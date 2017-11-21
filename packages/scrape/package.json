@@ -1,10 +1,10 @@
 {
-  "name": "@endal/pickle",
+  "name": "@endal/scrape",
   "version": "0.0.0",
   "description": "Endal!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/pickle",
+  "repository": "https://github.com/siteimprove/endal/tree/master/packages/scrape",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
