@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+.tmp
+
+**/locale/*.ts
+
+.nyc_output
+.nycrc
+
+tsconfig.json
+tslint.json

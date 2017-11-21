@@ -1,0 +1,13 @@
+{
+  "name": "@endal/ml",
+  "version": "0.0.0",
+  "description": "Endal!",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "repository": "https://github.com/siteimprove/endal/tree/master/packages/ml",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "license": "MIT",
+  "private": true
+}

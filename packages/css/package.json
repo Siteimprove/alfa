@@ -1,0 +1,16 @@
+{
+  "name": "@endal/css",
+  "version": "0.0.0",
+  "description": "Endal!",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "repository": "https://github.com/siteimprove/endal/tree/master/packages/css",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@endal/lang": "^0.0.0"
+  }
+}

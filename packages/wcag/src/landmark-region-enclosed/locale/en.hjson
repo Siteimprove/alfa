@@ -1,0 +1,35 @@
+{
+  id: en
+
+  title: Content is enclosed in landmarks or regions
+
+  description:
+    '''
+    HTML5 or WAI-ARIA landmarks are used on the page, but not all content is included.
+
+    When using HTML5 or WAI-ARIA landmarks it is best practice to include all content on the page in landmarks. In this way users of assistive technologies can use the landmarks for navigating the page without losing track of content.
+
+    Make sure that all content on the page is included in HTML5 or WAI-ARIA landmarks.
+    '''
+
+  tests: [
+    {
+      description:
+        '''
+        Check if the context contains any landmarks or regions. If the context does not contain any landmarks or regions then this rule does not apply to the context.
+        '''
+      outcome: {
+        inapplicable: The context does not contain any landmarks or regions
+      }
+    }
+    {
+      description:
+        '''
+        Perform a pre-order traversal of the context and check for each encountered node:
+        '''
+      outcome: {
+        inapplicable: The element does not contain content perceivable by screen readers
+      }
+    }
+  ]
+}

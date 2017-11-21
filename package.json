@@ -1,0 +1,27 @@
+{
+  "name": "endal",
+  "description": "Endal!",
+  "repository": "https://github.com/siteimprove/endal",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.32",
+    "@babel/plugin-transform-react-jsx": "^7.0.0-beta.32",
+    "@babel/preset-env": "^7.0.0-beta.32",
+    "@babel/preset-stage-2": "^7.0.0-beta.32",
+    "@babel/preset-typescript": "^7.0.0-beta.32",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^8.0.0-beta.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-size": "^2.1.0",
+    "lerna": "^2.5.1",
+    "typescript": "^2.6.1"
+  }
+}
