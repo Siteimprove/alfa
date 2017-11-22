@@ -1,20 +1,11 @@
 const gulp = require('gulp')
-const $ = require('gulp-load-plugins')()
+const size = require('gulp-size')
+const newer = require('gulp-newer')
+const babel = require('gulp-babel')
 const glob = require('glob')
-const { browsers, locale } = require('@endal/build')
+const { locale } = require('@endal/build')
 
 const plugins = {
-  babel: {
-    presets: [
-      ['@babel/env', { targets: { browsers } }],
-      ['@babel/stage-2'],
-      ['@babel/typescript']
-    ],
-    plugins: [
-      ['@babel/transform-react-jsx', { pragma: 'jsx' }]
-    ]
-  },
-
   size: {
     showFiles: true
   }
@@ -27,17 +18,17 @@ for (const package of packages) {
   const dest = `packages/${package}/dist`
 
   gulp.task(`build:${package}`, () => gulp.src(`${src}/**/*.ts`)
-    .pipe($.newer({ dest, ext: '.js' }))
-    .pipe($.babel(plugins.babel))
+    .pipe(newer({ dest, ext: '.js' }))
+    .pipe(babel({ presets: ['@endal/build/babel'] }))
     .pipe(gulp.dest(dest))
-    .pipe($.size({ ...plugins.size, title: package }))
+    .pipe(size({ ...plugins.size, title: package }))
   )
 
   gulp.task(`locale:${package}`, () => gulp.src(`${src}/**/locale/*.hjson`)
-    .pipe($.newer({ dest: src, ext: '.ts' }))
+    .pipe(newer({ dest: src, ext: '.ts' }))
     .pipe(locale())
     .pipe(gulp.dest(src))
-    .pipe($.size({ ...plugins.size, title: package }))
+    .pipe(size({ ...plugins.size, title: package }))
   )
 
   gulp.task(`watch:${package}`, [`build:${package}`], () => {

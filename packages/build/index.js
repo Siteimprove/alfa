@@ -1,21 +1,13 @@
-import { basename, dirname, extname, join } from 'path'
-import through from 'through2'
-import { parse } from 'hjson'
-import stringify from 'stringify-object'
+const { basename, dirname, extname, join } = require('path')
+const through = require('through2')
+const { parse } = require('hjson')
+const stringify = require('stringify-object')
 
-export const browsers = [
-  'chrome >= 55',
-  'edge >= 15',
-  'firefox >= 55',
-  'opera >= 48',
-  'safari >= 10.1'
-]
-
-function extension (path: string, ext: string): string {
+function extension (path, ext) {
   return join(dirname(path), basename(path, extname(path)) + ext);
 }
 
-export function locale () {
+function locale () {
   return through.obj((file, env, done) => {
     if (file.isBuffer()) {
       const json = parse(file.contents.toString('utf8'))
@@ -36,4 +28,8 @@ export default locale
 
     done(null, file)
   })
+}
+
+module.exports = {
+  locale
 }

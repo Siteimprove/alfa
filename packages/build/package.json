@@ -2,22 +2,18 @@
   "name": "@endal/build",
   "version": "0.0.0",
   "description": "Endal!",
-  "main": "dist/index.js",
-  "types": "src/index.ts",
+  "main": "index.js",
   "repository": "https://github.com/siteimprove/endal/tree/master/packages/build",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "prepare": "gulp build:build"
-  },
   "dependencies": {
-    "@endal/rule": "^0.0.0",
-    "@types/hjson": "^2.4.0",
-    "@types/stringify-object": "^3.1.1",
-    "@types/through2": "^2.0.33",
+    "@babel/plugin-transform-react-jsx": "^7.0.0-beta.32",
+    "@babel/preset-env": "^7.0.0-beta.32",
+    "@babel/preset-stage-2": "^7.0.0-beta.32",
+    "@babel/preset-typescript": "^7.0.0-beta.32",
     "hjson": "^3.1.0",
     "stringify-object": "^3.2.1",
     "through2": "^2.0.3"
