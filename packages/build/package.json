@@ -2,7 +2,7 @@
   "name": "@endal/build",
   "version": "0.0.0",
   "description": "Endal!",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/siteimprove/endal/tree/master/packages/build",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
