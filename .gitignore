@@ -8,6 +8,3 @@ coverage
 
 .nyc_output
 .nycrc
-
-tsconfig.json
-tslint.json

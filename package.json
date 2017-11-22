@@ -20,6 +20,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-size": "^2.1.0",
     "lerna": "^2.5.1",
+    "tslint": "^5.8.0",
+    "tslint-config-standard": "^7.0.0",
     "typescript": "^2.6.1"
   }
 }
