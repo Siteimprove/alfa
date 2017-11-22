@@ -1,7 +1,7 @@
-import { Node, Element, Text } from '@endal/dom'
+import * as V from '@endal/dom'
 
-export function jsx (tag: string, attributes: { [name: string]: string | number | boolean } | null, ...children: Array<Element | string>): Element {
-  const element: Element = {
+export function jsx (tag: string, attributes: { [name: string]: string | number | boolean } | null, ...children: Array<V.Element | string>): V.Element {
+  const element: V.Element = {
     type: 'element',
     tag,
     namespace: null,
@@ -11,7 +11,7 @@ export function jsx (tag: string, attributes: { [name: string]: string | number 
   }
 
   for (const node of children) {
-    let child: Element | Text | null = null
+    let child: V.Element | V.Text | null = null
 
     if (typeof node === 'string') {
       child = {
@@ -27,4 +27,18 @@ export function jsx (tag: string, attributes: { [name: string]: string | number 
   }
 
   return element
+}
+
+declare global {
+  namespace JSX {
+    interface Element extends V.Element {}
+
+    interface ElementAttributesProperty {
+      attributes: any
+    }
+
+    interface IntrinsicElements {
+      [tag: string]: any
+    }
+  }
 }
