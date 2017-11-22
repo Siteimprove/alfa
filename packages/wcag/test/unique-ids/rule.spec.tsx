@@ -2,7 +2,6 @@ import test from 'ava'
 
 import { check } from '@endal/rule'
 import { Element } from '@endal/dom'
-import { jsx } from '@endal/jsx'
 
 import { UNIQUE_IDS } from '../../src/unique-ids/rule'
 

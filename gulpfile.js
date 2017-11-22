@@ -2,10 +2,19 @@ const gulp = require('gulp')
 const size = require('gulp-size')
 const newer = require('gulp-newer')
 const babel = require('gulp-babel')
+const ava = require('gulp-ava')
+const sourcemaps = require('gulp-sourcemaps')
+const when = require('gulp-if')
 const glob = require('glob')
 const { locale } = require('@endal/build')
 
 const plugins = {
+  ava: {
+    require: [
+      '@endal/build/jsx'
+    ]
+  },
+
   size: {
     showFiles: true
   }
@@ -14,8 +23,10 @@ const plugins = {
 const packages = glob.sync('packages/*').map(package => package.replace('packages/', ''))
 
 for (const package of packages) {
-  const src = `packages/${package}/src`
-  const dest = `packages/${package}/dist`
+  const base = `packages/${package}`
+  const src = `${base}/src`
+  const dest = `${base}/dist`
+  const test = `${base}/test`
 
   gulp.task(`build:${package}`, () => gulp.src(`${src}/**/*.ts`)
     .pipe(newer({ dest, ext: '.js' }))
@@ -29,6 +40,13 @@ for (const package of packages) {
     .pipe(locale())
     .pipe(gulp.dest(src))
     .pipe(size({ ...plugins.size, title: package }))
+  )
+
+  gulp.task(`test:${package}`, () => gulp.src([`${src}/**/*.ts`, `${test}/**/*.ts{,x}`], { base })
+    .pipe(sourcemaps.init())
+    .pipe(babel(({ presets: ['@endal/build/babel'] })))
+    .pipe(gulp.dest(`${base}/.tmp`))
+    .pipe(when('*.spec.js', ava(plugins.ava)))
   )
 
   gulp.task(`watch:${package}`, [`build:${package}`], () => {
