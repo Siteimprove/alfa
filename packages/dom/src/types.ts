@@ -18,10 +18,12 @@ export interface Document extends Node, ParentNode {
 
 export interface Doctype extends Node, ChildNode {
   readonly type: 'doctype'
+  readonly value: string
 }
 
 export interface Comment extends Node, ChildNode {
   readonly type: 'comment'
+  readonly value: string
 }
 
 export interface Fragment extends Node, ParentNode, ChildNode {
@@ -31,6 +33,7 @@ export interface Fragment extends Node, ParentNode, ChildNode {
 export interface Element extends Node, ParentNode, ChildNode {
   readonly type: 'element'
   readonly tag: string
+  readonly namespace: string | null
   readonly attributes: { [name: string]: Attribute }
 }
 

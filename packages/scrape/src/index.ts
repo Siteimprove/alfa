@@ -1,69 +1,66 @@
-import { launch } from 'puppeteer'
+import { launch, Browser } from 'puppeteer'
+import browserify from 'browserify'
+import { Node } from '@endal/dom'
+import { Context } from '@endal/rule'
+import { parentize } from '@endal/pickle'
 
-export interface Document {
-  readonly source: string
-  readonly headers: { [key: string]: string }
-  readonly html: string
+const PICKLE = require.resolve('@endal/pickle')
+
+function bundle (file: string, options: object): Promise<string> {
+  return new Promise((resolve, reject) =>
+    browserify(file, options).bundle((error, buffer) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(buffer.toString('utf8'))
+      }
+    })
+  )
 }
 
-export interface Image {
-  readonly source: string
-  readonly data: string
+export enum Wait {
+  Ready = 'domcontentloaded',
+  Loaded = 'load',
+  Idle = 'networkidle0'
 }
 
-(async (): Promise<void> => {
-  const browser = await launch({
+export interface ScrapeOptions {
+  timeout: number
+  wait: Wait
+}
+
+export class Scraper {
+  private readonly _browser = launch({
     headless: true
   })
 
-  const page = await browser.newPage()
-
-  const documents: Array<Document> = []
-  const images: Array<Image> = []
-
-  page.on('response', async response => {
-    if (!response.ok) {
-      return
-    }
-
-    const type = response.headers['content-type']
-
-    if (!type) {
-      return
-    }
-
-    if (type.match(/^image/)) {
-      const buffer = await response.buffer()
-
-      images.push({
-        source: response.url,
-        data: buffer.toString('base64')
-      })
-    }
-
-    if (type.match(/^text\/html/)) {
-      const buffer = await response.buffer()
-
-      documents.push({
-        source: response.url,
-        headers: response.headers,
-        html: buffer.toString('utf8')
-      })
-    }
+  private readonly _pickle = bundle(PICKLE, {
+    standalone: 'Endal.Pickle'
   })
 
-  console.time('Scrape')
+  async scrape (url: string, options: Partial<ScrapeOptions> = {}): Promise<Context> {
+    const browser = await this._browser
+    const pickle = await this._pickle
 
-  await page.goto('https://siteimprove.com', {
-    waitUntil: 'networkidle0'
-  })
+    const page = await browser.newPage()
+    await page.goto(url, {
+      timeout: options.timeout || 10000,
+      waitUntil: options.wait || Wait.Loaded
+    })
 
-  console.timeEnd('Scrape')
+    await page.evaluate(pickle)
 
-  await page.close()
+    const dom: Node = await page.evaluate(`
+      Endal.Pickle.virtualize(document, { parents: false })
+    `)
 
-  console.log('Document:', JSON.stringify(documents).length, 'bytes')
-  console.log('Images:', JSON.stringify(images).length, 'bytes')
+    await page.close()
 
-  await browser.close()
-})()
+    return { dom }
+  }
+
+  async close (): Promise<void> {
+    const browser = await this._browser
+    await browser.close()
+  }
+}
