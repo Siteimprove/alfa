@@ -28,17 +28,3 @@ export function jsx (tag: string, attributes: { [name: string]: string | number 
 
   return element
 }
-
-declare global {
-  namespace JSX {
-    interface Element extends V.Element {}
-
-    interface ElementAttributesProperty {
-      attributes: any
-    }
-
-    interface IntrinsicElements {
-      [tag: string]: any
-    }
-  }
-}
