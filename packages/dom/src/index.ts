@@ -1,3 +1,5 @@
+import { Element } from './types'
+
 export * from './collect'
 export * from './compare'
 export * from './guards'
