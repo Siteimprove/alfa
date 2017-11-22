@@ -10,6 +10,9 @@
   ],
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "prepare": "gulp build:scrape"
+  },
   "dependencies": {
     "@endal/dom": "^0.0.0",
     "@endal/pickle": "^0.0.0",

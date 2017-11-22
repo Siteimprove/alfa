@@ -9,5 +9,8 @@
     "Kasper Isager <kki@siteimprove.com>"
   ],
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "prepare": "gulp build:wcag"
+  }
 }

@@ -10,6 +10,9 @@
   ],
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "prepare": "gulp build:rule"
+  },
   "dependencies": {
     "@endal/dom": "^0.0.0"
   }

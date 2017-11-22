@@ -3,53 +3,8 @@ import * as V from '@endal/dom'
 const { isParent } = V
 const { assign } = Object
 
-function serialize (node: Node): string {
-  switch (node.nodeType) {
-    // https://w3c.github.io/DOM-Parsing/#dfn-xml-serializing-a-text-node
-    case node.TEXT_NODE: {
-      const text = node as Text
-      return text.data
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
-
-    // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-comment-node
-    case node.COMMENT_NODE: {
-      const comment = node as Comment
-      return `<!--${comment.data}-->`;
-    }
-
-    // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-documenttype-node
-    case node.DOCUMENT_TYPE_NODE: {
-      const doctype = node as DocumentType
-      return `<!DOCTYPE ${doctype.name}` +
-        (doctype.publicId ? ` PUBLIC "${doctype.publicId}"` : doctype.systemId ? ' SYSTEM' : '') +
-        (doctype.systemId ? ` "${doctype.systemId}"` : '') +
-        '>';
-    }
-
-    default:
-      throw new Error(`Cannot serialize node of type "${node.nodeType}"`)
-  }
-}
-
 export interface VirtualizeOptions {
   parents: boolean
-}
-
-function children (node: Node, virtual: V.ParentNode, options: Partial<VirtualizeOptions> = {}): void {
-  const { childNodes } = node
-
-  for (let i = 0; i < childNodes.length; i++) {
-    const child = childNodes[i]
-
-    const vchild: V.ChildNode = assign(virtualize(child, options), {
-      parent: options.parents === true ? virtual : null
-    })
-
-    virtual.children[i] = vchild
-  }
 }
 
 export function virtualize (node: Node, options: Partial<VirtualizeOptions> = {}): V.Node {
@@ -142,4 +97,49 @@ export function parentize (node: V.Node): V.Node {
   }
 
   return node
+}
+
+function serialize (node: Node): string {
+  switch (node.nodeType) {
+    // https://w3c.github.io/DOM-Parsing/#dfn-xml-serializing-a-text-node
+    case node.TEXT_NODE: {
+      const text = node as Text
+      return text.data
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-comment-node
+    case node.COMMENT_NODE: {
+      const comment = node as Comment
+      return `<!--${comment.data}-->`;
+    }
+
+    // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-documenttype-node
+    case node.DOCUMENT_TYPE_NODE: {
+      const doctype = node as DocumentType
+      return `<!DOCTYPE ${doctype.name}` +
+        (doctype.publicId ? ` PUBLIC "${doctype.publicId}"` : doctype.systemId ? ' SYSTEM' : '') +
+        (doctype.systemId ? ` "${doctype.systemId}"` : '') +
+        '>';
+    }
+
+    default:
+      throw new Error(`Cannot serialize node of type "${node.nodeType}"`)
+  }
+}
+
+function children (node: Node, virtual: V.ParentNode, options: Partial<VirtualizeOptions> = {}): void {
+  const { childNodes } = node
+
+  for (let i = 0; i < childNodes.length; i++) {
+    const child = childNodes[i]
+
+    const vchild: V.ChildNode = assign(virtualize(child, options), {
+      parent: options.parents === true ? virtual : null
+    })
+
+    virtual.children[i] = vchild
+  }
 }

@@ -1,5 +1,6 @@
 const gulp = require('gulp')
 const $ = require('gulp-load-plugins')()
+const glob = require('glob')
 
 const browsers = [
   'chrome >= 55',
@@ -26,11 +27,20 @@ const plugins = {
   }
 }
 
-gulp.task('build', () => gulp.src('packages/*/src/**/*.ts')
-  .pipe($.babel(plugins.babel))
-  .pipe($.rename(path => {
-    path.dirname = path.dirname.replace('src', 'dist')
-  }))
-  .pipe(gulp.dest('packages'))
-  .pipe($.size(plugins.size))
-)
+const packages = glob.sync('packages/*').map(package => package.replace('packages/', ''))
+
+for (const package of packages) {
+  const src = `packages/${package}/src/**/*.ts`
+  const dest = `packages/${package}/dist`
+
+  gulp.task(`build:${package}`, () => gulp.src(src)
+    .pipe($.newer({ dest, ext: '.js' }))
+    .pipe($.babel(plugins.babel))
+    .pipe(gulp.dest(dest))
+    .pipe($.size({ ...plugins.size, title: package }))
+  )
+
+  gulp.task(`watch:${package}`, [`build:${package}`], () => {
+    gulp.watch(src, [`build:${package}`])
+  })
+}

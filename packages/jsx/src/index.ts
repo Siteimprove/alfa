@@ -4,6 +4,7 @@ export function jsx (tag: string, attributes: { [name: string]: string | number 
   const element: Element = {
     type: 'element',
     tag,
+    namespace: null,
     attributes: attributes === null ? {} : attributes,
     children: [],
     parent: null
