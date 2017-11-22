@@ -60,8 +60,6 @@ export function virtualize (node: Node, options: Partial<VirtualizeOptions> = {}
     case node.DOCUMENT_NODE: {
       const document = node as Document
 
-      const { childNodes } = document
-
       const virtual: V.Document = {
         type: 'document',
         children: []
@@ -107,13 +105,13 @@ function serialize (node: Node): string {
       return text.data
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+        .replace(/>/g, '&gt;')
     }
 
     // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-comment-node
     case node.COMMENT_NODE: {
       const comment = node as Comment
-      return `<!--${comment.data}-->`;
+      return `<!--${comment.data}-->`
     }
 
     // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-documenttype-node
@@ -122,7 +120,7 @@ function serialize (node: Node): string {
       return `<!DOCTYPE ${doctype.name}` +
         (doctype.publicId ? ` PUBLIC "${doctype.publicId}"` : doctype.systemId ? ' SYSTEM' : '') +
         (doctype.systemId ? ` "${doctype.systemId}"` : '') +
-        '>';
+        '>'
     }
 
     default:

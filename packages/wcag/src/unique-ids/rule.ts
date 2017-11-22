@@ -1,5 +1,5 @@
 import { rule } from '@endal/rule'
-import { Node, Element, Attribute, attribute, isElement, collect } from '@endal/dom'
+import { Element, Attribute, attribute, isElement, collect } from '@endal/dom'
 
 import EN from './locale/en'
 
@@ -44,7 +44,7 @@ export const UNIQUE_IDS = rule({
     (test, context, data) => {
       const ids = data as Ids
 
-      for (const [id, elements] of ids) {
+      for (const elements of ids.values()) {
         if (elements.size === 1) {
           const [element] = elements
           test.passed(element)

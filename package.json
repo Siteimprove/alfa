@@ -7,6 +7,10 @@
   ],
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "check": "tsc --project tsconfig.json",
+    "lint": "tslint --project tsconfig.json"
+  },
   "workspaces": [
     "packages/*"
   ],

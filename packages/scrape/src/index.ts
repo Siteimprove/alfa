@@ -1,4 +1,4 @@
-import { launch, Browser } from 'puppeteer'
+import { launch } from 'puppeteer'
 import browserify from 'browserify'
 import { Node } from '@endal/dom'
 import { Context } from '@endal/rule'
@@ -56,7 +56,7 @@ export class Scraper {
 
     await page.close()
 
-    return { dom }
+    return { dom: parentize(dom) }
   }
 
   async close (): Promise<void> {

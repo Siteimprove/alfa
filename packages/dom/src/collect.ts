@@ -1,5 +1,5 @@
-import { Node, Element, Text } from './types'
-import { isElement, isParent } from './guards'
+import { Node } from './types'
+import { isParent } from './guards'
 
 type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U)
 

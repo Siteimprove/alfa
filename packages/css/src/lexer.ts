@@ -48,25 +48,23 @@ const ident: CssPattern = stream => {
   }
 
   if (
-    !stream.accept(char =>
+    stream.accept(char =>
       isAlpha(char) ||
       isNonAscii(char) ||
       char === '_'
     )
   ) {
-    return
-  }
+    stream.accept(char =>
+      isAlphanumeric(char) ||
+      isNonAscii(char) ||
+      char === '_'
+    )
 
-  stream.accept(char =>
-    isAlphanumeric(char) ||
-    isNonAscii(char) ||
-    char === '_'
-  )
-
-  if (stream.progressed()) {
-    return {
-      type: 'ident',
-      value: stream.value()
+    if (stream.progressed()) {
+      return {
+        type: 'ident',
+        value: stream.value()
+      }
     }
   }
 }

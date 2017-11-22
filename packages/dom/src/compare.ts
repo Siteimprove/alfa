@@ -1,4 +1,4 @@
-import { Node, ChildNode, ParentNode } from './types'
+import { Node, ParentNode } from './types'
 import { isChild } from './guards'
 
 function pathFromRoot (node: Node): Array<Node> {
