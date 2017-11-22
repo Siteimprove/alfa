@@ -3,9 +3,16 @@ import through from 'through2'
 import { parse } from 'hjson'
 import stringify from 'stringify-object'
 
+export const browsers = [
+  'chrome >= 55',
+  'edge >= 15',
+  'firefox >= 55',
+  'opera >= 48',
+  'safari >= 10.1'
+]
+
 function extension (path: string, ext: string): string {
-  const file = basename(path, extname(path)) + ext;
-  return join(dirname(path), file);
+  return join(dirname(path), basename(path, extname(path)) + ext);
 }
 
 export function locale () {

@@ -1,15 +1,7 @@
 const gulp = require('gulp')
 const $ = require('gulp-load-plugins')()
 const glob = require('glob')
-const { locale } = require('@endal/build')
-
-const browsers = [
-  'chrome >= 55',
-  'edge >= 15',
-  'firefox >= 55',
-  'opera >= 48',
-  'safari >= 10.1'
-]
+const { browsers, locale } = require('@endal/build')
 
 const plugins = {
   babel: {
