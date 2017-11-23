@@ -1,11 +1,11 @@
 import { Node } from './types'
 import { isParent } from './guards'
 
-export function traverse (context: Node, visitor: (node: Node) => false | void) {
+export function traverse (root: Node, visitor: (node: Node) => false | void) {
   const queue: Array<Node> = []
 
   for (
-    let next: Node | undefined = context;
+    let next: Node | undefined = root;
     next;
     next = queue.pop()
   ) {
