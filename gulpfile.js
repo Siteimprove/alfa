@@ -11,7 +11,7 @@ const { locale } = require('@endal/build')
 const plugins = {
   ava: {
     require: [
-      '@endal/build/jsx'
+      '@endal/jsx/register'
     ]
   },
 
