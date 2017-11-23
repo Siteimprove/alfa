@@ -1,3 +1,4 @@
+const path = require('path')
 const gulp = require('gulp')
 const size = require('gulp-size')
 const newer = require('gulp-newer')
@@ -10,6 +11,7 @@ const { locale } = require('@endal/build')
 
 const plugins = {
   ava: {
+    verbose: true,
     require: [
       '@endal/jsx/register'
     ]
@@ -45,6 +47,9 @@ for (const package of packages) {
   gulp.task(`test:${package}`, () => gulp.src([`${src}/**/*.ts`, `${test}/**/*.ts{,x}`], { base })
     .pipe(sourcemaps.init())
     .pipe(babel(({ presets: ['@endal/build/babel'] })))
+    .pipe(sourcemaps.write('.', {
+      sourceRoot: path.join(__dirname, base, '/')
+    }))
     .pipe(gulp.dest(`${base}/.tmp`))
     .pipe(when('*.spec.js', ava(plugins.ava)))
   )
