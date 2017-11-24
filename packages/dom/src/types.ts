@@ -16,18 +16,18 @@ export interface Document extends Node, ParentNode {
   readonly type: 'document'
 }
 
-export interface Doctype extends Node, ChildNode {
-  readonly type: 'doctype'
+export interface DocumentType extends Node, ChildNode {
+  readonly type: 'documenttype'
   readonly value: string
+}
+
+export interface DocumentFragment extends Node, ParentNode, ChildNode {
+  readonly type: 'documentfragment'
 }
 
 export interface Comment extends Node, ChildNode {
   readonly type: 'comment'
   readonly value: string
-}
-
-export interface Fragment extends Node, ParentNode, ChildNode {
-  readonly type: 'fragment'
 }
 
 export interface Element extends Node, ParentNode, ChildNode {

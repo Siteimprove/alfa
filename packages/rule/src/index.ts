@@ -1,9 +1,11 @@
 import { Node } from '@endal/dom'
+import { Style, State } from '@endal/css'
 
 export type Outcome = 'passed' | 'failed' | 'inapplicable'
 
 export interface Context {
-  readonly dom: Node
+  readonly dom: Node,
+  readonly css: Map<Element, { [S in State]: Style }>
 }
 
 export type Target = Node

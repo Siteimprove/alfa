@@ -51,12 +51,24 @@ export class Scraper {
     await page.evaluate(pickle)
 
     const dom: Node = await page.evaluate(`
-      Endal.Pickle.virtualize(document, { parents: false })
+      (() => {
+        const dom = Endal.Pickle.virtualize(document, { parents: false })
+        const [...style] = Endal.Pickle.style(dom).values()
+        const [...layout] = Endal.Pickle.layout(dom).values()
+
+        Endal.Pickle.dereference(dom)
+
+        return {
+          dom,
+          style,
+          layout
+        }
+      })()
     `)
 
     await page.close()
 
-    return { dom: parentize(dom) }
+    return dom
   }
 
   async close (): Promise<void> {
@@ -64,3 +76,7 @@ export class Scraper {
     await browser.close()
   }
 }
+
+const scraper = new Scraper()
+
+scraper.scrape('https://siteimprove.com').then(ctx => console.log(ctx))

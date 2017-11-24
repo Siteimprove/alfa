@@ -14,6 +14,8 @@
     "prepare": "gulp build:pickle"
   },
   "dependencies": {
-    "@endal/dom": "^0.0.0"
+    "@endal/css": "^0.0.0",
+    "@endal/dom": "^0.0.0",
+    "@endal/layout": "^0.0.0"
   }
 }

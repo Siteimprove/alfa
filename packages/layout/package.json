@@ -1,20 +1,16 @@
 {
-  "name": "@endal/rule",
+  "name": "@endal/layout",
   "version": "0.0.0",
   "description": "Endal!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/rule",
+  "repository": "https://github.com/siteimprove/endal/tree/master/packages/layout",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepare": "gulp build:rule"
-  },
-  "dependencies": {
-    "@endal/css": "^0.0.0",
-    "@endal/dom": "^0.0.0"
+    "prepare": "gulp build:layout"
   }
 }
