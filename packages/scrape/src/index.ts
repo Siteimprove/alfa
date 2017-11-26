@@ -2,9 +2,11 @@ import { launch } from 'puppeteer'
 import browserify from 'browserify'
 import { Node } from '@endal/dom'
 import { Context } from '@endal/rule'
-import { parentize } from '@endal/pickle'
+import * as Pickle from '@endal/pickle'
 
 const PICKLE = require.resolve('@endal/pickle')
+
+const { parentize } = Pickle
 
 function bundle (file: string, options: object): Promise<string> {
   return new Promise((resolve, reject) =>
@@ -50,25 +52,27 @@ export class Scraper {
 
     await page.evaluate(pickle)
 
-    const dom: Node = await page.evaluate(`
-      (() => {
-        const dom = Endal.Pickle.virtualize(document, { parents: false })
-        const [...style] = Endal.Pickle.style(dom).values()
-        const [...layout] = Endal.Pickle.layout(dom).values()
+    const Endal = { Pickle }
 
-        Endal.Pickle.dereference(dom)
+    const virtual = await page.evaluate(() => {
+      const dom = Endal.Pickle.virtualize(document, { parents: false })
 
-        return {
-          dom,
-          style,
-          layout
-        }
-      })()
-    `)
+      const style = Endal.Pickle.style(dom).values()
+      const layout = Endal.Pickle.layout(dom).values()
+
+      Endal.Pickle.dereference(dom)
+
+      return { dom, style: [...style], layout: [...layout] }
+    })
 
     await page.close()
 
-    return dom
+    return {
+      dom: virtual.dom,
+      style: {
+        default: virtual.style
+      }
+    }
   }
 
   async close (): Promise<void> {

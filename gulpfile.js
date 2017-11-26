@@ -59,3 +59,7 @@ for (const package of packages) {
     gulp.watch(`${src}/**/*.hjson`, [`locale:${package}`])
   })
 }
+
+gulp.task('build', packages.map(package => `build:${package}`))
+gulp.task('watch', packages.map(package => `watch:${package}`))
+gulp.task('test', packages.map(package => `test:${package}`))

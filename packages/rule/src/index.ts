@@ -5,7 +5,7 @@ export type Outcome = 'passed' | 'failed' | 'inapplicable'
 
 export interface Context {
   readonly dom: Node,
-  readonly css: Map<Element, { [S in State]: Style }>
+  readonly style: Map<Element, { [S in State]: Style }>
 }
 
 export type Target = Node
