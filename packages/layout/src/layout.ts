@@ -57,7 +57,7 @@ export class LayoutIndex {
   private _root: LayoutNode
 
   constructor (layouts: Array<Layout>) {
-    this._root = load(layouts, 0, this._max)
+    this._root = load(layouts.slice(), 0, this._max)
   }
 
   within (target: Layout): Array<Layout> {
@@ -130,7 +130,7 @@ function load (nodes: Array<LayoutNode>, height: number, maximum: number): Layou
   if (length <= maximum) {
     return {
       ...union(...nodes),
-      children: [...nodes],
+      children: nodes,
       height: 1
     }
   }
