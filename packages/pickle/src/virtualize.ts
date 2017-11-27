@@ -1,5 +1,5 @@
 import * as V from '@endal/dom'
-import { Style, properties, clean } from '@endal/css'
+import { Style, State, properties, clean, deduplicate } from '@endal/css'
 import { Layout } from '@endal/layout'
 import { WithReference, hasReference } from './reference'
 
@@ -185,19 +185,35 @@ export function layout (root: WithReference<V.Node>): Map<V.Element, Layout> {
   return layout
 }
 
-export function style (root: WithReference<V.Node>): Map<V.Element, Style> {
-  const style: Map<V.Element, Style> = new Map()
+export function style (root: WithReference<V.Node>): Map<V.Element, { [S in State]: Style }> {
+  const style: Map<V.Element, { [S in State]: Style }> = new Map()
 
   traverse(root, node => {
     if (isElement(node) && hasReference(node)) {
-      const computed = getComputedStyle(node.ref as Element)
-      const _style: Style = {}
-
-      for (const property of properties) {
-        _style[property] = computed.getPropertyValue(property)
+      const element = node.ref as HTMLElement
+      const computed = getComputedStyle(element)
+      const _style: { [S in State]: Style } = {
+        default: {},
+        focus: {}
       }
 
-      style.set(node, clean(_style))
+      for (const property of properties) {
+        _style.default[property] = computed.getPropertyValue(property)
+      }
+
+      _style.default = clean(_style.default)
+
+      if ('focus' in element && element.tabIndex >= -1) {
+        element.focus()
+
+        for (const property of properties) {
+          _style.focus[property] = computed.getPropertyValue(property)
+        }
+
+        _style.focus = deduplicate(_style.default, clean(_style.focus))
+      }
+
+      style.set(node, _style)
     }
   })
 

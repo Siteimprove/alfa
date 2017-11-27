@@ -57,8 +57,8 @@ export class Scraper {
     const virtual = await page.evaluate(() => {
       const dom = Endal.Pickle.virtualize(document, { parents: false })
 
-      const style = Endal.Pickle.style(dom).values()
       const layout = Endal.Pickle.layout(dom).values()
+      const style = Endal.Pickle.style(dom).values()
 
       Endal.Pickle.dereference(dom)
 
@@ -69,9 +69,7 @@ export class Scraper {
 
     return {
       dom: virtual.dom,
-      style: {
-        default: virtual.style
-      },
+      style: virtual.style,
       layout: virtual.layout
     }
   }
