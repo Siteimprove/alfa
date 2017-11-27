@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "check": "tsc --project tsconfig.json",
-    "lint": "tslint --project tsconfig.json"
+    "lint": "tslint --project tsconfig.json",
+    "prepare": "gulp build --silent"
   },
   "workspaces": [
     "packages/*"

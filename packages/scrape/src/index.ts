@@ -71,7 +71,8 @@ export class Scraper {
       dom: virtual.dom,
       style: {
         default: virtual.style
-      }
+      },
+      layout: virtual.layout
     }
   }
 
@@ -80,7 +81,3 @@ export class Scraper {
     await browser.close()
   }
 }
-
-const scraper = new Scraper()
-
-scraper.scrape('https://siteimprove.com').then(ctx => console.log(ctx))

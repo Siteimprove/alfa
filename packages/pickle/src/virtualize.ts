@@ -174,10 +174,10 @@ export function layout (root: WithReference<V.Node>): Map<V.Element, Layout> {
       }
 
       layout.set(node, {
-        width: _layout.width,
-        height: _layout.height,
+        left: _layout.left,
+        right: _layout.right,
         top: _layout.top,
-        left: _layout.left
+        bottom: _layout.bottom
       })
     }
   })
