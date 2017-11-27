@@ -30,12 +30,15 @@ export function contains (a: Layout, b: Layout): boolean {
 }
 
 export function union (...layouts: Layout[]): Layout {
-  let top: number = 0
-  let right: number = 0
-  let bottom: number = 0
-  let left: number = 0
+  let top: number = Infinity
+  let right: number = -Infinity
+  let bottom: number = Infinity
+  let left: number = -Infinity
 
-  for (const layout of layouts) {
+  const { length } = layouts
+
+  for (let i = 0; i < length; i++) {
+    const layout = layouts[i]
     left = Math.min(left, layout.left)
     right = Math.max(right, layout.right)
     top = Math.min(top, layout.top)
@@ -50,21 +53,14 @@ export type LayoutNode = Layout & {
 }
 
 export class LayoutIndex {
-  private readonly _max = 9
-
   private _root: LayoutNode
 
   constructor (layouts: Array<Layout>) {
-    this._root = partition(layouts.slice(), 0, this._max)
+    this._root = partition(layouts.slice(), 9, true)
   }
 
   within (target: Layout): Array<Layout> {
     const result: Array<Layout> = []
-
-    if (!intersects(target, this._root)) {
-      return result
-    }
-
     const queue: Array<LayoutNode> = []
 
     for (
@@ -72,26 +68,14 @@ export class LayoutIndex {
       next;
       next = queue.pop()
     ) {
-      if (next.children === undefined) {
+      if (!intersects(target, next)) {
         continue
       }
 
-      const { length } = next.children
-
-      for (let i = 0; i < length; i++) {
-        const child = next.children[i]
-
-        if (!intersects(target, child)) {
-          continue
-        }
-
-        if (child.children === undefined) {
-          result.push(child)
-        } else if (contains(target, child)) {
-          leaves(child, result)
-        } else {
-          queue.push(child)
-        }
+      if (next.children === undefined) {
+        result.push(next)
+      } else {
+        queue.push.apply(queue, next.children)
       }
     }
 
@@ -99,63 +83,43 @@ export class LayoutIndex {
   }
 }
 
-function leaves (node: LayoutNode, result: Array<LayoutNode>) {
-  const queue: Array<LayoutNode> = []
-
-  for (
-    let next: LayoutNode | undefined = node;
-    next;
-    next = queue.pop()
-  ) {
-    if (next.children === undefined) {
-      result.push(next)
-    } else {
-      const { length } = next.children
-
-      for (let i = 0; i < length; i++) {
-        queue.push(next.children[i])
-      }
-    }
-  }
-}
-
 /**
  * @see http://ftp.informatik.rwth-aachen.de/Publications/CEUR-WS/Vol-74/files/FORUM_18.pdf
  */
-function partition (nodes: Array<LayoutNode>, height: number, maximum: number): LayoutNode {
-  const { length } = nodes
-
-  if (length <= maximum) {
-    return { ...union(...nodes), children: nodes }
+function partition (nodes: Array<LayoutNode>, maximum: number, root: boolean = false): LayoutNode {
+  if (nodes.length <= maximum) {
+    return Object.assign(union(...nodes), { children: nodes })
   }
 
-  let subtree = maximum
+  let slices = maximum
 
-  if (height === 0) {
-    height = Math.ceil(Math.log(length) / Math.log(maximum))
-    subtree = Math.ceil(length / Math.pow(maximum, height - 1))
+  if (root) {
+    const { length } = nodes
+    // OMT Eq. 1: Determine the desired height of the r-tree.
+    const height = Math.ceil(Math.log(length) / Math.log(maximum))
+    // OMT Eq. 2: Determine the desired size of every root entry.
+    const subtree = Math.ceil(length / Math.pow(maximum, height - 1))
+    // OMT Eq. 3: Determine the number of entries at the root.
+    slices = Math.floor(Math.sqrt(Math.ceil(length / subtree)))
   }
 
   const children: Array<LayoutNode> = []
 
-  const perGroup = Math.ceil(length / subtree)
-  const perSlice = perGroup * Math.ceil(Math.sqrt(subtree))
-
   nodes.sort((a, b) => a.left - b.left)
 
-  for (let i = 0; i < length; i += perSlice) {
-    const sliceEnd = Math.min(i + perSlice - 1, length - 1)
-    const slice = nodes.slice(i, sliceEnd + 1)
+  for (let i = 0; i < slices; i++) {
+    const chunk = Math.ceil(nodes.length / slices)
+    const outer = nodes.slice(i * chunk, (i + 1) * chunk)
 
-    slice.sort((a, b) => a.top - b.top)
+    outer.sort((a, b) => a.top - b.top)
 
-    for (let j = 0; j < slice.length; j += perGroup) {
-      const groupEnd = Math.min(j + perGroup - 1, slice.length - 1)
-      const group = slice.slice(j, groupEnd + 1)
+    for (let j = 0; j < slices; j++) {
+      const chunk = Math.ceil(outer.length / slices)
+      const inner = outer.slice(j * chunk, (j + 1) * chunk)
 
-      children.push(partition(group, height - 1, maximum))
+      children.push(partition(inner, maximum))
     }
   }
 
-  return { ...union(...children), children }
+  return Object.assign(union(...children), { children })
 }
