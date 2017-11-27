@@ -47,17 +47,15 @@ export function union (...layouts: Layout[]): Layout {
 
 export type LayoutNode = Layout & {
   children?: Array<LayoutNode>
-  height?: number
 }
 
 export class LayoutIndex {
   private readonly _max = 9
-  private readonly _min = 4
 
   private _root: LayoutNode
 
   constructor (layouts: Array<Layout>) {
-    this._root = load(layouts.slice(), 0, this._max)
+    this._root = partition(layouts.slice(), 0, this._max)
   }
 
   within (target: Layout): Array<Layout> {
@@ -124,15 +122,11 @@ function leaves (node: LayoutNode, result: Array<LayoutNode>) {
 /**
  * @see http://ftp.informatik.rwth-aachen.de/Publications/CEUR-WS/Vol-74/files/FORUM_18.pdf
  */
-function load (nodes: Array<LayoutNode>, height: number, maximum: number): LayoutNode {
+function partition (nodes: Array<LayoutNode>, height: number, maximum: number): LayoutNode {
   const { length } = nodes
 
   if (length <= maximum) {
-    return {
-      ...union(...nodes),
-      children: nodes,
-      height: 1
-    }
+    return { ...union(...nodes), children: nodes }
   }
 
   let subtree = maximum
@@ -152,17 +146,16 @@ function load (nodes: Array<LayoutNode>, height: number, maximum: number): Layou
   for (let i = 0; i < length; i += perSlice) {
     const sliceEnd = Math.min(i + perSlice - 1, length - 1)
     const slice = nodes.slice(i, sliceEnd + 1)
-    const sliceLength = slice.length
 
     slice.sort((a, b) => a.top - b.top)
 
-    for (let j = 0; j < sliceLength; j += perGroup) {
-      const groupEnd = Math.min(j + perGroup - 1, sliceLength - 1)
+    for (let j = 0; j < slice.length; j += perGroup) {
+      const groupEnd = Math.min(j + perGroup - 1, slice.length - 1)
       const group = slice.slice(j, groupEnd + 1)
 
-      children.push(load(group, height - 1, maximum))
+      children.push(partition(group, height - 1, maximum))
     }
   }
 
-  return { ...union(...children), children, height }
+  return { ...union(...children), children }
 }
