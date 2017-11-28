@@ -1,6 +1,6 @@
-import * as V from '@endal/dom'
-import { Style, State, properties, clean, deduplicate } from '@endal/css'
-import { Layout } from '@endal/layout'
+import * as V from '@alfa/dom'
+import { Style, State, properties, clean, deduplicate } from '@alfa/css'
+import { Layout } from '@alfa/layout'
 import { WithReference, hasReference } from './reference'
 
 const { assign, keys } = Object

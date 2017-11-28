@@ -1,7 +1,7 @@
 import test from 'ava'
 
-import { check } from '@endal/rule'
-import { Element } from '@endal/dom'
+import { check } from '@alfa/rule'
+import { Element } from '@alfa/dom'
 
 import { UNIQUE_IDS } from '../../src/unique-ids/rule'
 

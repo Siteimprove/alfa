@@ -1,10 +1,10 @@
 {
-  "name": "@endal/wcag",
+  "name": "@alfa/wcag",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/wcag",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/wcag",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
@@ -14,7 +14,7 @@
     "prepare": "gulp locale:wcag && gulp build:wcag"
   },
   "dependencies": {
-    "@endal/dom": "^0.0.0",
-    "@endal/rule": "^0.0.0"
+    "@alfa/dom": "^0.0.0",
+    "@alfa/rule": "^0.0.0"
   }
 }

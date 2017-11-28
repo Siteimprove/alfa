@@ -1,4 +1,4 @@
-import { Rule, Target, Requirement, Outcome, Locale } from '@endal/rule'
+import { Rule, Target, Requirement, Outcome, Locale } from '@alfa/rule'
 
 export function markdown (rule: Rule<Target, Requirement>, lang: Locale['id']): string | null {
   const locale = rule.locales.find(locale => locale.id === lang)

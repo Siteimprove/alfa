@@ -1,10 +1,10 @@
 {
-  "name": "@endal/img",
+  "name": "@alfa/img",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/img",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/img",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],

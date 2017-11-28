@@ -1,5 +1,5 @@
-import { Node } from '@endal/dom'
-import { Style, State } from '@endal/css'
+import { Node } from '@alfa/dom'
+import { Style, State } from '@alfa/css'
 
 export type Outcome = 'passed' | 'failed' | 'inapplicable'
 

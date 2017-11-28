@@ -1,10 +1,10 @@
 import { launch } from 'puppeteer'
 import browserify from 'browserify'
-import { Node } from '@endal/dom'
-import { Context } from '@endal/rule'
-import * as Pickle from '@endal/pickle'
+import { Node } from '@alfa/dom'
+import { Context } from '@alfa/rule'
+import * as Pickle from '@alfa/pickle'
 
-const PICKLE = require.resolve('@endal/pickle')
+const PICKLE = require.resolve('@alfa/pickle')
 
 const { parentize } = Pickle
 
@@ -37,7 +37,7 @@ export class Scraper {
   })
 
   private readonly _pickle = bundle(PICKLE, {
-    standalone: 'Endal.Pickle'
+    standalone: 'alfa.Pickle'
   })
 
   async scrape (url: string, options: Partial<ScrapeOptions> = {}): Promise<Context> {
@@ -52,15 +52,15 @@ export class Scraper {
 
     await page.evaluate(pickle)
 
-    const Endal = { Pickle }
+    const alfa = { Pickle }
 
     const virtual = await page.evaluate(() => {
-      const dom = Endal.Pickle.virtualize(document, { parents: false })
+      const dom = alfa.Pickle.virtualize(document, { parents: false })
 
-      const layout = Endal.Pickle.layout(dom).values()
-      const style = Endal.Pickle.style(dom).values()
+      const layout = alfa.Pickle.layout(dom).values()
+      const style = alfa.Pickle.style(dom).values()
 
-      Endal.Pickle.dereference(dom)
+      alfa.Pickle.dereference(dom)
 
       return { dom, style: [...style], layout: [...layout] }
     })

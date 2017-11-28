@@ -1,5 +1,5 @@
-import { rule } from '@endal/rule'
-import { Element, Attribute, attribute, isElement, collect } from '@endal/dom'
+import { rule } from '@alfa/rule'
+import { Element, Attribute, attribute, isElement, collect } from '@alfa/dom'
 
 import EN from './locale/en'
 

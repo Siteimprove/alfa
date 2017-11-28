@@ -1,10 +1,10 @@
 {
-  "name": "@endal/dom",
+  "name": "@alfa/dom",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/dom",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/dom",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],

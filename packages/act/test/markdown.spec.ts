@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { UNIQUE_IDS } from '@endal/wcag'
+import { UNIQUE_IDS } from '@alfa/wcag'
 
 import { markdown } from '../src/markdown'
 

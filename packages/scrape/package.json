@@ -1,10 +1,10 @@
 {
-  "name": "@endal/scrape",
+  "name": "@alfa/scrape",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/scrape",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/scrape",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
@@ -14,9 +14,9 @@
     "prepare": "gulp build:scrape"
   },
   "dependencies": {
-    "@endal/dom": "^0.0.0",
-    "@endal/pickle": "^0.0.0",
-    "@endal/rule": "^0.0.0",
+    "@alfa/dom": "^0.0.0",
+    "@alfa/pickle": "^0.0.0",
+    "@alfa/rule": "^0.0.0",
     "@types/browserify": "^12.0.33",
     "@types/node": "^8.0.53",
     "@types/puppeteer": "^0.13.2",

@@ -1,4 +1,4 @@
-import * as V from '@endal/dom'
+import * as V from '@alfa/dom'
 
 export type WithReference<T extends V.Node> = { [P in keyof T]: T[P] } & { ref: Node }
 

@@ -1,10 +1,10 @@
 {
-  "name": "@endal/lang",
+  "name": "@alfa/lang",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/lang",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/lang",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],

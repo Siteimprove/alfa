@@ -1,4 +1,4 @@
-import * as V from '@endal/dom'
+import * as V from '@alfa/dom'
 
 export function jsx (tag: string, attributes: { [name: string]: string | number | boolean } | null, ...children: Array<V.Element | string>): V.Element {
   const element: V.Element = {

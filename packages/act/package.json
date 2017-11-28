@@ -1,10 +1,10 @@
 {
-  "name": "@endal/act",
+  "name": "@alfa/act",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/act",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/act",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
@@ -15,7 +15,7 @@
     "prepare": "gulp build:act"
   },
   "dependencies": {
-    "@endal/rule": "^0.0.0",
-    "@endal/wcag": "^0.0.0"
+    "@alfa/rule": "^0.0.0",
+    "@alfa/wcag": "^0.0.0"
   }
 }

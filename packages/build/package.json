@@ -1,9 +1,9 @@
 {
-  "name": "@endal/build",
+  "name": "@alfa/build",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "src/index.js",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/build",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/build",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],

@@ -1,10 +1,10 @@
 {
-  "name": "@endal/rule",
+  "name": "@alfa/rule",
   "version": "0.0.0",
-  "description": "Endal!",
+  "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/endal/tree/master/packages/rule",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/rule",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
@@ -14,7 +14,7 @@
     "prepare": "gulp build:rule"
   },
   "dependencies": {
-    "@endal/css": "^0.0.0",
-    "@endal/dom": "^0.0.0"
+    "@alfa/css": "^0.0.0",
+    "@alfa/dom": "^0.0.0"
   }
 }

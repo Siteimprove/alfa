@@ -6,7 +6,7 @@ import {
   isAlpha,
   isAlphanumeric,
   isNonAscii
-} from '@endal/lang'
+} from '@alfa/lang'
 
 /**
  * @see https://www.w3.org/TR/css-syntax-3/#tokenization

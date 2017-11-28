@@ -1,5 +1,5 @@
-import { rule } from '@endal/rule'
-import { Node, traverse } from '@endal/dom'
+import { rule } from '@alfa/rule'
+import { Node, traverse } from '@alfa/dom'
 
 import EN from './locale/en'
 

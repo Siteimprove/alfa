@@ -7,13 +7,13 @@ const ava = require('gulp-ava')
 const sourcemaps = require('gulp-sourcemaps')
 const when = require('gulp-if')
 const glob = require('glob')
-const { locale } = require('@endal/build')
+const { locale } = require('@alfa/build')
 
 const plugins = {
   ava: {
     verbose: true,
     require: [
-      '@endal/jsx/register'
+      '@alfa/jsx/register'
     ]
   },
 
@@ -32,7 +32,7 @@ for (const package of packages) {
 
   gulp.task(`build:${package}`, () => gulp.src(`${src}/**/*.ts`)
     .pipe(newer({ dest, ext: '.js' }))
-    .pipe(babel({ presets: ['@endal/build/babel'] }))
+    .pipe(babel({ presets: ['@alfa/build/babel'] }))
     .pipe(gulp.dest(dest))
     .pipe(size({ ...plugins.size, title: package }))
   )
@@ -46,7 +46,7 @@ for (const package of packages) {
 
   gulp.task(`test:${package}`, () => gulp.src([`${src}/**/*.ts`, `${test}/**/*.ts{,x}`], { base })
     .pipe(sourcemaps.init())
-    .pipe(babel(({ presets: ['@endal/build/babel'] })))
+    .pipe(babel(({ presets: ['@alfa/build/babel'] })))
     .pipe(sourcemaps.write('.', {
       sourceRoot: path.join(__dirname, base, '/')
     }))

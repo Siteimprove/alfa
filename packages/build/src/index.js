@@ -14,8 +14,8 @@ function locale () {
       const string = stringify(json, { indent: '  ' })
 
       const contents = `
-// This file has been automatically generated from ${basename(file.path)} by @endal/build.
-import { Locale } from '@endal/rule'
+// This file has been automatically generated from ${basename(file.path)} by @alfa/build.
+import { Locale } from '@alfa/rule'
 
 const locale: Locale = ${string}
 
