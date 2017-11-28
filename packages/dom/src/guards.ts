@@ -1,4 +1,8 @@
-import { Node, Element, Text, ParentNode, ChildNode } from './types'
+import { Node, Document, Element, Text, Comment, ParentNode, ChildNode } from './types'
+
+export function isDocument (node: Node): node is Document {
+  return node.type === 'document'
+}
 
 export function isElement (node: Node): node is Element {
   return node.type === 'element'
@@ -6,6 +10,10 @@ export function isElement (node: Node): node is Element {
 
 export function isText (node: Node): node is Text {
   return node.type === 'text'
+}
+
+export function isComment (node: Node): node is Comment {
+  return node.type === 'comment'
 }
 
 export function isParent (node: Node): node is ParentNode {
