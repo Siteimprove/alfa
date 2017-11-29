@@ -3,7 +3,7 @@ import test from 'ava'
 import { check } from '@alfa/rule'
 import { Element } from '@alfa/dom'
 
-import { UNIQUE_IDS } from '../../src/unique-ids/rule'
+import { UNIQUE_IDS } from '../src/unique-ids/rule'
 
 test('passes when no duplicate ids exist within a context', async t => {
   const dom: Element = (

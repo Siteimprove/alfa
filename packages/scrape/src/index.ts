@@ -37,7 +37,7 @@ export class Scraper {
   })
 
   private readonly _pickle = bundle(PICKLE, {
-    standalone: 'alfa.Pickle'
+    standalone: 'Alfa.Pickle'
   })
 
   async scrape (url: string, options: Partial<ScrapeOptions> = {}): Promise<Context> {
@@ -52,15 +52,15 @@ export class Scraper {
 
     await page.evaluate(pickle)
 
-    const alfa = { Pickle }
+    const Alfa = { Pickle }
 
     const virtual = await page.evaluate(() => {
-      const dom = alfa.Pickle.virtualize(document, { parents: false })
+      const dom = Alfa.Pickle.virtualize(document, { parents: false })
 
-      const layout = alfa.Pickle.layout(dom).values()
-      const style = alfa.Pickle.style(dom).values()
+      const layout = Alfa.Pickle.layout(dom).values()
+      const style = Alfa.Pickle.style(dom).values()
 
-      alfa.Pickle.dereference(dom)
+      Alfa.Pickle.dereference(dom)
 
       return { dom, style: [...style], layout: [...layout] }
     })
