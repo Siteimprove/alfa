@@ -4,23 +4,22 @@ import { check } from '@alfa/rule'
 import { Element } from '@alfa/dom'
 
 import { UNIQUE_IDS } from '../src/unique-ids/rule'
+import { outcome } from './helpers/outcome'
 
-test('passes when no duplicate ids exist within a context', async t => {
-  const dom: Element = (
-    <div id='foo'>
-      <span id='bar'></span>
-    </div>
-  )
+test('Passes when no duplicate IDs exist within a document', async t => {
+  const bar: Element = <span id='bar'></span>
+  const foo: Element = <span id='foo'>{bar}</span>
 
   const results = await check(UNIQUE_IDS, { document: foo })
+
+  outcome(t, results, { passed: [foo, bar] })
 })
 
-test('fails when elements with duplicate ids exist within a context', async t => {
-  const dom: Element = (
-    <div id='foo'>
-      <span id='foo'></span>
-    </div>
-  )
+test('Fails when elements with duplicate IDs exist within a document', async t => {
+  const bar: Element = <span id='foo'></span>
+  const foo: Element = <span id='foo'>{bar}</span>
 
   const results = await check(UNIQUE_IDS, { document: foo })
+
+  outcome(t, results, { failed: [foo, bar] })
 })
