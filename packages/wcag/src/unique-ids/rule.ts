@@ -6,7 +6,7 @@ import EN from './locale/en'
 type Ids = Map<Attribute, Set<Element>>
 
 export const UNIQUE_IDS = rule({
-  id: 'wcag:unique-ids',
+  id: 'alfa:wcag:unique-ids',
   criteria: [
     'wcag:4.1.1'
   ],

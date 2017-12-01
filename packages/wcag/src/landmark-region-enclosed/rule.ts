@@ -6,7 +6,7 @@ import EN from './locale/en'
 declare function landmarks (context: Node): Array<Element>
 
 export const LANDMARK_REGION_ENCLOSED = rule({
-  id: 'wcag:landmark-region-enclosed',
+  id: 'alfa:wcag:landmark-region-enclosed',
   criteria: [
     'wcag:1.3.1'
   ],
