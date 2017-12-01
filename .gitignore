@@ -7,4 +7,3 @@ coverage
 **/locale/*.ts
 
 .nyc_output
-.nycrc

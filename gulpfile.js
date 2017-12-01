@@ -6,12 +6,14 @@ const babel = require('gulp-babel')
 const ava = require('gulp-ava')
 const sourcemaps = require('gulp-sourcemaps')
 const ignore = require('gulp-ignore')
+const sequence = require('gulp-sequence')
 const del = require('del')
 const glob = require('glob')
 const { locale } = require('@alfa/build')
 
 const plugins = {
   ava: {
+    nyc: true,
     verbose: true,
     require: [
       '@alfa/jsx/register'
@@ -66,7 +68,6 @@ for (const package of packages) {
   })
 }
 
-gulp.task('build', packages.map(package => `build:${package}`))
-gulp.task('watch', packages.map(package => `watch:${package}`))
-gulp.task('test', packages.map(package => `test:${package}`))
-gulp.task('clean', packages.map(package => `clean:${package}`))
+for (const task of ['build', 'watch', 'test', 'clean']) {
+  gulp.task(task, sequence(...packages.map(package => `${task}:${package}`)))
+}
