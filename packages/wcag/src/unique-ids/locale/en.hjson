@@ -18,7 +18,7 @@
 
         2. If the map does not contain an entry for the ID of the element, set the entry for the ID of the element to a set containing that element.
 
-        If the resulting map contains no entries, i.e. no elements with IDs exist within the context, mark the context as inapplicable.
+        If the resulting map contains no entries, i.e. no elements with IDs exist within the context, mark the context as inapplicable. Otherwise, continue to the next test.
         '''
       outcome: {
         inapplicable: The context contains no elements with IDs
