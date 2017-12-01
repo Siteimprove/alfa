@@ -4,8 +4,13 @@
 
 ## Contents
 
-- [Funding](#funding)
-- [License](#license)
+-   [Goals](#goals)
+-   [Funding](#funding)
+-   [License](#license)
+
+## Goals
+
+-   Alfa sets out to strike a balance between false positives and negatives with the goal of having result sets reach a high [F<sub>1</sub> score](https://en.wikipedia.org/wiki/F1_score). If a false negative is encountered, it is therefore just as important to avoid introducing a potential false positive as it is fixing the false negative.
 
 ## Funding
 
