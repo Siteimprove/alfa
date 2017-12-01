@@ -14,7 +14,7 @@ export function attribute (
   } = {
     trim: false
   }
-) {
+): string | number | boolean | null {
   const { attributes } = element
 
   if (!(name in attributes)) {
