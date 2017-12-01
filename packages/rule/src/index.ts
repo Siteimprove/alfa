@@ -10,10 +10,10 @@ export interface Context {
 
 export type Target = Node
 
-export interface Result<R extends Requirement> {
+export interface Result<T extends Target, R extends Requirement> {
   readonly test: string
   readonly context: Pick<Context, R>
-  readonly target: Target
+  readonly target: T
   readonly outcome: Outcome
 }
 
@@ -54,16 +54,16 @@ export function rule<T extends Target, R extends Requirement> (definition: Rule<
   return definition
 }
 
-export async function check<T extends Target, R extends Requirement> (rule: Rule<T, R>, context: Pick<Context, R>): Promise<Array<Result<R>>> {
-  const results: Array<Result<R>> = []
+export async function check<T extends Target, R extends Requirement> (rule: Rule<T, R>, context: Pick<Context, R>): Promise<Array<Result<T, R>>> {
+  const results: Array<Result<T, R>> = []
 
-  const result = (target: Target, outcome: Outcome) => {
+  const result = (target: T, outcome: Outcome) => {
     results.push({ test: rule.id, target, context, outcome })
   }
 
   const tests = [...rule.tests]
 
-  const run = async (test: Test<T, R> | undefined, index: number, data?: any): Promise<Array<Result<R>>> => {
+  const run = async (test: Test<T, R> | undefined, index: number, data?: any): Promise<Array<Result<T, R>>> => {
     if (test === undefined) {
       return results
     }
