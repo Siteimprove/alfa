@@ -5,7 +5,8 @@ const newer = require('gulp-newer')
 const babel = require('gulp-babel')
 const ava = require('gulp-ava')
 const sourcemaps = require('gulp-sourcemaps')
-const when = require('gulp-if')
+const ignore = require('gulp-ignore')
+const del = require('del')
 const glob = require('glob')
 const { locale } = require('@alfa/build')
 
@@ -29,6 +30,7 @@ for (const package of packages) {
   const src = `${base}/src`
   const dest = `${base}/dist`
   const test = `${base}/test`
+  const tmp = `${base}/.tmp`
 
   gulp.task(`build:${package}`, () => gulp.src(`${src}/**/*.ts`)
     .pipe(newer({ dest, ext: '.js' }))
@@ -50,12 +52,16 @@ for (const package of packages) {
     .pipe(sourcemaps.write('.', {
       sourceRoot: path.join(__dirname, base, '/')
     }))
-    .pipe(gulp.dest(`${base}/.tmp`))
-    .pipe(when('*.spec.js', ava(plugins.ava)))
+    .pipe(gulp.dest(tmp))
+    .pipe(ignore.include('*.spec.js'))
+    .pipe(ava(plugins.ava))
   )
+
+  gulp.task(`clean:${package}`, () => del([dest, tmp]))
 
   gulp.task(`watch:${package}`, [`build:${package}`], () => {
     gulp.watch(`${src}/**/*.ts`, [`build:${package}`])
+    gulp.watch(`${base}/**/*.ts{,x}`, [`test:${package}`])
     gulp.watch(`${src}/**/*.hjson`, [`locale:${package}`])
   })
 }
@@ -63,3 +69,4 @@ for (const package of packages) {
 gulp.task('build', packages.map(package => `build:${package}`))
 gulp.task('watch', packages.map(package => `watch:${package}`))
 gulp.task('test', packages.map(package => `test:${package}`))
+gulp.task('clean', packages.map(package => `clean:${package}`))
