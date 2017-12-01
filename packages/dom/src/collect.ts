@@ -4,6 +4,8 @@ import { isParent } from './guards'
 type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U)
 
 export class Collector<T extends Node> implements Iterable<T> {
+  readonly [Symbol.iterator]: () => Iterator<T>
+
   /**
    * The context on which the collector operates. This is used as the root node
    * during iteration.
@@ -19,6 +21,7 @@ export class Collector<T extends Node> implements Iterable<T> {
   constructor (context: Node, predicate: Predicate<Node, T> = () => true) {
     this.context = context
     this.predicate = predicate
+    this[Symbol.iterator] = this.values
   }
 
   public where<U extends T> (predicate: Predicate<T, U>): Collector<U> {
@@ -43,7 +46,7 @@ export class Collector<T extends Node> implements Iterable<T> {
     return last
   }
 
-  * [Symbol.iterator] (): Iterator<T> {
+  * values (): Iterator<T> {
     const queue: Array<Node> = []
 
     for (
