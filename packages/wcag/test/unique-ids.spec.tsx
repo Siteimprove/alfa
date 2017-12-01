@@ -23,3 +23,11 @@ test('Fails when elements with duplicate IDs exist within a document', async t =
 
   outcome(t, results, { failed: [foo, bar] })
 })
+
+test('Marks the document as inapplicable when no elements with IDs exist', async t => {
+  const foo: Element = <span>Foo <span>bar</span></span>
+
+  const results = await check(UNIQUE_IDS, { document: foo })
+
+  outcome(t, results, { inapplicable: [foo] })
+})
