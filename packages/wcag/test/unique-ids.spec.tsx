@@ -12,7 +12,7 @@ test('passes when no duplicate ids exist within a context', async t => {
     </div>
   )
 
-  const result = await check(UNIQUE_IDS, { dom })
+  const results = await check(UNIQUE_IDS, { document: foo })
 })
 
 test('fails when elements with duplicate ids exist within a context', async t => {
@@ -22,5 +22,5 @@ test('fails when elements with duplicate ids exist within a context', async t =>
     </div>
   )
 
-  const result = await check(UNIQUE_IDS, { dom })
+  const results = await check(UNIQUE_IDS, { document: foo })
 })

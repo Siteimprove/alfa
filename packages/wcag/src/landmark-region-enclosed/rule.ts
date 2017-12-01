@@ -14,19 +14,19 @@ export const LANDMARK_REGION_ENCLOSED = rule({
     EN
   ],
   requirements: [
-    'dom'
+    'document'
   ],
   tests: [
-    (test, { dom }) => {
-      if (landmarks(dom).length === 0) {
-        test.inapplicable(dom)
+    (test, { document }) => {
+      if (landmarks(document).length === 0) {
+        test.inapplicable(document)
       } else {
         test.next()
       }
     },
 
-    (test, { dom }) => {
-      traverse(dom, node => {
+    (test, { document }) => {
+      traverse(document, node => {
         //
       })
     }

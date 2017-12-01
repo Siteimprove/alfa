@@ -4,7 +4,7 @@ import { Style, State } from '@alfa/css'
 export type Outcome = 'passed' | 'failed' | 'inapplicable'
 
 export interface Context {
-  readonly dom: Node,
+  readonly document: Node,
   readonly style: Map<Element, { [S in State]: Style }>
 }
 

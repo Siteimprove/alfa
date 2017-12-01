@@ -14,13 +14,13 @@ export const UNIQUE_IDS = rule({
     EN
   ],
   requirements: [
-    'dom'
+    'document'
   ],
   tests: [
-    (test, { dom }) => {
+    (test, { document }) => {
       const ids: Ids = new Map()
 
-      for (const element of collect(dom).where(isElement)) {
+      for (const element of collect(document).where(isElement)) {
         const id = attribute(element, 'id', { trim: true })
 
         if (id) {
@@ -35,7 +35,7 @@ export const UNIQUE_IDS = rule({
       }
 
       if (ids.size === 0) {
-        test.inapplicable(dom)
+        test.inapplicable(document)
       } else {
         test.next(ids)
       }
