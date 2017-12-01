@@ -10,6 +10,7 @@ export function markdown (rule: Rule<Target, Requirement>, lang: Locale['id']): 
   const lines: Array<string> = []
 
   lines.push(`# ${locale.title}\n`)
+  lines.push(`> ${rule.id}\n`)
   lines.push(`${locale.description}\n`)
 
   lines.push('## Tests\n')
