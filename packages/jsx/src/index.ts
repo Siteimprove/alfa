@@ -20,7 +20,13 @@ export function jsx (tag: string, attributes: { [name: string]: string | number 
         parent: element
       }
     } else {
-      child = { ...node, parent: element }
+      const parent = { parent: element }
+
+      if (node.parent) {
+        child = Object.assign({}, node, parent)
+      } else {
+        child = Object.assign(node, parent)
+      }
     }
 
     element.children.push(child)
