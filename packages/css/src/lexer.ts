@@ -1,10 +1,10 @@
 import {
-  Lexer,
   Pattern,
   lex,
   isWhitespace,
   isAlpha,
   isAlphanumeric,
+  isNumeric,
   isNonAscii
 } from '@alfa/lang'
 
@@ -13,17 +13,43 @@ import {
  */
 export type CssToken =
     { type: 'whitespace' }
+
+  // Value tokens
   | { type: 'comment', value: string }
   | { type: 'ident', value: string }
-  | { type: 'hash', value: string }
   | { type: 'string', value: string }
+  | { type: 'delim', value: string }
   | { type: 'number', value: number }
+
+  // Character tokens
+  | { type: '(' } | { type: ')' }
+  | { type: '[' } | { type: ']' }
+  | { type: '{' } | { type: '}' }
+  | { type: ',' }
+  | { type: ':' }
+  | { type: ';' }
 
 export type CssPattern = Pattern<CssToken>
 
 const whitespace: CssPattern = stream => {
   if (stream.accept(isWhitespace)) {
     return { type: 'whitespace' }
+  }
+}
+
+const character: CssPattern = stream => {
+  const char = stream.next()
+
+  switch (char) {
+    case '(': return { type: char }
+    case ')': return { type: char }
+    case '[': return { type: char }
+    case ']': return { type: char }
+    case '{': return { type: char }
+    case '}': return { type: char }
+    case ',': return { type: char }
+    case ':': return { type: char }
+    case ';': return { type: char }
   }
 }
 
@@ -35,7 +61,6 @@ const comment: CssPattern = stream => {
       const value = stream.value()
 
       stream.advance(2)
-      stream.ignore()
 
       return { type: 'comment', value }
     }
@@ -47,18 +72,8 @@ const ident: CssPattern = stream => {
     stream.advance()
   }
 
-  if (
-    stream.accept(char =>
-      isAlpha(char) ||
-      isNonAscii(char) ||
-      char === '_'
-    )
-  ) {
-    stream.accept(char =>
-      isAlphanumeric(char) ||
-      isNonAscii(char) ||
-      char === '_'
-    )
+  if (stream.accept(char => isAlpha(char) || isNonAscii(char) || char === '_')) {
+    stream.accept(char => isAlphanumeric(char) || isNonAscii(char) || char === '_' || char === '-')
 
     if (stream.progressed()) {
       return {
@@ -69,18 +84,65 @@ const ident: CssPattern = stream => {
   }
 }
 
-export class CssLexer implements Lexer<CssToken> {
-  private readonly input: string
+const string: CssPattern = stream => {
+  const end = stream.next()
 
-  constructor (input: string) {
-    this.input = input
-  }
+  if (end === '"' || end === '\'') {
+    stream.ignore()
 
-  [Symbol.iterator] (): Iterator<CssToken> {
-    return lex(this.input, [
-      whitespace,
-      comment,
-      ident
-    ])
+    if (stream.accept(char => char !== '"' && char !== '\'')) {
+      const value = stream.value()
+
+      stream.advance()
+
+      return { type: 'string', value }
+    }
   }
 }
+
+const number: CssPattern = stream => {
+  if (stream.peek() === '+' || stream.peek() === '-') {
+    stream.advance()
+  }
+
+  stream.accept(isNumeric)
+
+  if (stream.peek() === '.' && isNumeric(stream.peek(1))) {
+    stream.advance()
+    stream.accept(isNumeric)
+  }
+
+  if (stream.peek() === 'E' || stream.peek() === 'e') {
+    let offset = 1
+
+    if (stream.peek(1) === '-' || stream.peek(1) === '+') {
+      offset = 2
+    }
+
+    if (isNumeric(stream.peek(offset))) {
+      stream.advance(offset)
+      stream.accept(isNumeric)
+    }
+  }
+
+  if (stream.progressed()) {
+    return {
+      type: 'number',
+      value: Number(stream.value())
+    }
+  }
+}
+
+const delim: CssPattern = stream => {
+  return { type: 'delim', value: stream.next() }
+}
+
+export const CssPatterns = [
+  whitespace,
+  character,
+  comment,
+  ident,
+  string,
+  number,
+  delim
+]
