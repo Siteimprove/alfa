@@ -7,7 +7,6 @@ export class Stream {
 
   private _position: number = 0
   private _start: number = 0
-
   private _line: number = 0
   private _column: number = 0
 
@@ -66,8 +65,10 @@ export class Stream {
     this._start = this._position
   }
 
-  public restore (position: number) {
+  public restore (position: number, line: number, column: number) {
     this._position = position
+    this._line = line
+    this._column = column
     this._start = this._position
   }
 
@@ -112,15 +113,15 @@ export class Stream {
 
 export type Pattern<T> = (stream: Stream) => T | void
 
-export interface Lexer<T extends Token> extends Iterable<T> {}
-
-export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T>>): Iterator<T> {
+export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T>>): IterableIterator<T> {
   const stream = new Stream(input)
 
   outer: while (stream.position < input.length) {
     for (let i = 0; i < patterns.length; i++) {
       const pattern = patterns[i]
-      const start = stream.position
+      const position = stream.position
+      const line = stream.line
+      const column = stream.column
       const token = pattern(stream)
 
       if (token) {
@@ -130,8 +131,8 @@ export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T
         continue outer
       }
 
-      if (start !== stream.position) {
-        stream.restore(start)
+      if (position !== stream.position) {
+        stream.restore(position, line, column)
       }
     }
 
