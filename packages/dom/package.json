@@ -12,5 +12,9 @@
   "private": true,
   "scripts": {
     "prepare": "gulp build:dom"
+  },
+  "dependencies": {
+    "@types/jssha": "^0.0.29",
+    "jssha": "^2.3.1"
   }
 }
