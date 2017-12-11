@@ -3,14 +3,20 @@ import SHA from 'jssha'
 import { Node } from './types'
 import { isElement, isText, isParent, isComment, isDocumentType } from './guards'
 
-const { keys } = Object
+const { keys, assign } = Object
+
+export type WithDigest<T extends Node> = T & { readonly digest: string }
+
+export function hasDigest<T extends Node> (node: T): node is WithDigest<T> {
+  return 'digest' in node
+}
 
 /**
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export function digest (node: Node): string | null {
-  if (isComment(node) || isDocumentType(node)) {
-    return null
+export function digest<T extends Node> (node: T): WithDigest<T> | Node {
+  if (hasDigest(node) || isComment(node) || isDocumentType(node)) {
+    return node
   }
 
   const sha = new SHA('SHA-256', 'TEXT')
@@ -34,13 +40,13 @@ export function digest (node: Node): string | null {
 
   if (isParent(node)) {
     for (const child of node.children) {
-      const hash = digest(child)
+      digest(child)
 
-      if (hash) {
-        sha.update(hash)
+      if (hasDigest(child)) {
+        sha.update(child.digest)
       }
     }
   }
 
-  return sha.getHash('B64')
+  return assign(node, { digest: sha.getHash('B64') })
 }
