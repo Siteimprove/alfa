@@ -11,6 +11,10 @@ export interface Location {
 
 export type WithLocation<T extends Token> = T & Location
 
+export function hasLocation<T extends Token> (token: T): token is WithLocation<T> {
+  return 'line' in token && 'column' in token
+}
+
 export class Stream {
   private readonly _input: string
 

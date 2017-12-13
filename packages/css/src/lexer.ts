@@ -9,7 +9,7 @@ import {
 } from '@alfa/lang'
 
 /**
- * @see https://www.w3.org/TR/css-syntax-3/#tokenization
+ * @see https://www.w3.org/TR/css-syntax/#tokenization
  */
 export type CssToken =
     { type: 'whitespace' }
