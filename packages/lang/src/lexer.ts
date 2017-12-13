@@ -1,6 +1,15 @@
+const { assign } = Object
+
 export interface Token {
   readonly type: string
 }
+
+export interface Location {
+  readonly line: number
+  readonly column: number
+}
+
+export type WithLocation<T extends Token> = T & Location
 
 export class Stream {
   private readonly _input: string
@@ -113,7 +122,7 @@ export class Stream {
 
 export type Pattern<T> = (stream: Stream) => T | void
 
-export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T>>): IterableIterator<T> {
+export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T>>): IterableIterator<WithLocation<T>> {
   const stream = new Stream(input)
 
   outer: while (stream.position < input.length) {
@@ -127,7 +136,8 @@ export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T
       if (token) {
         stream.ignore()
 
-        yield token
+        yield assign(token, { line, column })
+
         continue outer
       }
 
