@@ -11,7 +11,7 @@ export interface Context {
 export type Target = Node
 
 export interface Result<T extends Target, R extends Requirement> {
-  readonly test: string
+  readonly rule: string
   readonly context: Pick<Context, R>
   readonly target: T
   readonly outcome: Outcome
@@ -58,7 +58,7 @@ export async function check<T extends Target, R extends Requirement> (rule: Rule
   const results: Array<Result<T, R>> = []
 
   const result = (target: T, outcome: Outcome) => {
-    results.push({ test: rule.id, target, context, outcome })
+    results.push({ rule: rule.id, target, context, outcome })
   }
 
   const tests = [...rule.tests]
@@ -83,7 +83,7 @@ export async function check<T extends Target, R extends Requirement> (rule: Rule
         result(target, 'inapplicable')
       },
 
-      next (data) {
+      next (data?: any) {
         next = data === undefined ? true : data
       }
     }

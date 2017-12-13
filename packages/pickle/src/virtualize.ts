@@ -1,10 +1,15 @@
 import * as V from '@alfa/dom'
 import { Style, State, properties, clean, deduplicate } from '@alfa/css'
 import { Layout } from '@alfa/layout'
-import { WithReference, hasReference } from './reference'
 
 const { assign, keys } = Object
 const { isParent, isElement, traverse } = V
+
+export type WithReference<T extends V.Node> = T & { ref: Node }
+
+export function hasReference<T extends V.Node> (node: T): node is WithReference<T> {
+  return 'ref' in node
+}
 
 export interface VirtualizeOptions {
   parents?: boolean
