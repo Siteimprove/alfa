@@ -20,4 +20,4 @@ Alfa has been funded by the European Commission as part of the [Horizon 2020 Pro
 
 ## License
 
-Copyright &copy; 2017 [Siteimprove A/S](https://siteimprove.com/). Licensed under the terms of the [MIT license](LICENSE.md).
+Copyright &copy; 2017 [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
