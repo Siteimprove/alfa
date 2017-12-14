@@ -1,30 +1,22 @@
 import { Token, WithLocation } from './lexer'
 
-export interface Denotation<T extends Token, R> {
-  readonly advance: (accept?: T['type']) => T | null
-  readonly expression: (precedence?: number) => R
+export type Context<T extends Token, U extends T, R> = {
+  readonly advance: () => T | null
+  readonly expression: (precedence?: number) => R | null
 }
 
-export interface Production<T extends Token, R> {
-  readonly precedence: number
-
-  readonly nud: Denotation<T, R>
+export interface Production<T extends Token, U extends T, R> {
+  readonly token: U['type']
+  readonly null?: (token: U, context: Context<T, U, R>) => R | null
+  readonly left?: (token: U, context: Context<T, U, R>, left: R | null) => R | null
 }
 
-export type Grammar<T extends Token, R> = { [P in T['type']]: Production<T, R> }
+export type Grammar<T extends Token, R> = Array<Production<T, T, R>>
 
-export function parse<T extends Token, R> (tokens: IterableIterator<T>, grammar: Grammar<T, R>): R {
-  let token: T | null = tokens.next().value
+export function parse<T extends Token, R> (tokens: Iterator<T>, grammar: Grammar<T, R>): R | null {
+  let token: T | null = null
 
-  function advance (accept?: T['type']): T | null {
-    if (token === null) {
-      return null
-    }
-
-    if (accept && accept !== token.type) {
-      throw new Error(`Got ${token.type}, expected ${accept}`)
-    }
-
+  function advance<U extends T> (): T | null {
     const next = tokens.next()
 
     if (next.done) {
@@ -36,13 +28,43 @@ export function parse<T extends Token, R> (tokens: IterableIterator<T>, grammar:
     return token
   }
 
-  function expression (precedence = 0): R {
-    const next = token
+  function expression (): R | null {
+    token = advance()
 
-    advance()
+    if (token === null) {
+      return null
+    }
 
-    const production = grammar[next.type]
+    const { type } = token
 
-    let left = production.nud({ advance, expression })
+    let production = grammar.find(({ token: found }) => found === type)
+
+    if (production === undefined || production.null === undefined) {
+      throw new Error()
+    }
+
+    let left = production.null(token, { advance, expression })
+
+    do {
+      token = advance()
+
+      if (token === null) {
+        break
+      }
+
+      const { type } = token
+
+      let production = grammar.find(({ token: found }) => found === type)
+
+      if (production === undefined || production.left === undefined) {
+        throw new Error()
+      }
+
+      left = production.left(token, { advance, expression }, left)
+    } while (token)
+
+    return left
   }
+
+  return expression()
 }
