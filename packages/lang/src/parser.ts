@@ -1,70 +1,86 @@
+import { Bound } from '@alfa/util'
 import { Token, WithLocation } from './lexer'
 
-export type Context<T extends Token, U extends T, R> = {
-  readonly advance: () => T | null
-  readonly expression: (precedence?: number) => R | null
+class Stream<T extends Token> extends Bound {
+  private readonly _input: Array<T>
+
+  private _position: number = 0
+
+  public get position () {
+    return this._position
+  }
+
+  public constructor (input: Array<T>) {
+    super()
+    this._input = input
+  }
+
+  public peek (): T {
+    return this._input[this._position]
+  }
+
+  public advance (): boolean {
+    let advanced = false
+
+    if (this._position < this._input.length) {
+      advanced = true
+      this._position++
+    }
+
+    return advanced
+  }
 }
 
 export interface Production<T extends Token, U extends T, R> {
   readonly token: U['type']
-  readonly null?: (token: U, context: Context<T, U, R>) => R | null
-  readonly left?: (token: U, context: Context<T, U, R>, left: R | null) => R | null
+  readonly null?: (token: U, stream: Stream<T>, expression: () => R | null) => R | null
+  readonly left?: (token: U, stream: Stream<T>, expression: () => R | null, left: R | null) => R | null
 }
 
 export type Grammar<T extends Token, R> = Array<Production<T, T, R>>
 
-export function parse<T extends Token, R> (tokens: Iterator<T>, grammar: Grammar<T, R>): R | null {
-  let token: T | null = null
+export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R | null {
+  const productions: Map<T['type'], Production<T, T, R> & { precedence: number }> = new Map()
+  const stream = new Stream(input)
 
-  function advance<U extends T> (): T | null {
-    const next = tokens.next()
+  for (let i = 0; i < grammar.length; i++) {
+    const production = grammar[i]
+    const precedence = grammar.length - i
 
-    if (next.done) {
-      token = null
-    } else {
-      token = next.value
-    }
-
-    return token
+    productions.set(production.token, { ...production, precedence })
   }
 
-  function expression (): R | null {
-    token = advance()
-
-    if (token === null) {
-      return null
-    }
-
-    const { type } = token
-
-    let production = grammar.find(({ token: found }) => found === type)
+  function expression (precedence: number): R | null {
+    let token = stream.peek()
+    let production = productions.get(token.type)
 
     if (production === undefined || production.null === undefined) {
       throw new Error()
     }
 
-    let left = production.null(token, { advance, expression })
+    stream.advance()
 
-    do {
-      token = advance()
+    let left = production.null(token, stream, expression.bind(null, production.precedence))
 
-      if (token === null) {
-        break
-      }
-
-      const { type } = token
-
-      let production = grammar.find(({ token: found }) => found === type)
+    while (stream.peek()) {
+      token = stream.peek()
+      production = productions.get(token.type)
 
       if (production === undefined || production.left === undefined) {
         throw new Error()
       }
 
-      left = production.left(token, { advance, expression }, left)
-    } while (token)
+      if (precedence > production.precedence) {
+        break
+      }
+
+      stream.advance()
+
+      left = production.left(token, stream, expression.bind(null, production.precedence), left)
+    }
 
     return left
   }
 
-  return expression()
+  return expression(-1)
 }
