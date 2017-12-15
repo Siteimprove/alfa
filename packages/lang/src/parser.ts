@@ -102,13 +102,13 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
         throw new Error(`Unexpected token '${token}'`)
       }
 
-      if (precedence >= production.precedence) {
+      if (precedence > production.precedence || (precedence === production.precedence && production.associate !== 'right')) {
         break
       }
 
       stream.advance()
 
-      left = production.left(token, stream, expression.bind(null, production.precedence - (production.associate === 'right' ? 1 : 0)), left)
+      left = production.left(token, stream, expression.bind(null, production.precedence), left)
 
       if (left === undefined) {
         throw new Error(`Unexpected token '${token}'`)
