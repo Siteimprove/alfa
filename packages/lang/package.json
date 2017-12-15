@@ -12,5 +12,8 @@
   "private": true,
   "scripts": {
     "prepare": "gulp build:lang"
+  },
+  "dependencies": {
+    "@alfa/util": "0.0.0"
   }
 }
