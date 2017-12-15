@@ -1,5 +1,6 @@
 import {
   Pattern,
+  Alphabet,
   lex,
   isWhitespace,
   isAlpha,
@@ -137,7 +138,7 @@ const delim: CssPattern = stream => {
   return { type: 'delim', value: stream.next() }
 }
 
-export const CssPatterns = [
+export const CssAlphabet: Alphabet<CssToken> = [
   whitespace,
   character,
   comment,

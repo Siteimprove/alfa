@@ -127,15 +127,17 @@ class Stream extends Bound {
   }
 }
 
-export type Pattern<T> = (stream: Stream) => T | void
+export type Pattern<T extends Token> = (stream: Stream) => T | void
 
-export function lex<T extends Token> (input: string, patterns: Array<Pattern<T>>): Array<WithLocation<T>> {
+export type Alphabet<T extends Token> = Array<Pattern<T>>
+
+export function lex<T extends Token> (input: string, alphabet: Alphabet<T>): Array<WithLocation<T>> {
   const tokens: Array<WithLocation<T>> = []
   const stream = new Stream(input)
 
   outer: while (stream.position < input.length) {
-    for (let i = 0; i < patterns.length; i++) {
-      const pattern = patterns[i]
+    for (let i = 0; i < alphabet.length; i++) {
+      const pattern = alphabet[i]
       const position = stream.position
       const line = stream.line
       const column = stream.column

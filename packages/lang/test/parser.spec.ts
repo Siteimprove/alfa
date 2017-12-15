@@ -75,7 +75,7 @@ const subtraction: ExpressionProduction<{ type: '-' }> = {
   }
 }
 
-const exponentiation: ExpressionProduction<{ token: '^' }> = {
+const exponentiation: ExpressionProduction<{ type: '^' }> = {
   token: '^',
   associate: 'right',
 
