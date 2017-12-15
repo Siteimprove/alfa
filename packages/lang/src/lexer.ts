@@ -1,3 +1,5 @@
+import { Bound } from '@alfa/util'
+
 const { assign } = Object
 
 export interface Token {
@@ -15,7 +17,7 @@ export function hasLocation<T extends Token> (token: T): token is WithLocation<T
   return 'line' in token && 'column' in token
 }
 
-export class Stream {
+class Stream extends Bound {
   private readonly _input: string
 
   private _position: number = 0
@@ -23,23 +25,24 @@ export class Stream {
   private _line: number = 0
   private _column: number = 0
 
-  constructor (input: string) {
+  public constructor (input: string) {
+    super()
     this._input = input
   }
 
-  get input () {
+  public get input () {
     return this._input
   }
 
-  get position () {
+  public get position () {
     return this._position
   }
 
-  get line () {
+  public get line () {
     return this._line
   }
 
-  get column () {
+  public get column () {
     return this._column
   }
 
@@ -74,11 +77,11 @@ export class Stream {
     return next
   }
 
-  public ignore () {
+  public ignore (): void {
     this._start = this._position
   }
 
-  public restore (position: number, line: number, column: number) {
+  public restore (position: number, line: number, column: number): void {
     this._position = position
     this._line = line
     this._column = column
@@ -126,7 +129,8 @@ export class Stream {
 
 export type Pattern<T> = (stream: Stream) => T | void
 
-export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T>>): IterableIterator<WithLocation<T>> {
+export function lex<T extends Token> (input: string, patterns: Array<Pattern<T>>): Array<WithLocation<T>> {
+  const tokens: Array<WithLocation<T>> = []
   const stream = new Stream(input)
 
   outer: while (stream.position < input.length) {
@@ -140,7 +144,7 @@ export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T
       if (token) {
         stream.ignore()
 
-        yield assign(token, { line, column })
+        tokens.push(assign(token, { line, column }))
 
         continue outer
       }
@@ -150,8 +154,10 @@ export function * lex<T extends Token> (input: string, patterns: Array<Pattern<T
       }
     }
 
-    throw new Error(`Unexpected token "${stream.peek()}"`)
+    throw new Error(`Unexpected character "${stream.peek()}"`)
   }
+
+  return tokens
 }
 
 export function isBetween (char: string, lower: string, upper: string): boolean {
