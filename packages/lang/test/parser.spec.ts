@@ -15,6 +15,10 @@ type ExpressionToken =
 
 type ExpressionProduction<T extends ExpressionToken> = Production<ExpressionToken, T, Expression>
 
+function isNumber (token: ExpressionToken): token is ({ type: 'number', value: number }) {
+  return token.type === 'number' && 'value' in token
+}
+
 const constant: ExpressionProduction<{ type: 'number', value: number }> = {
   token: 'number',
 
@@ -42,14 +46,8 @@ const division: ExpressionProduction<{ type: '/' }> = {
 const addition: ExpressionProduction<{ type: '+' }> = {
   token: '+',
 
-  null (token, { peek }) {
-    const next = peek()
-
-    if (next) {
-      return { type: 'constant', value: next.value }
-    } else {
-      return null
-    }
+  null (token, { peek, accept }) {
+    return { type: 'constant', value: accept(isNumber).value }
   },
 
   left (token, stream, expression, left) {
@@ -60,14 +58,8 @@ const addition: ExpressionProduction<{ type: '+' }> = {
 const subtraction: ExpressionProduction<{ type: '-' }> = {
   token: '-',
 
-  null (token, { peek }) {
-    const next = peek()
-
-    if (next) {
-      return { type: 'constant', value: token.value * -1 }
-    } else {
-      return null
-    }
+  null (token, { peek, accept }) {
+    return { type: 'constant', value: accept(isNumber).value * -1 }
   },
 
   left (token, stream, expression, left) {

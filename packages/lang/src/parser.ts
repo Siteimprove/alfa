@@ -3,6 +3,8 @@ import { Token, WithLocation } from './lexer'
 
 const { isArray } = Array
 
+type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U)
+
 class Stream<T extends Token> extends Bound {
   private readonly _input: Array<T>
 
@@ -31,18 +33,29 @@ class Stream<T extends Token> extends Bound {
 
     return advanced
   }
+
+  public accept<U extends T> (predicate: Predicate<T, U>): U {
+    const token = this.peek()
+
+    if (predicate(token)) {
+      this.advance()
+      return token as U
+    }
+
+    throw new Error(`Unexpected token '${token.type}'`)
+  }
 }
 
 export interface Production<T extends Token, U extends T, R> {
   readonly token: U['type']
   readonly associate?: 'left' | 'right'
-  readonly null?: (token: U, stream: Stream<T>, expression: () => R | null) => R | null
-  readonly left?: (token: U, stream: Stream<T>, expression: () => R | null, left: R) => R | null
+  readonly null?: (token: U, stream: Stream<T>, expression: () => R) => R
+  readonly left?: (token: U, stream: Stream<T>, expression: () => R, left: R) => R
 }
 
 export type Grammar<T extends Token, R> = Array<Production<T, T, R> | Array<Production<T, T, R>>>
 
-export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R | null {
+export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R {
   const productions: Map<T['type'], Production<T, T, R> & { precedence: number }> = new Map()
   const stream = new Stream(input)
 
@@ -55,12 +68,12 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
     }
   }
 
-  function expression (precedence: number): R | null {
+  function expression (precedence: number): R {
     let token = stream.peek()
     let production = productions.get(token.type)
 
     if (production === undefined || production.null === undefined) {
-      throw new Error()
+      throw new Error(`Unexpected token '${token.type}'`)
     }
 
     stream.advance()
@@ -72,7 +85,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
       production = productions.get(token.type)
 
       if (production === undefined || production.left === undefined || left === null) {
-        throw new Error()
+        throw new Error(`Unexpected token '${token.type}'`)
       }
 
       if (precedence >= production.precedence) {
