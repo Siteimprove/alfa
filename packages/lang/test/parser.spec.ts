@@ -11,6 +11,7 @@ type ExpressionToken =
   | { type: '-' }
   | { type: '*' }
   | { type: '/' }
+  | { type: '^' }
 
 type ExpressionProduction<T extends ExpressionToken> = Production<ExpressionToken, T, Expression>
 
@@ -26,8 +27,7 @@ const multiplication: ExpressionProduction<{ type: '*' }> = {
   token: '*',
 
   left (token, stream, expression, left) {
-    const right = expression()
-    return { type: 'operator', value: '*', left, right }
+    return { type: 'operator', value: '*', left, right: expression() }
   }
 }
 
@@ -35,8 +35,7 @@ const division: ExpressionProduction<{ type: '/' }> = {
   token: '/',
 
   left (token, stream, expression, left) {
-    const right = expression()
-    return { type: 'operator', value: '/', left, right }
+    return { type: 'operator', value: '/', left, right: expression() }
   }
 }
 
@@ -54,8 +53,7 @@ const addition: ExpressionProduction<{ type: '+' }> = {
   },
 
   left (token, stream, expression, left) {
-    const right = expression()
-    return { type: 'operator', value: '+', left, right }
+    return { type: 'operator', value: '+', left, right: expression() }
   }
 }
 
@@ -77,8 +75,18 @@ const subtraction: ExpressionProduction<{ type: '-' }> = {
   }
 }
 
+const exponentiation: ExpressionProduction<{ token: '^' }> = {
+  token: '^',
+  associate: 'right',
+
+  left (token, stream, expression, left) {
+    return { type: 'operator', value: '^', left, right: expression() }
+  }
+}
+
 const ExpressionGrammar: Grammar<ExpressionToken, Expression> = [
   constant,
+  exponentiation,
   [multiplication, division],
   [addition, subtraction]
 ]

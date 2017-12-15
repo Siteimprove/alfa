@@ -35,8 +35,9 @@ class Stream<T extends Token> extends Bound {
 
 export interface Production<T extends Token, U extends T, R> {
   readonly token: U['type']
+  readonly associate?: 'left' | 'right'
   readonly null?: (token: U, stream: Stream<T>, expression: () => R | null) => R | null
-  readonly left?: (token: U, stream: Stream<T>, expression: () => R | null, left: R | null) => R | null
+  readonly left?: (token: U, stream: Stream<T>, expression: () => R | null, left: R) => R | null
 }
 
 export type Grammar<T extends Token, R> = Array<Production<T, T, R> | Array<Production<T, T, R>>>
@@ -70,7 +71,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
       token = stream.peek()
       production = productions.get(token.type)
 
-      if (production === undefined || production.left === undefined) {
+      if (production === undefined || production.left === undefined || left === null) {
         throw new Error()
       }
 
@@ -80,7 +81,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
 
       stream.advance()
 
-      left = production.left(token, stream, expression.bind(null, production.precedence), left)
+      left = production.left(token, stream, expression.bind(null, production.precedence - (production.associate === 'right' ? 1 : 0)), left)
     }
 
     return left
