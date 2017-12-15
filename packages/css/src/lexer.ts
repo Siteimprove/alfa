@@ -30,6 +30,10 @@ export type CssToken =
   | { type: ':' }
   | { type: ';' }
 
+export function isIdent (token: CssToken): token is ({ type: 'ident', value: string }) {
+  return token.type === 'ident'
+}
+
 export type CssPattern = Pattern<CssToken>
 
 const whitespace: CssPattern = stream => {

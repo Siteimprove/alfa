@@ -46,8 +46,27 @@ class Stream extends Bound {
     return this._column
   }
 
+  public ignore (): void {
+    this._start = this._position
+  }
+
+  public restore (position: number, line: number, column: number): void {
+    this._position = position
+    this._line = line
+    this._column = column
+    this._start = this._position
+  }
+
   public peek (offset: number = 0): string {
     return this._input.charAt(this._position + offset)
+  }
+
+  public value (): string {
+    return this.input.substring(this._start, this._position)
+  }
+
+  public progressed (): boolean {
+    return this._start !== this._position
   }
 
   public advance (times: number = 1): boolean {
@@ -75,17 +94,6 @@ class Stream extends Bound {
     const next = this.peek()
     this.advance()
     return next
-  }
-
-  public ignore (): void {
-    this._start = this._position
-  }
-
-  public restore (position: number, line: number, column: number): void {
-    this._position = position
-    this._line = line
-    this._column = column
-    this._start = this._position
   }
 
   public accept (predicate: (char: string) => boolean): boolean {
@@ -116,14 +124,6 @@ class Stream extends Bound {
     }
 
     return false
-  }
-
-  public value (): string {
-    return this.input.substring(this._start, this._position)
-  }
-
-  public progressed (): boolean {
-    return this._start !== this._position
   }
 }
 

@@ -47,7 +47,11 @@ const addition: ExpressionProduction<{ type: '+' }> = {
   token: '+',
 
   null (token, { peek, accept }) {
-    return { type: 'constant', value: accept(isNumber).value }
+    const num = accept(isNumber)
+
+    if (num) {
+      return { type: 'constant', value: num.value }
+    }
   },
 
   left (token, stream, expression, left) {
@@ -59,7 +63,11 @@ const subtraction: ExpressionProduction<{ type: '-' }> = {
   token: '-',
 
   null (token, { peek, accept }) {
-    return { type: 'constant', value: accept(isNumber).value * -1 }
+    const num = accept(isNumber)
+
+    if (num) {
+      return { type: 'constant', value: num.value * -1 }
+    }
   },
 
   left (token, stream, expression, left) {
