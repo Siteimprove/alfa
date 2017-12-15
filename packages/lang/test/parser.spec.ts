@@ -55,7 +55,6 @@ const addition: ExpressionProduction<{ type: '+' }> = {
 
   left (token, stream, expression, left) {
     const right = expression()
-    console.log('left', token, right)
     return { type: 'operator', value: '+', left, right }
   }
 }
@@ -80,13 +79,11 @@ const subtraction: ExpressionProduction<{ type: '-' }> = {
 
 const ExpressionGrammar: Grammar<ExpressionToken, Expression> = [
   constant,
-  multiplication,
-  division,
-  addition,
-  subtraction
+  [multiplication, division],
+  [addition, subtraction]
 ]
 
-test(t => {
+test('operator precedence', t => {
   const tokens = [
     { type: 'number', value: 1 },
     { type: '*' },

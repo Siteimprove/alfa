@@ -1,6 +1,8 @@
 import { Bound } from '@alfa/util'
 import { Token, WithLocation } from './lexer'
 
+const { isArray } = Array
+
 class Stream<T extends Token> extends Bound {
   private readonly _input: Array<T>
 
@@ -37,17 +39,19 @@ export interface Production<T extends Token, U extends T, R> {
   readonly left?: (token: U, stream: Stream<T>, expression: () => R | null, left: R | null) => R | null
 }
 
-export type Grammar<T extends Token, R> = Array<Production<T, T, R>>
+export type Grammar<T extends Token, R> = Array<Production<T, T, R> | Array<Production<T, T, R>>>
 
 export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R | null {
   const productions: Map<T['type'], Production<T, T, R> & { precedence: number }> = new Map()
   const stream = new Stream(input)
 
   for (let i = 0; i < grammar.length; i++) {
-    const production = grammar[i]
     const precedence = grammar.length - i
+    const group = grammar[i]
 
-    productions.set(production.token, { ...production, precedence })
+    for (const production of isArray(group) ? group : [group]) {
+      productions.set(production.token, { ...production, precedence })
+    }
   }
 
   function expression (precedence: number): R | null {
@@ -60,7 +64,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
 
     stream.advance()
 
-    let left = production.null(token, stream, expression.bind(null, production.precedence))
+    let left = production.null(token, stream, expression.bind(null, -1))
 
     while (stream.peek()) {
       token = stream.peek()
@@ -70,7 +74,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
         throw new Error()
       }
 
-      if (precedence > production.precedence) {
+      if (precedence >= production.precedence) {
         break
       }
 
