@@ -112,8 +112,8 @@ class Stream extends Bound {
     return accepted
   }
 
-  public match (pattern: RegExp): boolean {
-    const regex = new RegExp(pattern.source, 'y')
+  public match (pattern: string): boolean {
+    const regex = new RegExp(pattern, 'y')
 
     regex.lastIndex = this._position
 
