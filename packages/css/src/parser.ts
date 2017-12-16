@@ -13,16 +13,17 @@ type CssProduction<T extends CssToken, U extends CssTree> = Production<CssToken,
 const delim: CssProduction<{ type: 'delim', value: string }, ClassSelector | IdSelector> = {
   token: 'delim',
 
-  null (token, { accept, advance }) {
+  prefix (token, { accept, advance }) {
     switch (token.value) {
       case '.':
       case '#':
         const ident = accept(isIdent)
 
         if (ident) {
+          const name = ident.value
           return token.value === '.'
-            ? { type: 'class-selector', name: ident.value }
-            : { type: 'id-selector', name: ident.value }
+            ? { type: 'class-selector', name }
+            : { type: 'id-selector', name }
         }
     }
   }

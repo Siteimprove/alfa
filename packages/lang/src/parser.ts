@@ -59,8 +59,8 @@ class Stream<T extends Token> extends Bound {
 export interface Production<T extends Token, U extends T, R> {
   readonly token: U['type']
   readonly associate?: 'left' | 'right'
-  readonly null?: (token: U, stream: Stream<T>, expression: () => R) => R | void
-  readonly left?: (token: U, stream: Stream<T>, expression: () => R, left: R) => R | void
+  readonly prefix?: (token: U, stream: Stream<T>, expression: () => R) => R | void
+  readonly infix?: (token: U, stream: Stream<T>, expression: () => R, left: R) => R | void
 }
 
 export type Grammar<T extends Token, R> = Array<Production<T, T, R> | Array<Production<T, T, R>>>
@@ -82,13 +82,17 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
     let token = stream.peek()
     let production = productions.get(token.type)
 
-    if (production === undefined || production.null === undefined) {
+    if (production === undefined || production.prefix === undefined) {
       throw new Error(`Unexpected token '${token}'`)
     }
 
     stream.advance()
 
-    let left = production.null(token, stream, expression.bind(null, -1))
+    let left = production.prefix(
+      token,
+      stream,
+      expression.bind(null, -1)
+    )
 
     if (left === undefined) {
       throw new Error(`Unexpected token '${token}'`)
@@ -98,17 +102,28 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
       token = stream.peek()
       production = productions.get(token.type)
 
-      if (production === undefined || production.left === undefined) {
+      if (production === undefined || production.infix === undefined) {
         throw new Error(`Unexpected token '${token}'`)
       }
 
-      if (precedence > production.precedence || (precedence === production.precedence && production.associate !== 'right')) {
+      if (
+        production.precedence < precedence ||
+        (
+          production.precedence === precedence &&
+          production.associate !== 'right'
+        )
+      ) {
         break
       }
 
       stream.advance()
 
-      left = production.left(token, stream, expression.bind(null, production.precedence), left)
+      left = production.infix(
+        token,
+        stream,
+        expression.bind(null, production.precedence),
+        left
+      )
 
       if (left === undefined) {
         throw new Error(`Unexpected token '${token}'`)
