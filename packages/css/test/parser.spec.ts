@@ -22,3 +22,24 @@ test('Can parse a class selector', t => css(t,
     name: 'foo'
   }
 ))
+
+test('Can parse a selector list', t => css(t,
+  '.foo, .bar, .baz',
+  {
+    type: 'selector-list',
+    selectors: [
+      {
+        type: 'class-selector',
+        name: 'foo'
+      },
+      {
+        type: 'class-selector',
+        name: 'bar'
+      },
+      {
+        type: 'class-selector',
+        name: 'baz'
+      }
+    ]
+  }
+))

@@ -64,17 +64,17 @@ class Stream<T extends Token> extends Bound {
   }
 }
 
-export interface Production<T extends Token, U extends T, R> {
+export interface Production<T extends Token, U extends T, R, P extends R> {
   readonly token: U['type']
   readonly associate?: 'left' | 'right'
-  readonly prefix?: (token: U, stream: Stream<T>, expression: () => R | null) => R | void
-  readonly infix?: (token: U, stream: Stream<T>, expression: () => R | null, left: R) => R | void
+  readonly prefix?: (token: U, stream: Stream<T>, expression: () => R | null) => P | null
+  readonly infix?: (token: U, stream: Stream<T>, expression: () => R | null, left: R) => P | null
 }
 
-export type Grammar<T extends Token, R> = Array<Production<T, T, R> | Array<Production<T, T, R>>>
+export type Grammar<T extends Token, R> = Array<Production<T, T, R, R> | Array<Production<T, T, R, R>>>
 
 export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R | null {
-  const productions: Map<T['type'], Production<T, T, R> & { precedence: number }> = new Map()
+  const productions: Map<T['type'], Production<T, T, R, R> & { precedence: number }> = new Map()
   const stream = new Stream(input)
 
   for (let i = 0; i < grammar.length; i++) {
@@ -107,7 +107,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
       expression.bind(null, -1)
     )
 
-    if (left === undefined) {
+    if (left === null) {
       return null
     }
 
@@ -143,7 +143,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
         left
       )
 
-      if (left === undefined) {
+      if (left === null) {
         return null
       }
     }
