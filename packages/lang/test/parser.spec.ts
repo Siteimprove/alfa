@@ -22,7 +22,7 @@ function isNumber (token: ExpressionToken): token is ({ type: 'number', value: n
 const constant: ExpressionProduction<{ type: 'number', value: number }> = {
   token: 'number',
 
-  null (token) {
+  prefix (token) {
     return { type: 'constant', value: token.value }
   }
 }
@@ -30,48 +30,76 @@ const constant: ExpressionProduction<{ type: 'number', value: number }> = {
 const multiplication: ExpressionProduction<{ type: '*' }> = {
   token: '*',
 
-  left (token, stream, expression, left) {
-    return { type: 'operator', value: '*', left, right: expression() }
+  infix (token, stream, expression, left) {
+    const right = expression()
+
+    if (right === null) {
+      throw new Error('Expected right-hand-side expression')
+    }
+
+    return { type: 'operator', value: '*', left, right }
   }
 }
 
 const division: ExpressionProduction<{ type: '/' }> = {
   token: '/',
 
-  left (token, stream, expression, left) {
-    return { type: 'operator', value: '/', left, right: expression() }
+  infix (token, stream, expression, left) {
+    const right = expression()
+
+    if (right === null) {
+      throw new Error('Expected right-hand-side expression')
+    }
+
+    return { type: 'operator', value: '/', left, right }
   }
 }
 
 const addition: ExpressionProduction<{ type: '+' }> = {
   token: '+',
 
-  null (token, { peek, accept }) {
+  prefix (token, { peek, accept }) {
     const num = accept(isNumber)
 
-    if (num) {
-      return { type: 'constant', value: num.value }
+    if (num === false) {
+      throw new Error('Expected number')
     }
+
+    return { type: 'constant', value: num.value }
   },
 
-  left (token, stream, expression, left) {
-    return { type: 'operator', value: '+', left, right: expression() }
+  infix (token, stream, expression, left) {
+    const right = expression()
+
+    if (right === null) {
+      throw new Error('Expected right-hand-side expression')
+    }
+
+    return { type: 'operator', value: '+', left, right }
   }
 }
 
 const subtraction: ExpressionProduction<{ type: '-' }> = {
   token: '-',
 
-  null (token, { peek, accept }) {
+  prefix (token, { peek, accept }) {
     const num = accept(isNumber)
 
-    if (num) {
-      return { type: 'constant', value: num.value * -1 }
+    if (num === false) {
+      throw new Error('Expected number')
     }
+
+    return { type: 'constant', value: num.value * -1 }
   },
 
-  left (token, stream, expression, left) {
-    return { type: 'operator', value: '-', left, right: expression() }
+  infix (token, stream, expression, left) {
+    const right = expression()
+
+    if (right === null) {
+      throw new Error('Expected right-hand-side expression')
+    }
+
+    return { type: 'operator', value: '-', left, right }
   }
 }
 
@@ -79,8 +107,14 @@ const exponentiation: ExpressionProduction<{ type: '^' }> = {
   token: '^',
   associate: 'right',
 
-  left (token, stream, expression, left) {
-    return { type: 'operator', value: '^', left, right: expression() }
+  infix (token, stream, expression, left) {
+    const right = expression()
+
+    if (right === null) {
+      throw new Error('Expected right-hand-side expression')
+    }
+
+    return { type: 'operator', value: '^', left, right }
   }
 }
 

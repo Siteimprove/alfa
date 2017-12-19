@@ -10,6 +10,18 @@ export type CssTree =
 
 type CssProduction<T extends CssToken, U extends CssTree> = Production<CssToken, T, U>
 
+const whitespace: CssProduction<{ type: 'whitespace' }, CssTree> = {
+  token: 'whitespace',
+
+  prefix (token, stream, expression) {
+    return expression()
+  },
+
+  infix (token, stream, expression, left) {
+    return left
+  }
+}
+
 const delim: CssProduction<{ type: 'delim', value: string }, ClassSelector | IdSelector> = {
   token: 'delim',
 
@@ -19,16 +31,19 @@ const delim: CssProduction<{ type: 'delim', value: string }, ClassSelector | IdS
       case '#':
         const ident = accept(isIdent)
 
-        if (ident) {
-          const name = ident.value
-          return token.value === '.'
-            ? { type: 'class-selector', name }
-            : { type: 'id-selector', name }
+        if (ident === false) {
+          throw new Error('Expected ident')
         }
+
+        const name = ident.value
+        return token.value === '.'
+          ? { type: 'class-selector', name }
+          : { type: 'id-selector', name }
     }
   }
 }
 
 export const CssGrammar: Grammar<CssToken, CssTree> = [
+  whitespace,
   delim
 ]

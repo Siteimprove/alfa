@@ -57,8 +57,14 @@ class Stream extends Bound {
     this._start = this._position
   }
 
-  public peek (offset: number = 0): string {
-    return this._input.charAt(this._position + offset)
+  public peek (offset: number = 0): string | null {
+    const position = this._position + offset
+
+    if (position < this._input.length) {
+      return this._input.charAt(position)
+    }
+
+    return null
   }
 
   public value (): string {
@@ -76,7 +82,13 @@ class Stream extends Bound {
       if (this._position < this._input.length) {
         advanced = true
 
-        if (isNewline(this.peek())) {
+        const next = this.peek()
+
+        if (next === null) {
+          break
+        }
+
+        if (isNewline(next)) {
           this._line++
           this._column = 0
         } else {
@@ -90,7 +102,7 @@ class Stream extends Bound {
     return advanced
   }
 
-  public next (): string {
+  public next (): string | null {
     const next = this.peek()
     this.advance()
     return next
@@ -98,15 +110,16 @@ class Stream extends Bound {
 
   public accept (predicate: (char: string) => boolean): boolean {
     let accepted = false
+    let next = this.peek()
 
-    if (predicate(this.peek())) {
-      do {
-        if (!this.advance()) {
-          break
-        }
-      } while (predicate(this.peek()))
-
+    while (next !== null && predicate(next)) {
       accepted = true
+
+      if (!this.advance()) {
+        break
+      }
+
+      next = this.peek()
     }
 
     return accepted

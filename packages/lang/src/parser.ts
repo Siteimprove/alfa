@@ -23,33 +23,41 @@ class Stream<T extends Token> extends Bound {
     this._position = position
   }
 
-  public peek (): T {
-    return this._input[this._position]
+  public peek (offset: number = 0): T | null {
+    const position = this._position + offset
+
+    if (position < this._input.length) {
+      return this._input[position]
+    }
+
+    return null
   }
 
-  public advance (): boolean {
+  public advance (times: number = 1): boolean {
     let advanced = false
 
-    if (this._position < this._input.length) {
-      advanced = true
-      this._position++
-    }
+    do {
+      if (this._position < this._input.length) {
+        advanced = true
+        this._position++
+      }
+    } while (--times > 0)
 
     return advanced
   }
 
-  public next (): T {
+  public next (): T | null {
     const next = this.peek()
     this.advance()
     return next
   }
 
   public accept<U extends T> (predicate: Predicate<T, U>): U | false {
-    const token = this.peek()
+    const next = this.peek()
 
-    if (predicate(token)) {
+    if (next !== null && predicate(next)) {
       this.advance()
-      return token as U
+      return next as U
     }
 
     return false
@@ -59,13 +67,13 @@ class Stream<T extends Token> extends Bound {
 export interface Production<T extends Token, U extends T, R> {
   readonly token: U['type']
   readonly associate?: 'left' | 'right'
-  readonly prefix?: (token: U, stream: Stream<T>, expression: () => R) => R | void
-  readonly infix?: (token: U, stream: Stream<T>, expression: () => R, left: R) => R | void
+  readonly prefix?: (token: U, stream: Stream<T>, expression: () => R | null) => R | void
+  readonly infix?: (token: U, stream: Stream<T>, expression: () => R | null, left: R) => R | void
 }
 
 export type Grammar<T extends Token, R> = Array<Production<T, T, R> | Array<Production<T, T, R>>>
 
-export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R {
+export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R | null {
   const productions: Map<T['type'], Production<T, T, R> & { precedence: number }> = new Map()
   const stream = new Stream(input)
 
@@ -78,12 +86,17 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
     }
   }
 
-  function expression (precedence: number): R {
+  function expression (precedence: number): R | null {
     let token = stream.peek()
+
+    if (token === null) {
+      return null
+    }
+
     let production = productions.get(token.type)
 
     if (production === undefined || production.prefix === undefined) {
-      throw new Error(`Unexpected token '${token}'`)
+      throw new Error(`Unexpected token '${token.type}' in prefix position`)
     }
 
     stream.advance()
@@ -95,15 +108,20 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
     )
 
     if (left === undefined) {
-      throw new Error(`Unexpected token '${token}'`)
+      return null
     }
 
     while (stream.peek()) {
       token = stream.peek()
+
+      if (token === null) {
+        return null
+      }
+
       production = productions.get(token.type)
 
       if (production === undefined || production.infix === undefined) {
-        throw new Error(`Unexpected token '${token}'`)
+        throw new Error(`Unexpected token '${token.type}' in infix position`)
       }
 
       if (
@@ -126,7 +144,7 @@ export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, 
       )
 
       if (left === undefined) {
-        throw new Error(`Unexpected token '${token}'`)
+        return null
       }
     }
 
