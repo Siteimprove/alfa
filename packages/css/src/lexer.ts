@@ -86,16 +86,20 @@ const comment: CssPattern<Comment> = ({ next, ignore, accept, peek, result, adva
 }
 
 const ident: CssPattern<Ident> = ({ peek, advance, accept, progressed, result }) => {
-  if (peek() === '-') {
-    advance()
+  if (!accept(char => char === '-', 2)) {
+    if (peek() === '-') {
+      advance()
+    }
+
+    if (!accept(char => isAlpha(char) || isNonAscii(char) || char === '_')) {
+      return
+    }
   }
 
-  if (accept(char => isAlpha(char) || isNonAscii(char) || char === '_')) {
-    accept(char => isAlphanumeric(char) || isNonAscii(char) || char === '_' || char === '-')
+  accept(char => isAlphanumeric(char) || isNonAscii(char) || char === '_' || char === '-')
 
-    if (progressed()) {
-      return { type: 'ident', value: result() }
-    }
+  if (progressed()) {
+    return { type: 'ident', value: result() }
   }
 }
 
@@ -123,8 +127,7 @@ const number: CssPattern<Number> = ({ peek, advance, accept, progressed, result 
   accept(isNumeric)
 
   if (peek() === '.' && isNumeric(peek(1))) {
-    advance()
-    accept(isNumeric)
+    advance() && accept(isNumeric)
   }
 
   if (peek() === 'E' || peek() === 'e') {
@@ -135,8 +138,7 @@ const number: CssPattern<Number> = ({ peek, advance, accept, progressed, result 
     }
 
     if (isNumeric(peek(offset))) {
-      advance(offset)
-      accept(isNumeric)
+      advance(offset) && accept(isNumeric)
     }
   }
 

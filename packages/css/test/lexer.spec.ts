@@ -27,10 +27,17 @@ test('Can lex an ident', t => css(t,
   ]
 ))
 
-test('Can lex an ident prefixed with a hyphen', t => css(t,
+test('Can lex an ident prefixed with a single hyphen', t => css(t,
   '-foo',
   [
     { type: 'ident', value: '-foo', line: 0, column: 0 }
+  ]
+))
+
+test('Can lex an ident prefixed with a double hyphen', t => css(t,
+  '--foo',
+  [
+    { type: 'ident', value: '--foo', line: 0, column: 0 }
   ]
 ))
 

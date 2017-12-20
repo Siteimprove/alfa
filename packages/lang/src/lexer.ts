@@ -140,12 +140,12 @@ class Stream extends Bound {
     return next
   }
 
-  public accept (predicate: (char: string) => boolean): boolean {
+  public accept (predicate: (char: string) => boolean, times?: number): boolean {
     let accepted = false
     let next = this.peek()
 
-    while (next !== null && predicate(next)) {
-      accepted = true
+    while (next !== null && predicate(next) && (times === undefined || times-- > 0)) {
+      accepted = times === undefined || times === 0
 
       if (!this.advance()) {
         break
