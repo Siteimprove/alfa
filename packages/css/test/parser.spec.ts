@@ -40,7 +40,7 @@ test('Can parse a compound selector', t => css(t,
   }
 ))
 
-test('Can parse a selector list', t => css(t,
+test('Can parse a list of simple selectors', t => css(t,
   '.foo, .bar, .baz',
   {
     type: 'selector-list',
@@ -56,6 +56,32 @@ test('Can parse a selector list', t => css(t,
       {
         type: 'class-selector',
         name: 'baz'
+      }
+    ]
+  }
+))
+
+test('Can parse a list of simple and compound selectors', t => css(t,
+  '.foo, #bar.baz',
+  {
+    type: 'selector-list',
+    selectors: [
+      {
+        type: 'class-selector',
+        name: 'foo'
+      },
+      {
+        type: 'compound-selector',
+        selectors: [
+          {
+            type: 'id-selector',
+            name: 'bar'
+          },
+          {
+            type: 'class-selector',
+            name: 'baz'
+          }
+        ]
       }
     ]
   }

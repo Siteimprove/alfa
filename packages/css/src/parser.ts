@@ -7,7 +7,8 @@ export type ClassSelector = { type: 'class-selector', name: string }
 export type IdSelector = { type: 'id-selector', name: string }
 export type CompoundSelector = { type: 'compound-selector', selectors: Array<ClassSelector | IdSelector> }
 
-export type SelectorList = { type: 'selector-list', selectors: Array<ClassSelector | IdSelector> }
+export type Selector = ClassSelector | IdSelector | CompoundSelector
+export type SelectorList = { type: 'selector-list', selectors: Array<Selector> }
 
 export type CssTree =
     ClassSelector
@@ -102,7 +103,7 @@ const comma: CssProduction<{ type: ',' }, SelectorList> = {
   token: ',',
 
   infix (token, stream, expression, left) {
-    const selectors: Array<ClassSelector | IdSelector> = []
+    const selectors: Array<Selector> = []
 
     switch (left.type) {
       case 'id-selector':
@@ -119,6 +120,7 @@ const comma: CssProduction<{ type: ',' }, SelectorList> = {
     switch (right.type) {
       case 'id-selector':
       case 'class-selector':
+      case 'compound-selector':
         selectors.push(right)
         break
 
