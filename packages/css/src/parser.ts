@@ -1,5 +1,5 @@
 import { Grammar, Production } from '@alfa/lang'
-import { CssToken, isIdent } from './lexer'
+import { CssToken, Whitespace, Comment, Delim, Ident, Comma, isIdent } from './lexer'
 
 export type Combinator = '>>' | '>' | '+' | '~'
 
@@ -28,7 +28,7 @@ function isSimpleSelector (node: CssTree): node is ClassSelector | IdSelector {
   }
 }
 
-const whitespace: CssProduction<{ type: 'whitespace' }, CssTree> = {
+const whitespace: CssProduction<Whitespace, CssTree> = {
   token: 'whitespace',
 
   prefix (token, stream, expression) {
@@ -40,7 +40,7 @@ const whitespace: CssProduction<{ type: 'whitespace' }, CssTree> = {
   }
 }
 
-const comment: CssProduction<{ type: 'comment', value: string }, CssTree> = {
+const comment: CssProduction<Comment, CssTree> = {
   token: 'comment',
 
   prefix (token, stream, expression) {
@@ -52,7 +52,7 @@ const comment: CssProduction<{ type: 'comment', value: string }, CssTree> = {
   }
 }
 
-const delim: CssProduction<{ type: 'delim', value: string }, ClassSelector | IdSelector | CompoundSelector> = {
+const delim: CssProduction<Delim, Selector> = {
   token: 'delim',
 
   prefix (token, { accept }) {
@@ -99,7 +99,7 @@ const delim: CssProduction<{ type: 'delim', value: string }, ClassSelector | IdS
   }
 }
 
-const comma: CssProduction<{ type: ',' }, SelectorList> = {
+const comma: CssProduction<Comma, SelectorList> = {
   token: ',',
 
   infix (token, stream, expression, left) {
