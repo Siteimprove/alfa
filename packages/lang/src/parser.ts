@@ -46,6 +46,19 @@ class Stream<T extends Token> extends Bound {
     return advanced
   }
 
+  public backup (times: number = 1): boolean {
+    let backedup = false
+
+    do {
+      if (this._position > 0) {
+        backedup = true
+        this._position--
+      }
+    } while (--times > 0)
+
+    return backedup
+  }
+
   public next (): T | null {
     const next = this.peek()
     this.advance()
@@ -67,8 +80,8 @@ class Stream<T extends Token> extends Bound {
 export interface Production<T extends Token, U extends T, R, P extends R> {
   readonly token: U['type']
   readonly associate?: 'left' | 'right'
-  readonly prefix?: (token: U, stream: Stream<T>, expression: () => R | null) => P | null
-  readonly infix?: (token: U, stream: Stream<T>, expression: () => R | null, left: R) => P | null
+  prefix? (token: U, stream: Stream<T>, expression: () => R | null): P | null
+  infix? (token: U, stream: Stream<T>, expression: () => R | null, left: R): P | null
 }
 
 export type Grammar<T extends Token, R> = Array<Production<T, T, R, R> | Array<Production<T, T, R, R>>>
