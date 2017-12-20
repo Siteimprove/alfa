@@ -34,7 +34,12 @@ export interface Element extends Node, ParentNode, ChildNode {
   readonly type: 'element'
   readonly tag: string
   readonly namespace: string | null
-  readonly attributes: { [name: string]: Attribute }
+  readonly attributes: {
+    readonly [name: string]: Attribute | undefined,
+    readonly id?: string
+    readonly class?: string
+  }
+  readonly shadow: DocumentFragment | null
 }
 
 export interface Text extends Node, ChildNode {

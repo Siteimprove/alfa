@@ -1,10 +1,8 @@
 import test, { TestContext } from 'ava'
-import { lex, parse } from '@alfa/lang'
-import { CssToken, CssAlphabet } from '../src/lexer'
-import { CssTree, CssGrammar } from '../src/parser'
+import { CssTree, parse } from '../src/parser'
 
 function css (t: TestContext, input: string, expected: CssTree) {
-  t.deepEqual(parse(lex(input, CssAlphabet), CssGrammar), expected)
+  t.deepEqual(parse(input), expected)
 }
 
 test('Can parse an ID selector', t => css(t,

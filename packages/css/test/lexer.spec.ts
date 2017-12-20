@@ -1,9 +1,9 @@
 import test, { TestContext } from 'ava'
-import { lex, WithLocation } from '@alfa/lang'
-import { CssToken, CssAlphabet } from '../src/lexer'
+import { WithLocation } from '@alfa/lang'
+import { CssToken, lex } from '../src/lexer'
 
 function css (t: TestContext, input: string, expected: Array<WithLocation<CssToken>>) {
-  t.deepEqual(lex(input, CssAlphabet), expected)
+  t.deepEqual(lex(input), expected)
 }
 
 test('Can lex whitespace', t => css(t,

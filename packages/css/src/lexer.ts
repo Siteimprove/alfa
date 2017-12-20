@@ -1,12 +1,12 @@
 import {
   Pattern,
   Alphabet,
-  lex,
   isWhitespace,
   isAlpha,
   isAlphanumeric,
   isNumeric,
-  isNonAscii
+  isNonAscii,
+  lex as $lex
 } from '@alfa/lang'
 
 export type Whitespace = { type: 'whitespace' }
@@ -164,3 +164,7 @@ export const CssAlphabet: Alphabet<CssToken> = [
   number,
   delim
 ]
+
+export function lex (input: string): Array<CssToken> {
+  return $lex(input, CssAlphabet)
+}

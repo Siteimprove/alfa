@@ -1,5 +1,5 @@
-import { Grammar, Production } from '@alfa/lang'
-import { CssToken, Whitespace, Comment, Delim, Ident, Comma, isIdent } from './lexer'
+import { Grammar, Production, parse as $parse } from '@alfa/lang'
+import { CssToken, Whitespace, Comment, Delim, Ident, Comma, isIdent, lex } from './lexer'
 
 export type Combinator = '>>' | '>' | '+' | '~'
 
@@ -138,3 +138,7 @@ export const CssGrammar: Grammar<CssToken, CssTree> = [
   delim,
   comma
 ]
+
+export function parse (input: string): CssTree | null {
+  return $parse(lex(input), CssGrammar)
+}

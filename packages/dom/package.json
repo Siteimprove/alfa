@@ -14,6 +14,7 @@
     "prepare": "gulp build:dom"
   },
   "dependencies": {
+    "@alfa/css": "^0.0.0",
     "@types/jssha": "^0.0.29",
     "jssha": "^2.3.1"
   }

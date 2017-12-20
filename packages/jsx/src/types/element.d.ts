@@ -9,9 +9,10 @@ declare namespace JSX {
     type: 'element'
     tag: string
     namespace: string | null
-    attributes: { [name: string]: string | number | boolean }
+    attributes: { [name: string]: string | number | boolean | undefined }
     children: Array<Element | Text>
-    parent: Element | null
+    parent: Element | null,
+    shadow: null
   }
 
   interface ElementAttributesProperty {
