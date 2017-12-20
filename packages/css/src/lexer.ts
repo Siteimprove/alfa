@@ -9,137 +9,148 @@ import {
   isNonAscii
 } from '@alfa/lang'
 
+export type Whitespace = { type: 'whitespace' }
+
+export type Comment = { type: 'comment', value: string }
+export type Ident = { type: 'ident', value: string }
+export type String = { type: 'string', value: string }
+export type Delim = { type: 'delim', value: string }
+export type Number = { type: 'number', value: number }
+
+export type Paren = { type: '(' | ')' }
+export type Bracket = { type: '[' | ']' }
+export type Brace = { type: '{' | '}' }
+export type Comma = { type: ',' }
+export type Colon = { type: ':' }
+export type Semicolon = { type: ';' }
+
 /**
  * @see https://www.w3.org/TR/css-syntax/#tokenization
  */
 export type CssToken =
-    { type: 'whitespace' }
+  | Whitespace
 
   // Value tokens
-  | { type: 'comment', value: string }
-  | { type: 'ident', value: string }
-  | { type: 'string', value: string }
-  | { type: 'delim', value: string }
-  | { type: 'number', value: number }
+  | Comment
+  | Ident
+  | String
+  | Delim
+  | Number
 
   // Character tokens
-  | { type: '(' } | { type: ')' }
-  | { type: '[' } | { type: ']' }
-  | { type: '{' } | { type: '}' }
-  | { type: ',' }
-  | { type: ':' }
-  | { type: ';' }
+  | Paren
+  | Bracket
+  | Brace
+  | Comma
+  | Colon
+  | Semicolon
 
-export function isIdent (token: CssToken): token is ({ type: 'ident', value: string }) {
+export function isIdent (token: CssToken): token is Ident {
   return token.type === 'ident'
 }
 
-export type CssPattern = Pattern<CssToken>
+export type CssPattern<T extends CssToken> = Pattern<T>
 
-const whitespace: CssPattern = stream => {
-  if (stream.accept(isWhitespace)) {
+const whitespace: CssPattern<Whitespace> = ({ accept }) => {
+  if (accept(isWhitespace)) {
     return { type: 'whitespace' }
   }
 }
 
-const character: CssPattern = stream => {
-  const char = stream.next()
+const character: CssPattern<Paren | Bracket | Brace | Comma | Colon | Semicolon> = ({ next }) => {
+  const char = next()
 
   switch (char) {
-    case '(': return { type: char }
-    case ')': return { type: char }
-    case '[': return { type: char }
-    case ']': return { type: char }
-    case '{': return { type: char }
-    case '}': return { type: char }
+    case '(': case ')': return { type: char }
+    case '[': case ']': return { type: char }
+    case '{': case '}': return { type: char }
+
     case ',': return { type: char }
     case ':': return { type: char }
     case ';': return { type: char }
   }
 }
 
-const comment: CssPattern = stream => {
-  if (stream.next() === '/' && stream.next() === '*') {
-    stream.ignore()
+const comment: CssPattern<Comment> = ({ next, ignore, accept, peek, result, advance }) => {
+  if (next() === '/' && next() === '*') {
+    ignore()
 
-    if (stream.accept(() => stream.peek() !== '*' || stream.peek(1) !== '/')) {
-      const value = stream.value()
+    if (accept(() => peek() !== '*' || peek(1) !== '/')) {
+      const value = result()
 
-      stream.advance(2)
+      advance(2)
 
       return { type: 'comment', value }
     }
   }
 }
 
-const ident: CssPattern = stream => {
-  if (stream.peek() === '-') {
-    stream.advance()
+const ident: CssPattern<Ident> = ({ peek, advance, accept, progressed, result }) => {
+  if (peek() === '-') {
+    advance()
   }
 
-  if (stream.accept(char => isAlpha(char) || isNonAscii(char) || char === '_')) {
-    stream.accept(char => isAlphanumeric(char) || isNonAscii(char) || char === '_' || char === '-')
+  if (accept(char => isAlpha(char) || isNonAscii(char) || char === '_')) {
+    accept(char => isAlphanumeric(char) || isNonAscii(char) || char === '_' || char === '-')
 
-    if (stream.progressed()) {
-      return {
-        type: 'ident',
-        value: stream.value()
-      }
+    if (progressed()) {
+      return { type: 'ident', value: result() }
     }
   }
 }
 
-const string: CssPattern = stream => {
-  const end = stream.next()
+const string: CssPattern<String> = ({ next, ignore, accept, result, advance }) => {
+  const end = next()
 
   if (end === '"' || end === '\'') {
-    stream.ignore()
+    ignore()
 
-    if (stream.accept(char => char !== '"' && char !== '\'')) {
-      const value = stream.value()
+    if (accept(char => char !== '"' && char !== '\'')) {
+      const value = result()
 
-      stream.advance()
+      advance()
 
       return { type: 'string', value }
     }
   }
 }
 
-const number: CssPattern = stream => {
-  if (stream.peek() === '+' || stream.peek() === '-') {
-    stream.advance()
+const number: CssPattern<Number> = ({ peek, advance, accept, progressed, result }) => {
+  if (peek() === '+' || peek() === '-') {
+    advance()
   }
 
-  stream.accept(isNumeric)
+  accept(isNumeric)
 
-  if (stream.peek() === '.' && isNumeric(stream.peek(1))) {
-    stream.advance()
-    stream.accept(isNumeric)
+  if (peek() === '.' && isNumeric(peek(1))) {
+    advance()
+    accept(isNumeric)
   }
 
-  if (stream.peek() === 'E' || stream.peek() === 'e') {
+  if (peek() === 'E' || peek() === 'e') {
     let offset = 1
 
-    if (stream.peek(1) === '-' || stream.peek(1) === '+') {
+    if (peek(1) === '-' || peek(1) === '+') {
       offset = 2
     }
 
-    if (isNumeric(stream.peek(offset))) {
-      stream.advance(offset)
-      stream.accept(isNumeric)
+    if (isNumeric(peek(offset))) {
+      advance(offset)
+      accept(isNumeric)
     }
   }
 
-  if (stream.progressed()) {
-    return {
-      type: 'number',
-      value: Number(stream.value())
-    }
+  if (progressed()) {
+    return { type: 'number', value: Number(result()) }
   }
 }
 
-const delim: CssPattern = stream => {
-  return { type: 'delim', value: stream.next() }
+const delim: CssPattern<Delim> = ({ next }) => {
+  const char = next()
+
+  if (char) {
+    return { type: 'delim', value: char }
+  }
 }
 
 export const CssAlphabet: Alphabet<CssToken> = [

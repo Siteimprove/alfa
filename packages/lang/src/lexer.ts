@@ -60,7 +60,7 @@ class Stream extends Bound {
     return null
   }
 
-  public value (): string {
+  public result (): string {
     return this.input.substring(this._start, this._position)
   }
 
@@ -207,38 +207,38 @@ export function lex<T extends Token> (input: string, alphabet: Alphabet<T>): Arr
   return tokens
 }
 
-export function isBetween (char: string, lower: string, upper: string): boolean {
-  return char >= lower && char <= upper
+export function isBetween (char: string | null, lower: string, upper: string): boolean {
+  return char !== null && char >= lower && char <= upper
 }
 
-export function isWhitespace (char: string): boolean {
+export function isWhitespace (char: string | null): boolean {
   return char === ' ' || char === '\t' || char === '\n'
 }
 
-export function isNewline (char: string): boolean {
+export function isNewline (char: string | null): boolean {
   return char === '\n' || char === '\r' || char === '\f'
 }
 
-export function isAlpha (char: string): boolean {
+export function isAlpha (char: string | null): boolean {
   return isBetween(char, 'a', 'z') || isBetween(char, 'A', 'Z')
 }
 
-export function isNumeric (char: string): boolean {
+export function isNumeric (char: string | null): boolean {
   return isBetween(char, '0', '9')
 }
 
-export function isAlphanumeric (char: string): boolean {
+export function isAlphanumeric (char: string | null): boolean {
   return isAlpha(char) || isNumeric(char)
 }
 
-export function isHex (char: string): boolean {
+export function isHex (char: string | null): boolean {
   return isNumeric(char) || isBetween(char, 'a', 'f') || isBetween(char, 'A', 'F')
 }
 
-export function isAscii (char: string): boolean {
-  return char.charCodeAt(0) < 0x80
+export function isAscii (char: string | null): boolean {
+  return char !== null && char.charCodeAt(0) < 0x80
 }
 
-export function isNonAscii (char: string): boolean {
+export function isNonAscii (char: string | null): boolean {
   return !isAscii(char)
 }
