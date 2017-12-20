@@ -50,13 +50,6 @@ class Stream extends Bound {
     this._start = this._position
   }
 
-  public restore (position: number, line: number, column: number): void {
-    this._position = position
-    this._line = line
-    this._column = column
-    this._start = this._position
-  }
-
   public peek (offset: number = 0): string | null {
     const position = this._position + offset
 
@@ -100,6 +93,45 @@ class Stream extends Bound {
     } while (--times > 0)
 
     return advanced
+  }
+
+  public backup (times: number = 1): boolean {
+    let backedup = false
+
+    do {
+      if (this._position > 0) {
+        backedup = true
+
+        const next = this.peek()
+
+        if (next === null) {
+          break
+        }
+
+        if (isNewline(next)) {
+          this._line--
+          this._column = 0
+        } else {
+          this._column--
+        }
+
+        this._position--
+      }
+    } while (--times > 0)
+
+    return backedup
+  }
+
+  public restore (position: number): void {
+    const difference = position - this._position
+
+    if (difference > 0) {
+      this.advance(difference)
+    }
+
+    if (difference < 0) {
+      this.backup(difference * -1)
+    }
   }
 
   public next (): string | null {
@@ -165,7 +197,7 @@ export function lex<T extends Token> (input: string, alphabet: Alphabet<T>): Arr
       }
 
       if (position !== stream.position) {
-        stream.restore(position, line, column)
+        stream.restore(position)
       }
     }
 
