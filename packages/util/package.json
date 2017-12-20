@@ -12,5 +12,8 @@
   "private": true,
   "scripts": {
     "prepare": "gulp build:util"
+  },
+  "dependencies": {
+    "moize": "^4.0.4"
   }
 }
