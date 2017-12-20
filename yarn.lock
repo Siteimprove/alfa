@@ -4403,6 +4403,10 @@ module-deps@^4.0.8:
     through2 "^2.0.0"
     xtend "^4.0.0"
 
+moize@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/moize/-/moize-4.0.4.tgz#f58ce63439f73f8f3014fb92129dec615160a8d6"
+
 moment@^2.18.1, moment@^2.6.0:
   version "2.19.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
