@@ -1,10 +1,13 @@
-import { Selector, IdSelector, ClassSelector, parse } from '@alfa/css'
+import { Selector, SelectorList, IdSelector, ClassSelector, parse } from '@alfa/css'
+import { memoize } from '@alfa/util'
 import { Element } from '../types'
 import { attribute } from './attribute'
 import { classlist } from './classlist'
 
-export function matches (element: Element, selector: string | Selector): boolean {
-  const parsed = typeof selector === 'string' ? parse(selector) : selector
+const parseMemoized = memoize(parse, { cache: { size: 50 } })
+
+export function matches (element: Element, selector: string | Selector | SelectorList): boolean {
+  const parsed = typeof selector === 'string' ? parseMemoized(selector) : selector
 
   if (parsed === null) {
     return false
@@ -16,7 +19,11 @@ export function matches (element: Element, selector: string | Selector): boolean
 
     case 'class-selector':
       return classlist(element).has(parsed.name)
-  }
 
-  return false
+    case 'compound-selector':
+      return parsed.selectors.every(selector => matches(element, selector))
+
+    case 'selector-list':
+      return parsed.selectors.some(selector => matches(element, selector))
+  }
 }
