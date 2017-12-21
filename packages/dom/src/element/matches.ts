@@ -1,5 +1,7 @@
 import { Selector, IdSelector, ClassSelector, parse } from '@alfa/css'
-import { Element } from './types'
+import { Element } from '../types'
+import { attribute } from './attribute'
+import { classlist } from './classlist'
 
 export function matches (element: Element, selector: string | Selector): boolean {
   const parsed = typeof selector === 'string' ? parse(selector) : selector
@@ -8,24 +10,12 @@ export function matches (element: Element, selector: string | Selector): boolean
     return false
   }
 
-  const { attributes } = element
-
   switch (parsed.type) {
     case 'id-selector':
-      if (attributes.id === undefined) {
-        return false
-      }
-
-      return attributes.id === parsed.name
+      return attribute(element, 'id') === parsed.name
 
     case 'class-selector':
-      if (attributes.class === undefined) {
-        return false
-      }
-
-      return attributes.class
-        .split(/\s+/)
-        .indexOf(parsed.name) !== -1
+      return classlist(element).has(parsed.name)
   }
 
   return false
