@@ -7,7 +7,8 @@ export function jsx (tag: string, attributes: { [name: string]: string | number 
     namespace: null,
     attributes: attributes === null ? {} : attributes,
     children: [],
-    parent: null
+    parent: null,
+    shadow: null
   }
 
   for (const node of children) {
