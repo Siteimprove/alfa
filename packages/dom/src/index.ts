@@ -1,6 +1,7 @@
 export * from './collect'
 export * from './compare'
 export * from './guards'
+export * from './render'
 export * from './traverse'
 export * from './types'
 
