@@ -1,6 +1,7 @@
 import { Selector, SelectorList, parse } from '@alfa/css'
 import { memoize } from '@alfa/util'
 import { Element } from '../types'
+import { isElement } from '../guards'
 import { attribute } from './attribute'
 import { classlist } from './classlist'
 
@@ -28,5 +29,16 @@ export function matches (element: Element, selector: string | Selector | Selecto
 
     case 'selector-list':
       return parsed.selectors.some(selector => matches(element, selector))
+
+    case 'relative-selector':
+      if (!matches(element, parsed.selector)) {
+        return false
+      }
+
+      switch (parsed.combinator) {
+        case '>>':
+          const { parent } = element
+          return parent !== null && isElement(parent) && matches(parent, parsed.relative)
+      }
   }
 }

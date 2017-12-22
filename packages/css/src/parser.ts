@@ -9,9 +9,9 @@ export type SimpleSelector = TypeSelector | ClassSelector | IdSelector
 export type CompoundSelector = { type: 'compound-selector', selectors: Array<SimpleSelector> }
 
 export type RelativeSelector = {
-  type: 'relative-selector',
-  combinator: '>>' | '>' | '+' | '~',
-  selector: SimpleSelector | CompoundSelector,
+  type: 'relative-selector'
+  combinator: '>>' // | '>' | '+' | '~'
+  selector: SimpleSelector | CompoundSelector
   relative: Selector
 }
 
