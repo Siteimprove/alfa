@@ -5,11 +5,11 @@ function css (t: TestContext, input: string, expected: CssTree) {
   t.deepEqual(parse(input), expected)
 }
 
-test('Can parse an ID selector', t => css(t,
-  '#foo',
+test('Can parse a type selector', t => css(t,
+  'div',
   {
-    type: 'id-selector',
-    name: 'foo'
+    type: 'type-selector',
+    name: 'div'
   }
 ))
 
@@ -17,6 +17,14 @@ test('Can parse a class selector', t => css(t,
   '.foo',
   {
     type: 'class-selector',
+    name: 'foo'
+  }
+))
+
+test('Can parse an ID selector', t => css(t,
+  '#foo',
+  {
+    type: 'id-selector',
     name: 'foo'
   }
 ))
@@ -33,6 +41,23 @@ test('Can parse a compound selector', t => css(t,
       {
         type: 'class-selector',
         name: 'bar'
+      }
+    ]
+  }
+))
+
+test('Can parse a compound selector with a type in prefix position', t => css(t,
+  'div.foo',
+  {
+    type: 'compound-selector',
+    selectors: [
+      {
+        type: 'type-selector',
+        name: 'div'
+      },
+      {
+        type: 'class-selector',
+        name: 'foo'
       }
     ]
   }

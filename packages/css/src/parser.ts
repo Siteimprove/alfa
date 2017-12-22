@@ -3,29 +3,39 @@ import { CssToken, Whitespace, Comment, Delim, Ident, Comma, isIdent, lex } from
 
 export type Combinator = '>>' | '>' | '+' | '~'
 
+export type TypeSelector = { type: 'type-selector', name: string }
 export type ClassSelector = { type: 'class-selector', name: string }
 export type IdSelector = { type: 'id-selector', name: string }
-export type CompoundSelector = { type: 'compound-selector', selectors: Array<ClassSelector | IdSelector> }
 
-export type Selector = ClassSelector | IdSelector | CompoundSelector
+export type SimpleSelector = TypeSelector | ClassSelector | IdSelector
+export type CompoundSelector = { type: 'compound-selector', selectors: Array<SimpleSelector> }
+
+export type Selector = SimpleSelector | CompoundSelector
 export type SelectorList = { type: 'selector-list', selectors: Array<Selector> }
 
 export type CssTree =
-    ClassSelector
-  | IdSelector
-  | CompoundSelector
+    Selector
   | SelectorList
 
 type CssProduction<T extends CssToken, U extends CssTree> = Production<CssToken, T, CssTree, U>
 
-function isSimpleSelector (node: CssTree): node is ClassSelector | IdSelector {
+function isSimpleSelector (node: CssTree): node is SimpleSelector {
   switch (node.type) {
+    case 'type-selector':
     case 'class-selector':
     case 'id-selector':
       return true
     default:
       return false
   }
+}
+
+function isSelector (node: CssTree): node is Selector {
+  return isSimpleSelector(node) || node.type === 'compound-selector'
+}
+
+function isSelectorList (node: CssTree): node is SelectorList {
+  return node.type === 'selector-list'
 }
 
 const whitespace: CssProduction<Whitespace, CssTree> = {
@@ -75,27 +85,32 @@ const delim: CssProduction<Delim, Selector> = {
   },
 
   infix (token, stream, expression, left) {
-    switch (left.type) {
-      case 'id-selector':
-      case 'class-selector':
-      case 'compound-selector':
-        stream.backup()
+    if (isSelector(left)) {
+      stream.backup()
 
-        const right = expression()
+      const right = expression()
 
-        if (right === null || !isSimpleSelector(right)) {
-          throw new Error('Expected simple selector')
-        }
+      if (right === null || !isSimpleSelector(right)) {
+        throw new Error('Expected simple selector')
+      }
 
-        return {
-          type: 'compound-selector',
-          selectors: left.type === 'compound-selector'
-            ? [...left.selectors, right]
-            : [left, right]
-        }
+      return {
+        type: 'compound-selector',
+        selectors: left.type === 'compound-selector'
+          ? [...left.selectors, right]
+          : [left, right]
+      }
     }
 
     return null
+  }
+}
+
+const ident: CssProduction<Ident, TypeSelector> = {
+  token: 'ident',
+
+  prefix (token) {
+    return { type: 'type-selector', name: token.value }
   }
 }
 
@@ -105,10 +120,8 @@ const comma: CssProduction<Comma, SelectorList> = {
   infix (token, stream, expression, left) {
     const selectors: Array<Selector> = []
 
-    switch (left.type) {
-      case 'id-selector':
-      case 'class-selector':
-        selectors.push(left)
+    if (isSimpleSelector(left)) {
+      selectors.push(left)
     }
 
     const right = expression()
@@ -117,15 +130,12 @@ const comma: CssProduction<Comma, SelectorList> = {
       throw new Error('Expected selector')
     }
 
-    switch (right.type) {
-      case 'id-selector':
-      case 'class-selector':
-      case 'compound-selector':
-        selectors.push(right)
-        break
+    if (isSelector(right)) {
+      selectors.push(right)
+    }
 
-      case 'selector-list':
-        selectors.push.apply(selectors, right.selectors)
+    if (isSelectorList(right)) {
+      selectors.push.apply(selectors, right.selectors)
     }
 
     return { type: 'selector-list', selectors }
@@ -136,6 +146,7 @@ export const CssGrammar: Grammar<CssToken, CssTree> = [
   whitespace,
   comment,
   delim,
+  ident,
   comma
 ]
 

@@ -14,11 +14,14 @@ export function matches (element: Element, selector: string | Selector | Selecto
   }
 
   switch (parsed.type) {
-    case 'id-selector':
-      return attribute(element, 'id') === parsed.name
+    case 'type-selector':
+      return element.tag === parsed.name
 
     case 'class-selector':
       return classlist(element).has(parsed.name)
+
+    case 'id-selector':
+      return attribute(element, 'id') === parsed.name
 
     case 'compound-selector':
       return parsed.selectors.every(selector => matches(element, selector))
