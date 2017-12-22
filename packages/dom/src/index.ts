@@ -6,4 +6,5 @@ export * from './types'
 
 export * from './element/attribute'
 export * from './element/classlist'
+export * from './element/find'
 export * from './element/matches'
