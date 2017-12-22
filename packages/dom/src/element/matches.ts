@@ -1,4 +1,4 @@
-import { Selector, SelectorList, IdSelector, ClassSelector, parse } from '@alfa/css'
+import { Selector, SelectorList, parse } from '@alfa/css'
 import { memoize } from '@alfa/util'
 import { Element } from '../types'
 import { attribute } from './attribute'
