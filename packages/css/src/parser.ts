@@ -1,8 +1,6 @@
 import { Grammar, Production, parse as $parse } from '@alfa/lang'
 import { CssToken, Whitespace, Comment, Delim, Ident, Comma, isIdent, lex } from './lexer'
 
-export type Combinator = '>>' | '>' | '+' | '~'
-
 export type TypeSelector = { type: 'type-selector', name: string }
 export type ClassSelector = { type: 'class-selector', name: string }
 export type IdSelector = { type: 'id-selector', name: string }
@@ -10,7 +8,14 @@ export type IdSelector = { type: 'id-selector', name: string }
 export type SimpleSelector = TypeSelector | ClassSelector | IdSelector
 export type CompoundSelector = { type: 'compound-selector', selectors: Array<SimpleSelector> }
 
-export type Selector = SimpleSelector | CompoundSelector
+export type RelativeSelector = {
+  type: 'relative-selector',
+  combinator: '>>' | '>' | '+' | '~',
+  selector: SimpleSelector | CompoundSelector,
+  relative: Selector
+}
+
+export type Selector = SimpleSelector | CompoundSelector | RelativeSelector
 export type SelectorList = { type: 'selector-list', selectors: Array<Selector> }
 
 export type CssTree =
@@ -30,8 +35,16 @@ function isSimpleSelector (node: CssTree): node is SimpleSelector {
   }
 }
 
+function isCompoundSelector (node: CssTree): node is CompoundSelector {
+  return node.type === 'compound-selector'
+}
+
+function isRelativeSelector (node: CssTree): node is RelativeSelector {
+  return node.type === 'relative-selector'
+}
+
 function isSelector (node: CssTree): node is Selector {
-  return isSimpleSelector(node) || node.type === 'compound-selector'
+  return isSimpleSelector(node) || isCompoundSelector(node) || isRelativeSelector(node)
 }
 
 function isSelectorList (node: CssTree): node is SelectorList {
@@ -46,6 +59,16 @@ const whitespace: CssProduction<Whitespace, CssTree> = {
   },
 
   infix (token, stream, expression, left) {
+    if (isSelector(left)) {
+      const right = expression()
+
+      if (right !== null && (isSimpleSelector(right) || isCompoundSelector(right))) {
+        return { type: 'relative-selector', combinator: '>>', selector: right, relative: left }
+      }
+
+      throw new Error('Expected selector')
+    }
+
     return left
   }
 }
@@ -62,7 +85,7 @@ const comment: CssProduction<Comment, CssTree> = {
   }
 }
 
-const delim: CssProduction<Delim, Selector> = {
+const delim: CssProduction<Delim, ClassSelector | IdSelector | CompoundSelector> = {
   token: 'delim',
 
   prefix (token, { accept }) {
@@ -85,7 +108,7 @@ const delim: CssProduction<Delim, Selector> = {
   },
 
   infix (token, stream, expression, left) {
-    if (isSelector(left)) {
+    if (isSimpleSelector(left) || isCompoundSelector(left)) {
       stream.backup()
 
       const right = expression()
@@ -96,7 +119,7 @@ const delim: CssProduction<Delim, Selector> = {
 
       return {
         type: 'compound-selector',
-        selectors: left.type === 'compound-selector'
+        selectors: isCompoundSelector(left)
           ? [...left.selectors, right]
           : [left, right]
       }

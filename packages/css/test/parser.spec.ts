@@ -63,6 +63,46 @@ test('Can parse a compound selector with a type in prefix position', t => css(t,
   }
 ))
 
+test('Can parse a single descendant selector', t => css(t,
+  'div .foo',
+  {
+    type: 'relative-selector',
+    combinator: '>>',
+    selector: {
+      type: 'class-selector',
+      name: 'foo'
+    },
+    relative: {
+      type: 'type-selector',
+      name: 'div'
+    }
+  }
+))
+
+test('Can parse a double descendant selector', t => css(t,
+  'div .foo #bar',
+  {
+    type: 'relative-selector',
+    combinator: '>>',
+    selector: {
+      type: 'id-selector',
+      name: 'bar'
+    },
+    relative: {
+      type: 'relative-selector',
+      combinator: '>>',
+      selector: {
+        type: 'class-selector',
+        name: 'foo'
+      },
+      relative: {
+        type: 'type-selector',
+        name: 'div'
+      }
+    }
+  }
+))
+
 test('Can parse a list of simple selectors', t => css(t,
   '.foo, .bar, .baz',
   {
