@@ -22,7 +22,11 @@ test('Matches an element against a list of selectors', t => {
 
 test('Matches an element against a descendant selector', t => {
   const document: Element = (
-    <div><span id='foo'></span></div>
+    <div>
+      <p>
+        <span id='foo'></span>
+      </p>
+    </div>
   )
 
   const foo = find(document, '#foo')

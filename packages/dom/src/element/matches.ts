@@ -37,8 +37,17 @@ export function matches (element: Element, selector: string | Selector | Selecto
 
       switch (parsed.combinator) {
         case '>>':
-          const { parent } = element
-          return parent !== null && isElement(parent) && matches(parent, parsed.relative)
+          let { parent } = element
+
+          while (parent && isElement(parent)) {
+            if (matches(parent, parsed.relative)) {
+              return true
+            }
+
+            parent = parent.parent
+          }
+
+          return false
       }
   }
 }
