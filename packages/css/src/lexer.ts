@@ -45,8 +45,12 @@ export type CssToken =
   | Colon
   | Semicolon
 
-export function isIdent (token: CssToken): token is Ident {
-  return token.type === 'ident'
+export function isIdent (token: CssToken | null): token is Ident {
+  return token !== null && token.type === 'ident'
+}
+
+export function isDelim (token: CssToken | null): token is Delim {
+  return token !== null && token.type === 'delim'
 }
 
 export type CssPattern<T extends CssToken> = Pattern<T>
@@ -124,10 +128,11 @@ const number: CssPattern<Number> = ({ peek, advance, accept, progressed, result 
     advance()
   }
 
-  accept(isNumeric)
+  const isInteger = accept(isNumeric) && peek() !== '.'
+  const isDecimal = peek() === '.' && advance() && accept(isNumeric)
 
-  if (peek() === '.' && isNumeric(peek(1))) {
-    advance() && accept(isNumeric)
+  if (!isInteger && !isDecimal) {
+    return
   }
 
   if (peek() === 'E' || peek() === 'e') {
@@ -142,9 +147,7 @@ const number: CssPattern<Number> = ({ peek, advance, accept, progressed, result 
     }
   }
 
-  if (progressed()) {
-    return { type: 'number', value: Number(result()) }
-  }
+  return { type: 'number', value: Number(result()) }
 }
 
 const delim: CssPattern<Delim> = ({ next }) => {
