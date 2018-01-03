@@ -33,8 +33,13 @@ for (const package of packages) {
   const dest = `${base}/dist`
   const test = `${base}/test`
   const tmp = `${base}/.tmp`
+  const pkg = require(`./${base}/package.json`)
 
-  gulp.task(`build:${package}`, () => gulp.src(`${src}/**/*.ts`)
+  const deps = Object.keys(pkg.dependencies || {})
+    .filter(dep => dep.startsWith('@alfa/'))
+    .map(dep => dep.replace('@alfa/', ''))
+
+  gulp.task(`build:${package}`, deps.map(dep => `build:${dep}`), () => gulp.src(`${src}/**/*.ts`)
     .pipe(newer({ dest, ext: '.js' }))
     .pipe(babel({ presets: ['@alfa/build/babel'] }))
     .pipe(gulp.dest(dest))
@@ -48,7 +53,7 @@ for (const package of packages) {
     .pipe(size({ ...plugins.size, title: package }))
   )
 
-  gulp.task(`test:${package}`, () => gulp.src([`${src}/**/*.ts`, `${test}/**/*.ts{,x}`], { base })
+  gulp.task(`test:${package}`, ['build:jsx', `build:${package}`], () => gulp.src([`${src}/**/*.ts`, `${test}/**/*.ts{,x}`], { base })
     .pipe(sourcemaps.init())
     .pipe(babel(({ presets: ['@alfa/build/babel'] })))
     .pipe(sourcemaps.write('.', {
@@ -61,7 +66,7 @@ for (const package of packages) {
 
   gulp.task(`clean:${package}`, () => del([dest, tmp]))
 
-  gulp.task(`watch:${package}`, [`build:${package}`], () => {
+  gulp.task(`watch:${package}`, deps.map(dep => `watch:${dep}`), () => {
     gulp.watch(`${src}/**/*.ts`, [`build:${package}`])
     gulp.watch(`${base}/**/*.ts{,x}`, [`test:${package}`])
     gulp.watch(`${src}/**/*.hjson`, [`locale:${package}`])
