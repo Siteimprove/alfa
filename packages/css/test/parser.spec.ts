@@ -79,6 +79,22 @@ test('Can parse a single descendant selector', t => css(t,
   }
 ))
 
+test('Can parse a single descendant selector with a right-hand type selector', t => css(t,
+  'div span',
+  {
+    type: 'relative-selector',
+    combinator: '>>',
+    selector: {
+      type: 'type-selector',
+      name: 'span'
+    },
+    relative: {
+      type: 'type-selector',
+      name: 'div'
+    }
+  }
+))
+
 test('Can parse a double descendant selector', t => css(t,
   'div .foo #bar',
   {
@@ -99,6 +115,54 @@ test('Can parse a double descendant selector', t => css(t,
         type: 'type-selector',
         name: 'div'
       }
+    }
+  }
+))
+
+test('Can parse a direct descendant selector', t => css(t,
+  'div > .foo',
+  {
+    type: 'relative-selector',
+    combinator: '>',
+    selector: {
+      type: 'class-selector',
+      name: 'foo'
+    },
+    relative: {
+      type: 'type-selector',
+      name: 'div'
+    }
+  }
+))
+
+test('Can parse a sibling selector', t => css(t,
+  'div ~ .foo',
+  {
+    type: 'relative-selector',
+    combinator: '~',
+    selector: {
+      type: 'class-selector',
+      name: 'foo'
+    },
+    relative: {
+      type: 'type-selector',
+      name: 'div'
+    }
+  }
+))
+
+test('Can parse a direct sibling selector', t => css(t,
+  'div + .foo',
+  {
+    type: 'relative-selector',
+    combinator: '+',
+    selector: {
+      type: 'class-selector',
+      name: 'foo'
+    },
+    relative: {
+      type: 'type-selector',
+      name: 'div'
     }
   }
 ))

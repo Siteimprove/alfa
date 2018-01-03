@@ -1,5 +1,5 @@
 import { Grammar, Production, parse as $parse } from '@alfa/lang'
-import { CssToken, Whitespace, Comment, Delim, Ident, Comma, isIdent, lex } from './lexer'
+import { CssToken, Whitespace, Comment, Delim, Ident, Comma, isIdent, isDelim, lex } from './lexer'
 
 export type TypeSelector = { type: 'type-selector', name: string }
 export type ClassSelector = { type: 'class-selector', name: string }
@@ -10,7 +10,7 @@ export type CompoundSelector = { type: 'compound-selector', selectors: Array<Sim
 
 export type RelativeSelector = {
   type: 'relative-selector'
-  combinator: '>>' // | '>' | '+' | '~'
+  combinator: '>>' | '>' | '+' | '~'
   selector: SimpleSelector | CompoundSelector
   relative: Selector
 }
@@ -60,13 +60,30 @@ const whitespace: CssProduction<Whitespace, CssTree> = {
 
   infix (token, stream, expression, left) {
     if (isSelector(left)) {
-      const right = expression()
+      let token = stream.next()
 
-      if (right !== null && (isSimpleSelector(right) || isCompoundSelector(right))) {
-        return { type: 'relative-selector', combinator: '>>', selector: right, relative: left }
+      if (delim.infix === undefined) {
+        return null
       }
 
-      throw new Error('Expected selector')
+      const isImplicitDescendant = (
+        isIdent(token) ||
+        (
+          isDelim(token) && (
+            token.value === '.' ||
+            token.value === '#'
+          )
+        )
+      )
+
+      if (isImplicitDescendant) {
+        token = { type: 'delim', value: '>>' }
+        stream.backup()
+      }
+
+      if (isDelim(token)) {
+        return delim.infix(token, stream, expression, left)
+      }
     }
 
     return left
@@ -85,7 +102,7 @@ const comment: CssProduction<Comment, CssTree> = {
   }
 }
 
-const delim: CssProduction<Delim, ClassSelector | IdSelector | CompoundSelector> = {
+const delim: CssProduction<Delim, Selector> = {
   token: 'delim',
 
   prefix (token, { accept }) {
@@ -108,20 +125,40 @@ const delim: CssProduction<Delim, ClassSelector | IdSelector | CompoundSelector>
   },
 
   infix (token, stream, expression, left) {
-    if (isSimpleSelector(left) || isCompoundSelector(left)) {
-      stream.backup()
+    if (isSelector(left)) {
+      switch (token.value) {
+        case '.':
+        case '#': {
+          stream.backup()
 
-      const right = expression()
+          const right = expression()
 
-      if (right === null || !isSimpleSelector(right)) {
-        throw new Error('Expected simple selector')
-      }
+          if (right === null || !isSimpleSelector(right) || !isSimpleSelector(left)) {
+            throw new Error('Expected simple selector')
+          }
 
-      return {
-        type: 'compound-selector',
-        selectors: isCompoundSelector(left)
-          ? [...left.selectors, right]
-          : [left, right]
+          return {
+            type: 'compound-selector',
+            selectors: isCompoundSelector(left)
+              ? [...left.selectors, right]
+              : [left, right]
+          }
+        }
+
+        case '>':
+        case '>>':
+        case '+':
+        case '~':
+          const right = expression()
+
+          if (right !== null && (isSimpleSelector(right) || isCompoundSelector(right))) {
+            return {
+              type: 'relative-selector',
+              combinator: token.value,
+              selector: right,
+              relative: left
+            }
+          }
       }
     }
 
@@ -174,5 +211,6 @@ export const CssGrammar: Grammar<CssToken, CssTree> = [
 ]
 
 export function parse (input: string): CssTree | null {
+  // console.log(lex(input))
   return $parse(lex(input), CssGrammar)
 }
