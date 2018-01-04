@@ -68,7 +68,7 @@ export class Scraper {
     await page.close()
 
     return {
-      dom: virtual.dom,
+      document: virtual.dom,
       style: virtual.style,
       layout: virtual.layout
     }

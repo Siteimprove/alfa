@@ -1,25 +1,35 @@
 import test from 'ava'
 import { Grammar, Production, parse } from '../src/parser'
 
+type Constant = { type: 'constant', value: number }
+type Operator = { type: 'operator', value: string, left: Expression, right: Expression }
+
 type Expression =
-  | { type: 'constant', value: number }
-  | { type: 'operator', value: string, left: Expression, right: Expression }
+  | Constant
+  | Operator
+
+type Number = { type: 'number', value: number }
+type Plus = { type: '+' }
+type Minus = { type: '-' }
+type Asterix = { type: '*' }
+type Slash = { type: '/' }
+type Caret = { type: '^' }
 
 type ExpressionToken =
-  | { type: 'number', value: number }
-  | { type: '+' }
-  | { type: '-' }
-  | { type: '*' }
-  | { type: '/' }
-  | { type: '^' }
+  | Number
+  | Plus
+  | Minus
+  | Asterix
+  | Slash
+  | Caret
 
-type ExpressionProduction<T extends ExpressionToken> = Production<ExpressionToken, T, Expression>
+type ExpressionProduction<T extends ExpressionToken, U extends Expression> = Production<ExpressionToken, T, Expression, U>
 
-function isNumber (token: ExpressionToken): token is ({ type: 'number', value: number }) {
+function isNumber (token: ExpressionToken): token is Number {
   return token.type === 'number' && 'value' in token
 }
 
-const constant: ExpressionProduction<{ type: 'number', value: number }> = {
+const number: ExpressionProduction<Number, Constant> = {
   token: 'number',
 
   prefix (token) {
@@ -27,35 +37,7 @@ const constant: ExpressionProduction<{ type: 'number', value: number }> = {
   }
 }
 
-const multiplication: ExpressionProduction<{ type: '*' }> = {
-  token: '*',
-
-  infix (token, stream, expression, left) {
-    const right = expression()
-
-    if (right === null) {
-      throw new Error('Expected right-hand-side expression')
-    }
-
-    return { type: 'operator', value: '*', left, right }
-  }
-}
-
-const division: ExpressionProduction<{ type: '/' }> = {
-  token: '/',
-
-  infix (token, stream, expression, left) {
-    const right = expression()
-
-    if (right === null) {
-      throw new Error('Expected right-hand-side expression')
-    }
-
-    return { type: 'operator', value: '/', left, right }
-  }
-}
-
-const addition: ExpressionProduction<{ type: '+' }> = {
+const addition: ExpressionProduction<Plus, Constant | Operator> = {
   token: '+',
 
   prefix (token, { peek, accept }) {
@@ -79,7 +61,7 @@ const addition: ExpressionProduction<{ type: '+' }> = {
   }
 }
 
-const subtraction: ExpressionProduction<{ type: '-' }> = {
+const subtraction: ExpressionProduction<Minus, Constant | Operator> = {
   token: '-',
 
   prefix (token, { peek, accept }) {
@@ -103,7 +85,35 @@ const subtraction: ExpressionProduction<{ type: '-' }> = {
   }
 }
 
-const exponentiation: ExpressionProduction<{ type: '^' }> = {
+const multiplication: ExpressionProduction<Asterix, Operator> = {
+  token: '*',
+
+  infix (token, stream, expression, left) {
+    const right = expression()
+
+    if (right === null) {
+      throw new Error('Expected right-hand-side expression')
+    }
+
+    return { type: 'operator', value: '*', left, right }
+  }
+}
+
+const division: ExpressionProduction<Slash, Operator> = {
+  token: '/',
+
+  infix (token, stream, expression, left) {
+    const right = expression()
+
+    if (right === null) {
+      throw new Error('Expected right-hand-side expression')
+    }
+
+    return { type: 'operator', value: '/', left, right }
+  }
+}
+
+const exponentiation: ExpressionProduction<Caret, Operator> = {
   token: '^',
   associate: 'right',
 
@@ -119,7 +129,7 @@ const exponentiation: ExpressionProduction<{ type: '^' }> = {
 }
 
 const ExpressionGrammar: Grammar<ExpressionToken, Expression> = [
-  constant,
+  number,
   exponentiation,
   [multiplication, division],
   [addition, subtraction]
