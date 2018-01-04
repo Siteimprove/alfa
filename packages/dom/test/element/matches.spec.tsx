@@ -37,3 +37,54 @@ test('Matches an element against a descendant selector', t => {
     t.true(matches(foo, 'div #foo'))
   }
 })
+
+test('Matches an element against a direct descendant selector', t => {
+  const document: Element = (
+    <div>
+      <span id='foo'></span>
+    </div>
+  )
+
+  const foo = find(document, '#foo')
+
+  if (foo === null) {
+    t.fail()
+  } else {
+    t.true(matches(foo, 'div > #foo'))
+  }
+})
+
+test('Matches an element against a sibling selector', t => {
+  const document: Element = (
+    <div>
+      <p></p>
+      <b></b>
+      <span id='foo'></span>
+    </div>
+  )
+
+  const foo = find(document, '#foo')
+
+  if (foo === null) {
+    t.fail()
+  } else {
+    t.true(matches(foo, 'p ~ #foo'))
+  }
+})
+
+test('Matches an element against a direct sibling selector', t => {
+  const document: Element = (
+    <div>
+      <p></p>
+      <span id='foo'></span>
+    </div>
+  )
+
+  const foo = find(document, '#foo')
+
+  if (foo === null) {
+    t.fail()
+  } else {
+    t.true(matches(foo, 'p + #foo'))
+  }
+})
