@@ -7,14 +7,14 @@ const groups = [
     events: [
       {
         type: 'change',
-        taskFiles: 'build/tasks/babel.js'
+        taskFiles: 'build/tasks/babel/transform.js'
+      },
+      {
+        type: 'add',
+        taskFiles: 'build/tasks/babel/transform.js'
       }
     ]
   }
 ]
 
-watcher.add(groups, (err, trees) => {
-  if (err) {
-    console.error(err)
-  }
-})
+watcher.add(groups)
