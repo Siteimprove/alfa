@@ -2,7 +2,6 @@ const { notify } = require('wsk')
 const babel = require('@babel/core')
 const { read, write } = require('../../utils/file')
 const { extension } = require('../../utils/path')
-const { transform } = require('../../utils/babel')
 
 const config = {
   presets: [
@@ -27,7 +26,7 @@ async function onEvent (event, path) {
     const code = await read(path)
     const result = await transform(code, config)
 
-    const out = extension(path.replace('src', 'dist'), '.js')
+    const out = extension(path.replace('/src/', '/dist/'), '.js')
 
     await write(out, result.code)
 
