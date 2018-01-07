@@ -1,4 +1,12 @@
-const { extname, basename, dirname, join } = require('path')
+const { basename, dirname, extname, relative, join } = require('path')
+
+function base (path, extension) {
+  return extension ? basename(path) : basename(path, extname(path))
+}
+
+function directory (path) {
+  return dirname(path)
+}
 
 function extension (path, extension) {
   const ext = extname(path)
@@ -7,10 +15,7 @@ function extension (path, extension) {
     return ext
   }
 
-  const dir = dirname(path)
-  const base = basename(path, ext)
-
-  return join(dir, base + extension)
+  return join(directory(path), base(path, false) + extension)
 }
 
-module.exports = { extension }
+module.exports = { base, directory, extension, relative }
