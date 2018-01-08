@@ -1,4 +1,4 @@
-import test from 'ava'
+import { test } from 'tap'
 import { Grammar, Production, parse } from '../src/parser'
 
 type Constant = { type: 'constant', value: number }
@@ -135,7 +135,7 @@ const ExpressionGrammar: Grammar<ExpressionToken, Expression> = [
   [addition, subtraction]
 ]
 
-test('operator precedence', t => {
+test('operator precedence', async t => {
   const tokens = [
     { type: 'number', value: 1 },
     { type: '*' },
@@ -143,6 +143,4 @@ test('operator precedence', t => {
     { type: '+' },
     { type: 'number', value: 3 }
   ]
-
-  t.snapshot(parse(tokens, ExpressionGrammar))
 })

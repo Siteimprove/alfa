@@ -1,7 +1,7 @@
-import test, { TestContext } from 'ava'
+import { test, TestContext } from 'tap'
 import { CssTree, parse } from '../src/parser'
 
-function css (t: TestContext, input: string, expected: CssTree) {
+async function css (t: TestContext, input: string, expected: CssTree) {
   t.deepEqual(parse(input), expected)
 }
 

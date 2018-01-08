@@ -1,26 +1,26 @@
-import test from 'ava'
+import { test } from 'tap'
 import { Element } from '../../src/types'
 import { find } from '../../src/element/find'
 import { matches } from '../../src/element/matches'
 
-test('Matches an element against a tag', t => {
+test('Matches an element against a tag', async t => {
   t.true(matches(<div></div>, 'div'))
 })
 
-test('Matches an element against a class', t => {
+test('Matches an element against a class', async t => {
   t.true(matches(<div class='foo'></div>, '.foo'))
 })
 
-test('Matches an element against an ID', t => {
+test('Matches an element against an ID', async t => {
   t.true(matches(<div id='foo'></div>, '#foo'))
 })
 
-test('Matches an element against a list of selectors', t => {
+test('Matches an element against a list of selectors', async t => {
   t.true(matches(<div class='foo'></div>, '.foo, #bar'))
   t.true(matches(<div id='bar'></div>, '.foo, #bar'))
 })
 
-test('Matches an element against a descendant selector', t => {
+test('Matches an element against a descendant selector', async t => {
   const document: Element = (
     <div>
       <p>
@@ -38,7 +38,7 @@ test('Matches an element against a descendant selector', t => {
   }
 })
 
-test('Matches an element against a direct descendant selector', t => {
+test('Matches an element against a direct descendant selector', async t => {
   const document: Element = (
     <div>
       <span id='foo'></span>
@@ -54,7 +54,7 @@ test('Matches an element against a direct descendant selector', t => {
   }
 })
 
-test('Matches an element against a sibling selector', t => {
+test('Matches an element against a sibling selector', async t => {
   const document: Element = (
     <div>
       <p></p>
@@ -72,7 +72,7 @@ test('Matches an element against a sibling selector', t => {
   }
 })
 
-test('Matches an element against a direct sibling selector', t => {
+test('Matches an element against a direct sibling selector', async t => {
   const document: Element = (
     <div>
       <p></p>

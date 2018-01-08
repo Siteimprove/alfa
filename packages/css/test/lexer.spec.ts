@@ -1,8 +1,8 @@
-import test, { TestContext } from 'ava'
+import { test } from 'tap'
 import { WithLocation } from '@alfa/lang'
 import { CssToken, lex } from '../src/lexer'
 
-function css (t: TestContext, input: string, expected: Array<WithLocation<CssToken>>) {
+async function css (t: TestContext, input: string, expected: Array<WithLocation<CssToken>>) {
   t.deepEqual(lex(input), expected)
 }
 

@@ -1,4 +1,4 @@
-import test from 'ava'
+import { test } from 'tap'
 
 import { check } from '@alfa/rule'
 import { find, findAll } from '@alfa/dom'

@@ -1,39 +1,27 @@
 const { notify } = require('wsk')
 const tap = require('tap')
-const reporter = require('tap-mocha-reporter')
-const register = require('@babel/register')
+const Parser = require('tap-parser')
 const { relative } = require('../../utils/path')
 
-require('@alfa/jsx/register')
+const parser = new Parser()
+const stream = tap.pipe(parser)
 
-register({
-  presets: [
-    '@alfa/build/babel'
-  ],
-  ignore: [
-    'node_modules',
+parser.on('child', test => {
+  const { name, ok } = test
 
-    // Don't compile our Babel preset as this would cause a recursion error.
-    'packages/build/babel.js'
-  ],
-  extensions: [
-    '.js',
-    '.jsx',
-    '.ts',
-    '.tsx'
-  ]
+  notify({
+    message: `Test ${ok ? 'passed' : 'failed'}`,
+    value: name,
+    display: ok ? 'success' : 'error'
+  })
 })
 
 async function onEvent (event, path) {
-  tap.pipe(reporter('spec'))
-
   if (/\.spec\.tsx?/.test(path)) {
-    notify({
-      message: 'Testing',
-      value: path
-    })
-
-    require(relative(__dirname, `${path}`))
+    await tap.spawn('node', [
+      '--require', './build/tasks/ava/environment.js',
+      path
+    ], path)
   }
 }
 

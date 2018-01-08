@@ -1,8 +1,8 @@
-import test from 'ava'
+import { test } from 'tap'
 import { Element } from '../src/types'
 import { digest, hasDigest } from '../src/digest'
 
-test('Computes the digest value of a DOM node', t => {
+test('Computes the digest value of a DOM node', async t => {
   const foo: Element = (
     <div class='foo'>
       Hello world!

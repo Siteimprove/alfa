@@ -1,4 +1,3 @@
-import { TestContext } from 'ava'
 import { Outcome, Result, Target, Requirement } from '@alfa/rule'
 import { render } from '@alfa/dom'
 
