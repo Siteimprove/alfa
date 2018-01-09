@@ -6,91 +6,91 @@ async function css (t: TestContext, input: string, expected: Array<WithLocation<
   t.deepEqual(lex(input), expected)
 }
 
-test('Can lex whitespace', t => css(t,
+test('Can lex whitespace', async t => css(t,
   '  \n',
   [
     { type: 'whitespace', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex a comment', t => css(t,
+test('Can lex a comment', async t => css(t,
   '/*Hello world*/',
   [
     { type: 'comment', value: 'Hello world', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex an ident', t => css(t,
+test('Can lex an ident', async t => css(t,
   'foo',
   [
     { type: 'ident', value: 'foo', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex an ident prefixed with a single hyphen', t => css(t,
+test('Can lex an ident prefixed with a single hyphen', async t => css(t,
   '-foo',
   [
     { type: 'ident', value: '-foo', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex an ident prefixed with a double hyphen', t => css(t,
+test('Can lex an ident prefixed with a double hyphen', async t => css(t,
   '--foo',
   [
     { type: 'ident', value: '--foo', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex an ident containing an underscore', t => css(t,
+test('Can lex an ident containing an underscore', async t => css(t,
   'foo_bar',
   [
     { type: 'ident', value: 'foo_bar', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex an ident containing a hyphen', t => css(t,
+test('Can lex an ident containing a hyphen', async t => css(t,
   'foo-bar',
   [
     { type: 'ident', value: 'foo-bar', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex a double quoted string', t => css(t,
+test('Can lex a double quoted string', async t => css(t,
   '"foo"',
   [
     { type: 'string', value: 'foo', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex a single quoted string', t => css(t,
+test('Can lex a single quoted string', async t => css(t,
   '\'foo\'',
   [
     { type: 'string', value: 'foo', line: 0, column: 0 }
   ]
 ))
 
-test('Can lex an integer', t => css(t,
+test('Can lex an integer', async t => css(t,
   '123',
   [
     { type: 'number', value: 123, line: 0, column: 0 }
   ]
 ))
 
-test('Can lex a decimal', t => css(t,
+test('Can lex a decimal', async t => css(t,
   '123.456',
   [
     { type: 'number', value: 123.456, line: 0, column: 0 }
   ]
 ))
 
-test('Can lex a number in E-notation', t => css(t,
+test('Can lex a number in E-notation', async t => css(t,
   '123.456e2',
   [
     { type: 'number', value: 123.456e2, line: 0, column: 0 }
   ]
 ))
 
-test('Can lex a rule declaration', t => css(t,
+test('Can lex a rule declaration', async t => css(t,
   '#foo{background:none}',
   [
     { type: 'delim', value: '#', line: 0, column: 0 },

@@ -5,7 +5,7 @@ async function css (t: TestContext, input: string, expected: CssTree) {
   t.deepEqual(parse(input), expected)
 }
 
-test('Can parse a type selector', t => css(t,
+test('Can parse a type selector', async t => css(t,
   'div',
   {
     type: 'type-selector',
@@ -13,7 +13,7 @@ test('Can parse a type selector', t => css(t,
   }
 ))
 
-test('Can parse a class selector', t => css(t,
+test('Can parse a class selector', async t => css(t,
   '.foo',
   {
     type: 'class-selector',
@@ -21,7 +21,7 @@ test('Can parse a class selector', t => css(t,
   }
 ))
 
-test('Can parse an ID selector', t => css(t,
+test('Can parse an ID selector', async t => css(t,
   '#foo',
   {
     type: 'id-selector',
@@ -29,7 +29,7 @@ test('Can parse an ID selector', t => css(t,
   }
 ))
 
-test('Can parse a compound selector', t => css(t,
+test('Can parse a compound selector', async t => css(t,
   '#foo.bar',
   {
     type: 'compound-selector',
@@ -46,7 +46,7 @@ test('Can parse a compound selector', t => css(t,
   }
 ))
 
-test('Can parse a compound selector with a type in prefix position', t => css(t,
+test('Can parse a compound selector with a type in prefix position', async t => css(t,
   'div.foo',
   {
     type: 'compound-selector',
@@ -63,7 +63,7 @@ test('Can parse a compound selector with a type in prefix position', t => css(t,
   }
 ))
 
-test('Can parse a single descendant selector', t => css(t,
+test('Can parse a single descendant selector', async t => css(t,
   'div .foo',
   {
     type: 'relative-selector',
@@ -79,7 +79,7 @@ test('Can parse a single descendant selector', t => css(t,
   }
 ))
 
-test('Can parse a single descendant selector with a right-hand type selector', t => css(t,
+test('Can parse a single descendant selector with a right-hand type selector', async t => css(t,
   'div span',
   {
     type: 'relative-selector',
@@ -95,7 +95,7 @@ test('Can parse a single descendant selector with a right-hand type selector', t
   }
 ))
 
-test('Can parse a double descendant selector', t => css(t,
+test('Can parse a double descendant selector', async t => css(t,
   'div .foo #bar',
   {
     type: 'relative-selector',
@@ -119,7 +119,7 @@ test('Can parse a double descendant selector', t => css(t,
   }
 ))
 
-test('Can parse a direct descendant selector', t => css(t,
+test('Can parse a direct descendant selector', async t => css(t,
   'div > .foo',
   {
     type: 'relative-selector',
@@ -135,7 +135,7 @@ test('Can parse a direct descendant selector', t => css(t,
   }
 ))
 
-test('Can parse a sibling selector', t => css(t,
+test('Can parse a sibling selector', async t => css(t,
   'div ~ .foo',
   {
     type: 'relative-selector',
@@ -151,7 +151,7 @@ test('Can parse a sibling selector', t => css(t,
   }
 ))
 
-test('Can parse a direct sibling selector', t => css(t,
+test('Can parse a direct sibling selector', async t => css(t,
   'div + .foo',
   {
     type: 'relative-selector',
@@ -167,7 +167,7 @@ test('Can parse a direct sibling selector', t => css(t,
   }
 ))
 
-test('Can parse a list of simple selectors', t => css(t,
+test('Can parse a list of simple selectors', async t => css(t,
   '.foo, .bar, .baz',
   {
     type: 'selector-list',
@@ -188,7 +188,7 @@ test('Can parse a list of simple selectors', t => css(t,
   }
 ))
 
-test('Can parse a list of simple and compound selectors', t => css(t,
+test('Can parse a list of simple and compound selectors', async t => css(t,
   '.foo, #bar.baz',
   {
     type: 'selector-list',
