@@ -3,7 +3,7 @@ const { notify } = require('wsk')
 const { gray } = require('chalk')
 const tap = require('tap')
 const Parser = require('tap-parser')
-const { relative } = require('../../utils/path')
+const environment = require.resolve('./environment')
 
 tap.jobs = cpus().length
 
@@ -33,10 +33,7 @@ parser.on('child', test => {
 
 async function onEvent (event, path) {
   if (/\.spec\.tsx?/.test(path)) {
-    await tap.spawn('node', [
-      '--require', './build/tasks/ava/environment.js',
-      path
-    ], path)
+    await tap.spawn('node', ['--require', environment, path], path)
   }
 }
 
