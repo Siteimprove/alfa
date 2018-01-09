@@ -11,7 +11,7 @@ parser.on('child', test => {
   const { name, ok } = test
 
   notify({
-    message: 'Running tests...',
+    message: 'Running tests from',
     value: name
   })
 
