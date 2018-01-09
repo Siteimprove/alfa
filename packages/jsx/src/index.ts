@@ -1,5 +1,7 @@
 import * as V from '@alfa/dom'
 
+const { assign } = Object
+
 export function jsx (tag: string, attributes: { [name: string]: string | number | boolean } | null, ...children: Array<V.Element | string>): V.Element {
   const element: V.Element = {
     type: 'element',
@@ -24,9 +26,9 @@ export function jsx (tag: string, attributes: { [name: string]: string | number 
       const parent = { parent: element }
 
       if (node.parent) {
-        child = Object.assign({}, node, parent)
+        child = assign({}, node, parent)
       } else {
-        child = Object.assign(node, parent)
+        child = assign(node, parent)
       }
     }
 
