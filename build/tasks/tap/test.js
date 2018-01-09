@@ -5,10 +5,7 @@ const tap = require('tap')
 const Parser = require('tap-parser')
 const environment = require.resolve('./environment')
 
-tap.jobs = cpus().length
-
 const parser = new Parser()
-const stream = tap.pipe(parser)
 
 parser.on('child', test => {
   const { name, ok } = test
@@ -30,6 +27,9 @@ parser.on('child', test => {
     })
   })
 })
+
+tap.jobs = cpus().length
+tap.pipe(parser)
 
 async function onEvent (event, path) {
   if (/\.spec\.tsx?/.test(path)) {

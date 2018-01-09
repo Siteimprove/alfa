@@ -1,8 +1,6 @@
-const register = require('@babel/register')
-
 require('@alfa/jsx/register')
 
-register({
+require('@babel/register')({
   presets: [
     '@alfa/build/babel'
   ],
