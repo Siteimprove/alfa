@@ -6,7 +6,9 @@ const { extension } = require('../../utils/path')
 const config = {
   presets: [
     '@alfa/build/babel'
-  ]
+  ],
+  sourceMaps: 'inline',
+  sourceRoot: process.cwd(),
 }
 
 function transform (code, options) {
@@ -24,11 +26,11 @@ function transform (code, options) {
 async function onEvent (event, path) {
   try {
     const code = await read(path)
-    const result = await transform(code, config)
+    const result = await transform(code, { ...config, filename: path })
 
-    const out = extension(path.replace('/src/', '/dist/'), '.js')
+    const out = path.replace('/src/', '/dist/')
 
-    await write(out, result.code)
+    await write(extension(out, '.js'), result.code)
 
     notify({
       message: 'Compilation succeeded',

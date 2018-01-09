@@ -3,6 +3,7 @@ const { notify } = require('wsk')
 const { gray } = require('chalk')
 const tap = require('tap')
 const Parser = require('tap-parser')
+const nyc = require.resolve('nyc/bin/nyc')
 const environment = require.resolve('./environment')
 
 const parser = new Parser()
@@ -33,7 +34,13 @@ tap.pipe(parser)
 
 async function onEvent (event, path) {
   if (/\.spec\.tsx?/.test(path)) {
-    await tap.spawn('node', ['--require', environment, path], path)
+    await tap.spawn(nyc, [
+      '--silent',
+      '--cache',
+      '--require', environment,
+      '--',
+      'node', path
+    ], path)
   }
 }
 
