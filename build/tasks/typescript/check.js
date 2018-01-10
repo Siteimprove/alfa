@@ -1,8 +1,7 @@
 const { notify } = require('wsk')
-const { createProgram, createTypeChecker, flattenDiagnosticMessageText } = require('typescript')
+const ts = require('typescript')
 const { codeFrameColumns } = require('@babel/code-frame')
-const { read } = require('../../utils/file')
-const { compilerOptions } = require('../../../tsconfig.json')
+const { stat, read, glob } = require('../../utils/file')
 
 function location (file, position) {
   const { line, character } = file.getLineAndCharacterOfPosition(position)
@@ -13,7 +12,11 @@ function location (file, position) {
 }
 
 function flatten (message) {
-  return flattenDiagnosticMessageText(message, '\n')
+  return ts.flattenDiagnosticMessageText(message, '\n')
+}
+
+function snapshot (data) {
+  return ts.ScriptSnapshot.fromString(data)
 }
 
 class TypeError {
@@ -43,35 +46,62 @@ class TypeError {
   }
 }
 
-async function onEvent (event, path) {
-  const program = createProgram([path], compilerOptions)
-  const checker = createTypeChecker(program, true)
+const service = ts.createLanguageService({
+  getScriptFileNames () {
+    return glob('packages/**/{src,test}/**/*.ts{,x}', { sync: true })
+  },
 
+  getScriptVersion (file) {
+    return stat(file, { sync: true }).mtime.toString()
+  },
+
+  getScriptSnapshot (file) {
+    try {
+      return snapshot(read(file, { sync: true }))
+    } catch (err) {
+      return null
+    }
+  },
+
+  getCurrentDirectory () {
+    return process.cwd()
+  },
+
+  getCompilationSettings () {
+    const { config } = ts.parseConfigFileTextToJson('tsconfig.json', read('tsconfig.json', { sync: true }))
+    const { options } = ts.parseJsonConfigFileContent(config, ts.sys, process.cwd())
+
+    return options
+  },
+
+  getDefaultLibFileName (options) {
+    return ts.getDefaultLibFilePath(options)
+  }
+})
+
+function onEvent (event, path) {
+  const program = service.getProgram()
   const source = program.getSourceFile(path)
-  const diagnostics = checker.getDiagnostics(source)
+  const diagnostics = service.getSemanticDiagnostics(path)
 
   if (diagnostics.length === 0) {
     notify({
-      message: 'Checking succeeded',
+      message: 'Typecheck succeeded',
       value: path,
       display: 'success'
     })
   } else {
-    const group = notify.group()
-
-    for (const { file, start: position, length, messageText } of diagnostics) {
+    for (const { start: position, length, messageText } of diagnostics) {
       const start = location(source, position)
       const end = location(source, position + length)
 
-      group.add({
-        message: 'Checking failed',
+      notify({
+        message: 'Typecheck failed',
         value: path,
         display: 'error',
-        error: new TypeError(flatten(messageText), file.text, start, end)
+        error: new TypeError(flatten(messageText), source.text, start, end)
       })
     }
-
-    group.notify()
   }
 }
 

@@ -1,12 +1,32 @@
 const { dirname } = require('path')
-const { readFile, writeFile } = require('fs')
+const fs = require('fs')
 const mkdirp = require('mkdirp')
 const rimraf = require('rimraf')
 const globby = require('globby')
 
-function read (path) {
+function stat (path, options = { sync: false }) {
+  if (options.sync) {
+    return fs.statSync(path)
+  }
+
   return new Promise((resolve, reject) => {
-    readFile(path, 'utf8', (err, data) => {
+    fs.stat(path, (err, stats) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(stats)
+      }
+    })
+  })
+}
+
+function read (path, options = { sync: false }) {
+  if (options.sync) {
+    return fs.readFileSync(path, 'utf8')
+  }
+
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
         reject(err)
       } else {
@@ -16,13 +36,17 @@ function read (path) {
   })
 }
 
-function write (path, data) {
+function write (path, data, options = { sync: false }) {
+  if (options.sync) {
+    return mkdirp.sync(path), fs.writeFileSync(path, data)
+  }
+
   return new Promise((resolve, reject) => {
     mkdirp(dirname(path), err => {
       if (err) {
         reject(err)
       } else {
-        writeFile(path, data, err => {
+        fs.writeFile(path, data, err => {
           if (err) {
             reject(err)
           } else {
@@ -34,7 +58,11 @@ function write (path, data) {
   })
 }
 
-function remove (path) {
+function remove (path, options = { sync: false }) {
+  if (options.sync) {
+    return rimraf.sync(path)
+  }
+
   return new Promise((resolve, reject) => {
     rimraf(path, err => {
       if (err) {
@@ -46,8 +74,12 @@ function remove (path) {
   })
 }
 
-function glob (paths) {
+function glob (paths, options = { sync: false }) {
+  if (options.sync) {
+    return globby.sync(paths)
+  }
+
   return globby(paths)
 }
 
-module.exports = { read, write, remove, glob }
+module.exports = { stat, read, write, remove, glob }
