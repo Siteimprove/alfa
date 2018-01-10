@@ -48,7 +48,7 @@ class TypeError {
 
 const service = ts.createLanguageService({
   getScriptFileNames () {
-    return glob('packages/**/{src,test}/**/*.ts{,x}', { sync: true })
+    return glob('**/*.ts{,x}', { sync: true })
   },
 
   getScriptVersion (file) {
