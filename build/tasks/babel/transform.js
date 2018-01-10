@@ -24,6 +24,10 @@ function transform (code, options) {
 }
 
 async function onEvent (event, path) {
+  if (/\.spec\.tsx?/.test(path)) {
+    return
+  }
+
   try {
     const code = await read(path)
     const result = await transform(code, { ...config, filename: path })
