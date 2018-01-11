@@ -1,7 +1,8 @@
+import { Test } from '@alfa/test'
 import { Outcome, Result, Target, Requirement } from '@alfa/rule'
 import { render } from '@alfa/dom'
 
-export function outcome<T extends Target, R extends Requirement> (t: TestContext, results: Array<Result<T, R>>, assert: { [O in Outcome]?: Array<T | null> }) {
+export function outcome<T extends Target, R extends Requirement> (t: Test, results: Array<Result<T, R>>, assert: { [O in Outcome]?: Array<T | null> }) {
   const outcomes: Array<Outcome> = ['passed', 'failed', 'inapplicable']
 
   for (const outcome of outcomes) {

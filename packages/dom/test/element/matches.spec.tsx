@@ -1,4 +1,4 @@
-import { test } from 'tap'
+import { test } from '@alfa/test'
 import { Element } from '../../src/types'
 import { find } from '../../src/element/find'
 import { matches } from '../../src/element/matches'

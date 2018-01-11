@@ -15,5 +15,8 @@
   },
   "dependencies": {
     "moize": "^4.0.4"
+  },
+  "devDependencies": {
+    "@alfa/test": "^0.0.0"
   }
 }

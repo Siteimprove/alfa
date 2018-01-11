@@ -17,5 +17,8 @@
     "@alfa/css": "^0.0.0",
     "@types/jssha": "^0.0.29",
     "jssha": "^2.3.1"
+  },
+  "devDependencies": {
+    "@alfa/test": "^0.0.0"
   }
 }

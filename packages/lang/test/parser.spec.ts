@@ -1,4 +1,4 @@
-import { test } from 'tap'
+import { test } from '@alfa/test'
 import { Grammar, Production, parse } from '../src/parser'
 
 type Constant = { type: 'constant', value: number }

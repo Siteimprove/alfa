@@ -1,4 +1,4 @@
-import { test } from 'tap'
+import { test } from '@alfa/test'
 import { find, findAll } from '../../src/element/find'
 
 test('Finds all elements matching a selector', async t => {

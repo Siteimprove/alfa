@@ -1,4 +1,4 @@
-import { test } from 'tap'
+import { test } from '@alfa/test'
 
 import { UNIQUE_IDS } from '@alfa/wcag'
 

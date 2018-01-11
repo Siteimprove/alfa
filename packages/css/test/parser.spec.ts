@@ -1,8 +1,8 @@
-import { test, TestContext } from 'tap'
+import { test, Test } from '@alfa/test'
 import { CssTree, parse } from '../src/parser'
 
-async function css (t: TestContext, input: string, expected: CssTree) {
-  t.deepEqual(parse(input), expected)
+async function css (t: Test, input: string, expected: CssTree) {
+  t.deepEqual(parse(input), expected, 'Parse trees match')
 }
 
 test('Can parse a type selector', async t => css(t,

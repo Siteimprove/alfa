@@ -1,5 +1,4 @@
-import { test } from 'tap'
-
+import { test } from '@alfa/test'
 import { check } from '@alfa/rule'
 import { find, findAll } from '@alfa/dom'
 

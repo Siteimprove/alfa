@@ -12,5 +12,8 @@
   "private": true,
   "scripts": {
     "prepare": "gulp build:http"
+  },
+  "devDependencies": {
+    "@alfa/test": "^0.0.0"
   }
 }

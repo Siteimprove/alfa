@@ -1,6 +1,7 @@
 const { notify } = require('wsk')
 const ts = require('typescript')
-const { codeFrameColumns } = require('@babel/code-frame')
+const { gray } = require('chalk')
+const { CodeError } = require('../../utils/error')
 
 function location (file, position) {
   const { line, character } = file.getLineAndCharacterOfPosition(position)
@@ -12,33 +13,6 @@ function location (file, position) {
 
 function flatten (message) {
   return ts.flattenDiagnosticMessageText(message, '\n')
-}
-
-class TypeError {
-  get name () {
-    return 'TypeError'
-  }
-
-  get stack () {
-    return this.toString()
-  }
-
-  constructor (message, file, start, end) {
-    this.message = message
-    this.file = file
-    this.start = start
-    this.end = end
-  }
-
-  toString () {
-    const { name, message, file, start, end } = this
-
-    const frame = codeFrameColumns(file, { start, end }, {
-      highlightCode: true
-    })
-
-    return `${name}: ${message}\n${frame}`
-  }
 }
 
 class Project {
@@ -81,25 +55,26 @@ const service = ts.createLanguageService(new Project())
 
 function onEvent (event, path) {
   const diagnostics = service.getSemanticDiagnostics(path)
+  const ok = diagnostics.length === 0
 
-  if (diagnostics.length === 0) {
-    notify({
-      message: 'Typecheck succeeded',
-      value: path,
-      display: 'success'
-    })
-  } else {
+  notify({
+    message: `Typecheck ${ok ? 'succeeded' : 'failed'}`,
+    value: path,
+    display: ok ? 'success' : 'error'
+  })
+
+  if (!ok) {
     const source = service.getSourceFile(path)
 
-    for (const { start: position, length, messageText } of diagnostics) {
+    for (const { code, start: position, length, messageText } of diagnostics) {
       const start = location(source, position)
       const end = location(source, position + length)
+      const { text } = source
 
       notify({
-        message: 'Typecheck failed',
-        value: path,
+        message: gray('--- ') + flatten(messageText),
         display: 'error',
-        error: new TypeError(flatten(messageText), source.text, start, end)
+        error: new CodeError(text, start, end)
       })
     }
   }

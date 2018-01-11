@@ -1,4 +1,4 @@
-import { test } from 'tap'
+import { test } from '@alfa/test'
 import { classlist } from '../../src/element/classlist'
 
 test('Constructs a set of classes from an element', async t => {

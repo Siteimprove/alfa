@@ -22,5 +22,8 @@
     "@types/puppeteer": "^0.13.2",
     "browserify": "^14.5.0",
     "puppeteer": "^0.13.0"
+  },
+  "devDependencies": {
+    "@alfa/test": "^0.0.0"
   }
 }

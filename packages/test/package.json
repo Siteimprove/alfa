@@ -1,19 +1,17 @@
 {
-  "name": "@alfa/layout",
+  "name": "@alfa/test",
   "version": "0.0.0",
   "description": "alfa!",
   "main": "dist/index.js",
   "types": "src/index.ts",
-  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/layout",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/test",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "prepare": "gulp build:layout"
-  },
-  "devDependencies": {
-    "@alfa/test": "^0.0.0"
+  "scripts": {},
+  "dependencies": {
+    "tap": "^11.0.1"
   }
 }

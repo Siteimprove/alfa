@@ -3,15 +3,20 @@ const { notify } = require('wsk')
 const { gray } = require('chalk')
 const tap = require('tap')
 const Parser = require('tap-parser')
+const { read } = require('../../utils/file')
+const { CodeError } = require('../../utils/error')
 const nyc = require.resolve('nyc/bin/nyc')
 const environment = require.resolve('./environment')
 
 const parser = new Parser()
 
 parser.on('child', test => {
+  const { name: path } = test
+
   notify({
     message: 'Running tests',
-    value: test.name
+    value: path,
+    display: 'reload'
   })
 
   test.on('child', test => {
@@ -22,6 +27,25 @@ parser.on('child', test => {
           value: test.name,
           display: ok ? 'success' : 'error'
         })
+
+        const source = read(path, { sync: true })
+
+        for (const failure of failures) {
+          const { found, wanted } = failure.diag
+          const { line, column } = failure.diag.at
+
+          notify({
+            message: gray('--- ') + failure.name,
+            display: 'error',
+            extend: {
+              desktop: false
+            },
+            error: new CodeError(source, {
+              line,
+              column
+            })
+          })
+        }
       }
     })
   })
@@ -30,7 +54,8 @@ parser.on('child', test => {
     if (ok) {
       notify({
         message: `Tests ${ok ? 'passed' : 'failed'}`,
-        display: ok ? 'success' : 'error'
+        value: path,
+        display: ok ? 'success' : 'error',
       })
     }
   })
@@ -41,7 +66,6 @@ tap.pipe(parser)
 
 async function onEvent (event, path) {
   if (/\.spec\.tsx?/.test(path)) {
-
     await tap.spawn(nyc, [
       '--silent',
       '--cache',
