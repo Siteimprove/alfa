@@ -5,7 +5,7 @@ const { extension } = require('../../utils/path')
 
 const config = {
   presets: [
-    '@alfa/build/babel'
+    'module:@alfa/babel'
   ],
   sourceMaps: 'inline',
   sourceRoot: process.cwd(),

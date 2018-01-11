@@ -1,6 +1,6 @@
 const { basename, dirname, extname, relative, join } = require('path')
 
-function base (path, extension) {
+function base (path, extension = true) {
   return extension ? basename(path) : basename(path, extname(path))
 }
 

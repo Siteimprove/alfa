@@ -2,7 +2,7 @@ require('@alfa/jsx/register')
 
 require('@babel/register')({
   presets: [
-    '@alfa/build/babel'
+    'module:@alfa/babel'
   ],
   ignore: [
     'node_modules',

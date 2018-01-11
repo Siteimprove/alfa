@@ -1,9 +1,9 @@
 {
-  "name": "@alfa/build",
+  "name": "@alfa/babel",
   "version": "0.0.0",
   "description": "alfa!",
-  "main": "src/index.js",
-  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/build",
+  "main": "index.js",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/babel",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
@@ -13,12 +13,6 @@
     "@babel/plugin-transform-react-jsx": "^7.0.0-beta.35",
     "@babel/preset-env": "^7.0.0-beta.35",
     "@babel/preset-stage-2": "^7.0.0-beta.35",
-    "@babel/preset-typescript": "^7.0.0-beta.35",
-    "hjson": "^3.1.0",
-    "stringify-object": "^3.2.1",
-    "through2": "^2.0.3"
-  },
-  "devDependencies": {
-    "@alfa/test": "^0.0.0"
+    "@babel/preset-typescript": "^7.0.0-beta.35"
   }
 }
