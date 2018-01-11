@@ -1,6 +1,8 @@
 const { notify } = require('wsk')
 const ts = require('typescript')
 const { gray } = require('chalk')
+const { stat } = require('../../utils/file')
+const { resolve } = require('../../utils/path')
 const { CodeError } = require('../../utils/error')
 
 function location (file, position) {
@@ -14,6 +16,8 @@ function location (file, position) {
 function flatten (message) {
   return ts.flattenDiagnosticMessageText(message, '\n')
 }
+
+const versions = new Map()
 
 class Project {
   constructor (config = 'tsconfig.json') {
@@ -31,7 +35,7 @@ class Project {
   }
 
   getScriptVersion (path) {
-    return this.getModifiedTime(path)
+    return versions.get(path)
   }
 
   getScriptSnapshot (path) {
@@ -53,7 +57,11 @@ class Project {
 
 const service = ts.createLanguageService(new Project())
 
-function onEvent (event, path) {
+async function onEvent (event, path) {
+  const { mtime } = await stat(path)
+
+  versions.set(resolve(path), mtime.toString())
+
   const diagnostics = service.getSemanticDiagnostics(path)
   const ok = diagnostics.length === 0
 
