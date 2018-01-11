@@ -8,7 +8,7 @@ require('@babel/register')({
     'node_modules',
 
     // Don't compile our Babel preset as this would cause a recursion error.
-    'packages/build/babel.js'
+    'packages/babel/index.js'
   ],
   extensions: [
     '.js',
