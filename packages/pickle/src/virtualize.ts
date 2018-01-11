@@ -64,22 +64,22 @@ export function virtualize (node: Node, options: VirtualizeOptions = {}): WithRe
   switch (node.nodeType) {
     case node.ELEMENT_NODE: {
       const element = node as Element
+      const attributes: { [name: string]: V.Attribute } = {}
 
-      const { attributes } = element
+      for (let i = 0; i < element.attributes.length; i++) {
+        const { name, value } = element.attributes[i]
+        attributes[name] = value
+      }
 
       const virtual: WithReference<V.Element> = {
         type: 'element',
         tag: element.tagName.toLowerCase(),
         namespace: element.namespaceURI,
-        attributes: {},
+        attributes,
         parent: null,
+        shadow: null,
         children: [],
         ref: element
-      }
-
-      for (let i = 0; i < attributes.length; i++) {
-        const { name, value } = attributes[i]
-        virtual.attributes[name] = value
       }
 
       children(element, virtual, options)

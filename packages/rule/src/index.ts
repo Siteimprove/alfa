@@ -1,11 +1,13 @@
 import { Node } from '@alfa/dom'
 import { Style, State } from '@alfa/css'
+import { Layout } from '@alfa/layout'
 
 export type Outcome = 'passed' | 'failed' | 'inapplicable'
 
 export interface Context {
   readonly document: Node,
   readonly style: Map<Element, { [S in State]: Style }>
+  readonly layout: Map<Element, Layout>
 }
 
 export type Target = Node

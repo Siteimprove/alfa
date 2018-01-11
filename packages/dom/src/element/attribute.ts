@@ -7,10 +7,10 @@ export function attribute<K extends keyof Element['attributes']> (
   name: K,
   options: Options = { trim: false }
 ): Element['attributes'][K] {
-  const value = element.attributes[name]
+  let value = element.attributes[name]
 
   if (typeof value === 'string' && options.trim) {
-    return value.trim()
+    value = value.trim()
   }
 
   return value

@@ -30,7 +30,7 @@ export function matches (element: Element, selector: string | Selector | Selecto
     case 'selector-list':
       return parsed.selectors.some(selector => matches(element, selector))
 
-    case 'relative-selector':
+    case 'relative-selector': {
       let { parent } = element
 
       if (!matches(element, parsed.selector) || !isElement(parent)) {
@@ -72,5 +72,8 @@ export function matches (element: Element, selector: string | Selector | Selecto
 
           return false
       }
+    }
   }
+
+  return false
 }
