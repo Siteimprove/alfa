@@ -9,23 +9,30 @@ const environment = require.resolve('./environment')
 const parser = new Parser()
 
 parser.on('child', test => {
-  const { name, ok } = test
-
   notify({
-    message: 'Running tests from',
-    value: name
+    message: 'Running tests',
+    value: test.name
   })
 
   test.on('child', test => {
-    const { name } = test
-
     test.on('complete', ({ ok, failures }) => {
+      if (!ok) {
+        notify({
+          message: `Test ${ok ? 'passed' : 'failed'}`,
+          value: test.name,
+          display: ok ? 'success' : 'error'
+        })
+      }
+    })
+  })
+
+  test.on('complete', ({ ok }) => {
+    if (ok) {
       notify({
-        message: `Test ${ok ? 'passed' : 'failed'}`,
-        value: name,
+        message: `Tests ${ok ? 'passed' : 'failed'}`,
         display: ok ? 'success' : 'error'
       })
-    })
+    }
   })
 })
 
@@ -34,12 +41,14 @@ tap.pipe(parser)
 
 async function onEvent (event, path) {
   if (/\.spec\.tsx?/.test(path)) {
+
     await tap.spawn(nyc, [
       '--silent',
       '--cache',
-      '--require', environment,
       '--',
-      'node', path
+      'node',
+      '--require', environment,
+      path
     ], path)
   }
 }
