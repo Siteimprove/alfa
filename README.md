@@ -14,6 +14,8 @@
 
 -   Alfa is committed to complete transparency on how test results came to be. Every line of code that has the potential to influence test results will therefore always reside within Alfa itself and never with a third-party. This does not mean that you will never encounter a dependency from a third-party, only that there are limitations to what third-party dependencies may be used for.
 
+-   Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure.
+
 ## Funding
 
 [<img src="https://upload.wikimedia.org/wikipedia/commons/8/84/European_Commission.svg" width="200" align="right" alt="Logo of the European Commission">](https://ec.europa.eu/)
