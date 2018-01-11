@@ -1,4 +1,4 @@
-const { watcher } = require('wsk')
+const { watcher, notify } = require('wsk')
 
 const tasks = 'build/tasks'
 
@@ -7,7 +7,7 @@ const groups = [
     serviceName: 'TypeScript',
     path: 'packages/**/{src,test}/**/*.ts{,x}',
     displayOptions: {
-      hideChildFiles: true
+      hideAll: true
     },
     events: [
       {
@@ -33,7 +33,7 @@ const groups = [
     serviceName: 'Locale',
     path: 'packages/**/locale/*.hjson',
     displayOptions: {
-      hideChildFiles: true
+      hideAll: true
     },
     events: [
       {
@@ -52,4 +52,13 @@ const groups = [
   }
 ]
 
-watcher.add(groups)
+async function watch () {
+  await new Promise(resolve => watcher.add(groups, resolve))
+
+  notify({
+    message: 'Watching files...',
+    display: 'watch'
+  })
+}
+
+watch()

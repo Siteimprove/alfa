@@ -4,7 +4,9 @@ const stringify = require('stringify-object')
 const { base, extension } = require('../../utils/path')
 const { read, write } = require('../../utils/file')
 
-async function onEvent (event, path) {
+async function onEvent (event, path, options = {}) {
+  const { silent } = options
+
   try {
     const hjson = await read(path)
     const json = parse(hjson)
@@ -24,7 +26,8 @@ export default locale
     notify({
       message: 'Compilation succeeded',
       value: path,
-      display: 'compile'
+      display: 'compile',
+      silent
     })
   } catch (err) {
     notify({

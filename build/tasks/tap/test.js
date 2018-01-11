@@ -1,6 +1,6 @@
 const { cpus } = require('os')
 const { notify } = require('wsk')
-const { gray } = require('chalk')
+const { gray, reset } = require('chalk')
 const tap = require('tap')
 const Parser = require('tap-parser')
 const { read } = require('../../utils/file')
@@ -12,30 +12,38 @@ const parser = new Parser()
 
 parser.on('child', test => {
   const { name: path } = test
-
-  notify({
-    message: 'Running tests',
-    value: path,
-    display: 'reload'
-  })
+  const results = []
 
   test.on('child', test => {
     test.on('complete', ({ ok, failures }) => {
       if (!ok) {
+        results.push({ name: test.name, failures })
+      }
+    })
+  })
+
+  test.on('complete', async ({ ok }) => {
+    if (ok) {
+      notify({
+        message: 'Tests passed',
+        value: path,
+        display: 'success'
+      })
+    } else {
+      const source = await read(path)
+
+      for (const { name, failures } of results) {
         notify({
           message: `Test ${ok ? 'passed' : 'failed'}`,
-          value: test.name,
-          display: ok ? 'success' : 'error'
+          value: `${path} ${reset.dim(name)}`,
+          display: ok ? 'success' : 'error',
         })
 
-        const source = read(path, { sync: true })
-
-        for (const failure of failures) {
-          const { found, wanted } = failure.diag
-          const { line, column } = failure.diag.at
+        for (const { name, diag } of failures) {
+          const { line, column } = diag.at
 
           notify({
-            message: gray('--- ') + failure.name,
+            message: `${gray('---')} ${name}`,
             display: 'error',
             extend: {
               desktop: false
@@ -47,16 +55,6 @@ parser.on('child', test => {
           })
         }
       }
-    })
-  })
-
-  test.on('complete', ({ ok }) => {
-    if (ok) {
-      notify({
-        message: `Tests ${ok ? 'passed' : 'failed'}`,
-        value: path,
-        display: ok ? 'success' : 'error',
-      })
     }
   })
 })
