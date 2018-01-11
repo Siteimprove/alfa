@@ -23,10 +23,12 @@ function transform (code, options) {
   })
 }
 
-async function onEvent (event, path) {
-  if (/\.spec\.tsx?/.test(path)) {
+async function onEvent (event, path, options = {}) {
+  if (!/\/src\//.test(path)) {
     return
   }
+
+  const { silent } = options
 
   try {
     const code = await read(path)
@@ -39,7 +41,8 @@ async function onEvent (event, path) {
     notify({
       message: 'Compilation succeeded',
       value: path,
-      display: 'compile'
+      display: 'compile',
+      silent
     })
   } catch (err) {
     notify({

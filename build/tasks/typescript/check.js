@@ -57,7 +57,8 @@ class Project {
 
 const service = ts.createLanguageService(new Project())
 
-async function onEvent (event, path) {
+async function onEvent (event, path, options = {}) {
+  const { silent } = options
   const { mtime } = await stat(path)
 
   versions.set(resolve(path), mtime.toString())
@@ -68,7 +69,8 @@ async function onEvent (event, path) {
   notify({
     message: `Typecheck ${ok ? 'succeeded' : 'failed'}`,
     value: path,
-    display: ok ? 'success' : 'error'
+    display: ok ? 'success' : 'error',
+    silent: ok && silent
   })
 
   if (!ok) {
