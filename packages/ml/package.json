@@ -10,9 +10,6 @@
   ],
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "prepare": "gulp build:ml"
-  },
   "dependencies": {
     "@alfa/img": "^0.0.0"
   },

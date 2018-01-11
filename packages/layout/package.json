@@ -10,9 +10,6 @@
   ],
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "prepare": "gulp build:layout"
-  },
   "devDependencies": {
     "@alfa/test": "^0.0.0"
   }

@@ -10,9 +10,6 @@
   ],
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "prepare": "gulp locale:wcag && gulp build:wcag"
-  },
   "dependencies": {
     "@alfa/dom": "^0.0.0",
     "@alfa/rule": "^0.0.0"

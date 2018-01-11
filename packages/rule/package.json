@@ -10,9 +10,6 @@
   ],
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "prepare": "gulp build:rule"
-  },
   "dependencies": {
     "@alfa/css": "^0.0.0",
     "@alfa/dom": "^0.0.0"

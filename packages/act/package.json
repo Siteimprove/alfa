@@ -10,10 +10,6 @@
   ],
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "test": "gulp test:act",
-    "prepare": "gulp build:act"
-  },
   "dependencies": {
     "@alfa/rule": "^0.0.0",
     "@alfa/wcag": "^0.0.0"
