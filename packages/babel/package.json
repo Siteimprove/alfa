@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "description": "alfa!",
   "main": "index.js",
-  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/babel",
-  "contributors": [
-    "Kasper Isager <kki@siteimprove.com>"
-  ],
+  "repository":
+    "https://github.com/siteimprove/alfa/tree/master/packages/babel",
+  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
   "dependencies": {

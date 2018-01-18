@@ -1,85 +1,85 @@
-const { dirname } = require('path')
-const fs = require('fs')
-const mkdirp = require('mkdirp')
-const rimraf = require('rimraf')
-const globby = require('globby')
+const { dirname } = require("path");
+const fs = require("fs");
+const mkdirp = require("mkdirp");
+const rimraf = require("rimraf");
+const globby = require("globby");
 
-function stat (path, options = { sync: false }) {
+function stat(path, options = { sync: false }) {
   if (options.sync) {
-    return fs.statSync(path)
+    return fs.statSync(path);
   }
 
   return new Promise((resolve, reject) => {
     fs.stat(path, (err, stats) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(stats)
+        resolve(stats);
       }
-    })
-  })
+    });
+  });
 }
 
-function read (path, options = { sync: false }) {
+function read(path, options = { sync: false }) {
   if (options.sync) {
-    return fs.readFileSync(path, 'utf8')
+    return fs.readFileSync(path, "utf8");
   }
 
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (err, data) => {
+    fs.readFile(path, "utf8", (err, data) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(data)
+        resolve(data);
       }
-    })
-  })
+    });
+  });
 }
 
-function write (path, data, options = { sync: false }) {
+function write(path, data, options = { sync: false }) {
   if (options.sync) {
-    return mkdirp.sync(path), fs.writeFileSync(path, data)
+    return mkdirp.sync(path), fs.writeFileSync(path, data);
   }
 
   return new Promise((resolve, reject) => {
     mkdirp(dirname(path), err => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
         fs.writeFile(path, data, err => {
           if (err) {
-            reject(err)
+            reject(err);
           } else {
-            resolve()
+            resolve();
           }
-        })
+        });
       }
-    })
-  })
+    });
+  });
 }
 
-function remove (path, options = { sync: false }) {
+function remove(path, options = { sync: false }) {
   if (options.sync) {
-    return rimraf.sync(path)
+    return rimraf.sync(path);
   }
 
   return new Promise((resolve, reject) => {
     rimraf(path, err => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve()
+        resolve();
       }
-    })
-  })
+    });
+  });
 }
 
-function glob (paths, options = { sync: false }) {
+function glob(paths, options = { sync: false }) {
   if (options.sync) {
-    return globby.sync(paths)
+    return globby.sync(paths);
   }
 
-  return globby(paths)
+  return globby(paths);
 }
 
-module.exports = { stat, read, write, remove, glob }
+module.exports = { stat, read, write, remove, glob };

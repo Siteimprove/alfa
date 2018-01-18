@@ -1,17 +1,17 @@
-const { watcher, notify } = require('wsk')
+const { watcher, notify } = require("wsk");
 
-const tasks = 'build/tasks'
+const tasks = "build/tasks";
 
 const groups = [
   {
-    serviceName: 'TypeScript',
-    path: 'packages/**/{src,test}/**/*.ts{,x}',
+    serviceName: "TypeScript",
+    path: "packages/**/{src,test}/**/*.ts{,x}",
     displayOptions: {
       hideAll: true
     },
     events: [
       {
-        type: 'change',
+        type: "change",
         taskFiles: [
           `${tasks}/babel/transform.js`,
           `${tasks}/typescript/check.js`,
@@ -19,7 +19,7 @@ const groups = [
         ]
       },
       {
-        type: 'add',
+        type: "add",
         taskFiles: [
           `${tasks}/babel/transform.js`,
           `${tasks}/typescript/check.js`,
@@ -30,35 +30,31 @@ const groups = [
   },
 
   {
-    serviceName: 'Locale',
-    path: 'packages/**/locale/*.hjson',
+    serviceName: "Locale",
+    path: "packages/**/locale/*.hjson",
     displayOptions: {
       hideAll: true
     },
     events: [
       {
-        type: 'change',
-        taskFiles: [
-          `${tasks}/locale/transform.js`
-        ]
+        type: "change",
+        taskFiles: [`${tasks}/locale/transform.js`]
       },
       {
-        type: 'add',
-        taskFiles: [
-          `${tasks}/locale/transform.js`
-        ]
+        type: "add",
+        taskFiles: [`${tasks}/locale/transform.js`]
       }
     ]
   }
-]
+];
 
-async function watch () {
-  await new Promise(resolve => watcher.add(groups, resolve))
+async function watch() {
+  await new Promise(resolve => watcher.add(groups, resolve));
 
   notify({
-    message: 'Watching files...',
-    display: 'watch'
-  })
+    message: "Watching files...",
+    display: "watch"
+  });
 }
 
-watch()
+watch();

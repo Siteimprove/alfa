@@ -5,9 +5,7 @@
   "main": "dist/index.js",
   "types": "src/index.ts",
   "repository": "https://github.com/siteimprove/alfa/tree/master/packages/img",
-  "contributors": [
-    "Kasper Isager <kki@siteimprove.com>"
-  ],
+  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
   "devDependencies": {

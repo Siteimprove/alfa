@@ -1,1 +1,1 @@
-global.jsx = require('./dist').jsx
+global.jsx = require("./dist").jsx;

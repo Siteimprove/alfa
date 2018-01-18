@@ -1,57 +1,55 @@
-const { notify } = require('wsk')
-const babel = require('@babel/core')
-const { read, write } = require('../../utils/file')
-const { extension } = require('../../utils/path')
+const { notify } = require("wsk");
+const babel = require("@babel/core");
+const { read, write } = require("../../utils/file");
+const { extension } = require("../../utils/path");
 
 const config = {
-  presets: [
-    'module:@alfa/babel'
-  ],
-  sourceMaps: 'inline',
-  sourceRoot: process.cwd(),
-}
+  presets: ["module:@alfa/babel"],
+  sourceMaps: "inline",
+  sourceRoot: process.cwd()
+};
 
-function transform (code, options) {
+function transform(code, options) {
   return new Promise((resolve, reject) => {
     babel.transform(code, options, (err, result) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(result)
+        resolve(result);
       }
-    })
-  })
+    });
+  });
 }
 
-async function onEvent (event, path, options = {}) {
+async function onEvent(event, path, options = {}) {
   if (!/\/src\//.test(path)) {
-    return
+    return;
   }
 
-  const { silent } = options
+  const { silent } = options;
 
   try {
-    const code = await read(path)
-    const result = await transform(code, { ...config, filename: path })
+    const code = await read(path);
+    const result = await transform(code, { ...config, filename: path });
 
-    const out = path.replace('/src/', '/dist/')
+    const out = path.replace("/src/", "/dist/");
 
-    await write(extension(out, '.js'), result.code)
+    await write(extension(out, ".js"), result.code);
 
     notify({
-      message: 'Compilation succeeded',
+      message: "Compilation succeeded",
       value: path,
-      display: 'compile',
+      display: "compile",
       silent
-    })
+    });
   } catch (err) {
     notify({
-      message: 'Compilation failed',
+      message: "Compilation failed",
       value: path,
-      display: 'error',
+      display: "error",
       error: err
-    })
+    });
   }
 }
 
-module.exports = { onEvent }
+module.exports = { onEvent };
