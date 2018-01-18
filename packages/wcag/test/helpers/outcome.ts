@@ -1,8 +1,8 @@
 import { Test } from '@alfa/test'
-import { Outcome, Result, Target, Requirement } from '@alfa/rule'
+import { Outcome, Result, Target, Aspect } from '@alfa/rule'
 import { render } from '@alfa/dom'
 
-export function outcome<T extends Target, R extends Requirement> (t: Test, results: Array<Result<T, R>>, assert: { [O in Outcome]?: Array<T | null> }) {
+export function outcome<T extends Target, A extends Aspect> (t: Test, results: Array<Result<T, A>>, assert: { [O in Outcome]?: Array<T | null> }) {
   const outcomes: Array<Outcome> = ['passed', 'failed', 'inapplicable']
 
   for (const outcome of outcomes) {
@@ -11,8 +11,13 @@ export function outcome<T extends Target, R extends Requirement> (t: Test, resul
 
     t.is(actual.length, expected.length, `There must be ${expected.length} ${outcome} results`)
 
-    for (const { target } of actual) {
-      t.true(expected.some(element => element === target), `${render(target)} must be ${outcome}`)
+    for (const target of expected) {
+      if (target === null) {
+      } else {
+        const holds = actual.some(result => result.outcome === 'inapplicable' || result.target === target)
+
+        t.true(holds, `${render(target)} must be ${outcome}`)
+      }
     }
   }
 }

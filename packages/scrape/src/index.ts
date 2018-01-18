@@ -1,7 +1,7 @@
 import { launch } from 'puppeteer'
 import browserify from 'browserify'
 import { Node } from '@alfa/dom'
-import { Context } from '@alfa/rule'
+import { Aspects } from '@alfa/rule'
 import * as Pickle from '@alfa/pickle'
 
 const PICKLE = require.resolve('@alfa/pickle')
@@ -40,7 +40,7 @@ export class Scraper {
     standalone: 'Alfa.Pickle'
   })
 
-  async scrape (url: string, options: Partial<ScrapeOptions> = {}): Promise<Context> {
+  async scrape (url: string, options: Partial<ScrapeOptions> = {}): Promise<Aspects> {
     const browser = await this._browser
     const pickle = await this._pickle
 

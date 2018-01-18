@@ -1,37 +1,22 @@
 {
   id: en
 
-  title: Element ID is not unique
+  title: Element IDs must be unique
 
   description:
     '''
-    The ID used for an element on the page is also used for another element on the page.
     '''
 
-  tests: [
+  applicability:
+    '''
+    This rule applies to any element with a non-empty ID attribute.
+    '''
+
+  expectations: [
     {
       description:
         '''
-        Construct a map from element IDs to sets of element nodes. Then, for every element with a non-empty ID within the context, do the following:
-
-        1. If the map contains an entry for the ID of the element, add the element to the associated set of elements.
-
-        2. If the map does not contain an entry for the ID of the element, set the entry for the ID of the element to a set containing that element.
-
-        If the resulting map contains no entries, i.e. no elements with IDs exist within the context, mark the context as inapplicable. Otherwise, continue to the next test.
-        '''
-      outcome: {
-        inapplicable: The context contains no elements with IDs
-      }
-    }
-    {
-      description:
-        '''
-        Using the map constructed in the previous test, do the following for every entry and its associated set of elements:
-
-        1. If the set contains only a single element, mark the single element as passed.
-
-        2. If the set contains more than one element, mark every element within the set as failed.
+        For each applicable element, no other element within the current [[document context]] has the same ID as the element currently considered.
         '''
       outcome: {
         passed: The element has a unique ID

@@ -2,98 +2,95 @@ import { Node } from '@alfa/dom'
 import { Style, State } from '@alfa/css'
 import { Layout } from '@alfa/layout'
 
-export type Outcome = 'passed' | 'failed' | 'inapplicable'
+export type Criterion = string
 
-export interface Context {
+export type Target = Node
+
+export interface Aspects {
   readonly document: Node,
   readonly style: Map<Element, { [S in State]: Style }>
   readonly layout: Map<Element, Layout>
 }
 
-export type Target = Node
+export type Aspect = keyof Aspects
 
-export interface Result<T extends Target, R extends Requirement> {
-  readonly rule: string
-  readonly context: Pick<Context, R>
-  readonly target: T
-  readonly outcome: Outcome
-}
+export type Result<T extends Target, A extends Aspect> =
+  {
+    readonly rule: string
+    readonly context: Pick<Aspects, A>
+  } & (
+    {
+      readonly outcome: 'passed' | 'failed'
+      readonly target: T
+    } |
+    {
+      readonly outcome: 'inapplicable'
+    }
+  )
 
-export interface Assertions<T extends Target> {
-  passed (target: T): void
-  failed (target: T): void
-  inapplicable (target: T): void
-  next (data?: any): void
-}
-
-export type Criterion = string
-
-export type Requirement = keyof Context
+export type Outcome = Result<Target, Aspect>['outcome']
 
 export interface Locale {
   readonly id: 'en'
   readonly title: string
   readonly description: string
-  readonly tests: Array<{
+  readonly assumptions?: string
+  readonly applicability: string
+  readonly expectations: Array<{
     readonly description: string
     readonly outcome: {
-      readonly [P in Outcome]?: string
+      readonly [P in Outcome]: string
     }
   }>
 }
 
-export type Test<T extends Target, R extends Requirement> = (test: Assertions<T>, context: Pick<Context, R>, data?: any) => Promise<any> | any
+export type Applicability<T extends Target, A extends Aspect> = (context: Pick<Aspects, A>) => Promise<Iterable<T>>
 
-export interface Rule<T extends Target, R extends Requirement> {
+export type Expectation<T extends Target, A extends Aspect> = (target: T, context: Pick<Aspects, A>) => Promise<boolean>
+
+export interface Rule<T extends Target, A extends Aspect> {
   readonly id: string
   readonly criteria: Array<Criterion>
   readonly locales: Array<Locale>
-  readonly requirements: Array<R>
-  readonly tests: Array<Test<T, R>>
+  readonly applicability: Applicability<T, A>
+  readonly expectations: Array<Expectation<T, A>>
 }
 
-export function rule<T extends Target, R extends Requirement> (definition: Rule<T, R>): Rule<T, R> {
+export function rule<T extends Target, A extends Aspect> (definition: Rule<T, A>): Rule<T, A> {
   return definition
 }
 
-export async function check<T extends Target, R extends Requirement> (rule: Rule<T, R>, context: Pick<Context, R>): Promise<Array<Result<T, R>>> {
-  const results: Array<Result<T, R>> = []
+export async function check<T extends Target, A extends Aspect> (rule: Rule<T, A>, context: Pick<Aspects, A>): Promise<Array<Result<T, A>>> {
+  const results: Array<Result<T, A>> = []
 
-  const result = (target: T, outcome: Outcome) => {
-    results.push({ rule: rule.id, target, context, outcome })
-  }
+  const targets = [...await rule.applicability(context)]
 
-  const tests = [...rule.tests]
+  if (targets.length === 0) {
+    results.push({
+      rule: rule.id,
+      outcome: 'inapplicable',
+      context
+    })
+  } else {
+    for (const target of targets) {
+      let passed = true
 
-  const run = async (test: Test<T, R> | undefined, index: number, data?: any): Promise<Array<Result<T, R>>> => {
-    if (test === undefined) {
-      return results
-    }
+      for (const expectation of rule.expectations) {
+        const holds = await expectation(target, context)
 
-    let next: any
-
-    const assertions: Assertions<T> = {
-      passed (target: T) {
-        result(target, 'passed')
-      },
-
-      failed (target: T) {
-        result(target, 'failed')
-      },
-
-      inapplicable (target: T) {
-        result(target, 'inapplicable')
-      },
-
-      next (data?: any) {
-        next = data === undefined ? true : data
+        if (!holds) {
+          passed = false
+        }
       }
+
+      results.push({
+        rule: rule.id,
+        outcome: passed ? 'passed' : 'failed',
+        context,
+        target
+      })
     }
-
-    await test(assertions, context, data)
-
-    return next ? run(tests.shift(), index + 1, next) : results
   }
 
-  return run(tests.shift(), 0)
+  return results
 }
