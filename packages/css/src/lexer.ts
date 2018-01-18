@@ -7,22 +7,22 @@ import {
   isNumeric,
   isNonAscii,
   lex as $lex
-} from '@alfa/lang'
+} from "@alfa/lang";
 
-export type Whitespace = { type: 'whitespace' }
+export type Whitespace = { type: "whitespace" };
 
-export type Comment = { type: 'comment', value: string }
-export type Ident = { type: 'ident', value: string }
-export type String = { type: 'string', value: string }
-export type Delim = { type: 'delim', value: string }
-export type Number = { type: 'number', value: number }
+export type Comment = { type: "comment"; value: string };
+export type Ident = { type: "ident"; value: string };
+export type String = { type: "string"; value: string };
+export type Delim = { type: "delim"; value: string };
+export type Number = { type: "number"; value: number };
 
-export type Paren = { type: '(' | ')' }
-export type Bracket = { type: '[' | ']' }
-export type Brace = { type: '{' | '}' }
-export type Comma = { type: ',' }
-export type Colon = { type: ':' }
-export type Semicolon = { type: ';' }
+export type Paren = { type: "(" | ")" };
+export type Bracket = { type: "[" | "]" };
+export type Brace = { type: "{" | "}" };
+export type Comma = { type: "," };
+export type Colon = { type: ":" };
+export type Semicolon = { type: ";" };
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#tokenization
@@ -43,120 +43,159 @@ export type CssToken =
   | Brace
   | Comma
   | Colon
-  | Semicolon
+  | Semicolon;
 
-export function isIdent (token: CssToken | null): token is Ident {
-  return token !== null && token.type === 'ident'
+export function isIdent(token: CssToken | null): token is Ident {
+  return token !== null && token.type === "ident";
 }
 
-export function isDelim (token: CssToken | null): token is Delim {
-  return token !== null && token.type === 'delim'
+export function isDelim(token: CssToken | null): token is Delim {
+  return token !== null && token.type === "delim";
 }
 
-export type CssPattern<T extends CssToken> = Pattern<T>
+export type CssPattern<T extends CssToken> = Pattern<T>;
 
 const whitespace: CssPattern<Whitespace> = ({ accept }) => {
   if (accept(isWhitespace)) {
-    return { type: 'whitespace' }
+    return { type: "whitespace" };
   }
-}
+};
 
-const character: CssPattern<Paren | Bracket | Brace | Comma | Colon | Semicolon> = ({ next }) => {
-  const char = next()
+const character: CssPattern<
+  Paren | Bracket | Brace | Comma | Colon | Semicolon
+> = ({ next }) => {
+  const char = next();
 
   switch (char) {
-    case '(': case ')': return { type: char }
-    case '[': case ']': return { type: char }
-    case '{': case '}': return { type: char }
+    case "(":
+    case ")":
+      return { type: char };
+    case "[":
+    case "]":
+      return { type: char };
+    case "{":
+    case "}":
+      return { type: char };
 
-    case ',': return { type: char }
-    case ':': return { type: char }
-    case ';': return { type: char }
+    case ",":
+      return { type: char };
+    case ":":
+      return { type: char };
+    case ";":
+      return { type: char };
   }
-}
+};
 
-const comment: CssPattern<Comment> = ({ next, ignore, accept, peek, result, advance }) => {
-  if (next() === '/' && next() === '*') {
-    ignore()
+const comment: CssPattern<Comment> = ({
+  next,
+  ignore,
+  accept,
+  peek,
+  result,
+  advance
+}) => {
+  if (next() === "/" && next() === "*") {
+    ignore();
 
-    if (accept(() => peek() !== '*' || peek(1) !== '/')) {
-      const value = result()
+    if (accept(() => peek() !== "*" || peek(1) !== "/")) {
+      const value = result();
 
-      advance(2)
+      advance(2);
 
-      return { type: 'comment', value }
+      return { type: "comment", value };
     }
   }
-}
+};
 
-const ident: CssPattern<Ident> = ({ peek, advance, accept, progressed, result }) => {
-  if (!accept(char => char === '-', 2)) {
-    if (peek() === '-') {
-      advance()
+const ident: CssPattern<Ident> = ({
+  peek,
+  advance,
+  accept,
+  progressed,
+  result
+}) => {
+  if (!accept(char => char === "-", 2)) {
+    if (peek() === "-") {
+      advance();
     }
 
-    if (!accept(char => isAlpha(char) || isNonAscii(char) || char === '_')) {
-      return
+    if (!accept(char => isAlpha(char) || isNonAscii(char) || char === "_")) {
+      return;
     }
   }
 
-  accept(char => isAlphanumeric(char) || isNonAscii(char) || char === '_' || char === '-')
+  accept(
+    char =>
+      isAlphanumeric(char) || isNonAscii(char) || char === "_" || char === "-"
+  );
 
   if (progressed()) {
-    return { type: 'ident', value: result() }
+    return { type: "ident", value: result() };
   }
-}
+};
 
-const string: CssPattern<String> = ({ next, ignore, accept, result, advance }) => {
-  const end = next()
+const string: CssPattern<String> = ({
+  next,
+  ignore,
+  accept,
+  result,
+  advance
+}) => {
+  const end = next();
 
-  if (end === '"' || end === '\'') {
-    ignore()
+  if (end === '"' || end === "'") {
+    ignore();
 
-    if (accept(char => char !== '"' && char !== '\'')) {
-      const value = result()
+    if (accept(char => char !== '"' && char !== "'")) {
+      const value = result();
 
-      advance()
+      advance();
 
-      return { type: 'string', value }
+      return { type: "string", value };
     }
   }
-}
+};
 
-const number: CssPattern<Number> = ({ peek, advance, accept, progressed, result }) => {
-  if (peek() === '+' || peek() === '-') {
-    advance()
+const number: CssPattern<Number> = ({
+  peek,
+  advance,
+  accept,
+  progressed,
+  result
+}) => {
+  if (peek() === "+" || peek() === "-") {
+    advance();
   }
 
-  const isInteger = accept(isNumeric) && peek() !== '.'
-  const isDecimal = peek() === '.' && advance() && accept(isNumeric)
+  const isInteger = accept(isNumeric) && peek() !== ".";
+  const isDecimal = peek() === "." && advance() && accept(isNumeric);
 
   if (!isInteger && !isDecimal) {
-    return
+    return;
   }
 
-  if (peek() === 'E' || peek() === 'e') {
-    let offset = 1
+  if (peek() === "E" || peek() === "e") {
+    let offset = 1;
 
-    if (peek(1) === '-' || peek(1) === '+') {
-      offset = 2
+    if (peek(1) === "-" || peek(1) === "+") {
+      offset = 2;
     }
 
     if (isNumeric(peek(offset))) {
-      advance(offset) && accept(isNumeric)
+      advance(offset) && accept(isNumeric);
     }
   }
 
-  return { type: 'number', value: Number(result()) }
-}
+  return { type: "number", value: Number(result()) };
+};
 
 const delim: CssPattern<Delim> = ({ next }) => {
-  const char = next()
+  const char = next();
 
   if (char) {
-    return { type: 'delim', value: char }
+    return { type: "delim", value: char };
   }
-}
+};
 
 export const CssAlphabet: Alphabet<CssToken> = [
   whitespace,
@@ -166,8 +205,8 @@ export const CssAlphabet: Alphabet<CssToken> = [
   string,
   number,
   delim
-]
+];
 
-export function lex (input: string): Array<CssToken> {
-  return $lex(input, CssAlphabet)
+export function lex(input: string): Array<CssToken> {
+  return $lex(input, CssAlphabet);
 }

@@ -1,168 +1,175 @@
-import { Bound } from '@alfa/util'
-import { Token, WithLocation } from './lexer'
+import { Bound } from "@alfa/util";
+import { Token, WithLocation } from "./lexer";
 
-const { isArray } = Array
+const { isArray } = Array;
 
-type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U)
+type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U);
 
 class Stream<T extends Token> extends Bound {
-  private readonly _input: Array<T>
+  private readonly _input: Array<T>;
 
-  private _position: number = 0
+  private _position: number = 0;
 
-  public get position () {
-    return this._position
+  public get position() {
+    return this._position;
   }
 
-  public constructor (input: Array<T>) {
-    super()
-    this._input = input
+  public constructor(input: Array<T>) {
+    super();
+    this._input = input;
   }
 
-  public restore (position: number): void {
-    this._position = position
+  public restore(position: number): void {
+    this._position = position;
   }
 
-  public peek (offset: number = 0): T | null {
-    const position = this._position + offset
+  public peek(offset: number = 0): T | null {
+    const position = this._position + offset;
 
     if (position < this._input.length) {
-      return this._input[position]
+      return this._input[position];
     }
 
-    return null
+    return null;
   }
 
-  public advance (times: number = 1): boolean {
-    let advanced = false
+  public advance(times: number = 1): boolean {
+    let advanced = false;
 
     do {
       if (this._position < this._input.length) {
-        advanced = true
-        this._position++
+        advanced = true;
+        this._position++;
       }
-    } while (--times > 0)
+    } while (--times > 0);
 
-    return advanced
+    return advanced;
   }
 
-  public backup (times: number = 1): boolean {
-    let backedup = false
+  public backup(times: number = 1): boolean {
+    let backedup = false;
 
     do {
       if (this._position > 0) {
-        backedup = true
-        this._position--
+        backedup = true;
+        this._position--;
       }
-    } while (--times > 0)
+    } while (--times > 0);
 
-    return backedup
+    return backedup;
   }
 
-  public next (): T | null {
-    const next = this.peek()
-    this.advance()
-    return next
+  public next(): T | null {
+    const next = this.peek();
+    this.advance();
+    return next;
   }
 
-  public accept<U extends T> (predicate: Predicate<T, U>): U | false {
-    const next = this.peek()
+  public accept<U extends T>(predicate: Predicate<T, U>): U | false {
+    const next = this.peek();
 
     if (next !== null && predicate(next)) {
-      this.advance()
-      return next as U
+      this.advance();
+      return next as U;
     }
 
-    return false
+    return false;
   }
 }
 
 export interface Production<T extends Token, U extends T, R, P extends R> {
-  readonly token: U['type']
-  readonly associate?: 'left' | 'right'
-  prefix? (token: U, stream: Stream<T>, expression: () => R | null): P | null
-  infix? (token: U, stream: Stream<T>, expression: () => R | null, left: R): P | null
+  readonly token: U["type"];
+  readonly associate?: "left" | "right";
+  prefix?(token: U, stream: Stream<T>, expression: () => R | null): P | null;
+  infix?(
+    token: U,
+    stream: Stream<T>,
+    expression: () => R | null,
+    left: R
+  ): P | null;
 }
 
-export type Grammar<T extends Token, R> = Array<Production<T, T, R, R> | Array<Production<T, T, R, R>>>
+export type Grammar<T extends Token, R> = Array<
+  Production<T, T, R, R> | Array<Production<T, T, R, R>>
+>;
 
-export function parse<T extends Token, R> (input: Array<T>, grammar: Grammar<T, R>): R | null {
-  const productions: Map<T['type'], Production<T, T, R, R> & { precedence: number }> = new Map()
-  const stream = new Stream(input)
+export function parse<T extends Token, R>(
+  input: Array<T>,
+  grammar: Grammar<T, R>
+): R | null {
+  const productions: Map<
+    T["type"],
+    Production<T, T, R, R> & { precedence: number }
+  > = new Map();
+  const stream = new Stream(input);
 
   for (let i = 0; i < grammar.length; i++) {
-    const precedence = grammar.length - i
-    const group = grammar[i]
+    const precedence = grammar.length - i;
+    const group = grammar[i];
 
     for (const production of isArray(group) ? group : [group]) {
-      productions.set(production.token, { ...production, precedence })
+      productions.set(production.token, { ...production, precedence });
     }
   }
 
-  function expression (precedence: number): R | null {
-    let token = stream.peek()
+  function expression(precedence: number): R | null {
+    let token = stream.peek();
 
     if (token === null) {
-      return null
+      return null;
     }
 
-    let production = productions.get(token.type)
+    let production = productions.get(token.type);
 
     if (production === undefined || production.prefix === undefined) {
-      throw new Error(`Unexpected token '${token.type}' in prefix position`)
+      throw new Error(`Unexpected token '${token.type}' in prefix position`);
     }
 
-    stream.advance()
+    stream.advance();
 
-    let left = production.prefix(
-      token,
-      stream,
-      expression.bind(null, -1)
-    )
+    let left = production.prefix(token, stream, expression.bind(null, -1));
 
     if (left === null) {
-      return null
+      return null;
     }
 
     while (stream.peek()) {
-      token = stream.peek()
+      token = stream.peek();
 
       if (token === null) {
-        return null
+        return null;
       }
 
-      production = productions.get(token.type)
+      production = productions.get(token.type);
 
       if (production === undefined || production.infix === undefined) {
-        throw new Error(`Unexpected token '${token.type}' in infix position`)
+        throw new Error(`Unexpected token '${token.type}' in infix position`);
       }
 
       if (
         production.precedence < precedence ||
-        (
-          production.precedence === precedence &&
-          production.associate !== 'right'
-        )
+        (production.precedence === precedence &&
+          production.associate !== "right")
       ) {
-        break
+        break;
       }
 
-      stream.advance()
+      stream.advance();
 
       left = production.infix(
         token,
         stream,
         expression.bind(null, production.precedence),
         left
-      )
+      );
 
       if (left === null) {
-        return null
+        return null;
       }
     }
 
-    return left
+    return left;
   }
 
-  return expression(-1)
+  return expression(-1);
 }

@@ -1,5 +1,5 @@
-import { Image } from '@alfa/img'
+import { Image } from "@alfa/img";
 
 export interface Vision {
-  hasText (image: Image): Promise<boolean>
+  hasText(image: Image): Promise<boolean>;
 }

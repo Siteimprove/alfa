@@ -1,244 +1,259 @@
-import { Bound } from '@alfa/util'
+import { Bound } from "@alfa/util";
 
-const { assign } = Object
+const { assign } = Object;
 
 export interface Token {
-  readonly type: string
+  readonly type: string;
 }
 
 export interface Location {
-  readonly line: number
-  readonly column: number
+  readonly line: number;
+  readonly column: number;
 }
 
-export type WithLocation<T extends Token> = T & Location
+export type WithLocation<T extends Token> = T & Location;
 
-export function hasLocation<T extends Token> (token: T): token is WithLocation<T> {
-  return 'line' in token && 'column' in token
+export function hasLocation<T extends Token>(
+  token: T
+): token is WithLocation<T> {
+  return "line" in token && "column" in token;
 }
 
 class Stream extends Bound {
-  private readonly _input: string
+  private readonly _input: string;
 
-  private _position: number = 0
-  private _start: number = 0
-  private _line: number = 0
-  private _column: number = 0
+  private _position: number = 0;
+  private _start: number = 0;
+  private _line: number = 0;
+  private _column: number = 0;
 
-  public constructor (input: string) {
-    super()
-    this._input = input
+  public constructor(input: string) {
+    super();
+    this._input = input;
   }
 
-  public get input () {
-    return this._input
+  public get input() {
+    return this._input;
   }
 
-  public get position () {
-    return this._position
+  public get position() {
+    return this._position;
   }
 
-  public get line () {
-    return this._line
+  public get line() {
+    return this._line;
   }
 
-  public get column () {
-    return this._column
+  public get column() {
+    return this._column;
   }
 
-  public ignore (): void {
-    this._start = this._position
+  public ignore(): void {
+    this._start = this._position;
   }
 
-  public peek (offset: number = 0): string | null {
-    const position = this._position + offset
+  public peek(offset: number = 0): string | null {
+    const position = this._position + offset;
 
     if (position < this._input.length) {
-      return this._input.charAt(position)
+      return this._input.charAt(position);
     }
 
-    return null
+    return null;
   }
 
-  public result (): string {
-    return this.input.substring(this._start, this._position)
+  public result(): string {
+    return this.input.substring(this._start, this._position);
   }
 
-  public progressed (): boolean {
-    return this._start !== this._position
+  public progressed(): boolean {
+    return this._start !== this._position;
   }
 
-  public advance (times: number = 1): boolean {
-    let advanced = false
+  public advance(times: number = 1): boolean {
+    let advanced = false;
 
     do {
       if (this._position < this._input.length) {
-        advanced = true
+        advanced = true;
 
-        const next = this.peek()
+        const next = this.peek();
 
         if (next === null) {
-          break
+          break;
         }
 
         if (isNewline(next)) {
-          this._line++
-          this._column = 0
+          this._line++;
+          this._column = 0;
         } else {
-          this._column++
+          this._column++;
         }
 
-        this._position++
+        this._position++;
       }
-    } while (--times > 0)
+    } while (--times > 0);
 
-    return advanced
+    return advanced;
   }
 
-  public backup (times: number = 1): boolean {
-    let backedup = false
+  public backup(times: number = 1): boolean {
+    let backedup = false;
 
     do {
       if (this._position > 0) {
-        backedup = true
+        backedup = true;
 
-        const next = this.peek()
+        const next = this.peek();
 
         if (next === null) {
-          break
+          break;
         }
 
         if (isNewline(next)) {
-          this._line--
-          this._column = 0
+          this._line--;
+          this._column = 0;
         } else {
-          this._column--
+          this._column--;
         }
 
-        this._position--
+        this._position--;
       }
-    } while (--times > 0)
+    } while (--times > 0);
 
-    return backedup
+    return backedup;
   }
 
-  public restore (position: number): void {
-    const difference = position - this._position
+  public restore(position: number): void {
+    const difference = position - this._position;
 
     if (difference > 0) {
-      this.advance(difference)
+      this.advance(difference);
     }
 
     if (difference < 0) {
-      this.backup(difference * -1)
+      this.backup(difference * -1);
     }
   }
 
-  public next (): string | null {
-    const next = this.peek()
-    this.advance()
-    return next
+  public next(): string | null {
+    const next = this.peek();
+    this.advance();
+    return next;
   }
 
-  public accept (predicate: (char: string) => boolean, times?: number): boolean {
-    let accepted = false
-    let next = this.peek()
+  public accept(predicate: (char: string) => boolean, times?: number): boolean {
+    let accepted = false;
+    let next = this.peek();
 
-    while (next !== null && predicate(next) && (times === undefined || times-- > 0)) {
-      accepted = times === undefined || times === 0
+    while (
+      next !== null &&
+      predicate(next) &&
+      (times === undefined || times-- > 0)
+    ) {
+      accepted = times === undefined || times === 0;
 
       if (!this.advance()) {
-        break
+        break;
       }
 
-      next = this.peek()
+      next = this.peek();
     }
 
-    return accepted
+    return accepted;
   }
 
-  public match (pattern: string): boolean {
-    const regex = new RegExp(pattern, 'y')
+  public match(pattern: string): boolean {
+    const regex = new RegExp(pattern, "y");
 
-    regex.lastIndex = this._position
+    regex.lastIndex = this._position;
 
     if (regex.test(this._input) && regex.lastIndex !== this._position) {
-      this._position = regex.lastIndex
+      this._position = regex.lastIndex;
 
-      return true
+      return true;
     }
 
-    return false
+    return false;
   }
 }
 
-export type Pattern<T extends Token> = (stream: Stream) => T | void
+export type Pattern<T extends Token> = (stream: Stream) => T | void;
 
-export type Alphabet<T extends Token> = Array<Pattern<T>>
+export type Alphabet<T extends Token> = Array<Pattern<T>>;
 
-export function lex<T extends Token> (input: string, alphabet: Alphabet<T>): Array<WithLocation<T>> {
-  const tokens: Array<WithLocation<T>> = []
-  const stream = new Stream(input)
+export function lex<T extends Token>(
+  input: string,
+  alphabet: Alphabet<T>
+): Array<WithLocation<T>> {
+  const tokens: Array<WithLocation<T>> = [];
+  const stream = new Stream(input);
 
   outer: while (stream.position < input.length) {
     for (let i = 0; i < alphabet.length; i++) {
-      const pattern = alphabet[i]
-      const position = stream.position
-      const line = stream.line
-      const column = stream.column
-      const token = pattern(stream)
+      const pattern = alphabet[i];
+      const position = stream.position;
+      const line = stream.line;
+      const column = stream.column;
+      const token = pattern(stream);
 
       if (token) {
-        stream.ignore()
+        stream.ignore();
 
-        tokens.push(assign(token, { line, column }))
+        tokens.push(assign(token, { line, column }));
 
-        continue outer
+        continue outer;
       }
 
       if (position !== stream.position) {
-        stream.restore(position)
+        stream.restore(position);
       }
     }
 
-    throw new Error(`Unexpected character "${stream.peek()}"`)
+    throw new Error(`Unexpected character "${stream.peek()}"`);
   }
 
-  return tokens
+  return tokens;
 }
 
-export function isBetween (char: string | null, lower: string, upper: string): boolean {
-  return char !== null && char >= lower && char <= upper
+export function isBetween(
+  char: string | null,
+  lower: string,
+  upper: string
+): boolean {
+  return char !== null && char >= lower && char <= upper;
 }
 
-export function isWhitespace (char: string | null): boolean {
-  return char === ' ' || char === '\t' || char === '\n'
+export function isWhitespace(char: string | null): boolean {
+  return char === " " || char === "\t" || char === "\n";
 }
 
-export function isNewline (char: string | null): boolean {
-  return char === '\n' || char === '\r' || char === '\f'
+export function isNewline(char: string | null): boolean {
+  return char === "\n" || char === "\r" || char === "\f";
 }
 
-export function isAlpha (char: string | null): boolean {
-  return isBetween(char, 'a', 'z') || isBetween(char, 'A', 'Z')
+export function isAlpha(char: string | null): boolean {
+  return isBetween(char, "a", "z") || isBetween(char, "A", "Z");
 }
 
-export function isNumeric (char: string | null): boolean {
-  return isBetween(char, '0', '9')
+export function isNumeric(char: string | null): boolean {
+  return isBetween(char, "0", "9");
 }
 
-export function isAlphanumeric (char: string | null): boolean {
-  return isAlpha(char) || isNumeric(char)
+export function isAlphanumeric(char: string | null): boolean {
+  return isAlpha(char) || isNumeric(char);
 }
 
-export function isHex (char: string | null): boolean {
-  return isNumeric(char) || isBetween(char, 'a', 'f') || isBetween(char, 'A', 'F')
+export function isHex(char: string | null): boolean {
+  return (
+    isNumeric(char) || isBetween(char, "a", "f") || isBetween(char, "A", "F")
+  );
 }
 
-export function isAscii (char: string | null): boolean {
-  return char !== null && char.charCodeAt(0) < 0x80
+export function isAscii(char: string | null): boolean {
+  return char !== null && char.charCodeAt(0) < 0x80;
 }
 
-export function isNonAscii (char: string | null): boolean {
-  return !isAscii(char)
+export function isNonAscii(char: string | null): boolean {
+  return !isAscii(char);
 }

@@ -1,8 +1,5 @@
-import tap, { Test } from 'tap'
+import tap, { Test } from "tap";
 
-const { test } = tap
+const { test } = tap;
 
-export {
-  test,
-  Test
-}
+export { test, Test };

@@ -2,28 +2,29 @@
   "name": "alfa",
   "description": "alfa!",
   "repository": "https://github.com/siteimprove/alfa",
-  "contributors": [
-    "Kasper Isager <kki@siteimprove.com>"
-  ],
+  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
   "scripts": {
     "prepare": "node build/build.js",
-    "start": "node build/watch.js"
+    "start": "node build/watch.js",
+    "precommit": "pretty-quick --staged"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "devDependencies": {
     "@babel/code-frame": "^7.0.0-beta.36",
     "@babel/core": "^7.0.0-beta.35",
     "@babel/register": "^7.0.0-beta.36",
     "chalk": "^2.3.0",
+    "concordance": "^3.0.0",
     "globby": "^7.1.1",
     "hjson": "^3.1.0",
+    "husky": "^0.14.3",
     "lerna": "^2.5.1",
     "mkdirp": "^0.5.1",
     "nyc": "^11.4.1",
+    "prettier": "1.10.2",
+    "pretty-quick": "^1.2.2",
     "rimraf": "^2.6.2",
     "stringify-object": "^3.2.1",
     "tap": "^11.0.1",

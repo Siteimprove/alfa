@@ -1,1 +1,1 @@
-export * from './unique-ids/rule'
+export * from "./unique-ids/rule";

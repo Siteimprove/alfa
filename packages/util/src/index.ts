@@ -1,3 +1,3 @@
-export * from './class/bound'
+export * from "./class/bound";
 
-export * from './function/memoize'
+export * from "./function/memoize";
