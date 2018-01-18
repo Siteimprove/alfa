@@ -1,4 +1,4 @@
-import { Node } from '@alfa/dom'
+import { Node, Element } from '@alfa/dom'
 import { Style, State } from '@alfa/css'
 import { Layout } from '@alfa/layout'
 
@@ -56,10 +56,6 @@ export interface Rule<T extends Target, A extends Aspect> {
   readonly expectations: Array<Expectation<T, A>>
 }
 
-export function rule<T extends Target, A extends Aspect> (definition: Rule<T, A>): Rule<T, A> {
-  return definition
-}
-
 export async function check<T extends Target, A extends Aspect> (rule: Rule<T, A>, context: Pick<Aspects, A>): Promise<Array<Result<T, A>>> {
   const results: Array<Result<T, A>> = []
 
@@ -89,6 +85,18 @@ export async function check<T extends Target, A extends Aspect> (rule: Rule<T, A
         context,
         target
       })
+    }
+  }
+
+  return results
+}
+
+export async function checkAll<T extends Target, A extends Aspect> (rules: Array<Rule<T, A>>, context: Pick<Aspects, A>): Promise<Array<Result<T, A>>> {
+  const results: Array<Result<T, A>> = []
+
+  for (const rule of rules) {
+    for (const result of await check(rule, context)) {
+      results.push(result)
     }
   }
 
