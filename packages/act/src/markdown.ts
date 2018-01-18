@@ -1,7 +1,7 @@
-import { Rule, Target, Requirement, Outcome, Locale } from "@alfa/rule";
+import { Rule, Target, Aspect, Outcome, Locale } from "@alfa/rule";
 
-export function markdown(
-  rule: Rule<Target, Requirement>,
+export function markdown<T extends Target, A extends Aspect>(
+  rule: Rule<T, A>,
   lang: Locale["id"]
 ): string | null {
   const locale = rule.locales.find(locale => locale.id === lang);
@@ -18,7 +18,7 @@ export function markdown(
 
   lines.push("## Tests\n");
 
-  for (const [index, test] of locale.tests.entries()) {
+  for (const [index, test] of locale.expectations.entries()) {
     lines.push(`### Test ${index + 1}\n`);
     lines.push(`${test.description}\n`);
 
