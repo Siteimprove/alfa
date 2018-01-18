@@ -28,8 +28,6 @@
     "stringify-object": "^3.2.1",
     "tap": "^11.0.1",
     "tap-parser": "^7.0.0",
-    "tslint": "^5.8.0",
-    "tslint-config-standard": "^7.0.0",
     "typescript": "^2.6.2",
     "wsk": "^1.0.1"
   }
