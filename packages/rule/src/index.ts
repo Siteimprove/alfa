@@ -36,7 +36,7 @@ export interface Locale {
   readonly applicability: string;
   readonly expectations: Array<{
     readonly description: string;
-    readonly outcome: { readonly [P in Outcome]: string };
+    readonly outcome: { readonly [P in Outcome]?: string };
   }>;
 }
 
