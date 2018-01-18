@@ -84,7 +84,10 @@ async function onEvent (event, path, options = {}) {
       notify({
         message: gray('--- ') + flatten(messageText),
         display: 'error',
-        error: new CodeError(text, start, end)
+        error: new CodeError(text, start, end),
+        extend: {
+          desktop: false
+        }
       })
     }
   }
