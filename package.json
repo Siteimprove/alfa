@@ -8,7 +8,7 @@
   "scripts": {
     "prepare": "node build/build.js",
     "start": "node build/watch.js",
-    "precommit": "pretty-quick --staged"
+    "precommit": "node build/lint.js"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
@@ -17,6 +17,7 @@
     "@babel/register": "^7.0.0-beta.36",
     "chalk": "^2.3.0",
     "concordance": "^3.0.0",
+    "execa": "^0.9.0",
     "globby": "^7.1.1",
     "hjson": "^3.1.0",
     "husky": "^0.14.3",
@@ -24,7 +25,6 @@
     "mkdirp": "^0.5.1",
     "nyc": "^11.4.1",
     "prettier": "1.10.2",
-    "pretty-quick": "^1.2.2",
     "rimraf": "^2.6.2",
     "stringify-object": "^3.2.1",
     "tap": "^11.0.1",
