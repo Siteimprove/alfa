@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "prepare": "node build/build.js",
+    "test": "node build/test.js",
     "start": "node build/watch.js",
     "precommit": "node build/lint.js"
   },
