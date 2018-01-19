@@ -1,14 +1,24 @@
 const { notify } = require("wsk");
-const { format } = require("prettier");
+const { format, check, getSupportInfo } = require("prettier");
 const { read, write } = require("../../utils/file");
+const { extension } = require("../../utils/path");
+
+const extensions = getSupportInfo().languages.reduce(
+  (extensions, language) => extensions.concat(language.extensions || []),
+  []
+);
+
+function isSupported(path) {
+  return extensions.includes(extension(path));
+}
 
 async function onEvent(event, path, options = {}) {
   try {
     const source = await read(path);
-    const formatted = format(source, { filepath: path });
+    const options = { filepath: path };
 
-    if (source !== formatted) {
-      await write(path, formatted);
+    if (isSupported(path) && !check(source, options)) {
+      await write(path, format(source, options));
 
       if (typeof options.onWrite === "function") {
         await options.onWrite(path);
