@@ -56,7 +56,7 @@ test("Can parse a compound selector with a type in prefix position", async t =>
 test("Can parse a single descendant selector", async t =>
   css(t, "div .foo", {
     type: "relative-selector",
-    combinator: ">>",
+    combinator: " ",
     selector: {
       type: "class-selector",
       name: "foo"
@@ -70,7 +70,7 @@ test("Can parse a single descendant selector", async t =>
 test("Can parse a single descendant selector with a right-hand type selector", async t =>
   css(t, "div span", {
     type: "relative-selector",
-    combinator: ">>",
+    combinator: " ",
     selector: {
       type: "type-selector",
       name: "span"
@@ -84,14 +84,14 @@ test("Can parse a single descendant selector with a right-hand type selector", a
 test("Can parse a double descendant selector", async t =>
   css(t, "div .foo #bar", {
     type: "relative-selector",
-    combinator: ">>",
+    combinator: " ",
     selector: {
       type: "id-selector",
       name: "bar"
     },
     relative: {
       type: "relative-selector",
-      combinator: ">>",
+      combinator: " ",
       selector: {
         type: "class-selector",
         name: "foo"

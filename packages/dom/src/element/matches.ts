@@ -45,7 +45,7 @@ export function matches(
         case ">":
           return matches(parent, parsed.relative);
 
-        case ">>":
+        case " ":
           do {
             if (matches(parent, parsed.relative)) {
               return true;

@@ -23,7 +23,7 @@ export type CompoundSelector = {
 
 export type RelativeSelector = {
   type: "relative-selector";
-  combinator: ">>" | ">" | "+" | "~";
+  combinator: " " | ">" | "+" | "~";
   selector: SimpleSelector | CompoundSelector;
   relative: Selector;
 };
@@ -94,7 +94,7 @@ const whitespace: CssProduction<Whitespace, CssTree> = {
         (isDelim(token) && (token.value === "." || token.value === "#"));
 
       if (isImplicitDescendant) {
-        token = { type: "delim", value: ">>" };
+        token = { type: "delim", value: " " };
         stream.backup();
       }
 
@@ -166,8 +166,8 @@ const delim: CssProduction<Delim, Selector> = {
           };
         }
 
+        case " ":
         case ">":
-        case ">>":
         case "+":
         case "~":
           const right = expression();
