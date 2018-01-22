@@ -85,7 +85,7 @@ export class LayoutIndex {
       if (next.children === undefined) {
         result.push(next);
       } else {
-        queue.push.apply(queue, next.children);
+        queue.push(...next.children);
       }
     }
 

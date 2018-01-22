@@ -219,7 +219,7 @@ const comma: CssProduction<Comma, SelectorList> = {
     }
 
     if (isSelectorList(right)) {
-      selectors.push.apply(selectors, right.selectors);
+      selectors.push(...right.selectors);
     }
 
     return { type: "selector-list", selectors };
