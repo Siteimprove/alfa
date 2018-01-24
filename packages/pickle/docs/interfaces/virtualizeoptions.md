@@ -8,7 +8,7 @@
 
 ### «Optional» parents
 
-**● parents**: _`boolean`_
+**● parents**: _`undefined`⎮`true`⎮`false`_
 
 _Defined in [virtualize.ts:17](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L17)_
 

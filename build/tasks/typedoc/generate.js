@@ -3,12 +3,13 @@ const exec = require("execa");
 const { Application } = require("typedoc");
 const { glob } = require("../../utils/file");
 const prettier = require("../prettier/transform");
+const config = require("../../../tsconfig.json");
 
 async function onEvent(event, path) {
   try {
     const app = new Application({
-      target: "es2015",
-      module: "commonjs",
+      ...config.compilerOptions,
+
       mode: "file",
       readme: "none",
       theme: "markdown",

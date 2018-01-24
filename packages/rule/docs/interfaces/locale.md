@@ -18,7 +18,7 @@ _Defined in [index.ts:36](https://github.com/Siteimprove/alfa/blob/master/packag
 
 ### «Optional» assumptions
 
-**● assumptions**: _`string`_
+**● assumptions**: _`undefined`⎮`string`_
 
 _Defined in [index.ts:35](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L35)_
 
