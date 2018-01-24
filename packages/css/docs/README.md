@@ -60,7 +60,7 @@
 
 **Τ Brace**: _`object`_
 
-_Defined in [lexer.ts:25](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L25)_
+_Defined in [lexer.ts:22](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L22)_
 
 #### Type declaration
 
@@ -72,7 +72,7 @@ _Defined in [lexer.ts:25](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **Τ Bracket**: _`object`_
 
-_Defined in [lexer.ts:24](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L24)_
+_Defined in [lexer.ts:21](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L21)_
 
 #### Type declaration
 
@@ -96,7 +96,7 @@ _Defined in [parser.ts:15](https://github.com/Siteimprove/alfa/blob/master/packa
 
 **Τ Colon**: _`object`_
 
-_Defined in [lexer.ts:27](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L27)_
+_Defined in [lexer.ts:24](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L24)_
 
 #### Type declaration
 
@@ -108,7 +108,7 @@ _Defined in [lexer.ts:27](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **Τ Comma**: _`object`_
 
-_Defined in [lexer.ts:26](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L26)_
+_Defined in [lexer.ts:23](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L23)_
 
 #### Type declaration
 
@@ -144,7 +144,7 @@ _Defined in [parser.ts:19](https://github.com/Siteimprove/alfa/blob/master/packa
 
 **Τ CssPattern**: _`Pattern`.<`T`>_
 
-_Defined in [lexer.ts:59](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L59)_
+_Defined in [lexer.ts:56](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L56)_
 
 ---
 
@@ -154,7 +154,7 @@ _Defined in [lexer.ts:59](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **Τ CssToken**: _[Whitespace](#whitespace)⎮[Comment](#comment)⎮[Ident](#ident)⎮[String](#string)⎮[Delim](#delim)⎮[Number](#number)⎮[Paren](#paren)⎮[Bracket](#bracket)⎮[Brace](#brace)⎮[Comma](#comma)⎮[Colon](#colon)⎮[Semicolon](#semicolon)_
 
-_Defined in [lexer.ts:33](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L33)_
+_Defined in [lexer.ts:30](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L30)_
 
 _**see**_: [https://www.w3.org/TR/css-syntax/#tokenization](https://www.w3.org/TR/css-syntax/#tokenization)
 
@@ -176,7 +176,7 @@ _Defined in [parser.ts:37](https://github.com/Siteimprove/alfa/blob/master/packa
 
 **Τ Delim**: _`object`_
 
-_Defined in [lexer.ts:20](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L20)_
+_Defined in [lexer.ts:17](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L17)_
 
 #### Type declaration
 
@@ -200,7 +200,7 @@ _Defined in [parser.ts:16](https://github.com/Siteimprove/alfa/blob/master/packa
 
 **Τ Ident**: _`object`_
 
-_Defined in [lexer.ts:18](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L18)_
+_Defined in [lexer.ts:15](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L15)_
 
 #### Type declaration
 
@@ -212,7 +212,7 @@ _Defined in [lexer.ts:18](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **Τ Number**: _`object`_
 
-_Defined in [lexer.ts:21](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L21)_
+_Defined in [lexer.ts:18](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L18)_
 
 #### Type declaration
 
@@ -224,7 +224,7 @@ _Defined in [lexer.ts:21](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **Τ Paren**: _`object`_
 
-_Defined in [lexer.ts:23](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L23)_
+_Defined in [lexer.ts:20](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L20)_
 
 #### Type declaration
 
@@ -280,7 +280,7 @@ _Defined in [parser.ts:32](https://github.com/Siteimprove/alfa/blob/master/packa
 
 **Τ Semicolon**: _`object`_
 
-_Defined in [lexer.ts:28](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L28)_
+_Defined in [lexer.ts:25](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L25)_
 
 #### Type declaration
 
@@ -312,7 +312,7 @@ _Defined in [style.ts:3](https://github.com/Siteimprove/alfa/blob/master/package
 
 **Τ String**: _`object`_
 
-_Defined in [lexer.ts:19](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L19)_
+_Defined in [lexer.ts:16](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L16)_
 
 #### Type declaration
 
@@ -370,7 +370,7 @@ number,
 delim
 ]
 
-_Defined in [lexer.ts:203](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L203)_
+_Defined in [lexer.ts:200](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L200)_
 
 ---
 
@@ -445,7 +445,7 @@ _Defined in [style.ts:32](https://github.com/Siteimprove/alfa/blob/master/packag
 
 ► **isDelim**(token: _[CssToken](#csstoken)⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:55](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L55)_
+_Defined in [lexer.ts:52](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L52)_
 
 **Parameters:**
 
@@ -463,7 +463,7 @@ _Defined in [lexer.ts:55](https://github.com/Siteimprove/alfa/blob/master/packag
 
 ► **isIdent**(token: _[CssToken](#csstoken)⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:51](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L51)_
+_Defined in [lexer.ts:48](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L48)_
 
 **Parameters:**
 
@@ -481,7 +481,7 @@ _Defined in [lexer.ts:51](https://github.com/Siteimprove/alfa/blob/master/packag
 
 ► **lex**(input: _`string`_): `Array`.<[CssToken](#csstoken)>
 
-_Defined in [lexer.ts:213](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L213)_
+_Defined in [lexer.ts:210](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/lexer.ts#L210)_
 
 **Parameters:**
 
