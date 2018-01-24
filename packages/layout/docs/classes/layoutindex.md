@@ -20,7 +20,7 @@
 
 ### ⊕ **new LayoutIndex**(layouts: _`Array`.<[Layout](../interfaces/layout.md)>_): [LayoutIndex](layoutindex.md)
 
-_Defined in [layout.ts:66](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L66)_
+_Defined in [layout.ts:66](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L66)_
 
 **Parameters:**
 
@@ -40,7 +40,7 @@ _Defined in [layout.ts:66](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **within**(target: _[Layout](../interfaces/layout.md)_): `Array`.<[Layout](../interfaces/layout.md)>
 
-_Defined in [layout.ts:72](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L72)_
+_Defined in [layout.ts:72](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L72)_
 
 **Parameters:**
 

@@ -10,7 +10,7 @@
 
 **● document**: _`Node`_
 
-_Defined in [index.ts:10](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L10)_
+_Defined in [index.ts:10](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L10)_
 
 ---
 
@@ -20,7 +20,7 @@ _Defined in [index.ts:10](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● layout**: _`Map`.<`Element`>,.<`Layout`>_
 
-_Defined in [index.ts:12](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L12)_
+_Defined in [index.ts:12](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L12)_
 
 ---
 
@@ -30,6 +30,6 @@ _Defined in [index.ts:12](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● style**: _`Map`.<`Element`>,.<`object`>_
 
-_Defined in [index.ts:11](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L11)_
+_Defined in [index.ts:11](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L11)_
 
 ---

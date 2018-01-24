@@ -10,7 +10,7 @@
 
 **● bottom**: _`number`_
 
-_Defined in [layout.ts:5](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L5)_
+_Defined in [layout.ts:5](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L5)_
 
 ---
 
@@ -20,7 +20,7 @@ _Defined in [layout.ts:5](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● left**: _`number`_
 
-_Defined in [layout.ts:2](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L2)_
+_Defined in [layout.ts:2](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L2)_
 
 ---
 
@@ -30,7 +30,7 @@ _Defined in [layout.ts:2](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● right**: _`number`_
 
-_Defined in [layout.ts:3](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L3)_
+_Defined in [layout.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L3)_
 
 ---
 
@@ -40,6 +40,6 @@ _Defined in [layout.ts:3](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● top**: _`number`_
 
-_Defined in [layout.ts:4](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L4)_
+_Defined in [layout.ts:4](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L4)_
 
 ---

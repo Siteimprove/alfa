@@ -27,7 +27,7 @@
 
 ** background-color**:
 
-_Defined in [style.ts:11](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L11)_
+_Defined in [style.ts:11](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L11)_
 
 ---
 
@@ -37,7 +37,7 @@ _Defined in [style.ts:11](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ** background-image**:
 
-_Defined in [style.ts:12](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L12)_
+_Defined in [style.ts:12](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L12)_
 
 ---
 
@@ -47,7 +47,7 @@ _Defined in [style.ts:12](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ** color**:
 
-_Defined in [style.ts:8](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L8)_
+_Defined in [style.ts:8](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L8)_
 
 ---
 
@@ -57,7 +57,7 @@ _Defined in [style.ts:8](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 ** display**:
 
-_Defined in [style.ts:6](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L6)_
+_Defined in [style.ts:6](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L6)_
 
 ---
 
@@ -67,7 +67,7 @@ _Defined in [style.ts:6](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 ** font-size**:
 
-_Defined in [style.ts:9](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L9)_
+_Defined in [style.ts:9](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L9)_
 
 ---
 
@@ -77,7 +77,7 @@ _Defined in [style.ts:9](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 ** outline-color**:
 
-_Defined in [style.ts:14](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L14)_
+_Defined in [style.ts:14](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L14)_
 
 ---
 
@@ -87,7 +87,7 @@ _Defined in [style.ts:14](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ** outline-style**:
 
-_Defined in [style.ts:13](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L13)_
+_Defined in [style.ts:13](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L13)_
 
 ---
 
@@ -97,7 +97,7 @@ _Defined in [style.ts:13](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ** outline-width**:
 
-_Defined in [style.ts:15](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L15)_
+_Defined in [style.ts:15](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L15)_
 
 ---
 
@@ -107,7 +107,7 @@ _Defined in [style.ts:15](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ** text-indent**:
 
-_Defined in [style.ts:10](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L10)_
+_Defined in [style.ts:10](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L10)_
 
 ---
 
@@ -117,6 +117,6 @@ _Defined in [style.ts:10](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ** visibility**:
 
-_Defined in [style.ts:7](https://github.com/Siteimprove/alfa/blob/7447116/packages/css/src/style.ts#L7)_
+_Defined in [style.ts:7](https://github.com/Siteimprove/alfa/blob/master/packages/css/src/style.ts#L7)_
 
 ---

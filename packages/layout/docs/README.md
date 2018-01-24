@@ -34,7 +34,7 @@
 
 **Τ LayoutNode**: _[Layout](interfaces/layout.md)`object`_
 
-_Defined in [layout.ts:61](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L61)_
+_Defined in [layout.ts:61](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L61)_
 
 ---
 
@@ -46,7 +46,7 @@ _Defined in [layout.ts:61](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **area**(layout: _[Layout](interfaces/layout.md)_): `number`
 
-_Defined in [layout.ts:16](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L16)_
+_Defined in [layout.ts:16](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L16)_
 
 **Parameters:**
 
@@ -64,7 +64,7 @@ _Defined in [layout.ts:16](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **contains**(a: _[Layout](interfaces/layout.md)_, b: _[Layout](interfaces/layout.md)_): `boolean`
 
-_Defined in [layout.ts:33](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L33)_
+_Defined in [layout.ts:33](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L33)_
 
 **Parameters:**
 
@@ -83,7 +83,7 @@ _Defined in [layout.ts:33](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **height**(layout: _[Layout](interfaces/layout.md)_): `number`
 
-_Defined in [layout.ts:12](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L12)_
+_Defined in [layout.ts:12](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L12)_
 
 **Parameters:**
 
@@ -101,7 +101,7 @@ _Defined in [layout.ts:12](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **intersects**(a: _[Layout](interfaces/layout.md)_, b: _[Layout](interfaces/layout.md)_): `boolean`
 
-_Defined in [layout.ts:24](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L24)_
+_Defined in [layout.ts:24](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L24)_
 
 **Parameters:**
 
@@ -120,7 +120,7 @@ _Defined in [layout.ts:24](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **margin**(layout: _[Layout](interfaces/layout.md)_): `number`
 
-_Defined in [layout.ts:20](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L20)_
+_Defined in [layout.ts:20](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L20)_
 
 **Parameters:**
 
@@ -138,7 +138,7 @@ _Defined in [layout.ts:20](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **union**(...layouts: _[Layout](interfaces/layout.md)[]_): [Layout](interfaces/layout.md)
 
-_Defined in [layout.ts:42](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L42)_
+_Defined in [layout.ts:42](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L42)_
 
 **Parameters:**
 
@@ -156,7 +156,7 @@ _Defined in [layout.ts:42](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **width**(layout: _[Layout](interfaces/layout.md)_): `number`
 
-_Defined in [layout.ts:8](https://github.com/Siteimprove/alfa/blob/7447116/packages/layout/src/layout.ts#L8)_
+_Defined in [layout.ts:8](https://github.com/Siteimprove/alfa/blob/master/packages/layout/src/layout.ts#L8)_
 
 **Parameters:**
 

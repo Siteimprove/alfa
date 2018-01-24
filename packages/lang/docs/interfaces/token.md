@@ -10,6 +10,6 @@
 
 **● type**: _`string`_
 
-_Defined in [lexer.ts:6](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L6)_
+_Defined in [lexer.ts:6](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L6)_
 
 ---

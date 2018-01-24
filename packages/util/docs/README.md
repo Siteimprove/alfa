@@ -25,7 +25,7 @@
 
 **Τ Fn**: _`function`_
 
-_Defined in [function/memoize.ts:3](https://github.com/Siteimprove/alfa/blob/7447116/packages/util/src/function/memoize.ts#L3)_
+_Defined in [function/memoize.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/util/src/function/memoize.ts#L3)_
 
 #### Type declaration
 
@@ -47,7 +47,7 @@ _Defined in [function/memoize.ts:3](https://github.com/Siteimprove/alfa/blob/744
 
 **Τ Options**: _`object`_
 
-_Defined in [function/memoize.ts:5](https://github.com/Siteimprove/alfa/blob/7447116/packages/util/src/function/memoize.ts#L5)_
+_Defined in [function/memoize.ts:5](https://github.com/Siteimprove/alfa/blob/master/packages/util/src/function/memoize.ts#L5)_
 
 #### Type declaration
 
@@ -61,7 +61,7 @@ _Defined in [function/memoize.ts:5](https://github.com/Siteimprove/alfa/blob/744
 
 ► **memoize**T(fn: _`T`_, options?: _[Options](#options)_): `T`
 
-_Defined in [function/memoize.ts:9](https://github.com/Siteimprove/alfa/blob/7447116/packages/util/src/function/memoize.ts#L9)_
+_Defined in [function/memoize.ts:9](https://github.com/Siteimprove/alfa/blob/master/packages/util/src/function/memoize.ts#L9)_
 
 **Type parameters:**
 

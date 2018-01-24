@@ -29,7 +29,7 @@
 
 **Τ WithReference**: _` T``object `_
 
-_Defined in [virtualize.ts:8](https://github.com/Siteimprove/alfa/blob/7447116/packages/pickle/src/virtualize.ts#L8)_
+_Defined in [virtualize.ts:8](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L8)_
 
 ---
 
@@ -41,7 +41,7 @@ _Defined in [virtualize.ts:8](https://github.com/Siteimprove/alfa/blob/7447116/p
 
 ► **dereference**(node: _`Node`_): `Node`
 
-_Defined in [virtualize.ts:171](https://github.com/Siteimprove/alfa/blob/7447116/packages/pickle/src/virtualize.ts#L171)_
+_Defined in [virtualize.ts:171](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L171)_
 
 **Parameters:**
 
@@ -59,7 +59,7 @@ _Defined in [virtualize.ts:171](https://github.com/Siteimprove/alfa/blob/7447116
 
 ► **hasReference**T(node: _`T`_): `boolean`
 
-_Defined in [virtualize.ts:10](https://github.com/Siteimprove/alfa/blob/7447116/packages/pickle/src/virtualize.ts#L10)_
+_Defined in [virtualize.ts:10](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L10)_
 
 **Type parameters:**
 
@@ -81,7 +81,7 @@ _Defined in [virtualize.ts:10](https://github.com/Siteimprove/alfa/blob/7447116/
 
 ► **layout**(root: _[WithReference](#withreference)`Node`_): `Map`.<`Element`>,.<`Layout`>
 
-_Defined in [virtualize.ts:183](https://github.com/Siteimprove/alfa/blob/7447116/packages/pickle/src/virtualize.ts#L183)_
+_Defined in [virtualize.ts:183](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L183)_
 
 **Parameters:**
 
@@ -99,7 +99,7 @@ _Defined in [virtualize.ts:183](https://github.com/Siteimprove/alfa/blob/7447116
 
 ► **parentize**(node: _`Node`_): `Node`
 
-_Defined in [virtualize.ts:161](https://github.com/Siteimprove/alfa/blob/7447116/packages/pickle/src/virtualize.ts#L161)_
+_Defined in [virtualize.ts:161](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L161)_
 
 **Parameters:**
 
@@ -117,7 +117,7 @@ _Defined in [virtualize.ts:161](https://github.com/Siteimprove/alfa/blob/7447116
 
 ► **style**(root: _[WithReference](#withreference)`Node`_): `Map`.<`Element`>,.<`object`>
 
-_Defined in [virtualize.ts:206](https://github.com/Siteimprove/alfa/blob/7447116/packages/pickle/src/virtualize.ts#L206)_
+_Defined in [virtualize.ts:206](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L206)_
 
 **Parameters:**
 
@@ -135,7 +135,7 @@ _Defined in [virtualize.ts:206](https://github.com/Siteimprove/alfa/blob/7447116
 
 ► **virtualize**(node: _`Node`_, options?: _[VirtualizeOptions](interfaces/virtualizeoptions.md)_): [WithReference](#withreference)`Node`
 
-_Defined in [virtualize.ts:73](https://github.com/Siteimprove/alfa/blob/7447116/packages/pickle/src/virtualize.ts#L73)_
+_Defined in [virtualize.ts:73](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L73)_
 
 **Parameters:**
 

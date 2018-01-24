@@ -12,6 +12,7 @@ async function onEvent(event, path) {
       mode: "file",
       readme: "none",
       theme: "markdown",
+      gitRevision: "master",
       logger: () => {},
 
       // Exclude everything except public APIs
@@ -44,7 +45,7 @@ async function onEvent(event, path) {
       });
 
       for (const file of await glob(`${path}/docs/**/*.md`)) {
-        await prettier.onEvent(null, file)
+        await prettier.onEvent(null, file);
       }
     }
   } catch (err) {

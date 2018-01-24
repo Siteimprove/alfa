@@ -20,7 +20,7 @@
 
 **● associate**: _"left"⎮"right"_
 
-_Defined in [parser.ts:82](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/parser.ts#L82)_
+_Defined in [parser.ts:82](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/parser.ts#L82)_
 
 ---
 
@@ -30,7 +30,7 @@ _Defined in [parser.ts:82](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 **● token**: _`U[&quot;type&quot;]`_
 
-_Defined in [parser.ts:81](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/parser.ts#L81)_
+_Defined in [parser.ts:81](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/parser.ts#L81)_
 
 ---
 
@@ -42,7 +42,7 @@ _Defined in [parser.ts:81](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **infix**(token: _`U`_, stream: _`Stream`.<`T`>_, expression: _`function`_, left: _`R`_): `P`⎮`null`
 
-_Defined in [parser.ts:84](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/parser.ts#L84)_
+_Defined in [parser.ts:84](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/parser.ts#L84)_
 
 **Parameters:**
 
@@ -63,7 +63,7 @@ _Defined in [parser.ts:84](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **prefix**(token: _`U`_, stream: _`Stream`.<`T`>_, expression: _`function`_): `P`⎮`null`
 
-_Defined in [parser.ts:83](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/parser.ts#L83)_
+_Defined in [parser.ts:83](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/parser.ts#L83)_
 
 **Parameters:**
 

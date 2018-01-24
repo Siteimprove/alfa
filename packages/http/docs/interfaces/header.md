@@ -10,7 +10,7 @@
 
 **● name**: _`string`_
 
-_Defined in [index.ts:2](https://github.com/Siteimprove/alfa/blob/7447116/packages/http/src/index.ts#L2)_
+_Defined in [index.ts:2](https://github.com/Siteimprove/alfa/blob/master/packages/http/src/index.ts#L2)_
 
 ---
 
@@ -20,6 +20,6 @@ _Defined in [index.ts:2](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 **● value**: _`string`_
 
-_Defined in [index.ts:3](https://github.com/Siteimprove/alfa/blob/7447116/packages/http/src/index.ts#L3)_
+_Defined in [index.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/http/src/index.ts#L3)_
 
 ---

@@ -10,7 +10,7 @@
 
 **● height**: _`number`_
 
-_Defined in [index.ts:4](https://github.com/Siteimprove/alfa/blob/7447116/packages/img/src/index.ts#L4)_
+_Defined in [index.ts:4](https://github.com/Siteimprove/alfa/blob/master/packages/img/src/index.ts#L4)_
 
 ---
 
@@ -20,7 +20,7 @@ _Defined in [index.ts:4](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 **● source**: _`string`_
 
-_Defined in [index.ts:2](https://github.com/Siteimprove/alfa/blob/7447116/packages/img/src/index.ts#L2)_
+_Defined in [index.ts:2](https://github.com/Siteimprove/alfa/blob/master/packages/img/src/index.ts#L2)_
 
 ---
 
@@ -30,6 +30,6 @@ _Defined in [index.ts:2](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 **● width**: _`number`_
 
-_Defined in [index.ts:3](https://github.com/Siteimprove/alfa/blob/7447116/packages/img/src/index.ts#L3)_
+_Defined in [index.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/img/src/index.ts#L3)_
 
 ---

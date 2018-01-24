@@ -10,7 +10,7 @@
 
 **● applicability**: _`string`_
 
-_Defined in [index.ts:36](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L36)_
+_Defined in [index.ts:36](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L36)_
 
 ---
 
@@ -20,7 +20,7 @@ _Defined in [index.ts:36](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● assumptions**: _`string`_
 
-_Defined in [index.ts:35](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L35)_
+_Defined in [index.ts:35](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L35)_
 
 ---
 
@@ -30,7 +30,7 @@ _Defined in [index.ts:35](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● description**: _`string`_
 
-_Defined in [index.ts:34](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L34)_
+_Defined in [index.ts:34](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L34)_
 
 ---
 
@@ -40,7 +40,7 @@ _Defined in [index.ts:34](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● expectations**: _`Array`.<`object`>_
 
-_Defined in [index.ts:37](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L37)_
+_Defined in [index.ts:37](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L37)_
 
 ---
 
@@ -50,7 +50,7 @@ _Defined in [index.ts:37](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● id**: _"en"_
 
-_Defined in [index.ts:32](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L32)_
+_Defined in [index.ts:32](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L32)_
 
 ---
 
@@ -60,6 +60,6 @@ _Defined in [index.ts:32](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● title**: _`string`_
 
-_Defined in [index.ts:33](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L33)_
+_Defined in [index.ts:33](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L33)_
 
 ---

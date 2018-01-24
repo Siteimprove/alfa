@@ -40,7 +40,7 @@
 
 **Τ Alphabet**: _`Array`.<[Pattern](#pattern)`T`>_
 
-_Defined in [lexer.ts:183](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L183)_
+_Defined in [lexer.ts:183](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L183)_
 
 ---
 
@@ -50,7 +50,7 @@ _Defined in [lexer.ts:183](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 **Τ Grammar**: _`Array`.<[Production](interfaces/production.md)`T`, `T`, `R`, `R`⎮`Array`.<[Production](interfaces/production.md)`T`, `T`, `R`, `R`>>_
 
-_Defined in [parser.ts:92](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/parser.ts#L92)_
+_Defined in [parser.ts:92](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/parser.ts#L92)_
 
 ---
 
@@ -60,7 +60,7 @@ _Defined in [parser.ts:92](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 **Τ Pattern**: _`function`_
 
-_Defined in [lexer.ts:181](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L181)_
+_Defined in [lexer.ts:181](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L181)_
 
 #### Type declaration
 
@@ -82,7 +82,7 @@ _Defined in [lexer.ts:181](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 **Τ WithLocation**: _`T`[Location](interfaces/location.md)_
 
-_Defined in [lexer.ts:14](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L14)_
+_Defined in [lexer.ts:14](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L14)_
 
 ---
 
@@ -94,7 +94,7 @@ _Defined in [lexer.ts:14](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ► **hasLocation**T(token: _`T`_): `boolean`
 
-_Defined in [lexer.ts:16](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L16)_
+_Defined in [lexer.ts:16](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L16)_
 
 **Type parameters:**
 
@@ -116,7 +116,7 @@ _Defined in [lexer.ts:16](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ► **isAlpha**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:235](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L235)_
+_Defined in [lexer.ts:235](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L235)_
 
 **Parameters:**
 
@@ -134,7 +134,7 @@ _Defined in [lexer.ts:235](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isAlphanumeric**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:243](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L243)_
+_Defined in [lexer.ts:243](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L243)_
 
 **Parameters:**
 
@@ -152,7 +152,7 @@ _Defined in [lexer.ts:243](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isAscii**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:253](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L253)_
+_Defined in [lexer.ts:253](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L253)_
 
 **Parameters:**
 
@@ -170,7 +170,7 @@ _Defined in [lexer.ts:253](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isBetween**(char: _`string`⎮`null`_, lower: _`string`_, upper: _`string`_): `boolean`
 
-_Defined in [lexer.ts:219](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L219)_
+_Defined in [lexer.ts:219](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L219)_
 
 **Parameters:**
 
@@ -190,7 +190,7 @@ _Defined in [lexer.ts:219](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isHex**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:247](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L247)_
+_Defined in [lexer.ts:247](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L247)_
 
 **Parameters:**
 
@@ -208,7 +208,7 @@ _Defined in [lexer.ts:247](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isNewline**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:231](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L231)_
+_Defined in [lexer.ts:231](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L231)_
 
 **Parameters:**
 
@@ -226,7 +226,7 @@ _Defined in [lexer.ts:231](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isNonAscii**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:257](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L257)_
+_Defined in [lexer.ts:257](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L257)_
 
 **Parameters:**
 
@@ -244,7 +244,7 @@ _Defined in [lexer.ts:257](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isNumeric**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:239](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L239)_
+_Defined in [lexer.ts:239](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L239)_
 
 **Parameters:**
 
@@ -262,7 +262,7 @@ _Defined in [lexer.ts:239](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **isWhitespace**(char: _`string`⎮`null`_): `boolean`
 
-_Defined in [lexer.ts:227](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L227)_
+_Defined in [lexer.ts:227](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L227)_
 
 **Parameters:**
 
@@ -280,7 +280,7 @@ _Defined in [lexer.ts:227](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **lex**T(input: _`string`_, alphabet: _[Alphabet](#alphabet)`T`_): `Array`.<[WithLocation](#withlocation)`T`>
 
-_Defined in [lexer.ts:185](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L185)_
+_Defined in [lexer.ts:185](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L185)_
 
 **Type parameters:**
 
@@ -303,7 +303,7 @@ _Defined in [lexer.ts:185](https://github.com/Siteimprove/alfa/blob/7447116/pack
 
 ► **parse**T,R(input: _`Array`.<`T`>_, grammar: _[Grammar](#grammar)`T`, `R`_): `R`⎮`null`
 
-_Defined in [parser.ts:96](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/parser.ts#L96)_
+_Defined in [parser.ts:96](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/parser.ts#L96)_
 
 **Type parameters:**
 

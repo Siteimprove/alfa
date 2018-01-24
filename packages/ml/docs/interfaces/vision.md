@@ -10,7 +10,7 @@
 
 ► **hasText**(image: _`Image`_): `Promise`.<`boolean`>
 
-_Defined in [vision.ts:4](https://github.com/Siteimprove/alfa/blob/7447116/packages/ml/src/vision.ts#L4)_
+_Defined in [vision.ts:4](https://github.com/Siteimprove/alfa/blob/master/packages/ml/src/vision.ts#L4)_
 
 **Parameters:**
 

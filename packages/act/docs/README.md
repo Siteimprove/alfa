@@ -16,7 +16,7 @@
 
 ► **markdown**T,A(rule: _`Rule`.<`T`>,.<`A`>_, lang: _"en"_): `string`⎮`null`
 
-_Defined in [markdown.ts:3](https://github.com/Siteimprove/alfa/blob/7447116/packages/act/src/markdown.ts#L3)_
+_Defined in [markdown.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/act/src/markdown.ts#L3)_
 
 **Type parameters:**
 

@@ -18,7 +18,7 @@
 
 **● applicability**: _`function`_ = elementsWithIds
 
-_Defined in [unique-ids/rule.ts:32](https://github.com/Siteimprove/alfa/blob/7447116/packages/wcag/src/unique-ids/rule.ts#L32)_
+_Defined in [unique-ids/rule.ts:32](https://github.com/Siteimprove/alfa/blob/master/packages/wcag/src/unique-ids/rule.ts#L32)_
 
 #### Type declaration
 
@@ -40,7 +40,7 @@ _Defined in [unique-ids/rule.ts:32](https://github.com/Siteimprove/alfa/blob/744
 
 **● criteria**: _`string`[]_ = ["wcag:4.1.1"]
 
-_Defined in [unique-ids/rule.ts:30](https://github.com/Siteimprove/alfa/blob/7447116/packages/wcag/src/unique-ids/rule.ts#L30)_
+_Defined in [unique-ids/rule.ts:30](https://github.com/Siteimprove/alfa/blob/master/packages/wcag/src/unique-ids/rule.ts#L30)_
 
 ---
 
@@ -50,7 +50,7 @@ _Defined in [unique-ids/rule.ts:30](https://github.com/Siteimprove/alfa/blob/744
 
 **● expectations**: _`function`[]_ = [elementIdIsUnique]
 
-_Defined in [unique-ids/rule.ts:33](https://github.com/Siteimprove/alfa/blob/7447116/packages/wcag/src/unique-ids/rule.ts#L33)_
+_Defined in [unique-ids/rule.ts:33](https://github.com/Siteimprove/alfa/blob/master/packages/wcag/src/unique-ids/rule.ts#L33)_
 
 ---
 
@@ -60,7 +60,7 @@ _Defined in [unique-ids/rule.ts:33](https://github.com/Siteimprove/alfa/blob/744
 
 **● id**: _`string`_ = "alfa:wcag:unique-ids"
 
-_Defined in [unique-ids/rule.ts:29](https://github.com/Siteimprove/alfa/blob/7447116/packages/wcag/src/unique-ids/rule.ts#L29)_
+_Defined in [unique-ids/rule.ts:29](https://github.com/Siteimprove/alfa/blob/master/packages/wcag/src/unique-ids/rule.ts#L29)_
 
 ---
 
@@ -70,6 +70,6 @@ _Defined in [unique-ids/rule.ts:29](https://github.com/Siteimprove/alfa/blob/744
 
 **● locales**: _`Locale`[]_ = [EN]
 
-_Defined in [unique-ids/rule.ts:31](https://github.com/Siteimprove/alfa/blob/7447116/packages/wcag/src/unique-ids/rule.ts#L31)_
+_Defined in [unique-ids/rule.ts:31](https://github.com/Siteimprove/alfa/blob/master/packages/wcag/src/unique-ids/rule.ts#L31)_
 
 ---

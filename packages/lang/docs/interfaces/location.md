@@ -10,7 +10,7 @@
 
 **● column**: _`number`_
 
-_Defined in [lexer.ts:11](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L11)_
+_Defined in [lexer.ts:11](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L11)_
 
 ---
 
@@ -20,6 +20,6 @@ _Defined in [lexer.ts:11](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **● line**: _`number`_
 
-_Defined in [lexer.ts:10](https://github.com/Siteimprove/alfa/blob/7447116/packages/lang/src/lexer.ts#L10)_
+_Defined in [lexer.ts:10](https://github.com/Siteimprove/alfa/blob/master/packages/lang/src/lexer.ts#L10)_
 
 ---

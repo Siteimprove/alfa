@@ -33,7 +33,7 @@
 
 **Τ Applicability**: _`function`_
 
-_Defined in [index.ts:43](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L43)_
+_Defined in [index.ts:43](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L43)_
 
 #### Type declaration
 
@@ -55,7 +55,7 @@ _Defined in [index.ts:43](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **Τ Aspect**: _"document"⎮"style"⎮"layout"_
 
-_Defined in [index.ts:15](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L15)_
+_Defined in [index.ts:15](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L15)_
 
 ---
 
@@ -65,7 +65,7 @@ _Defined in [index.ts:15](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **Τ Criterion**: _`string`_
 
-_Defined in [index.ts:5](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L5)_
+_Defined in [index.ts:5](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L5)_
 
 ---
 
@@ -75,7 +75,7 @@ _Defined in [index.ts:5](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 **Τ Expectation**: _`function`_
 
-_Defined in [index.ts:47](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L47)_
+_Defined in [index.ts:47](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L47)_
 
 #### Type declaration
 
@@ -98,7 +98,7 @@ _Defined in [index.ts:47](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **Τ Outcome**: _"passed"⎮"failed"⎮"inapplicable"_
 
-_Defined in [index.ts:29](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L29)_
+_Defined in [index.ts:29](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L29)_
 
 ---
 
@@ -108,7 +108,7 @@ _Defined in [index.ts:29](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **Τ Result**: _` object``object `⎮`object`_
 
-_Defined in [index.ts:17](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L17)_
+_Defined in [index.ts:17](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L17)_
 
 ---
 
@@ -118,7 +118,7 @@ _Defined in [index.ts:17](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 **Τ Target**: _`Node`_
 
-_Defined in [index.ts:7](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L7)_
+_Defined in [index.ts:7](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L7)_
 
 ---
 
@@ -130,7 +130,7 @@ _Defined in [index.ts:7](https://github.com/Siteimprove/alfa/blob/7447116/packag
 
 ► **check**T,A(rule: _[Rule](interfaces/rule.md)`T`, `A`_, context: _`Pick`.<[Aspects](interfaces/aspects.md)>,.<`A`>_): `Promise`.<`Array`.<[Result](#result)`T`, `A`>>
 
-_Defined in [index.ts:60](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L60)_
+_Defined in [index.ts:60](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L60)_
 
 **Type parameters:**
 
@@ -155,7 +155,7 @@ _Defined in [index.ts:60](https://github.com/Siteimprove/alfa/blob/7447116/packa
 
 ► **checkAll**T,A(rules: _`Array`.<[Rule](interfaces/rule.md)`T`, `A`>_, context: _`Pick`.<[Aspects](interfaces/aspects.md)>,.<`A`>_): `Promise`.<`Array`.<[Result](#result)`T`, `A`>>
 
-_Defined in [index.ts:98](https://github.com/Siteimprove/alfa/blob/7447116/packages/rule/src/index.ts#L98)_
+_Defined in [index.ts:98](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L98)_
 
 **Type parameters:**
 
