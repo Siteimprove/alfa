@@ -76,10 +76,10 @@ function remove(path, options = { sync: false }) {
 
 function glob(paths, options = { sync: false }) {
   if (options.sync) {
-    return globby.sync(paths);
+    return globby.sync(paths, { nodir: false });
   }
 
-  return globby(paths);
+  return globby(paths, { nodir: false });
 }
 
 module.exports = { stat, read, write, remove, glob };

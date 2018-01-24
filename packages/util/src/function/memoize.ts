@@ -1,8 +1,8 @@
 import moize from "moize";
 
-type Fn = (...args: any[]) => any;
+export type Fn = (...args: any[]) => any;
 
-type Options = {
+export type Options = {
   cache?: { size?: number; age?: number };
 };
 
