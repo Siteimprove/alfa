@@ -13,9 +13,9 @@ notify({
 });
 
 glob("packages/**/*.spec.ts{,x}")
-  .then(async files => Promise.all(files.map(file =>
-    tap.onEvent(null, file, config)
-  )))
+  .then(async files =>
+    Promise.all(files.map(file => tap.onEvent(null, file, config)))
+  )
   .then(() =>
     notify({
       message: "Tests succeeded!",
