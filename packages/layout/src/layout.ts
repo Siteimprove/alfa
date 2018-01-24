@@ -94,7 +94,6 @@ export class LayoutIndex {
 }
 
 /**
- * Partition
  * @see http://ftp.informatik.rwth-aachen.de/Publications/CEUR-WS/Vol-74/files/FORUM_18.pdf
  */
 function partition(
