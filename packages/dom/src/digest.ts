@@ -36,7 +36,7 @@ export function digest<T extends Node>(node: T): WithDigest<T> | Node {
   if (isElement(node)) {
     sha.update(node.tag);
 
-    for (const name of keys(node.attributes)) {
+    for (const name of keys(node.attributes).sort()) {
       const value = node.attributes[name];
 
       sha.update(name);
