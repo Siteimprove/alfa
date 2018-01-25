@@ -17,7 +17,7 @@ async function onEvent(event, path, options = {}) {
     const source = await read(path);
     const options = { filepath: path };
 
-    if (isSupported(path) && !check(source, options)) {
+    if (isSupported(path)) {
       await write(path, format(source, options));
 
       if (typeof options.onWrite === "function") {
