@@ -39,8 +39,36 @@ export function digest<T extends Node>(node: T): WithDigest<T> | Node {
     for (const name of keys(node.attributes).sort()) {
       const value = node.attributes[name];
 
+      // A false value indicates that the attribute is non-present per the HTML5
+      // spec, so we can skip it altogether. Likewise, we are not interested in
+      // attributes with undefined values.
+      // https://www.w3.org/TR/html5/infrastructure.html#sec-boolean-attributes
+      if (value === false || value === undefined) {
+        continue;
+      }
+
       sha.update(name);
-      sha.update(String(value));
+
+      // For boolean attributes, we must repeat the name of the attribute in
+      // order to prevent the case were two consecutive boolean attributes in
+      // sorted order would otherwise hash to the same value as an attribute
+      // with a name of the first attribute and a value of the second:
+      //
+      //   <div bar foo /> = <div bar="foo" />
+      //
+      // We also cannot use the stringified value of boolean attributes as part
+      // of the hash as we'd otherwise encounter the following case:
+      //
+      //   <div foo /> = <div foo="true" />
+      //
+      // The is not valid per the HTML5 spec as the literal values "true" and
+      // "false" cannot be used for indicating boolean attributes.
+      // https://www.w3.org/TR/html5/infrastructure.html#sec-boolean-attributes
+      if (value === true) {
+        sha.update(name);
+      } else {
+        sha.update(String(value));
+      }
     }
   }
 
