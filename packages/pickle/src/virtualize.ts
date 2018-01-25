@@ -63,7 +63,7 @@ function children(
     const child = childNodes[i];
 
     const vchild: V.ChildNode = assign(virtualize(child, options), {
-      parent: options.parents === true ? virtual : null
+      parent: options.parents === false ? null : virtual
     });
 
     virtual.children[i] = vchild;
@@ -153,6 +153,21 @@ export function virtualize(
       return virtual;
     }
 
+    case node.DOCUMENT_FRAGMENT_NODE: {
+      const docfragment = node as DocumentType;
+
+      const virtual: WithReference<V.DocumentFragment> = {
+        type: "documentfragment",
+        parent: null,
+        children: [],
+        ref: docfragment
+      };
+
+      children(docfragment, virtual, options);
+
+      return virtual;
+    }
+
     default:
       throw new Error(`Cannot virtualize node of type "${node.nodeType}"`);
   }
@@ -203,6 +218,26 @@ export function layout(root: WithReference<V.Node>): Map<V.Element, Layout> {
   return layout;
 }
 
+function focusTarget(element: HTMLElement): HTMLElement | null {
+  if ("focus" in element && element.tabIndex >= -1) {
+    return element;
+  }
+
+  if (element.parentElement !== null) {
+    return focusTarget(element.parentElement);
+  }
+
+  return null;
+}
+
+function view(node: Node): Window {
+  if (node.nodeType === node.DOCUMENT_NODE) {
+    return (node as Document).defaultView;
+  }
+
+  return node.ownerDocument.defaultView;
+}
+
 export function style(
   root: WithReference<V.Node>
 ): Map<V.Element, { [S in State]: Style }> {
@@ -211,23 +246,37 @@ export function style(
   traverse(root, node => {
     if (isElement(node) && hasReference(node)) {
       const element = node.ref as HTMLElement;
-      const computed = getComputedStyle(element);
+      const computed = view(element).getComputedStyle(element);
       const _style: { [S in State]: Style } = {
         default: {},
         focus: {}
       };
 
+      const target = focusTarget(element);
+
+      if (target !== null) {
+        target.blur();
+      }
+
       for (const property of properties) {
-        _style.default[property] = computed.getPropertyValue(property);
+        const value = computed.getPropertyValue(property);
+
+        if (value !== "") {
+          _style.default[property] = value;
+        }
       }
 
       _style.default = clean(_style.default);
 
-      if ("focus" in element && element.tabIndex >= -1) {
-        element.focus();
+      if (target !== null) {
+        target.focus();
 
         for (const property of properties) {
-          _style.focus[property] = computed.getPropertyValue(property);
+          const value = computed.getPropertyValue(property);
+
+          if (value !== "") {
+            _style.focus[property] = value;
+          }
         }
 
         _style.focus = deduplicate(_style.default, clean(_style.focus));
