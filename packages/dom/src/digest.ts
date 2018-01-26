@@ -11,7 +11,7 @@ import {
 
 const { keys, assign } = Object;
 
-export type WithDigest<T extends Node> = T & { readonly digest: string };
+export type WithDigest<T extends Node> = T & Readonly<{ digest: string }>;
 
 export function hasDigest<T extends Node>(node: T): node is WithDigest<T> {
   return "digest" in node;
@@ -24,11 +24,13 @@ export function hasDigest<T extends Node>(node: T): node is WithDigest<T> {
  *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export async function digest<T extends Node>(
-  node: T
-): Promise<WithDigest<T> | Node> {
-  if (hasDigest(node) || isComment(node) || isDocumentType(node)) {
-    return node;
+export async function digest<T extends Node>(node: T): Promise<string | null> {
+  if (isComment(node) || isDocumentType(node)) {
+    return null;
+  }
+
+  if (hasDigest(node)) {
+    return node.digest;
   }
 
   let data = node.type;
@@ -86,5 +88,7 @@ export async function digest<T extends Node>(
     }
   }
 
-  return assign(node, { digest: await crypto.digest(data) });
+  const withDigest = assign(node, { digest: await crypto.digest(data) });
+
+  return withDigest.digest;
 }

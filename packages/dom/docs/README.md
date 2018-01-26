@@ -177,7 +177,7 @@ _Defined in [compare.ts:34](https://github.com/Siteimprove/alfa/blob/master/pack
 
 ### digest
 
-► **digest**T(node: _`T`_): `Promise`.<[WithDigest](#withdigest)`T`⎮[Node](interfaces/node.md)>
+► **digest**T(node: _`T`_): `Promise`.<`string`⎮`null`>
 
 _Defined in [digest.ts:27](https://github.com/Siteimprove/alfa/blob/master/packages/dom/src/digest.ts#L27)_
 
@@ -194,7 +194,7 @@ _**see**_: [https://www.ietf.org/rfc/rfc2803.txt](https://www.ietf.org/rfc/rfc28
 | ----- | ---- | ----------- |
 | node  | `T`  | -           |
 
-**Returns:** `Promise`.<[WithDigest](#withdigest)`T`⎮[Node](interfaces/node.md)>
+**Returns:** `Promise`.<`string`⎮`null`>
 
 ---
 
