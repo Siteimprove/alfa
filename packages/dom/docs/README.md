@@ -177,10 +177,11 @@ _Defined in [compare.ts:34](https://github.com/Siteimprove/alfa/blob/master/pack
 
 ### digest
 
-► **digest**T(node: _`T`_): [WithDigest](#withdigest)`T`⎮[Node](interfaces/node.md)
+► **digest**T(node: _`T`_): `Promise`.<[WithDigest](#withdigest)`T`⎮[Node](interfaces/node.md)>
 
-_Defined in [digest.ts:23](https://github.com/Siteimprove/alfa/blob/master/packages/dom/src/digest.ts#L23)_
+_Defined in [digest.ts:27](https://github.com/Siteimprove/alfa/blob/master/packages/dom/src/digest.ts#L27)_
 
+Compute and assign digests to a node and all of its children. The digest algorithm is based on DOMHASH (RFC2803) and provides a means of identifying identical subtrees of a DOM structure.
 _**see**_: [https://www.ietf.org/rfc/rfc2803.txt](https://www.ietf.org/rfc/rfc2803.txt)
 
 **Type parameters:**
@@ -193,7 +194,7 @@ _**see**_: [https://www.ietf.org/rfc/rfc2803.txt](https://www.ietf.org/rfc/rfc28
 | ----- | ---- | ----------- |
 | node  | `T`  | -           |
 
-**Returns:** [WithDigest](#withdigest)`T`⎮[Node](interfaces/node.md)
+**Returns:** `Promise`.<[WithDigest](#withdigest)`T`⎮[Node](interfaces/node.md)>
 
 ---
 

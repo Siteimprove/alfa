@@ -1,4 +1,4 @@
-import SHA from "jssha";
+import * as crypto from "@alfa/crypto";
 
 import { Node } from "./types";
 import {
@@ -18,23 +18,27 @@ export function hasDigest<T extends Node>(node: T): node is WithDigest<T> {
 }
 
 /**
+ * Compute and assign digests to a node and all of its children. The digest
+ * algorithm is based on DOMHASH (RFC2803) and provides a means of identifying
+ * identical subtrees of a DOM structure.
+ *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export function digest<T extends Node>(node: T): WithDigest<T> | Node {
+export async function digest<T extends Node>(
+  node: T
+): Promise<WithDigest<T> | Node> {
   if (hasDigest(node) || isComment(node) || isDocumentType(node)) {
     return node;
   }
 
-  const sha = new SHA("SHA-256", "TEXT");
-
-  sha.update(node.type);
+  let data = node.type;
 
   if (isText(node)) {
-    sha.update(node.value);
+    data += node.value;
   }
 
   if (isElement(node)) {
-    sha.update(node.tag);
+    data += node.tag;
 
     for (const name of keys(node.attributes).sort()) {
       const value = node.attributes[name];
@@ -47,7 +51,7 @@ export function digest<T extends Node>(node: T): WithDigest<T> | Node {
         continue;
       }
 
-      sha.update(name);
+      data += name;
 
       // For boolean attributes, we must repeat the name of the attribute in
       // order to prevent the case were two consecutive boolean attributes in
@@ -65,22 +69,22 @@ export function digest<T extends Node>(node: T): WithDigest<T> | Node {
       // "false" cannot be used for indicating boolean attributes.
       // https://www.w3.org/TR/html5/infrastructure.html#sec-boolean-attributes
       if (value === true) {
-        sha.update(name);
+        data += name;
       } else {
-        sha.update(String(value));
+        data += String(value);
       }
     }
   }
 
   if (isParent(node)) {
     for (const child of node.children) {
-      digest(child);
+      await digest(child);
 
       if (hasDigest(child)) {
-        sha.update(child.digest);
+        data += child.digest;
       }
     }
   }
 
-  return assign(node, { digest: sha.getHash("B64") });
+  return assign(node, { digest: await crypto.digest(data) });
 }

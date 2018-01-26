@@ -9,9 +9,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@alfa/css": "^0.0.0",
-    "@types/jssha": "^0.0.29",
-    "jssha": "^2.3.1"
+    "@alfa/crypto": "^0.0.0",
+    "@alfa/css": "^0.0.0"
   },
   "devDependencies": {
     "@alfa/test": "^0.0.0"
