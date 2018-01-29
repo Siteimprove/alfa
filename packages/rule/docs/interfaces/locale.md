@@ -10,7 +10,7 @@
 
 **● applicability**: _`string`_
 
-_Defined in [index.ts:36](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L36)_
+_Defined in [index.ts:37](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L37)_
 
 ---
 
@@ -20,7 +20,7 @@ _Defined in [index.ts:36](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● assumptions**: _`undefined`⎮`string`_
 
-_Defined in [index.ts:35](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L35)_
+_Defined in [index.ts:36](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L36)_
 
 ---
 
@@ -30,7 +30,7 @@ _Defined in [index.ts:35](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● description**: _`string`_
 
-_Defined in [index.ts:34](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L34)_
+_Defined in [index.ts:35](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L35)_
 
 ---
 
@@ -38,9 +38,9 @@ _Defined in [index.ts:34](https://github.com/Siteimprove/alfa/blob/master/packag
 
 ### expectations
 
-**● expectations**: _`Array`.<`object`>_
+**● expectations**: _`Array`.<`Readonly`.<`object`>>_
 
-_Defined in [index.ts:37](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L37)_
+_Defined in [index.ts:38](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L38)_
 
 ---
 
@@ -50,7 +50,7 @@ _Defined in [index.ts:37](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● id**: _"en"_
 
-_Defined in [index.ts:32](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L32)_
+_Defined in [index.ts:33](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L33)_
 
 ---
 
@@ -60,6 +60,6 @@ _Defined in [index.ts:32](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● title**: _`string`_
 
-_Defined in [index.ts:33](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L33)_
+_Defined in [index.ts:34](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L34)_
 
 ---

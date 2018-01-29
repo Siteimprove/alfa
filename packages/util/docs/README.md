@@ -8,8 +8,7 @@
 
 ### Type aliases
 
-* [Fn](#fn)
-* [Options](#options)
+* [MemoizeOptions](#memoizeoptions)
 
 ### Functions
 
@@ -19,37 +18,13 @@
 
 # Type aliases
 
-<a id="fn"></a>
+<a id="memoizeoptions"></a>
 
-### Fn
+### MemoizeOptions
 
-**Τ Fn**: _`function`_
+**Τ MemoizeOptions**: _`Readonly`.<`object`>_
 
 _Defined in [function/memoize.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/util/src/function/memoize.ts#L3)_
-
-#### Type declaration
-
-►(...args: _`any`[]_): `any`
-
-**Parameters:**
-
-| Param | Type    | Description |
-| ----- | ------- | ----------- |
-| args  | `any`[] | -           |
-
-**Returns:** `any`
-
----
-
-<a id="options"></a>
-
-### Options
-
-**Τ Options**: _`object`_
-
-_Defined in [function/memoize.ts:5](https://github.com/Siteimprove/alfa/blob/master/packages/util/src/function/memoize.ts#L5)_
-
-#### Type declaration
 
 ---
 
@@ -59,20 +34,20 @@ _Defined in [function/memoize.ts:5](https://github.com/Siteimprove/alfa/blob/mas
 
 ### memoize
 
-► **memoize**T(fn: _`T`_, options?: _[Options](#options)_): `T`
+► **memoize**T(fn: _`T`_, options?: _[MemoizeOptions](#memoizeoptions)_): `T`
 
-_Defined in [function/memoize.ts:9](https://github.com/Siteimprove/alfa/blob/master/packages/util/src/function/memoize.ts#L9)_
+_Defined in [function/memoize.ts:7](https://github.com/Siteimprove/alfa/blob/master/packages/util/src/function/memoize.ts#L7)_
 
 **Type parameters:**
 
-#### T : [Fn](#fn)
+#### T : `function`
 
 **Parameters:**
 
-| Param   | Type                | Default value | Description |
-| ------- | ------------------- | ------------- | ----------- |
-| fn      | `T`                 | -             | -           |
-| options | [Options](#options) | {}            | -           |
+| Param   | Type                              | Default value | Description |
+| ------- | --------------------------------- | ------------- | ----------- |
+| fn      | `T`                               | -             | -           |
+| options | [MemoizeOptions](#memoizeoptions) | {}            | -           |
 
 **Returns:** `T`
 

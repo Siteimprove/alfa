@@ -2,24 +2,6 @@ export type Algorithm = "sha1" | "sha256" | "sha384" | "sha512";
 
 export let digest: (data: string, algorithm?: Algorithm) => Promise<string>;
 
-function normalize(algorithm: Algorithm): string {
-  if (typeof crypto === "undefined") {
-    return algorithm;
-  } else {
-    switch (algorithm) {
-      case "sha1":
-        return "SHA-1";
-      case "sha256":
-      default:
-        return "SHA-256";
-      case "sha384":
-        return "SHA-384";
-      case "sha512":
-        return "SHA-512";
-    }
-  }
-}
-
 if (typeof crypto === "undefined") {
   const crypto = require("crypto");
 
@@ -45,4 +27,22 @@ if (typeof crypto === "undefined") {
     const string = decoder.decode(hash, { stream: true });
     return btoa(string);
   };
+}
+
+function normalize(algorithm: Algorithm): string {
+  if (typeof crypto === "undefined") {
+    return algorithm;
+  } else {
+    switch (algorithm) {
+      case "sha1":
+        return "SHA-1";
+      case "sha256":
+      default:
+        return "SHA-256";
+      case "sha384":
+        return "SHA-384";
+      case "sha512":
+        return "SHA-512";
+    }
+  }
 }

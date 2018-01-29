@@ -14,17 +14,18 @@ export interface Aspects {
 
 export type Aspect = keyof Aspects;
 
-export type Result<T extends Target, A extends Aspect> = {
-  readonly rule: string;
-  readonly context: Pick<Aspects, A>;
-} & (
-  | {
-      readonly outcome: "passed" | "failed";
-      readonly target: T;
-    }
-  | {
-      readonly outcome: "inapplicable";
-    });
+export type Result<T extends Target, A extends Aspect> = Readonly<{
+  rule: string;
+  context: Pick<Aspects, A>;
+}> &
+  (
+    | Readonly<{
+        outcome: "passed" | "failed";
+        target: T;
+      }>
+    | Readonly<{
+        outcome: "inapplicable";
+      }>);
 
 export type Outcome = Result<Target, Aspect>["outcome"];
 
@@ -34,10 +35,12 @@ export interface Locale {
   readonly description: string;
   readonly assumptions?: string;
   readonly applicability: string;
-  readonly expectations: Array<{
-    readonly description: string;
-    readonly outcome: { readonly [P in Outcome]?: string };
-  }>;
+  readonly expectations: Array<
+    Readonly<{
+      description: string;
+      outcome: Readonly<{ [P in Outcome]?: string }>;
+    }>
+  >;
 }
 
 export type Applicability<T extends Target, A extends Aspect> = (

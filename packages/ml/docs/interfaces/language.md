@@ -10,7 +10,7 @@
 
 ► **detect**(text: _`string`_): "en"⎮"da"⎮`null`
 
-_Defined in language.ts:2_
+_Defined in [language.ts:2](https://github.com/Siteimprove/alfa/blob/master/packages/ml/src/language.ts#L2)_
 
 **Parameters:**
 

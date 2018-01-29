@@ -10,8 +10,20 @@
 
 * [Scraper](classes/scraper.md)
 
-### Interfaces
+### Type aliases
 
-* [ScrapeOptions](interfaces/scrapeoptions.md)
+* [ScrapeOptions](#scrapeoptions)
+
+---
+
+# Type aliases
+
+<a id="scrapeoptions"></a>
+
+### ScrapeOptions
+
+**Τ ScrapeOptions**: _`Readonly`.<`object`>_
+
+_Defined in [index.ts:29](https://github.com/Siteimprove/alfa/blob/master/packages/scrape/src/index.ts#L29)_
 
 ---

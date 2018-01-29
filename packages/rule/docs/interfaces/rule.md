@@ -16,7 +16,7 @@
 
 **● applicability**: _[Applicability](../#applicability)`T`, `A`_
 
-_Defined in [index.ts:56](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L56)_
+_Defined in [index.ts:59](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L59)_
 
 ---
 
@@ -26,7 +26,7 @@ _Defined in [index.ts:56](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● criteria**: _`Array`.<[Criterion](../#criterion)>_
 
-_Defined in [index.ts:54](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L54)_
+_Defined in [index.ts:57](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L57)_
 
 ---
 
@@ -36,7 +36,7 @@ _Defined in [index.ts:54](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● expectations**: _`Array`.<[Expectation](../#expectation)`T`, `A`>_
 
-_Defined in [index.ts:57](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L57)_
+_Defined in [index.ts:60](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L60)_
 
 ---
 
@@ -46,7 +46,7 @@ _Defined in [index.ts:57](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● id**: _`string`_
 
-_Defined in [index.ts:53](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L53)_
+_Defined in [index.ts:56](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L56)_
 
 ---
 
@@ -56,6 +56,6 @@ _Defined in [index.ts:53](https://github.com/Siteimprove/alfa/blob/master/packag
 
 **● locales**: _`Array`.<[Locale](locale.md)>_
 
-_Defined in [index.ts:55](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L55)_
+_Defined in [index.ts:58](https://github.com/Siteimprove/alfa/blob/master/packages/rule/src/index.ts#L58)_
 
 ---

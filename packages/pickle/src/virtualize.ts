@@ -13,9 +13,7 @@ export function hasReference<T extends V.Node>(
   return "ref" in node;
 }
 
-export interface VirtualizeOptions {
-  parents?: boolean;
-}
+export type VirtualizeOptions = Readonly<{ parents?: boolean }>;
 
 function serialize(node: Node): string {
   switch (node.nodeType) {

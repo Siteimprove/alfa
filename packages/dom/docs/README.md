@@ -21,6 +21,7 @@
 ### Type aliases
 
 * [Attribute](#attribute)
+* [AttributeOptions](#attributeoptions)
 * [WithDigest](#withdigest)
 
 ### Functions
@@ -59,11 +60,21 @@ _Defined in [types.ts:1](https://github.com/Siteimprove/alfa/blob/master/package
 
 ---
 
+<a id="attributeoptions"></a>
+
+### AttributeOptions
+
+**Τ AttributeOptions**: _`Readonly`.<`object`>_
+
+_Defined in [element/attribute.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/dom/src/element/attribute.ts#L3)_
+
+---
+
 <a id="withdigest"></a>
 
 ### WithDigest
 
-**Τ WithDigest**: _` T``object `_
+**Τ WithDigest**: _` T``Readonly `.<`object`>_
 
 _Defined in [digest.ts:14](https://github.com/Siteimprove/alfa/blob/master/packages/dom/src/digest.ts#L14)_
 
@@ -75,7 +86,7 @@ _Defined in [digest.ts:14](https://github.com/Siteimprove/alfa/blob/master/packa
 
 ### attribute
 
-► **attribute**K(element: _[Element](interfaces/element.md)_, name: _`K`_, options?: _`Options`_): `{ readonly [name: string]: string | number | boolean | undefined; readonly id?: string | undefine...`
+► **attribute**K(element: _[Element](interfaces/element.md)_, name: _`K`_, options?: _[AttributeOptions](#attributeoptions)_): `Readonly&lt;{ [name: string]: string | number | boolean | undefined; id?: string | undefined; class?...`
 
 _Defined in [element/attribute.ts:5](https://github.com/Siteimprove/alfa/blob/master/packages/dom/src/element/attribute.ts#L5)_
 
@@ -85,13 +96,13 @@ _Defined in [element/attribute.ts:5](https://github.com/Siteimprove/alfa/blob/ma
 
 **Parameters:**
 
-| Param   | Type                             | Default value   | Description |
-| ------- | -------------------------------- | --------------- | ----------- |
-| element | [Element](interfaces/element.md) | -               | -           |
-| name    | `K`                              | -               | -           |
-| options | `Options`                        | { trim: false } | -           |
+| Param   | Type                                  | Default value   | Description |
+| ------- | ------------------------------------- | --------------- | ----------- |
+| element | [Element](interfaces/element.md)      | -               | -           |
+| name    | `K`                                   | -               | -           |
+| options | [AttributeOptions](#attributeoptions) | { trim: false } | -           |
 
-**Returns:** `{ readonly [name: string]: string | number | boolean | undefined; readonly id?: string | undefine...`
+**Returns:** `Readonly&lt;{ [name: string]: string | number | boolean | undefined; id?: string | undefined; class?...`
 
 ---
 

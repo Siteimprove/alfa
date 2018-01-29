@@ -19,7 +19,7 @@
 
 ► **close**(): `Promise`.<`void`>
 
-_Defined in [index.ts:80](https://github.com/Siteimprove/alfa/blob/master/packages/scrape/src/index.ts#L80)_
+_Defined in [index.ts:76](https://github.com/Siteimprove/alfa/blob/master/packages/scrape/src/index.ts#L76)_
 
 **Returns:** `Promise`.<`void`>
 
@@ -29,16 +29,16 @@ _Defined in [index.ts:80](https://github.com/Siteimprove/alfa/blob/master/packag
 
 ### scrape
 
-► **scrape**(url: _`string`_, options?: _`Partial`.<[ScrapeOptions](../interfaces/scrapeoptions.md)>_): `Promise`.<`Aspects`>
+► **scrape**(url: _`string`_, options?: _[ScrapeOptions](../#scrapeoptions)_): `Promise`.<`Aspects`>
 
 _Defined in [index.ts:43](https://github.com/Siteimprove/alfa/blob/master/packages/scrape/src/index.ts#L43)_
 
 **Parameters:**
 
-| Param   | Type                                                        | Default value | Description |
-| ------- | ----------------------------------------------------------- | ------------- | ----------- |
-| url     | `string`                                                    | -             | -           |
-| options | `Partial`.<[ScrapeOptions](../interfaces/scrapeoptions.md)> | {}            | -           |
+| Param   | Type                               | Default value | Description |
+| ------- | ---------------------------------- | ------------- | ----------- |
+| url     | `string`                           | -             | -           |
+| options | [ScrapeOptions](../#scrapeoptions) | {}            | -           |
 
 **Returns:** `Promise`.<`Aspects`>
 

@@ -34,11 +34,11 @@ export interface Element extends Node, ParentNode, ChildNode {
   readonly type: "element";
   readonly tag: string;
   readonly namespace: string | null;
-  readonly attributes: {
-    readonly [name: string]: Attribute | undefined;
-    readonly id?: string;
-    readonly class?: string;
-  };
+  readonly attributes: Readonly<{
+    [name: string]: Attribute | undefined;
+    id?: string;
+    class?: string;
+  }>;
   readonly shadow: DocumentFragment | null;
 }
 

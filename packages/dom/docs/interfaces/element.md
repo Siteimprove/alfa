@@ -18,13 +18,9 @@
 
 ### attributes
 
-**● attributes**: _`object`_
+**● attributes**: _`Readonly`.<`object`>_
 
 _Defined in [types.ts:37](https://github.com/Siteimprove/alfa/blob/master/packages/dom/src/types.ts#L37)_
-
-#### Type declaration
-
-[name: `string`]: [Attribute](../#attribute)⎮`undefined`
 
 ---
 

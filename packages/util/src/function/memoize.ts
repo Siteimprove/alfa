@@ -1,12 +1,13 @@
 import moize from "moize";
 
-export type Fn = (...args: any[]) => any;
+export type MemoizeOptions = Readonly<{
+  cache?: Readonly<{ size?: number; age?: number }>;
+}>;
 
-export type Options = {
-  cache?: { size?: number; age?: number };
-};
-
-export function memoize<T extends Fn>(fn: T, options: Options = {}): T {
+export function memoize<T extends (...args: any[]) => any>(
+  fn: T,
+  options: MemoizeOptions = {}
+): T {
   const { cache = {} } = options;
 
   return moize(fn, {

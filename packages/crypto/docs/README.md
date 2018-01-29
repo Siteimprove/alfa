@@ -20,7 +20,7 @@
 
 **Τ Algorithm**: _"sha1"⎮"sha256"⎮"sha384"⎮"sha512"_
 
-_Defined in index.ts:1_
+_Defined in [index.ts:1](https://github.com/Siteimprove/alfa/blob/master/packages/crypto/src/index.ts#L1)_
 
 ---
 
@@ -32,7 +32,7 @@ _Defined in index.ts:1_
 
 **● digest**: _`function`_
 
-_Defined in index.ts:3_
+_Defined in [index.ts:3](https://github.com/Siteimprove/alfa/blob/master/packages/crypto/src/index.ts#L3)_
 
 #### Type declaration
 

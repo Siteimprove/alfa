@@ -26,10 +26,10 @@ export enum Wait {
   Idle = "networkidle0"
 }
 
-export interface ScrapeOptions {
-  timeout: number;
-  wait: Wait;
-}
+export type ScrapeOptions = Readonly<{
+  timeout?: number;
+  wait?: Wait;
+}>;
 
 export class Scraper {
   private readonly _browser = launch({
@@ -40,10 +40,7 @@ export class Scraper {
     standalone: "Alfa.Pickle"
   });
 
-  async scrape(
-    url: string,
-    options: Partial<ScrapeOptions> = {}
-  ): Promise<Aspects> {
+  async scrape(url: string, options: ScrapeOptions = {}): Promise<Aspects> {
     const browser = await this._browser;
     const pickle = await this._pickle;
 
@@ -59,7 +56,6 @@ export class Scraper {
 
     const virtual = await page.evaluate(() => {
       const dom = Alfa.Pickle.virtualize(document, { parents: false });
-
       const layout = Alfa.Pickle.layout(dom).values();
       const style = Alfa.Pickle.style(dom).values();
 
