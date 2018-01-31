@@ -1,5 +1,5 @@
 module.exports = {
   upper(input) {
-    return input.toUpperCase()
+    return input.toUpperCase();
   }
-}
+};
