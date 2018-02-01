@@ -2,6 +2,8 @@ import { Node, Element } from "@alfa/dom";
 import { Style, State } from "@alfa/css";
 import { Layout } from "@alfa/layout";
 
+const { keys } = Object;
+
 export type Criterion = string;
 
 export type Target = Node;
@@ -35,12 +37,12 @@ export interface Locale {
   readonly description: string;
   readonly assumptions?: string;
   readonly applicability: string;
-  readonly expectations: Array<
-    Readonly<{
+  readonly expectations: Readonly<{
+    [name: string]: Readonly<{
       description: string;
       outcome: Readonly<{ [P in Outcome]?: string }>;
-    }>
-  >;
+    }>;
+  }>;
 }
 
 export type Applicability<T extends Target, A extends Aspect> = (
@@ -57,7 +59,7 @@ export interface Rule<T extends Target, A extends Aspect> {
   readonly criteria: Array<Criterion>;
   readonly locales: Array<Locale>;
   readonly applicability: Applicability<T, A>;
-  readonly expectations: Array<Expectation<T, A>>;
+  readonly expectations: Readonly<{ [name: string]: Expectation<T, A> }>;
 }
 
 export async function check<T extends Target, A extends Aspect>(
@@ -78,7 +80,8 @@ export async function check<T extends Target, A extends Aspect>(
     for (const target of targets) {
       let passed = true;
 
-      for (const expectation of rule.expectations) {
+      for (const key of keys(rule.expectations)) {
+        const expectation = rule.expectations[key];
         const holds = await expectation(target, context);
 
         if (!holds) {

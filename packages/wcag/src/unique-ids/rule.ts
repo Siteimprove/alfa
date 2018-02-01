@@ -30,5 +30,5 @@ export const UNIQUE_IDS: Rule<Element, "document"> = {
   criteria: ["wcag:4.1.1"],
   locales: [EN],
   applicability: elementsWithIds,
-  expectations: [elementIdIsUnique]
+  expectations: {elementIdIsUnique}
 };
