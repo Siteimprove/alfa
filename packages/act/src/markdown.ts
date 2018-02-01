@@ -1,4 +1,16 @@
 import { Rule, Target, Aspect, Outcome, Locale } from "@alfa/rule";
+import {
+  render,
+  parse,
+  Node,
+  Heading,
+  Text,
+  Paragraph,
+  Blockquote,
+  Table
+} from "@alfa/markdown";
+
+const { keys } = Object;
 
 export function markdown<T extends Target, A extends Aspect>(
   rule: Rule<T, A>,
@@ -10,32 +22,101 @@ export function markdown<T extends Target, A extends Aspect>(
     return null;
   }
 
-  const lines: Array<string> = [];
+  const nodes: Array<Node> = [
+    {
+      type: "heading",
+      depth: 1,
+      children: [{ type: "text", value: locale.title } as Text]
+    } as Heading,
+    {
+      type: "blockquote",
+      children: [{ type: "text", value: rule.id } as Text]
+    } as Blockquote,
+    {
+      type: "paragraph"
+    } as Paragraph,
 
-  lines.push(`# ${locale.title}\n`);
-  lines.push(`> ${rule.id}\n`);
-  lines.push(`${locale.description}\n`);
+    {
+      type: "heading",
+      depth: 2,
+      children: [{ type: "text", value: "Applicability " } as Text]
+    } as Heading,
+    {
+      type: "paragraph",
+      children: parse(locale.applicability).children
+    } as Paragraph,
 
-  lines.push("## Tests\n");
+    {
+      type: "heading",
+      depth: 2,
+      children: [{ type: "text", value: "Expectations" } as Text]
+    } as Heading
+  ];
 
-  for (const [index, test] of locale.expectations.entries()) {
-    lines.push(`### Test ${index + 1}\n`);
-    lines.push(`${test.description}\n`);
+  let index = 1;
 
-    lines.push("#### Result\n");
-    lines.push("Outcome | Description");
-    lines.push("--- | ---");
+  for (const key of keys(locale.expectations)) {
+    const expectation = locale.expectations[key];
 
-    for (const outcome of ["inapplicable", "passed", "failed"]) {
-      const description = test.outcome[outcome as Outcome];
+    nodes.push(
+      {
+        type: "heading",
+        depth: 3,
+        children: [{ type: "text", value: `Expectation ${index++}` } as Text]
+      } as Heading,
+      {
+        type: "paragraph",
+        children: parse(expectation.description).children
+      } as Paragraph,
+      {
+        type: "heading",
+        depth: 4,
+        children: [{ type: "text", value: "Result" } as Text]
+      } as Heading
+    );
+
+    const result: Table = {
+      type: "table",
+      align: [],
+      children: [
+        {
+          type: "tableRow",
+          children: [
+            {
+              type: "tableCell",
+              children: [{ type: "text", value: "Outcome" } as Text]
+            },
+            {
+              type: "tableCell",
+              children: [{ type: "text", value: "Description" } as Text]
+            }
+          ]
+        }
+      ]
+    };
+
+    for (const outcome of ["passed", "failed"]) {
+      const description = expectation.outcome[outcome as Outcome];
 
       if (description) {
-        lines.push(`${outcome} | ${description}`);
+        result.children.push({
+          type: "tableRow",
+          children: [
+            {
+              type: "tableCell",
+              children: [{ type: "text", value: outcome } as Text]
+            },
+            {
+              type: "tableCell",
+              children: parse(description).children
+            }
+          ]
+        });
       }
     }
 
-    lines.push("");
+    nodes.push(result);
   }
 
-  return lines.join("\n");
+  return render({ type: "root", children: nodes });
 }
