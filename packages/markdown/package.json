@@ -1,0 +1,21 @@
+{
+  "name": "@alfa/markdown",
+  "version": "0.0.0",
+  "description": "alfa!",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/markdown",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "remark-parse": "^5.0.0",
+    "remark-stringify": "^5.0.0",
+    "vfile": "^2.3.0"
+  },
+  "devDependencies": {
+    "@alfa/test": "^0.0.0"
+  }
+}
