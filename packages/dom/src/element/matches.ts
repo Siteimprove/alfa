@@ -1,6 +1,6 @@
 import { Selector, SelectorList, RelativeSelector, parse } from "@alfa/css";
 import { memoize } from "@alfa/util";
-import { Element, ParentNode } from "../types";
+import { Element } from "../types";
 import { isElement } from "../guards";
 import { attribute } from "./attribute";
 import { classlist } from "./classlist";

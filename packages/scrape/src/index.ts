@@ -55,7 +55,10 @@ export class Scraper {
     const Alfa = { Pickle };
 
     const virtual = await page.evaluate(() => {
-      const dom = Alfa.Pickle.virtualize(document, { parents: false });
+      const dom = Alfa.Pickle.virtualize(document, {
+        parents: false,
+        references: true
+      });
       const layout = Alfa.Pickle.layout(dom).values();
       const style = Alfa.Pickle.style(dom).values();
 

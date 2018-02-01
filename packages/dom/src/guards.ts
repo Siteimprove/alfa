@@ -5,8 +5,8 @@ import {
   Element,
   Text,
   Comment,
-  ParentNode,
-  ChildNode
+  Parent,
+  Child
 } from "./types";
 
 export function isDocument(node: Node | null): node is Document {
@@ -29,10 +29,10 @@ export function isComment(node: Node | null): node is Comment {
   return node !== null && node.type === "comment";
 }
 
-export function isParent(node: Node | null): node is ParentNode {
+export function isParent(node: Node | null): node is Parent {
   return node !== null && "children" in node;
 }
 
-export function isChild(node: Node | null): node is ChildNode {
+export function isChild(node: Node | null): node is Child {
   return node !== null && "parent" in node;
 }

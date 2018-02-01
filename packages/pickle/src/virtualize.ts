@@ -13,7 +13,10 @@ export function hasReference<T extends V.Node>(
   return "ref" in node;
 }
 
-export type VirtualizeOptions = Readonly<{ parents?: boolean }>;
+export type VirtualizeOptions = Readonly<{
+  parents?: boolean;
+  references?: boolean;
+}>;
 
 function serialize(node: Node): string {
   switch (node.nodeType) {
@@ -52,7 +55,7 @@ function serialize(node: Node): string {
 
 function children(
   node: Node,
-  virtual: V.ParentNode,
+  virtual: V.Parent,
   options: VirtualizeOptions = {}
 ): void {
   const { childNodes } = node;
@@ -60,7 +63,7 @@ function children(
   for (let i = 0; i < childNodes.length; i++) {
     const child = childNodes[i];
 
-    const vchild: V.ChildNode = assign(virtualize(child, options), {
+    const vchild: V.Child = assign(virtualize(child, options), {
       parent: options.parents === false ? null : virtual
     });
 
@@ -70,8 +73,15 @@ function children(
 
 export function virtualize(
   node: Node,
+  options: VirtualizeOptions & { references: true }
+): WithReference<V.Node>;
+
+export function virtualize(node: Node, options?: VirtualizeOptions): V.Node;
+
+export function virtualize(
+  node: Node,
   options: VirtualizeOptions = {}
-): WithReference<V.Node> {
+): WithReference<V.Node> | V.Node {
   switch (node.nodeType) {
     case node.ELEMENT_NODE: {
       const element = node as Element;
@@ -82,16 +92,19 @@ export function virtualize(
         attributes[name] = value;
       }
 
-      const virtual: WithReference<V.Element> = {
+      const virtual: V.Element = {
         type: "element",
         tag: element.tagName.toLowerCase(),
         namespace: element.namespaceURI,
         attributes,
         parent: null,
         shadow: null,
-        children: [],
-        ref: element
+        children: []
       };
+
+      if (options.references) {
+        assign(virtual, { ref: element });
+      }
 
       children(element, virtual, options);
 
@@ -101,12 +114,15 @@ export function virtualize(
     case node.TEXT_NODE: {
       const text = node as Text;
 
-      const virtual: WithReference<V.Text> = {
+      const virtual: V.Text = {
         type: "text",
         value: serialize(text),
-        parent: null,
-        ref: text
+        parent: null
       };
+
+      if (options.references) {
+        assign(virtual, { ref: text });
+      }
 
       return virtual;
     }
@@ -114,12 +130,15 @@ export function virtualize(
     case node.COMMENT_NODE: {
       const comment = node as Comment;
 
-      const virtual: WithReference<V.Comment> = {
+      const virtual: V.Comment = {
         type: "comment",
         value: serialize(comment),
-        parent: null,
-        ref: comment
+        parent: null
       };
+
+      if (options.references) {
+        assign(virtual, { ref: comment });
+      }
 
       return virtual;
     }
@@ -127,11 +146,14 @@ export function virtualize(
     case node.DOCUMENT_NODE: {
       const document = node as Document;
 
-      const virtual: WithReference<V.Document> = {
+      const virtual: V.Document = {
         type: "document",
-        children: [],
-        ref: document
+        children: []
       };
+
+      if (options.references) {
+        assign(virtual, { ref: document });
+      }
 
       children(document, virtual, options);
 
@@ -141,25 +163,31 @@ export function virtualize(
     case node.DOCUMENT_TYPE_NODE: {
       const doctype = node as DocumentType;
 
-      const virtual: WithReference<V.DocumentType> = {
-        type: "documenttype",
+      const virtual: V.DocumentType = {
+        type: "documentType",
         value: serialize(doctype),
-        parent: null,
-        ref: doctype
+        parent: null
       };
+
+      if (options.references) {
+        assign(virtual, { ref: doctype });
+      }
 
       return virtual;
     }
 
     case node.DOCUMENT_FRAGMENT_NODE: {
-      const docfragment = node as DocumentType;
+      const docfragment = node as DocumentFragment;
 
-      const virtual: WithReference<V.DocumentFragment> = {
-        type: "documentfragment",
+      const virtual: V.DocumentFragment = {
+        type: "documentFragment",
         parent: null,
-        children: [],
-        ref: docfragment
+        children: []
       };
+
+      if (options.references) {
+        assign(virtual, { ref: docfragment });
+      }
 
       children(docfragment, virtual, options);
 

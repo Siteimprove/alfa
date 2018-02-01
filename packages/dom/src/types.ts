@@ -1,36 +1,36 @@
-export type Attribute = string | number | boolean;
-
 export interface Node {
   readonly type: string;
 }
 
-export interface ParentNode extends Node {
-  readonly children: Array<ChildNode>;
+export interface Parent extends Node {
+  readonly children: Array<Child>;
 }
 
-export interface ChildNode extends Node {
-  readonly parent: ParentNode | null;
+export interface Child extends Node {
+  readonly parent: Parent | null;
 }
 
-export interface Document extends Node, ParentNode {
+export interface Document extends Node, Parent {
   readonly type: "document";
 }
 
-export interface DocumentType extends Node, ChildNode {
-  readonly type: "documenttype";
+export interface DocumentType extends Node, Child {
+  readonly type: "documentType";
   readonly value: string;
 }
 
-export interface DocumentFragment extends Node, ParentNode, ChildNode {
-  readonly type: "documentfragment";
+export interface DocumentFragment extends Node, Parent, Child {
+  readonly type: "documentFragment";
 }
 
-export interface Comment extends Node, ChildNode {
+export interface Comment extends Node, Child {
   readonly type: "comment";
   readonly value: string;
 }
 
-export interface Element extends Node, ParentNode, ChildNode {
+export type Attribute = string | number | boolean;
+
+export interface Element extends Node, Parent, Child {
   readonly type: "element";
   readonly tag: string;
   readonly namespace: string | null;
@@ -42,7 +42,7 @@ export interface Element extends Node, ParentNode, ChildNode {
   readonly shadow: DocumentFragment | null;
 }
 
-export interface Text extends Node, ChildNode {
+export interface Text extends Node, Child {
   readonly type: "text";
   readonly value: string;
 }

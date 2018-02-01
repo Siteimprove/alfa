@@ -48,7 +48,7 @@ _Defined in [virtualize.ts:8](https://github.com/Siteimprove/alfa/blob/master/pa
 
 ► **dereference**(node: _`Node`_): `Node`
 
-_Defined in [virtualize.ts:184](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L184)_
+_Defined in [virtualize.ts:212](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L212)_
 
 **Parameters:**
 
@@ -88,7 +88,7 @@ _Defined in [virtualize.ts:10](https://github.com/Siteimprove/alfa/blob/master/p
 
 ► **layout**(root: _[WithReference](#withreference)`Node`_): `Map`.<`Element`>,.<`Layout`>
 
-_Defined in [virtualize.ts:196](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L196)_
+_Defined in [virtualize.ts:224](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L224)_
 
 **Parameters:**
 
@@ -106,7 +106,7 @@ _Defined in [virtualize.ts:196](https://github.com/Siteimprove/alfa/blob/master/
 
 ► **parentize**(node: _`Node`_): `Node`
 
-_Defined in [virtualize.ts:174](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L174)_
+_Defined in [virtualize.ts:202](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L202)_
 
 **Parameters:**
 
@@ -124,7 +124,7 @@ _Defined in [virtualize.ts:174](https://github.com/Siteimprove/alfa/blob/master/
 
 ► **style**(root: _[WithReference](#withreference)`Node`_): `Map`.<`Element`>,.<`object`>
 
-_Defined in [virtualize.ts:239](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L239)_
+_Defined in [virtualize.ts:267](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L267)_
 
 **Parameters:**
 
@@ -140,17 +140,30 @@ _Defined in [virtualize.ts:239](https://github.com/Siteimprove/alfa/blob/master/
 
 ### virtualize
 
-► **virtualize**(node: _`Node`_, options?: _[VirtualizeOptions](#virtualizeoptions)_): [WithReference](#withreference)`Node`
+► **virtualize**(node: _`Node`_, options: _[VirtualizeOptions](#virtualizeoptions)`object`_): [WithReference](#withreference)`Node`
+
+► **virtualize**(node: _`Node`_, options?: _[VirtualizeOptions](#virtualizeoptions)_): `Node`
 
 _Defined in [virtualize.ts:71](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L71)_
 
 **Parameters:**
 
-| Param   | Type                                    | Default value | Description |
-| ------- | --------------------------------------- | ------------- | ----------- |
-| node    | `Node`                                  | -             | -           |
-| options | [VirtualizeOptions](#virtualizeoptions) | {}            | -           |
+| Param   | Type                                            | Description |
+| ------- | ----------------------------------------------- | ----------- |
+| node    | `Node`                                          | -           |
+| options | [VirtualizeOptions](#virtualizeoptions)`object` | -           |
 
 **Returns:** [WithReference](#withreference)`Node`
+
+_Defined in [virtualize.ts:76](https://github.com/Siteimprove/alfa/blob/master/packages/pickle/src/virtualize.ts#L76)_
+
+**Parameters:**
+
+| Param   | Type                                    | Description |
+| ------- | --------------------------------------- | ----------- |
+| node    | `Node`                                  | -           |
+| options | [VirtualizeOptions](#virtualizeoptions) | -           |
+
+**Returns:** `Node`
 
 ---
