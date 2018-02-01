@@ -16,7 +16,7 @@
 
 **● identifier**: _`string`_
 
-_Defined in types.ts:126_
+_Defined in [types.ts:126](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L126)_
 
 ---
 
@@ -28,6 +28,6 @@ _Defined in types.ts:126_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:125_
+_Defined in [types.ts:125](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L125)_
 
 ---

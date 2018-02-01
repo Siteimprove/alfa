@@ -16,7 +16,7 @@
 
 **● alt**: _`string`⎮`null`_
 
-_Defined in types.ts:121_
+_Defined in [types.ts:121](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L121)_
 
 ---
 
@@ -26,7 +26,7 @@ _Defined in types.ts:121_
 
 **● identifier**: _`string`_
 
-_Defined in types.ts:119_
+_Defined in [types.ts:119](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L119)_
 
 ---
 
@@ -36,7 +36,7 @@ _Defined in types.ts:119_
 
 **● referenceType**: _[ReferenceType](../#referencetype)_
 
-_Defined in types.ts:120_
+_Defined in [types.ts:120](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L120)_
 
 ---
 
@@ -48,6 +48,6 @@ _Defined in types.ts:120_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:118_
+_Defined in [types.ts:118](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L118)_
 
 ---

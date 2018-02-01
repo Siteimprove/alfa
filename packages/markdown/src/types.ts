@@ -78,7 +78,7 @@ export interface Break extends Node {
 }
 
 export interface Emphasis extends Parent {
-  readonly type: 'emphasis'
+  readonly type: "emphasis";
 }
 
 export interface Strong extends Parent {

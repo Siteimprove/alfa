@@ -18,7 +18,7 @@
 
 _Overrides [Parent](parent.md).[children](parent.md#children)_
 
-_Defined in types.ts:65_
+_Defined in [types.ts:65](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L65)_
 
 ---
 
@@ -30,6 +30,6 @@ _Defined in types.ts:65_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:64_
+_Defined in [types.ts:64](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L64)_
 
 ---

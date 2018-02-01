@@ -18,7 +18,7 @@
 
 _Inherited from [Parent](parent.md).[children](parent.md#children)_
 
-_Defined in types.ts:6_
+_Defined in [types.ts:6](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L6)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in types.ts:6_
 
 **● depth**: _`number`_
 
-_Defined in types.ts:27_
+_Defined in [types.ts:27](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L27)_
 
 ---
 
@@ -40,6 +40,6 @@ _Defined in types.ts:27_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:26_
+_Defined in [types.ts:26](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L26)_
 
 ---

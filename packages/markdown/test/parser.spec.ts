@@ -2,7 +2,7 @@ import { test } from "@alfa/test";
 import { parse } from "../src/parser";
 
 test("Parse", async t => {
-  const markdown = parse("# Alfa\n");
+  const markdown = parse("# Alfa");
 
   t.deepEqual(markdown, {
     type: "root",

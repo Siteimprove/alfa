@@ -16,7 +16,7 @@
 
 **● identifier**: _`string`_
 
-_Defined in types.ts:131_
+_Defined in [types.ts:131](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L131)_
 
 ---
 
@@ -26,7 +26,7 @@ _Defined in types.ts:131_
 
 **● title**: _`string`⎮`null`_
 
-_Defined in types.ts:132_
+_Defined in [types.ts:132](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L132)_
 
 ---
 
@@ -38,7 +38,7 @@ _Defined in types.ts:132_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:130_
+_Defined in [types.ts:130](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L130)_
 
 ---
 
@@ -48,6 +48,6 @@ _Defined in types.ts:130_
 
 **● url**: _`string`_
 
-_Defined in types.ts:133_
+_Defined in [types.ts:133](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L133)_
 
 ---

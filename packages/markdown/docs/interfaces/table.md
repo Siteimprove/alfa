@@ -16,7 +16,7 @@
 
 **● align**: _`Array`.<[Alignment](../#alignment)>_
 
-_Defined in types.ts:59_
+_Defined in [types.ts:59](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L59)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in types.ts:59_
 
 _Overrides [Parent](parent.md).[children](parent.md#children)_
 
-_Defined in types.ts:60_
+_Defined in [types.ts:60](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L60)_
 
 ---
 
@@ -40,6 +40,6 @@ _Defined in types.ts:60_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:58_
+_Defined in [types.ts:58](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L58)_
 
 ---

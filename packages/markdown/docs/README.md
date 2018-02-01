@@ -52,7 +52,7 @@
 
 **Τ Alignment**: _"left"⎮"right"⎮"center"_
 
-_Defined in types.ts:55_
+_Defined in [types.ts:55](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L55)_
 
 ---
 
@@ -62,7 +62,7 @@ _Defined in types.ts:55_
 
 **Τ ReferenceType**: _"shortcut"⎮"collapsed"⎮"full"_
 
-_Defined in types.ts:109_
+_Defined in [types.ts:109](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L109)_
 
 ---
 
@@ -72,9 +72,9 @@ _Defined in types.ts:109_
 
 ### parse
 
-► **parse**(markdown: _`string`_): [Node](interfaces/node.md)
+► **parse**(markdown: _`string`_): [Root](interfaces/root.md)
 
-_Defined in parser.ts:15_
+_Defined in [parser.ts:15](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/parser.ts#L15)_
 
 **Parameters:**
 
@@ -82,7 +82,7 @@ _Defined in parser.ts:15_
 | -------- | -------- | ----------- |
 | markdown | `string` | -           |
 
-**Returns:** [Node](interfaces/node.md)
+**Returns:** [Root](interfaces/root.md)
 
 ---
 
@@ -92,7 +92,7 @@ _Defined in parser.ts:15_
 
 ► **render**T(node: _`T`_): `string`
 
-_Defined in render.ts:5_
+_Defined in [render.ts:5](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/render.ts#L5)_
 
 **Type parameters:**
 

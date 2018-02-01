@@ -18,7 +18,7 @@
 
 _Overrides [Parent](parent.md).[children](parent.md#children)_
 
-_Defined in types.ts:46_
+_Defined in [types.ts:46](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L46)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in types.ts:46_
 
 **● loose**: _`boolean`_
 
-_Defined in types.ts:45_
+_Defined in [types.ts:45](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L45)_
 
 ---
 
@@ -38,7 +38,7 @@ _Defined in types.ts:45_
 
 **● ordered**: _`boolean`_
 
-_Defined in types.ts:43_
+_Defined in [types.ts:43](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L43)_
 
 ---
 
@@ -48,7 +48,7 @@ _Defined in types.ts:43_
 
 **● start**: _`number`⎮`null`_
 
-_Defined in types.ts:44_
+_Defined in [types.ts:44](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L44)_
 
 ---
 
@@ -60,6 +60,6 @@ _Defined in types.ts:44_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:42_
+_Defined in [types.ts:42](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L42)_
 
 ---

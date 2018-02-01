@@ -16,7 +16,7 @@
 
 **● checked**: _`boolean`⎮`null`_
 
-_Defined in types.ts:52_
+_Defined in [types.ts:52](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L52)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in types.ts:52_
 
 _Inherited from [Parent](parent.md).[children](parent.md#children)_
 
-_Defined in types.ts:6_
+_Defined in [types.ts:6](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L6)_
 
 ---
 
@@ -38,7 +38,7 @@ _Defined in types.ts:6_
 
 **● loose**: _`boolean`_
 
-_Defined in types.ts:51_
+_Defined in [types.ts:51](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L51)_
 
 ---
 
@@ -50,6 +50,6 @@ _Defined in types.ts:51_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:50_
+_Defined in [types.ts:50](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L50)_
 
 ---

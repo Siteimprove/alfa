@@ -18,6 +18,6 @@
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:10_
+_Defined in [types.ts:10](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L10)_
 
 ---

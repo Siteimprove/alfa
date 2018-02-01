@@ -16,7 +16,7 @@
 
 **● lang**: _`string`⎮`null`_
 
-_Defined in types.ts:33_
+_Defined in [types.ts:33](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L33)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in types.ts:33_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:31_
+_Defined in [types.ts:31](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L31)_
 
 ---
 
@@ -38,6 +38,6 @@ _Defined in types.ts:31_
 
 **● value**: _`string`_
 
-_Defined in types.ts:32_
+_Defined in [types.ts:32](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L32)_
 
 ---

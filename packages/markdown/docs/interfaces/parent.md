@@ -48,7 +48,7 @@
 
 **● children**: _`Array`.<[Node](node.md)>_
 
-_Defined in types.ts:6_
+_Defined in [types.ts:6](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L6)_
 
 ---
 
@@ -60,6 +60,6 @@ _Defined in types.ts:6_
 
 _Inherited from [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:2_
+_Defined in [types.ts:2](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L2)_
 
 ---

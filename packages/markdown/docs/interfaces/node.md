@@ -34,6 +34,6 @@
 
 **● type**: _`string`_
 
-_Defined in types.ts:2_
+_Defined in [types.ts:2](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L2)_
 
 ---

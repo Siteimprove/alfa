@@ -16,7 +16,7 @@
 
 **● alt**: _`string`⎮`null`_
 
-_Defined in types.ts:101_
+_Defined in [types.ts:101](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L101)_
 
 ---
 
@@ -26,7 +26,7 @@ _Defined in types.ts:101_
 
 **● title**: _`string`⎮`null`_
 
-_Defined in types.ts:100_
+_Defined in [types.ts:100](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L100)_
 
 ---
 
@@ -38,7 +38,7 @@ _Defined in types.ts:100_
 
 _Overrides [Node](node.md).[type](node.md#type)_
 
-_Defined in types.ts:99_
+_Defined in [types.ts:99](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L99)_
 
 ---
 
@@ -48,6 +48,6 @@ _Defined in types.ts:99_
 
 **● url**: _`string`_
 
-_Defined in types.ts:102_
+_Defined in [types.ts:102](https://github.com/Siteimprove/alfa/blob/master/packages/markdown/src/types.ts#L102)_
 
 ---
