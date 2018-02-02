@@ -187,3 +187,22 @@ test("Can parse a list of simple and compound selectors", async t =>
       }
     ]
   }));
+
+test("Can parse a list of selectors independant of whitespace", async t =>
+  css(t, ".foo  ,  .bar  ,  .baz", {
+    type: "selector-list",
+    selectors: [
+      {
+        type: "class-selector",
+        name: "foo"
+      },
+      {
+        type: "class-selector",
+        name: "bar"
+      },
+      {
+        type: "class-selector",
+        name: "baz"
+      }
+    ]
+  }));

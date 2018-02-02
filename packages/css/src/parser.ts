@@ -82,24 +82,19 @@ const whitespace: CssProduction<Whitespace, CssTree> = {
   },
 
   infix(token, stream, expression, left) {
-    if (isSelector(left)) {
-      let token = stream.next();
-
-      if (delim.infix === undefined) {
-        return null;
-      }
-
+    if (isSelector(left) && delim.infix !== undefined) {
+      const token = stream.peek();
       const isImplicitDescendant =
         isIdent(token) ||
         (isDelim(token) && (token.value === "." || token.value === "#"));
 
       if (isImplicitDescendant) {
-        token = { type: "delim", value: " " };
-        stream.backup();
-      }
-
-      if (isDelim(token)) {
-        return delim.infix(token, stream, expression, left);
+        return delim.infix(
+          { type: "delim", value: " " },
+          stream,
+          expression,
+          left
+        );
       }
     }
 
