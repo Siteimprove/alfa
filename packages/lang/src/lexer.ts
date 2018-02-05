@@ -104,7 +104,7 @@ class Stream extends Bound {
       if (this._position > 0) {
         backedup = true;
 
-        const next = this.peek();
+        const next = this.peek(-1);
 
         if (next === null) {
           break;
