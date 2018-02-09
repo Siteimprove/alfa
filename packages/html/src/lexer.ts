@@ -133,7 +133,10 @@ const tagName: (
 const selfClosingStartTag: (
   start: Location,
   tag: StartTag
-) => HtmlPattern<HtmlToken> = (start, tag) => ({ peek, location, advance }, emit) => {
+) => HtmlPattern<HtmlToken> = (start, tag) => (
+  { peek, location, advance },
+  emit
+) => {
   if (peek() === ">") {
     assign(tag, { closed: true });
     emit(tag, start, location());
