@@ -1,6 +1,6 @@
 export type Constant = Readonly<{
   type: "constant";
-  value: number
+  value: number;
 }>;
 
 export type Operator = Readonly<{

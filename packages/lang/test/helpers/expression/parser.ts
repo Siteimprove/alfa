@@ -1,6 +1,15 @@
 import { Grammar, Production } from "../../../src/parser";
 import { Expression, Constant, Operator } from "../expression";
-import { ExpressionToken, Number, Plus, Minus, Asterix, Slash, Caret, isNumber } from "./lexer";
+import {
+  ExpressionToken,
+  Number,
+  Plus,
+  Minus,
+  Asterix,
+  Slash,
+  Caret,
+  isNumber
+} from "./lexer";
 
 export type ExpressionProduction<
   T extends ExpressionToken,

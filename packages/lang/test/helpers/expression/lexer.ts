@@ -1,4 +1,10 @@
-import { Pattern, Alphabet, lex, isNumeric, isWhitespace } from "../../../src/lexer";
+import {
+  Pattern,
+  Alphabet,
+  lex,
+  isNumeric,
+  isWhitespace
+} from "../../../src/lexer";
 
 export type Number = { type: "number"; value: number };
 export type Plus = { type: "+" };
@@ -54,7 +60,10 @@ const number: ExpressionPattern<Number> = ({ peek, accept, result }, emit) => {
   }
 };
 
-export const ExpressionAlphabet: Alphabet<ExpressionToken> = ({ peek, accept }) => {
+export const ExpressionAlphabet: Alphabet<ExpressionToken> = ({
+  peek,
+  accept
+}) => {
   accept(isWhitespace);
 
   if (isNumeric(peek())) {
