@@ -178,9 +178,14 @@ class Stream extends Bound {
   }
 }
 
-export type Pattern<T extends Token> = (stream: Stream) => T | void;
+export type Pattern<T extends Token, U extends T> = (
+  stream: Stream,
+  emit: (token: U) => void
+) => Pattern<T, T> | void;
 
-export type Alphabet<T extends Token> = Array<Pattern<T>>;
+export type Alphabet<T extends Token> = (
+  stream: Stream
+) => Pattern<T, T> | void;
 
 export function lex<T extends Token>(
   input: string,
@@ -189,28 +194,30 @@ export function lex<T extends Token>(
   const tokens: Array<WithLocation<T>> = [];
   const stream = new Stream(input);
 
-  outer: while (stream.position < input.length) {
-    for (let i = 0; i < alphabet.length; i++) {
-      const pattern = alphabet[i];
-      const position = stream.position;
-      const line = stream.line;
-      const column = stream.column;
-      const token = pattern(stream);
+  let { line, column } = stream;
 
-      if (token) {
-        stream.ignore();
+  function emit(token: T) {
+    tokens.push(assign(token, { line, column }));
+  }
 
-        tokens.push(assign(token, { line, column }));
+  let pattern: Pattern<T, T> = alphabet;
 
-        continue outer;
-      }
+  while (stream.position < input.length) {
+    const next = pattern(stream, emit);
 
-      if (position !== stream.position) {
-        stream.restore(position);
-      }
+    if (next) {
+      pattern = next;
+    } else if (pattern !== alphabet) {
+      pattern = alphabet;
+    } else {
+      throw new Error(`Unexpected character "${stream.peek()}"`);
     }
 
-    throw new Error(`Unexpected character "${stream.peek()}"`);
+    if (stream.progressed()) {
+      stream.ignore();
+      line = stream.line;
+      column = stream.column;
+    }
   }
 
   return tokens;
