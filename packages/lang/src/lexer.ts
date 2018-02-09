@@ -11,7 +11,8 @@ export interface Location {
   readonly column: number;
 }
 
-export type WithLocation<T extends Token> = T & Location;
+export type WithLocation<T extends Token> = T &
+  Readonly<{ location: Readonly<{ start: Location; end: Location }> }>;
 
 export function hasLocation<T extends Token>(
   token: T
@@ -176,16 +177,18 @@ class Stream extends Bound {
 
     return false;
   }
+
+  public location(): Location {
+    return { line: this.line, column: this.column };
+  }
 }
 
-export type Pattern<T extends Token, U extends T> = (
+export type Pattern<T extends Token> = (
   stream: Stream,
-  emit: (token: U) => void
-) => Pattern<T, T> | void;
+  emit: <U extends T>(token: U, start: Location, end: Location) => U
+) => Pattern<T> | void;
 
-export type Alphabet<T extends Token> = (
-  stream: Stream
-) => Pattern<T, T> | void;
+export type Alphabet<T extends Token> = (stream: Stream) => Pattern<T> | void;
 
 export function lex<T extends Token>(
   input: string,
@@ -196,27 +199,18 @@ export function lex<T extends Token>(
 
   let { line, column } = stream;
 
-  function emit(token: T) {
-    tokens.push(assign(token, { line, column }));
+  function emit<U extends T>(token: U, start: Location, end: Location): U {
+    tokens.push(assign(token, { location: { start, end } }));
+    return token;
   }
 
-  let pattern: Pattern<T, T> = alphabet;
+  let pattern: Pattern<T> = alphabet;
 
   while (stream.position < input.length) {
     const next = pattern(stream, emit);
 
     if (next) {
       pattern = next;
-    } else if (pattern !== alphabet) {
-      pattern = alphabet;
-    } else {
-      throw new Error(`Unexpected character "${stream.peek()}"`);
-    }
-
-    if (stream.progressed()) {
-      stream.ignore();
-      line = stream.line;
-      column = stream.column;
     }
   }
 
