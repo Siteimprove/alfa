@@ -22,7 +22,11 @@ export type Url = Readonly<{ type: "url"; value: string }>;
 export type Delim = Readonly<{ type: "delim"; value: string }>;
 export type Number = Readonly<{ type: "number"; value: number }>;
 export type Percentage = Readonly<{ type: "percentage"; value: number }>;
-export type Dimension = Readonly<{ type: "dimension"; value: number }>;
+export type Dimension = Readonly<{
+  type: "dimension";
+  value: number;
+  unit: string;
+}>;
 
 export type Colon = Readonly<{ type: ":" }>;
 export type Semicolon = Readonly<{ type: ";" }>;
@@ -301,11 +305,18 @@ const number: CssPattern = (
 const numeric: (start: Location, number: Number) => CssPattern = (
   start,
   number
-) => ({ peek, location }, emit) => {
-  // if (startsIdentifier(peek(), peek(1), peek(2))) {
-  //
-  // }
-  emit(number, start, location());
+) => (stream, emit) => {
+  const { peek, advance, location } = stream;
+
+  let token: Number | Percentage | Dimension = number;
+
+  if (startsIdentifier(peek(), peek(1), peek(2))) {
+    token = { type: "dimension", value: number.value, unit: name(stream) };
+  } else if (peek() === "%" && advance()) {
+    token = { type: "percentage", value: number.value };
+  }
+
+  emit(token, start, location());
   return data;
 };
 

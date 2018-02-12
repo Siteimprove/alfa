@@ -200,3 +200,28 @@ test("Can lex a number in E-notation", async t =>
       }
     }
   ]));
+
+test("Can lex a dimension", async t =>
+  css(t, "123px", [
+    {
+      type: "dimension",
+      value: 123,
+      unit: "px",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 5 }
+      }
+    }
+  ]));
+
+test("Can lex a percentage", async t =>
+  css(t, "123%", [
+    {
+      type: "percentage",
+      value: 123,
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 4 }
+      }
+    }
+  ]));
