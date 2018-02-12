@@ -188,7 +188,9 @@ export type Pattern<T extends Token> = (
   emit: <U extends T>(token: U, start: Location, end: Location) => U
 ) => Pattern<T> | void;
 
-export type Alphabet<T extends Token> = (stream: CharacterStream) => Pattern<T> | void;
+export type Alphabet<T extends Token> = (
+  stream: CharacterStream
+) => Pattern<T> | void;
 
 export function lex<T extends Token>(
   input: string,

@@ -80,7 +80,11 @@ class TokenStream<T extends Token> extends Bound {
 export interface Production<T extends Token, U extends T, R, P extends R> {
   readonly token: U["type"];
   readonly associate?: "left" | "right";
-  prefix?(token: U, stream: TokenStream<T>, expression: () => R | null): P | null;
+  prefix?(
+    token: U,
+    stream: TokenStream<T>,
+    expression: () => R | null
+  ): P | null;
   infix?(
     token: U,
     stream: TokenStream<T>,
