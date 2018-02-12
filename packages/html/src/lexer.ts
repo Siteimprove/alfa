@@ -44,31 +44,37 @@ export type HtmlPattern<T extends HtmlToken> = Pattern<T>;
 /**
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
-export const data: HtmlPattern<HtmlToken> = ({ next, location }) => {
+export const data: HtmlPattern<HtmlToken> = ({ next, location }, emit, end) => {
   const start = location();
+  const char = next();
 
-  if (next() === "<") {
+  if (char === "<") {
     return tagOpen(start);
   }
+
+  if (char === null) {
+    return end();
+  }
+
+  emit({ type: "character", value: char }, start, location());
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
  */
 const tagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
-  { next, ignore, backup, location },
+  { peek, next, ignore, advance, location },
   emit
 ) => {
-  const char = next();
+  const char = peek();
 
   if (char === "/") {
+    advance();
     return endTagOpen(start);
   }
 
   if (isAscii(char)) {
-    backup();
     ignore();
-
     return tagName(start, {
       type: "start-tag",
       value: "",
@@ -78,6 +84,8 @@ const tagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
   }
 
   emit({ type: "character", value: "<" }, start, location());
+
+  return data;
 };
 
 /**

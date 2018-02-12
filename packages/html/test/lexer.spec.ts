@@ -38,6 +38,18 @@ test("Can lex a self-closing start tag", async t =>
     }
   ]));
 
+test("Can lex an orphaned less-than sign", async t =>
+  html(t, "<", [
+    {
+      type: "character",
+      value: "<",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 1 }
+      }
+    }
+  ]));
+
 test("Can lex an end tag", async t =>
   html(t, "</span>", [
     {

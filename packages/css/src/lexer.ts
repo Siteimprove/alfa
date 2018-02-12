@@ -139,6 +139,74 @@ const name: (stream: CharacterStream) => string = ({
   return result();
 };
 
+/**
+ * @see https://www.w3.org/TR/css-syntax/#consume-a-token
+ */
+const data: CssPattern = (
+  { peek, next, accept, advance, backup, location },
+  emit,
+  end
+) => {
+  const start = location();
+  const char = next();
+
+  if (isWhitespace(char)) {
+    accept(isWhitespace);
+    emit({ type: "whitespace" }, start, location());
+    return;
+  }
+
+  switch (char) {
+    case '"':
+    case "'":
+      return string(start, char);
+
+    case "(":
+    case ")":
+      emit({ type: char }, start, location());
+      return;
+    case "[":
+    case "]":
+      emit({ type: char }, start, location());
+      return;
+    case "{":
+    case "}":
+      emit({ type: char }, start, location());
+      return;
+    case ",":
+      emit({ type: char }, start, location());
+      return;
+    case ":":
+      emit({ type: char }, start, location());
+      return;
+    case ";":
+      emit({ type: char }, start, location());
+      return;
+
+    case "/":
+      if (peek() === "*") {
+        advance();
+        return comment(start);
+      }
+  }
+
+  if (startsNumber(char, peek(), peek(1))) {
+    backup();
+    return number;
+  }
+
+  if (startsIdentifier(char, peek(), peek(1))) {
+    backup();
+    return ident;
+  }
+
+  if (char === null) {
+    return end();
+  }
+
+  emit({ type: "delim", value: char }, start, location());
+};
+
 const comment: (start: Location) => CssPattern = start => (
   { next, ignore, accept, peek, result, advance, location },
   emit
@@ -224,13 +292,7 @@ const number: CssPattern = (
     }
   }
 
-  const number: Number = { type: "number", value: Number(result()) };
-
-  if (peek() === null) {
-    emit(number, start, location());
-  } else {
-    return numeric(start, number);
-  }
+  return numeric(start, { type: "number", value: Number(result()) });
 };
 
 /**
@@ -245,71 +307,6 @@ const numeric: (start: Location, number: Number) => CssPattern = (
   // }
   emit(number, start, location());
   return data;
-};
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#consume-a-token
- */
-const data: CssPattern = (
-  { peek, next, accept, advance, backup, location },
-  emit
-) => {
-  const start = location();
-  const char = next();
-
-  if (isWhitespace(char)) {
-    accept(isWhitespace);
-    emit({ type: "whitespace" }, start, location());
-    return;
-  }
-
-  switch (char) {
-    case '"':
-    case "'":
-      return string(start, char);
-
-    case "(":
-    case ")":
-      emit({ type: char }, start, location());
-      return;
-    case "[":
-    case "]":
-      emit({ type: char }, start, location());
-      return;
-    case "{":
-    case "}":
-      emit({ type: char }, start, location());
-      return;
-    case ",":
-      emit({ type: char }, start, location());
-      return;
-    case ":":
-      emit({ type: char }, start, location());
-      return;
-    case ";":
-      emit({ type: char }, start, location());
-      return;
-
-    case "/":
-      if (peek() === "*") {
-        advance();
-        return comment(start);
-      }
-  }
-
-  if (startsNumber(char, peek(), peek(1))) {
-    backup();
-    return number;
-  }
-
-  if (startsIdentifier(char, peek(), peek(1))) {
-    backup();
-    return ident;
-  }
-
-  if (char !== null) {
-    emit({ type: "delim", value: char }, start, location());
-  }
 };
 
 export const CssAlphabet: Alphabet<CssToken> = () => data;

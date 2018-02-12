@@ -185,7 +185,8 @@ export class CharacterStream extends Bound {
 
 export type Pattern<T extends Token> = (
   stream: CharacterStream,
-  emit: <U extends T>(token: U, start: Location, end: Location) => U
+  emit: <U extends T>(token: U, start: Location, end: Location) => U,
+  end: () => void
 ) => Pattern<T> | void;
 
 export type Alphabet<T extends Token> = (
@@ -200,16 +201,21 @@ export function lex<T extends Token>(
   const stream = new CharacterStream(input);
 
   let { line, column } = stream;
+  let done = false;
 
   function emit<U extends T>(token: U, start: Location, end: Location): U {
     tokens.push(assign(token, { location: { start, end } }));
     return token;
   }
 
+  function end() {
+    done = true;
+  }
+
   let pattern: Pattern<T> = alphabet;
 
-  while (stream.position < input.length) {
-    const next = pattern(stream, emit);
+  while (!done) {
+    const next = pattern(stream, emit, end);
 
     if (next) {
       pattern = next;
@@ -258,5 +264,5 @@ export function isAscii(char: string | null): boolean {
 }
 
 export function isNonAscii(char: string | null): boolean {
-  return !isAscii(char);
+  return char !== null && char.charCodeAt(0) >= 0x80;
 }
