@@ -20,7 +20,7 @@ export function hasLocation<T extends Token>(
   return "line" in token && "column" in token;
 }
 
-class Stream extends Bound {
+export class CharacterStream extends Bound {
   private readonly _input: string;
 
   private _position: number = 0;
@@ -105,13 +105,13 @@ class Stream extends Bound {
       if (this._position > 0) {
         backedup = true;
 
-        const next = this.peek(-1);
+        const prev = this.peek(-1);
 
-        if (next === null) {
+        if (prev === null) {
           break;
         }
 
-        if (isNewline(next)) {
+        if (isNewline(prev)) {
           this._line--;
           this._column = 0;
         } else {
@@ -184,18 +184,18 @@ class Stream extends Bound {
 }
 
 export type Pattern<T extends Token> = (
-  stream: Stream,
+  stream: CharacterStream,
   emit: <U extends T>(token: U, start: Location, end: Location) => U
 ) => Pattern<T> | void;
 
-export type Alphabet<T extends Token> = (stream: Stream) => Pattern<T> | void;
+export type Alphabet<T extends Token> = (stream: CharacterStream) => Pattern<T> | void;
 
 export function lex<T extends Token>(
   input: string,
   alphabet: Alphabet<T>
 ): Array<WithLocation<T>> {
   const tokens: Array<WithLocation<T>> = [];
-  const stream = new Stream(input);
+  const stream = new CharacterStream(input);
 
   let { line, column } = stream;
 

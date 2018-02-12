@@ -5,7 +5,7 @@ const { isArray } = Array;
 
 type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U);
 
-class Stream<T extends Token> extends Bound {
+class TokenStream<T extends Token> extends Bound {
   private readonly _input: Array<T>;
 
   private _position: number = 0;
@@ -80,10 +80,10 @@ class Stream<T extends Token> extends Bound {
 export interface Production<T extends Token, U extends T, R, P extends R> {
   readonly token: U["type"];
   readonly associate?: "left" | "right";
-  prefix?(token: U, stream: Stream<T>, expression: () => R | null): P | null;
+  prefix?(token: U, stream: TokenStream<T>, expression: () => R | null): P | null;
   infix?(
     token: U,
-    stream: Stream<T>,
+    stream: TokenStream<T>,
     expression: () => R | null,
     left: R
   ): P | null;
@@ -101,7 +101,7 @@ export function parse<T extends Token, R>(
     T["type"],
     Production<T, T, R, R> & { precedence: number }
   > = new Map();
-  const stream = new Stream(input);
+  const stream = new TokenStream(input);
 
   for (let i = 0; i < grammar.length; i++) {
     const precedence = grammar.length - i;

@@ -11,52 +11,132 @@ async function css(
 }
 
 test("Can lex whitespace", async t =>
-  css(t, "  \n", [{ type: "whitespace", line: 0, column: 0 }]));
+  css(t, "  \n \t", [
+    {
+      type: "whitespace",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 1, column: 2 }
+      }
+    }
+  ]));
 
 test("Can lex a comment", async t =>
   css(t, "/*Hello world*/", [
-    { type: "comment", value: "Hello world", line: 0, column: 0 }
+    {
+      type: "comment",
+      value: "Hello world",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 15 }
+      }
+    }
   ]));
 
 test("Can lex an ident", async t =>
-  css(t, "foo", [{ type: "ident", value: "foo", line: 0, column: 0 }]));
+  css(t, "foo", [
+    {
+      type: "ident",
+      value: "foo",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 3 }
+      }
+    }
+  ]));
 
 test("Can lex an ident prefixed with a single hyphen", async t =>
-  css(t, "-foo", [{ type: "ident", value: "-foo", line: 0, column: 0 }]));
-
-test("Can lex an ident prefixed with a double hyphen", async t =>
-  css(t, "--foo", [{ type: "ident", value: "--foo", line: 0, column: 0 }]));
+  css(t, "-foo", [
+    {
+      type: "ident",
+      value: "-foo",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 4 }
+      }
+    }
+  ]));
 
 test("Can lex an ident containing an underscore", async t =>
-  css(t, "foo_bar", [{ type: "ident", value: "foo_bar", line: 0, column: 0 }]));
+  css(t, "foo_bar", [
+    {
+      type: "ident",
+      value: "foo_bar",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 7 }
+      }
+    }
+  ]));
 
 test("Can lex an ident containing a hyphen", async t =>
-  css(t, "foo-bar", [{ type: "ident", value: "foo-bar", line: 0, column: 0 }]));
+  css(t, "foo-bar", [
+    {
+      type: "ident",
+      value: "foo-bar",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 7 }
+      }
+    }
+  ]));
 
 test("Can lex a double quoted string", async t =>
-  css(t, '"foo"', [{ type: "string", value: "foo", line: 0, column: 0 }]));
+  css(t, '"foo"', [
+    {
+      type: "string",
+      value: "foo",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 5 }
+      }
+    }
+  ]));
 
 test("Can lex a single quoted string", async t =>
-  css(t, "'foo'", [{ type: "string", value: "foo", line: 0, column: 0 }]));
+  css(t, "'foo'", [
+    {
+      type: "string",
+      value: "foo",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 5 }
+      }
+    }
+  ]));
 
 test("Can lex an integer", async t =>
-  css(t, "123", [{ type: "number", value: 123, line: 0, column: 0 }]));
+  css(t, "123", [
+    {
+      type: "number",
+      value: 123,
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 3 }
+      }
+    }
+  ]));
 
 test("Can lex a decimal", async t =>
-  css(t, "123.456", [{ type: "number", value: 123.456, line: 0, column: 0 }]));
+  css(t, "123.456", [
+    {
+      type: "number",
+      value: 123.456,
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 7 }
+      }
+    }
+  ]));
 
 test("Can lex a number in E-notation", async t =>
   css(t, "123.456e2", [
-    { type: "number", value: 123.456e2, line: 0, column: 0 }
-  ]));
-
-test("Can lex a rule declaration", async t =>
-  css(t, "#foo{background:none}", [
-    { type: "delim", value: "#", line: 0, column: 0 },
-    { type: "ident", value: "foo", line: 0, column: 1 },
-    { type: "{", line: 0, column: 4 },
-    { type: "ident", value: "background", line: 0, column: 5 },
-    { type: ":", line: 0, column: 15 },
-    { type: "ident", value: "none", line: 0, column: 16 },
-    { type: "}", line: 0, column: 20 }
+    {
+      type: "number",
+      value: 123.456e2,
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 9 }
+      }
+    }
   ]));
