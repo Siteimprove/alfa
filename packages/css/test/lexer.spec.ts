@@ -21,6 +21,39 @@ test("Can lex whitespace", async t =>
     }
   ]));
 
+test("Can lex a comma", async t =>
+  css(t, ",", [
+    {
+      type: ",",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 1 }
+      }
+    }
+  ]));
+
+test("Can lex a colon", async t =>
+  css(t, ":", [
+    {
+      type: ":",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 1 }
+      }
+    }
+  ]));
+
+test("Can lex a semicolon", async t =>
+  css(t, ";", [
+    {
+      type: ";",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 1 }
+      }
+    }
+  ]));
+
 test("Can lex a comment", async t =>
   css(t, "/*Hello world*/", [
     {
@@ -76,6 +109,33 @@ test("Can lex an ident containing a hyphen", async t =>
       value: "foo-bar",
       location: {
         start: { line: 0, column: 0 },
+        end: { line: 0, column: 7 }
+      }
+    }
+  ]));
+
+test("Can lex two idents separated by a comma", async t =>
+  css(t, "foo,bar", [
+    {
+      type: "ident",
+      value: "foo",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 3 }
+      }
+    },
+    {
+      type: ",",
+      location: {
+        start: { line: 0, column: 3 },
+        end: { line: 0, column: 4 }
+      }
+    },
+    {
+      type: "ident",
+      value: "bar",
+      location: {
+        start: { line: 0, column: 4 },
         end: { line: 0, column: 7 }
       }
     }

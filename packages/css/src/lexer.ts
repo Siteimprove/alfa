@@ -129,7 +129,12 @@ function isName(char: string | null): boolean {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
-const name: (stream: CharacterStream) => string = ({ accept, result }) => {
+const name: (stream: CharacterStream) => string = ({
+  ignore,
+  accept,
+  result
+}) => {
+  ignore();
   accept(char => isName(char));
   return result();
 };
