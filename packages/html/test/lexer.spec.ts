@@ -19,7 +19,7 @@ test("Can lex a start tag", async t =>
       attributes: {},
       location: {
         start: { line: 0, column: 0 },
-        end: { line: 0, column: 5 }
+        end: { line: 0, column: 6 }
       }
     }
   ]));
@@ -33,7 +33,7 @@ test("Can lex a self-closing start tag", async t =>
       attributes: {},
       location: {
         start: { line: 0, column: 0 },
-        end: { line: 0, column: 6 }
+        end: { line: 0, column: 7 }
       }
     }
   ]));
@@ -45,7 +45,7 @@ test("Can lex an end tag", async t =>
       value: "span",
       location: {
         start: { line: 0, column: 0 },
-        end: { line: 0, column: 6 }
+        end: { line: 0, column: 7 }
       }
     }
   ]));
@@ -59,7 +59,7 @@ test("Can lex a start tag followed by an end tag", async t =>
       attributes: {},
       location: {
         start: { line: 0, column: 0 },
-        end: { line: 0, column: 5 }
+        end: { line: 0, column: 6 }
       }
     },
     {
@@ -67,7 +67,7 @@ test("Can lex a start tag followed by an end tag", async t =>
       value: "span",
       location: {
         start: { line: 0, column: 6 },
-        end: { line: 0, column: 12 }
+        end: { line: 0, column: 13 }
       }
     }
   ]));

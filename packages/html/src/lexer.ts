@@ -56,18 +56,19 @@ export const data: HtmlPattern<HtmlToken> = ({ next, location }) => {
  * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
  */
 const tagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
-  { peek, ignore, advance, location },
+  { next, ignore, backup, location },
   emit
 ) => {
-  const char = peek();
+  const char = next();
 
   if (char === "/") {
-    advance();
     return endTagOpen(start);
   }
 
   if (isAscii(char)) {
+    backup();
     ignore();
+
     return tagName(start, {
       type: "start-tag",
       value: "",
@@ -113,18 +114,16 @@ const tagName: (
     assign(tag, { value: result() });
   }
 
+  advance();
+
   if (char === "/") {
-    advance();
     return selfClosingStartTag(start, tag as StartTag);
   }
 
   if (char === ">") {
     emit(tag, start, location());
-    advance();
     return data;
   }
-
-  advance();
 };
 
 /**
@@ -138,9 +137,9 @@ const selfClosingStartTag: (
   emit
 ) => {
   if (peek() === ">") {
+    advance();
     assign(tag, { closed: true });
     emit(tag, start, location());
-    advance();
     return data;
   }
 };
