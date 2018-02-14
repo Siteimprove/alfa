@@ -1,5 +1,7 @@
 import { Bound } from "@alfa/util";
 
+const { assign } = Object;
+
 export interface Token {
   readonly type: string;
 }
@@ -203,8 +205,7 @@ export function lex<T extends Token>(
   let done = false;
 
   function emit<U extends T>(token: U, start: Location, end: Location): void {
-    token.location = { start, end };
-    tokens.push(token);
+    tokens.push(assign(token, { location: { start, end } }));
   }
 
   function end() {

@@ -9,6 +9,8 @@ import {
   lex as $lex
 } from "@alfa/lang";
 
+const { assign } = Object;
+
 export type StartTag = Readonly<{
   type: "start-tag";
   value: string;
@@ -146,7 +148,7 @@ const tagName: HtmlPattern = (
   const char = peek();
 
   if (isWhitespace(char) || char === "/" || char === ">") {
-    tag.value = result();
+    assign(tag, { value: result() });
   }
 
   advance();
@@ -160,7 +162,9 @@ const tagName: HtmlPattern = (
   }
 
   if (char === ">") {
-    emit(tag, start, location());
+    if (tag !== null) {
+      emit(tag, start, location());
+    }
     return initial;
   }
 
@@ -182,8 +186,10 @@ const selfClosingStartTag: HtmlPattern = (
 
   if (char === ">") {
     advance();
-    tag.closed = true;
-    emit(tag, start, location());
+    assign(tag, { closed: true });
+    if (tag !== null) {
+      emit(tag, start, location());
+    }
     return initial;
   }
 
@@ -214,7 +220,7 @@ const beforeAttributeName: HtmlPattern = (
 
   const { tag } = state;
 
-  if (tag.type === "start-tag") {
+  if (tag !== null && tag.type === "start-tag") {
     tag.attributes.push(state.attribute);
   }
 
@@ -234,12 +240,12 @@ const attributeName: HtmlPattern = (
   const char = peek();
 
   if (isWhitespace(char) || char === "/" || char === ">" || char === null) {
-    attribute.name = result();
+    assign(attribute, { name: result() });
     return afterAttributeName;
   }
 
   if (char === "=") {
-    attribute.name = result();
+    assign(attribute, { name: result() });
     advance();
     return beforeAttributeValue;
   }
@@ -270,9 +276,13 @@ const afterAttributeName: HtmlPattern = (
     return beforeAttributeValue;
   }
 
+  const { tag } = state;
+
   if (char === ">") {
     advance();
-    emit(state.tag, state.start, location());
+    if (tag !== null) {
+      emit(tag, state.start, location());
+    }
     return initial;
   }
 
@@ -325,7 +335,7 @@ const attributeValueDoubleQuoted: HtmlPattern = (
   const char = peek();
 
   if (char === '"') {
-    attribute.value = result();
+    assign(attribute, { value: result() });
     advance();
     return afterAttributeValueQuoted;
   }
@@ -349,7 +359,7 @@ const attributeValueSingleQuoted: HtmlPattern = (
   const char = peek();
 
   if (char === "'") {
-    attribute.value = result();
+    assign(attribute, { value: result() });
     advance();
     return afterAttributeValueQuoted;
   }
@@ -373,7 +383,7 @@ const attributeValueUnquoted: HtmlPattern = (
   const char = peek();
 
   if (isWhitespace(char) || char === ">") {
-    attribute.value = result();
+    assign(attribute, { value: result() });
   }
 
   advance();
@@ -383,7 +393,9 @@ const attributeValueUnquoted: HtmlPattern = (
   }
 
   if (char === ">") {
-    emit(tag, start, location());
+    if (tag !== null) {
+      emit(tag, start, location());
+    }
     return initial;
   }
 
@@ -416,7 +428,9 @@ const afterAttributeValueQuoted: HtmlPattern = (
   }
 
   if (char === ">") {
-    emit(tag, start, location());
+    if (tag !== null) {
+      emit(tag, start, location());
+    }
     return initial;
   }
 
