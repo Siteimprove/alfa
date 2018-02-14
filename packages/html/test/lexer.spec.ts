@@ -129,6 +129,49 @@ test("Can lex a start tag with an unquoted attribute", async t =>
     }
   ]));
 
+test("Can lex a start tag with multiple attributes", async t =>
+  html(t, '<span foo="bar" baz="qux">', [
+    {
+      type: "start-tag",
+      value: "span",
+      closed: false,
+      attributes: [
+        { name: "foo", value: "bar" },
+        { name: "baz", value: "qux" }
+      ],
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 26 }
+      }
+    }
+  ]));
+
+test("Can lex a start tag with a boolean attribute", async t =>
+  html(t, "<span foo>", [
+    {
+      type: "start-tag",
+      value: "span",
+      closed: false,
+      attributes: [{ name: "foo", value: "" }],
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 10 }
+      }
+    }
+  ]));
+
+test("Can lex an incorrectly closed end tag", async t =>
+  html(t, "</ ", [
+    {
+      type: "comment",
+      value: " ",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 3 }
+      }
+    }
+  ]));
+
 test("Can lex character data within a tag", async t =>
   html(t, "<p>Hi</p>", [
     {

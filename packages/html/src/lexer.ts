@@ -6,7 +6,6 @@ import {
   isAlpha,
   isAlphanumeric,
   isNumeric,
-  isAscii,
   lex as $lex
 } from "@alfa/lang";
 
@@ -73,7 +72,7 @@ const tagOpen: (start: Location) => HtmlPattern = start => (
     return endTagOpen(start);
   }
 
-  if (isAscii(char)) {
+  if (isAlpha(char)) {
     ignore();
     return tagName(start, {
       type: "start-tag",
@@ -93,16 +92,12 @@ const tagOpen: (start: Location) => HtmlPattern = start => (
  */
 const endTagOpen: (start: Location) => HtmlPattern = start => (
   { peek, advance, ignore, location },
-  emit
+  emit,
+  done
 ) => {
   const char = peek();
 
-  if (char === ">") {
-    advance();
-    return data;
-  }
-
-  if (isAscii(char)) {
+  if (isAlpha(char)) {
     ignore();
     return tagName(start, {
       type: "end-tag",
@@ -110,7 +105,18 @@ const endTagOpen: (start: Location) => HtmlPattern = start => (
     });
   }
 
-  return data;
+  if (char === ">") {
+    advance();
+    return data;
+  }
+
+  if (char === null) {
+    emit({ type: "character", value: "<" }, start, location());
+    emit({ type: "character", value: "/" }, start, location());
+    return done();
+  }
+
+  return bogusComment(start, { type: "comment", value: "" });
 };
 
 /**
@@ -150,13 +156,21 @@ const tagName: (start: Location, tag: StartTag | EndTag) => HtmlPattern = (
 const selfClosingStartTag: (start: Location, tag: StartTag) => HtmlPattern = (
   start,
   tag
-) => ({ peek, location, advance }, emit) => {
-  if (peek() === ">") {
+) => ({ peek, location, advance }, emit, done) => {
+  const char = peek();
+
+  if (char === ">") {
     advance();
     assign(tag, { closed: true });
     emit(tag, start, location());
     return data;
   }
+
+  if (char === null) {
+    return done();
+  }
+
+  return beforeAttributeName(start, tag);
 };
 
 /**
@@ -241,6 +255,8 @@ const afterAttributeName: (
   if (char === null) {
     return done();
   }
+
+  return attributeName(start, tag, { name: "", value: "" });
 };
 
 /**
@@ -338,6 +354,30 @@ const afterAttributeValue: (
   }
 
   return beforeAttributeName(start, tag);
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#bogus-comment-state
+ */
+const bogusComment: (start: Location, comment: Comment) => HtmlPattern = (
+  start,
+  comment
+) => ({ next, location }, emit, done) => {
+  const char = next();
+
+  if (char === ">" || char === null) {
+    emit(comment, start, location());
+  }
+
+  if (char === ">") {
+    return data;
+  }
+
+  if (char === null) {
+    return done();
+  }
+
+  assign(comment, { value: comment.value + char });
 };
 
 export const HtmlAlphabet: Alphabet<HtmlToken> = () => data;
