@@ -16,7 +16,27 @@ async function expression(
 
 test("Can lex an expression", async t =>
   expression(t, "1 + 2", [
-    { type: "number", value: 1, line: 0, column: 0 },
-    { type: "+", line: 0, column: 2 },
-    { type: "number", value: 2, line: 0, column: 4 }
+    {
+      type: "number",
+      value: 1,
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 1 }
+      }
+    },
+    {
+      type: "+",
+      location: {
+        start: { line: 0, column: 2 },
+        end: { line: 0, column: 3 }
+      }
+    },
+    {
+      type: "number",
+      value: 2,
+      location: {
+        start: { line: 0, column: 4 },
+        end: { line: 0, column: 5 }
+      }
+    }
   ]));
