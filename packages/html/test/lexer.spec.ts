@@ -16,7 +16,7 @@ test("Can lex a start tag", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: {},
+      attributes: [],
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 6 }
@@ -24,13 +24,16 @@ test("Can lex a start tag", async t =>
     }
   ]));
 
+test("Can lex a start tag with a missing closing brace", async t =>
+  html(t, "<span", []));
+
 test("Can lex a self-closing start tag", async t =>
   html(t, "<span/>", [
     {
       type: "start-tag",
       value: "span",
       closed: true,
-      attributes: {},
+      attributes: [],
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 7 }
@@ -68,7 +71,7 @@ test("Can lex a start tag followed by an end tag", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: {},
+      attributes: [],
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 6 }
@@ -80,6 +83,86 @@ test("Can lex a start tag followed by an end tag", async t =>
       location: {
         start: { line: 0, column: 6 },
         end: { line: 0, column: 13 }
+      }
+    }
+  ]));
+
+test("Can lex a start tag with a double-quoted attribute", async t =>
+  html(t, '<span foo="bar">', [
+    {
+      type: "start-tag",
+      value: "span",
+      closed: false,
+      attributes: [{ name: "foo", value: "bar" }],
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 16 }
+      }
+    }
+  ]));
+
+test("Can lex a start tag with a single-quoted attribute", async t =>
+  html(t, "<span foo='bar'>", [
+    {
+      type: "start-tag",
+      value: "span",
+      closed: false,
+      attributes: [{ name: "foo", value: "bar" }],
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 16 }
+      }
+    }
+  ]));
+
+test("Can lex a start tag with an unquoted attribute", async t =>
+  html(t, "<span foo=bar>", [
+    {
+      type: "start-tag",
+      value: "span",
+      closed: false,
+      attributes: [{ name: "foo", value: "bar" }],
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 14 }
+      }
+    }
+  ]));
+
+test("Can lex character data within a tag", async t =>
+  html(t, "<p>Hi</p>", [
+    {
+      type: "start-tag",
+      value: "p",
+      closed: false,
+      attributes: [],
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 3 }
+      }
+    },
+    {
+      type: "character",
+      value: "H",
+      location: {
+        start: { line: 0, column: 3 },
+        end: { line: 0, column: 4 }
+      }
+    },
+    {
+      type: "character",
+      value: "i",
+      location: {
+        start: { line: 0, column: 4 },
+        end: { line: 0, column: 5 }
+      }
+    },
+    {
+      type: "end-tag",
+      value: "p",
+      location: {
+        start: { line: 0, column: 5 },
+        end: { line: 0, column: 9 }
       }
     }
   ]));

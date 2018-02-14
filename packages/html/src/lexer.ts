@@ -16,7 +16,7 @@ export type StartTag = Readonly<{
   type: "start-tag";
   value: string;
   closed: boolean;
-  attributes: Readonly<{ [name: string]: string }>;
+  attributes: Array<Readonly<{ name: string; value: string }>>;
 }>;
 
 export type EndTag = Readonly<{
@@ -39,12 +39,12 @@ export type HtmlToken =
   | Character
   | Comment;
 
-export type HtmlPattern<T extends HtmlToken> = Pattern<T>;
+export type HtmlPattern = Pattern<HtmlToken>;
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
-export const data: HtmlPattern<HtmlToken> = ({ next, location }, emit, end) => {
+export const data: HtmlPattern = ({ next, location }, emit, end) => {
   const start = location();
   const char = next();
 
@@ -62,7 +62,7 @@ export const data: HtmlPattern<HtmlToken> = ({ next, location }, emit, end) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
  */
-const tagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
+const tagOpen: (start: Location) => HtmlPattern = start => (
   { peek, next, ignore, advance, location },
   emit
 ) => {
@@ -79,7 +79,7 @@ const tagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
       type: "start-tag",
       value: "",
       closed: false,
-      attributes: {}
+      attributes: []
     });
   }
 
@@ -91,11 +91,16 @@ const tagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#end-tag-open-state
  */
-const endTagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
-  { peek, ignore },
+const endTagOpen: (start: Location) => HtmlPattern = start => (
+  { peek, advance, ignore, location },
   emit
 ) => {
   const char = peek();
+
+  if (char === ">") {
+    advance();
+    return data;
+  }
 
   if (isAscii(char)) {
     ignore();
@@ -104,25 +109,24 @@ const endTagOpen: (start: Location) => HtmlPattern<HtmlToken> = start => (
       value: ""
     });
   }
+
+  return data;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tag-name-state
  */
-const tagName: (
-  start: Location,
-  tag: StartTag | EndTag
-) => HtmlPattern<HtmlToken> = (start, tag) => (
-  { next, peek, advance, result, location },
-  emit
-) => {
+const tagName: (start: Location, tag: StartTag | EndTag) => HtmlPattern = (
+  start,
+  tag
+) => ({ next, peek, advance, result, location }, emit, done) => {
   const char = peek();
 
-  if (char === "/" || char === ">") {
-    assign(tag, { value: result() });
-  }
-
   advance();
+
+  if (isWhitespace(char)) {
+    return beforeAttributeName(start, tag);
+  }
 
   if (char === "/") {
     return selfClosingStartTag(start, tag as StartTag);
@@ -132,24 +136,208 @@ const tagName: (
     emit(tag, start, location());
     return data;
   }
+
+  if (char === null) {
+    return done();
+  }
+
+  assign(tag, { value: tag.value + char });
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
  */
-const selfClosingStartTag: (
-  start: Location,
-  tag: StartTag
-) => HtmlPattern<HtmlToken> = (start, tag) => (
-  { peek, location, advance },
-  emit
-) => {
+const selfClosingStartTag: (start: Location, tag: StartTag) => HtmlPattern = (
+  start,
+  tag
+) => ({ peek, location, advance }, emit) => {
   if (peek() === ">") {
     advance();
     assign(tag, { closed: true });
     emit(tag, start, location());
     return data;
   }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
+ */
+const beforeAttributeName: (
+  start: Location,
+  tag: StartTag | EndTag
+) => HtmlPattern = (start, tag) => ({ peek, accept, advance }, emit) => {
+  accept(isWhitespace);
+
+  const char = peek();
+
+  const attribute = { name: "", value: "" };
+
+  if (char === "/" || char === ">" || char === null) {
+    return afterAttributeName(start, tag, attribute);
+  }
+
+  if (tag.type === "start-tag") {
+    tag.attributes.push(attribute);
+  }
+
+  return attributeName(start, tag, attribute);
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#attribute-name-state
+ */
+const attributeName: (
+  start: Location,
+  tag: StartTag | EndTag,
+  attribute: { name: string; value: string }
+) => HtmlPattern = (start, tag, attribute) => ({ peek, advance }, emit) => {
+  const char = peek();
+
+  if (isWhitespace(char) || char === "/" || char === ">" || char === null) {
+    return afterAttributeName(start, tag, attribute);
+  }
+
+  advance();
+
+  if (char === "=") {
+    return beforeAttributeValue(start, tag, attribute);
+  }
+
+  attribute.name += char;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#after-attribute-name-state
+ */
+const afterAttributeName: (
+  start: Location,
+  tag: StartTag | EndTag,
+  attribute: { name: string; value: string }
+) => HtmlPattern = (start, tag, attribute) => (
+  { peek, advance, accept, location },
+  emit,
+  done
+) => {
+  accept(isWhitespace);
+
+  const char = peek();
+
+  if (char === "/") {
+    advance();
+    return selfClosingStartTag(start, tag as StartTag);
+  }
+
+  if (char === "=") {
+    advance();
+    return beforeAttributeValue(start, tag, attribute);
+  }
+
+  if (char === ">") {
+    advance();
+    emit(tag, start, location());
+    return data;
+  }
+
+  if (char === null) {
+    return done();
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#before-attribute-value-state
+ */
+const beforeAttributeValue: (
+  start: Location,
+  tag: StartTag | EndTag,
+  attribute: { name: string; value: string }
+) => HtmlPattern = (start, tag, attribute) => ({ peek, accept, advance }) => {
+  accept(isWhitespace);
+
+  const char = peek();
+
+  let mark: '"' | "'" | null = null;
+
+  if (char === '"' || char === "'") {
+    advance();
+    mark = char;
+  }
+
+  return attributeValue(start, tag, attribute, mark);
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
+ * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
+ * @see https://www.w3.org/TR/html/syntax.html#attribute-value-unquoted-state
+ */
+const attributeValue: (
+  start: Location,
+  tag: StartTag | EndTag,
+  attribute: { name: string; value: string },
+  mark: '"' | "'" | null
+) => HtmlPattern = (start, tag, attribute, mark) => (
+  { next, location },
+  emit,
+  done
+) => {
+  const char = next();
+
+  if (char === null) {
+    return done();
+  }
+
+  if (char === mark) {
+    return afterAttributeValue(start, tag, attribute, mark);
+  }
+
+  if (mark === null && isWhitespace(char)) {
+    return beforeAttributeName(start, tag);
+  }
+
+  if (mark === null && char === ">") {
+    emit(tag, start, location());
+    return data;
+  }
+
+  attribute.value += char;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#after-attribute-value-quoted-state
+ */
+const afterAttributeValue: (
+  start: Location,
+  tag: StartTag | EndTag,
+  attribute: { name: string; value: string },
+  mark: '"' | "'"
+) => HtmlPattern = (start, tag, attribute, mark) => (
+  { peek, accept, advance, location },
+  emit,
+  done
+) => {
+  const char = peek();
+
+  if (isWhitespace(char)) {
+    advance();
+    return beforeAttributeName(start, tag);
+  }
+
+  if (char === "/") {
+    advance();
+    return selfClosingStartTag(start, tag as StartTag);
+  }
+
+  if (char === ">") {
+    advance();
+    emit(tag, start, location());
+    return data;
+  }
+
+  if (char === null) {
+    return done();
+  }
+
+  return beforeAttributeName(start, tag);
 };
 
 export const HtmlAlphabet: Alphabet<HtmlToken> = () => data;
