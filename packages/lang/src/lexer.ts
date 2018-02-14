@@ -1,7 +1,5 @@
 import { Bound } from "@alfa/util";
 
-const { assign } = Object;
-
 export interface Token {
   readonly type: string;
 }
@@ -185,7 +183,7 @@ export class CharacterStream extends Bound {
 
 export type Pattern<T extends Token, S> = (
   stream: CharacterStream,
-  emit: <U extends T>(token: U, start: Location, end: Location) => U,
+  emit: <U extends T>(token: U, start: Location, end: Location) => void,
   state: S,
   end: () => void
 ) => Pattern<T, S> | void;
@@ -204,9 +202,9 @@ export function lex<T extends Token>(
   let { line, column } = stream;
   let done = false;
 
-  function emit<U extends T>(token: U, start: Location, end: Location): U {
-    tokens.push(assign(token, { location: { start, end } }));
-    return token;
+  function emit<U extends T>(token: U, start: Location, end: Location): void {
+    token.location = { start, end };
+    tokens.push(token);
   }
 
   function end() {
