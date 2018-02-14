@@ -183,19 +183,20 @@ export class CharacterStream extends Bound {
   }
 }
 
-export type Pattern<T extends Token> = (
+export type Pattern<T extends Token, S> = (
   stream: CharacterStream,
   emit: <U extends T>(token: U, start: Location, end: Location) => U,
+  state: S,
   end: () => void
-) => Pattern<T> | void;
+) => Pattern<T, S> | void;
 
-export type Alphabet<T extends Token> = (
+export type Alphabet<T extends Token, S> = (
   stream: CharacterStream
-) => Pattern<T> | void;
+) => [Pattern<T, S>, S];
 
 export function lex<T extends Token>(
   input: string,
-  alphabet: Alphabet<T>
+  alphabet: Alphabet<T, any>
 ): Array<WithLocation<T>> {
   const tokens: Array<WithLocation<T>> = [];
   const stream = new CharacterStream(input);
@@ -212,10 +213,10 @@ export function lex<T extends Token>(
     done = true;
   }
 
-  let pattern: Pattern<T> = alphabet;
+  let [pattern, state] = alphabet(stream);
 
   while (!done) {
-    const next = pattern(stream, emit, end);
+    const next = pattern(stream, emit, state, end);
 
     if (next) {
       pattern = next;

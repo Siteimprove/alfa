@@ -1,6 +1,7 @@
 import {
   Pattern,
   Alphabet,
+  Location,
   lex,
   isNumeric,
   isWhitespace
@@ -15,62 +16,35 @@ export type Caret = { type: "^" };
 
 export type ExpressionToken = Number | Plus | Minus | Asterix | Slash | Caret;
 
-export type ExpressionPattern<T extends ExpressionToken> = Pattern<
-  ExpressionToken,
-  T
->;
+export type ExpressionState = { start: Location };
+
+export type ExpressionPattern = Pattern<ExpressionToken, ExpressionState>;
 
 export function isNumber(token: ExpressionToken): token is Number {
   return token.type === "number" && "value" in token;
 }
 
-const plus: ExpressionPattern<Plus> = ({ next }, emit) => {
-  if (next() === "+") {
-    emit({ type: "+" });
-  }
-};
-
-const minus: ExpressionPattern<Minus> = ({ next }, emit) => {
-  if (next() === "-") {
-    emit({ type: "-" });
-  }
-};
-
-const asterix: ExpressionPattern<Asterix> = ({ next }, emit) => {
-  if (next() === "*") {
-    emit({ type: "*" });
-  }
-};
-
-const slash: ExpressionPattern<Slash> = ({ next }, emit) => {
-  if (next() === "/") {
-    emit({ type: "/" });
-  }
-};
-
-const caret: ExpressionPattern<Caret> = ({ next }, emit) => {
-  if (next() === "^") {
-    emit({ type: "^" });
-  }
-};
-
-const number: ExpressionPattern<Number> = ({ peek, accept, result }, emit) => {
-  if (accept(isNumeric)) {
-    emit({ type: "number", value: Number(result()) });
-  }
-};
-
-export const ExpressionAlphabet: Alphabet<ExpressionToken> = ({
-  peek,
-  accept
-}) => {
+const initial: ExpressionPattern = (
+  { peek, next, accept, location },
+  emit,
+  state,
+  done
+) => {
   accept(isWhitespace);
+
+  state.start = location();
 
   if (isNumeric(peek())) {
     return number;
   }
 
-  switch (peek()) {
+  const char = next();
+
+  if (char === null) {
+    return done();
+  }
+
+  switch (char) {
     case "+":
       return plus;
     case "-":
@@ -83,3 +57,43 @@ export const ExpressionAlphabet: Alphabet<ExpressionToken> = ({
       return caret;
   }
 };
+
+const plus: ExpressionPattern = ({ next, location }, emit, { start }) => {
+  emit({ type: "+" }, start, location());
+  return initial;
+};
+
+const minus: ExpressionPattern = ({ next, location }, emit, { start }) => {
+  emit({ type: "-" }, start, location());
+  return initial;
+};
+
+const asterix: ExpressionPattern = ({ next, location }, emit, { start }) => {
+  emit({ type: "*" }, start, location());
+  return initial;
+};
+
+const slash: ExpressionPattern = ({ next, location }, emit, { start }) => {
+  emit({ type: "/" }, start, location());
+  return initial;
+};
+
+const caret: ExpressionPattern = ({ next, location }, emit, { start }) => {
+  emit({ type: "^" }, start, location());
+  return initial;
+};
+
+const number: ExpressionPattern = (
+  { peek, accept, ignore, result, location },
+  emit,
+  { start }
+) => {
+  ignore();
+  accept(isNumeric);
+  emit({ type: "number", value: Number(result()) }, start, location());
+  return initial;
+};
+
+export const ExpressionAlphabet: Alphabet<ExpressionToken, ExpressionState> = ({
+  location
+}) => [initial, { start: location() }];
