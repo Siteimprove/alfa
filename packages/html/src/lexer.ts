@@ -42,6 +42,7 @@ export type HtmlState = {
   start: Location;
   tag: StartTag | EndTag | null;
   attribute: { name: string; value: string } | null;
+  comment: Comment | null;
 };
 
 export type HtmlPattern = Pattern<HtmlToken, HtmlState>;
@@ -75,6 +76,11 @@ const tagOpen: HtmlPattern = (
 ) => {
   const char = peek();
 
+  if (char === "!") {
+    advance();
+    return markupDeclarationOpen;
+  }
+
   if (char === "/") {
     advance();
     return endTagOpen;
@@ -93,9 +99,270 @@ const tagOpen: HtmlPattern = (
     return tagName;
   }
 
-  emit({ type: "character", value: "<" }, state.start, location());
+  if (char === "?") {
+    state.comment = {
+      type: "comment",
+      value: ""
+    };
+
+    ignore();
+
+    return bogusComment;
+  }
+
+  const { start } = state;
+
+  emit({ type: "character", value: "<" }, start, location());
 
   return initial;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#markup-declaration-open-state
+ */
+const markupDeclarationOpen: HtmlPattern = (
+  { peek, ignore, advance },
+  emit,
+  state
+) => {
+  state.comment = {
+    type: "comment",
+    value: ""
+  };
+
+  if (peek() === "-" && peek(1) === "-") {
+    advance(2);
+    return commentStart;
+  }
+
+  ignore();
+
+  return bogusComment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-start-state
+ */
+const commentStart: HtmlPattern = (
+  { peek, advance, location },
+  emit,
+  state
+) => {
+  const char = peek();
+
+  if (char === "-") {
+    advance();
+    return commentStartDash;
+  }
+
+  if (char === ">") {
+    advance();
+    if (state.comment !== null) {
+      emit(state.comment, state.start, location());
+    }
+    return initial;
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
+ */
+const commentStartDash: HtmlPattern = (
+  { peek, advance, location },
+  emit,
+  state,
+  done
+) => {
+  const char = peek();
+
+  if (char === "-") {
+    advance();
+    return commentEnd;
+  }
+
+  if (char === ">" || char === null) {
+    advance();
+    if (state.comment !== null) {
+      emit(state.comment, state.start, location());
+    }
+  }
+
+  if (char === ">") {
+    return initial;
+  }
+
+  if (char === null) {
+    return done();
+  }
+
+  if (state.comment !== null) {
+    assign(state.comment, { value: state.comment.value + "-" });
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-state
+ */
+const comment: HtmlPattern = ({ next, location }, emit, state, done) => {
+  const char = next();
+
+  if (char === "<") {
+    if (state.comment !== null) {
+      assign(state.comment, { value: state.comment.value + char });
+    }
+    return commentLessThanSign;
+  }
+
+  if (char === "-") {
+    return commentEndDash;
+  }
+
+  if (char === null) {
+    if (state.comment !== null) {
+      emit(state.comment, state.start, location());
+    }
+    return done();
+  }
+
+  if (state.comment !== null) {
+    assign(state.comment, { value: state.comment.value + char });
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-state
+ */
+const commentLessThanSign: HtmlPattern = ({ peek, advance }, emit, state) => {
+  const char = peek();
+
+  if (char === "!" || char === "<") {
+    advance();
+    if (state.comment !== null) {
+      assign(state.comment, { value: state.comment.value + char });
+    }
+  }
+
+  if (char === "!") {
+    advance();
+    return commentLessThanSignBang;
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-state
+ */
+const commentLessThanSignBang: HtmlPattern = ({ peek, advance }) => {
+  if (peek() === "-") {
+    advance();
+    return commentLessThanSignBangDash;
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-state
+ */
+const commentLessThanSignBangDash: HtmlPattern = ({ peek, advance }) => {
+  if (peek() === "-") {
+    advance();
+    return commentEnd;
+  }
+
+  return commentEndDash;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
+ */
+const commentEndDash: HtmlPattern = ({ peek, advance }, emit, state, done) => {
+  const char = peek();
+
+  if (char === "-" || char === null) {
+    advance();
+  }
+
+  if (char === "-") {
+    return commentEnd;
+  }
+
+  if (char === null) {
+    return done();
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
+ */
+const commentEnd: HtmlPattern = (
+  { peek, advance, result, location },
+  emit,
+  state,
+  done
+) => {
+  const char = peek();
+
+  if (char === ">") {
+    advance();
+    if (state.comment !== null) {
+      emit(state.comment, state.start, location());
+    }
+    return initial;
+  }
+
+  if (char === "!") {
+    advance();
+    return commentEndBang;
+  }
+
+  if (char === null) {
+    return done();
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
+ */
+const commentEndBang: HtmlPattern = ({ peek, advance, location }, emit, state, done) => {
+  const char = peek();
+
+  if (char === "-") {
+    advance();
+    if (state.comment !== null) {
+      assign(state.comment, { value: state.comment.value + "-!" });
+    }
+    return commentEndDash;
+  }
+
+  if (char === ">" || char === null) {
+    if (state.comment !== null) {
+      emit(state.comment, state.start, location());
+    }
+  }
+
+  if (char === ">") {
+    return initial;
+  }
+
+  if (char === null) {
+    return done();
+  }
+
+  if (state.comment !== null) {
+    assign(state.comment, { value: state.comment.value + "-!" });
+  }
+
+  return comment;
 };
 
 /**
@@ -130,6 +397,11 @@ const endTagOpen: HtmlPattern = (
     emit({ type: "character", value: "/" }, state.start, location());
     return done();
   }
+
+  state.comment = {
+    type: "comment",
+    value: ""
+  };
 
   ignore();
 
@@ -447,13 +719,19 @@ const afterAttributeValueQuoted: HtmlPattern = (
 const bogusComment: HtmlPattern = (
   { next, result, location },
   emit,
-  { start },
+  { start, comment },
   done
 ) => {
   const char = next();
 
   if (char === ">" || char === null) {
-    emit({ type: "comment", value: result() }, start, location());
+    if (comment !== null) {
+      emit(
+        assign(comment, { value: comment.value + result() }),
+        start,
+        location()
+      );
+    }
   }
 
   if (char === ">") {
@@ -467,7 +745,7 @@ const bogusComment: HtmlPattern = (
 
 export const HtmlAlphabet: Alphabet<HtmlToken, HtmlState> = ({ location }) => [
   initial,
-  { start: location(), tag: null, attribute: null }
+  { start: location(), tag: null, attribute: null, comment: null }
 ];
 
 export function lex(input: string): Array<HtmlToken> {

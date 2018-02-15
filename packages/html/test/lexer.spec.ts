@@ -209,3 +209,15 @@ test("Can lex character data within a tag", async t =>
       }
     }
   ]));
+
+test("Can lex a comment", async t =>
+  html(t, "<!--foo-->", [
+    {
+      type: "comment",
+      value: "foo",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 10 }
+      }
+    }
+  ]));
