@@ -333,7 +333,12 @@ const commentEnd: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
  */
-const commentEndBang: HtmlPattern = ({ peek, advance, location }, emit, state, done) => {
+const commentEndBang: HtmlPattern = (
+  { peek, advance, location },
+  emit,
+  state,
+  done
+) => {
   const char = peek();
 
   if (char === "-") {
