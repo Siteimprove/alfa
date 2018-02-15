@@ -33,15 +33,7 @@ export const Roletype: Role = {
     {
       name: "aria-current",
       type: "token",
-      values: [
-        "page",
-        "step",
-        "location",
-        "date",
-        "time",
-        "true",
-        "false"
-      ]
+      values: ["page", "step", "location", "date", "time", "true", "false"]
     },
     /**
      * @see https://www.w3.org/TR/wai-aria/#aria-describedby
@@ -70,14 +62,7 @@ export const Roletype: Role = {
     {
       name: "aria-dropeffect",
       type: "token-list",
-      values: [
-        "copy",
-        "execute",
-        "link",
-        "move",
-        "none",
-        "popup"
-      ]
+      values: ["copy", "execute", "link", "move", "none", "popup"]
     },
     /**
      * @see https://www.w3.org/TR/wai-aria/#aria-errormessage
@@ -106,15 +91,7 @@ export const Roletype: Role = {
     {
       name: "aria-haspopup",
       type: "token",
-      values: [
-        "false",
-        "true",
-        "menu",
-        "listbox",
-        "tree",
-        "grid",
-        "dialog"
-      ]
+      values: ["false", "true", "menu", "listbox", "tree", "grid", "dialog"]
     },
     /**
      * @see https://www.w3.org/TR/wai-aria/#aria-hidden
@@ -129,12 +106,7 @@ export const Roletype: Role = {
     {
       name: "aria-invalid",
       type: "token",
-      values: [
-        "grammar",
-        "false",
-        "spelling",
-        "true"
-      ]
+      values: ["grammar", "false", "spelling", "true"]
     },
     /**
      * @see https://www.w3.org/TR/wai-aria/#aria-keyshortcuts
@@ -163,11 +135,7 @@ export const Roletype: Role = {
     {
       name: "aria-live",
       type: "token",
-      values: [
-        "assertive",
-        "off",
-        "polite"
-      ]
+      values: ["assertive", "off", "polite"]
     },
     /**
      * @see https://www.w3.org/TR/wai-aria/#aria-owns
@@ -182,12 +150,7 @@ export const Roletype: Role = {
     {
       name: "aria-relevant",
       type: "token-list",
-      values: [
-        "additions",
-        "all",
-        "removals",
-        "text"
-      ]
+      values: ["additions", "all", "removals", "text"]
     },
     /**
      * @see https://www.w3.org/TR/wai-aria/#aria-roledescription
