@@ -1,0 +1,19 @@
+{
+  "name": "@alfa/aria",
+  "version": "0.0.0",
+  "description": "alfa!",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/aria",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@alfa/dom": "^0.0.0"
+  },
+  "devDependencies": {
+    "@alfa/test": "^0.0.0"
+  }
+}
