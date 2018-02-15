@@ -78,13 +78,7 @@ export class CharacterStream extends Bound {
       if (this._position < this._input.length) {
         advanced = true;
 
-        const next = this.peek();
-
-        if (next === null) {
-          break;
-        }
-
-        if (isNewline(next)) {
+        if (isNewline(this.peek())) {
           this._line++;
           this._column = 0;
         } else {
@@ -92,7 +86,7 @@ export class CharacterStream extends Bound {
         }
 
         this._position++;
-      }
+      } else break;
     } while (--times > 0);
 
     return advanced;
@@ -105,13 +99,7 @@ export class CharacterStream extends Bound {
       if (this._position > 0) {
         backedup = true;
 
-        const prev = this.peek(-1);
-
-        if (prev === null) {
-          break;
-        }
-
-        if (isNewline(prev)) {
+        if (isNewline(this.peek(-1))) {
           this._line--;
           this._column = 0;
         } else {
@@ -119,7 +107,7 @@ export class CharacterStream extends Bound {
         }
 
         this._position--;
-      }
+      } else break;
     } while (--times > 0);
 
     return backedup;
@@ -215,11 +203,7 @@ export function lex<T extends Token>(
   let [pattern, state] = alphabet(stream);
 
   while (!done) {
-    const next = pattern(stream, emit, state, end);
-
-    if (next) {
-      pattern = next;
-    }
+    pattern = pattern(stream, emit, state, end) || pattern;
   }
 
   return tokens;
@@ -259,10 +243,12 @@ export function isHex(char: string | null): boolean {
   );
 }
 
+const asciiLimit = String.fromCharCode(0x80);
+
 export function isAscii(char: string | null): boolean {
-  return char !== null && char.charCodeAt(0) < 0x80;
+  return char !== null && char < asciiLimit;
 }
 
 export function isNonAscii(char: string | null): boolean {
-  return char !== null && char.charCodeAt(0) >= 0x80;
+  return char !== null && char >= asciiLimit;
 }
