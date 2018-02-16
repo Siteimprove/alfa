@@ -70,10 +70,14 @@ export type Attribute = Readonly<{
 export type Role = Readonly<{
   name: string;
   abstract?: boolean;
+  label?: Readonly<{
+    from: "author" | "contents" | ["author", "contents"];
+    required?: boolean;
+  }>;
   inherits?: Array<Role>;
-  nameFrom?: "author" | "contents";
-  nameRequired?: boolean;
-  requiredAttributes?: Array<Attribute>;
-  supportedAttributes?: Array<Attribute>;
-  implicitValues?: Map<Attribute, string>;
+  context?: Array<Role>;
+  owned?: Array<Role>;
+  required?: Array<Attribute>;
+  supported?: Array<Attribute>;
+  defaults?: Map<Attribute, string>;
 }>;
