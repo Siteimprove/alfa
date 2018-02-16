@@ -61,6 +61,7 @@ export type State = Readonly<{
   name: string;
   type: ValueType;
   values?: Array<string>;
+  deprecated?: boolean;
 }>;
 
 /**
@@ -70,6 +71,7 @@ export type Property = Readonly<{
   name: string;
   type: ValueType;
   values?: Array<string>;
+  deprecated?: boolean;
 }>;
 
 /**
@@ -81,6 +83,7 @@ export type Attribute = State | Property;
  * @see https://www.w3.org/TR/wai-aria/#dfn-role
  */
 export type Role = Readonly<{
+  name: string;
   abstract?: boolean;
   inherits?: Array<Role>;
   nameFrom?: "author" | "contents";

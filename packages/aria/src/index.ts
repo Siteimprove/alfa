@@ -1,3 +1,5 @@
-export * from "./types";
+import * as Attributes from "./attributes";
+import * as Roles from "./roles";
 
-export * from "./roles/roletype";
+export * from "./types";
+export { Attributes, Roles };
