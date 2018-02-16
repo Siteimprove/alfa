@@ -55,29 +55,14 @@ export type ValueType =
   | "uri";
 
 /**
- * @see https://www.w3.org/TR/wai-aria/#dfn-state
- */
-export type State = Readonly<{
-  name: string;
-  type: ValueType;
-  values?: Array<string>;
-  deprecated?: boolean;
-}>;
-
-/**
- * @see https://www.w3.org/TR/wai-aria/#dfn-property
- */
-export type Property = Readonly<{
-  name: string;
-  type: ValueType;
-  values?: Array<string>;
-  deprecated?: boolean;
-}>;
-
-/**
  * @see https://www.w3.org/TR/wai-aria/#dfn-attribute
  */
-export type Attribute = State | Property;
+export type Attribute = Readonly<{
+  name: string;
+  type: ValueType;
+  values?: Array<string>;
+  deprecated?: boolean;
+}>;
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#dfn-role
