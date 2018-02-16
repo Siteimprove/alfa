@@ -1,5 +1,6 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Group } from "../structure";
 import { Composite } from "./composite";
 
 /**

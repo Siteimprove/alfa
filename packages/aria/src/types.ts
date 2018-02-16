@@ -69,15 +69,47 @@ export type Attribute = Readonly<{
  */
 export type Role = Readonly<{
   name: string;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#isAbstract
+   */
   abstract?: boolean;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#namecalculation
+   */
   label?: Readonly<{
     from: "author" | "contents" | ["author", "contents"];
     required?: boolean;
   }>;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#superclassrole
+   */
   inherits?: Array<Role>;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#scope
+   */
   context?: Array<Role>;
-  owned?: Array<Role>;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#mustContain
+   */
+  owned?: Array<Role | [Role, Role]>;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#requiredState
+   */
   required?: Array<Attribute>;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#supportedState
+   */
   supported?: Array<Attribute>;
-  defaults?: Map<Attribute, string>;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#implictValueForRole
+   */
+  defaults?: Array<[Attribute, string]>;
 }>;

@@ -1,3 +1,6 @@
+import { Role } from "../../types";
+import { Roletype } from "./roletype";
+
 /**
  * @see https://www.w3.org/TR/wai-aria/#widget
  */

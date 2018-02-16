@@ -1,3 +1,7 @@
+import { Role } from "../../types";
+import * as Attributes from "../../attributes";
+import { Roletype } from "./roletype";
+
 /**
  * @see https://www.w3.org/TR/wai-aria/#window
  */

@@ -9,7 +9,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@alfa/dom": "^0.0.0"
+    "@alfa/dom": "^0.0.0",
+    "@alfa/util": "^0.0.0"
   },
   "devDependencies": {
     "@alfa/test": "^0.0.0"
