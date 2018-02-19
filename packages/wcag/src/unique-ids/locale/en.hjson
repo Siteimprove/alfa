@@ -13,7 +13,7 @@
     '''
 
   expectations: {
-    elementIdIsUnique: {
+    1: {
       description:
         '''
         For each applicable element, no other element within the current document context has the same ID as the element currently considered.
