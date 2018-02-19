@@ -11,8 +11,8 @@ import {
 } from "@alfa/css";
 import { Element, Parent } from "../types";
 import { isElement } from "../guards";
-import { attribute } from "./attribute";
-import { classlist } from "./classlist";
+import { getAttribute } from "./get-attribute";
+import { getClasslist } from "./get-classlist";
 
 const parseMemoized = memoize(parse, { cache: { size: 50 } });
 
@@ -50,11 +50,11 @@ function matchesType(element: Element, selector: TypeSelector): boolean {
 }
 
 function matchesClass(element: Element, selector: ClassSelector): boolean {
-  return classlist(element).has(selector.name);
+  return getClasslist(element).has(selector.name);
 }
 
 function matchesId(element: Element, selector: IdSelector): boolean {
-  return attribute(element, "id") === selector.name;
+  return getAttribute(element, "id") === selector.name;
 }
 
 function matchesCompound(

@@ -2,7 +2,7 @@ import { Element, Attribute } from "../types";
 
 export type AttributeOptions = Readonly<{ trim?: boolean }>;
 
-export function attribute<K extends keyof Element["attributes"]>(
+export function getAttribute<K extends keyof Element["attributes"]>(
   element: Element,
   name: K,
   options: AttributeOptions = { trim: false }
