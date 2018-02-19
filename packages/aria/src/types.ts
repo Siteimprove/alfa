@@ -107,9 +107,4 @@ export type Role = Readonly<{
    * @see https://www.w3.org/TR/wai-aria/#supportedState
    */
   supported?: Array<Attribute>;
-
-  /**
-   * @see https://www.w3.org/TR/wai-aria/#implictValueForRole
-   */
-  defaults?: Array<[Attribute, string]>;
 }>;

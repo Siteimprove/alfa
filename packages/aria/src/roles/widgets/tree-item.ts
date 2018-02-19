@@ -1,8 +1,8 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
 import { Select } from "../abstract";
-import { Group } from "../structure";
-import { Tree } from "../widgets";
+import { Group, ListItem } from "../structure";
+import { Tree, Option } from "../widgets";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#treeitem
@@ -12,5 +12,5 @@ export const TreeItem: Role = {
   label: { from: ["author", "contents"], required: true },
   inherits: [ListItem, Option],
   context: [Group, Tree],
-  required: [Attributes.Selected],
+  required: [Attributes.Selected]
 };

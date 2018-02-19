@@ -12,6 +12,5 @@ export const Tree: Role = {
   label: { from: "author", required: true },
   inherits: [Select],
   owned: [TreeItem, [Group, TreeItem]],
-  supported: [Attributes.Multiselectable, Attributes.Required],
-  defaults: [[Attributes.Orientation, "vertical"]]
+  supported: [Attributes.Multiselectable, Attributes.Required]
 };

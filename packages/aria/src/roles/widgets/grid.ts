@@ -11,9 +11,5 @@ export const Grid: Role = {
   label: { from: "author", required: true },
   inherits: [Composite, Table],
   owned: [Row, [RowGroup, Row]],
-  supported: [
-    Attributes.Level,
-    Attributes.Multiselectable,
-    Attributes.ReadOnly
-  ]
+  supported: [Attributes.Level, Attributes.Multiselectable, Attributes.ReadOnly]
 };
