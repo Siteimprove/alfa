@@ -1,3 +1,4 @@
-export * from "./class/bound";
-
-export * from "./function/memoize";
+export * from "./class";
+export * from "./function";
+export * from "./object";
+export * from "./string";
