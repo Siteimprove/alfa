@@ -1,4 +1,18 @@
-import { Bound } from "@alfa/util";
+import { Bound, isNewline } from "@alfa/util";
+
+// Expose string utilities to consumers of @alfa/lang as a convenience. Packages
+// that implement lexers will most likely need one or more of these and getting
+// them within the same import is neat.
+export {
+  isAlpha,
+  isAlphanumeric,
+  isAscii,
+  isBetween,
+  isHex,
+  isNewline,
+  isNumeric,
+  isWhitespace
+} from "@alfa/util";
 
 const { assign } = Object;
 
@@ -57,7 +71,7 @@ export class CharacterStream extends Bound {
     const position = this._position + offset;
 
     if (position < this._input.length) {
-      return this._input.charAt(position);
+      return this._input[position];
     }
 
     return null;
@@ -207,48 +221,4 @@ export function lex<T extends Token>(
   }
 
   return tokens;
-}
-
-export function isBetween(
-  char: string | null,
-  lower: string,
-  upper: string
-): boolean {
-  return char !== null && char >= lower && char <= upper;
-}
-
-export function isWhitespace(char: string | null): boolean {
-  return char === " " || char === "\t" || char === "\n";
-}
-
-export function isNewline(char: string | null): boolean {
-  return char === "\n" || char === "\r" || char === "\f";
-}
-
-export function isAlpha(char: string | null): boolean {
-  return isBetween(char, "a", "z") || isBetween(char, "A", "Z");
-}
-
-export function isNumeric(char: string | null): boolean {
-  return isBetween(char, "0", "9");
-}
-
-export function isAlphanumeric(char: string | null): boolean {
-  return isAlpha(char) || isNumeric(char);
-}
-
-export function isHex(char: string | null): boolean {
-  return (
-    isNumeric(char) || isBetween(char, "a", "f") || isBetween(char, "A", "F")
-  );
-}
-
-const asciiLimit = String.fromCharCode(0x80);
-
-export function isAscii(char: string | null): boolean {
-  return char !== null && char < asciiLimit;
-}
-
-export function isNonAscii(char: string | null): boolean {
-  return char !== null && char >= asciiLimit;
 }
