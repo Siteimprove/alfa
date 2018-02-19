@@ -306,6 +306,8 @@ export function style(
         }
 
         _style.focus = deduplicate(_style.default, clean(_style.focus));
+
+        target.blur();
       }
 
       style.set(node, _style);
