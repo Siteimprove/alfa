@@ -7,7 +7,7 @@ import {
   isAlpha,
   isAlphanumeric,
   isNumeric,
-  isNonAscii,
+  isAscii,
   lex as $lex
 } from "@alfa/lang";
 
@@ -126,7 +126,7 @@ function startsIdentifier(
  * @see https://www.w3.org/TR/css-syntax/#name-start-code-point
  */
 function isNameStart(char: string | null): boolean {
-  return isAlpha(char) || isNonAscii(char) || char === "_";
+  return isAlpha(char) || !isAscii(char) || char === "_";
 }
 
 /**
