@@ -1,12 +1,10 @@
-const { notify } = require("wsk");
+import { base, extension } from "@foreman/path";
+import { read, write } from "@foreman/fs";
+import { notify } from "@foreman/notify";
 const { parse } = require("hjson");
 const stringify = require("stringify-object");
-const { base, extension } = require("../../utils/path");
-const { read, write } = require("../../utils/file");
 
-async function onEvent(event, path, options = {}) {
-  const { silent } = options;
-
+export async function transform(path: string) {
   try {
     const hjson = await read(path);
     const json = parse(hjson);
@@ -25,18 +23,16 @@ export default locale
 
     notify({
       message: "Compilation succeeded",
-      value: path,
-      display: "compile",
-      silent
+      type: "compile",
+      desktop: false
     });
-  } catch (err) {
+  } catch (error) {
     notify({
       message: "Compilation failed",
-      value: path,
-      display: "error",
-      error: err
+      type: "error",
+      error
     });
+
+    throw error;
   }
 }
-
-module.exports = { onEvent };
