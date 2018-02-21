@@ -12,9 +12,5 @@ export const Option: Role = {
   inherits: [Input],
   context: [ListBox],
   required: [Attributes.Selected],
-  supported: [
-    Attributes.Checked,
-    Attributes.PositionInSet,
-    Attributes.SetSize
-  ]
+  supported: [Attributes.Checked, Attributes.PositionInSet, Attributes.SetSize]
 };

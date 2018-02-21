@@ -28,7 +28,7 @@ export async function check<T extends Target, A extends Aspect>(
     );
 
     if (answer) {
-      return answer.answer
+      return answer.answer;
     } else {
       results.push({
         rule: rule.id,
@@ -36,7 +36,7 @@ export async function check<T extends Target, A extends Aspect>(
         target
       });
 
-      return false
+      return false;
     }
   }
 

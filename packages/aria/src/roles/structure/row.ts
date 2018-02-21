@@ -12,7 +12,7 @@ export const Row: Role = {
   label: { from: ["author", "contents"] },
   inherits: [Widget, Group],
   context: [Grid, RowGroup, Table, TreeGrid],
-  owned: [Cell/*, ColumnHeader, GridCell, RowHeader*/],
+  owned: [Cell /*, ColumnHeader, GridCell, RowHeader*/],
   supported: [
     Attributes.ColumnIndex,
     Attributes.Level,

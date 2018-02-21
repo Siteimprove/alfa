@@ -11,9 +11,5 @@ export const ListItem: Role = {
   label: { from: "author" },
   inherits: [Section],
   context: [Group, List],
-  supported: [
-    Attributes.Level,
-    Attributes.PositionInSet,
-    Attributes.SetSize
-  ]
+  supported: [Attributes.Level, Attributes.PositionInSet, Attributes.SetSize]
 };
