@@ -164,6 +164,10 @@ const initial: CssPattern = (
 
   const char = next();
 
+  if (char === null) {
+    return end();
+  }
+
   if (isWhitespace(char)) {
     accept(isWhitespace);
     emit({ type: "whitespace" }, start, location());
@@ -213,10 +217,6 @@ const initial: CssPattern = (
   if (startsIdentifier(char, peek(), peek(1))) {
     backup();
     return ident;
-  }
-
-  if (char === null) {
-    return end();
   }
 
   emit({ type: "delim", value: char }, start, location());
