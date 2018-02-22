@@ -1,5 +1,5 @@
 import { launch } from "puppeteer";
-import browserify from "browserify";
+import * as browserify from "browserify";
 import { Node } from "@alfa/dom";
 import { Aspects } from "@alfa/rule";
 import * as Pickle from "@alfa/pickle";
