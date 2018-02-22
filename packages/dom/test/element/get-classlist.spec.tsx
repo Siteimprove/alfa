@@ -1,3 +1,4 @@
+import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
 import { getClasslist } from "../../src/element/get-classlist";
 

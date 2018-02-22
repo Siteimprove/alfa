@@ -1,3 +1,4 @@
+import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
 import { find, findAll } from "../../src/element/find";
 

@@ -1,3 +1,4 @@
+import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
 import { Element } from "../src/types";
 import { digest, hasDigest } from "../src/digest";

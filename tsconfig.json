@@ -2,9 +2,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2015",
-    "jsx": "preserve",
-    "allowSyntheticDefaultImports": true,
-    "noEmit": true,
+    "jsx": "react",
+    "jsxFactory": "jsx",
+    "inlineSourceMap": true,
     "strict": true
   }
 }
