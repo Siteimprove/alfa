@@ -29,7 +29,10 @@ async function build(): Promise<void> {
     }
   }
 
-  for (const path of await expand("packages/*/test/**/*.ts{,x}")) {
+  for (const path of await expand([
+    "packages/*/test/**/*.ts{,x}",
+    "build/**/*.ts"
+  ])) {
     notify({ message: "Building", value: path, desktop: false });
 
     try {
