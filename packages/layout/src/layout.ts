@@ -1,3 +1,5 @@
+const { assign } = Object;
+
 export interface Layout {
   readonly left: number;
   readonly right: number;
@@ -102,7 +104,7 @@ function partition(
   root: boolean = false
 ): LayoutNode {
   if (nodes.length <= maximum) {
-    return Object.assign(union(...nodes), { children: nodes });
+    return assign(union(...nodes), { children: nodes });
   }
 
   let slices = maximum;
@@ -135,5 +137,5 @@ function partition(
     }
   }
 
-  return Object.assign(union(...children), { children });
+  return assign(union(...children), { children });
 }
