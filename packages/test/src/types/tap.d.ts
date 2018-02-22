@@ -1,4 +1,31 @@
 declare module "tap" {
+  namespace Options {
+    export interface Bag {
+      [propName: string]: any;
+    }
+
+    export interface Pragma {
+      [propName: string]: boolean;
+    }
+
+    export interface Assert extends Bag {
+      todo?: boolean | string;
+      skip?: boolean | string;
+    }
+
+    export interface Spawn extends Assert {
+      bail?: boolean;
+      timeout?: number;
+    }
+
+    export interface Test extends Assert {
+      name?: string;
+      timeout?: number;
+      bail?: boolean;
+      autoend?: boolean;
+    }
+  }
+
   namespace Assertions {
     export type Basic = (
       obj: any,
@@ -48,7 +75,7 @@ declare module "tap" {
     ) => boolean;
   }
 
-  export class Test {
+  class Test {
     ok: Assertions.Basic;
     true: Assertions.Basic;
     assert: Assertions.Basic;
@@ -187,33 +214,7 @@ declare module "tap" {
     afterEach(fn: (cb: () => any) => Promise<void> | void): void;
   }
 
-  namespace Options {
-    export interface Bag {
-      [propName: string]: any;
-    }
-
-    export interface Pragma {
-      [propName: string]: boolean;
-    }
-
-    export interface Assert extends Bag {
-      todo?: boolean | string;
-      skip?: boolean | string;
-    }
-
-    export interface Spawn extends Assert {
-      bail?: boolean;
-      timeout?: number;
-    }
-
-    export interface Test extends Assert {
-      name?: string;
-      timeout?: number;
-      bail?: boolean;
-      autoend?: boolean;
-    }
-  }
-
   const tap: Test;
-  export default tap;
+
+  export = tap;
 }

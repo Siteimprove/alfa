@@ -8,7 +8,6 @@
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
-  "scripts": {},
   "dependencies": {
     "tap": "^11.0.1"
   }
