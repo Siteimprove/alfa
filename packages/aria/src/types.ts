@@ -108,3 +108,14 @@ export type Role = Readonly<{
    */
   supported?: Array<Attribute>;
 }>;
+
+/**
+ * @see https://www.w3.org/TR/html-aria/
+ */
+export type Feature = Readonly<{
+  element: string;
+  when?: (element: Element) => boolean;
+  role?: Role;
+  allowedRoles?: Array<Role>;
+  allowedAttributes?: Array<Attribute>;
+}>;
