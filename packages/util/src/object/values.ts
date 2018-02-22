@@ -12,7 +12,7 @@ export function values<T, K extends keyof T>(target: T): Array<T[K]> {
   const values: Array<T[K]> = [];
 
   for (const key of keys(target)) {
-    values.push(target[key]);
+    values.push(target[key] as T[K]);
   }
 
   return values;
