@@ -6,7 +6,7 @@ import {
   ExpressionAlphabet
 } from "./helpers/expression";
 
-async function expression(
+function expression(
   t: Test,
   input: string,
   expected: Array<WithLocation<ExpressionToken>>

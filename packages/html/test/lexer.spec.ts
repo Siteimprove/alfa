@@ -2,7 +2,7 @@ import { test, Test } from "@alfa/test";
 import { WithLocation } from "@alfa/lang";
 import { HtmlToken, lex } from "../src/lexer";
 
-async function html(
+function html(
   t: Test,
   input: string,
   expected: Array<WithLocation<HtmlToken>>

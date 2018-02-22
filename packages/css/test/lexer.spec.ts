@@ -2,11 +2,7 @@ import { test, Test } from "@alfa/test";
 import { WithLocation } from "@alfa/lang";
 import { CssToken, lex } from "../src/lexer";
 
-async function css(
-  t: Test,
-  input: string,
-  expected: Array<WithLocation<CssToken>>
-) {
+function css(t: Test, input: string, expected: Array<WithLocation<CssToken>>) {
   t.deepEqual(lex(input), expected);
 }
 
