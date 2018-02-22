@@ -29,7 +29,7 @@ watch(
 
       if (/spec\.tsx?$/.test(path)) {
         tasks.push(tap.test);
-      } else if (!/d\.ts$/.test(path)) {
+      } else if (!/\.d\.ts$/.test(path)) {
         tasks.push(typescript.transform);
       }
     }

@@ -16,7 +16,7 @@ async function build(): Promise<void> {
   }
 
   for (const path of await expand("packages/*/src/**/*.ts")) {
-    if (/d\.ts$/.test(path)) {
+    if (/\.d\.ts$/.test(path)) {
       continue;
     }
 
