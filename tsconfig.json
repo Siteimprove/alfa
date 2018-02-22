@@ -5,6 +5,7 @@
     "jsx": "react",
     "jsxFactory": "jsx",
     "inlineSourceMap": true,
+    "noEmit": true,
     "strict": true
   }
 }
