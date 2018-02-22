@@ -16,7 +16,8 @@ watch(
     notify({
       message: `File ${event === "add" ? "added" : "changed"}`,
       value: path,
-      type: event === "add" ? "add" : "change"
+      type: event === "add" ? "add" : "change",
+      desktop: false
     });
 
     const tasks: Array<Task> = [];
@@ -28,6 +29,8 @@ watch(
 
       if (/spec\.tsx?$/.test(path)) {
         tasks.push(tap.test);
+      } else if (!/d\.ts$/.test(path)) {
+        tasks.push(typescript.transform);
       }
     }
 

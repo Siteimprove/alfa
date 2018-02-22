@@ -2,9 +2,7 @@ import { notify } from "@foreman/notify";
 import { spawn } from "@foreman/tap";
 
 export async function test(path: string): Promise<void> {
-  const { ok, children } = await spawn(path, {
-    loader: "./build/config/environment.js"
-  });
+  const { ok, children } = await spawn(path);
 
   if (ok) {
     return notify({

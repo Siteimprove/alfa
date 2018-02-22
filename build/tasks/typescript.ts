@@ -1,7 +1,7 @@
-import { read } from "@foreman/fs";
+import { read, write } from "@foreman/fs";
+import { extension } from "@foreman/path";
 import { notify } from "@foreman/notify";
 import * as typescript from "@foreman/typescript";
-import * as config from "../config";
 
 const service = typescript.createLanguageService();
 
@@ -20,6 +20,31 @@ export async function check(path: string): Promise<void> {
 
     notify({
       message: "Typecheck failed",
+      type: "error",
+      error
+    });
+
+    throw error;
+  }
+}
+
+export async function transform(path: string): Promise<void> {
+  const source = await read(path);
+  try {
+    const code = await typescript.transform(source, {
+      fileName: path
+    });
+
+    await write(extension(path.replace("/src/", "/dist/"), ".js"), code);
+
+    notify({
+      message: "Compilation succeeded",
+      type: "compile",
+      desktop: false
+    });
+  } catch (error) {
+    notify({
+      message: "Compilation failed",
       type: "error",
       error
     });

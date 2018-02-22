@@ -1,38 +1,39 @@
 import { Task, execute } from "@foreman/api";
 import { expand } from "@foreman/fs";
 import { notify } from "@foreman/notify";
-import * as babel from "./tasks/babel";
 import * as typescript from "./tasks/typescript";
 import * as locale from "./tasks/locale";
 
 async function build(): Promise<void> {
-  const paths = await expand([
-    "packages/**/*.hjson",
-    "packages/**/src/**/*.ts",
-    "packages/**/test/**/*.ts{,x}"
-  ]);
-
-  for (const path of paths) {
-    notify({
-      message: "Building",
-      value: path,
-      desktop: false
-    });
-
-    const tasks: Array<Task> = [];
-
-    if (/\.hjson$/.test(path)) {
-      tasks.push(locale.transform);
-    } else {
-      tasks.push(typescript.check);
-
-      if (!/spec\.tsx?$/.test(path)) {
-        tasks.push(babel.transform);
-      }
-    }
+  for (const path of await expand("packages/**/*.hjson")) {
+    notify({ message: "Building", value: path, desktop: false });
 
     try {
-      await execute(tasks, path);
+      await execute([locale.transform], path);
+    } catch (error) {
+      process.exit(1);
+    }
+  }
+
+  for (const path of await expand("packages/*/src/**/*.ts")) {
+    if (/d\.ts$/.test(path)) {
+      continue;
+    }
+
+    notify({ message: "Building", value: path, desktop: false });
+
+    try {
+      await execute([typescript.check, typescript.transform], path);
+    } catch (error) {
+      process.exit(1);
+    }
+  }
+
+  for (const path of await expand("packages/*/test/**/*.ts{,x}")) {
+    notify({ message: "Building", value: path, desktop: false });
+
+    try {
+      await execute([typescript.check], path);
     } catch (error) {
       process.exit(1);
     }

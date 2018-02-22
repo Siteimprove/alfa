@@ -14,7 +14,6 @@
   "workspaces": ["packages/*"],
   "devDependencies": {
     "@foreman/api": "^1.0.0",
-    "@foreman/babel": "^1.0.0",
     "@foreman/cli": "^1.0.0",
     "@foreman/fs": "^1.0.0",
     "@foreman/git": "^1.0.0",
