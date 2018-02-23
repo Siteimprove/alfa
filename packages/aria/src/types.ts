@@ -1,3 +1,5 @@
+import { Element } from "@alfa/dom";
+
 export type ValueType =
   /**
    * @see https://www.w3.org/TR/wai-aria/#valuetype_true-false
@@ -109,13 +111,14 @@ export type Role = Readonly<{
   supported?: Array<Attribute>;
 }>;
 
+export type FeatureAspect<T> = T | ((element: Element) => T | null);
+
 /**
  * @see https://www.w3.org/TR/html-aria/
  */
 export type Feature = Readonly<{
   element: string;
-  when?: (element: Element) => boolean;
-  role?: Role;
-  allowedRoles?: Array<Role>;
-  allowedAttributes?: Array<Attribute>;
+  role?: FeatureAspect<Role>;
+  allowedRoles?: FeatureAspect<Array<Role>>;
+  allowedAttributes?: FeatureAspect<Array<Attribute>>;
 }>;
