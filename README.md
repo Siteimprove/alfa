@@ -2,6 +2,8 @@
 
 > Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
+Alfa is the result of distilling the best parts of our proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://w3c.github.io/wcag-act/act-rules-format.html). In comparison to our proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
+
 ## Contents
 
 * [Goals](#goals)
