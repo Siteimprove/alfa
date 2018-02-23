@@ -14,12 +14,12 @@
     "@alfa/pickle": "^0.0.0",
     "@alfa/rule": "^0.0.0",
     "@types/browserify": "^12.0.33",
-    "@types/node": "^8.0.53",
-    "@types/puppeteer": "^0.13.2",
+    "@types/puppeteer": "^1.0.0",
     "browserify": "^14.5.0",
-    "puppeteer": "^0.13.0"
+    "puppeteer": "^1.0.0"
   },
   "devDependencies": {
-    "@alfa/test": "^0.0.0"
+    "@alfa/test": "^0.0.0",
+    "typescript": "^2.7.2"
   }
 }

@@ -13,6 +13,7 @@
     "@types/text-encoding": "^0.0.32"
   },
   "devDependencies": {
-    "@alfa/test": "^0.0.0"
+    "@alfa/test": "^0.0.0",
+    "typescript": "^2.7.2"
   }
 }

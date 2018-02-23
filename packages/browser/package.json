@@ -18,6 +18,7 @@
     "rollup-plugin-node-resolve": "^3.0.2"
   },
   "devDependencies": {
-    "@alfa/test": "^0.0.0"
+    "@alfa/test": "^0.0.0",
+    "typescript": "^2.7.2"
   }
 }
