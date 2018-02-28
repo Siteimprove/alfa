@@ -9,4 +9,5 @@ export * from "./types";
 export * from "./element/find";
 export * from "./element/get-attribute";
 export * from "./element/get-classlist";
+export * from "./element/get-root";
 export * from "./element/matches";
