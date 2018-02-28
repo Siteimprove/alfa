@@ -3,9 +3,41 @@ import { isParent, isChild } from "./guards";
 
 type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U);
 
-export class Collector<T extends Node> implements Iterable<T> {
-  readonly [Symbol.iterator]: () => Iterator<T>;
+export class CollectorIterator<T extends Node> implements Iterator<T> {
+  private readonly queue: Array<Node> = [];
 
+  private readonly predicate: Predicate<Node, T>;
+
+  constructor(context: Node, predicate: Predicate<Node, T>) {
+    this.queue.push(context);
+    this.predicate = predicate;
+  }
+
+  public next(): IteratorResult<T> {
+    const next = this.queue.pop();
+
+    if (next === undefined) {
+      // https://github.com/Microsoft/TypeScript/issues/8938
+      return { done: true } as IteratorResult<T>;
+    }
+
+    if (isParent(next)) {
+      const { children } = next;
+
+      for (let i = children.length - 1; i >= 0; i--) {
+        this.queue.push(children[i]);
+      }
+    }
+
+    if (this.predicate(next)) {
+      return { done: false, value: next };
+    }
+
+    return this.next();
+  }
+}
+
+export class Collector<T extends Node> implements Iterable<T> {
   /**
    * The context on which the collector operates. This is used as the root node
    * during iteration.
@@ -21,7 +53,6 @@ export class Collector<T extends Node> implements Iterable<T> {
   constructor(context: Node, predicate: Predicate<Node, T> = () => true) {
     this.context = context;
     this.predicate = predicate;
-    this[Symbol.iterator] = this.values;
   }
 
   public where<U extends T>(predicate: Predicate<T, U>): Collector<U> {
@@ -32,39 +63,33 @@ export class Collector<T extends Node> implements Iterable<T> {
   }
 
   public first(): T | null {
-    for (const first of this) {
-      return first;
+    const iterator = this.values();
+
+    for (let next = iterator.next(); !next.done; next = iterator.next()) {
+      return next.value;
     }
 
     return null;
   }
 
   public last(): T | null {
+    const iterator = this.values();
+
     let last: T | null = null;
 
-    for (const next of this) {
-      last = next;
+    for (let next = iterator.next(); !next.done; next = iterator.next()) {
+      last = next.value;
     }
 
     return last;
   }
 
-  *values(): Iterator<T> {
-    const queue: Array<Node> = [];
+  public values(): Iterator<T> {
+    return new CollectorIterator(this.context, this.predicate);
+  }
 
-    for (let next: Node | undefined = this.context; next; next = queue.pop()) {
-      if (this.predicate(next)) {
-        yield next as T;
-      }
-
-      if (isParent(next)) {
-        const { children } = next;
-
-        for (let i = children.length - 1; i >= 0; i--) {
-          queue.push(children[i]);
-        }
-      }
-    }
+  public [Symbol.iterator](): Iterator<T> {
+    return this.values();
   }
 }
 
