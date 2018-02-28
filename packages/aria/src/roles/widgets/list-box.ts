@@ -8,7 +8,7 @@ import { Option } from "../widgets";
  */
 export const ListBox: Role = {
   name: "listbox",
-  label: { from: "author", required: true },
+  label: { from: ["author"], required: true },
   inherits: [Select],
   owned: [Option],
   required: [Attributes.Selected],

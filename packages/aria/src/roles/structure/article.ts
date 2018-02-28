@@ -7,7 +7,7 @@ import { Document } from "./document";
  */
 export const Article: Role = {
   name: "article",
-  label: { from: "author" },
+  label: { from: ["author"] },
   inherits: [Document],
   supported: [Attributes.PositionInSet, Attributes.SetSize]
 };

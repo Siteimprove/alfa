@@ -8,6 +8,6 @@ import { Widget } from "./widget";
 export const Input: Role = {
   name: "input",
   abstract: true,
-  label: { from: "author" },
+  label: { from: ["author"] },
   inherits: [Widget]
 };

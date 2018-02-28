@@ -7,7 +7,7 @@ import { Input } from "../abstract";
  */
 export const TextBox: Role = {
   name: "textbox",
-  label: { from: "author", required: true },
+  label: { from: ["author"], required: true },
   inherits: [Input],
   supported: [
     Attributes.ActiveDescendant,

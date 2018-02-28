@@ -7,7 +7,7 @@ import { Structure } from "../abstract";
  */
 export const Document: Role = {
   name: "document",
-  label: { from: "author" },
+  label: { from: ["author"] },
   inherits: [Structure],
   supported: [Attributes.Expanded]
 };

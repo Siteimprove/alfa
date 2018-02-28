@@ -8,7 +8,7 @@ import { Group, List } from "../structure";
  */
 export const ListItem: Role = {
   name: "listitem",
-  label: { from: "author" },
+  label: { from: ["author"] },
   inherits: [Section],
   context: [Group, List],
   supported: [Attributes.Level, Attributes.PositionInSet, Attributes.SetSize]

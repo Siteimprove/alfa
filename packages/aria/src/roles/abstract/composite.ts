@@ -8,7 +8,7 @@ import { Widget } from "./widget";
 export const Composite: Role = {
   name: "composite",
   abstract: true,
-  label: { from: "author" },
+  label: { from: ["author"] },
   inherits: [Widget],
   supported: [Attributes.ActiveDescendant]
 };

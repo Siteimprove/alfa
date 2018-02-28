@@ -8,7 +8,7 @@ import { MenuItem, MenuItemCheckbox, MenuItemRadio } from "../widgets";
  */
 export const Menu: Role = {
   name: "menu",
-  label: { from: "author" },
+  label: { from: ["author"] },
   inherits: [Select],
   owned: [MenuItem, MenuItemCheckbox, MenuItemRadio, [Group, MenuItemRadio]]
 };

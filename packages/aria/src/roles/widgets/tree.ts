@@ -9,7 +9,7 @@ import { TreeItem } from "../widgets";
  */
 export const Tree: Role = {
   name: "tree",
-  label: { from: "author", required: true },
+  label: { from: ["author"], required: true },
   inherits: [Select],
   owned: [TreeItem, [Group, TreeItem]],
   supported: [Attributes.Multiselectable, Attributes.Required]

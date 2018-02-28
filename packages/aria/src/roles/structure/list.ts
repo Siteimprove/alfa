@@ -8,7 +8,7 @@ import { Group, ListItem } from "../structure";
  */
 export const List: Role = {
   name: "list",
-  label: { from: "author" },
+  label: { from: ["author"] },
   inherits: [Section],
   owned: [ListItem, [Group, ListItem]]
 };

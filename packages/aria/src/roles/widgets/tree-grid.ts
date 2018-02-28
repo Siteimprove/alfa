@@ -7,7 +7,7 @@ import { Grid, Tree } from "../widgets";
  */
 export const TreeGrid: Role = {
   name: "treegrid",
-  label: { from: "author", required: true },
+  label: { from: ["author"], required: true },
   inherits: [Grid, Tree],
   owned: [Row, [RowGroup, Row]]
 };
