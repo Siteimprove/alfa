@@ -27,29 +27,37 @@ test("Falls through when aria-label is a boolean attribute", async t => {
 });
 
 test("Computes the text alternative of a button with an aria-labelledby", async t => {
-  const button = <button aria-labelledby="h w">Button</button>;
-
   const document = (
     <div>
-      {button}
+      <button aria-labelledby="h w">Button</button>;
       <p id="h">Hello</p>
       <p id="w">world</p>
     </div>
   );
 
-  t.is(getTextAlternative(button), "Hello world");
+  const button = find(document, "button");
+
+  if (button) {
+    t.is(getTextAlternative(button), "Hello world");
+  } else {
+    t.fail();
+  }
 });
 
 test("Falls through when no text alternative is found in aria-labelledby", async t => {
-  const button = (
-    <button aria-labelledby="h w" aria-label="Hello world">
-      =>Button
-    </button>
+  const document = (
+    <div>
+      <button aria-labelledby="h w">Button</button>
+    </div>
   );
 
-  const document = <div>{button}</div>;
+  const button = find(document, "button");
 
-  t.is(getTextAlternative(button), "Hello world");
+  if (button) {
+    t.is(getTextAlternative(button), "Button");
+  } else {
+    t.fail();
+  }
 });
 
 test("Does not infitely recurse when recursive aria-labelledby references are encountered", async t => {
