@@ -3,10 +3,12 @@ import {
   Text,
   isText,
   isElement,
+  find,
   getAttribute,
-  getRoot
+  getRoot,
+  getText
 } from "@alfa/dom";
-import { getRole } from "@alfa/aria";
+import { Roles, getRole } from "@alfa/aria";
 import { isVisible } from "./is-visible";
 import { resolveReferences } from "./resolve-references";
 
@@ -20,16 +22,16 @@ export function getTextAlternative(
   visited: Set<Element | Text> = new Set(),
   recursing: boolean = false,
   referencing: boolean = false
-): string {
+): string | null {
   if (visited.has(node)) {
-    return "";
+    return null;
   }
 
   visited.add(node);
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2A
   if (!isVisible(node) && !referencing) {
-    return "";
+    return null;
   }
 
   // Perform the last step at this point in order to appease the type checker.
@@ -60,26 +62,50 @@ export function getTextAlternative(
     return String(label);
   }
 
+  const role = getRole(node);
+
   // https://www.w3.org/TR/accname-aam-1.1/#step2D
+  if (role !== Roles.Presentation && role !== Roles.None) {
+    const native = getNativeTextAlternative(node);
+    if (native) {
+      return native;
+    }
+  }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2E
+  if (isEmbeddedControl(node, referencing)) {
+    switch (role) {
+      case Roles.TextBox:
+        switch (node.tag) {
+          case "input":
+          case "textarea":
+            const value = getAttribute(node, "value");
+            if (value) {
+              return String(value);
+            }
+            break;
+          default:
+            return getText(node);
+        }
+
+      case Roles.Button:
+        return getTextAlternative(node, visited, true, false);
+    }
+  }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2F
-  const role = getRole(node);
   if (
     (role && role.label && role.label.from.indexOf("contents") !== -1) ||
     referencing ||
     isNativeTextAlternativeElement(node)
   ) {
     const subtree = node.children
-      .map(child => {
-        if (isElement(child) || isText(child)) {
-          const text = getTextAlternative(child, visited, true, false);
-          return text;
-        }
-
-        return null;
-      })
+      .map(
+        child =>
+          isElement(child) || isText(child)
+            ? getTextAlternative(child, visited, true, false)
+            : null
+      )
       .filter(child => child !== null)
       .join(" ");
 
@@ -94,7 +120,40 @@ export function getTextAlternative(
     return String(title);
   }
 
-  return "";
+  return null;
+}
+
+/**
+ * Get the text alternative of an element provided by native markup.
+ *
+ * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
+ */
+function getNativeTextAlternative(element: Element): string | null {
+  switch (element.tag) {
+    // https://www.w3.org/TR/html-aam-1.0/#img-element
+    case "img":
+      const alt = getAttribute(element, "alt");
+      if (alt) {
+        return String(alt);
+      }
+
+    // https://www.w3.org/TR/html-aam-1.0/#table-element
+    case "table":
+      const caption = find(element, "caption");
+      if (caption) {
+        return getTextAlternative(caption);
+      }
+  }
+
+  return null;
+}
+
+/**
+ * Check if an element is a "control embedded within the label of another
+ * widget".
+ */
+function isEmbeddedControl(element: Element, referencing: boolean): boolean {
+  return false;
 }
 
 /**
@@ -111,7 +170,7 @@ function isNativeTextAlternativeElement(element: Element): boolean {
     case "legend":
     case "output":
     case "summary":
-    case "figure":
+    case "figcaption":
       return true;
   }
 

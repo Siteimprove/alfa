@@ -1,7 +1,7 @@
 import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
-import { getRole } from "../../src/element/get-role";
-import * as Roles from "../../src/roles";
+import { getRole } from "../src/get-role";
+import * as Roles from "../src/roles";
 
 test("Returns the semantic role of an element when explicitly set", async t => {
   t.is(getRole(<div role="button">Button</div>), Roles.Button);

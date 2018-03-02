@@ -1,8 +1,8 @@
 import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
-import { Element } from "../../src/types";
-import { find } from "../../src/element/find";
-import { matches } from "../../src/element/matches";
+import { Element } from "../src/types";
+import { find } from "../src/find";
+import { matches } from "../src/matches";
 
 test("Matches an element against a tag", async t => {
   t.true(matches(<div />, "div"));

@@ -1,5 +1,5 @@
-import { Parent, Child } from "../types";
-import { isChild, isParent } from "../guards";
+import { Parent, Child } from "./types";
+import { isChild, isParent } from "./guards";
 
 export function getRoot(child: Child): Parent | null {
   let root = isParent(child) ? child : child.parent;

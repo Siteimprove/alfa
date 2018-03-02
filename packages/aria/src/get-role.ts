@@ -1,8 +1,8 @@
 import { Element, getAttribute } from "@alfa/dom";
 import { isWhitespace, split, keys } from "@alfa/util";
-import { Role, Feature } from "../types";
-import * as Roles from "../roles";
-import * as Features from "../features";
+import { Role, Feature } from "./types";
+import * as Roles from "./roles";
+import * as Features from "./features";
 
 const roles: Map<string, Role> = new Map();
 const features: Map<string, Feature> = new Map();

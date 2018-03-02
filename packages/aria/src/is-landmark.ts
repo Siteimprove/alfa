@@ -1,6 +1,6 @@
 import { Element } from "@alfa/dom";
 import { getRole } from "./get-role";
-import { Landmark } from "../roles/abstract";
+import { Landmark } from "./roles/abstract";
 
 /**
  * Check if an element is a landmark.

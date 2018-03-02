@@ -1,4 +1,4 @@
-import { Element, Attribute } from "../types";
+import { Element, Attribute } from "./types";
 
 export type AttributeOptions = Readonly<{ trim?: boolean }>;
 

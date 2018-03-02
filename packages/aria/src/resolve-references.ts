@@ -2,7 +2,7 @@ import { Element, Parent, collect, getAttribute, isElement } from "@alfa/dom";
 import { split, isWhitespace } from "@alfa/util";
 
 export function resolveReferences(
-  root: Parent | null,
+  root: Parent,
   references: string
 ): Array<Element> {
   const elements: Array<Element> = [];

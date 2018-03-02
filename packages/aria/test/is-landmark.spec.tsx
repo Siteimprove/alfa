@@ -1,6 +1,6 @@
 import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
-import { isLandmark } from "../../src/element/is-landmark";
+import { isLandmark } from "../src/is-landmark";
 
 test("Returns true when an element is a landmark", async t => {
   t.true(isLandmark(<div role="banner" />));

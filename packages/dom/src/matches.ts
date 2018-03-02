@@ -9,8 +9,8 @@ import {
   CompoundSelector,
   parse
 } from "@alfa/css";
-import { Element, Parent } from "../types";
-import { isElement } from "../guards";
+import { Element, Parent } from "./types";
+import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";
 import { getClasslist } from "./get-classlist";
 

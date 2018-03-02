@@ -1,4 +1,4 @@
-import { Element } from "../types";
+import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
 
 const whitespace = /\s+/;
