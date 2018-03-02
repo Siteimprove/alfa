@@ -9,6 +9,7 @@ import {
   getText
 } from "@alfa/dom";
 import { Roles, getRole } from "@alfa/aria";
+import { includes } from "@alfa/util";
 import { isVisible } from "./is-visible";
 import { resolveReferences } from "./resolve-references";
 
@@ -39,7 +40,7 @@ export function getTextAlternative(
   // remaining steps below.
   // https://www.w3.org/TR/accname-aam-1.1/#step2G
   if (isText(node)) {
-    return node.value;
+    return flatten(node.value) || null;
   }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2B
@@ -47,19 +48,21 @@ export function getTextAlternative(
   if (labelledBy && !referencing) {
     const root = getRoot(node);
 
-    if (root === null) {
-      return "";
-    }
+    if (root !== null) {
+      const references = resolveReferences(root, String(labelledBy)).map(
+        element => getTextAlternative(element, visited, true, true)
+      );
 
-    return resolveReferences(root, String(labelledBy))
-      .map(element => getTextAlternative(element, visited, true, true))
-      .join(" ");
+      if (references.length > 0) {
+        return flatten(references.join(" "));
+      }
+    }
   }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2C
   const label = getAttribute(node, "aria-label");
-  if (label) {
-    return String(label);
+  if (typeof label === "string" && label) {
+    return flatten(label);
   }
 
   const role = getRole(node);
@@ -67,8 +70,8 @@ export function getTextAlternative(
   // https://www.w3.org/TR/accname-aam-1.1/#step2D
   if (role !== Roles.Presentation && role !== Roles.None) {
     const native = getNativeTextAlternative(node);
-    if (native) {
-      return native;
+    if (native !== null) {
+      return flatten(native);
     }
   }
 
@@ -80,8 +83,8 @@ export function getTextAlternative(
           case "input":
           case "textarea":
             const value = getAttribute(node, "value");
-            if (value) {
-              return String(value);
+            if (typeof value === "string" && value) {
+              return flatten(value);
             }
             break;
           default:
@@ -95,32 +98,40 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2F
   if (
-    (role && role.label && role.label.from.indexOf("contents") !== -1) ||
+    (role && role.label && includes(role.label.from, "contents")) ||
     referencing ||
     isNativeTextAlternativeElement(node)
   ) {
-    const subtree = node.children
+    const children = node.children
       .map(
         child =>
           isElement(child) || isText(child)
             ? getTextAlternative(child, visited, true, false)
             : null
       )
-      .filter(child => child !== null)
-      .join(" ");
+      .filter(child => child !== null);
 
-    if (subtree !== "") {
-      return subtree;
+    if (children.length > 0) {
+      return flatten(children.join(" "));
     }
   }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2H
   const title = getAttribute(node, "title");
-  if (title) {
-    return String(title);
+  if (typeof title === "string" && title) {
+    return flatten(title);
   }
 
   return null;
+}
+
+/**
+ * Return a flattened and trimmed version of a string.
+ *
+ * @see https://www.w3.org/TR/accname-aam-1.1/#terminology
+ */
+function flatten(string: string): string {
+  return string.replace(/\s+/, " ").trim();
 }
 
 /**
@@ -133,8 +144,8 @@ function getNativeTextAlternative(element: Element): string | null {
     // https://www.w3.org/TR/html-aam-1.0/#img-element
     case "img":
       const alt = getAttribute(element, "alt");
-      if (alt) {
-        return String(alt);
+      if (typeof alt === "string" && alt) {
+        return flatten(alt);
       }
 
     // https://www.w3.org/TR/html-aam-1.0/#table-element
