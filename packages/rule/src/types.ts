@@ -1,5 +1,5 @@
 import { Node, Element } from "@alfa/dom";
-import { Style, State } from "@alfa/css";
+import { Style, State } from "@alfa/style";
 import { Layout } from "@alfa/layout";
 
 export type Criterion = string;
