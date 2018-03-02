@@ -15,7 +15,6 @@ export async function transform(path: string): Promise<void> {
         await write(path, code);
         return notify({
           message: "Linting succeeded",
-          value: path,
           type: "success",
           desktop: false
         });
@@ -24,6 +23,7 @@ export async function transform(path: string): Promise<void> {
 
     notify({
       message: "Linting skipped",
+      type: "watch",
       desktop: false
     });
   } catch (error) {
