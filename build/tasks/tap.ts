@@ -2,7 +2,7 @@ import { notify } from "@foreman/notify";
 import { spawn } from "@foreman/tap";
 
 export async function test(path: string): Promise<void> {
-  const { ok, children } = await spawn(path);
+  const { ok, assertions } = await spawn(path);
 
   if (ok) {
     return notify({
@@ -12,21 +12,17 @@ export async function test(path: string): Promise<void> {
     });
   }
 
-  for (const { name, ok, assertions } of children) {
-    for (const { ok, error } of assertions) {
-      if (ok) {
-        continue;
-      }
-
-      notify({
-        message: `Test ${ok ? "passed" : "failed"}`,
-        value: name,
-        type: ok ? "success" : "error",
-        desktop: !ok,
-        error
-      });
-
-      throw error;
+  for (const { ok, error } of assertions) {
+    if (ok) {
+      continue;
     }
+
+    notify({
+      message: `Assertion failed`,
+      type: "error",
+      error
+    });
+
+    throw error;
   }
 }

@@ -7,7 +7,7 @@ export async function transform(path: string): Promise<void> {
   const source = await read(path);
   try {
     if (prettier.isSupported(path)) {
-      const code = await prettier.transform(source, {
+      const { code } = prettier.transform(source, {
         filepath: path
       });
 

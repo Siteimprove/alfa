@@ -31,7 +31,7 @@ export async function check(path: string): Promise<void> {
 export async function transform(path: string): Promise<void> {
   const source = await read(path);
   try {
-    const code = await typescript.transform(source, {
+    const { code } = typescript.transform(source, {
       fileName: path
     });
 
