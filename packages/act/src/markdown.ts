@@ -32,9 +32,6 @@ export function markdown<T extends Target, A extends Aspect>(
       type: "blockquote",
       children: [{ type: "text", value: rule.id } as Text]
     } as Blockquote,
-    {
-      type: "paragraph"
-    } as Paragraph,
 
     {
       type: "heading",
