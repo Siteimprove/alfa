@@ -9,7 +9,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "tap": "^11.0.1"
+    "@types/tape": "^4.2.31",
+    "tape": "^4.9.0"
   },
   "devDependencies": {
     "typescript": "^2.7.2"

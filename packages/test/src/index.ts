@@ -1,1 +1,1 @@
-export * from "./tap";
+export * from "./tape";
