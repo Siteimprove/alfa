@@ -1,5 +1,11 @@
 import { Node } from "./types";
-import { isDocument, isElement, isText, isComment } from "./guards";
+import {
+  isDocument,
+  isDocumentType,
+  isElement,
+  isText,
+  isComment
+} from "./guards";
 
 const { keys } = Object;
 
@@ -30,6 +36,10 @@ const VOID = new Set([
 export function render(node: Node): string {
   if (isDocument(node)) {
     return node.children.map(render).join(EMPTY);
+  }
+
+  if (isDocumentType(node)) {
+    return node.value;
   }
 
   if (isElement(node)) {
