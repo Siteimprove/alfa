@@ -1,9 +1,7 @@
 import * as V from "@alfa/dom";
-import { Style, State, properties, clean, deduplicate } from "@alfa/css";
-import { Layout } from "@alfa/layout";
 
-const { assign, keys } = Object;
-const { isParent, isElement, traverse } = V;
+const { assign } = Object;
+const { isParent } = V;
 
 export type WithReference<T extends V.Node> = T & { ref: Node };
 
@@ -219,100 +217,4 @@ export function dereference(node: V.Node): V.Node {
   }
 
   return node;
-}
-
-export function layout(root: WithReference<V.Node>): Map<V.Element, Layout> {
-  const layout: Map<V.Element, Layout> = new Map();
-
-  traverse(root, node => {
-    if (isElement(node) && hasReference(node)) {
-      const _layout = (node.ref as Element).getBoundingClientRect();
-
-      if (_layout.width <= 0 || _layout.height <= 0) {
-        return false;
-      }
-
-      layout.set(node, {
-        left: _layout.left,
-        right: _layout.right,
-        top: _layout.top,
-        bottom: _layout.bottom
-      });
-    }
-  });
-
-  return layout;
-}
-
-function focusTarget(element: HTMLElement): HTMLElement | null {
-  if ("focus" in element && element.tabIndex >= -1) {
-    return element;
-  }
-
-  if (element.parentElement !== null) {
-    return focusTarget(element.parentElement);
-  }
-
-  return null;
-}
-
-function view(node: Node): Window {
-  if (node.nodeType === node.DOCUMENT_NODE) {
-    return (node as Document).defaultView;
-  }
-
-  return node.ownerDocument.defaultView;
-}
-
-export function style(
-  root: WithReference<V.Node>
-): Map<V.Element, { [S in State]: Style }> {
-  const style: Map<V.Element, { [S in State]: Style }> = new Map();
-
-  traverse(root, node => {
-    if (isElement(node) && hasReference(node)) {
-      const element = node.ref as HTMLElement;
-      const computed = view(element).getComputedStyle(element);
-      const _style: { [S in State]: Style } = {
-        default: {},
-        focus: {}
-      };
-
-      const target = focusTarget(element);
-
-      if (target !== null) {
-        target.blur();
-      }
-
-      for (const property of properties) {
-        const value = computed.getPropertyValue(property);
-
-        if (value !== "") {
-          _style.default[property] = value;
-        }
-      }
-
-      _style.default = clean(_style.default);
-
-      if (target !== null) {
-        target.focus();
-
-        for (const property of properties) {
-          const value = computed.getPropertyValue(property);
-
-          if (value !== "") {
-            _style.focus[property] = value;
-          }
-        }
-
-        _style.focus = deduplicate(_style.default, clean(_style.focus));
-
-        target.blur();
-      }
-
-      style.set(node, _style);
-    }
-  });
-
-  return style;
 }

@@ -1,12 +1,14 @@
 import { launch } from "puppeteer";
 import * as browserify from "browserify";
-import { Node } from "@alfa/dom";
+import { Node, Element, traverse, isElement } from "@alfa/dom";
 import { Aspects } from "@alfa/rule";
+import { Style, State } from "@alfa/style";
+import { Layout } from "@alfa/layout";
 import * as Pickle from "@alfa/pickle";
 
 const PICKLE = require.resolve("@alfa/pickle");
 
-const { parentize } = Pickle;
+const { parentize, hasStyle, hasLayout } = Pickle;
 
 function bundle(file: string, options: object): Promise<string> {
   return new Promise((resolve, reject) =>
@@ -54,26 +56,40 @@ export class Scraper {
 
     const Alfa = { Pickle };
 
-    const virtual = await page.evaluate(() => {
-      const dom = Alfa.Pickle.virtualize(document, {
+    const document = await page.evaluate(() => {
+      const document = Alfa.Pickle.virtualize(window.document, {
         parents: false,
         references: true
       });
-      const layout = Alfa.Pickle.layout(dom).values();
-      const style = Alfa.Pickle.style(dom).values();
 
-      Alfa.Pickle.dereference(dom);
+      Alfa.Pickle.layout(document);
+      Alfa.Pickle.style(document);
 
-      return { dom, style: [...style], layout: [...layout] };
+      Alfa.Pickle.dereference(document);
+
+      return document;
     });
+
+    parentize(document);
 
     await page.close();
 
-    return {
-      document: virtual.dom,
-      style: virtual.style,
-      layout: virtual.layout
-    };
+    const style: Map<Element, { [S in State]: Style }> = new Map();
+    const layout: Map<Element, Layout> = new Map();
+
+    traverse(document, node => {
+      if (isElement(node)) {
+        if (hasStyle(node)) {
+          style.set(node, node.style);
+        }
+
+        if (hasLayout(node)) {
+          layout.set(node, node.layout);
+        }
+      }
+    });
+
+    return { document, style, layout };
   }
 
   async close(): Promise<void> {
