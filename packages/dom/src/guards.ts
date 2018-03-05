@@ -14,7 +14,7 @@ export function isDocument(node: Node | null): node is Document {
 }
 
 export function isDocumentType(node: Node | null): node is DocumentType {
-  return node !== null && node.type === "documenttype";
+  return node !== null && node.type === "documentType";
 }
 
 export function isElement(node: Node | null): node is Element {
