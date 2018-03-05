@@ -4,6 +4,7 @@
     "target": "es2015",
     "jsx": "react",
     "jsxFactory": "jsx",
+    "sourceMap": true,
     "noEmit": true,
     "strict": true
   }
