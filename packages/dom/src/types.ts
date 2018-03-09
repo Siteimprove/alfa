@@ -16,7 +16,9 @@ export interface Document extends Node, Parent {
 
 export interface DocumentType extends Node, Child {
   readonly type: "documentType";
-  readonly value: string;
+  readonly name: string;
+  readonly publicId: string;
+  readonly systemId: string;
 }
 
 export interface DocumentFragment extends Node, Parent, Child {

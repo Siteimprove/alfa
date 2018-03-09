@@ -38,8 +38,16 @@ export function render(node: Node): string {
     return node.children.map(render).join(EMPTY);
   }
 
+  // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-documenttype-node
   if (isDocumentType(node)) {
-    return node.value;
+    return (
+      `<!DOCTYPE ${node.name}` +
+      (node.publicId
+        ? ` PUBLIC "${node.publicId}"`
+        : node.systemId ? " SYSTEM" : "") +
+      (node.systemId ? ` "${node.systemId}"` : "") +
+      ">"
+    );
   }
 
   if (isElement(node)) {
@@ -70,10 +78,15 @@ export function render(node: Node): string {
     return element;
   }
 
+  // https://w3c.github.io/DOM-Parsing/#dfn-xml-serializing-a-text-node
   if (isText(node)) {
-    return node.value;
+    return node.value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
   }
 
+  // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-comment-node
   if (isComment(node)) {
     return `<!--${node.value}-->`;
   }
