@@ -1,13 +1,12 @@
-import { read, write } from "@foreman/fs";
+import { write } from "@foreman/fs";
 import { extension } from "@foreman/path";
 import { notify } from "@foreman/notify";
 import * as typescript from "@foreman/typescript";
 
-const service = typescript.createLanguageService();
+const workspace = new typescript.Workspace();
 
-export async function check(path: string): Promise<void> {
-  const source = await read(path);
-  const diagnotics = await typescript.diagnose(service, path);
+export async function diagnose(path: string): Promise<void> {
+  const diagnotics = await typescript.diagnose(workspace, path);
 
   if (diagnotics.length === 0) {
     notify({
@@ -28,14 +27,13 @@ export async function check(path: string): Promise<void> {
   }
 }
 
-export async function transform(path: string): Promise<void> {
-  const source = await read(path);
+export async function compile(path: string): Promise<void> {
   try {
-    const { code } = typescript.transform(source, {
-      fileName: path
-    });
+    const files = await typescript.compile(workspace, path);
 
-    await write(extension(path.replace("/src/", "/dist/"), ".js"), code);
+    for (const { name, text } of files) {
+      await write(name, text);
+    }
 
     notify({
       message: "Compilation succeeded",

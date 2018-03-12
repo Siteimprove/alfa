@@ -23,7 +23,7 @@ async function build(): Promise<void> {
     notify({ message: "Building", value: path, desktop: false });
 
     try {
-      await execute([typescript.check, typescript.transform], path);
+      await execute([typescript.diagnose, typescript.compile], path);
     } catch (error) {
       process.exit(1);
     }
@@ -36,7 +36,7 @@ async function build(): Promise<void> {
     notify({ message: "Building", value: path, desktop: false });
 
     try {
-      await execute([typescript.check], path);
+      await execute([typescript.diagnose], path);
     } catch (error) {
       process.exit(1);
     }

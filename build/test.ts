@@ -14,7 +14,7 @@ async function build(): Promise<void> {
       desktop: false
     });
 
-    const tasks: Array<Task> = [typescript.check, tap.test];
+    const tasks: Array<Task> = [typescript.diagnose, tap.test];
 
     try {
       await execute(tasks, path);
