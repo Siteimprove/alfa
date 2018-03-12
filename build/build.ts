@@ -16,10 +16,6 @@ async function build(): Promise<void> {
   }
 
   for (const path of await expand("packages/*/src/**/*.ts")) {
-    if (/\.d\.ts$/.test(path)) {
-      continue;
-    }
-
     notify({ message: "Building", value: path, desktop: false });
 
     try {

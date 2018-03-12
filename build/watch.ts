@@ -7,8 +7,8 @@ import * as locale from "./tasks/locale";
 
 watch(
   [
-    "packages/**/src/**/*.ts",
-    "packages/**/test/**/*.ts{,x}",
+    "packages/*/src/**/*.ts",
+    "packages/*/test/**/*.ts{,x}",
     "packages/**/*.hjson"
   ],
   ["add", "change"],
@@ -36,6 +36,8 @@ watch(
 
     try {
       await execute(tasks, path);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
