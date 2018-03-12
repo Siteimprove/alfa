@@ -36,8 +36,6 @@ watch(
 
     try {
       await execute(tasks, path);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 );
