@@ -1,6 +1,7 @@
 import { Node } from "./types";
 import {
   isDocument,
+  isDocumentFragment,
   isDocumentType,
   isElement,
   isText,
@@ -12,7 +13,7 @@ const { keys } = Object;
 const EMPTY = "";
 
 /**
- * @see https://www.w3.org/TR/html51/syntax.html#void-elements
+ * @see https://www.w3.org/TR/html/syntax.html#void-elements
  */
 const VOID = new Set([
   "area",
@@ -23,9 +24,7 @@ const VOID = new Set([
   "hr",
   "img",
   "input",
-  "keygen",
   "link",
-  "menuitem",
   "meta",
   "param",
   "source",
@@ -33,23 +32,21 @@ const VOID = new Set([
   "wbr"
 ]);
 
+function escape(input: string | number): string {
+  if (typeof input === "string") {
+    return input
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  return String(input);
+}
+
+/**
+ * @see https://www.w3.org/TR/DOM-Parsing/#serializing
+ */
 export function render(node: Node): string {
-  if (isDocument(node)) {
-    return node.children.map(render).join(EMPTY);
-  }
-
-  // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-documenttype-node
-  if (isDocumentType(node)) {
-    return (
-      `<!DOCTYPE ${node.name}` +
-      (node.publicId
-        ? ` PUBLIC "${node.publicId}"`
-        : node.systemId ? " SYSTEM" : "") +
-      (node.systemId ? ` "${node.systemId}"` : "") +
-      ">"
-    );
-  }
-
   if (isElement(node)) {
     let attributes = EMPTY;
     let element = EMPTY;
@@ -57,14 +54,16 @@ export function render(node: Node): string {
     for (const name of keys(node.attributes)) {
       const value = node.attributes[name];
 
+      if (value === false || value === undefined) {
+        continue;
+      }
+
       switch (value) {
-        case false:
-          continue;
         case true:
           attributes += ` ${name}`;
           break;
         default:
-          attributes += ` ${name}="${value}"`;
+          attributes += ` ${name}="${escape(value)}"`;
       }
     }
 
@@ -78,17 +77,27 @@ export function render(node: Node): string {
     return element;
   }
 
-  // https://w3c.github.io/DOM-Parsing/#dfn-xml-serializing-a-text-node
   if (isText(node)) {
-    return node.value
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    return escape(node.value);
   }
 
-  // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-comment-node
   if (isComment(node)) {
     return `<!--${node.value}-->`;
+  }
+
+  if (isDocument(node) || isDocumentFragment(node)) {
+    return node.children.map(render).join(EMPTY);
+  }
+
+  if (isDocumentType(node)) {
+    return (
+      `<!DOCTYPE ${node.name}` +
+      (node.publicId
+        ? ` PUBLIC "${node.publicId}"`
+        : node.systemId ? " SYSTEM" : "") +
+      (node.systemId ? ` "${node.systemId}"` : "") +
+      ">"
+    );
   }
 
   return EMPTY;
