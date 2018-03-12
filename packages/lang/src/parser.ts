@@ -3,9 +3,11 @@ import { Token, WithLocation } from "./lexer";
 
 const { isArray } = Array;
 
-type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U);
+export type Predicate<T, U extends T> =
+  | ((n: T) => boolean)
+  | ((n: T) => n is U);
 
-class TokenStream<T extends Token> extends Bound {
+export class TokenStream<T extends Token> extends Bound {
   private readonly _input: Array<T>;
 
   private _position: number = 0;
