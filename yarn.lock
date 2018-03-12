@@ -100,15 +100,15 @@
     execa "^0.9.0"
     tap-parser "^7.0.0"
 
-"@foreman/typescript@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.0.1.tgz#8bbbd92163d0480c05896eec2d4f7e21226811e4"
+"@foreman/typescript@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.0.3.tgz#016d7e39b86edd59c27348570f0802c4b4626eb3"
   dependencies:
     "@foreman/api" "^0.0.0"
     "@foreman/error" "^0.0.0"
     "@types/node" "^9.4.6"
     tsconfig "^7.0.0"
-    typecomp "^1.0.2"
+    typecomp "^1.0.4"
     typescript "^2.7.2"
 
 "@types/browserify@^12.0.33":
@@ -175,7 +175,7 @@
   version "8.5.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.2.tgz#83b8103fa9a2c2e83d78f701a9aa7c9539739aa5"
 
-"@types/node@^9.3.0", "@types/node@^9.4.6":
+"@types/node@^9.3.0", "@types/node@^9.4.6", "@types/node@^9.4.7":
   version "9.4.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.7.tgz#57d81cd98719df2c9de118f2d5f3b1120dcd7275"
 
@@ -4154,9 +4154,9 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.3.0"
     micromatch "^2.3.11"
 
-rollup@^0.55.1:
-  version "0.55.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.55.1.tgz#baf4f23abe3014b29e56dea7d72d9946e56ac7dd"
+rollup@^0.56.5:
+  version "0.56.5"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.56.5.tgz#40fe3cf0cd1659d469baad11f4d5b6336c14ce84"
 
 run-async@^2.2.0:
   version "2.3.0"
@@ -4795,9 +4795,9 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typecomp@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/typecomp/-/typecomp-1.0.2.tgz#f929567edbcf15e227525b4cf2d3ebe74cc180f2"
+typecomp@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/typecomp/-/typecomp-1.0.4.tgz#fa4b0db52de48ed6801202dced6b585ac132da81"
   dependencies:
     "@types/node" "^9.4.6"
     tsconfig "^7.0.0"

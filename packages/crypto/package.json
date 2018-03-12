@@ -10,6 +10,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@types/node": "^9.4.7",
     "@types/text-encoding": "^0.0.32"
   },
   "devDependencies": {

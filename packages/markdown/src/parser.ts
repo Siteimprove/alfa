@@ -1,3 +1,5 @@
+/// <reference types="node"/>
+
 import { Node, Root, Parent } from "./types";
 
 const vfile = require("vfile");
