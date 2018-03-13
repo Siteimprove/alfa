@@ -26,7 +26,7 @@ export class Scraper {
 
   private readonly _pickle = bundle(PICKLE, {
     builtins: false,
-    plugin: ["tinyify"]
+    plugin: [require("tinyify")]
   });
 
   async scrape(url: string, options: ScrapeOptions = {}): Promise<Aspects> {
@@ -72,3 +72,9 @@ export class Scraper {
     await browser.close();
   }
 }
+
+const scraper = new Scraper();
+scraper
+  .scrape("https://funktionel.co")
+  .then(result => console.log(result))
+  .then(() => scraper.close());
