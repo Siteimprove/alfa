@@ -1,14 +1,28 @@
 import * as tape from "tape";
 
-type Test = tape.Test;
+export type Test = tape.Test;
+export type TestOptions = tape.TestOptions;
+export type TestCase = (test: Test) => Promise<void> | void;
 
-export { Test };
+export function test(name: string, callback: TestCase): void;
 
 export function test(
   name: string,
-  callback: (test: Test) => Promise<void> | void
+  options: TestOptions,
+  callback: TestCase
+): void;
+
+export function test(
+  name: string,
+  options: TestOptions | TestCase,
+  callback: TestCase = () => {}
 ): void {
-  tape(name, t => {
+  if (typeof options === "function") {
+    callback = options;
+    options = {};
+  }
+
+  tape(name, options, t => {
     try {
       const result = callback(t);
 
