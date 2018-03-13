@@ -10,6 +10,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@types/node": "^9.4.7",
     "remark-parse": "^5.0.0",
     "remark-stringify": "^5.0.0",
     "vfile": "^2.3.0"

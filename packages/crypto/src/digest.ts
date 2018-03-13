@@ -1,3 +1,4 @@
+/// <reference types="node"/>
 /// <reference types="text-encoding"/>
 
 export type Algorithm = "sha1" | "sha256" | "sha384" | "sha512";

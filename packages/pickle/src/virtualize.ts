@@ -16,41 +16,6 @@ export type VirtualizeOptions = Readonly<{
   references?: boolean;
 }>;
 
-function serialize(node: Node): string {
-  switch (node.nodeType) {
-    // https://w3c.github.io/DOM-Parsing/#dfn-xml-serializing-a-text-node
-    case node.TEXT_NODE: {
-      const text = node as Text;
-      return text.data
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-    }
-
-    // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-comment-node
-    case node.COMMENT_NODE: {
-      const comment = node as Comment;
-      return `<!--${comment.data}-->`;
-    }
-
-    // https://w3c.github.io/DOM-Parsing/#xml-serializing-a-documenttype-node
-    case node.DOCUMENT_TYPE_NODE: {
-      const doctype = node as DocumentType;
-      return (
-        `<!DOCTYPE ${doctype.name}` +
-        (doctype.publicId
-          ? ` PUBLIC "${doctype.publicId}"`
-          : doctype.systemId ? " SYSTEM" : "") +
-        (doctype.systemId ? ` "${doctype.systemId}"` : "") +
-        ">"
-      );
-    }
-
-    default:
-      throw new Error(`Cannot serialize node of type "${node.nodeType}"`);
-  }
-}
-
 function children(
   node: Node,
   virtual: V.Parent,
@@ -114,7 +79,7 @@ export function virtualize(
 
       const virtual: V.Text = {
         type: "text",
-        value: serialize(text),
+        value: text.data,
         parent: null
       };
 
@@ -130,7 +95,7 @@ export function virtualize(
 
       const virtual: V.Comment = {
         type: "comment",
-        value: serialize(comment),
+        value: comment.data,
         parent: null
       };
 
@@ -163,7 +128,9 @@ export function virtualize(
 
       const virtual: V.DocumentType = {
         type: "documentType",
-        value: serialize(doctype),
+        name: doctype.name,
+        publicId: doctype.publicId,
+        systemId: doctype.systemId,
         parent: null
       };
 

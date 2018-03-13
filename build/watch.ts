@@ -7,8 +7,8 @@ import * as locale from "./tasks/locale";
 
 watch(
   [
-    "packages/**/src/**/*.ts",
-    "packages/**/test/**/*.ts{,x}",
+    "packages/*/src/**/*.ts",
+    "packages/*/test/**/*.ts{,x}",
     "packages/**/*.hjson"
   ],
   ["add", "change"],
@@ -25,12 +25,12 @@ watch(
     if (/\.hjson$/.test(path)) {
       tasks.push(locale.transform);
     } else {
-      tasks.push(typescript.check);
+      tasks.push(typescript.diagnose);
 
       if (/spec\.tsx?$/.test(path)) {
         tasks.push(tap.test);
       } else if (!/\.d\.ts$/.test(path)) {
-        tasks.push(typescript.transform);
+        tasks.push(typescript.compile);
       }
     }
 

@@ -1,7 +1,9 @@
 import { Node } from "./types";
 import { isParent, isChild } from "./guards";
 
-type Predicate<T, U extends T> = ((n: T) => boolean) | ((n: T) => n is U);
+export type Predicate<T, U extends T> =
+  | ((n: T) => boolean)
+  | ((n: T) => n is U);
 
 export class CollectorIterator<T extends Node> implements Iterator<T> {
   private readonly queue: Array<Node> = [];
