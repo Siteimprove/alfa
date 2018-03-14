@@ -12,17 +12,17 @@ async function build(): Promise<void> {
     packages.add(name);
   }
 
-  await packages.traverse(async pkg => {
-    for (const path of await expand(`${pkg}/**/*.hjson`)) {
-      notify({ message: "Building", value: path, desktop: false });
+  for (const path of await expand("packages/**/*.hjson")) {
+    notify({ message: "Building", value: path, desktop: false });
 
-      try {
-        await execute([locale.transform], path);
-      } catch (error) {
-        process.exit(1);
-      }
+    try {
+      await execute([locale.transform], path);
+    } catch (error) {
+      process.exit(1);
     }
+  }
 
+  await packages.traverse(async pkg => {
     for (const path of await expand(`${pkg}/src/**/*.ts`)) {
       notify({ message: "Building", value: path, desktop: false });
 
