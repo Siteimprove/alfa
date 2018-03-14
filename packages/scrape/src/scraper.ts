@@ -72,9 +72,3 @@ export class Scraper {
     await browser.close();
   }
 }
-
-const scraper = new Scraper();
-scraper
-  .scrape("https://funktionel.co")
-  .then(result => console.log(result))
-  .then(() => scraper.close());
