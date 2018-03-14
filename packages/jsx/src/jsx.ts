@@ -1,16 +1,14 @@
 /// <reference path="./types/element.d.ts"/>
 /// <reference path="./types/intrinsics.d.ts"/>
 
-import { Element, Text } from "@alfa/dom";
-
 const { assign } = Object;
 
 export function jsx(
   tag: string,
   attributes: { [name: string]: string | number | boolean } | null,
-  ...children: Array<Element | string>
-): Element {
-  const element: Element = {
+  ...children: Array<JSX.Element | string>
+): JSX.Element {
+  const element: JSX.Element = {
     type: "element",
     tag,
     namespace: null,
@@ -21,7 +19,7 @@ export function jsx(
   };
 
   for (const node of children) {
-    let child: Element | Text | null = null;
+    let child: JSX.Element | JSX.Text;
 
     if (typeof node === "string") {
       child = {

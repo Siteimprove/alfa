@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "description": "alfa!",
   "main": "dist/index.js",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/siteimprove/alfa/tree/master/packages/dom",
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
   "dependencies": {
     "@alfa/crypto": "^0.0.0",
-    "@alfa/css": "^0.0.0"
+    "@alfa/css": "^0.0.0",
+    "@alfa/jsx": "^0.0.0"
   },
   "devDependencies": {
     "@alfa/test": "^0.0.0",

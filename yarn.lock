@@ -32,6 +32,16 @@
     execa "^0.9.0"
     yargs "^10.1.1"
 
+"@foreman/dependant@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@foreman/dependant/-/dependant-0.0.4.tgz#71d2ab9f1ef53e13e7a6d9006224e73db10e7b80"
+  dependencies:
+    "@types/micromatch" "^3.1.0"
+    "@types/resolve-from" "^0.0.18"
+    dependency-graph "^0.7.0"
+    micromatch "^3.1.9"
+    resolve-from "^4.0.0"
+
 "@foreman/error@^0.0.0":
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/@foreman/error/-/error-0.0.0.tgz#eb0b707dcf4a9d91922a7161c2ecd879096e7d7a"
@@ -111,6 +121,10 @@
     typecomp "^1.0.4"
     typescript "^2.7.2"
 
+"@types/braces@*":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@types/braces/-/braces-2.3.0.tgz#d00ec0a76562b2acb6f29330be33a093e33ed25c"
+
 "@types/browserify@^12.0.33":
   version "12.0.33"
   resolved "https://registry.yarnpkg.com/@types/browserify/-/browserify-12.0.33.tgz#e61971c0f985bf1f7709048326493f10b0dd78bd"
@@ -167,6 +181,12 @@
   dependencies:
     "@types/node" "*"
 
+"@types/micromatch@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/micromatch/-/micromatch-3.1.0.tgz#514c8a3d24b2680a9b838eeb80e6d7d724545433"
+  dependencies:
+    "@types/braces" "*"
+
 "@types/minimatch@*":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -189,6 +209,10 @@
   dependencies:
     "@types/events" "*"
     "@types/node" "*"
+
+"@types/resolve-from@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@types/resolve-from/-/resolve-from-0.0.18.tgz#a8ccb7ce3fb1db75c95eb7dea7ed51b8d060385d"
 
 "@types/strip-bom@^3.0.0":
   version "3.0.0"
@@ -1475,6 +1499,10 @@ delayed-stream@~1.0.0:
 delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
+
+dependency-graph@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.7.0.tgz#8fc7991ad236e47f0d5742701b5e307b83d7c0d0"
 
 deps-sort@^2.0.0:
   version "2.0.0"
@@ -3159,7 +3187,7 @@ micromatch@^2.3.11:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
-micromatch@^3.1.4:
+micromatch@^3.1.4, micromatch@^3.1.9:
   version "3.1.9"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.9.tgz#15dc93175ae39e52e93087847096effc73efcf89"
   dependencies:
@@ -4078,6 +4106,10 @@ require-directory@^2.1.1:
 require-main-filename@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
+
+resolve-from@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-4.0.0.tgz#4abcd852ad32dd7baabfe9b40e00a36db5f392e6"
 
 resolve-url@^0.2.1:
   version "0.2.1"

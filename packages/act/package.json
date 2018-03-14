@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "alfa!",
   "main": "dist/index.js",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/siteimprove/alfa/tree/master/packages/act",
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",

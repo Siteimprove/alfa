@@ -8,8 +8,9 @@ import {
   getRoot,
   getText
 } from "@alfa/dom";
-import { Roles, getRole } from "@alfa/aria";
 import { includes } from "@alfa/util";
+import * as Roles from "./roles";
+import { getRole } from "./get-role";
 import { isVisible } from "./is-visible";
 import { resolveReferences } from "./resolve-references";
 

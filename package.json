@@ -15,6 +15,7 @@
   "devDependencies": {
     "@foreman/api": "^0.0.0",
     "@foreman/cli": "^0.0.0",
+    "@foreman/dependant": "^0.0.4",
     "@foreman/fs": "^0.0.0",
     "@foreman/git": "^0.0.0",
     "@foreman/notify": "^0.0.0",
