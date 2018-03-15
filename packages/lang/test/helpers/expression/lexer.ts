@@ -25,7 +25,7 @@ export function isNumber(token: ExpressionToken): token is Number {
 }
 
 const initial: ExpressionPattern = (
-  { peek, next, accept, location },
+  { peek, next, accept, advance, location },
   emit,
   state,
   done
@@ -34,15 +34,17 @@ const initial: ExpressionPattern = (
 
   state.start = location();
 
-  if (isNumeric(peek())) {
-    return number;
-  }
-
-  const char = next();
+  const char = peek();
 
   if (char === null) {
     return done();
   }
+
+  if (isNumeric(char)) {
+    return number;
+  }
+
+  advance();
 
   switch (char) {
     case "+":

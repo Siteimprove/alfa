@@ -92,7 +92,9 @@ export class CharacterStream extends Bound {
       if (this._position < this._input.length) {
         advanced = true;
 
-        if (isNewline(this.peek())) {
+        const next = this.peek();
+
+        if (next !== null && isNewline(next)) {
           this._line++;
           this._column = 0;
         } else {
@@ -113,7 +115,9 @@ export class CharacterStream extends Bound {
       if (this._position > 0) {
         backedup = true;
 
-        if (isNewline(this.peek(-1))) {
+        const prev = this.peek(-1);
+
+        if (prev !== null && isNewline(prev)) {
           this._line--;
           this._column = 0;
         } else {

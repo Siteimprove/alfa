@@ -86,7 +86,7 @@ const tagOpen: HtmlPattern = (
     return endTagOpen;
   }
 
-  if (isAlpha(char)) {
+  if (char !== null && isAlpha(char)) {
     ignore();
 
     state.tag = {
@@ -381,6 +381,12 @@ const endTagOpen: HtmlPattern = (
 ) => {
   const char = peek();
 
+  if (char === null) {
+    emit({ type: "character", value: "<" }, state.start, location());
+    emit({ type: "character", value: "/" }, state.start, location());
+    return done();
+  }
+
   if (isAlpha(char)) {
     ignore();
 
@@ -395,12 +401,6 @@ const endTagOpen: HtmlPattern = (
   if (char === ">") {
     advance();
     return initial;
-  }
-
-  if (char === null) {
-    emit({ type: "character", value: "<" }, state.start, location());
-    emit({ type: "character", value: "/" }, state.start, location());
-    return done();
   }
 
   state.comment = {
@@ -424,6 +424,10 @@ const tagName: HtmlPattern = (
 ) => {
   const char = peek();
 
+  if (char === null) {
+    return done();
+  }
+
   if (isWhitespace(char) || char === "/" || char === ">") {
     assign(tag, { value: result() });
   }
@@ -443,10 +447,6 @@ const tagName: HtmlPattern = (
       emit(tag, start, location());
     }
     return initial;
-  }
-
-  if (char === null) {
-    return done();
   }
 };
 
@@ -516,7 +516,7 @@ const attributeName: HtmlPattern = (
 ) => {
   const char = peek();
 
-  if (isWhitespace(char) || char === "/" || char === ">" || char === null) {
+  if (char === null || isWhitespace(char) || char === "/" || char === ">") {
     assign(attribute, { name: result() });
     return afterAttributeName;
   }
@@ -659,6 +659,10 @@ const attributeValueUnquoted: HtmlPattern = (
 ) => {
   const char = peek();
 
+  if (char === null) {
+    return done();
+  }
+
   if (isWhitespace(char) || char === ">") {
     assign(attribute, { value: result() });
   }
@@ -675,10 +679,6 @@ const attributeValueUnquoted: HtmlPattern = (
     }
     return initial;
   }
-
-  if (char === null) {
-    return done();
-  }
 };
 
 /**
@@ -691,6 +691,10 @@ const afterAttributeValueQuoted: HtmlPattern = (
   done
 ) => {
   const char = peek();
+
+  if (char === null) {
+    return done();
+  }
 
   if (isWhitespace(char) || char === "/" || char === ">") {
     advance();
@@ -709,10 +713,6 @@ const afterAttributeValueQuoted: HtmlPattern = (
       emit(tag, start, location());
     }
     return initial;
-  }
-
-  if (char === null) {
-    return done();
   }
 
   return beforeAttributeName;

@@ -68,18 +68,18 @@ export type CssState = {
 
 export type CssPattern = Pattern<CssToken, CssState>;
 
-export function isIdent(token: CssToken | null): token is Ident {
-  return token !== null && token.type === "ident";
+export function isIdent(token: CssToken): token is Ident {
+  return token.type === "ident";
 }
 
-export function isDelim(token: CssToken | null): token is Delim {
-  return token !== null && token.type === "delim";
+export function isDelim(token: CssToken): token is Delim {
+  return token.type === "delim";
 }
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
  */
-function startsValidEscape(fst: string | null, snd: string | null): boolean {
+function startsValidEscape(fst: string, snd: string): boolean {
   return fst === "\\" && snd !== "\n";
 }
 
@@ -87,20 +87,26 @@ function startsValidEscape(fst: string | null, snd: string | null): boolean {
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-number
  */
 function startsNumber(
-  fst: string | null,
+  fst: string,
   snd: string | null,
   thd: string | null
 ): boolean {
   if (fst === "+" || fst === "-") {
     if (snd === ".") {
-      return isNumeric(thd);
+      if (thd !== null) {
+        fst = thd;
+      }
+    } else {
+      if (snd !== null) {
+        fst = snd;
+      }
     }
-
-    return isNumeric(snd);
   }
 
   if (fst === ".") {
-    return isNumeric(snd);
+    if (snd !== null) {
+      fst = snd;
+    }
   }
 
   return isNumeric(fst);
@@ -110,29 +116,33 @@ function startsNumber(
  * @see https://www.w3.org/TR/css-syntax/#would-start-an-identifier
  */
 function startsIdentifier(
-  fst: string | null,
+  fst: string,
   snd: string | null,
   thd: string | null
 ): boolean {
   if (fst === "-") {
+    if (snd === null) {
+      return false;
+    }
+
     fst = snd;
     snd = thd;
   }
 
-  return isNameStart(fst) || startsValidEscape(fst, snd);
+  return isNameStart(fst) || (snd !== null && startsValidEscape(fst, snd));
 }
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#name-start-code-point
  */
-function isNameStart(char: string | null): boolean {
+function isNameStart(char: string): boolean {
   return isAlpha(char) || !isAscii(char) || char === "_";
 }
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#name-code-point
  */
-function isName(char: string | null): boolean {
+function isName(char: string): boolean {
   return isNameStart(char) || isNumeric(char) || char === "-";
 }
 
@@ -145,7 +155,7 @@ const name: (stream: CharacterStream) => string = ({
   result
 }) => {
   ignore();
-  accept(char => isName(char));
+  accept(isName);
   return result();
 };
 
@@ -305,7 +315,9 @@ const number: CssPattern = (
       offset = 2;
     }
 
-    if (isNumeric(peek(offset))) {
+    const next = peek(offset);
+
+    if (next !== null && isNumeric(next)) {
       advance(offset) && accept(isNumeric);
     }
   }
@@ -326,7 +338,9 @@ const numeric: CssPattern = (stream, emit, { start, number }) => {
     value: NaN
   };
 
-  if (startsIdentifier(peek(), peek(1), peek(2))) {
+  const next = peek();
+
+  if (next !== null && startsIdentifier(next, peek(1), peek(2))) {
     token = { type: "dimension", value: token.value, unit: name(stream) };
   } else if (peek() === "%" && advance()) {
     token = { type: "percentage", value: token.value };
