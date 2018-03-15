@@ -16,15 +16,15 @@ export function hasLayout<T extends V.Element>(
 export function layout(root: WithReference<V.Node>): V.Node {
   traverse(root, node => {
     if (isElement(node) && hasReference(node)) {
-      const layout = (node.ref as Element).getBoundingClientRect();
+      const {
+        left,
+        right,
+        top,
+        bottom
+      } = (node.ref as Element).getBoundingClientRect();
 
       assign(node, {
-        layout: {
-          left: layout.left,
-          right: layout.right,
-          top: layout.top,
-          bottom: layout.bottom
-        }
+        layout: { left, right, top, bottom }
       });
     }
   });
