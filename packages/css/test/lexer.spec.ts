@@ -3,7 +3,7 @@ import { WithLocation } from "@alfa/lang";
 import { CssToken, lex } from "../src/lexer";
 
 function css(t: Test, input: string, expected: Array<WithLocation<CssToken>>) {
-  t.deepEqual(lex(input), expected);
+  t.deepEqual(lex(input), expected, t.title);
 }
 
 test("Can lex whitespace", async t =>
