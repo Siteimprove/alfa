@@ -18,10 +18,6 @@ export function layout(root: WithReference<V.Node>): V.Node {
     if (isElement(node) && hasReference(node)) {
       const layout = (node.ref as Element).getBoundingClientRect();
 
-      if (layout.width <= 0 || layout.height <= 0) {
-        return false;
-      }
-
       assign(node, {
         layout: {
           left: layout.left,
