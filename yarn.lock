@@ -42,9 +42,9 @@
     micromatch "^3.1.9"
     resolve-from "^4.0.0"
 
-"@foreman/error@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@foreman/error/-/error-0.0.0.tgz#eb0b707dcf4a9d91922a7161c2ecd879096e7d7a"
+"@foreman/error@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@foreman/error/-/error-0.0.6.tgz#1693da166d6a036fa9e20eb763da15a106ad09a8"
   dependencies:
     "@babel/code-frame" "^7.0.0-beta.40"
     chalk "^2.3.1"
@@ -73,11 +73,11 @@
     "@types/execa" "^0.8.1"
     execa "^0.9.0"
 
-"@foreman/notify@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@foreman/notify/-/notify-0.0.0.tgz#8aff266d132fe12c7cb790b99d0b34fe513b33a5"
+"@foreman/notify@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@foreman/notify/-/notify-0.0.6.tgz#0a40c01f62f98c87fc5d035c2c9861541b1302c0"
   dependencies:
-    "@foreman/error" "^0.0.0"
+    "@foreman/error" "^0.0.6"
     chalk "^2.3.1"
     wsk-notify "^1.0.0"
 
@@ -100,25 +100,25 @@
     "@foreman/api" "^0.0.0"
     source-map-support "^0.5.3"
 
-"@foreman/tap@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@foreman/tap/-/tap-0.0.0.tgz#64df54b82d981c55a979d13151a37bebb110bf60"
+"@foreman/tap@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@foreman/tap/-/tap-0.0.6.tgz#b291f6b770ae74126761dfc76f239dd263e79d48"
   dependencies:
-    "@foreman/error" "^0.0.0"
+    "@foreman/error" "^0.0.6"
     "@foreman/register" "^0.0.0"
     "@types/execa" "^0.8.1"
     execa "^0.9.0"
     tap-parser "^7.0.0"
 
-"@foreman/typescript@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.0.3.tgz#016d7e39b86edd59c27348570f0802c4b4626eb3"
+"@foreman/typescript@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.0.6.tgz#0bc3d556ea5e30ed062d1a424344232f8d68c6cf"
   dependencies:
     "@foreman/api" "^0.0.0"
-    "@foreman/error" "^0.0.0"
+    "@foreman/error" "^0.0.6"
     "@types/node" "^9.4.6"
     tsconfig "^7.0.0"
-    typecomp "^1.0.4"
+    typecomp "^1.0.5"
     typescript "^2.7.2"
 
 "@types/braces@*":
@@ -4827,9 +4827,9 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typecomp@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/typecomp/-/typecomp-1.0.4.tgz#fa4b0db52de48ed6801202dced6b585ac132da81"
+typecomp@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/typecomp/-/typecomp-1.0.5.tgz#96ba2854c545164febf3dea3596b9a5359270c67"
   dependencies:
     "@types/node" "^9.4.6"
     tsconfig "^7.0.0"
