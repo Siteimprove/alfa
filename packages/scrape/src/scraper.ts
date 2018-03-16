@@ -34,7 +34,10 @@ export class Scraper {
     const pickle = await this._pickle;
 
     const page = await browser.newPage();
-    await page.goto(url, {
+
+    await page.goto(url);
+
+    await page.waitForNavigation({
       timeout: options.timeout || 10000,
       waitUntil: options.wait || Wait.Loaded
     });
