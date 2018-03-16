@@ -79,13 +79,13 @@ export class Scraper {
       }
     } while (document === null);
 
+    await page.close();
+
     if (document === null) {
       throw error || new Error("Failed to scrape document");
     }
 
     parentize(document);
-
-    await page.close();
 
     const style: Map<Element, { [S in State]: Style }> = new Map();
     const layout: Map<Element, Layout> = new Map();
