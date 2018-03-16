@@ -36,14 +36,14 @@ export type SelectorList = {
 
 export type CssTree = Selector | SelectorList;
 
-type CssProduction<T extends CssToken, U extends CssTree> = Production<
+export type CssProduction<T extends CssToken, U extends CssTree> = Production<
   CssToken,
   T,
   CssTree,
   U
 >;
 
-function isSimpleSelector(node: CssTree): node is SimpleSelector {
+export function isSimpleSelector(node: CssTree): node is SimpleSelector {
   switch (node.type) {
     case "type-selector":
     case "class-selector":
@@ -54,15 +54,15 @@ function isSimpleSelector(node: CssTree): node is SimpleSelector {
   }
 }
 
-function isCompoundSelector(node: CssTree): node is CompoundSelector {
+export function isCompoundSelector(node: CssTree): node is CompoundSelector {
   return node.type === "compound-selector";
 }
 
-function isRelativeSelector(node: CssTree): node is RelativeSelector {
+export function isRelativeSelector(node: CssTree): node is RelativeSelector {
   return node.type === "relative-selector";
 }
 
-function isSelector(node: CssTree): node is Selector {
+export function isSelector(node: CssTree): node is Selector {
   return (
     isSimpleSelector(node) ||
     isCompoundSelector(node) ||
@@ -70,7 +70,7 @@ function isSelector(node: CssTree): node is Selector {
   );
 }
 
-function isSelectorList(node: CssTree): node is SelectorList {
+export function isSelectorList(node: CssTree): node is SelectorList {
   return node.type === "selector-list";
 }
 
@@ -84,17 +84,20 @@ const whitespace: CssProduction<Whitespace, CssTree> = {
   infix(token, stream, expression, left) {
     if (isSelector(left) && delim.infix !== undefined) {
       const token = stream.peek();
-      const isImplicitDescendant =
-        isIdent(token) ||
-        (isDelim(token) && (token.value === "." || token.value === "#"));
 
-      if (isImplicitDescendant) {
-        return delim.infix(
-          { type: "delim", value: " " },
-          stream,
-          expression,
-          left
-        );
+      if (token !== null) {
+        const isImplicitDescendant =
+          isIdent(token) ||
+          (isDelim(token) && (token.value === "." || token.value === "#"));
+
+        if (isImplicitDescendant) {
+          return delim.infix(
+            { type: "delim", value: " " },
+            stream,
+            expression,
+            left
+          );
+        }
       }
     }
 
