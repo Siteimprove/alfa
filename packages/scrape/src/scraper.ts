@@ -1,5 +1,5 @@
 import { launch } from "puppeteer";
-import { Node, Element, traverse, isElement } from "@alfa/dom";
+import { Node, Element, Document, traverse, isElement } from "@alfa/dom";
 import { Aspects } from "@alfa/rule";
 import { Style, State } from "@alfa/style";
 import { Layout } from "@alfa/layout";
@@ -35,16 +35,34 @@ export class Scraper {
 
     const page = await browser.newPage();
 
-    await page.goto(url, {
-      timeout: options.timeout || 10000,
-      waitUntil: options.wait || Wait.Loaded
-    });
+    const wait = options.wait || Wait.Loaded;
+    const start = Date.now();
 
-    const document = await page.evaluate(`{
-      const require = ${pickle};
-      const { pickle } = require("${PICKLE}");
-      pickle();
-    }`);
+    let timeout = options.timeout || 10000;
+
+    await page.goto(url, { timeout, waitUntil: wait });
+
+    let document: Document | null = null;
+    let error: Error | null = null;
+    do {
+      timeout -= Date.now() - start;
+
+      try {
+        document = await page.evaluate(`{
+          const require = ${pickle};
+          const { pickle } = require("${PICKLE}");
+          pickle();
+        }`);
+        break;
+      } catch (err) {
+        error = err;
+        await page.reload({ timeout, waitUntil: wait });
+      }
+    } while (timeout > 0);
+
+    if (document === null) {
+      throw error || new Error("Failed to scrape document");
+    }
 
     parentize(document);
 
