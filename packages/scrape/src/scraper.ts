@@ -17,6 +17,11 @@ export enum Wait {
 export type ScrapeOptions = Readonly<{
   timeout?: number;
   wait?: Wait;
+  viewport?: Readonly<{
+    width: number;
+    height: number;
+    scale?: number;
+  }>;
 }>;
 
 export class Scraper {
@@ -34,6 +39,14 @@ export class Scraper {
     const pickle = await this._pickle;
 
     const page = await browser.newPage();
+
+    if (options.viewport) {
+      page.setViewport({
+        width: options.viewport.width,
+        height: options.viewport.width,
+        deviceScaleFactor: options.viewport.scale || 1
+      });
+    }
 
     const wait = options.wait || Wait.Loaded;
     const start = Date.now();
