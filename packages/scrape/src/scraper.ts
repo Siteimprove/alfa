@@ -53,7 +53,12 @@ export class Scraper {
 
     const start = Date.now();
 
-    await page.goto(url, { timeout, waitUntil: wait });
+    try {
+      await page.goto(url, { timeout, waitUntil: wait });
+    } catch (err) {
+      await page.close();
+      throw err;
+    }
 
     let document: Document | null = null;
     let error: Error | null = null;
