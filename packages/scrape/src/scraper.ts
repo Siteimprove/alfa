@@ -78,6 +78,9 @@ export class Scraper {
       } catch (err) {
         error = err;
 
+        // If evaluation fails, this could indicate that a client side redirect
+        // was performed. If so, we should now be on the correct domain; reload
+        // the page using whatever is left of the timeout and try again.
         try {
           await page.reload({ timeout: timeout - elapsed, waitUntil: wait });
         } catch (err) {}
