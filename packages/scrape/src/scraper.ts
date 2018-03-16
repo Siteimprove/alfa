@@ -21,7 +21,7 @@ export type ScrapeOptions = Readonly<{
 
 export class Scraper {
   private readonly _browser = launch({
-    headless: true
+    headless: false
   });
 
   private readonly _pickle = bundle(PICKLE, {
@@ -35,9 +35,7 @@ export class Scraper {
 
     const page = await browser.newPage();
 
-    await page.goto(url);
-
-    await page.waitForNavigation({
+    await page.goto(url, {
       timeout: options.timeout || 10000,
       waitUntil: options.wait || Wait.Loaded
     });
