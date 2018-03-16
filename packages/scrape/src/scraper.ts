@@ -49,16 +49,20 @@ export class Scraper {
     }
 
     const wait = options.wait || Wait.Loaded;
-    const start = Date.now();
+    const timeout = options.timeout || 10000;
 
-    let timeout = options.timeout || 10000;
+    const start = Date.now();
 
     await page.goto(url, { timeout, waitUntil: wait });
 
     let document: Document | null = null;
     let error: Error | null = null;
     do {
-      timeout -= Date.now() - start;
+      const elapsed = Date.now() - start;
+
+      if (elapsed > timeout) {
+        break;
+      }
 
       try {
         document = await page.evaluate(`{
@@ -66,12 +70,14 @@ export class Scraper {
           const { pickle } = require("${PICKLE}");
           pickle();
         }`);
-        break;
       } catch (err) {
         error = err;
-        await page.reload({ timeout, waitUntil: wait });
+
+        try {
+          await page.reload({ timeout: timeout - elapsed, waitUntil: wait });
+        } catch (err) {}
       }
-    } while (timeout > 0);
+    } while (document === null);
 
     if (document === null) {
       throw error || new Error("Failed to scrape document");
