@@ -1,17 +1,19 @@
-import { Element, Attribute } from "./types";
+import { Element } from "./types";
 
 export type AttributeOptions = Readonly<{ trim?: boolean }>;
 
-export function getAttribute<K extends keyof Element["attributes"]>(
+export function getAttribute(
   element: Element,
-  name: K,
+  name: string,
   options: AttributeOptions = { trim: false }
-): Element["attributes"][K] {
-  let value = element.attributes[name];
+): string | null {
+  for (const attribute of element.attributes) {
+    const { value } = attribute;
 
-  if (typeof value === "string" && options.trim) {
-    value = value.trim();
+    if (name === attribute.name) {
+      return options.trim ? value.trim() : value;
+    }
   }
 
-  return value;
+  return null;
 }

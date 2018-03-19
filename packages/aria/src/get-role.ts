@@ -26,21 +26,21 @@ for (const key of keys(Features)) {
 export function getRole(element: Element): Role | null {
   const role = getAttribute(element, "role");
 
-  if (role !== undefined) {
+  if (role === null) {
+    const feature = features.get(element.tagName);
+
+    if (feature !== undefined && feature.role !== undefined) {
+      return typeof feature.role === "function"
+        ? feature.role(element)
+        : feature.role;
+    }
+  } else {
     for (const name of split(String(role), isWhitespace)) {
       const role = roles.get(name);
 
       if (role !== undefined && !role.abstract) {
         return role;
       }
-    }
-  } else {
-    const feature = features.get(element.tag);
-
-    if (feature !== undefined && feature.role !== undefined) {
-      return typeof feature.role === "function"
-        ? feature.role(element)
-        : feature.role;
     }
   }
 

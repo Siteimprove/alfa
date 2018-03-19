@@ -8,10 +8,9 @@ import * as Roles from "../roles";
  */
 export const Anchor: Feature = {
   element: "a",
-  role: anchor =>
-    getAttribute(anchor, "href") === undefined ? null : Roles.Link,
+  role: anchor => (getAttribute(anchor, "href") === null ? null : Roles.Link),
   allowedRoles: anchor =>
-    getAttribute(anchor, "href") === undefined
+    getAttribute(anchor, "href") === null
       ? []
       : [
           Roles.Button,

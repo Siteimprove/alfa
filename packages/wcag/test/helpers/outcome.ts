@@ -7,7 +7,7 @@ import {
   Question,
   isResult
 } from "@alfa/rule";
-import { render } from "@alfa/dom";
+import { serialize } from "@alfa/dom";
 
 export function outcome<T extends Target, A extends Aspect>(
   t: Test,
@@ -36,7 +36,7 @@ export function outcome<T extends Target, A extends Aspect>(
             result.outcome === "inapplicable" || result.target === target
         );
 
-        t.true(holds, `${render(target)} must be ${outcome}, was `);
+        t.true(holds, `${serialize(target)} must be ${outcome}, was `);
       }
     }
   }

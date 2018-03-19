@@ -6,7 +6,7 @@ import { digest, hasDigest } from "../src/digest";
 test("Computes the digest value of a DOM node", async t => {
   const foo: Element = <div class="foo">Hello world!</div>;
 
-  t.is(await digest(foo), "ZEFMOG4PLZ4SK7Ky0k5CdPa++++QJrK/r2YrIxIV3Ls=");
+  t.is(await digest(foo), "KyhbK7Jdg0Fx4kcimu2kwPcmuWebNhSZNiFu1QQ2uPc=");
 });
 
 test("Is order independant when digesting element attributes", async t => {

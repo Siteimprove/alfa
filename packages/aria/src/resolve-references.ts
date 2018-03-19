@@ -1,8 +1,14 @@
-import { Element, Parent, collect, getAttribute, isElement } from "@alfa/dom";
+import {
+  Element,
+  ParentNode,
+  collect,
+  getAttribute,
+  isElement
+} from "@alfa/dom";
 import { split, isWhitespace } from "@alfa/util";
 
 export function resolveReferences(
-  root: Parent,
+  root: ParentNode,
   references: string
 ): Array<Element> {
   const elements: Array<Element> = [];

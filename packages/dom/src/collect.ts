@@ -24,10 +24,10 @@ export class CollectorIterator<T extends Node> implements Iterator<T> {
     }
 
     if (isParent(next)) {
-      const { children } = next;
+      const { childNodes } = next;
 
-      for (let i = children.length - 1; i >= 0; i--) {
-        this.queue.push(children[i]);
+      for (let i = childNodes.length - 1; i >= 0; i--) {
+        this.queue.push(childNodes[i]);
       }
     }
 
@@ -106,7 +106,7 @@ export function closest<T extends Node>(
   for (
     let next: Node | null = context;
     next;
-    next = isChild(next) ? next.parent : null
+    next = isChild(next) ? next.parentNode || null : null
   ) {
     if (predicate(next)) {
       return next as T;

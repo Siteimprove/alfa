@@ -18,7 +18,7 @@ export type VirtualizeOptions = Readonly<{
 
 function children(
   node: Node,
-  virtual: V.Parent,
+  virtual: V.ParentNode,
   options: VirtualizeOptions = {}
 ): void {
   const { childNodes } = node;
@@ -26,11 +26,11 @@ function children(
   for (let i = 0; i < childNodes.length; i++) {
     const child = childNodes[i];
 
-    const vchild: V.Child = assign(virtualize(child, options), {
-      parent: options.parents === false ? null : virtual
+    const vchild: V.ChildNode = assign(virtualize(child, options), {
+      parentNode: options.parents === false ? null : virtual
     });
 
-    virtual.children[i] = vchild;
+    virtual.childNodes[i] = vchild;
   }
 }
 
@@ -48,21 +48,21 @@ export function virtualize(
   switch (node.nodeType) {
     case node.ELEMENT_NODE: {
       const element = node as Element;
-      const attributes: { [name: string]: V.Attribute } = {};
+      const attributes: Array<V.Attr> = [];
 
       for (let i = 0; i < element.attributes.length; i++) {
         const { name, value } = element.attributes[i];
-        attributes[name] = value;
+        attributes.push({ name, value });
       }
 
       const virtual: V.Element = {
-        type: "element",
-        tag: element.tagName.toLowerCase(),
-        namespace: element.namespaceURI,
+        nodeType: 1,
+        tagName: element.tagName.toLowerCase(),
+        namespaceURI: element.namespaceURI,
         attributes,
-        parent: null,
-        shadow: null,
-        children: []
+        parentNode: null,
+        childNodes: [],
+        shadowRoot: null
       };
 
       if (options.references) {
@@ -78,9 +78,10 @@ export function virtualize(
       const text = node as Text;
 
       const virtual: V.Text = {
-        type: "text",
-        value: text.data,
-        parent: null
+        nodeType: 3,
+        parentNode: null,
+        childNodes: [],
+        data: text.data
       };
 
       if (options.references) {
@@ -94,9 +95,10 @@ export function virtualize(
       const comment = node as Comment;
 
       const virtual: V.Comment = {
-        type: "comment",
-        value: comment.data,
-        parent: null
+        nodeType: 8,
+        parentNode: null,
+        childNodes: [],
+        data: comment.data
       };
 
       if (options.references) {
@@ -110,8 +112,9 @@ export function virtualize(
       const document = node as Document;
 
       const virtual: V.Document = {
-        type: "document",
-        children: []
+        nodeType: 9,
+        parentNode: null,
+        childNodes: []
       };
 
       if (options.references) {
@@ -127,11 +130,10 @@ export function virtualize(
       const doctype = node as DocumentType;
 
       const virtual: V.DocumentType = {
-        type: "documentType",
-        name: doctype.name,
-        publicId: doctype.publicId,
-        systemId: doctype.systemId,
-        parent: null
+        nodeType: 10,
+        parentNode: null,
+        childNodes: [],
+        name: doctype.name
       };
 
       if (options.references) {
@@ -145,9 +147,9 @@ export function virtualize(
       const docfragment = node as DocumentFragment;
 
       const virtual: V.DocumentFragment = {
-        type: "documentFragment",
-        parent: null,
-        children: []
+        nodeType: 11,
+        parentNode: null,
+        childNodes: []
       };
 
       if (options.references) {
@@ -166,8 +168,8 @@ export function virtualize(
 
 export function parentize(node: V.Node): V.Node {
   if (isParent(node)) {
-    for (const child of node.children) {
-      assign(parentize(child), { parent: node });
+    for (const child of node.childNodes) {
+      assign(parentize(child), { parentNode: node });
     }
   }
 
@@ -180,7 +182,7 @@ export function dereference(node: V.Node): V.Node {
   }
 
   if (isParent(node)) {
-    node.children.map(dereference);
+    node.childNodes.map(dereference);
   }
 
   return node;

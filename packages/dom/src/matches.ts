@@ -9,7 +9,7 @@ import {
   CompoundSelector,
   parse
 } from "@alfa/css";
-import { Element, Parent } from "./types";
+import { Element, ParentNode } from "./types";
 import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";
 import { getClasslist } from "./get-classlist";
@@ -46,7 +46,7 @@ export function matches(
 }
 
 function matchesType(element: Element, selector: TypeSelector): boolean {
-  return element.tag === selector.name;
+  return element.tagName === selector.name;
 }
 
 function matchesClass(element: Element, selector: ClassSelector): boolean {
@@ -92,18 +92,14 @@ function matchesDescendant(
   element: Element,
   selector: RelativeSelector
 ): boolean {
-  let { parent } = element;
+  let { parentNode } = element;
 
-  while (isElement(parent)) {
-    if (matches(parent, selector.relative)) {
+  while (parentNode !== null && isElement(parentNode)) {
+    if (matches(parentNode, selector.relative)) {
       return true;
     }
 
-    if (parent.parent === null) {
-      break;
-    }
-
-    parent = parent.parent;
+    parentNode = parentNode.parentNode;
   }
 
   return false;
@@ -113,19 +109,23 @@ function matchesDirectDescendant(
   element: Element,
   selector: RelativeSelector
 ): boolean {
-  const { parent } = element;
-  return isElement(parent) && matches(parent, selector.relative);
+  const { parentNode } = element;
+  return (
+    parentNode !== null &&
+    isElement(parentNode) &&
+    matches(parentNode, selector.relative)
+  );
 }
 
 function matchesSibling(element: Element, selector: RelativeSelector): boolean {
-  const { parent } = element;
+  const { parentNode } = element;
 
-  if (parent === null) {
+  if (parentNode === null) {
     return false;
   }
 
-  for (let i = parent.children.indexOf(element) - 1; i >= 0; i--) {
-    const sibling = parent.children[i];
+  for (let i = parentNode.childNodes.indexOf(element) - 1; i >= 0; i--) {
+    const sibling = parentNode.childNodes[i];
 
     if (isElement(sibling) && matches(sibling, selector.relative)) {
       return true;
@@ -139,13 +139,14 @@ function matchesDirectSibling(
   element: Element,
   selector: RelativeSelector
 ): boolean {
-  const { parent } = element;
+  const { parentNode } = element;
 
-  if (parent === null) {
+  if (parentNode === null) {
     return false;
   }
 
-  const sibling = parent.children[parent.children.indexOf(element) - 1];
+  const sibling =
+    parentNode.childNodes[parentNode.childNodes.indexOf(element) - 1];
 
   if (sibling === undefined || !isElement(sibling)) {
     return false;

@@ -10,10 +10,10 @@ export function traverse(root: Node, visitor: (node: Node) => false | void) {
     }
 
     if (isParent(next)) {
-      const { children } = next;
+      const { childNodes } = next;
 
-      for (let i = children.length - 1; i >= 0; i--) {
-        queue.push(children[i]);
+      for (let i = childNodes.length - 1; i >= 0; i--) {
+        queue.push(childNodes[i]);
       }
     }
   }

@@ -1,25 +1,20 @@
 declare namespace JSX {
-  interface Text {
-    type: "text";
-    value: string;
-    parent: Element | null;
+  interface Node {
+    readonly nodeType: number;
+    readonly parentNode: Node | null;
+    readonly childNodes: Array<Node>;
   }
 
-  interface Element {
-    type: "element";
-    tag: string;
-    namespace: string | null;
-    attributes: { [name: string]: string | number | boolean | undefined };
-    children: Array<Element | Text>;
-    parent: Element | null;
-    shadow: null;
+  interface Element extends Node {
+    readonly nodeType: 1;
+    readonly namespaceURI: string | null;
+    readonly tagName: string;
+    readonly attributes: Array<{ name: string; value: string }>;
+    readonly shadowRoot: null;
   }
 
-  interface ElementAttributesProperty {
-    attributes: any;
-  }
-
-  interface ElementChildrenAttribute {
-    children: any;
+  interface Text extends Node {
+    readonly nodeType: 3;
+    readonly data: string;
   }
 }

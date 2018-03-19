@@ -41,12 +41,12 @@ export function getTextAlternative(
   // remaining steps below.
   // https://www.w3.org/TR/accname-aam-1.1/#step2G
   if (isText(node)) {
-    return flatten(node.value) || null;
+    return flatten(node.data) || null;
   }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2B
   const labelledBy = getAttribute(node, "aria-labelledby");
-  if (labelledBy && !referencing) {
+  if (labelledBy && labelledBy !== "aria-labelledby" && !referencing) {
     const root = getRoot(node);
 
     if (root !== null) {
@@ -62,7 +62,7 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2C
   const label = getAttribute(node, "aria-label");
-  if (typeof label === "string" && label) {
+  if (label && label !== "aria-label") {
     return flatten(label);
   }
 
@@ -80,7 +80,7 @@ export function getTextAlternative(
   if (isEmbeddedControl(node, referencing)) {
     switch (role) {
       case Roles.TextBox:
-        switch (node.tag) {
+        switch (node.tagName) {
           case "input":
           case "textarea":
             const value = getAttribute(node, "value");
@@ -103,7 +103,7 @@ export function getTextAlternative(
     referencing ||
     isNativeTextAlternativeElement(node)
   ) {
-    const children = node.children
+    const children = node.childNodes
       .map(
         child =>
           isElement(child) || isText(child)
@@ -141,7 +141,7 @@ function flatten(string: string): string {
  * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
  */
 function getNativeTextAlternative(element: Element): string | null {
-  switch (element.tag) {
+  switch (element.tagName) {
     // https://www.w3.org/TR/html-aam-1.0/#img-element
     case "img":
       const alt = getAttribute(element, "alt");
@@ -177,7 +177,7 @@ function isEmbeddedControl(element: Element, referencing: boolean): boolean {
  * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
  */
 function isNativeTextAlternativeElement(element: Element): boolean {
-  switch (element.tag) {
+  switch (element.tagName) {
     case "button":
     case "legend":
     case "output":
@@ -194,7 +194,7 @@ function isNativeTextAlternativeElement(element: Element): boolean {
  * @see https://www.w3.org/TR/html-aam-1.0/#text-level-elements-not-listed-elsewhere
  */
 function isTextLevelElement(element: Element): boolean {
-  switch (element.tag) {
+  switch (element.tagName) {
     case "a":
     case "em":
     case "strong":

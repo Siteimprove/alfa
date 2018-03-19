@@ -1,21 +1,36 @@
 /// <reference path="./types/element.d.ts"/>
 /// <reference path="./types/intrinsics.d.ts"/>
 
-const { assign } = Object;
+const { keys, assign } = Object;
 
 export function jsx(
-  tag: string,
+  tagName: string,
   attributes: { [name: string]: string | number | boolean } | null,
   ...children: Array<JSX.Element | string>
 ): JSX.Element {
   const element: JSX.Element = {
-    type: "element",
-    tag,
-    namespace: null,
-    attributes: attributes === null ? {} : attributes,
-    children: [],
-    parent: null,
-    shadow: null
+    nodeType: 1,
+    namespaceURI: null,
+    tagName,
+    attributes:
+      attributes === null
+        ? []
+        : keys(attributes).map(name => {
+            let value = attributes[name];
+
+            if (typeof value === "number") {
+              value = String(value);
+            }
+
+            if (typeof value === "boolean") {
+              value = name;
+            }
+
+            return { name, value };
+          }),
+    parentNode: null,
+    childNodes: [],
+    shadowRoot: null
   };
 
   for (const node of children) {
@@ -23,21 +38,22 @@ export function jsx(
 
     if (typeof node === "string") {
       child = {
-        type: "text",
-        value: node,
-        parent: element
+        nodeType: 3,
+        parentNode: element,
+        childNodes: [],
+        data: node
       };
     } else {
-      const parent = { parent: element };
+      const parentNode = { parentNode: element };
 
-      if (node.parent) {
-        child = assign({}, node, parent);
+      if (node.parentNode) {
+        child = assign({}, node, parentNode);
       } else {
-        child = assign(node, parent);
+        child = assign(node, parentNode);
       }
     }
 
-    element.children.push(child);
+    element.childNodes.push(child);
   }
 
   return element;

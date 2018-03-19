@@ -8,6 +8,6 @@ export * from "./get-root";
 export * from "./get-text";
 export * from "./guards";
 export * from "./matches";
-export * from "./render";
+export * from "./serialize";
 export * from "./traverse";
 export * from "./types";

@@ -1,4 +1,4 @@
-import { Node, Parent } from "./types";
+import { Node, ParentNode } from "./types";
 import { isChild } from "./guards";
 
 function pathFromRoot(node: Node): Array<Node> {
@@ -7,7 +7,7 @@ function pathFromRoot(node: Node): Array<Node> {
   for (
     let next: Node | null = node;
     next;
-    next = isChild(next) ? next.parent : null
+    next = isChild(next) ? next.parentNode || null : null
   ) {
     path.unshift(next);
   }
@@ -45,15 +45,15 @@ export function compare(a: Node, b: Node): number {
     return 1;
   }
 
-  const { children = [] } = ap[fork] as Parent;
+  const { childNodes } = ap[fork];
 
   a = ap[fork + 1];
   b = bp[fork + 1];
 
-  const n = children.length;
+  const n = childNodes.length;
 
   for (let i = 0; i < n; i++) {
-    const child = children[i];
+    const child = childNodes[i];
 
     if (child === a) {
       return -1;
