@@ -13,6 +13,7 @@ import { Element, ParentNode } from "./types";
 import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";
 import { getClasslist } from "./get-classlist";
+import { getTag } from "./get-tag";
 
 const parseMemoized = memoize(parse, { cache: { size: 50 } });
 
@@ -46,7 +47,7 @@ export function matches(
 }
 
 function matchesType(element: Element, selector: TypeSelector): boolean {
-  return element.tagName === selector.name;
+  return getTag(element) === selector.name;
 }
 
 function matchesClass(element: Element, selector: ClassSelector): boolean {
@@ -124,8 +125,10 @@ function matchesSibling(element: Element, selector: RelativeSelector): boolean {
     return false;
   }
 
-  for (let i = parentNode.childNodes.indexOf(element) - 1; i >= 0; i--) {
-    const sibling = parentNode.childNodes[i];
+  const { childNodes } = parentNode;
+
+  for (let i = childNodes.indexOf(element) - 1; i >= 0; i--) {
+    const sibling = childNodes[i];
 
     if (isElement(sibling) && matches(sibling, selector.relative)) {
       return true;
@@ -145,8 +148,9 @@ function matchesDirectSibling(
     return false;
   }
 
-  const sibling =
-    parentNode.childNodes[parentNode.childNodes.indexOf(element) - 1];
+  const { childNodes } = parentNode;
+
+  const sibling = childNodes[childNodes.indexOf(element) - 1];
 
   if (sibling === undefined || !isElement(sibling)) {
     return false;

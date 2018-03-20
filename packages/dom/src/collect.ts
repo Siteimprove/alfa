@@ -67,7 +67,7 @@ export class Collector<T extends Node> implements Iterable<T> {
   public first(): T | null {
     const iterator = this.values();
 
-    for (let next = iterator.next(); !next.done; next = iterator.next()) {
+    for (let next = iterator.next(); !next.done; ) {
       return next.value;
     }
 

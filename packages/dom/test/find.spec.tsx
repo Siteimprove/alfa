@@ -13,7 +13,7 @@ test("Finds all elements matching a selector", async t => {
     </div>
   );
 
-  t.deepEqual([...findAll(context, ".foo")], [foo1, foo2]);
+  t.deepEqual(findAll(context, ".foo"), [foo1, foo2]);
 });
 
 test("Finds the first element matching a selector", async t => {
