@@ -105,25 +105,29 @@ export class Scraper {
     const style: Map<Element, { [S in State]: Style }> = new Map();
     const layout: Map<Element, Layout> = new Map();
 
-    traverse(document, node => {
-      if (isElement(node)) {
-        if (hasStyle(node)) {
-          style.set(node, node.style);
-          delete node.style;
+    traverse(
+      document,
+      node => {
+        if (isElement(node)) {
+          if (hasStyle(node)) {
+            style.set(node, node.style);
+            delete node.style;
+          }
+
+          if (hasLayout(node)) {
+            layout.set(node, node.layout);
+            delete node.layout;
+          }
         }
 
-        if (hasLayout(node)) {
-          layout.set(node, node.layout);
-          delete node.layout;
+        if (isParent(node)) {
+          for (const child of node.childNodes) {
+            assign(child, { parentNode: node });
+          }
         }
-      }
-
-      if (isParent(node)) {
-        for (const child of node.childNodes) {
-          assign(child, { parentNode: node });
-        }
-      }
-    });
+      },
+      { deep: true }
+    );
 
     return { document, style, layout };
   }
