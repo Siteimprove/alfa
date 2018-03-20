@@ -7,40 +7,20 @@ import {
   isText,
   isComment
 } from "./guards";
+import { getTag } from "./get-tag";
 
 const { keys } = Object;
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#void-elements
- */
-const VOID = new Set([
-  "area",
-  "base",
-  "br",
-  "col",
-  "embed",
-  "hr",
-  "img",
-  "input",
-  "link",
-  "meta",
-  "param",
-  "source",
-  "track",
-  "wbr"
-]);
-
-/**
  * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
  */
-function escape(input: string | number, isAttribute: boolean = false): string {
-  if (typeof input !== "string") {
-    input = String(input);
-  }
-
+function escape(
+  input: string,
+  options: { attributeMode?: boolean } = {}
+): string {
   input = input.replace(/&/g, "&amp;").replace(/\u00A0/g, "&nbsp;");
 
-  if (isAttribute) {
+  if (options.attributeMode) {
     input = input.replace(/"/g, "&quot;");
   } else {
     input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -54,17 +34,36 @@ function escape(input: string | number, isAttribute: boolean = false): string {
  */
 export function serialize(node: Node): string {
   if (isElement(node)) {
-    let element = `<${node.tagName}`;
+    let element = `<${getTag(node)}`;
 
     for (const { name, value } of node.attributes) {
-      element += ` ${name}="${escape(value, true)}"`;
+      element += ` ${name}="${escape(value, { attributeMode: true })}"`;
     }
 
     element += ">";
 
-    if (!VOID.has(node.tagName)) {
-      element += node.childNodes.map(serialize).join("");
-      element += `</${node.tagName}>`;
+    switch (getTag(node)) {
+      case "area":
+      case "base":
+      case "basefont":
+      case "bgsound":
+      case "br":
+      case "col":
+      case "embed":
+      case "frame":
+      case "hr":
+      case "img":
+      case "input":
+      case "link":
+      case "meta":
+      case "param":
+      case "source":
+      case "track":
+      case "wbr":
+        break;
+      default:
+        element += node.childNodes.map(serialize).join("");
+        element += `</${getTag(node)}>`;
     }
 
     return element;
@@ -74,11 +73,14 @@ export function serialize(node: Node): string {
     const { parentNode } = node;
 
     if (parentNode !== null && isElement(parentNode)) {
-      switch (parentNode.tagName) {
+      switch (getTag(parentNode)) {
         case "style":
         case "script":
+        case "xmp":
         case "iframe":
         case "noembed":
+        case "noframes":
+        case "plaintext":
         case "noscript":
           return node.data;
       }
@@ -91,13 +93,9 @@ export function serialize(node: Node): string {
     return `<!--${node.data}-->`;
   }
 
-  if (isDocument(node) || isDocumentFragment(node)) {
-    return node.childNodes.map(serialize).join("");
-  }
-
   if (isDocumentType(node)) {
     return `<!DOCTYPE ${node.name}>`;
   }
 
-  return "";
+  return node.childNodes.map(serialize).join("");
 }
