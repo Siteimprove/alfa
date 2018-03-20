@@ -49,13 +49,13 @@ export class Scraper {
 
     const page = await browser.newPage();
 
-    if (options.viewport) {
-      page.setViewport({
-        width: options.viewport.width,
-        height: options.viewport.width,
-        deviceScaleFactor: options.viewport.scale || 1
-      });
-    }
+    const { viewport = { width: 1280, height: 720 } } = options;
+
+    page.setViewport({
+      width: viewport.width,
+      height: viewport.width,
+      deviceScaleFactor: viewport.scale || 1
+    });
 
     const wait = options.wait || Wait.Loaded;
     const timeout = options.timeout || 10000;
