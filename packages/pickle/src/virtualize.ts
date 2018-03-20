@@ -1,19 +1,23 @@
 import * as V from "@alfa/dom";
+import { style } from "./style";
+import { layout } from "./layout";
 
 const { assign } = Object;
 const { isParent } = V;
 
-export type WithReference<T extends V.Node> = T & { ref: Node };
+export type WithReference<T extends V.Node> = T & { reference: Node };
 
 export function hasReference<T extends V.Node>(
   node: T
 ): node is WithReference<T> {
-  return "ref" in node;
+  return "reference" in node;
 }
 
 export type VirtualizeOptions = Readonly<{
   parents?: boolean;
   references?: boolean;
+  style?: boolean;
+  layout?: boolean;
 }>;
 
 function children(
@@ -27,7 +31,7 @@ function children(
     const child = childNodes[i];
 
     const vchild: V.ChildNode = assign(virtualize(child, options), {
-      parentNode: options.parents === false ? null : virtual
+      parentNode: options.parents ? virtual : null
     });
 
     virtual.childNodes[i] = vchild;
@@ -36,15 +40,19 @@ function children(
 
 export function virtualize(
   node: Node,
-  options: VirtualizeOptions & { references: true }
-): WithReference<V.Node>;
-
-export function virtualize(node: Node, options?: VirtualizeOptions): V.Node;
-
-export function virtualize(
-  node: Node,
   options: VirtualizeOptions = {}
-): WithReference<V.Node> | V.Node {
+): V.Node {
+  options = assign(
+    {},
+    {
+      parents: true,
+      references: false,
+      style: false,
+      layout: false
+    },
+    options
+  );
+
   switch (node.nodeType) {
     case node.ELEMENT_NODE: {
       const element = node as Element;
@@ -66,7 +74,15 @@ export function virtualize(
       };
 
       if (options.references) {
-        assign(virtual, { ref: element });
+        assign(virtual, { reference: element });
+      }
+
+      if (options.style) {
+        style(virtual, element);
+      }
+
+      if (options.layout) {
+        layout(virtual, element);
       }
 
       children(element, virtual, options);
@@ -85,7 +101,7 @@ export function virtualize(
       };
 
       if (options.references) {
-        assign(virtual, { ref: text });
+        assign(virtual, { reference: text });
       }
 
       return virtual;
@@ -102,7 +118,7 @@ export function virtualize(
       };
 
       if (options.references) {
-        assign(virtual, { ref: comment });
+        assign(virtual, { reference: comment });
       }
 
       return virtual;
@@ -118,7 +134,7 @@ export function virtualize(
       };
 
       if (options.references) {
-        assign(virtual, { ref: document });
+        assign(virtual, { reference: document });
       }
 
       children(document, virtual, options);
@@ -137,7 +153,7 @@ export function virtualize(
       };
 
       if (options.references) {
-        assign(virtual, { ref: doctype });
+        assign(virtual, { reference: doctype });
       }
 
       return virtual;
@@ -153,7 +169,7 @@ export function virtualize(
       };
 
       if (options.references) {
-        assign(virtual, { ref: docfragment });
+        assign(virtual, { reference: docfragment });
       }
 
       children(docfragment, virtual, options);
@@ -164,26 +180,4 @@ export function virtualize(
     default:
       throw new Error(`Cannot virtualize node of type "${node.nodeType}"`);
   }
-}
-
-export function parentize(node: V.Node): V.Node {
-  if (isParent(node)) {
-    for (const child of node.childNodes) {
-      assign(parentize(child), { parentNode: node });
-    }
-  }
-
-  return node;
-}
-
-export function dereference(node: V.Node): V.Node {
-  if (hasReference(node)) {
-    delete node.ref;
-  }
-
-  if (isParent(node)) {
-    node.childNodes.map(dereference);
-  }
-
-  return node;
 }

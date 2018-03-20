@@ -1,15 +1,10 @@
-import { virtualize, layout, style, dereference } from "@alfa/pickle";
+import { virtualize } from "@alfa/pickle";
 
 export function pickle(): object {
-  const document = virtualize(window.document, {
+  return virtualize(window.document, {
     parents: false,
-    references: true
+    references: false,
+    style: true,
+    layout: true
   });
-
-  layout(document);
-  style(document);
-
-  dereference(document);
-
-  return document;
 }

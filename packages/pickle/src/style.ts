@@ -1,9 +1,7 @@
 import * as V from "@alfa/dom";
 import { Style, State, properties, clean, deduplicate } from "@alfa/style";
-import { WithReference, hasReference } from "./virtualize";
 
 const { assign } = Object;
-const { isElement, traverse } = V;
 
 export type WithStyle<T extends V.Element> = T & {
   style: { [S in State]: Style };
@@ -35,51 +33,47 @@ function view(node: Node): Window {
   return node.ownerDocument.defaultView;
 }
 
-export function style(root: WithReference<V.Node>): V.Node {
-  traverse(root, node => {
-    if (isElement(node) && hasReference(node)) {
-      const element = node.ref as HTMLElement;
-      const computed = view(element).getComputedStyle(element);
-      const style: { [S in State]: Style } = {
-        default: {},
-        focus: {}
-      };
+export function style(
+  element: V.Element,
+  reference: Element
+): WithStyle<V.Element> {
+  const computed = view(reference).getComputedStyle(reference);
+  const style: { [S in State]: Style } = {
+    default: {},
+    focus: {}
+  };
 
-      const target = focusTarget(element);
+  const target = focusTarget(reference as HTMLElement);
 
-      if (target !== null) {
-        target.blur();
-      }
+  if (target !== null) {
+    target.blur();
+  }
 
-      for (const property of properties) {
-        const value = computed.getPropertyValue(property);
+  for (const property of properties) {
+    const value = computed.getPropertyValue(property);
 
-        if (value !== "") {
-          style.default[property] = value;
-        }
-      }
-
-      style.default = clean(style.default);
-
-      if (target !== null) {
-        target.focus();
-
-        for (const property of properties) {
-          const value = computed.getPropertyValue(property);
-
-          if (value !== "") {
-            style.focus[property] = value;
-          }
-        }
-
-        style.focus = deduplicate(style.default, clean(style.focus));
-
-        target.blur();
-      }
-
-      assign(node, { style });
+    if (value !== "") {
+      style.default[property] = value;
     }
-  });
+  }
 
-  return root;
+  style.default = clean(style.default);
+
+  if (target !== null) {
+    target.focus();
+
+    for (const property of properties) {
+      const value = computed.getPropertyValue(property);
+
+      if (value !== "") {
+        style.focus[property] = value;
+      }
+    }
+
+    style.focus = deduplicate(style.default, clean(style.focus));
+
+    target.blur();
+  }
+
+  return assign(element, { style });
 }

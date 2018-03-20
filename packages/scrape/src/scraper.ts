@@ -1,12 +1,21 @@
 import { launch } from "puppeteer";
-import { Node, Element, Document, traverse, isElement } from "@alfa/dom";
+import {
+  Node,
+  Element,
+  Document,
+  traverse,
+  isElement,
+  isParent
+} from "@alfa/dom";
 import { Aspects } from "@alfa/rule";
 import { Style, State } from "@alfa/style";
 import { Layout } from "@alfa/layout";
-import { parentize, hasLayout, hasStyle } from "@alfa/pickle";
+import { hasLayout, hasStyle } from "@alfa/pickle";
 import { bundle } from "./bundle";
 
 const PICKLE = require.resolve("./pickle");
+
+const { assign } = Object;
 
 export enum Wait {
   Ready = "domcontentloaded",
@@ -93,8 +102,6 @@ export class Scraper {
       throw error || new Error("Failed to scrape document");
     }
 
-    parentize(document);
-
     const style: Map<Element, { [S in State]: Style }> = new Map();
     const layout: Map<Element, Layout> = new Map();
 
@@ -102,10 +109,18 @@ export class Scraper {
       if (isElement(node)) {
         if (hasStyle(node)) {
           style.set(node, node.style);
+          delete node.style;
         }
 
         if (hasLayout(node)) {
           layout.set(node, node.layout);
+          delete node.layout;
+        }
+      }
+
+      if (isParent(node)) {
+        for (const child of node.childNodes) {
+          assign(child, { parentNode: node });
         }
       }
     });
