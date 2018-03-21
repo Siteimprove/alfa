@@ -92,14 +92,15 @@ export function virtualize(
         attributes,
         parentNode: null,
         childNodes: [],
-        shadowRoot:
-          element.shadowRoot === null
-            ? null
-            : virtualize(element.shadowRoot, options)
+        shadowRoot: null
       };
 
-      if (options.references) {
-        assign(virtual, { reference: element });
+      if (element.shadowRoot !== null) {
+        assign(virtual, {
+          shadowRoot: assign(virtualize(element.shadowRoot, options), {
+            host: virtual
+          })
+        });
       }
 
       if (options.style) {

@@ -33,7 +33,9 @@ export interface Element extends Node, ParentNode, ChildNode {
   readonly namespaceURI: string | null;
   readonly tagName: string;
   readonly attributes: Array<Attr>;
-  readonly shadowRoot: DocumentFragment | null;
+
+  // https://www.w3.org/TR/dom41/#dom-element-shadowroot
+  readonly shadowRoot: ShadowRoot | null;
 }
 
 /**
@@ -72,4 +74,11 @@ export interface DocumentType extends Node, ChildNode {
  */
 export interface DocumentFragment extends Node, ParentNode {
   readonly nodeType: 11;
+}
+
+/**
+ * @see https://www.w3.org/TR/dom41/#interface-shadowroot
+ */
+export interface ShadowRoot extends DocumentFragment {
+  readonly host: Element;
 }
