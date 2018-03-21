@@ -192,7 +192,7 @@ const ident: CssProduction<Ident, TypeSelector> = {
   token: "ident",
 
   prefix(token) {
-    return { type: "type-selector", name: token.value };
+    return { type: "type-selector", name: token.value.toLowerCase() };
   }
 };
 

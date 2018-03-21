@@ -11,6 +11,12 @@ test("Can parse a type selector", async t =>
     name: "div"
   }));
 
+test("Can parse an uppercase type selector", async t =>
+  css(t, "DIV", {
+    type: "type-selector",
+    name: "div"
+  }));
+
 test("Can parse a class selector", async t =>
   css(t, ".foo", {
     type: "class-selector",
