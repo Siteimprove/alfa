@@ -9,8 +9,10 @@ async function lint() {
   for (const file of files) {
     if (await exists(file)) {
       notify({ message: "Linting", value: file, desktop: false });
-      await prettier.transform(file);
-      await add(file);
+
+      if (await prettier.transform(file)) {
+        await add(file);
+      }
     }
   }
 }

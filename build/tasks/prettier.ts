@@ -3,7 +3,7 @@ import { extension } from "@foreman/path";
 import { notify } from "@foreman/notify";
 import * as prettier from "@foreman/prettier";
 
-export async function transform(path: string): Promise<void> {
+export async function transform(path: string): Promise<boolean> {
   const source = await read(path);
   try {
     if (prettier.isSupported(path)) {
@@ -13,11 +13,14 @@ export async function transform(path: string): Promise<void> {
 
       if (source !== code) {
         await write(path, code);
-        return notify({
+
+        notify({
           message: "Linting succeeded",
           type: "success",
           desktop: false
         });
+
+        return true;
       }
     }
 
@@ -35,4 +38,6 @@ export async function transform(path: string): Promise<void> {
 
     throw error;
   }
+
+  return false;
 }
