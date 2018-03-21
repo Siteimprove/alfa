@@ -1,4 +1,5 @@
 import { launch } from "puppeteer";
+import { parse } from "circular-json";
 import {
   Node,
   Element,
@@ -79,11 +80,13 @@ export class Scraper {
       }
 
       try {
-        document = await page.evaluate(`{
-          const require = ${pickle};
-          const { pickle } = require("${PICKLE}");
-          pickle();
-        }`);
+        document = parse(
+          await page.evaluate(`{
+            const require = ${pickle};
+            const { pickle } = require("${PICKLE}");
+            pickle();
+          }`)
+        );
       } catch (err) {
         error = err;
 
@@ -117,12 +120,6 @@ export class Scraper {
           if (hasLayout(node)) {
             layout.set(node, node.layout);
             delete node.layout;
-          }
-        }
-
-        if (isParent(node)) {
-          for (const child of node.childNodes) {
-            assign(child, { parentNode: node });
           }
         }
       },

@@ -1,10 +1,11 @@
+import { stringify } from "circular-json";
 import { virtualize } from "@alfa/pickle";
 
-export function pickle(): object {
-  return virtualize(window.document, {
-    parents: false,
-    references: false,
-    style: true,
-    layout: true
-  });
+export function pickle(): string {
+  return stringify(
+    virtualize(window.document, {
+      style: true,
+      layout: true
+    })
+  );
 }

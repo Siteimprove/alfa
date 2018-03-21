@@ -5,17 +5,7 @@ import { layout } from "./layout";
 const { assign } = Object;
 const { isParent } = V;
 
-export type WithReference<T extends V.Node> = T & { reference: Node };
-
-export function hasReference<T extends V.Node>(
-  node: T
-): node is WithReference<T> {
-  return "reference" in node;
-}
-
 export type VirtualizeOptions = Readonly<{
-  parents?: boolean;
-  references?: boolean;
   style?: boolean;
   layout?: boolean;
 }>;
@@ -31,7 +21,7 @@ function children(
     const child = childNodes[i];
 
     const vchild: V.ChildNode = assign(virtualize(child, options), {
-      parentNode: options.parents ? virtual : null
+      parentNode: virtual
     });
 
     virtual.childNodes[i] = vchild;
@@ -135,10 +125,6 @@ export function virtualize(
         data: text.data
       };
 
-      if (options.references) {
-        assign(virtual, { reference: text });
-      }
-
       return virtual;
     }
 
@@ -152,10 +138,6 @@ export function virtualize(
         data: comment.data
       };
 
-      if (options.references) {
-        assign(virtual, { reference: comment });
-      }
-
       return virtual;
     }
 
@@ -167,10 +149,6 @@ export function virtualize(
         parentNode: null,
         childNodes: []
       };
-
-      if (options.references) {
-        assign(virtual, { reference: document });
-      }
 
       children(document, virtual, options);
 
@@ -187,10 +165,6 @@ export function virtualize(
         name: doctype.name
       };
 
-      if (options.references) {
-        assign(virtual, { reference: doctype });
-      }
-
       return virtual;
     }
 
@@ -202,10 +176,6 @@ export function virtualize(
         parentNode: null,
         childNodes: []
       };
-
-      if (options.references) {
-        assign(virtual, { reference: docfragment });
-      }
 
       children(docfragment, virtual, options);
 
