@@ -15,9 +15,18 @@ export function layout(
   element: V.Element,
   reference: Element
 ): WithLayout<V.Element> {
+  const { ownerDocument } = reference;
+  const { documentElement } = ownerDocument;
+  const { scrollTop, scrollLeft } = documentElement;
+
   const { left, right, top, bottom } = reference.getBoundingClientRect();
 
   return assign(element, {
-    layout: { left, right, top, bottom }
+    layout: {
+      top: top + scrollTop,
+      right: right + scrollLeft,
+      bottom: bottom + scrollTop,
+      left: left + scrollLeft
+    }
   });
 }
