@@ -12,8 +12,8 @@ import {
 
 const { keys } = Object;
 
-export function markdown<T extends Target, A extends Aspect>(
-  rule: Rule<T, A>,
+export function markdown<T extends Target, A extends Aspect, C = null>(
+  rule: Rule<T, A, C>,
   lang: Locale["id"]
 ): string | null {
   const locale = rule.locales.find(locale => locale.id === lang);
