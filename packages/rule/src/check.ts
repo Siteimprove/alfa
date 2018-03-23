@@ -10,14 +10,16 @@ import {
 
 const { keys } = Object;
 
-export async function check<T extends Target, A extends Aspect>(
-  rule: Rule<T, A>,
+export async function check<T extends Target, A extends Aspect, C = undefined>(
+  rule: Rule<T, A, C>,
   aspects: Pick<Aspects, A>,
   answers: Array<Answer<T>> = []
 ): Promise<Array<Result<T, A> | Question<T>>> {
   const results: Array<Result<T, A> | Question<T>> = [];
 
-  const targets = [...(await rule.applicability(aspects))];
+  const context = rule.context(aspects);
+
+  const targets = [...(await rule.applicability(aspects, context))];
 
   function question(question: string, target?: T): boolean {
     const answer = answers.find(
@@ -52,7 +54,7 @@ export async function check<T extends Target, A extends Aspect>(
 
       for (const key of keys(rule.expectations)) {
         const expectation = rule.expectations[key];
-        const holds = await expectation(target, aspects, question);
+        const holds = await expectation(target, aspects, question, context);
 
         if (!holds) {
           passed = false;

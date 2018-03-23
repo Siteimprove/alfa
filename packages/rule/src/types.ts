@@ -52,20 +52,23 @@ export interface Locale {
   }>;
 }
 
-export type Applicability<T extends Target, A extends Aspect> = (
-  aspects: Pick<Aspects, A>
+export type Applicability<T extends Target, A extends Aspect, C = null> = (
+  aspects: Pick<Aspects, A>,
+  context: C
 ) => Promise<Iterable<T>>;
 
-export type Expectation<T extends Target, A extends Aspect> = (
+export type Expectation<T extends Target, A extends Aspect, C = null> = (
   target: T,
   aspects: Pick<Aspects, A>,
-  question: (question: string, target?: T) => boolean
+  question: (question: string, target?: T) => boolean,
+  context: C
 ) => Promise<boolean>;
 
-export interface Rule<T extends Target, A extends Aspect> {
+export interface Rule<T extends Target, A extends Aspect, C = null> {
   readonly id: string;
   readonly criteria: Array<Criterion>;
   readonly locales: Array<Locale>;
-  readonly applicability: Applicability<T, A>;
-  readonly expectations: Readonly<{ [id: string]: Expectation<T, A> }>;
+  readonly context: (aspects: Pick<Aspects, A>) => C;
+  readonly applicability: Applicability<T, A, C>;
+  readonly expectations: Readonly<{ [id: string]: Expectation<T, A, C> }>;
 }
