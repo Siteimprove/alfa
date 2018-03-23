@@ -1,7 +1,7 @@
 import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
 import { Element } from "../src/types";
-import { digest, hasDigest } from "../src/digest";
+import { digest } from "../src/digest";
 
 test("Computes the digest value of a DOM node", async t => {
   const foo: Element = <div class="foo">Hello world!</div>;

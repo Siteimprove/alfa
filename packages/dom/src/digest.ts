@@ -11,10 +11,12 @@ import {
 
 const { keys, assign } = Object;
 
-export type WithDigest<T extends Node> = T & Readonly<{ digest: string }>;
+const Digest = Symbol("Digest");
 
-export function hasDigest<T extends Node>(node: T): node is WithDigest<T> {
-  return "digest" in node;
+type WithDigest<T extends Node> = T & { readonly [Digest]: string };
+
+function hasDigest<T extends Node>(node: T): node is WithDigest<T> {
+  return Digest in node;
 }
 
 /**
@@ -30,7 +32,7 @@ export async function digest<T extends Node>(node: T): Promise<string | null> {
   }
 
   if (hasDigest(node)) {
-    return node.digest;
+    return node[Digest];
   }
 
   let data = String(node.nodeType);
@@ -54,7 +56,7 @@ export async function digest<T extends Node>(node: T): Promise<string | null> {
       await digest(child);
 
       if (hasDigest(child)) {
-        data += child.digest;
+        data += child[Digest];
       }
     }
   }
