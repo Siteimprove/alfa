@@ -53,15 +53,17 @@ export async function digest<T extends Node>(node: T): Promise<string | null> {
 
   if (isParent(node)) {
     for (const child of node.childNodes) {
-      await digest(child);
+      const childDigest = await digest(child);
 
-      if (hasDigest(child)) {
-        data += child[Digest];
+      if (childDigest !== null) {
+        data += childDigest;
       }
     }
   }
 
-  const withDigest = assign(node, { digest: await crypto.digest(data) });
+  const nodeDigest = await crypto.digest(data);
 
-  return withDigest.digest;
+  assign(node, { [Digest]: nodeDigest });
+
+  return nodeDigest;
 }
