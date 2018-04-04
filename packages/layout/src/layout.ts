@@ -1,18 +1,55 @@
 const { assign } = Object;
 
+/**
+ * @see https://www.w3.org/TR/geometry/#DOMRect
+ */
 export interface Layout {
-  readonly left: number;
-  readonly right: number;
-  readonly top: number;
-  readonly bottom: number;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
 }
 
+/**
+ * @see https://www.w3.org/TR/geometry/#dom-domrectreadonly-domrect-width
+ */
 export function width(layout: Layout): number {
-  return layout.right - layout.left;
+  return layout.width;
 }
 
+/**
+ * @see https://www.w3.org/TR/geometry/#dom-domrectreadonly-domrect-height
+ */
 export function height(layout: Layout): number {
-  return layout.bottom - layout.top;
+  return layout.height;
+}
+
+/**
+ * @see https://www.w3.org/TR/geometry/#dom-domrectreadonly-domrect-top
+ */
+export function top(layout: Layout): number {
+  return Math.min(layout.y, layout.y + layout.height);
+}
+
+/**
+ * @see https://www.w3.org/TR/geometry/#dom-domrectreadonly-domrect-right
+ */
+export function right(layout: Layout): number {
+  return Math.max(layout.x, layout.x + layout.width);
+}
+
+/**
+ * @see https://www.w3.org/TR/geometry/#dom-domrectreadonly-domrect-right
+ */
+export function bottom(layout: Layout): number {
+  return Math.max(layout.y, layout.y + layout.height);
+}
+
+/**
+ * @see https://www.w3.org/TR/geometry/#dom-domrectreadonly-domrect-right
+ */
+export function left(layout: Layout): number {
+  return Math.min(layout.x, layout.x + layout.width);
 }
 
 export function area(layout: Layout): number {
@@ -25,39 +62,44 @@ export function margin(layout: Layout): number {
 
 export function intersects(a: Layout, b: Layout): boolean {
   return (
-    b.left <= a.right &&
-    b.top <= a.bottom &&
-    b.right >= a.left &&
-    b.bottom >= a.top
+    left(b) <= right(a) &&
+    top(b) <= bottom(a) &&
+    right(b) >= left(a) &&
+    bottom(b) >= top(a)
   );
 }
 
 export function contains(a: Layout, b: Layout): boolean {
   return (
-    a.left <= b.left &&
-    a.top <= b.top &&
-    b.right <= a.right &&
-    b.bottom <= a.bottom
+    left(a) <= left(b) &&
+    top(a) <= top(b) &&
+    right(b) <= right(a) &&
+    bottom(b) <= bottom(a)
   );
 }
 
 export function union(...layouts: Layout[]): Layout {
-  let top: number = Infinity;
-  let right: number = -Infinity;
-  let bottom: number = Infinity;
-  let left: number = -Infinity;
+  let minTop: number = Infinity;
+  let maxRight: number = -Infinity;
+  let maxBottom: number = Infinity;
+  let minLeft: number = -Infinity;
 
   const { length } = layouts;
 
   for (let i = 0; i < length; i++) {
     const layout = layouts[i];
-    left = Math.min(left, layout.left);
-    right = Math.max(right, layout.right);
-    top = Math.min(top, layout.top);
-    bottom = Math.max(bottom, layout.bottom);
+    minTop = Math.min(minTop, top(layout));
+    maxRight = Math.max(maxRight, right(layout));
+    maxBottom = Math.max(maxBottom, bottom(layout));
+    minLeft = Math.min(minLeft, left(layout));
   }
 
-  return { top, right, bottom, left };
+  return {
+    x: minLeft,
+    y: minTop,
+    width: maxRight - minLeft,
+    height: maxBottom - minLeft
+  };
 }
 
 export type LayoutNode = Layout & {
@@ -121,13 +163,13 @@ function partition(
 
   const children: Array<LayoutNode> = [];
 
-  nodes.sort((a, b) => a.left - b.left);
+  nodes.sort((a, b) => a.x - b.x);
 
   for (let i = 0; i < slices; i++) {
     const chunk = Math.ceil(nodes.length / slices);
     const outer = nodes.slice(i * chunk, (i + 1) * chunk);
 
-    outer.sort((a, b) => a.top - b.top);
+    outer.sort((a, b) => a.y - b.y);
 
     for (let j = 0; j < slices; j++) {
       const chunk = Math.ceil(outer.length / slices);
