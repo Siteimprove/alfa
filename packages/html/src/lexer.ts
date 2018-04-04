@@ -50,7 +50,7 @@ export type HtmlPattern = Pattern<HtmlToken, HtmlState>;
 /**
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
-export const initial: HtmlPattern = ({ next, location }, emit, state, end) => {
+const initial: HtmlPattern = ({ next, location }, emit, state, end) => {
   state.start = location();
 
   const char = next();
@@ -63,7 +63,11 @@ export const initial: HtmlPattern = ({ next, location }, emit, state, end) => {
     return end();
   }
 
-  emit({ type: "character", value: char }, state.start, location());
+  emit({
+    type: "character",
+    value: char,
+    location: { start: state.start, end: location() }
+  });
 };
 
 /**
@@ -112,7 +116,7 @@ const tagOpen: HtmlPattern = (
 
   const { start } = state;
 
-  emit({ type: "character", value: "<" }, start, location());
+  emit({ type: "character", value: "<", location: { start, end: location() } });
 
   return initial;
 };
@@ -158,7 +162,11 @@ const commentStart: HtmlPattern = (
   if (char === ">") {
     advance();
     if (state.comment !== null) {
-      emit(state.comment, state.start, location());
+      emit(
+        assign(state.comment, {
+          location: { start: state.start, end: location() }
+        })
+      );
     }
     return initial;
   }
@@ -185,7 +193,11 @@ const commentStartDash: HtmlPattern = (
   if (char === ">" || char === null) {
     advance();
     if (state.comment !== null) {
-      emit(state.comment, state.start, location());
+      emit(
+        assign(state.comment, {
+          location: { start: state.start, end: location() }
+        })
+      );
     }
   }
 
@@ -223,7 +235,11 @@ const comment: HtmlPattern = ({ next, location }, emit, state, done) => {
 
   if (char === null) {
     if (state.comment !== null) {
-      emit(state.comment, state.start, location());
+      emit(
+        assign(state.comment, {
+          location: { start: state.start, end: location() }
+        })
+      );
     }
     return done();
   }
@@ -313,7 +329,11 @@ const commentEnd: HtmlPattern = (
   if (char === ">") {
     advance();
     if (state.comment !== null) {
-      emit(state.comment, state.start, location());
+      emit(
+        assign(state.comment, {
+          location: { start: state.start, end: location() }
+        })
+      );
     }
     return initial;
   }
@@ -351,7 +371,11 @@ const commentEndBang: HtmlPattern = (
 
   if (char === ">" || char === null) {
     if (state.comment !== null) {
-      emit(state.comment, state.start, location());
+      emit(
+        assign(state.comment, {
+          location: { start: state.start, end: location() }
+        })
+      );
     }
   }
 
@@ -382,8 +406,16 @@ const endTagOpen: HtmlPattern = (
   const char = peek();
 
   if (char === null) {
-    emit({ type: "character", value: "<" }, state.start, location());
-    emit({ type: "character", value: "/" }, state.start, location());
+    emit({
+      type: "character",
+      value: "<",
+      location: { start: state.start, end: location() }
+    });
+    emit({
+      type: "character",
+      value: "/",
+      location: { start: state.start, end: location() }
+    });
     return done();
   }
 
@@ -444,7 +476,7 @@ const tagName: HtmlPattern = (
 
   if (char === ">") {
     if (tag !== null) {
-      emit(tag, start, location());
+      emit(assign(tag, { location: { start, end: location() } }));
     }
     return initial;
   }
@@ -463,9 +495,8 @@ const selfClosingStartTag: HtmlPattern = (
 
   if (char === ">") {
     advance();
-    assign(tag, { closed: true });
     if (tag !== null) {
-      emit(tag, start, location());
+      emit(assign(tag, { closed: true, location: { start, end: location() } }));
     }
     return initial;
   }
@@ -558,7 +589,7 @@ const afterAttributeName: HtmlPattern = (
   if (char === ">") {
     advance();
     if (tag !== null) {
-      emit(tag, state.start, location());
+      emit(assign(tag, { location: { start: state.start, end: location() } }));
     }
     return initial;
   }
@@ -675,7 +706,7 @@ const attributeValueUnquoted: HtmlPattern = (
 
   if (char === ">") {
     if (tag !== null) {
-      emit(tag, start, location());
+      emit(assign(tag, { location: { start: start, end: location() } }));
     }
     return initial;
   }
@@ -710,7 +741,7 @@ const afterAttributeValueQuoted: HtmlPattern = (
 
   if (char === ">") {
     if (tag !== null) {
-      emit(tag, start, location());
+      emit(assign(tag, { location: { start: start, end: location() } }));
     }
     return initial;
   }
@@ -732,9 +763,10 @@ const bogusComment: HtmlPattern = (
   if (char === ">" || char === null) {
     if (comment !== null) {
       emit(
-        assign(comment, { value: comment.value + result() }),
-        start,
-        location()
+        assign(comment, {
+          value: comment.value + result(),
+          location: { start, end: location() }
+        })
       );
     }
   }

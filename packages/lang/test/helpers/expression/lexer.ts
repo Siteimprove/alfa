@@ -61,27 +61,27 @@ const initial: ExpressionPattern = (
 };
 
 const plus: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "+" }, start, location());
+  emit({ type: "+", location: { start, end: location() } });
   return initial;
 };
 
 const minus: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "-" }, start, location());
+  emit({ type: "-", location: { start, end: location() } });
   return initial;
 };
 
 const asterix: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "*" }, start, location());
+  emit({ type: "*", location: { start, end: location() } });
   return initial;
 };
 
 const slash: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "/" }, start, location());
+  emit({ type: "/", location: { start, end: location() } });
   return initial;
 };
 
 const caret: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "^" }, start, location());
+  emit({ type: "^", location: { start, end: location() } });
   return initial;
 };
 
@@ -92,7 +92,11 @@ const number: ExpressionPattern = (
 ) => {
   ignore();
   accept(isNumeric);
-  emit({ type: "number", value: Number(result()) }, start, location());
+  emit({
+    type: "number",
+    value: Number(result()),
+    location: { start, end: location() }
+  });
   return initial;
 };
 

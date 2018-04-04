@@ -2,6 +2,7 @@ import {
   Pattern,
   Alphabet,
   Location,
+  WithLocation,
   CharacterStream,
   isWhitespace,
   isAlpha,
@@ -180,7 +181,7 @@ const initial: CssPattern = (
 
   if (isWhitespace(char)) {
     accept(isWhitespace);
-    emit({ type: "whitespace" }, start, location());
+    emit({ type: "whitespace", location: { start, end: location() } });
     return;
   }
 
@@ -192,24 +193,24 @@ const initial: CssPattern = (
 
     case "(":
     case ")":
-      emit({ type: char }, start, location());
+      emit({ type: char, location: { start, end: location() } });
       return;
     case "[":
     case "]":
-      emit({ type: char }, start, location());
+      emit({ type: char, location: { start, end: location() } });
       return;
     case "{":
     case "}":
-      emit({ type: char }, start, location());
+      emit({ type: char, location: { start, end: location() } });
       return;
     case ",":
-      emit({ type: char }, start, location());
+      emit({ type: char, location: { start, end: location() } });
       return;
     case ":":
-      emit({ type: char }, start, location());
+      emit({ type: char, location: { start, end: location() } });
       return;
     case ";":
-      emit({ type: char }, start, location());
+      emit({ type: char, location: { start, end: location() } });
       return;
 
     case "/":
@@ -229,7 +230,7 @@ const initial: CssPattern = (
     return ident;
   }
 
-  emit({ type: "delim", value: char }, start, location());
+  emit({ type: "delim", value: char, location: { start, end: location() } });
 };
 
 const comment: CssPattern = (
@@ -246,7 +247,7 @@ const comment: CssPattern = (
     // While the CSS syntax specification states that comments should be
     // consumed without emitting a token, we emit one anyway in order to
     // reproduce a complete version of the CSS.
-    emit({ type: "comment", value }, start, location());
+    emit({ type: "comment", value, location: { start, end: location() } });
     return initial;
   }
 };
@@ -261,9 +262,9 @@ const ident: CssPattern = (stream, emit) => {
 
   if (peek() === "(") {
     advance();
-    emit({ type: "function", value }, start, location());
+    emit({ type: "function", value, location: { start, end: location() } });
   } else {
-    emit({ type: "ident", value }, start, location());
+    emit({ type: "ident", value, location: { start, end: location() } });
   }
 
   return initial;
@@ -282,7 +283,7 @@ const string: CssPattern = (
   if (accept(char => char !== mark)) {
     const value = result();
     advance();
-    emit({ type: "string", value }, start, location());
+    emit({ type: "string", value, location: { start, end: location() } });
     return initial;
   }
 };
@@ -333,20 +334,30 @@ const number: CssPattern = (
 const numeric: CssPattern = (stream, emit, { start, number }) => {
   const { peek, advance, location } = stream;
 
-  let token: Number | Percentage | Dimension = number || {
+  let token: WithLocation<Number | Percentage | Dimension> = {
     type: "number",
-    value: NaN
+    value: number === null ? NaN : number.value,
+    location: { start, end: location() }
   };
 
   const next = peek();
 
   if (next !== null && startsIdentifier(next, peek(1), peek(2))) {
-    token = { type: "dimension", value: token.value, unit: name(stream) };
+    token = {
+      type: "dimension",
+      value: token.value,
+      unit: name(stream),
+      location: { start, end: location() }
+    };
   } else if (peek() === "%" && advance()) {
-    token = { type: "percentage", value: token.value };
+    token = {
+      type: "percentage",
+      value: token.value,
+      location: { start, end: location() }
+    };
   }
 
-  emit(token, start, location());
+  emit(token);
   return initial;
 };
 
