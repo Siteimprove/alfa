@@ -16,17 +16,17 @@ export function layout(
   reference: Element
 ): WithLayout<V.Element> {
   const { ownerDocument } = reference;
-  const { documentElement } = ownerDocument;
-  const { scrollTop, scrollLeft } = documentElement;
+  const { defaultView } = ownerDocument;
+  const { pageXOffset, pageYOffset } = defaultView;
 
   const { left, right, top, bottom } = reference.getBoundingClientRect();
 
   return assign(element, {
     layout: {
-      top: top + scrollTop,
-      right: right + scrollLeft,
-      bottom: bottom + scrollTop,
-      left: left + scrollLeft
+      top: top + pageYOffset,
+      right: right + pageXOffset,
+      bottom: bottom + pageYOffset,
+      left: left + pageXOffset
     }
   });
 }
