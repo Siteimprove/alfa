@@ -19,6 +19,12 @@ export function layout(
   const { defaultView } = ownerDocument;
   const { pageXOffset, pageYOffset } = defaultView;
 
+  if (reference.getClientRects().length === 0) {
+    return assign(element, {
+      layout: { x: 0, y: 0, width: 0, height: 0 }
+    });
+  }
+
   // Only IE and Edge return a non-standard ClientRect object so we force the
   // compiler to think that a standard DOMRect is returned.
   const { x, y, width, height } = reference.getBoundingClientRect() as DOMRect;
