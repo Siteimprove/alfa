@@ -1,5 +1,5 @@
 import { Element } from "@alfa/dom";
-import { Layout, LayoutSheet } from "./layout";
+import { Layout, LayoutSheet } from "./types";
 
 export function getLayout(
   layoutSheet: LayoutSheet,
