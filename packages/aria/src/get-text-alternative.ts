@@ -84,7 +84,7 @@ export function getTextAlternative(
           case "input":
           case "textarea":
             const value = getAttribute(node, "value");
-            if (typeof value === "string" && value) {
+            if (value !== null && value !== "") {
               return flatten(value);
             }
             break;
@@ -119,7 +119,7 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2H
   const title = getAttribute(node, "title");
-  if (typeof title === "string" && title) {
+  if (title !== null && title !== "") {
     return flatten(title);
   }
 
@@ -140,21 +140,84 @@ function flatten(string: string): string {
  *
  * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
  */
-function getNativeTextAlternative(element: Element): string | null {
+function getNativeTextAlternative(
+  element: Element,
+  visited: Set<Element | Text> = new Set()
+): string | null {
   switch (element.tagName) {
+    case "input":
+      const type = getAttribute(element, "type");
+      if (type !== null) {
+        switch (type) {
+          // https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset
+          case "button":
+          case "submit":
+          case "reset": {
+            const value = getAttribute(element, "value");
+            if (value !== null && value !== "") {
+              return flatten(value);
+            }
+
+            if (type === "submit") {
+              return "Submit";
+            }
+
+            if (type === "reset") {
+              return "Reset";
+            }
+          }
+
+          // https://www.w3.org/TR/html-aam-1.0/#input-type-image
+          case "image": {
+            const alt = getAttribute(element, "alt");
+            if (alt !== null && alt !== "") {
+              return flatten(alt);
+            }
+
+            const value = getAttribute(element, "value");
+            if (value !== null && value !== "") {
+              return flatten(value);
+            }
+          }
+        }
+      }
+      break;
+
+    // https://www.w3.org/TR/html-aam-1.0/#fieldset-and-legend-elements
+    case "fieldset": {
+      const legend = find(element, "legend");
+      if (legend) {
+        return getTextAlternative(legend, visited, true);
+      }
+      break;
+    }
+
+    // https://www.w3.org/TR/html-aam-1.0/#figure-and-figcaption-elements
+    case "figure": {
+      const caption = find(element, "figcaption");
+      if (caption) {
+        return getTextAlternative(caption, visited, true);
+      }
+      break;
+    }
+
     // https://www.w3.org/TR/html-aam-1.0/#img-element
-    case "img":
+    case "img": {
       const alt = getAttribute(element, "alt");
-      if (typeof alt === "string" && alt) {
+      if (alt !== null && alt !== "") {
         return flatten(alt);
       }
+      break;
+    }
 
     // https://www.w3.org/TR/html-aam-1.0/#table-element
-    case "table":
+    case "table": {
       const caption = find(element, "caption");
       if (caption) {
-        return getTextAlternative(caption);
+        return getText(caption);
       }
+      break;
+    }
   }
 
   return null;
@@ -178,6 +241,7 @@ function isEmbeddedControl(element: Element, referencing: boolean): boolean {
  */
 function isNativeTextAlternativeElement(element: Element): boolean {
   switch (element.tagName) {
+    case "a":
     case "button":
     case "legend":
     case "output":
@@ -190,37 +254,35 @@ function isNativeTextAlternativeElement(element: Element): boolean {
 }
 
 /**
- * @see https://www.w3.org/TR/html/textlevel-semantics.html
  * @see https://www.w3.org/TR/html-aam-1.0/#text-level-elements-not-listed-elsewhere
  */
 function isTextLevelElement(element: Element): boolean {
   switch (element.tagName) {
-    case "a":
-    case "em":
-    case "strong":
-    case "small":
-    case "s":
-    case "cite":
-    case "q":
-    case "dfn":
     case "abbr":
-    case "time":
-    case "code":
-    case "var":
-    case "samp":
-    case "kbd":
-    case "sub":
-    case "sup":
-    case "i":
     case "b":
-    case "u":
-    case "mark":
-    case "ruby":
-    case "rt":
-    case "rp":
     case "bdi":
     case "bdo":
     case "br":
+    case "cite":
+    case "code":
+    case "dfn":
+    case "em":
+    case "i":
+    case "kbd":
+    case "mark":
+    case "q":
+    case "rp":
+    case "rt":
+    case "ruby":
+    case "s":
+    case "samp":
+    case "small":
+    case "strong":
+    case "sub":
+    case "sup":
+    case "time":
+    case "u":
+    case "var":
     case "wbr":
       return true;
   }

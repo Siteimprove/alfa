@@ -29,7 +29,7 @@ test("Falls through when aria-label is a boolean attribute", t => {
 test("Computes the text alternative of a button with an aria-labelledby", t => {
   const document = (
     <div>
-      <button aria-labelledby="h w">Button</button>;
+      <button aria-labelledby="h w">Button</button>
       <p id="h">Hello</p>
       <p id="w">world</p>
     </div>
@@ -108,10 +108,86 @@ test("Returns null when a paragraph has no text alternative", t => {
   t.is(getTextAlternative(<p>Paragraph</p>), null);
 });
 
-test("Computes the text alternative of an anchor", t => {
+test("Computes the text alternative of an anchor with an href", t => {
   t.is(getTextAlternative(<a href="http://foo.com">Anchor</a>), "Anchor");
 });
 
-test("Returns null when an anchor has no href", { skip: true }, t => {
-  t.is(getTextAlternative(<a>Anchor</a>), null);
+test("Computes the text alternative of an anchor without an href", t => {
+  t.is(getTextAlternative(<a>Anchor</a>), "Anchor");
+});
+
+test('Computes the text alternative of an input of type "submit" with a value', t => {
+  t.is(getTextAlternative(<input type="submit" value="Input" />), "Input");
+});
+
+test('Computes the text alternative of an input of type "submit" without a value', t => {
+  t.is(getTextAlternative(<input type="submit" />), "Submit");
+});
+
+test('Computes the text alternative of an input of type "reset" with a value', t => {
+  t.is(getTextAlternative(<input type="reset" value="Input" />), "Input");
+});
+
+test('Computes the text alternative of an input of type "reset" without a value', t => {
+  t.is(getTextAlternative(<input type="reset" />), "Reset");
+});
+
+test('Computes the text alternative of an input of type "button" with a value', t => {
+  t.is(getTextAlternative(<input type="button" value="Input" />), "Input");
+});
+
+test('Computes the text alternative of an input of type "button" with a title', t => {
+  t.is(getTextAlternative(<input type="button" title="Input" />), "Input");
+});
+
+test('Computes the text alternative of an input of type "image" with an alt', t => {
+  t.is(getTextAlternative(<input type="image" alt="Input" />), "Input");
+});
+
+test('Computes the text alternative of an input of type "image" with a value', t => {
+  t.is(getTextAlternative(<input type="image" value="Input" />), "Input");
+});
+
+test('Computes the text alternative of an input of type "image" with a title', t => {
+  t.is(getTextAlternative(<input type="image" title="Input" />), "Input");
+});
+
+test("Computes the text alternative of a table with a caption", t => {
+  t.is(
+    getTextAlternative(
+      <table>
+        <caption>Hello world</caption>
+        <tbody>
+          <tr>
+            <td>Table row</td>
+          </tr>
+        </tbody>
+      </table>
+    ),
+    "Hello world"
+  );
+});
+
+test("Computes the text alternative of a figure with a figcaption", t => {
+  t.is(
+    getTextAlternative(
+      <figure>
+        <img src="foo.png" alt="Foo" />
+        <figcaption>Hello world</figcaption>
+      </figure>
+    ),
+    "Hello world"
+  );
+});
+
+test("Computes the text alternative of a fieldset with a legend", t => {
+  t.is(
+    getTextAlternative(
+      <fieldset>
+        <legend>Hello world</legend>
+        <input type="submit" />
+      </fieldset>
+    ),
+    "Hello world"
+  );
 });
