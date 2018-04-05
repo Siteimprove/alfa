@@ -32,6 +32,10 @@ export type ScrapeOptions = Readonly<{
     height: number;
     scale?: number;
   }>;
+  credentials?: Readonly<{
+    username: string;
+    password: string;
+  }>;
 }>;
 
 export class Scraper {
@@ -50,13 +54,18 @@ export class Scraper {
 
     const page = await browser.newPage();
 
-    const { viewport = { width: 1280, height: 720 } } = options;
+    const {
+      viewport = { width: 1280, height: 720 },
+      credentials = null
+    } = options;
 
-    page.setViewport({
+    await page.setViewport({
       width: viewport.width,
       height: viewport.width,
       deviceScaleFactor: viewport.scale || 1
     });
+
+    await page.authenticate(credentials);
 
     const wait = options.wait || Wait.Loaded;
     const timeout = options.timeout || 10000;
