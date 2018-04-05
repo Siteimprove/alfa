@@ -1,6 +1,6 @@
-const { keys } = Object;
+import { Element } from "@alfa/dom";
 
-export type State = "default" | "focus";
+const { keys } = Object;
 
 export enum PropertyName {
   "display",
@@ -17,14 +17,19 @@ export enum PropertyName {
 
 export type Property = keyof typeof PropertyName;
 
-export type Style = { [P in Property]?: string };
+export type Style = { readonly [P in Property]?: string };
 
-export const properties: Array<Property> = [];
+export type StyleSheet = Array<{
+  readonly element: Element;
+  readonly style: Style;
+}>;
+
+export const Properties: Array<Property> = [];
 
 for (const name in keys(PropertyName)) {
   const property = PropertyName[name];
 
   if (property !== undefined) {
-    properties[name] = property as Property;
+    Properties[name] = property as Property;
   }
 }

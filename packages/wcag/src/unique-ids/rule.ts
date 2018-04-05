@@ -1,4 +1,4 @@
-import { Rule } from "@alfa/rule";
+import { Rule } from "@alfa/act";
 import { Element, traverse, getAttribute, isElement } from "@alfa/dom";
 
 import EN from "./locale/en";

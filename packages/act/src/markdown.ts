@@ -1,4 +1,3 @@
-import { Rule, Target, Aspect, Outcome, Locale } from "@alfa/rule";
 import {
   render,
   parse,
@@ -9,6 +8,7 @@ import {
   Blockquote,
   Table
 } from "@alfa/markdown";
+import { Rule, Target, Aspect, Outcome, Locale } from "./types";
 
 const { keys } = Object;
 

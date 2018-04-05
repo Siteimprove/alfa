@@ -1,6 +1,6 @@
 import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
-import { check } from "@alfa/rule";
+import { check } from "@alfa/act";
 import { find, findAll } from "@alfa/dom";
 
 import { UniqueIds } from "../src/unique-ids/rule";

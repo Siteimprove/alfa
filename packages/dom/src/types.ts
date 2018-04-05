@@ -20,7 +20,7 @@ export interface ChildNode extends Node {}
 /**
  * @see https://www.w3.org/TR/dom/#interface-attr
  */
-export interface Attr {
+export interface Attribute {
   readonly name: string;
   readonly value: string;
 }
@@ -32,7 +32,7 @@ export interface Element extends Node, ParentNode, ChildNode {
   readonly nodeType: 1;
   readonly namespaceURI: string | null;
   readonly tagName: string;
-  readonly attributes: Array<Attr>;
+  readonly attributes: Array<Attribute>;
 
   // https://www.w3.org/TR/dom41/#dom-element-shadowroot
   readonly shadowRoot: ShadowRoot | null;

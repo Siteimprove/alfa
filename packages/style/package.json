@@ -10,7 +10,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@alfa/css": "^0.0.0"
+    "@alfa/css": "^0.0.0",
+    "@alfa/dom": "^0.0.0"
   },
   "devDependencies": {
     "@alfa/test": "^0.0.0",

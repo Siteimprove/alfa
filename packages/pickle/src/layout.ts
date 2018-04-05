@@ -1,40 +1,22 @@
-import * as V from "@alfa/dom";
 import { Layout } from "@alfa/layout";
 
-const { assign } = Object;
-
-export type WithLayout<T extends V.Element> = T & { layout: Layout };
-
-export function hasLayout<T extends V.Element>(
-  element: T
-): element is WithLayout<T> {
-  return "layout" in element;
-}
-
-export function layout(
-  element: V.Element,
-  reference: Element
-): WithLayout<V.Element> {
-  const { ownerDocument } = reference;
+export function layout(element: Element): Layout {
+  const { ownerDocument } = element;
   const { defaultView } = ownerDocument;
   const { pageXOffset, pageYOffset } = defaultView;
 
-  if (reference.getClientRects().length === 0) {
-    return assign(element, {
-      layout: { x: 0, y: 0, width: 0, height: 0 }
-    });
+  if (element.getClientRects().length === 0) {
+    return { x: 0, y: 0, width: 0, height: 0 };
   }
 
   // Only IE and Edge return a non-standard ClientRect object so we force the
   // compiler to think that a standard DOMRect is returned.
-  const { x, y, width, height } = reference.getBoundingClientRect() as DOMRect;
+  const { x, y, width, height } = element.getBoundingClientRect() as DOMRect;
 
-  return assign(element, {
-    layout: {
-      x: x + pageXOffset,
-      y: y + pageYOffset,
-      width,
-      height
-    }
-  });
+  return {
+    x: x + pageXOffset,
+    y: y + pageYOffset,
+    width,
+    height
+  };
 }

@@ -1,84 +1,44 @@
+import { set } from "@alfa/util";
 import * as V from "@alfa/dom";
+import { StyleSheet } from "@alfa/style";
+import { LayoutSheet } from "@alfa/layout";
 import { style } from "./style";
 import { layout } from "./layout";
 
-const { assign } = Object;
 const { isParent } = V;
 
-export type VirtualizeOptions = Readonly<{
-  style?: boolean;
-  layout?: boolean;
-}>;
-
-function children(
-  node: Node,
-  virtual: V.ParentNode,
-  options: VirtualizeOptions = {}
-): void {
-  const { childNodes } = node;
-
-  for (let i = 0; i < childNodes.length; i++) {
-    const child = childNodes[i];
-
-    const vchild: V.ChildNode = assign(virtualize(child, options), {
-      parentNode: virtual
-    });
-
-    virtual.childNodes[i] = vchild;
-  }
+export interface Sheets {
+  readonly style: StyleSheet;
+  readonly layout: LayoutSheet;
 }
 
-export function virtualize<T extends Element>(
-  node: T,
-  options?: VirtualizeOptions
-): V.Element;
+export function virtualize(node: Element, sheets?: Sheets): V.Element;
 
-export function virtualize<T extends Text>(
-  node: T,
-  options?: VirtualizeOptions
-): V.Text;
+export function virtualize(node: Text, sheets?: Sheets): V.Text;
 
-export function virtualize<T extends Comment>(
-  node: T,
-  options?: VirtualizeOptions
-): V.Comment;
+export function virtualize(node: Comment, sheets?: Sheets): V.Comment;
 
-export function virtualize<T extends Document>(
-  node: T,
-  options?: VirtualizeOptions
-): V.Document;
+export function virtualize(node: Document, sheets?: Sheets): V.Document;
 
-export function virtualize<T extends DocumentType>(
-  node: T,
-  options?: VirtualizeOptions
-): V.DocumentType;
+export function virtualize(node: DocumentType, sheets?: Sheets): V.DocumentType;
 
-export function virtualize<T extends DocumentFragment>(
-  node: T,
-  options?: VirtualizeOptions
+export function virtualize(node: ShadowRoot, sheets?: Sheets): V.ShadowRoot;
+
+export function virtualize(
+  node: DocumentFragment,
+  sheets?: Sheets
 ): V.DocumentFragment;
 
-export function virtualize(node: Node, options?: VirtualizeOptions): V.Node;
+export function virtualize(node: Node, sheets?: Sheets): V.Node;
 
 export function virtualize(
   node: Node,
-  options: VirtualizeOptions = {}
+  sheets?: { style: StyleSheet; layout: LayoutSheet }
 ): V.Node {
-  options = assign(
-    {},
-    {
-      parents: true,
-      references: false,
-      style: false,
-      layout: false
-    },
-    options
-  );
-
   switch (node.nodeType) {
     case node.ELEMENT_NODE: {
       const element = node as Element;
-      const attributes: Array<V.Attr> = [];
+      const attributes: Array<V.Attribute> = [];
 
       for (let i = 0; i < element.attributes.length; i++) {
         const { name, value } = element.attributes[i];
@@ -96,22 +56,19 @@ export function virtualize(
       };
 
       if (element.shadowRoot !== null) {
-        assign(virtual, {
-          shadowRoot: assign(virtualize(element.shadowRoot, options), {
-            host: virtual
-          })
-        });
+        set(
+          virtual,
+          "shadowRoot",
+          set(virtualize(element.shadowRoot, sheets), "host", virtual)
+        );
       }
 
-      if (options.style) {
-        style(virtual, element);
+      if (sheets !== undefined) {
+        sheets.style.push({ element: virtual, style: style(element) });
+        sheets.layout.push({ element: virtual, layout: layout(element) });
       }
 
-      if (options.layout) {
-        layout(virtual, element);
-      }
-
-      children(element, virtual, options);
+      children(node, virtual, sheets);
 
       return virtual;
     }
@@ -151,7 +108,7 @@ export function virtualize(
         childNodes: []
       };
 
-      children(document, virtual, options);
+      children(node, virtual, sheets);
 
       return virtual;
     }
@@ -170,15 +127,24 @@ export function virtualize(
     }
 
     case node.DOCUMENT_FRAGMENT_NODE: {
-      const docfragment = node as DocumentFragment;
+      let virtual: V.DocumentFragment | V.ShadowRoot;
 
-      const virtual: V.DocumentFragment = {
-        nodeType: 11,
-        parentNode: null,
-        childNodes: []
-      };
+      if ("host" in node) {
+        virtual = {
+          nodeType: 11,
+          parentNode: null,
+          childNodes: [],
+          host: null
+        };
+      } else {
+        virtual = {
+          nodeType: 11,
+          parentNode: null,
+          childNodes: []
+        };
+      }
 
-      children(docfragment, virtual, options);
+      children(node, virtual, sheets);
 
       return virtual;
     }
@@ -186,4 +152,28 @@ export function virtualize(
     default:
       throw new Error(`Cannot virtualize node of type "${node.nodeType}"`);
   }
+}
+
+function children(node: Node, virtual: V.ParentNode, sheets?: Sheets): void {
+  const { childNodes } = node;
+
+  for (let i = 0; i < childNodes.length; i++) {
+    virtual.childNodes[i] = set(
+      virtualize(childNodes[i], sheets),
+      "parentNode",
+      virtual
+    );
+  }
+}
+
+function focusTarget(element: HTMLElement): HTMLElement | null {
+  if ("focus" in element && element.tabIndex >= -1) {
+    return element;
+  }
+
+  if (element.parentElement !== null) {
+    return focusTarget(element.parentElement);
+  }
+
+  return null;
 }

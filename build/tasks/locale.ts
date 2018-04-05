@@ -12,11 +12,11 @@ export async function transform(path: string) {
 
     const code = `
 // This file has been automatically generated from ${base(path)}.
-import { Locale } from '@alfa/rule'
+import { Locale } from "@alfa/act";
 
-const locale: Locale = ${string}
+const locale: Locale = ${string};
 
-export default locale
+export default locale;
     `.trim();
 
     await write(extension(path, ".ts"), code + "\n");

@@ -1,12 +1,5 @@
 import { Test } from "@alfa/test";
-import {
-  Outcome,
-  Result,
-  Target,
-  Aspect,
-  Question,
-  isResult
-} from "@alfa/rule";
+import { Outcome, Result, Target, Aspect, Question, isResult } from "@alfa/act";
 import { serialize } from "@alfa/dom";
 
 export function outcome<T extends Target, A extends Aspect>(

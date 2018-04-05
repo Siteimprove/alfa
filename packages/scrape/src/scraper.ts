@@ -1,22 +1,9 @@
 import { launch } from "puppeteer";
 import { parse } from "circular-json";
-import {
-  Node,
-  Element,
-  Document,
-  traverse,
-  isElement,
-  isParent
-} from "@alfa/dom";
-import { Aspects } from "@alfa/rule";
-import { Style, State } from "@alfa/style";
-import { Layout } from "@alfa/layout";
-import { hasLayout, hasStyle } from "@alfa/pickle";
+import { Aspects } from "@alfa/act";
 import { bundle } from "./bundle";
 
 const PICKLE = require.resolve("./pickle");
-
-const { assign } = Object;
 
 export enum Wait {
   Ready = "domcontentloaded",
@@ -40,7 +27,7 @@ export type ScrapeOptions = Readonly<{
 
 export class Scraper {
   private readonly _browser = launch({
-    headless: true
+    headless: false
   });
 
   private readonly _pickle = bundle(PICKLE, {
@@ -79,7 +66,7 @@ export class Scraper {
       throw err;
     }
 
-    let document: Document | null = null;
+    let aspects: Aspects | null = null;
     let error: Error | null = null;
     do {
       const elapsed = Date.now() - start;
@@ -89,7 +76,7 @@ export class Scraper {
       }
 
       try {
-        document = parse(
+        aspects = parse(
           await page.evaluate(`{
             const require = ${pickle};
             const { pickle } = require("${PICKLE}");
@@ -106,36 +93,15 @@ export class Scraper {
           await page.reload({ timeout: timeout - elapsed, waitUntil: wait });
         } catch (err) {}
       }
-    } while (document === null);
+    } while (aspects === null);
 
     await page.close();
 
-    if (document === null) {
+    if (aspects === null) {
       throw error || new Error("Failed to scrape document");
     }
 
-    const style: Map<Element, { [S in State]: Style }> = new Map();
-    const layout: Map<Element, Layout> = new Map();
-
-    traverse(
-      document,
-      node => {
-        if (isElement(node)) {
-          if (hasStyle(node)) {
-            style.set(node, node.style);
-            delete node.style;
-          }
-
-          if (hasLayout(node)) {
-            layout.set(node, node.layout);
-            delete node.layout;
-          }
-        }
-      },
-      { deep: true }
-    );
-
-    return { document, style, layout };
+    return aspects;
   }
 
   async close(): Promise<void> {
