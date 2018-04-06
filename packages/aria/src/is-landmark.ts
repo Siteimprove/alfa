@@ -19,11 +19,5 @@ export function isLandmark(element: Element): boolean {
 
   const { inherits = [] } = role;
 
-  for (const ancestor of inherits) {
-    if (ancestor === Landmark) {
-      return true;
-    }
-  }
-
-  return false;
+  return inherits.some(ancestor => ancestor === Landmark);
 }
