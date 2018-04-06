@@ -1,5 +1,3 @@
-/// <reference types="node"/>
-
 import { Node } from "./types";
 
 const { Compiler } = require("remark-stringify");

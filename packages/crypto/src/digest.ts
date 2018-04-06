@@ -1,6 +1,3 @@
-/// <reference types="node"/>
-/// <reference types="text-encoding"/>
-
 export type Algorithm = "sha1" | "sha256" | "sha384" | "sha512";
 
 export let digest: (data: string, algorithm?: Algorithm) => Promise<string>;
