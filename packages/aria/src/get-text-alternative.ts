@@ -121,6 +121,10 @@ export function getTextAlternative(
           isElement(child) || isText(child)
             ? getTextAlternative(child, visited, {
                 recursing: true,
+                // Pass down the labelling flag as the current call may have
+                // been initiated from a labelling element; the subtree will
+                // therefore also have to be considered part of the labelling
+                // element.
                 labelling: flags.labelling
               })
             : null
