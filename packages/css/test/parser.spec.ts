@@ -236,3 +236,20 @@ test("Can parse an attribute selector with a string value", async t =>
     value: "bar",
     matcher: null
   }));
+
+test("Can parse an attribute selector when part of a compound selector", async t =>
+  css(t, ".foo[foo]", {
+    type: "compound-selector",
+    selectors: [
+      {
+        type: "class-selector",
+        name: "foo"
+      },
+      {
+        type: "attribute-selector",
+        name: "foo",
+        value: null,
+        matcher: null
+      }
+    ]
+  }));

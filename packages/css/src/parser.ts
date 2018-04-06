@@ -240,7 +240,7 @@ const comma: CssProduction<Comma, SelectorList> = {
   }
 };
 
-const bracket: CssProduction<Bracket, AttributeSelector> = {
+const bracket: CssProduction<Bracket, AttributeSelector | CompoundSelector> = {
   token: "[",
 
   prefix(token, { accept, next }, expression) {
@@ -278,6 +278,23 @@ const bracket: CssProduction<Bracket, AttributeSelector> = {
       name: attribute.value,
       value: value.value,
       matcher: null
+    };
+  },
+
+  infix(token, { backup }, expression, left) {
+    backup();
+
+    const right = expression();
+
+    if (right === null || !isSimpleSelector(right) || !isSimpleSelector(left)) {
+      throw new Error("Expected simple selector");
+    }
+
+    return {
+      type: "compound-selector",
+      selectors: isCompoundSelector(left)
+        ? [...left.selectors, right]
+        : [left, right]
     };
   }
 };
