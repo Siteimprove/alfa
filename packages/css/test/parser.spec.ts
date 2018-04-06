@@ -212,3 +212,27 @@ test("Can parse a list of selectors independant of whitespace", async t =>
       }
     ]
   }));
+
+test("Can parse an attribute selector without a value", async t =>
+  css(t, "[foo]", {
+    type: "attribute-selector",
+    name: "foo",
+    value: null,
+    matcher: null
+  }));
+
+test("Can parse an attribute selector with an ident value", async t =>
+  css(t, "[foo=bar]", {
+    type: "attribute-selector",
+    name: "foo",
+    value: "bar",
+    matcher: null
+  }));
+
+test("Can parse an attribute selector with a string value", async t =>
+  css(t, '[foo="bar"]', {
+    type: "attribute-selector",
+    name: "foo",
+    value: "bar",
+    matcher: null
+  }));

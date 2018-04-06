@@ -16,6 +16,14 @@ test("Matches an element against an ID", async t => {
   t.true(matches(<div id="foo" />, "#foo"));
 });
 
+test("Matches an element against an attribute without a value", async t => {
+  t.true(matches(<div foo />, "[foo]"));
+});
+
+test("Matches an element against an attribute with a value", async t => {
+  t.true(matches(<div foo="bar" />, "[foo=bar]"));
+});
+
 test("Matches an element against a list of selectors", async t => {
   t.true(matches(<div class="foo" />, ".foo, #bar"));
   t.true(matches(<div id="bar" />, ".foo, #bar"));

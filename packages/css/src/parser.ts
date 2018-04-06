@@ -6,16 +6,30 @@ import {
   Delim,
   Ident,
   Comma,
+  Bracket,
   isIdent,
+  isString,
   isDelim,
   lex
 } from "./lexer";
 
-export type TypeSelector = { type: "type-selector"; name: string };
-export type ClassSelector = { type: "class-selector"; name: string };
 export type IdSelector = { type: "id-selector"; name: string };
 
-export type SimpleSelector = TypeSelector | ClassSelector | IdSelector;
+export type ClassSelector = { type: "class-selector"; name: string };
+
+export type AttributeSelector = {
+  type: "attribute-selector";
+  name: string;
+  value: string | null;
+  matcher: "~" | "|" | "^" | "$" | "*" | null;
+};
+
+export type TypeSelector = { type: "type-selector"; name: string };
+
+export type SubclassSelector = IdSelector | ClassSelector | AttributeSelector;
+
+export type SimpleSelector = TypeSelector | SubclassSelector;
+
 export type CompoundSelector = {
   type: "compound-selector";
   selectors: Array<SimpleSelector>;
@@ -29,6 +43,7 @@ export type RelativeSelector = {
 };
 
 export type Selector = SimpleSelector | CompoundSelector | RelativeSelector;
+
 export type SelectorList = {
   type: "selector-list";
   selectors: Array<Selector>;
@@ -45,9 +60,10 @@ export type CssProduction<T extends CssToken, U extends CssTree> = Production<
 
 export function isSimpleSelector(node: CssTree): node is SimpleSelector {
   switch (node.type) {
-    case "type-selector":
-    case "class-selector":
     case "id-selector":
+    case "class-selector":
+    case "attribute-selector":
+    case "type-selector":
       return true;
     default:
       return false;
@@ -224,12 +240,55 @@ const comma: CssProduction<Comma, SelectorList> = {
   }
 };
 
+const bracket: CssProduction<Bracket, AttributeSelector> = {
+  token: "[",
+
+  prefix(token, { accept, next }, expression) {
+    const attribute = accept(isIdent);
+
+    if (attribute === false) {
+      throw new Error("Expected ident");
+    }
+
+    if (accept(token => token.type === "]")) {
+      return {
+        type: "attribute-selector",
+        name: attribute.value,
+        value: null,
+        matcher: null
+      };
+    }
+
+    if (accept(token => isDelim(token) && token.value === "=") === false) {
+      throw new Error("Expected attribute matcher");
+    }
+
+    const value = next();
+
+    if (value === null || !(isIdent(value) || isString(value))) {
+      throw new Error("Expected ident or string");
+    }
+
+    if (accept(token => token.type === "]") === false) {
+      throw new Error("Expected end of attribute selector");
+    }
+
+    return {
+      type: "attribute-selector",
+      name: attribute.value,
+      value: value.value,
+      matcher: null
+    };
+  }
+};
+
 export const CssGrammar: Grammar<CssToken, CssTree> = [
   whitespace,
   comment,
   delim,
   ident,
-  comma
+  comma,
+  bracket
 ];
 
 export function parse(input: string): CssTree | null {

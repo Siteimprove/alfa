@@ -73,6 +73,10 @@ export function isIdent(token: CssToken): token is Ident {
   return token.type === "ident";
 }
 
+export function isString(token: CssToken): token is String {
+  return token.type === "string";
+}
+
 export function isDelim(token: CssToken): token is Delim {
   return token.type === "delim";
 }

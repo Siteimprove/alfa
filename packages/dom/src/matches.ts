@@ -6,6 +6,7 @@ import {
   TypeSelector,
   ClassSelector,
   IdSelector,
+  AttributeSelector,
   CompoundSelector,
   parse
 } from "@alfa/css";
@@ -35,6 +36,8 @@ export function matches(
       return matchesClass(element, parsed);
     case "id-selector":
       return matchesId(element, parsed);
+    case "attribute-selector":
+      return matchesAttribute(element, parsed);
     case "compound-selector":
       return matchesCompound(element, parsed);
     case "selector-list":
@@ -56,6 +59,19 @@ function matchesClass(element: Element, selector: ClassSelector): boolean {
 
 function matchesId(element: Element, selector: IdSelector): boolean {
   return getAttribute(element, "id") === selector.name;
+}
+
+function matchesAttribute(
+  element: Element,
+  selector: AttributeSelector
+): boolean {
+  const value = getAttribute(element, selector.name);
+
+  if (selector.value === null) {
+    return value !== null;
+  }
+
+  return selector.value === value;
 }
 
 function matchesCompound(
