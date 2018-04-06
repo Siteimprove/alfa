@@ -24,8 +24,11 @@ import { resolveReferences } from "./resolve-references";
 export function getTextAlternative(
   node: Element | Text,
   visited: Set<Element | Text> = new Set(),
-  recursing: boolean = false,
-  referencing: boolean = false
+  flags: Readonly<{
+    recursing?: boolean;
+    referencing?: boolean;
+    labelling?: boolean;
+  }> = {}
 ): string | null {
   if (visited.has(node)) {
     return null;
@@ -34,7 +37,7 @@ export function getTextAlternative(
   visited.add(node);
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2A
-  if (!isVisible(node) && !referencing) {
+  if (!isVisible(node) && !flags.referencing) {
     return null;
   }
 
@@ -52,13 +55,16 @@ export function getTextAlternative(
     labelledBy !== null &&
     labelledBy !== "" &&
     labelledBy !== "aria-labelledby" &&
-    !referencing
+    !flags.referencing
   ) {
     const root = getRoot(node);
 
     if (root !== null) {
       const references = resolveReferences(root, labelledBy).map(element =>
-        getTextAlternative(element, visited, true, true)
+        getTextAlternative(element, visited, {
+          recursing: true,
+          referencing: true
+        })
       );
 
       if (references.length > 0) {
@@ -84,12 +90,11 @@ export function getTextAlternative(
   }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2E
-  if (isEmbeddedControl(node, referencing)) {
+  if (flags.labelling || flags.referencing) {
     switch (role) {
       case Roles.TextBox:
         switch (getTag(node)) {
           case "input":
-          case "textarea":
             const value = getAttribute(node, "value");
             if (value !== null && value !== "") {
               return flatten(value);
@@ -100,21 +105,24 @@ export function getTextAlternative(
         }
 
       case Roles.Button:
-        return getTextAlternative(node, visited, true, false);
+        return getTextAlternative(node, visited, { recursing: true });
     }
   }
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2F
   if (
     (role !== null && role.label && includes(role.label.from, "contents")) ||
-    referencing ||
+    flags.referencing ||
     isNativeTextAlternativeElement(node)
   ) {
     const children = node.childNodes
       .map(
         child =>
           isElement(child) || isText(child)
-            ? getTextAlternative(child, visited, true, false)
+            ? getTextAlternative(child, visited, {
+                recursing: true,
+                labelling: flags.labelling
+              })
             : null
       )
       .filter(child => child !== null);
@@ -153,7 +161,10 @@ function getNativeTextAlternative(
 ): string | null {
   const label = getLabel(element);
   if (label !== null) {
-    return getTextAlternative(label, visited, true);
+    return getTextAlternative(label, visited, {
+      recursing: true,
+      labelling: true
+    });
   }
 
   switch (getTag(element)) {
@@ -199,7 +210,7 @@ function getNativeTextAlternative(
     case "fieldset": {
       const legend = find(element, "legend");
       if (legend) {
-        return getTextAlternative(legend, visited, true);
+        return getTextAlternative(legend, visited, { recursing: true });
       }
       break;
     }
@@ -208,7 +219,7 @@ function getNativeTextAlternative(
     case "figure": {
       const caption = find(element, "figcaption");
       if (caption) {
-        return getTextAlternative(caption, visited, true);
+        return getTextAlternative(caption, visited, { recursing: true });
       }
       break;
     }
@@ -233,14 +244,6 @@ function getNativeTextAlternative(
   }
 
   return null;
-}
-
-/**
- * Check if an element is a "control embedded within the label of another
- * widget".
- */
-function isEmbeddedControl(element: Element, referencing: boolean): boolean {
-  return false;
 }
 
 /**

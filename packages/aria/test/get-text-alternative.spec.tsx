@@ -191,7 +191,7 @@ test("Computes the text alternative of an input with an explicit label", t => {
     </div>
   );
 
-  const input = find(document, "input");
+  const input = find(document, "#test");
 
   if (input) {
     t.is(getTextAlternative(input), "Hello world");
@@ -204,11 +204,30 @@ test("Computes the text alternative of an input with an implicit label", t => {
   const document = (
     <label>
       Hello world
-      <input type="text" />
+      <input type="text" id="test" />
     </label>
   );
 
-  const input = find(document, "input");
+  const input = find(document, "#test");
+
+  if (input) {
+    t.is(getTextAlternative(input), "Hello world");
+  } else {
+    t.fail();
+  }
+});
+
+test("Computes the text alternative of an input with an explicit label that includes an embedded control", t => {
+  const document = (
+    <div>
+      <label for="test">
+        <textarea>Hello world</textarea>
+      </label>
+      <input type="text" id="test" />
+    </div>
+  );
+
+  const input = find(document, "#test");
 
   if (input) {
     t.is(getTextAlternative(input), "Hello world");
