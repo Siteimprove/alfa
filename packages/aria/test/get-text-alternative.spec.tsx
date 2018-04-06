@@ -45,19 +45,10 @@ test("Computes the text alternative of a button with an aria-labelledby", t => {
 });
 
 test("Falls through when no text alternative is found in aria-labelledby", t => {
-  const document = (
-    <div>
-      <button aria-labelledby="h w">Button</button>
-    </div>
+  t.is(
+    getTextAlternative(<button aria-labelledby="h w">Button</button>),
+    "Button"
   );
-
-  const button = find(document, "button");
-
-  if (button) {
-    t.is(getTextAlternative(button), "Button");
-  } else {
-    t.fail();
-  }
 });
 
 test("Does not infitely recurse when recursive aria-labelledby references are encountered", t => {
@@ -190,4 +181,38 @@ test("Computes the text alternative of a fieldset with a legend", t => {
     ),
     "Hello world"
   );
+});
+
+test("Computes the text alternative of an input with an explicit label", t => {
+  const document = (
+    <div>
+      <label for="test">Hello world</label>
+      <input type="text" id="test" />
+    </div>
+  );
+
+  const input = find(document, "input");
+
+  if (input) {
+    t.is(getTextAlternative(input), "Hello world");
+  } else {
+    t.fail();
+  }
+});
+
+test("Computes the text alternative of an input with an implicit label", t => {
+  const document = (
+    <label>
+      Hello world
+      <input type="text" />
+    </label>
+  );
+
+  const input = find(document, "input");
+
+  if (input) {
+    t.is(getTextAlternative(input), "Hello world");
+  } else {
+    t.fail();
+  }
 });

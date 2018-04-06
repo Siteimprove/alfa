@@ -98,20 +98,3 @@ export class Collector<T extends Node> implements Iterable<T> {
 export function collect(context: Node): Collector<Node> {
   return new Collector(context);
 }
-
-export function closest<T extends Node>(
-  context: Node,
-  predicate: Predicate<Node, T>
-): T | null {
-  for (
-    let next: Node | null = context;
-    next;
-    next = isChild(next) ? next.parentNode || null : null
-  ) {
-    if (predicate(next)) {
-      return next as T;
-    }
-  }
-
-  return null;
-}

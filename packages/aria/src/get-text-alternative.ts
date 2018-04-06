@@ -4,9 +4,11 @@ import {
   isText,
   isElement,
   find,
+  getTag,
   getAttribute,
   getRoot,
-  getText
+  getText,
+  getLabel
 } from "@alfa/dom";
 import { includes } from "@alfa/util";
 import * as Roles from "./roles";
@@ -46,12 +48,17 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2B
   const labelledBy = getAttribute(node, "aria-labelledby");
-  if (labelledBy && labelledBy !== "aria-labelledby" && !referencing) {
+  if (
+    labelledBy !== null &&
+    labelledBy !== "" &&
+    labelledBy !== "aria-labelledby" &&
+    !referencing
+  ) {
     const root = getRoot(node);
 
     if (root !== null) {
-      const references = resolveReferences(root, String(labelledBy)).map(
-        element => getTextAlternative(element, visited, true, true)
+      const references = resolveReferences(root, labelledBy).map(element =>
+        getTextAlternative(element, visited, true, true)
       );
 
       if (references.length > 0) {
@@ -70,7 +77,7 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2D
   if (role !== Roles.Presentation && role !== Roles.None) {
-    const native = getNativeTextAlternative(node);
+    const native = getNativeTextAlternative(node, visited);
     if (native !== null) {
       return flatten(native);
     }
@@ -80,7 +87,7 @@ export function getTextAlternative(
   if (isEmbeddedControl(node, referencing)) {
     switch (role) {
       case Roles.TextBox:
-        switch (node.tagName) {
+        switch (getTag(node)) {
           case "input":
           case "textarea":
             const value = getAttribute(node, "value");
@@ -99,7 +106,7 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2F
   if (
-    (role && role.label && includes(role.label.from, "contents")) ||
+    (role !== null && role.label && includes(role.label.from, "contents")) ||
     referencing ||
     isNativeTextAlternativeElement(node)
   ) {
@@ -142,9 +149,14 @@ function flatten(string: string): string {
  */
 function getNativeTextAlternative(
   element: Element,
-  visited: Set<Element | Text> = new Set()
+  visited: Set<Element | Text>
 ): string | null {
-  switch (element.tagName) {
+  const label = getLabel(element);
+  if (label !== null) {
+    return getTextAlternative(label, visited, true);
+  }
+
+  switch (getTag(element)) {
     case "input":
       const type = getAttribute(element, "type");
       if (type !== null) {
@@ -235,12 +247,13 @@ function isEmbeddedControl(element: Element, referencing: boolean): boolean {
  * Check if an element is a "native host language text alternative element".
  * The elements that qualify as such are defined in the HTML Accessibility
  * API Mappings specification as elements whose text alternative can be
- * computed from their subtree.
+ * computed from their subtree as well as <label> elements.
  *
  * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
  */
 function isNativeTextAlternativeElement(element: Element): boolean {
-  switch (element.tagName) {
+  switch (getTag(element)) {
+    case "label":
     case "a":
     case "button":
     case "legend":
@@ -257,7 +270,7 @@ function isNativeTextAlternativeElement(element: Element): boolean {
  * @see https://www.w3.org/TR/html-aam-1.0/#text-level-elements-not-listed-elsewhere
  */
 function isTextLevelElement(element: Element): boolean {
-  switch (element.tagName) {
+  switch (getTag(element)) {
     case "abbr":
     case "b":
     case "bdi":
