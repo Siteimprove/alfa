@@ -101,7 +101,7 @@ export function getTextAlternative(
             }
             break;
           default:
-            return getText(node);
+            return flatten(getText(node));
         }
 
       case Roles.Button:
@@ -237,7 +237,7 @@ function getNativeTextAlternative(
     case "table": {
       const caption = find(element, "caption");
       if (caption) {
-        return getText(caption);
+        return flatten(getText(caption));
       }
       break;
     }
