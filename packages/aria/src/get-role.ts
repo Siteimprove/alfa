@@ -35,7 +35,7 @@ export function getRole(element: Element): Role | null {
         : feature.role;
     }
   } else {
-    for (const name of split(String(role), isWhitespace)) {
+    for (const name of split(role, isWhitespace)) {
       const role = roles.get(name);
 
       if (role !== undefined && !role.abstract) {
