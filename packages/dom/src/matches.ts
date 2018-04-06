@@ -8,6 +8,7 @@ import {
   IdSelector,
   AttributeSelector,
   CompoundSelector,
+  CssTree,
   parse
 } from "@alfa/css";
 import { Element, ParentNode } from "./types";
@@ -22,8 +23,13 @@ export function matches(
   element: Element,
   selector: string | Selector | SelectorList
 ): boolean {
-  const parsed =
-    typeof selector === "string" ? parseMemoized(selector) : selector;
+  let parsed: CssTree | null = null;
+
+  try {
+    parsed = typeof selector === "string" ? parseMemoized(selector) : selector;
+  } catch (err) {
+    throw new Error(`Invalid selector: ${selector}`);
+  }
 
   if (parsed === null) {
     return false;
