@@ -1,7 +1,8 @@
 import { Element } from "./types";
+import { isElement } from "./guards";
 import { find } from "./find";
 import { closest } from "./closest";
-import { matches } from "./matches";
+import { getTag } from "./get-tag";
 import { getRoot } from "./get-root";
 import { getAttribute } from "./get-attribute";
 import { isLabelable } from "./is-labelable";
@@ -20,7 +21,13 @@ export function getLabel(element: Element): Element | null {
     const root = getRoot(element);
 
     if (root !== null) {
-      const label = find(root, `label[for="${id}"]`);
+      const label = find<Element>(
+        root,
+        node =>
+          isElement(node) &&
+          getTag(node) === "label" &&
+          getAttribute(node, "for") === id
+      );
 
       if (label !== null) {
         return label;
