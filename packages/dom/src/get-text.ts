@@ -1,7 +1,9 @@
 import { Node } from "./types";
 import { isText } from "./guards";
-import { collect } from "./collect";
+import { findAll } from "./find";
 
 export function getText(node: Node): string {
-  return [...collect(node).where(isText)].map(text => text.data).join("");
+  return findAll(node, isText)
+    .map(text => text.data)
+    .join("");
 }
