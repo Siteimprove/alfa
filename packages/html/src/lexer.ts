@@ -27,7 +27,7 @@ export type Comment = Readonly<{ type: "comment"; value: string }>;
 export type Character = Readonly<{ type: "character"; value: string }>;
 
 /**
- * @see https://www.w3.org/TR/html53/syntax.html#tokenization
+ * @see https://www.w3.org/TR/html/syntax.html#tokenization
  */
 export type HtmlToken =
   // Tag tokens
