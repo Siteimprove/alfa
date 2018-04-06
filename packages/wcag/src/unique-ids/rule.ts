@@ -1,7 +1,7 @@
 import { Rule } from "@alfa/act";
 import { Element, traverse, getAttribute, isElement } from "@alfa/dom";
 
-import EN from "./locale/en";
+import { EN } from "./locale/en";
 
 export type Context = Map<string, Set<Element>>;
 

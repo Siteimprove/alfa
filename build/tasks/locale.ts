@@ -1,6 +1,7 @@
 import { base, extension } from "@foreman/path";
 import { read, write } from "@foreman/fs";
 import { notify } from "@foreman/notify";
+import * as prettier from "@foreman/prettier";
 const { parse } = require("hjson");
 const stringify = require("stringify-object");
 
@@ -10,16 +11,18 @@ export async function transform(path: string) {
     const json = parse(hjson);
     const string = stringify(json, { indent: "  " });
 
-    const code = `
-// This file has been automatically generated from ${base(path)}.
-import { Locale } from "@alfa/act";
+    const { code } = prettier.transform(
+      `
+      import { Locale } from "@alfa/act";
 
-const locale: Locale = ${string};
+      export const ${json.id.toUpperCase()}: Locale = ${string};
+      `,
+      {
+        filepath: ".ts"
+      }
+    );
 
-export default locale;
-    `.trim();
-
-    await write(extension(path, ".ts"), code + "\n");
+    await write(extension(path, ".ts"), code);
 
     notify({
       message: "Compilation succeeded",
