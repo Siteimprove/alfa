@@ -20,8 +20,8 @@ export const Anchor: Feature = {
           Roles.MenuItemRadio,
           Roles.Option,
           Roles.Radio,
-          // Roles.Switch,
-          // Roles.Tab,
+          Roles.Switch,
+          Roles.Tab,
           Roles.TreeItem
         ]
 };
