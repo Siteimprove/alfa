@@ -6,6 +6,6 @@ import { Structure } from "../abstract";
  */
 export const Presentation: Role = {
   name: "presentation",
-  label: { from: ["author"] },
-  inherits: [Structure]
+  inherits: [Structure],
+  label: { from: ["author"] }
 };

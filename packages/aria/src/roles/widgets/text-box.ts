@@ -7,7 +7,6 @@ import { Input } from "../abstract";
  */
 export const TextBox: Role = {
   name: "textbox",
-  label: { from: ["author"], required: true },
   inherits: [Input],
   supported: [
     Attributes.ActiveDescendant,
@@ -16,5 +15,6 @@ export const TextBox: Role = {
     Attributes.Placeholder,
     Attributes.ReadOnly,
     Attributes.Required
-  ]
+  ],
+  label: { from: ["author"], required: true }
 };

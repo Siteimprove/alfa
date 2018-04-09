@@ -9,8 +9,8 @@ import { Tree, Option } from "../widgets";
  */
 export const TreeItem: Role = {
   name: "treeitem",
-  label: { from: ["author", "contents"], required: true },
   inherits: [ListItem, Option],
   context: [Group, Tree],
-  required: [Attributes.Selected]
+  required: [Attributes.Selected],
+  label: { from: ["author", "contents"], required: true }
 };

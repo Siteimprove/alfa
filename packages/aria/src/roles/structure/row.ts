@@ -9,7 +9,6 @@ import { Grid, TreeGrid } from "../widgets";
  */
 export const Row: Role = {
   name: "row",
-  label: { from: ["author", "contents"] },
   inherits: [Widget, Group],
   context: [Grid, RowGroup, Table, TreeGrid],
   owned: [Cell /*, ColumnHeader, GridCell, RowHeader*/],
@@ -18,5 +17,6 @@ export const Row: Role = {
     Attributes.Level,
     Attributes.RowIndex,
     Attributes.Selected
-  ]
+  ],
+  label: { from: ["author", "contents"] }
 };

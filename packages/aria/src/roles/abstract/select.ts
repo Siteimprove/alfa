@@ -9,7 +9,7 @@ import { Composite } from "./composite";
 export const Select: Role = {
   name: "select",
   abstract: true,
-  label: { from: ["author"] },
   inherits: [Composite, Group],
-  supported: [Attributes.Orientation]
+  supported: [Attributes.Orientation],
+  label: { from: ["author"] }
 };

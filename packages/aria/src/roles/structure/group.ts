@@ -7,7 +7,7 @@ import { Section } from "../abstract";
  */
 export const Group: Role = {
   name: "group",
-  label: { from: ["author"] },
   inherits: [Section],
-  supported: [Attributes.ActiveDescendant]
+  supported: [Attributes.ActiveDescendant],
+  label: { from: ["author"] }
 };
