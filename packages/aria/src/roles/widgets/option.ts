@@ -8,9 +8,9 @@ import { ListBox } from "../widgets";
  */
 export const Option: Role = {
   name: "option",
-  label: { from: ["author", "contents"], required: true },
   inherits: [Input],
   context: [ListBox],
   required: [Attributes.Selected],
-  supported: [Attributes.Checked, Attributes.PositionInSet, Attributes.SetSize]
+  supported: [Attributes.Checked, Attributes.PositionInSet, Attributes.SetSize],
+  label: { from: ["author", "contents"], required: true }
 };

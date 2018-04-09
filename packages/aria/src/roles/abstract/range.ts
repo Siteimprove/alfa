@@ -8,12 +8,12 @@ import { Widget } from "./widget";
 export const Range: Role = {
   name: "range",
   abstract: true,
-  label: { from: ["author"] },
   inherits: [Widget],
   supported: [
     Attributes.ValueMaximum,
     Attributes.ValueMinimum,
     Attributes.ValueNow,
     Attributes.ValueText
-  ]
+  ],
+  label: { from: ["author"] }
 };

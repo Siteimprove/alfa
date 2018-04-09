@@ -8,7 +8,6 @@ import { Row } from "./row";
  */
 export const Cell: Role = {
   name: "cell",
-  label: { from: ["author", "contents"] },
   inherits: [Section],
   context: [Row],
   supported: [
@@ -16,5 +15,6 @@ export const Cell: Role = {
     Attributes.ColumnSpan,
     Attributes.RowIndex,
     Attributes.RowSpan
-  ]
+  ],
+  label: { from: ["author", "contents"] }
 };

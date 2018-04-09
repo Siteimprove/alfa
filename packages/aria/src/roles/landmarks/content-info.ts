@@ -6,6 +6,6 @@ import { Landmark } from "../abstract";
  */
 export const ContentInfo: Role = {
   name: "contentinfo",
-  label: { from: ["author"] },
-  inherits: [Landmark]
+  inherits: [Landmark],
+  label: { from: ["author"] }
 };

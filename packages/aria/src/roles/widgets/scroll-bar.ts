@@ -7,7 +7,6 @@ import { Range } from "../abstract";
  */
 export const ScrollBar: Role = {
   name: "scrollbar",
-  label: { from: ["author"] },
   inherits: [Range],
   supported: [
     Attributes.Controls,
@@ -15,5 +14,6 @@ export const ScrollBar: Role = {
     Attributes.ValueMaximum,
     Attributes.ValueMinimum,
     Attributes.ValueNow
-  ]
+  ],
+  label: { from: ["author"] }
 };

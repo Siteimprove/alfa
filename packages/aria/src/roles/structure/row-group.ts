@@ -9,8 +9,8 @@ import { Grid, TreeGrid } from "../widgets";
  */
 export const RowGroup: Role = {
   name: "rowgroup",
-  label: { from: ["author", "contents"] },
   inherits: [Structure],
   context: [Grid, Table, TreeGrid],
-  owned: [Row]
+  owned: [Row],
+  label: { from: ["author", "contents"] }
 };

@@ -8,6 +8,6 @@ import { Section } from "./section";
 export const Landmark: Role = {
   name: "landmark",
   abstract: true,
-  label: { from: ["author"] },
-  inherits: [Section]
+  inherits: [Section],
+  label: { from: ["author"] }
 };

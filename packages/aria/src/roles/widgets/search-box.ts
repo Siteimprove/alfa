@@ -6,6 +6,6 @@ import { TextBox } from "../widgets";
  */
 export const SearchBox: Role = {
   name: "searchbox",
-  label: { from: ["author"], required: true },
-  inherits: [TextBox]
+  inherits: [TextBox],
+  label: { from: ["author"], required: true }
 };

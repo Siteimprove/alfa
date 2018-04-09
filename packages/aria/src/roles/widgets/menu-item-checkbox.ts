@@ -8,7 +8,7 @@ import { Checkbox, Menu, MenuItem, MenuBar } from "../widgets";
  */
 export const MenuItemCheckbox: Role = {
   name: "menuitemcheckbox",
-  label: { from: ["author", "contents"], required: true },
   inherits: [Checkbox, MenuItem],
-  context: [Menu, MenuBar]
+  context: [Menu, MenuBar],
+  label: { from: ["author", "contents"], required: true }
 };

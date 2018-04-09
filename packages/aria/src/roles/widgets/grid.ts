@@ -8,8 +8,12 @@ import { Table, Row, RowGroup } from "../structure";
  */
 export const Grid: Role = {
   name: "grid",
-  label: { from: ["author"], required: true },
   inherits: [Composite, Table],
   owned: [Row, [RowGroup, Row]],
-  supported: [Attributes.Level, Attributes.Multiselectable, Attributes.ReadOnly]
+  supported: [
+    Attributes.Level,
+    Attributes.Multiselectable,
+    Attributes.ReadOnly
+  ],
+  label: { from: ["author"], required: true }
 };

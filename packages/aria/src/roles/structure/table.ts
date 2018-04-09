@@ -8,8 +8,8 @@ import { Row, RowGroup } from "../structure";
  */
 export const Table: Role = {
   name: "table",
-  label: { from: ["author"], required: true },
   inherits: [Section],
   owned: [Row, [RowGroup, Row]],
-  supported: [Attributes.ColumnCount, Attributes.RowCount]
+  supported: [Attributes.ColumnCount, Attributes.RowCount],
+  label: { from: ["author"], required: true }
 };

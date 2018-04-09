@@ -6,6 +6,6 @@ import { Range } from "../abstract";
  */
 export const ProgressBar: Role = {
   name: "progressbar",
-  label: { from: ["author"], required: true },
-  inherits: [Range]
+  inherits: [Range],
+  label: { from: ["author"], required: true }
 };

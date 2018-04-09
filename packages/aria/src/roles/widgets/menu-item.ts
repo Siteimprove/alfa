@@ -9,8 +9,8 @@ import { Menu, MenuBar } from "../widgets";
  */
 export const MenuItem: Role = {
   name: "menuitem",
-  label: { from: ["author", "contents"], required: true },
   inherits: [Command],
   context: [Group, Menu, MenuBar],
-  supported: [Attributes.Expanded]
+  supported: [Attributes.Expanded],
+  label: { from: ["author", "contents"], required: true }
 };

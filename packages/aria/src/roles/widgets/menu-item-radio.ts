@@ -9,7 +9,7 @@ import { Radio, Menu, MenuItem, MenuBar } from "../widgets";
  */
 export const MenuItemRadio: Role = {
   name: "menuitemradio",
-  label: { from: ["author", "contents"], required: true },
   inherits: [Radio, MenuItem],
-  context: [Group, Menu, MenuBar]
+  context: [Group, Menu, MenuBar],
+  label: { from: ["author", "contents"], required: true }
 };
