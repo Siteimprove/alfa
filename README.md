@@ -22,7 +22,7 @@ Alfa is the result of distilling the best parts of our proprietary accessibility
 
 [<img src="https://upload.wikimedia.org/wikipedia/commons/8/84/European_Commission.svg" width="200" align="right" alt="Logo of the European Commission">](https://ec.europa.eu/)
 
-Alfa has been funded by the European Commission as part of the [Horizon 2020 Programme for Research and Innovation](https://ec.europa.eu/programmes/horizon2020/). We would therefore like to give thanks to not only the European Commission for their grant but also you, as a European citizen, for your contribution to making Alfa possible!
+Alfa has been funded by the European Commission as part of the [Horizon 2020 Programme for Research and Innovation](https://ec.europa.eu/programmes/horizon2020/) under the [WAI-Tools](https://www.w3.org/WAI/Tools/) project. We would therefore like to give thanks to not only the European Commission for their grant but also you, as a European citizen, for your contribution to making Alfa possible!
 
 ## License
 
