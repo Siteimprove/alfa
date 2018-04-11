@@ -18,7 +18,7 @@ export async function transform(path: string) {
       export const ${json.id.toUpperCase()}: Locale = ${string};
       `,
       {
-        filepath: ".ts"
+        parser: "typescript"
       }
     );
 
