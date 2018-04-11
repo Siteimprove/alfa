@@ -1,4 +1,4 @@
-import { Bound, isNewline } from "@alfa/util";
+import { bind, isNewline } from "@alfa/util";
 
 // Expose string utilities to consumers of @alfa/lang as a convenience. Packages
 // that implement lexers will most likely need one or more of these and getting
@@ -32,7 +32,7 @@ export function hasLocation<T extends Token>(
   return "line" in token && "column" in token;
 }
 
-export class CharacterStream extends Bound {
+export class CharacterStream {
   private readonly _input: string;
 
   private _position: number = 0;
@@ -41,7 +41,7 @@ export class CharacterStream extends Bound {
   private _column: number = 0;
 
   public constructor(input: string) {
-    super();
+    bind(this);
     this._input = input;
   }
 

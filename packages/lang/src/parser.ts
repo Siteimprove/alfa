@@ -1,4 +1,4 @@
-import { Bound } from "@alfa/util";
+import { bind } from "@alfa/util";
 import { Token, WithLocation } from "./lexer";
 
 const { isArray } = Array;
@@ -7,7 +7,7 @@ export type Predicate<T, U extends T> =
   | ((n: T) => boolean)
   | ((n: T) => n is U);
 
-export class TokenStream<T extends Token> extends Bound {
+export class TokenStream<T extends Token> {
   private readonly _input: Array<T>;
 
   private _position: number = 0;
@@ -17,7 +17,7 @@ export class TokenStream<T extends Token> extends Bound {
   }
 
   public constructor(input: Array<T>) {
-    super();
+    bind(this);
     this._input = input;
   }
 
