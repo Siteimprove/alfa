@@ -53,8 +53,8 @@ export type CssTree = Selector | SelectorList;
 
 export type CssProduction<T extends CssToken, U extends CssTree> = Production<
   CssToken,
-  T,
   CssTree,
+  T,
   U
 >;
 
@@ -299,14 +299,14 @@ const bracket: CssProduction<Bracket, AttributeSelector | CompoundSelector> = {
   }
 };
 
-export const CssGrammar: Grammar<CssToken, CssTree> = [
+export const CssGrammar: Grammar<CssToken, CssTree> = new Grammar([
   whitespace,
   comment,
   delim,
   ident,
   comma,
   bracket
-];
+]);
 
 export function parse(input: string): CssTree | null {
   return $parse(lex(input), CssGrammar);

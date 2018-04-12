@@ -14,7 +14,7 @@ import {
 export type ExpressionProduction<
   T extends ExpressionToken,
   U extends Expression
-> = Production<ExpressionToken, T, Expression, U>;
+> = Production<ExpressionToken, Expression, T, U>;
 
 const number: ExpressionProduction<Number, Constant> = {
   token: "number",
@@ -115,9 +115,12 @@ const exponentiation: ExpressionProduction<Caret, Operator> = {
   }
 };
 
-export const ExpressionGrammar: Grammar<ExpressionToken, Expression> = [
+export const ExpressionGrammar: Grammar<
+  ExpressionToken,
+  Expression
+> = new Grammar([
   number,
   exponentiation,
   [multiplication, division],
   [addition, subtraction]
-];
+]);

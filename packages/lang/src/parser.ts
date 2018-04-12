@@ -79,7 +79,12 @@ export class TokenStream<T extends Token> {
   }
 }
 
-export interface Production<T extends Token, U extends T, R, P extends R> {
+export interface Production<
+  T extends Token,
+  R,
+  U extends T = T,
+  P extends R = R
+> {
   readonly token: U["type"];
   readonly associate?: "left" | "right";
   prefix?(
@@ -95,28 +100,53 @@ export interface Production<T extends Token, U extends T, R, P extends R> {
   ): P | null;
 }
 
-export type Grammar<T extends Token, R> = Array<
-  Production<T, T, R, R> | Array<Production<T, T, R, R>>
->;
+export class Grammar<T extends Token, R> {
+  private _entries: Map<
+    T["type"],
+    { production: Production<T, R>; precedence: number }
+  > = new Map();
+
+  public constructor(
+    productions: Array<Production<T, R> | Array<Production<T, R>>>
+  ) {
+    for (let i = 0; i < productions.length; i++) {
+      const precedence = productions.length - i;
+      const group = productions[i];
+
+      for (const production of isArray(group) ? group : [group]) {
+        const { token } = production;
+
+        this._entries.set(token, { production, precedence });
+      }
+    }
+  }
+
+  public production(token: T): Production<T, R> {
+    const entry = this._entries.get(token.type);
+
+    if (entry === undefined) {
+      throw new Error(`No production defined for token "${token.type}"`);
+    }
+
+    return entry.production;
+  }
+
+  public precedence(token: T): number {
+    const entry = this._entries.get(token.type);
+
+    if (entry === undefined) {
+      throw new Error(`No production defined for token "${token.type}"`);
+    }
+
+    return entry.precedence;
+  }
+}
 
 export function parse<T extends Token, R>(
   input: Array<T>,
   grammar: Grammar<T, R>
 ): R | null {
-  const productions: Map<
-    T["type"],
-    Production<T, T, R, R> & { precedence: number }
-  > = new Map();
   const stream = new TokenStream(input);
-
-  for (let i = 0; i < grammar.length; i++) {
-    const precedence = grammar.length - i;
-    const group = grammar[i];
-
-    for (const production of isArray(group) ? group : [group]) {
-      productions.set(production.token, { ...production, precedence });
-    }
-  }
 
   function expression(precedence: number): R | null {
     let token = stream.peek();
@@ -125,9 +155,9 @@ export function parse<T extends Token, R>(
       return null;
     }
 
-    let production = productions.get(token.type);
+    let production = grammar.production(token);
 
-    if (production === undefined || production.prefix === undefined) {
+    if (production.prefix === undefined) {
       throw new Error(`Unexpected token '${token.type}' in prefix position`);
     }
 
@@ -146,15 +176,15 @@ export function parse<T extends Token, R>(
         return null;
       }
 
-      production = productions.get(token.type);
+      production = grammar.production(token);
 
-      if (production === undefined || production.infix === undefined) {
+      if (production.infix === undefined) {
         throw new Error(`Unexpected token '${token.type}' in infix position`);
       }
 
       if (
-        production.precedence < precedence ||
-        (production.precedence === precedence &&
+        grammar.precedence(token) < precedence ||
+        (grammar.precedence(token) === precedence &&
           production.associate !== "right")
       ) {
         break;
@@ -165,7 +195,7 @@ export function parse<T extends Token, R>(
       left = production.infix(
         token,
         stream,
-        expression.bind(null, production.precedence),
+        expression.bind(null, grammar.precedence(token)),
         left
       );
 
