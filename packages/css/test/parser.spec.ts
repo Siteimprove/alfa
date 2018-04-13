@@ -253,3 +253,38 @@ test("Can parse an attribute selector when part of a compound selector", async t
       }
     ]
   }));
+
+test("Can parse a function with no values", async t =>
+  css(t, "rgb()", {
+    type: "function",
+    name: "rgb",
+    value: []
+  }));
+
+test("Can parse a function with a single value", async t =>
+  css(t, "rgb(123)", {
+    type: "function",
+    name: "rgb",
+    value: [
+      {
+        type: "number",
+        value: 123
+      }
+    ]
+  }));
+
+test("Can parse a function with multiple values", async t =>
+  css(t, "rgb(123, 456)", {
+    type: "function",
+    name: "rgb",
+    value: [
+      {
+        type: "number",
+        value: 123
+      },
+      {
+        type: "number",
+        value: 456
+      }
+    ]
+  }));

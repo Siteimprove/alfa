@@ -6,7 +6,13 @@ import {
   Delim,
   Ident,
   Comma,
+  Paren,
   Bracket,
+  String,
+  Number,
+  Percentage,
+  Dimension,
+  FunctionName,
   isIdent,
   isString,
   isDelim,
@@ -49,7 +55,31 @@ export type SelectorList = {
   selectors: Array<Selector>;
 };
 
-export type CssTree = Selector | SelectorList;
+export type PreservedToken = String | Number | Percentage | Dimension;
+
+export type Function = {
+  type: "function";
+  name: string;
+  value: Array<ComponentValue>;
+};
+
+export type SimpleBlock = {
+  type: "simple-block";
+  value: Array<ComponentValue>;
+};
+
+export type ComponentValue = PreservedToken | Function | SimpleBlock;
+
+export type ComponentValueList = {
+  type: "component-value-list";
+  values: Array<ComponentValue>;
+};
+
+export type CssTree =
+  | Selector
+  | SelectorList
+  | ComponentValue
+  | ComponentValueList;
 
 export type CssProduction<T extends CssToken, U extends CssTree> = Production<
   CssToken,
@@ -88,6 +118,36 @@ export function isSelector(node: CssTree): node is Selector {
 
 export function isSelectorList(node: CssTree): node is SelectorList {
   return node.type === "selector-list";
+}
+
+export function isPreservedToken(node: CssTree): node is PreservedToken {
+  switch (node.type) {
+    case "string":
+    case "number":
+    case "percentage":
+    case "dimension":
+      return true;
+    default:
+      return false;
+  }
+}
+
+export function isFunction(node: CssTree): node is Function {
+  return node.type === "function";
+}
+
+export function isSimpleBlock(node: CssTree): node is SimpleBlock {
+  return node.type === "simple-block";
+}
+
+export function isComponentValue(node: CssTree): node is ComponentValue {
+  return isPreservedToken(node) || isFunction(node) || isSimpleBlock(node);
+}
+
+export function isComponentValueList(
+  node: CssTree
+): node is ComponentValueList {
+  return node.type === "component-value-list";
 }
 
 const whitespace: CssProduction<Whitespace, CssTree> = {
@@ -212,31 +272,49 @@ const ident: CssProduction<Ident, TypeSelector> = {
   }
 };
 
-const comma: CssProduction<Comma, SelectorList> = {
+const comma: CssProduction<Comma, SelectorList | ComponentValueList> = {
   token: ",",
 
   infix(token, stream, expression, left) {
-    const selectors: Array<Selector> = [];
-
-    if (isSimpleSelector(left)) {
-      selectors.push(left);
-    }
-
     const right = expression();
 
-    if (right === null) {
-      throw new Error("Expected selector");
+    if (isSimpleSelector(left)) {
+      const selectors: Array<Selector> = [left];
+
+      if (right === null) {
+        throw new Error("Expected selector");
+      }
+
+      if (isSelector(right)) {
+        selectors.push(right);
+      } else if (isSelectorList(right)) {
+        selectors.push(...right.selectors);
+      } else {
+        throw new Error("Expected selector");
+      }
+
+      return { type: "selector-list", selectors };
     }
 
-    if (isSelector(right)) {
-      selectors.push(right);
+    if (isComponentValue(left)) {
+      const values: Array<ComponentValue> = [left];
+
+      if (right === null) {
+        throw new Error("Expected component value");
+      }
+
+      if (isComponentValue(right)) {
+        values.push(right);
+      } else if (isComponentValueList(right)) {
+        values.push(...right.values);
+      } else {
+        throw new Error("Expected component value");
+      }
+
+      return { type: "component-value-list", values };
     }
 
-    if (isSelectorList(right)) {
-      selectors.push(...right.selectors);
-    }
-
-    return { type: "selector-list", selectors };
+    throw new Error("Unexpected comma");
   }
 };
 
@@ -299,13 +377,88 @@ const bracket: CssProduction<Bracket, AttributeSelector | CompoundSelector> = {
   }
 };
 
+const functionName: CssProduction<FunctionName, Function> = {
+  token: "function-name",
+
+  prefix(token, { peek, advance }, expression) {
+    const func: Function = { type: "function", name: token.value, value: [] };
+
+    let next: CssToken | null = peek();
+
+    while (next !== null) {
+      const right = expression();
+
+      if (right !== null) {
+        if (isComponentValue(right)) {
+          func.value.push(right);
+        } else if (isComponentValueList(right)) {
+          func.value.push(...right.values);
+        } else {
+          throw new Error("Expected component value");
+        }
+      }
+
+      next = peek();
+
+      if (next === null || next.type === ")") {
+        break;
+      }
+    }
+
+    if (next === null || next.type !== ")") {
+      throw new Error("Expected end of function");
+    }
+
+    advance();
+
+    return func;
+  }
+};
+
+const string: CssProduction<String, String> = {
+  token: "string",
+
+  prefix(token, stream, expression) {
+    return { type: "string", value: token.value };
+  }
+};
+
+const number: CssProduction<Number, Number> = {
+  token: "number",
+
+  prefix(token, stream, expression) {
+    return { type: "number", value: token.value };
+  }
+};
+
+const percentage: CssProduction<Percentage, Percentage> = {
+  token: "percentage",
+
+  prefix(token, stream, expression) {
+    return { type: "percentage", value: token.value };
+  }
+};
+
+const dimension: CssProduction<Dimension, Dimension> = {
+  token: "dimension",
+
+  prefix(token, stream, expression) {
+    return { type: "dimension", value: token.value, unit: token.unit };
+  }
+};
+
 export const CssGrammar: Grammar<CssToken, CssTree> = new Grammar([
   whitespace,
   comment,
   delim,
   ident,
   comma,
-  bracket
+  bracket,
+  functionName,
+  string,
+  number,
+  percentage,
+  dimension
 ]);
 
 export function parse(input: string): CssTree | null {

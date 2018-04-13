@@ -17,7 +17,7 @@ export type Whitespace = Readonly<{ type: "whitespace" }>;
 export type Comment = Readonly<{ type: "comment"; value: string }>;
 
 export type Ident = Readonly<{ type: "ident"; value: string }>;
-export type Function = Readonly<{ type: "function"; value: string }>;
+export type FunctionName = Readonly<{ type: "function-name"; value: string }>;
 export type String = Readonly<{ type: "string"; value: string }>;
 export type Url = Readonly<{ type: "url"; value: string }>;
 export type Delim = Readonly<{ type: "delim"; value: string }>;
@@ -45,7 +45,7 @@ export type CssToken =
 
   // Value tokens
   | Ident
-  | Function
+  | FunctionName
   | String
   | Url
   | Delim
@@ -266,7 +266,11 @@ const ident: CssPattern = (stream, emit) => {
 
   if (peek() === "(") {
     advance();
-    emit({ type: "function", value, location: { start, end: location() } });
+    emit({
+      type: "function-name",
+      value,
+      location: { start, end: location() }
+    });
   } else {
     emit({ type: "ident", value, location: { start, end: location() } });
   }
@@ -296,11 +300,13 @@ const string: CssPattern = (
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
 const number: CssPattern = (
-  { peek, advance, accept, location, result },
+  { ignore, peek, advance, accept, location, result },
   emit,
   state
 ) => {
   const { start } = state;
+
+  ignore();
 
   if (peek() === "+" || peek() === "-") {
     advance();
@@ -356,7 +362,7 @@ const numeric: CssPattern = (stream, emit, { start, number }) => {
   } else if (peek() === "%" && advance()) {
     token = {
       type: "percentage",
-      value: token.value,
+      value: token.value / 100,
       location: { start, end: location() }
     };
   }

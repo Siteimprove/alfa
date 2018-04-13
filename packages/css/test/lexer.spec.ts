@@ -214,10 +214,56 @@ test("Can lex a percentage", async t =>
   css(t, "123%", [
     {
       type: "percentage",
-      value: 123,
+      value: 1.23,
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 4 }
+      }
+    }
+  ]));
+
+test("Can lex a function with no arguments", async t =>
+  css(t, "rgb()", [
+    {
+      type: "function-name",
+      value: "rgb",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 4 }
+      }
+    },
+    {
+      type: ")",
+      location: {
+        start: { line: 0, column: 4 },
+        end: { line: 0, column: 5 }
+      }
+    }
+  ]));
+
+test("Can lex a function with a single argument", async t =>
+  css(t, "rgb(123)", [
+    {
+      type: "function-name",
+      value: "rgb",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 4 }
+      }
+    },
+    {
+      type: "number",
+      value: 123,
+      location: {
+        start: { line: 0, column: 4 },
+        end: { line: 0, column: 7 }
+      }
+    },
+    {
+      type: ")",
+      location: {
+        start: { line: 0, column: 7 },
+        end: { line: 0, column: 8 }
       }
     }
   ]));
