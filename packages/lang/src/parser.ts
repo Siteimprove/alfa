@@ -121,6 +121,10 @@ export class Grammar<T extends Token, R> {
     }
   }
 
+  public has(token: T): boolean {
+    return this._entries.has(token.type);
+  }
+
   public production(token: T): Production<T, R> {
     const entry = this._entries.get(token.type);
 
@@ -148,17 +152,17 @@ export function parse<T extends Token, R>(
 ): R | null {
   const stream = new TokenStream(input);
 
-  function expression(precedence: number): R | null {
+  function expression(power: number): R | null {
     let token = stream.peek();
 
-    if (token === null) {
+    if (token === null || !grammar.has(token)) {
       return null;
     }
 
     let production = grammar.production(token);
 
     if (production.prefix === undefined) {
-      throw new Error(`Unexpected token '${token.type}' in prefix position`);
+      return null;
     }
 
     stream.advance();
@@ -172,20 +176,21 @@ export function parse<T extends Token, R>(
     while (stream.peek()) {
       token = stream.peek();
 
-      if (token === null) {
-        return null;
+      if (token === null || !grammar.has(token)) {
+        return left;
       }
 
       production = grammar.production(token);
 
       if (production.infix === undefined) {
-        throw new Error(`Unexpected token '${token.type}' in infix position`);
+        return left;
       }
 
+      const precedence = grammar.precedence(token);
+
       if (
-        grammar.precedence(token) < precedence ||
-        (grammar.precedence(token) === precedence &&
-          production.associate !== "right")
+        precedence < power ||
+        (precedence === power && production.associate !== "right")
       ) {
         break;
       }
@@ -207,5 +212,12 @@ export function parse<T extends Token, R>(
     return left;
   }
 
-  return expression(-1);
+  const result = expression(-1);
+  const end = stream.peek();
+
+  if (end !== null) {
+    throw new Error(`Unexpected token "${end.type}"`);
+  }
+
+  return result;
 }
