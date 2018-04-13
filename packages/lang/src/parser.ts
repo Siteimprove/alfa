@@ -121,28 +121,16 @@ export class Grammar<T extends Token, R> {
     }
   }
 
-  public has(token: T): boolean {
-    return this._entries.has(token.type);
-  }
-
-  public production(token: T): Production<T, R> {
+  public get(
+    token: T
+  ): { production: Production<T, R>; precedence: number } | null {
     const entry = this._entries.get(token.type);
 
     if (entry === undefined) {
-      throw new Error(`No production defined for token "${token.type}"`);
+      return null;
     }
 
-    return entry.production;
-  }
-
-  public precedence(token: T): number {
-    const entry = this._entries.get(token.type);
-
-    if (entry === undefined) {
-      throw new Error(`No production defined for token "${token.type}"`);
-    }
-
-    return entry.precedence;
+    return entry;
   }
 }
 
@@ -153,13 +141,19 @@ export function parse<T extends Token, R>(
   const stream = new TokenStream(input);
 
   function expression(power: number): R | null {
-    let token = stream.peek();
+    const token = stream.peek();
 
-    if (token === null || !grammar.has(token)) {
+    if (token === null) {
       return null;
     }
 
-    let production = grammar.production(token);
+    const entry = grammar.get(token);
+
+    if (entry === null) {
+      return null;
+    }
+
+    const { production } = entry;
 
     if (production.prefix === undefined) {
       return null;
@@ -167,26 +161,30 @@ export function parse<T extends Token, R>(
 
     stream.advance();
 
-    let left = production.prefix(token, stream, expression.bind(null, -1));
+    let left = production.prefix(token, stream, () => expression(-1));
 
     if (left === null) {
       return null;
     }
 
     while (stream.peek()) {
-      token = stream.peek();
+      const token = stream.peek();
 
-      if (token === null || !grammar.has(token)) {
-        return left;
+      if (token === null) {
+        break;
       }
 
-      production = grammar.production(token);
+      const entry = grammar.get(token);
+
+      if (entry === null) {
+        break;
+      }
+
+      const { production, precedence } = entry;
 
       if (production.infix === undefined) {
-        return left;
+        break;
       }
-
-      const precedence = grammar.precedence(token);
 
       if (
         precedence < power ||
@@ -200,7 +198,7 @@ export function parse<T extends Token, R>(
       left = production.infix(
         token,
         stream,
-        expression.bind(null, grammar.precedence(token)),
+        () => expression(precedence),
         left
       );
 
