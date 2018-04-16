@@ -8,5 +8,5 @@ export const Heading: Role = {
   name: "heading",
   inherits: [SectionHead],
   required: [Attributes.Level],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };
