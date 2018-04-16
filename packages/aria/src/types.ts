@@ -111,7 +111,11 @@ export type Role = Readonly<{
   supported?: Array<Attribute>;
 }>;
 
-export type FeatureAspect<T> = T | ((element: Element) => T | null);
+export type FeatureAspect<T> = T | ((element: Element) => T);
+
+export const Any = "any";
+
+export const None = "none";
 
 /**
  * @see https://www.w3.org/TR/html-aria/
@@ -119,6 +123,6 @@ export type FeatureAspect<T> = T | ((element: Element) => T | null);
 export type Feature = Readonly<{
   element: string;
   role?: FeatureAspect<Role>;
-  allowedRoles?: FeatureAspect<Array<Role>>;
+  allowedRoles: FeatureAspect<Array<Role> | typeof Any | typeof None>;
   allowedAttributes?: FeatureAspect<Array<Attribute>>;
 }>;

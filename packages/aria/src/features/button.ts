@@ -19,8 +19,8 @@ export const Button: Feature = {
           Roles.MenuItemCheckbox,
           Roles.MenuItemRadio,
           Roles.Option,
-          Roles.Radio
-          // Roles.Switch,
-          // Roles.Tab
+          Roles.Radio,
+          Roles.Switch,
+          Roles.Tab
         ]
 };

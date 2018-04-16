@@ -8,8 +8,8 @@ export const Aside: Feature = {
   element: "aside",
   role: Roles.Complementary,
   allowedRoles: [
-    // Roles.Feed,
-    // Roles.Note,
+    Roles.Feed,
+    Roles.Note,
     Roles.Presentation,
     Roles.None,
     Roles.Region,
