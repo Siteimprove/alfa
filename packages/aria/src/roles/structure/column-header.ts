@@ -12,5 +12,5 @@ export const ColumnHeader: Role = {
   inherits: [Cell, GridCell, SectionHead],
   context: [Row],
   supported: [Attributes.Sort],
-  label: { from: ["contents","author"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };
