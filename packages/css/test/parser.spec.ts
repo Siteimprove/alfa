@@ -194,8 +194,8 @@ test("Can parse a list of simple and compound selectors", async t =>
     ]
   }));
 
-test("Can parse a list of selectors independant of whitespace", async t =>
-  css(t, ".foo  ,  .bar  ,  .baz", {
+test("Can parse a list of selectors with no whitespace", async t =>
+  css(t, ".foo,.bar,.baz", {
     type: "selector-list",
     selectors: [
       {
@@ -275,6 +275,22 @@ test("Can parse a function with a single value", async t =>
 
 test("Can parse a function with multiple values", async t =>
   css(t, "rgb(123, 456)", {
+    type: "function",
+    name: "rgb",
+    value: [
+      {
+        type: "number",
+        value: 123
+      },
+      {
+        type: "number",
+        value: 456
+      }
+    ]
+  }));
+
+test("Can parse a function with multiple values and no whitespace", async t =>
+  css(t, "rgb(123,456)", {
     type: "function",
     name: "rgb",
     value: [

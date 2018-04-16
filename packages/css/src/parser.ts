@@ -278,8 +278,10 @@ const comma: CssProduction<Comma, SelectorList | ComponentValueList> = {
   infix(token, stream, expression, left) {
     const right = expression();
 
-    if (isSimpleSelector(left)) {
-      const selectors: Array<Selector> = [left];
+    if (isSelector(left) || isSelectorList(left)) {
+      const selectors: Array<Selector> = isSelector(left)
+        ? [left]
+        : left.selectors;
 
       if (right === null) {
         throw new Error("Expected selector");
@@ -296,8 +298,10 @@ const comma: CssProduction<Comma, SelectorList | ComponentValueList> = {
       return { type: "selector-list", selectors };
     }
 
-    if (isComponentValue(left)) {
-      const values: Array<ComponentValue> = [left];
+    if (isComponentValue(left) || isComponentValueList(left)) {
+      const values: Array<ComponentValue> = isComponentValue(left)
+        ? [left]
+        : left.values;
 
       if (right === null) {
         throw new Error("Expected component value");
