@@ -8,5 +8,5 @@ export const Feed: Role = {
   name: "feed",
   inherits: [List],
   owned: [Article],
-  label: { from: ["author"], required: false }
+  label: { from: ["author"] }
 };
