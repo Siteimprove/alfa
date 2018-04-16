@@ -1,4 +1,6 @@
+import { values, includes } from "@alfa/util";
 import { Element } from "@alfa/dom";
+import * as Roles from "./roles";
 
 export type ValueType =
   /**
@@ -113,9 +115,12 @@ export type Role = Readonly<{
 
 export type FeatureAspect<T> = T | ((element: Element) => T);
 
-export const Any = "any";
+export const Any: Array<Role> = values(Roles);
 
-export const None = "none";
+export const None: Array<Role> = [];
+
+export const Except: (...roles: Array<Role>) => Array<Role> = (...roles) =>
+  Any.filter(role => includes(roles, role));
 
 /**
  * @see https://www.w3.org/TR/html-aria/
