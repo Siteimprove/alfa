@@ -6,7 +6,6 @@ import { Status } from "../live-region";
  */
 export const Timer: Role = {
   name: "timer",
-  abstract: true,
   inherits: [Status],
   label: { from: ["author"], required: true }
 };
