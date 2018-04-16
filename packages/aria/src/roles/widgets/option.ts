@@ -12,5 +12,5 @@ export const Option: Role = {
   context: [ListBox],
   required: [Attributes.Selected],
   supported: [Attributes.Checked, Attributes.PositionInSet, Attributes.SetSize],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };

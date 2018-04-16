@@ -10,5 +10,5 @@ export const Radio: Role = {
   inherits: [Input],
   required: [Attributes.Checked],
   supported: [Attributes.PositionInSet, Attributes.SetSize],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };

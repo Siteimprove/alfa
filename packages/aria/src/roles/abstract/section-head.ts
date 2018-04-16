@@ -10,5 +10,5 @@ export const SectionHead: Role = {
   abstract: true,
   inherits: [Structure],
   supported: [Attributes.Expanded],
-  label: { from: ["author", "contents"] }
+  label: { from: ["contents", "author"] }
 };

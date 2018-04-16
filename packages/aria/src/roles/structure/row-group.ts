@@ -12,5 +12,5 @@ export const RowGroup: Role = {
   inherits: [Structure],
   context: [Grid, Table, TreeGrid],
   owned: [Row],
-  label: { from: ["author", "contents"] }
+  label: { from: ["contents", "author"] }
 };

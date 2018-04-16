@@ -9,5 +9,5 @@ export const Link: Role = {
   name: "link",
   inherits: [Command],
   supported: [Attributes.Expanded],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };

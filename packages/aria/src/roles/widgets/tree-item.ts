@@ -12,5 +12,5 @@ export const TreeItem: Role = {
   inherits: [ListItem, Option],
   context: [Group, Tree],
   required: [Attributes.Selected],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };

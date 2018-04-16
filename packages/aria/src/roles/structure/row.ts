@@ -18,5 +18,5 @@ export const Row: Role = {
     Attributes.RowIndex,
     Attributes.Selected
   ],
-  label: { from: ["author", "contents"] }
+  label: { from: ["contents", "author"] }
 };

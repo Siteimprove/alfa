@@ -63,7 +63,7 @@ export type Attribute = Readonly<{
   name: string;
   type: ValueType;
   values?: Array<string>;
-  deprecated?: boolean;
+  deprecated?: true;
 }>;
 
 /**
@@ -75,14 +75,14 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#isAbstract
    */
-  abstract?: boolean;
+  abstract?: true;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#namecalculation
    */
   label?: Readonly<{
-    from: Array<"author" | "contents">;
-    required?: boolean;
+    from: ["contents"] | ["author"] | ["contents", "author"];
+    required?: true;
   }>;
 
   /**

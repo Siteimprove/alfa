@@ -10,5 +10,5 @@ export const MenuItemCheckbox: Role = {
   name: "menuitemcheckbox",
   inherits: [Checkbox, MenuItem],
   context: [Menu, MenuBar],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };

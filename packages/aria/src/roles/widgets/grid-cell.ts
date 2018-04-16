@@ -11,5 +11,5 @@ export const GridCell: Role = {
   inherits: [Cell, Widget],
   context: [Row],
   supported: [Attributes.ReadOnly, Attributes.Required, Attributes.Selected],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };

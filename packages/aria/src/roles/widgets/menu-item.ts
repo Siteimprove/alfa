@@ -12,5 +12,5 @@ export const MenuItem: Role = {
   inherits: [Command],
   context: [Group, Menu, MenuBar],
   supported: [Attributes.Expanded],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };

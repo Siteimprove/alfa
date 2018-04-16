@@ -16,5 +16,5 @@ export const Cell: Role = {
     Attributes.RowIndex,
     Attributes.RowSpan
   ],
-  label: { from: ["author", "contents"] }
+  label: { from: ["contents", "author"] }
 };

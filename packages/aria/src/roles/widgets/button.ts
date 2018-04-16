@@ -9,5 +9,5 @@ export const Button: Role = {
   name: "button",
   inherits: [Command],
   supported: [Attributes.Expanded, Attributes.Pressed],
-  label: { from: ["author", "contents"], required: true }
+  label: { from: ["contents", "author"], required: true }
 };
