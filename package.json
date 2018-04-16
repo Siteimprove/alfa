@@ -14,19 +14,21 @@
   "workspaces": ["packages/*"],
   "devDependencies": {
     "@foreman/api": "^0.0.0",
-    "@foreman/cli": "^0.0.0",
-    "@foreman/dependant": "^0.0.4",
-    "@foreman/fs": "^0.0.0",
-    "@foreman/git": "^0.0.0",
-    "@foreman/notify": "^0.0.6",
+    "@foreman/cli": "^0.1.0",
+    "@foreman/dependant": "^0.1.0",
+    "@foreman/fs": "^0.1.0",
+    "@foreman/git": "^0.1.0",
+    "@foreman/notify": "^0.1.0",
     "@foreman/path": "^0.0.0",
-    "@foreman/prettier": "^0.0.0",
-    "@foreman/register": "^0.0.0",
-    "@foreman/tap": "^0.0.7",
-    "@foreman/typescript": "^0.0.6",
+    "@foreman/prettier": "^0.2.0",
+    "@foreman/register": "^0.1.0",
+    "@foreman/tap": "^0.1.0",
+    "@foreman/typescript": "^0.2.0",
     "hjson": "^3.1.0",
     "husky": "^0.14.3",
     "lerna": "^2.8.0",
-    "stringify-object": "^3.2.1"
+    "prettier": "1.12.0",
+    "stringify-object": "^3.2.1",
+    "typescript": "^2.8.1"
   }
 }
