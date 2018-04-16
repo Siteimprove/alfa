@@ -4,7 +4,7 @@ import { Group } from "../structure";
 /**
  * @see https://www.w3.org/TR/wai-aria/#toolbar
  */
-export const ToolBar: Role = {
+export const Toolbar: Role = {
   name: "toolbar",
   inherits: [Group],
   supported: [Attributes.Orientation],
