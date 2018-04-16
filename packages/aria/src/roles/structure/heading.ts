@@ -5,7 +5,7 @@ import { SectionHead } from "../abstract";
  * @see https://www.w3.org/TR/wai-aria/#heading
  */
 export const Heading: Role = {
-  name: "Heading",
+  name: "heading",
   inherits: [SectionHead],
   required: [Attributes.Level],
   label: { from: ["author", "contents"], required: true }
