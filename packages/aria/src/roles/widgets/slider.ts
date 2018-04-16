@@ -5,7 +5,7 @@ import { Input, Range } from "../abstract";
 /**
  * @see https://www.w3.org/TR/wai-aria/#slider
  */
-export const slider: Role = {
+export const Slider: Role = {
   name: "slider",
   inherits: [Input, Range],
   required: [
