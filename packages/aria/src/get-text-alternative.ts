@@ -21,6 +21,21 @@ import { resolveReferences } from "./resolve-references";
  *
  * @see https://www.w3.org/TR/accname-aam-1.1/
  */
+export function getTextAlternative(node: Element | Text): string | null;
+
+/**
+ * @internal
+ */
+export function getTextAlternative(
+  node: Element | Text,
+  visited: Set<Element | Text>,
+  flags?: Readonly<{
+    recursing?: boolean;
+    referencing?: boolean;
+    labelling?: boolean;
+  }>
+): string | null;
+
 export function getTextAlternative(
   node: Element | Text,
   visited: Set<Element | Text> = new Set(),
