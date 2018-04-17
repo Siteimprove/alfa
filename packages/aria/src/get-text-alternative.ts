@@ -289,6 +289,10 @@ function isNativeTextAlternativeElement(element: Element): boolean {
 }
 
 /**
+ * Check if an element is a "text level elements not listed elsewhere". A few
+ * text level elements, such as anchors, are handled elsewhere and are therefore
+ * not considered by this function.
+ *
  * @see https://www.w3.org/TR/html-aam-1.0/#text-level-elements-not-listed-elsewhere
  */
 function isTextLevelElement(element: Element): boolean {
