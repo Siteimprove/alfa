@@ -3,6 +3,7 @@ import * as Roles from "./roles";
 import * as Features from "./features";
 
 export * from "./get-role";
+export * from "./get-text-alternative";
 export * from "./is-landmark";
 export * from "./types";
 export { Attributes, Roles, Features };

@@ -1,3 +1,4 @@
+export * from "./closest";
 export * from "./collect";
 export * from "./compare";
 export * from "./digest";
