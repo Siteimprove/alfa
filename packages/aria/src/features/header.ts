@@ -1,5 +1,5 @@
 import { closest, Element, getTag, isElement } from "@alfa/dom";
-import { Feature, Role, None } from "../types";
+import { Feature, Role } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -17,9 +17,13 @@ function role(header: Element): Role | undefined {
       if (isElement(element)) {
         switch (getTag(element)) {
           case "article":
+            return true;
           case "aside":
+            return true;
           case "main":
+            return true;
           case "nav":
+            return true;
           case "section":
             return true;
 
