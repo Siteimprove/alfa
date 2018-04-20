@@ -1,9 +1,9 @@
 import { launch } from "puppeteer";
-import { parse } from "circular-json";
+import { Document } from "@alfa/dom";
 import { Aspects } from "@alfa/act";
 import { bundle } from "./bundle";
 
-const PICKLE = require.resolve("./pickle");
+const PICKLE = require.resolve("@alfa/pickle");
 
 export enum Wait {
   Ready = "domcontentloaded",
@@ -27,7 +27,7 @@ export type ScrapeOptions = Readonly<{
 
 export class Scraper {
   private readonly _browser = launch({
-    headless: false
+    headless: true
   });
 
   private readonly _pickle = bundle(PICKLE, {
@@ -66,7 +66,7 @@ export class Scraper {
       throw err;
     }
 
-    let aspects: Aspects | null = null;
+    let document: Document | null = null;
     let error: Error | null = null;
     do {
       const elapsed = Date.now() - start;
@@ -76,13 +76,11 @@ export class Scraper {
       }
 
       try {
-        aspects = parse(
-          await page.evaluate(`{
-            const require = ${pickle};
-            const { pickle } = require("${PICKLE}");
-            pickle();
-          }`)
-        );
+        document = await page.evaluate(`{
+          const require = ${pickle};
+          const { virtualize } = require("${PICKLE}");
+          virtualize(window.document);
+        }`);
       } catch (err) {
         error = err;
 
@@ -93,15 +91,15 @@ export class Scraper {
           await page.reload({ timeout: timeout - elapsed, waitUntil: wait });
         } catch (err) {}
       }
-    } while (aspects === null);
+    } while (document === null);
 
     await page.close();
 
-    if (aspects === null) {
+    if (document === null) {
       throw error || new Error("Failed to scrape document");
     }
 
-    return aspects;
+    return { document };
   }
 
   async close(): Promise<void> {

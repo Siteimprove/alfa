@@ -58,6 +58,11 @@ export interface Comment extends Node, ChildNode {
  */
 export interface Document extends Node, ParentNode {
   readonly nodeType: 9;
+
+  /**
+   * @see https://www.w3.org/TR/cssom/#extensions-to-the-document-interface
+   */
+  readonly styleSheets: Array<StyleSheet>;
 }
 
 /**
@@ -79,4 +84,117 @@ export interface DocumentFragment extends Node, ParentNode {
  * @see https://www.w3.org/TR/dom41/#interface-shadowroot
  */
 export interface ShadowRoot extends DocumentFragment {}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssstylesheet
+ */
+export interface StyleSheet {
+  readonly cssRules: Array<Rule>;
+}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssstyledeclaration
+ */
+export interface StyleDeclaration {
+  readonly cssText: string;
+}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssrule
+ */
+export interface Rule {
+  readonly type: number;
+}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssgroupingrule
+ */
+export interface GroupingRule extends Rule {
+  readonly cssRules: Array<Rule>;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-conditional/#cssconditionrule
+ */
+export interface ConditionRule extends GroupingRule {
+  readonly conditionText: string;
+}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssstylerule
+ */
+export interface StyleRule extends Rule {
+  readonly type: 1;
+  readonly selectorText: string;
+  readonly style: StyleDeclaration;
+}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssimportrule
+ */
+export interface ImportRule extends Rule {
+  readonly type: 3;
+  readonly href: string;
+  readonly media: Array<string>;
+  readonly styleSheet: StyleSheet;
+}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssmediarule
+ */
+export interface MediaRule extends GroupingRule {
+  readonly type: 4;
+  readonly media: Array<string>;
+}
+
+export interface FontFaceRule extends Rule {
+  readonly type: 5;
+  readonly style: StyleDeclaration;
+}
+
+/**
+ * NB: While the specification states that the `CSSPageRule` interface extends
+ * `CSSGroupingRule`, this is in practice not the case; in current browser
+ * implementations, it extends `CSSRule`.
+ *
+ * @see https://www.w3.org/TR/cssom/#csspagerule
+ */
+export interface PageRule extends Rule {
+  readonly type: 6;
+  readonly selectorText: string;
+  readonly style: StyleDeclaration;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-animations/#csskeyframesrule
+ */
+export interface KeyframesRule extends Rule {
+  readonly type: 7;
+  readonly name: string;
+  readonly cssRules: Array<Rule>;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-animations/#csskeyframerule
+ */
+export interface KeyframeRule extends Rule {
+  readonly type: 8;
+  readonly keyText: string;
+  readonly style: StyleDeclaration;
+}
+
+/**
+ * @see https://www.w3.org/TR/cssom/#cssnamespacerule
+ */
+export interface NamespaceRule extends Rule {
+  readonly type: 10;
+  readonly namespaceURI: string;
+  readonly prefix: string;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-conditional/#csssupportsrule
+ */
+export interface SupportsRule extends ConditionRule {
+  readonly type: 12;
 }

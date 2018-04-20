@@ -1,6 +1,4 @@
 import { Node, Element } from "@alfa/dom";
-import { StyleSheet } from "@alfa/style";
-import { LayoutSheet } from "@alfa/layout";
 
 export type Criterion = string;
 
@@ -11,8 +9,6 @@ export type Target = Node;
  */
 export interface Aspects {
   readonly document: Node;
-  readonly style: StyleSheet;
-  readonly layout: LayoutSheet;
 }
 
 /**
