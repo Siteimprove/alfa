@@ -12,7 +12,7 @@ export function traverse(
   root: Node,
   visitor: (node: Node, parent: Node | null) => false | void,
   options: TraverseOptions = {}
-) {
+): void {
   const queue: Array<Node> = [];
 
   for (
