@@ -11,16 +11,18 @@ import {
   CssTree,
   parse
 } from "@alfa/css";
-import { Element, ParentNode } from "./types";
+import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";
-import { getClasslist } from "./get-classlist";
+import { getClassList } from "./get-class-list";
 import { getTag } from "./get-tag";
+import { getParent } from "./get-parent";
 
 const parseMemoized = memoize(parse, { cache: { size: 50 } });
 
 export function matches(
   element: Element,
+  context: Node,
   selector: string | Selector | SelectorList
 ): boolean {
   let parsed: CssTree | null = null;
@@ -45,11 +47,11 @@ export function matches(
     case "attribute-selector":
       return matchesAttribute(element, parsed);
     case "compound-selector":
-      return matchesCompound(element, parsed);
+      return matchesCompound(element, context, parsed);
     case "selector-list":
-      return matchesList(element, parsed);
+      return matchesList(element, context, parsed);
     case "relative-selector":
-      return matchesRelative(element, parsed);
+      return matchesRelative(element, context, parsed);
   }
 
   return false;
@@ -60,7 +62,7 @@ function matchesType(element: Element, selector: TypeSelector): boolean {
 }
 
 function matchesClass(element: Element, selector: ClassSelector): boolean {
-  return getClasslist(element).has(selector.name);
+  return getClassList(element).has(selector.name);
 }
 
 function matchesId(element: Element, selector: IdSelector): boolean {
@@ -82,47 +84,58 @@ function matchesAttribute(
 
 function matchesCompound(
   element: Element,
+  context: Node,
   selector: CompoundSelector
 ): boolean {
-  return selector.selectors.every(selector => matches(element, selector));
+  return selector.selectors.every(selector =>
+    matches(element, context, selector)
+  );
 }
 
-function matchesList(element: Element, selector: SelectorList): boolean {
-  return selector.selectors.some(selector => matches(element, selector));
+function matchesList(
+  element: Element,
+  context: Node,
+  selector: SelectorList
+): boolean {
+  return selector.selectors.some(selector =>
+    matches(element, context, selector)
+  );
 }
 
 function matchesRelative(
   element: Element,
+  context: Node,
   selector: RelativeSelector
 ): boolean {
-  if (!matches(element, selector.selector)) {
+  if (!matches(element, context, selector.selector)) {
     return false;
   }
 
   switch (selector.combinator) {
     case " ":
-      return matchesDescendant(element, selector);
+      return matchesDescendant(element, context, selector);
     case ">":
-      return matchesDirectDescendant(element, selector);
+      return matchesDirectDescendant(element, context, selector);
     case "~":
-      return matchesSibling(element, selector);
+      return matchesSibling(element, context, selector);
     case "+":
-      return matchesDirectSibling(element, selector);
+      return matchesDirectSibling(element, context, selector);
   }
 }
 
 function matchesDescendant(
   element: Element,
+  context: Node,
   selector: RelativeSelector
 ): boolean {
-  let { parentNode } = element;
+  let parent: Node | null = getParent(element, context);
 
-  while (parentNode !== null && isElement(parentNode)) {
-    if (matches(parentNode, selector.relative)) {
+  while (parent !== null && isElement(parent)) {
+    if (matches(parent, context, selector.relative)) {
       return true;
     }
 
-    parentNode = parentNode.parentNode;
+    parent = getParent(parent, context);
   }
 
   return false;
@@ -130,29 +143,34 @@ function matchesDescendant(
 
 function matchesDirectDescendant(
   element: Element,
+  context: Node,
   selector: RelativeSelector
 ): boolean {
-  const { parentNode } = element;
+  const parent = getParent(element, context);
   return (
-    parentNode !== null &&
-    isElement(parentNode) &&
-    matches(parentNode, selector.relative)
+    parent !== null &&
+    isElement(parent) &&
+    matches(parent, context, selector.relative)
   );
 }
 
-function matchesSibling(element: Element, selector: RelativeSelector): boolean {
-  const { parentNode } = element;
+function matchesSibling(
+  element: Element,
+  context: Node,
+  selector: RelativeSelector
+): boolean {
+  const parent = getParent(element, context);
 
-  if (parentNode === null) {
+  if (parent === null) {
     return false;
   }
 
-  const { childNodes } = parentNode;
+  const { childNodes } = parent;
 
   for (let i = childNodes.indexOf(element) - 1; i >= 0; i--) {
     const sibling = childNodes[i];
 
-    if (isElement(sibling) && matches(sibling, selector.relative)) {
+    if (isElement(sibling) && matches(sibling, context, selector.relative)) {
       return true;
     }
   }
@@ -162,15 +180,16 @@ function matchesSibling(element: Element, selector: RelativeSelector): boolean {
 
 function matchesDirectSibling(
   element: Element,
+  context: Node,
   selector: RelativeSelector
 ): boolean {
-  const { parentNode } = element;
+  const parent = getParent(element, context);
 
-  if (parentNode === null) {
+  if (parent === null) {
     return false;
   }
 
-  const { childNodes } = parentNode;
+  const { childNodes } = parent;
 
   const sibling = childNodes[childNodes.indexOf(element) - 1];
 
@@ -178,5 +197,5 @@ function matchesDirectSibling(
     return false;
   }
 
-  return matches(sibling, selector.relative);
+  return matches(sibling, context, selector.relative);
 }

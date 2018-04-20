@@ -1,20 +1,30 @@
-import { Node, ParentNode } from "./types";
-import { isParent, isShadowRoot } from "./guards";
+import { Node } from "./types";
+import { isElement } from "./guards";
+import { getParent } from "./get-parent";
 
 export function getRoot(
   node: Node,
+  context: Node,
   options: { composed?: boolean } = {}
-): ParentNode | null {
-  let root: ParentNode | null = isParent(node) ? node : null;
+): Node {
+  let root: Node | null = node;
 
   while (root) {
-    if (root.parentNode !== null) {
-      root = root.parentNode;
-    } else if (options.composed && isShadowRoot(root)) {
-      root = root.host;
-    } else {
+    const parent = getParent(root, context);
+
+    if (parent === null) {
       break;
     }
+
+    if (
+      isElement(parent) &&
+      options.composed !== true &&
+      parent.shadowRoot === root
+    ) {
+      break;
+    }
+
+    root = parent;
   }
 
   return root;

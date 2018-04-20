@@ -1,4 +1,4 @@
-import { Element } from "@alfa/dom";
+import { Node, Element } from "@alfa/dom";
 
 export type ValueType =
   /**
@@ -111,7 +111,7 @@ export type Role = Readonly<{
   supported?: Array<Attribute>;
 }>;
 
-export type FeatureAspect<T> = T | ((element: Element) => T);
+export type FeatureAspect<T> = T | ((element: Element, context: Node) => T);
 
 export const Any = "any";
 

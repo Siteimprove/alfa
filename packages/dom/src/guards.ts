@@ -36,7 +36,7 @@ export function isDocumentFragment(node: Node): node is DocumentFragment {
 }
 
 export function isShadowRoot(node: Node): node is ShadowRoot {
-  return isDocumentFragment(node) && "host" in node;
+  return isDocumentFragment(node);
 }
 
 export function isParent(node: Node): node is ParentNode {

@@ -1,9 +1,15 @@
 import { Node } from "./types";
 import { isText } from "./guards";
-import { findAll } from "./find";
+import { traverse } from "./traverse";
 
 export function getText(node: Node): string {
-  return findAll(node, isText)
-    .map(text => text.data)
-    .join("");
+  let text = "";
+
+  traverse(node, node => {
+    if (isText(node)) {
+      text += node.data;
+    }
+  });
+
+  return text;
 }

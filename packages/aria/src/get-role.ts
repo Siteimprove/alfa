@@ -1,4 +1,4 @@
-import { Element, getAttribute } from "@alfa/dom";
+import { Node, Element, getAttribute } from "@alfa/dom";
 import { isWhitespace, split, keys } from "@alfa/util";
 import { Role, Feature } from "./types";
 import * as Roles from "./roles";
@@ -23,16 +23,21 @@ for (const key of keys(Features)) {
  * @param element The element whose semantic role to get.
  * @return The semantic role of the element if one exists, otherwise `null`.
  */
-export function getRole(element: Element): Role | null {
+export function getRole(element: Element, context: Node): Role | null {
   const role = getAttribute(element, "role");
 
   if (role === null) {
     const feature = features.get(element.tagName);
 
-    if (feature !== undefined && feature.role !== undefined) {
-      return typeof feature.role === "function"
-        ? feature.role(element)
-        : feature.role;
+    if (feature !== undefined) {
+      const role =
+        typeof feature.role === "function"
+          ? feature.role(element, context)
+          : feature.role;
+
+      if (role !== undefined) {
+        return role;
+      }
     }
   } else {
     for (const name of split(role, isWhitespace)) {

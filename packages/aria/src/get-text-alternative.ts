@@ -1,4 +1,5 @@
 import {
+  Node,
   Element,
   Text,
   isText,
@@ -21,13 +22,17 @@ import { resolveReferences } from "./resolve-references";
  *
  * @see https://www.w3.org/TR/accname-aam-1.1/
  */
-export function getTextAlternative(node: Element | Text): string | null;
+export function getTextAlternative(
+  node: Element | Text,
+  context: Node
+): string | null;
 
 /**
  * @internal
  */
 export function getTextAlternative(
   node: Element | Text,
+  context: Node,
   visited: Set<Element | Text>,
   flags?: Readonly<{
     recursing?: boolean;
@@ -38,6 +43,7 @@ export function getTextAlternative(
 
 export function getTextAlternative(
   node: Element | Text,
+  context: Node,
   visited: Set<Element | Text> = new Set(),
   flags: Readonly<{
     recursing?: boolean;
@@ -72,14 +78,15 @@ export function getTextAlternative(
     labelledBy !== "aria-labelledby" &&
     !flags.referencing
   ) {
-    const root = getRoot(node);
+    const root = getRoot(node, context);
 
     if (root !== null) {
-      const references = resolveReferences(root, labelledBy).map(element =>
-        getTextAlternative(element, visited, {
-          recursing: true,
-          referencing: true
-        })
+      const references = resolveReferences(root, context, labelledBy).map(
+        element =>
+          getTextAlternative(element, context, visited, {
+            recursing: true,
+            referencing: true
+          })
       );
 
       if (references.length > 0) {
@@ -94,11 +101,11 @@ export function getTextAlternative(
     return flatten(label);
   }
 
-  const role = getRole(node);
+  const role = getRole(node, context);
 
   // https://www.w3.org/TR/accname-aam-1.1/#step2D
   if (role !== Roles.Presentation && role !== Roles.None) {
-    const native = getNativeTextAlternative(node, visited);
+    const native = getNativeTextAlternative(node, context, visited);
     if (native !== null) {
       return flatten(native);
     }
@@ -118,9 +125,9 @@ export function getTextAlternative(
           default:
             return flatten(getText(node));
         }
-
+        break;
       case Roles.Button:
-        return getTextAlternative(node, visited, { recursing: true });
+        return getTextAlternative(node, context, visited, { recursing: true });
     }
   }
 
@@ -134,7 +141,7 @@ export function getTextAlternative(
       .map(
         child =>
           isElement(child) || isText(child)
-            ? getTextAlternative(child, visited, {
+            ? getTextAlternative(child, context, visited, {
                 recursing: true,
                 // Pass down the labelling flag as the current call may have
                 // been initiated from a labelling element; the subtree will
@@ -176,11 +183,12 @@ function flatten(string: string): string {
  */
 function getNativeTextAlternative(
   element: Element,
+  context: Node,
   visited: Set<Element | Text>
 ): string | null {
-  const label = getLabel(element);
+  const label = getLabel(element, context);
   if (label !== null) {
-    return getTextAlternative(label, visited, {
+    return getTextAlternative(label, context, visited, {
       recursing: true,
       labelling: true
     });
@@ -207,6 +215,8 @@ function getNativeTextAlternative(
             if (type === "reset") {
               return "Reset";
             }
+
+            break;
           }
 
           // https://www.w3.org/TR/html-aam-1.0/#input-type-image
@@ -227,18 +237,22 @@ function getNativeTextAlternative(
 
     // https://www.w3.org/TR/html-aam-1.0/#fieldset-and-legend-elements
     case "fieldset": {
-      const legend = find(element, "legend");
+      const legend = find(element, context, "legend");
       if (legend) {
-        return getTextAlternative(legend, visited, { recursing: true });
+        return getTextAlternative(legend, context, visited, {
+          recursing: true
+        });
       }
       break;
     }
 
     // https://www.w3.org/TR/html-aam-1.0/#figure-and-figcaption-elements
     case "figure": {
-      const caption = find(element, "figcaption");
+      const caption = find(element, context, "figcaption");
       if (caption) {
-        return getTextAlternative(caption, visited, { recursing: true });
+        return getTextAlternative(caption, context, visited, {
+          recursing: true
+        });
       }
       break;
     }
@@ -254,7 +268,7 @@ function getNativeTextAlternative(
 
     // https://www.w3.org/TR/html-aam-1.0/#table-element
     case "table": {
-      const caption = find(element, "caption");
+      const caption = find(element, context, "caption");
       if (caption) {
         return flatten(getText(caption));
       }

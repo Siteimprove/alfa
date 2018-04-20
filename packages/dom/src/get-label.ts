@@ -1,4 +1,4 @@
-import { Element } from "./types";
+import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { find } from "./find";
 import { closest } from "./closest";
@@ -10,7 +10,7 @@ import { isLabelable } from "./is-labelable";
 /**
  * @see https://www.w3.org/TR/html/forms.html#labeled-control
  */
-export function getLabel(element: Element): Element | null {
+export function getLabel(element: Element, context: Node): Element | null {
   if (!isLabelable(element)) {
     return null;
   }
@@ -18,11 +18,12 @@ export function getLabel(element: Element): Element | null {
   const id = getAttribute(element, "id");
 
   if (id !== null && id !== "") {
-    const root = getRoot(element);
+    const root = getRoot(element, context);
 
     if (root !== null) {
       const label = find<Element>(
         root,
+        context,
         node =>
           isElement(node) &&
           getTag(node) === "label" &&
@@ -35,5 +36,5 @@ export function getLabel(element: Element): Element | null {
     }
   }
 
-  return closest(element, "label");
+  return closest(element, context, "label");
 }

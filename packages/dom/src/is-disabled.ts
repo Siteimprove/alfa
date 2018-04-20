@@ -1,4 +1,4 @@
-import { Element } from "./types";
+import { Node, Element } from "./types";
 import { getTag } from "./get-tag";
 import { getAttribute } from "./get-attribute";
 import { closest } from "./closest";
@@ -8,7 +8,7 @@ import { contains } from "./contains";
 /**
  * @see https://www.w3.org/TR/html/disabled-elements.html#disabling
  */
-export function isDisabled(element: Element): boolean {
+export function isDisabled(element: Element, context: Node): boolean {
   switch (getTag(element)) {
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-disabledformelements-disabled
     case "button":
@@ -21,24 +21,24 @@ export function isDisabled(element: Element): boolean {
         return true;
       }
 
-      const fieldset = closest(element, "fieldset");
+      const fieldset = closest(element, context, "fieldset");
 
-      if (fieldset === null || !isDisabled(fieldset)) {
+      if (fieldset === null || !isDisabled(fieldset, context)) {
         return false;
       }
 
-      const legend = find(fieldset, "legend");
+      const legend = find(fieldset, context, "legend");
 
-      return legend !== null && !contains(legend, element);
+      return legend !== null && !contains(legend, context, element);
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-option-disabled
     case "option":
       if (getAttribute(element, "disabled") !== null) {
         return true;
       }
 
-      const optgroup = closest(element, "optgroup");
+      const optgroup = closest(element, context, "optgroup");
 
-      return optgroup !== null && isDisabled(optgroup);
+      return optgroup !== null && isDisabled(optgroup, context);
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-optgroup-disabled
     case "optgroup":
       return getAttribute(element, "disabled") !== null;

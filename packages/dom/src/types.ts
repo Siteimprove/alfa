@@ -3,7 +3,6 @@
  */
 export interface Node {
   readonly nodeType: number;
-  readonly parentNode: Node | null;
   readonly childNodes: Array<Node>;
 }
 
@@ -79,6 +78,5 @@ export interface DocumentFragment extends Node, ParentNode {
 /**
  * @see https://www.w3.org/TR/dom41/#interface-shadowroot
  */
-export interface ShadowRoot extends DocumentFragment {
-  readonly host: Element;
+export interface ShadowRoot extends DocumentFragment {}
 }

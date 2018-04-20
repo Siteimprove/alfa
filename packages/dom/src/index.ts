@@ -3,7 +3,7 @@ export * from "./compare";
 export * from "./digest";
 export * from "./find";
 export * from "./get-attribute";
-export * from "./get-classlist";
+export * from "./get-class-list";
 export * from "./get-label";
 export * from "./get-root";
 export * from "./get-tag";
