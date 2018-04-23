@@ -3,7 +3,19 @@ import { getTag } from "./get-tag";
 import { getAttribute } from "./get-attribute";
 
 /**
+ * Given an element, check if the element can be associated with a form label.
+ *
  * @see https://www.w3.org/TR/html/forms.html#labelable-element
+ *
+ * @example
+ * const input = <input type="text" />;
+ * isLabelable(input);
+ * // => true
+ *
+ * @example
+ * const div = <div />;
+ * isLabelable(div);
+ * // => false
  */
 export function isLabelable(element: Element): boolean {
   switch (getTag(element)) {

@@ -21,6 +21,16 @@ import { resolveReferences } from "./resolve-references";
  * Get the computed accessible text alternative of an element.
  *
  * @see https://www.w3.org/TR/accname-aam-1.1/
+ *
+ * @example
+ * const button = <button>Foo</button>;
+ * getTextAlternative(button, <section>{button}</section>);
+ * // => "Foo"
+ *
+ * @example
+ * const img = <img alt="Foo" src="foo.png" />;
+ * getTextAlternative(img, <section>{img}</section>);
+ * // => "Foo"
  */
 export function getTextAlternative(
   node: Element | Text,

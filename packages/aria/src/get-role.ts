@@ -20,6 +20,11 @@ for (const key of keys(Features)) {
  *
  * @see https://www.w3.org/TR/html/dom.html#aria-role-attribute
  *
+ * @example
+ * const button = <button>Foo</button>;
+ * getRole(button, <section>{button}</section>);
+ * // => Button
+ *
  * @param element The element whose semantic role to get.
  * @return The semantic role of the element if one exists, otherwise `null`.
  */
