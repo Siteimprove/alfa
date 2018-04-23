@@ -1,4 +1,4 @@
-import { getAttribute } from "@alfa/dom";
+import { hasAttribute } from "@alfa/dom";
 import { Feature, None } from "../types";
 import * as Roles from "../roles";
 
@@ -7,6 +7,6 @@ import * as Roles from "../roles";
  */
 export const Area: Feature = {
   element: "area",
-  role: area => (getAttribute(area, "href") === null ? undefined : Roles.Link),
+  role: area => (hasAttribute(area, "href") ? Roles.Link : undefined),
   allowedRoles: None
 };

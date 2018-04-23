@@ -1,3 +1,4 @@
+import { hasText } from "@alfa/dom";
 import { getTextAlternative } from "../get-text-alternative";
 import { Feature, Role } from "../types";
 import * as Roles from "../roles";
@@ -7,8 +8,7 @@ import * as Roles from "../roles";
  */
 export const Section: Feature = {
   element: "section",
-  role: section =>
-    getTextAlternative(section) === null ? undefined : Roles.Region,
+  role: section => (hasText(section) ? Roles.Region : undefined),
   allowedRoles: [
     Roles.Alert,
     Roles.AlertDialog,

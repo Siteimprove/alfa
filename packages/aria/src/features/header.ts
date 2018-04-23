@@ -11,9 +11,9 @@ export const Header: Feature = {
   allowedRoles: [Roles.Group, Roles.None, Roles.Presentation]
 };
 
-function role(header: Element): Role | undefined {
+function role(header: Element, context: Element): Role | undefined {
   if (
-    closest(header, element => {
+    closest(header, context, element => {
       if (isElement(element)) {
         switch (getTag(element)) {
           case "article":

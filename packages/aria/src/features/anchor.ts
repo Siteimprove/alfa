@@ -1,4 +1,4 @@
-import { getAttribute } from "@alfa/dom";
+import { hasAttribute } from "@alfa/dom";
 import { Feature, Any } from "../types";
 import * as Roles from "../roles";
 
@@ -8,12 +8,10 @@ import * as Roles from "../roles";
  */
 export const Anchor: Feature = {
   element: "a",
-  role: anchor =>
-    getAttribute(anchor, "href") === null ? undefined : Roles.Link,
+  role: anchor => (hasAttribute(anchor, "href") ? Roles.Link : undefined),
   allowedRoles: anchor =>
-    getAttribute(anchor, "href") === null
-      ? Any
-      : [
+    hasAttribute(anchor, "href")
+      ? [
           Roles.Button,
           Roles.Checkbox,
           Roles.MenuItem,
@@ -25,4 +23,5 @@ export const Anchor: Feature = {
           Roles.Tab,
           Roles.TreeItem
         ]
+      : Any
 };

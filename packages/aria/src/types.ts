@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import { values, includes } from "@alfa/util";
 import { Element } from "@alfa/dom";
 import * as Roles from "./roles";
-=======
-import { Node, Element } from "@alfa/dom";
->>>>>>> 9fe084f0e486943376cc3a5c52151cc0ec5b5d8f
-
 export type ValueType =
   /**
    * @see https://www.w3.org/TR/wai-aria/#valuetype_true-false

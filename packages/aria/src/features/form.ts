@@ -1,4 +1,4 @@
-import { getAttribute } from "@alfa/dom";
+import { hasText } from "@alfa/dom";
 import { Feature, None } from "../types";
 import { getTextAlternative } from "../get-text-alternative";
 import * as Roles from "../roles";
@@ -8,6 +8,6 @@ import * as Roles from "../roles";
  */
 export const Form: Feature = {
   element: "form",
-  role: form => (getTextAlternative(form) === null ? undefined : Roles.Form),
+  role: form => (hasText(form) === null ? Roles.Form : undefined),
   allowedRoles: [Roles.None, Roles.Presentation, Roles.Search]
 };
