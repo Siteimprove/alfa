@@ -6,6 +6,8 @@
     "jsxFactory": "jsx",
     "declaration": true,
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "stripInternal": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

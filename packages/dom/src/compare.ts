@@ -1,14 +1,10 @@
-import { Node, ParentNode } from "./types";
-import { isChild } from "./guards";
+import { Node } from "./types";
+import { getParent } from "./get-parent";
 
-function pathFromRoot(node: Node): Array<Node> {
+function pathFromRoot(node: Node, context: Node): Array<Node> {
   const path: Array<Node> = [];
 
-  for (
-    let next: Node | null = node;
-    next;
-    next = isChild(next) ? next.parentNode || null : null
-  ) {
+  for (let next: Node | null = node; next; next = getParent(next, context)) {
     path.unshift(next);
   }
 
@@ -31,9 +27,9 @@ function forkingPoint(a: Array<any>, b: Array<any>) {
   return fork;
 }
 
-export function compare(a: Node, b: Node): number {
-  const ap = pathFromRoot(a);
-  const bp = pathFromRoot(b);
+export function compare(a: Node, b: Node, context: Node): number {
+  const ap = pathFromRoot(a, context);
+  const bp = pathFromRoot(b, context);
 
   const fork = forkingPoint(ap, bp);
 

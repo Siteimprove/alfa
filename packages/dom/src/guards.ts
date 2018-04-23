@@ -3,6 +3,7 @@ import {
   Document,
   DocumentType,
   DocumentFragment,
+  ShadowRoot,
   Element,
   Text,
   Comment,
@@ -32,6 +33,10 @@ export function isDocumentType(node: Node): node is DocumentType {
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === 11;
+}
+
+export function isShadowRoot(node: Node): node is ShadowRoot {
+  return isDocumentFragment(node);
 }
 
 export function isParent(node: Node): node is ParentNode {

@@ -1,0 +1,31 @@
+import { jsx } from "@alfa/jsx";
+import { test } from "@alfa/test";
+import { Element } from "../src/types";
+import { getDigest } from "../src/get-digest";
+
+test("Computes the digest value of a DOM node", async t => {
+  const foo = <div class="foo">Hello world!</div>;
+
+  t.is(await getDigest(foo), "KyhbK7Jdg0Fx4kcimu2kwPcmuWebNhSZNiFu1QQ2uPc=");
+});
+
+test("Is order independant when digesting element attributes", async t => {
+  const foo = <div class="foo" id="foo" />;
+  const bar = <div id="foo" class="foo" />;
+
+  t.is(await getDigest(foo), await getDigest(bar));
+});
+
+test("Correctly distinguishes literal boolean values from boolean attributes", async t => {
+  const foo = <div foo />;
+  const bar = <div foo="true" />;
+
+  t.isNot(await getDigest(foo), await getDigest(bar));
+});
+
+test("Correctly handles cases of sorted boolean attributes", async t => {
+  const foo = <div bar foo />;
+  const bar = <div bar="foo" />;
+
+  t.isNot(await getDigest(foo), await getDigest(bar));
+});

@@ -1,4 +1,4 @@
-import { Element } from "@alfa/dom";
+import { Node, Element } from "@alfa/dom";
 import { getRole } from "./get-role";
 import { Landmark } from "./roles/abstract";
 
@@ -10,8 +10,8 @@ import { Landmark } from "./roles/abstract";
  * @param element The element to check.
  * @return `true` if the element is landmark, otherwise `false`.
  */
-export function isLandmark(element: Element): boolean {
-  const role = getRole(element);
+export function isLandmark(element: Element, context: Node): boolean {
+  const role = getRole(element, context);
 
   if (role === null) {
     return false;

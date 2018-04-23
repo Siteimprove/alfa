@@ -15,8 +15,8 @@ test("Passes when no duplicate IDs exist within a document", async t => {
 
   const results = await audit(UniqueIds, { document });
 
-  const foo = find(document, "#foo");
-  const bar = find(document, "#bar");
+  const foo = find(document, document, "#foo");
+  const bar = find(document, document, "#bar");
 
   outcome(t, results, { passed: [foo, bar] });
 });
@@ -30,7 +30,7 @@ test("Fails when elements with duplicate IDs exist within a document", async t =
 
   const results = await audit(UniqueIds, { document });
 
-  const foos = findAll(document, "#foo");
+  const foos = findAll(document, document, "#foo");
 
   outcome(t, results, { failed: [...foos] });
 });

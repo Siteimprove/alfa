@@ -8,6 +8,7 @@ import {
   isComment
 } from "./guards";
 import { getTag } from "./get-tag";
+import { getParent } from "./get-parent";
 
 const { keys } = Object;
 
@@ -32,7 +33,7 @@ function escape(
 /**
  * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
  */
-export function serialize(node: Node): string {
+export function serialize(node: Node, context: Node | null = null): string {
   if (isElement(node)) {
     let element = `<${getTag(node)}`;
 
@@ -62,7 +63,9 @@ export function serialize(node: Node): string {
       case "wbr":
         break;
       default:
-        element += node.childNodes.map(serialize).join("");
+        element += node.childNodes
+          .map(child => serialize(child, context))
+          .join("");
         element += `</${getTag(node)}>`;
     }
 
@@ -70,19 +73,21 @@ export function serialize(node: Node): string {
   }
 
   if (isText(node)) {
-    const { parentNode } = node;
+    if (context !== null) {
+      const parent = getParent(node, context);
 
-    if (parentNode !== null && isElement(parentNode)) {
-      switch (getTag(parentNode)) {
-        case "style":
-        case "script":
-        case "xmp":
-        case "iframe":
-        case "noembed":
-        case "noframes":
-        case "plaintext":
-        case "noscript":
-          return node.data;
+      if (parent !== null && isElement(parent)) {
+        switch (getTag(parent)) {
+          case "style":
+          case "script":
+          case "xmp":
+          case "iframe":
+          case "noembed":
+          case "noframes":
+          case "plaintext":
+          case "noscript":
+            return node.data;
+        }
       }
     }
 
@@ -97,5 +102,5 @@ export function serialize(node: Node): string {
     return `<!DOCTYPE ${node.name}>`;
   }
 
-  return node.childNodes.map(serialize).join("");
+  return node.childNodes.map(child => serialize(child, context)).join("");
 }

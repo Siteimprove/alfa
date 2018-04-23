@@ -5,95 +5,79 @@ import { find } from "../src/find";
 import { matches } from "../src/matches";
 
 test("Matches an element against a tag", async t => {
-  t.true(matches(<div />, "div"));
+  const div = <div />;
+  t.true(matches(div, div, "div"));
 });
 
 test("Matches an element against a class", async t => {
-  t.true(matches(<div class="foo" />, ".foo"));
+  const div = <div class="foo" />;
+  t.true(matches(div, div, ".foo"));
 });
 
 test("Matches an element against an ID", async t => {
-  t.true(matches(<div id="foo" />, "#foo"));
+  const div = <div id="foo" />;
+  t.true(matches(div, div, "#foo"));
 });
 
 test("Matches an element against an attribute without a value", async t => {
-  t.true(matches(<div foo />, "[foo]"));
+  const div = <div foo />;
+  t.true(matches(div, div, "[foo]"));
 });
 
 test("Matches an element against an attribute with a value", async t => {
-  t.true(matches(<div foo="bar" />, "[foo=bar]"));
+  const div = <div foo="bar" />;
+  t.true(matches(div, div, "[foo=bar]"));
 });
 
-test("Matches an element against a list of selectors", async t => {
-  t.true(matches(<div class="foo" />, ".foo, #bar"));
-  t.true(matches(<div id="bar" />, ".foo, #bar"));
+test("Matches an element with a class against a list of selectors", async t => {
+  const div = <div class="foo" />;
+  t.true(matches(div, div, ".foo, #bar"));
+});
+
+test("Matches an element with an ID against a list of selectors", async t => {
+  const div = <div id="bar" />;
+  t.true(matches(div, div, ".foo, #bar"));
 });
 
 test("Matches an element against a descendant selector", async t => {
-  const document: Element = (
+  const foo = <span id="foo" />;
+  const document = (
     <div>
-      <p>
-        <span id="foo" />
-      </p>
+      <p>{foo}</p>
     </div>
   );
 
-  const foo = find(document, "#foo");
-
-  if (foo === null) {
-    t.fail();
-  } else {
-    t.true(matches(foo, "div #foo"));
-  }
+  t.true(matches(foo, document, "div #foo"));
 });
 
 test("Matches an element against a direct descendant selector", async t => {
-  const document: Element = (
-    <div>
-      <span id="foo" />
-    </div>
-  );
+  const foo = <span id="foo" />;
+  const document = <div>{foo}</div>;
 
-  const foo = find(document, "#foo");
-
-  if (foo === null) {
-    t.fail();
-  } else {
-    t.true(matches(foo, "div > #foo"));
-  }
+  t.true(matches(foo, document, "div > #foo"));
 });
 
 test("Matches an element against a sibling selector", async t => {
-  const document: Element = (
+  const foo = <span id="foo" />;
+  const document = (
     <div>
       <p />
       <b />
-      <span id="foo" />
+      {foo}
     </div>
   );
 
-  const foo = find(document, "#foo");
-
-  if (foo === null) {
-    t.fail();
-  } else {
-    t.true(matches(foo, "p ~ #foo"));
-  }
+  t.true(matches(foo, document, "p ~ #foo"));
 });
 
 test("Matches an element against a direct sibling selector", async t => {
-  const document: Element = (
+  const foo = <span id="foo" />;
+  const document = (
     <div>
       <p />
-      <span id="foo" />
+      {foo}
     </div>
   );
 
-  const foo = find(document, "#foo");
-
-  if (foo === null) {
-    t.fail();
-  } else {
-    t.true(matches(foo, "p + #foo"));
-  }
+  t.true(matches(foo, document, "p + #foo"));
 });

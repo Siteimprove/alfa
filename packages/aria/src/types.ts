@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 import { values, includes } from "@alfa/util";
 import { Element } from "@alfa/dom";
 import * as Roles from "./roles";
+=======
+import { Node, Element } from "@alfa/dom";
+>>>>>>> 9fe084f0e486943376cc3a5c52151cc0ec5b5d8f
 
 export type ValueType =
   /**
@@ -113,7 +117,7 @@ export type Role = Readonly<{
   supported?: Array<Attribute>;
 }>;
 
-export type FeatureAspect<T> = T | ((element: Element) => T);
+export type FeatureAspect<T> = T | ((element: Element, context: Node) => T);
 
 export const Any: Array<Role> = values(Roles);
 

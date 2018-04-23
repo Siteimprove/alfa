@@ -28,7 +28,6 @@ export function jsx(
 
             return { name, value };
           }),
-    parentNode: null,
     childNodes: [],
     shadowRoot: null
   };
@@ -39,18 +38,11 @@ export function jsx(
     if (typeof node === "string") {
       child = {
         nodeType: 3,
-        parentNode: element,
         childNodes: [],
         data: node
       };
     } else {
-      const parentNode = { parentNode: element };
-
-      if (node.parentNode) {
-        child = assign({}, node, parentNode);
-      } else {
-        child = assign(node, parentNode);
-      }
+      child = node;
     }
 
     element.childNodes.push(child);

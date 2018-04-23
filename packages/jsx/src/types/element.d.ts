@@ -1,7 +1,6 @@
 declare namespace JSX {
   interface Node {
     readonly nodeType: number;
-    readonly parentNode: Node | null;
     readonly childNodes: Array<Node>;
   }
 
