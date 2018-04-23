@@ -2,7 +2,7 @@
  * Check if an array includes a specific element.
  */
 export function includes<T>(
-  array: Array<T>,
+  array: ArrayLike<T>,
   query: T,
   position: number = 0
 ): boolean {

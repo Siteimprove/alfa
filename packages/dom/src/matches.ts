@@ -1,4 +1,4 @@
-import { memoize } from "@alfa/util";
+import { memoize, indexOf } from "@alfa/util";
 import {
   Selector,
   SelectorList,
@@ -167,7 +167,7 @@ function matchesSibling(
 
   const { childNodes } = parent;
 
-  for (let i = childNodes.indexOf(element) - 1; i >= 0; i--) {
+  for (let i = indexOf(childNodes, element) - 1; i >= 0; i--) {
     const sibling = childNodes[i];
 
     if (isElement(sibling) && matches(sibling, context, selector.relative)) {
@@ -191,7 +191,7 @@ function matchesDirectSibling(
 
   const { childNodes } = parent;
 
-  const sibling = childNodes[childNodes.indexOf(element) - 1];
+  const sibling = childNodes[indexOf(childNodes, element) - 1];
 
   if (sibling === undefined || !isElement(sibling)) {
     return false;

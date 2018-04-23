@@ -1,3 +1,4 @@
+import { map, includes } from "@alfa/util";
 import {
   Node,
   Element,
@@ -11,7 +12,6 @@ import {
   getText,
   getLabel
 } from "@alfa/dom";
-import { includes } from "@alfa/util";
 import * as Roles from "./roles";
 import { getRole } from "./get-role";
 import { isVisible } from "./is-visible";
@@ -147,21 +147,19 @@ export function getTextAlternative(
     flags.referencing ||
     isNativeTextAlternativeElement(node)
   ) {
-    const children = node.childNodes
-      .map(
-        child =>
-          isElement(child) || isText(child)
-            ? getTextAlternative(child, context, visited, {
-                recursing: true,
-                // Pass down the labelling flag as the current call may have
-                // been initiated from a labelling element; the subtree will
-                // therefore also have to be considered part of the labelling
-                // element.
-                labelling: flags.labelling
-              })
-            : null
-      )
-      .filter(child => child !== null);
+    const children = map(
+      node.childNodes,
+      child =>
+        isElement(child) || isText(child)
+          ? getTextAlternative(child, context, visited, {
+              recursing: true,
+              // Pass down the labelling flag as the current call may have been
+              // initiated from a labelling element; the subtree will therefore
+              // also have to be considered part of the labelling element.
+              labelling: flags.labelling
+            })
+          : null
+    ).filter(child => child !== null);
 
     if (children.length > 0) {
       return flatten(children.join(" "));
