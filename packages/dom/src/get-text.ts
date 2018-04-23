@@ -8,7 +8,7 @@ import { traverse } from "./traverse";
  * @example
  * const div = <div>Hello <span>world</span></div>;
  * getText(div);
- * // => "Hello world";
+ * // => "Hello world"
  */
 export function getText(node: Node): string {
   let text = "";
