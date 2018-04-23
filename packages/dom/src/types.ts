@@ -3,7 +3,7 @@
  */
 export interface Node {
   readonly nodeType: number;
-  readonly childNodes: Array<Node>;
+  readonly childNodes: ArrayLike<Node>;
 }
 
 /**
@@ -31,7 +31,7 @@ export interface Element extends Node, ParentNode, ChildNode {
   readonly nodeType: 1;
   readonly namespaceURI: string | null;
   readonly tagName: string;
-  readonly attributes: Array<Attribute>;
+  readonly attributes: ArrayLike<Attribute>;
 
   // https://www.w3.org/TR/dom41/#dom-element-shadowroot
   readonly shadowRoot: ShadowRoot | null;
@@ -62,7 +62,7 @@ export interface Document extends Node, ParentNode {
   /**
    * @see https://www.w3.org/TR/cssom/#extensions-to-the-document-interface
    */
-  readonly styleSheets: Array<StyleSheet>;
+  readonly styleSheets: ArrayLike<StyleSheet>;
 }
 
 /**
@@ -89,7 +89,7 @@ export interface ShadowRoot extends DocumentFragment {}
  * @see https://www.w3.org/TR/cssom/#cssstylesheet
  */
 export interface StyleSheet {
-  readonly cssRules: Array<Rule>;
+  readonly cssRules: ArrayLike<Rule>;
 }
 
 /**
@@ -110,7 +110,7 @@ export interface Rule {
  * @see https://www.w3.org/TR/cssom/#cssgroupingrule
  */
 export interface GroupingRule extends Rule {
-  readonly cssRules: Array<Rule>;
+  readonly cssRules: ArrayLike<Rule>;
 }
 
 /**
@@ -135,7 +135,7 @@ export interface StyleRule extends Rule {
 export interface ImportRule extends Rule {
   readonly type: 3;
   readonly href: string;
-  readonly media: Array<string>;
+  readonly media: ArrayLike<string>;
   readonly styleSheet: StyleSheet;
 }
 
@@ -144,7 +144,7 @@ export interface ImportRule extends Rule {
  */
 export interface MediaRule extends GroupingRule {
   readonly type: 4;
-  readonly media: Array<string>;
+  readonly media: ArrayLike<string>;
 }
 
 export interface FontFaceRule extends Rule {
@@ -171,7 +171,7 @@ export interface PageRule extends Rule {
 export interface KeyframesRule extends Rule {
   readonly type: 7;
   readonly name: string;
-  readonly cssRules: Array<Rule>;
+  readonly cssRules: ArrayLike<Rule>;
 }
 
 /**

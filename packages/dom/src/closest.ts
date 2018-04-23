@@ -4,12 +4,38 @@ import { isElement } from "./guards";
 import { matches } from "./matches";
 import { getParent } from "./get-parent";
 
+/**
+ * Given a node and a context, get the closest parent (or the node itself) that
+ * matches the given selector.
+ *
+ * @example
+ * const span = <span />;
+ * closests(
+ *   span,
+ *   <div class="foo"><div class="bar">{span}</div></div>,
+ *   ".foo"
+ * );
+ * // => <div class="foo">...</div>
+ */
 export function closest(
   node: Node,
   context: Node,
   query: string
 ): Element | null;
 
+/**
+ * Given a node and a context, get the closest parent (or the node itself) that
+ * matches the given predicate.
+ *
+ * @example
+ * const span = <span />;
+ * closests(
+ *   span,
+ *   <div class="foo"><div class="bar">{span}</div></div>,
+ *   node => isElement(node) && getTag(node) === "div"
+ * );
+ * // => <div class="bar">...</div>
+ */
 export function closest<T extends Node>(
   node: Node,
   context: Node,

@@ -1,4 +1,4 @@
-import { set } from "@alfa/util";
+import { set, map, slice } from "@alfa/util";
 import * as V from "@alfa/dom";
 
 export function virtualize(node: Node): V.Node {
@@ -25,19 +25,15 @@ function virtualizeNode(node: Node): V.Node {
 }
 
 function virtualizeElement(element: Element): V.Element {
-  const attributes: Array<V.Attribute> = [];
-
-  for (let i = 0; i < element.attributes.length; i++) {
-    const { name, value } = element.attributes[i];
-    attributes.push({ name, value });
-  }
-
   const virtual: V.Element = {
     nodeType: 1,
     tagName: element.tagName.toLowerCase(),
     namespaceURI: element.namespaceURI,
-    attributes,
-    childNodes: [],
+    attributes: map(element.attributes, attribute => ({
+      name: attribute.name,
+      value: attribute.value
+    })),
+    childNodes: map(element.childNodes, child => virtualizeNode(child)),
     shadowRoot: null
   };
 
@@ -48,8 +44,6 @@ function virtualizeElement(element: Element): V.Element {
       virtualizeShadowRoot(element.shadowRoot, virtual)
     );
   }
-
-  children(element, virtual);
 
   return virtual;
 }
@@ -65,13 +59,11 @@ function virtualizeComment({ data }: Comment): V.Comment {
 function virtualizeDocument(document: Document): V.Document {
   const virtual: V.Document = {
     nodeType: 9,
-    childNodes: [],
-    styleSheets: Array.from(document.styleSheets).map(styleSheet =>
+    childNodes: map(document.childNodes, child => virtualizeNode(child)),
+    styleSheets: map(document.styleSheets, styleSheet =>
       virtualizeStyleSheet(styleSheet as CSSStyleSheet)
     )
   };
-
-  children(document, virtual);
 
   return virtual;
 }
@@ -85,10 +77,8 @@ function virtualizeDocumentFragment(
 ): V.DocumentFragment {
   const virtual: V.DocumentFragment = {
     nodeType: 11,
-    childNodes: []
+    childNodes: map(documentFragment.childNodes, child => virtualizeNode(child))
   };
-
-  children(documentFragment, virtual);
 
   return virtual;
 }
@@ -99,19 +89,15 @@ function virtualizeShadowRoot(
 ): V.ShadowRoot {
   const virtual: V.ShadowRoot = {
     nodeType: 11,
-    childNodes: []
+    childNodes: map(shadowRoot.childNodes, child => virtualizeNode(child))
   };
-
-  children(shadowRoot, virtual);
 
   return virtual;
 }
 
 function virtualizeStyleSheet(styleSheet: CSSStyleSheet): V.StyleSheet {
   return {
-    cssRules: Array.from(styleSheet.cssRules).map(cssRule =>
-      virtualizeRule(cssRule)
-    )
+    cssRules: map(styleSheet.cssRules, cssRule => virtualizeRule(cssRule))
   };
 }
 
@@ -158,7 +144,7 @@ function virtualizeImportRule(importRule: CSSImportRule): V.ImportRule {
   return {
     type: 3,
     href: importRule.href,
-    media: Array.from(importRule.media),
+    media: slice(importRule.media),
     styleSheet: virtualizeStyleSheet(importRule.styleSheet)
   };
 }
@@ -166,8 +152,8 @@ function virtualizeImportRule(importRule: CSSImportRule): V.ImportRule {
 function virtualizeMediaRule(mediaRule: CSSMediaRule): V.MediaRule {
   return {
     type: 4,
-    cssRules: Array.from(mediaRule.cssRules).map(rule => virtualizeRule(rule)),
-    media: Array.from(mediaRule.media)
+    cssRules: map(mediaRule.cssRules, rule => virtualizeRule(rule)),
+    media: slice(mediaRule.media)
   };
 }
 
@@ -192,9 +178,7 @@ function virtualizeKeyframesRule(
   return {
     type: 7,
     name: keyframesRule.name,
-    cssRules: Array.from(keyframesRule.cssRules).map(rule =>
-      virtualizeRule(rule)
-    )
+    cssRules: map(keyframesRule.cssRules, rule => virtualizeRule(rule))
   };
 }
 
@@ -219,18 +203,7 @@ function virtualizeNamespaceRule(
 function virtualizeSupportsRule(supportsRule: CSSSupportsRule): V.SupportsRule {
   return {
     type: 12,
-    cssRules: Array.from(supportsRule.cssRules).map(rule =>
-      virtualizeRule(rule)
-    ),
+    cssRules: map(supportsRule.cssRules, rule => virtualizeRule(rule)),
     conditionText: supportsRule.conditionText
   };
-}
-
-function children(node: Node, virtual: V.Node): void {
-  const { childNodes } = node;
-  const { length } = childNodes;
-
-  for (let i = 0; i < length; i++) {
-    virtual.childNodes[i] = virtualizeNode(childNodes[i]);
-  }
 }

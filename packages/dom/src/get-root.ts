@@ -2,6 +2,9 @@ import { Node } from "./types";
 import { isElement } from "./guards";
 import { getParent } from "./get-parent";
 
+/**
+ * Given a node and a context, get the root of the node within the context.
+ */
 export function getRoot(
   node: Node,
   context: Node,

@@ -1,3 +1,4 @@
+import { map, each } from "@alfa/util";
 import { Node } from "./types";
 import {
   isDocument,
@@ -37,9 +38,9 @@ export function serialize(node: Node, context: Node | null = null): string {
   if (isElement(node)) {
     let element = `<${getTag(node)}`;
 
-    for (const { name, value } of node.attributes) {
+    each(node.attributes, ({ name, value }) => {
       element += ` ${name}="${escape(value, { attributeMode: true })}"`;
-    }
+    });
 
     element += ">";
 
@@ -63,9 +64,9 @@ export function serialize(node: Node, context: Node | null = null): string {
       case "wbr":
         break;
       default:
-        element += node.childNodes
-          .map(child => serialize(child, context))
-          .join("");
+        element += map(node.childNodes, child =>
+          serialize(child, context)
+        ).join("");
         element += `</${getTag(node)}>`;
     }
 
@@ -102,5 +103,5 @@ export function serialize(node: Node, context: Node | null = null): string {
     return `<!DOCTYPE ${node.name}>`;
   }
 
-  return node.childNodes.map(child => serialize(child, context)).join("");
+  return map(node.childNodes, child => serialize(child, context)).join("");
 }

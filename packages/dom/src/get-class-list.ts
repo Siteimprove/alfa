@@ -7,6 +7,16 @@ export interface ClassList extends Iterable<string> {
 
 const classLists: WeakMap<Element, ClassList> = new WeakMap();
 
+/**
+ * Given an element, get the associated class list of an element.
+ *
+ * @see https://www.w3.org/TR/dom/#dom-element-classlist
+ *
+ * @example
+ * const div = <div class="foo bar" />;
+ * ...getClassList(div);
+ * // => ["foo", "bar"]
+ */
 export function getClassList(element: Element): ClassList {
   let classList = classLists.get(element);
 

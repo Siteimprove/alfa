@@ -4,6 +4,14 @@ export type AttributeOptions = Readonly<{ trim?: boolean }>;
 
 const attributeMaps: WeakMap<Element, AttributeMap> = new WeakMap();
 
+/**
+ * Given an element, get the value of the specified attribute of the element.
+ *
+ * @example
+ * const div = <div title="Foo" />;
+ * getAttribute(div, "title");
+ * // => "Foo"
+ */
 export function getAttribute(
   element: Element,
   name: string,

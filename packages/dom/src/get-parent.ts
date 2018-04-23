@@ -3,6 +3,15 @@ import { traverse } from "./traverse";
 
 const parentTrees: WeakMap<Node, ParentTree> = new WeakMap();
 
+/**
+ * Given a node and a context, get the parent of the node within the context.
+ *
+ * @example
+ * const span = <span />;
+ * const div = <div>{span}</div>;
+ * getParent(span, <section>{div}</section>);
+ * // => <div>...</div>
+ */
 export function getParent(node: Node, context: Node): Node | null {
   let parentTree = parentTrees.get(context);
 

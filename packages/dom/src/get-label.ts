@@ -8,6 +8,15 @@ import { getAttribute } from "./get-attribute";
 import { isLabelable } from "./is-labelable";
 
 /**
+ * Given an element and a context, get the form label associated with the
+ * element, if any.
+ *
+ * @example
+ * const input = <input type="text" id="foo" />;
+ * const form = <form><label for="foo">Foo</label>{input}</form>;
+ * getLabel(element, form);
+ * // => <label for="foo">...</label>
+ *
  * @see https://www.w3.org/TR/html/forms.html#labeled-control
  */
 export function getLabel(element: Element, context: Node): Element | null {

@@ -1,3 +1,4 @@
+import { slice } from "@alfa/util";
 import * as crypto from "@alfa/crypto";
 
 import { Node } from "./types";
@@ -37,7 +38,7 @@ export async function getDigest<T extends Node>(
     if (isElement(node)) {
       digest += node.tagName;
 
-      for (const { name, value } of node.attributes.sort(
+      for (const { name, value } of slice(node.attributes).sort(
         (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
       )) {
         digest += name + value;
@@ -45,7 +46,8 @@ export async function getDigest<T extends Node>(
     }
 
     if (isParent(node)) {
-      for (const child of node.childNodes) {
+      for (let i = 0, n = node.childNodes.length; i < n; i++) {
+        const child = node.childNodes[i];
         const childDigest = await getDigest(child);
 
         if (childDigest !== null) {
