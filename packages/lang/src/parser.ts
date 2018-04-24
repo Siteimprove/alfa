@@ -79,6 +79,8 @@ export class TokenStream<T extends Token> {
   }
 }
 
+export type Expression<T> = () => T | null;
+
 export interface Production<
   T extends Token,
   R,
@@ -90,12 +92,12 @@ export interface Production<
   prefix?(
     token: U,
     stream: TokenStream<T>,
-    expression: () => R | null
+    expression: Expression<R>
   ): P | null;
   infix?(
     token: U,
     stream: TokenStream<T>,
-    expression: () => R | null,
+    expression: Expression<R>,
     left: R
   ): P | null;
 }
@@ -164,7 +166,7 @@ export function parse<T extends Token, R>(
     let left = production.prefix(token, stream, () => expression(-1));
 
     if (left === null) {
-      return null;
+      return expression(power);
     }
 
     while (stream.peek()) {
@@ -195,15 +197,15 @@ export function parse<T extends Token, R>(
 
       stream.advance();
 
-      left = production.infix(
+      const right = production.infix(
         token,
         stream,
         () => expression(precedence),
         left
       );
 
-      if (left === null) {
-        return null;
+      if (right !== null) {
+        left = right;
       }
     }
 

@@ -267,3 +267,37 @@ test("Can lex a function with a single argument", async t =>
       }
     }
   ]));
+
+test("Can lex a declaration", async t =>
+  css(t, "color:red;", [
+    {
+      type: "ident",
+      value: "color",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 5 }
+      }
+    },
+    {
+      type: ":",
+      location: {
+        start: { line: 0, column: 5 },
+        end: { line: 0, column: 6 }
+      }
+    },
+    {
+      type: "ident",
+      value: "red",
+      location: {
+        start: { line: 0, column: 6 },
+        end: { line: 0, column: 9 }
+      }
+    },
+    {
+      type: ";",
+      location: {
+        start: { line: 0, column: 9 },
+        end: { line: 0, column: 10 }
+      }
+    }
+  ]));
