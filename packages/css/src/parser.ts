@@ -525,8 +525,8 @@ const bracket: CssProduction<Bracket, Selector> = {
   },
 
   infix(token, stream, expression, left) {
-    if (!isComplexSelector(left)) {
-      throw new Error("Unexpected bracket");
+    if (!isSelector(left)) {
+      throw new Error("Expected selector");
     }
 
     return compoundSelector(left, attributeSelector(stream));
@@ -541,8 +541,8 @@ const colon: CssProduction<Colon, Selector> = {
   },
 
   infix(token, stream, expression, left) {
-    if (!isComplexSelector(left)) {
-      throw new Error("Unexpected colon");
+    if (!isSelector(left)) {
+      throw new Error("Expected selector");
     }
 
     return compoundSelector(left, pseudoSelector(stream, expression));

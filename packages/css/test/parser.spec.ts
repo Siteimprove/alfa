@@ -387,6 +387,31 @@ test("Can parse an attribute selector when part of a descendant selector", async
     }
   }));
 
+test("Can parse an attribute selector when part of a compound selector relative to a class selector", async t =>
+  css(t, ".foo div[foo]", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "attribute-selector",
+          name: "foo",
+          value: null,
+          matcher: null
+        }
+      ]
+    }
+  }));
+
 test("Can parse a pseudo-element selector", async t =>
   css(t, "::foo", {
     type: "pseudo-element-selector",
@@ -422,6 +447,29 @@ test("Can parse a pseudo-element selector when part of a descendant selector", a
     }
   }));
 
+test("Can parse a pseudo-element selector when part of a compound selector relative to a class selector", async t =>
+  css(t, ".foo div::foo", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "pseudo-element-selector",
+          name: "foo"
+        }
+      ]
+    }
+  }));
+
 test("Can parse a pseudo-class selector", async t =>
   css(t, ":hover", {
     type: "pseudo-class-selector",
@@ -443,6 +491,30 @@ test("Can parse a pseudo-class selector when part of a compound selector", async
         value: null
       }
     ]
+  }));
+
+test("Can parse a pseudo-class selector when part of a compound selector relative to a class selector", async t =>
+  css(t, ".foo div:hover", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "pseudo-class-selector",
+          name: "hover",
+          value: null
+        }
+      ]
+    }
   }));
 
 test("Can parse a function with no values", async t =>
