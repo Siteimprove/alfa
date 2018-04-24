@@ -239,8 +239,26 @@ function attributeSelector(stream: TokenStream<CssToken>): AttributeSelector {
     };
   }
 
+  let matcher: AttributeSelector["matcher"] = null;
+
+  stream.accept(token => {
+    if (isDelim(token)) {
+      switch (token.value) {
+        case "~":
+        case "|":
+        case "^":
+        case "$":
+        case "*":
+          matcher = token.value;
+          return true;
+      }
+    }
+
+    return false;
+  });
+
   if (stream.accept(token => isDelim(token) && token.value === "=") === false) {
-    throw new Error("Expected attribute matcher");
+    throw new Error("Expected equals sign");
   }
 
   const value = stream.next();
@@ -257,7 +275,7 @@ function attributeSelector(stream: TokenStream<CssToken>): AttributeSelector {
     type: "attribute-selector",
     name: attribute.value,
     value: value.value,
-    matcher: null
+    matcher: matcher
   };
 }
 
@@ -268,39 +286,37 @@ function pseudoSelector(
   let selector: PseudoElementSelector | PseudoClassSelector;
 
   if (stream.accept(next => next.type === ":")) {
-    const next = stream.next();
+    const ident = stream.accept(isIdent);
 
-    if (next === null || !isIdent(next)) {
+    if (ident === false) {
       throw new Error("Excepted ident");
     }
 
     selector = {
       type: "pseudo-element-selector",
-      name: next.value
+      name: ident.value
     };
   } else {
-    let next = stream.next();
+    const name = stream.next();
 
-    if (next === null || (!isIdent(next) && !isFunctionName(next))) {
+    if (name === null || (!isIdent(name) && !isFunctionName(name))) {
       throw new Error("Excepted ident or function name");
     }
 
-    if (isIdent(next)) {
+    if (isIdent(name)) {
       selector = {
         type: "pseudo-class-selector",
-        name: next.value,
+        name: name.value,
         value: null
       };
     } else {
       selector = {
         type: "pseudo-class-selector",
-        name: next.value,
+        name: name.value,
         value: expression()
       };
 
-      next = stream.next();
-
-      if (next === null || next.type !== ")") {
+      if (stream.accept(token => token.type === ")") === false) {
         throw new Error("Expected end of arguments");
       }
     }
@@ -366,9 +382,7 @@ function functionValue(
     }
   }
 
-  if (next !== null && next.type === ")") {
-    stream.advance();
-  } else {
+  if (stream.accept(token => token.type === ")") === false) {
     throw new Error("Expected end of arguments");
   }
 
