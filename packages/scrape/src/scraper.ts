@@ -27,7 +27,8 @@ export type ScrapeOptions = Readonly<{
 
 export class Scraper {
   private readonly _browser = launch({
-    headless: true
+    headless: true,
+    args: ["--disable-web-security"]
   });
 
   private readonly _pickle = bundle(PICKLE, {
