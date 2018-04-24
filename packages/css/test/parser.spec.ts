@@ -44,6 +44,12 @@ test("Can parse a compound selector", async t =>
     ]
   }));
 
+test("Can parse the universal selector", async t =>
+  css(t, "*", {
+    type: "type-selector",
+    name: "*"
+  }));
+
 test("Can parse a compound selector with a type in prefix position", async t =>
   css(t, "div.foo", {
     type: "compound-selector",

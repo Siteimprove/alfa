@@ -197,7 +197,7 @@ function isImplicitDescendant(token: CssToken): boolean {
     case ":":
       return true;
     case "delim":
-      return token.value === "." || token.value === "#";
+      return token.value === "." || token.value === "#" || token.value === "*";
   }
 
   return false;
@@ -429,6 +429,8 @@ const delim: CssProduction<Delim, Selector> = {
         return idSelector(stream);
       case ".":
         return classSelector(stream);
+      case "*":
+        return { type: "type-selector", name: "*" };
     }
 
     throw new Error("Expected ID or class name");
@@ -444,6 +446,8 @@ const delim: CssProduction<Delim, Selector> = {
         return selector(left, idSelector(stream));
       case ".":
         return selector(left, classSelector(stream));
+      case "*":
+        return selector(left, { type: "type-selector", name: "*" });
 
       case ">":
       case "+":
