@@ -330,6 +330,28 @@ test("Can parse a compound selector relative to a compound selector", async t =>
     }
   }));
 
+test("Can parse a descendant selector relative to a sibling selector", async t =>
+  css(t, "div ~ span .foo", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "relative-selector",
+      combinator: "~",
+      relative: {
+        type: "type-selector",
+        name: "div"
+      },
+      selector: {
+        type: "type-selector",
+        name: "span"
+      }
+    },
+    selector: {
+      type: "class-selector",
+      name: "foo"
+    }
+  }));
+
 test("Can parse an attribute selector without a value", async t =>
   css(t, "[foo]", {
     type: "attribute-selector",

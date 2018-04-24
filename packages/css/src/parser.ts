@@ -594,18 +594,10 @@ const dimension: CssProduction<Dimension, Dimension> = {
 };
 
 export const CssGrammar: Grammar<CssToken, CssTree> = new Grammar([
-  whitespace,
-  comment,
-  delim,
-  ident,
-  colon,
-  bracket,
-  functionName,
+  [delim, ident, colon, bracket, functionName, whitespace],
+  [string, number, percentage, dimension],
   comma,
-  string,
-  number,
-  percentage,
-  dimension
+  comment
 ]);
 
 export function parse(input: string): CssTree | null {
