@@ -43,7 +43,7 @@ export type TypeSelector = { type: "type-selector"; name: string };
 export type PseudoClassSelector = {
   type: "pseudo-class-selector";
   name: string;
-  value: any;
+  value: CssTree | null;
 };
 
 export type PseudoElementSelector = {
@@ -279,7 +279,7 @@ function pseudoSelector(
       name: next.value
     };
   } else {
-    const next = stream.next();
+    let next = stream.next();
 
     if (next === null || (!isIdent(next) && !isFunctionName(next))) {
       throw new Error("Excepted ident or function name");
@@ -295,8 +295,14 @@ function pseudoSelector(
       selector = {
         type: "pseudo-class-selector",
         name: next.value,
-        value: functionValue(stream, expression)
+        value: expression()
       };
+
+      next = stream.next();
+
+      if (next === null || next.type !== ")") {
+        throw new Error("Expected end of arguments");
+      }
     }
   }
 
@@ -360,11 +366,11 @@ function functionValue(
     }
   }
 
-  if (next === null || next.type !== ")") {
-    throw new Error("Expected end of function");
+  if (next !== null && next.type === ")") {
+    stream.advance();
+  } else {
+    throw new Error("Expected end of arguments");
   }
-
-  stream.advance();
 
   return value;
 }

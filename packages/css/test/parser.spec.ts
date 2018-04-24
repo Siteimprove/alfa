@@ -492,11 +492,21 @@ test("Can parse a pseudo-element selector when part of a compound selector relat
     }
   }));
 
-test("Can parse a pseudo-class selector", async t =>
+test("Can parse a named pseudo-class selector", async t =>
   css(t, ":hover", {
     type: "pseudo-class-selector",
     name: "hover",
     value: null
+  }));
+
+test("Can parse a functional pseudo-class selector", async t =>
+  css(t, ":not(.foo)", {
+    type: "pseudo-class-selector",
+    name: "not",
+    value: {
+      type: "class-selector",
+      name: "foo"
+    }
   }));
 
 test("Can parse a pseudo-class selector when part of a compound selector", async t =>
