@@ -539,6 +539,34 @@ test("Can parse a pseudo-class selector when part of a compound selector relativ
     }
   }));
 
+test("Can parse a compound type, class, and pseudo-class selector relative to a class selector", async t =>
+  css(t, ".foo div.bar:hover", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "class-selector",
+          name: "bar"
+        },
+        {
+          type: "pseudo-class-selector",
+          name: "hover",
+          value: null
+        }
+      ]
+    }
+  }));
+
 test("Can parse a function with no values", async t =>
   css(t, "rgb()", {
     type: "function",

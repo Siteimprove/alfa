@@ -302,33 +302,34 @@ function pseudoSelector(
 
   return selector;
 }
-
 function compoundSelector(
-  left: Selector,
+  left: ComplexSelector,
   right: SimpleSelector
-): CompoundSelector | RelativeSelector {
-  if (isRelativeSelector(left)) {
-    if (!isSimpleSelector(left.selector)) {
-      throw new Error("Expected simple selector");
-    }
-
-    return {
-      type: "relative-selector",
-      combinator: left.combinator,
-      relative: left.relative,
-      selector: {
-        type: "compound-selector",
-        selectors: [left.selector, right]
-      }
-    };
-  }
-
+): CompoundSelector {
   return {
     type: "compound-selector",
     selectors: isCompoundSelector(left)
       ? [...left.selectors, right]
       : [left, right]
   };
+}
+
+function relativeSelector(
+  left: RelativeSelector,
+  right: SimpleSelector
+): RelativeSelector {
+  return {
+    type: "relative-selector",
+    combinator: left.combinator,
+    relative: left.relative,
+    selector: compoundSelector(left.selector, right)
+  };
+}
+
+function selector(left: Selector, right: SimpleSelector): Selector {
+  return isRelativeSelector(left)
+    ? relativeSelector(left, right)
+    : compoundSelector(left, right);
 }
 
 function functionValue(
@@ -434,9 +435,9 @@ const delim: CssProduction<Delim, Selector> = {
 
     switch (token.value) {
       case "#":
-        return compoundSelector(left, idSelector(stream));
+        return selector(left, idSelector(stream));
       case ".":
-        return compoundSelector(left, classSelector(stream));
+        return selector(left, classSelector(stream));
 
       case ">":
       case "+":
@@ -529,7 +530,7 @@ const bracket: CssProduction<Bracket, Selector> = {
       throw new Error("Expected selector");
     }
 
-    return compoundSelector(left, attributeSelector(stream));
+    return selector(left, attributeSelector(stream));
   }
 };
 
@@ -545,7 +546,7 @@ const colon: CssProduction<Colon, Selector> = {
       throw new Error("Expected selector");
     }
 
-    return compoundSelector(left, pseudoSelector(stream, expression));
+    return selector(left, pseudoSelector(stream, expression));
   }
 };
 
