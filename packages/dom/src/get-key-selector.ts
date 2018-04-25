@@ -5,7 +5,6 @@ import {
   parse,
   isSelector,
   isSimpleSelector,
-  isCompoundSelector,
   isRelativeSelector
 } from "@alfa/css";
 
@@ -15,7 +14,9 @@ import {
  * matching as an element won't match a given selector unless it also matches
  * the key selector.
  */
-export function getKeySelector(selector: string | Selector): SimpleSelector {
+export function getKeySelector(
+  selector: string | Selector
+): SimpleSelector | null {
   if (typeof selector === "string") {
     const parsed = parse(selector);
 
@@ -27,12 +28,26 @@ export function getKeySelector(selector: string | Selector): SimpleSelector {
   }
 
   if (isSimpleSelector(selector)) {
+    if (selector.type === "type-selector" && selector.name === "*") {
+      return null;
+    }
+
     return selector;
   }
 
-  if (isCompoundSelector(selector)) {
-    return getKeySelector(first(selector.selectors) as SimpleSelector);
+  if (isRelativeSelector(selector)) {
+    return getKeySelector(selector.selector);
   }
 
-  return getKeySelector(selector.selector);
+  const { selectors } = selector;
+
+  for (let i = 0, n = selectors.length; i < n; i++) {
+    const selector = getKeySelector(selectors[i]);
+
+    if (selector !== null) {
+      return selector;
+    }
+  }
+
+  return null;
 }

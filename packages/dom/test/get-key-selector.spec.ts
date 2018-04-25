@@ -15,6 +15,17 @@ test("Gets the key selector of a class selector", async t => {
   });
 });
 
+test("Gets the key selector of a type selector", async t => {
+  t.deepEqual(getKeySelector("foo"), {
+    type: "type-selector",
+    name: "foo"
+  });
+});
+
+test("Returns null when given the universal selector", async t => {
+  t.is(getKeySelector("*"), null);
+});
+
 test("Gets the key selector of an attribute selector", async t => {
   t.deepEqual(getKeySelector("[foo]"), {
     type: "attribute-selector",
@@ -36,6 +47,20 @@ test("Gets the key selector of a pseudo-class selector", async t => {
     type: "pseudo-class-selector",
     name: "hover",
     value: null
+  });
+});
+
+test("Gets the key selector of a compound selector", async t => {
+  t.deepEqual(getKeySelector("div.foo"), {
+    type: "type-selector",
+    name: "div"
+  });
+});
+
+test("Ignores the universal selector in a compound selector", async t => {
+  t.deepEqual(getKeySelector("*.foo"), {
+    type: "class-selector",
+    name: "foo"
   });
 });
 

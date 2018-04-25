@@ -122,7 +122,7 @@ class SelectorMap {
         }
 
         each(selectors, selector => {
-          const { type, name } = getKeySelector(selector);
+          const key = getKeySelector(selector);
           const specificity = getSpecificity(selector);
 
           const entry: SelectorEntry = {
@@ -132,18 +132,22 @@ class SelectorMap {
             specificity
           };
 
-          switch (type) {
-            case "id-selector":
-              addRule(this._ids, name, entry);
-              break;
-            case "class-selector":
-              addRule(this._classes, name, entry);
-              break;
-            case "type-selector":
-              addRule(this._types, name, entry);
-              break;
-            default:
-              this._other.push(entry);
+          if (key === null) {
+            this._other.push(entry);
+          } else {
+            switch (key.type) {
+              case "id-selector":
+                addRule(this._ids, key.name, entry);
+                break;
+              case "class-selector":
+                addRule(this._classes, key.name, entry);
+                break;
+              case "type-selector":
+                addRule(this._types, key.name, entry);
+                break;
+              default:
+                this._other.push(entry);
+            }
           }
         });
       }
@@ -165,21 +169,31 @@ class SelectorMap {
   }
 
   public getRules(element: Element, context: Node): Array<SelectorEntry> {
-    const rules: Array<SelectorEntry> = slice(this._other);
+    const rules: Array<SelectorEntry> = [];
+
+    const collect = (entries: Array<SelectorEntry>) => {
+      each(entries, entry => {
+        if (matches(element, context, entry.selector)) {
+          rules.push(entry);
+        }
+      });
+    };
 
     const id = getAttribute(element, "id");
 
     if (id !== null) {
-      rules.push(...getRules(this._ids, id));
+      collect(getRules(this._ids, id));
     }
 
-    rules.push(...getRules(this._types, getTag(element)));
+    collect(getRules(this._types, getTag(element)));
 
     for (const className of getClassList(element)) {
-      rules.push(...getRules(this._classes, className));
+      collect(getRules(this._classes, className));
     }
 
-    return rules.filter(({ selector }) => matches(element, context, selector));
+    collect(this._other);
+
+    return rules;
   }
 }
 
