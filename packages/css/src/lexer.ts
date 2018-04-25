@@ -21,11 +21,20 @@ export type FunctionName = Readonly<{ type: "function-name"; value: string }>;
 export type String = Readonly<{ type: "string"; value: string }>;
 export type Url = Readonly<{ type: "url"; value: string }>;
 export type Delim = Readonly<{ type: "delim"; value: string }>;
-export type Number = Readonly<{ type: "number"; value: number }>;
-export type Percentage = Readonly<{ type: "percentage"; value: number }>;
+export type Number = Readonly<{
+  type: "number";
+  value: number;
+  integer: boolean;
+}>;
+export type Percentage = Readonly<{
+  type: "percentage";
+  value: number;
+  integer: boolean;
+}>;
 export type Dimension = Readonly<{
   type: "dimension";
   value: number;
+  integer: boolean;
   unit: string;
 }>;
 
@@ -337,7 +346,11 @@ const number: CssPattern = (
     }
   }
 
-  state.number = { type: "number", value: Number(result()) };
+  state.number = {
+    type: "number",
+    value: Number(result()),
+    integer: isInteger
+  };
 
   return numeric;
 };
@@ -351,6 +364,7 @@ const numeric: CssPattern = (stream, emit, { start, number }) => {
   let token: WithLocation<Number | Percentage | Dimension> = {
     type: "number",
     value: number === null ? NaN : number.value,
+    integer: number === null ? true : number.integer,
     location: { start, end: location() }
   };
 
@@ -360,6 +374,7 @@ const numeric: CssPattern = (stream, emit, { start, number }) => {
     token = {
       type: "dimension",
       value: token.value,
+      integer: token.integer,
       unit: name(stream),
       location: { start, end: location() }
     };
@@ -367,6 +382,7 @@ const numeric: CssPattern = (stream, emit, { start, number }) => {
     token = {
       type: "percentage",
       value: token.value / 100,
+      integer: token.integer,
       location: { start, end: location() }
     };
   }

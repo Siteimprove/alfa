@@ -166,6 +166,7 @@ test("Can lex an integer", async t =>
     {
       type: "number",
       value: 123,
+      integer: true,
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 3 }
@@ -178,6 +179,7 @@ test("Can lex a decimal", async t =>
     {
       type: "number",
       value: 123.456,
+      integer: false,
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 7 }
@@ -190,6 +192,7 @@ test("Can lex a number in E-notation", async t =>
     {
       type: "number",
       value: 123.456e2,
+      integer: false,
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 9 }
@@ -202,6 +205,7 @@ test("Can lex a dimension", async t =>
     {
       type: "dimension",
       value: 123,
+      integer: true,
       unit: "px",
       location: {
         start: { line: 0, column: 0 },
@@ -215,6 +219,7 @@ test("Can lex a percentage", async t =>
     {
       type: "percentage",
       value: 1.23,
+      integer: true,
       location: {
         start: { line: 0, column: 0 },
         end: { line: 0, column: 4 }
@@ -254,6 +259,7 @@ test("Can lex a function with a single argument", async t =>
     {
       type: "number",
       value: 123,
+      integer: true,
       location: {
         start: { line: 0, column: 4 },
         end: { line: 0, column: 7 }
@@ -298,6 +304,29 @@ test("Can lex a declaration", async t =>
       location: {
         start: { line: 0, column: 9 },
         end: { line: 0, column: 10 }
+      }
+    }
+  ]));
+
+test("Can lex an+b values", async t =>
+  css(t, "2n+4", [
+    {
+      type: "dimension",
+      value: 2,
+      integer: true,
+      unit: "n",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 2 }
+      }
+    },
+    {
+      type: "number",
+      value: 4,
+      integer: true,
+      location: {
+        start: { line: 0, column: 2 },
+        end: { line: 0, column: 4 }
       }
     }
   ]));

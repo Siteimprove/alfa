@@ -605,7 +605,8 @@ test("Can parse a function with a single value", async t =>
     value: [
       {
         type: "number",
-        value: 123
+        value: 123,
+        integer: true
       }
     ]
   }));
@@ -617,11 +618,13 @@ test("Can parse a function with multiple values", async t =>
     value: [
       {
         type: "number",
-        value: 123
+        value: 123,
+        integer: true
       },
       {
         type: "number",
-        value: 456
+        value: 456,
+        integer: true
       }
     ]
   }));
@@ -633,11 +636,13 @@ test("Can parse a function with multiple values and no whitespace", async t =>
     value: [
       {
         type: "number",
-        value: 123
+        value: 123,
+        integer: true
       },
       {
         type: "number",
-        value: 456
+        value: 456,
+        integer: true
       }
     ]
   }));

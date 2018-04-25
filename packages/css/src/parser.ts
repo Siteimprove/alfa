@@ -598,7 +598,7 @@ const number: CssProduction<Number, Number> = {
   token: "number",
 
   prefix(token, stream, expression) {
-    return { type: "number", value: token.value };
+    return { type: "number", value: token.value, integer: token.integer };
   }
 };
 
@@ -606,7 +606,7 @@ const percentage: CssProduction<Percentage, Percentage> = {
   token: "percentage",
 
   prefix(token, stream, expression) {
-    return { type: "percentage", value: token.value };
+    return { type: "percentage", value: token.value, integer: token.integer };
   }
 };
 
@@ -614,7 +614,12 @@ const dimension: CssProduction<Dimension, Dimension> = {
   token: "dimension",
 
   prefix(token, stream, expression) {
-    return { type: "dimension", value: token.value, unit: token.unit };
+    return {
+      type: "dimension",
+      value: token.value,
+      integer: token.integer,
+      unit: token.unit
+    };
   }
 };
 
