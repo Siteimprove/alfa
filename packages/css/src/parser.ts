@@ -396,9 +396,9 @@ const whitespace: CssProduction<Whitespace, CssTree> = {
     return null;
   },
 
-  infix(token, { peek }, expression, left) {
+  infix(token, stream, expression, left) {
     if (isSelector(left)) {
-      const token = peek();
+      const token = stream.peek();
 
       if (token !== null) {
         if (isImplicitDescendant(token)) {

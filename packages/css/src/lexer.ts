@@ -167,38 +167,29 @@ function isName(char: string): boolean {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
-const name: (stream: CharacterStream) => string = ({
-  ignore,
-  accept,
-  result
-}) => {
-  ignore();
-  accept(isName);
-  return result();
+const name: (stream: CharacterStream) => string = stream => {
+  stream.ignore();
+  stream.accept(isName);
+  return stream.result();
 };
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
  */
-const initial: CssPattern = (
-  { peek, next, accept, advance, backup, location },
-  emit,
-  state,
-  end
-) => {
-  state.start = location();
+const initial: CssPattern = (stream, emit, state, end) => {
+  state.start = stream.location();
 
   const { start } = state;
 
-  const char = next();
+  const char = stream.next();
 
   if (char === null) {
     return end();
   }
 
   if (isWhitespace(char)) {
-    accept(isWhitespace);
-    emit({ type: "whitespace", location: { start, end: location() } });
+    stream.accept(isWhitespace);
+    emit({ type: "whitespace", location: { start, end: stream.location() } });
     return;
   }
 
@@ -210,61 +201,65 @@ const initial: CssPattern = (
 
     case "(":
     case ")":
-      emit({ type: char, location: { start, end: location() } });
+      emit({ type: char, location: { start, end: stream.location() } });
       return;
     case "[":
     case "]":
-      emit({ type: char, location: { start, end: location() } });
+      emit({ type: char, location: { start, end: stream.location() } });
       return;
     case "{":
     case "}":
-      emit({ type: char, location: { start, end: location() } });
+      emit({ type: char, location: { start, end: stream.location() } });
       return;
     case ",":
-      emit({ type: char, location: { start, end: location() } });
+      emit({ type: char, location: { start, end: stream.location() } });
       return;
     case ":":
-      emit({ type: char, location: { start, end: location() } });
+      emit({ type: char, location: { start, end: stream.location() } });
       return;
     case ";":
-      emit({ type: char, location: { start, end: location() } });
+      emit({ type: char, location: { start, end: stream.location() } });
       return;
 
     case "/":
-      if (peek() === "*") {
-        advance();
+      if (stream.peek() === "*") {
+        stream.advance();
         return comment;
       }
   }
 
-  if (startsNumber(char, peek(), peek(1))) {
-    backup();
+  if (startsNumber(char, stream.peek(), stream.peek(1))) {
+    stream.backup();
     return number;
   }
 
-  if (startsIdentifier(char, peek(), peek(1))) {
-    backup();
+  if (startsIdentifier(char, stream.peek(), stream.peek(1))) {
+    stream.backup();
     return ident;
   }
 
-  emit({ type: "delim", value: char, location: { start, end: location() } });
+  emit({
+    type: "delim",
+    value: char,
+    location: { start, end: stream.location() }
+  });
 };
 
-const comment: CssPattern = (
-  { next, ignore, accept, peek, result, advance, location },
-  emit,
-  { start }
-) => {
-  ignore();
+const comment: CssPattern = (stream, emit, state) => {
+  stream.ignore();
 
-  if (accept(() => peek() !== "*" || peek(1) !== "/")) {
-    const value = result();
-    advance(2);
+  if (stream.accept(() => stream.peek() !== "*" || stream.peek(1) !== "/")) {
+    const value = stream.result();
+    stream.advance(2);
 
     // While the CSS syntax specification states that comments should be
     // consumed without emitting a token, we emit one anyway in order to
     // reproduce a complete version of the CSS.
-    emit({ type: "comment", value, location: { start, end: location() } });
+    emit({
+      type: "comment",
+      value,
+      location: { start: state.start, end: stream.location() }
+    });
     return initial;
   }
 };
@@ -273,19 +268,18 @@ const comment: CssPattern = (
  * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
  */
 const ident: CssPattern = (stream, emit) => {
-  const { peek, advance, location } = stream;
-  const start = location();
+  const start = stream.location();
   const value = name(stream);
 
-  if (peek() === "(") {
-    advance();
+  if (stream.peek() === "(") {
+    stream.advance();
     emit({
       type: "function-name",
       value,
-      location: { start, end: location() }
+      location: { start, end: stream.location() }
     });
   } else {
-    emit({ type: "ident", value, location: { start, end: location() } });
+    emit({ type: "ident", value, location: { start, end: stream.location() } });
   }
 
   return initial;
@@ -294,17 +288,17 @@ const ident: CssPattern = (stream, emit) => {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-string-token
  */
-const string: CssPattern = (
-  { next, ignore, accept, result, advance, location },
-  emit,
-  { start, mark }
-) => {
-  ignore();
+const string: CssPattern = (stream, emit, state) => {
+  stream.ignore();
 
-  if (accept(char => char !== mark)) {
-    const value = result();
-    advance();
-    emit({ type: "string", value, location: { start, end: location() } });
+  if (stream.accept(char => char !== state.mark)) {
+    const value = stream.result();
+    stream.advance();
+    emit({
+      type: "string",
+      value,
+      location: { start: state.start, end: stream.location() }
+    });
     return initial;
   }
 };
@@ -312,43 +306,40 @@ const string: CssPattern = (
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
-const number: CssPattern = (
-  { ignore, peek, advance, accept, location, result },
-  emit,
-  state
-) => {
+const number: CssPattern = (stream, emit, state) => {
   const { start } = state;
 
-  ignore();
+  stream.ignore();
 
-  if (peek() === "+" || peek() === "-") {
-    advance();
+  if (stream.peek() === "+" || stream.peek() === "-") {
+    stream.advance();
   }
 
-  const isInteger = accept(isNumeric) && peek() !== ".";
-  const isDecimal = peek() === "." && advance() && accept(isNumeric);
+  const isInteger = stream.accept(isNumeric) && stream.peek() !== ".";
+  const isDecimal =
+    stream.peek() === "." && stream.advance() && stream.accept(isNumeric);
 
   if (!isInteger && !isDecimal) {
     return;
   }
 
-  if (peek() === "E" || peek() === "e") {
+  if (stream.peek() === "E" || stream.peek() === "e") {
     let offset = 1;
 
-    if (peek(1) === "-" || peek(1) === "+") {
+    if (stream.peek(1) === "-" || stream.peek(1) === "+") {
       offset = 2;
     }
 
-    const next = peek(offset);
+    const next = stream.peek(offset);
 
     if (next !== null && isNumeric(next)) {
-      advance(offset) && accept(isNumeric);
+      stream.advance(offset) && stream.accept(isNumeric);
     }
   }
 
   state.number = {
     type: "number",
-    value: Number(result()),
+    value: Number(stream.result()),
     integer: isInteger
   };
 
@@ -358,32 +349,30 @@ const number: CssPattern = (
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-numeric-token
  */
-const numeric: CssPattern = (stream, emit, { start, number }) => {
-  const { peek, advance, location } = stream;
-
+const numeric: CssPattern = (stream, emit, state) => {
   let token: WithLocation<Number | Percentage | Dimension> = {
     type: "number",
-    value: number === null ? NaN : number.value,
-    integer: number === null ? true : number.integer,
-    location: { start, end: location() }
+    value: state.number === null ? NaN : state.number.value,
+    integer: state.number === null ? true : state.number.integer,
+    location: { start: state.start, end: stream.location() }
   };
 
-  const next = peek();
+  const next = stream.peek();
 
-  if (next !== null && startsIdentifier(next, peek(1), peek(2))) {
+  if (next !== null && startsIdentifier(next, stream.peek(1), stream.peek(2))) {
     token = {
       type: "dimension",
       value: token.value,
       integer: token.integer,
       unit: name(stream),
-      location: { start, end: location() }
+      location: { start: state.start, end: stream.location() }
     };
-  } else if (peek() === "%" && advance()) {
+  } else if (stream.peek() === "%" && stream.advance()) {
     token = {
       type: "percentage",
       value: token.value / 100,
       integer: token.integer,
-      location: { start, end: location() }
+      location: { start: state.start, end: stream.location() }
     };
   }
 
@@ -391,9 +380,9 @@ const numeric: CssPattern = (stream, emit, { start, number }) => {
   return initial;
 };
 
-export const CssAlphabet: Alphabet<CssToken, CssState> = ({ location }) => [
+export const CssAlphabet: Alphabet<CssToken, CssState> = stream => [
   initial,
-  { start: location(), number: null, mark: null }
+  { start: stream.location(), number: null, mark: null }
 ];
 
 export function lex(input: string): Array<CssToken> {

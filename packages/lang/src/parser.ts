@@ -1,4 +1,3 @@
-import { bind } from "@alfa/util";
 import { Token, WithLocation } from "./lexer";
 
 const { isArray } = Array;
@@ -17,7 +16,6 @@ export class TokenStream<T extends Token> {
   }
 
   public constructor(input: Array<T>) {
-    bind(this);
     this._input = input;
   }
 
