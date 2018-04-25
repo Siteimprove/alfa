@@ -27,10 +27,10 @@ export function getCascade(document: Document): Cascade {
 
       rules.sort((a, b) => {
         // If the specificities of the rules are equal, the declaration order
-        // will determine the cascade. The rule with the lowest order gets the
+        // will determine the cascade. The rule with the highest order gets the
         // highest priority.
         if (a.specificity === b.specificity) {
-          return a.order - b.order;
+          return b.order - a.order;
         }
 
         // Otherwise, the specificity will determine the cascade. The rule with
@@ -92,11 +92,22 @@ class SelectorMap {
   private _other: Array<SelectorEntry> = [];
 
   constructor(styleSheets: Array<StyleSheet>) {
+    // Every rule encountered in style sheets is assigned an increasing number
+    // that denotes declaration order. While rules are stored in buckets in the
+    // order in which they were declared, information related to ordering will
+    // otherwise no longer be available once rules from different buckets are
+    // combined.
     let order: number = 0;
 
-    const queue: Array<Rule> = styleSheets
-      .map(styleSheet => slice(styleSheet.cssRules))
-      .reduce(concat, []);
+    const queue: Array<Rule> = [];
+
+    for (let i = styleSheets.length - 1; i >= 0; i--) {
+      const { cssRules } = styleSheets[i];
+
+      for (let j = cssRules.length - 1; j >= 0; j--) {
+        queue.push(cssRules[j]);
+      }
+    }
 
     while (queue.length > 0) {
       const rule = queue.pop();
@@ -139,16 +150,18 @@ class SelectorMap {
         });
       }
 
+      let children: ArrayLike<Rule> = [];
+
       if (isImportRule(rule)) {
-        each(rule.styleSheet.cssRules, rule => {
-          queue.push(rule);
-        });
+        children = rule.styleSheet.cssRules;
       }
 
       if (isGroupingRule(rule)) {
-        each(rule.cssRules, rule => {
-          queue.push(rule);
-        });
+        children = rule.cssRules;
+      }
+
+      for (let i = children.length - 1; i >= 0; i--) {
+        queue.push(children[i]);
       }
     }
   }
