@@ -1,4 +1,4 @@
-import { each, concat, slice, map } from "@alfa/util";
+import { each, slice, map } from "@alfa/util";
 import { parse, Selector, isSelector, isSelectorList } from "@alfa/css";
 import { Node, Document, Element, StyleSheet, Rule } from "./types";
 import { isElement, isStyleRule, isImportRule, isGroupingRule } from "./guards";
@@ -17,9 +17,7 @@ export interface Cascade {
 export function getCascade(document: Document): Cascade {
   const cascade: WeakMap<Element, Array<Rule>> = new WeakMap();
 
-  const { styleSheets } = document;
-
-  const selectorMap = new SelectorMap(slice(styleSheets));
+  const selectorMap = new SelectorMap(document.styleSheets);
 
   traverse(document, node => {
     if (isElement(node)) {
@@ -91,7 +89,7 @@ class SelectorMap {
 
   private _other: Array<SelectorEntry> = [];
 
-  constructor(styleSheets: Array<StyleSheet>) {
+  constructor(styleSheets: ArrayLike<StyleSheet>) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -167,16 +165,15 @@ class SelectorMap {
   }
 
   public getRules(element: Element, context: Node): Array<SelectorEntry> {
-    const rules: Array<SelectorEntry> = [
-      ...this._other,
-      ...getRules(this._types, getTag(element))
-    ];
+    const rules: Array<SelectorEntry> = slice(this._other);
 
     const id = getAttribute(element, "id");
 
     if (id !== null) {
       rules.push(...getRules(this._ids, id));
     }
+
+    rules.push(...getRules(this._types, getTag(element)));
 
     for (const className of getClassList(element)) {
       rules.push(...getRules(this._classes, className));
