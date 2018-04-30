@@ -1,4 +1,3 @@
-import { hasAttribute } from "@alfa/dom";
 import { Feature } from "../types";
 import * as Roles from "../roles";
 

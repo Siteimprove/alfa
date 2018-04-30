@@ -7,6 +7,6 @@ import { Structure, Widget } from "./abstract";
  */
 export const Separator: Role = {
   name: "separator",
-  inherits: separator => (isFocusable(separator) ? Widget : Structure),
+  inherits: separator => (isFocusable(separator) ? [Widget] : [Structure]),
   label: { from: ["author"] }
 };

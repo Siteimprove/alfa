@@ -89,7 +89,7 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#superclassrole
    */
-  inherits?: Array<Role>;
+  inherits?: RoleAspect<Array<Role>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#scope
@@ -99,7 +99,7 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#mustContain
    */
-  owned?: Array<Role | [Role, Role]>;
+  owned?: RoleAspect<Array<Role | [Role, Role]>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#requiredState
@@ -113,6 +113,8 @@ export type Role = Readonly<{
 }>;
 
 export type FeatureAspect<T> = T | ((element: Element, context: Node) => T);
+
+export type RoleAspect<T> = T | ((element: Element, context: Node) => T);
 
 export const Any: Array<Role> = values(Roles);
 

@@ -1,0 +1,162 @@
+import { Element, getAttribute, hasAttribute } from "@alfa/dom";
+import { Feature, Role, None } from "../types";
+import * as Roles from "../roles";
+
+/**
+ * @see https://www.w3.org/TR/html-aria/#input
+ */
+export const Input: Feature = {
+  element: "input",
+  role,
+  allowedRoles
+};
+//TODO Verify with Kasper that this is indeed correct
+function role(input: Element, context: Element): Role | undefined {
+  if (hasAttribute(input, "type")) {
+    switch (getAttribute(input, "type")) {
+      case "button":
+        return Roles.Button;
+      case "checkbox":
+        return Roles.Checkbox;
+      case "color":
+        return undefined;
+      case "date":
+        return undefined;
+      case "datetime":
+        return undefined;
+      case "email":
+        if (!hasAttribute(input, "list")) {
+          return Roles.TextBox;
+        }
+        return Roles.Combobox;
+      case "file":
+        return undefined;
+      case "hidden":
+        return undefined;
+      case "image":
+        return Roles.Button;
+      case "month":
+        return undefined;
+      case "number":
+        return Roles.SpinButton;
+      case "password":
+        return undefined;
+      case "radio":
+        return Roles.Radio;
+      case "range":
+        return Roles.Slider;
+      case "reset":
+        return Roles.Button;
+      case "search":
+        if (!hasAttribute(input, "list")) {
+          return Roles.SearchBox;
+        }
+        return Roles.Combobox;
+      case "submit":
+        return Roles.Button;
+      case "tel":
+        if (!hasAttribute(input, "list")) {
+          return Roles.TextBox;
+        }
+        return Roles.Combobox;
+      case "text":
+        if (!hasAttribute(input, "list")) {
+          return Roles.TextBox;
+        }
+        return Roles.Combobox;
+      case "time":
+        return undefined;
+      case "url":
+        if (!hasAttribute(input, "list")) {
+          return Roles.TextBox;
+        }
+        return Roles.Combobox;
+      case "week":
+        return undefined;
+      default:
+        return undefined;
+    }
+  }
+  return undefined;
+}
+
+function allowedRoles(
+  input: Element,
+  context: Node
+): Array<Role> | typeof None {
+  if (hasAttribute(input, "type")) {
+    switch (getAttribute(input, "type")) {
+      case "button":
+        return [
+          Roles.Link,
+          Roles.MenuItem,
+          Roles.MenuItemCheckbox,
+          Roles.MenuItemRadio,
+          Roles.Option,
+          Roles.Radio,
+          Roles.Switch,
+          Roles.Tab
+        ];
+      case "checkbox":
+        if (getAttribute(input, "pressed") === "true") {
+          return [
+            Roles.Button,
+            Roles.MenuItemCheckbox,
+            Roles.Option,
+            Roles.Switch
+          ];
+        }
+        return [Roles.MenuItemCheckbox, Roles.Option, Roles.Switch];
+      case "color":
+        return None;
+      case "date":
+        return None;
+      case "datetime":
+        return None;
+      case "email":
+        return None;
+      case "file":
+        return None;
+      case "hidden":
+        return None;
+      case "image":
+        return [
+          Roles.Link,
+          Roles.MenuItem,
+          Roles.MenuItemCheckbox,
+          Roles.MenuItemRadio,
+          Roles.Radio,
+          Roles.Switch
+        ];
+      case "month":
+        return None;
+      case "number":
+        return None;
+      case "password":
+        return None;
+      case "radio":
+        return [Roles.MenuItemRadio];
+      case "range":
+        return None;
+      case "reset":
+        return None;
+      case "search":
+        return None;
+      case "submit":
+        return None;
+      case "tel":
+        return None;
+      case "text":
+        return None;
+      case "time":
+        return None;
+      case "url":
+        return None;
+      case "week":
+        return None;
+      default:
+        return None;
+    }
+  }
+  return None; //The documentation does not explicitly state this
+}

@@ -33,7 +33,9 @@ export interface Element extends Node, ParentNode, ChildNode {
   readonly tagName: string;
   readonly attributes: ArrayLike<Attribute>;
 
-  // https://www.w3.org/TR/dom41/#dom-element-shadowroot
+  /**
+   * @see https://www.w3.org/TR/dom41/#dom-element-shadowroot
+   */
   readonly shadowRoot: ShadowRoot | null;
 }
 
