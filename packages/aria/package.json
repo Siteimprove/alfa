@@ -10,7 +10,6 @@
   "private": true,
   "dependencies": {
     "@alfa/dom": "^0.0.0",
-    "@alfa/style": "^0.0.0",
     "@alfa/util": "^0.0.0"
   },
   "devDependencies": {
