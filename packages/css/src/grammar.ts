@@ -12,8 +12,8 @@ export * from "./grammar/selector";
 export type AtRule = {
   type: "at-rule";
   name: string;
-  prelude: Array<ComponentValue>;
-  value?: SimpleBlock<"{">;
+  prelude: Array<Token>;
+  value?: Array<Token>;
 };
 
 /**
@@ -21,8 +21,8 @@ export type AtRule = {
  */
 export type QualifiedRule = {
   type: "qualified-rule";
-  prelude: Array<ComponentValue>;
-  value: SimpleBlock<"{">;
+  prelude: Array<Token>;
+  value: Array<Token>;
 };
 
 /**
@@ -31,46 +31,15 @@ export type QualifiedRule = {
 export type Declaration = {
   type: "declaration";
   name: string;
-  value: Array<ComponentValue>;
+  value: Array<Token>;
   important: boolean;
-};
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#component-value
- */
-export type ComponentValue = PreservedToken | Function | SimpleBlock;
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#preserved-tokens
- */
-export type PreservedToken = Exclude<
-  Token,
-  FunctionName | Brace<"{"> | Paren<"("> | Bracket<"[">
->;
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#function
- */
-export type Function = {
-  type: "function";
-  name: string;
-  value: Array<ComponentValue>;
-};
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#simple-block
- */
-export type SimpleBlock<Name extends "[" | "(" | "{" = "[" | "(" | "{"> = {
-  type: "simple-block";
-  name: Name;
-  value: Array<ComponentValue>;
 };
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-at-rule
  */
 export function atRule(stream: Stream<Token>, name: string): AtRule {
-  const prelude: Array<ComponentValue> = [];
+  const prelude: Array<Token> = [];
 
   let next = stream.peek();
 
@@ -82,7 +51,7 @@ export function atRule(stream: Stream<Token>, name: string): AtRule {
         type: "at-rule",
         name,
         prelude,
-        value: simpleBlock(stream, next.type)
+        value: block(stream, next.type)
       };
     }
 
@@ -90,7 +59,7 @@ export function atRule(stream: Stream<Token>, name: string): AtRule {
       break;
     }
 
-    prelude.push(componentValue(stream));
+    prelude.push(value(stream));
 
     next = stream.peek();
   }
@@ -106,7 +75,7 @@ export function atRule(stream: Stream<Token>, name: string): AtRule {
  * @see https://www.w3.org/TR/css-syntax/#consume-a-qualified-rule
  */
 export function qualifiedRule(stream: Stream<Token>): QualifiedRule | null {
-  const prelude: Array<ComponentValue> = [];
+  const prelude: Array<Token> = [];
 
   let next = stream.peek();
 
@@ -117,11 +86,11 @@ export function qualifiedRule(stream: Stream<Token>): QualifiedRule | null {
       return {
         type: "qualified-rule",
         prelude,
-        value: simpleBlock(stream, next.type)
+        value: block(stream, next.type)
       };
     }
 
-    prelude.push(componentValue(stream));
+    prelude.push(value(stream));
 
     next = stream.peek();
   }
@@ -136,7 +105,7 @@ export function declaration(
   stream: Stream<Token>,
   name: string
 ): Declaration | null {
-  let value: Array<ComponentValue> = [];
+  let values: Array<Token> = [];
   let important: boolean = false;
   let next = stream.peek();
 
@@ -151,12 +120,12 @@ export function declaration(
   next = stream.next();
 
   while (next !== null && next.type !== ";") {
-    value.push(componentValue(stream));
+    values.push(value(stream));
     next = stream.peek();
   }
 
-  const fst = value[value.length - 2];
-  const snd = value[value.length - 1];
+  const fst = values[values.length - 2];
+  const snd = values[values.length - 1];
 
   if (
     fst &&
@@ -167,21 +136,18 @@ export function declaration(
     snd.value === "important"
   ) {
     important = true;
-    value = value.slice(0, -2);
+    values = values.slice(0, -2);
   }
 
   return {
     type: "declaration",
     name,
-    value,
+    value: values,
     important
   };
 }
 
-/**
- * @see https://www.w3.org/TR/css-syntax/#consume-a-component-value
- */
-export function componentValue(stream: Stream<Token>): ComponentValue {
+export function value(stream: Stream<Token>): Token {
   const next = stream.next();
 
   if (next === null) {
@@ -189,14 +155,6 @@ export function componentValue(stream: Stream<Token>): ComponentValue {
   }
 
   switch (next.type) {
-    case "{":
-    case "[":
-    case "(":
-      return simpleBlock(stream, next.type);
-
-    case "function-name":
-      return func(stream, next.value);
-
     case "whitespace":
       return { type: next.type };
     case ":":
@@ -205,16 +163,21 @@ export function componentValue(stream: Stream<Token>): ComponentValue {
       return { type: next.type };
     case ",":
       return { type: next.type };
+    case "{":
     case "}":
       return { type: next.type };
+    case "[":
     case "]":
       return { type: next.type };
+    case "(":
     case ")":
       return { type: next.type };
 
     case "comment":
       return { type: next.type, value: next.value };
     case "ident":
+      return { type: next.type, value: next.value };
+    case "function-name":
       return { type: next.type, value: next.value };
     case "string":
       return { type: next.type, value: next.value };
@@ -238,14 +201,11 @@ export function componentValue(stream: Stream<Token>): ComponentValue {
   }
 }
 
-/**
- * @see https://www.w3.org/TR/css-syntax/#consume-a-simple-block
- */
-export function simpleBlock<Name extends "[" | "(" | "{">(
+export function block<Name extends "[" | "(" | "{">(
   stream: Stream<Token>,
   name: Name
-): SimpleBlock<Name> {
-  const value: Array<ComponentValue> = [];
+): Array<Token> {
+  const values: Array<Token> = [];
   const mirror =
     name === "[" ? "]" : name === "(" ? ")" : name === "{" ? "}" : null;
 
@@ -256,7 +216,7 @@ export function simpleBlock<Name extends "[" | "(" | "{">(
       break;
     }
 
-    value.push(componentValue(stream));
+    values.push(value(stream));
 
     next = stream.peek();
   }
@@ -265,29 +225,5 @@ export function simpleBlock<Name extends "[" | "(" | "{">(
     stream.advance();
   }
 
-  return {
-    type: "simple-block",
-    name,
-    value
-  };
-}
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#consume-a-function
- */
-export function func(stream: Stream<Token>, name: string): Function {
-  const value: Array<ComponentValue> = [];
-
-  let next = stream.peek();
-
-  while (next !== null) {
-    value.push(componentValue(stream));
-    next = stream.peek();
-  }
-
-  return {
-    type: "function",
-    name,
-    value
-  };
+  return values;
 }

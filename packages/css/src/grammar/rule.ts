@@ -70,20 +70,24 @@ const ident: Production<Ident> = {
 const delim: Production<Delim> = {
   token: "delim",
   prefix(token, stream) {
-    stream.backup();
-    return qualifiedRule(stream);
+    return rule(stream);
+  },
+  infix(token, stream, expression, left) {
+    return ruleList(stream, expression, left);
   }
 };
 
 const bracket: Production<Bracket> = {
   token: "[",
   prefix(token, stream) {
-    stream.backup();
-    return qualifiedRule(stream);
+    return rule(stream);
+  },
+  infix(token, stream, expression, left) {
+    return ruleList(stream, expression, left);
   }
 };
 
 export const RuleGrammar: Grammar<
   Token,
   AtRule | QualifiedRule | Array<AtRule | QualifiedRule>
-> = new Grammar([ident, delim, whitespace]);
+> = new Grammar([ident, delim, bracket, whitespace]);
