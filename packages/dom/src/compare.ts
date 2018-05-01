@@ -46,9 +46,7 @@ export function compare(a: Node, b: Node, context: Node): number {
   a = ap[fork + 1];
   b = bp[fork + 1];
 
-  const n = childNodes.length;
-
-  for (let i = 0; i < n; i++) {
+  for (let i = 0, n = childNodes.length; i < n; i++) {
     const child = childNodes[i];
 
     if (child === a) {
