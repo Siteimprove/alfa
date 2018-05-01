@@ -44,6 +44,12 @@ test("Can parse a compound selector", async t =>
     ]
   }));
 
+test("Can parse the universal selector", async t =>
+  css(t, "*", {
+    type: "type-selector",
+    name: "*"
+  }));
+
 test("Can parse a compound selector with a type in prefix position", async t =>
   css(t, "div.foo", {
     type: "compound-selector",
@@ -63,13 +69,13 @@ test("Can parse a single descendant selector", async t =>
   css(t, "div .foo", {
     type: "relative-selector",
     combinator: " ",
-    selector: {
-      type: "class-selector",
-      name: "foo"
-    },
     relative: {
       type: "type-selector",
       name: "div"
+    },
+    selector: {
+      type: "class-selector",
+      name: "foo"
     }
   }));
 
@@ -77,13 +83,13 @@ test("Can parse a single descendant selector with a right-hand type selector", a
   css(t, "div span", {
     type: "relative-selector",
     combinator: " ",
-    selector: {
-      type: "type-selector",
-      name: "span"
-    },
     relative: {
       type: "type-selector",
       name: "div"
+    },
+    selector: {
+      type: "type-selector",
+      name: "span"
     }
   }));
 
@@ -91,21 +97,21 @@ test("Can parse a double descendant selector", async t =>
   css(t, "div .foo #bar", {
     type: "relative-selector",
     combinator: " ",
-    selector: {
-      type: "id-selector",
-      name: "bar"
-    },
     relative: {
       type: "relative-selector",
       combinator: " ",
-      selector: {
-        type: "class-selector",
-        name: "foo"
-      },
       relative: {
         type: "type-selector",
         name: "div"
+      },
+      selector: {
+        type: "class-selector",
+        name: "foo"
       }
+    },
+    selector: {
+      type: "id-selector",
+      name: "bar"
     }
   }));
 
@@ -113,13 +119,13 @@ test("Can parse a direct descendant selector", async t =>
   css(t, "div > .foo", {
     type: "relative-selector",
     combinator: ">",
-    selector: {
-      type: "class-selector",
-      name: "foo"
-    },
     relative: {
       type: "type-selector",
       name: "div"
+    },
+    selector: {
+      type: "class-selector",
+      name: "foo"
     }
   }));
 
@@ -127,13 +133,13 @@ test("Can parse a sibling selector", async t =>
   css(t, "div ~ .foo", {
     type: "relative-selector",
     combinator: "~",
-    selector: {
-      type: "class-selector",
-      name: "foo"
-    },
     relative: {
       type: "type-selector",
       name: "div"
+    },
+    selector: {
+      type: "class-selector",
+      name: "foo"
     }
   }));
 
@@ -141,13 +147,13 @@ test("Can parse a direct sibling selector", async t =>
   css(t, "div + .foo", {
     type: "relative-selector",
     combinator: "+",
-    selector: {
-      type: "class-selector",
-      name: "foo"
-    },
     relative: {
       type: "type-selector",
       name: "div"
+    },
+    selector: {
+      type: "class-selector",
+      name: "foo"
     }
   }));
 
@@ -194,6 +200,68 @@ test("Can parse a list of simple and compound selectors", async t =>
     ]
   }));
 
+test("Can parse a list of descendant selectors", async t =>
+  css(t, "div .foo, span .baz", {
+    type: "selector-list",
+    selectors: [
+      {
+        type: "relative-selector",
+        combinator: " ",
+        relative: {
+          type: "type-selector",
+          name: "div"
+        },
+        selector: {
+          type: "class-selector",
+          name: "foo"
+        }
+      },
+      {
+        type: "relative-selector",
+        combinator: " ",
+        relative: {
+          type: "type-selector",
+          name: "span"
+        },
+        selector: {
+          type: "class-selector",
+          name: "baz"
+        }
+      }
+    ]
+  }));
+
+test("Can parse a list of sibling selectors", async t =>
+  css(t, "div ~ .foo, span ~ .baz", {
+    type: "selector-list",
+    selectors: [
+      {
+        type: "relative-selector",
+        combinator: "~",
+        relative: {
+          type: "type-selector",
+          name: "div"
+        },
+        selector: {
+          type: "class-selector",
+          name: "foo"
+        }
+      },
+      {
+        type: "relative-selector",
+        combinator: "~",
+        relative: {
+          type: "type-selector",
+          name: "span"
+        },
+        selector: {
+          type: "class-selector",
+          name: "baz"
+        }
+      }
+    ]
+  }));
+
 test("Can parse a list of selectors with no whitespace", async t =>
   css(t, ".foo,.bar,.baz", {
     type: "selector-list",
@@ -211,6 +279,83 @@ test("Can parse a list of selectors with no whitespace", async t =>
         name: "baz"
       }
     ]
+  }));
+
+test("Can parse a compound selector relative to a class selector", async t =>
+  css(t, ".foo div.bar", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "class-selector",
+          name: "bar"
+        }
+      ]
+    }
+  }));
+
+test("Can parse a compound selector relative to a compound selector", async t =>
+  css(t, "span.foo div.bar", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "span"
+        },
+        {
+          type: "class-selector",
+          name: "foo"
+        }
+      ]
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "class-selector",
+          name: "bar"
+        }
+      ]
+    }
+  }));
+
+test("Can parse a descendant selector relative to a sibling selector", async t =>
+  css(t, "div ~ span .foo", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "relative-selector",
+      combinator: "~",
+      relative: {
+        type: "type-selector",
+        name: "div"
+      },
+      selector: {
+        type: "type-selector",
+        name: "span"
+      }
+    },
+    selector: {
+      type: "class-selector",
+      name: "foo"
+    }
   }));
 
 test("Can parse an attribute selector without a value", async t =>
@@ -237,6 +382,14 @@ test("Can parse an attribute selector with a string value", async t =>
     matcher: null
   }));
 
+test("Can parse an attribute selector with a matcher", async t =>
+  css(t, "[foo*=bar]", {
+    type: "attribute-selector",
+    name: "foo",
+    value: "bar",
+    matcher: "*"
+  }));
+
 test("Can parse an attribute selector when part of a compound selector", async t =>
   css(t, ".foo[foo]", {
     type: "compound-selector",
@@ -254,6 +407,190 @@ test("Can parse an attribute selector when part of a compound selector", async t
     ]
   }));
 
+test("Can parse an attribute selector when part of a descendant selector", async t =>
+  css(t, "div [foo]", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "type-selector",
+      name: "div"
+    },
+    selector: {
+      type: "attribute-selector",
+      name: "foo",
+      value: null,
+      matcher: null
+    }
+  }));
+
+test("Can parse an attribute selector when part of a compound selector relative to a class selector", async t =>
+  css(t, ".foo div[foo]", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "attribute-selector",
+          name: "foo",
+          value: null,
+          matcher: null
+        }
+      ]
+    }
+  }));
+
+test("Can parse a pseudo-element selector", async t =>
+  css(t, "::foo", {
+    type: "pseudo-element-selector",
+    name: "foo"
+  }));
+
+test("Can parse a pseudo-element selector when part of a compound selector", async t =>
+  css(t, ".foo::foo", {
+    type: "compound-selector",
+    selectors: [
+      {
+        type: "class-selector",
+        name: "foo"
+      },
+      {
+        type: "pseudo-element-selector",
+        name: "foo"
+      }
+    ]
+  }));
+
+test("Can parse a pseudo-element selector when part of a descendant selector", async t =>
+  css(t, "div ::foo", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "type-selector",
+      name: "div"
+    },
+    selector: {
+      type: "pseudo-element-selector",
+      name: "foo"
+    }
+  }));
+
+test("Can parse a pseudo-element selector when part of a compound selector relative to a class selector", async t =>
+  css(t, ".foo div::foo", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "pseudo-element-selector",
+          name: "foo"
+        }
+      ]
+    }
+  }));
+
+test("Can parse a named pseudo-class selector", async t =>
+  css(t, ":hover", {
+    type: "pseudo-class-selector",
+    name: "hover",
+    value: null
+  }));
+
+test("Can parse a functional pseudo-class selector", async t =>
+  css(t, ":not(.foo)", {
+    type: "pseudo-class-selector",
+    name: "not",
+    value: {
+      type: "class-selector",
+      name: "foo"
+    }
+  }));
+
+test("Can parse a pseudo-class selector when part of a compound selector", async t =>
+  css(t, "div:hover", {
+    type: "compound-selector",
+    selectors: [
+      {
+        type: "type-selector",
+        name: "div"
+      },
+      {
+        type: "pseudo-class-selector",
+        name: "hover",
+        value: null
+      }
+    ]
+  }));
+
+test("Can parse a pseudo-class selector when part of a compound selector relative to a class selector", async t =>
+  css(t, ".foo div:hover", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "pseudo-class-selector",
+          name: "hover",
+          value: null
+        }
+      ]
+    }
+  }));
+
+test("Can parse a compound type, class, and pseudo-class selector relative to a class selector", async t =>
+  css(t, ".foo div.bar:hover", {
+    type: "relative-selector",
+    combinator: " ",
+    relative: {
+      type: "class-selector",
+      name: "foo"
+    },
+    selector: {
+      type: "compound-selector",
+      selectors: [
+        {
+          type: "type-selector",
+          name: "div"
+        },
+        {
+          type: "class-selector",
+          name: "bar"
+        },
+        {
+          type: "pseudo-class-selector",
+          name: "hover",
+          value: null
+        }
+      ]
+    }
+  }));
+
 test("Can parse a function with no values", async t =>
   css(t, "rgb()", {
     type: "function",
@@ -268,7 +605,8 @@ test("Can parse a function with a single value", async t =>
     value: [
       {
         type: "number",
-        value: 123
+        value: 123,
+        integer: true
       }
     ]
   }));
@@ -280,11 +618,13 @@ test("Can parse a function with multiple values", async t =>
     value: [
       {
         type: "number",
-        value: 123
+        value: 123,
+        integer: true
       },
       {
         type: "number",
-        value: 456
+        value: 456,
+        integer: true
       }
     ]
   }));
@@ -296,11 +636,13 @@ test("Can parse a function with multiple values and no whitespace", async t =>
     value: [
       {
         type: "number",
-        value: 123
+        value: 123,
+        integer: true
       },
       {
         type: "number",
-        value: 456
+        value: 456,
+        integer: true
       }
     ]
   }));

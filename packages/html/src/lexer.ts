@@ -1,7 +1,9 @@
+import { set } from "@alfa/util";
 import {
   Pattern,
   Alphabet,
   Location,
+  WithLocation,
   isWhitespace,
   isAlpha,
   isAlphanumeric,
@@ -9,13 +11,16 @@ import {
   lex as $lex
 } from "@alfa/lang";
 
-const { assign } = Object;
+export type Attribute = Readonly<{
+  name: string;
+  value: string;
+}>;
 
 export type StartTag = Readonly<{
   type: "start-tag";
   value: string;
   closed: boolean;
-  attributes: Array<Readonly<{ name: string; value: string }>>;
+  attributes: Array<Attribute>;
 }>;
 
 export type EndTag = Readonly<{
@@ -41,7 +46,7 @@ export type HtmlToken =
 export type HtmlState = {
   start: Location;
   tag: StartTag | EndTag | null;
-  attribute: { name: string; value: string } | null;
+  attribute: Attribute | null;
   comment: Comment | null;
 };
 
@@ -50,10 +55,10 @@ export type HtmlPattern = Pattern<HtmlToken, HtmlState>;
 /**
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
-const initial: HtmlPattern = ({ next, location }, emit, state, end) => {
-  state.start = location();
+const initial: HtmlPattern = (stream, emit, state, end) => {
+  state.start = stream.location();
 
-  const char = next();
+  const char = stream.next();
 
   if (char === "<") {
     return tagOpen;
@@ -66,32 +71,28 @@ const initial: HtmlPattern = ({ next, location }, emit, state, end) => {
   emit({
     type: "character",
     value: char,
-    location: { start: state.start, end: location() }
+    location: { start: state.start, end: stream.location() }
   });
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
  */
-const tagOpen: HtmlPattern = (
-  { peek, next, ignore, advance, location },
-  emit,
-  state
-) => {
-  const char = peek();
+const tagOpen: HtmlPattern = (stream, emit, state) => {
+  const char = stream.peek();
 
   if (char === "!") {
-    advance();
+    stream.advance();
     return markupDeclarationOpen;
   }
 
   if (char === "/") {
-    advance();
+    stream.advance();
     return endTagOpen;
   }
 
   if (char !== null && isAlpha(char)) {
-    ignore();
+    stream.ignore();
 
     state.tag = {
       type: "start-tag",
@@ -109,14 +110,18 @@ const tagOpen: HtmlPattern = (
       value: ""
     };
 
-    ignore();
+    stream.ignore();
 
     return bogusComment;
   }
 
   const { start } = state;
 
-  emit({ type: "character", value: "<", location: { start, end: location() } });
+  emit({
+    type: "character",
+    value: "<",
+    location: { start, end: stream.location() }
+  });
 
   return initial;
 };
@@ -124,22 +129,18 @@ const tagOpen: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#markup-declaration-open-state
  */
-const markupDeclarationOpen: HtmlPattern = (
-  { peek, ignore, advance },
-  emit,
-  state
-) => {
+const markupDeclarationOpen: HtmlPattern = (stream, emit, state) => {
   state.comment = {
     type: "comment",
     value: ""
   };
 
-  if (peek() === "-" && peek(1) === "-") {
-    advance(2);
+  if (stream.peek() === "-" && stream.peek(1) === "-") {
+    stream.advance(2);
     return commentStart;
   }
 
-  ignore();
+  stream.ignore();
 
   return bogusComment;
 };
@@ -147,27 +148,26 @@ const markupDeclarationOpen: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-start-state
  */
-const commentStart: HtmlPattern = (
-  { peek, advance, location },
-  emit,
-  state
-) => {
-  const char = peek();
+const commentStart: HtmlPattern = (stream, emit, state) => {
+  const char = stream.peek();
 
   if (char === "-") {
-    advance();
+    stream.advance();
     return commentStartDash;
   }
 
   if (char === ">") {
-    advance();
+    stream.advance();
+
     if (state.comment !== null) {
       emit(
-        assign(state.comment, {
-          location: { start: state.start, end: location() }
+        set(state.comment as WithLocation<Comment>, "location", {
+          start: state.start,
+          end: stream.location()
         })
       );
     }
+
     return initial;
   }
 
@@ -177,25 +177,22 @@ const commentStart: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
  */
-const commentStartDash: HtmlPattern = (
-  { peek, advance, location },
-  emit,
-  state,
-  done
-) => {
-  const char = peek();
+const commentStartDash: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === "-") {
-    advance();
+    stream.advance();
     return commentEnd;
   }
 
   if (char === ">" || char === null) {
-    advance();
+    stream.advance();
+
     if (state.comment !== null) {
       emit(
-        assign(state.comment, {
-          location: { start: state.start, end: location() }
+        set(state.comment as WithLocation<Comment>, "location", {
+          start: state.start,
+          end: stream.location()
         })
       );
     }
@@ -210,7 +207,7 @@ const commentStartDash: HtmlPattern = (
   }
 
   if (state.comment !== null) {
-    assign(state.comment, { value: state.comment.value + "-" });
+    set(state.comment, "value", state.comment.value + "-");
   }
 
   return comment;
@@ -219,13 +216,14 @@ const commentStartDash: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-state
  */
-const comment: HtmlPattern = ({ next, location }, emit, state, done) => {
-  const char = next();
+const comment: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.next();
 
   if (char === "<") {
     if (state.comment !== null) {
-      assign(state.comment, { value: state.comment.value + char });
+      set(state.comment, "value", state.comment.value + char);
     }
+
     return commentLessThanSign;
   }
 
@@ -236,8 +234,9 @@ const comment: HtmlPattern = ({ next, location }, emit, state, done) => {
   if (char === null) {
     if (state.comment !== null) {
       emit(
-        assign(state.comment, {
-          location: { start: state.start, end: location() }
+        set(state.comment as WithLocation<Comment>, "location", {
+          start: state.start,
+          end: stream.location()
         })
       );
     }
@@ -245,25 +244,26 @@ const comment: HtmlPattern = ({ next, location }, emit, state, done) => {
   }
 
   if (state.comment !== null) {
-    assign(state.comment, { value: state.comment.value + char });
+    set(state.comment, "value", state.comment.value + char);
   }
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-state
  */
-const commentLessThanSign: HtmlPattern = ({ peek, advance }, emit, state) => {
-  const char = peek();
+const commentLessThanSign: HtmlPattern = (stream, emit, state) => {
+  const char = stream.peek();
 
   if (char === "!" || char === "<") {
-    advance();
+    stream.advance();
+
     if (state.comment !== null) {
-      assign(state.comment, { value: state.comment.value + char });
+      set(state.comment, "value", state.comment.value + char);
     }
   }
 
   if (char === "!") {
-    advance();
+    stream.advance();
     return commentLessThanSignBang;
   }
 
@@ -273,9 +273,9 @@ const commentLessThanSign: HtmlPattern = ({ peek, advance }, emit, state) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-state
  */
-const commentLessThanSignBang: HtmlPattern = ({ peek, advance }) => {
-  if (peek() === "-") {
-    advance();
+const commentLessThanSignBang: HtmlPattern = stream => {
+  if (stream.peek() === "-") {
+    stream.advance();
     return commentLessThanSignBangDash;
   }
 
@@ -285,9 +285,9 @@ const commentLessThanSignBang: HtmlPattern = ({ peek, advance }) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-state
  */
-const commentLessThanSignBangDash: HtmlPattern = ({ peek, advance }) => {
-  if (peek() === "-") {
-    advance();
+const commentLessThanSignBangDash: HtmlPattern = stream => {
+  if (stream.peek() === "-") {
+    stream.advance();
     return commentEnd;
   }
 
@@ -297,11 +297,11 @@ const commentLessThanSignBangDash: HtmlPattern = ({ peek, advance }) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
  */
-const commentEndDash: HtmlPattern = ({ peek, advance }, emit, state, done) => {
-  const char = peek();
+const commentEndDash: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === "-" || char === null) {
-    advance();
+    stream.advance();
   }
 
   if (char === "-") {
@@ -318,28 +318,26 @@ const commentEndDash: HtmlPattern = ({ peek, advance }, emit, state, done) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
  */
-const commentEnd: HtmlPattern = (
-  { peek, advance, result, location },
-  emit,
-  state,
-  done
-) => {
-  const char = peek();
+const commentEnd: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === ">") {
-    advance();
+    stream.advance();
+
     if (state.comment !== null) {
       emit(
-        assign(state.comment, {
-          location: { start: state.start, end: location() }
+        set(state.comment as WithLocation<Comment>, "location", {
+          start: state.start,
+          end: stream.location()
         })
       );
     }
+
     return initial;
   }
 
   if (char === "!") {
-    advance();
+    stream.advance();
     return commentEndBang;
   }
 
@@ -353,27 +351,25 @@ const commentEnd: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
  */
-const commentEndBang: HtmlPattern = (
-  { peek, advance, location },
-  emit,
-  state,
-  done
-) => {
-  const char = peek();
+const commentEndBang: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === "-") {
-    advance();
+    stream.advance();
+
     if (state.comment !== null) {
-      assign(state.comment, { value: state.comment.value + "-!" });
+      set(state.comment, "value", state.comment.value + "-!");
     }
+
     return commentEndDash;
   }
 
   if (char === ">" || char === null) {
     if (state.comment !== null) {
       emit(
-        assign(state.comment, {
-          location: { start: state.start, end: location() }
+        set(state.comment as WithLocation<Comment>, "location", {
+          start: state.start,
+          end: stream.location()
         })
       );
     }
@@ -388,7 +384,7 @@ const commentEndBang: HtmlPattern = (
   }
 
   if (state.comment !== null) {
-    assign(state.comment, { value: state.comment.value + "-!" });
+    set(state.comment, "value", state.comment.value + "-!");
   }
 
   return comment;
@@ -397,30 +393,25 @@ const commentEndBang: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#end-tag-open-state
  */
-const endTagOpen: HtmlPattern = (
-  { peek, advance, ignore, location },
-  emit,
-  state,
-  done
-) => {
-  const char = peek();
+const endTagOpen: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === null) {
     emit({
       type: "character",
       value: "<",
-      location: { start: state.start, end: location() }
+      location: { start: state.start, end: stream.location() }
     });
     emit({
       type: "character",
       value: "/",
-      location: { start: state.start, end: location() }
+      location: { start: state.start, end: stream.location() }
     });
     return done();
   }
 
   if (isAlpha(char)) {
-    ignore();
+    stream.ignore();
 
     state.tag = {
       type: "end-tag",
@@ -431,7 +422,7 @@ const endTagOpen: HtmlPattern = (
   }
 
   if (char === ">") {
-    advance();
+    stream.advance();
     return initial;
   }
 
@@ -440,7 +431,7 @@ const endTagOpen: HtmlPattern = (
     value: ""
   };
 
-  ignore();
+  stream.ignore();
 
   return bogusComment;
 };
@@ -448,23 +439,20 @@ const endTagOpen: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tag-name-state
  */
-const tagName: HtmlPattern = (
-  { next, peek, advance, result, location },
-  emit,
-  { start, tag },
-  done
-) => {
-  const char = peek();
+const tagName: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === null) {
     return done();
   }
 
   if (isWhitespace(char) || char === "/" || char === ">") {
-    assign(tag, { value: result() });
+    if (state.tag !== null) {
+      set(state.tag, "value", stream.result());
+    }
   }
 
-  advance();
+  stream.advance();
 
   if (isWhitespace(char)) {
     return beforeAttributeName;
@@ -475,9 +463,15 @@ const tagName: HtmlPattern = (
   }
 
   if (char === ">") {
-    if (tag !== null) {
-      emit(assign(tag, { location: { start, end: location() } }));
+    if (state.tag !== null) {
+      emit(
+        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
+          start: state.start,
+          end: stream.location()
+        })
+      );
     }
+
     return initial;
   }
 };
@@ -485,19 +479,25 @@ const tagName: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
  */
-const selfClosingStartTag: HtmlPattern = (
-  { peek, location, advance },
-  emit,
-  { start, tag },
-  done
-) => {
-  const char = peek();
+const selfClosingStartTag: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === ">") {
-    advance();
-    if (tag !== null) {
-      emit(assign(tag, { closed: true, location: { start, end: location() } }));
+    stream.advance();
+
+    if (state.tag !== null) {
+      if (state.tag.type === "start-tag") {
+        set(state.tag, "closed", true);
+      }
+
+      emit(
+        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
+          start: state.start,
+          end: stream.location()
+        })
+      );
     }
+
     return initial;
   }
 
@@ -511,14 +511,10 @@ const selfClosingStartTag: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
  */
-const beforeAttributeName: HtmlPattern = (
-  { peek, ignore, accept, advance },
-  emit,
-  state
-) => {
-  accept(isWhitespace);
+const beforeAttributeName: HtmlPattern = (stream, emit, state) => {
+  stream.accept(isWhitespace);
 
-  const char = peek();
+  const char = stream.peek();
 
   state.attribute = { name: "", value: "" };
 
@@ -526,13 +522,11 @@ const beforeAttributeName: HtmlPattern = (
     return afterAttributeName;
   }
 
-  const { tag } = state;
-
-  if (tag !== null && tag.type === "start-tag") {
-    tag.attributes.push(state.attribute);
+  if (state.tag !== null && state.tag.type === "start-tag") {
+    state.tag.attributes.push(state.attribute);
   }
 
-  ignore();
+  stream.ignore();
 
   return attributeName;
 };
@@ -540,57 +534,60 @@ const beforeAttributeName: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-name-state
  */
-const attributeName: HtmlPattern = (
-  { peek, result, advance },
-  emit,
-  { start, tag, attribute }
-) => {
-  const char = peek();
+const attributeName: HtmlPattern = (stream, emit, state) => {
+  const char = stream.peek();
 
   if (char === null || isWhitespace(char) || char === "/" || char === ">") {
-    assign(attribute, { name: result() });
+    if (state.attribute !== null) {
+      set(state.attribute, "name", stream.result());
+    }
+
     return afterAttributeName;
   }
 
   if (char === "=") {
-    assign(attribute, { name: result() });
-    advance();
+    if (state.attribute !== null) {
+      set(state.attribute, "name", stream.result());
+    }
+
+    stream.advance();
+
     return beforeAttributeValue;
   }
 
-  advance();
+  stream.advance();
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-name-state
  */
-const afterAttributeName: HtmlPattern = (
-  { peek, advance, accept, location },
-  emit,
-  state,
-  done
-) => {
-  accept(isWhitespace);
+const afterAttributeName: HtmlPattern = (stream, emit, state, done) => {
+  stream.accept(isWhitespace);
 
-  const char = peek();
+  const char = stream.peek();
 
   if (char === "/") {
-    advance();
+    stream.advance();
     return selfClosingStartTag;
   }
 
   if (char === "=") {
-    advance();
+    stream.advance();
     return beforeAttributeValue;
   }
 
-  const { tag } = state;
-
   if (char === ">") {
-    advance();
-    if (tag !== null) {
-      emit(assign(tag, { location: { start: state.start, end: location() } }));
+    stream.advance();
+
+    if (state.tag !== null) {
+      emit(
+        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
+          start: state.start,
+          end: stream.location()
+        })
+      );
     }
+
     return initial;
   }
 
@@ -606,19 +603,16 @@ const afterAttributeName: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-value-state
  */
-const beforeAttributeValue: HtmlPattern = (
-  { peek, accept, advance, ignore },
-  emit
-) => {
-  accept(isWhitespace);
+const beforeAttributeValue: HtmlPattern = (stream, emit) => {
+  stream.accept(isWhitespace);
 
-  const char = peek();
+  const char = stream.peek();
 
   if (char === '"' || char === "'") {
-    advance();
+    stream.advance();
   }
 
-  ignore();
+  stream.ignore();
 
   if (char === '"') {
     return attributeValueDoubleQuoted;
@@ -635,20 +629,24 @@ const beforeAttributeValue: HtmlPattern = (
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
  */
 const attributeValueDoubleQuoted: HtmlPattern = (
-  { peek, advance, result },
+  stream,
   emit,
   { attribute },
   done
 ) => {
-  const char = peek();
+  const char = stream.peek();
 
   if (char === '"') {
-    assign(attribute, { value: result() });
-    advance();
+    if (attribute !== null) {
+      set(attribute, "value", stream.result());
+    }
+
+    stream.advance();
+
     return afterAttributeValueQuoted;
   }
 
-  advance();
+  stream.advance();
 
   if (char === null) {
     return done();
@@ -659,20 +657,24 @@ const attributeValueDoubleQuoted: HtmlPattern = (
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
  */
 const attributeValueSingleQuoted: HtmlPattern = (
-  { peek, advance, result },
+  stream,
   emit,
   { attribute },
   done
 ) => {
-  const char = peek();
+  const char = stream.peek();
 
   if (char === "'") {
-    assign(attribute, { value: result() });
-    advance();
+    if (attribute !== null) {
+      set(attribute, "value", stream.result());
+    }
+
+    stream.advance();
+
     return afterAttributeValueQuoted;
   }
 
-  advance();
+  stream.advance();
 
   if (char === null) {
     return done();
@@ -682,32 +684,35 @@ const attributeValueSingleQuoted: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-unquoted-state
  */
-const attributeValueUnquoted: HtmlPattern = (
-  { peek, advance, result, location },
-  emit,
-  { start, tag, attribute },
-  done
-) => {
-  const char = peek();
+const attributeValueUnquoted: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === null) {
     return done();
   }
 
   if (isWhitespace(char) || char === ">") {
-    assign(attribute, { value: result() });
+    if (state.attribute !== null) {
+      set(state.attribute, "value", stream.result());
+    }
   }
 
-  advance();
+  stream.advance();
 
   if (isWhitespace(char)) {
     return beforeAttributeName;
   }
 
   if (char === ">") {
-    if (tag !== null) {
-      emit(assign(tag, { location: { start: start, end: location() } }));
+    if (state.tag !== null) {
+      emit(
+        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
+          start: state.start,
+          end: stream.location()
+        })
+      );
     }
+
     return initial;
   }
 };
@@ -715,20 +720,15 @@ const attributeValueUnquoted: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-value-quoted-state
  */
-const afterAttributeValueQuoted: HtmlPattern = (
-  { peek, accept, advance, location },
-  emit,
-  { start, tag },
-  done
-) => {
-  const char = peek();
+const afterAttributeValueQuoted: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.peek();
 
   if (char === null) {
     return done();
   }
 
   if (isWhitespace(char) || char === "/" || char === ">") {
-    advance();
+    stream.advance();
   }
 
   if (isWhitespace(char)) {
@@ -740,9 +740,15 @@ const afterAttributeValueQuoted: HtmlPattern = (
   }
 
   if (char === ">") {
-    if (tag !== null) {
-      emit(assign(tag, { location: { start: start, end: location() } }));
+    if (state.tag !== null) {
+      emit(
+        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
+          start: state.start,
+          end: stream.location()
+        })
+      );
     }
+
     return initial;
   }
 
@@ -752,20 +758,16 @@ const afterAttributeValueQuoted: HtmlPattern = (
 /**
  * @see https://www.w3.org/TR/html/syntax.html#bogus-comment-state
  */
-const bogusComment: HtmlPattern = (
-  { next, result, location },
-  emit,
-  { start, comment },
-  done
-) => {
-  const char = next();
+const bogusComment: HtmlPattern = (stream, emit, state, done) => {
+  const char = stream.next();
 
   if (char === ">" || char === null) {
-    if (comment !== null) {
+    if (state.comment !== null) {
+      set(state.comment, "value", state.comment.value + stream.result());
       emit(
-        assign(comment, {
-          value: comment.value + result(),
-          location: { start, end: location() }
+        set(state.comment as WithLocation<Comment>, "location", {
+          start: state.start,
+          end: stream.location()
         })
       );
     }
@@ -780,9 +782,14 @@ const bogusComment: HtmlPattern = (
   }
 };
 
-export const HtmlAlphabet: Alphabet<HtmlToken, HtmlState> = ({ location }) => [
+export const HtmlAlphabet: Alphabet<HtmlToken, HtmlState> = stream => [
   initial,
-  { start: location(), tag: null, attribute: null, comment: null }
+  {
+    start: stream.location(),
+    tag: null,
+    attribute: null,
+    comment: null
+  }
 ];
 
 export function lex(input: string): Array<HtmlToken> {

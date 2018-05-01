@@ -1,4 +1,4 @@
-import { memoize, indexOf } from "@alfa/util";
+import { memoize, indexOf, isWhitespace, split, first } from "@alfa/util";
 import {
   Selector,
   SelectorList,
@@ -38,12 +38,12 @@ export function matches(
   }
 
   switch (parsed.type) {
-    case "type-selector":
-      return matchesType(element, parsed);
-    case "class-selector":
-      return matchesClass(element, parsed);
     case "id-selector":
       return matchesId(element, parsed);
+    case "class-selector":
+      return matchesClass(element, parsed);
+    case "type-selector":
+      return matchesType(element, parsed);
     case "attribute-selector":
       return matchesAttribute(element, parsed);
     case "compound-selector":
@@ -57,18 +57,35 @@ export function matches(
   return false;
 }
 
-function matchesType(element: Element, selector: TypeSelector): boolean {
-  return getTag(element) === selector.name;
-}
-
-function matchesClass(element: Element, selector: ClassSelector): boolean {
-  return getClassList(element).has(selector.name);
-}
-
+/**
+ * @see https://www.w3.org/TR/selectors/#id-selectors
+ */
 function matchesId(element: Element, selector: IdSelector): boolean {
   return getAttribute(element, "id") === selector.name;
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#class-html
+ */
+function matchesClass(element: Element, selector: ClassSelector): boolean {
+  return getClassList(element).has(selector.name);
+}
+
+/**
+ * @see https://www.w3.org/TR/selectors/#type-selectors
+ */
+function matchesType(element: Element, selector: TypeSelector): boolean {
+  // https://www.w3.org/TR/selectors/#the-universal-selector
+  if (selector.name === "*") {
+    return true;
+  }
+
+  return getTag(element) === selector.name;
+}
+
+/**
+ * @see https://www.w3.org/TR/selectors/#attribute-selectors
+ */
 function matchesAttribute(
   element: Element,
   selector: AttributeSelector
@@ -79,9 +96,33 @@ function matchesAttribute(
     return value !== null;
   }
 
-  return selector.value === value;
+  if (value === null) {
+    return false;
+  }
+
+  if (selector.matcher === null) {
+    return selector.value === value;
+  }
+
+  switch (selector.matcher) {
+    case "^":
+      return value.startsWith(selector.value);
+    case "$":
+      return value.endsWith(selector.value);
+    case "*":
+      return value.includes(selector.value);
+    case "~":
+      return split(value, isWhitespace).some(value => selector.value === value);
+    case "|":
+      return selector.value === value || value.startsWith(selector.value + "-");
+  }
+
+  return false;
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#compound
+ */
 function matchesCompound(
   element: Element,
   context: Node,
@@ -92,6 +133,9 @@ function matchesCompound(
   );
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#grouping
+ */
 function matchesList(
   element: Element,
   context: Node,
@@ -102,6 +146,9 @@ function matchesList(
   );
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#combinators
+ */
 function matchesRelative(
   element: Element,
   context: Node,
@@ -123,6 +170,9 @@ function matchesRelative(
   }
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#descendant-combinators
+ */
 function matchesDescendant(
   element: Element,
   context: Node,
@@ -141,6 +191,9 @@ function matchesDescendant(
   return false;
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#child-combinators
+ */
 function matchesDirectDescendant(
   element: Element,
   context: Node,
@@ -154,6 +207,9 @@ function matchesDirectDescendant(
   );
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#general-sibling-combinators
+ */
 function matchesSibling(
   element: Element,
   context: Node,
@@ -178,6 +234,9 @@ function matchesSibling(
   return false;
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#adjacent-sibling-combinators
+ */
 function matchesDirectSibling(
   element: Element,
   context: Node,

@@ -1,4 +1,4 @@
-import { bind, isNewline } from "@alfa/util";
+import { isNewline } from "@alfa/util";
 
 // Expose string utilities to consumers of @alfa/lang as a convenience. Packages
 // that implement lexers will most likely need one or more of these and getting
@@ -41,7 +41,6 @@ export class CharacterStream {
   private _column: number = 0;
 
   public constructor(input: string) {
-    bind(this);
     this._input = input;
   }
 

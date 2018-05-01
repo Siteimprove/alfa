@@ -1,4 +1,4 @@
-import { Selector, parse, isSelector } from "./parser";
+import { Selector, parse, isSelector } from "@alfa/css";
 
 const { min } = Math;
 
@@ -35,29 +35,35 @@ export function getSpecificity(selector: string | Selector): Specificity {
   const queue: Array<Selector> = [selector];
 
   while (queue.length > 0) {
-    const next = queue.pop();
+    const selector = queue.pop();
 
-    if (next === undefined) {
+    if (selector === undefined) {
       break;
     }
 
-    switch (next.type) {
+    switch (selector.type) {
       case "id-selector":
         a++;
         break;
       case "class-selector":
       case "attribute-selector":
+      case "pseudo-class-selector":
         b++;
         break;
       case "type-selector":
+        if (selector.name !== "*") {
+          c++;
+        }
+        break;
+      case "pseudo-element-selector":
         c++;
         break;
       case "compound-selector":
-        queue.push(...next.selectors);
+        queue.push(...selector.selectors);
         break;
       case "relative-selector":
-        queue.push(next.selector);
-        queue.push(next.relative);
+        queue.push(selector.selector);
+        queue.push(selector.relative);
     }
   }
 

@@ -1,4 +1,10 @@
-import { Grammar, Production, parse as $parse } from "@alfa/lang";
+import {
+  Grammar,
+  Expression,
+  Production,
+  TokenStream,
+  parse as $parse
+} from "@alfa/lang";
 import {
   CssToken,
   Whitespace,
@@ -6,6 +12,7 @@ import {
   Delim,
   Ident,
   Comma,
+  Colon,
   Paren,
   Bracket,
   String,
@@ -14,6 +21,7 @@ import {
   Dimension,
   FunctionName,
   isIdent,
+  isFunctionName,
   isString,
   isDelim,
   lex
@@ -32,7 +40,23 @@ export type AttributeSelector = {
 
 export type TypeSelector = { type: "type-selector"; name: string };
 
-export type SubclassSelector = IdSelector | ClassSelector | AttributeSelector;
+export type PseudoClassSelector = {
+  type: "pseudo-class-selector";
+  name: string;
+  value: CssTree | null;
+};
+
+export type PseudoElementSelector = {
+  type: "pseudo-element-selector";
+  name: string;
+};
+
+export type SubclassSelector =
+  | IdSelector
+  | ClassSelector
+  | AttributeSelector
+  | PseudoClassSelector
+  | PseudoElementSelector;
 
 export type SimpleSelector = TypeSelector | SubclassSelector;
 
@@ -41,14 +65,16 @@ export type CompoundSelector = {
   selectors: Array<SimpleSelector>;
 };
 
+export type ComplexSelector = SimpleSelector | CompoundSelector;
+
 export type RelativeSelector = {
   type: "relative-selector";
   combinator: " " | ">" | "+" | "~";
-  selector: SimpleSelector | CompoundSelector;
   relative: Selector;
+  selector: ComplexSelector;
 };
 
-export type Selector = SimpleSelector | CompoundSelector | RelativeSelector;
+export type Selector = ComplexSelector | RelativeSelector;
 
 export type SelectorList = {
   type: "selector-list";
@@ -75,6 +101,18 @@ export type ComponentValueList = {
   values: Array<ComponentValue>;
 };
 
+export type Declaration = {
+  type: "declaration";
+  property: string;
+  value: Array<ComponentValue>;
+  important: boolean;
+};
+
+export type DeclarationList = {
+  type: "declaration-list";
+  declarations: Array<Declaration>;
+};
+
 export type CssTree =
   | Selector
   | SelectorList
@@ -94,6 +132,8 @@ export function isSimpleSelector(node: CssTree): node is SimpleSelector {
     case "class-selector":
     case "attribute-selector":
     case "type-selector":
+    case "pseudo-class-selector":
+    case "pseudo-element-selector":
       return true;
     default:
       return false;
@@ -104,16 +144,16 @@ export function isCompoundSelector(node: CssTree): node is CompoundSelector {
   return node.type === "compound-selector";
 }
 
+export function isComplexSelector(node: CssTree): node is ComplexSelector {
+  return isSimpleSelector(node) || isCompoundSelector(node);
+}
+
 export function isRelativeSelector(node: CssTree): node is RelativeSelector {
   return node.type === "relative-selector";
 }
 
 export function isSelector(node: CssTree): node is Selector {
-  return (
-    isSimpleSelector(node) ||
-    isCompoundSelector(node) ||
-    isRelativeSelector(node)
-  );
+  return isComplexSelector(node) || isRelativeSelector(node);
 }
 
 export function isSelectorList(node: CssTree): node is SelectorList {
@@ -150,117 +190,297 @@ export function isComponentValueList(
   return node.type === "component-value-list";
 }
 
+function isImplicitDescendant(token: CssToken): boolean {
+  switch (token.type) {
+    case "ident":
+    case "[":
+    case ":":
+      return true;
+    case "delim":
+      return token.value === "." || token.value === "#" || token.value === "*";
+  }
+
+  return false;
+}
+
+function idSelector(stream: TokenStream<CssToken>): IdSelector {
+  const ident = stream.accept(isIdent);
+
+  if (ident === false) {
+    throw new Error("Expected ident");
+  }
+
+  return { type: "id-selector", name: ident.value };
+}
+
+function classSelector(stream: TokenStream<CssToken>): ClassSelector {
+  const ident = stream.accept(isIdent);
+
+  if (ident === false) {
+    throw new Error("Expected ident");
+  }
+
+  return { type: "class-selector", name: ident.value };
+}
+
+function attributeSelector(stream: TokenStream<CssToken>): AttributeSelector {
+  const attribute = stream.accept(isIdent);
+
+  if (attribute === false) {
+    throw new Error("Expected ident");
+  }
+
+  if (stream.accept(token => token.type === "]")) {
+    return {
+      type: "attribute-selector",
+      name: attribute.value,
+      value: null,
+      matcher: null
+    };
+  }
+
+  let matcher: AttributeSelector["matcher"] = null;
+
+  stream.accept(token => {
+    if (isDelim(token)) {
+      switch (token.value) {
+        case "~":
+        case "|":
+        case "^":
+        case "$":
+        case "*":
+          matcher = token.value;
+          return true;
+      }
+    }
+
+    return false;
+  });
+
+  if (stream.accept(token => isDelim(token) && token.value === "=") === false) {
+    throw new Error("Expected equals sign");
+  }
+
+  const value = stream.next();
+
+  if (value === null || !(isIdent(value) || isString(value))) {
+    throw new Error("Expected ident or string");
+  }
+
+  if (stream.accept(token => token.type === "]") === false) {
+    throw new Error("Expected end of attribute selector");
+  }
+
+  return {
+    type: "attribute-selector",
+    name: attribute.value,
+    value: value.value,
+    matcher: matcher
+  };
+}
+
+function pseudoSelector(
+  stream: TokenStream<CssToken>,
+  expression: Expression<CssTree>
+): PseudoElementSelector | PseudoClassSelector {
+  let selector: PseudoElementSelector | PseudoClassSelector;
+
+  if (stream.accept(next => next.type === ":")) {
+    const ident = stream.accept(isIdent);
+
+    if (ident === false) {
+      throw new Error("Excepted ident");
+    }
+
+    selector = {
+      type: "pseudo-element-selector",
+      name: ident.value
+    };
+  } else {
+    const name = stream.next();
+
+    if (name === null || (!isIdent(name) && !isFunctionName(name))) {
+      throw new Error("Excepted ident or function name");
+    }
+
+    if (isIdent(name)) {
+      selector = {
+        type: "pseudo-class-selector",
+        name: name.value,
+        value: null
+      };
+    } else {
+      selector = {
+        type: "pseudo-class-selector",
+        name: name.value,
+        value: expression()
+      };
+
+      if (stream.accept(token => token.type === ")") === false) {
+        throw new Error("Expected end of arguments");
+      }
+    }
+  }
+
+  return selector;
+}
+function compoundSelector(
+  left: ComplexSelector,
+  right: SimpleSelector
+): CompoundSelector {
+  return {
+    type: "compound-selector",
+    selectors: isCompoundSelector(left)
+      ? [...left.selectors, right]
+      : [left, right]
+  };
+}
+
+function relativeSelector(
+  left: RelativeSelector,
+  right: SimpleSelector
+): RelativeSelector {
+  return {
+    type: "relative-selector",
+    combinator: left.combinator,
+    relative: left.relative,
+    selector: compoundSelector(left.selector, right)
+  };
+}
+
+function selector(left: Selector, right: SimpleSelector): Selector {
+  return isRelativeSelector(left)
+    ? relativeSelector(left, right)
+    : compoundSelector(left, right);
+}
+
+function functionValue(
+  stream: TokenStream<CssToken>,
+  expression: Expression<CssTree>
+): Array<ComponentValue> {
+  const value: Array<ComponentValue> = [];
+
+  let next: CssToken | null = stream.peek();
+
+  while (next !== null) {
+    const right = expression();
+
+    if (right !== null) {
+      if (isComponentValue(right)) {
+        value.push(right);
+      } else if (isComponentValueList(right)) {
+        value.push(...right.values);
+      } else {
+        throw new Error("Expected component value");
+      }
+    }
+
+    next = stream.peek();
+
+    if (next === null || next.type === ")") {
+      break;
+    }
+  }
+
+  if (stream.accept(token => token.type === ")") === false) {
+    throw new Error("Expected end of arguments");
+  }
+
+  return value;
+}
+
 const whitespace: CssProduction<Whitespace, CssTree> = {
   token: "whitespace",
 
   prefix(token, stream, expression) {
-    return expression();
+    return null;
   },
 
   infix(token, stream, expression, left) {
-    if (isSelector(left) && delim.infix !== undefined) {
+    if (isSelector(left)) {
       const token = stream.peek();
 
       if (token !== null) {
-        const isImplicitDescendant =
-          isIdent(token) ||
-          (isDelim(token) && (token.value === "." || token.value === "#"));
+        if (isImplicitDescendant(token)) {
+          const right = expression();
 
-        if (isImplicitDescendant) {
-          return delim.infix(
-            { type: "delim", value: " " },
-            stream,
-            expression,
-            left
-          );
+          if (right === null || !isComplexSelector(right)) {
+            throw new Error("Expected complex selector");
+          }
+
+          return {
+            type: "relative-selector",
+            combinator: " ",
+            relative: left,
+            selector: right
+          };
         }
       }
     }
 
-    return left;
+    return null;
   }
 };
 
 const comment: CssProduction<Comment, CssTree> = {
   token: "comment",
 
-  prefix(token, stream, expression) {
-    return expression();
+  prefix() {
+    return null;
   },
 
-  infix(token, stream, expression, left) {
-    return left;
+  infix() {
+    return null;
   }
 };
 
 const delim: CssProduction<Delim, Selector> = {
   token: "delim",
 
-  prefix(token, { accept }) {
+  prefix(token, stream) {
     switch (token.value) {
-      case ".":
       case "#":
-        const ident = accept(isIdent);
-
-        if (ident === false) {
-          throw new Error("Expected ident");
-        }
-
-        const name = ident.value;
-        return token.value === "."
-          ? { type: "class-selector", name }
-          : { type: "id-selector", name };
+        return idSelector(stream);
+      case ".":
+        return classSelector(stream);
+      case "*":
+        return { type: "type-selector", name: "*" };
     }
 
-    return null;
+    throw new Error("Expected ID or class name");
   },
 
   infix(token, stream, expression, left) {
-    if (isSelector(left)) {
-      switch (token.value) {
-        case ".":
-        case "#": {
-          stream.backup();
-
-          const right = expression();
-
-          if (
-            right === null ||
-            !isSimpleSelector(right) ||
-            !isSimpleSelector(left)
-          ) {
-            throw new Error("Expected simple selector");
-          }
-
-          return {
-            type: "compound-selector",
-            selectors: isCompoundSelector(left)
-              ? [...left.selectors, right]
-              : [left, right]
-          };
-        }
-
-        case " ":
-        case ">":
-        case "+":
-        case "~":
-          const right = expression();
-
-          if (
-            right !== null &&
-            (isSimpleSelector(right) || isCompoundSelector(right))
-          ) {
-            return {
-              type: "relative-selector",
-              combinator: token.value,
-              selector: right,
-              relative: left
-            };
-          }
-      }
+    if (!isSelector(left)) {
+      throw new Error("Exepected selector");
     }
 
-    return null;
+    switch (token.value) {
+      case "#":
+        return selector(left, idSelector(stream));
+      case ".":
+        return selector(left, classSelector(stream));
+      case "*":
+        return selector(left, { type: "type-selector", name: "*" });
+
+      case ">":
+      case "+":
+      case "~":
+        const right = expression();
+
+        if (right === null || !isComplexSelector(right)) {
+          throw new Error("Expected selector");
+        }
+
+        return {
+          type: "relative-selector",
+          combinator: token.value,
+          relative: left,
+          selector: right
+        };
+    }
+
+    throw new Error("Expected ID or class name or combinator");
   }
 };
 
@@ -322,100 +542,47 @@ const comma: CssProduction<Comma, SelectorList | ComponentValueList> = {
   }
 };
 
-const bracket: CssProduction<Bracket, AttributeSelector | CompoundSelector> = {
+const bracket: CssProduction<Bracket, Selector> = {
   token: "[",
 
-  prefix(token, { accept, next }, expression) {
-    const attribute = accept(isIdent);
-
-    if (attribute === false) {
-      throw new Error("Expected ident");
-    }
-
-    if (accept(token => token.type === "]")) {
-      return {
-        type: "attribute-selector",
-        name: attribute.value,
-        value: null,
-        matcher: null
-      };
-    }
-
-    if (accept(token => isDelim(token) && token.value === "=") === false) {
-      throw new Error("Expected attribute matcher");
-    }
-
-    const value = next();
-
-    if (value === null || !(isIdent(value) || isString(value))) {
-      throw new Error("Expected ident or string");
-    }
-
-    if (accept(token => token.type === "]") === false) {
-      throw new Error("Expected end of attribute selector");
-    }
-
-    return {
-      type: "attribute-selector",
-      name: attribute.value,
-      value: value.value,
-      matcher: null
-    };
+  prefix(token, stream) {
+    return attributeSelector(stream);
   },
 
-  infix(token, { backup }, expression, left) {
-    backup();
-
-    const right = expression();
-
-    if (right === null || !isSimpleSelector(right) || !isSimpleSelector(left)) {
-      throw new Error("Expected simple selector");
+  infix(token, stream, expression, left) {
+    if (!isSelector(left)) {
+      throw new Error("Expected selector");
     }
 
-    return {
-      type: "compound-selector",
-      selectors: isCompoundSelector(left)
-        ? [...left.selectors, right]
-        : [left, right]
-    };
+    return selector(left, attributeSelector(stream));
+  }
+};
+
+const colon: CssProduction<Colon, Selector> = {
+  token: ":",
+
+  prefix(token, stream, expression) {
+    return pseudoSelector(stream, expression);
+  },
+
+  infix(token, stream, expression, left) {
+    if (!isSelector(left)) {
+      throw new Error("Expected selector");
+    }
+
+    return selector(left, pseudoSelector(stream, expression));
   }
 };
 
 const functionName: CssProduction<FunctionName, Function> = {
   token: "function-name",
 
-  prefix(token, { peek, advance }, expression) {
-    const func: Function = { type: "function", name: token.value, value: [] };
-
-    let next: CssToken | null = peek();
-
-    while (next !== null) {
-      const right = expression();
-
-      if (right !== null) {
-        if (isComponentValue(right)) {
-          func.value.push(right);
-        } else if (isComponentValueList(right)) {
-          func.value.push(...right.values);
-        } else {
-          throw new Error("Expected component value");
-        }
-      }
-
-      next = peek();
-
-      if (next === null || next.type === ")") {
-        break;
-      }
-    }
-
-    if (next === null || next.type !== ")") {
-      throw new Error("Expected end of function");
-    }
-
-    advance();
-
-    return func;
+  prefix(token, stream, expression) {
+    return {
+      type: "function",
+      name: token.value,
+      value: functionValue(stream, expression)
+    };
   }
 };
 
@@ -431,7 +598,7 @@ const number: CssProduction<Number, Number> = {
   token: "number",
 
   prefix(token, stream, expression) {
-    return { type: "number", value: token.value };
+    return { type: "number", value: token.value, integer: token.integer };
   }
 };
 
@@ -439,7 +606,7 @@ const percentage: CssProduction<Percentage, Percentage> = {
   token: "percentage",
 
   prefix(token, stream, expression) {
-    return { type: "percentage", value: token.value };
+    return { type: "percentage", value: token.value, integer: token.integer };
   }
 };
 
@@ -447,22 +614,20 @@ const dimension: CssProduction<Dimension, Dimension> = {
   token: "dimension",
 
   prefix(token, stream, expression) {
-    return { type: "dimension", value: token.value, unit: token.unit };
+    return {
+      type: "dimension",
+      value: token.value,
+      integer: token.integer,
+      unit: token.unit
+    };
   }
 };
 
 export const CssGrammar: Grammar<CssToken, CssTree> = new Grammar([
-  whitespace,
-  comment,
-  delim,
-  ident,
+  [delim, ident, colon, bracket, functionName, whitespace],
+  [string, number, percentage, dimension],
   comma,
-  bracket,
-  functionName,
-  string,
-  number,
-  percentage,
-  dimension
+  comment
 ]);
 
 export function parse(input: string): CssTree | null {
