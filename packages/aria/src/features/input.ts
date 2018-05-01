@@ -98,7 +98,7 @@ function allowedRoles(
           Roles.Tab
         ];
       case "checkbox":
-        if (getAttribute(input, "pressed") === "true") {
+        if (hasAttribute(input, "pressed")) {
           return [
             Roles.Button,
             Roles.MenuItemCheckbox,

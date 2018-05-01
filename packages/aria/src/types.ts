@@ -124,9 +124,6 @@ export const NoRole: Array<Role> = [];
 export const Except: (...roles: Array<Role>) => Array<Role> = (...roles) =>
   AnyRole.filter(role => includes(roles, role));
 
-export const AnyAttribute: Array<Attribute> = values(Attributes);
-
-export const NoAttribute: Array<Attribute> = [];
 /**
  * @see https://www.w3.org/TR/html-aria/
  */
