@@ -1,4 +1,4 @@
-import { Feature } from "../types";
+import { AnyAttribute, Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -15,5 +15,6 @@ export const Article: Feature = {
     Roles.Application,
     Roles.Main,
     Roles.Region
-  ]
+  ],
+  allowedAttributes: AnyAttribute
 };

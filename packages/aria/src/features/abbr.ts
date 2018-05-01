@@ -1,9 +1,10 @@
-import { Feature, Any } from "../types";
+import { Feature, AnyRole, AnyAttribute } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#abbr
  */
 export const Abbr: Feature = {
   element: "abbr",
-  allowedRoles: Any
+  allowedRoles: AnyRole,
+  allowedAttributes: AnyAttribute
 };

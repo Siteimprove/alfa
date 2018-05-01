@@ -1,5 +1,5 @@
 import { hasAttribute } from "@alfa/dom";
-import { Feature, Any } from "../types";
+import { AnyAttribute, AnyRole, Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -23,5 +23,6 @@ export const Anchor: Feature = {
           Roles.Tab,
           Roles.TreeItem
         ]
-      : Any
+      : AnyRole,
+  allowedAttributes: AnyAttribute
 };

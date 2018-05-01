@@ -20,10 +20,8 @@ function role(select: Element, context: Node): Role | undefined {
     return Roles.Combobox;
   }
   if (
-    !(
-      !hasAttribute(select, "multiple") &&
-      Number(getAttribute(select, "size")) <= 1
-    )
+    hasAttribute(select, "multiple") ||
+    Number(getAttribute(select, "size")) > 1
   ) {
     return Roles.ListBox;
   }
@@ -41,10 +39,8 @@ function allowedRoles(
     return [Roles.Menu];
   }
   if (
-    !(
-      !hasAttribute(select, "multiple") &&
-      Number(getAttribute(select, "size")) <= 1
-    )
+    hasAttribute(select, "multiple") ||
+    Number(getAttribute(select, "size")) > 1
   ) {
     None;
   }

@@ -1,6 +1,7 @@
 import { values, includes } from "@alfa/util";
 import { Element } from "@alfa/dom";
 import * as Roles from "./roles";
+import * as Attributes from "./attributes";
 export type ValueType =
   /**
    * @see https://www.w3.org/TR/wai-aria/#valuetype_true-false
@@ -116,19 +117,22 @@ export type FeatureAspect<T> = T | ((element: Element, context: Node) => T);
 
 export type RoleAspect<T> = T | ((element: Element, context: Node) => T);
 
-export const Any: Array<Role> = values(Roles);
+export const AnyRole: Array<Role> = values(Roles);
 
-export const None: Array<Role> = [];
+export const NoRole: Array<Role> = [];
 
 export const Except: (...roles: Array<Role>) => Array<Role> = (...roles) =>
-  Any.filter(role => includes(roles, role));
+  AnyRole.filter(role => includes(roles, role));
 
+export const AnyAttribute: Array<Attribute> = values(Attributes);
+
+export const NoAttribute: Array<Attribute> = [];
 /**
  * @see https://www.w3.org/TR/html-aria/
  */
 export type Feature = Readonly<{
   element: string;
   role?: FeatureAspect<Role>;
-  allowedRoles: FeatureAspect<Array<Role> | typeof Any | typeof None>;
+  allowedRoles: FeatureAspect<Array<Role> | typeof AnyRole | typeof NoRole>;
   allowedAttributes?: FeatureAspect<Array<Attribute>>;
 }>;
