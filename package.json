@@ -22,7 +22,7 @@
     "@foreman/path": "^0.0.0",
     "@foreman/prettier": "^0.2.0",
     "@foreman/register": "^0.1.0",
-    "@foreman/tap": "^0.1.0",
+    "@foreman/tap": "^0.2.3",
     "@foreman/typescript": "^0.2.0",
     "hjson": "^3.1.0",
     "husky": "^0.14.3",
