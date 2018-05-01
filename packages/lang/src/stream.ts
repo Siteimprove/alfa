@@ -108,6 +108,8 @@ export abstract class Stream<T> {
     let next = this.peek();
     let start = this._position;
 
+    const single = times === 1;
+
     while (
       next !== null &&
       predicate(next) &&
@@ -128,7 +130,7 @@ export abstract class Stream<T> {
 
     const range = this.range(start, this._position);
 
-    return times === 1 ? (range[0] as U) : (range as StreamItems<U>);
+    return single ? (range[0] as U) : (range as StreamItems<U>);
   }
 }
 
