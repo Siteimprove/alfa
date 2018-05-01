@@ -1,16 +1,12 @@
+import * as Lang from "@alfa/lang";
+import { Location, WithLocation, Stream } from "@alfa/lang";
 import {
-  Pattern,
-  Alphabet,
-  Location,
-  WithLocation,
-  CharacterStream,
   isWhitespace,
   isAlpha,
   isAlphanumeric,
   isNumeric,
-  isAscii,
-  lex as $lex
-} from "@alfa/lang";
+  isAscii
+} from "@alfa/util";
 
 export type Whitespace = Readonly<{ type: "whitespace" }>;
 
@@ -41,14 +37,21 @@ export type Dimension = Readonly<{
 export type Colon = Readonly<{ type: ":" }>;
 export type Semicolon = Readonly<{ type: ";" }>;
 export type Comma = Readonly<{ type: "," }>;
-export type Bracket = Readonly<{ type: "[" | "]" }>;
-export type Paren = Readonly<{ type: "(" | ")" }>;
-export type Brace = Readonly<{ type: "{" | "}" }>;
+
+export type Bracket<Type extends "[" | "]" = "[" | "]"> = Readonly<{
+  type: Type;
+}>;
+export type Paren<Type extends "(" | ")" = "(" | ")"> = Readonly<{
+  type: Type;
+}>;
+export type Brace<Type extends "{" | "}" = "{" | "}"> = Readonly<{
+  type: Type;
+}>;
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#tokenization
  */
-export type CssToken =
+export type Token =
   | Whitespace
   | Comment
 
@@ -70,27 +73,27 @@ export type CssToken =
   | Paren
   | Brace;
 
-export type CssState = {
+export type State = {
   start: Location;
   number: Number | null;
   mark: '"' | "'" | null;
 };
 
-export type CssPattern = Pattern<CssToken, CssState>;
+export type Pattern = Lang.Pattern<Token, State>;
 
-export function isIdent(token: CssToken): token is Ident {
+export function isIdent(token: Token): token is Ident {
   return token.type === "ident";
 }
 
-export function isFunctionName(token: CssToken): token is FunctionName {
+export function isFunctionName(token: Token): token is FunctionName {
   return token.type === "function-name";
 }
 
-export function isString(token: CssToken): token is String {
+export function isString(token: Token): token is String {
   return token.type === "string";
 }
 
-export function isDelim(token: CssToken): token is Delim {
+export function isDelim(token: Token): token is Delim {
   return token.type === "delim";
 }
 
@@ -167,16 +170,14 @@ function isName(char: string): boolean {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
-const name: (stream: CharacterStream) => string = stream => {
-  stream.ignore();
-  stream.accept(isName);
-  return stream.result();
+const name: (stream: Stream<string>) => string = stream => {
+  return stream.accept(isName) || "";
 };
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
  */
-const initial: CssPattern = (stream, emit, state, end) => {
+const initial: Pattern = (stream, emit, state, end) => {
   state.start = stream.location();
 
   const { start } = state;
@@ -245,7 +246,7 @@ const initial: CssPattern = (stream, emit, state, end) => {
   });
 };
 
-const comment: CssPattern = (stream, emit, state) => {
+const comment: Pattern = (stream, emit, state) => {
   stream.ignore();
 
   if (stream.accept(() => stream.peek() !== "*" || stream.peek(1) !== "/")) {
@@ -267,7 +268,7 @@ const comment: CssPattern = (stream, emit, state) => {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
  */
-const ident: CssPattern = (stream, emit) => {
+const ident: Pattern = (stream, emit) => {
   const start = stream.location();
   const value = name(stream);
 
@@ -288,7 +289,7 @@ const ident: CssPattern = (stream, emit) => {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-string-token
  */
-const string: CssPattern = (stream, emit, state) => {
+const string: Pattern = (stream, emit, state) => {
   stream.ignore();
 
   if (stream.accept(char => char !== state.mark)) {
@@ -306,7 +307,7 @@ const string: CssPattern = (stream, emit, state) => {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
-const number: CssPattern = (stream, emit, state) => {
+const number: Pattern = (stream, emit, state) => {
   const { start } = state;
 
   stream.ignore();
@@ -315,9 +316,11 @@ const number: CssPattern = (stream, emit, state) => {
     stream.advance();
   }
 
-  const isInteger = stream.accept(isNumeric) && stream.peek() !== ".";
+  const isInteger = stream.accept(isNumeric) !== false && stream.peek() !== ".";
   const isDecimal =
-    stream.peek() === "." && stream.advance() && stream.accept(isNumeric);
+    stream.peek() === "." &&
+    stream.advance() !== false &&
+    stream.accept(isNumeric) !== false;
 
   if (!isInteger && !isDecimal) {
     return;
@@ -349,7 +352,7 @@ const number: CssPattern = (stream, emit, state) => {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-numeric-token
  */
-const numeric: CssPattern = (stream, emit, state) => {
+const numeric: Pattern = (stream, emit, state) => {
   let token: WithLocation<Number | Percentage | Dimension> = {
     type: "number",
     value: state.number === null ? NaN : state.number.value,
@@ -380,11 +383,7 @@ const numeric: CssPattern = (stream, emit, state) => {
   return initial;
 };
 
-export const CssAlphabet: Alphabet<CssToken, CssState> = stream => [
+export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   initial,
-  { start: stream.location(), number: null, mark: null }
-];
-
-export function lex(input: string): Array<CssToken> {
-  return $lex(input, CssAlphabet);
-}
+  stream => ({ start: stream.location(), number: null, mark: null })
+);

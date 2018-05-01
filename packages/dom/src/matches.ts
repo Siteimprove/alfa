@@ -1,15 +1,15 @@
 import { memoize, indexOf, isWhitespace, split, first } from "@alfa/util";
+import { parse, lex } from "@alfa/lang";
 import {
+  Alphabet,
+  SelectorGrammar,
   Selector,
-  SelectorList,
   RelativeSelector,
   TypeSelector,
   ClassSelector,
   IdSelector,
   AttributeSelector,
-  CompoundSelector,
-  CssTree,
-  parse
+  CompoundSelector
 } from "@alfa/css";
 import { Node, Element } from "./types";
 import { isElement } from "./guards";
@@ -18,14 +18,19 @@ import { getClassList } from "./get-class-list";
 import { getTag } from "./get-tag";
 import { getParent } from "./get-parent";
 
-const parseMemoized = memoize(parse, { cache: { size: 50 } });
+const { isArray } = Array;
+
+const parseMemoized = memoize(
+  (selector: string) => parse(lex(selector, Alphabet), SelectorGrammar),
+  { cache: { size: 50 } }
+);
 
 export function matches(
   element: Element,
   context: Node,
-  selector: string | Selector | SelectorList
+  selector: string | Selector | Array<Selector>
 ): boolean {
-  let parsed: CssTree | null = null;
+  let parsed: Selector | Array<Selector> | null = null;
 
   try {
     parsed = typeof selector === "string" ? parseMemoized(selector) : selector;
@@ -35,6 +40,10 @@ export function matches(
 
   if (parsed === null) {
     return false;
+  }
+
+  if (isArray(parsed)) {
+    return matchesList(element, context, parsed);
   }
 
   switch (parsed.type) {
@@ -48,8 +57,6 @@ export function matches(
       return matchesAttribute(element, parsed);
     case "compound-selector":
       return matchesCompound(element, context, parsed);
-    case "selector-list":
-      return matchesList(element, context, parsed);
     case "relative-selector":
       return matchesRelative(element, context, parsed);
   }
@@ -139,11 +146,9 @@ function matchesCompound(
 function matchesList(
   element: Element,
   context: Node,
-  selector: SelectorList
+  selectors: Array<Selector>
 ): boolean {
-  return selector.selectors.some(selector =>
-    matches(element, context, selector)
-  );
+  return selectors.some(selector => matches(element, context, selector));
 }
 
 /**

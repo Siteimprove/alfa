@@ -1,5 +1,6 @@
 import { test, Test } from "@alfa/test";
-import { WithLocation, lex } from "../src/lexer";
+import { WithLocation } from "../src/types";
+import { lex } from "../src/lex";
 import {
   Expression,
   ExpressionToken,

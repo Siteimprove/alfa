@@ -12,5 +12,5 @@ export type Operator = Readonly<{
 
 export type Expression = Constant | Operator;
 
-export * from "./expression/lexer";
-export * from "./expression/parser";
+export * from "./expression/alphabet";
+export * from "./expression/grammar";

@@ -1,5 +1,6 @@
 import { each, slice, map } from "@alfa/util";
-import { parse, Selector, isSelector, isSelectorList } from "@alfa/css";
+import { parse, lex } from "@alfa/lang";
+import { Selector, Alphabet, SelectorGrammar } from "@alfa/css";
 import { Node, Document, Element, StyleSheet, Rule } from "./types";
 import { isElement, isStyleRule, isImportRule, isGroupingRule } from "./guards";
 import { traverse } from "./traverse";
@@ -9,6 +10,8 @@ import { getTag } from "./get-tag";
 import { getClassList } from "./get-class-list";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
+
+const { isArray } = Array;
 
 export interface Cascade {
   get(element: Element): Array<Rule> | undefined;
@@ -199,19 +202,13 @@ class SelectorMap {
 
 function parseSelectors(selector: string): Array<Selector> | null {
   try {
-    const parsed = parse(selector);
+    const parsed = parse(lex(selector, Alphabet), SelectorGrammar);
 
     if (parsed === null) {
       return null;
     }
 
-    if (isSelector(parsed)) {
-      return [parsed];
-    }
-
-    if (isSelectorList(parsed)) {
-      return parsed.selectors;
-    }
+    return isArray(parsed) ? parsed : [parsed];
   } catch (err) {}
 
   return null;

@@ -1,4 +1,5 @@
-import { Grammar, Production } from "../../../src/parser";
+import { Production } from "../../../src/types";
+import { Grammar } from "../../../src/grammar";
 import { Expression, Constant, Operator } from "../expression";
 import {
   ExpressionToken,
@@ -9,7 +10,7 @@ import {
   Slash,
   Caret,
   isNumber
-} from "./lexer";
+} from "./alphabet";
 
 export type ExpressionProduction<
   T extends ExpressionToken,
@@ -27,8 +28,8 @@ const number: ExpressionProduction<Number, Constant> = {
 const addition: ExpressionProduction<Plus, Constant | Operator> = {
   token: "+",
 
-  prefix(token, { peek, accept }) {
-    const num = accept(isNumber);
+  prefix(token, stream) {
+    const num = stream.accept(isNumber, 1);
 
     if (num === false) {
       throw new Error("Expected number");
@@ -51,8 +52,8 @@ const addition: ExpressionProduction<Plus, Constant | Operator> = {
 const subtraction: ExpressionProduction<Minus, Constant | Operator> = {
   token: "-",
 
-  prefix(token, { peek, accept }) {
-    const num = accept(isNumber);
+  prefix(token, stream) {
+    const num = stream.accept(isNumber, 1);
 
     if (num === false) {
       throw new Error("Expected number");

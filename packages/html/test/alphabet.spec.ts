@@ -1,13 +1,9 @@
 import { test, Test } from "@alfa/test";
-import { WithLocation } from "@alfa/lang";
-import { HtmlToken, lex } from "../src/lexer";
+import { WithLocation, lex } from "@alfa/lang";
+import { Alphabet, Token } from "../src/alphabet";
 
-function html(
-  t: Test,
-  input: string,
-  expected: Array<WithLocation<HtmlToken>>
-) {
-  t.deepEqual(lex(input), expected);
+function html(t: Test, input: string, expected: Array<WithLocation<Token>>) {
+  t.deepEqual(lex(input, Alphabet), expected, t.title);
 }
 
 test("Can lex a start tag", async t =>

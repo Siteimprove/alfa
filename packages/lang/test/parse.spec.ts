@@ -1,5 +1,5 @@
 import { test, Test } from "@alfa/test";
-import { parse } from "../src/parser";
+import { parse } from "../src/parse";
 import {
   Expression,
   ExpressionToken,

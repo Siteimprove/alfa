@@ -1,11 +1,7 @@
-import {
-  Pattern,
-  Alphabet,
-  Location,
-  lex,
-  isNumeric,
-  isWhitespace
-} from "../../../src/lexer";
+import { isWhitespace, isNumeric } from "@alfa/util";
+import { Pattern, Location } from "../../../src/types";
+import { Alphabet } from "../../../src/alphabet";
+import { lex } from "../../../src/lex";
 
 export type Number = { type: "number"; value: number };
 export type Plus = { type: "+" };
@@ -100,6 +96,7 @@ const number: ExpressionPattern = (
   return initial;
 };
 
-export const ExpressionAlphabet: Alphabet<ExpressionToken, ExpressionState> = ({
-  location
-}) => [initial, { start: location() }];
+export const ExpressionAlphabet: Alphabet<
+  ExpressionToken,
+  ExpressionState
+> = new Alphabet(initial, stream => ({ start: stream.location() }));
