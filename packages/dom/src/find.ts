@@ -1,10 +1,10 @@
+import { Predicate } from "@alfa/util";
 import { Node, Element } from "./types";
-import { Predicate } from "./collect";
 import { isElement } from "./guards";
 import { matches } from "./matches";
-import { traverse, TraverseOptions } from "./traverse";
+import { traverseNode } from "./traverse-node";
 
-export type FindOptions = TraverseOptions;
+export type FindOptions = Readonly<{ composed?: boolean }>;
 
 export function find(
   node: Node,
@@ -36,7 +36,7 @@ export function find<T extends Node>(
 
   let found: T | null = null;
 
-  traverse(
+  traverseNode(
     node,
     node => {
       if (found !== null) {
@@ -83,7 +83,7 @@ export function findAll<T extends Node>(
 
   const found: Array<T> = [];
 
-  traverse(
+  traverseNode(
     node,
     node => {
       if (predicate(node)) {

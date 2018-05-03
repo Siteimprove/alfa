@@ -8,8 +8,8 @@ import {
   find,
   getTag,
   getAttribute,
-  getRoot,
-  getText,
+  getRootNode,
+  getTextContent,
   getLabel
 } from "@alfa/dom";
 import * as Roles from "./roles";
@@ -88,10 +88,10 @@ export function getTextAlternative(
     labelledBy !== "aria-labelledby" &&
     !flags.referencing
   ) {
-    const root = getRoot(node, context);
+    const rootNode = getRootNode(node, context);
 
-    if (root !== null) {
-      const references = resolveReferences(root, context, labelledBy).map(
+    if (rootNode !== null) {
+      const references = resolveReferences(rootNode, context, labelledBy).map(
         element =>
           getTextAlternative(element, context, visited, {
             recursing: true,
@@ -133,7 +133,7 @@ export function getTextAlternative(
             }
             break;
           default:
-            return flatten(getText(node));
+            return flatten(getTextContent(node));
         }
         break;
       case Roles.Button:
@@ -278,7 +278,7 @@ function getNativeTextAlternative(
     case "table": {
       const caption = find(element, context, "caption");
       if (caption) {
-        return flatten(getText(caption));
+        return flatten(getTextContent(caption));
       }
       break;
     }

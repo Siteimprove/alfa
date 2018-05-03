@@ -89,6 +89,7 @@ export interface ShadowRoot extends DocumentFragment {}
  * @see https://www.w3.org/TR/cssom/#cssstylesheet
  */
 export interface StyleSheet {
+  readonly disabled: boolean;
   readonly cssRules: ArrayLike<Rule>;
 }
 

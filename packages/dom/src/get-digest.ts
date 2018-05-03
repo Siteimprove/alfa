@@ -2,13 +2,7 @@ import { slice } from "@alfa/util";
 import * as crypto from "@alfa/crypto";
 
 import { Node } from "./types";
-import {
-  isElement,
-  isText,
-  isParent,
-  isComment,
-  isDocumentType
-} from "./guards";
+import { isElement, isText, isComment, isDocumentType } from "./guards";
 
 const digests: WeakMap<Node, string> = new WeakMap();
 
@@ -19,9 +13,7 @@ const digests: WeakMap<Node, string> = new WeakMap();
  *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export async function getDigest<T extends Node>(
-  node: T
-): Promise<string | null> {
+export async function getDigest(node: Node): Promise<string | null> {
   if (isComment(node) || isDocumentType(node)) {
     return null;
   }
@@ -45,14 +37,12 @@ export async function getDigest<T extends Node>(
       }
     }
 
-    if (isParent(node)) {
-      for (let i = 0, n = node.childNodes.length; i < n; i++) {
-        const child = node.childNodes[i];
-        const childDigest = await getDigest(child);
+    for (let i = 0, n = node.childNodes.length; i < n; i++) {
+      const child = node.childNodes[i];
+      const childDigest = await getDigest(child);
 
-        if (childDigest !== null) {
-          digest += childDigest;
-        }
+      if (childDigest !== null) {
+        digest += childDigest;
       }
     }
 

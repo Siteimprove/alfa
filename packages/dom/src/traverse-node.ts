@@ -1,22 +1,15 @@
 import { Node } from "./types";
-import { isParent, isElement } from "./guards";
+import { isElement } from "./guards";
 
-export type TraverseOptions = Readonly<{
-  composed?: boolean;
-}>;
-
-/**
- * @see https://www.w3.org/TR/dom/#concept-tree-order
- */
-export function traverse(
-  root: Node,
-  visitor: (node: Node, parent: Node | null) => false | void,
-  options: TraverseOptions = {}
+export function traverseNode(
+  context: Node,
+  visitor: (target: Node, parent: Node | null) => false | void,
+  options: { composed?: boolean } = {}
 ): void {
   const queue: Array<Node> = [];
 
   for (
-    let child: Node | undefined = root, parent: Node | undefined;
+    let child: Node | undefined = context, parent: Node | undefined;
     child;
     child = queue.pop(), parent = queue.pop()
   ) {

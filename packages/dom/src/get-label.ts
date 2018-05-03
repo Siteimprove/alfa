@@ -3,7 +3,7 @@ import { isElement } from "./guards";
 import { find } from "./find";
 import { closest } from "./closest";
 import { getTag } from "./get-tag";
-import { getRoot } from "./get-root";
+import { getRootNode } from "./get-root-node";
 import { getAttribute } from "./get-attribute";
 import { isLabelable } from "./is-labelable";
 
@@ -27,11 +27,11 @@ export function getLabel(element: Element, context: Node): Element | null {
   const id = getAttribute(element, "id");
 
   if (id !== null && id !== "") {
-    const root = getRoot(element, context);
+    const rootNode = getRootNode(element, context);
 
-    if (root !== null) {
+    if (rootNode !== null) {
       const label = find<Element>(
-        root,
+        rootNode,
         context,
         node =>
           isElement(node) &&

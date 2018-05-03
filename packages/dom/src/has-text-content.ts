@@ -1,6 +1,6 @@
 import { Node } from "./types";
 import { isText } from "./guards";
-import { traverse } from "./traverse";
+import { traverseNode } from "./traverse-node";
 
 /**
  * Given a node, check if the node or its descendants contain non-empty text.
@@ -10,10 +10,10 @@ import { traverse } from "./traverse";
  * hasText(div);
  * // => true
  */
-export function hasText(node: Node): boolean {
+export function hasTextContent(node: Node): boolean {
   let text = false;
 
-  traverse(node, node => {
+  traverseNode(node, node => {
     if (isText(node) && node.data.trim() !== "") {
       text = true;
       return false;

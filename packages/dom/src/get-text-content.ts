@@ -1,19 +1,21 @@
 import { Node } from "./types";
 import { isText } from "./guards";
-import { traverse } from "./traverse";
+import { traverseNode } from "./traverse-node";
 
 /**
  * Given a node, get the text content of all descendants of the node.
  *
+ * @see https://www.w3.org/TR/dom/#dom-node-textcontent
+ *
  * @example
  * const div = <div>Hello <span>world</span></div>;
- * getText(div);
+ * getTextContent(div);
  * // => "Hello world"
  */
-export function getText(node: Node): string {
+export function getTextContent(node: Node): string {
   let text = "";
 
-  traverse(node, node => {
+  traverseNode(node, node => {
     if (isText(node)) {
       text += node.data;
     }

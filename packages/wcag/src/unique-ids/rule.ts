@@ -1,5 +1,5 @@
 import { Rule } from "@alfa/act";
-import { Element, traverse, getAttribute, isElement } from "@alfa/dom";
+import { Element, traverseNode, getAttribute, isElement } from "@alfa/dom";
 
 import { EN } from "./locale/en";
 
@@ -12,7 +12,7 @@ export const UniqueIds: Rule<Element, "document", Context> = {
   context: ({ document }) => {
     const context: Context = new Map();
 
-    traverse(document, node => {
+    traverseNode(document, node => {
       if (isElement(node)) {
         const id = getAttribute(node, "id");
 

@@ -1,12 +1,14 @@
+import { Predicate } from "@alfa/util";
 import { Node, Element } from "./types";
-import { Predicate } from "./collect";
 import { isElement } from "./guards";
 import { matches } from "./matches";
-import { getParent } from "./get-parent";
+import { getParentNode } from "./get-parent-node";
 
 /**
  * Given a node and a context, get the closest parent (or the node itself) that
  * matches the given selector.
+ *
+ * @see https://dom.spec.whatwg.org/#dom-element-closest
  *
  * @example
  * const span = <span />;
@@ -26,6 +28,8 @@ export function closest(
 /**
  * Given a node and a context, get the closest parent (or the node itself) that
  * matches the given predicate.
+ *
+ * @see https://dom.spec.whatwg.org/#dom-element-closest
  *
  * @example
  * const span = <span />;
@@ -55,7 +59,11 @@ export function closest<T extends Node>(
     predicate = query;
   }
 
-  for (let next: Node | null = node; next; next = getParent(next, context)) {
+  for (
+    let next: Node | null = node;
+    next;
+    next = getParentNode(next, context)
+  ) {
     if (predicate(next)) {
       return next;
     }

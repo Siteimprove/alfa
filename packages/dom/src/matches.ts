@@ -16,7 +16,7 @@ import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";
 import { getTag } from "./get-tag";
-import { getParent } from "./get-parent";
+import { getParentNode } from "./get-parent-node";
 
 const { isArray } = Array;
 
@@ -183,14 +183,14 @@ function matchesDescendant(
   context: Node,
   selector: RelativeSelector
 ): boolean {
-  let parent: Node | null = getParent(element, context);
+  let parentNode: Node | null = getParentNode(element, context);
 
-  while (parent !== null && isElement(parent)) {
-    if (matches(parent, context, selector.relative)) {
+  while (parentNode !== null && isElement(parentNode)) {
+    if (matches(parentNode, context, selector.relative)) {
       return true;
     }
 
-    parent = getParent(parent, context);
+    parentNode = getParentNode(parentNode, context);
   }
 
   return false;
@@ -204,11 +204,11 @@ function matchesDirectDescendant(
   context: Node,
   selector: RelativeSelector
 ): boolean {
-  const parent = getParent(element, context);
+  const parentNode = getParentNode(element, context);
   return (
-    parent !== null &&
-    isElement(parent) &&
-    matches(parent, context, selector.relative)
+    parentNode !== null &&
+    isElement(parentNode) &&
+    matches(parentNode, context, selector.relative)
   );
 }
 
@@ -220,13 +220,13 @@ function matchesSibling(
   context: Node,
   selector: RelativeSelector
 ): boolean {
-  const parent = getParent(element, context);
+  const parentNode = getParentNode(element, context);
 
-  if (parent === null) {
+  if (parentNode === null) {
     return false;
   }
 
-  const { childNodes } = parent;
+  const { childNodes } = parentNode;
 
   for (let i = indexOf(childNodes, element) - 1; i >= 0; i--) {
     const sibling = childNodes[i];
@@ -247,13 +247,13 @@ function matchesDirectSibling(
   context: Node,
   selector: RelativeSelector
 ): boolean {
-  const parent = getParent(element, context);
+  const parentNode = getParentNode(element, context);
 
-  if (parent === null) {
+  if (parentNode === null) {
     return false;
   }
 
-  const { childNodes } = parent;
+  const { childNodes } = parentNode;
 
   const sibling = childNodes[indexOf(childNodes, element) - 1];
 

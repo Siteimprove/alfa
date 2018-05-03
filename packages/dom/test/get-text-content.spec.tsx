@@ -1,10 +1,10 @@
 import { jsx } from "@alfa/jsx";
 import { test } from "@alfa/test";
-import { getText } from "../src/get-text";
+import { getTextContent } from "../src/get-text-content";
 
 test("Returns the textual content of a node and its descendants", async t => {
   t.is(
-    getText(
+    getTextContent(
       <p>
         Hello <span>world</span>
       </p>

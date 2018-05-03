@@ -9,7 +9,7 @@ import {
   isComment
 } from "./guards";
 import { getTag } from "./get-tag";
-import { getParent } from "./get-parent";
+import { getParentNode } from "./get-parent-node";
 
 const { keys } = Object;
 
@@ -75,7 +75,7 @@ export function serialize(node: Node, context: Node | null = null): string {
 
   if (isText(node)) {
     if (context !== null) {
-      const parent = getParent(node, context);
+      const parent = getParentNode(node, context);
 
       if (parent !== null && isElement(parent)) {
         switch (getTag(parent)) {

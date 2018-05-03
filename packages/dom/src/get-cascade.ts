@@ -1,9 +1,10 @@
 import { each, slice, map } from "@alfa/util";
 import { parse, lex } from "@alfa/lang";
-import { Selector, Alphabet, SelectorGrammar } from "@alfa/css";
+import { Alphabet, Selector, SelectorGrammar } from "@alfa/css";
 import { Node, Document, Element, StyleSheet, Rule } from "./types";
 import { isElement, isStyleRule, isImportRule, isGroupingRule } from "./guards";
-import { traverse } from "./traverse";
+import { traverseNode } from "./traverse-node";
+import { traverseStyleSheet } from "./traverse-style-sheet";
 import { matches } from "./matches";
 import { getAttribute } from "./get-attribute";
 import { getTag } from "./get-tag";
@@ -22,7 +23,7 @@ export function getCascade(document: Document): Cascade {
 
   const selectorMap = new SelectorMap(document.styleSheets);
 
-  traverse(document, node => {
+  traverseNode(document, node => {
     if (isElement(node)) {
       const rules = selectorMap.getRules(node, document);
 
@@ -100,75 +101,45 @@ class SelectorMap {
     // combined.
     let order: number = 0;
 
-    const queue: Array<Rule> = [];
+    each(styleSheets, styleSheet => {
+      traverseStyleSheet(styleSheet, rule => {
+        if (isStyleRule(rule)) {
+          const selectors = parseSelectors(rule.selectorText);
 
-    for (let i = styleSheets.length - 1; i >= 0; i--) {
-      const { cssRules } = styleSheets[i];
+          if (selectors !== null) {
+            each(selectors, selector => {
+              const key = getKeySelector(selector);
+              const specificity = getSpecificity(selector);
 
-      for (let j = cssRules.length - 1; j >= 0; j--) {
-        queue.push(cssRules[j]);
-      }
-    }
+              const entry: SelectorEntry = {
+                selector,
+                rule,
+                order: order++,
+                specificity
+              };
 
-    while (queue.length > 0) {
-      const rule = queue.pop();
-
-      if (rule === undefined) {
-        break;
-      }
-
-      if (isStyleRule(rule)) {
-        const selectors = parseSelectors(rule.selectorText);
-
-        if (selectors === null) {
-          continue;
-        }
-
-        each(selectors, selector => {
-          const key = getKeySelector(selector);
-          const specificity = getSpecificity(selector);
-
-          const entry: SelectorEntry = {
-            selector,
-            rule,
-            order: order++,
-            specificity
-          };
-
-          if (key === null) {
-            this._other.push(entry);
-          } else {
-            switch (key.type) {
-              case "id-selector":
-                addRule(this._ids, key.name, entry);
-                break;
-              case "class-selector":
-                addRule(this._classes, key.name, entry);
-                break;
-              case "type-selector":
-                addRule(this._types, key.name, entry);
-                break;
-              default:
+              if (key === null) {
                 this._other.push(entry);
-            }
+              } else {
+                switch (key.type) {
+                  case "id-selector":
+                    addRule(this._ids, key.name, entry);
+                    break;
+                  case "class-selector":
+                    addRule(this._classes, key.name, entry);
+                    break;
+                  case "type-selector":
+                    addRule(this._types, key.name, entry);
+                    break;
+                  default:
+                    this._other.push(entry);
+                }
+              }
+            });
           }
-        });
-      }
-
-      let children: ArrayLike<Rule> = [];
-
-      if (isImportRule(rule)) {
-        children = rule.styleSheet.cssRules;
-      }
-
-      if (isGroupingRule(rule)) {
-        children = rule.cssRules;
-      }
-
-      for (let i = children.length - 1; i >= 0; i--) {
-        queue.push(children[i]);
-      }
-    }
+        }
+      });
+    });
   }
 
   public getRules(element: Element, context: Node): Array<SelectorEntry> {
@@ -204,11 +175,9 @@ function parseSelectors(selector: string): Array<Selector> | null {
   try {
     const parsed = parse(lex(selector, Alphabet), SelectorGrammar);
 
-    if (parsed === null) {
-      return null;
+    if (parsed !== null) {
+      return isArray(parsed) ? parsed : [parsed];
     }
-
-    return isArray(parsed) ? parsed : [parsed];
   } catch (err) {}
 
   return null;
