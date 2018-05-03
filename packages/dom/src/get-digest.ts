@@ -28,7 +28,7 @@ export async function getDigest(node: Node): Promise<string | null> {
     }
 
     if (isElement(node)) {
-      digest += node.tagName;
+      digest += node.namespaceURI + ":" + node.localName;
 
       for (const { name, value } of slice(node.attributes).sort(
         (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)

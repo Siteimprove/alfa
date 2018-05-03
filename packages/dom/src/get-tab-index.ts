@@ -1,5 +1,4 @@
 import { Element } from "./types";
-import { getTag } from "./get-tag";
 import { getAttribute } from "./get-attribute";
 import { hasAttribute } from "./has-attribute";
 
@@ -23,7 +22,7 @@ export function getTabIndex(element: Element): number | null {
 }
 
 function isSuggestedFocusableElement(element: Element): boolean {
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "a":
     case "link":
       if (hasAttribute(element, "href")) {
@@ -65,5 +64,5 @@ function isEditingHost(element: Element): boolean {
  * @see https://www.w3.org/TR/html/browsers.html#browsing-context-container
  */
 function isBrowsingContextContainer(element: Element): boolean {
-  return getTag(element) === "iframe";
+  return element.localName === "iframe";
 }

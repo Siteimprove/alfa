@@ -15,7 +15,6 @@ import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";
-import { getTag } from "./get-tag";
 import { getParentNode } from "./get-parent-node";
 
 const { isArray } = Array;
@@ -87,7 +86,7 @@ function matchesType(element: Element, selector: TypeSelector): boolean {
     return true;
   }
 
-  return getTag(element) === selector.name;
+  return element.localName === selector.name;
 }
 
 /**

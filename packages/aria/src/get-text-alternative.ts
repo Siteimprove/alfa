@@ -6,7 +6,6 @@ import {
   isText,
   isElement,
   find,
-  getTag,
   getAttribute,
   getRootNode,
   getTextContent,
@@ -125,7 +124,7 @@ export function getTextAlternative(
   if (flags.labelling || flags.referencing) {
     switch (role) {
       case Roles.TextBox:
-        switch (getTag(node)) {
+        switch (node.localName) {
           case "input":
             const value = getAttribute(node, "value");
             if (value !== null && value !== "") {
@@ -202,7 +201,7 @@ function getNativeTextAlternative(
     });
   }
 
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "input":
       const type = getAttribute(element, "type");
       if (type !== null) {
@@ -296,7 +295,7 @@ function getNativeTextAlternative(
  * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
  */
 function isNativeTextAlternativeElement(element: Element): boolean {
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "label":
     case "a":
     case "button":
@@ -318,7 +317,7 @@ function isNativeTextAlternativeElement(element: Element): boolean {
  * @see https://www.w3.org/TR/html-aam-1.0/#text-level-elements-not-listed-elsewhere
  */
 function isTextLevelElement(element: Element): boolean {
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "abbr":
     case "b":
     case "bdi":

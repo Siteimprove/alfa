@@ -2,7 +2,6 @@ import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { find } from "./find";
 import { closest } from "./closest";
-import { getTag } from "./get-tag";
 import { getRootNode } from "./get-root-node";
 import { getAttribute } from "./get-attribute";
 import { isLabelable } from "./is-labelable";
@@ -35,7 +34,7 @@ export function getLabel(element: Element, context: Node): Element | null {
         context,
         node =>
           isElement(node) &&
-          getTag(node) === "label" &&
+          node.localName === "label" &&
           getAttribute(node, "for") === id
       );
 

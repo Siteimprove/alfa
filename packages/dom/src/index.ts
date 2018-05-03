@@ -9,7 +9,6 @@ export * from "./get-label";
 export * from "./get-parent-node";
 export * from "./get-root-node";
 export * from "./get-tab-index";
-export * from "./get-tag";
 export * from "./get-text-content";
 export * from "./guards";
 export * from "./has-attribute";

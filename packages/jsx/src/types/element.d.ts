@@ -7,7 +7,8 @@ declare namespace JSX {
   interface Element extends Node {
     readonly nodeType: 1;
     readonly namespaceURI: string | null;
-    readonly tagName: string;
+    readonly prefix: string | null;
+    readonly localName: string;
     readonly attributes: Array<{ name: string; value: string }>;
     readonly shadowRoot: null;
   }

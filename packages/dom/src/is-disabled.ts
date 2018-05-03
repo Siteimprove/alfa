@@ -1,5 +1,4 @@
 import { Node, Element } from "./types";
-import { getTag } from "./get-tag";
 import { getAttribute } from "./get-attribute";
 import { closest } from "./closest";
 import { find } from "./find";
@@ -9,7 +8,7 @@ import { contains } from "./contains";
  * @see https://www.w3.org/TR/html/disabled-elements.html#disabling
  */
 export function isDisabled(element: Element, context: Node): boolean {
-  switch (getTag(element)) {
+  switch (element.localName) {
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-disabledformelements-disabled
     case "button":
     case "input":

@@ -1,5 +1,4 @@
 import { Element } from "./types";
-import { getTag } from "./get-tag";
 import { getAttribute } from "./get-attribute";
 
 /**
@@ -18,7 +17,7 @@ import { getAttribute } from "./get-attribute";
  * // => false
  */
 export function isLabelable(element: Element): boolean {
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "button":
     case "meter":
     case "output":

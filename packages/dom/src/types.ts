@@ -30,7 +30,8 @@ export interface Attribute {
 export interface Element extends Node, ParentNode, ChildNode {
   readonly nodeType: 1;
   readonly namespaceURI: string | null;
-  readonly tagName: string;
+  readonly prefix: string | null;
+  readonly localName: string;
   readonly attributes: ArrayLike<Attribute>;
 
   // https://www.w3.org/TR/dom41/#dom-element-shadowroot

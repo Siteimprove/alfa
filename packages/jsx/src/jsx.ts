@@ -4,14 +4,16 @@
 const { keys, assign } = Object;
 
 export function jsx(
-  tagName: string,
+  localName: string,
   attributes: { [name: string]: string | number | boolean } | null,
   ...children: Array<JSX.Element | string>
 ): JSX.Element {
   const element: JSX.Element = {
     nodeType: 1,
-    namespaceURI: null,
-    tagName,
+    childNodes: [],
+    namespaceURI: "http://www.w3.org/1999/xhtml",
+    prefix: null,
+    localName,
     attributes:
       attributes === null
         ? []
@@ -28,7 +30,6 @@ export function jsx(
 
             return { name, value };
           }),
-    childNodes: [],
     shadowRoot: null
   };
 

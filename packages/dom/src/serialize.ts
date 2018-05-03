@@ -8,7 +8,6 @@ import {
   isText,
   isComment
 } from "./guards";
-import { getTag } from "./get-tag";
 import { getParentNode } from "./get-parent-node";
 
 const { keys } = Object;
@@ -36,7 +35,7 @@ function escape(
  */
 export function serialize(node: Node, context: Node | null = null): string {
   if (isElement(node)) {
-    let element = `<${getTag(node)}`;
+    let element = `<${node.localName}`;
 
     each(node.attributes, ({ name, value }) => {
       element += ` ${name}="${escape(value, { attributeMode: true })}"`;
@@ -44,7 +43,7 @@ export function serialize(node: Node, context: Node | null = null): string {
 
     element += ">";
 
-    switch (getTag(node)) {
+    switch (node.localName) {
       case "area":
       case "base":
       case "basefont":
@@ -67,7 +66,7 @@ export function serialize(node: Node, context: Node | null = null): string {
         element += map(node.childNodes, child =>
           serialize(child, context)
         ).join("");
-        element += `</${getTag(node)}>`;
+        element += `</${node.localName}>`;
     }
 
     return element;
@@ -78,7 +77,7 @@ export function serialize(node: Node, context: Node | null = null): string {
       const parent = getParentNode(node, context);
 
       if (parent !== null && isElement(parent)) {
-        switch (getTag(parent)) {
+        switch (parent.localName) {
           case "style":
           case "script":
           case "xmp":

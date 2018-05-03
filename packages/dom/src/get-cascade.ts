@@ -7,7 +7,6 @@ import { traverseNode } from "./traverse-node";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { matches } from "./matches";
 import { getAttribute } from "./get-attribute";
-import { getTag } from "./get-tag";
 import { getClassList } from "./get-class-list";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
@@ -159,7 +158,7 @@ class SelectorMap {
       collect(getRules(this._ids, id));
     }
 
-    collect(getRules(this._types, getTag(element)));
+    collect(getRules(this._types, element.localName));
 
     for (const className of getClassList(element)) {
       collect(getRules(this._classes, className));
