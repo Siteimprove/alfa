@@ -39,6 +39,27 @@ test("Can parse a type selector with an empty namespace", async t =>
     namespace: ""
   }));
 
+test("Can parse the universal selector with an empty namespace", async t =>
+  selector(t, "|*", {
+    type: "type-selector",
+    name: "*",
+    namespace: ""
+  }));
+
+test("Can parse a type selector with the universal namespace", async t =>
+  selector(t, "*|a", {
+    type: "type-selector",
+    name: "a",
+    namespace: "*"
+  }));
+
+test("Can parse the universal selector with the universal namespace", async t =>
+  selector(t, "*|*", {
+    type: "type-selector",
+    name: "*",
+    namespace: "*"
+  }));
+
 test("Can parse a class selector", async t =>
   selector(t, ".foo", {
     type: "class-selector",

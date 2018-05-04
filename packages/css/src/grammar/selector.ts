@@ -163,13 +163,16 @@ function typeSelector(
   }
 
   if (name === null) {
-    const ident = stream.accept(isIdent, 1);
+    const next = stream.next();
 
-    if (ident === false) {
-      throw new Error("Expected ident");
+    if (
+      next !== null &&
+      (isIdent(next) || (isDelim(next) && next.value === "*"))
+    ) {
+      name = next.value.toLowerCase();
+    } else {
+      throw new Error("Expected ident or delim");
     }
-
-    name = ident.value.toLowerCase();
   }
 
   return {
