@@ -274,8 +274,76 @@ test("Can lex a function with a single argument", async t =>
     }
   ]));
 
+test("Can lex an ID selector", async t =>
+  css(t, "#foo", [
+    {
+      type: "delim",
+      value: "#",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 1 }
+      }
+    },
+    {
+      type: "ident",
+      value: "foo",
+      location: {
+        start: { line: 0, column: 1 },
+        end: { line: 0, column: 4 }
+      }
+    }
+  ]));
+
+test("Can lex a class selector", async t =>
+  css(t, ".foo", [
+    {
+      type: "delim",
+      value: ".",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 1 }
+      }
+    },
+    {
+      type: "ident",
+      value: "foo",
+      location: {
+        start: { line: 0, column: 1 },
+        end: { line: 0, column: 4 }
+      }
+    }
+  ]));
+
+test("Can lex a type selector with a namespace", async t =>
+  css(t, "svg|div", [
+    {
+      type: "ident",
+      value: "svg",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 3 }
+      }
+    },
+    {
+      type: "delim",
+      value: "|",
+      location: {
+        start: { line: 0, column: 3 },
+        end: { line: 0, column: 4 }
+      }
+    },
+    {
+      type: "ident",
+      value: "div",
+      location: {
+        start: { line: 0, column: 4 },
+        end: { line: 0, column: 7 }
+      }
+    }
+  ]));
+
 test("Can lex a declaration", async t =>
-  css(t, "color:red;", [
+  css(t, "color:red", [
     {
       type: "ident",
       value: "color",
@@ -297,13 +365,6 @@ test("Can lex a declaration", async t =>
       location: {
         start: { line: 0, column: 6 },
         end: { line: 0, column: 9 }
-      }
-    },
-    {
-      type: ";",
-      location: {
-        start: { line: 0, column: 9 },
-        end: { line: 0, column: 10 }
       }
     }
   ]));

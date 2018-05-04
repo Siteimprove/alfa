@@ -34,7 +34,11 @@ export type AttributeSelector = {
   matcher: "~" | "|" | "^" | "$" | "*" | null;
 };
 
-export type TypeSelector = { type: "type-selector"; name: string };
+export type TypeSelector = {
+  type: "type-selector";
+  name: string;
+  namespace: string | null;
+};
 
 export type PseudoClassSelector = {
   type: "pseudo-class-selector";
@@ -141,6 +145,38 @@ function classSelector(stream: Stream<Token>): ClassSelector {
   }
 
   return { type: "class-selector", name: ident.value };
+}
+
+function typeSelector(
+  token: Delim | Ident,
+  stream: Stream<Token>
+): TypeSelector {
+  let name: string | null = null;
+  let namespace: string | null = null;
+
+  if (isDelim(token) && token.value === "|") {
+    namespace = "";
+  } else if (stream.accept(token => isDelim(token) && token.value === "|", 1)) {
+    namespace = token.value.toLowerCase();
+  } else {
+    name = token.value.toLowerCase();
+  }
+
+  if (name === null) {
+    const ident = stream.accept(isIdent, 1);
+
+    if (ident === false) {
+      throw new Error("Expected ident");
+    }
+
+    name = ident.value.toLowerCase();
+  }
+
+  return {
+    type: "type-selector",
+    name,
+    namespace
+  };
 }
 
 function attributeSelector(stream: Stream<Token>): AttributeSelector {
@@ -338,7 +374,8 @@ const delim: Production<Delim> = {
       case ".":
         return classSelector(stream);
       case "*":
-        return { type: "type-selector", name: "*" };
+      case "|":
+        return typeSelector(token, stream);
     }
 
     throw new Error("Expected ID or class name");
@@ -355,7 +392,8 @@ const delim: Production<Delim> = {
       case ".":
         return selector(left, classSelector(stream));
       case "*":
-        return selector(left, { type: "type-selector", name: "*" });
+      case "|":
+        return selector(left, typeSelector(token, stream));
 
       case ">":
       case "+":
@@ -381,8 +419,8 @@ const delim: Production<Delim> = {
 const ident: Production<Ident> = {
   token: "ident",
 
-  prefix(token) {
-    return { type: "type-selector", name: token.value.toLowerCase() };
+  prefix(token, stream) {
+    return typeSelector(token, stream);
   }
 };
 
