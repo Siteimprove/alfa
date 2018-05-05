@@ -207,6 +207,7 @@ test("Computes the text alternative of an input with an explicit label that incl
       <label for="test">
         <textarea>Hello world</textarea>
       </label>
+      {input}
     </div>
   );
   t.is(getTextAlternative(input, document), "Hello world");

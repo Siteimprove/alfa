@@ -32,7 +32,8 @@ test("Gets the key selector of a class selector", async t => {
 test("Gets the key selector of a type selector", async t => {
   t.deepEqual(getKeySelector(selector("foo")), {
     type: "type-selector",
-    name: "foo"
+    name: "foo",
+    namespace: null
   });
 });
 
@@ -67,7 +68,8 @@ test("Gets the key selector of a pseudo-class selector", async t => {
 test("Gets the key selector of a compound selector", async t => {
   t.deepEqual(getKeySelector(selector("div.foo")), {
     type: "type-selector",
-    name: "div"
+    name: "div",
+    namespace: null
   });
 });
 

@@ -20,17 +20,12 @@ export function isNumber(token: ExpressionToken): token is Number {
   return token.type === "number" && "value" in token;
 }
 
-const initial: ExpressionPattern = (
-  { peek, next, accept, advance, location },
-  emit,
-  state,
-  done
-) => {
-  accept(isWhitespace);
+const initial: ExpressionPattern = (stream, emit, state, done) => {
+  stream.accept(isWhitespace);
 
-  state.start = location();
+  state.start = stream.location();
 
-  const char = peek();
+  const char = stream.peek();
 
   if (char === null) {
     return done();
@@ -40,7 +35,7 @@ const initial: ExpressionPattern = (
     return number;
   }
 
-  advance();
+  stream.advance();
 
   switch (char) {
     case "+":
@@ -56,42 +51,38 @@ const initial: ExpressionPattern = (
   }
 };
 
-const plus: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "+", location: { start, end: location() } });
+const plus: ExpressionPattern = (stream, emit, { start }) => {
+  emit({ type: "+", location: { start, end: stream.location() } });
   return initial;
 };
 
-const minus: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "-", location: { start, end: location() } });
+const minus: ExpressionPattern = (stream, emit, { start }) => {
+  emit({ type: "-", location: { start, end: stream.location() } });
   return initial;
 };
 
-const asterix: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "*", location: { start, end: location() } });
+const asterix: ExpressionPattern = (stream, emit, { start }) => {
+  emit({ type: "*", location: { start, end: stream.location() } });
   return initial;
 };
 
-const slash: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "/", location: { start, end: location() } });
+const slash: ExpressionPattern = (stream, emit, { start }) => {
+  emit({ type: "/", location: { start, end: stream.location() } });
   return initial;
 };
 
-const caret: ExpressionPattern = ({ next, location }, emit, { start }) => {
-  emit({ type: "^", location: { start, end: location() } });
+const caret: ExpressionPattern = (stream, emit, { start }) => {
+  emit({ type: "^", location: { start, end: stream.location() } });
   return initial;
 };
 
-const number: ExpressionPattern = (
-  { peek, accept, ignore, result, location },
-  emit,
-  { start }
-) => {
-  ignore();
-  accept(isNumeric);
+const number: ExpressionPattern = (stream, emit, { start }) => {
+  stream.ignore();
+  stream.accept(isNumeric);
   emit({
     type: "number",
-    value: Number(result()),
-    location: { start, end: location() }
+    value: Number(stream.result()),
+    location: { start, end: stream.location() }
   });
   return initial;
 };
