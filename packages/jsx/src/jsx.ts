@@ -1,53 +1,70 @@
-/// <reference path="./types/element.d.ts"/>
+/// <reference path="./types/nodes.d.ts"/>
 /// <reference path="./types/intrinsics.d.ts"/>
 
-const { keys, assign } = Object;
+import { set } from "@alfa/util";
+
+const { keys } = Object;
 
 export function jsx(
   localName: string,
-  attributes: { [name: string]: string | number | boolean } | null,
-  ...children: Array<JSX.Element | string>
+  attributes: { [name: string]: any } | null,
+  ...childNodes: Array<JSX.Element | string>
 ): JSX.Element {
   const element: JSX.Element = {
     nodeType: 1,
-    childNodes: [],
+    childNodes: childNodes.map(
+      childNode =>
+        typeof childNode === "string"
+          ? { nodeType: 3, childNodes: [], data: childNode }
+          : childNode
+    ),
     namespaceURI: "http://www.w3.org/1999/xhtml",
     prefix: null,
     localName,
     attributes:
       attributes === null
         ? []
-        : keys(attributes).map(name => {
-            let value = attributes[name];
-
-            if (typeof value === "number") {
-              value = String(value);
-            }
-
-            if (typeof value === "boolean") {
-              value = name;
-            }
-
-            return { name, value };
-          }),
+        : keys(attributes)
+            .filter(name => {
+              const value = attributes[name];
+              return value !== false && value !== null && value !== undefined;
+            })
+            .map(name => {
+              const value = attributes[name];
+              return {
+                namespaceURI: null,
+                prefix: null,
+                localName: name,
+                value:
+                  typeof value === "number"
+                    ? value.toString(10)
+                    : typeof value === "boolean"
+                      ? name
+                      : typeof value === "string"
+                        ? value
+                        : value.toString()
+              };
+            }),
     shadowRoot: null
   };
 
-  for (const node of children) {
-    let child: JSX.Element | JSX.Text;
-
-    if (typeof node === "string") {
-      child = {
-        nodeType: 3,
-        childNodes: [],
-        data: node
-      };
-    } else {
-      child = node;
-    }
-
-    element.childNodes.push(child);
+  if (localName === "svg") {
+    setNamespace(element, "http://www.w3.org/2000/svg");
   }
 
   return element;
+}
+
+function isElement(node: JSX.Node): node is JSX.Element {
+  return node.nodeType === 1;
+}
+
+function setNamespace(node: JSX.Node, namespaceURI: string): void {
+  if (isElement(node)) {
+    set(node, "namespaceURI", namespaceURI);
+  }
+
+  node.childNodes.forEach(childNode => {
+    setNamespace(childNode, namespaceURI);
+  });
 }

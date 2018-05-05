@@ -1,4 +1,4 @@
-import { slice } from "@alfa/util";
+import { slice, each } from "@alfa/util";
 import * as crypto from "@alfa/crypto";
 
 import { Node } from "./types";
@@ -28,13 +28,28 @@ export async function getDigest(node: Node): Promise<string | null> {
     }
 
     if (isElement(node)) {
-      digest += node.namespaceURI + ":" + node.localName;
-
-      for (const { name, value } of slice(node.attributes).sort(
-        (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
-      )) {
-        digest += name + value;
+      if (node.namespaceURI === null) {
+        digest += node.localName;
+      } else {
+        digest += node.namespaceURI + ":" + node.localName;
       }
+
+      const attributes = slice(node.attributes).sort(
+        (a, b) =>
+          a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0
+      );
+
+      each(attributes, attribute => {
+        if (attribute.namespaceURI === null) {
+          digest += attribute.localName + attribute.value;
+        } else {
+          digest +=
+            attribute.namespaceURI +
+            ":" +
+            attribute.localName +
+            attribute.value;
+        }
+      });
     }
 
     for (let i = 0, n = node.childNodes.length; i < n; i++) {

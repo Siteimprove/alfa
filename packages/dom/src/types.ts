@@ -20,7 +20,9 @@ export interface ChildNode extends Node {}
  * @see https://www.w3.org/TR/dom/#interface-attr
  */
 export interface Attribute {
-  readonly name: string;
+  readonly namespaceURI: string | null;
+  readonly prefix: string | null;
+  readonly localName: string;
   readonly value: string;
 }
 

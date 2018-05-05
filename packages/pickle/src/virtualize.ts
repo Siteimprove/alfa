@@ -32,7 +32,9 @@ function virtualizeElement(element: Element): V.Element {
     prefix: element.prefix,
     localName: element.localName || "",
     attributes: map(element.attributes, attribute => ({
-      name: attribute.name,
+      namespaceURI: attribute.namespaceURI,
+      prefix: attribute.prefix,
+      localName: attribute.localName || "",
       value: attribute.value
     })),
     shadowRoot: null

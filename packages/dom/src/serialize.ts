@@ -37,8 +37,8 @@ export function serialize(node: Node, context: Node | null = null): string {
   if (isElement(node)) {
     let element = `<${node.localName}`;
 
-    each(node.attributes, ({ name, value }) => {
-      element += ` ${name}="${escape(value, { attributeMode: true })}"`;
+    each(node.attributes, ({ localName, value }) => {
+      element += ` ${localName}="${escape(value, { attributeMode: true })}"`;
     });
 
     element += ">";

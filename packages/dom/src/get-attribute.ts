@@ -40,8 +40,12 @@ class AttributeMap {
     const { length } = element.attributes;
 
     for (let i = 0; i < length; i++) {
-      const { name, value } = element.attributes[i];
-      this._attributes.set(name, value);
+      const { prefix, localName, value } = element.attributes[i];
+
+      const qualifiedName =
+        prefix === null ? localName : prefix + ":" + localName;
+
+      this._attributes.set(qualifiedName, value);
     }
   }
 
