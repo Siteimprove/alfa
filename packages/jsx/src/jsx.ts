@@ -52,6 +52,10 @@ export function jsx(
     setNamespace(element, "http://www.w3.org/2000/svg");
   }
 
+  if (localName === "math") {
+    setNamespace(element, "http://www.w3.org/1998/Math/MathML");
+  }
+
   return element;
 }
 
