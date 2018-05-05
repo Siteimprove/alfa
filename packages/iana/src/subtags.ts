@@ -48437,6 +48437,12 @@ export namespace Variants {
     prefix: ["pt", "gl"]
   };
 
+  export const ARANES: Variant = {
+    type: "variant",
+    name: "aranes",
+    prefix: "oc"
+  };
+
   export const AREVELA: Variant = {
     type: "variant",
     name: "arevela",
@@ -48453,6 +48459,12 @@ export namespace Variants {
     type: "variant",
     name: "asante",
     prefix: "tw"
+  };
+
+  export const AUVERN: Variant = {
+    type: "variant",
+    name: "auvern",
+    prefix: "oc"
   };
 
   export const BAKU1926: Variant = {
@@ -48509,6 +48521,12 @@ export namespace Variants {
     prefix: "en"
   };
 
+  export const CISAUP: Variant = {
+    type: "variant",
+    name: "cisaup",
+    prefix: "oc"
+  };
+
   export const COLB1945: Variant = {
     type: "variant",
     name: "colb1945",
@@ -48519,6 +48537,12 @@ export namespace Variants {
     type: "variant",
     name: "cornu",
     prefix: "en"
+  };
+
+  export const CREISS: Variant = {
+    type: "variant",
+    name: "creiss",
+    prefix: "oc"
   };
 
   export const DAJNKO: Variant = {
@@ -48544,6 +48568,11 @@ export namespace Variants {
     name: "fonipa"
   };
 
+  export const FONKIRSH: Variant = {
+    type: "variant",
+    name: "fonkirsh"
+  };
+
   export const FONNAPA: Variant = {
     type: "variant",
     name: "fonnapa"
@@ -48557,6 +48586,30 @@ export namespace Variants {
   export const FONXSAMP: Variant = {
     type: "variant",
     name: "fonxsamp"
+  };
+
+  export const GASCON: Variant = {
+    type: "variant",
+    name: "gascon",
+    prefix: "oc"
+  };
+
+  export const GRCLASS: Variant = {
+    type: "variant",
+    name: "grclass",
+    prefix: "oc"
+  };
+
+  export const GRITAL: Variant = {
+    type: "variant",
+    name: "grital",
+    prefix: "oc"
+  };
+
+  export const GRMISTR: Variant = {
+    type: "variant",
+    name: "grmistr",
+    prefix: "oc"
   };
 
   export const HEPBURN: Variant = {
@@ -48637,6 +48690,18 @@ export namespace Variants {
     prefix: "sa"
   };
 
+  export const LEMOSIN: Variant = {
+    type: "variant",
+    name: "lemosin",
+    prefix: "oc"
+  };
+
+  export const LENGADOC: Variant = {
+    type: "variant",
+    name: "lengadoc",
+    prefix: "oc"
+  };
+
   export const LIPAW: Variant = {
     type: "variant",
     name: "lipaw",
@@ -48677,6 +48742,12 @@ export namespace Variants {
     type: "variant",
     name: "newfound",
     prefix: "en-ca"
+  };
+
+  export const NICARD: Variant = {
+    type: "variant",
+    name: "nicard",
+    prefix: "oc"
   };
 
   export const NJIVA: Variant = {
@@ -48743,6 +48814,12 @@ export namespace Variants {
     type: "variant",
     name: "polyton",
     prefix: "el"
+  };
+
+  export const PROVENC: Variant = {
+    type: "variant",
+    name: "provenc",
+    prefix: "oc"
   };
 
   export const PUTER: Variant = {
@@ -48868,6 +48945,12 @@ export namespace Variants {
     type: "variant",
     name: "vallader",
     prefix: "rm"
+  };
+
+  export const VIVARAUP: Variant = {
+    type: "variant",
+    name: "vivaraup",
+    prefix: "oc"
   };
 
   export const WADEGILE: Variant = {
