@@ -1,5 +1,5 @@
 import { test } from "@alfa/test";
-import { parse } from "../src/parser";
+import { parse } from "../src/parse";
 
 test("Parse", async t => {
   const markdown = parse("# Alfa");
