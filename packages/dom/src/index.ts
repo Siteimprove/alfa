@@ -6,6 +6,7 @@ export * from "./get-attribute";
 export * from "./get-class-list";
 export * from "./get-digest";
 export * from "./get-label";
+export * from "./get-namespace";
 export * from "./get-parent-node";
 export * from "./get-root-node";
 export * from "./get-tab-index";

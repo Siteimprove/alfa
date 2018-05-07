@@ -212,3 +212,15 @@ test("Computes the text alternative of an input with an explicit label that incl
   );
   t.is(getTextAlternative(input, document), "Hello world");
 });
+
+test("Computes the text alternative of an SVG with a title element", t => {
+  const svg = (
+    <svg>
+      <title>Hello world</title>
+      <g>
+        <text>Hi there</text>
+      </g>
+    </svg>
+  );
+  t.is(getTextAlternative(svg, svg), "Hello world");
+});
