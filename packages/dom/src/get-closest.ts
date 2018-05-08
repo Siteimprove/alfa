@@ -12,14 +12,14 @@ import { getParentNode } from "./get-parent-node";
  *
  * @example
  * const span = <span />;
- * closests(
+ * getClosests(
  *   span,
  *   <div class="foo"><div class="bar">{span}</div></div>,
  *   ".foo"
  * );
  * // => <div class="foo">...</div>
  */
-export function closest(
+export function getClosest(
   node: Node,
   context: Node,
   query: string
@@ -33,20 +33,20 @@ export function closest(
  *
  * @example
  * const span = <span />;
- * closests(
+ * getClosests(
  *   span,
  *   <div class="foo"><div class="bar">{span}</div></div>,
  *   node => isElement(node) && getTag(node) === "div"
  * );
  * // => <div class="bar">...</div>
  */
-export function closest<T extends Node>(
+export function getClosest<T extends Node>(
   node: Node,
   context: Node,
   query: Predicate<Node, T>
 ): T | null;
 
-export function closest<T extends Node>(
+export function getClosest<T extends Node>(
   node: Node,
   context: Node,
   query: Predicate<Node, T> | string

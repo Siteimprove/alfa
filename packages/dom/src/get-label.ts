@@ -1,7 +1,7 @@
 import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { find } from "./find";
-import { closest } from "./closest";
+import { getClosest } from "./get-closest";
 import { getRootNode } from "./get-root-node";
 import { getAttribute } from "./get-attribute";
 import { isLabelable } from "./is-labelable";
@@ -44,5 +44,5 @@ export function getLabel(element: Element, context: Node): Element | null {
     }
   }
 
-  return closest(element, context, "label");
+  return getClosest(element, context, "label");
 }
