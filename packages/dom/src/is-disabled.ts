@@ -1,6 +1,6 @@
 import { Node, Element } from "./types";
 import { getAttribute } from "./get-attribute";
-import { closest } from "./closest";
+import { getClosest } from "./get-closest";
 import { find } from "./find";
 import { contains } from "./contains";
 
@@ -20,7 +20,7 @@ export function isDisabled(element: Element, context: Node): boolean {
         return true;
       }
 
-      const fieldset = closest(element, context, "fieldset");
+      const fieldset = getClosest(element, context, "fieldset");
 
       if (fieldset === null || !isDisabled(fieldset, context)) {
         return false;
@@ -35,7 +35,7 @@ export function isDisabled(element: Element, context: Node): boolean {
         return true;
       }
 
-      const optgroup = closest(element, context, "optgroup");
+      const optgroup = getClosest(element, context, "optgroup");
 
       return optgroup !== null && isDisabled(optgroup, context);
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-optgroup-disabled
