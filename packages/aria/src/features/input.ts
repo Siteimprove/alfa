@@ -10,7 +10,7 @@ export const Input: Feature = {
   role,
   allowedRoles
 };
-//TODO Verify with Kasper that this is indeed correct
+
 function role(input: Element, context: Element): Role | undefined {
   if (hasAttribute(input, "type")) {
     switch (getAttribute(input, "type")) {

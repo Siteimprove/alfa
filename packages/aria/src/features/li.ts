@@ -1,4 +1,4 @@
-import { getParent, getTag, isElement } from "@alfa/dom";
+import { getParentNode, getTag, isElement } from "@alfa/dom";
 import { Feature, Role } from "../types";
 import * as Roles from "../roles";
 
@@ -23,7 +23,7 @@ export const Li: Feature = {
 };
 
 function role(il: Element, context: Element): Role | undefined {
-  const parent = getParent(il, context);
+  const parent = getParentNode(il, context);
   if (parent != null && isElement(parent)) {
     switch (getTag(parent)) {
       case "ol":

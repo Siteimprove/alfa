@@ -1,4 +1,4 @@
-import { closest, getTag, Element, isElement } from "@alfa/dom";
+import { getClosest, getTag, Element, isElement } from "@alfa/dom";
 import { Feature, NoRole, Role } from "../types";
 import * as Roles from "../roles";
 
@@ -13,7 +13,7 @@ export const Option: Feature = {
 
 function role(option: Element, context: Node): Role | undefined {
   if (
-    closest(option, context, option => {
+    getClosest(option, context, option => {
       if (isElement(option)) {
         switch (getTag(option)) {
           case "select":

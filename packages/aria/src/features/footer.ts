@@ -1,4 +1,4 @@
-import { closest, Element, getTag, isElement } from "@alfa/dom";
+import { getClosest, Element, isElement } from "@alfa/dom";
 import { Feature, Role } from "../types";
 import * as Roles from "../roles";
 
@@ -13,7 +13,7 @@ export const Footer: Feature = {
 
 function role(header: Element, context: Element): Role | undefined {
   if (
-    closest(header, context, element => {
+    getClosest(header, context, element => {
       if (isElement(element)) {
         switch (getTag(element)) {
           case "article":
