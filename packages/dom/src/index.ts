@@ -10,6 +10,7 @@ export * from "./get-namespace";
 export * from "./get-parent-node";
 export * from "./get-root-node";
 export * from "./get-tab-index";
+export * from "./get-tag-name";
 export * from "./get-text-content";
 export * from "./guards";
 export * from "./has-attribute";
