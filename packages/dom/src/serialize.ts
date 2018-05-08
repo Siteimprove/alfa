@@ -9,6 +9,7 @@ import {
   isComment
 } from "./guards";
 import { getParentNode } from "./get-parent-node";
+import { Namespace, getNamespace } from "./get-namespace";
 
 const { keys } = Object;
 
@@ -33,12 +34,55 @@ function escape(
 /**
  * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
  */
-export function serialize(node: Node, context: Node | null = null): string {
+export function serialize(node: Node, context: Node = node): string {
   if (isElement(node)) {
-    let element = `<${node.localName}`;
+    const namespace = getNamespace(node, context);
 
-    each(node.attributes, ({ localName, value }) => {
-      element += ` ${localName}="${escape(value, { attributeMode: true })}"`;
+    let name = node.localName;
+
+    if (namespace !== null) {
+      switch (namespace) {
+        case Namespace.HTML:
+        case Namespace.MathML:
+        case Namespace.SVG:
+          break;
+        default:
+          if (node.prefix !== null) {
+            name = node.prefix + ":" + node.localName;
+          }
+      }
+    }
+
+    let element = `<${name}`;
+
+    each(node.attributes, attribute => {
+      const namespace = getNamespace(attribute, node);
+
+      let name = attribute.localName;
+
+      if (namespace !== null) {
+        switch (namespace) {
+          case Namespace.XML:
+            name = "xml:" + attribute.localName;
+            break;
+          case Namespace.XMLNS:
+            if (attribute.localName !== "xmlns") {
+              name = "xmlns:" + attribute.localName;
+            }
+            break;
+          case Namespace.XLink:
+            name = "xlink:" + attribute.localName;
+            break;
+          default:
+            if (attribute.prefix !== null) {
+              name = attribute.prefix + ":" + attribute.localName;
+            }
+        }
+      }
+
+      element += ` ${name}="${escape(attribute.value, {
+        attributeMode: true
+      })}"`;
     });
 
     element += ">";
@@ -66,7 +110,7 @@ export function serialize(node: Node, context: Node | null = null): string {
         element += map(node.childNodes, child =>
           serialize(child, context)
         ).join("");
-        element += `</${node.localName}>`;
+        element += `</${name}>`;
     }
 
     return element;
