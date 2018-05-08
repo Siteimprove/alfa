@@ -290,9 +290,16 @@ function matchesPseudoClass(
   options: MatchingOptions
 ): boolean {
   switch (selector.name) {
-    // https://www.w3.org/TR/selectors/#the-scope-pseudo
+    // https://www.w3.org/TR/selectors/#scope-pseudo
     case "scope":
       return options.scope === element;
+    // https://www.w3.org/TR/selectors/#negation-pseudo
+    case "not":
+      if (selector.value === null) {
+        return true;
+      }
+
+      return !matches(element, context, selector.value, options);
   }
 
   return false;
