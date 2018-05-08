@@ -32,8 +32,7 @@ export class Scraper {
   });
 
   private readonly _pickle = bundle(PICKLE, {
-    builtins: false,
-    plugin: [require("tinyify")]
+    builtins: false
   });
 
   async scrape(url: string, options: ScrapeOptions = {}): Promise<Aspects> {
