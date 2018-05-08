@@ -1,5 +1,5 @@
 import { getAttribute } from "@alfa/dom";
-import { Feature, None } from "../types";
+import { Feature, NoRole } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -8,5 +8,5 @@ import * as Roles from "../roles";
 export const Textarea: Feature = {
   element: "textarea",
   role: Roles.TextBox,
-  allowedRoles: None
+  allowedRoles: NoRole
 };

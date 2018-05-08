@@ -16,7 +16,7 @@ export const Li: Feature = {
     Roles.None,
     Roles.Presentation,
     Roles.Radio,
-    //Roles.Separator,
+    Roles.Separator,
     Roles.Tab,
     Roles.TreeItem
   ]

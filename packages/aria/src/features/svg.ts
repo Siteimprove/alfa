@@ -1,4 +1,4 @@
-import { Feature, Any } from "../types";
+import { Feature } from "../types";
 import * as Roles from "../roles";
 
 /**

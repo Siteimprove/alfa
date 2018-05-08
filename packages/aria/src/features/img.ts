@@ -1,5 +1,5 @@
 import { getAttribute, Element } from "@alfa/dom";
-import { Feature, Role, Except } from "../types";
+import { Feature, Role, AnyRoleExcept } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -11,7 +11,7 @@ export const Img: Feature = {
   allowedRoles: img =>
     role(img) === undefined
       ? [Roles.None, Roles.Presentation]
-      : Except(Roles.None, Roles.Presentation)
+      : AnyRoleExcept(Roles.None, Roles.Presentation)
 };
 
 function role(img: Element): Role | undefined {

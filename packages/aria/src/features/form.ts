@@ -1,5 +1,5 @@
 import { hasText } from "@alfa/dom";
-import { Feature, None } from "../types";
+import { Feature } from "../types";
 import { getTextAlternative } from "../get-text-alternative";
 import * as Roles from "../roles";
 

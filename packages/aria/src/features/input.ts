@@ -1,5 +1,5 @@
 import { Element, getAttribute, hasAttribute } from "@alfa/dom";
-import { Feature, Role, None } from "../types";
+import { Feature, Role, NoRole } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -83,7 +83,7 @@ function role(input: Element, context: Element): Role | undefined {
 function allowedRoles(
   input: Element,
   context: Node
-): Array<Role> | typeof None {
+): Array<Role> | typeof NoRole {
   if (hasAttribute(input, "type")) {
     switch (getAttribute(input, "type")) {
       case "button":
@@ -108,17 +108,17 @@ function allowedRoles(
         }
         return [Roles.MenuItemCheckbox, Roles.Option, Roles.Switch];
       case "color":
-        return None;
+        return NoRole;
       case "date":
-        return None;
+        return NoRole;
       case "datetime":
-        return None;
+        return NoRole;
       case "email":
-        return None;
+        return NoRole;
       case "file":
-        return None;
+        return NoRole;
       case "hidden":
-        return None;
+        return NoRole;
       case "image":
         return [
           Roles.Link,
@@ -129,34 +129,34 @@ function allowedRoles(
           Roles.Switch
         ];
       case "month":
-        return None;
+        return NoRole;
       case "number":
-        return None;
+        return NoRole;
       case "password":
-        return None;
+        return NoRole;
       case "radio":
         return [Roles.MenuItemRadio];
       case "range":
-        return None;
+        return NoRole;
       case "reset":
-        return None;
+        return NoRole;
       case "search":
-        return None;
+        return NoRole;
       case "submit":
-        return None;
+        return NoRole;
       case "tel":
-        return None;
+        return NoRole;
       case "text":
-        return None;
+        return NoRole;
       case "time":
-        return None;
+        return NoRole;
       case "url":
-        return None;
+        return NoRole;
       case "week":
-        return None;
+        return NoRole;
       default:
-        return None;
+        return NoRole;
     }
   }
-  return None; //The documentation does not explicitly state this
+  return NoRole; //The documentation does not explicitly state this
 }

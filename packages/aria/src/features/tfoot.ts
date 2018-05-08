@@ -1,4 +1,4 @@
-import { Feature, Any } from "../types";
+import { Feature, AnyRole } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -7,5 +7,5 @@ import * as Roles from "../roles";
 export const TFoot: Feature = {
   element: "tfoot",
   role: Roles.RowGroup,
-  allowedRoles: Any
+  allowedRoles: AnyRole
 };

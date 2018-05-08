@@ -1,4 +1,4 @@
-import { Feature, Any } from "../types";
+import { Feature, AnyRole } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -7,5 +7,5 @@ import * as Roles from "../roles";
 export const Table: Feature = {
   element: "table",
   role: Roles.Table,
-  allowedRoles: Any
+  allowedRoles: AnyRole
 };

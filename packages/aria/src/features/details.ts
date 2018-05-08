@@ -1,4 +1,4 @@
-import { Feature, None } from "../types";
+import { Feature, NoRole } from "../types";
 import * as Roles from "../roles";
 /**
  * @see https://www.w3.org/TR/html-aria/#details
@@ -6,5 +6,5 @@ import * as Roles from "../roles";
 export const Details: Feature = {
   element: "details",
   role: Roles.Group,
-  allowedRoles: None
+  allowedRoles: NoRole
 };

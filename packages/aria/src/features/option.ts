@@ -1,5 +1,5 @@
 import { closest, getTag, Element, isElement } from "@alfa/dom";
-import { Feature, None, Role } from "../types";
+import { Feature, NoRole, Role } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -8,7 +8,7 @@ import * as Roles from "../roles";
 export const Option: Feature = {
   element: "option",
   role,
-  allowedRoles: None
+  allowedRoles: NoRole
 };
 
 function role(option: Element, context: Node): Role | undefined {

@@ -1,4 +1,4 @@
-import { AnyAttribute, Feature } from "../types";
+import { Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -6,6 +6,5 @@ import * as Roles from "../roles";
  */
 export const Audio: Feature = {
   element: "audio",
-  allowedRoles: [Roles.Application],
-  allowedAttributes: AnyAttribute
+  allowedRoles: [Roles.Application]
 };

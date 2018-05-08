@@ -1,9 +1,9 @@
-import { Feature, Any } from "../types";
+import { Feature, AnyRole } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#rp
  */
 export const Rp: Feature = {
   element: "rp",
-  allowedRoles: Any
+  allowedRoles: AnyRole
 };

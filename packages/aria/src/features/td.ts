@@ -1,5 +1,5 @@
 import { closest, Element, getTag, isElement } from "@alfa/dom";
-import { Feature, Role, Any } from "../types";
+import { Feature, Role, AnyRole } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -8,7 +8,7 @@ import * as Roles from "../roles";
 export const Td: Feature = {
   element: "td",
   role,
-  allowedRoles: Any
+  allowedRoles: AnyRole
 };
 
 function role(td: Element, context: Node): Role | undefined {

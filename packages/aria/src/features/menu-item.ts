@@ -1,5 +1,5 @@
 import { getAttribute, isElement } from "@alfa/dom";
-import { Feature, Role, None } from "../types";
+import { Feature, Role, NoRole } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -8,7 +8,7 @@ import * as Roles from "../roles";
 export const MenuItem: Feature = {
   element: "menuitem",
   role,
-  allowedRoles: None
+  allowedRoles: NoRole
 };
 
 function role(menuitem: Element, context: Element): Role | undefined {

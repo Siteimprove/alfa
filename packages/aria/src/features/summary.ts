@@ -1,5 +1,5 @@
 import { Element } from "@alfa/dom";
-import { Feature, Role, Any } from "../types";
+import { Feature, Role } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -8,9 +8,5 @@ import * as Roles from "../roles";
 export const Summary: Feature = {
   element: "summary",
   role: Roles.Button,
-  allowedRoles
+  allowedRoles: [Roles.Button] //TODO clarify ambiguity in the documentation
 };
-
-function allowedRoles(summary: Element, context: Node): Array<Role> {
-  return []; //TODO implement
-}

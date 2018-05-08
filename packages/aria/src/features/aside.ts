@@ -1,4 +1,4 @@
-import { AnyAttribute, Feature } from "../types";
+import { Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -14,6 +14,5 @@ export const Aside: Feature = {
     Roles.None,
     Roles.Region,
     Roles.Search
-  ],
-  allowedAttributes: AnyAttribute
+  ]
 };

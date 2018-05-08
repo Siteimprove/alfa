@@ -1,5 +1,5 @@
 import { getAttribute } from "@alfa/dom";
-import { AnyAttribute, Feature } from "../types";
+import { Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -22,6 +22,5 @@ export const Button: Feature = {
           Roles.Radio,
           Roles.Switch,
           Roles.Tab
-        ],
-  allowedAttributes: AnyAttribute
+        ]
 };

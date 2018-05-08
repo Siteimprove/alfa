@@ -1,4 +1,4 @@
-import { Feature, None } from "../types";
+import { Feature, NoRole } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -7,5 +7,5 @@ import * as Roles from "../roles";
 export const Nav: Feature = {
   element: "nav",
   role: Roles.Navigation,
-  allowedRoles: None //The documentation does not specifically state this
+  allowedRoles: NoRole //The documentation does not specifically state this
 };
