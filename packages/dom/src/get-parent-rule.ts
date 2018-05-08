@@ -1,9 +1,11 @@
 import { Rule, StyleSheet } from "./types";
 import { traverseRule } from "./traverse-rule";
 import { traverseStyleSheet } from "./traverse-style-sheet";
-import { ParentTree } from "./parent-tree";
 
-const parentTrees: WeakMap<Rule | StyleSheet, ParentTree<Rule>> = new WeakMap();
+const parentMaps: WeakMap<
+  Rule | StyleSheet,
+  WeakMap<Rule, Rule>
+> = new WeakMap();
 
 /**
  * Given a rule and a context, get the parent of the rule within the context.
@@ -14,27 +16,27 @@ export function getParentRule(
   rule: Rule,
   context: Rule | StyleSheet
 ): Rule | null {
-  let parentTree = parentTrees.get(context);
+  let parentMap = parentMaps.get(context);
 
-  if (parentTree === undefined) {
-    parentTree = new ParentTree();
+  if (parentMap === undefined) {
+    parentMap = new WeakMap();
 
     if ("disabled" in context) {
       traverseStyleSheet(context, (rule, parent) => {
-        if (parent !== null && parentTree !== undefined) {
-          parentTree.join(rule, parent);
+        if (parent !== null && parentMap !== undefined) {
+          parentMap.set(rule, parent);
         }
       });
     } else {
       traverseRule(context, (rule, parent) => {
-        if (parent !== null && parentTree !== undefined) {
-          parentTree.join(rule, parent);
+        if (parent !== null && parentMap !== undefined) {
+          parentMap.set(rule, parent);
         }
       });
     }
 
-    parentTrees.set(context, parentTree);
+    parentMaps.set(context, parentMap);
   }
 
-  return parentTree.get(rule);
+  return parentMap.get(rule) || null;
 }

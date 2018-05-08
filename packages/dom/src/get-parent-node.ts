@@ -1,8 +1,7 @@
 import { Node } from "./types";
 import { traverseNode } from "./traverse-node";
-import { ParentTree } from "./parent-tree";
 
-const parentTrees: WeakMap<Node, ParentTree<Node>> = new WeakMap();
+const parentMaps: WeakMap<Node, WeakMap<Node, Node>> = new WeakMap();
 
 /**
  * Given a node and a context, get the parent of the node within the context.
@@ -16,19 +15,19 @@ const parentTrees: WeakMap<Node, ParentTree<Node>> = new WeakMap();
  * // => <div>...</div>
  */
 export function getParentNode(node: Node, context: Node): Node | null {
-  let parentTree = parentTrees.get(context);
+  let parentMap = parentMaps.get(context);
 
-  if (parentTree === undefined) {
-    parentTree = new ParentTree();
+  if (parentMap === undefined) {
+    parentMap = new WeakMap();
 
     traverseNode(context, (node, parent) => {
-      if (parent !== null && parentTree !== undefined) {
-        parentTree.join(node, parent);
+      if (parent !== null && parentMap !== undefined) {
+        parentMap.set(node, parent);
       }
     });
 
-    parentTrees.set(context, parentTree);
+    parentMaps.set(context, parentMap);
   }
 
-  return parentTree.get(node);
+  return parentMap.get(node) || null;
 }
