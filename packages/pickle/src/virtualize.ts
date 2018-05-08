@@ -27,13 +27,16 @@ function virtualizeNode(node: Node): V.Node {
 function virtualizeElement(element: Element): V.Element {
   const virtual: V.Element = {
     nodeType: 1,
-    tagName: element.tagName.toLowerCase(),
+    childNodes: map(element.childNodes, child => virtualizeNode(child)),
     namespaceURI: element.namespaceURI,
+    prefix: element.prefix,
+    localName: element.localName || "",
     attributes: map(element.attributes, attribute => ({
-      name: attribute.name,
+      namespaceURI: attribute.namespaceURI,
+      prefix: attribute.prefix,
+      localName: attribute.localName || "",
       value: attribute.value
     })),
-    childNodes: map(element.childNodes, child => virtualizeNode(child)),
     shadowRoot: null
   };
 
@@ -97,6 +100,7 @@ function virtualizeShadowRoot(
 
 function virtualizeStyleSheet(styleSheet: CSSStyleSheet): V.StyleSheet {
   return {
+    disabled: styleSheet.disabled,
     cssRules: map(styleSheet.cssRules, cssRule => virtualizeRule(cssRule))
   };
 }

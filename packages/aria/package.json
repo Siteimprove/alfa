@@ -10,11 +10,10 @@
   "private": true,
   "dependencies": {
     "@alfa/dom": "^0.0.0",
-    "@alfa/style": "^0.0.0",
     "@alfa/util": "^0.0.0"
   },
   "devDependencies": {
     "@alfa/test": "^0.0.0",
-    "typescript": "^2.7.2"
+    "typescript": "^2.8.3"
   }
 }

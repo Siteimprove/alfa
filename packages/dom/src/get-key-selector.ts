@@ -2,8 +2,6 @@ import { first } from "@alfa/util";
 import {
   Selector,
   SimpleSelector,
-  parse,
-  isSelector,
   isSimpleSelector,
   isRelativeSelector
 } from "@alfa/css";
@@ -14,19 +12,7 @@ import {
  * matching as an element won't match a given selector unless it also matches
  * the key selector.
  */
-export function getKeySelector(
-  selector: string | Selector
-): SimpleSelector | null {
-  if (typeof selector === "string") {
-    const parsed = parse(selector);
-
-    if (parsed === null || !isSelector(parsed)) {
-      throw new Error(`Not a valid selector: ${selector}`);
-    }
-
-    selector = parsed;
-  }
-
+export function getKeySelector(selector: Selector): SimpleSelector | null {
   if (isSimpleSelector(selector)) {
     if (selector.type === "type-selector" && selector.name === "*") {
       return null;

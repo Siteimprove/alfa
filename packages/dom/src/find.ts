@@ -1,10 +1,10 @@
+import { Predicate } from "@alfa/util";
 import { Node, Element } from "./types";
-import { Predicate } from "./collect";
 import { isElement } from "./guards";
 import { matches } from "./matches";
-import { traverse, TraverseOptions } from "./traverse";
+import { traverseNode } from "./traverse-node";
 
-export type FindOptions = TraverseOptions;
+export type FindOptions = Readonly<{ composed?: boolean }>;
 
 export function find(
   node: Node,
@@ -14,14 +14,14 @@ export function find(
 ): Element | null;
 
 export function find<T extends Node>(
-  node: Node,
+  scope: Node,
   context: Node,
   query: Predicate<Node, T>,
   options?: FindOptions
 ): T | null;
 
 export function find<T extends Node>(
-  node: Node,
+  scope: Node,
   context: Node,
   query: Predicate<Node, T> | string,
   options: FindOptions = {}
@@ -29,15 +29,16 @@ export function find<T extends Node>(
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
-    predicate = node => isElement(node) && matches(node, context, query);
+    predicate = node =>
+      isElement(node) && matches(node, context, query, { scope });
   } else {
     predicate = query;
   }
 
   let found: T | null = null;
 
-  traverse(
-    node,
+  traverseNode(
+    scope,
     node => {
       if (found !== null) {
         return false;
@@ -54,21 +55,21 @@ export function find<T extends Node>(
 }
 
 export function findAll(
-  node: Node,
+  scope: Node,
   context: Node,
   query: string,
   options?: FindOptions
 ): Array<Element>;
 
 export function findAll<T extends Node>(
-  node: Node,
+  scope: Node,
   context: Node,
   query: Predicate<Node, T>,
   options?: FindOptions
 ): Array<T>;
 
 export function findAll<T extends Node>(
-  node: Node,
+  scope: Node,
   context: Node,
   query: Predicate<Node, T> | string,
   options: FindOptions = {}
@@ -76,15 +77,16 @@ export function findAll<T extends Node>(
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
-    predicate = node => isElement(node) && matches(node, context, query);
+    predicate = node =>
+      isElement(node) && matches(node, context, query, { scope });
   } else {
     predicate = query;
   }
 
   const found: Array<T> = [];
 
-  traverse(
-    node,
+  traverseNode(
+    scope,
     node => {
       if (predicate(node)) {
         found.push(node);

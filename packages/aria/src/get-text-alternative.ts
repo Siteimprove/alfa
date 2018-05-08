@@ -3,14 +3,15 @@ import {
   Node,
   Element,
   Text,
+  Namespace,
   isText,
   isElement,
   find,
-  getTag,
   getAttribute,
-  getRoot,
-  getText,
-  getLabel
+  getRootNode,
+  getTextContent,
+  getLabel,
+  getNamespace
 } from "@alfa/dom";
 import * as Roles from "./roles";
 import { getRole } from "./get-role";
@@ -20,7 +21,7 @@ import { resolveReferences } from "./resolve-references";
 /**
  * Get the computed accessible text alternative of an element.
  *
- * @see https://www.w3.org/TR/accname-aam-1.1/
+ * @see https://www.w3.org/TR/accname/
  *
  * @example
  * const button = <button>Foo</button>;
@@ -67,7 +68,7 @@ export function getTextAlternative(
 
   visited.add(node);
 
-  // https://www.w3.org/TR/accname-aam-1.1/#step2A
+  // https://www.w3.org/TR/accname/#step2A
   if (!isVisible(node) && !flags.referencing) {
     return null;
   }
@@ -75,12 +76,12 @@ export function getTextAlternative(
   // Perform the last step at this point in order to appease the type checker.
   // Otherwise, we might risk that we're not dealing with an element in the
   // remaining steps below.
-  // https://www.w3.org/TR/accname-aam-1.1/#step2G
+  // https://www.w3.org/TR/accname/#step2G
   if (isText(node)) {
     return flatten(node.data) || null;
   }
 
-  // https://www.w3.org/TR/accname-aam-1.1/#step2B
+  // https://www.w3.org/TR/accname/#step2B
   const labelledBy = getAttribute(node, "aria-labelledby");
   if (
     labelledBy !== null &&
@@ -88,10 +89,10 @@ export function getTextAlternative(
     labelledBy !== "aria-labelledby" &&
     !flags.referencing
   ) {
-    const root = getRoot(node, context);
+    const rootNode = getRootNode(node, context);
 
-    if (root !== null) {
-      const references = resolveReferences(root, context, labelledBy).map(
+    if (rootNode !== null) {
+      const references = resolveReferences(rootNode, context, labelledBy).map(
         element =>
           getTextAlternative(element, context, visited, {
             recursing: true,
@@ -105,15 +106,15 @@ export function getTextAlternative(
     }
   }
 
-  // https://www.w3.org/TR/accname-aam-1.1/#step2C
-  const label = getAttribute(node, "aria-label");
+  // https://www.w3.org/TR/accname/#step2C
+  const label = getAttribute(node, "aria-label", { trim: true });
   if (label && label !== "aria-label") {
     return flatten(label);
   }
 
   const role = getRole(node, context);
 
-  // https://www.w3.org/TR/accname-aam-1.1/#step2D
+  // https://www.w3.org/TR/accname/#step2D
   if (role !== Roles.Presentation && role !== Roles.None) {
     const native = getNativeTextAlternative(node, context, visited);
     if (native !== null) {
@@ -121,11 +122,11 @@ export function getTextAlternative(
     }
   }
 
-  // https://www.w3.org/TR/accname-aam-1.1/#step2E
+  // https://www.w3.org/TR/accname/#step2E
   if (flags.labelling || flags.referencing) {
     switch (role) {
       case Roles.TextBox:
-        switch (getTag(node)) {
+        switch (node.localName) {
           case "input":
             const value = getAttribute(node, "value");
             if (value !== null && value !== "") {
@@ -133,7 +134,7 @@ export function getTextAlternative(
             }
             break;
           default:
-            return flatten(getText(node));
+            return flatten(getTextContent(node));
         }
         break;
       case Roles.Button:
@@ -141,7 +142,7 @@ export function getTextAlternative(
     }
   }
 
-  // https://www.w3.org/TR/accname-aam-1.1/#step2F
+  // https://www.w3.org/TR/accname/#step2F
   if (
     (role !== null && role.label && includes(role.label.from, "contents")) ||
     flags.referencing ||
@@ -166,7 +167,7 @@ export function getTextAlternative(
     }
   }
 
-  // https://www.w3.org/TR/accname-aam-1.1/#step2H
+  // https://www.w3.org/TR/accname/#step2I
   const title = getAttribute(node, "title");
   if (title !== null && title !== "") {
     return flatten(title);
@@ -178,7 +179,7 @@ export function getTextAlternative(
 /**
  * Return a flattened and trimmed version of a string.
  *
- * @see https://www.w3.org/TR/accname-aam-1.1/#terminology
+ * @see https://www.w3.org/TR/accname/#terminology
  */
 function flatten(string: string): string {
   return string.replace(/\s+/, " ").trim();
@@ -186,10 +187,30 @@ function flatten(string: string): string {
 
 /**
  * Get the text alternative of an element provided by native markup.
- *
- * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
  */
 function getNativeTextAlternative(
+  element: Element,
+  context: Node,
+  visited: Set<Element | Text>
+): string | null {
+  const namespace = getNamespace(element, context);
+
+  if (namespace !== null) {
+    switch (namespace) {
+      case Namespace.HTML:
+        return getHtmlTextAlternative(element, context, visited);
+      case Namespace.SVG:
+        return getSvgTextAlternative(element, context, visited);
+    }
+  }
+
+  return null;
+}
+
+/**
+ * @see https://www.w3.org/TR/html-aam/#accessible-name-and-description-computation
+ */
+function getHtmlTextAlternative(
   element: Element,
   context: Node,
   visited: Set<Element | Text>
@@ -202,12 +223,12 @@ function getNativeTextAlternative(
     });
   }
 
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "input":
       const type = getAttribute(element, "type");
       if (type !== null) {
         switch (type) {
-          // https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset
+          // https://www.w3.org/TR/html-aam/#input-type-button-input-type-submit-and-input-type-reset
           case "button":
           case "submit":
           case "reset": {
@@ -227,7 +248,7 @@ function getNativeTextAlternative(
             break;
           }
 
-          // https://www.w3.org/TR/html-aam-1.0/#input-type-image
+          // https://www.w3.org/TR/html-aam/#input-type-image
           case "image": {
             const alt = getAttribute(element, "alt");
             if (alt !== null && alt !== "") {
@@ -243,7 +264,7 @@ function getNativeTextAlternative(
       }
       break;
 
-    // https://www.w3.org/TR/html-aam-1.0/#fieldset-and-legend-elements
+    // https://www.w3.org/TR/html-aam/#fieldset-and-legend-elements
     case "fieldset": {
       const legend = find(element, context, "legend");
       if (legend) {
@@ -254,7 +275,7 @@ function getNativeTextAlternative(
       break;
     }
 
-    // https://www.w3.org/TR/html-aam-1.0/#figure-and-figcaption-elements
+    // https://www.w3.org/TR/html-aam/#figure-and-figcaption-elements
     case "figure": {
       const caption = find(element, context, "figcaption");
       if (caption) {
@@ -265,7 +286,7 @@ function getNativeTextAlternative(
       break;
     }
 
-    // https://www.w3.org/TR/html-aam-1.0/#img-element
+    // https://www.w3.org/TR/html-aam/#img-element
     case "img": {
       const alt = getAttribute(element, "alt");
       if (alt !== null && alt !== "") {
@@ -274,14 +295,44 @@ function getNativeTextAlternative(
       break;
     }
 
-    // https://www.w3.org/TR/html-aam-1.0/#table-element
+    // https://www.w3.org/TR/html-aam/#table-element
     case "table": {
       const caption = find(element, context, "caption");
       if (caption) {
-        return flatten(getText(caption));
+        return flatten(getTextContent(caption));
       }
       break;
     }
+  }
+
+  return null;
+}
+
+/**
+ * @see https://www.w3.org/TR/svg-aam/#mapping_additional_nd
+ */
+function getSvgTextAlternative(
+  element: Element,
+  context: Node,
+  visited: Set<Element | Text>
+): string | null {
+  if (element.localName === "title") {
+    return flatten(getTextContent(element));
+  }
+
+  const title = find(element, context, ":scope > title");
+  if (title) {
+    return getTextAlternative(title, context, visited, {
+      recursing: true
+    });
+  }
+
+  switch (element.localName) {
+    case "a":
+      const title = getAttribute(element, "xlink:title");
+      if (title !== null && title !== "") {
+        return flatten(title);
+      }
   }
 
   return null;
@@ -293,10 +344,10 @@ function getNativeTextAlternative(
  * API Mappings specification as elements whose text alternative can be
  * computed from their subtree as well as <label> elements.
  *
- * @see https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
+ * @see https://www.w3.org/TR/html-aam/#accessible-name-and-description-computation
  */
 function isNativeTextAlternativeElement(element: Element): boolean {
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "label":
     case "a":
     case "button":
@@ -315,10 +366,10 @@ function isNativeTextAlternativeElement(element: Element): boolean {
  * text level elements, such as anchors, are handled elsewhere and are therefore
  * not considered by this function.
  *
- * @see https://www.w3.org/TR/html-aam-1.0/#text-level-elements-not-listed-elsewhere
+ * @see https://www.w3.org/TR/html-aam/#text-level-elements-not-listed-elsewhere
  */
 function isTextLevelElement(element: Element): boolean {
-  switch (getTag(element)) {
+  switch (element.localName) {
     case "abbr":
     case "b":
     case "bdi":

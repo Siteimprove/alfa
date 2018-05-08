@@ -1,5 +1,5 @@
+import { Predicate } from "@alfa/util";
 import { Node, Element } from "./types";
-import { Predicate } from "./collect";
 import { isElement } from "./guards";
 import { matches } from "./matches";
 import { find } from "./find";
@@ -8,6 +8,8 @@ import { find } from "./find";
  * Given a node and a context, check if the node contains another node that
  * matches the given query. One node is said to contain another node if the
  * other node is a descendant of the first.
+ *
+ * @see https://dom.spec.whatwg.org/#dom-node-contains
  *
  * @example
  * const div = <div><span /></div>;

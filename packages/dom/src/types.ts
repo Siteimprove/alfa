@@ -20,7 +20,9 @@ export interface ChildNode extends Node {}
  * @see https://www.w3.org/TR/dom/#interface-attr
  */
 export interface Attribute {
-  readonly name: string;
+  readonly namespaceURI: string | null;
+  readonly prefix: string | null;
+  readonly localName: string;
   readonly value: string;
 }
 
@@ -30,7 +32,8 @@ export interface Attribute {
 export interface Element extends Node, ParentNode, ChildNode {
   readonly nodeType: 1;
   readonly namespaceURI: string | null;
-  readonly tagName: string;
+  readonly prefix: string | null;
+  readonly localName: string;
   readonly attributes: ArrayLike<Attribute>;
 
   /**
@@ -91,6 +94,7 @@ export interface ShadowRoot extends DocumentFragment {}
  * @see https://www.w3.org/TR/cssom/#cssstylesheet
  */
 export interface StyleSheet {
+  readonly disabled: boolean;
   readonly cssRules: ArrayLike<Rule>;
 }
 

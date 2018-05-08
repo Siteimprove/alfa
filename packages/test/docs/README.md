@@ -1,5 +1,0 @@
-# @alfa/test
-
-## Index
-
----

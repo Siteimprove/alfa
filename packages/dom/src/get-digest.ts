@@ -1,14 +1,8 @@
-import { slice } from "@alfa/util";
+import { slice, each } from "@alfa/util";
 import * as crypto from "@alfa/crypto";
 
 import { Node } from "./types";
-import {
-  isElement,
-  isText,
-  isParent,
-  isComment,
-  isDocumentType
-} from "./guards";
+import { isElement, isText, isComment, isDocumentType } from "./guards";
 
 const digests: WeakMap<Node, string> = new WeakMap();
 
@@ -19,9 +13,7 @@ const digests: WeakMap<Node, string> = new WeakMap();
  *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export async function getDigest<T extends Node>(
-  node: T
-): Promise<string | null> {
+export async function getDigest(node: Node): Promise<string | null> {
   if (isComment(node) || isDocumentType(node)) {
     return null;
   }
@@ -36,23 +28,36 @@ export async function getDigest<T extends Node>(
     }
 
     if (isElement(node)) {
-      digest += node.tagName;
-
-      for (const { name, value } of slice(node.attributes).sort(
-        (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
-      )) {
-        digest += name + value;
+      if (node.namespaceURI === null) {
+        digest += node.localName;
+      } else {
+        digest += node.namespaceURI + ":" + node.localName;
       }
+
+      const attributes = slice(node.attributes).sort(
+        (a, b) =>
+          a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0
+      );
+
+      each(attributes, attribute => {
+        if (attribute.namespaceURI === null) {
+          digest += attribute.localName + attribute.value;
+        } else {
+          digest +=
+            attribute.namespaceURI +
+            ":" +
+            attribute.localName +
+            attribute.value;
+        }
+      });
     }
 
-    if (isParent(node)) {
-      for (let i = 0, n = node.childNodes.length; i < n; i++) {
-        const child = node.childNodes[i];
-        const childDigest = await getDigest(child);
+    for (let i = 0, n = node.childNodes.length; i < n; i++) {
+      const child = node.childNodes[i];
+      const childDigest = await getDigest(child);
 
-        if (childDigest !== null) {
-          digest += childDigest;
-        }
+      if (childDigest !== null) {
+        digest += childDigest;
       }
     }
 

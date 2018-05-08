@@ -1,4 +1,4 @@
-import { Selector, parse, isSelector } from "@alfa/css";
+import { Selector } from "@alfa/css";
 
 const { min } = Math;
 
@@ -17,17 +17,7 @@ const componentMax = (1 << componentBits) - 1;
 /**
  * @see https://www.w3.org/TR/selectors/#specificity
  */
-export function getSpecificity(selector: string | Selector): Specificity {
-  if (typeof selector === "string") {
-    const parsed = parse(selector);
-
-    if (parsed === null || !isSelector(parsed)) {
-      throw new Error(`Not a valid selector: ${selector}`);
-    }
-
-    selector = parsed;
-  }
-
+export function getSpecificity(selector: Selector): Specificity {
   let a = 0;
   let b = 0;
   let c = 0;

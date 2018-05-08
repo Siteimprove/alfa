@@ -1,2 +1,2 @@
-export * from "./lexer";
-export * from "./parser";
+export * from "./alphabet";
+export * from "./grammar";

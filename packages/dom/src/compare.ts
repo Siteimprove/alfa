@@ -1,10 +1,14 @@
 import { Node } from "./types";
-import { getParent } from "./get-parent";
+import { getParentNode } from "./get-parent-node";
 
 function pathFromRoot(node: Node, context: Node): Array<Node> {
   const path: Array<Node> = [];
 
-  for (let next: Node | null = node; next; next = getParent(next, context)) {
+  for (
+    let next: Node | null = node;
+    next;
+    next = getParentNode(next, context)
+  ) {
     path.unshift(next);
   }
 
@@ -46,9 +50,7 @@ export function compare(a: Node, b: Node, context: Node): number {
   a = ap[fork + 1];
   b = bp[fork + 1];
 
-  const n = childNodes.length;
-
-  for (let i = 0; i < n; i++) {
+  for (let i = 0, n = childNodes.length; i < n; i++) {
     const child = childNodes[i];
 
     if (child === a) {

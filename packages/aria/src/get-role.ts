@@ -32,7 +32,7 @@ export function getRole(element: Element, context: Node): Role | null {
   const role = getAttribute(element, "role");
 
   if (role === null) {
-    const feature = features.get(element.tagName);
+    const feature = features.get(element.localName);
 
     if (feature !== undefined) {
       const role =

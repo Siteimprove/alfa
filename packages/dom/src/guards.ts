@@ -11,6 +11,7 @@ import {
   ChildNode,
   Rule,
   GroupingRule,
+  ConditionRule,
   StyleRule,
   ImportRule,
   MediaRule,
@@ -50,18 +51,22 @@ export function isShadowRoot(node: Node): node is ShadowRoot {
   return isDocumentFragment(node);
 }
 
-export function isParent(node: Node): node is ParentNode {
+export function isParentNode(node: Node): node is ParentNode {
   return isElement(node) || isDocument(node) || isDocumentFragment(node);
 }
 
-export function isChild(node: Node): node is ChildNode {
+export function isChildNode(node: Node): node is ChildNode {
   return (
     isElement(node) || isText(node) || isComment(node) || isDocumentType(node)
   );
 }
 
 export function isGroupingRule(rule: Rule): rule is GroupingRule {
-  return isMediaRule(rule) || isSupportsRule(rule);
+  return isMediaRule(rule) || isConditionRule(rule);
+}
+
+export function isConditionRule(rule: Rule): rule is ConditionRule {
+  return isSupportsRule(rule);
 }
 
 export function isStyleRule(rule: Rule): rule is StyleRule {
