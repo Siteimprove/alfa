@@ -1,4 +1,4 @@
-import { memoize, indexOf, isWhitespace, split, first } from "@alfa/util";
+import { memoize, isWhitespace, split, first } from "@alfa/util";
 import { parse, lex } from "@alfa/lang";
 import {
   Alphabet,
@@ -17,6 +17,7 @@ import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";
 import { getParentNode } from "./get-parent-node";
+import { getPreviousSibling } from "./get-previous-sibling";
 
 const { isArray } = Array;
 
@@ -238,23 +239,16 @@ function matchesSibling(
   selector: RelativeSelector,
   options: MatchingOptions
 ): boolean {
-  const parentNode = getParentNode(element, context);
+  let previousSibling = getPreviousSibling(element, context);
 
-  if (parentNode === null) {
-    return false;
-  }
-
-  const { childNodes } = parentNode;
-
-  for (let i = indexOf(childNodes, element) - 1; i >= 0; i--) {
-    const sibling = childNodes[i];
-
-    if (
-      isElement(sibling) &&
-      matches(sibling, context, selector.relative, options)
-    ) {
-      return true;
+  while (previousSibling !== null) {
+    if (isElement(previousSibling)) {
+      if (matches(previousSibling, context, selector.relative, options)) {
+        return true;
+      }
     }
+
+    previousSibling = getPreviousSibling(previousSibling, context);
   }
 
   return false;
@@ -269,21 +263,21 @@ function matchesDirectSibling(
   selector: RelativeSelector,
   options: MatchingOptions
 ): boolean {
-  const parentNode = getParentNode(element, context);
+  let previousSibling = getPreviousSibling(element, context);
 
-  if (parentNode === null) {
-    return false;
+  while (previousSibling !== null) {
+    if (isElement(previousSibling)) {
+      if (matches(previousSibling, context, selector.relative, options)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    previousSibling = getPreviousSibling(previousSibling, context);
   }
 
-  const { childNodes } = parentNode;
-
-  const sibling = childNodes[indexOf(childNodes, element) - 1];
-
-  if (sibling === undefined || !isElement(sibling)) {
-    return false;
-  }
-
-  return matches(sibling, context, selector.relative, options);
+  return false;
 }
 
 /**
