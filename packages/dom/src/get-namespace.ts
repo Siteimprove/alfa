@@ -1,4 +1,4 @@
-import { Node, Element } from "./types";
+import { Node, Element, Attribute } from "./types";
 /**
  * @see https://www.w3.org/TR/html/infrastructure.html#namespaces
  */
@@ -34,12 +34,19 @@ export enum Namespace {
   XMLNS = "http://www.w3.org/2000/xmlns/"
 }
 
+export function getNamespace(element: Element, context: Node): Namespace | null;
+
 export function getNamespace(
-  element: Element,
+  attribute: Attribute,
+  context: Node
+): Namespace | null;
+
+export function getNamespace(
+  node: Element | Attribute,
   context: Node
 ): Namespace | null {
-  if (element.namespaceURI !== null) {
-    switch (element.namespaceURI) {
+  if (node.namespaceURI !== null) {
+    switch (node.namespaceURI) {
       case Namespace.HTML:
         return Namespace.HTML;
       case Namespace.SVG:
