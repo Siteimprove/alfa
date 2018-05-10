@@ -20,7 +20,7 @@ Alfa is the result of distilling the best parts of our proprietary accessibility
 
 ## Funding
 
-[<img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" width="200" align="right" alt="European emblem">](https://ec.europa.eu/)
+[<img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" height="96" align="right" alt="European emblem">](https://ec.europa.eu/)
 
 Alfa is part of a project that has received funding from the European Union's [Horizon 2020 research and innovation programme](https://ec.europa.eu/programmes/horizon2020/) under [grant agreement Nº780057](https://cordis.europa.eu/project/rcn/213106_en.html). We would therefore like to give thanks to the European Commission for their grant, as well as all European citizens, who have indirectly contributed to making Alfa possible. You rock! :raised_hands:
 
