@@ -1,6 +1,6 @@
 # Alfa
 
-> Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
+> :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
 Alfa is the result of distilling the best parts of our proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). In comparison to our proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
@@ -22,7 +22,7 @@ Alfa is the result of distilling the best parts of our proprietary accessibility
 
 [<img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" width="200" align="right" alt="European emblem">](https://ec.europa.eu/)
 
-Alfa is part of a project that has received funding from the European Union's [Horizon 2020 research and innovation programme](https://ec.europa.eu/programmes/horizon2020/) under [grant agreement Nº780057](https://cordis.europa.eu/project/rcn/213106_en.html). We would therefore like to give thanks to the European Commission for their grant, as well as all European citizens, who have indirectly contributed to making Alfa possible.
+Alfa is part of a project that has received funding from the European Union's [Horizon 2020 research and innovation programme](https://ec.europa.eu/programmes/horizon2020/) under [grant agreement Nº780057](https://cordis.europa.eu/project/rcn/213106_en.html). We would therefore like to give thanks to the European Commission for their grant, as well as all European citizens, who have indirectly contributed to making Alfa possible. You rock! :raised_hands:
 
 ## License
 
