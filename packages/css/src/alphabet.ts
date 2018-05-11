@@ -4,6 +4,7 @@ import {
   isWhitespace,
   isAlpha,
   isAlphanumeric,
+  isHex,
   isNumeric,
   isAscii
 } from "@alfa/util";
@@ -100,7 +101,7 @@ export function isDelim(token: Token): token is Delim {
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
  */
-function startsValidEscape(fst: string, snd: string): boolean {
+function startsValidEscape(fst: string, snd: string | null): boolean {
   return fst === "\\" && snd !== "\n";
 }
 
@@ -171,7 +172,50 @@ function isName(char: string): boolean {
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
 const name: (stream: Stream<string>) => string = stream => {
-  return stream.accept(isName) || "";
+  let result = "";
+  let next = stream.next();
+
+  while (next !== null) {
+    if (startsValidEscape(next, stream.peek())) {
+      result += escapedCodePoint(stream);
+    } else if (isName(next)) {
+      result += next;
+    } else {
+      stream.backup();
+      return result;
+    }
+
+    next = stream.next();
+  }
+
+  return result;
+};
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#consume-an-escaped-code-point
+ */
+const escapedCodePoint: (stream: Stream<string>) => string = stream => {
+  let next = stream.next();
+
+  if (next === null) {
+    return "\ufffd";
+  }
+
+  if (isHex(next)) {
+    const hex = stream.accept(isHex, 0, 5);
+
+    stream.accept(isWhitespace, 1);
+
+    const code = parseInt(next + hex, 16);
+
+    if (code === 0) {
+      return "\ufffd";
+    }
+
+    return String.fromCharCode(code);
+  }
+
+  return next;
 };
 
 /**

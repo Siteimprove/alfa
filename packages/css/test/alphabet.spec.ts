@@ -391,3 +391,27 @@ test("Can lex an+b values", async t =>
       }
     }
   ]));
+
+test("Can lex an escaped character", t =>
+  css(t, "\\/", [
+    {
+      type: "ident",
+      value: "/",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 2 }
+      }
+    }
+  ]));
+
+test("Can lex an escaped unicode point", t =>
+  css(t, "\\002d", [
+    {
+      type: "ident",
+      value: "\u002d",
+      location: {
+        start: { line: 0, column: 0 },
+        end: { line: 0, column: 5 }
+      }
+    }
+  ]));
