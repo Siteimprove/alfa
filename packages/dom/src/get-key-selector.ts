@@ -11,6 +11,8 @@ import {
  * The key selector is the most important selector when performing selector
  * matching as an element won't match a given selector unless it also matches
  * the key selector.
+ *
+ * @internal
  */
 export function getKeySelector(selector: Selector): SimpleSelector | null {
   if (isSimpleSelector(selector)) {

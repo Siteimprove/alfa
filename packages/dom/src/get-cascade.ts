@@ -4,10 +4,16 @@ import { traverseNode } from "./traverse-node";
 import { SelectorMap } from "./selector-map";
 import { AncestorFilter } from "./ancestor-filter";
 
+/**
+ * @internal
+ */
 export interface Cascade {
   get(element: Element): Array<StyleRule> | undefined;
 }
 
+/**
+ * @internal
+ */
 export function getCascade(document: Document): Cascade {
   const cascade: WeakMap<Element, Array<StyleRule>> = new WeakMap();
 
