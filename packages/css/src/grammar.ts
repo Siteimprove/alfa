@@ -2,7 +2,9 @@ import * as Lang from "@alfa/lang";
 import { Expression, Stream } from "@alfa/lang";
 import { Token, Paren, Bracket, Brace, FunctionName } from "./alphabet";
 
+export * from "./grammar/color";
 export * from "./grammar/declaration";
+export * from "./grammar/font";
 export * from "./grammar/rule";
 export * from "./grammar/selector";
 
