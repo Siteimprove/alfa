@@ -1,6 +1,8 @@
 import { isNewline } from "@alfa/util";
 import { Token, Location } from "./types";
 
+const { isArray } = Array;
+
 export type Predicate<T, U extends T> =
   | ((n: T) => boolean)
   | ((n: T) => n is U);
@@ -14,6 +16,10 @@ export abstract class Stream<T> {
   protected _start: number = 0;
   protected _line: number = 0;
   protected _column: number = 0;
+
+  public get position() {
+    return this._position;
+  }
 
   abstract range(start: number, end: number): StreamItems<T>;
 
@@ -93,44 +99,61 @@ export abstract class Stream<T> {
     return backedup;
   }
 
+  public accept<U extends T>(
+    predicate: Predicate<T, U>
+  ): StreamItems<U> | false;
+
   public accept<U extends T>(predicate: Predicate<T, U>, times: 1): U | false;
 
   public accept<U extends T>(
     predicate: Predicate<T, U>,
-    times?: number
+    times: number
   ): StreamItems<U> | false;
 
   public accept<U extends T>(
     predicate: Predicate<T, U>,
-    times?: number
+    minimum: number,
+    maximum: number
+  ): StreamItems<U> | false;
+
+  public accept<U extends T>(
+    predicate: Predicate<T, U>,
+    minimum?: number,
+    maximum?: number
   ): U | StreamItems<U> | false {
-    let accepted = false;
+    if (minimum === undefined) {
+      minimum = 0;
+      maximum = Infinity;
+    }
+
+    if (maximum === undefined) {
+      maximum = minimum;
+    }
+
+    let accepted = 0;
     let next = this.peek();
     let start = this._position;
 
-    const single = times === 1;
+    while (next !== null && predicate(next)) {
+      accepted++;
 
-    while (
-      next !== null &&
-      predicate(next) &&
-      (times === undefined || times-- > 0)
-    ) {
-      accepted = times === undefined || times === 0;
-
-      if (!this.advance()) {
+      if (accepted === maximum || !this.advance()) {
         break;
       }
 
       next = this.peek();
     }
 
-    if (accepted === false) {
+    if (accepted < minimum) {
+      this.restore(start);
       return false;
     }
 
     const range = this.range(start, this._position);
 
-    return single ? (range[0] as U) : (range as StreamItems<U>);
+    return minimum === 1 && maximum === 1
+      ? (range[0] as U)
+      : (range as StreamItems<U>);
   }
 }
 
