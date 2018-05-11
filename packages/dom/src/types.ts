@@ -7,16 +7,6 @@ export interface Node {
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-parentnode
- */
-export interface ParentNode extends Node {}
-
-/**
- * @see https://www.w3.org/TR/dom/#interface-childnode
- */
-export interface ChildNode extends Node {}
-
-/**
  * @see https://www.w3.org/TR/dom/#interface-attr
  */
 export interface Attribute {
@@ -29,7 +19,7 @@ export interface Attribute {
 /**
  * @see https://www.w3.org/TR/dom/#interface-element
  */
-export interface Element extends Node, ParentNode, ChildNode {
+export interface Element extends Node {
   readonly nodeType: 1;
   readonly namespaceURI: string | null;
   readonly prefix: string | null;
@@ -43,7 +33,7 @@ export interface Element extends Node, ParentNode, ChildNode {
 /**
  * @see https://www.w3.org/TR/dom/#interface-text
  */
-export interface Text extends Node, ChildNode {
+export interface Text extends Node {
   readonly nodeType: 3;
   readonly data: string;
 }
@@ -51,7 +41,7 @@ export interface Text extends Node, ChildNode {
 /**
  * @see https://www.w3.org/TR/dom/#interface-comment
  */
-export interface Comment extends Node, ChildNode {
+export interface Comment extends Node {
   readonly nodeType: 8;
   readonly data: string;
 }
@@ -59,7 +49,7 @@ export interface Comment extends Node, ChildNode {
 /**
  * @see https://www.w3.org/TR/dom/#interface-document
  */
-export interface Document extends Node, ParentNode {
+export interface Document extends Node {
   readonly nodeType: 9;
 
   /**
@@ -71,7 +61,7 @@ export interface Document extends Node, ParentNode {
 /**
  * @see https://www.w3.org/TR/dom/#interface-documenttype
  */
-export interface DocumentType extends Node, ChildNode {
+export interface DocumentType extends Node {
   readonly nodeType: 10;
   readonly name: string;
 }
@@ -79,7 +69,7 @@ export interface DocumentType extends Node, ChildNode {
 /**
  * @see https://www.w3.org/TR/dom/#interface-documentfragment
  */
-export interface DocumentFragment extends Node, ParentNode {
+export interface DocumentFragment extends Node {
   readonly nodeType: 11;
 }
 

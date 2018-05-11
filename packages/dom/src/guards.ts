@@ -7,8 +7,6 @@ import {
   Element,
   Text,
   Comment,
-  ParentNode,
-  ChildNode,
   Rule,
   GroupingRule,
   ConditionRule,
@@ -49,16 +47,6 @@ export function isDocumentFragment(node: Node): node is DocumentFragment {
 
 export function isShadowRoot(node: Node): node is ShadowRoot {
   return isDocumentFragment(node);
-}
-
-export function isParentNode(node: Node): node is ParentNode {
-  return isElement(node) || isDocument(node) || isDocumentFragment(node);
-}
-
-export function isChildNode(node: Node): node is ChildNode {
-  return (
-    isElement(node) || isText(node) || isComment(node) || isDocumentType(node)
-  );
 }
 
 export function isGroupingRule(rule: Rule): rule is GroupingRule {
