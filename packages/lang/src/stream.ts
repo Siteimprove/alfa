@@ -130,8 +130,18 @@ export abstract class Stream<T> {
       maximum = minimum;
     }
 
-    let accepted = 0;
     let next = this.peek();
+
+    if (minimum === 1 && maximum === 1) {
+      if (next !== null && predicate(next)) {
+        this.advance();
+        return next;
+      }
+
+      return false;
+    }
+
+    let accepted = 0;
     let start = this._position;
 
     while (next !== null && predicate(next)) {
@@ -149,11 +159,7 @@ export abstract class Stream<T> {
       return false;
     }
 
-    const range = this.range(start, this._position);
-
-    return minimum === 1 && maximum === 1
-      ? (range[0] as U)
-      : (range as StreamItems<U>);
+    return this.range(start, this._position) as StreamItems<U>;
   }
 }
 
