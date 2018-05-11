@@ -14,7 +14,7 @@ export function traverseNode(
     child = queue.pop(), parent = queue.pop()
   ) {
     if (visitor(child, parent || null) === false) {
-      continue;
+      break;
     }
 
     const { childNodes } = child;

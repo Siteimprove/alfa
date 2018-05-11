@@ -40,12 +40,9 @@ export function find<T extends Node>(
   traverseNode(
     scope,
     node => {
-      if (found !== null) {
-        return false;
-      }
-
       if (predicate(node)) {
         found = node;
+        return false;
       }
     },
     options

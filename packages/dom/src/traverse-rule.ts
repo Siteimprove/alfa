@@ -13,10 +13,8 @@ export function traverseRule(
     child;
     child = queue.pop(), parent = queue.pop()
   ) {
-    let children: ArrayLike<Rule> = [];
-
     if (visitor(child, parent || null) === false) {
-      continue;
+      break;
     }
 
     if (isImportRule(child)) {
