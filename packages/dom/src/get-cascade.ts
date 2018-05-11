@@ -1,7 +1,7 @@
 import { each, slice, map } from "@alfa/util";
 import { parse, lex } from "@alfa/lang";
 import { Alphabet, Selector, SelectorGrammar } from "@alfa/css";
-import { Node, Document, Element, StyleSheet, Rule } from "./types";
+import { Node, Document, Element, StyleSheet, StyleRule } from "./types";
 import { isElement, isStyleRule, isImportRule, isGroupingRule } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { traverseStyleSheet } from "./traverse-style-sheet";
@@ -14,11 +14,11 @@ import { getSpecificity } from "./get-specificity";
 const { isArray } = Array;
 
 export interface Cascade {
-  get(element: Element): Array<Rule> | undefined;
+  get(element: Element): Array<StyleRule> | undefined;
 }
 
 export function getCascade(document: Document): Cascade {
-  const cascade: WeakMap<Element, Array<Rule>> = new WeakMap();
+  const cascade: WeakMap<Element, Array<StyleRule>> = new WeakMap();
 
   const selectorMap = new SelectorMap(document.styleSheets);
 
@@ -48,7 +48,7 @@ export function getCascade(document: Document): Cascade {
 
 type SelectorEntry = {
   readonly selector: Selector;
-  readonly rule: Rule;
+  readonly rule: StyleRule;
   readonly order: number;
   readonly specificity: number;
 };
