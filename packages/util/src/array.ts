@@ -6,3 +6,4 @@ export * from "./array/index-of";
 export * from "./array/last";
 export * from "./array/map";
 export * from "./array/slice";
+export * from "./array/union";
