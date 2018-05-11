@@ -98,14 +98,14 @@
     execa "^0.10.0"
     tap-parser "^7.0.0"
 
-"@foreman/typescript@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.2.0.tgz#98d98f45d69c3c000a57eae133729b439a3d79f7"
+"@foreman/typescript@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.3.0.tgz#ea0a0c8944282d33189bac4d85876307f6312754"
   dependencies:
     "@foreman/api" "^0.0.0"
     "@foreman/error" "^0.1.0"
     tsconfig "^7.0.0"
-    typecomp "^2.0.0"
+    typecomp "^2.1.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -4075,9 +4075,9 @@ tty-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.1.tgz#3f05251ee17904dfd0677546670db9651682b811"
 
-typecomp@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/typecomp/-/typecomp-2.0.0.tgz#a3bdb3d4271b7a8fe462daf6c6cf8f32f5b1d285"
+typecomp@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/typecomp/-/typecomp-2.1.0.tgz#819a7faffb2983d923a46365bb732731ea1e7078"
   dependencies:
     tsconfig "^7.0.0"
 

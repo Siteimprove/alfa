@@ -33,6 +33,11 @@ export async function compile(path: string): Promise<void> {
 
     for (const { name, text } of files) {
       await write(name, text);
+
+      switch (extension(name)) {
+        case ".ts":
+          workspace.index(name);
+      }
     }
 
     notify({
