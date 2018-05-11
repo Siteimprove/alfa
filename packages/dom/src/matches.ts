@@ -18,6 +18,7 @@ import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";
 import { getParentNode } from "./get-parent-node";
 import { getPreviousSibling } from "./get-previous-sibling";
+import { AncestorFilter } from "./ancestor-filter";
 
 const { isArray } = Array;
 
@@ -31,6 +32,11 @@ export type MatchingOptions = Readonly<{
    * @see https://www.w3.org/TR/selectors/#scope-element
    */
   scope?: Node;
+
+  /**
+   * @internal
+   */
+  filter?: AncestorFilter;
 }>;
 
 export function matches(
@@ -201,6 +207,18 @@ function matchesDescendant(
   options: MatchingOptions
 ): boolean {
   let parentNode: Node | null = getParentNode(element, context);
+
+  if (options.filter !== undefined && selector.combinator === " ") {
+    const { relative } = selector;
+    switch (relative.type) {
+      case "id-selector":
+      case "class-selector":
+      case "type-selector":
+        if (!options.filter.matches(relative)) {
+          return false;
+        }
+    }
+  }
 
   while (parentNode !== null && isElement(parentNode)) {
     if (matches(parentNode, context, selector.relative, options)) {
