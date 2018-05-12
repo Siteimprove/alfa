@@ -12,14 +12,13 @@ export function traverseNode(
   const visitors =
     typeof visitor === "function" ? { enter: visitor, exit: noop } : visitor;
 
-  const queue: Array<Node> = [];
-
-  const exits: Map<Node, () => false | void> = new Map();
+  const entries: Array<Node> = [];
+  const exits: Array<Node | undefined> = [];
 
   for (
     let child: Node | undefined = context, parent: Node | undefined;
     child;
-    child = queue.pop(), parent = queue.pop()
+    child = entries.pop(), parent = entries.pop()
   ) {
     if (visitors.enter(child, parent || null) === false) {
       break;
@@ -27,20 +26,25 @@ export function traverseNode(
 
     const { childNodes } = child;
 
-    const exit = last(childNodes);
-
-    const args = { child, parent };
-
-    if (exit === null) {
-      if (visitors.exit(args.child, args.parent || null) === false) {
+    if (childNodes.length === 0) {
+      if (visitors.exit(child, parent || null) === false) {
         break;
       }
     } else {
-      exits.set(exit, () => visitors.exit(args.child, args.parent || null));
+      exits.push(parent, child);
+    }
+
+    if (parent && last(parent.childNodes) === child) {
+      const child = exits.pop()!,
+        parent = exits.pop();
+
+      if (visitors.exit(child, parent || null) === false) {
+        break;
+      }
     }
 
     for (let i = childNodes.length - 1; i >= 0; i--) {
-      queue.push(child, childNodes[i]);
+      entries.push(child, childNodes[i]);
     }
 
     // Shadow roots should be traversed as soon as they're encountered per the
@@ -48,15 +52,7 @@ export function traverseNode(
     // root is therefore pushed in front of the queue.
     // https://www.w3.org/TR/dom41/#shadow-including-preorder-depth-first-traversal
     if (options.composed && isElement(child) && child.shadowRoot !== null) {
-      queue.push(child, child.shadowRoot);
-    }
-
-    if (exits.has(child)) {
-      const exit = exits.get(child)!;
-
-      if (exit() === false) {
-        break;
-      }
+      entries.push(child, child.shadowRoot);
     }
   }
 }
