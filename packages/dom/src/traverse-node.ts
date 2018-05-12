@@ -26,7 +26,7 @@ export function traverseNode(
 
     const { childNodes } = child;
 
-    if (childNodes.length === 0) {
+    if (getExitNode(child, options.composed) === null) {
       if (visitors.exit(child, parent || null) === false) {
         break;
       }
@@ -34,11 +34,11 @@ export function traverseNode(
       exits.push(parent, child);
     }
 
-    if (parent && last(parent.childNodes) === child) {
-      const child = exits.pop()!,
-        parent = exits.pop();
+    if (parent && getExitNode(parent, options.composed) === child) {
+      const child = exits.pop();
+      const parent = exits.pop();
 
-      if (visitors.exit(child, parent || null) === false) {
+      if (visitors.exit(child!, parent || null) === false) {
         break;
       }
     }
@@ -55,4 +55,18 @@ export function traverseNode(
       entries.push(child, child.shadowRoot);
     }
   }
+}
+
+function getExitNode(node: Node, composed?: boolean): Node | null {
+  const { childNodes } = node;
+
+  // If we're traversing the composed tree and the current node is an element
+  // without children then return the shadow root of the element. Since shadow
+  // roots are traversed as soon as they're encountered, they will only be the
+  // last child of their host element when the host has no other children.
+  if (composed && childNodes.length === 0 && isElement(node)) {
+    return node.shadowRoot;
+  }
+
+  return last(childNodes);
 }
