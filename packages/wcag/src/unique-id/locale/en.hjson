@@ -5,18 +5,19 @@
 
   description:
     '''
+    This rule checks that all `id` attribute values on a single page are unique.
     '''
 
   applicability:
     '''
-    This rule applies to any element with a non-empty ID attribute.
+    Any element with an id attribute.
     '''
 
   expectations: {
     1: {
       description:
         '''
-        For each applicable element, no other element within the current document context has the same ID as the element currently considered.
+        All `id` attribute values are unique.
         '''
       outcome: {
         passed: The element has a unique ID

@@ -1,1 +1,1 @@
-export { UniqueIds } from "./unique-ids/rule";
+export { UniqueId } from "./unique-id/rule";

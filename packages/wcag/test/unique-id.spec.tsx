@@ -3,7 +3,7 @@ import { test } from "@alfa/test";
 import { audit } from "@alfa/act";
 import { find, findAll } from "@alfa/dom";
 
-import { UniqueIds } from "../src/unique-ids/rule";
+import { UniqueId } from "../src/unique-id/rule";
 import { outcome } from "./helpers/outcome";
 
 test("Passes when no duplicate IDs exist within a document", async t => {
@@ -13,7 +13,7 @@ test("Passes when no duplicate IDs exist within a document", async t => {
     </div>
   );
 
-  const results = await audit(UniqueIds, { document });
+  const results = await audit(UniqueId, { document });
 
   const foo = find(document, document, "#foo");
   const bar = find(document, document, "#bar");
@@ -28,7 +28,7 @@ test("Fails when elements with duplicate IDs exist within a document", async t =
     </div>
   );
 
-  const results = await audit(UniqueIds, { document });
+  const results = await audit(UniqueId, { document });
 
   const foos = findAll(document, document, "#foo");
 
@@ -43,7 +43,7 @@ test("Marks the document as inapplicable when no elements with IDs exist", async
     </div>
   );
 
-  const results = await audit(UniqueIds, { document });
+  const results = await audit(UniqueId, { document });
 
   outcome(t, results, { inapplicable: [document] });
 });

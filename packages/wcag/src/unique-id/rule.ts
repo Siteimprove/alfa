@@ -5,8 +5,8 @@ import { EN } from "./locale/en";
 
 export type Context = Map<string, Set<Element>>;
 
-export const UniqueIds: Rule<Element, "document", Context> = {
-  id: "alfa:wcag:unique-ids",
+export const UniqueId: Rule<Element, "document", Context> = {
+  id: "alfa:wcag:unique-id",
   criteria: ["wcag:4.1.1"],
   locales: [EN],
   context: ({ document }) => {
@@ -52,9 +52,7 @@ export const UniqueIds: Rule<Element, "document", Context> = {
         return true;
       }
 
-      const set = context.get(id);
-
-      return set !== undefined && set.size === 1;
+      return context.get(id)!.size === 1;
     }
   }
 };
