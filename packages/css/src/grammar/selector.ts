@@ -32,6 +32,7 @@ export type AttributeSelector = {
   name: string;
   value: string | null;
   matcher: "~" | "|" | "^" | "$" | "*" | null;
+  modifier: "i" | null;
 };
 
 export type TypeSelector = {
@@ -194,7 +195,8 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
       type: "attribute-selector",
       name: attribute.value,
       value: null,
-      matcher: null
+      matcher: null,
+      modifier: null
     };
   }
 
@@ -228,6 +230,22 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
     throw new Error("Expected ident or string");
   }
 
+  stream.accept(token => token.type === "whitespace");
+
+  let modifier: AttributeSelector["modifier"] = null;
+
+  stream.accept(token => {
+    if (isIdent(token)) {
+      switch (token.value) {
+        case "i":
+          modifier = token.value;
+          return true;
+      }
+    }
+
+    return false;
+  }, 1);
+
   if (stream.accept(token => token.type === "]", 1) === false) {
     throw new Error("Expected end of attribute selector");
   }
@@ -236,7 +254,8 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
     type: "attribute-selector",
     name: attribute.value,
     value: value.value,
-    matcher: matcher
+    matcher,
+    modifier
   };
 }
 

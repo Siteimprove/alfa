@@ -409,7 +409,8 @@ test("Can parse an attribute selector without a value", async t =>
     type: "attribute-selector",
     name: "foo",
     value: null,
-    matcher: null
+    matcher: null,
+    modifier: null
   }));
 
 test("Can parse an attribute selector with an ident value", async t =>
@@ -417,7 +418,8 @@ test("Can parse an attribute selector with an ident value", async t =>
     type: "attribute-selector",
     name: "foo",
     value: "bar",
-    matcher: null
+    matcher: null,
+    modifier: null
   }));
 
 test("Can parse an attribute selector with a string value", async t =>
@@ -425,7 +427,8 @@ test("Can parse an attribute selector with a string value", async t =>
     type: "attribute-selector",
     name: "foo",
     value: "bar",
-    matcher: null
+    matcher: null,
+    modifier: null
   }));
 
 test("Can parse an attribute selector with a matcher", async t =>
@@ -433,7 +436,17 @@ test("Can parse an attribute selector with a matcher", async t =>
     type: "attribute-selector",
     name: "foo",
     value: "bar",
-    matcher: "*"
+    matcher: "*",
+    modifier: null
+  }));
+
+test("Can parse an attribute selector with a casing modifier", async t =>
+  selector(t, "[foo=bar i]", {
+    type: "attribute-selector",
+    name: "foo",
+    value: "bar",
+    matcher: null,
+    modifier: "i"
   }));
 
 test("Can parse an attribute selector when part of a compound selector", async t =>
@@ -448,7 +461,8 @@ test("Can parse an attribute selector when part of a compound selector", async t
         type: "attribute-selector",
         name: "foo",
         value: null,
-        matcher: null
+        matcher: null,
+        modifier: null
       }
     ]
   }));
@@ -466,7 +480,8 @@ test("Can parse an attribute selector when part of a descendant selector", async
       type: "attribute-selector",
       name: "foo",
       value: null,
-      matcher: null
+      matcher: null,
+      modifier: null
     }
   }));
 
@@ -490,7 +505,8 @@ test("Can parse an attribute selector when part of a compound selector relative 
           type: "attribute-selector",
           name: "foo",
           value: null,
-          matcher: null
+          matcher: null,
+          modifier: null
         }
       ]
     }
