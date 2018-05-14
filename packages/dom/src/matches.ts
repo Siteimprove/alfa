@@ -34,6 +34,10 @@ export type MatchingOptions = Readonly<{
   scope?: Node;
 
   /**
+   * Ancestor filter used for fast-rejecting elements during selector matching.
+   * This options is only available to internal methods as the ancestor filter
+   * is not exposed externally.
+   *
    * @internal
    */
   filter?: AncestorFilter;
@@ -181,19 +185,25 @@ function matchesRelative(
   selector: RelativeSelector,
   options: MatchingOptions
 ): boolean {
+  if (options.filter !== undefined && canReject(selector, options.filter)) {
+    return false;
+  }
+
   if (!matches(element, context, selector.selector, options)) {
     return false;
   }
 
-  switch (selector.combinator) {
+  const { combinator, relative } = selector;
+
+  switch (combinator) {
     case " ":
-      return matchesDescendant(element, context, selector, options);
+      return matchesDescendant(element, context, relative, options);
     case ">":
-      return matchesDirectDescendant(element, context, selector, options);
+      return matchesDirectDescendant(element, context, relative, options);
     case "~":
-      return matchesSibling(element, context, selector, options);
+      return matchesSibling(element, context, relative, options);
     case "+":
-      return matchesDirectSibling(element, context, selector, options);
+      return matchesDirectSibling(element, context, relative, options);
   }
 }
 
@@ -203,26 +213,16 @@ function matchesRelative(
 function matchesDescendant(
   element: Element,
   context: Node,
-  selector: RelativeSelector,
+  selector: Selector,
   options: MatchingOptions
 ): boolean {
-  let parentNode: Node | null = getParentNode(element, context);
+  let parentNode = getParentNode(element, context);
 
-  if (options.filter !== undefined && selector.combinator === " ") {
-    const { relative } = selector;
-    switch (relative.type) {
-      case "id-selector":
-      case "class-selector":
-      case "type-selector":
-        if (!options.filter.matches(relative)) {
-          return false;
-        }
-    }
-  }
-
-  while (parentNode !== null && isElement(parentNode)) {
-    if (matches(parentNode, context, selector.relative, options)) {
-      return true;
+  while (parentNode !== null) {
+    if (isElement(parentNode)) {
+      if (matches(parentNode, context, selector, options)) {
+        return true;
+      }
     }
 
     parentNode = getParentNode(parentNode, context);
@@ -237,15 +237,24 @@ function matchesDescendant(
 function matchesDirectDescendant(
   element: Element,
   context: Node,
-  selector: RelativeSelector,
+  selector: Selector,
   options: MatchingOptions
 ): boolean {
-  const parentNode = getParentNode(element, context);
-  return (
-    parentNode !== null &&
-    isElement(parentNode) &&
-    matches(parentNode, context, selector.relative, options)
-  );
+  let parentNode = getParentNode(element, context);
+
+  while (parentNode !== null) {
+    if (isElement(parentNode)) {
+      if (matches(parentNode, context, selector, options)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    parentNode = getParentNode(parentNode, context);
+  }
+
+  return false;
 }
 
 /**
@@ -254,14 +263,14 @@ function matchesDirectDescendant(
 function matchesSibling(
   element: Element,
   context: Node,
-  selector: RelativeSelector,
+  selector: Selector,
   options: MatchingOptions
 ): boolean {
   let previousSibling = getPreviousSibling(element, context);
 
   while (previousSibling !== null) {
     if (isElement(previousSibling)) {
-      if (matches(previousSibling, context, selector.relative, options)) {
+      if (matches(previousSibling, context, selector, options)) {
         return true;
       }
     }
@@ -278,14 +287,14 @@ function matchesSibling(
 function matchesDirectSibling(
   element: Element,
   context: Node,
-  selector: RelativeSelector,
+  selector: Selector,
   options: MatchingOptions
 ): boolean {
   let previousSibling = getPreviousSibling(element, context);
 
   while (previousSibling !== null) {
     if (isElement(previousSibling)) {
-      if (matches(previousSibling, context, selector.relative, options)) {
+      if (matches(previousSibling, context, selector, options)) {
         return true;
       }
 
@@ -321,4 +330,26 @@ function matchesPseudoClass(
   }
 
   return false;
+}
+
+/**
+ * Check if a selector can be rejected based on an ancestor filter.
+ */
+function canReject(selector: Selector, filter: AncestorFilter): boolean {
+  while (true) {
+    switch (selector.type) {
+      case "id-selector":
+      case "class-selector":
+      case "type-selector":
+        return !filter.matches(selector);
+      case "relative-selector":
+        const { combinator } = selector;
+        if (combinator === " " || combinator === ">") {
+          selector = selector.relative;
+          continue;
+        }
+    }
+
+    return false;
+  }
 }
