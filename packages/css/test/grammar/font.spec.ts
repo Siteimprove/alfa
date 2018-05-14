@@ -26,3 +26,9 @@ test("Can parse a % font size", t =>
     type: "percentage",
     value: 0.8
   }));
+
+test("Can parse an absolute font size", t =>
+  fontSize(t, "small", {
+    type: "absolute",
+    value: "small"
+  }));

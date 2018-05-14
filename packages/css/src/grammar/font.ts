@@ -1,6 +1,6 @@
 import * as Lang from "@alfa/lang";
 import { Grammar, Stream } from "@alfa/lang";
-import { Token, Whitespace, Dimension, Percentage } from "../alphabet";
+import { Token, Whitespace, Ident, Dimension, Percentage } from "../alphabet";
 import { RelativeLength, AbsoluteLength } from "../units";
 
 export type FontSize = Readonly<
@@ -31,6 +31,24 @@ const whitespace: Production<Whitespace> = {
     return null;
   },
   infix() {
+    return null;
+  }
+};
+
+const ident: Production<Ident, FontSize> = {
+  token: "ident",
+  prefix(token) {
+    switch (token.value) {
+      case "xx-small":
+      case "x-small":
+      case "small":
+      case "medium":
+      case "large":
+      case "x-large":
+      case "xx-large":
+        return { type: "absolute", value: token.value };
+    }
+
     return null;
   }
 };
@@ -74,6 +92,7 @@ const percentage: Production<Percentage, FontSize> = {
 
 export const FontSizeGrammar: Grammar<Token, FontSize> = new Grammar([
   whitespace,
+  ident,
   dimension,
   percentage
 ]);
