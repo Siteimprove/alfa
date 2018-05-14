@@ -13,10 +13,12 @@ import { traverseNode } from "./traverse-node";
 export function hasTextContent(node: Node): boolean {
   let text = false;
 
-  traverseNode(node, node => {
-    if (isText(node) && node.data.trim() !== "") {
-      text = true;
-      return false;
+  traverseNode(node, {
+    enter(node) {
+      if (isText(node) && node.data.trim() !== "") {
+        text = true;
+        return false;
+      }
     }
   });
 

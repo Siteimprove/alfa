@@ -12,19 +12,21 @@ export const UniqueIds: Rule<Element, "document", Context> = {
   context: ({ document }) => {
     const context: Context = new Map();
 
-    traverseNode(document, node => {
-      if (isElement(node)) {
-        const id = getAttribute(node, "id");
+    traverseNode(document, {
+      enter(node) {
+        if (isElement(node)) {
+          const id = getAttribute(node, "id");
 
-        if (id) {
-          let set = context.get(id);
+          if (id) {
+            let set = context.get(id);
 
-          if (set === undefined) {
-            set = new Set();
-            context.set(id, set);
+            if (set === undefined) {
+              set = new Set();
+              context.set(id, set);
+            }
+
+            set.add(node);
           }
-
-          set.add(node);
         }
       }
     });

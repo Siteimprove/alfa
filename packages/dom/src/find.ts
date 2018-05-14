@@ -39,10 +39,12 @@ export function find<T extends Node>(
 
   traverseNode(
     scope,
-    node => {
-      if (predicate(node)) {
-        found = node;
-        return false;
+    {
+      enter(node) {
+        if (predicate(node)) {
+          found = node;
+          return false;
+        }
       }
     },
     options
@@ -84,9 +86,11 @@ export function findAll<T extends Node>(
 
   traverseNode(
     scope,
-    node => {
-      if (predicate(node)) {
-        found.push(node);
+    {
+      enter(node) {
+        if (predicate(node)) {
+          found.push(node);
+        }
       }
     },
     options

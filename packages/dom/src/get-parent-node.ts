@@ -20,9 +20,11 @@ export function getParentNode(node: Node, context: Node): Node | null {
   if (parentMap === undefined) {
     parentMap = new WeakMap();
 
-    traverseNode(context, (node, parent) => {
-      if (parent !== null && parentMap !== undefined) {
-        parentMap.set(node, parent);
+    traverseNode(context, {
+      enter(node, parent) {
+        if (parent !== null && parentMap !== undefined) {
+          parentMap.set(node, parent);
+        }
       }
     });
 

@@ -15,9 +15,11 @@ import { traverseNode } from "./traverse-node";
 export function getTextContent(node: Node): string {
   let text = "";
 
-  traverseNode(node, node => {
-    if (isText(node)) {
-      text += node.data;
+  traverseNode(node, {
+    enter(node) {
+      if (isText(node)) {
+        text += node.data;
+      }
     }
   });
 
