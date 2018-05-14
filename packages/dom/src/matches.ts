@@ -118,7 +118,7 @@ function matchesAttribute(
   element: Element,
   selector: AttributeSelector
 ): boolean {
-  const value = getAttribute(element, selector.name);
+  let value = getAttribute(element, selector.name);
 
   if (selector.value === null) {
     return value !== null;
@@ -128,21 +128,28 @@ function matchesAttribute(
     return false;
   }
 
+  let match = selector.value;
+
+  if (selector.modifier === "i") {
+    value = value.toLowerCase();
+    match = match.toLowerCase();
+  }
+
   if (selector.matcher === null) {
     return selector.value === value;
   }
 
   switch (selector.matcher) {
     case "^":
-      return value.startsWith(selector.value);
+      return value.startsWith(match);
     case "$":
-      return value.endsWith(selector.value);
+      return value.endsWith(match);
     case "*":
-      return value.includes(selector.value);
+      return value.includes(match);
     case "~":
-      return split(value, isWhitespace).some(value => selector.value === value);
+      return split(value, isWhitespace).some(value => value === match);
     case "|":
-      return selector.value === value || value.startsWith(selector.value + "-");
+      return value === match || value.startsWith(match + "-");
   }
 
   return false;
