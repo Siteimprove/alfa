@@ -206,7 +206,7 @@ const escapedCodePoint: (stream: Stream<string>) => string = stream => {
 
     stream.accept(isWhitespace, 1);
 
-    const code = parseInt(next + hex, 16);
+    const code = parseInt(next + (hex === false ? "" : hex.join("")), 16);
 
     if (code === 0) {
       return "\ufffd";
@@ -273,14 +273,17 @@ const initial: Pattern = (stream, emit, state, end) => {
       }
   }
 
-  if (startsNumber(char, stream.peek(), stream.peek(1))) {
-    stream.backup();
-    return number;
-  }
+  const snd = stream.peek();
+  const thd = stream.peek(1);
 
-  if (startsIdentifier(char, stream.peek(), stream.peek(1))) {
+  if (startsIdentifier(char, snd, thd)) {
     stream.backup();
     return ident;
+  }
+
+  if (startsNumber(char, snd, thd)) {
+    stream.backup();
+    return number;
   }
 
   emit({
@@ -294,7 +297,7 @@ const comment: Pattern = (stream, emit, state) => {
   stream.ignore();
 
   if (stream.accept(() => stream.peek() !== "*" || stream.peek(1) !== "/")) {
-    const value = stream.result();
+    const value = stream.result().join("");
     stream.advance(2);
 
     // While the CSS syntax specification states that comments should be
@@ -337,7 +340,7 @@ const string: Pattern = (stream, emit, state) => {
   stream.ignore();
 
   if (stream.accept(char => char !== state.mark)) {
-    const value = stream.result();
+    const value = stream.result().join("");
     stream.advance();
     emit({
       type: "string",
@@ -384,9 +387,11 @@ const number: Pattern = (stream, emit, state) => {
     }
   }
 
+  const value = stream.result().join("");
+
   state.number = {
     type: "number",
-    value: Number(stream.result()),
+    value: isInteger ? parseInt(value, 10) : parseFloat(value),
     integer: isInteger
   };
 

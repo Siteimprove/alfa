@@ -1,29 +1,16 @@
-import { isNewline } from "@alfa/util";
+import { Predicate, isNewline } from "@alfa/util";
 import { Token, Location } from "./types";
 
 const { isArray } = Array;
 
-export type Predicate<T, U extends T> =
-  | ((n: T) => boolean)
-  | ((n: T) => n is U);
-
-export type StreamItems<T> = T extends string ? string : Array<T>;
-
-export abstract class Stream<T> {
-  protected _input: StreamItems<T>;
-
+export class Stream<T> {
+  protected _input: Array<T>;
   protected _position: number = 0;
   protected _start: number = 0;
   protected _line: number = 0;
   protected _column: number = 0;
 
-  public get position() {
-    return this._position;
-  }
-
-  abstract range(start: number, end: number): StreamItems<T>;
-
-  public constructor(input: StreamItems<T>) {
+  public constructor(input: Array<T>) {
     this._input = input;
   }
 
@@ -35,7 +22,7 @@ export abstract class Stream<T> {
     const position = this._position + offset;
 
     if (position < this._input.length) {
-      return this._input[position] as T;
+      return this._input[position];
     }
 
     return null;
@@ -51,8 +38,12 @@ export abstract class Stream<T> {
     this._start = this._position;
   }
 
-  public result(): StreamItems<T> {
-    return this.range(this._start, this._position);
+  public range(start: number, end: number): Array<T> {
+    return this._input.slice(start, end);
+  }
+
+  public result(): Array<T> {
+    return this._input.slice(this._start, this._position);
   }
 
   public progressed(): boolean {
@@ -71,56 +62,54 @@ export abstract class Stream<T> {
     }
   }
 
-  public advance(times: number = 1, callback: () => void = () => {}): boolean {
+  public advance(times: number = 1, callback?: () => void): boolean {
     let advanced = false;
 
     do {
       if (this._position < this._input.length) {
-        callback();
         advanced = true;
         this._position++;
+        callback && callback();
       }
     } while (--times > 0);
 
     return advanced;
   }
 
-  public backup(times: number = 1, callback: () => void = () => {}): boolean {
+  public backup(times: number = 1, callback?: () => void): boolean {
     let backedup = false;
 
     do {
       if (this._position > 0) {
         backedup = true;
         this._position--;
-        callback();
+        callback && callback();
       }
     } while (--times > 0);
 
     return backedup;
   }
 
-  public accept<U extends T>(
-    predicate: Predicate<T, U>
-  ): StreamItems<U> | false;
+  public accept<U extends T>(predicate: Predicate<T, U>): Array<U> | false;
 
   public accept<U extends T>(predicate: Predicate<T, U>, times: 1): U | false;
 
   public accept<U extends T>(
     predicate: Predicate<T, U>,
     times: number
-  ): StreamItems<U> | false;
+  ): Array<U> | false;
 
   public accept<U extends T>(
     predicate: Predicate<T, U>,
     minimum: number,
     maximum: number
-  ): StreamItems<U> | false;
+  ): Array<U> | false;
 
   public accept<U extends T>(
     predicate: Predicate<T, U>,
     minimum?: number,
     maximum?: number
-  ): U | StreamItems<U> | false {
+  ): U | Array<U> | false {
     if (minimum === undefined) {
       minimum = 0;
       maximum = Infinity;
@@ -159,7 +148,7 @@ export abstract class Stream<T> {
       return false;
     }
 
-    return this.range(start, this._position) as StreamItems<U>;
+    return this.range(start, this._position) as Array<U>;
   }
 }
 
@@ -168,11 +157,7 @@ export abstract class Stream<T> {
  */
 export class CharacterStream extends Stream<string> {
   public constructor(input: string) {
-    super(input);
-  }
-
-  public range(start: number, end: number): StreamItems<string> {
-    return this._input.substring(start, end);
+    super(input.split(""));
   }
 
   public advance(times?: number): boolean {
@@ -205,12 +190,4 @@ export class CharacterStream extends Stream<string> {
 /**
  * @internal
  */
-export class TokenStream<T extends Token> extends Stream<T> {
-  public constructor(input: Array<T>) {
-    super(input as StreamItems<T>);
-  }
-
-  public range(start: number, end: number): StreamItems<T> {
-    return this._input.slice(start, end) as StreamItems<T>;
-  }
-}
+export class TokenStream<T extends Token> extends Stream<T> {}

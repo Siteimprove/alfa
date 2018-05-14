@@ -445,7 +445,7 @@ const tagName: Pattern = (stream, emit, state, done) => {
 
   if (isWhitespace(char) || char === "/" || char === ">") {
     if (state.tag !== null) {
-      set(state.tag, "value", stream.result());
+      set(state.tag, "value", stream.result().join(""));
     }
   }
 
@@ -536,7 +536,7 @@ const attributeName: Pattern = (stream, emit, state) => {
 
   if (char === null || isWhitespace(char) || char === "/" || char === ">") {
     if (state.attribute !== null) {
-      set(state.attribute, "name", stream.result());
+      set(state.attribute, "name", stream.result().join(""));
     }
 
     return afterAttributeName;
@@ -544,7 +544,7 @@ const attributeName: Pattern = (stream, emit, state) => {
 
   if (char === "=") {
     if (state.attribute !== null) {
-      set(state.attribute, "name", stream.result());
+      set(state.attribute, "name", stream.result().join(""));
     }
 
     stream.advance();
@@ -635,7 +635,7 @@ const attributeValueDoubleQuoted: Pattern = (
 
   if (char === '"') {
     if (attribute !== null) {
-      set(attribute, "value", stream.result());
+      set(attribute, "value", stream.result().join(""));
     }
 
     stream.advance();
@@ -663,7 +663,7 @@ const attributeValueSingleQuoted: Pattern = (
 
   if (char === "'") {
     if (attribute !== null) {
-      set(attribute, "value", stream.result());
+      set(attribute, "value", stream.result().join(""));
     }
 
     stream.advance();
@@ -690,7 +690,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state, done) => {
 
   if (isWhitespace(char) || char === ">") {
     if (state.attribute !== null) {
-      set(state.attribute, "value", stream.result());
+      set(state.attribute, "value", stream.result().join(""));
     }
   }
 
@@ -760,7 +760,11 @@ const bogusComment: Pattern = (stream, emit, state, done) => {
 
   if (char === ">" || char === null) {
     if (state.comment !== null) {
-      set(state.comment, "value", state.comment.value + stream.result());
+      set(
+        state.comment,
+        "value",
+        state.comment.value + stream.result().join("")
+      );
       emit(
         set(state.comment as WithLocation<Comment>, "location", {
           start: state.start,
