@@ -35,9 +35,9 @@ export function getCascade(document: Document): Cascade {
           });
 
           rules.sort((a, b) => {
-            // If the specificities of the rules are equal, the declaration order
-            // will determine the cascade. The rule with the highest order gets
-            // the highest priority.
+            // If the specificities of the rules are equal, the declaration
+            // order will determine the cascade. The rule with the highest
+            // order gets the highest priority.
             if (a.specificity === b.specificity) {
               return b.order - a.order;
             }
