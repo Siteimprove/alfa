@@ -2,11 +2,12 @@
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
-Alfa is the result of distilling the best parts of our proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). In comparison to our proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
+Alfa is an open and standards-based accessibility conformance testing engine used for testing websites built using HTML, CSS, and JavaScript against the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). It is the result of distilling the best parts of our proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). In comparison to our proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
 ## Contents
 
 * [Goals](#goals)
+* [Overview](#overview)
 * [Funding](#funding)
 * [License](#license)
 
@@ -17,6 +18,20 @@ Alfa is the result of distilling the best parts of our proprietary accessibility
 * Alfa is committed to complete transparency on how test results came to be. Every line of code that has the potential to influence test results will therefore always reside within Alfa itself and never with a third-party. This does not mean that you will never encounter a dependency from a third-party, only that there are limitations to what third-party dependencies may be used for.
 
 * Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure.
+
+## Overview
+
+At its core, Alfa is built around a small tree structure that mirrors a subset of the [Document Object Model (DOM)](https://www.w3.org/TR/dom) and [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom/) interfaces. This tree structure can be created statically from an HTML document and associated CSS style sheets, or it can be extracted from within a browser to also provide executing of JavaScript. Anything else that a browser would normally provide, such as querying elements or computing styles, Alfa implements according to the corresponding W3C specifications.
+
+By implementing browser aspects, such as a style system and the accessibility tree, directly within Alfa, we gain the ability to do some interesting things that would otherwise not be possible had we relied on only the APIs provided by the browser. The most radical difference is perhaps computation of CSS properties, where Alfa can follow declared CSS properties up through cascade, inheritance, and absolutisation.
+
+At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. The primary packages are:
+
+* [**DOM**](packages/dom)
+* [**CSS**](packages/css)
+* [**ARIA**](packages/aria)
+* [**ACT**](packages/act)
+* [**WCAG**](packages/wcag)
 
 ## Funding
 
