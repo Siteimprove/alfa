@@ -83,3 +83,12 @@ test("Gets the initial values of properties when specified", t => {
     }
   });
 });
+
+test("Gets no properties when none are specified nor inherited", t => {
+  const span = <span />;
+  const div = <div>{span}</div>;
+
+  const style = getStyle(span, div, Stage.Computed);
+
+  t.deepEqual(style, {});
+});
