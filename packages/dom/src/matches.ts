@@ -334,6 +334,13 @@ function matchesPseudoClass(
       }
 
       return !matches(element, context, selector.value, options);
+    // https://www.w3.org/TR/selectors/#hover-pseudo
+    case "hover":
+    // https://www.w3.org/TR/selectors/#active-pseudo
+    case "active":
+    // https://www.w3.org/TR/selectors/#focus-pseudo
+    case "focus":
+      return false;
   }
 
   return false;
