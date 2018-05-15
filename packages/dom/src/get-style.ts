@@ -3,12 +3,12 @@ import { Grammar, parse, lex } from "@alfa/lang";
 import {
   Alphabet,
   Token,
-  Color,
-  ColorGrammar,
   Declaration,
   DeclarationGrammar,
-  FontSize,
-  FontSizeGrammar
+  Stage,
+  Style,
+  Properties,
+  PropertyName
 } from "@alfa/css";
 import { Node, Element } from "./types";
 import { isDocument, isElement } from "./guards";
@@ -18,196 +18,184 @@ import { Cascade, getCascade } from "./get-cascade";
 import { ContextCache } from "./context-cache";
 
 const { isArray } = Array;
-const { round } = Math;
 
-export enum Stage {
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#cascaded
-   */
-  Cascaded,
-
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#specified
-   */
-  Specified,
-
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#computed
-   */
-  Computed
-}
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#initial
- */
-export type Initial = "initial";
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#inherit
- */
-export type Inherit = "inherit";
-
-export type Property<T> = T | Initial | Inherit;
-
-export interface Style {
-  /**
-   * @see https://www.w3.org/TR/css-color/#the-color-property
-   */
-  readonly color?: Property<Color>;
-
-  /**
-   * @see https://www.w3.org/TR/css-fonts/#font-size-prop
-   */
-  readonly "font-size"?: Property<FontSize>;
-}
-
-export function getStyle(
+export function getStyle<S extends Stage = Stage.Computed>(
   element: Element,
   context: Node,
-  stage: Stage = Stage.Computed
-): Style {
+  stage?: S
+): Style<S> {
   switch (stage) {
     case Stage.Cascaded:
-      return getCascadedStyle(element, context);
+      return getCascadedStyle(element, context) as Style<S>;
     case Stage.Specified:
-      return getSpecifiedStyle(element, context);
+      return getSpecifiedStyle(element, context) as Style<S>;
     case Stage.Computed:
-      return getComputedStyle(element, context);
+    default:
+      return getComputedStyle(element, context) as Style<S>;
   }
 }
 
-const inlineStyle: ContextCache<Node, Element, Style> = new ContextCache();
+function getPropertyName(input: string): PropertyName | null {
+  switch (input) {
+    case "color":
+      return input;
+    case "font-size":
+      return "fontSize";
+  }
 
-function getInlineStyle(element: Element, context: Node): Style {
-  return inlineStyle.get(context, element, () => {
-    const style: Style = {};
-
-    const inline = getAttribute(element, "style");
-
-    if (inline !== null) {
-      const declarations = parseDeclarations(inline);
-
-      for (const declaration of declarations) {
-        const property = declaration.name;
-        switch (property) {
-          case "color":
-          case "font-size":
-            if (isInitial(declaration)) {
-              set(style, property, "initial");
-            } else if (isInherited(declaration)) {
-              set(style, property, "inherit");
-            } else {
-              const value = getDeclaredValue(property, declaration);
-              if (value !== null) {
-                set(style, property, value);
-              }
-            }
-            break;
-        }
-      }
-    }
-
-    return style;
-  });
+  return null;
 }
 
-const cascadedStyle: ContextCache<Node, Element, Style> = new ContextCache();
+const cascadedStyle: ContextCache<
+  Node,
+  Element,
+  Style<Stage.Cascaded>
+> = new ContextCache();
 
-function getCascadedStyle(element: Element, context: Node): Style {
+function getCascadedStyle(
+  element: Element,
+  context: Node
+): Style<Stage.Cascaded> {
   return cascadedStyle.get(context, element, () => {
-    const style = { ...getInlineStyle(element, context) };
+    const cascadedStyle: Style<Stage.Cascaded> = {};
 
+    const style = getAttribute(element, "style");
     const cascade = isDocument(context) ? getCascade(context) : null;
+
+    const declarations: Array<Declaration> = [];
+
+    if (style !== null) {
+      declarations.push(...parseDeclarations(style));
+    }
 
     if (cascade !== null) {
       const rules = cascade.get(element) || [];
 
       for (const rule of rules) {
-        const declarations = parseDeclarations(rule.style.cssText);
+        declarations.push(...parseDeclarations(rule.style.cssText));
+      }
+    }
 
-        for (const declaration of declarations) {
-          if (declaration.name in style && !declaration.important) {
-            continue;
-          }
+    for (const declaration of declarations) {
+      const propertyName = getPropertyName(declaration.name);
 
-          const property = declaration.name;
-          switch (property) {
-            case "color":
-            case "font-size":
-              if (isInitial(declaration)) {
-                set(style, property, "initial");
-              } else if (isInherited(declaration)) {
-                set(style, property, "inherit");
-              } else {
-                const value = getDeclaredValue(property, declaration);
-                if (value !== null) {
-                  set(style, property, value);
-                }
-              }
-              break;
-          }
+      if (propertyName === null) {
+        continue;
+      }
+
+      if (propertyName in cascadedStyle && !declaration.important) {
+        continue;
+      }
+
+      if (isInitial(declaration)) {
+        set(cascadedStyle, propertyName, "initial");
+      } else if (isInherited(declaration)) {
+        set(cascadedStyle, propertyName, "inherit");
+      } else {
+        const property = Properties[propertyName];
+        const value = parse(declaration.value, property.grammar as Grammar<
+          Token,
+          any
+        >);
+        if (value !== null) {
+          set(cascadedStyle, propertyName, value);
         }
       }
     }
 
-    return style;
+    return cascadedStyle;
   });
 }
 
-const specifiedStyle: ContextCache<Node, Element, Style> = new ContextCache();
+const specifiedStyle: ContextCache<
+  Node,
+  Element,
+  Style<Stage.Specified>
+> = new ContextCache();
 
-function getSpecifiedStyle(element: Element, context: Node): Style {
+function getSpecifiedStyle(
+  element: Element,
+  context: Node
+): Style<Stage.Specified> {
   return specifiedStyle.get(context, element, () => {
+    const specifiedStyle: Style<Stage.Specified> = {};
+
     const parentStyle = getParentStyle(element, context);
-    const style = { ...getCascadedStyle(element, context) };
+    const cascadedStyle = getCascadedStyle(element, context);
 
-    const properties = union(keys(style), keys(parentStyle));
+    const propertyNames = union(keys(cascadedStyle), keys(parentStyle));
 
-    each(properties, property => {
-      let inherits = false;
+    each(propertyNames, propertyName => {
+      const property = Properties[propertyName];
 
-      switch (property) {
-        case "color":
-        case "font-size":
-          inherits = property in style === false;
+      if (property.inherits) {
+        const inherited = parentStyle[propertyName];
+
+        if (inherited !== undefined) {
+          const value = cascadedStyle[propertyName];
+
+          if (value === undefined || value === "inherit") {
+            set(specifiedStyle, propertyName, inherited);
+          }
+        }
       }
 
-      switch (style[property]) {
-        case "inherit":
-          inherits = true;
+      if (propertyName in specifiedStyle) {
+        return;
       }
 
-      if (inherits && property in parentStyle) {
-        set(style, property, parentStyle[property]);
-      }
+      const value = cascadedStyle[propertyName];
 
-      if (property in style === false) {
-        set(style, property, getInitialValue(property));
+      if (value === undefined || value === "initial") {
+        const initial = property.initial();
+
+        if (initial !== null) {
+          set(specifiedStyle, propertyName, initial);
+        }
+      } else if (value !== "inherit") {
+        set(specifiedStyle, propertyName, value);
       }
     });
 
-    return style;
+    return specifiedStyle;
   });
 }
 
-const computedStyle: ContextCache<Node, Element, Style> = new ContextCache();
+const computedStyle: ContextCache<
+  Node,
+  Element,
+  Style<Stage.Computed>
+> = new ContextCache();
 
-function getComputedStyle(element: Element, context: Node): Style {
+function getComputedStyle(
+  element: Element,
+  context: Node
+): Style<Stage.Computed> {
   return computedStyle.get(context, element, () => {
+    const computedStyle: Style<Stage.Computed> = {};
+
     const parentStyle = getParentStyle(element, context);
-    const style = getSpecifiedStyle(element, context);
+    const specifiedStyle = getSpecifiedStyle(element, context);
 
-    const properties = keys(style);
+    const propertyNames = keys(specifiedStyle);
 
-    each(properties, property => {
-      set(style, property, getComputedValue(property, style, parentStyle));
+    each(propertyNames, propertyName => {
+      const property = Properties[propertyName];
+      const computed = property.computed(specifiedStyle, parentStyle);
+
+      if (computed !== null) {
+        set(computedStyle, propertyName, computed);
+      }
     });
 
-    return style;
+    return computedStyle;
   });
 }
 
-function getParentStyle(element: Element, context: Node): Style {
+function getParentStyle(
+  element: Element,
+  context: Node
+): Style<Stage.Computed> {
   const parentNode = getParentNode(element, context);
 
   if (parentNode === null || !isElement(parentNode)) {
@@ -251,99 +239,4 @@ function isInherited(declaration: Declaration): boolean {
   const [token] = value;
 
   return token.type === "ident" && token.value === "inherit";
-}
-
-function getInitialValue<P extends keyof Style>(property: P): Style[P] {
-  switch (property) {
-    case "color":
-      return { red: 0, green: 0, blue: 0, alpha: 1 };
-    case "font-size":
-      return { type: "absolute", value: "medium" };
-  }
-}
-
-function getDeclaredValue<P extends keyof Style>(
-  property: P,
-  declaration: Declaration
-): Style[P] | null {
-  let grammar: Grammar<Token, Style[P]> | null = null;
-
-  switch (property) {
-    case "color":
-      grammar = ColorGrammar;
-      break;
-    case "font-size":
-      grammar = FontSizeGrammar;
-  }
-
-  if (grammar === null) {
-    return null;
-  }
-
-  return parse(declaration.value, grammar);
-}
-
-function getComputedValue<P extends keyof Style>(
-  property: P,
-  style: Style,
-  parentStyle: Style
-): Style[P] {
-  switch (property) {
-    case "font-size":
-      if (property in parentStyle === false) {
-        break;
-      }
-
-      const value = style[property] as FontSize;
-      const parentValue = parentStyle[property] as FontSize;
-
-      switch (value.type) {
-        case "absolute":
-          let factor: number;
-
-          switch (value.value) {
-            case "xx-small":
-              factor = 3 / 5;
-              break;
-            case "x-small":
-              factor = 3 / 4;
-              break;
-            case "small":
-              factor = 8 / 9;
-              break;
-            case "medium":
-            default:
-              factor = 1;
-              break;
-            case "large":
-              factor = 6 / 5;
-              break;
-            case "x-large":
-              factor = 3 / 2;
-              break;
-            case "xx-large":
-              factor = 2;
-          }
-
-          return {
-            type: "length",
-            value: round(factor * 16),
-            unit: "px"
-          };
-        case "percentage":
-          if (parentValue.type !== "length") {
-            break;
-          }
-          switch (value.unit) {
-            case "em":
-              return {
-                type: "length",
-                value: value.value * parentValue.value,
-                unit: parentValue.unit
-              };
-          }
-      }
-  }
-
-  return style[property];
 }
