@@ -1,6 +1,9 @@
 import { Node, Element, find, getAttribute, isElement } from "@alfa/dom";
 import { split, isWhitespace } from "@alfa/util";
 
+/**
+ * @internal
+ */
 export function resolveReferences(
   node: Node,
   context: Node,

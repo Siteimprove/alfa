@@ -1,4 +1,4 @@
-import { map, includes } from "@alfa/util";
+import { map } from "@alfa/util";
 import {
   Node,
   Element,
@@ -17,6 +17,7 @@ import * as Roles from "./roles";
 import { getRole } from "./get-role";
 import { isVisible } from "./is-visible";
 import { resolveReferences } from "./resolve-references";
+import { hasNameFrom } from "./has-name-from";
 
 /**
  * Get the computed accessible text alternative of an element.
@@ -144,7 +145,7 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname/#step2F
   if (
-    (role !== null && role.label && includes(role.label.from, "contents")) ||
+    (role !== null && hasNameFrom(role, "contents")) ||
     flags.referencing ||
     isNativeTextAlternativeElement(node)
   ) {
