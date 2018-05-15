@@ -4,7 +4,8 @@
   "description": "alfa!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/html",
+  "repository":
+    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-html",
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,

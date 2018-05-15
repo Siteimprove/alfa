@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository":
-    "https://github.com/siteimprove/alfa/tree/master/packages/pickle",
+    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-pickle",
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,

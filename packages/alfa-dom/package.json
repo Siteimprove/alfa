@@ -4,7 +4,8 @@
   "description": "alfa!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/dom",
+  "repository":
+    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-dom",
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
