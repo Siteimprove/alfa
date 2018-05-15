@@ -83,6 +83,11 @@ function getCascadedStyle(
         continue;
       }
 
+      // If the property name is already present in the cascaded style then this
+      // means that the property was set inline and that we're now trying to
+      // set it from the cascaded styles. However, only important declarations
+      // from the cascaded styles can override those set inline to we move on if
+      // the declaration is not important.
       if (propertyName in cascadedStyle && !declaration.important) {
         continue;
       }
@@ -93,10 +98,7 @@ function getCascadedStyle(
         set(cascadedStyle, propertyName, "inherit");
       } else {
         const property = Properties[propertyName];
-        const value = parse(declaration.value, property.grammar as Grammar<
-          Token,
-          any
-        >);
+        const value = property.parse(declaration.value);
         if (value !== null) {
           set(cascadedStyle, propertyName, value);
         }
@@ -127,31 +129,16 @@ function getSpecifiedStyle(
 
     each(propertyNames, propertyName => {
       const property = Properties[propertyName];
-
-      if (property.inherits) {
-        const inherited = parentStyle[propertyName];
-
-        if (inherited !== undefined) {
-          const value = cascadedStyle[propertyName];
-
-          if (value === undefined || value === "inherit") {
-            set(specifiedStyle, propertyName, inherited);
-          }
-        }
-      }
-
-      if (propertyName in specifiedStyle) {
-        return;
-      }
-
       const value = cascadedStyle[propertyName];
+      const inherited = parentStyle[propertyName];
 
-      if (value === undefined || value === "initial") {
-        const initial = property.initial();
+      const shouldInherit =
+        value === "inherit" || (value === undefined && property.inherits);
 
-        if (initial !== null) {
-          set(specifiedStyle, propertyName, initial);
-        }
+      if (shouldInherit && inherited !== undefined) {
+        set(specifiedStyle, propertyName, inherited);
+      } else if (value === undefined || value === "initial") {
+        set(specifiedStyle, propertyName, property.initial());
       } else if (value !== "inherit") {
         set(specifiedStyle, propertyName, value);
       }

@@ -1,5 +1,4 @@
 import { values } from "@alfa/util";
-import { Grammar } from "@alfa/lang";
 import { Token } from "./alphabet";
 import { Properties } from "./properties";
 
@@ -35,10 +34,11 @@ export type PropertyName = keyof typeof Properties;
 export type PropertyType<P> = P extends Property<infer T> ? T : never;
 
 export interface Property<T> {
-  readonly grammar: Grammar<Token, T>;
   readonly inherits: boolean;
 
-  initial(): T | null;
+  parse(input: Array<Token>): T | null;
+
+  initial(): T;
 
   computed(
     own: Style<Stage.Specified>,
