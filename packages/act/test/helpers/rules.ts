@@ -1,4 +1,4 @@
-import { Element, isElement, getAttribute } from "@alfa/dom";
+import { Element, isElement, getAttribute } from "@siteimprove/alfa-dom";
 import { Rule } from "../../src/types";
 
 export const Manual: Rule<Element, "document"> = {

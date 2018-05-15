@@ -1,5 +1,5 @@
-import * as Lang from "@alfa/lang";
-import { Grammar } from "@alfa/lang";
+import * as Lang from "@siteimprove/alfa-lang";
+import { Grammar } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, Semicolon } from "../alphabet";
 import { Declaration, declaration } from "../grammar";
 

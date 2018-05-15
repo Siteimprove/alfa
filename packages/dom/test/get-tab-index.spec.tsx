@@ -1,5 +1,5 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import { getTabIndex } from "../src/get-tab-index";
 
 test("Computes the tab index of an anchor with an href attribute", async t => {

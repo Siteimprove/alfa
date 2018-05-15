@@ -1,5 +1,11 @@
-import { Node, Element, find, getAttribute, isElement } from "@alfa/dom";
-import { split, isWhitespace } from "@alfa/util";
+import {
+  Node,
+  Element,
+  find,
+  getAttribute,
+  isElement
+} from "@siteimprove/alfa-dom";
+import { split, isWhitespace } from "@siteimprove/alfa-util";
 
 /**
  * @internal

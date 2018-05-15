@@ -1,4 +1,4 @@
-import { getAttribute } from "@alfa/dom";
+import { getAttribute } from "@siteimprove/alfa-dom";
 import { Feature, Any } from "../types";
 import * as Roles from "../roles";
 

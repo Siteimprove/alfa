@@ -1,4 +1,4 @@
-import { Rule } from "@alfa/act";
+import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
   Namespace,
@@ -6,7 +6,7 @@ import {
   find,
   getNamespace,
   hasTextContent
-} from "@alfa/dom";
+} from "@siteimprove/alfa-dom";
 
 export type Context = Readonly<{ root: Element | null; title: Element | null }>;
 

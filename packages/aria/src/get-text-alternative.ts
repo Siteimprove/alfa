@@ -1,4 +1,4 @@
-import { map } from "@alfa/util";
+import { map } from "@siteimprove/alfa-util";
 import {
   Node,
   Element,
@@ -12,7 +12,7 @@ import {
   getTextContent,
   getLabel,
   getNamespace
-} from "@alfa/dom";
+} from "@siteimprove/alfa-dom";
 import * as Roles from "./roles";
 import { getRole } from "./get-role";
 import { isVisible } from "./is-visible";

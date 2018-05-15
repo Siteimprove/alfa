@@ -1,4 +1,4 @@
-import { isWhitespace, isNumeric } from "@alfa/util";
+import { isWhitespace, isNumeric } from "@siteimprove/alfa-util";
 import { Pattern, Location } from "../../../src/types";
 import { Alphabet } from "../../../src/alphabet";
 import { lex } from "../../../src/lex";

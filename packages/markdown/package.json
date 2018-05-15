@@ -1,5 +1,5 @@
 {
-  "name": "@alfa/markdown",
+  "name": "@siteimprove/alfa-markdown",
   "version": "0.0.0",
   "description": "alfa!",
   "main": "dist/index.js",
@@ -16,7 +16,7 @@
     "vfile": "^3.0.0"
   },
   "devDependencies": {
-    "@alfa/test": "^0.0.0",
+    "@siteimprove/alfa-test": "^0.0.0",
     "typescript": "^2.8.3"
   }
 }

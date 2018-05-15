@@ -1,5 +1,5 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import { serialize } from "../src/serialize";
 
 test("Serializes DOM nodes to HTML", async t => {

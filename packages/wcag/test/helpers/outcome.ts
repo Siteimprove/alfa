@@ -1,6 +1,13 @@
-import { Test } from "@alfa/test";
-import { Outcome, Result, Target, Aspect, Question, isResult } from "@alfa/act";
-import { serialize } from "@alfa/dom";
+import { Test } from "@siteimprove/alfa-test";
+import {
+  Outcome,
+  Result,
+  Target,
+  Aspect,
+  Question,
+  isResult
+} from "@siteimprove/alfa-act";
+import { serialize } from "@siteimprove/alfa-dom";
 
 export function outcome<T extends Target, A extends Aspect>(
   t: Test,

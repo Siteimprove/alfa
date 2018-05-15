@@ -1,5 +1,5 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import { getParentNode } from "../src/get-parent-node";
 
 test("Returns the parent of an element", async t => {

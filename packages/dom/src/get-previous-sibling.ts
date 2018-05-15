@@ -1,4 +1,4 @@
-import { Predicate } from "@alfa/util";
+import { Predicate } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import { getParentNode } from "./get-parent-node";
 

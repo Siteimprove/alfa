@@ -1,4 +1,4 @@
-import { test } from "@alfa/test";
+import { test } from "@siteimprove/alfa-test";
 import { render } from "../src/render";
 
 test("Render", async t => {

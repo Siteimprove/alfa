@@ -13,7 +13,7 @@ export async function transform(path: string) {
 
     const { code } = prettier.transform(
       `
-      import { Locale } from "@alfa/act";
+      import { Locale } from "@siteimprove/alfa-act";
 
       export const ${json.id.toUpperCase()}: Locale = ${string};
       `,

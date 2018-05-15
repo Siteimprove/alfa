@@ -1,5 +1,5 @@
-import { test, Test } from "@alfa/test";
-import { parse, lex } from "@alfa/lang";
+import { test, Test } from "@siteimprove/alfa-test";
+import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { FontSize, FontSizeGrammar } from "../../src/grammar/font";
 

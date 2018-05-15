@@ -7,7 +7,7 @@ import {
   Paragraph,
   Blockquote,
   Table
-} from "@alfa/markdown";
+} from "@siteimprove/alfa-markdown";
 import { Rule, Target, Aspect, Outcome, Locale } from "./types";
 
 const { keys } = Object;

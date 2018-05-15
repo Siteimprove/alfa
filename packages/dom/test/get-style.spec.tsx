@@ -1,6 +1,6 @@
-import { test } from "@alfa/test";
-import { jsx } from "@alfa/jsx";
-import { Stage } from "@alfa/css";
+import { test } from "@siteimprove/alfa-test";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { Stage } from "@siteimprove/alfa-css";
 import { getStyle } from "../src/get-style";
 
 const span = <span style="font-size: 1.2em; color: inherit" />;

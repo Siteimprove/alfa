@@ -1,5 +1,5 @@
-import { memoize, isWhitespace, split, first } from "@alfa/util";
-import { parse, lex } from "@alfa/lang";
+import { memoize, isWhitespace, split, first } from "@siteimprove/alfa-util";
+import { parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
   SelectorGrammar,
@@ -11,7 +11,7 @@ import {
   AttributeSelector,
   CompoundSelector,
   PseudoClassSelector
-} from "@alfa/css";
+} from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { getAttribute } from "./get-attribute";

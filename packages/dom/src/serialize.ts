@@ -1,4 +1,4 @@
-import { map, each } from "@alfa/util";
+import { map, each } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import {
   isDocument,

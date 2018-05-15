@@ -1,5 +1,5 @@
-import { set, map, slice } from "@alfa/util";
-import * as V from "@alfa/dom";
+import { set, map, slice } from "@siteimprove/alfa-util";
+import * as V from "@siteimprove/alfa-dom";
 
 export function virtualize(node: Node): V.Node {
   return virtualizeNode(node);

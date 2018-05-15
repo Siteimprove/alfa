@@ -1,4 +1,4 @@
-import { parse } from "@alfa/lang";
+import { parse } from "@siteimprove/alfa-lang";
 import { FontSize, FontSizeGrammar } from "../grammar/font";
 import { Property } from "../types";
 

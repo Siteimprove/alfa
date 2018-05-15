@@ -1,4 +1,4 @@
-import { test } from "@alfa/test";
+import { test } from "@siteimprove/alfa-test";
 import { split } from "../../src/string/split";
 
 test("Can split a string according to a predicate", async t => {

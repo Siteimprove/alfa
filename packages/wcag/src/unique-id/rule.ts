@@ -1,5 +1,10 @@
-import { Rule } from "@alfa/act";
-import { Element, traverseNode, getAttribute, isElement } from "@alfa/dom";
+import { Rule } from "@siteimprove/alfa-act";
+import {
+  Element,
+  traverseNode,
+  getAttribute,
+  isElement
+} from "@siteimprove/alfa-dom";
 
 import { EN } from "./locale/en";
 

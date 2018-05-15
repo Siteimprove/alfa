@@ -1,5 +1,5 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import { Element } from "../src/types";
 import { find } from "../src/find";
 import { matches } from "../src/matches";

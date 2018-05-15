@@ -1,4 +1,4 @@
-import { Selector } from "@alfa/css";
+import { Selector } from "@siteimprove/alfa-css";
 
 const { min } = Math;
 

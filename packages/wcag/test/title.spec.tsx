@@ -1,6 +1,6 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
-import { audit } from "@alfa/act";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
+import { audit } from "@siteimprove/alfa-act";
 
 import { Title } from "../src/title/rule";
 import { outcome } from "./helpers/outcome";

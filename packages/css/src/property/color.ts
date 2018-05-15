@@ -1,4 +1,4 @@
-import { parse } from "@alfa/lang";
+import { parse } from "@siteimprove/alfa-lang";
 import { Color, ColorGrammar } from "../grammar/color";
 import { Property } from "../types";
 

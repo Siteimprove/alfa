@@ -1,4 +1,4 @@
-import { includes } from "@alfa/util";
+import { includes } from "@siteimprove/alfa-util";
 import { Role } from "./types";
 
 export function hasNameFrom(

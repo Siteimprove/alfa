@@ -1,6 +1,6 @@
-import { isWhitespace, set, clamp } from "@alfa/util";
-import * as Lang from "@alfa/lang";
-import { Grammar, Stream } from "@alfa/lang";
+import { isWhitespace, set, clamp } from "@siteimprove/alfa-util";
+import * as Lang from "@siteimprove/alfa-lang";
+import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, FunctionName } from "../alphabet";
 
 const { isArray } = Array;

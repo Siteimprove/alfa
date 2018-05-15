@@ -1,9 +1,9 @@
 import { launch } from "puppeteer";
-import { Document } from "@alfa/dom";
-import { Aspects } from "@alfa/act";
+import { Document } from "@siteimprove/alfa-dom";
+import { Aspects } from "@siteimprove/alfa-act";
 import { bundle } from "./bundle";
 
-const PICKLE = require.resolve("@alfa/pickle");
+const PICKLE = require.resolve("@siteimprove/alfa-pickle");
 
 export enum Wait {
   Ready = "domcontentloaded",

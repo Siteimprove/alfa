@@ -1,4 +1,4 @@
-import { test } from "@alfa/test";
+import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../src/jsx";
 
 test("Transforms JSX into DOM nodes", async t => {

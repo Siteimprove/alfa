@@ -1,5 +1,5 @@
-import { test, Test } from "@alfa/test";
-import { WithLocation, lex } from "@alfa/lang";
+import { test, Test } from "@siteimprove/alfa-test";
+import { WithLocation, lex } from "@siteimprove/alfa-lang";
 import { Alphabet, Token } from "../src/alphabet";
 
 function html(t: Test, input: string, expected: Array<WithLocation<Token>>) {

@@ -1,7 +1,7 @@
 /// <reference path="./types/nodes.d.ts"/>
 /// <reference path="./types/intrinsics.d.ts"/>
 
-import { set } from "@alfa/util";
+import { set } from "@siteimprove/alfa-util";
 
 const { keys } = Object;
 

@@ -1,7 +1,7 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
-import { audit } from "@alfa/act";
-import { find, findAll } from "@alfa/dom";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
+import { audit } from "@siteimprove/alfa-act";
+import { find, findAll } from "@siteimprove/alfa-dom";
 
 import { UniqueId } from "../src/unique-id/rule";
 import { outcome } from "./helpers/outcome";

@@ -1,4 +1,4 @@
-import { Node, Element } from "@alfa/dom";
+import { Node, Element } from "@siteimprove/alfa-dom";
 import { getRole } from "./get-role";
 import { Landmark } from "./roles/abstract";
 

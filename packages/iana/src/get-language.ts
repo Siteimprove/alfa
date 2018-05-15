@@ -1,4 +1,4 @@
-import { set } from "@alfa/util";
+import { set } from "@siteimprove/alfa-util";
 import { Language } from "./types";
 import {
   PrimaryLanguageIndex,

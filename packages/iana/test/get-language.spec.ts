@@ -1,4 +1,4 @@
-import { test } from "@alfa/test";
+import { test } from "@siteimprove/alfa-test";
 import { getLanguage } from "../src/get-language";
 import { PrimaryLanguages, Regions } from "../src/subtags";
 

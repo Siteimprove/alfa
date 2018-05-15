@@ -1,5 +1,5 @@
 {
-  "name": "@alfa/crypto",
+  "name": "@siteimprove/alfa-crypto",
   "version": "0.0.0",
   "description": "alfa!",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
     "@types/text-encoding": "^0.0.32"
   },
   "devDependencies": {
-    "@alfa/test": "^0.0.0",
+    "@siteimprove/alfa-test": "^0.0.0",
     "typescript": "^2.8.3"
   }
 }

@@ -1,10 +1,10 @@
-import { first } from "@alfa/util";
+import { first } from "@siteimprove/alfa-util";
 import {
   Selector,
   SimpleSelector,
   isSimpleSelector,
   isRelativeSelector
-} from "@alfa/css";
+} from "@siteimprove/alfa-css";
 
 /**
  * Given a selector, get the right-most simple selector, i.e. the key selector.

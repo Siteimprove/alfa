@@ -1,5 +1,5 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import { isLandmark } from "../src/is-landmark";
 
 test("Returns true when an element is a landmark", async t => {

@@ -1,4 +1,4 @@
-import { values } from "@alfa/util";
+import { values } from "@siteimprove/alfa-util";
 import { Token } from "./alphabet";
 import { Properties } from "./properties";
 

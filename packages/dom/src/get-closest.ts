@@ -1,4 +1,4 @@
-import { Predicate } from "@alfa/util";
+import { Predicate } from "@siteimprove/alfa-util";
 import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { matches } from "./matches";

@@ -1,5 +1,5 @@
 {
-  "name": "@alfa/css",
+  "name": "@siteimprove/alfa-css",
   "version": "0.0.0",
   "description": "alfa!",
   "main": "dist/index.js",
@@ -9,10 +9,10 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@alfa/lang": "^0.0.0"
+    "@siteimprove/alfa-lang": "^0.0.0"
   },
   "devDependencies": {
-    "@alfa/test": "^0.0.0",
+    "@siteimprove/alfa-test": "^0.0.0",
     "typescript": "^2.8.3"
   }
 }

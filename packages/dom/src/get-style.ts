@@ -1,5 +1,5 @@
-import { set, keys, each, union } from "@alfa/util";
-import { Grammar, parse, lex } from "@alfa/lang";
+import { set, keys, each, union } from "@siteimprove/alfa-util";
+import { Grammar, parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
   Token,
@@ -9,7 +9,7 @@ import {
   Style,
   Properties,
   PropertyName
-} from "@alfa/css";
+} from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { isDocument, isElement } from "./guards";
 import { getAttribute } from "./get-attribute";

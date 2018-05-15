@@ -1,5 +1,5 @@
 {
-  "name": "@alfa/util",
+  "name": "@siteimprove/alfa-util",
   "version": "0.0.0",
   "description": "alfa!",
   "main": "dist/index.js",
@@ -12,7 +12,7 @@
     "moize": "^5.2.3"
   },
   "devDependencies": {
-    "@alfa/test": "^0.0.0",
+    "@siteimprove/alfa-test": "^0.0.0",
     "typescript": "^2.8.3"
   }
 }

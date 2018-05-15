@@ -1,5 +1,5 @@
-import * as Lang from "@alfa/lang";
-import { Location, WithLocation, Stream } from "@alfa/lang";
+import * as Lang from "@siteimprove/alfa-lang";
+import { Location, WithLocation, Stream } from "@siteimprove/alfa-lang";
 import {
   isWhitespace,
   isAlpha,
@@ -7,7 +7,7 @@ import {
   isHex,
   isNumeric,
   isAscii
-} from "@alfa/util";
+} from "@siteimprove/alfa-util";
 
 export type Whitespace = Readonly<{ type: "whitespace" }>;
 

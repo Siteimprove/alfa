@@ -4,9 +4,9 @@ import {
   isAlpha,
   isAlphanumeric,
   isNumeric
-} from "@alfa/util";
-import * as Lang from "@alfa/lang";
-import { Location, WithLocation } from "@alfa/lang";
+} from "@siteimprove/alfa-util";
+import * as Lang from "@siteimprove/alfa-lang";
+import { Location, WithLocation } from "@siteimprove/alfa-lang";
 
 export type Attribute = Readonly<{
   name: string;

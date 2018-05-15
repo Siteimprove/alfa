@@ -1,4 +1,4 @@
-import { IdSelector, ClassSelector, TypeSelector } from "@alfa/css";
+import { IdSelector, ClassSelector, TypeSelector } from "@siteimprove/alfa-css";
 import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";

@@ -1,4 +1,4 @@
-import { Node } from "@alfa/dom";
+import { Node } from "@siteimprove/alfa-dom";
 import { Result, Question, Aspect } from "./types";
 
 export function isResult<T extends Node, A extends Aspect>(

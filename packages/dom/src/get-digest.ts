@@ -1,5 +1,5 @@
-import { slice, each } from "@alfa/util";
-import * as crypto from "@alfa/crypto";
+import { slice, each } from "@siteimprove/alfa-util";
+import * as crypto from "@siteimprove/alfa-crypto";
 
 import { Node } from "./types";
 import { isElement, isText, isComment, isDocumentType } from "./guards";

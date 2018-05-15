@@ -1,4 +1,4 @@
-import { last, noop } from "@alfa/util";
+import { last, noop } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import { isElement } from "./guards";
 

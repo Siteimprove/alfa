@@ -130,7 +130,7 @@ async function subtags() {
     // Registry. Do therefore not modify it directly! If you wish to make changes,
     // do so in \`build/subtags.ts\` and run \`yarn prepare\` to rebuild this file.
 
-    import { values } from "@alfa/util";
+    import { values } from "@siteimprove/alfa-util";
     import { PrimaryLanguage, ExtendedLanguage, Script, Region, Variant } from "./types";
     `
   ];

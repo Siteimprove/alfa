@@ -1,6 +1,6 @@
-import { jsx } from "@alfa/jsx";
-import { test } from "@alfa/test";
-import { find } from "@alfa/dom";
+import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
+import { find } from "@siteimprove/alfa-dom";
 import { getTextAlternative } from "../src/get-text-alternative";
 
 test("Computes the text alternative of a button with text", t => {

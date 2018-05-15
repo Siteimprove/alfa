@@ -1,4 +1,4 @@
-import { test, Test } from "@alfa/test";
+import { test, Test } from "@siteimprove/alfa-test";
 import { parse } from "../src/parse";
 import {
   Expression,
