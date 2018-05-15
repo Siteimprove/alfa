@@ -47,6 +47,9 @@ const ident: Production<Ident, FontSize> = {
       case "x-large":
       case "xx-large":
         return { type: "absolute", value: token.value };
+      case "smaller":
+      case "larger":
+        return { type: "relative", value: token.value };
     }
 
     return null;

@@ -32,3 +32,9 @@ test("Can parse an absolute font size", t =>
     type: "absolute",
     value: "small"
   }));
+
+test("Can parse a relative font size", t =>
+  fontSize(t, "smaller", {
+    type: "relative",
+    value: "smaller"
+  }));

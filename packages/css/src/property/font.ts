@@ -57,18 +57,33 @@ export const FontSizeProperty: Property<FontSize> = {
       };
     }
 
-    if (
-      value.type === "percentage" &&
-      parentValue !== undefined &&
-      parentValue.type === "length"
-    ) {
-      switch (value.unit) {
-        case "em":
-          return {
-            type: "length",
-            value: value.value * parentValue.value,
-            unit: parentValue.unit
-          };
+    if (parentValue !== undefined && parentValue.type === "length") {
+      if (value.type === "percentage") {
+        switch (value.unit) {
+          case "em":
+            return {
+              type: "length",
+              value: parentValue.value * value.value,
+              unit: parentValue.unit
+            };
+        }
+      }
+
+      if (value.type === "relative") {
+        switch (value.value) {
+          case "smaller":
+            return {
+              type: "length",
+              value: parentValue.value / 1.2,
+              unit: parentValue.unit
+            };
+          case "larger":
+            return {
+              type: "length",
+              value: parentValue.value * 1.2,
+              unit: parentValue.unit
+            };
+        }
       }
     }
 
