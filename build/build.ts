@@ -1,5 +1,5 @@
 import { Task, execute } from "@foreman/api";
-import { expand } from "@foreman/fs";
+import { expand, remove } from "@foreman/fs";
 import { notify } from "@foreman/notify";
 import { Packages } from "@foreman/dependant";
 import * as typescript from "./tasks/typescript";
@@ -8,8 +8,9 @@ import * as locale from "./tasks/locale";
 async function build(): Promise<void> {
   const packages = new Packages({ include: "packages/*" });
 
-  for (const name of await expand("packages/*")) {
-    packages.add(name);
+  for (const pkg of await expand("packages/*")) {
+    packages.add(pkg);
+    await remove(`${pkg}/dist`);
   }
 
   for (const path of await expand("packages/**/*.hjson")) {
