@@ -27,11 +27,11 @@ By implementing browser aspects, such as a style system and the accessibility tr
 
 At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. The primary packages are:
 
-* [**DOM**](packages/dom)
-* [**CSS**](packages/css)
-* [**ARIA**](packages/aria)
-* [**ACT**](packages/act)
-* [**WCAG**](packages/wcag)
+* [**DOM**](packages/alfa-dom)
+* [**CSS**](packages/alfa-css)
+* [**ARIA**](packages/alfa-aria)
+* [**ACT**](packages/alfa-act)
+* [**WCAG**](packages/alfa-wcag)
 
 ## Funding
 
