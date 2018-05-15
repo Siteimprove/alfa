@@ -23,14 +23,15 @@ export type Result<T extends Target, A extends Aspect> = Readonly<{
   rule: string;
   aspects: Pick<Aspects, A>;
 }> &
-  (
-    | Readonly<{
+  Readonly<
+    | {
         target: T;
         outcome: "passed" | "failed";
-      }>
-    | Readonly<{
+      }
+    | {
         outcome: "inapplicable";
-      }>);
+      }
+  >;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#output-outcome
