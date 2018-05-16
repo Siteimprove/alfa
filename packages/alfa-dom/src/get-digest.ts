@@ -1,8 +1,8 @@
 import { slice, each } from "@siteimprove/alfa-util";
 import * as crypto from "@siteimprove/alfa-crypto";
-
 import { Node } from "./types";
 import { isElement, isText, isComment, isDocumentType } from "./guards";
+import { getNamespace } from "./get-namespace";
 
 const digests: WeakMap<Node, string> = new WeakMap();
 
@@ -13,7 +13,10 @@ const digests: WeakMap<Node, string> = new WeakMap();
  *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export async function getDigest(node: Node): Promise<string | null> {
+export async function getDigest(
+  node: Node,
+  context: Node = node
+): Promise<string | null> {
   if (isComment(node) || isDocumentType(node)) {
     return null;
   }
@@ -28,10 +31,12 @@ export async function getDigest(node: Node): Promise<string | null> {
     }
 
     if (isElement(node)) {
-      if (node.namespaceURI === null) {
+      const namespace = getNamespace(node, context);
+
+      if (namespace === null) {
         digest += node.localName;
       } else {
-        digest += node.namespaceURI + ":" + node.localName;
+        digest += namespace + ":" + node.localName;
       }
 
       const attributes = slice(node.attributes).sort(
@@ -40,21 +45,18 @@ export async function getDigest(node: Node): Promise<string | null> {
       );
 
       each(attributes, attribute => {
-        if (attribute.namespaceURI === null) {
+        const namespace = getNamespace(attribute, context);
+
+        if (namespace === null) {
           digest += attribute.localName + attribute.value;
         } else {
-          digest +=
-            attribute.namespaceURI +
-            ":" +
-            attribute.localName +
-            attribute.value;
+          digest += namespace + ":" + attribute.localName + attribute.value;
         }
       });
     }
 
     for (let i = 0, n = node.childNodes.length; i < n; i++) {
-      const child = node.childNodes[i];
-      const childDigest = await getDigest(child);
+      const childDigest = await getDigest(node.childNodes[i], context);
 
       if (childDigest !== null) {
         digest += childDigest;

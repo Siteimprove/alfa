@@ -100,7 +100,6 @@ function virtualizeShadowRoot(
 
 function virtualizeStyleSheet(styleSheet: CSSStyleSheet): V.StyleSheet {
   return {
-    disabled: styleSheet.disabled,
     cssRules: map(styleSheet.cssRules, cssRule => virtualizeRule(cssRule))
   };
 }

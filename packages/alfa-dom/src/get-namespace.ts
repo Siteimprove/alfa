@@ -48,9 +48,8 @@ export function getNamespace(
   if (node.namespaceURI !== null) {
     switch (node.namespaceURI) {
       case Namespace.HTML:
-        return Namespace.HTML;
       case Namespace.SVG:
-        return Namespace.SVG;
+        return node.namespaceURI;
     }
   }
 
