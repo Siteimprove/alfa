@@ -1,4 +1,5 @@
 import { Node, Element, Attribute } from "./types";
+
 /**
  * @see https://www.w3.org/TR/html/infrastructure.html#namespaces
  */
