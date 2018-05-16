@@ -35,6 +35,8 @@ At the code level, Alfa is structured as a monolithic repository consisting of s
 * [**ACT**](packages/alfa-act)
 * [**WCAG**](packages/alfa-wcag)
 
+You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
+
 ## Funding
 
 [<img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" height="96" align="right" alt="European emblem">](https://ec.europa.eu/)
