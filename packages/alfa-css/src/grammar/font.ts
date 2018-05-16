@@ -1,27 +1,7 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, Dimension, Percentage } from "../alphabet";
-import { RelativeLength, AbsoluteLength } from "../units";
-
-export type FontSize = Readonly<
-  // https://www.w3.org/TR/css-fonts-3/#absolute-size-value
-  | {
-      type: "absolute";
-      value:
-        | "xx-small"
-        | "x-small"
-        | "small"
-        | "medium"
-        | "large"
-        | "x-large"
-        | "xx-large";
-    }
-  // https://www.w3.org/TR/css-fonts-3/#relative-size-value
-  | { type: "relative"; value: "larger" | "smaller" }
-  // https://www.w3.org/TR/css-fonts-3/#length-percentage-size-value
-  | { type: "length"; value: number; unit: AbsoluteLength }
-  | { type: "percentage"; value: number; unit?: RelativeLength }
->;
+import { FontSize } from "../property/font";
 
 type Production<T extends Token, R = never> = Lang.Production<Token, R, T>;
 

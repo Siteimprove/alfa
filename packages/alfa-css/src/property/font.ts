@@ -1,8 +1,27 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { FontSize, FontSizeGrammar } from "../grammar/font";
+import { FontSizeGrammar } from "../grammar/font";
 import { Property } from "../types";
+import { RelativeLength, AbsoluteLength } from "../units";
 
-export { FontSize };
+export type FontSize = Readonly<
+  // https://www.w3.org/TR/css-fonts-3/#absolute-size-value
+  | {
+      type: "absolute";
+      value:
+        | "xx-small"
+        | "x-small"
+        | "small"
+        | "medium"
+        | "large"
+        | "x-large"
+        | "xx-large";
+    }
+  // https://www.w3.org/TR/css-fonts-3/#relative-size-value
+  | { type: "relative"; value: "larger" | "smaller" }
+  // https://www.w3.org/TR/css-fonts-3/#length-percentage-size-value
+  | { type: "length"; value: number; unit: AbsoluteLength }
+  | { type: "percentage"; value: number; unit?: RelativeLength }
+>;
 
 /**
  * @see https://www.w3.org/TR/css-fonts/#font-size-prop

@@ -2,15 +2,9 @@ import { isWhitespace, set, clamp } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, FunctionName } from "../alphabet";
+import { Color } from "../property/color";
 
 const { isArray } = Array;
-
-export interface Color {
-  readonly red: number;
-  readonly green: number;
-  readonly blue: number;
-  readonly alpha: number;
-}
 
 enum Component {
   Red = 0,

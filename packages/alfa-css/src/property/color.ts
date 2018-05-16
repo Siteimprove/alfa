@@ -1,8 +1,13 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Color, ColorGrammar } from "../grammar/color";
+import { ColorGrammar } from "../grammar/color";
 import { Property } from "../types";
 
-export { Color };
+export interface Color {
+  readonly red: number;
+  readonly green: number;
+  readonly blue: number;
+  readonly alpha: number;
+}
 
 /**
  * @see https://www.w3.org/TR/css-color/#the-color-property
