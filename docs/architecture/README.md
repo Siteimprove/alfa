@@ -22,9 +22,3 @@ An architecture decision report lives in the [`docs/architecture/decisions`](dec
   This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
 
 [documenting architecture decisions]: http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions "Documenting architecture decisions by Michael Nygard"
-
-### Decisions
-
-The following is an index of all the ADRs created so far. Whenever a new ADR is created, it must be added to the index regardless of its status. As such, all ADRs must be listed in the index, not just accepted ones.
-
-* [**ADR-001**](decisions/adr-001.md): Use architecture decision reports
