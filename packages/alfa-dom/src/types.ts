@@ -1,4 +1,18 @@
 /**
+ * NB: Notice that we explicitly do NOT define the `parentNode` property. There
+ * is a very good reason for this: Serialization. Since `parentNode` introduces
+ * a circular reference, serialization becomes tricky as there's no way to
+ * handle circular references in JSON without relying on non-standard methods.
+ * As we want Alfa to be agnostic to where it receives DOM structures from, we
+ * must make sure that this DOM structure can be serialized to and from JSON
+ * without any additional work.
+ *
+ * The consequence of not storing parent pointers is that for all methods that
+ * must move up the DOM tree, an associated context node must also be passed.
+ * From this context node we can then build a parent pointer tree in order to
+ * provide access to parent nodes in amortized constant time. When moving down
+ * the DOM tree, we get access to parent pointers for free.
+ *
  * @see https://www.w3.org/TR/dom/#interface-node
  */
 export interface Node {
