@@ -1,8 +1,4 @@
 node_modules
 dist
-coverage
 *.log
-
 **/locale/*.ts
-
-.nyc_output
