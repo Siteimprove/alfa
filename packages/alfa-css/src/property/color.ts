@@ -2,12 +2,12 @@ import { parse } from "@siteimprove/alfa-lang";
 import { ColorGrammar } from "../grammar/color";
 import { Property } from "../types";
 
-export interface Color {
-  readonly red: number;
-  readonly green: number;
-  readonly blue: number;
-  readonly alpha: number;
-}
+export type Color = Readonly<{
+  red: number;
+  green: number;
+  blue: number;
+  alpha: number;
+}>;
 
 /**
  * @see https://www.w3.org/TR/css-color/#the-color-property

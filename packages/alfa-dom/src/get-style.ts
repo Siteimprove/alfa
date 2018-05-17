@@ -38,6 +38,7 @@ export function getStyle<S extends Stage = Stage.Computed>(
 function getPropertyName(input: string): PropertyName | null {
   switch (input) {
     case "color":
+    case "display":
       return input;
     case "font-size":
       return "fontSize";
