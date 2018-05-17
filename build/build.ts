@@ -7,7 +7,7 @@ import * as locale from "./tasks/locale";
 
 async function build(): Promise<void> {
   for (const path of await expand(["build/**/*.ts"])) {
-    notify({ message: "Building", value: path, desktop: false });
+    notify({ message: "Building", value: path });
 
     try {
       await execute([typescript.diagnose], path);
@@ -26,7 +26,7 @@ async function build(): Promise<void> {
     await remove(`${pkg}/dist`);
 
     for (const path of await expand(`${pkg}/**/*.hjson`)) {
-      notify({ message: "Building", value: path, desktop: false });
+      notify({ message: "Building", value: path });
 
       try {
         await execute([locale.transform], path);
@@ -36,7 +36,7 @@ async function build(): Promise<void> {
     }
 
     for (const path of await expand(`${pkg}/src/**/*.ts`)) {
-      notify({ message: "Building", value: path, desktop: false });
+      notify({ message: "Building", value: path });
 
       try {
         await execute([typescript.diagnose, typescript.compile], path);
@@ -46,7 +46,7 @@ async function build(): Promise<void> {
     }
 
     for (const path of await expand([`${pkg}/test/**/*.ts{,x}`])) {
-      notify({ message: "Building", value: path, desktop: false });
+      notify({ message: "Building", value: path });
 
       try {
         await execute([typescript.diagnose], path);

@@ -10,8 +10,7 @@ async function build(): Promise<void> {
   for (const path of paths) {
     notify({
       message: "Testing",
-      value: path,
-      desktop: false
+      value: path
     });
 
     const tasks: Array<Task> = [typescript.diagnose, tap.test];

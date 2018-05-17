@@ -14,7 +14,7 @@
     "@foreman/dependant": "^0.1.0",
     "@foreman/fs": "^0.1.0",
     "@foreman/git": "^0.1.0",
-    "@foreman/notify": "^0.1.0",
+    "@foreman/notify": "^0.4.0",
     "@foreman/path": "^0.0.0",
     "@foreman/prettier": "^0.2.0",
     "@foreman/register": "^0.1.0",

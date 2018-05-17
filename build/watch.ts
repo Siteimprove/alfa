@@ -15,9 +15,7 @@ watch(
   async (event, path) => {
     notify({
       message: `File ${event === "add" ? "added" : "changed"}`,
-      value: path,
-      type: event === "add" ? "add" : "change",
-      desktop: false
+      value: path
     });
 
     const tasks: Array<Task> = [];
@@ -38,4 +36,9 @@ watch(
       await execute(tasks, path);
     } catch (error) {}
   }
-);
+).then(() => {
+  notify({
+    message: "Watching files for changes",
+    type: "watch"
+  });
+});

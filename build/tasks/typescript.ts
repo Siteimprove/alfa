@@ -11,8 +11,7 @@ export async function diagnose(path: string): Promise<void> {
   if (diagnotics.length === 0) {
     notify({
       message: "Typecheck succeeded",
-      type: "success",
-      desktop: false
+      type: "success"
     });
   } else {
     const [error] = diagnotics;
@@ -37,8 +36,7 @@ export async function compile(path: string): Promise<void> {
 
     notify({
       message: "Compilation succeeded",
-      type: "compile",
-      desktop: false
+      type: "success"
     });
   } catch (error) {
     notify({

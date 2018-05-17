@@ -26,8 +26,7 @@ export async function transform(path: string) {
 
     notify({
       message: "Compilation succeeded",
-      type: "compile",
-      desktop: false
+      type: "success"
     });
   } catch (error) {
     notify({

@@ -7,8 +7,7 @@ export async function test(path: string): Promise<void> {
   if (ok) {
     return notify({
       message: "Tests passed",
-      type: "success",
-      desktop: false
+      type: "success"
     });
   }
 
@@ -18,7 +17,7 @@ export async function test(path: string): Promise<void> {
     }
 
     notify({
-      message: `Assertion failed`,
+      message: "Assertion failed",
       type: "error",
       error
     });

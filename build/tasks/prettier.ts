@@ -16,8 +16,7 @@ export async function transform(path: string): Promise<boolean> {
 
         notify({
           message: "Linting succeeded",
-          type: "success",
-          desktop: false
+          type: "success"
         });
 
         return true;
@@ -26,8 +25,7 @@ export async function transform(path: string): Promise<boolean> {
 
     notify({
       message: "Linting skipped",
-      type: "watch",
-      desktop: false
+      type: "skip"
     });
   } catch (error) {
     notify({
