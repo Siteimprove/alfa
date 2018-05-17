@@ -39,6 +39,7 @@ function getPropertyName(input: string): PropertyName | null {
   switch (input) {
     case "color":
     case "display":
+    case "visibility":
       return input;
     case "font-size":
       return "fontSize";
