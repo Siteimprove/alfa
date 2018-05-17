@@ -34,7 +34,7 @@ export type PropertyName = keyof typeof Properties;
 export type PropertyType<P> = P extends Property<infer T> ? T : never;
 
 export interface Property<T> {
-  readonly inherits: boolean;
+  readonly inherits?: true;
 
   parse(input: Array<Token>): T | null;
 

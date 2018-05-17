@@ -59,7 +59,6 @@ export type Display = Readonly<
  * @see https://www.w3.org/TR/css-display/#the-display-properties
  */
 export const DisplayProperty: Property<Display> = {
-  inherits: true,
   parse(input) {
     return parse(input, DisplayGrammar);
   },
