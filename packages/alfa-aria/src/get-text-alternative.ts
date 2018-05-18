@@ -70,7 +70,7 @@ export function getTextAlternative(
   visited.add(node);
 
   // https://www.w3.org/TR/accname/#step2A
-  if (!isVisible(node) && !flags.referencing) {
+  if (!isVisible(node, context) && !flags.referencing) {
     return null;
   }
 
