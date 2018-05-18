@@ -1,4 +1,4 @@
-import { isWhitespace, set, clamp } from "@siteimprove/alfa-util";
+import { Mutable, isWhitespace, clamp } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, FunctionName } from "../alphabet";
@@ -49,7 +49,7 @@ function functionArguments(stream: Stream<Token>): Array<Token> {
 }
 
 function rgbaColor(stream: Stream<Token>): Color {
-  const color: Color = { red: 0, green: 0, blue: 0, alpha: 1 };
+  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
 
   const args = functionArguments(stream);
 
@@ -78,16 +78,16 @@ function rgbaColor(stream: Stream<Token>): Color {
 
     switch (i) {
       case Component.Red:
-        set(color, "red", value);
+        color.red = value;
         break;
       case Component.Green:
-        set(color, "green", value);
+        color.green = value;
         break;
       case Component.Blue:
-        set(color, "blue", value);
+        color.blue = value;
         break;
       case Component.Alpha:
-        set(color, "alpha", value);
+        color.alpha = value;
         break;
     }
   }

@@ -1,4 +1,4 @@
-import { set } from "@siteimprove/alfa-util";
+import { Mutable } from "@siteimprove/alfa-util";
 import { Language } from "./types";
 import {
   PrimaryLanguageIndex,
@@ -19,27 +19,27 @@ export function getLanguage(tag: string): Language | null {
     return null;
   }
 
-  const language: Language = { primary };
+  const language: Mutable<Language> = { primary };
 
   const extended = ExtendedLanguageIndex.get(parts[part++]);
   if (extended === undefined) {
     part--;
   } else {
-    set(language, "extended", extended);
+    language.extended = extended;
   }
 
   const script = ScriptIndex.get(parts[part++]);
   if (script === undefined) {
     part--;
   } else {
-    set(language, "script", script);
+    language.script = script;
   }
 
   const region = RegionIndex.get(parts[part++]);
   if (region === undefined) {
     part--;
   } else {
-    set(language, "region", region);
+    language.region = region;
   }
 
   return parts.length === part ? language : null;

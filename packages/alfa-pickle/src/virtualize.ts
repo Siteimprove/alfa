@@ -1,4 +1,4 @@
-import { set, map, slice } from "@siteimprove/alfa-util";
+import { Mutable, map, slice } from "@siteimprove/alfa-util";
 import * as V from "@siteimprove/alfa-dom";
 
 export function virtualize(node: Node): V.Node {
@@ -25,7 +25,7 @@ function virtualizeNode(node: Node): V.Node {
 }
 
 function virtualizeElement(element: Element): V.Element {
-  const virtual: V.Element = {
+  const virtual: Mutable<V.Element> = {
     nodeType: 1,
     childNodes: map(element.childNodes, child => virtualizeNode(child)),
     namespaceURI: element.namespaceURI,
@@ -41,11 +41,7 @@ function virtualizeElement(element: Element): V.Element {
   };
 
   if (element.shadowRoot !== null) {
-    set(
-      virtual,
-      "shadowRoot",
-      virtualizeShadowRoot(element.shadowRoot, virtual)
-    );
+    virtual.shadowRoot = virtualizeShadowRoot(element.shadowRoot, virtual);
   }
 
   return virtual;

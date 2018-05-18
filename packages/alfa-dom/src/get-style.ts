@@ -1,4 +1,4 @@
-import { set, keys, each, union } from "@siteimprove/alfa-util";
+import { Mutable, keys, each, union } from "@siteimprove/alfa-util";
 import { Grammar, parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
@@ -59,7 +59,7 @@ function getCascadedStyle(
   context: Node
 ): Style<Stage.Cascaded> {
   return cascadedStyle.get(context, element, () => {
-    const cascadedStyle: Style<Stage.Cascaded> = {};
+    const cascadedStyle: Mutable<Style<Stage.Cascaded>> = {};
 
     const style = getAttribute(element, "style");
     const cascade = isDocument(context) ? getCascade(context) : null;
@@ -95,14 +95,14 @@ function getCascadedStyle(
       }
 
       if (isInitial(declaration)) {
-        set(cascadedStyle, propertyName, "initial");
+        cascadedStyle[propertyName] = "initial";
       } else if (isInherited(declaration)) {
-        set(cascadedStyle, propertyName, "inherit");
+        cascadedStyle[propertyName] = "inherit";
       } else {
         const property = Properties[propertyName];
         const value = property.parse(declaration.value);
         if (value !== null) {
-          set(cascadedStyle, propertyName, value);
+          cascadedStyle[propertyName] = value;
         }
       }
     }
@@ -122,7 +122,7 @@ function getSpecifiedStyle(
   context: Node
 ): Style<Stage.Specified> {
   return specifiedStyle.get(context, element, () => {
-    const specifiedStyle: Style<Stage.Specified> = {};
+    const specifiedStyle: Mutable<Style<Stage.Specified>> = {};
 
     const parentStyle = getParentStyle(element, context);
     const cascadedStyle = getCascadedStyle(element, context);
@@ -138,11 +138,11 @@ function getSpecifiedStyle(
         value === "inherit" || (value === undefined && property.inherits);
 
       if (shouldInherit && inherited !== undefined) {
-        set(specifiedStyle, propertyName, inherited);
+        specifiedStyle[propertyName] = inherited;
       } else if (value === undefined || value === "initial") {
-        set(specifiedStyle, propertyName, property.initial());
+        specifiedStyle[propertyName] = property.initial();
       } else if (value !== "inherit") {
-        set(specifiedStyle, propertyName, value);
+        specifiedStyle[propertyName] = value;
       }
     });
 
@@ -161,7 +161,7 @@ function getComputedStyle(
   context: Node
 ): Style<Stage.Computed> {
   return computedStyle.get(context, element, () => {
-    const computedStyle: Style<Stage.Computed> = {};
+    const computedStyle: Mutable<Style<Stage.Computed>> = {};
 
     const parentStyle = getParentStyle(element, context);
     const specifiedStyle = getSpecifiedStyle(element, context);
@@ -173,7 +173,7 @@ function getComputedStyle(
       const computed = property.computed(specifiedStyle, parentStyle);
 
       if (computed !== null) {
-        set(computedStyle, propertyName, computed);
+        computedStyle[propertyName] = computed;
       }
     });
 

@@ -16,7 +16,6 @@ export * from "./number/clamp";
 
 export * from "./object/entries";
 export * from "./object/keys";
-export * from "./object/set";
 export * from "./object/values";
 
 export * from "./string/is-alpha";
@@ -29,4 +28,5 @@ export * from "./string/is-numeric";
 export * from "./string/is-whitespace";
 export * from "./string/split";
 
+export * from "./type/mutable";
 export * from "./type/predicate";

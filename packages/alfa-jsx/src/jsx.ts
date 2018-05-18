@@ -1,7 +1,7 @@
 /// <reference path="./types/nodes.d.ts"/>
 /// <reference path="./types/intrinsics.d.ts"/>
 
-import { set } from "@siteimprove/alfa-util";
+import { Mutable } from "@siteimprove/alfa-util";
 
 const { keys } = Object;
 
@@ -63,9 +63,10 @@ function isElement(node: JSX.Node): node is JSX.Element {
   return node.nodeType === 1;
 }
 
-function setNamespace(node: JSX.Node, namespaceURI: string): void {
+function setNamespace(node: Mutable<JSX.Node>, namespaceURI: string): void {
   if (isElement(node)) {
-    set(node, "namespaceURI", namespaceURI);
+    const element: Mutable<JSX.Element> = node;
+    element.namespaceURI = namespaceURI;
   }
 
   node.childNodes.forEach(childNode => {

@@ -1,5 +1,5 @@
 import {
-  set,
+  Mutable,
   isWhitespace,
   isAlpha,
   isAlphanumeric,
@@ -40,9 +40,9 @@ export type Token =
   | Comment;
 
 export type State = {
-  tag: StartTag | EndTag | null;
-  attribute: Attribute | null;
-  comment: Comment | null;
+  tag: Mutable<StartTag | EndTag> | null;
+  attribute: Mutable<Attribute> | null;
+  comment: Mutable<Comment> | null;
 };
 
 export type Pattern = Lang.Pattern<Token, State>;
@@ -180,7 +180,7 @@ const commentStartDash: Pattern = (stream, emit, state, done) => {
   }
 
   if (state.comment !== null) {
-    set(state.comment, "value", state.comment.value + "-");
+    state.comment.value += "-";
   }
 
   return comment;
@@ -194,7 +194,7 @@ const comment: Pattern = (stream, emit, state, done) => {
 
   if (char === "<") {
     if (state.comment !== null) {
-      set(state.comment, "value", state.comment.value + char);
+      state.comment.value += char;
     }
 
     return commentLessThanSign;
@@ -212,7 +212,7 @@ const comment: Pattern = (stream, emit, state, done) => {
   }
 
   if (state.comment !== null) {
-    set(state.comment, "value", state.comment.value + char);
+    state.comment.value += char;
   }
 };
 
@@ -226,7 +226,7 @@ const commentLessThanSign: Pattern = (stream, emit, state) => {
     stream.advance();
 
     if (state.comment !== null) {
-      set(state.comment, "value", state.comment.value + char);
+      state.comment.value += char;
     }
   }
 
@@ -321,7 +321,7 @@ const commentEndBang: Pattern = (stream, emit, state, done) => {
     stream.advance();
 
     if (state.comment !== null) {
-      set(state.comment, "value", state.comment.value + "-!");
+      state.comment.value += "-!";
     }
 
     return commentEndDash;
@@ -342,7 +342,7 @@ const commentEndBang: Pattern = (stream, emit, state, done) => {
   }
 
   if (state.comment !== null) {
-    set(state.comment, "value", state.comment.value + "-!");
+    state.comment.value += "-!";
   }
 
   return comment;
@@ -398,7 +398,7 @@ const tagName: Pattern = (stream, emit, state, done) => {
 
   if (isWhitespace(char) || char === "/" || char === ">") {
     if (state.tag !== null) {
-      set(state.tag, "value", stream.result().join(""));
+      state.tag.value = stream.result().join("");
     }
   }
 
@@ -432,7 +432,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state, done) => {
 
     if (state.tag !== null) {
       if (state.tag.type === "start-tag") {
-        set(state.tag, "closed", true);
+        state.tag.closed = true;
       }
 
       emit(state.tag);
@@ -479,7 +479,7 @@ const attributeName: Pattern = (stream, emit, state) => {
 
   if (char === null || isWhitespace(char) || char === "/" || char === ">") {
     if (state.attribute !== null) {
-      set(state.attribute, "name", stream.result().join(""));
+      state.attribute.name = stream.result().join("");
     }
 
     return afterAttributeName;
@@ -487,7 +487,7 @@ const attributeName: Pattern = (stream, emit, state) => {
 
   if (char === "=") {
     if (state.attribute !== null) {
-      set(state.attribute, "name", stream.result().join(""));
+      state.attribute.name = stream.result().join("");
     }
 
     stream.advance();
@@ -573,7 +573,7 @@ const attributeValueDoubleQuoted: Pattern = (
 
   if (char === '"') {
     if (attribute !== null) {
-      set(attribute, "value", stream.result().join(""));
+      attribute.value = stream.result().join("");
     }
 
     stream.advance();
@@ -601,7 +601,7 @@ const attributeValueSingleQuoted: Pattern = (
 
   if (char === "'") {
     if (attribute !== null) {
-      set(attribute, "value", stream.result().join(""));
+      attribute.value = stream.result().join("");
     }
 
     stream.advance();
@@ -628,7 +628,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state, done) => {
 
   if (isWhitespace(char) || char === ">") {
     if (state.attribute !== null) {
-      set(state.attribute, "value", stream.result().join(""));
+      state.attribute.value = stream.result().join("");
     }
   }
 
@@ -688,11 +688,7 @@ const bogusComment: Pattern = (stream, emit, state, done) => {
 
   if (char === ">" || char === null) {
     if (state.comment !== null) {
-      set(
-        state.comment,
-        "value",
-        state.comment.value + stream.result().join("")
-      );
+      state.comment.value += stream.result().join("");
       emit(state.comment);
     }
   }
