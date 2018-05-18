@@ -50,7 +50,7 @@ export function getTextAlternative(
     recursing?: boolean;
     referencing?: boolean;
     labelling?: boolean;
-    subtree?: boolean;
+    descending?: boolean;
   }>
 ): string | null;
 
@@ -62,7 +62,7 @@ export function getTextAlternative(
     recursing?: boolean;
     referencing?: boolean;
     labelling?: boolean;
-    subtree?: boolean;
+    descending?: boolean;
   }> = {}
 ): string | null {
   if (visited.has(node)) {
@@ -150,7 +150,7 @@ export function getTextAlternative(
   if (
     (role !== null && hasNameFrom(role, "contents")) ||
     flags.referencing ||
-    flags.subtree ||
+    flags.descending ||
     isNativeTextAlternativeElement(node)
   ) {
     const children = map(
@@ -159,7 +159,7 @@ export function getTextAlternative(
         isElement(child) || isText(child)
           ? getTextAlternative(child, context, visited, {
               recursing: true,
-              subtree: true,
+              descending: true,
               // Pass down the labelling flag as the current call may have been
               // initiated from a labelling element; the subtree will therefore
               // also have to be considered part of the labelling element.
@@ -275,7 +275,8 @@ function getHtmlTextAlternative(
       const legend = find(element, context, "legend");
       if (legend) {
         return getTextAlternative(legend, context, visited, {
-          recursing: true
+          recursing: true,
+          descending: true
         });
       }
       break;
@@ -286,7 +287,8 @@ function getHtmlTextAlternative(
       const caption = find(element, context, "figcaption");
       if (caption) {
         return getTextAlternative(caption, context, visited, {
-          recursing: true
+          recursing: true,
+          descending: true
         });
       }
       break;
@@ -329,7 +331,8 @@ function getSvgTextAlternative(
   const title = find(element, context, ":scope > title");
   if (title) {
     return getTextAlternative(title, context, visited, {
-      recursing: true
+      recursing: true,
+      descending: true
     });
   }
 
