@@ -2,7 +2,6 @@ export * from "./alphabet";
 export * from "./grammar";
 export * from "./properties";
 export * from "./types";
-export * from "./units";
 
 export * from "./grammars/color";
 export * from "./grammars/declaration";

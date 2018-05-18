@@ -1,7 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { FontSizeGrammar } from "../grammars/font";
-import { Property } from "../types";
-import { RelativeLength, AbsoluteLength } from "../units";
+import { Property, RelativeLength, AbsoluteLength } from "../types";
 
 export type FontSize = Readonly<
   // https://www.w3.org/TR/css-fonts-3/#absolute-size-value
