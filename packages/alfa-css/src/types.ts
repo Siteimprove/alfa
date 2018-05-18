@@ -79,7 +79,7 @@ export interface Property<T> {
 
   parse(input: Array<Token>): T | null;
 
-  initial(): T;
+  initial: Readonly<T>;
 
   computed(
     own: Style<Stage.Specified>,

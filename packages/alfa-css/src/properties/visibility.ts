@@ -12,9 +12,7 @@ export const VisibilityProperty: Property<Visibility> = {
   parse(input) {
     return parse(input, VisibilityGrammar);
   },
-  initial() {
-    return "visible";
-  },
+  initial: "visible",
   computed(own, parent) {
     return own.visibility || null;
   }

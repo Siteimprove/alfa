@@ -17,9 +17,7 @@ export const ColorProperty: Property<Color> = {
   parse(input) {
     return parse(input, ColorGrammar);
   },
-  initial() {
-    return { red: 0, green: 0, blue: 0, alpha: 1 };
-  },
+  initial: { red: 0, green: 0, blue: 0, alpha: 1 },
   computed(own, parent) {
     return own.color || null;
   }

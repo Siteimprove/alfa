@@ -140,7 +140,7 @@ function getSpecifiedStyle(
       if (shouldInherit && inherited !== undefined) {
         specifiedStyle[propertyName] = inherited;
       } else if (value === undefined || value === "initial") {
-        specifiedStyle[propertyName] = property.initial();
+        specifiedStyle[propertyName] = property.initial;
       } else if (value !== "inherit") {
         specifiedStyle[propertyName] = value;
       }
@@ -198,12 +198,11 @@ function getParentStyle(
 
 function parseDeclarations(input: string): Array<Declaration> {
   const declarations = parse(lex(input, Alphabet), DeclarationGrammar);
-
-  if (declarations === null) {
-    return [];
-  }
-
-  return isArray(declarations) ? declarations : [declarations];
+  return declarations === null
+    ? []
+    : isArray(declarations)
+      ? declarations
+      : [declarations];
 }
 
 function isInitial(declaration: Declaration): boolean {

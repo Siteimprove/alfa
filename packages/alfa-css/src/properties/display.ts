@@ -62,9 +62,7 @@ export const DisplayProperty: Property<Display> = {
   parse(input) {
     return parse(input, DisplayGrammar);
   },
-  initial() {
-    return { outside: "inline", inside: "flow" };
-  },
+  initial: { outside: "inline", inside: "flow" },
   computed(own, parent) {
     return own.display || null;
   }
