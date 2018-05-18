@@ -67,7 +67,7 @@ export interface Locale {
 export type Applicability<T extends Target, A extends Aspect, C = null> = (
   aspects: Pick<Aspects, A>,
   context: C
-) => Promise<Iterable<T>>;
+) => T | Array<T> | null | Promise<T | Array<T> | null>;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#expectations
@@ -77,7 +77,7 @@ export type Expectation<T extends Target, A extends Aspect, C = null> = (
   aspects: Pick<Aspects, A>,
   question: (question: string, target?: T) => boolean,
   context: C
-) => Promise<boolean>;
+) => boolean | Promise<boolean>;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#structure
@@ -86,7 +86,7 @@ export interface Rule<T extends Target, A extends Aspect, C = null> {
   readonly id: string;
   readonly criteria: Array<Criterion>;
   readonly locales: Array<Locale>;
-  readonly context: (aspects: Pick<Aspects, A>) => C;
+  readonly context: (aspects: Pick<Aspects, A>) => C | Promise<C>;
   readonly applicability: Applicability<T, A, C>;
   readonly expectations: Readonly<{ [id: string]: Expectation<T, A, C> }>;
 }

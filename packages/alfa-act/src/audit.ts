@@ -21,10 +21,6 @@ export async function audit<T extends Target, A extends Aspect, C = undefined>(
   rules = isArray(rules) ? rules : [rules];
 
   for (const rule of rules) {
-    const context = rule.context(aspects);
-
-    const targets = [...(await rule.applicability(aspects, context))];
-
     function question(question: string, target?: T): boolean {
       const answer = answers.find(
         answer =>
@@ -45,6 +41,17 @@ export async function audit<T extends Target, A extends Aspect, C = undefined>(
         return false;
       }
     }
+
+    const context = await rule.context(aspects);
+
+    const applicability = await rule.applicability(aspects, context);
+
+    const targets =
+      applicability === null
+        ? []
+        : isArray(applicability)
+          ? applicability
+          : [applicability];
 
     if (targets.length === 0) {
       results.push({
