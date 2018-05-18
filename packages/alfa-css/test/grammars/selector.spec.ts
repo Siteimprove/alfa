@@ -1,7 +1,7 @@
 import { test, Test } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
-import { SelectorGrammar, Selector } from "../../src/grammar/selector";
+import { SelectorGrammar, Selector } from "../../src/grammars/selector";
 
 async function selector(
   t: Test,

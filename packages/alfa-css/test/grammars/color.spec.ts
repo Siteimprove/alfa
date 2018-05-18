@@ -1,8 +1,8 @@
 import { test, Test } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
-import { Color } from "../../src/property/color";
-import { ColorGrammar } from "../../src/grammar/color";
+import { Color } from "../../src/properties/color";
+import { ColorGrammar } from "../../src/grammars/color";
 
 async function color(t: Test, input: string, expected: Color) {
   t.deepEqual(parse(lex(input, Alphabet), ColorGrammar), expected, t.title);

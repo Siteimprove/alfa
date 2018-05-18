@@ -2,7 +2,7 @@ import { test, Test } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { Declaration } from "../../src/grammar";
-import { DeclarationGrammar } from "../../src/grammar/declaration";
+import { DeclarationGrammar } from "../../src/grammars/declaration";
 
 async function declaration(
   t: Test,

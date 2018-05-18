@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { DisplayGrammar } from "../grammar/display";
+import { DisplayGrammar } from "../grammars/display";
 import { Property } from "../types";
 
 /**

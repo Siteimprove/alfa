@@ -2,12 +2,6 @@ import * as Lang from "@siteimprove/alfa-lang";
 import { Expression, Stream } from "@siteimprove/alfa-lang";
 import { Token, Paren, Bracket, Brace, FunctionName } from "./alphabet";
 
-export * from "./grammar/color";
-export * from "./grammar/declaration";
-export * from "./grammar/font";
-export * from "./grammar/rule";
-export * from "./grammar/selector";
-
 /**
  * @see https://www.w3.org/TR/css-syntax/#at-rule
  */

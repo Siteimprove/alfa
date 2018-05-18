@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { FontSizeGrammar } from "../grammar/font";
+import { FontSizeGrammar } from "../grammars/font";
 import { Property } from "../types";
 import { RelativeLength, AbsoluteLength } from "../units";
 

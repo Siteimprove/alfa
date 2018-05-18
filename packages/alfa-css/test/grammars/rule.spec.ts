@@ -2,7 +2,7 @@ import { test, Test } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { AtRule, QualifiedRule } from "../../src/grammar";
-import { RuleGrammar } from "../../src/grammar/rule";
+import { RuleGrammar } from "../../src/grammars/rule";
 
 async function rule(
   t: Test,

@@ -1,7 +1,7 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident } from "../alphabet";
-import { Display } from "../property/display";
+import { Display } from "../properties/display";
 
 type Production<T extends Token, R = never> = Lang.Production<Token, R, T>;
 

@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { ColorGrammar } from "../grammar/color";
+import { ColorGrammar } from "../grammars/color";
 import { Property } from "../types";
 
 export type Color = Readonly<{

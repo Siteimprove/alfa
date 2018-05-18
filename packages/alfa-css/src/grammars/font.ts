@@ -1,7 +1,7 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, Dimension, Percentage } from "../alphabet";
-import { FontSize } from "../property/font";
+import { FontSize } from "../properties/font";
 
 type Production<T extends Token, R = never> = Lang.Production<Token, R, T>;
 

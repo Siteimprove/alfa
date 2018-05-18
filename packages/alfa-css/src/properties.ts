@@ -1,13 +1,8 @@
 import { Property } from "./types";
-import { ColorProperty } from "./property/color";
-import { DisplayProperty } from "./property/display";
-import { FontSizeProperty } from "./property/font";
-import { VisibilityProperty } from "./property/visibility";
-
-export * from "./property/color";
-export * from "./property/display";
-export * from "./property/font";
-export * from "./property/visibility";
+import { ColorProperty } from "./properties/color";
+import { DisplayProperty } from "./properties/display";
+import { FontSizeProperty } from "./properties/font";
+import { VisibilityProperty } from "./properties/visibility";
 
 export const Properties = {
   color: ColorProperty,
