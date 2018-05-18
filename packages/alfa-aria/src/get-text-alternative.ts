@@ -50,6 +50,7 @@ export function getTextAlternative(
     recursing?: boolean;
     referencing?: boolean;
     labelling?: boolean;
+    subtree?: boolean;
   }>
 ): string | null;
 
@@ -61,6 +62,7 @@ export function getTextAlternative(
     recursing?: boolean;
     referencing?: boolean;
     labelling?: boolean;
+    subtree?: boolean;
   }> = {}
 ): string | null {
   if (visited.has(node)) {
@@ -144,9 +146,11 @@ export function getTextAlternative(
   }
 
   // https://www.w3.org/TR/accname/#step2F
+  // https://www.w3.org/TR/accname/#step2G
   if (
     (role !== null && hasNameFrom(role, "contents")) ||
     flags.referencing ||
+    flags.subtree ||
     isNativeTextAlternativeElement(node)
   ) {
     const children = map(
@@ -155,6 +159,7 @@ export function getTextAlternative(
         isElement(child) || isText(child)
           ? getTextAlternative(child, context, visited, {
               recursing: true,
+              subtree: true,
               // Pass down the labelling flag as the current call may have been
               // initiated from a labelling element; the subtree will therefore
               // also have to be considered part of the labelling element.

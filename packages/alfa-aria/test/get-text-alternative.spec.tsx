@@ -8,6 +8,24 @@ test("Computes the text alternative of a button with text", t => {
   t.is(getTextAlternative(button, button), "Button");
 });
 
+test("Computes the text alternative of a button with text within a span", t => {
+  const button = (
+    <button>
+      <span>Button</span>
+    </button>
+  );
+  t.is(getTextAlternative(button, button), "Button");
+});
+
+test("Ignores non-visible nodes", t => {
+  const button = (
+    <button>
+      Button <span style="display: none">Hidden</span>
+    </button>
+  );
+  t.is(getTextAlternative(button, button), "Button");
+});
+
 test("Computes the text alternative of a button with a title and no text", t => {
   const button = <button title="Hello world" />;
   t.is(getTextAlternative(button, button), "Hello world");
