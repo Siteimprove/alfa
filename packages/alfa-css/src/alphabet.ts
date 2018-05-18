@@ -1,5 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Location, WithLocation, Stream } from "@siteimprove/alfa-lang";
+import { Stream } from "@siteimprove/alfa-lang";
 import {
   isWhitespace,
   isAlpha,
@@ -75,7 +75,6 @@ export type Token =
   | Brace;
 
 export type State = {
-  start: Location;
   number: Number | null;
   mark: '"' | "'" | null;
 };
@@ -222,10 +221,6 @@ const escapedCodePoint: (stream: Stream<string>) => string = stream => {
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
  */
 const initial: Pattern = (stream, emit, state, end) => {
-  state.start = stream.location();
-
-  const { start } = state;
-
   const char = stream.next();
 
   if (char === null) {
@@ -234,7 +229,7 @@ const initial: Pattern = (stream, emit, state, end) => {
 
   if (isWhitespace(char)) {
     stream.accept(isWhitespace);
-    emit({ type: "whitespace", location: { start, end: stream.location() } });
+    emit({ type: "whitespace" });
     return;
   }
 
@@ -246,24 +241,24 @@ const initial: Pattern = (stream, emit, state, end) => {
 
     case "(":
     case ")":
-      emit({ type: char, location: { start, end: stream.location() } });
+      emit({ type: char });
       return;
     case "[":
     case "]":
-      emit({ type: char, location: { start, end: stream.location() } });
+      emit({ type: char });
       return;
     case "{":
     case "}":
-      emit({ type: char, location: { start, end: stream.location() } });
+      emit({ type: char });
       return;
     case ",":
-      emit({ type: char, location: { start, end: stream.location() } });
+      emit({ type: char });
       return;
     case ":":
-      emit({ type: char, location: { start, end: stream.location() } });
+      emit({ type: char });
       return;
     case ";":
-      emit({ type: char, location: { start, end: stream.location() } });
+      emit({ type: char });
       return;
 
     case "/":
@@ -286,11 +281,7 @@ const initial: Pattern = (stream, emit, state, end) => {
     return number;
   }
 
-  emit({
-    type: "delim",
-    value: char,
-    location: { start, end: stream.location() }
-  });
+  emit({ type: "delim", value: char });
 };
 
 const comment: Pattern = (stream, emit, state) => {
@@ -303,11 +294,7 @@ const comment: Pattern = (stream, emit, state) => {
     // While the CSS syntax specification states that comments should be
     // consumed without emitting a token, we emit one anyway in order to
     // reproduce a complete version of the CSS.
-    emit({
-      type: "comment",
-      value,
-      location: { start: state.start, end: stream.location() }
-    });
+    emit({ type: "comment", value });
     return initial;
   }
 };
@@ -316,18 +303,13 @@ const comment: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
  */
 const ident: Pattern = (stream, emit) => {
-  const start = stream.location();
   const value = name(stream);
 
   if (stream.peek() === "(") {
     stream.advance();
-    emit({
-      type: "function-name",
-      value,
-      location: { start, end: stream.location() }
-    });
+    emit({ type: "function-name", value });
   } else {
-    emit({ type: "ident", value, location: { start, end: stream.location() } });
+    emit({ type: "ident", value });
   }
 
   return initial;
@@ -342,11 +324,7 @@ const string: Pattern = (stream, emit, state) => {
   if (stream.accept(char => char !== state.mark)) {
     const value = stream.result().join("");
     stream.advance();
-    emit({
-      type: "string",
-      value,
-      location: { start: state.start, end: stream.location() }
-    });
+    emit({ type: "string", value });
     return initial;
   }
 };
@@ -355,8 +333,6 @@ const string: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
 const number: Pattern = (stream, emit, state) => {
-  const { start } = state;
-
   stream.ignore();
 
   if (stream.peek() === "+" || stream.peek() === "-") {
@@ -402,11 +378,10 @@ const number: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/css-syntax/#consume-a-numeric-token
  */
 const numeric: Pattern = (stream, emit, state) => {
-  let token: WithLocation<Number | Percentage | Dimension> = {
+  let token: Number | Percentage | Dimension = {
     type: "number",
     value: state.number === null ? NaN : state.number.value,
-    integer: state.number === null ? true : state.number.integer,
-    location: { start: state.start, end: stream.location() }
+    integer: state.number === null ? true : state.number.integer
   };
 
   const next = stream.peek();
@@ -416,15 +391,13 @@ const numeric: Pattern = (stream, emit, state) => {
       type: "dimension",
       value: token.value,
       integer: token.integer,
-      unit: name(stream),
-      location: { start: state.start, end: stream.location() }
+      unit: name(stream)
     };
   } else if (stream.peek() === "%" && stream.advance()) {
     token = {
       type: "percentage",
       value: token.value / 100,
-      integer: token.integer,
-      location: { start: state.start, end: stream.location() }
+      integer: token.integer
     };
   }
 
@@ -434,5 +407,5 @@ const numeric: Pattern = (stream, emit, state) => {
 
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   initial,
-  stream => ({ start: stream.location(), number: null, mark: null })
+  () => ({ number: null, mark: null })
 );

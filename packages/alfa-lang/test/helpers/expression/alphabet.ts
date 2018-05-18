@@ -1,5 +1,5 @@
 import { isWhitespace, isNumeric } from "@siteimprove/alfa-util";
-import { Pattern, Location } from "../../../src/types";
+import { Pattern } from "../../../src/types";
 import { Alphabet } from "../../../src/alphabet";
 import { lex } from "../../../src/lex";
 
@@ -12,9 +12,7 @@ export type Caret = { type: "^" };
 
 export type ExpressionToken = Number | Plus | Minus | Asterix | Slash | Caret;
 
-export type ExpressionState = { start: Location };
-
-export type ExpressionPattern = Pattern<ExpressionToken, ExpressionState>;
+export type ExpressionPattern = Pattern<ExpressionToken>;
 
 export function isNumber(token: ExpressionToken): token is Number {
   return token.type === "number" && "value" in token;
@@ -22,8 +20,6 @@ export function isNumber(token: ExpressionToken): token is Number {
 
 const initial: ExpressionPattern = (stream, emit, state, done) => {
   stream.accept(isWhitespace);
-
-  state.start = stream.location();
 
   const char = stream.peek();
 
@@ -51,43 +47,39 @@ const initial: ExpressionPattern = (stream, emit, state, done) => {
   }
 };
 
-const plus: ExpressionPattern = (stream, emit, { start }) => {
-  emit({ type: "+", location: { start, end: stream.location() } });
+const plus: ExpressionPattern = (stream, emit) => {
+  emit({ type: "+" });
   return initial;
 };
 
-const minus: ExpressionPattern = (stream, emit, { start }) => {
-  emit({ type: "-", location: { start, end: stream.location() } });
+const minus: ExpressionPattern = (stream, emit) => {
+  emit({ type: "-" });
   return initial;
 };
 
-const asterix: ExpressionPattern = (stream, emit, { start }) => {
-  emit({ type: "*", location: { start, end: stream.location() } });
+const asterix: ExpressionPattern = (stream, emit) => {
+  emit({ type: "*" });
   return initial;
 };
 
-const slash: ExpressionPattern = (stream, emit, { start }) => {
-  emit({ type: "/", location: { start, end: stream.location() } });
+const slash: ExpressionPattern = (stream, emit) => {
+  emit({ type: "/" });
   return initial;
 };
 
-const caret: ExpressionPattern = (stream, emit, { start }) => {
-  emit({ type: "^", location: { start, end: stream.location() } });
+const caret: ExpressionPattern = (stream, emit) => {
+  emit({ type: "^" });
   return initial;
 };
 
-const number: ExpressionPattern = (stream, emit, { start }) => {
+const number: ExpressionPattern = (stream, emit) => {
   stream.ignore();
   stream.accept(isNumeric);
-  emit({
-    type: "number",
-    value: Number(stream.result()),
-    location: { start, end: stream.location() }
-  });
+  emit({ type: "number", value: parseFloat(stream.result().join("")) });
   return initial;
 };
 
-export const ExpressionAlphabet: Alphabet<
-  ExpressionToken,
-  ExpressionState
-> = new Alphabet(initial, stream => ({ start: stream.location() }));
+export const ExpressionAlphabet: Alphabet<ExpressionToken> = new Alphabet(
+  initial,
+  () => null
+);

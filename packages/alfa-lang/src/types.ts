@@ -9,12 +9,9 @@ export interface Location {
   readonly column: number;
 }
 
-export type WithLocation<T extends Token> = T &
-  Readonly<{ location: Readonly<{ start: Location; end: Location }> }>;
-
-export type Pattern<T extends Token, S> = (
+export type Pattern<T extends Token, S = null> = (
   stream: Stream<string>,
-  emit: <U extends T>(token: WithLocation<U>) => void,
+  emit: <U extends T>(token: U) => void,
   state: S,
   end: () => void
 ) => Pattern<T, S> | void;

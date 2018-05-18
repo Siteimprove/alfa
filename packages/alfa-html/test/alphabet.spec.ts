@@ -1,8 +1,8 @@
 import { test, Test } from "@siteimprove/alfa-test";
-import { WithLocation, lex } from "@siteimprove/alfa-lang";
+import { lex } from "@siteimprove/alfa-lang";
 import { Alphabet, Token } from "../src/alphabet";
 
-function html(t: Test, input: string, expected: Array<WithLocation<Token>>) {
+function html(t: Test, input: string, expected: Array<Token>) {
   t.deepEqual(lex(input, Alphabet), expected, t.title);
 }
 
@@ -12,11 +12,7 @@ test("Can lex a start tag", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: [],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 6 }
-      }
+      attributes: []
     }
   ]));
 
@@ -29,11 +25,7 @@ test("Can lex a self-closing start tag", async t =>
       type: "start-tag",
       value: "span",
       closed: true,
-      attributes: [],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 7 }
-      }
+      attributes: []
     }
   ]));
 
@@ -41,11 +33,7 @@ test("Can lex an orphaned less-than sign", async t =>
   html(t, "<", [
     {
       type: "character",
-      value: "<",
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 1 }
-      }
+      value: "<"
     }
   ]));
 
@@ -53,11 +41,7 @@ test("Can lex an end tag", async t =>
   html(t, "</span>", [
     {
       type: "end-tag",
-      value: "span",
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 7 }
-      }
+      value: "span"
     }
   ]));
 
@@ -67,19 +51,11 @@ test("Can lex a start tag followed by an end tag", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: [],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 6 }
-      }
+      attributes: []
     },
     {
       type: "end-tag",
-      value: "span",
-      location: {
-        start: { line: 0, column: 6 },
-        end: { line: 0, column: 13 }
-      }
+      value: "span"
     }
   ]));
 
@@ -89,11 +65,7 @@ test("Can lex a start tag with a double-quoted attribute", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: [{ name: "foo", value: "bar" }],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 16 }
-      }
+      attributes: [{ name: "foo", value: "bar" }]
     }
   ]));
 
@@ -103,11 +75,7 @@ test("Can lex a start tag with a single-quoted attribute", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: [{ name: "foo", value: "bar" }],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 16 }
-      }
+      attributes: [{ name: "foo", value: "bar" }]
     }
   ]));
 
@@ -117,11 +85,7 @@ test("Can lex a start tag with an unquoted attribute", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: [{ name: "foo", value: "bar" }],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 14 }
-      }
+      attributes: [{ name: "foo", value: "bar" }]
     }
   ]));
 
@@ -131,14 +95,7 @@ test("Can lex a start tag with multiple attributes", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: [
-        { name: "foo", value: "bar" },
-        { name: "baz", value: "qux" }
-      ],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 26 }
-      }
+      attributes: [{ name: "foo", value: "bar" }, { name: "baz", value: "qux" }]
     }
   ]));
 
@@ -148,11 +105,7 @@ test("Can lex a start tag with a boolean attribute", async t =>
       type: "start-tag",
       value: "span",
       closed: false,
-      attributes: [{ name: "foo", value: "" }],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 10 }
-      }
+      attributes: [{ name: "foo", value: "" }]
     }
   ]));
 
@@ -160,11 +113,7 @@ test("Can lex an incorrectly closed end tag", async t =>
   html(t, "</ ", [
     {
       type: "comment",
-      value: " ",
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 3 }
-      }
+      value: " "
     }
   ]));
 
@@ -174,35 +123,19 @@ test("Can lex character data within a tag", async t =>
       type: "start-tag",
       value: "p",
       closed: false,
-      attributes: [],
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 3 }
-      }
+      attributes: []
     },
     {
       type: "character",
-      value: "H",
-      location: {
-        start: { line: 0, column: 3 },
-        end: { line: 0, column: 4 }
-      }
+      value: "H"
     },
     {
       type: "character",
-      value: "i",
-      location: {
-        start: { line: 0, column: 4 },
-        end: { line: 0, column: 5 }
-      }
+      value: "i"
     },
     {
       type: "end-tag",
-      value: "p",
-      location: {
-        start: { line: 0, column: 5 },
-        end: { line: 0, column: 9 }
-      }
+      value: "p"
     }
   ]));
 
@@ -210,10 +143,6 @@ test("Can lex a comment", async t =>
   html(t, "<!--foo-->", [
     {
       type: "comment",
-      value: "foo",
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 10 }
-      }
+      value: "foo"
     }
   ]));

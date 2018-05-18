@@ -6,7 +6,6 @@ import {
   isNumeric
 } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
-import { Location, WithLocation } from "@siteimprove/alfa-lang";
 
 export type Attribute = Readonly<{
   name: string;
@@ -41,7 +40,6 @@ export type Token =
   | Comment;
 
 export type State = {
-  start: Location;
   tag: StartTag | EndTag | null;
   attribute: Attribute | null;
   comment: Comment | null;
@@ -53,8 +51,6 @@ export type Pattern = Lang.Pattern<Token, State>;
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
 const initial: Pattern = (stream, emit, state, end) => {
-  state.start = stream.location();
-
   const char = stream.next();
 
   if (char === "<") {
@@ -65,11 +61,7 @@ const initial: Pattern = (stream, emit, state, end) => {
     return end();
   }
 
-  emit({
-    type: "character",
-    value: char,
-    location: { start: state.start, end: stream.location() }
-  });
+  emit({ type: "character", value: char });
 };
 
 /**
@@ -112,13 +104,7 @@ const tagOpen: Pattern = (stream, emit, state) => {
     return bogusComment;
   }
 
-  const { start } = state;
-
-  emit({
-    type: "character",
-    value: "<",
-    location: { start, end: stream.location() }
-  });
+  emit({ type: "character", value: "<" });
 
   return initial;
 };
@@ -157,12 +143,7 @@ const commentStart: Pattern = (stream, emit, state) => {
     stream.advance();
 
     if (state.comment !== null) {
-      emit(
-        set(state.comment as WithLocation<Comment>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.comment);
     }
 
     return initial;
@@ -186,12 +167,7 @@ const commentStartDash: Pattern = (stream, emit, state, done) => {
     stream.advance();
 
     if (state.comment !== null) {
-      emit(
-        set(state.comment as WithLocation<Comment>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.comment);
     }
   }
 
@@ -230,12 +206,7 @@ const comment: Pattern = (stream, emit, state, done) => {
 
   if (char === null) {
     if (state.comment !== null) {
-      emit(
-        set(state.comment as WithLocation<Comment>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.comment);
     }
     return done();
   }
@@ -322,12 +293,7 @@ const commentEnd: Pattern = (stream, emit, state, done) => {
     stream.advance();
 
     if (state.comment !== null) {
-      emit(
-        set(state.comment as WithLocation<Comment>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.comment);
     }
 
     return initial;
@@ -363,12 +329,7 @@ const commentEndBang: Pattern = (stream, emit, state, done) => {
 
   if (char === ">" || char === null) {
     if (state.comment !== null) {
-      emit(
-        set(state.comment as WithLocation<Comment>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.comment);
     }
   }
 
@@ -394,16 +355,8 @@ const endTagOpen: Pattern = (stream, emit, state, done) => {
   const char = stream.peek();
 
   if (char === null) {
-    emit({
-      type: "character",
-      value: "<",
-      location: { start: state.start, end: stream.location() }
-    });
-    emit({
-      type: "character",
-      value: "/",
-      location: { start: state.start, end: stream.location() }
-    });
+    emit({ type: "character", value: "<" });
+    emit({ type: "character", value: "/" });
     return done();
   }
 
@@ -461,12 +414,7 @@ const tagName: Pattern = (stream, emit, state, done) => {
 
   if (char === ">") {
     if (state.tag !== null) {
-      emit(
-        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.tag);
     }
 
     return initial;
@@ -487,12 +435,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state, done) => {
         set(state.tag, "closed", true);
       }
 
-      emit(
-        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.tag);
     }
 
     return initial;
@@ -577,12 +520,7 @@ const afterAttributeName: Pattern = (stream, emit, state, done) => {
     stream.advance();
 
     if (state.tag !== null) {
-      emit(
-        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.tag);
     }
 
     return initial;
@@ -702,12 +640,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state, done) => {
 
   if (char === ">") {
     if (state.tag !== null) {
-      emit(
-        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.tag);
     }
 
     return initial;
@@ -738,12 +671,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state, done) => {
 
   if (char === ">") {
     if (state.tag !== null) {
-      emit(
-        set(state.tag as WithLocation<StartTag | EndTag>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.tag);
     }
 
     return initial;
@@ -765,12 +693,7 @@ const bogusComment: Pattern = (stream, emit, state, done) => {
         "value",
         state.comment.value + stream.result().join("")
       );
-      emit(
-        set(state.comment as WithLocation<Comment>, "location", {
-          start: state.start,
-          end: stream.location()
-        })
-      );
+      emit(state.comment);
     }
   }
 
@@ -785,10 +708,5 @@ const bogusComment: Pattern = (stream, emit, state, done) => {
 
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   initial,
-  stream => ({
-    start: stream.location(),
-    tag: null,
-    attribute: null,
-    comment: null
-  })
+  () => ({ tag: null, attribute: null, comment: null })
 );

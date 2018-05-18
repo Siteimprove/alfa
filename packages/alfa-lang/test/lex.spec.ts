@@ -1,5 +1,4 @@
 import { test, Test } from "@siteimprove/alfa-test";
-import { WithLocation } from "../src/types";
 import { lex } from "../src/lex";
 import {
   Expression,
@@ -7,11 +6,7 @@ import {
   ExpressionAlphabet
 } from "./helpers/expression";
 
-function expression(
-  t: Test,
-  input: string,
-  expected: Array<WithLocation<ExpressionToken>>
-) {
+function expression(t: Test, input: string, expected: Array<ExpressionToken>) {
   t.deepEqual(lex(input, ExpressionAlphabet), expected, "Token lists match");
 }
 
@@ -19,25 +14,13 @@ test("Can lex an expression", async t =>
   expression(t, "1 + 2", [
     {
       type: "number",
-      value: 1,
-      location: {
-        start: { line: 0, column: 0 },
-        end: { line: 0, column: 1 }
-      }
+      value: 1
     },
     {
-      type: "+",
-      location: {
-        start: { line: 0, column: 2 },
-        end: { line: 0, column: 3 }
-      }
+      type: "+"
     },
     {
       type: "number",
-      value: 2,
-      location: {
-        start: { line: 0, column: 4 },
-        end: { line: 0, column: 5 }
-      }
+      value: 2
     }
   ]));

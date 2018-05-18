@@ -1,17 +1,17 @@
-import { Token, WithLocation } from "./types";
+import { Token } from "./types";
 import { Alphabet } from "./alphabet";
 import { CharacterStream } from "./stream";
 
-export function lex<T extends Token>(
+export function lex<T extends Token, S = null>(
   input: string,
-  alphabet: Alphabet<T>
-): Array<WithLocation<T>> {
-  const tokens: Array<WithLocation<T>> = [];
+  alphabet: Alphabet<T, S>
+): Array<T> {
+  const tokens: Array<T> = [];
   const stream = new CharacterStream(input);
 
   let done = false;
 
-  function emit<U extends T>(token: WithLocation<U>): void {
+  function emit<U extends T>(token: U): void {
     tokens.push(token);
   }
 

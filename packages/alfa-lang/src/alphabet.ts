@@ -1,7 +1,7 @@
 import { Token, Pattern } from "./types";
 import { Stream } from "./stream";
 
-export class Alphabet<T extends Token, S = any> {
+export class Alphabet<T extends Token, S = null> {
   private readonly _pattern: Pattern<T, S>;
   private readonly _state: (stream: Stream<string>) => S;
 
