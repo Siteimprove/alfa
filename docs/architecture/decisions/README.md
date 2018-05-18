@@ -4,3 +4,4 @@ The following is an index of all the architecture decisions taken so far. Whenev
 
 * [**ADR-001**](adr-001.md): Use architecture decision reports
 * [**ADR-002**](adr-002.md): Move towards static analysis
+* [**ADR-003**](adr-003.md): Use TypeScript as implementation language
