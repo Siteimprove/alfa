@@ -20,7 +20,7 @@ import { getParentNode } from "./get-parent-node";
  * // => <div class="foo">...</div>
  */
 export function getClosest(
-  node: Node,
+  scope: Node,
   context: Node,
   query: string
 ): Element | null;
@@ -41,26 +41,27 @@ export function getClosest(
  * // => <div class="bar">...</div>
  */
 export function getClosest<T extends Node>(
-  node: Node,
+  scope: Node,
   context: Node,
   query: Predicate<Node, T>
 ): T | null;
 
 export function getClosest<T extends Node>(
-  node: Node,
+  scope: Node,
   context: Node,
   query: Predicate<Node, T> | string
 ): T | null {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
-    predicate = node => isElement(node) && matches(node, context, query);
+    predicate = node =>
+      isElement(node) && matches(node, context, query, { scope });
   } else {
     predicate = query;
   }
 
   for (
-    let next: Node | null = node;
+    let next: Node | null = scope;
     next;
     next = getParentNode(next, context)
   ) {

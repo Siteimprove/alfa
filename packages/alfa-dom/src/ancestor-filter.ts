@@ -15,6 +15,23 @@ export class AncestorFilter {
 
   private _elements: Set<Element> = new Set();
 
+  private process(
+    element: Element,
+    fn: (bucket: AncestorBucket, entry: string) => void
+  ) {
+    const id = getAttribute(element, "id");
+
+    if (id !== null) {
+      fn(this._ids, id);
+    }
+
+    fn(this._types, element.localName);
+
+    for (const className of getClassList(element)) {
+      fn(this._classes, className);
+    }
+  }
+
   public add(element: Element): void {
     if (this._elements.has(element)) {
       return;
@@ -22,17 +39,7 @@ export class AncestorFilter {
 
     this._elements.add(element);
 
-    const id = getAttribute(element, "id");
-
-    if (id !== null) {
-      addEntry(this._ids, id);
-    }
-
-    addEntry(this._types, element.localName);
-
-    for (const className of getClassList(element)) {
-      addEntry(this._classes, className);
-    }
+    this.process(element, addEntry);
   }
 
   public remove(element: Element): void {
@@ -42,17 +49,7 @@ export class AncestorFilter {
 
     this._elements.delete(element);
 
-    const id = getAttribute(element, "id");
-
-    if (id !== null) {
-      removeEntry(this._ids, id);
-    }
-
-    removeEntry(this._types, element.localName);
-
-    for (const className of getClassList(element)) {
-      removeEntry(this._classes, className);
-    }
+    this.process(element, removeEntry);
   }
 
   public matches(selector: IdSelector | ClassSelector | TypeSelector): boolean {
@@ -74,6 +71,13 @@ export class AncestorFilter {
   }
 }
 
+/**
+ * While most browser implementations use bloom filters for ancestor filters, we
+ * can make do with native maps for two reasons: Memory is not much of a concern
+ * as we only ever compute cascade once for every context, and native maps are
+ * actually much faster than any bloom filter we might be able to cook up in
+ * plain JavaScript.
+ */
 type AncestorBucket = Map<string, number>;
 
 function addEntry(bucket: AncestorBucket, entry: string): void {

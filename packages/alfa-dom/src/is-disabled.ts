@@ -1,6 +1,7 @@
 import { Node, Element } from "./types";
 import { getAttribute } from "./get-attribute";
 import { getClosest } from "./get-closest";
+import { hasAttribute } from "./has-attribute";
 import { find } from "./find";
 import { contains } from "./contains";
 
@@ -16,7 +17,7 @@ export function isDisabled(element: Element, context: Node): boolean {
     case "textarea":
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-fieldset-disabled
     case "fieldset":
-      if (getAttribute(element, "disabled") !== null) {
+      if (hasAttribute(element, "disabled")) {
         return true;
       }
 
@@ -31,7 +32,7 @@ export function isDisabled(element: Element, context: Node): boolean {
       return legend !== null && !contains(legend, context, element);
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-option-disabled
     case "option":
-      if (getAttribute(element, "disabled") !== null) {
+      if (hasAttribute(element, "disabled")) {
         return true;
       }
 
@@ -40,7 +41,7 @@ export function isDisabled(element: Element, context: Node): boolean {
       return optgroup !== null && isDisabled(optgroup, context);
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-optgroup-disabled
     case "optgroup":
-      return getAttribute(element, "disabled") !== null;
+      return hasAttribute(element, "disabled");
   }
 
   return false;

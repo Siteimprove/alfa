@@ -35,8 +35,8 @@ export type MatchingOptions = Readonly<{
 
   /**
    * Ancestor filter used for fast-rejecting elements during selector matching.
-   * This options is only available to internal methods as the ancestor filter
-   * is not exposed externally.
+   * This option is only available to internal methods as the ancestor filter is
+   * not exposed externally.
    *
    * @internal
    */

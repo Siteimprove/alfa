@@ -1,11 +1,17 @@
 import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
+import { ObjectCache } from "./object-cache";
 
 export interface ClassList extends Iterable<string> {
   has(className: string): boolean;
 }
 
-const classLists: WeakMap<Element, ClassList> = new WeakMap();
+const classLists: ObjectCache<Element, ClassList> = new ObjectCache();
+
+/**
+ * Empty singleton set used for elements that have no class list.
+ */
+const empty: ClassList = new Set();
 
 /**
  * Given an element, get the associated class list of an element.
@@ -18,12 +24,13 @@ const classLists: WeakMap<Element, ClassList> = new WeakMap();
  * // => ["foo", "bar"]
  */
 export function getClassList(element: Element): ClassList {
-  let classList = classLists.get(element);
+  return classLists.get(element, () => {
+    const classList = getAttribute(element, "class");
 
-  if (classList === undefined) {
-    classList = new Set((getAttribute(element, "class") || "").split(/\s+/));
-    classLists.set(element, classList);
-  }
+    if (classList === null) {
+      return empty;
+    }
 
-  return classList;
+    return new Set(classList.split(/\s+/));
+  });
 }

@@ -21,18 +21,16 @@ export function getCascade(document: Document): Cascade {
   return cascades.get(document, () => {
     const cascade: WeakMap<Element, Array<StyleRule>> = new WeakMap();
     const selectorMap = new SelectorMap(document.styleSheets);
-    const ancestorFilter = new AncestorFilter();
+    const filter = new AncestorFilter();
 
     traverseNode(document, {
       enter(node, parent) {
         if (parent !== null && isElement(parent)) {
-          ancestorFilter.add(parent);
+          filter.add(parent);
         }
 
         if (isElement(node)) {
-          const rules = selectorMap.getRules(node, document, {
-            filter: ancestorFilter
-          });
+          const rules = selectorMap.getRules(node, document, { filter });
 
           rules.sort((a, b) => {
             // If the specificities of the rules are equal, the declaration
@@ -52,7 +50,7 @@ export function getCascade(document: Document): Cascade {
       },
       exit(node) {
         if (isElement(node)) {
-          ancestorFilter.remove(node);
+          filter.remove(node);
         }
       }
     });

@@ -1,6 +1,9 @@
 import { Element } from "./types";
 
-export type AttributeOptions = Readonly<{ trim?: boolean }>;
+export type AttributeOptions = Readonly<{
+  trim?: boolean;
+  lowerCase?: boolean;
+}>;
 
 const attributeMaps: WeakMap<Element, AttributeMap> = new WeakMap();
 
@@ -15,7 +18,7 @@ const attributeMaps: WeakMap<Element, AttributeMap> = new WeakMap();
 export function getAttribute(
   element: Element,
   name: string,
-  options: AttributeOptions = { trim: false }
+  options: AttributeOptions = {}
 ): string | null {
   let attributeMap = attributeMaps.get(element);
 
@@ -24,13 +27,16 @@ export function getAttribute(
     attributeMaps.set(element, attributeMap);
   }
 
-  const value = attributeMap.get(name);
+  let value = attributeMap.get(name);
 
   if (value === null) {
     return null;
   }
 
-  return options.trim ? value.trim() : value;
+  value = options.trim ? value.trim() : value;
+  value = options.lowerCase ? value.toLowerCase() : value;
+
+  return value;
 }
 
 class AttributeMap {
