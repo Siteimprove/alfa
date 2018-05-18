@@ -1,3 +1,4 @@
+import { each } from "@siteimprove/alfa-util";
 import { Element } from "./types";
 
 export type AttributeOptions = Readonly<{
@@ -45,14 +46,14 @@ class AttributeMap {
   public constructor(element: Element) {
     const { length } = element.attributes;
 
-    for (let i = 0; i < length; i++) {
-      const { prefix, localName, value } = element.attributes[i];
+    each(element.attributes, attribute => {
+      const { prefix, localName, value } = attribute;
 
       const qualifiedName =
         prefix === null ? localName : prefix + ":" + localName;
 
       this._attributes.set(qualifiedName, value);
-    }
+    });
   }
 
   public get(name: string): string | null {
