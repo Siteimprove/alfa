@@ -1,5 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Expression, Stream } from "@siteimprove/alfa-lang";
+import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
 import {
   Token,
   Whitespace,
