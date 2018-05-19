@@ -10,8 +10,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@types/node": "^10.0.4",
-    "@types/text-encoding": "^0.0.32"
+    "@types/sjcl": "^1.0.28",
+    "sjcl": "^1.0.7"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",

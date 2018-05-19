@@ -1,1 +1,2 @@
-export * from "./digest";
+export * from "./get-hash";
+export * from "./types";

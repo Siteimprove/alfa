@@ -1,5 +1,5 @@
+import { getHash } from "@siteimprove/alfa-crypto";
 import { slice, each } from "@siteimprove/alfa-util";
-import * as crypto from "@siteimprove/alfa-crypto";
 import { Node } from "./types";
 import { isElement, isText, isComment, isDocumentType } from "./guards";
 import { getNamespace } from "./get-namespace";
@@ -13,10 +13,7 @@ const digests: WeakMap<Node, string> = new WeakMap();
  *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export async function getDigest(
-  node: Node,
-  context: Node = node
-): Promise<string | null> {
+export function getDigest(node: Node, context: Node = node): string | null {
   if (isComment(node) || isDocumentType(node)) {
     return null;
   }
@@ -24,19 +21,21 @@ export async function getDigest(
   let digest = digests.get(node);
 
   if (digest === undefined) {
-    digest = String(node.nodeType);
+    let hash = getHash("sha256");
+
+    hash.update(String(node.nodeType));
 
     if (isText(node)) {
-      digest += node.data;
+      hash.update(node.data);
     }
 
     if (isElement(node)) {
       const namespace = getNamespace(node, context);
 
       if (namespace === null) {
-        digest += node.localName;
+        hash.update(node.localName);
       } else {
-        digest += namespace + ":" + node.localName;
+        hash.update(namespace + ":" + node.localName);
       }
 
       const attributes = slice(node.attributes).sort(
@@ -48,22 +47,22 @@ export async function getDigest(
         const namespace = getNamespace(attribute, context);
 
         if (namespace === null) {
-          digest += attribute.localName + attribute.value;
+          hash.update(attribute.localName + attribute.value);
         } else {
-          digest += namespace + ":" + attribute.localName + attribute.value;
+          hash.update(namespace + ":" + attribute.localName + attribute.value);
         }
       });
     }
 
-    for (let i = 0, n = node.childNodes.length; i < n; i++) {
-      const childDigest = await getDigest(node.childNodes[i], context);
+    each(node.childNodes, childNode => {
+      const childDigest = getDigest(childNode, context);
 
       if (childDigest !== null) {
-        digest += childDigest;
+        hash.update(childDigest);
       }
-    }
+    });
 
-    digest = await crypto.digest(digest);
+    digest = hash.digest("base64");
     digests.set(node, digest);
   }
 
