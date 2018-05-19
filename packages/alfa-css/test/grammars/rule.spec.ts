@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { AtRule, QualifiedRule } from "../../src/grammar";
 import { RuleGrammar } from "../../src/grammars/rule";
 
-async function rule(
+function rule(
   t: Test,
   input: string,
   expected: AtRule | QualifiedRule | Array<AtRule | QualifiedRule>
@@ -12,7 +12,7 @@ async function rule(
   t.deepEqual(parse(lex(input, Alphabet), RuleGrammar), expected, t.title);
 }
 
-test("Can parse a single qualified rule", async t =>
+test("Can parse a single qualified rule", t =>
   rule(t, "div{color:red}", {
     type: "qualified-rule",
     prelude: [
@@ -36,7 +36,7 @@ test("Can parse a single qualified rule", async t =>
     ]
   }));
 
-test("Can parse a list of qualified rules", async t =>
+test("Can parse a list of qualified rules", t =>
   rule(t, "div{color:red}span{color:blue}", [
     {
       type: "qualified-rule",
@@ -84,7 +84,7 @@ test("Can parse a list of qualified rules", async t =>
     }
   ]));
 
-test("Can parse a rule with a class selector", async t =>
+test("Can parse a rule with a class selector", t =>
   rule(t, ".foo{}", {
     type: "qualified-rule",
     prelude: [
@@ -100,7 +100,7 @@ test("Can parse a rule with a class selector", async t =>
     value: []
   }));
 
-test("Can parse a rule with an ID selector", async t =>
+test("Can parse a rule with an ID selector", t =>
   rule(t, "#foo{}", {
     type: "qualified-rule",
     prelude: [
@@ -116,7 +116,7 @@ test("Can parse a rule with an ID selector", async t =>
     value: []
   }));
 
-test("Can parse a rule with an attribute selector", async t =>
+test("Can parse a rule with an attribute selector", t =>
   rule(t, "[foo]{}", {
     type: "qualified-rule",
     prelude: [

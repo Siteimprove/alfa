@@ -6,11 +6,11 @@ export const Manual: Rule<Element, "document"> = {
   criteria: [],
   locales: [],
   context: () => null,
-  applicability: async ({ document }) => {
-    return isElement(document) ? [document] : [];
+  applicability: ({ document }) => {
+    return isElement(document) ? document : null;
   },
   expectations: {
-    1: async (target, { document }, question) => {
+    1: (target, { document }, question) => {
       if (getAttribute(target, "alt") === "") {
         return true;
       }
@@ -25,15 +25,15 @@ export const Dependencies: Rule<Element, "document"> = {
   criteria: [],
   locales: [],
   context: () => null,
-  applicability: async ({ document }) => {
+  applicability: ({ document }) => {
     return isElement(document) ? [document] : [];
   },
   expectations: {
-    1: async (target, { document }) => {
+    1: (target, { document }) => {
       return false;
     },
 
-    2: async (target, { document }) => {
+    2: (target, { document }) => {
       return true;
     }
   }

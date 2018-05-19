@@ -38,7 +38,7 @@ export const UniqueId: Rule<Element, "document", Context> = {
 
     return context;
   },
-  applicability: async (aspects, context) => {
+  applicability: (aspects, context) => {
     const elements: Array<Element> = [];
 
     for (const [id, set] of context) {
@@ -50,7 +50,7 @@ export const UniqueId: Rule<Element, "document", Context> = {
     return elements;
   },
   expectations: {
-    1: async (target, aspects, question, context) => {
+    1: (target, aspects, question, context) => {
       const id = getAttribute(target, "id");
 
       if (id === null) {

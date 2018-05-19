@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { Declaration } from "../../src/grammar";
 import { DeclarationGrammar } from "../../src/grammars/declaration";
 
-async function declaration(
+function declaration(
   t: Test,
   input: string,
   expected: Declaration | Array<Declaration>
@@ -16,7 +16,7 @@ async function declaration(
   );
 }
 
-test("Can parse a single declaration", async t =>
+test("Can parse a single declaration", t =>
   declaration(t, "color:red", {
     type: "declaration",
     name: "color",
@@ -29,7 +29,7 @@ test("Can parse a single declaration", async t =>
     important: false
   }));
 
-test("Can parse a list of declarations", async t =>
+test("Can parse a list of declarations", t =>
   declaration(t, "color:red;font-size:24px", [
     {
       type: "declaration",
@@ -57,7 +57,7 @@ test("Can parse a list of declarations", async t =>
     }
   ]));
 
-test("Can parse an important declaration", async t =>
+test("Can parse an important declaration", t =>
   declaration(t, "color:red!important", {
     type: "declaration",
     name: "color",

@@ -6,35 +6,35 @@ function css(t: Test, input: string, expected: Array<Token>) {
   t.deepEqual(lex(input, Alphabet), expected, t.title);
 }
 
-test("Can lex whitespace", async t =>
+test("Can lex whitespace", t =>
   css(t, "  \n \t", [
     {
       type: "whitespace"
     }
   ]));
 
-test("Can lex a comma", async t =>
+test("Can lex a comma", t =>
   css(t, ",", [
     {
       type: ","
     }
   ]));
 
-test("Can lex a colon", async t =>
+test("Can lex a colon", t =>
   css(t, ":", [
     {
       type: ":"
     }
   ]));
 
-test("Can lex a semicolon", async t =>
+test("Can lex a semicolon", t =>
   css(t, ";", [
     {
       type: ";"
     }
   ]));
 
-test("Can lex a comment", async t =>
+test("Can lex a comment", t =>
   css(t, "/*Hello world*/", [
     {
       type: "comment",
@@ -42,7 +42,7 @@ test("Can lex a comment", async t =>
     }
   ]));
 
-test("Can lex an ident", async t =>
+test("Can lex an ident", t =>
   css(t, "foo", [
     {
       type: "ident",
@@ -50,7 +50,7 @@ test("Can lex an ident", async t =>
     }
   ]));
 
-test("Can lex an ident prefixed with a single hyphen", async t =>
+test("Can lex an ident prefixed with a single hyphen", t =>
   css(t, "-foo", [
     {
       type: "ident",
@@ -58,7 +58,7 @@ test("Can lex an ident prefixed with a single hyphen", async t =>
     }
   ]));
 
-test("Can lex an ident containing an underscore", async t =>
+test("Can lex an ident containing an underscore", t =>
   css(t, "foo_bar", [
     {
       type: "ident",
@@ -66,7 +66,7 @@ test("Can lex an ident containing an underscore", async t =>
     }
   ]));
 
-test("Can lex an ident containing a hyphen", async t =>
+test("Can lex an ident containing a hyphen", t =>
   css(t, "foo-bar", [
     {
       type: "ident",
@@ -74,7 +74,7 @@ test("Can lex an ident containing a hyphen", async t =>
     }
   ]));
 
-test("Can lex two idents separated by a comma", async t =>
+test("Can lex two idents separated by a comma", t =>
   css(t, "foo,bar", [
     {
       type: "ident",
@@ -89,7 +89,7 @@ test("Can lex two idents separated by a comma", async t =>
     }
   ]));
 
-test("Can lex a double quoted string", async t =>
+test("Can lex a double quoted string", t =>
   css(t, '"foo"', [
     {
       type: "string",
@@ -97,7 +97,7 @@ test("Can lex a double quoted string", async t =>
     }
   ]));
 
-test("Can lex a single quoted string", async t =>
+test("Can lex a single quoted string", t =>
   css(t, "'foo'", [
     {
       type: "string",
@@ -105,7 +105,7 @@ test("Can lex a single quoted string", async t =>
     }
   ]));
 
-test("Can lex an integer", async t =>
+test("Can lex an integer", t =>
   css(t, "123", [
     {
       type: "number",
@@ -114,7 +114,7 @@ test("Can lex an integer", async t =>
     }
   ]));
 
-test("Can lex a decimal", async t =>
+test("Can lex a decimal", t =>
   css(t, "123.456", [
     {
       type: "number",
@@ -123,7 +123,7 @@ test("Can lex a decimal", async t =>
     }
   ]));
 
-test("Can lex a number in E-notation", async t =>
+test("Can lex a number in E-notation", t =>
   css(t, "123.456e2", [
     {
       type: "number",
@@ -132,7 +132,7 @@ test("Can lex a number in E-notation", async t =>
     }
   ]));
 
-test("Can lex a dimension", async t =>
+test("Can lex a dimension", t =>
   css(t, "123px", [
     {
       type: "dimension",
@@ -142,7 +142,7 @@ test("Can lex a dimension", async t =>
     }
   ]));
 
-test("Can lex a percentage", async t =>
+test("Can lex a percentage", t =>
   css(t, "123%", [
     {
       type: "percentage",
@@ -151,7 +151,7 @@ test("Can lex a percentage", async t =>
     }
   ]));
 
-test("Can lex a function with no arguments", async t =>
+test("Can lex a function with no arguments", t =>
   css(t, "rgb()", [
     {
       type: "function-name",
@@ -162,7 +162,7 @@ test("Can lex a function with no arguments", async t =>
     }
   ]));
 
-test("Can lex a function with a single argument", async t =>
+test("Can lex a function with a single argument", t =>
   css(t, "rgb(123)", [
     {
       type: "function-name",
@@ -178,7 +178,7 @@ test("Can lex a function with a single argument", async t =>
     }
   ]));
 
-test("Can lex an ID selector", async t =>
+test("Can lex an ID selector", t =>
   css(t, "#foo", [
     {
       type: "delim",
@@ -190,7 +190,7 @@ test("Can lex an ID selector", async t =>
     }
   ]));
 
-test("Can lex a class selector", async t =>
+test("Can lex a class selector", t =>
   css(t, ".foo", [
     {
       type: "delim",
@@ -202,7 +202,7 @@ test("Can lex a class selector", async t =>
     }
   ]));
 
-test("Can lex a type selector with a namespace", async t =>
+test("Can lex a type selector with a namespace", t =>
   css(t, "svg|div", [
     {
       type: "ident",
@@ -218,7 +218,7 @@ test("Can lex a type selector with a namespace", async t =>
     }
   ]));
 
-test("Can lex a declaration", async t =>
+test("Can lex a declaration", t =>
   css(t, "color:red", [
     {
       type: "ident",
@@ -233,7 +233,7 @@ test("Can lex a declaration", async t =>
     }
   ]));
 
-test("Can lex an+b values", async t =>
+test("Can lex an+b values", t =>
   css(t, "2n+4", [
     {
       type: "dimension",

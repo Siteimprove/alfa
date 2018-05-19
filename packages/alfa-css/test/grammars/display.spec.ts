@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { Display } from "../../src/properties/display";
 import { DisplayGrammar } from "../../src/grammars/display";
 
-async function display(t: Test, input: string, expected: Display) {
+function display(t: Test, input: string, expected: Display) {
   t.deepEqual(parse(lex(input, Alphabet), DisplayGrammar), expected, t.title);
 }
 

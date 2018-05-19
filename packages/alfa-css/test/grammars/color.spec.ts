@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { Color } from "../../src/properties/color";
 import { ColorGrammar } from "../../src/grammars/color";
 
-async function color(t: Test, input: string, expected: Color) {
+function color(t: Test, input: string, expected: Color) {
   t.deepEqual(parse(lex(input, Alphabet), ColorGrammar), expected, t.title);
 }
 

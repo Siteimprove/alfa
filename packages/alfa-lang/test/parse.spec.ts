@@ -6,7 +6,7 @@ import {
   ExpressionGrammar
 } from "./helpers/expression";
 
-async function expression(
+function expression(
   t: Test,
   input: Array<ExpressionToken>,
   expected: Expression
@@ -14,7 +14,7 @@ async function expression(
   t.deepEqual(parse(input, ExpressionGrammar), expected, "Parse trees match");
 }
 
-test("Correctly handles operator precedence", async t =>
+test("Correctly handles operator precedence", t =>
   expression(
     t,
     [

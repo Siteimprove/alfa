@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { FontSize } from "../../src/properties/font";
 import { FontSizeGrammar } from "../../src/grammars/font";
 
-async function fontSize(t: Test, input: string, expected: FontSize) {
+function fontSize(t: Test, input: string, expected: FontSize) {
   t.deepEqual(parse(lex(input, Alphabet), FontSizeGrammar), expected, t.title);
 }
 

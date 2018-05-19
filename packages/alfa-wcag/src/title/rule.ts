@@ -32,14 +32,14 @@ export const Title: Rule<Element, "document", Context> = {
 
     return { root, title };
   },
-  applicability: async (aspects, context) => {
-    return context.root ? [context.root] : [];
+  applicability: (aspects, context) => {
+    return context.root;
   },
   expectations: {
-    1: async (root, aspects, question, { title }) => {
+    1: (root, aspects, question, { title }) => {
       return title !== null;
     },
-    2: async (root, aspects, question, { title }) => {
+    2: (root, aspects, question, { title }) => {
       return title !== null && hasTextContent(title);
     }
   }

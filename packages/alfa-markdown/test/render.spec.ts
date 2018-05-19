@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { render } from "../src/render";
 
-test("Render", async t => {
+test("Render", t => {
   const markdown = render({
     type: "heading",
     depth: 1,

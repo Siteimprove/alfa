@@ -6,7 +6,7 @@ function html(t: Test, input: string, expected: Array<Token>) {
   t.deepEqual(lex(input, Alphabet), expected, t.title);
 }
 
-test("Can lex a start tag", async t =>
+test("Can lex a start tag", t =>
   html(t, "<span>", [
     {
       type: "start-tag",
@@ -16,10 +16,10 @@ test("Can lex a start tag", async t =>
     }
   ]));
 
-test("Can lex a start tag with a missing closing brace", async t =>
+test("Can lex a start tag with a missing closing brace", t =>
   html(t, "<span", []));
 
-test("Can lex a self-closing start tag", async t =>
+test("Can lex a self-closing start tag", t =>
   html(t, "<span/>", [
     {
       type: "start-tag",
@@ -29,7 +29,7 @@ test("Can lex a self-closing start tag", async t =>
     }
   ]));
 
-test("Can lex an orphaned less-than sign", async t =>
+test("Can lex an orphaned less-than sign", t =>
   html(t, "<", [
     {
       type: "character",
@@ -37,7 +37,7 @@ test("Can lex an orphaned less-than sign", async t =>
     }
   ]));
 
-test("Can lex an end tag", async t =>
+test("Can lex an end tag", t =>
   html(t, "</span>", [
     {
       type: "end-tag",
@@ -45,7 +45,7 @@ test("Can lex an end tag", async t =>
     }
   ]));
 
-test("Can lex a start tag followed by an end tag", async t =>
+test("Can lex a start tag followed by an end tag", t =>
   html(t, "<span></span>", [
     {
       type: "start-tag",
@@ -59,7 +59,7 @@ test("Can lex a start tag followed by an end tag", async t =>
     }
   ]));
 
-test("Can lex a start tag with a double-quoted attribute", async t =>
+test("Can lex a start tag with a double-quoted attribute", t =>
   html(t, '<span foo="bar">', [
     {
       type: "start-tag",
@@ -69,7 +69,7 @@ test("Can lex a start tag with a double-quoted attribute", async t =>
     }
   ]));
 
-test("Can lex a start tag with a single-quoted attribute", async t =>
+test("Can lex a start tag with a single-quoted attribute", t =>
   html(t, "<span foo='bar'>", [
     {
       type: "start-tag",
@@ -79,7 +79,7 @@ test("Can lex a start tag with a single-quoted attribute", async t =>
     }
   ]));
 
-test("Can lex a start tag with an unquoted attribute", async t =>
+test("Can lex a start tag with an unquoted attribute", t =>
   html(t, "<span foo=bar>", [
     {
       type: "start-tag",
@@ -89,7 +89,7 @@ test("Can lex a start tag with an unquoted attribute", async t =>
     }
   ]));
 
-test("Can lex a start tag with multiple attributes", async t =>
+test("Can lex a start tag with multiple attributes", t =>
   html(t, '<span foo="bar" baz="qux">', [
     {
       type: "start-tag",
@@ -99,7 +99,7 @@ test("Can lex a start tag with multiple attributes", async t =>
     }
   ]));
 
-test("Can lex a start tag with a boolean attribute", async t =>
+test("Can lex a start tag with a boolean attribute", t =>
   html(t, "<span foo>", [
     {
       type: "start-tag",
@@ -109,7 +109,7 @@ test("Can lex a start tag with a boolean attribute", async t =>
     }
   ]));
 
-test("Can lex an incorrectly closed end tag", async t =>
+test("Can lex an incorrectly closed end tag", t =>
   html(t, "</ ", [
     {
       type: "comment",
@@ -117,7 +117,7 @@ test("Can lex an incorrectly closed end tag", async t =>
     }
   ]));
 
-test("Can lex character data within a tag", async t =>
+test("Can lex character data within a tag", t =>
   html(t, "<p>Hi</p>", [
     {
       type: "start-tag",
@@ -139,7 +139,7 @@ test("Can lex character data within a tag", async t =>
     }
   ]));
 
-test("Can lex a comment", async t =>
+test("Can lex a comment", t =>
   html(t, "<!--foo-->", [
     {
       type: "comment",

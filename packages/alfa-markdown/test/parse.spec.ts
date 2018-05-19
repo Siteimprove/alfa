@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { parse } from "../src/parse";
 
-test("Parse", async t => {
+test("Parse", t => {
   const markdown = parse("# Alfa");
 
   t.deepEqual(markdown, {

@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../src/jsx";
 
-test("Transforms JSX into DOM nodes", async t => {
+test("Transforms JSX into DOM nodes", t => {
   t.deepEqual(<div class="foo">Hello world</div>, {
     nodeType: 1,
     childNodes: [
@@ -26,7 +26,7 @@ test("Transforms JSX into DOM nodes", async t => {
   });
 });
 
-test("Handles boolean attributes when truthy", async t => {
+test("Handles boolean attributes when truthy", t => {
   const element = <div hidden />;
 
   const hidden = element.attributes.find(
@@ -41,7 +41,7 @@ test("Handles boolean attributes when truthy", async t => {
   });
 });
 
-test("Handles boolean attributes when falsey", async t => {
+test("Handles boolean attributes when falsey", t => {
   const element = <div hidden={false} />;
 
   const hidden = element.attributes.find(
@@ -51,7 +51,7 @@ test("Handles boolean attributes when falsey", async t => {
   t.is(hidden, undefined);
 });
 
-test("Converts numbers in attributes to strings", async t => {
+test("Converts numbers in attributes to strings", t => {
   const element = <div number={20} />;
 
   const number = element.attributes.find(
@@ -66,7 +66,7 @@ test("Converts numbers in attributes to strings", async t => {
   });
 });
 
-test("Handles attributes with null values", async t => {
+test("Handles attributes with null values", t => {
   const element = <div foo={null} />;
 
   const foo = element.attributes.find(
@@ -76,7 +76,7 @@ test("Handles attributes with null values", async t => {
   t.is(foo, undefined);
 });
 
-test("Handles attributes with undefined values", async t => {
+test("Handles attributes with undefined values", t => {
   const element = <div foo={undefined} />;
 
   const foo = element.attributes.find(
@@ -86,7 +86,7 @@ test("Handles attributes with undefined values", async t => {
   t.is(foo, undefined);
 });
 
-test("Handles attributes with NaN values", async t => {
+test("Handles attributes with NaN values", t => {
   const element = <div foo={NaN} />;
 
   const foo = element.attributes.find(
@@ -101,7 +101,7 @@ test("Handles attributes with NaN values", async t => {
   });
 });
 
-test("Handles attributes with array values", async t => {
+test("Handles attributes with array values", t => {
   const element = <div foo={[1, 2, 3]} />;
 
   const foo = element.attributes.find(
@@ -116,7 +116,7 @@ test("Handles attributes with array values", async t => {
   });
 });
 
-test("Handles attributes with object values", async t => {
+test("Handles attributes with object values", t => {
   const element = <div foo={{ foo: "foo" }} />;
 
   const foo = element.attributes.find(
@@ -131,7 +131,7 @@ test("Handles attributes with object values", async t => {
   });
 });
 
-test("Handles foreign objects in the SVG namespace", async t => {
+test("Handles foreign objects in the SVG namespace", t => {
   t.deepEqual(
     <svg>
       <g>
@@ -170,7 +170,7 @@ test("Handles foreign objects in the SVG namespace", async t => {
   );
 });
 
-test("Handles foreign objects in the MathML namespace", async t => {
+test("Handles foreign objects in the MathML namespace", t => {
   t.deepEqual(
     <math>
       <apply>
