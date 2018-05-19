@@ -1,19 +1,10 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident } from "../alphabet";
+import { whitespace } from "../grammar";
 import { Display } from "../properties/display";
 
 type Production<T extends Token, R = never> = Lang.Production<Token, R, T>;
-
-const whitespace: Production<Whitespace> = {
-  token: "whitespace",
-  prefix() {
-    return null;
-  },
-  infix() {
-    return null;
-  }
-};
 
 const ident: Production<Ident, Display> = {
   token: "ident",

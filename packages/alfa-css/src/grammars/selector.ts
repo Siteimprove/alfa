@@ -20,6 +20,7 @@ import {
   isString,
   isDelim
 } from "../alphabet";
+import { comment } from "../grammar";
 
 const { isArray } = Array;
 
@@ -345,7 +346,7 @@ const whitespace: Production<Whitespace> = {
   token: "whitespace",
 
   prefix(token, stream, expression) {
-    return null;
+    return Command.Continue;
   },
 
   infix(token, stream, expression, left) {
@@ -370,19 +371,7 @@ const whitespace: Production<Whitespace> = {
       };
     }
 
-    return null;
-  }
-};
-
-const comment: Production<Comment> = {
-  token: "comment",
-
-  prefix() {
-    return null;
-  },
-
-  infix() {
-    return null;
+    return Command.Continue;
   }
 };
 

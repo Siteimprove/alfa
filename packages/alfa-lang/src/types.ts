@@ -9,12 +9,16 @@ export interface Location {
   readonly column: number;
 }
 
+export enum Command {
+  End,
+  Continue
+}
+
 export type Pattern<T extends Token, S = null> = (
   stream: Stream<string>,
   emit: <U extends T>(token: U) => void,
-  state: S,
-  end: () => void
-) => Pattern<T, S> | void;
+  state: S
+) => Pattern<T, S> | Command.End | void;
 
 export type Expression<T> = () => T | null;
 
@@ -26,11 +30,15 @@ export interface Production<
 > {
   readonly token: U["type"];
   readonly associate?: "left" | "right";
-  prefix?(token: U, stream: Stream<T>, expression: Expression<R>): P | null;
+  prefix?(
+    token: U,
+    stream: Stream<T>,
+    expression: Expression<R>
+  ): P | Command.Continue | null;
   infix?(
     token: U,
     stream: Stream<T>,
     expression: Expression<R>,
     left: R
-  ): P | null;
+  ): P | Command.Continue | null;
 }

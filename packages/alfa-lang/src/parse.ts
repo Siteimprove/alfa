@@ -1,4 +1,4 @@
-import { Token } from "./types";
+import { Token, Command } from "./types";
 import { Grammar } from "./grammar";
 import { TokenStream } from "./stream";
 
@@ -9,7 +9,7 @@ export function parse<T extends Token, R>(
   const stream = new TokenStream(input);
 
   function expression(power: number): R | null {
-    const token = stream.peek();
+    let token = stream.peek();
 
     if (token === null) {
       return null;
@@ -32,16 +32,16 @@ export function parse<T extends Token, R>(
     let left = production.prefix(token, stream, () => expression(-1));
 
     if (left === null) {
+      return null;
+    }
+
+    if (left === Command.Continue) {
       return expression(power);
     }
 
-    while (stream.peek()) {
-      const token = stream.peek();
+    token = stream.peek();
 
-      if (token === null) {
-        break;
-      }
-
+    while (token !== null) {
       const entry = grammar.get(token);
 
       if (entry === null) {
@@ -54,10 +54,11 @@ export function parse<T extends Token, R>(
         break;
       }
 
-      if (
-        precedence < power ||
-        (precedence === power && production.associate !== "right")
-      ) {
+      if (precedence < power) {
+        break;
+      }
+
+      if (precedence === power && production.associate !== "right") {
         break;
       }
 
@@ -70,9 +71,17 @@ export function parse<T extends Token, R>(
         left
       );
 
-      if (right !== null) {
-        left = right;
+      if (right === null) {
+        return null;
       }
+
+      token = stream.peek();
+
+      if (right === Command.Continue) {
+        continue;
+      }
+
+      left = right;
     }
 
     return left;

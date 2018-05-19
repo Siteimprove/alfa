@@ -1,4 +1,4 @@
-import { Token } from "./types";
+import { Token, Pattern, Command } from "./types";
 import { Alphabet } from "./alphabet";
 import { CharacterStream } from "./stream";
 
@@ -9,22 +9,28 @@ export function lex<T extends Token, S = null>(
   const tokens: Array<T> = [];
   const stream = new CharacterStream(input);
 
-  let done = false;
-
   function emit<U extends T>(token: U): void {
     tokens.push(token);
   }
 
-  function end() {
-    done = true;
-  }
-
   const state = alphabet.state(stream);
 
-  let { pattern } = alphabet;
+  let pattern: Pattern<T, S> = alphabet.pattern;
 
-  while (!done) {
-    pattern = pattern(stream, emit, state, end) || pattern;
+  while (true) {
+    const next = pattern(stream, emit, state);
+
+    if (next === undefined) {
+      continue;
+    }
+
+    if (typeof next === "function") {
+      pattern = next;
+    } else {
+      if (next === Command.End) {
+        break;
+      }
+    }
   }
 
   return tokens;

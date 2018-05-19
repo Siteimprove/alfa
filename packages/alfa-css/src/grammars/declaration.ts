@@ -1,7 +1,7 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, Semicolon } from "../alphabet";
-import { Declaration, declaration } from "../grammar";
+import { Declaration, declaration, whitespace } from "../grammar";
 
 const { isArray } = Array;
 
@@ -10,16 +10,6 @@ type Production<T extends Token> = Lang.Production<
   Declaration | Array<Declaration>,
   T
 >;
-
-const whitespace: Production<Whitespace> = {
-  token: "whitespace",
-  prefix() {
-    return null;
-  },
-  infix() {
-    return null;
-  }
-};
 
 const ident: Production<Ident> = {
   token: "ident",

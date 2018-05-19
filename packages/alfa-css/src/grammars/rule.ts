@@ -1,7 +1,13 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Whitespace, Ident, Delim, Bracket } from "../alphabet";
-import { AtRule, QualifiedRule, atRule, qualifiedRule } from "../grammar";
+import {
+  AtRule,
+  QualifiedRule,
+  atRule,
+  qualifiedRule,
+  whitespace
+} from "../grammar";
 
 const { isArray } = Array;
 
@@ -46,16 +52,6 @@ type Production<T extends Token> = Lang.Production<
   Rule | Array<Rule>,
   T
 >;
-
-const whitespace: Production<Whitespace> = {
-  token: "whitespace",
-  prefix() {
-    return null;
-  },
-  infix() {
-    return null;
-  }
-};
 
 const ident: Production<Ident> = {
   token: "ident",

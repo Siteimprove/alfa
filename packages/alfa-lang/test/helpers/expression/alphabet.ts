@@ -1,5 +1,5 @@
 import { isWhitespace, isNumeric } from "@siteimprove/alfa-util";
-import { Pattern } from "../../../src/types";
+import { Pattern, Command } from "../../../src/types";
 import { Alphabet } from "../../../src/alphabet";
 import { lex } from "../../../src/lex";
 
@@ -18,13 +18,13 @@ export function isNumber(token: ExpressionToken): token is Number {
   return token.type === "number" && "value" in token;
 }
 
-const initial: ExpressionPattern = (stream, emit, state, done) => {
+const initial: ExpressionPattern = (stream, emit, state) => {
   stream.accept(isWhitespace);
 
   const char = stream.peek();
 
   if (char === null) {
-    return done();
+    return Command.End;
   }
 
   if (isNumeric(char)) {

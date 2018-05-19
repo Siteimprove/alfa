@@ -1,5 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Stream } from "@siteimprove/alfa-lang";
+import { Stream, Command } from "@siteimprove/alfa-lang";
 import {
   isWhitespace,
   isAlpha,
@@ -220,11 +220,11 @@ const escapedCodePoint: (stream: Stream<string>) => string = stream => {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
  */
-const initial: Pattern = (stream, emit, state, end) => {
+const initial: Pattern = (stream, emit, state) => {
   const char = stream.next();
 
   if (char === null) {
-    return end();
+    return Command.End;
   }
 
   if (isWhitespace(char)) {
