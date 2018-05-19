@@ -46,7 +46,8 @@ test("Gets the key selector of an attribute selector", t => {
     type: "attribute-selector",
     name: "foo",
     value: null,
-    matcher: null
+    matcher: null,
+    modifier: null
   });
 });
 
