@@ -564,12 +564,12 @@ const beforeAttributeValue: Pattern = (stream, emit) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
  */
-const attributeValueDoubleQuoted: Pattern = (stream, emit, { attribute }) => {
+const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
   const char = stream.peek();
 
   if (char === '"') {
-    if (attribute !== null) {
-      attribute.value = stream.result().join("");
+    if (state.attribute !== null) {
+      state.attribute.value = stream.result().join("");
     }
 
     stream.advance();
@@ -587,12 +587,12 @@ const attributeValueDoubleQuoted: Pattern = (stream, emit, { attribute }) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
  */
-const attributeValueSingleQuoted: Pattern = (stream, emit, { attribute }) => {
+const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
   const char = stream.peek();
 
   if (char === "'") {
-    if (attribute !== null) {
-      attribute.value = stream.result().join("");
+    if (state.attribute !== null) {
+      state.attribute.value = stream.result().join("");
     }
 
     stream.advance();
