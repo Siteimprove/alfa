@@ -162,51 +162,7 @@ export function value(stream: Stream<Token>): Token {
     throw new Error("Unexpected end of input");
   }
 
-  switch (next.type) {
-    case "whitespace":
-      return { type: next.type };
-    case ":":
-      return { type: next.type };
-    case ";":
-      return { type: next.type };
-    case ",":
-      return { type: next.type };
-    case "{":
-    case "}":
-      return { type: next.type };
-    case "[":
-    case "]":
-      return { type: next.type };
-    case "(":
-    case ")":
-      return { type: next.type };
-
-    case "comment":
-      return { type: next.type, value: next.value };
-    case "ident":
-      return { type: next.type, value: next.value };
-    case "function-name":
-      return { type: next.type, value: next.value };
-    case "string":
-      return { type: next.type, value: next.value };
-    case "url":
-      return { type: next.type, value: next.value };
-    case "delim":
-      return { type: next.type, value: next.value };
-
-    case "number":
-      return { type: next.type, value: next.value, integer: next.integer };
-    case "percentage":
-      return { type: next.type, value: next.value, integer: next.integer };
-
-    case "dimension":
-      return {
-        type: next.type,
-        value: next.value,
-        integer: next.integer,
-        unit: next.unit
-      };
-  }
+  return next;
 }
 
 export function block<Name extends "[" | "(" | "{">(
