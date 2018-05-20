@@ -11,8 +11,6 @@ import {
 
 export type Whitespace = Readonly<{ type: "whitespace" }>;
 
-export type Comment = Readonly<{ type: "comment"; value: string }>;
-
 export type Ident = Readonly<{ type: "ident"; value: string }>;
 export type FunctionName = Readonly<{ type: "function-name"; value: string }>;
 export type String = Readonly<{ type: "string"; value: string }>;
@@ -54,7 +52,6 @@ export type Brace<Type extends "{" | "}" = "{" | "}"> = Readonly<{
  */
 export type Token =
   | Whitespace
-  | Comment
 
   // Value tokens
   | Ident
@@ -290,11 +287,6 @@ const comment: Pattern = (stream, emit, state) => {
   if (stream.accept(() => stream.peek() !== "*" || stream.peek(1) !== "/")) {
     const value = stream.result().join("");
     stream.advance(2);
-
-    // While the CSS syntax specification states that comments should be
-    // consumed without emitting a token, we emit one anyway in order to
-    // reproduce a complete version of the CSS.
-    emit({ type: "comment", value });
     return initial;
   }
 };

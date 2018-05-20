@@ -3,7 +3,6 @@ import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
 import {
   Token,
   Whitespace,
-  Comment,
   Delim,
   Ident,
   Comma,
@@ -20,7 +19,6 @@ import {
   isString,
   isDelim
 } from "../alphabet";
-import { comment } from "../grammar";
 
 const { isArray } = Array;
 
@@ -492,4 +490,4 @@ const colon: Production<Colon> = {
 export const SelectorGrammar: Grammar<
   Token,
   Selector | Array<Selector>
-> = new Grammar([[delim, ident, colon, bracket, whitespace], comma, comment]);
+> = new Grammar([[delim, ident, colon, bracket, whitespace], comma]);

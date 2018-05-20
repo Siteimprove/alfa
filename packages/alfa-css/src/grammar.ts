@@ -8,7 +8,6 @@ import {
 import {
   Token,
   Whitespace,
-  Comment,
   Paren,
   Bracket,
   Brace,
@@ -242,19 +241,6 @@ export function block<Name extends "[" | "(" | "{">(
  */
 export const whitespace: Production<Token, never, Whitespace> = {
   token: "whitespace",
-  prefix() {
-    return Command.Continue;
-  },
-  infix() {
-    return Command.Continue;
-  }
-};
-
-/**
- * @internal
- */
-export const comment: Production<Token, never, Comment> = {
-  token: "comment",
   prefix() {
     return Command.Continue;
   },
