@@ -41,12 +41,6 @@ function getRefreshTime(content: string): number | null {
 
   stream.accept(isWhitespace);
 
-  const sign = stream.accept(char => char === "+" || char === "-", 1);
-
-  if (sign === "-") {
-    return null;
-  }
-
   const time = stream.accept(isNumeric);
 
   if (time === false) {
