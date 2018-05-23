@@ -11,11 +11,11 @@ import {
 const { keys } = Object;
 const { isArray } = Array;
 
-export async function audit<T extends Target, A extends Aspect, C = undefined>(
+export function audit<T extends Target, A extends Aspect, C = undefined>(
   rules: Rule<T, A, C> | Array<Rule<T, A, C>>,
   aspects: Pick<Aspects, A>,
   answers: Array<Answer<T>> = []
-): Promise<Array<Result<T, A> | Question<T>>> {
+): Array<Result<T, A> | Question<T>> {
   const results: Array<Result<T, A> | Question<T>> = [];
 
   rules = isArray(rules) ? rules : [rules];
@@ -42,9 +42,9 @@ export async function audit<T extends Target, A extends Aspect, C = undefined>(
       }
     }
 
-    const context = await rule.context(aspects);
+    const context = rule.context(aspects);
 
-    const applicability = await rule.applicability(aspects, context);
+    const applicability = rule.applicability(aspects, context);
 
     const targets =
       applicability === null
@@ -65,7 +65,7 @@ export async function audit<T extends Target, A extends Aspect, C = undefined>(
 
         for (const key of keys(rule.expectations)) {
           const expectation = rule.expectations[key];
-          const holds = await expectation(target, aspects, question, context);
+          const holds = expectation(target, aspects, question, context);
 
           if (!holds) {
             passed = false;

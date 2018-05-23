@@ -5,7 +5,7 @@ import { audit } from "@siteimprove/alfa-act";
 import { Title } from "../src/title/rule";
 import { outcome } from "./helpers/outcome";
 
-test("Passes when at least one non-empty title exists within a document", async t => {
+test("Passes when at least one non-empty title exists within a document", t => {
   const document = (
     <html>
       <head>
@@ -14,7 +14,7 @@ test("Passes when at least one non-empty title exists within a document", async 
     </html>
   );
 
-  const results = await audit(Title, { document });
+  const results = audit(Title, { document });
 
   outcome(t, results, { passed: [document] });
 });
