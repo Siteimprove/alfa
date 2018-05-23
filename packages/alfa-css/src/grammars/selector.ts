@@ -1,4 +1,4 @@
-import { concat, last } from "@siteimprove/alfa-util";
+import { last } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
 import {
@@ -338,29 +338,34 @@ function compoundSelector(
   left: SimpleSelector | Array<SimpleSelector>,
   right: SimpleSelector
 ): CompoundSelector {
-  left = isArray(left) ? left : [left];
+  const selectors = isArray(left) ? left : [left];
 
-  if (isPseudoElementSelector(last(left)!)) {
+  if (isPseudoElementSelector(last(selectors)!)) {
     throw new Error("Unexpected pseudo-element selector");
   }
 
-  return {
-    type: "compound-selector",
-    selectors: concat(left, [right])
-  };
+  selectors.push(right);
+
+  return { type: "compound-selector", selectors };
 }
 
 function selectorList(
   left: Selector | Array<Selector>,
   right: Selector | Array<Selector>
 ): Array<Selector> {
-  left = isArray(left) ? left : [left];
+  const selectors = isArray(left) ? left : [left];
 
-  if (isPseudoElementSelector(last(left)!)) {
+  if (isPseudoElementSelector(last(selectors)!)) {
     throw new Error("Unexpected pseudo-element selector");
   }
 
-  return concat(left, isArray(right) ? right : [right]);
+  if (isArray(right)) {
+    selectors.push(...right);
+  } else {
+    selectors.push(right);
+  }
+
+  return selectors;
 }
 
 function combineSelectors(
