@@ -1,3 +1,4 @@
+import { concat, last } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
 import {
@@ -108,6 +109,18 @@ export function isRelativeSelector(
   selector: Selector
 ): selector is RelativeSelector {
   return selector.type === "relative-selector";
+}
+
+export function isPseudoClassSelector(
+  selector: Selector
+): selector is PseudoClassSelector {
+  return selector.type === "pseudo-class-selector";
+}
+
+export function isPseudoElementSelector(
+  selector: Selector
+): selector is PseudoElementSelector {
+  return selector.type === "pseudo-element-selector";
 }
 
 export function isSelector(selector: Selector): selector is Selector {
@@ -304,34 +317,101 @@ function pseudoSelector(
   return selector;
 }
 
-function compoundSelector(
-  left: ComplexSelector,
-  right: SimpleSelector
-): CompoundSelector {
-  return {
-    type: "compound-selector",
-    selectors: isCompoundSelector(left)
-      ? [...left.selectors, right]
-      : [left, right]
-  };
-}
-
 function relativeSelector(
-  left: RelativeSelector,
-  right: SimpleSelector
+  left: Selector,
+  right: ComplexSelector,
+  combinator: RelativeSelector["combinator"]
 ): RelativeSelector {
+  if (isPseudoElementSelector(left)) {
+    throw new Error("Unexpected pseudo-element selector");
+  }
+
   return {
     type: "relative-selector",
-    combinator: left.combinator,
-    relative: left.relative,
-    selector: compoundSelector(left.selector, right)
+    combinator,
+    relative: left,
+    selector: right
   };
 }
 
-function selector(left: Selector, right: SimpleSelector): Selector {
-  return isRelativeSelector(left)
-    ? relativeSelector(left, right)
-    : compoundSelector(left, right);
+function compoundSelector(
+  left: SimpleSelector | Array<SimpleSelector>,
+  right: SimpleSelector
+): CompoundSelector {
+  left = isArray(left) ? left : [left];
+
+  if (isPseudoElementSelector(last(left)!)) {
+    throw new Error("Unexpected pseudo-element selector");
+  }
+
+  return {
+    type: "compound-selector",
+    selectors: concat(left, [right])
+  };
+}
+
+function selectorList(
+  left: Selector | Array<Selector>,
+  right: Selector | Array<Selector>
+): Array<Selector> {
+  left = isArray(left) ? left : [left];
+
+  if (isPseudoElementSelector(last(left)!)) {
+    throw new Error("Unexpected pseudo-element selector");
+  }
+
+  return concat(left, isArray(right) ? right : [right]);
+}
+
+function combineSelectors(
+  left: Selector | Array<Selector>,
+  right: Selector | Array<Selector>,
+  combinator?: RelativeSelector["combinator"]
+): Selector | Array<Selector> {
+  if (isArray(left) || isArray(right)) {
+    return selectorList(left, right);
+  }
+
+  if (combinator !== undefined) {
+    if (!isComplexSelector(right)) {
+      throw new Error("Exepected complex selector");
+    }
+
+    return relativeSelector(left, right, combinator);
+  }
+
+  if (isSimpleSelector(left)) {
+    if (!isSimpleSelector(right)) {
+      throw new Error("Expected simple selector");
+    }
+
+    return compoundSelector(left, right);
+  }
+
+  if (isComplexSelector(left)) {
+    if (!isSimpleSelector(right)) {
+      throw new Error("Expected simple selector");
+    }
+
+    return compoundSelector(left.selectors, right);
+  }
+
+  if (!isSimpleSelector(right)) {
+    throw new Error("Expected simple selector");
+  }
+
+  const { relative, selector } = left;
+
+  combinator = left.combinator;
+
+  return relativeSelector(
+    relative,
+    compoundSelector(
+      isCompoundSelector(selector) ? selector.selectors : selector,
+      right
+    ),
+    combinator
+  );
 }
 
 type Production<T extends Token> = Lang.Production<
@@ -348,25 +428,14 @@ const whitespace: Production<Whitespace> = {
   },
 
   infix(token, stream, expression, left) {
-    if (isArray(left)) {
-      return null;
-    }
-
     const next = stream.peek();
 
     if (next !== null && isImplicitDescendant(next)) {
       const right = expression();
 
-      if (right === null || isArray(right) || !isComplexSelector(right)) {
-        throw new Error("Expected complex selector");
+      if (right !== null) {
+        return combineSelectors(left, right, " ");
       }
-
-      return {
-        type: "relative-selector",
-        combinator: " ",
-        relative: left,
-        selector: right
-      };
     }
 
     return Command.Continue;
@@ -391,34 +460,25 @@ const delim: Production<Delim> = {
   },
 
   infix(token, stream, expression, left) {
-    if (isArray(left)) {
-      throw new Error("Exepected selector");
-    }
-
     switch (token.value) {
       case "#":
-        return selector(left, idSelector(stream));
+        return combineSelectors(left, idSelector(stream));
       case ".":
-        return selector(left, classSelector(stream));
+        return combineSelectors(left, classSelector(stream));
       case "*":
       case "|":
-        return selector(left, typeSelector(token, stream));
+        return combineSelectors(left, typeSelector(token, stream));
 
       case ">":
       case "+":
       case "~":
         const right = expression();
 
-        if (right === null || isArray(right) || !isComplexSelector(right)) {
+        if (right === null) {
           throw new Error("Expected selector");
         }
 
-        return {
-          type: "relative-selector",
-          combinator: token.value,
-          relative: left,
-          selector: right
-        };
+        return combineSelectors(left, right, token.value);
     }
 
     throw new Error("Expected ID or class name or combinator");
@@ -439,19 +499,11 @@ const comma: Production<Comma> = {
   infix(token, stream, expression, left) {
     const right = expression();
 
-    const selectors: Array<Selector> = isArray(left) ? left : [left];
-
     if (right === null) {
       throw new Error("Expected selector");
     }
 
-    if (isArray(right)) {
-      selectors.push(...right);
-    } else {
-      selectors.push(right);
-    }
-
-    return selectors;
+    return selectorList(left, right);
   }
 };
 
@@ -463,11 +515,7 @@ const bracket: Production<Bracket> = {
   },
 
   infix(token, stream, expression, left) {
-    if (isArray(left)) {
-      throw new Error("Expected selector");
-    }
-
-    return selector(left, attributeSelector(stream));
+    return combineSelectors(left, attributeSelector(stream));
   }
 };
 
@@ -479,11 +527,7 @@ const colon: Production<Colon> = {
   },
 
   infix(token, stream, expression, left) {
-    if (isArray(left)) {
-      throw new Error("Expected selector");
-    }
-
-    return selector(left, pseudoSelector(stream, expression));
+    return combineSelectors(left, pseudoSelector(stream, expression));
   }
 };
 
