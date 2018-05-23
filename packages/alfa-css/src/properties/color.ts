@@ -10,7 +10,7 @@ export type Color = Readonly<{
 }>;
 
 /**
- * @see https://www.w3.org/TR/css-color/#the-color-property
+ * @see https://www.w3.org/TR/css-color/#propdef-color
  */
 export const ColorProperty: Property<Color> = {
   inherits: true,
@@ -19,6 +19,6 @@ export const ColorProperty: Property<Color> = {
   },
   initial: { red: 0, green: 0, blue: 0, alpha: 1 },
   computed(own, parent) {
-    return own.color || null;
+    return own.color === undefined ? null : own.color;
   }
 };

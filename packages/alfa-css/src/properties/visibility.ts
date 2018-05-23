@@ -5,7 +5,7 @@ import { VisibilityGrammar } from "../grammars/visibility";
 export type Visibility = "visible" | "hidden" | "collapse";
 
 /**
- * @see https://drafts.csswg.org/css-box/#visibility-prop
+ * @see https://drafts.csswg.org/css-box/#propdef-visibility
  */
 export const VisibilityProperty: Property<Visibility> = {
   inherits: true,
@@ -14,6 +14,6 @@ export const VisibilityProperty: Property<Visibility> = {
   },
   initial: "visible",
   computed(own, parent) {
-    return own.visibility || null;
+    return own.visibility === undefined ? null : own.visibility;
   }
 };

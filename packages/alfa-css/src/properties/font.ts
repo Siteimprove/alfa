@@ -3,7 +3,7 @@ import { FontSizeGrammar } from "../grammars/font";
 import { Property, RelativeLength, AbsoluteLength } from "../types";
 
 export type FontSize = Readonly<
-  // https://www.w3.org/TR/css-fonts-3/#absolute-size-value
+  // https://www.w3.org/TR/css-fonts/#absolute-size-value
   | {
       type: "absolute";
       value:
@@ -15,15 +15,15 @@ export type FontSize = Readonly<
         | "x-large"
         | "xx-large";
     }
-  // https://www.w3.org/TR/css-fonts-3/#relative-size-value
+  // https://www.w3.org/TR/css-fonts/#relative-size-value
   | { type: "relative"; value: "larger" | "smaller" }
-  // https://www.w3.org/TR/css-fonts-3/#length-percentage-size-value
+  // https://www.w3.org/TR/css-fonts/#length-percentage-size-value
   | { type: "length"; value: number; unit: AbsoluteLength }
   | { type: "percentage"; value: number; unit?: RelativeLength }
 >;
 
 /**
- * @see https://www.w3.org/TR/css-fonts/#font-size-prop
+ * @see https://www.w3.org/TR/css-fonts/#propdef-font-size
  */
 export const FontSizeProperty: Property<FontSize> = {
   inherits: true,

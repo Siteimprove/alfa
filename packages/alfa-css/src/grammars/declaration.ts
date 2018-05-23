@@ -1,6 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
-import { Token, Whitespace, Ident, Semicolon } from "../alphabet";
+import { Token, Ident, Semicolon } from "../alphabet";
 import { Declaration, declaration, whitespace } from "../grammar";
 
 const { isArray } = Array;
@@ -21,13 +21,7 @@ const ident: Production<Ident> = {
 const semicolon: Production<Semicolon> = {
   token: ";",
   infix(token, stream, expression, left) {
-    const declarations: Array<Declaration> = [];
-
-    if (isArray(left)) {
-      declarations.push(...left);
-    } else {
-      declarations.push(left);
-    }
+    const declarations = isArray(left) ? left : [left];
 
     const right = expression();
 

@@ -61,7 +61,7 @@ export type Display = Readonly<
 >;
 
 /**
- * @see https://www.w3.org/TR/css-display/#the-display-properties
+ * @see https://www.w3.org/TR/css-display/#propdef-display
  */
 export const DisplayProperty: Property<Display> = {
   parse(input) {
@@ -69,6 +69,6 @@ export const DisplayProperty: Property<Display> = {
   },
   initial: { outside: "inline", inside: "flow" },
   computed(own, parent) {
-    return own.display || null;
+    return own.display === undefined ? null : own.display;
   }
 };

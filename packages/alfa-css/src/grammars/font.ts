@@ -1,12 +1,12 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, Whitespace, Ident, Dimension, Percentage } from "../alphabet";
+import { Token, Ident, Dimension, Percentage } from "../alphabet";
 import { whitespace } from "../grammar";
 import { FontSize } from "../properties/font";
 
-type Production<T extends Token, R = never> = Lang.Production<Token, R, T>;
+type Production<T extends Token> = Lang.Production<Token, FontSize, T>;
 
-const ident: Production<Ident, FontSize> = {
+const ident: Production<Ident> = {
   token: "ident",
   prefix(token) {
     switch (token.value) {
@@ -27,7 +27,7 @@ const ident: Production<Ident, FontSize> = {
   }
 };
 
-const dimension: Production<Dimension, FontSize> = {
+const dimension: Production<Dimension> = {
   token: "dimension",
   prefix(token) {
     switch (token.unit) {
@@ -57,7 +57,7 @@ const dimension: Production<Dimension, FontSize> = {
   }
 };
 
-const percentage: Production<Percentage, FontSize> = {
+const percentage: Production<Percentage> = {
   token: "percentage",
   prefix(token) {
     return { type: "percentage", value: token.value };

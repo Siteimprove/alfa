@@ -1,6 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, Whitespace, Ident, Delim, Bracket } from "../alphabet";
+import { Token, Ident, Delim, Bracket } from "../alphabet";
 import {
   AtRule,
   QualifiedRule,

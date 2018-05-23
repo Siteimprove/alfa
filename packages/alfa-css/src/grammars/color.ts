@@ -1,7 +1,7 @@
 import { Mutable, isWhitespace, clamp } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, Whitespace, Ident, FunctionName } from "../alphabet";
+import { Token, Ident, FunctionName } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 

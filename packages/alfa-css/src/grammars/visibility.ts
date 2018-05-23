@@ -1,12 +1,12 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
-import { Token, Whitespace, Ident } from "../alphabet";
+import { Token, Ident } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Visibility } from "../properties/visibility";
 
-type Production<T extends Token, R = never> = Lang.Production<Token, R, T>;
+type Production<T extends Token> = Lang.Production<Token, Visibility, T>;
 
-const ident: Production<Ident, Visibility> = {
+const ident: Production<Ident> = {
   token: "ident",
   prefix(token) {
     switch (token.value) {
