@@ -40,6 +40,7 @@ function getPropertyName(input: string): PropertyName | null {
     case "color":
     case "display":
     case "visibility":
+    case "opacity":
       return input;
     case "font-size":
       return "fontSize";
