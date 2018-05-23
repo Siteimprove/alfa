@@ -35,6 +35,9 @@ test("Can parse grid display", t =>
 test("Can parse ruby display", t =>
   display(t, "ruby", { outside: "inline", inside: "ruby" }));
 
+test("Can parse list-item display", t =>
+  display(t, "list-item", { outside: "block", inside: "flow", marker: true }));
+
 test("Can parse contents display", t =>
   display(t, "contents", { box: "contents" }));
 

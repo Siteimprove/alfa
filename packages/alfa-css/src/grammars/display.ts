@@ -24,6 +24,9 @@ const ident: Production<Ident, Display> = {
       case "ruby":
         return { outside: "inline", inside: token.value };
 
+      case "list-item":
+        return { outside: "block", inside: "flow", marker: true };
+
       case "contents":
       case "none":
         return { box: token.value };

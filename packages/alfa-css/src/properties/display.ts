@@ -50,7 +50,12 @@ export type DisplayLegacy =
   | "inline-grid";
 
 export type Display = Readonly<
-  | { outside: DisplayOutside; inside: DisplayInside; marker?: true }
+  | {
+      outside: DisplayOutside;
+      inside: DisplayInside;
+      // https://www.w3.org/TR/css-display/#list-items
+      marker?: true;
+    }
   | { box: DisplayBox }
   | { internal: DisplayInternal }
 >;
