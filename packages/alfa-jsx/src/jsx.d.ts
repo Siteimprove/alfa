@@ -1,4 +1,8 @@
 declare namespace JSX {
+  interface IntrinsicElements {
+    [tag: string]: any;
+  }
+
   interface Node {
     readonly nodeType: number;
     readonly childNodes: Array<Node>;

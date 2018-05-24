@@ -1,5 +1,4 @@
-/// <reference path="./types/nodes.d.ts"/>
-/// <reference path="./types/intrinsics.d.ts"/>
+/// <reference path="./jsx.d.ts"/>
 
 import { Mutable } from "@siteimprove/alfa-util";
 
