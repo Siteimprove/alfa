@@ -11,13 +11,27 @@ import {
   getRootNode,
   getTextContent,
   getLabel,
-  getNamespace
+  getNamespace,
+  getComputedStyle
 } from "@siteimprove/alfa-dom";
 import * as Roles from "./roles";
 import { getRole } from "./get-role";
 import { isVisible } from "./is-visible";
 import { resolveReferences } from "./resolve-references";
 import { hasNameFrom } from "./has-name-from";
+
+const { isArray } = Array;
+
+/**
+ * @internal
+ */
+export type TextAlternativeOptions = Readonly<{
+  recursing?: boolean;
+  referencing?: boolean;
+  revisiting?: boolean;
+  labelling?: boolean;
+  descending?: boolean;
+}>;
 
 /**
  * Get the computed accessible text alternative of an element.
@@ -46,33 +60,23 @@ export function getTextAlternative(
   node: Element | Text,
   context: Node,
   visited: Set<Element | Text>,
-  flags?: Readonly<{
-    recursing?: boolean;
-    referencing?: boolean;
-    labelling?: boolean;
-    descending?: boolean;
-  }>
+  options?: TextAlternativeOptions
 ): string | null;
 
 export function getTextAlternative(
   node: Element | Text,
   context: Node,
   visited: Set<Element | Text> = new Set(),
-  flags: Readonly<{
-    recursing?: boolean;
-    referencing?: boolean;
-    labelling?: boolean;
-    descending?: boolean;
-  }> = {}
+  options: TextAlternativeOptions = {}
 ): string | null {
-  if (visited.has(node)) {
+  if (visited.has(node) && !options.revisiting) {
     return null;
   }
 
   visited.add(node);
 
   // https://www.w3.org/TR/accname/#step2A
-  if (!isVisible(node, context) && !flags.referencing) {
+  if (!isVisible(node, context) && !options.referencing) {
     return null;
   }
 
@@ -81,7 +85,7 @@ export function getTextAlternative(
   // remaining steps below.
   // https://www.w3.org/TR/accname/#step2G
   if (isText(node)) {
-    return flatten(node.data) || null;
+    return flatten(node.data, options) || null;
   }
 
   // https://www.w3.org/TR/accname/#step2B
@@ -90,7 +94,7 @@ export function getTextAlternative(
     labelledBy !== null &&
     labelledBy !== "" &&
     labelledBy !== "aria-labelledby" &&
-    !flags.referencing
+    !options.referencing
   ) {
     const rootNode = getRootNode(node, context);
 
@@ -104,7 +108,7 @@ export function getTextAlternative(
       );
 
       if (references.length > 0) {
-        return flatten(references.join(" "));
+        return flatten(references.join(" "), options);
       }
     }
   }
@@ -112,7 +116,7 @@ export function getTextAlternative(
   // https://www.w3.org/TR/accname/#step2C
   const label = getAttribute(node, "aria-label", { trim: true });
   if (label && label !== "aria-label") {
-    return flatten(label);
+    return flatten(label, options);
   }
 
   const role = getRole(node, context);
@@ -121,27 +125,34 @@ export function getTextAlternative(
   if (role !== Roles.Presentation && role !== Roles.None) {
     const native = getNativeTextAlternative(node, context, visited);
     if (native !== null) {
-      return flatten(native);
+      return flatten(native, options);
     }
   }
 
   // https://www.w3.org/TR/accname/#step2E
-  if (flags.labelling || flags.referencing) {
+  if (options.labelling || options.referencing) {
     switch (role) {
       case Roles.TextBox:
         switch (node.localName) {
           case "input":
             const value = getAttribute(node, "value");
             if (value !== null && value !== "") {
-              return flatten(value);
+              return flatten(value, options);
             }
             break;
           default:
-            return flatten(getTextContent(node));
+            return flatten(getTextContent(node), options);
         }
         break;
       case Roles.Button:
-        return getTextAlternative(node, context, visited, { recursing: true });
+        const label = getTextAlternative(node, context, visited, {
+          recursing: true,
+          revisiting: true
+        });
+
+        if (label !== null) {
+          return flatten(label, options);
+        }
     }
   }
 
@@ -149,8 +160,8 @@ export function getTextAlternative(
   // https://www.w3.org/TR/accname/#step2G
   if (
     (role !== null && hasNameFrom(role, "contents")) ||
-    flags.referencing ||
-    flags.descending ||
+    options.referencing ||
+    options.descending ||
     isNativeTextAlternativeElement(node)
   ) {
     const children = map(
@@ -163,20 +174,32 @@ export function getTextAlternative(
               // Pass down the labelling flag as the current call may have been
               // initiated from a labelling element; the subtree will therefore
               // also have to be considered part of the labelling element.
-              labelling: flags.labelling
+              labelling: options.labelling
             })
           : null
     ).filter(child => child !== null);
 
+    const before = getComputedStyle(node, context, { pseudo: "before" });
+
+    if (isArray(before.content)) {
+      children.unshift(before.content.join(""));
+    }
+
+    const after = getComputedStyle(node, context, { pseudo: "after" });
+
+    if (isArray(after.content)) {
+      children.push(after.content.join(""));
+    }
+
     if (children.length > 0) {
-      return flatten(children.join(" "));
+      return flatten(children.join(""), options);
     }
   }
 
   // https://www.w3.org/TR/accname/#step2I
   const title = getAttribute(node, "title");
   if (title !== null && title !== "") {
-    return flatten(title);
+    return flatten(title, options);
   }
 
   return null;
@@ -187,8 +210,8 @@ export function getTextAlternative(
  *
  * @see https://www.w3.org/TR/accname/#terminology
  */
-function flatten(string: string): string {
-  return string.replace(/\s+/, " ").trim();
+function flatten(string: string, options: TextAlternativeOptions): string {
+  return options.recursing ? string : string.replace(/\s+/g, " ").trim();
 }
 
 /**
@@ -240,7 +263,7 @@ function getHtmlTextAlternative(
           case "reset": {
             const value = getAttribute(element, "value");
             if (value !== null && value !== "") {
-              return flatten(value);
+              return value;
             }
 
             if (type === "submit") {
@@ -258,12 +281,12 @@ function getHtmlTextAlternative(
           case "image": {
             const alt = getAttribute(element, "alt");
             if (alt !== null && alt !== "") {
-              return flatten(alt);
+              return alt;
             }
 
             const value = getAttribute(element, "value");
             if (value !== null && value !== "") {
-              return flatten(value);
+              return value;
             }
           }
         }
@@ -298,7 +321,7 @@ function getHtmlTextAlternative(
     case "img": {
       const alt = getAttribute(element, "alt");
       if (alt !== null && alt !== "") {
-        return flatten(alt);
+        return alt;
       }
       break;
     }
@@ -307,7 +330,7 @@ function getHtmlTextAlternative(
     case "table": {
       const caption = find(element, context, "caption");
       if (caption) {
-        return flatten(getTextContent(caption));
+        return getTextContent(caption);
       }
       break;
     }
@@ -325,7 +348,7 @@ function getSvgTextAlternative(
   visited: Set<Element | Text>
 ): string | null {
   if (element.localName === "title") {
-    return flatten(getTextContent(element));
+    return getTextContent(element);
   }
 
   const title = find(element, context, ":scope > title");
@@ -340,7 +363,7 @@ function getSvgTextAlternative(
     case "a":
       const title = getAttribute(element, "xlink:title");
       if (title !== null && title !== "") {
-        return flatten(title);
+        return title;
       }
   }
 
