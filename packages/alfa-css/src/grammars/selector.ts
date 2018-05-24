@@ -1,6 +1,7 @@
-import { last } from "@siteimprove/alfa-util";
+import { last, values, includes } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
+import { PseudoClass, PseudoElement } from "../types";
 import {
   Token,
   Whitespace,
@@ -43,13 +44,13 @@ export type TypeSelector = {
 
 export type PseudoClassSelector = {
   type: "pseudo-class-selector";
-  name: string;
+  name: PseudoClass;
   value: Selector | Array<Selector> | null;
 };
 
 export type PseudoElementSelector = {
   type: "pseudo-element-selector";
-  name: string;
+  name: PseudoElement;
 };
 
 export type SubclassSelector =
@@ -284,33 +285,48 @@ function pseudoSelector(
       throw new Error("Excepted ident");
     }
 
-    selector = {
-      type: "pseudo-element-selector",
-      name: ident.value
-    };
-  } else {
-    const name = stream.next();
+    let name: PseudoElement;
 
-    if (name === null || (!isIdent(name) && !isFunctionName(name))) {
+    switch (ident.value) {
+      case "before":
+      case "after":
+        name = ident.value;
+        break;
+      default:
+        throw new Error(`Unknown pseudo-element "${ident.value}"`);
+    }
+
+    selector = { type: "pseudo-element-selector", name };
+  } else {
+    const ident = stream.next();
+
+    if (ident === null || (!isIdent(ident) && !isFunctionName(ident))) {
       throw new Error("Excepted ident or function name");
     }
 
-    if (isIdent(name)) {
-      selector = {
-        type: "pseudo-class-selector",
-        name: name.value,
-        value: null
-      };
+    let name: PseudoClass;
+
+    switch (ident.value) {
+      case "hover":
+      case "active":
+      case "focus":
+      case "scope":
+        name = ident.value;
+        break;
+      default:
+        throw new Error(`Unknown pseudo-class "${ident.value}"`);
+    }
+
+    if (isIdent(ident)) {
+      selector = { type: "pseudo-class-selector", name, value: null };
     } else {
-      selector = {
-        type: "pseudo-class-selector",
-        name: name.value,
-        value: expression()
-      };
+      const value = expression();
 
       if (stream.accept(token => token.type === ")", 1) === false) {
         throw new Error("Expected end of arguments");
       }
+
+      selector = { type: "pseudo-class-selector", name, value };
     }
   }
 

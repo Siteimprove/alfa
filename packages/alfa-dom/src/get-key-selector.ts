@@ -1,40 +1,41 @@
 import { first } from "@siteimprove/alfa-util";
 import {
   Selector,
-  SimpleSelector,
-  isSimpleSelector,
-  isRelativeSelector
+  IdSelector,
+  ClassSelector,
+  TypeSelector
 } from "@siteimprove/alfa-css";
 
 /**
- * Given a selector, get the right-most simple selector, i.e. the key selector.
- * The key selector is the most important selector when performing selector
- * matching as an element won't match a given selector unless it also matches
- * the key selector.
+ * Given a selector, get the right-most ID, class, or type selector, i.e. the
+ * key selector.
  *
  * @internal
  */
-export function getKeySelector(selector: Selector): SimpleSelector | null {
-  if (isSimpleSelector(selector)) {
-    if (selector.type === "type-selector" && selector.name === "*") {
-      return null;
-    }
-
-    return selector;
-  }
-
-  if (isRelativeSelector(selector)) {
-    return getKeySelector(selector.selector);
-  }
-
-  const { selectors } = selector;
-
-  for (let i = 0, n = selectors.length; i < n; i++) {
-    const selector = getKeySelector(selectors[i]);
-
-    if (selector !== null) {
+export function getKeySelector(
+  selector: Selector
+): IdSelector | ClassSelector | TypeSelector | null {
+  switch (selector.type) {
+    case "id-selector":
+    case "class-selector":
       return selector;
-    }
+
+    case "type-selector":
+      return selector.name === "*" ? null : selector;
+
+    case "relative-selector":
+      return getKeySelector(selector.selector);
+
+    case "compound-selector":
+      const { selectors } = selector;
+
+      for (let i = selectors.length - 1; i > 0; i--) {
+        const selector = getKeySelector(selectors[i]);
+
+        if (selector !== null) {
+          return selector;
+        }
+      }
   }
 
   return null;

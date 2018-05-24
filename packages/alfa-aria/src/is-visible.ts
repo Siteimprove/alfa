@@ -5,7 +5,7 @@ import {
   Text,
   isElement,
   getAttribute,
-  getStyle,
+  getComputedStyle,
   getParentNode
 } from "@siteimprove/alfa-dom";
 
@@ -15,7 +15,7 @@ export function isVisible(node: Element | Text, context: Node): boolean {
       return false;
     }
 
-    const { visibility } = getStyle(node, context);
+    const { visibility } = getComputedStyle(node, context);
 
     if (visibility === "hidden" || visibility === "collapse") {
       return false;
@@ -26,7 +26,7 @@ export function isVisible(node: Element | Text, context: Node): boolean {
       next !== null && isElement(next);
       next = getParentNode(next, context)
     ) {
-      const { display } = getStyle(next, context);
+      const { display } = getComputedStyle(next, context);
 
       if (display !== undefined && "box" in display && display.box === "none") {
         return false;

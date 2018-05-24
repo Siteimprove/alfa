@@ -54,8 +54,9 @@ export function getClosest<T extends Node>(
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
+    const options = { scope: isElement(scope) ? scope : undefined };
     predicate = node =>
-      isElement(node) && matches(node, context, query, { scope });
+      isElement(node) && matches(node, context, query, options);
   } else {
     predicate = query;
   }

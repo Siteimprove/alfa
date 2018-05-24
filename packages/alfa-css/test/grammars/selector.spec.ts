@@ -3,12 +3,16 @@ import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { SelectorGrammar, Selector } from "../../src/grammars/selector";
 
+function parseSelector(input: string): Selector | Array<Selector> | null {
+  return parse(lex(input, Alphabet), SelectorGrammar);
+}
+
 function selector(
   t: Test,
   input: string,
   expected: Selector | Array<Selector>
 ) {
-  t.deepEqual(parse(lex(input, Alphabet), SelectorGrammar), expected, t.title);
+  t.deepEqual(parseSelector(input), expected, t.title);
 }
 
 test("Can parse a type selector", t =>
@@ -513,13 +517,13 @@ test("Can parse an attribute selector when part of a compound selector relative 
   }));
 
 test("Can parse a pseudo-element selector", t =>
-  selector(t, "::foo", {
+  selector(t, "::before", {
     type: "pseudo-element-selector",
-    name: "foo"
+    name: "before"
   }));
 
 test("Can parse a pseudo-element selector when part of a compound selector", t =>
-  selector(t, ".foo::foo", {
+  selector(t, ".foo::before", {
     type: "compound-selector",
     selectors: [
       {
@@ -528,13 +532,13 @@ test("Can parse a pseudo-element selector when part of a compound selector", t =
       },
       {
         type: "pseudo-element-selector",
-        name: "foo"
+        name: "before"
       }
     ]
   }));
 
 test("Can parse a pseudo-element selector when part of a descendant selector", t =>
-  selector(t, "div ::foo", {
+  selector(t, "div ::before", {
     type: "relative-selector",
     combinator: " ",
     relative: {
@@ -544,12 +548,12 @@ test("Can parse a pseudo-element selector when part of a descendant selector", t
     },
     selector: {
       type: "pseudo-element-selector",
-      name: "foo"
+      name: "before"
     }
   }));
 
 test("Can parse a pseudo-element selector when part of a compound selector relative to a class selector", t =>
-  selector(t, ".foo div::foo", {
+  selector(t, ".foo div::before", {
     type: "relative-selector",
     combinator: " ",
     relative: {
@@ -566,11 +570,16 @@ test("Can parse a pseudo-element selector when part of a compound selector relat
         },
         {
           type: "pseudo-element-selector",
-          name: "foo"
+          name: "before"
         }
       ]
     }
   }));
+
+test("Only allows pseudo-element selectors as the last selector", t => {
+  t.throws(() => parseSelector("::foo.foo"));
+  t.throws(() => parseSelector("::foo+foo"));
+});
 
 test("Can parse a named pseudo-class selector", t =>
   selector(t, ":hover", {

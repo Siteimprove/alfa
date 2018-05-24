@@ -10,10 +10,13 @@ import {
   IdSelector,
   AttributeSelector,
   CompoundSelector,
-  PseudoClassSelector
+  PseudoClassSelector,
+  PseudoElement,
+  PseudoElementSelector
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { isElement } from "./guards";
+import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";
 import { getParentNode } from "./get-parent-node";
@@ -27,21 +30,61 @@ const parseMemoized = memoize(
   { cache: { size: 50 } }
 );
 
+/**
+ * @internal
+ */
 export type MatchingOptions = Readonly<{
   /**
    * @see https://www.w3.org/TR/selectors/#scope-element
    */
-  scope?: Node;
+  scope?: Element;
+
+  /**
+   * @see https://www.w3.org/TR/selectors/#the-hover-pseudo
+   */
+  hover?: Element | boolean;
+
+  /**
+   * @see https://www.w3.org/TR/selectors/#the-active-pseudo
+   */
+  active?: Element | boolean;
+
+  /**
+   * @see https://www.w3.org/TR/selectors/#the-focus-pseudo
+   */
+  focus?: Element | boolean;
+
+  /**
+   * Whether or not to perform selector matching against pseudo-elements.
+   *
+   * @see https://www.w3.org/TR/selectors/#pseudo-elements
+   */
+  pseudo?: boolean;
 
   /**
    * Ancestor filter used for fast-rejecting elements during selector matching.
-   * This option is only available to internal methods as the ancestor filter is
-   * not exposed externally.
-   *
-   * @internal
    */
   filter?: AncestorFilter;
 }>;
+
+/**
+ * @see https://www.w3.org/TR/dom41/#dom-element-matches
+ */
+export function matches(
+  element: Element,
+  context: Node,
+  selector: string
+): boolean;
+
+/**
+ * @internal
+ */
+export function matches(
+  element: Element,
+  context: Node,
+  selector: string | Selector | Array<Selector>,
+  options?: MatchingOptions
+): boolean;
 
 export function matches(
   element: Element,
@@ -49,40 +92,38 @@ export function matches(
   selector: string | Selector | Array<Selector>,
   options: MatchingOptions = {}
 ): boolean {
-  let parsed: Selector | Array<Selector> | null = null;
+  if (typeof selector === "string") {
+    const parsed = parseMemoized(selector);
 
-  try {
-    parsed = typeof selector === "string" ? parseMemoized(selector) : selector;
-  } catch (err) {
-    throw new Error(`Invalid selector: ${selector}`);
+    if (parsed === null) {
+      return false;
+    }
+
+    selector = parsed;
   }
 
-  if (parsed === null) {
-    return false;
+  if (isArray(selector)) {
+    return matchesList(element, context, selector, options);
   }
 
-  if (isArray(parsed)) {
-    return matchesList(element, context, parsed, options);
-  }
-
-  switch (parsed.type) {
+  switch (selector.type) {
     case "id-selector":
-      return matchesId(element, parsed);
+      return matchesId(element, selector);
     case "class-selector":
-      return matchesClass(element, parsed);
+      return matchesClass(element, selector);
     case "type-selector":
-      return matchesType(element, parsed);
+      return matchesType(element, selector);
     case "attribute-selector":
-      return matchesAttribute(element, parsed);
+      return matchesAttribute(element, selector);
     case "compound-selector":
-      return matchesCompound(element, context, parsed, options);
+      return matchesCompound(element, context, selector, options);
     case "relative-selector":
-      return matchesRelative(element, context, parsed, options);
+      return matchesRelative(element, context, selector, options);
     case "pseudo-class-selector":
-      return matchesPseudoClass(element, context, parsed, options);
+      return matchesPseudoClass(element, context, selector, options);
+    case "pseudo-element-selector":
+      return matchesPseudoElement(element, context, selector, options);
   }
-
-  return false;
 }
 
 /**
@@ -327,23 +368,63 @@ function matchesPseudoClass(
     // https://www.w3.org/TR/selectors/#scope-pseudo
     case "scope":
       return options.scope === element;
+
     // https://www.w3.org/TR/selectors/#negation-pseudo
     case "not":
-      if (selector.value === null) {
-        return true;
-      }
+      return (
+        selector.value === null ||
+        !matches(element, context, selector.value, options)
+      );
 
-      return !matches(element, context, selector.value, options);
     // https://www.w3.org/TR/selectors/#hover-pseudo
     case "hover":
+      const { hover } = options;
+
+      if (hover === undefined || hover === false) {
+        return false;
+      }
+
+      return (
+        hover === true || contains(element, context, hover, { composed: true })
+      );
+
     // https://www.w3.org/TR/selectors/#active-pseudo
     case "active":
+      const { active } = options;
+
+      if (active === undefined || active === false) {
+        return false;
+      }
+
+      return (
+        active === true ||
+        contains(element, context, active, { composed: true })
+      );
+
     // https://www.w3.org/TR/selectors/#focus-pseudo
     case "focus":
-      return false;
+      const { focus } = options;
+
+      if (focus === undefined || focus === false) {
+        return false;
+      }
+
+      return focus === true || element === focus;
   }
 
   return false;
+}
+
+/**
+ * @see https://www.w3.org/TR/selectors/#pseudo-elements
+ */
+function matchesPseudoElement(
+  element: Element,
+  context: Node,
+  selector: PseudoElementSelector,
+  options: MatchingOptions
+): boolean {
+  return options.pseudo === true;
 }
 
 /**

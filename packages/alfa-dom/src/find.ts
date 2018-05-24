@@ -7,7 +7,7 @@ import { traverseNode } from "./traverse-node";
 export type FindOptions = Readonly<{ composed?: boolean }>;
 
 export function find(
-  node: Node,
+  scope: Node,
   context: Node,
   query: string,
   options?: FindOptions
@@ -29,8 +29,9 @@ export function find<T extends Node>(
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
+    const options = { scope: isElement(scope) ? scope : undefined };
     predicate = node =>
-      isElement(node) && matches(node, context, query, { scope });
+      isElement(node) && matches(node, context, query, options);
   } else {
     predicate = query;
   }
@@ -76,8 +77,9 @@ export function findAll<T extends Node>(
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
+    const options = { scope: isElement(scope) ? scope : undefined };
     predicate = node =>
-      isElement(node) && matches(node, context, query, { scope });
+      isElement(node) && matches(node, context, query, options);
   } else {
     predicate = query;
   }

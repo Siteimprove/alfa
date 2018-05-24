@@ -47,37 +47,34 @@ export class SelectorMap {
         if (isStyleRule(rule)) {
           const selectors = parseSelectors(rule.selectorText);
 
-          if (selectors !== null) {
-            each(selectors, selector => {
-              const key = getKeySelector(selector);
-              const specificity = getSpecificity(selector);
+          each(selectors, selector => {
+            const keySelector = getKeySelector(selector);
+            const specificity = getSpecificity(selector);
 
-              const entry: SelectorEntry = {
-                selector,
-                rule,
-                order: order++,
-                specificity
-              };
+            const entry: SelectorEntry = {
+              selector,
+              rule,
+              order: order++,
+              specificity
+            };
 
-              if (key === null) {
-                this._other.push(entry);
-              } else {
-                switch (key.type) {
-                  case "id-selector":
-                    addEntry(this._ids, key.name, entry);
-                    break;
-                  case "class-selector":
-                    addEntry(this._classes, key.name, entry);
-                    break;
-                  case "type-selector":
-                    addEntry(this._types, key.name, entry);
-                    break;
-                  default:
-                    this._other.push(entry);
-                }
+            if (keySelector === null) {
+              this._other.push(entry);
+            } else {
+              const key = keySelector.name;
+
+              switch (keySelector.type) {
+                case "id-selector":
+                  addEntry(this._ids, key, entry);
+                  break;
+                case "class-selector":
+                  addEntry(this._classes, key, entry);
+                  break;
+                case "type-selector":
+                  addEntry(this._types, key, entry);
               }
-            });
-          }
+            }
+          });
         }
       });
     });
@@ -143,7 +140,7 @@ function getEntries(bucket: SelectorBucket, key: string): Array<SelectorEntry> {
   return entries;
 }
 
-function parseSelectors(selector: string): Array<Selector> | null {
+function parseSelectors(selector: string): Array<Selector> {
   try {
     const parsed = parse(lex(selector, Alphabet), SelectorGrammar);
 
@@ -152,5 +149,5 @@ function parseSelectors(selector: string): Array<Selector> | null {
     }
   } catch (err) {}
 
-  return null;
+  return [];
 }

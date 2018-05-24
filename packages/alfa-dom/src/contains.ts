@@ -4,6 +4,8 @@ import { isElement } from "./guards";
 import { matches } from "./matches";
 import { find } from "./find";
 
+export type ContainsOptions = Readonly<{ composed?: boolean }>;
+
 /**
  * Given a node and a context, check if the node contains another node that
  * matches the given query. One node is said to contain another node if the
@@ -23,19 +25,22 @@ import { find } from "./find";
  * // => true
  */
 export function contains<T extends Node>(
-  node: Node,
+  scope: Node,
   context: Node,
-  query: Predicate<Node, T> | T | string
+  query: Predicate<Node, T> | T | string,
+  options: ContainsOptions = {}
 ): boolean {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
-    predicate = node => isElement(node) && matches(node, context, query);
+    const options = { scope: isElement(scope) ? scope : undefined };
+    predicate = node =>
+      isElement(node) && matches(node, context, query, options);
   } else if (typeof query === "object") {
     predicate = node => node === query;
   } else {
     predicate = query;
   }
 
-  return find(node, context, predicate) !== null;
+  return find(scope, context, predicate, options) !== null;
 }

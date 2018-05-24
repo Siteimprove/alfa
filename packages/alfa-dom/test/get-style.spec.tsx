@@ -1,13 +1,17 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "@siteimprove/alfa-jsx";
-import { Stage } from "@siteimprove/alfa-css";
-import { getStyle } from "../src/get-style";
+import { Document, StyleRule } from "../src/types";
+import {
+  getCascadedStyle,
+  getSpecifiedStyle,
+  getComputedStyle
+} from "../src/get-style";
 
 const span = <span style="font-size: 1.2em; color: inherit" />;
 const div = <div style="font-size: 16px; color: red">{span}</div>;
 
 test("Gets the cascaded style of an element", t => {
-  const style = getStyle(span, div, Stage.Cascaded);
+  const style = getCascadedStyle(span, div);
 
   t.deepEqual(style, {
     color: "inherit",
@@ -20,7 +24,7 @@ test("Gets the cascaded style of an element", t => {
 });
 
 test("Gets the specified style of an element", t => {
-  const style = getStyle(span, div, Stage.Specified);
+  const style = getSpecifiedStyle(span, div);
 
   t.deepEqual(style, {
     color: {
@@ -38,7 +42,7 @@ test("Gets the specified style of an element", t => {
 });
 
 test("Gets the computed style of an element", t => {
-  const style = getStyle(span, div, Stage.Computed);
+  const style = getComputedStyle(span, div);
 
   t.deepEqual(style, {
     color: {
@@ -59,7 +63,7 @@ test("Correctly handles default inherited properties", t => {
   const span = <span />;
   const div = <div style="font-size: 14px">{span}</div>;
 
-  const style = getStyle(span, div, Stage.Computed);
+  const style = getComputedStyle(span, div);
 
   t.deepEqual(style, {
     fontSize: {
@@ -73,7 +77,7 @@ test("Correctly handles default inherited properties", t => {
 test("Gets the initial values of properties when specified", t => {
   const span = <span style="font-size: initial" />;
 
-  const style = getStyle(span, span, Stage.Computed);
+  const style = getComputedStyle(span, span);
 
   t.deepEqual(style, {
     fontSize: {
@@ -88,7 +92,7 @@ test("Gets no properties when none are specified nor inherited", t => {
   const span = <span />;
   const div = <div>{span}</div>;
 
-  const style = getStyle(span, div, Stage.Computed);
+  const style = getComputedStyle(span, div);
 
   t.deepEqual(style, {});
 });
