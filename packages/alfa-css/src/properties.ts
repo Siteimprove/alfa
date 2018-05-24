@@ -1,14 +1,6 @@
-import { Property } from "./types";
-import { ColorProperty } from "./properties/color";
-import { DisplayProperty } from "./properties/display";
-import { FontSizeProperty } from "./properties/font";
-import { VisibilityProperty } from "./properties/visibility";
-import { OpacityProperty } from "./properties/opacity";
-
-export const Properties = {
-  color: ColorProperty,
-  display: DisplayProperty,
-  fontSize: FontSizeProperty,
-  visibility: VisibilityProperty,
-  opacity: OpacityProperty
-};
+export { ColorProperty as color } from "./properties/color";
+export { ContentProperty as content } from "./properties/content";
+export { DisplayProperty as display } from "./properties/display";
+export { FontSizeProperty as fontSize } from "./properties/font";
+export { OpacityProperty as opacity } from "./properties/opacity";
+export { VisibilityProperty as visibility } from "./properties/visibility";

@@ -1,6 +1,6 @@
 import { values } from "@siteimprove/alfa-util";
 import { Token } from "./alphabet";
-import { Properties } from "./properties";
+import * as Properties from "./properties";
 
 /**
  * @see https://www.w3.org/TR/css-values/#relative-lengths
@@ -210,7 +210,7 @@ export interface Property<T> {
 
   parse(input: Array<Token>): T | null;
 
-  initial: Readonly<T>;
+  initial: T;
 
   computed(
     own: Style<Stage.Specified>,
