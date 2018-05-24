@@ -15,17 +15,9 @@ export function getRootNode(
   let rootNode: Node | null = node;
 
   while (rootNode) {
-    const parentNode = getParentNode(rootNode, context);
+    const parentNode = getParentNode(rootNode, context, options);
 
     if (parentNode === null) {
-      break;
-    }
-
-    if (
-      isElement(parentNode) &&
-      options.composed !== true &&
-      parentNode.shadowRoot === rootNode
-    ) {
       break;
     }
 

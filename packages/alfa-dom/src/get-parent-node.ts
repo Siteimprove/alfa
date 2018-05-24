@@ -1,4 +1,5 @@
 import { Node } from "./types";
+import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 
 const parentMaps: WeakMap<Node, WeakMap<Node, Node>> = new WeakMap();
@@ -14,22 +15,44 @@ const parentMaps: WeakMap<Node, WeakMap<Node, Node>> = new WeakMap();
  * getParent(span, <section>{div}</section>);
  * // => <div>...</div>
  */
-export function getParentNode(node: Node, context: Node): Node | null {
+export function getParentNode(
+  node: Node,
+  context: Node,
+  options: { composed?: boolean } = {}
+): Node | null {
   let parentMap = parentMaps.get(context);
 
   if (parentMap === undefined) {
     parentMap = new WeakMap();
 
-    traverseNode(context, {
-      enter(node, parent) {
-        if (parent !== null && parentMap !== undefined) {
-          parentMap.set(node, parent);
+    traverseNode(
+      context,
+      {
+        enter(node, parent) {
+          if (parent !== null && parentMap !== undefined) {
+            parentMap.set(node, parent);
+          }
         }
-      }
-    });
+      },
+      { composed: true }
+    );
 
     parentMaps.set(context, parentMap);
   }
 
-  return parentMap.get(node) || null;
+  const parentNode = parentMap.get(node);
+
+  if (parentNode === undefined) {
+    return null;
+  }
+
+  if (
+    isElement(parentNode) &&
+    options.composed !== true &&
+    parentNode.shadowRoot === node
+  ) {
+    return null;
+  }
+
+  return parentNode;
 }
