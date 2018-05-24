@@ -12,8 +12,5 @@
   "dependencies": {
     "@types/tape": "^4.2.31",
     "tape": "^4.9.0"
-  },
-  "devDependencies": {
-    "typescript": "^2.8.3"
   }
 }

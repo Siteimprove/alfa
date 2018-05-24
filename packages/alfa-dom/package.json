@@ -11,11 +11,10 @@
   "private": true,
   "dependencies": {
     "@siteimprove/alfa-crypto": "^0.0.0",
-    "@siteimprove/alfa-css": "^0.0.0",
-    "@siteimprove/alfa-jsx": "^0.0.0"
+    "@siteimprove/alfa-css": "^0.0.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "typescript": "^2.8.3"
+    "@siteimprove/alfa-jsx": "^0.0.0",
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

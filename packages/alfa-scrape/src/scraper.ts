@@ -1,6 +1,5 @@
 import { launch } from "puppeteer";
 import { Document } from "@siteimprove/alfa-dom";
-import { Aspects } from "@siteimprove/alfa-act";
 import { bundle } from "./bundle";
 
 const PICKLE = require.resolve("@siteimprove/alfa-pickle");
@@ -35,7 +34,10 @@ export class Scraper {
     builtins: false
   });
 
-  async scrape(url: string, options: ScrapeOptions = {}): Promise<Aspects> {
+  async scrape(
+    url: string,
+    options: ScrapeOptions = {}
+  ): Promise<{ document: Document }> {
     const browser = await this._browser;
     const pickle = await this._pickle;
 

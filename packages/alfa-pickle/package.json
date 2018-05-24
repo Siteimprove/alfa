@@ -14,7 +14,6 @@
     "@siteimprove/alfa-dom": "^0.0.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "typescript": "^2.8.3"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

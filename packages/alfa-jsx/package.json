@@ -10,7 +10,6 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "typescript": "^2.8.3"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

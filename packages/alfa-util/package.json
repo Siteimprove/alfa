@@ -13,7 +13,6 @@
     "moize": "^5.2.3"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "typescript": "^2.8.3"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

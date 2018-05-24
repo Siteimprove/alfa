@@ -10,7 +10,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@siteimprove/alfa-act": "^0.0.0",
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-pickle": "^0.0.0",
     "@types/browserify": "^12.0.33",
@@ -19,7 +18,6 @@
     "puppeteer": "^1.3.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "typescript": "^2.8.3"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }
