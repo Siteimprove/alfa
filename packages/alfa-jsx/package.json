@@ -9,8 +9,10 @@
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
+  "dependencies": {
+    "@siteimprove/alfa-util": "^0.0.0"
+  },
   "devDependencies": {
-    "@siteimprove/alfa-util": "^0.0.0",
     "@siteimprove/alfa-test": "^0.0.0"
   }
 }
