@@ -1,5 +1,8 @@
 import * as browserify from "browserify";
 
+/**
+ * @internal
+ */
 export function bundle(file: string, options: object = {}): Promise<string> {
   return new Promise((resolve, reject) =>
     browserify(file, options)

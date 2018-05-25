@@ -2,7 +2,7 @@ import { launch } from "puppeteer";
 import { Document } from "@siteimprove/alfa-dom";
 import { bundle } from "./bundle";
 
-const PICKLE = require.resolve("@siteimprove/alfa-pickle");
+const Virtualize = require.resolve("./virtualize");
 
 export enum Wait {
   Ready = "domcontentloaded",
@@ -30,7 +30,7 @@ export class Scraper {
     args: ["--disable-web-security"]
   });
 
-  private readonly _pickle = bundle(PICKLE, {
+  private readonly _virtualize = bundle(Virtualize, {
     builtins: false
   });
 
@@ -39,7 +39,7 @@ export class Scraper {
     options: ScrapeOptions = {}
   ): Promise<{ document: Document }> {
     const browser = await this._browser;
-    const pickle = await this._pickle;
+    const virtualize = await this._virtualize;
 
     const page = await browser.newPage();
 
@@ -79,8 +79,8 @@ export class Scraper {
 
       try {
         document = await page.evaluate(`{
-          const require = ${pickle};
-          const { virtualize } = require("${PICKLE}");
+          const require = ${virtualize};
+          const { virtualize } = require("${Virtualize}");
           virtualize(window.document);
         }`);
       } catch (err) {
