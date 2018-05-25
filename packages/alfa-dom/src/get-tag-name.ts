@@ -1,4 +1,4 @@
-import { Element } from "./types";
+import { Node, Element } from "./types";
 import { Namespace, getNamespace } from "./get-namespace";
 
 /**
