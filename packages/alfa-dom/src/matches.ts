@@ -202,10 +202,10 @@ function matchesAttribute(
 function matchesCompound(
   element: Element,
   context: Node,
-  selector: CompoundSelector,
+  { selectors }: CompoundSelector,
   options: MatchingOptions
 ): boolean {
-  return selector.selectors.every(selector =>
+  return selectors.every(selector =>
     matches(element, context, selector, options)
   );
 }
