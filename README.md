@@ -23,7 +23,7 @@ Alfa is an open and standards-based accessibility conformance testing engine use
 
 ## Overview
 
-At its core, Alfa is built around a small tree structure that mirrors a subset of the [Document Object Model (DOM)](https://www.w3.org/TR/dom) and [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom/) interfaces. This tree structure can be created statically from an HTML document and associated CSS style sheets, or it can be extracted from within a browser to also provide executing of JavaScript. Anything else that a browser would normally provide, such as querying elements or computing styles, Alfa implements according to the corresponding W3C specifications.
+At its core, Alfa is built around a tree structure that mirrors a subset of the [Document Object Model (DOM)](https://www.w3.org/TR/dom) and [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom/) interfaces. This tree structure can be created statically from an HTML document and associated CSS style sheets, or it can be extracted from within a browser to also provide executing of JavaScript. Anything else that a browser would normally provide, such as querying elements or computing styles, Alfa implements according to the corresponding W3C specifications.
 
 By implementing browser aspects, such as a style system and the accessibility tree, directly within Alfa, we gain the ability to do some interesting things that would otherwise not be possible had we relied on only the APIs provided by the browser. The most radical difference is perhaps computation of CSS properties, where Alfa can follow declared CSS properties up through cascade, inheritance, and absolutisation.
 
