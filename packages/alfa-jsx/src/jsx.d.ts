@@ -5,7 +5,7 @@ declare namespace JSX {
 
   interface Node {
     readonly nodeType: number;
-    readonly childNodes: Array<Node>;
+    readonly childNodes: ArrayLike<Node>;
   }
 
   interface Attribute {
@@ -20,7 +20,7 @@ declare namespace JSX {
     readonly namespaceURI: string | null;
     readonly prefix: string | null;
     readonly localName: string;
-    readonly attributes: Array<Attribute>;
+    readonly attributes: ArrayLike<Attribute>;
     readonly shadowRoot: null;
   }
 

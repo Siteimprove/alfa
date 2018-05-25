@@ -68,7 +68,9 @@ function setNamespace(node: Mutable<JSX.Node>, namespaceURI: string): void {
     element.namespaceURI = namespaceURI;
   }
 
-  node.childNodes.forEach(childNode => {
-    setNamespace(childNode, namespaceURI);
-  });
+  const { childNodes } = node;
+
+  for (let i = 0, n = childNodes.length; i < n; i++) {
+    setNamespace(childNodes[i], namespaceURI);
+  }
 }
