@@ -1,4 +1,4 @@
-import { map, each } from "@siteimprove/alfa-util";
+import { map } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import {
   isDocument,
@@ -55,7 +55,10 @@ export function serialize(node: Node, context: Node = node): string {
 
     let element = `<${name}`;
 
-    each(node.attributes, attribute => {
+    const { attributes } = node;
+
+    for (let i = 0, n = attributes.length; i < n; i++) {
+      const attribute = attributes[i];
       const namespace = getNamespace(attribute, node);
 
       let name = attribute.localName;
@@ -83,7 +86,7 @@ export function serialize(node: Node, context: Node = node): string {
       element += ` ${name}="${escape(attribute.value, {
         attributeMode: true
       })}"`;
-    });
+    }
 
     element += ">";
 

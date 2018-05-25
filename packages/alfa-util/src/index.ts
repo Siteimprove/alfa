@@ -1,5 +1,4 @@
 export * from "./array/concat";
-export * from "./array/each";
 export * from "./array/filter";
 export * from "./array/first";
 export * from "./array/includes";

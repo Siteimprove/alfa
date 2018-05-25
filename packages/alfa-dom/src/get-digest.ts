@@ -1,5 +1,5 @@
 import { getHash } from "@siteimprove/alfa-crypto";
-import { slice, each } from "@siteimprove/alfa-util";
+import { slice } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import { isElement, isText, isComment, isDocumentType } from "./guards";
 import { getNamespace } from "./get-namespace";
@@ -43,7 +43,7 @@ export function getDigest(node: Node, context: Node = node): string | null {
           a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0
       );
 
-      each(attributes, attribute => {
+      for (const attribute of attributes) {
         const namespace = getNamespace(attribute, context);
 
         if (namespace === null) {
@@ -51,16 +51,18 @@ export function getDigest(node: Node, context: Node = node): string | null {
         } else {
           hash.update(namespace + ":" + attribute.localName + attribute.value);
         }
-      });
+      }
     }
 
-    each(node.childNodes, childNode => {
-      const childDigest = getDigest(childNode, context);
+    const { childNodes } = node;
+
+    for (let i = 0, n = childNodes.length; i < n; i++) {
+      const childDigest = getDigest(childNodes[i], context);
 
       if (childDigest !== null) {
         hash.update(childDigest);
       }
-    });
+    }
 
     digest = hash.digest("base64");
     digests.set(node, digest);

@@ -1,4 +1,4 @@
-import { Mutable, keys, each, union, last } from "@siteimprove/alfa-util";
+import { Mutable, keys, union, last } from "@siteimprove/alfa-util";
 import { Grammar, parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
@@ -138,7 +138,7 @@ export function getSpecifiedStyle(
 
   const propertyNames = union(keys(cascadedStyle), keys(parentStyle));
 
-  each(propertyNames, propertyName => {
+  for (const propertyName of propertyNames) {
     const property = Properties[propertyName];
     const value = cascadedStyle[propertyName];
     const inherited = parentStyle[propertyName];
@@ -153,7 +153,7 @@ export function getSpecifiedStyle(
     } else if (value !== "inherit") {
       specifiedStyle[propertyName] = value;
     }
-  });
+  }
 
   return specifiedStyle;
 }
@@ -191,14 +191,14 @@ export function getComputedStyle(
 
   const propertyNames = keys(specifiedStyle);
 
-  each(propertyNames, propertyName => {
+  for (const propertyName of propertyNames) {
     const property = Properties[propertyName];
     const computed = property.computed(specifiedStyle, parentStyle);
 
     if (computed !== null) {
       computedStyle[propertyName] = computed;
     }
-  });
+  }
 
   return computedStyle;
 }

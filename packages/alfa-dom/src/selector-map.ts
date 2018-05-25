@@ -1,4 +1,3 @@
-import { each } from "@siteimprove/alfa-util";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet, Selector, SelectorGrammar } from "@siteimprove/alfa-css";
 import { Node, Element, StyleSheet, StyleRule } from "./types";
@@ -42,12 +41,12 @@ export class SelectorMap {
     // combined.
     let order: number = 0;
 
-    each(styleSheets, styleSheet => {
-      traverseStyleSheet(styleSheet, rule => {
+    for (let i = 0, n = styleSheets.length; i < n; i++) {
+      traverseStyleSheet(styleSheets[i], rule => {
         if (isStyleRule(rule)) {
           const selectors = parseSelectors(rule.selectorText);
 
-          each(selectors, selector => {
+          for (const selector of selectors) {
             const keySelector = getKeySelector(selector);
             const specificity = getSpecificity(selector);
 
@@ -74,10 +73,10 @@ export class SelectorMap {
                   addEntry(this._types, key, entry);
               }
             }
-          });
+          }
         }
       });
-    });
+    }
   }
 
   public getRules(
@@ -88,11 +87,11 @@ export class SelectorMap {
     const rules: Array<SelectorEntry> = [];
 
     const collect = (entries: Array<SelectorEntry>) => {
-      each(entries, entry => {
+      for (const entry of entries) {
         if (matches(element, context, entry.selector, options)) {
           rules.push(entry);
         }
-      });
+      }
     };
 
     const id = getAttribute(element, "id");

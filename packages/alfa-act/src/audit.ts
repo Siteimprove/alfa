@@ -18,30 +18,32 @@ export function audit<T extends Target, A extends Aspect, C = undefined>(
 ): Array<Result<T, A> | Question<T>> {
   const results: Array<Result<T, A> | Question<T>> = [];
 
-  rules = isArray(rules) ? rules : [rules];
+  function question(
+    rule: Rule<T, A, C>,
+    question: string,
+    target?: T
+  ): boolean {
+    const answer = answers.find(
+      answer =>
+        answer.rule === rule.id &&
+        answer.question === question &&
+        answer.target === target
+    );
 
-  for (const rule of rules) {
-    function question(question: string, target?: T): boolean {
-      const answer = answers.find(
-        answer =>
-          answer.rule === rule.id &&
-          answer.question === question &&
-          answer.target === target
-      );
+    if (answer) {
+      return answer.answer;
+    } else {
+      results.push({
+        rule: rule.id,
+        question,
+        target
+      });
 
-      if (answer) {
-        return answer.answer;
-      } else {
-        results.push({
-          rule: rule.id,
-          question,
-          target
-        });
-
-        return false;
-      }
+      return false;
     }
+  }
 
+  for (const rule of isArray(rules) ? rules : [rules]) {
     const context = rule.context(aspects);
 
     const applicability = rule.applicability(aspects, context);
@@ -65,7 +67,12 @@ export function audit<T extends Target, A extends Aspect, C = undefined>(
 
         for (const key of keys(rule.expectations)) {
           const expectation = rule.expectations[key];
-          const holds = expectation(target, aspects, question, context);
+          const holds = expectation(
+            target,
+            aspects,
+            (id, target) => question(rule, id, target),
+            context
+          );
 
           if (!holds) {
             passed = false;

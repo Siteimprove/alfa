@@ -18,9 +18,7 @@ function pathFromRoot(node: Node, context: Node): Array<Node> {
 function forkingPoint(a: Array<any>, b: Array<any>) {
   let fork = 0;
 
-  const n = Math.min(a.length, b.length);
-
-  for (let i = fork; i < n; i++) {
+  for (let i = fork, n = Math.min(a.length, b.length); i < n; i++) {
     if (a[i] !== b[i]) {
       break;
     }
