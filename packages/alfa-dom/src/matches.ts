@@ -18,9 +18,9 @@ import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
-import { getClassList } from "./get-class-list";
 import { getParentNode } from "./get-parent-node";
 import { getPreviousSibling } from "./get-previous-sibling";
+import { hasClass } from "./has-class";
 import { AncestorFilter } from "./ancestor-filter";
 
 const { isArray } = Array;
@@ -137,7 +137,7 @@ function matchesId(element: Element, selector: IdSelector): boolean {
  * @see https://www.w3.org/TR/selectors/#class-html
  */
 function matchesClass(element: Element, selector: ClassSelector): boolean {
-  return getClassList(element).has(selector.name);
+  return hasClass(element, selector.name);
 }
 
 /**
@@ -205,9 +205,13 @@ function matchesCompound(
   { selectors }: CompoundSelector,
   options: MatchingOptions
 ): boolean {
-  return selectors.every(selector =>
-    matches(element, context, selector, options)
-  );
+  for (const selector of selectors) {
+    if (!matches(element, context, selector, options)) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -219,9 +223,13 @@ function matchesList(
   selectors: Array<Selector>,
   options: MatchingOptions
 ): boolean {
-  return selectors.some(selector =>
-    matches(element, context, selector, options)
-  );
+  for (const selector of selectors) {
+    if (matches(element, context, selector, options)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**

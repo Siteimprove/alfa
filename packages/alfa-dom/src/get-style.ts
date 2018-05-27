@@ -31,13 +31,28 @@ export type StyleOptions = Readonly<{
 export function getCascadedStyle(
   element: Element,
   context: Node,
-  options: StyleOptions = {}
+  options?: StyleOptions
+): Style<Stage.Cascaded>;
+
+/**
+ * @internal
+ */
+export function getCascadedStyle(
+  element: Element,
+  context: Node,
+  options?: StyleOptions,
+  cascade?: Cascade | null
+): Style<Stage.Cascaded>;
+
+export function getCascadedStyle(
+  element: Element,
+  context: Node,
+  options: StyleOptions = {},
+  cascade: Cascade | null = getCascade(context)
 ): Style<Stage.Cascaded> {
   const cascadedStyle: Mutable<Style<Stage.Cascaded>> = {};
 
   const style = getAttribute(element, "style");
-
-  const cascade = isDocument(context) ? getCascade(context) : null;
 
   const declarations: Array<Declaration> = [];
 
@@ -123,6 +138,7 @@ export function getSpecifiedStyle(
   element: Element,
   context: Node,
   options?: StyleOptions,
+  cascade?: Cascade | null,
   parentStyle?: Style<Stage.Computed>
 ): Style<Stage.Specified>;
 
@@ -130,11 +146,17 @@ export function getSpecifiedStyle(
   element: Element,
   context: Node,
   options: StyleOptions = {},
-  parentStyle: Style<Stage.Computed> = getParentStyle(element, context, options)
+  cascade: Cascade | null = getCascade(context),
+  parentStyle: Style<Stage.Computed> = getParentStyle(
+    element,
+    context,
+    options,
+    cascade
+  )
 ): Style<Stage.Specified> {
   const specifiedStyle: Mutable<Style<Stage.Specified>> = {};
 
-  const cascadedStyle = getCascadedStyle(element, context, options);
+  const cascadedStyle = getCascadedStyle(element, context, options, cascade);
 
   const propertyNames = union(keys(cascadedStyle), keys(parentStyle));
 
@@ -171,6 +193,7 @@ export function getComputedStyle(
   element: Element,
   context: Node,
   options?: StyleOptions,
+  cascade?: Cascade | null,
   parentStyle?: Style<Stage.Computed>
 ): Style<Stage.Computed>;
 
@@ -178,7 +201,13 @@ export function getComputedStyle(
   element: Element,
   context: Node,
   options: StyleOptions = {},
-  parentStyle: Style<Stage.Computed> = getParentStyle(element, context, options)
+  cascade: Cascade | null = getCascade(context),
+  parentStyle: Style<Stage.Computed> = getParentStyle(
+    element,
+    context,
+    options,
+    cascade
+  )
 ): Style<Stage.Computed> {
   const computedStyle: Mutable<Style<Stage.Computed>> = {};
 
@@ -186,6 +215,7 @@ export function getComputedStyle(
     element,
     context,
     options,
+    cascade,
     parentStyle
   );
 
@@ -218,7 +248,8 @@ function getPropertyName(input: string): PropertyName | null {
 function getParentStyle(
   element: Element,
   context: Node,
-  options: StyleOptions
+  options: StyleOptions,
+  cascade: Cascade | null
 ): Style<Stage.Computed> {
   const parentNode = getParentNode(element, context);
 
@@ -234,13 +265,20 @@ function getParentStyle(
     parentNode,
     context,
     options,
-    getParentStyle(parentNode, context, options)
+    cascade,
+    getParentStyle(parentNode, context, options, cascade)
   );
 
   // If we're getting the style of a pseudo-element, the parent style will be
   // that of the origin element.
   if (pseudo !== undefined) {
-    parentStyle = getComputedStyle(element, context, options, parentStyle);
+    parentStyle = getComputedStyle(
+      element,
+      context,
+      options,
+      cascade,
+      parentStyle
+    );
   }
 
   return parentStyle;

@@ -24,7 +24,7 @@ export function find<T extends Node>(
   scope: Node,
   context: Node,
   query: Predicate<Node, T> | string,
-  options: FindOptions = {}
+  options?: FindOptions
 ): T | null {
   let predicate: Predicate<Node, T>;
 
@@ -41,7 +41,7 @@ export function find<T extends Node>(
   traverseNode(
     scope,
     {
-      enter(node) {
+      enter(node, parent) {
         if (predicate(node)) {
           found = node;
           return false;
@@ -89,7 +89,7 @@ export function findAll<T extends Node>(
   traverseNode(
     scope,
     {
-      enter(node) {
+      enter(node, parent) {
         if (predicate(node)) {
           found.push(node);
         }

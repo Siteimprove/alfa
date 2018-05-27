@@ -16,7 +16,7 @@ export function getTextContent(node: Node): string {
   let text = "";
 
   traverseNode(node, {
-    enter(node) {
+    enter(node, parent) {
       if (isText(node)) {
         text += node.data;
       }

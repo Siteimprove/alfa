@@ -14,7 +14,7 @@ export function hasTextContent(node: Node): boolean {
   let text = false;
 
   traverseNode(node, {
-    enter(node) {
+    enter(node, parent) {
       if (isText(node) && node.data.trim() !== "") {
         text = true;
         return false;

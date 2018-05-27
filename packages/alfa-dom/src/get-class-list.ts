@@ -1,17 +1,6 @@
+import { split, isWhitespace } from "@siteimprove/alfa-util";
 import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
-import { ObjectCache } from "./object-cache";
-
-export interface ClassList extends Iterable<string> {
-  has(className: string): boolean;
-}
-
-const classLists: ObjectCache<Element, ClassList> = new ObjectCache();
-
-/**
- * Empty singleton set used for elements that have no class list.
- */
-const empty: ClassList = new Set();
 
 /**
  * Given an element, get the associated class list of an element.
@@ -20,17 +9,15 @@ const empty: ClassList = new Set();
  *
  * @example
  * const div = <div class="foo bar" />;
- * ...getClassList(div);
+ * getClassList(div);
  * // => ["foo", "bar"]
  */
-export function getClassList(element: Element): ClassList {
-  return classLists.get(element, () => {
-    const classList = getAttribute(element, "class");
+export function getClassList(element: Element): Array<string> {
+  const classNames = getAttribute(element, "class");
 
-    if (classList === null) {
-      return empty;
-    }
+  if (classNames === null) {
+    return [];
+  }
 
-    return new Set(classList.split(/\s+/));
-  });
+  return split(classNames, isWhitespace);
 }

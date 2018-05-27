@@ -1,11 +1,13 @@
 import { Selector } from "@siteimprove/alfa-css";
 import { Node, Document, Element, StyleSheet, StyleRule } from "./types";
-import { isElement } from "./guards";
+import { isElement, isDocument } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { SelectorMap } from "./selector-map";
 import { AncestorFilter } from "./ancestor-filter";
-import { ObjectCache } from "./object-cache";
 
+/**
+ * @internal
+ */
 export type CascadeEntry = Readonly<{
   selector: Selector;
   rule: StyleRule;
@@ -18,55 +20,55 @@ export interface Cascade {
   get(element: Element): Array<CascadeEntry> | undefined;
 }
 
-const cascades: ObjectCache<Document, Cascade> = new ObjectCache();
-
 /**
  * @internal
  */
-export function getCascade(document: Document): Cascade {
-  return cascades.get(document, () => {
-    const cascade: WeakMap<Element, Array<CascadeEntry>> = new WeakMap();
-    const selectorMap = new SelectorMap(document.styleSheets);
-    const filter = new AncestorFilter();
+export function getCascade(context: Node): Cascade | null {
+  if (!isDocument(context)) {
+    return null;
+  }
 
-    traverseNode(document, {
-      enter(node, parent) {
-        if (parent !== null && isElement(parent)) {
-          filter.add(parent);
-        }
+  const cascade: WeakMap<Element, Array<CascadeEntry>> = new WeakMap();
+  const selectorMap = new SelectorMap(context.styleSheets);
+  const filter = new AncestorFilter();
 
-        if (isElement(node)) {
-          const rules = selectorMap.getRules(node, document, {
-            filter,
-            hover: true,
-            active: true,
-            focus: true,
-            pseudo: true
-          });
-
-          rules.sort((a, b) => {
-            // If the specificities of the rules are equal, the declaration
-            // order will determine the cascade. The rule with the highest
-            // order gets the highest priority.
-            if (a.specificity === b.specificity) {
-              return b.order - a.order;
-            }
-
-            // Otherwise, the specificity will determine the cascade. The rule
-            // with the highest specificity gets the highest priority.
-            return b.specificity - a.specificity;
-          });
-
-          cascade.set(node, rules);
-        }
-      },
-      exit(node) {
-        if (isElement(node)) {
-          filter.remove(node);
-        }
+  traverseNode(context, {
+    enter(node, parent) {
+      if (parent !== null && isElement(parent)) {
+        filter.add(parent);
       }
-    });
 
-    return cascade;
+      if (isElement(node)) {
+        const rules = selectorMap.getRules(node, context, {
+          filter,
+          hover: true,
+          active: true,
+          focus: true,
+          pseudo: true
+        });
+
+        rules.sort((a, b) => {
+          // If the specificities of the rules are equal, the declaration order
+          // will determine the cascade. The rule with the highest order gets
+          // the highest priority.
+          if (a.specificity === b.specificity) {
+            return b.order - a.order;
+          }
+
+          // Otherwise, the specificity will determine the cascade. The rule
+          // with the highest specificity gets the highest priority.
+          return b.specificity - a.specificity;
+        });
+
+        cascade.set(node, rules);
+      }
+    },
+    exit(node, parent) {
+      if (isElement(node)) {
+        filter.remove(node);
+      }
+    }
   });
+
+  return cascade;
 }
