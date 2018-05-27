@@ -1,6 +1,6 @@
 import { Selector } from "@siteimprove/alfa-css";
-import { Node, Document, Element, StyleSheet, StyleRule } from "./types";
-import { isElement, isDocument } from "./guards";
+import { Document, Element, StyleSheet, StyleRule } from "./types";
+import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { SelectorMap } from "./selector-map";
 import { AncestorFilter } from "./ancestor-filter";
@@ -23,11 +23,7 @@ export interface Cascade {
 /**
  * @internal
  */
-export function getCascade(context: Node): Cascade | null {
-  if (!isDocument(context)) {
-    return null;
-  }
-
+export function getCascade(context: Document): Cascade | null {
   const cascade: WeakMap<Element, Array<CascadeEntry>> = new WeakMap();
   const selectorMap = new SelectorMap(context.styleSheets);
   const filter = new AncestorFilter();
