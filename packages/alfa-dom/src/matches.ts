@@ -205,8 +205,8 @@ function matchesCompound(
   { selectors }: CompoundSelector,
   options: MatchingOptions
 ): boolean {
-  for (const selector of selectors) {
-    if (!matches(element, context, selector, options)) {
+  for (let i = 0, n = selectors.length; i < n; i++) {
+    if (!matches(element, context, selectors[i], options)) {
       return false;
     }
   }
@@ -223,8 +223,8 @@ function matchesList(
   selectors: Array<Selector>,
   options: MatchingOptions
 ): boolean {
-  for (const selector of selectors) {
-    if (matches(element, context, selector, options)) {
+  for (let i = 0, n = selectors.length; i < n; i++) {
+    if (matches(element, context, selectors[i], options)) {
       return true;
     }
   }
