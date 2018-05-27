@@ -205,13 +205,15 @@ export function getTextAlternative(
   return null;
 }
 
+const whitespace = /\s+/g;
+
 /**
  * Return a flattened and trimmed version of a string.
  *
  * @see https://www.w3.org/TR/accname/#terminology
  */
 function flatten(string: string, options: TextAlternativeOptions): string {
-  return options.recursing ? string : string.replace(/\s+/g, " ").trim();
+  return options.recursing ? string : string.replace(whitespace, " ").trim();
 }
 
 /**

@@ -1,8 +1,10 @@
-import { Node, Element, getAttribute } from "@siteimprove/alfa-dom";
 import { keys } from "@siteimprove/alfa-util";
+import { Node, Element, getAttribute } from "@siteimprove/alfa-dom";
 import { Role, Feature } from "./types";
 import * as Roles from "./roles";
 import * as Features from "./features";
+
+const whitespace = /\s+/;
 
 const roles: Map<string, Role> = new Map();
 const features: Map<string, Feature> = new Map();
@@ -45,7 +47,7 @@ export function getRole(element: Element, context: Node): Role | null {
       }
     }
   } else {
-    for (const name of role.split(/\s+/)) {
+    for (const name of role.split(whitespace)) {
       const role = roles.get(name);
 
       if (role !== undefined && !role.abstract) {

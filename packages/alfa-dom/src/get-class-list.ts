@@ -1,6 +1,8 @@
 import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
 
+const whitespace = /\s+/;
+
 /**
  * Given an element, get the associated class list of an element.
  *
@@ -18,5 +20,5 @@ export function getClassList(element: Element): Array<string> {
     return [];
   }
 
-  return classNames.split(/\s+/);
+  return classNames.split(whitespace);
 }

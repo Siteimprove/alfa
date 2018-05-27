@@ -152,6 +152,8 @@ function matchesType(element: Element, selector: TypeSelector): boolean {
   return element.localName === selector.name;
 }
 
+const whitespace = /\s+/;
+
 /**
  * @see https://www.w3.org/TR/selectors/#attribute-selectors
  */
@@ -188,7 +190,7 @@ function matchesAttribute(
     case "*":
       return value.includes(match);
     case "~":
-      return value.split(/\s+/).some(value => value === match);
+      return value.split(whitespace).some(value => value === match);
     case "|":
       return value === match || value.startsWith(match + "-");
   }

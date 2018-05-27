@@ -6,6 +6,8 @@ import {
   isElement
 } from "@siteimprove/alfa-dom";
 
+const whitespace = /\s+/;
+
 /**
  * @internal
  */
@@ -16,7 +18,7 @@ export function resolveReferences(
 ): Array<Element> {
   const elements: Array<Element> = [];
 
-  for (const id of references.split(/\s+/)) {
+  for (const id of references.split(whitespace)) {
     const element = find<Element>(
       node,
       context,
