@@ -1,8 +1,6 @@
-import { Predicate } from "@siteimprove/alfa-util";
+import { indexOf } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import { getParentNode } from "./get-parent-node";
-
-const siblingMaps: WeakMap<Node, WeakMap<Node, Node | null>> = new WeakMap();
 
 /**
  * @see https://www.w3.org/TR/dom/#dom-node-nextsibling
@@ -11,30 +9,13 @@ export function getNextSibling<T extends Node>(
   node: Node,
   context: Node
 ): Node | null {
-  let siblingMap = siblingMaps.get(context);
+  const parentNode = getParentNode(node, context);
 
-  if (siblingMap === undefined) {
-    siblingMap = new WeakMap();
-    siblingMaps.set(context, siblingMap);
+  if (parentNode === null) {
+    return null;
   }
 
-  let sibling = siblingMap.get(node);
+  const { childNodes } = parentNode;
 
-  if (sibling === undefined) {
-    const parentNode = getParentNode(node, context);
-
-    if (parentNode === null) {
-      sibling = null;
-    } else {
-      const { childNodes } = parentNode;
-
-      for (let i = 0, n = childNodes.length; i < n; i++) {
-        siblingMap.set(childNodes[i], childNodes[i + 1] || null);
-      }
-
-      sibling = siblingMap.get(node)!;
-    }
-  }
-
-  return sibling;
+  return childNodes[indexOf(childNodes, node) + 1] || null;
 }
