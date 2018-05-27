@@ -53,8 +53,7 @@ export function getSpecificity(selector: Selector): Specificity {
         queue.push(...selector.selectors);
         break;
       case "relative-selector":
-        queue.push(selector.selector);
-        queue.push(selector.relative);
+        queue.push(selector.selector, selector.relative);
     }
   }
 
