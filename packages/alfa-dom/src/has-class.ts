@@ -9,17 +9,27 @@ export function hasClass(element: Element, className: string): boolean {
     return false;
   }
 
-  const index = classNames.indexOf(className);
+  const { length } = classNames;
 
-  if (index === -1) {
-    return false;
+  let start = 0;
+
+  while (start < length) {
+    let end = start;
+
+    while (!isWhitespace(classNames[end]) && end < length) {
+      end++;
+    }
+
+    if (start !== end && className === classNames.substring(start, end)) {
+      return true;
+    }
+
+    while (isWhitespace(classNames[end]) && end < length) {
+      end++;
+    }
+
+    start = end;
   }
 
-  const before = classNames[index - 1];
-  const after = classNames[index + className.length];
-
-  return (
-    (before === undefined || isWhitespace(before)) &&
-    (after === undefined || isWhitespace(after))
-  );
+  return false;
 }
