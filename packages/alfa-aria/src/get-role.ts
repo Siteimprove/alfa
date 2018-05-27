@@ -1,5 +1,5 @@
 import { Node, Element, getAttribute } from "@siteimprove/alfa-dom";
-import { isWhitespace, split, keys } from "@siteimprove/alfa-util";
+import { keys } from "@siteimprove/alfa-util";
 import { Role, Feature } from "./types";
 import * as Roles from "./roles";
 import * as Features from "./features";
@@ -45,7 +45,7 @@ export function getRole(element: Element, context: Node): Role | null {
       }
     }
   } else {
-    for (const name of split(role, isWhitespace)) {
+    for (const name of role.split(/\s+/)) {
       const role = roles.get(name);
 
       if (role !== undefined && !role.abstract) {

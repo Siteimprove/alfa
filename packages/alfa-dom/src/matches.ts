@@ -1,4 +1,4 @@
-import { memoize, isWhitespace, split, first } from "@siteimprove/alfa-util";
+import { memoize, first } from "@siteimprove/alfa-util";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
@@ -188,7 +188,7 @@ function matchesAttribute(
     case "*":
       return value.includes(match);
     case "~":
-      return split(value, isWhitespace).some(value => value === match);
+      return value.split(/\s+/).some(value => value === match);
     case "|":
       return value === match || value.startsWith(match + "-");
   }

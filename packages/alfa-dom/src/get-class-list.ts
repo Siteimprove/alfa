@@ -1,4 +1,3 @@
-import { split, isWhitespace } from "@siteimprove/alfa-util";
 import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
 
@@ -19,5 +18,5 @@ export function getClassList(element: Element): Array<string> {
     return [];
   }
 
-  return split(classNames, isWhitespace);
+  return classNames.split(/\s+/);
 }

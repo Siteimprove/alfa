@@ -5,7 +5,6 @@ import {
   getAttribute,
   isElement
 } from "@siteimprove/alfa-dom";
-import { split, isWhitespace } from "@siteimprove/alfa-util";
 
 /**
  * @internal
@@ -17,7 +16,7 @@ export function resolveReferences(
 ): Array<Element> {
   const elements: Array<Element> = [];
 
-  for (const id of split(references, isWhitespace)) {
+  for (const id of references.split(/\s+/)) {
     const element = find<Element>(
       node,
       context,

@@ -26,7 +26,6 @@ export * from "./string/is-hex";
 export * from "./string/is-newline";
 export * from "./string/is-numeric";
 export * from "./string/is-whitespace";
-export * from "./string/split";
 
 export * from "./type/mutable";
 export * from "./type/predicate";
