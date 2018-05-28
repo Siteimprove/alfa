@@ -4,7 +4,7 @@ const { assign } = Object;
 
 export type Test = tape.Test & { title: string };
 export type TestOptions = tape.TestOptions;
-export type TestCase = (test: Test) => Promise<void> | void;
+export type TestCase = (test: Test) => void | Promise<void>;
 
 export function test(title: string, callback: TestCase): void;
 
