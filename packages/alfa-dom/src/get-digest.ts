@@ -1,5 +1,4 @@
 import { getHash } from "@siteimprove/alfa-crypto";
-import { slice } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import { isElement, isText, isComment, isDocumentType } from "./guards";
 import { getNamespace } from "./get-namespace";
@@ -38,7 +37,7 @@ export function getDigest(node: Node, context: Node = node): string | null {
         hash.update(namespace + ":" + node.localName);
       }
 
-      const attributes = slice(node.attributes).sort(
+      const attributes = Array.from(node.attributes).sort(
         (a, b) =>
           a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0
       );
