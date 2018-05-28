@@ -6,7 +6,7 @@ import * as typescript from "./tasks/typescript";
 import * as locale from "./tasks/locale";
 
 async function build(): Promise<void> {
-  for (const path of await expand(["build/**/*.ts"])) {
+  for (const path of await expand("build/**/*.ts")) {
     notify({ message: "Building", value: path });
 
     try {
@@ -55,6 +55,16 @@ async function build(): Promise<void> {
       }
     }
   });
+
+  for (const path of await expand("docs/**/*.ts")) {
+    notify({ message: "Building", value: path });
+
+    try {
+      await execute([typescript.diagnose], path);
+    } catch (error) {
+      process.exit(1);
+    }
+  }
 }
 
 build();
