@@ -3,7 +3,6 @@ import { expand, remove } from "@foreman/fs";
 import { notify } from "@foreman/notify";
 import { Packages } from "@foreman/dependant";
 import * as typescript from "./tasks/typescript";
-import * as locale from "./tasks/locale";
 
 (async () => {
   for (const path of await expand("build/**/*.ts")) {
@@ -24,16 +23,6 @@ import * as locale from "./tasks/locale";
 
   await packages.traverse(async pkg => {
     await remove(`${pkg}/dist`);
-
-    for (const path of await expand(`${pkg}/**/*.hjson`)) {
-      notify({ message: "Building", value: path });
-
-      try {
-        await execute([locale.transform], path);
-      } catch (error) {
-        process.exit(1);
-      }
-    }
 
     for (const path of await expand(`${pkg}/src/**/*.ts`)) {
       notify({ message: "Building", value: path });

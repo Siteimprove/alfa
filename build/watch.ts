@@ -3,15 +3,10 @@ import { watch } from "@foreman/fs";
 import { notify } from "@foreman/notify";
 import * as tap from "./tasks/tap";
 import * as typescript from "./tasks/typescript";
-import * as locale from "./tasks/locale";
 import { isBench, isTest, isDefinition } from "./guards";
 
 watch(
-  [
-    "packages/*/src/**/*.ts",
-    "packages/*/{test,bench}/**/*.ts{,x}",
-    "packages/**/*.hjson"
-  ],
+  "packages/*/{bench,src,test}/**/*.ts{,x}",
   ["add", "change"],
   async (event, path) => {
     notify({
@@ -21,17 +16,13 @@ watch(
 
     const tasks: Array<Task> = [];
 
-    if (/\.hjson$/.test(path)) {
-      tasks.push(locale.transform);
-    } else {
-      tasks.push(typescript.diagnose);
+    tasks.push(typescript.diagnose);
 
-      if (!isBench(path)) {
-        if (isTest(path)) {
-          tasks.push(tap.test);
-        } else if (!isDefinition(path)) {
-          tasks.push(typescript.compile);
-        }
+    if (!isBench(path)) {
+      if (isTest(path)) {
+        tasks.push(tap.test);
+      } else if (!isDefinition(path)) {
+        tasks.push(typescript.compile);
       }
     }
 
