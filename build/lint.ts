@@ -3,7 +3,7 @@ import { staged, add } from "@foreman/git";
 import { notify } from "@foreman/notify";
 import * as prettier from "./tasks/prettier";
 
-async function lint() {
+(async () => {
   const files = await staged();
 
   for (const file of files) {
@@ -15,6 +15,4 @@ async function lint() {
       }
     }
   }
-}
-
-lint();
+})();

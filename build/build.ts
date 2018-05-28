@@ -5,7 +5,7 @@ import { Packages } from "@foreman/dependant";
 import * as typescript from "./tasks/typescript";
 import * as locale from "./tasks/locale";
 
-async function build(): Promise<void> {
+(async () => {
   for (const path of await expand("build/**/*.ts")) {
     notify({ message: "Building", value: path });
 
@@ -45,7 +45,7 @@ async function build(): Promise<void> {
       }
     }
 
-    for (const path of await expand([`${pkg}/test/**/*.ts{,x}`])) {
+    for (const path of await expand([`${pkg}/{test,bench}/**/*.ts{,x}`])) {
       notify({ message: "Building", value: path });
 
       try {
@@ -65,6 +65,4 @@ async function build(): Promise<void> {
       process.exit(1);
     }
   }
-}
-
-build();
+})();

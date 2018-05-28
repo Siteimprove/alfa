@@ -2,11 +2,29 @@ import { write } from "@foreman/fs";
 import { extension } from "@foreman/path";
 import { notify } from "@foreman/notify";
 import * as typescript from "@foreman/typescript";
+import { Workspace } from "@foreman/typescript";
+import { isBench, isTest } from "../guards";
 
-const workspace = new typescript.Workspace();
+const Workspaces = {
+  Bench: new Workspace(),
+  Src: new Workspace(),
+  Test: new Workspace()
+};
+
+function workspaceFor(path: string): Workspace {
+  if (isBench(path)) {
+    return Workspaces.Bench;
+  }
+
+  if (isTest(path)) {
+    return Workspaces.Test;
+  }
+
+  return Workspaces.Src;
+}
 
 export async function diagnose(path: string): Promise<void> {
-  const diagnotics = await typescript.diagnose(workspace, path);
+  const diagnotics = await typescript.diagnose(workspaceFor(path), path);
 
   if (diagnotics.length === 0) {
     notify({
@@ -28,7 +46,7 @@ export async function diagnose(path: string): Promise<void> {
 
 export async function compile(path: string): Promise<void> {
   try {
-    const files = await typescript.compile(workspace, path);
+    const files = await typescript.compile(workspaceFor(path), path);
 
     for (const { name, text } of files) {
       await write(name, text);

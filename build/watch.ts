@@ -4,11 +4,12 @@ import { notify } from "@foreman/notify";
 import * as tap from "./tasks/tap";
 import * as typescript from "./tasks/typescript";
 import * as locale from "./tasks/locale";
+import { isBench, isTest, isDefinition } from "./guards";
 
 watch(
   [
     "packages/*/src/**/*.ts",
-    "packages/*/test/**/*.ts{,x}",
+    "packages/*/{test,bench}/**/*.ts{,x}",
     "packages/**/*.hjson"
   ],
   ["add", "change"],
@@ -25,10 +26,12 @@ watch(
     } else {
       tasks.push(typescript.diagnose);
 
-      if (/spec\.tsx?$/.test(path)) {
-        tasks.push(tap.test);
-      } else if (!/\.d\.ts$/.test(path)) {
-        tasks.push(typescript.compile);
+      if (!isBench(path)) {
+        if (isTest(path)) {
+          tasks.push(tap.test);
+        } else if (!isDefinition(path)) {
+          tasks.push(typescript.compile);
+        }
       }
     }
 
