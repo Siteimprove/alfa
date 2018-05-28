@@ -7,7 +7,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
 
-export const Lang: Rule<Element, "document"> = {
+export const Lang: Rule<"document", Element> = {
   id: "alfa:wcag:lang",
   criteria: ["wcag:3.1.2"],
   locales: [],

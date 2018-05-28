@@ -1,7 +1,7 @@
 import { Element, isElement, getAttribute } from "@siteimprove/alfa-dom";
 import { Rule } from "../../src/types";
 
-export const Manual: Rule<Element, "document"> = {
+export const Manual: Rule<"document", Element> = {
   id: "alfa:test:manual",
   criteria: [],
   locales: [],
@@ -20,7 +20,7 @@ export const Manual: Rule<Element, "document"> = {
   }
 };
 
-export const Dependencies: Rule<Element, "document"> = {
+export const Dependencies: Rule<"document", Element> = {
   id: "alfa:test:dependencies",
   criteria: [],
   locales: [],

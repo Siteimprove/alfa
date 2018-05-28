@@ -8,12 +8,12 @@ import {
   Blockquote,
   Table
 } from "@siteimprove/alfa-markdown";
-import { Rule, Target, Aspect, Outcome, Locale } from "./types";
+import { Rule, Aspect, Target, Outcome, Locale } from "./types";
 
 const { keys } = Object;
 
-export function markdown<T extends Target, A extends Aspect, C = null>(
-  rule: Rule<T, A, C>,
+export function markdown<A extends Aspect, T extends Target>(
+  rule: Rule<A, T>,
   lang: Locale["id"]
 ): string | null {
   const locale = rule.locales.find(locale => locale.id === lang);

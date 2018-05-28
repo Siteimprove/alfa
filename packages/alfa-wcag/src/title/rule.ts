@@ -10,7 +10,7 @@ import {
 
 export type Context = Readonly<{ root: Element | null; title: Element | null }>;
 
-export const Title: Rule<Element, "document", Context> = {
+export const Title: Rule<"document", Element, Context> = {
   id: "alfa:wcag:title",
   criteria: ["wcag:2.4.2"],
   locales: [],

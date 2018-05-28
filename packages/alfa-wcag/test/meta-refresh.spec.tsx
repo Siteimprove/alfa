@@ -13,7 +13,7 @@ test("Passes when a refresh has a timeout of 0 and no URL", t => {
     </html>
   );
 
-  const results = audit(MetaRefresh, { document });
+  const results = audit({ document }, MetaRefresh);
 
   outcome(t, results, { passed: [meta] });
 });
@@ -26,7 +26,7 @@ test("Passes when a refresh has a timeout of 0 and a URL", t => {
     </html>
   );
 
-  const results = audit(MetaRefresh, { document });
+  const results = audit({ document }, MetaRefresh);
 
   outcome(t, results, { passed: [meta] });
 });
@@ -39,7 +39,7 @@ test("Fails when a refresh has a timeout greater than 0 and no URL", t => {
     </html>
   );
 
-  const results = audit(MetaRefresh, { document });
+  const results = audit({ document }, MetaRefresh);
 
   outcome(t, results, { failed: [meta] });
 });
@@ -52,7 +52,7 @@ test("Fails when a refresh has a timeout greater than 0 and a URL", t => {
     </html>
   );
 
-  const results = audit(MetaRefresh, { document });
+  const results = audit({ document }, MetaRefresh);
 
   outcome(t, results, { failed: [meta] });
 });

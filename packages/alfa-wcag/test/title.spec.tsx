@@ -14,7 +14,7 @@ test("Passes when at least one non-empty title exists within a document", t => {
     </html>
   );
 
-  const results = audit(Title, { document });
+  const results = audit({ document }, Title);
 
   outcome(t, results, { passed: [document] });
 });

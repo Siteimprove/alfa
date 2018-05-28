@@ -14,7 +14,7 @@ test("Passes when no duplicate IDs exist within a document", t => {
     </html>
   );
 
-  const results = audit(UniqueId, { document });
+  const results = audit({ document }, UniqueId);
 
   outcome(t, results, { passed: [foo, bar] });
 });
@@ -28,7 +28,7 @@ test("Fails when elements with duplicate IDs exist within a document", t => {
     </html>
   );
 
-  const results = audit(UniqueId, { document });
+  const results = audit({ document }, UniqueId);
 
   outcome(t, results, { failed: [foo, bar] });
 });
@@ -40,7 +40,7 @@ test("Marks the document as inapplicable when no elements with IDs exist", t => 
     </div>
   );
 
-  const results = audit(UniqueId, { document });
+  const results = audit({ document }, UniqueId);
 
   outcome(t, results, { inapplicable: [document] });
 });
