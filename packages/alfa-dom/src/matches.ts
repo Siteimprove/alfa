@@ -1,4 +1,4 @@
-import { memoize, first } from "@siteimprove/alfa-util";
+import { first } from "@siteimprove/alfa-util";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
@@ -24,11 +24,6 @@ import { hasClass } from "./has-class";
 import { AncestorFilter } from "./ancestor-filter";
 
 const { isArray } = Array;
-
-const parseMemoized = memoize(
-  (selector: string) => parse(lex(selector, Alphabet), SelectorGrammar),
-  { cache: { size: 50 } }
-);
 
 /**
  * @internal
@@ -93,7 +88,7 @@ export function matches(
   options: MatchingOptions = {}
 ): boolean {
   if (typeof selector === "string") {
-    const parsed = parseMemoized(selector);
+    const parsed = parse(lex(selector, Alphabet), SelectorGrammar);
 
     if (parsed === null) {
       return false;

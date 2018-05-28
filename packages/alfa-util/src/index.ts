@@ -7,9 +7,6 @@ export * from "./array/last";
 export * from "./array/map";
 export * from "./array/union";
 
-export * from "./function/memoize";
-export * from "./function/noop";
-
 export * from "./number/clamp";
 
 export * from "./object/entries";
