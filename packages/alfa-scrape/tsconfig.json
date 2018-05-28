@@ -3,7 +3,6 @@
   "include": ["src/**/*.ts"],
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
     "lib": ["es2015", "dom"]
   }
 }
