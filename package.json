@@ -5,7 +5,8 @@
     "prepare": "foreman build/build.ts",
     "test": "foreman build/test.ts",
     "start": "foreman build/watch.ts",
-    "precommit": "foreman build/lint.ts"
+    "precommit": "foreman build/lint.ts",
+    "bench": "foreman --prof"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
