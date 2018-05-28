@@ -1,13 +1,13 @@
 import { Token, Pattern, Command } from "./types";
 import { Alphabet } from "./alphabet";
-import { CharacterStream } from "./stream";
+import { Stream } from "./stream";
 
 export function lex<T extends Token, S = null>(
   input: string,
   alphabet: Alphabet<T, S>
 ): Array<T> {
   const tokens: Array<T> = [];
-  const stream = new CharacterStream(input);
+  const stream = new Stream(input);
 
   function emit<U extends T>(token: U): void {
     tokens.push(token);

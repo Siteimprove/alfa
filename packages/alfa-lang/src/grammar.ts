@@ -1,5 +1,4 @@
 import { Token, Production } from "./types";
-import { TokenStream } from "./stream";
 
 const { isArray } = Array;
 

@@ -1,12 +1,12 @@
 import { Token, Command } from "./types";
 import { Grammar } from "./grammar";
-import { TokenStream } from "./stream";
+import { Stream } from "./stream";
 
 export function parse<T extends Token, R>(
   input: Array<T>,
   grammar: Grammar<T, R>
 ): R | null {
-  const stream = new TokenStream(input);
+  const stream = new Stream(input);
 
   function expression(power: number): R | null {
     let token = stream.peek();

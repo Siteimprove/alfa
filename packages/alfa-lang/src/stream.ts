@@ -4,13 +4,13 @@ import { Token, Location } from "./types";
 const { isArray } = Array;
 
 export class Stream<T> {
-  protected _input: Array<T>;
+  protected _input: ArrayLike<T>;
   protected _position: number = 0;
   protected _start: number = 0;
   protected _line: number = 0;
   protected _column: number = 0;
 
-  public constructor(input: Array<T>) {
+  public constructor(input: ArrayLike<T>) {
     this._input = input;
   }
 
@@ -39,11 +39,17 @@ export class Stream<T> {
   }
 
   public range(start: number, end: number): Array<T> {
-    return this._input.slice(start, end);
+    const result: Array<T> = new Array(end - start);
+
+    for (let i = start, j = 0; i < end; i++, j++) {
+      result[j] = this._input[i];
+    }
+
+    return result;
   }
 
   public result(): Array<T> {
-    return this._input.slice(this._start, this._position);
+    return this.range(this._start, this._position);
   }
 
   public progressed(): boolean {
@@ -62,28 +68,26 @@ export class Stream<T> {
     }
   }
 
-  public advance(times: number = 1, callback?: () => void): boolean {
+  public advance(times: number = 1): boolean {
     let advanced = false;
 
     do {
       if (this._position < this._input.length) {
         advanced = true;
         this._position++;
-        callback && callback();
       }
     } while (--times > 0);
 
     return advanced;
   }
 
-  public backup(times: number = 1, callback?: () => void): boolean {
+  public backup(times: number = 1): boolean {
     let backedup = false;
 
     do {
       if (this._position > 0) {
         backedup = true;
         this._position--;
-        callback && callback();
       }
     } while (--times > 0);
 
@@ -151,43 +155,3 @@ export class Stream<T> {
     return this.range(start, this._position) as Array<U>;
   }
 }
-
-/**
- * @internal
- */
-export class CharacterStream extends Stream<string> {
-  public constructor(input: string) {
-    super(input.split(""));
-  }
-
-  public advance(times?: number): boolean {
-    return super.advance(times, () => {
-      const next = this.peek();
-
-      if (next !== null && isNewline(next)) {
-        this._line++;
-        this._column = 0;
-      } else {
-        this._column++;
-      }
-    });
-  }
-
-  public backup(times?: number): boolean {
-    return super.backup(times, () => {
-      const prev = this.peek();
-
-      if (prev !== null && isNewline(prev)) {
-        this._line--;
-        this._column = 0;
-      } else {
-        this._column--;
-      }
-    });
-  }
-}
-
-/**
- * @internal
- */
-export class TokenStream<T extends Token> extends Stream<T> {}
