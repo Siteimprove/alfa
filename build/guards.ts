@@ -3,7 +3,7 @@ export function isBench(path: string): boolean {
 }
 
 export function isTest(path: string): boolean {
-  return /\.test\.tsx?$/.test(path);
+  return /\.spec\.tsx?$/.test(path);
 }
 
 export function isDefinition(path: string): boolean {
