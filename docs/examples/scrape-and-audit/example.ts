@@ -25,7 +25,7 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
     const page = await scraper.scrape(`${site}/${url}`);
 
     const results = audit(page, Rules).map(result => {
-      if ("target" in result) {
+      if ("target" in result && result.target !== undefined) {
         return { ...result, target: serialize(result.target) };
       }
 
