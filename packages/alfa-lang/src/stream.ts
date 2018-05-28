@@ -1,4 +1,4 @@
-import { Predicate, isNewline } from "@siteimprove/alfa-util";
+import { Predicate } from "@siteimprove/alfa-util";
 import { Token, Location } from "./types";
 
 const { isArray } = Array;

@@ -1,4 +1,3 @@
-import { isNumeric, isWhitespace } from "@siteimprove/alfa-util";
 import { Stream } from "@siteimprove/alfa-lang";
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, isElement, find, getAttribute } from "@siteimprove/alfa-dom";
@@ -37,11 +36,11 @@ export const MetaRefresh: Rule<"document", Element> = {
  * @see https://www.w3.org/TR/html/document-metadata.html#statedef-http-equiv-refresh
  */
 function getRefreshTime(content: string): number | null {
-  const stream = new Stream(content.split(""));
+  const stream = new Stream(content);
 
-  stream.accept(isWhitespace);
+  stream.accept(char => /\s/.test(char));
 
-  const time = stream.accept(isNumeric);
+  const time = stream.accept(char => /\d/.test(char));
 
   if (time === false) {
     return null;
@@ -52,7 +51,7 @@ function getRefreshTime(content: string): number | null {
   // As long as the time of the refresh is ended correctly, the URL won't matter
   // in terms of the validity of the refresh. If the URL is therefore invalid,
   // the refresh will simply redirect to the current page.
-  if (next !== null && next !== ";" && next !== "," && isWhitespace(next)) {
+  if (next !== null && next !== ";" && next !== "," && /\s/.test(next)) {
     return null;
   }
 

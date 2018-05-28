@@ -15,7 +15,7 @@ export enum Command {
 }
 
 export type Pattern<T extends Token, S = null> = (
-  stream: Stream<string>,
+  stream: Stream<number>,
   emit: <U extends T>(token: U) => void,
   state: S
 ) => Pattern<T, S> | Command.End | void;

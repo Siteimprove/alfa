@@ -1,13 +1,15 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Stream, Command } from "@siteimprove/alfa-lang";
 import {
+  Stream,
+  Command,
+  Char,
   isWhitespace,
   isAlpha,
   isAlphanumeric,
   isHex,
   isNumeric,
   isAscii
-} from "@siteimprove/alfa-util";
+} from "@siteimprove/alfa-lang";
 
 export type Whitespace = Readonly<{ type: "whitespace" }>;
 
@@ -73,7 +75,7 @@ export type Token =
 
 export type State = {
   number: Number | null;
-  mark: '"' | "'" | null;
+  mark: Char.QuotationMark | Char.Apostrophe | null;
 };
 
 export type Pattern = Lang.Pattern<Token, State>;
@@ -97,20 +99,20 @@ export function isDelim(token: Token): token is Delim {
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
  */
-function startsValidEscape(fst: string, snd: string | null): boolean {
-  return fst === "\\" && snd !== "\n";
+function startsValidEscape(fst: number, snd: number | null): boolean {
+  return fst === Char.ReverseSolidus && snd !== Char.LineFeed;
 }
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-number
  */
 function startsNumber(
-  fst: string,
-  snd: string | null,
-  thd: string | null
+  fst: number,
+  snd: number | null,
+  thd: number | null
 ): boolean {
-  if (fst === "+" || fst === "-") {
-    if (snd === ".") {
+  if (fst === Char.PlusSign || fst === Char.HyphenMinus) {
+    if (snd === Char.FullStop) {
       if (thd !== null) {
         fst = thd;
       }
@@ -121,7 +123,7 @@ function startsNumber(
     }
   }
 
-  if (fst === ".") {
+  if (fst === Char.FullStop) {
     if (snd !== null) {
       fst = snd;
     }
@@ -134,11 +136,11 @@ function startsNumber(
  * @see https://www.w3.org/TR/css-syntax/#would-start-an-identifier
  */
 function startsIdentifier(
-  fst: string,
-  snd: string | null,
-  thd: string | null
+  fst: number,
+  snd: number | null,
+  thd: number | null
 ): boolean {
-  if (fst === "-") {
+  if (fst === Char.HyphenMinus) {
     if (snd === null) {
       return false;
     }
@@ -153,21 +155,21 @@ function startsIdentifier(
 /**
  * @see https://www.w3.org/TR/css-syntax/#name-start-code-point
  */
-function isNameStart(char: string): boolean {
-  return isAlpha(char) || !isAscii(char) || char === "_";
+function isNameStart(char: number): boolean {
+  return isAlpha(char) || !isAscii(char) || char === Char.LowLine;
 }
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#name-code-point
  */
-function isName(char: string): boolean {
-  return isNameStart(char) || isNumeric(char) || char === "-";
+function isName(char: number): boolean {
+  return isNameStart(char) || isNumeric(char) || char === Char.HyphenMinus;
 }
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
-const name: (stream: Stream<string>) => string = stream => {
+const name: (stream: Stream<number>) => string = stream => {
   let result = "";
   let next = stream.next();
 
@@ -190,28 +192,28 @@ const name: (stream: Stream<string>) => string = stream => {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-escaped-code-point
  */
-const escapedCodePoint: (stream: Stream<string>) => string = stream => {
-  let next = stream.next();
+const escapedCodePoint: (stream: Stream<number>) => string = stream => {
+  let code = stream.next();
 
-  if (next === null) {
+  if (code === null) {
     return "\ufffd";
   }
 
-  if (isHex(next)) {
+  if (isHex(code)) {
     const hex = stream.accept(isHex, 0, 5);
 
-    stream.accept(isWhitespace, 1);
+    if (hex !== false) {
+      code = hex.reduce((code, n) => 0x10 * code + n, code);
+    }
 
-    const code = parseInt(next + (hex === false ? "" : hex.join("")), 16);
+    stream.accept(isWhitespace, 1);
 
     if (code === 0) {
       return "\ufffd";
     }
-
-    return String.fromCharCode(code);
   }
 
-  return next;
+  return String.fromCharCode(code);
 };
 
 /**
@@ -231,35 +233,41 @@ const initial: Pattern = (stream, emit, state) => {
   }
 
   switch (char) {
-    case '"':
-    case "'":
+    case Char.QuotationMark:
+    case Char.Apostrophe:
       state.mark = char;
       return string;
 
-    case "(":
-    case ")":
-      emit({ type: char });
+    case Char.LeftParenthesis:
+      emit({ type: "(" });
       return;
-    case "[":
-    case "]":
-      emit({ type: char });
+    case Char.RightParenthesis:
+      emit({ type: ")" });
       return;
-    case "{":
-    case "}":
-      emit({ type: char });
+    case Char.LeftSquareBracket:
+      emit({ type: "[" });
       return;
-    case ",":
-      emit({ type: char });
+    case Char.RightSquareBracket:
+      emit({ type: "]" });
       return;
-    case ":":
-      emit({ type: char });
+    case Char.LeftCurlyBracket:
+      emit({ type: "{" });
       return;
-    case ";":
-      emit({ type: char });
+    case Char.RightCurlyBracket:
+      emit({ type: "}" });
+      return;
+    case Char.Comma:
+      emit({ type: "," });
+      return;
+    case Char.Colon:
+      emit({ type: ":" });
+      return;
+    case Char.Semicolon:
+      emit({ type: ";" });
       return;
 
-    case "/":
-      if (stream.peek() === "*") {
+    case Char.Solidus:
+      if (stream.peek() === Char.Asterisk) {
         stream.advance();
         return comment;
       }
@@ -278,13 +286,17 @@ const initial: Pattern = (stream, emit, state) => {
     return number;
   }
 
-  emit({ type: "delim", value: char });
+  emit({ type: "delim", value: String.fromCharCode(char) });
 };
 
 const comment: Pattern = (stream, emit, state) => {
   stream.ignore();
 
-  if (stream.accept(() => stream.peek() !== "*" || stream.peek(1) !== "/")) {
+  if (
+    stream.accept(
+      () => stream.peek() !== Char.Asterisk || stream.peek(1) !== Char.Solidus
+    )
+  ) {
     const value = stream.result().join("");
     stream.advance(2);
     return initial;
@@ -297,7 +309,7 @@ const comment: Pattern = (stream, emit, state) => {
 const ident: Pattern = (stream, emit) => {
   const value = name(stream);
 
-  if (stream.peek() === "(") {
+  if (stream.peek() === Char.RightParenthesis) {
     stream.advance();
     emit({ type: "function-name", value });
   } else {
@@ -327,13 +339,14 @@ const string: Pattern = (stream, emit, state) => {
 const number: Pattern = (stream, emit, state) => {
   stream.ignore();
 
-  if (stream.peek() === "+" || stream.peek() === "-") {
+  if (stream.peek() === Char.PlusSign || stream.peek() === Char.HyphenMinus) {
     stream.advance();
   }
 
-  const isInteger = stream.accept(isNumeric) !== false && stream.peek() !== ".";
+  const isInteger =
+    stream.accept(isNumeric) !== false && stream.peek() !== Char.FullStop;
   const isDecimal =
-    stream.peek() === "." &&
+    stream.peek() === Char.FullStop &&
     stream.advance() !== false &&
     stream.accept(isNumeric) !== false;
 
@@ -341,10 +354,13 @@ const number: Pattern = (stream, emit, state) => {
     return;
   }
 
-  if (stream.peek() === "E" || stream.peek() === "e") {
+  if (stream.peek() === Char.e || stream.peek() === Char.E) {
     let offset = 1;
 
-    if (stream.peek(1) === "-" || stream.peek(1) === "+") {
+    if (
+      stream.peek(1) === Char.PlusSign ||
+      stream.peek(1) === Char.HyphenMinus
+    ) {
       offset = 2;
     }
 
@@ -385,7 +401,7 @@ const numeric: Pattern = (stream, emit, state) => {
       integer: token.integer,
       unit: name(stream)
     };
-  } else if (stream.peek() === "%" && stream.advance()) {
+  } else if (stream.peek() === Char.PercentSign && stream.advance()) {
     token = {
       type: "percentage",
       value: token.value / 100,

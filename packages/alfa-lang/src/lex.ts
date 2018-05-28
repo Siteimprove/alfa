@@ -7,7 +7,14 @@ export function lex<T extends Token, S = null>(
   alphabet: Alphabet<T, S>
 ): Array<T> {
   const tokens: Array<T> = [];
-  const stream = new Stream(input);
+
+  const characters: Array<number> = new Array(input.length);
+
+  for (let i = 0, n = input.length; i < n; i++) {
+    characters[i] = input.charCodeAt(i);
+  }
+
+  const stream = new Stream(characters);
 
   function emit<U extends T>(token: U): void {
     tokens.push(token);

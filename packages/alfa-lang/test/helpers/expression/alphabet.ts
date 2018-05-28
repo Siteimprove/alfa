@@ -1,7 +1,9 @@
-import { isWhitespace, isNumeric } from "@siteimprove/alfa-util";
 import { Pattern, Command } from "../../../src/types";
 import { Alphabet } from "../../../src/alphabet";
+import { Char } from "../../../src/char";
 import { lex } from "../../../src/lex";
+import { isWhitespace } from "../../../src/is-whitespace";
+import { isNumeric } from "../../../src/is-numeric";
 
 export type Number = { type: "number"; value: number };
 export type Plus = { type: "+" };
@@ -34,15 +36,15 @@ const initial: ExpressionPattern = (stream, emit, state) => {
   stream.advance();
 
   switch (char) {
-    case "+":
+    case Char.PlusSign:
       return plus;
-    case "-":
+    case Char.HyphenMinus:
       return minus;
-    case "*":
+    case Char.Asterisk:
       return asterix;
-    case "/":
+    case Char.Solidus:
       return slash;
-    case "^":
+    case Char.CircumflexAccent:
       return caret;
   }
 };
@@ -75,7 +77,10 @@ const caret: ExpressionPattern = (stream, emit) => {
 const number: ExpressionPattern = (stream, emit) => {
   stream.ignore();
   stream.accept(isNumeric);
-  emit({ type: "number", value: parseFloat(stream.result().join("")) });
+  emit({
+    type: "number",
+    value: stream.result().reduce((value, n) => 10 * value + n)
+  });
   return initial;
 };
 
