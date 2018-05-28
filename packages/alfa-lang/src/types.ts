@@ -30,11 +30,13 @@ export interface Production<
 > {
   readonly token: U["type"];
   readonly associate?: "left" | "right";
+
   prefix?(
     token: U,
     stream: Stream<T>,
     expression: Expression<R>
   ): P | Command.Continue | null;
+
   infix?(
     token: U,
     stream: Stream<T>,

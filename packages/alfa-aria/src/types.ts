@@ -81,7 +81,7 @@ export type Role = Readonly<{
    * @see https://www.w3.org/TR/wai-aria/#namecalculation
    */
   label?: Readonly<{
-    from: ["contents"] | ["author"] | ["contents", "author"];
+    from: Array<"contents" | "author">;
     required?: true;
   }>;
 

@@ -10,7 +10,7 @@ import { EN } from "./locale/en";
 
 export type Context = Map<string, Set<Element>>;
 
-export const UniqueId: Rule<Element, "document", Context> = {
+export const UniqueId: Rule<"document", Element, Context> = {
   id: "alfa:wcag:unique-id",
   criteria: ["wcag:4.1.1"],
   locales: [EN],

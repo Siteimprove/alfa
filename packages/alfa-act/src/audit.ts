@@ -11,18 +11,14 @@ import {
 const { keys } = Object;
 const { isArray } = Array;
 
-export function audit<T extends Target, A extends Aspect, C = undefined>(
-  rules: Rule<T, A, C> | Array<Rule<T, A, C>>,
+export function audit<A extends Aspect, T extends Target>(
   aspects: Pick<Aspects, A>,
-  answers: Array<Answer<T>> = []
-): Array<Result<T, A> | Question<T>> {
-  const results: Array<Result<T, A> | Question<T>> = [];
+  rules: Rule<A, T> | Array<Rule<A, T>>,
+  answers: Array<Answer> = []
+): Array<Result<T> | Question<T>> {
+  const results: Array<Result<T> | Question<T>> = [];
 
-  function question(
-    rule: Rule<T, A, C>,
-    question: string,
-    target?: T
-  ): boolean {
+  function question(rule: Rule<A, T>, question: string, target?: T): boolean {
     const answer = answers.find(
       answer =>
         answer.rule === rule.id &&
@@ -58,8 +54,7 @@ export function audit<T extends Target, A extends Aspect, C = undefined>(
     if (targets.length === 0) {
       results.push({
         rule: rule.id,
-        outcome: "inapplicable",
-        aspects
+        outcome: "inapplicable"
       });
     } else {
       for (const target of targets) {
@@ -82,7 +77,6 @@ export function audit<T extends Target, A extends Aspect, C = undefined>(
         results.push({
           rule: rule.id,
           outcome: passed ? "passed" : "failed",
-          aspects,
           target
         });
       }

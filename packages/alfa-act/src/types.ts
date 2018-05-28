@@ -19,32 +19,30 @@ export type Aspect = keyof Aspects;
 /**
  * @see https://www.w3.org/TR/act-rules-format/#output
  */
-export type Result<T extends Target, A extends Aspect> = Readonly<{
-  rule: string;
-  aspects: Pick<Aspects, A>;
-}> &
-  Readonly<
-    | {
-        target: T;
-        outcome: "passed" | "failed";
-      }
-    | {
-        outcome: "inapplicable";
-      }
-  >;
+export type Result<T extends Target = Target> = Readonly<
+  | {
+      rule: string;
+      outcome: "passed" | "failed";
+      target: T;
+    }
+  | {
+      rule: string;
+      outcome: "inapplicable";
+    }
+>;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#output-outcome
  */
-export type Outcome = Result<Target, Aspect>["outcome"];
+export type Outcome = Result["outcome"];
 
-export type Question<T extends Target> = Readonly<{
+export type Question<T extends Target = Target> = Readonly<{
   rule: string;
   question: string;
   target?: T;
 }>;
 
-export type Answer<T extends Target> = Question<T> &
+export type Answer<T extends Target = Target> = Question<T> &
   Readonly<{ answer: boolean }>;
 
 export interface Locale {
@@ -64,15 +62,20 @@ export interface Locale {
 /**
  * @see https://www.w3.org/TR/act-rules-format/#applicability
  */
-export type Applicability<T extends Target, A extends Aspect, C = null> = (
-  aspects: Pick<Aspects, A>,
-  context: C
-) => T | Array<T> | null;
+export type Applicability<
+  A extends Aspect = Aspect,
+  T extends Target = Target,
+  C = any
+> = (aspects: Pick<Aspects, A>, context: C) => T | Array<T> | null;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#expectations
  */
-export type Expectation<T extends Target, A extends Aspect, C = null> = (
+export type Expectation<
+  A extends Aspect = Aspect,
+  T extends Target = Target,
+  C = any
+> = (
   target: T,
   aspects: Pick<Aspects, A>,
   question: (question: string, target?: T) => boolean,
@@ -82,11 +85,15 @@ export type Expectation<T extends Target, A extends Aspect, C = null> = (
 /**
  * @see https://www.w3.org/TR/act-rules-format/#structure
  */
-export interface Rule<T extends Target, A extends Aspect, C = null> {
+export interface Rule<
+  A extends Aspect = Aspect,
+  T extends Target = Target,
+  C = any
+> {
   readonly id: string;
   readonly criteria: Array<Criterion>;
   readonly locales: Array<Locale>;
   readonly context: (aspects: Pick<Aspects, A>) => C;
-  readonly applicability: Applicability<T, A, C>;
-  readonly expectations: Readonly<{ [id: string]: Expectation<T, A, C> }>;
+  readonly applicability: Applicability<A, T, C>;
+  readonly expectations: Readonly<{ [id: string]: Expectation<A, T, C> }>;
 }

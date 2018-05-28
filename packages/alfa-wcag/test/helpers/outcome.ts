@@ -9,10 +9,10 @@ import {
 } from "@siteimprove/alfa-act";
 import { serialize } from "@siteimprove/alfa-dom";
 
-export function outcome<T extends Target, A extends Aspect>(
+export function outcome<T extends Target>(
   t: Test,
-  results: Array<Result<T, A> | Question<T>>,
-  assert: { [O in Outcome]?: Array<T | null> }
+  results: Array<Result<T> | Question<T>>,
+  assert: { [O in Outcome]?: Array<T> }
 ) {
   const outcomes: Array<Outcome> = ["passed", "failed", "inapplicable"];
 

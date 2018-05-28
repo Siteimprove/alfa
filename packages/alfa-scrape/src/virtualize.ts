@@ -1,4 +1,4 @@
-import { Mutable, map, slice } from "@siteimprove/alfa-util";
+import { Mutable, map } from "@siteimprove/alfa-util";
 import * as V from "@siteimprove/alfa-dom";
 
 export function virtualize(node: Node): V.Node {
@@ -143,7 +143,7 @@ function virtualizeImportRule(importRule: CSSImportRule): V.ImportRule {
   return {
     type: 3,
     href: importRule.href,
-    media: slice(importRule.media),
+    media: Array.from(importRule.media),
     styleSheet: virtualizeStyleSheet(importRule.styleSheet)
   };
 }
@@ -152,7 +152,7 @@ function virtualizeMediaRule(mediaRule: CSSMediaRule): V.MediaRule {
   return {
     type: 4,
     cssRules: map(mediaRule.cssRules, rule => virtualizeRule(rule)),
-    media: slice(mediaRule.media)
+    media: Array.from(mediaRule.media)
   };
 }
 

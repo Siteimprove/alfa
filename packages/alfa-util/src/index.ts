@@ -2,15 +2,10 @@ export * from "./array/concat";
 export * from "./array/filter";
 export * from "./array/find";
 export * from "./array/first";
-export * from "./array/includes";
 export * from "./array/index-of";
 export * from "./array/last";
 export * from "./array/map";
-export * from "./array/slice";
 export * from "./array/union";
-
-export * from "./function/memoize";
-export * from "./function/noop";
 
 export * from "./number/clamp";
 

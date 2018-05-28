@@ -2,7 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element, isElement, find, getAttribute } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
 
-export const HtmlXmlLangMatch: Rule<Element, "document"> = {
+export const HtmlXmlLangMatch: Rule<"document", Element> = {
   id: "alfa:wcag:html-xml-lang-match",
   criteria: ["wcag:3.1.1"],
   locales: [],

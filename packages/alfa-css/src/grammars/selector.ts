@@ -1,4 +1,4 @@
-import { last, values, includes } from "@siteimprove/alfa-util";
+import { last } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
 import { PseudoClass, PseudoElement } from "../types";

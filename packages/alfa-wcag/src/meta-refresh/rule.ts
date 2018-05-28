@@ -3,7 +3,7 @@ import { Stream } from "@siteimprove/alfa-lang";
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, isElement, find, getAttribute } from "@siteimprove/alfa-dom";
 
-export const MetaRefresh: Rule<Element, "document"> = {
+export const MetaRefresh: Rule<"document", Element> = {
   id: "alfa:wcag:meta-refresh",
   criteria: ["wcag:2.2.1", "wcag:3.2.5"],
   locales: [],

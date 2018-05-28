@@ -5,12 +5,13 @@
     "prepare": "foreman build/build.ts",
     "test": "foreman build/test.ts",
     "start": "foreman build/watch.ts",
-    "precommit": "foreman build/lint.ts"
+    "precommit": "foreman build/lint.ts",
+    "bench": "foreman --prof"
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
     "@foreman/api": "^0.0.0",
-    "@foreman/cli": "^0.1.0",
+    "@foreman/cli": "^0.4.1",
     "@foreman/dependant": "^0.1.0",
     "@foreman/fs": "^0.1.0",
     "@foreman/git": "^0.1.0",
@@ -20,11 +21,9 @@
     "@foreman/register": "^0.1.0",
     "@foreman/tap": "^0.2.3",
     "@foreman/typescript": "^0.3.0",
-    "hjson": "^3.1.0",
     "husky": "^0.14.3",
     "lerna": "^2.8.0",
     "prettier": "1.12.1",
-    "stringify-object": "^3.2.1",
     "typescript": "^2.8.3"
   }
 }

@@ -9,9 +9,6 @@
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],
   "license": "MIT",
   "private": true,
-  "dependencies": {
-    "moize": "^5.2.3"
-  },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
   }
