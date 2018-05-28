@@ -19,22 +19,17 @@ export type Aspect = keyof Aspects;
 /**
  * @see https://www.w3.org/TR/act-rules-format/#output
  */
-export type Result<
-  A extends Aspect = Aspect,
-  T extends Target = Target
-> = Readonly<{
-  rule: string;
-  aspects: Pick<Aspects, A>;
-}> &
-  Readonly<
-    | {
-        target: T;
-        outcome: "passed" | "failed";
-      }
-    | {
-        outcome: "inapplicable";
-      }
-  >;
+export type Result<T extends Target = Target> = Readonly<
+  | {
+      rule: string;
+      outcome: "passed" | "failed";
+      target: T;
+    }
+  | {
+      rule: string;
+      outcome: "inapplicable";
+    }
+>;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#output-outcome
