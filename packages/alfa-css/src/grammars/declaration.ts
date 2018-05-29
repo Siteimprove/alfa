@@ -24,20 +24,21 @@ export function declaration(
 ): Declaration | null {
   let values: Array<Token> = [];
   let important: boolean = false;
-  let next = stream.peek();
 
-  while (next !== null && next.type === "whitespace") {
-    next = stream.next();
-  }
+  stream.accept(token => token.type === "whitespace");
+
+  let next = stream.peek();
 
   if (next === null || next.type !== ":") {
     return null;
   }
 
-  next = stream.next();
+  stream.advance();
+  next = stream.peek();
 
   while (next !== null && next.type !== ";") {
     values.push(next);
+    stream.advance();
     next = stream.peek();
   }
 

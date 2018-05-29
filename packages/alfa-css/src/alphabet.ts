@@ -283,8 +283,7 @@ const initial: Pattern = (stream, emit, state) => {
       return;
 
     case Char.Solidus:
-      if (stream.peek() === Char.Asterisk) {
-        stream.advance();
+      if (stream.accept(char => char === Char.Asterisk, 1)) {
         return comment;
       }
   }
@@ -324,8 +323,7 @@ const comment: Pattern = (stream, emit, state) => {
 const ident: Pattern = (stream, emit) => {
   const value = name(stream);
 
-  if (stream.peek() === Char.LeftParenthesis) {
-    stream.advance();
+  if (stream.accept(char => char === Char.LeftParenthesis, 1)) {
     emit({ type: "function-name", value });
   } else {
     emit({ type: "ident", value });
