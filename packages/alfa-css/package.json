@@ -14,6 +14,7 @@
     "@siteimprove/alfa-util": "^0.0.0"
   },
   "devDependencies": {
+    "@siteimprove/alfa-bench": "^0.0.0",
     "@siteimprove/alfa-test": "^0.0.0"
   }
 }
