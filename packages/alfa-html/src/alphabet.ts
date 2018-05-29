@@ -9,6 +9,8 @@ import {
   isNumeric
 } from "@siteimprove/alfa-lang";
 
+const { fromCharCode } = String;
+
 export type Attribute = Readonly<{
   name: string;
   value: string;
@@ -63,7 +65,7 @@ const initial: Pattern = (stream, emit, state) => {
     return Command.End;
   }
 
-  emit({ type: "character", value: String.fromCharCode(char) });
+  emit({ type: "character", value: fromCharCode(char) });
 };
 
 /**
@@ -199,7 +201,7 @@ const comment: Pattern = (stream, emit, state) => {
 
   if (char === Char.LessThanSign) {
     if (state.comment !== null) {
-      state.comment.value += String.fromCharCode(char);
+      state.comment.value += fromCharCode(char);
     }
 
     return commentLessThanSign;
@@ -217,7 +219,7 @@ const comment: Pattern = (stream, emit, state) => {
   }
 
   if (state.comment !== null) {
-    state.comment.value += String.fromCharCode(char);
+    state.comment.value += fromCharCode(char);
   }
 };
 
@@ -231,7 +233,7 @@ const commentLessThanSign: Pattern = (stream, emit, state) => {
     stream.advance();
 
     if (state.comment !== null) {
-      state.comment.value += char;
+      state.comment.value += fromCharCode(char);
     }
   }
 
@@ -407,7 +409,7 @@ const tagName: Pattern = (stream, emit, state) => {
     char === Char.GreaterThanSign
   ) {
     if (state.tag !== null) {
-      state.tag.value = stream.result().join("");
+      state.tag.value = fromCharCode(...stream.result());
     }
   }
 
@@ -493,7 +495,7 @@ const attributeName: Pattern = (stream, emit, state) => {
     char === Char.GreaterThanSign
   ) {
     if (state.attribute !== null) {
-      state.attribute.name = stream.result().join("");
+      state.attribute.name = fromCharCode(...stream.result());
     }
 
     return afterAttributeName;
@@ -501,7 +503,7 @@ const attributeName: Pattern = (stream, emit, state) => {
 
   if (char === Char.EqualSign) {
     if (state.attribute !== null) {
-      state.attribute.name = stream.result().join("");
+      state.attribute.name = fromCharCode(...stream.result());
     }
 
     stream.advance();
@@ -582,7 +584,7 @@ const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
 
   if (char === Char.QuotationMark) {
     if (state.attribute !== null) {
-      state.attribute.value = stream.result().join("");
+      state.attribute.value = fromCharCode(...stream.result());
     }
 
     stream.advance();
@@ -605,7 +607,7 @@ const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
 
   if (char === Char.Apostrophe) {
     if (state.attribute !== null) {
-      state.attribute.value = stream.result().join("");
+      state.attribute.value = fromCharCode(...stream.result());
     }
 
     stream.advance();
@@ -632,7 +634,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
   if (isWhitespace(char) || char === Char.GreaterThanSign) {
     if (state.attribute !== null) {
-      state.attribute.value = stream.result().join("");
+      state.attribute.value = fromCharCode(...stream.result());
     }
   }
 
@@ -696,7 +698,7 @@ const bogusComment: Pattern = (stream, emit, state) => {
 
   if (char === Char.GreaterThanSign || char === null) {
     if (state.comment !== null) {
-      state.comment.value += stream.result().join("");
+      state.comment.value += fromCharCode(...stream.result());
       emit(state.comment);
     }
   }
