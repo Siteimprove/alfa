@@ -5,7 +5,7 @@ import { isBetween } from "./is-between";
 export function isHex(char: number): boolean {
   return (
     isNumeric(char) ||
-    isBetween(char, Char.a, Char.f) ||
-    isBetween(char, Char.A, Char.F)
+    isBetween(char, Char.SmallLetterA, Char.SmallLetterF) ||
+    isBetween(char, Char.CapitalLetterA, Char.CapitalLetterF)
   );
 }

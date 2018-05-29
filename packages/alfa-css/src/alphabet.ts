@@ -6,10 +6,13 @@ import {
   isWhitespace,
   isAlpha,
   isAlphanumeric,
+  isBetween,
   isHex,
   isNumeric,
   isAscii
 } from "@siteimprove/alfa-lang";
+
+const { fromCharCode } = String;
 
 export type Whitespace = Readonly<{ type: "whitespace" }>;
 
@@ -177,7 +180,7 @@ const name: (stream: Stream<number>) => string = stream => {
     if (startsValidEscape(next, stream.peek())) {
       result += escapedCodePoint(stream);
     } else if (isName(next)) {
-      result += next;
+      result += fromCharCode(next);
     } else {
       stream.backup();
       return result;
@@ -200,10 +203,24 @@ const escapedCodePoint: (stream: Stream<number>) => string = stream => {
   }
 
   if (isHex(code)) {
-    const hex = stream.accept(isHex, 0, 5);
+    const bytes = [code, ...(stream.accept(isHex, 0, 5) || [])];
 
-    if (hex !== false) {
-      code = hex.reduce((code, n) => 0x10 * code + n, code);
+    for (let i = 0, n = bytes.length; i < n; i++) {
+      let byte = bytes[i];
+
+      if (isNumeric(byte)) {
+        byte = byte - Char.DigitZero;
+      }
+
+      if (isBetween(byte, Char.SmallLetterA, Char.SmallLetterF)) {
+        byte = byte - Char.SmallLetterA + 10;
+      }
+
+      if (isBetween(byte, Char.CapitalLetterA, Char.CapitalLetterF)) {
+        byte = byte - Char.CapitalLetterA + 10;
+      }
+
+      code = 0x10 * code + byte;
     }
 
     stream.accept(isWhitespace, 1);
@@ -213,7 +230,7 @@ const escapedCodePoint: (stream: Stream<number>) => string = stream => {
     }
   }
 
-  return String.fromCharCode(code);
+  return fromCharCode(code);
 };
 
 /**
@@ -286,7 +303,7 @@ const initial: Pattern = (stream, emit, state) => {
     return number;
   }
 
-  emit({ type: "delim", value: String.fromCharCode(char) });
+  emit({ type: "delim", value: fromCharCode(char) });
 };
 
 const comment: Pattern = (stream, emit, state) => {
@@ -297,7 +314,7 @@ const comment: Pattern = (stream, emit, state) => {
       () => stream.peek() !== Char.Asterisk || stream.peek(1) !== Char.Solidus
     )
   ) {
-    const value = stream.result().join("");
+    const value = fromCharCode(...stream.result());
     stream.advance(2);
     return initial;
   }
@@ -309,7 +326,7 @@ const comment: Pattern = (stream, emit, state) => {
 const ident: Pattern = (stream, emit) => {
   const value = name(stream);
 
-  if (stream.peek() === Char.RightParenthesis) {
+  if (stream.peek() === Char.LeftParenthesis) {
     stream.advance();
     emit({ type: "function-name", value });
   } else {
@@ -326,7 +343,7 @@ const string: Pattern = (stream, emit, state) => {
   stream.ignore();
 
   if (stream.accept(char => char !== state.mark)) {
-    const value = stream.result().join("");
+    const value = fromCharCode(...stream.result());
     stream.advance();
     emit({ type: "string", value });
     return initial;
@@ -345,6 +362,7 @@ const number: Pattern = (stream, emit, state) => {
 
   const isInteger =
     stream.accept(isNumeric) !== false && stream.peek() !== Char.FullStop;
+
   const isDecimal =
     stream.peek() === Char.FullStop &&
     stream.advance() !== false &&
@@ -354,7 +372,10 @@ const number: Pattern = (stream, emit, state) => {
     return;
   }
 
-  if (stream.peek() === Char.e || stream.peek() === Char.E) {
+  if (
+    stream.peek() === Char.SmallLetterE ||
+    stream.peek() === Char.CapitalLetterE
+  ) {
     let offset = 1;
 
     if (
@@ -371,7 +392,7 @@ const number: Pattern = (stream, emit, state) => {
     }
   }
 
-  const value = stream.result().join("");
+  const value = fromCharCode(...stream.result());
 
   state.number = {
     type: "number",

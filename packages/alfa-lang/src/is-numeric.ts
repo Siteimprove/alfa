@@ -1,5 +1,6 @@
+import { Char } from "./char";
 import { isBetween } from "./is-between";
 
 export function isNumeric(char: number): boolean {
-  return isBetween(char, 0, 9);
+  return isBetween(char, Char.DigitZero, Char.DigitNine);
 }
