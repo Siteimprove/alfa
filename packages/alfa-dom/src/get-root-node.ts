@@ -1,5 +1,4 @@
 import { Node } from "./types";
-import { isElement } from "./guards";
 import { getParentNode } from "./get-parent-node";
 
 /**

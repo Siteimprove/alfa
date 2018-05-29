@@ -1,5 +1,4 @@
 import { write } from "@foreman/fs";
-import { extension } from "@foreman/path";
 import { notify } from "@foreman/notify";
 import * as typescript from "@foreman/typescript";
 import { Workspace } from "@foreman/typescript";

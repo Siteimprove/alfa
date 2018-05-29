@@ -1,6 +1,4 @@
 import { Role } from "../../types";
-import * as Attributes from "../../attributes";
-import { Command } from "../abstract";
 import { Group } from "../structure";
 import { Radio, Menu, MenuItem, MenuBar } from "../widgets";
 

@@ -1,4 +1,3 @@
-import { first } from "@siteimprove/alfa-util";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
@@ -11,7 +10,6 @@ import {
   AttributeSelector,
   CompoundSelector,
   PseudoClassSelector,
-  PseudoElement,
   PseudoElementSelector
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";

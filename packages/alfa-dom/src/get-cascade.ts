@@ -1,5 +1,5 @@
 import { Selector } from "@siteimprove/alfa-css";
-import { Document, Element, StyleSheet, StyleRule } from "./types";
+import { Document, Element, StyleRule } from "./types";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { SelectorMap } from "./selector-map";

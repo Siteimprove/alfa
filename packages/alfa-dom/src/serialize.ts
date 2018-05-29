@@ -1,17 +1,8 @@
 import { map } from "@siteimprove/alfa-util";
 import { Node } from "./types";
-import {
-  isDocument,
-  isDocumentFragment,
-  isDocumentType,
-  isElement,
-  isText,
-  isComment
-} from "./guards";
+import { isDocumentType, isElement, isText, isComment } from "./guards";
 import { getParentNode } from "./get-parent-node";
 import { Namespace, getNamespace } from "./get-namespace";
-
-const { keys } = Object;
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string

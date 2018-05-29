@@ -1,7 +1,7 @@
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet, Selector, SelectorGrammar } from "@siteimprove/alfa-css";
 import { Node, Element, StyleSheet, StyleRule } from "./types";
-import { isStyleRule, isImportRule, isGroupingRule } from "./guards";
+import { isStyleRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { matches, MatchingOptions } from "./matches";
 import { getAttribute } from "./get-attribute";

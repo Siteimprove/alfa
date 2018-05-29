@@ -1,13 +1,6 @@
 import { Mutable } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
-import {
-  Command,
-  Char,
-  isWhitespace,
-  isAlpha,
-  isAlphanumeric,
-  isNumeric
-} from "@siteimprove/alfa-lang";
+import { Command, Char, isWhitespace, isAlpha } from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
 

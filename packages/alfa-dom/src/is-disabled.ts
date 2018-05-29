@@ -1,5 +1,4 @@
 import { Node, Element } from "./types";
-import { getAttribute } from "./get-attribute";
 import { getClosest } from "./get-closest";
 import { hasAttribute } from "./has-attribute";
 import { find } from "./find";

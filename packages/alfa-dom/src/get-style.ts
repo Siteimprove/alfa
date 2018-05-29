@@ -1,8 +1,7 @@
 import { Mutable, keys, union, last } from "@siteimprove/alfa-util";
-import { Grammar, parse, lex } from "@siteimprove/alfa-lang";
+import { parse, lex } from "@siteimprove/alfa-lang";
 import {
   Alphabet,
-  Token,
   Selector,
   Declaration,
   DeclarationGrammar,
@@ -13,11 +12,11 @@ import {
   PseudoElement
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
-import { isDocument, isElement } from "./guards";
+import { isElement } from "./guards";
 import { matches } from "./matches";
 import { getAttribute } from "./get-attribute";
 import { getParentNode } from "./get-parent-node";
-import { Cascade, getCascade } from "./get-cascade";
+import { Cascade } from "./get-cascade";
 
 const { isArray } = Array;
 

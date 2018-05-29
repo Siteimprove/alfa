@@ -1,5 +1,4 @@
 import { read, write } from "@foreman/fs";
-import { extension } from "@foreman/path";
 import { notify } from "@foreman/notify";
 import * as prettier from "@foreman/prettier";
 

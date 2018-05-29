@@ -1,7 +1,5 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import { Element } from "../src/types";
-import { find } from "../src/find";
 import { matches } from "../src/matches";
 
 test("Matches an element against a tag", t => {

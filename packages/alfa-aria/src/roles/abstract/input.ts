@@ -1,5 +1,4 @@
 import { Role } from "../../types";
-import * as Attributes from "../../attributes";
 import { Widget } from "./widget";
 
 /**

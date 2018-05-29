@@ -1,6 +1,5 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Select } from "../abstract";
 import { Group, ListItem } from "../structure";
 import { Tree, Option } from "../widgets";
 

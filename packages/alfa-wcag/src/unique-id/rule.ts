@@ -41,7 +41,9 @@ export const UniqueId: Rule<"document", Element, Context> = {
   applicability: (aspects, context) => {
     const elements: Array<Element> = [];
 
-    for (const [id, set] of context) {
+    for (const entry of context) {
+      const set = entry[1];
+
       for (const element of set) {
         elements.push(element);
       }

@@ -1,5 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Stream } from "@siteimprove/alfa-lang";
+import { Grammar } from "@siteimprove/alfa-lang";
 import { Token, Ident, Dimension, Percentage } from "../alphabet";
 import { whitespace } from "../grammar";
 import { FontSize } from "../properties/font";

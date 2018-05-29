@@ -1,6 +1,5 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import { Element } from "../src/types";
 import { getDigest } from "../src/get-digest";
 
 test("Computes the digest value of a DOM node", t => {

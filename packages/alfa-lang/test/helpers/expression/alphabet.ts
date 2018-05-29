@@ -1,7 +1,6 @@
 import { Pattern, Command } from "../../../src/types";
 import { Alphabet } from "../../../src/alphabet";
 import { Char } from "../../../src/char";
-import { lex } from "../../../src/lex";
 import { isWhitespace } from "../../../src/is-whitespace";
 import { isNumeric } from "../../../src/is-numeric";
 
@@ -20,7 +19,7 @@ export function isNumber(token: ExpressionToken): token is Number {
   return token.type === "number" && "value" in token;
 }
 
-const initial: ExpressionPattern = (stream, emit, state) => {
+const initial: ExpressionPattern = stream => {
   stream.accept(isWhitespace);
 
   const char = stream.peek();

@@ -1,10 +1,6 @@
 import { test, Test } from "@siteimprove/alfa-test";
 import { lex } from "../src/lex";
-import {
-  Expression,
-  ExpressionToken,
-  ExpressionAlphabet
-} from "./helpers/expression";
+import { ExpressionToken, ExpressionAlphabet } from "./helpers/expression";
 
 function expression(t: Test, input: string, expected: Array<ExpressionToken>) {
   t.deepEqual(lex(input, ExpressionAlphabet), expected, "Token lists match");

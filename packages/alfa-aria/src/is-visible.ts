@@ -1,4 +1,3 @@
-import { Visibility } from "@siteimprove/alfa-css";
 import {
   Node,
   Element,

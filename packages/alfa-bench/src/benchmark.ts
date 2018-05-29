@@ -1,5 +1,5 @@
-import { Suite, Event } from "benchmark";
-import chalk, { Chalk } from "chalk";
+import { Suite } from "benchmark";
+import chalk from "chalk";
 
 type Result = Readonly<{
   id: number;

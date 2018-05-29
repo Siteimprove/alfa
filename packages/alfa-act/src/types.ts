@@ -1,4 +1,4 @@
-import { Node, Element } from "@siteimprove/alfa-dom";
+import { Node } from "@siteimprove/alfa-dom";
 
 export type Criterion = string;
 

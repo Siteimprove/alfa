@@ -1,4 +1,3 @@
-import { first } from "@siteimprove/alfa-util";
 import {
   Selector,
   IdSelector,

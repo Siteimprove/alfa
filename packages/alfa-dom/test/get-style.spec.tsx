@@ -1,6 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "@siteimprove/alfa-jsx";
-import { Document, StyleRule } from "../src/types";
 import {
   getCascadedStyle,
   getSpecifiedStyle,

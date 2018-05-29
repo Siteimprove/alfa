@@ -5,8 +5,6 @@ import { Token, Ident, FunctionName } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
-const { isArray } = Array;
-
 enum Component {
   Red = 0,
   Green,

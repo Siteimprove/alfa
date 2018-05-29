@@ -3,7 +3,6 @@ import {
   Outcome,
   Result,
   Target,
-  Aspect,
   Question,
   isResult
 } from "@siteimprove/alfa-act";

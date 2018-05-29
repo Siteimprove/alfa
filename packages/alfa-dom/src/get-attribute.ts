@@ -22,7 +22,7 @@ export function getAttribute(
   const { attributes } = element;
 
   const attribute = find(attributes, (attribute, i) => {
-    const { prefix, localName, value } = attribute;
+    const { prefix, localName } = attribute;
 
     const qualifiedName =
       prefix === null ? localName : prefix + ":" + localName;

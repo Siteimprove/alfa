@@ -1,5 +1,5 @@
 import { Predicate } from "@siteimprove/alfa-util";
-import { Node, Element } from "./types";
+import { Node } from "./types";
 import { isElement } from "./guards";
 import { matches } from "./matches";
 import { find } from "./find";

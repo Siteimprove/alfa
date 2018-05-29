@@ -1,21 +1,12 @@
 import { Predicate } from "@siteimprove/alfa-util";
-import { Token, Location } from "./types";
-
-const { isArray } = Array;
 
 export class Stream<T> {
   protected _input: ArrayLike<T>;
   protected _position: number = 0;
   protected _start: number = 0;
-  protected _line: number = 0;
-  protected _column: number = 0;
 
   public constructor(input: ArrayLike<T>) {
     this._input = input;
-  }
-
-  public location(): Location {
-    return { line: this._line, column: this._column };
   }
 
   public peek(offset: number = 0): T | null {

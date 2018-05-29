@@ -112,6 +112,8 @@ function virtualizeRule(rule: CSSRule): V.Rule {
   switch (rule.type) {
     case rule.STYLE_RULE:
       return virtualizeStyleRule(rule as CSSStyleRule);
+    case rule.IMPORT_RULE:
+      return virtualizeImportRule(rule as CSSImportRule);
     case rule.MEDIA_RULE:
       return virtualizeMediaRule(rule as CSSMediaRule);
     case rule.FONT_FACE_RULE:

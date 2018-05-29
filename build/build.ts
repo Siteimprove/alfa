@@ -1,4 +1,4 @@
-import { Task, execute } from "@foreman/api";
+import { execute } from "@foreman/api";
 import { expand, remove } from "@foreman/fs";
 import { notify } from "@foreman/notify";
 import { Packages } from "@foreman/dependant";

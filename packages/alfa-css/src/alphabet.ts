@@ -5,7 +5,6 @@ import {
   Char,
   isWhitespace,
   isAlpha,
-  isAlphanumeric,
   isBetween,
   isHex,
   isNumeric,
@@ -314,7 +313,6 @@ const comment: Pattern = (stream, emit, state) => {
       () => stream.peek() !== Char.Asterisk || stream.peek(1) !== Char.Solidus
     )
   ) {
-    const value = fromCharCode(...stream.result());
     stream.advance(2);
     return initial;
   }
