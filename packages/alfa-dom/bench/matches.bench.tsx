@@ -1,17 +1,26 @@
 import { benchmark } from "@siteimprove/alfa-bench";
 import { jsx } from "@siteimprove/alfa-jsx";
+import { parseSelector } from "@siteimprove/alfa-css";
 import { matches } from "../src/matches";
 
-const el = <div id="foo" class="foo" href="foo" />;
+const element = <foo id="foo" class="foo" href="foo" />;
+
+const id = parseSelector("#foo")!;
+const className = parseSelector(".foo")!;
+const type = parseSelector("foo")!;
+const attribute = parseSelector("[foo]")!;
 
 benchmark()
-  .add("Matching against an ID", () => {
-    matches(el, el, "#foo");
+  .add("Match an ID", () => {
+    matches(element, element, id);
   })
-  .add("Matching against a class", () => {
-    matches(el, el, ".foo");
+  .add("Match a class", () => {
+    matches(element, element, className);
   })
-  .add("Matching against an attribute", () => {
-    matches(el, el, "[href=foo]");
+  .add("Match a type", () => {
+    matches(element, element, type);
+  })
+  .add("Match an attribute", () => {
+    matches(element, element, attribute);
   })
   .run();
