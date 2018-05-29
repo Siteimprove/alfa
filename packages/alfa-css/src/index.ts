@@ -3,6 +3,7 @@ export { Properties };
 
 export * from "./alphabet";
 export * from "./grammar";
+export * from "./parse";
 export * from "./types";
 
 export * from "./grammars/color";
