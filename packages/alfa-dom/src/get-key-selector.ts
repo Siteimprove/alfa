@@ -7,7 +7,8 @@ import {
 
 /**
  * Given a selector, get the right-most ID, class, or type selector, i.e. the
- * key selector.
+ * key selector. If the right-most selector is a compound selector, then the
+ * left-most ID, class, or type selector of the compound selector is returned.
  *
  * @internal
  */
@@ -28,7 +29,7 @@ export function getKeySelector(
     case "compound-selector":
       const { selectors } = selector;
 
-      for (let i = selectors.length - 1; i > 0; i--) {
+      for (let i = 0, n = selectors.length; i < n; i++) {
         const selector = getKeySelector(selectors[i]);
 
         if (selector !== null) {
