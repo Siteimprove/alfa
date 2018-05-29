@@ -78,7 +78,9 @@ const number: ExpressionPattern = (stream, emit) => {
   stream.accept(isNumeric);
   emit({
     type: "number",
-    value: stream.result().reduce((value, n) => 10 * value + n)
+    value: stream
+      .result()
+      .reduce((value, n) => 10 * value + n - Char.DigitZero, 0)
   });
   return initial;
 };
