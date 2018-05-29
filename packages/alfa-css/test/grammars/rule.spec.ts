@@ -1,14 +1,9 @@
 import { test, Test } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
-import { AtRule, QualifiedRule } from "../../src/grammar";
-import { RuleGrammar } from "../../src/grammars/rule";
+import { Rule, RuleGrammar } from "../../src/grammars/rule";
 
-function rule(
-  t: Test,
-  input: string,
-  expected: AtRule | QualifiedRule | Array<AtRule | QualifiedRule>
-) {
+function rule(t: Test, input: string, expected: Rule | Array<Rule>) {
   t.deepEqual(parse(lex(input, Alphabet), RuleGrammar), expected, t.title);
 }
 

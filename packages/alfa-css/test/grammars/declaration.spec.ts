@@ -1,8 +1,10 @@
 import { test, Test } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
-import { Declaration } from "../../src/grammar";
-import { DeclarationGrammar } from "../../src/grammars/declaration";
+import {
+  Declaration,
+  DeclarationGrammar
+} from "../../src/grammars/declaration";
 
 function declaration(
   t: Test,
