@@ -30,7 +30,11 @@ export function getCascade(context: Document): Cascade | null {
 
   traverseNode(context, {
     enter(node, parentNode) {
-      if (parentNode !== null && isElement(parentNode)) {
+      if (
+        parentNode !== null &&
+        isElement(parentNode) &&
+        parentNode.childNodes[0] === node
+      ) {
         filter.add(parentNode);
       }
 

@@ -7,13 +7,11 @@ import { getClassList } from "./get-class-list";
  * @internal
  */
 export class AncestorFilter {
-  private _ids: AncestorBucket = new Map();
+  private ids: AncestorBucket = new Map();
 
-  private _classes: AncestorBucket = new Map();
+  private classes: AncestorBucket = new Map();
 
-  private _types: AncestorBucket = new Map();
-
-  private _elements: Set<Element> = new Set();
+  private types: AncestorBucket = new Map();
 
   private process(
     element: Element,
@@ -22,33 +20,21 @@ export class AncestorFilter {
     const id = getAttribute(element, "id");
 
     if (id !== null) {
-      fn(this._ids, id);
+      fn(this.ids, id);
     }
 
-    fn(this._types, element.localName);
+    fn(this.types, element.localName);
 
     for (const className of getClassList(element)) {
-      fn(this._classes, className);
+      fn(this.classes, className);
     }
   }
 
   public add(element: Element): void {
-    if (this._elements.has(element)) {
-      return;
-    }
-
-    this._elements.add(element);
-
     this.process(element, addEntry);
   }
 
   public remove(element: Element): void {
-    if (!this._elements.has(element)) {
-      return;
-    }
-
-    this._elements.delete(element);
-
     this.process(element, removeEntry);
   }
 
@@ -57,14 +43,14 @@ export class AncestorFilter {
 
     switch (selector.type) {
       case "id-selector":
-        bucket = this._ids;
+        bucket = this.ids;
         break;
       case "class-selector":
-        bucket = this._classes;
+        bucket = this.classes;
         break;
       case "type-selector":
       default:
-        bucket = this._types;
+        bucket = this.types;
     }
 
     return bucket.has(selector.name);
