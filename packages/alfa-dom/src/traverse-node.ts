@@ -17,6 +17,10 @@ export function traverseNode(
   const actions: Array<Action> = [];
 
   function push(action: Action, node: Node, parentNode?: Node): void {
+    if (action === Action.Exit && visitors.exit === undefined) {
+      return;
+    }
+
     if (parentNode === undefined) {
       nodes.push(node);
     } else {

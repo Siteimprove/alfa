@@ -17,6 +17,10 @@ export function traverseRule(
   const actions: Array<Action> = [];
 
   function push(action: Action, rule: Rule, parentRule?: Rule): void {
+    if (action === Action.Exit && visitors.exit === undefined) {
+      return;
+    }
+
     if (parentRule === undefined) {
       rules.push(rule);
     } else {
