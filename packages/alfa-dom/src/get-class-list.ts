@@ -3,6 +3,10 @@ import { getAttribute } from "./get-attribute";
 
 const whitespace = /\s+/;
 
+const empty: ReadonlyArray<string> = [];
+
+const classLists: WeakMap<Element, ReadonlyArray<string>> = new WeakMap();
+
 /**
  * Given an element, get the associated class list of an element.
  *
@@ -13,12 +17,20 @@ const whitespace = /\s+/;
  * getClassList(div);
  * // => ["foo", "bar"]
  */
-export function getClassList(element: Element): Array<string> {
-  const classNames = getAttribute(element, "class");
+export function getClassList(element: Element): ReadonlyArray<string> {
+  let classList = classLists.get(element);
 
-  if (classNames === null) {
-    return [];
+  if (classList === undefined) {
+    const classNames = getAttribute(element, "class");
+
+    if (classNames === null) {
+      classList = empty;
+    } else {
+      classList = classNames.split(whitespace);
+    }
+
+    classLists.set(element, classList);
   }
 
-  return classNames.split(whitespace);
+  return classList;
 }

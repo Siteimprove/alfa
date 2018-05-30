@@ -1,5 +1,6 @@
-import { find } from "@siteimprove/alfa-util";
 import { Element } from "./types";
+
+const attributeMaps: WeakMap<Element, Map<string, string>> = new WeakMap();
 
 export type AttributeOptions = Readonly<{
   trim?: boolean;
@@ -19,22 +20,30 @@ export function getAttribute(
   name: string,
   options: AttributeOptions = {}
 ): string | null {
-  const { attributes } = element;
+  let attributeMap = attributeMaps.get(element);
 
-  const attribute = find(attributes, (attribute, i) => {
-    const { prefix, localName } = attribute;
+  if (attributeMap === undefined) {
+    attributeMap = new Map();
 
-    const qualifiedName =
-      prefix === null ? localName : prefix + ":" + localName;
+    const { attributes } = element;
 
-    return qualifiedName === name;
-  });
+    for (let i = 0, n = attributes.length; i < n; i++) {
+      const { prefix, localName, value } = attributes[i];
 
-  if (attribute === null) {
-    return null;
+      const qualifiedName =
+        prefix === null ? localName : prefix + ":" + localName;
+
+      attributeMap.set(qualifiedName, value);
+    }
+
+    attributeMaps.set(element, attributeMap);
   }
 
-  let { value } = attribute;
+  let value = attributeMap.get(name);
+
+  if (value === undefined) {
+    return null;
+  }
 
   value = options.trim ? value.trim() : value;
   value = options.lowerCase ? value.toLowerCase() : value;
