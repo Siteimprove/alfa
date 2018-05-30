@@ -3,12 +3,12 @@ import { getAttribute } from "./get-attribute";
 
 const whitespace = /\s+/;
 
-const empty: ReadonlyArray<string> = [];
+const empty: Array<string> = [];
 
-const classLists: WeakMap<Element, ReadonlyArray<string>> = new WeakMap();
+const classLists: WeakMap<Element, Array<string>> = new WeakMap();
 
 /**
- * Given an element, get the associated class list of an element.
+ * Given an element, get the class list of the element.
  *
  * @see https://www.w3.org/TR/dom/#dom-element-classlist
  *
