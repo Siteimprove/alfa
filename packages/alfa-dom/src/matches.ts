@@ -1,7 +1,4 @@
-import { parse, lex } from "@siteimprove/alfa-lang";
 import {
-  Alphabet,
-  SelectorGrammar,
   Selector,
   RelativeSelector,
   TypeSelector,
@@ -10,7 +7,8 @@ import {
   AttributeSelector,
   CompoundSelector,
   PseudoClassSelector,
-  PseudoElementSelector
+  PseudoElementSelector,
+  parseSelector
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { contains } from "./contains";
@@ -85,7 +83,7 @@ export function matches(
   options: MatchingOptions = {}
 ): boolean {
   if (typeof selector === "string") {
-    const parsed = parse(lex(selector, Alphabet), SelectorGrammar);
+    const parsed = parseSelector(selector);
 
     if (parsed === null) {
       return false;

@@ -1,5 +1,4 @@
-import { parse, lex } from "@siteimprove/alfa-lang";
-import { Alphabet, Selector, SelectorGrammar } from "@siteimprove/alfa-css";
+import { Selector, parseSelector } from "@siteimprove/alfa-css";
 import { Node, Element, StyleSheet, StyleRule } from "./types";
 import { isStyleRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
@@ -46,35 +45,44 @@ export class SelectorMap {
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
         enter(rule) {
-          if (isStyleRule(rule)) {
-            const selectors = parseSelectors(rule.selectorText);
+          if (!isStyleRule(rule)) {
+            return;
+          }
 
-            for (const selector of selectors) {
-              const keySelector = getKeySelector(selector);
-              const specificity = getSpecificity(selector);
+          let selectors: Selector | Array<Selector> | null = null;
+          try {
+            selectors = parseSelector(rule.selectorText);
+          } catch (err) {}
 
-              const entry: SelectorEntry = {
-                selector,
-                rule,
-                order: order++,
-                specificity
-              };
+          if (selectors === null) {
+            return;
+          }
 
-              if (keySelector === null) {
-                other.push(entry);
-              } else {
-                const key = keySelector.name;
+          for (const selector of isArray(selectors) ? selectors : [selectors]) {
+            const keySelector = getKeySelector(selector);
+            const specificity = getSpecificity(selector);
 
-                switch (keySelector.type) {
-                  case "id-selector":
-                    addEntry(ids, key, entry);
-                    break;
-                  case "class-selector":
-                    addEntry(classes, key, entry);
-                    break;
-                  case "type-selector":
-                    addEntry(types, key, entry);
-                }
+            const entry: SelectorEntry = {
+              selector,
+              rule,
+              order: order++,
+              specificity
+            };
+
+            if (keySelector === null) {
+              other.push(entry);
+            } else {
+              const key = keySelector.name;
+
+              switch (keySelector.type) {
+                case "id-selector":
+                  addEntry(ids, key, entry);
+                  break;
+                case "class-selector":
+                  addEntry(classes, key, entry);
+                  break;
+                case "type-selector":
+                  addEntry(types, key, entry);
               }
             }
           }
@@ -167,16 +175,4 @@ function collectEntries(
       target.push(entry);
     }
   }
-}
-
-function parseSelectors(selector: string): Array<Selector> {
-  try {
-    const parsed = parse(lex(selector, Alphabet), SelectorGrammar);
-
-    if (parsed !== null) {
-      return isArray(parsed) ? parsed : [parsed];
-    }
-  } catch (err) {}
-
-  return [];
 }

@@ -1,15 +1,13 @@
 import { Mutable, keys, union, last } from "@siteimprove/alfa-util";
-import { parse, lex } from "@siteimprove/alfa-lang";
 import {
-  Alphabet,
   Selector,
   Declaration,
-  DeclarationGrammar,
   Stage,
   Style,
   Properties,
   PropertyName,
-  PseudoElement
+  PseudoElement,
+  parseDeclaration
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { matches } from "./matches";
@@ -56,7 +54,15 @@ export function getCascadedStyle(
   const declarations: Array<Declaration> = [];
 
   if (style !== null && options.pseudo === undefined) {
-    declarations.push(...parseDeclarations(style));
+    const declaration = parseDeclaration(style);
+
+    if (declaration !== null) {
+      if (isArray(declaration)) {
+        declarations.push(...declaration);
+      } else {
+        declarations.push(declaration);
+      }
+    }
   }
 
   if (cascade !== null) {
@@ -86,7 +92,15 @@ export function getCascadedStyle(
             pseudo: true
           })
         ) {
-          declarations.push(...parseDeclarations(rule.style.cssText));
+          const declaration = parseDeclaration(rule.style.cssText);
+
+          if (declaration !== null) {
+            if (isArray(declaration)) {
+              declarations.push(...declaration);
+            } else {
+              declarations.push(declaration);
+            }
+          }
         }
       }
     }
@@ -299,15 +313,6 @@ function getPseudoElement(selector: Selector): PseudoElement | null {
   }
 
   return null;
-}
-
-function parseDeclarations(input: string): Array<Declaration> {
-  const declarations = parse(lex(input, Alphabet), DeclarationGrammar);
-  return declarations === null
-    ? []
-    : isArray(declarations)
-      ? declarations
-      : [declarations];
 }
 
 function isInitial(declaration: Declaration): boolean {
