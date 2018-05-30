@@ -12,6 +12,7 @@ import {
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { contains } from "./contains";
+import { getId } from "./get-id";
 import { getAttribute } from "./get-attribute";
 import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
@@ -120,7 +121,7 @@ export function matches(
  * @see https://www.w3.org/TR/selectors/#id-selectors
  */
 function matchesId(element: Element, selector: IdSelector): boolean {
-  return getAttribute(element, "id") === selector.name;
+  return getId(element) === selector.name;
 }
 
 /**
