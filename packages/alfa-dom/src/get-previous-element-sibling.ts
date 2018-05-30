@@ -18,7 +18,7 @@ export function getPreviousElementSibling<T extends Node>(
 
   const { childNodes } = parentNode;
 
-  for (let i = indexOf(childNodes, node) - 1; i > 0; i--) {
+  for (let i = indexOf(childNodes, node) - 1; i >= 0; i--) {
     const sibling = childNodes[i];
 
     if (isElement(sibling)) {
