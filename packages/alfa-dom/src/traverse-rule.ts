@@ -2,30 +2,75 @@ import { Rule } from "./types";
 import { isImportRule, isGroupingRule, isKeyframesRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 
+enum Action {
+  Enter,
+  Exit
+}
+
+export type RuleVisitor = (rule: Rule, parentRule: Rule | null) => false | void;
+
 export function traverseRule(
   context: Rule,
-  visitor: (target: Rule, parent: Rule | null) => false | void
+  visitors: Readonly<{ enter?: RuleVisitor; exit?: RuleVisitor }>
 ): void {
-  const queue: Array<Rule> = [];
+  const rules: Array<Rule> = [];
+  const actions: Array<Action> = [];
+
+  function push(action: Action, rule: Rule, parentRule?: Rule): void {
+    if (parentRule === undefined) {
+      rules.push(rule);
+    } else {
+      rules.push(parentRule, rule);
+    }
+
+    actions.push(action);
+  }
+
+  let action: Action | undefined;
+  let rule: Rule | undefined;
+  let parentRule: Rule | undefined;
 
   for (
-    let child: Rule | undefined = context, parent: Rule | undefined;
-    child;
-    child = queue.pop(), parent = queue.pop()
+    action = Action.Enter, rule = context;
+    rule !== undefined;
+    action = actions.pop(), rule = rules.pop(), parentRule = rules.pop()
   ) {
-    if (visitor(child, parent || null) === false) {
-      break;
-    }
+    if (action === Action.Enter) {
+      if (
+        visitors.enter !== undefined &&
+        visitors.enter(rule, parentRule || null) === false
+      ) {
+        break;
+      }
 
-    if (isImportRule(child)) {
-      traverseStyleSheet(child.styleSheet, visitor);
-    }
+      if (isImportRule(rule)) {
+        traverseStyleSheet(rule.styleSheet, visitors);
+      }
 
-    if (isGroupingRule(child) || isKeyframesRule(child)) {
-      const { cssRules } = child;
+      if (isGroupingRule(rule) || isKeyframesRule(rule)) {
+        const { cssRules } = rule;
 
-      for (let i = cssRules.length - 1; i >= 0; i--) {
-        queue.push(child, cssRules[i]);
+        if (cssRules.length > 0) {
+          push(Action.Exit, rule, parentRule);
+        } else {
+          if (
+            visitors.exit !== undefined &&
+            visitors.exit(rule, parentRule || null) === false
+          ) {
+            break;
+          }
+        }
+
+        for (let i = cssRules.length - 1; i >= 0; i--) {
+          push(Action.Enter, cssRules[i], rule);
+        }
+      }
+    } else {
+      if (
+        visitors.exit !== undefined &&
+        visitors.exit(rule, parentRule || null) === false
+      ) {
+        break;
       }
     }
   }

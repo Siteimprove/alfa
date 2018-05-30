@@ -6,7 +6,7 @@ enum Action {
   Exit
 }
 
-export type NodeVisitor = (target: Node, parent: Node | null) => false | void;
+export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
 
 export function traverseNode(
   context: Node,
@@ -16,50 +16,50 @@ export function traverseNode(
   const nodes: Array<Node> = [];
   const actions: Array<Action> = [];
 
-  function push(action: Action, child: Node, parent?: Node): void {
-    if (parent === undefined) {
-      nodes.push(child);
+  function push(action: Action, node: Node, parentNode?: Node): void {
+    if (parentNode === undefined) {
+      nodes.push(node);
     } else {
-      nodes.push(parent, child);
+      nodes.push(parentNode, node);
     }
 
     actions.push(action);
   }
 
   let action: Action | undefined;
-  let child: Node | undefined;
-  let parent: Node | undefined;
+  let node: Node | undefined;
+  let parentNode: Node | undefined;
 
   for (
-    action = Action.Enter, child = context;
-    child !== undefined;
-    action = actions.pop(), child = nodes.pop(), parent = nodes.pop()
+    action = Action.Enter, node = context;
+    node !== undefined;
+    action = actions.pop(), node = nodes.pop(), parentNode = nodes.pop()
   ) {
     if (action === Action.Enter) {
       if (
         visitors.enter !== undefined &&
-        visitors.enter(child, parent || null) === false
+        visitors.enter(node, parentNode || null) === false
       ) {
         break;
       }
 
-      const { childNodes } = child;
+      const { childNodes } = node;
 
-      const shadowRoot = isElement(child) ? child.shadowRoot : null;
+      const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
       if (childNodes.length > 0 || shadowRoot !== null) {
-        push(Action.Exit, child, parent);
+        push(Action.Exit, node, parentNode);
       } else {
         if (
           visitors.exit !== undefined &&
-          visitors.exit(child, parent || null) === false
+          visitors.exit(node, parentNode || null) === false
         ) {
           break;
         }
       }
 
       for (let i = childNodes.length - 1; i >= 0; i--) {
-        push(Action.Enter, childNodes[i], child);
+        push(Action.Enter, childNodes[i], node);
       }
 
       // Shadow roots should be traversed as soon as they're encountered per the
@@ -67,12 +67,12 @@ export function traverseNode(
       // shadow root is therefore pushed in front of the queue.
       // https://www.w3.org/TR/dom41/#shadow-including-preorder-depth-first-traversal
       if (options.composed && shadowRoot !== null) {
-        push(Action.Enter, shadowRoot, child);
+        push(Action.Enter, shadowRoot, node);
       }
     } else {
       if (
         visitors.exit !== undefined &&
-        visitors.exit(child, parent || null) === false
+        visitors.exit(node, parentNode || null) === false
       ) {
         break;
       }

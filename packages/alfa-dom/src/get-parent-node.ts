@@ -5,7 +5,8 @@ import { traverseNode } from "./traverse-node";
 const parentMaps: WeakMap<Node, WeakMap<Node, Node>> = new WeakMap();
 
 /**
- * Given a node and a context, get the parent of the node within the context.
+ * Given a node and a context, get the parent node of the node within the
+ * context.
  *
  * @see https://www.w3.org/TR/dom/#dom-node-parentnode
  *
@@ -28,9 +29,9 @@ export function getParentNode(
     traverseNode(
       context,
       {
-        enter(node, parent) {
-          if (parent !== null && parentMap !== undefined) {
-            parentMap.set(node, parent);
+        enter(node, parentNode) {
+          if (parentNode !== null && parentMap !== undefined) {
+            parentMap.set(node, parentNode);
           }
         }
       },

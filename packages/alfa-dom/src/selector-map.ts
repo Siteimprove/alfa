@@ -25,15 +25,17 @@ export type SelectorEntry = {
  * @internal
  */
 export class SelectorMap {
-  private _ids: SelectorBucket = new Map();
+  private ids: SelectorBucket = new Map();
 
-  private _classes: SelectorBucket = new Map();
+  private classes: SelectorBucket = new Map();
 
-  private _types: SelectorBucket = new Map();
+  private types: SelectorBucket = new Map();
 
-  private _other: Array<SelectorEntry> = [];
+  private other: Array<SelectorEntry> = [];
 
   constructor(styleSheets: ArrayLike<StyleSheet>) {
+    const { other, ids, classes, types } = this;
+
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -42,35 +44,37 @@ export class SelectorMap {
     let order: number = 0;
 
     for (let i = 0, n = styleSheets.length; i < n; i++) {
-      traverseStyleSheet(styleSheets[i], rule => {
-        if (isStyleRule(rule)) {
-          const selectors = parseSelectors(rule.selectorText);
+      traverseStyleSheet(styleSheets[i], {
+        enter(rule) {
+          if (isStyleRule(rule)) {
+            const selectors = parseSelectors(rule.selectorText);
 
-          for (const selector of selectors) {
-            const keySelector = getKeySelector(selector);
-            const specificity = getSpecificity(selector);
+            for (const selector of selectors) {
+              const keySelector = getKeySelector(selector);
+              const specificity = getSpecificity(selector);
 
-            const entry: SelectorEntry = {
-              selector,
-              rule,
-              order: order++,
-              specificity
-            };
+              const entry: SelectorEntry = {
+                selector,
+                rule,
+                order: order++,
+                specificity
+              };
 
-            if (keySelector === null) {
-              this._other.push(entry);
-            } else {
-              const key = keySelector.name;
+              if (keySelector === null) {
+                other.push(entry);
+              } else {
+                const key = keySelector.name;
 
-              switch (keySelector.type) {
-                case "id-selector":
-                  addEntry(this._ids, key, entry);
-                  break;
-                case "class-selector":
-                  addEntry(this._classes, key, entry);
-                  break;
-                case "type-selector":
-                  addEntry(this._types, key, entry);
+                switch (keySelector.type) {
+                  case "id-selector":
+                    addEntry(ids, key, entry);
+                    break;
+                  case "class-selector":
+                    addEntry(classes, key, entry);
+                    break;
+                  case "type-selector":
+                    addEntry(types, key, entry);
+                }
               }
             }
           }
@@ -93,7 +97,7 @@ export class SelectorMap {
         element,
         context,
         rules,
-        getEntries(this._ids, id),
+        getEntries(this.ids, id),
         options
       );
     }
@@ -102,7 +106,7 @@ export class SelectorMap {
       element,
       context,
       rules,
-      getEntries(this._types, element.localName),
+      getEntries(this.types, element.localName),
       options
     );
 
@@ -111,12 +115,12 @@ export class SelectorMap {
         element,
         context,
         rules,
-        getEntries(this._classes, className),
+        getEntries(this.classes, className),
         options
       );
     }
 
-    collectEntries(element, context, rules, this._other, options);
+    collectEntries(element, context, rules, this.other, options);
 
     return rules;
   }

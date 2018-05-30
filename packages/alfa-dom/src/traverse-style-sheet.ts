@@ -1,13 +1,13 @@
-import { Rule, StyleSheet } from "./types";
-import { traverseRule } from "./traverse-rule";
+import { StyleSheet } from "./types";
+import { RuleVisitor, traverseRule } from "./traverse-rule";
 
 export function traverseStyleSheet(
   context: StyleSheet,
-  visitor: (target: Rule, parent: Rule | null) => false | void
+  visitors: Readonly<{ enter?: RuleVisitor; exit?: RuleVisitor }>
 ): void {
   const { cssRules } = context;
 
   for (let i = 0, n = cssRules.length; i < n; i++) {
-    traverseRule(cssRules[i], visitor);
+    traverseRule(cssRules[i], visitors);
   }
 }

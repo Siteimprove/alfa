@@ -29,9 +29,9 @@ export function getCascade(context: Document): Cascade | null {
   const filter = new AncestorFilter();
 
   traverseNode(context, {
-    enter(node, parent) {
-      if (parent !== null && isElement(parent)) {
-        filter.add(parent);
+    enter(node, parentNode) {
+      if (parentNode !== null && isElement(parentNode)) {
+        filter.add(parentNode);
       }
 
       if (isElement(node)) {
@@ -59,7 +59,7 @@ export function getCascade(context: Document): Cascade | null {
         cascade.set(node, rules);
       }
     },
-    exit(node, parent) {
+    exit(node) {
       if (isElement(node)) {
         filter.remove(node);
       }
