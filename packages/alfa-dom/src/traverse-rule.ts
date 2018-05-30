@@ -17,10 +17,6 @@ export function traverseRule(
   const actions: Array<Action> = [];
 
   function push(action: Action, rule: Rule, parentRule?: Rule): void {
-    if (action === Action.Exit && visitors.exit === undefined) {
-      return;
-    }
-
     if (parentRule === undefined) {
       rules.push(rule);
     } else {
@@ -54,13 +50,10 @@ export function traverseRule(
       if (isGroupingRule(rule) || isKeyframesRule(rule)) {
         const { cssRules } = rule;
 
-        if (cssRules.length > 0) {
-          push(Action.Exit, rule, parentRule);
-        } else {
-          if (
-            visitors.exit !== undefined &&
-            visitors.exit(rule, parentRule || null) === false
-          ) {
+        if (visitors.exit !== undefined) {
+          if (cssRules.length > 0) {
+            push(Action.Exit, rule, parentRule);
+          } else if (visitors.exit(rule, parentRule || null) === false) {
             break;
           }
         }
@@ -70,10 +63,9 @@ export function traverseRule(
         }
       }
     } else {
-      if (
-        visitors.exit !== undefined &&
-        visitors.exit(rule, parentRule || null) === false
-      ) {
+      // Exit actions will only ever be pushed if an exit visitor is defined. We
+      // can therefore safely assert that the exit visitor is defined.
+      if (visitors.exit!(rule, parentRule || null) === false) {
         break;
       }
     }

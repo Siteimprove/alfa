@@ -17,10 +17,6 @@ export function traverseNode(
   const actions: Array<Action> = [];
 
   function push(action: Action, node: Node, parentNode?: Node): void {
-    if (action === Action.Exit && visitors.exit === undefined) {
-      return;
-    }
-
     if (parentNode === undefined) {
       nodes.push(node);
     } else {
@@ -51,13 +47,10 @@ export function traverseNode(
 
       const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
-      if (childNodes.length > 0 || shadowRoot !== null) {
-        push(Action.Exit, node, parentNode);
-      } else {
-        if (
-          visitors.exit !== undefined &&
-          visitors.exit(node, parentNode || null) === false
-        ) {
+      if (visitors.exit !== undefined) {
+        if (childNodes.length > 0 || shadowRoot !== null) {
+          push(Action.Exit, node, parentNode);
+        } else if (visitors.exit(node, parentNode || null) === false) {
           break;
         }
       }
@@ -74,10 +67,9 @@ export function traverseNode(
         push(Action.Enter, shadowRoot, node);
       }
     } else {
-      if (
-        visitors.exit !== undefined &&
-        visitors.exit(node, parentNode || null) === false
-      ) {
+      // Exit actions will only ever be pushed if an exit visitor is defined. We
+      // can therefore safely assert that the exit visitor is defined.
+      if (visitors.exit!(node, parentNode || null) === false) {
         break;
       }
     }
