@@ -161,11 +161,8 @@ function matchesAttribute(
     return false;
   }
 
-  let match = selector.value;
-
   if (selector.modifier === "i") {
     value = value.toLowerCase();
-    match = match.toLowerCase();
   }
 
   if (selector.matcher === null) {
@@ -174,15 +171,15 @@ function matchesAttribute(
 
   switch (selector.matcher) {
     case "^":
-      return value.startsWith(match);
+      return value.startsWith(selector.value);
     case "$":
-      return value.endsWith(match);
+      return value.endsWith(selector.value);
     case "*":
-      return value.includes(match);
+      return value.includes(selector.value);
     case "~":
-      return value.split(whitespace).some(value => value === match);
+      return value.split(whitespace).some(value => value === selector.value);
     case "|":
-      return value === match || value.startsWith(match + "-");
+      return value === selector.value || value.startsWith(selector.value + "-");
   }
 
   return false;

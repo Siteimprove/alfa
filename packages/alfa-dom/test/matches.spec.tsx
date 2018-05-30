@@ -28,8 +28,8 @@ test("Matches an element against an attribute with a value", t => {
 });
 
 test("Matches an element against an attribute with a casing modifier", t => {
-  const div = <div foo="BAR" />;
-  t.true(matches(div, div, "[foo=bar i]"));
+  const div = <div foo="bAR" />;
+  t.true(matches(div, div, "[foo=Bar i]"));
 });
 
 test("Matches an element with a class against a list of selectors", t => {

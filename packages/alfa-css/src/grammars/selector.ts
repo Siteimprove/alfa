@@ -260,7 +260,7 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
   return {
     type: "attribute-selector",
     name: attribute.value,
-    value: value.value,
+    value: modifier === "i" ? value.value.toLowerCase() : value.value,
     matcher,
     modifier
   };
