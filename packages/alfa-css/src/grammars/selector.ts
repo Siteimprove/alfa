@@ -282,8 +282,16 @@ function pseudoSelector(
     let name: PseudoElement;
 
     switch (ident.value) {
+      case "first-line":
+      case "first-letter":
+      case "selection":
+      case "inactive-selection":
+      case "spelling-error":
+      case "grammar-error":
       case "before":
       case "after":
+      case "marker":
+      case "placeholder":
         name = ident.value;
         break;
       default:
@@ -301,10 +309,59 @@ function pseudoSelector(
     let name: PseudoClass;
 
     switch (ident.value) {
+      case "matches":
+      case "not":
+      case "something":
+      case "has":
+      case "dir":
+      case "lang":
+      case "any-link":
+      case "link":
+      case "visited":
+      case "local-link":
+      case "target":
+      case "target-within":
+      case "scope":
       case "hover":
       case "active":
       case "focus":
-      case "scope":
+      case "focus-visible":
+      case "focus-within":
+      case "drop":
+      case "current":
+      case "past":
+      case "future":
+      case "playing":
+      case "paused":
+      case "enabled":
+      case "disabled":
+      case "read-only":
+      case "read-write":
+      case "placeholder-shown":
+      case "default":
+      case "checked":
+      case "indetermine":
+      case "valid":
+      case "invalid":
+      case "in-range":
+      case "out-of-range":
+      case "required":
+      case "user-invalid":
+      case "root":
+      case "empty":
+      case "blank":
+      case "nth-child":
+      case "nth-last-child":
+      case "first-child":
+      case "last-child":
+      case "only-child":
+      case "nth-of-type":
+      case "nth-last-of-type":
+      case "first-of-type":
+      case "last-of-type":
+      case "only-of-type":
+      case "nth-col":
+      case "nth-last-col":
         name = ident.value;
         break;
       default:
