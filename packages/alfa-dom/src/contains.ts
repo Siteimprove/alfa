@@ -1,8 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-util";
 import { Node } from "./types";
-import { isElement } from "./guards";
-import { matches } from "./matches";
 import { find } from "./find";
+import { getClosest } from "./get-closest";
 
 export type ContainsOptions = Readonly<{ composed?: boolean }>;
 
@@ -30,17 +29,9 @@ export function contains<T extends Node>(
   query: Predicate<Node, T> | T | string,
   options: ContainsOptions = {}
 ): boolean {
-  let predicate: Predicate<Node, T>;
-
-  if (typeof query === "string") {
-    const options = { scope: isElement(scope) ? scope : undefined };
-    predicate = node =>
-      isElement(node) && matches(node, context, query, options);
-  } else if (typeof query === "object") {
-    predicate = node => node === query;
-  } else {
-    predicate = query;
+  if (typeof query === "object") {
+    return getClosest(query, context, node => node === scope) !== null;
   }
 
-  return find(scope, context, predicate, options) !== null;
+  return find(scope, context, query, options) !== null;
 }
