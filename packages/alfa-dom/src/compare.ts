@@ -30,17 +30,21 @@ function forkingPoint(a: Array<any>, b: Array<any>) {
 }
 
 export function compare(a: Node, b: Node, context: Node): number {
+  if (a === b) {
+    return 0;
+  }
+
   const ap = pathFromRoot(a, context);
   const bp = pathFromRoot(b, context);
 
   const fork = forkingPoint(ap, bp);
 
   if (a === ap[fork]) {
-    return -1;
+    return 1;
   }
 
   if (b === bp[fork]) {
-    return 1;
+    return -1;
   }
 
   const { childNodes } = ap[fork];
@@ -52,11 +56,11 @@ export function compare(a: Node, b: Node, context: Node): number {
     const child = childNodes[i];
 
     if (child === a) {
-      return -1;
+      return 1;
     }
 
     if (child === b) {
-      return 1;
+      return -1;
     }
   }
 
