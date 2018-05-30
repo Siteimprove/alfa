@@ -12,6 +12,7 @@ export * from "./get-label";
 export * from "./get-namespace";
 export * from "./get-next-element-sibling";
 export * from "./get-next-sibling";
+export * from "./get-parent-element";
 export * from "./get-parent-node";
 export * from "./get-parent-rule";
 export * from "./get-previous-element-sibling";

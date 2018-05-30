@@ -5,7 +5,7 @@ import {
   isElement,
   getAttribute,
   getComputedStyle,
-  getParentNode
+  getParentElement
 } from "@siteimprove/alfa-dom";
 
 export function isVisible(node: Element | Text, context: Node): boolean {
@@ -21,9 +21,9 @@ export function isVisible(node: Element | Text, context: Node): boolean {
     }
 
     for (
-      let next: Node | null = node;
-      next !== null && isElement(next);
-      next = getParentNode(next, context)
+      let next: Element | null = node;
+      next !== null;
+      next = getParentElement(next, context)
     ) {
       const { display } = getComputedStyle(next, context);
 
@@ -32,10 +32,10 @@ export function isVisible(node: Element | Text, context: Node): boolean {
       }
     }
   } else {
-    const parentNode = getParentNode(node, context);
+    const parentElement = getParentElement(node, context);
 
-    if (parentNode !== null && isElement(parentNode)) {
-      return isVisible(parentNode, context);
+    if (parentElement !== null) {
+      return isVisible(parentElement, context);
     }
   }
 

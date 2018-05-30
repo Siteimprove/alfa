@@ -13,11 +13,10 @@ import {
   PseudoElementSelector
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
-import { isElement } from "./guards";
 import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
-import { getParentNode } from "./get-parent-node";
-import { getPreviousSibling } from "./get-previous-sibling";
+import { getParentElement } from "./get-parent-element";
+import { getPreviousElementSibling } from "./get-previous-element-sibling";
 import { hasClass } from "./has-class";
 import { AncestorFilter } from "./ancestor-filter";
 
@@ -267,16 +266,14 @@ function matchesDescendant(
   selector: Selector,
   options: MatchingOptions
 ): boolean {
-  let parentNode = getParentNode(element, context);
+  let parentElement = getParentElement(element, context);
 
-  while (parentNode !== null) {
-    if (isElement(parentNode)) {
-      if (matches(parentNode, context, selector, options)) {
-        return true;
-      }
+  while (parentElement !== null) {
+    if (matches(parentElement, context, selector, options)) {
+      return true;
     }
 
-    parentNode = getParentNode(parentNode, context);
+    parentElement = getParentElement(parentElement, context);
   }
 
   return false;
@@ -291,21 +288,13 @@ function matchesDirectDescendant(
   selector: Selector,
   options: MatchingOptions
 ): boolean {
-  let parentNode = getParentNode(element, context);
+  let parentElement = getParentElement(element, context);
 
-  while (parentNode !== null) {
-    if (isElement(parentNode)) {
-      if (matches(parentNode, context, selector, options)) {
-        return true;
-      }
-
-      return false;
-    }
-
-    parentNode = getParentNode(parentNode, context);
+  if (parentElement === null) {
+    return false;
   }
 
-  return false;
+  return matches(parentElement, context, selector, options);
 }
 
 /**
@@ -317,16 +306,17 @@ function matchesSibling(
   selector: Selector,
   options: MatchingOptions
 ): boolean {
-  let previousSibling = getPreviousSibling(element, context);
+  let previousElementSibling = getPreviousElementSibling(element, context);
 
-  while (previousSibling !== null) {
-    if (isElement(previousSibling)) {
-      if (matches(previousSibling, context, selector, options)) {
-        return true;
-      }
+  while (previousElementSibling !== null) {
+    if (matches(previousElementSibling, context, selector, options)) {
+      return true;
     }
 
-    previousSibling = getPreviousSibling(previousSibling, context);
+    previousElementSibling = getPreviousElementSibling(
+      previousElementSibling,
+      context
+    );
   }
 
   return false;
@@ -341,21 +331,13 @@ function matchesDirectSibling(
   selector: Selector,
   options: MatchingOptions
 ): boolean {
-  let previousSibling = getPreviousSibling(element, context);
+  let previousElementSibling = getPreviousElementSibling(element, context);
 
-  while (previousSibling !== null) {
-    if (isElement(previousSibling)) {
-      if (matches(previousSibling, context, selector, options)) {
-        return true;
-      }
-
-      return false;
-    }
-
-    previousSibling = getPreviousSibling(previousSibling, context);
+  if (previousElementSibling === null) {
+    return false;
   }
 
-  return false;
+  return matches(previousElementSibling, context, selector, options);
 }
 
 /**

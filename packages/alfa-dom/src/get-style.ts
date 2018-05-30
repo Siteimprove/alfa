@@ -12,10 +12,9 @@ import {
   PseudoElement
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
-import { isElement } from "./guards";
 import { matches } from "./matches";
 import { getAttribute } from "./get-attribute";
-import { getParentNode } from "./get-parent-node";
+import { getParentElement } from "./get-parent-element";
 import { Cascade } from "./get-cascade";
 
 const { isArray } = Array;
@@ -253,9 +252,9 @@ function getParentStyle(
   cascade: Cascade | null,
   options: StyleOptions
 ): Style<Stage.Computed> {
-  const parentNode = getParentNode(element, context);
+  const parentElement = getParentElement(element, context);
 
-  if (parentNode === null || !isElement(parentNode)) {
+  if (parentElement === null) {
     return {};
   }
 
@@ -264,11 +263,11 @@ function getParentStyle(
   options = { ...options, pseudo: undefined };
 
   let parentStyle = getComputedStyle(
-    parentNode,
+    parentElement,
     context,
     cascade,
     options,
-    getParentStyle(parentNode, context, cascade, options)
+    getParentStyle(parentElement, context, cascade, options)
   );
 
   // If we're getting the style of a pseudo-element, the parent style will be

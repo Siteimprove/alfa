@@ -1,7 +1,7 @@
 import { map } from "@siteimprove/alfa-util";
 import { Node } from "./types";
 import { isDocumentType, isElement, isText, isComment } from "./guards";
-import { getParentNode } from "./get-parent-node";
+import { getParentElement } from "./get-parent-element";
 import { Namespace, getNamespace } from "./get-namespace";
 
 /**
@@ -112,10 +112,10 @@ export function serialize(node: Node, context: Node = node): string {
 
   if (isText(node)) {
     if (context !== null) {
-      const parent = getParentNode(node, context);
+      const parentElement = getParentElement(node, context);
 
-      if (parent !== null && isElement(parent)) {
-        switch (parent.localName) {
+      if (parentElement !== null) {
+        switch (parentElement.localName) {
           case "style":
           case "script":
           case "xmp":
