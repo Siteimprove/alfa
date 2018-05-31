@@ -1,5 +1,5 @@
 export * from "./ancestor-filter";
-export * from "./compare";
+export * from "./compare-document-position";
 export * from "./contains";
 export * from "./find";
 export * from "./get-attribute";
