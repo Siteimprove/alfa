@@ -12,6 +12,7 @@ import {
   getTextContent,
   getLabel,
   getElementNamespace,
+  getInputType,
   getComputedStyle
 } from "@siteimprove/alfa-dom";
 import * as Roles from "./roles";
@@ -256,7 +257,7 @@ function getHtmlTextAlternative(
 
   switch (element.localName) {
     case "input":
-      const type = getAttribute(element, "type");
+      const type = getInputType(element);
       if (type !== null) {
         switch (type) {
           // https://www.w3.org/TR/html-aam/#input-type-button-input-type-submit-and-input-type-reset

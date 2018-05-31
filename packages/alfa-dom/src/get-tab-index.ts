@@ -1,6 +1,7 @@
 import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
 import { hasAttribute } from "./has-attribute";
+import { getInputType } from "./get-input-type";
 
 const { isNaN } = Number;
 
@@ -30,7 +31,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
       }
       break;
     case "input":
-      if (getAttribute(element, "type") !== "hidden") {
+      if (getInputType(element) !== "hidden") {
         return true;
       }
       break;

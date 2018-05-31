@@ -1,5 +1,5 @@
 import { Element } from "./types";
-import { getAttribute } from "./get-attribute";
+import { getInputType } from "./get-input-type";
 
 /**
  * Given an element, check if the element can be associated with a form label.
@@ -27,7 +27,7 @@ export function isLabelable(element: Element): boolean {
       return true;
 
     case "input":
-      return getAttribute(element, "type") !== "hidden";
+      return getInputType(element) !== "hidden";
   }
 
   return false;
