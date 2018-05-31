@@ -3,7 +3,7 @@ import { Grammar } from "./grammar";
 import { Stream } from "./stream";
 
 export function parse<T extends Token, R>(
-  input: Array<T>,
+  input: ArrayLike<T>,
   grammar: Grammar<T, R>
 ): R | null {
   const stream = new Stream(input);
@@ -88,6 +88,7 @@ export function parse<T extends Token, R>(
   }
 
   const result = expression(-1);
+
   const end = stream.peek();
 
   if (end !== null) {
