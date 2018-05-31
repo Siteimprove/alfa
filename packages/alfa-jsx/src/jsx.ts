@@ -1,7 +1,5 @@
 /// <reference path="./jsx.d.ts"/>
 
-import { Mutable } from "@siteimprove/alfa-util";
-
 const { keys } = Object;
 
 export function jsx(
@@ -9,15 +7,8 @@ export function jsx(
   attributes: { [name: string]: any } | null,
   ...childNodes: Array<JSX.Element | string>
 ): JSX.Element {
-  const element: JSX.Element = {
+  return {
     nodeType: 1,
-    childNodes: childNodes.map(
-      childNode =>
-        typeof childNode === "string"
-          ? { nodeType: 3, childNodes: [], data: childNode }
-          : childNode
-    ),
-    namespaceURI: "http://www.w3.org/1999/xhtml",
     prefix: null,
     localName,
     attributes:
@@ -31,7 +22,6 @@ export function jsx(
             .map(name => {
               const value = attributes[name];
               return {
-                namespaceURI: null,
                 prefix: null,
                 localName: name,
                 value:
@@ -44,33 +34,12 @@ export function jsx(
                         : value.toString()
               };
             }),
-    shadowRoot: null
+    shadowRoot: null,
+    childNodes: childNodes.map(
+      childNode =>
+        typeof childNode === "string"
+          ? { nodeType: 3, childNodes: [], data: childNode }
+          : childNode
+    )
   };
-
-  if (localName === "svg") {
-    setNamespace(element, "http://www.w3.org/2000/svg");
-  }
-
-  if (localName === "math") {
-    setNamespace(element, "http://www.w3.org/1998/Math/MathML");
-  }
-
-  return element;
-}
-
-function isElement(node: JSX.Node): node is JSX.Element {
-  return node.nodeType === 1;
-}
-
-function setNamespace(node: Mutable<JSX.Node>, namespaceURI: string): void {
-  if (isElement(node)) {
-    const element: Mutable<JSX.Element> = node;
-    element.namespaceURI = namespaceURI;
-  }
-
-  const { childNodes } = node;
-
-  for (let i = 0, n = childNodes.length; i < n; i++) {
-    setNamespace(childNodes[i], namespaceURI);
-  }
 }

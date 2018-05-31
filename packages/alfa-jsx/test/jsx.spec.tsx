@@ -5,14 +5,6 @@ import { jsx } from "../src/jsx";
 test("Transforms JSX into DOM nodes", t => {
   t.deepEqual(<div class="foo">Hello world</div>, {
     nodeType: 1,
-    childNodes: [
-      {
-        nodeType: 3,
-        childNodes: [],
-        data: "Hello world"
-      }
-    ],
-    namespaceURI: "http://www.w3.org/1999/xhtml",
     prefix: null,
     localName: "div",
     attributes: [
@@ -23,7 +15,14 @@ test("Transforms JSX into DOM nodes", t => {
         value: "foo"
       }
     ],
-    shadowRoot: null
+    shadowRoot: null,
+    childNodes: [
+      {
+        nodeType: 3,
+        data: "Hello world",
+        childNodes: []
+      }
+    ]
   });
 });
 
@@ -138,82 +137,4 @@ test("Handles attributes with object values", t => {
     localName: "foo",
     value: "[object Object]"
   });
-});
-
-test("Handles foreign objects in the SVG namespace", t => {
-  t.deepEqual(
-    <svg>
-      <g>
-        <path />
-      </g>
-    </svg>,
-    {
-      nodeType: 1,
-      childNodes: [
-        {
-          nodeType: 1,
-          childNodes: [
-            {
-              nodeType: 1,
-              childNodes: [],
-              namespaceURI: "http://www.w3.org/2000/svg",
-              prefix: null,
-              localName: "path",
-              attributes: [],
-              shadowRoot: null
-            }
-          ],
-          namespaceURI: "http://www.w3.org/2000/svg",
-          prefix: null,
-          localName: "g",
-          attributes: [],
-          shadowRoot: null
-        }
-      ],
-      namespaceURI: "http://www.w3.org/2000/svg",
-      prefix: null,
-      localName: "svg",
-      attributes: [],
-      shadowRoot: null
-    }
-  );
-});
-
-test("Handles foreign objects in the MathML namespace", t => {
-  t.deepEqual(
-    <math>
-      <apply>
-        <times />
-      </apply>
-    </math>,
-    {
-      nodeType: 1,
-      childNodes: [
-        {
-          nodeType: 1,
-          childNodes: [
-            {
-              nodeType: 1,
-              childNodes: [],
-              namespaceURI: "http://www.w3.org/1998/Math/MathML",
-              prefix: null,
-              localName: "times",
-              attributes: [],
-              shadowRoot: null
-            }
-          ],
-          namespaceURI: "http://www.w3.org/1998/Math/MathML",
-          prefix: null,
-          localName: "apply",
-          attributes: [],
-          shadowRoot: null
-        }
-      ],
-      namespaceURI: "http://www.w3.org/1998/Math/MathML",
-      prefix: null,
-      localName: "math",
-      attributes: [],
-      shadowRoot: null
-    }
-  );
 });

@@ -27,17 +27,15 @@ function virtualizeNode(node: Node): V.Node {
 function virtualizeElement(element: Element): V.Element {
   const virtual: Mutable<V.Element> = {
     nodeType: 1,
-    childNodes: map(element.childNodes, child => virtualizeNode(child)),
-    namespaceURI: element.namespaceURI,
     prefix: element.prefix,
     localName: element.localName || "",
     attributes: map(element.attributes, attribute => ({
-      namespaceURI: attribute.namespaceURI,
       prefix: attribute.prefix,
       localName: attribute.localName || "",
       value: attribute.value
     })),
-    shadowRoot: null
+    shadowRoot: null,
+    childNodes: map(element.childNodes, child => virtualizeNode(child))
   };
 
   if (element.shadowRoot !== null) {
@@ -48,11 +46,11 @@ function virtualizeElement(element: Element): V.Element {
 }
 
 function virtualizeText({ data }: Text): V.Text {
-  return { nodeType: 3, childNodes: [], data };
+  return { nodeType: 3, data, childNodes: [] };
 }
 
 function virtualizeComment({ data }: Comment): V.Comment {
-  return { nodeType: 8, childNodes: [], data };
+  return { nodeType: 8, data, childNodes: [] };
 }
 
 function virtualizeDocument(document: Document): V.Document {
@@ -68,7 +66,7 @@ function virtualizeDocument(document: Document): V.Document {
 }
 
 function virtualizeDocumentType({ name }: DocumentType): V.DocumentType {
-  return { nodeType: 10, childNodes: [], name };
+  return { nodeType: 10, name, childNodes: [] };
 }
 
 function virtualizeDocumentFragment(

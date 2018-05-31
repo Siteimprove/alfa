@@ -9,7 +9,6 @@ declare namespace JSX {
   }
 
   interface Attribute {
-    readonly namespaceURI: string | null;
     readonly prefix: string | null;
     readonly localName: string;
     readonly value: string;
@@ -17,7 +16,6 @@ declare namespace JSX {
 
   interface Element extends Node {
     readonly nodeType: 1;
-    readonly namespaceURI: string | null;
     readonly prefix: string | null;
     readonly localName: string;
     readonly attributes: ArrayLike<Attribute>;

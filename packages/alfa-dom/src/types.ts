@@ -42,11 +42,6 @@ export interface CharacterData extends Node {
  */
 export interface Attribute {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-attr-namespaceuri
-   */
-  readonly namespaceURI: string | null;
-
-  /**
    * @see https://www.w3.org/TR/dom/#dom-attr-prefix
    */
   readonly prefix: string | null;
@@ -70,11 +65,6 @@ export interface Element extends Node {
    * @see https://www.w3.org/TR/dom/#dom-node-element_node
    */
   readonly nodeType: 1;
-
-  /**
-   * @see https://www.w3.org/TR/dom/#dom-element-namespaceuri
-   */
-  readonly namespaceURI: string | null;
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-element-prefix
