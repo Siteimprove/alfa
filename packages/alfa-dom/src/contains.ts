@@ -33,5 +33,9 @@ export function contains<T extends Node>(
     return getClosest(query, context, node => node === scope) !== null;
   }
 
+  if (typeof query === "string") {
+    return find(scope, context, query, options) !== null;
+  }
+
   return find(scope, context, query, options) !== null;
 }
