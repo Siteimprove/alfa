@@ -4,11 +4,37 @@
 export enum Char {
   // Control codes
   Null = 0x0000,
+  StartOfHeading = 0x0001,
+  StartOfText = 0x0002,
+  EndOfText = 0x0003,
+  EndOfTransmission = 0x0004,
+  Enquiry = 0x0005,
+  Acknowledge = 0x0006,
+  Bell = 0x0007,
+  Backspace = 0x0008,
   CharacterTabulation = 0x0009,
   LineFeed = 0x000a,
   LineTabulation = 0x000b,
   FormFeed = 0x000c,
   CarriageReturn = 0x000d,
+  ShiftOut = 0x000e,
+  ShiftIn = 0x000f,
+  DataLinkEscape = 0x0010,
+  DeviceControlOne = 0x0011,
+  DeviceControlTwo = 0x0012,
+  DeviceControlThree = 0x0013,
+  DeviceControlFour = 0x0014,
+  NegativeAcknowledge = 0x0015,
+  SynchronousIdle = 0x0016,
+  EndOfTransmissionBlock = 0x0017,
+  Cancel = 0x0018,
+  EndOfMedium = 0x0019,
+  Substitute = 0x001a,
+  Escape = 0x001b,
+  FileSeparator = 0x001c,
+  GroupSeparator = 0x001d,
+  RecordSeparator = 0x001e,
+  UnitSeparator = 0x001f,
 
   // Punctuation and symbols
   Space = 0x0020,
@@ -117,5 +143,8 @@ export enum Char {
   LeftCurlyBracket = 0x007b,
   VerticalLine = 0x007c,
   RightCurlyBracket = 0x007d,
-  Tilde = 0x007e
+  Tilde = 0x007e,
+
+  // Control codes
+  Delete = 0x007f
 }
