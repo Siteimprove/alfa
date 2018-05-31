@@ -13,32 +13,32 @@ const ident: Production<Ident> = {
       case "block":
       case "inline":
       case "run-in":
-        return { outside: token.value, inside: "flow" };
+        return [token.value, "flow"];
 
       case "flow":
       case "flow-root":
       case "table":
       case "flex":
       case "grid":
-        return { outside: "block", inside: token.value };
+        return ["block", token.value];
       case "ruby":
-        return { outside: "inline", inside: token.value };
+        return ["inline", token.value];
 
       case "list-item":
-        return { outside: "block", inside: "flow", marker: true };
+        return ["block", "flow", token.value];
 
       case "contents":
       case "none":
-        return { box: token.value };
+        return token.value;
 
       case "inline-block":
-        return { outside: "inline", inside: "flow-root" };
+        return ["inline", "flow-root"];
       case "inline-table":
-        return { outside: "inline", inside: "table" };
+        return ["inline", "table"];
       case "inline-flex":
-        return { outside: "inline", inside: "flex" };
+        return ["inline", "flex"];
       case "inline-grid":
-        return { outside: "inline", inside: "grid" };
+        return ["inline", "grid"];
     }
 
     return null;

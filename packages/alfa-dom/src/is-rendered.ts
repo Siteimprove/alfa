@@ -12,9 +12,7 @@ export function isRendered(element: Element, context: Node): boolean {
     next !== null;
     next = getParentElement(next, context)
   ) {
-    const { display } = getComputedStyle(next, context);
-
-    if (display !== undefined && "box" in display && display.box === "none") {
+    if (getComputedStyle(next, context).display === "none") {
       return false;
     }
   }

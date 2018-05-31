@@ -19,6 +19,11 @@ export type DisplayInside =
   | "ruby";
 
 /**
+ * @see https://www.w3.org/TR/css-display/#list-items
+ */
+export type DisplayListItem = "list-item";
+
+/**
  * @see https://www.w3.org/TR/css-display/#layout-specific-display
  */
 export type DisplayInternal =
@@ -40,25 +45,11 @@ export type DisplayInternal =
  */
 export type DisplayBox = "contents" | "none";
 
-/**
- * @see https://www.w3.org/TR/css-display/#legacy-display
- */
-export type DisplayLegacy =
-  | "inline-block"
-  | "inline-table"
-  | "inline-flex"
-  | "inline-grid";
-
-export type Display = Readonly<
-  | {
-      outside: DisplayOutside;
-      inside: DisplayInside;
-      // https://www.w3.org/TR/css-display/#list-items
-      marker?: true;
-    }
-  | { box: DisplayBox }
-  | { internal: DisplayInternal }
->;
+export type Display =
+  | [DisplayOutside, DisplayInside]
+  | [DisplayOutside, DisplayInside, DisplayListItem]
+  | DisplayInternal
+  | DisplayBox;
 
 /**
  * @see https://www.w3.org/TR/css-display/#propdef-display
@@ -67,7 +58,7 @@ export const DisplayProperty: Property<Display> = {
   parse(input) {
     return parse(input, DisplayGrammar);
   },
-  initial: { outside: "inline", inside: "flow" },
+  initial: ["inline", "flow"],
   computed(own, parent) {
     return own.display === undefined ? null : own.display;
   }
