@@ -89,10 +89,10 @@ export function parse<T extends Token, R>(
 
   const result = expression(-1);
 
-  const end = stream.peek();
+  const token = stream.peek();
 
-  if (end !== null) {
-    throw new Error(`Unexpected token "${end.type}"`);
+  if (token !== null) {
+    throw new Error(`Unexpected token ${JSON.stringify(token)}`);
   }
 
   return result;

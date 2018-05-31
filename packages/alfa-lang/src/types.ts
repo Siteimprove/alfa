@@ -1,13 +1,14 @@
 import { Stream } from "./stream";
 
-export interface Token {
-  readonly type: string;
-}
+export type SimpleToken = string;
 
-export interface Location {
-  readonly line: number;
-  readonly column: number;
-}
+export type ObjectToken = Readonly<{ type: string }>;
+
+export type Token = SimpleToken | ObjectToken;
+
+export type TokenIdentifier<T extends Token> = T extends ObjectToken
+  ? T["type"]
+  : T;
 
 export enum Command {
   End,
@@ -28,7 +29,8 @@ export interface Production<
   U extends T = T,
   P extends R = R
 > {
-  readonly token: U["type"];
+  readonly token: TokenIdentifier<U>;
+
   readonly associate?: "left" | "right";
 
   prefix?(

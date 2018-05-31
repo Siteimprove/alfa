@@ -12,9 +12,7 @@ test("Can lex an expression", t =>
       type: "number",
       value: 1
     },
-    {
-      type: "+"
-    },
+    "+",
     {
       type: "number",
       value: 2

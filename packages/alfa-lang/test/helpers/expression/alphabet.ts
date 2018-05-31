@@ -4,22 +4,28 @@ import { Char } from "../../../src/char";
 import { isWhitespace } from "../../../src/is-whitespace";
 import { isNumeric } from "../../../src/is-numeric";
 
-export type Number = { type: "number"; value: number };
-export type Plus = { type: "+" };
-export type Minus = { type: "-" };
-export type Asterix = { type: "*" };
-export type Slash = { type: "/" };
-export type Caret = { type: "^" };
+export type Number = Readonly<{ type: "number"; value: number }>;
+export type Add = "+";
+export type Subtract = "-";
+export type Multiply = "*";
+export type Divide = "/";
+export type Exponentiate = "^";
 
-export type ExpressionToken = Number | Plus | Minus | Asterix | Slash | Caret;
+export type ExpressionToken =
+  | Number
+  | Add
+  | Subtract
+  | Multiply
+  | Divide
+  | Exponentiate;
 
 export type ExpressionPattern = Pattern<ExpressionToken>;
 
 export function isNumber(token: ExpressionToken): token is Number {
-  return token.type === "number" && "value" in token;
+  return typeof token === "object" && token.type === "number";
 }
 
-const initial: ExpressionPattern = stream => {
+const initial: ExpressionPattern = (stream, emit) => {
   stream.accept(isWhitespace);
 
   const char = stream.peek();
@@ -36,41 +42,20 @@ const initial: ExpressionPattern = stream => {
 
   switch (char) {
     case Char.PlusSign:
-      return plus;
+      emit("+");
+      return;
     case Char.HyphenMinus:
-      return minus;
+      emit("-");
+      return;
     case Char.Asterisk:
-      return asterix;
+      emit("*");
+      return;
     case Char.Solidus:
-      return slash;
+      emit("/");
+      return;
     case Char.CircumflexAccent:
-      return caret;
+      emit("^");
   }
-};
-
-const plus: ExpressionPattern = (stream, emit) => {
-  emit({ type: "+" });
-  return initial;
-};
-
-const minus: ExpressionPattern = (stream, emit) => {
-  emit({ type: "-" });
-  return initial;
-};
-
-const asterix: ExpressionPattern = (stream, emit) => {
-  emit({ type: "*" });
-  return initial;
-};
-
-const slash: ExpressionPattern = (stream, emit) => {
-  emit({ type: "/" });
-  return initial;
-};
-
-const caret: ExpressionPattern = (stream, emit) => {
-  emit({ type: "^" });
-  return initial;
 };
 
 const number: ExpressionPattern = (stream, emit) => {

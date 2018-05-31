@@ -2,11 +2,13 @@ import { Token, Production } from "./types";
 
 const { isArray } = Array;
 
+export type GrammarEntry<T extends Token, R> = Readonly<{
+  production: Production<T, R>;
+  precedence: number;
+}>;
+
 export class Grammar<T extends Token, R> {
-  private _entries: Map<
-    T["type"],
-    { production: Production<T, R>; precedence: number }
-  > = new Map();
+  private entries: Map<string, GrammarEntry<T, R>> = new Map();
 
   public constructor(
     productions: Array<Production<T, R> | Array<Production<T, R>>>
@@ -16,22 +18,14 @@ export class Grammar<T extends Token, R> {
       const group = productions[i];
 
       for (const production of isArray(group) ? group : [group]) {
-        const { token } = production;
-
-        this._entries.set(token, { production, precedence });
+        this.entries.set(production.token, { production, precedence });
       }
     }
   }
 
-  public get(
-    token: T
-  ): { production: Production<T, R>; precedence: number } | null {
-    const entry = this._entries.get(token.type);
-
-    if (entry === undefined) {
-      return null;
-    }
-
-    return entry;
+  public get(token: Token): GrammarEntry<T, R> | null {
+    return (
+      this.entries.get(typeof token === "string" ? token : token.type) || null
+    );
   }
 }

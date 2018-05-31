@@ -4,11 +4,11 @@ import { Expression, Constant, Operator } from "../expression";
 import {
   ExpressionToken,
   Number,
-  Plus,
-  Minus,
-  Asterix,
-  Slash,
-  Caret,
+  Add,
+  Subtract,
+  Multiply,
+  Divide,
+  Exponentiate,
   isNumber
 } from "./alphabet";
 
@@ -25,17 +25,20 @@ const number: ExpressionProduction<Number, Constant> = {
   }
 };
 
-const addition: ExpressionProduction<Plus, Constant | Operator> = {
+const addition: ExpressionProduction<Add, Constant | Operator> = {
   token: "+",
 
   prefix(token, stream) {
-    const num = stream.accept(isNumber, 1);
+    const numbers = stream.accept(isNumber);
 
-    if (num === false) {
+    if (numbers === false) {
       throw new Error("Expected number");
     }
 
-    return { type: "constant", value: num.value };
+    return {
+      type: "constant",
+      value: numbers.reduce((number, { value }) => 10 * number + value, 0)
+    };
   },
 
   infix(token, stream, expression, left) {
@@ -49,17 +52,20 @@ const addition: ExpressionProduction<Plus, Constant | Operator> = {
   }
 };
 
-const subtraction: ExpressionProduction<Minus, Constant | Operator> = {
+const subtraction: ExpressionProduction<Subtract, Constant | Operator> = {
   token: "-",
 
   prefix(token, stream) {
-    const num = stream.accept(isNumber, 1);
+    const numbers = stream.accept(isNumber);
 
-    if (num === false) {
+    if (numbers === false) {
       throw new Error("Expected number");
     }
 
-    return { type: "constant", value: num.value * -1 };
+    return {
+      type: "constant",
+      value: -1 * numbers.reduce((number, { value }) => 10 * number + value, 0)
+    };
   },
 
   infix(token, stream, expression, left) {
@@ -69,11 +75,11 @@ const subtraction: ExpressionProduction<Minus, Constant | Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: "-", left, right };
+    return { type: "operator", value: token, left, right };
   }
 };
 
-const multiplication: ExpressionProduction<Asterix, Operator> = {
+const multiplication: ExpressionProduction<Multiply, Operator> = {
   token: "*",
 
   infix(token, stream, expression, left) {
@@ -83,11 +89,11 @@ const multiplication: ExpressionProduction<Asterix, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: "*", left, right };
+    return { type: "operator", value: token, left, right };
   }
 };
 
-const division: ExpressionProduction<Slash, Operator> = {
+const division: ExpressionProduction<Divide, Operator> = {
   token: "/",
 
   infix(token, stream, expression, left) {
@@ -97,11 +103,11 @@ const division: ExpressionProduction<Slash, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: "/", left, right };
+    return { type: "operator", value: token, left, right };
   }
 };
 
-const exponentiation: ExpressionProduction<Caret, Operator> = {
+const exponentiation: ExpressionProduction<Exponentiate, Operator> = {
   token: "^",
   associate: "right",
 
@@ -112,7 +118,7 @@ const exponentiation: ExpressionProduction<Caret, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: "^", left, right };
+    return { type: "operator", value: token, left, right };
   }
 };
 

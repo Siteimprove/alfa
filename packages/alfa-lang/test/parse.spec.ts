@@ -19,9 +19,9 @@ test("Correctly handles operator precedence", t =>
     t,
     [
       { type: "number", value: 1 },
-      { type: "*" },
+      "*",
       { type: "number", value: 2 },
-      { type: "+" },
+      "+",
       { type: "number", value: 3 }
     ],
     {
