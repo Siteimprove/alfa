@@ -367,3 +367,42 @@ export interface SupportsRule extends ConditionRule {
    */
   readonly type: 12;
 }
+
+/**
+ * @see https://www.w3.org/TR/html/infrastructure.html#namespaces
+ */
+export enum Namespace {
+  /**
+   * @see https://www.w3.org/TR/html/infrastructure.html#html-namespace
+   */
+  HTML = "http://www.w3.org/1999/xhtml",
+
+  /**
+   * @see https://www.w3.org/TR/html/infrastructure.html#mathml-namespace
+   */
+  MathML = "http://www.w3.org/1998/Math/MathML",
+
+  /**
+   * @see https://www.w3.org/TR/html/infrastructure.html#svg-namespace
+   */
+  SVG = "http://www.w3.org/2000/svg",
+
+  /**
+   * @see https://www.w3.org/TR/html/infrastructure.html#xlink-namespace
+   */
+  XLink = "http://www.w3.org/1999/xlink",
+
+  /**
+   * @see https://www.w3.org/TR/html/infrastructure.html#xml-namespace
+   */
+  XML = "http://www.w3.org/XML/1998/namespace",
+
+  /**
+   * NB: The trailing slash is not a typo! For some reason it snuck its way into
+   * the specification and whether or not it is strictly required is an awfully
+   * good question.
+   *
+   * @see https://www.w3.org/TR/html/infrastructure.html#xmlns-namespace
+   */
+  XMLNS = "http://www.w3.org/2000/xmlns/"
+}

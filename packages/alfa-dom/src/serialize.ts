@@ -1,8 +1,9 @@
 import { map } from "@siteimprove/alfa-util";
-import { Node } from "./types";
+import { Node, Namespace } from "./types";
 import { isDocumentType, isElement, isText, isComment } from "./guards";
 import { getParentElement } from "./get-parent-element";
-import { Namespace, getNamespace } from "./get-namespace";
+import { getElementNamespace } from "./get-element-namespace";
+import { getAttributeNamespace } from "./get-attribute-namespace";
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
@@ -27,7 +28,7 @@ function escape(
  */
 export function serialize(node: Node, context: Node = node): string {
   if (isElement(node)) {
-    const namespace = getNamespace(node, context);
+    const namespace = getElementNamespace(node, context);
 
     let name = node.localName;
 
@@ -50,7 +51,7 @@ export function serialize(node: Node, context: Node = node): string {
 
     for (let i = 0, n = attributes.length; i < n; i++) {
       const attribute = attributes[i];
-      const namespace = getNamespace(attribute, node);
+      const namespace = getAttributeNamespace(attribute, node, context);
 
       let name = attribute.localName;
 

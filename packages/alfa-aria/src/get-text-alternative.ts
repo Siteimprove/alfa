@@ -11,7 +11,7 @@ import {
   getRootNode,
   getTextContent,
   getLabel,
-  getNamespace,
+  getElementNamespace,
   getComputedStyle
 } from "@siteimprove/alfa-dom";
 import * as Roles from "./roles";
@@ -224,7 +224,7 @@ function getNativeTextAlternative(
   context: Node,
   visited: Set<Element | Text>
 ): string | null {
-  const namespace = getNamespace(element, context);
+  const namespace = getElementNamespace(element, context);
 
   if (namespace !== null) {
     switch (namespace) {

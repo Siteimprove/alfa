@@ -1,7 +1,8 @@
 import { getHash } from "@siteimprove/alfa-crypto";
 import { Node } from "./types";
 import { isElement, isText, isComment, isDocumentType } from "./guards";
-import { getNamespace } from "./get-namespace";
+import { getElementNamespace } from "./get-element-namespace";
+import { getAttributeNamespace } from "./get-attribute-namespace";
 
 const digests: WeakMap<Node, string> = new WeakMap();
 
@@ -29,7 +30,7 @@ export function getDigest(node: Node, context: Node = node): string | null {
     }
 
     if (isElement(node)) {
-      const namespace = getNamespace(node, context);
+      const namespace = getElementNamespace(node, context);
 
       if (namespace === null) {
         hash.update(node.localName);
@@ -43,7 +44,7 @@ export function getDigest(node: Node, context: Node = node): string | null {
       );
 
       for (const attribute of attributes) {
-        const namespace = getNamespace(attribute, context);
+        const namespace = getAttributeNamespace(attribute, node, context);
 
         if (namespace === null) {
           hash.update(attribute.localName + attribute.value);

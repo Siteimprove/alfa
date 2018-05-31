@@ -4,7 +4,7 @@ import {
   Namespace,
   isElement,
   find,
-  getNamespace,
+  getElementNamespace,
   hasTextContent
 } from "@siteimprove/alfa-dom";
 
@@ -27,7 +27,7 @@ export const Title: Rule<"document", Element, Context> = {
       node =>
         isElement(node) &&
         node.localName === "title" &&
-        getNamespace(node, document) === Namespace.HTML
+        getElementNamespace(node, document) === Namespace.HTML
     );
 
     return { root, title };

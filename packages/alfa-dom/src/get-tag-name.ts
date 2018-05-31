@@ -1,5 +1,5 @@
-import { Node, Element } from "./types";
-import { Namespace, getNamespace } from "./get-namespace";
+import { Node, Element, Namespace } from "./types";
+import { getElementNamespace } from "./get-element-namespace";
 
 /**
  * Given an element and a context, get the tag name of the element.
@@ -15,7 +15,7 @@ export function getTagName(element: Element, context: Node): string {
     qualifiedName = element.localName;
   }
 
-  if (getNamespace(element, context) === Namespace.HTML) {
+  if (getElementNamespace(element, context) === Namespace.HTML) {
     return qualifiedName.toUpperCase();
   }
 
