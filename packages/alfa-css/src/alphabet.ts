@@ -17,6 +17,7 @@ export type Whitespace = Readonly<{ type: "whitespace" }>;
 
 export type Ident = Readonly<{ type: "ident"; value: string }>;
 export type FunctionName = Readonly<{ type: "function-name"; value: string }>;
+export type AtKeyword = Readonly<{ type: "at-keyword"; value: string }>;
 export type String = Readonly<{ type: "string"; value: string }>;
 export type Url = Readonly<{ type: "url"; value: string }>;
 export type Delim = Readonly<{ type: "delim"; value: string }>;
@@ -60,6 +61,7 @@ export type Token =
   // Value tokens
   | Ident
   | FunctionName
+  | AtKeyword
   | String
   | Url
   | Delim
@@ -288,6 +290,19 @@ const initial: Pattern = (stream, emit, state) => {
       if (stream.accept(char => char === Char.Asterisk, 1)) {
         return comment;
       }
+      break;
+
+    case Char.AtSign: {
+      const char = stream.peek();
+
+      if (
+        char !== null &&
+        startsIdentifier(char, stream.peek(1), stream.peek(2))
+      ) {
+        emit({ type: "at-keyword", value: name(stream) });
+        return;
+      }
+    }
   }
 
   const snd = stream.peek();

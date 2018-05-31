@@ -257,3 +257,11 @@ test("Can lex an escaped unicode point", t =>
       value: "\u002d"
     }
   ]));
+
+test("Can lex an @-keyword", t =>
+  css(t, "@page", [
+    {
+      type: "at-keyword",
+      value: "page"
+    }
+  ]));
