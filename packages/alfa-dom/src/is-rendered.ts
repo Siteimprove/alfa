@@ -8,6 +8,8 @@ import { getComputedStyle } from "./get-style";
  *
  * @see https://www.w3.org/TR/html/rendering.html#being-rendered
  *
+ * @todo Handle `display: contents` once it gains wider support.
+ *
  * @example
  * const span = <span />;
  * isRendered(span, <div style="display: none">{span}</div>);
