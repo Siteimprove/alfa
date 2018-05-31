@@ -4,6 +4,7 @@ import * as prettier from "@foreman/prettier";
 
 export async function transform(path: string): Promise<boolean> {
   const source = await read(path);
+
   try {
     if (prettier.isSupported(path)) {
       const { code } = prettier.transform(source, {
