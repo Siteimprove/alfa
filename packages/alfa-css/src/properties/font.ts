@@ -75,6 +75,14 @@ export const FontSizeProperty: Property<FontSize> = {
 
     if (parentValue !== undefined && parentValue.type === "length") {
       if (value.type === "percentage") {
+        if (value.unit === undefined) {
+          return {
+            type: "length",
+            value: parentValue.value * value.value,
+            unit: parentValue.unit
+          };
+        }
+
         switch (value.unit) {
           case "em":
             return {
