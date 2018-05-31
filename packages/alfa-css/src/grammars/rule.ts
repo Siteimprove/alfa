@@ -1,6 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, Ident, Delim, Bracket } from "../alphabet";
+import { Token, Ident, Delim, Bracket, AtKeyword } from "../alphabet";
 import { whitespace } from "../grammar";
 
 const { isArray } = Array;
@@ -29,14 +29,13 @@ export type Rule = AtRule | QualifiedRule;
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-at-rule
  */
-export function atRule(stream: Stream<Token>, name: string): AtRule {
+function atRule(stream: Stream<Token>, name: string): AtRule {
   const prelude: Array<Token> = [];
 
   let next = stream.peek();
 
-  while (next !== null) {
+  while (next !== null && next.type !== ";") {
     if (next.type === "{") {
-      stream.advance();
       return {
         type: "at-rule",
         name,
@@ -45,13 +44,10 @@ export function atRule(stream: Stream<Token>, name: string): AtRule {
       };
     }
 
-    if (next.type === ";") {
-      break;
-    }
-
     prelude.push(next);
 
-    next = stream.next();
+    stream.advance();
+    next = stream.peek();
   }
 
   return {
@@ -64,14 +60,14 @@ export function atRule(stream: Stream<Token>, name: string): AtRule {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-qualified-rule
  */
-export function qualifiedRule(stream: Stream<Token>): QualifiedRule | null {
-  const prelude: Array<Token> = [];
-
+function qualifiedRule(
+  stream: Stream<Token>,
+  prelude: Array<Token>
+): QualifiedRule | null {
   let next = stream.peek();
 
   while (next !== null) {
     if (next.type === "{") {
-      stream.advance();
       return {
         type: "qualified-rule",
         prelude,
@@ -81,7 +77,8 @@ export function qualifiedRule(stream: Stream<Token>): QualifiedRule | null {
 
     prelude.push(next);
 
-    next = stream.next();
+    stream.advance();
+    next = stream.peek();
   }
 
   return null;
@@ -95,16 +92,13 @@ export function block<Name extends "[" | "(" | "{">(
   const mirror =
     name === "[" ? "]" : name === "(" ? ")" : name === "{" ? "}" : null;
 
+  stream.advance();
   let next = stream.peek();
 
-  while (next !== null) {
-    if (next.type === mirror) {
-      break;
-    }
-
+  while (next !== null && next.type !== mirror) {
     values.push(next);
-
-    next = stream.next();
+    stream.advance();
+    next = stream.peek();
   }
 
   if (next !== null && next.type === mirror) {
@@ -114,10 +108,12 @@ export function block<Name extends "[" | "(" | "{">(
   return values;
 }
 
-function rule(stream: Stream<Token>): Rule | null {
-  stream.backup();
+function rule(token: Token, stream: Stream<Token>): Rule | null {
+  if (token.type === "at-keyword") {
+    return atRule(stream, token.value);
+  }
 
-  return qualifiedRule(stream);
+  return qualifiedRule(stream, [token]);
 }
 
 function ruleList(
@@ -157,7 +153,7 @@ type Production<T extends Token> = Lang.Production<
 const ident: Production<Ident> = {
   token: "ident",
   prefix(token, stream) {
-    return rule(stream);
+    return rule(token, stream);
   },
   infix(token, stream, expression, left) {
     return ruleList(stream, expression, left);
@@ -167,7 +163,7 @@ const ident: Production<Ident> = {
 const delim: Production<Delim> = {
   token: "delim",
   prefix(token, stream) {
-    return rule(stream);
+    return rule(token, stream);
   },
   infix(token, stream, expression, left) {
     return ruleList(stream, expression, left);
@@ -177,7 +173,17 @@ const delim: Production<Delim> = {
 const bracket: Production<Bracket> = {
   token: "[",
   prefix(token, stream) {
-    return rule(stream);
+    return rule(token, stream);
+  },
+  infix(token, stream, expression, left) {
+    return ruleList(stream, expression, left);
+  }
+};
+
+const atKeyword: Production<AtKeyword> = {
+  token: "at-keyword",
+  prefix(token, stream) {
+    return rule(token, stream);
   },
   infix(token, stream, expression, left) {
     return ruleList(stream, expression, left);
@@ -188,5 +194,6 @@ export const RuleGrammar: Grammar<Token, Rule | Array<Rule>> = new Grammar([
   ident,
   delim,
   bracket,
+  atKeyword,
   whitespace
 ]);

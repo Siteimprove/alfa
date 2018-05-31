@@ -79,6 +79,26 @@ test("Can parse a list of qualified rules", t =>
     }
   ]));
 
+test("Can parse a single at-rule", t =>
+  rule(t, "@page{color:red}", {
+    type: "at-rule",
+    name: "page",
+    prelude: [],
+    value: [
+      {
+        type: "ident",
+        value: "color"
+      },
+      {
+        type: ":"
+      },
+      {
+        type: "ident",
+        value: "red"
+      }
+    ]
+  }));
+
 test("Can parse a rule with a class selector", t =>
   rule(t, ".foo{}", {
     type: "qualified-rule",
