@@ -191,6 +191,8 @@ const name: (stream: Stream<number>) => string = stream => {
   return result;
 };
 
+const replacementCharacter = "\ufffd";
+
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-escaped-code-point
  */
@@ -198,7 +200,7 @@ const escapedCodePoint: (stream: Stream<number>) => string = stream => {
   let code = stream.next();
 
   if (code === null) {
-    return "\ufffd";
+    return replacementCharacter;
   }
 
   if (isHex(code)) {
@@ -225,7 +227,7 @@ const escapedCodePoint: (stream: Stream<number>) => string = stream => {
     stream.accept(isWhitespace, 1);
 
     if (code === 0) {
-      return "\ufffd";
+      return replacementCharacter;
     }
   }
 
