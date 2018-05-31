@@ -3,6 +3,7 @@ import {
   Element,
   Text,
   isElement,
+  isRendered,
   getAttribute,
   getComputedStyle,
   getParentElement
@@ -20,17 +21,7 @@ export function isVisible(node: Element | Text, context: Node): boolean {
       return false;
     }
 
-    for (
-      let next: Element | null = node;
-      next !== null;
-      next = getParentElement(next, context)
-    ) {
-      const { display } = getComputedStyle(next, context);
-
-      if (display !== undefined && "box" in display && display.box === "none") {
-        return false;
-      }
-    }
+    return isRendered(node, context);
   } else {
     const parentElement = getParentElement(node, context);
 
