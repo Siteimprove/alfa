@@ -1,4 +1,4 @@
-import { hasAttribute } from "@alfa/dom";
+import { hasAttribute } from "@siteimprove/alfa-dom";
 import { Feature, NoRole } from "../types";
 import * as Roles from "../roles";
 

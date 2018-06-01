@@ -1,7 +1,6 @@
-import { values, includes } from "@alfa/util";
-import { Node, Element } from "@alfa/dom";
+import { values } from "@siteimprove/alfa-util";
+import { Node, Element } from "@siteimprove/alfa-dom";
 import * as Roles from "./roles";
-import * as Attributes from "./attributes";
 
 export type ValueType =
   /**
@@ -124,7 +123,7 @@ export const NoRole: Array<Role> = [];
 
 export const AnyRoleExcept: (...roles: Array<Role>) => Array<Role> = (
   ...roles
-) => AnyRole.filter(role => includes(roles, role));
+) => AnyRole.filter(role => roles.includes(role));
 
 /**
  * @see https://www.w3.org/TR/html-aria/

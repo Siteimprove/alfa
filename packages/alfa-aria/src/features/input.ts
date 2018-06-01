@@ -1,4 +1,9 @@
-import { Element, getAttribute, hasAttribute } from "@alfa/dom";
+import {
+  Element,
+  getAttribute,
+  hasAttribute,
+  Node
+} from "@siteimprove/alfa-dom";
 import { Feature, Role, NoRole } from "../types";
 import * as Roles from "../roles";
 
@@ -11,7 +16,7 @@ export const Input: Feature = {
   allowedRoles
 };
 
-function role(input: Element, context: Element): Role | undefined {
+function role(input: Element, context: Node): Role | undefined {
   if (hasAttribute(input, "type")) {
     switch (getAttribute(input, "type")) {
       case "button":

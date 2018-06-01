@@ -1,4 +1,4 @@
-import { isFocusable } from "@alfa/dom";
+import { isFocusable } from "@siteimprove/alfa-dom";
 import { Role } from "../types";
 import { Structure, Widget } from "./abstract";
 
@@ -7,6 +7,7 @@ import { Structure, Widget } from "./abstract";
  */
 export const Separator: Role = {
   name: "separator",
-  inherits: separator => (isFocusable(separator) ? [Widget] : [Structure]),
+  inherits: (separator, context) =>
+    isFocusable(separator, context) ? [Widget] : [Structure],
   label: { from: ["author"] }
 };

@@ -1,4 +1,4 @@
-import { Element, getAttribute } from "@alfa/dom";
+import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
 import { Select } from "../abstract";

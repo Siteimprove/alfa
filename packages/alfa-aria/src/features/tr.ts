@@ -1,4 +1,10 @@
-import { getClosest, Element, isElement, getTagName } from "@alfa/dom";
+import {
+  Element,
+  getClosest,
+  isElement,
+  getTagName,
+  Node
+} from "@siteimprove/alfa-dom";
 import { getRole } from "../get-role";
 import { Feature, Role, AnyRole } from "../types";
 import * as Roles from "../roles";

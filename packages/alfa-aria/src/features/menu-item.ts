@@ -1,4 +1,4 @@
-import { getAttribute, isElement } from "@alfa/dom";
+import { Element, getAttribute, isElement, Node } from "@siteimprove/alfa-dom";
 import { Feature, Role, NoRole } from "../types";
 import * as Roles from "../roles";
 
@@ -11,7 +11,7 @@ export const MenuItem: Feature = {
   allowedRoles: NoRole
 };
 
-function role(menuitem: Element, context: Element): Role | undefined {
+function role(menuitem: Element, context: Node): Role | undefined {
   if (isElement(menuitem)) {
     switch (getAttribute(menuitem, "type")) {
       case "command":

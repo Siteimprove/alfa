@@ -1,5 +1,4 @@
-import { Element } from "@alfa/dom";
-import { Feature, Role } from "../types";
+import { Feature } from "../types";
 import * as Roles from "../roles";
 
 /**

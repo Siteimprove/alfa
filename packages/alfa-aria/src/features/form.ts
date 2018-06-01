@@ -1,6 +1,5 @@
-import { hasTextContent } from "@alfa/dom";
+import { hasTextContent } from "@siteimprove/alfa-dom";
 import { Feature } from "../types";
-import { getTextAlternative } from "../get-text-alternative";
 import * as Roles from "../roles";
 
 /**
