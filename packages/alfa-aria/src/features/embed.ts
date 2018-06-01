@@ -9,7 +9,6 @@ export const Embed: Feature = {
     Roles.Application,
     Roles.Document,
     Roles.Presentation,
-    Roles.None,
-    Roles.Img
-  ]
+    Roles.None
+  ] || [Roles.Application, Roles.Document, Roles.Presentation, Roles.Img]
 };
