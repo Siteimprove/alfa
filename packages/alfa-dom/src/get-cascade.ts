@@ -1,23 +1,15 @@
-import { Selector } from "@siteimprove/alfa-css";
-import { Document, Element, StyleRule } from "./types";
+import { Document, Element } from "./types";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { SelectorMap } from "./selector-map";
 import { AncestorFilter } from "./ancestor-filter";
-
-/**
- * @internal
- */
-export type CascadeEntry = Readonly<{
-  selector: Selector;
-  rule: StyleRule;
-}>;
+import { RuleTree, RuleEntry } from "./rule-tree";
 
 /**
  * @internal
  */
 export interface Cascade {
-  get(element: Element): Array<CascadeEntry> | undefined;
+  get(element: Element): RuleEntry | undefined;
 }
 
 const cascades: WeakMap<Document, Cascade> = new WeakMap();
@@ -29,9 +21,11 @@ export function getCascade(context: Document): Cascade | null {
   let cascade = cascades.get(context);
 
   if (cascade === undefined) {
-    const entries = new WeakMap();
+    const entries: WeakMap<Element, RuleEntry> = new WeakMap();
+
     const selectorMap = new SelectorMap(context.styleSheets);
     const filter = new AncestorFilter();
+    const ruleTree = new RuleTree();
 
     traverseNode(context, {
       enter(node, parentNode) {
@@ -57,15 +51,19 @@ export function getCascade(context: Document): Cascade | null {
             // order will determine the cascade. The rule with the highest
             // order gets the highest priority.
             if (a.specificity === b.specificity) {
-              return b.order - a.order;
+              return a.order - b.order;
             }
 
             // Otherwise, the specificity will determine the cascade. The rule
             // with the highest specificity gets the highest priority.
-            return b.specificity - a.specificity;
+            return a.specificity - b.specificity;
           });
 
-          entries.set(node, rules);
+          const entry = ruleTree.insert(rules);
+
+          if (entry !== null) {
+            entries.set(node, entry);
+          }
         }
       },
       exit(node) {

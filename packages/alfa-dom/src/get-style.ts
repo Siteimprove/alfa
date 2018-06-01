@@ -65,40 +65,41 @@ export function getCascadedStyle(
   }
 
   if (cascade !== null) {
-    const entries = cascade.get(element);
+    for (
+      let entry = cascade.get(element) || null;
+      entry !== null;
+      entry = entry.parent
+    ) {
+      const { selector, rule } = entry;
+      const pseudo = getPseudoElement(selector);
 
-    if (entries !== undefined) {
-      for (const { selector, rule } of entries) {
-        const pseudo = getPseudoElement(selector);
-
-        if (pseudo === null) {
-          if (options.pseudo !== undefined) {
-            continue;
-          }
-        } else {
-          if (options.pseudo !== pseudo) {
-            continue;
-          }
+      if (pseudo === null) {
+        if (options.pseudo !== undefined) {
+          continue;
         }
+      } else {
+        if (options.pseudo !== pseudo) {
+          continue;
+        }
+      }
 
-        const { hover, active, focus } = options;
+      const { hover, active, focus } = options;
 
-        if (
-          matches(element, context, selector, {
-            hover,
-            active,
-            focus,
-            pseudo: true
-          })
-        ) {
-          const declaration = parseDeclaration(rule.style.cssText);
+      if (
+        matches(element, context, selector, {
+          hover,
+          active,
+          focus,
+          pseudo: true
+        })
+      ) {
+        const declaration = parseDeclaration(rule.style.cssText);
 
-          if (declaration !== null) {
-            if (isArray(declaration)) {
-              declarations.push(...declaration);
-            } else {
-              declarations.push(declaration);
-            }
+        if (declaration !== null) {
+          if (isArray(declaration)) {
+            declarations.push(...declaration);
+          } else {
+            declarations.push(declaration);
           }
         }
       }
