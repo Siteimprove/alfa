@@ -1,4 +1,4 @@
-/// <reference path="./jsx.d.ts"/>
+/// <reference path="../types/jsx.d.ts" />
 
 const { keys } = Object;
 

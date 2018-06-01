@@ -9,7 +9,6 @@ test("Transforms JSX into DOM nodes", t => {
     localName: "div",
     attributes: [
       {
-        namespaceURI: null,
         prefix: null,
         localName: "class",
         value: "foo"
@@ -35,7 +34,6 @@ test("Handles boolean attributes when truthy", t => {
   );
 
   t.deepEqual(hidden, {
-    namespaceURI: null,
     prefix: null,
     localName: "hidden",
     value: "hidden"
@@ -50,7 +48,7 @@ test("Handles boolean attributes when falsey", t => {
     attribute => attribute.localName === "hidden"
   );
 
-  t.is(hidden, undefined);
+  t.is(hidden, null);
 });
 
 test("Converts numbers in attributes to strings", t => {
@@ -62,7 +60,6 @@ test("Converts numbers in attributes to strings", t => {
   );
 
   t.deepEqual(number, {
-    namespaceURI: null,
     prefix: null,
     localName: "number",
     value: "20"
@@ -77,7 +74,7 @@ test("Handles attributes with null values", t => {
     attribute => attribute.localName === "foo"
   );
 
-  t.is(foo, undefined);
+  t.is(foo, null);
 });
 
 test("Handles attributes with undefined values", t => {
@@ -88,7 +85,7 @@ test("Handles attributes with undefined values", t => {
     attribute => attribute.localName === "foo"
   );
 
-  t.is(foo, undefined);
+  t.is(foo, null);
 });
 
 test("Handles attributes with NaN values", t => {
@@ -100,7 +97,6 @@ test("Handles attributes with NaN values", t => {
   );
 
   t.deepEqual(foo, {
-    namespaceURI: null,
     prefix: null,
     localName: "foo",
     value: "NaN"
@@ -116,7 +112,6 @@ test("Handles attributes with array values", t => {
   );
 
   t.deepEqual(foo, {
-    namespaceURI: null,
     prefix: null,
     localName: "foo",
     value: "1,2,3"
@@ -132,7 +127,6 @@ test("Handles attributes with object values", t => {
   );
 
   t.deepEqual(foo, {
-    namespaceURI: null,
     prefix: null,
     localName: "foo",
     value: "[object Object]"
