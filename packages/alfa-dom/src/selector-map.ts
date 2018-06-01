@@ -58,6 +58,8 @@ export class SelectorMap {
             return;
           }
 
+          order++;
+
           for (const selector of isArray(selectors) ? selectors : [selectors]) {
             const keySelector = getKeySelector(selector);
             const specificity = getSpecificity(selector);
@@ -65,7 +67,7 @@ export class SelectorMap {
             const entry: SelectorEntry = {
               selector,
               rule,
-              order: order++,
+              order,
               specificity
             };
 
