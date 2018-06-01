@@ -8,5 +8,5 @@ import * as Roles from "../roles";
 export const Form: Feature = {
   element: "form",
   role: form => (hasTextContent(form) === null ? Roles.Form : undefined),
-  allowedRoles: [Roles.None, Roles.Presentation, Roles.Search]
+  allowedRoles: [Roles.Search, Roles.None, Roles.Presentation]
 };
