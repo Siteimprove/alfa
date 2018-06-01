@@ -20,7 +20,7 @@
     "@foreman/prettier": "^0.2.0",
     "@foreman/register": "^0.1.0",
     "@foreman/tap": "^0.2.3",
-    "@foreman/typescript": "^0.3.0",
+    "@foreman/typescript": "^0.4.2",
     "husky": "^0.14.3",
     "lerna": "^2.8.0",
     "prettier": "1.12.1",
