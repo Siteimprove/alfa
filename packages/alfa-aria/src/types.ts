@@ -90,7 +90,7 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#superclassrole
    */
-  inherits?: RoleAspect<Array<Role>>;
+  inherits?: Aspect<Array<Role>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#scope
@@ -100,7 +100,7 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#mustContain
    */
-  owned?: RoleAspect<Array<Role | [Role, Role]>>;
+  owned?: Aspect<Array<Role | [Role, Role]>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#requiredState
@@ -113,9 +113,7 @@ export type Role = Readonly<{
   supported?: Array<Attribute>;
 }>;
 
-export type FeatureAspect<T> = T | ((element: Element, context: Node) => T);
-
-export type RoleAspect<T> = T | ((element: Element, context: Node) => T);
+export type Aspect<T> = T | ((element: Element, context: Node) => T);
 
 export const AnyRole: Array<Role> = values(Roles);
 
@@ -130,7 +128,7 @@ export const AnyRoleExcept: (...roles: Array<Role>) => Array<Role> = (
  */
 export type Feature = Readonly<{
   element: string;
-  role?: FeatureAspect<Role>;
-  allowedRoles: FeatureAspect<Array<Role> | typeof AnyRole | typeof NoRole>;
-  allowedAttributes?: FeatureAspect<Array<Attribute>>;
+  role?: Aspect<Role>;
+  allowedRoles: Aspect<Array<Role> | typeof AnyRole | typeof NoRole>;
+  allowedAttributes?: Aspect<Array<Attribute>>;
 }>;
