@@ -99,12 +99,14 @@
     execa "^0.10.0"
     tap-parser "^7.0.0"
 
-"@foreman/typescript@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.3.0.tgz#ea0a0c8944282d33189bac4d85876307f6312754"
+"@foreman/typescript@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@foreman/typescript/-/typescript-0.4.2.tgz#57ac8875dd12794c03ea96defb816e550433c1b4"
   dependencies:
     "@foreman/api" "^0.0.0"
     "@foreman/error" "^0.1.0"
+    "@foreman/fs" "^0.1.0"
+    "@foreman/path" "^0.0.0"
     tsconfig "^7.0.0"
     typecomp "^2.1.0"
 
