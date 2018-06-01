@@ -23,19 +23,11 @@ export function getKeySelector(
     case "type-selector":
       return selector.name === "*" ? null : selector;
 
-    case "relative-selector":
-      return getKeySelector(selector.selector);
-
     case "compound-selector":
-      const { selectors } = selector;
+      return getKeySelector(selector.left);
 
-      for (let i = 0, n = selectors.length; i < n; i++) {
-        const selector = getKeySelector(selectors[i]);
-
-        if (selector !== null) {
-          return selector;
-        }
-      }
+    case "relative-selector":
+      return getKeySelector(selector.right);
   }
 
   return null;

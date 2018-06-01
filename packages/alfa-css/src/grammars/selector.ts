@@ -47,18 +47,18 @@ export type PseudoElementSelector = {
   name: PseudoElement;
 };
 
-export type SubclassSelector =
+export type SimpleSelector =
   | IdSelector
   | ClassSelector
+  | TypeSelector
   | AttributeSelector
   | PseudoClassSelector
   | PseudoElementSelector;
 
-export type SimpleSelector = TypeSelector | SubclassSelector;
-
 export type CompoundSelector = {
   type: "compound-selector";
-  selectors: Array<SimpleSelector>;
+  left: SimpleSelector;
+  right: SimpleSelector | CompoundSelector;
 };
 
 export type ComplexSelector = SimpleSelector | CompoundSelector;
@@ -66,8 +66,8 @@ export type ComplexSelector = SimpleSelector | CompoundSelector;
 export type RelativeSelector = {
   type: "relative-selector";
   combinator: " " | ">" | "+" | "~";
-  relative: Selector;
-  selector: ComplexSelector;
+  left: ComplexSelector;
+  right: ComplexSelector | RelativeSelector;
 };
 
 export type Selector = ComplexSelector | RelativeSelector;
@@ -384,36 +384,53 @@ function pseudoSelector(
   return selector;
 }
 
+function compoundSelector(
+  left: ComplexSelector,
+  right: ComplexSelector
+): CompoundSelector {
+  if (isPseudoElementSelector(left)) {
+    throw new Error("Unexpected pseudo-element selector");
+  }
+
+  if (isCompoundSelector(left)) {
+    return {
+      type: "compound-selector",
+      left: left.left,
+      right: compoundSelector(left.right, right)
+    };
+  }
+
+  return {
+    type: "compound-selector",
+    left,
+    right
+  };
+}
+
 function relativeSelector(
   left: Selector,
-  right: ComplexSelector,
+  right: Selector,
   combinator: RelativeSelector["combinator"]
 ): RelativeSelector {
   if (isPseudoElementSelector(left)) {
     throw new Error("Unexpected pseudo-element selector");
   }
 
-  return {
-    type: "relative-selector",
-    combinator,
-    relative: left,
-    selector: right
-  };
-}
-
-function compoundSelector(
-  left: SimpleSelector | Array<SimpleSelector>,
-  right: SimpleSelector
-): CompoundSelector {
-  const selectors = isArray(left) ? left : [left];
-
-  if (isPseudoElementSelector(last(selectors)!)) {
-    throw new Error("Unexpected pseudo-element selector");
+  if (isRelativeSelector(left)) {
+    return {
+      type: "relative-selector",
+      combinator: left.combinator,
+      left: left.left,
+      right: relativeSelector(left.right, right, combinator)
+    };
   }
 
-  selectors.push(right);
-
-  return { type: "compound-selector", selectors };
+  return {
+    type: "relative-selector",
+    combinator: combinator,
+    left,
+    right
+  };
 }
 
 function selectorList(
@@ -444,46 +461,19 @@ function combineSelectors(
     return selectorList(left, right);
   }
 
-  if (combinator !== undefined) {
-    if (!isComplexSelector(right)) {
-      throw new Error("Exepected complex selector");
+  if (combinator === undefined) {
+    if (!isComplexSelector(left)) {
+      throw new Error("Expected complex selector");
     }
 
-    return relativeSelector(left, right, combinator);
-  }
-
-  if (isSimpleSelector(left)) {
-    if (!isSimpleSelector(right)) {
-      throw new Error("Expected simple selector");
+    if (!isComplexSelector(right)) {
+      throw new Error("Expected complex selector");
     }
 
     return compoundSelector(left, right);
   }
 
-  if (isComplexSelector(left)) {
-    if (!isSimpleSelector(right)) {
-      throw new Error("Expected simple selector");
-    }
-
-    return compoundSelector(left.selectors, right);
-  }
-
-  if (!isSimpleSelector(right)) {
-    throw new Error("Expected simple selector");
-  }
-
-  const { relative, selector } = left;
-
-  combinator = left.combinator;
-
-  return relativeSelector(
-    relative,
-    compoundSelector(
-      isCompoundSelector(selector) ? selector.selectors : selector,
-      right
-    ),
-    combinator
-  );
+  return relativeSelector(left, right, combinator);
 }
 
 type Production<T extends Token> = Lang.Production<
@@ -606,4 +596,4 @@ const colon: Production<Colon> = {
 export const SelectorGrammar: Grammar<
   Token,
   Selector | Array<Selector>
-> = new Grammar([[delim, ident, colon, bracket, whitespace], comma]);
+> = new Grammar([[delim, ident, colon, bracket], whitespace, comma]);

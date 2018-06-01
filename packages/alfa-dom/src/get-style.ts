@@ -1,4 +1,4 @@
-import { Mutable, keys, union, last } from "@siteimprove/alfa-util";
+import { Mutable, keys, union } from "@siteimprove/alfa-util";
 import {
   Selector,
   Declaration,
@@ -274,16 +274,13 @@ function getParentStyle(
 }
 
 function getPseudoElement(selector: Selector): PseudoElement | null {
-  if (selector.type === "relative-selector") {
-    return getPseudoElement(selector.selector);
-  }
+  switch (selector.type) {
+    case "pseudo-element-selector":
+      return selector.name;
 
-  if (selector.type === "compound-selector") {
-    return getPseudoElement(last(selector.selectors)!);
-  }
-
-  if (selector.type === "pseudo-element-selector") {
-    return selector.name;
+    case "compound-selector":
+    case "relative-selector":
+      return getPseudoElement(selector.right);
   }
 
   return null;

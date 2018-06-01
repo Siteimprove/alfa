@@ -94,7 +94,13 @@ export function matches(
   }
 
   if (isArray(selector)) {
-    return matchesList(element, context, selector, options);
+    for (let i = 0, n = selector.length; i < n; i++) {
+      if (matches(element, context, selector[i], options)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   switch (selector.type) {
@@ -192,34 +198,14 @@ function matchesAttribute(
 function matchesCompound(
   element: Element,
   context: Node,
-  { selectors }: CompoundSelector,
+  selector: CompoundSelector,
   options: MatchingOptions
 ): boolean {
-  for (let i = 0, n = selectors.length; i < n; i++) {
-    if (!matches(element, context, selectors[i], options)) {
-      return false;
-    }
+  if (!matches(element, context, selector.left, options)) {
+    return false;
   }
 
-  return true;
-}
-
-/**
- * @see https://www.w3.org/TR/selectors/#grouping
- */
-function matchesList(
-  element: Element,
-  context: Node,
-  selectors: Array<Selector>,
-  options: MatchingOptions
-): boolean {
-  for (let i = 0, n = selectors.length; i < n; i++) {
-    if (matches(element, context, selectors[i], options)) {
-      return true;
-    }
-  }
-
-  return false;
+  return matches(element, context, selector.right, options);
 }
 
 /**
@@ -235,21 +221,19 @@ function matchesRelative(
     return false;
   }
 
-  if (!matches(element, context, selector.selector, options)) {
+  if (!matches(element, context, selector.right, options)) {
     return false;
   }
 
-  const { combinator, relative } = selector;
-
-  switch (combinator) {
+  switch (selector.combinator) {
     case " ":
-      return matchesDescendant(element, context, relative, options);
+      return matchesDescendant(element, context, selector.left, options);
     case ">":
-      return matchesDirectDescendant(element, context, relative, options);
+      return matchesDirectDescendant(element, context, selector.left, options);
     case "~":
-      return matchesSibling(element, context, relative, options);
+      return matchesSibling(element, context, selector.left, options);
     case "+":
-      return matchesDirectSibling(element, context, relative, options);
+      return matchesDirectSibling(element, context, selector.left, options);
   }
 }
 
@@ -412,20 +396,19 @@ function matchesPseudoElement(
  * Check if a selector can be rejected based on an ancestor filter.
  */
 function canReject(selector: Selector, filter: AncestorFilter): boolean {
-  while (true) {
-    switch (selector.type) {
-      case "id-selector":
-      case "class-selector":
-      case "type-selector":
-        return !filter.matches(selector);
-      case "relative-selector":
-        const { combinator } = selector;
-        if (combinator === " " || combinator === ">") {
-          selector = selector.relative;
-          continue;
-        }
-    }
+  switch (selector.type) {
+    case "id-selector":
+    case "class-selector":
+    case "type-selector":
+      return !filter.matches(selector);
 
-    return false;
+    case "relative-selector":
+      switch (selector.combinator) {
+        case " ":
+        case ">":
+          return canReject(selector.left, filter);
+      }
   }
+
+  return false;
 }

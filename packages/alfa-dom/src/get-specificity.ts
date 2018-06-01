@@ -50,10 +50,8 @@ export function getSpecificity(selector: Selector): Specificity {
         c++;
         break;
       case "compound-selector":
-        queue.push(...selector.selectors);
-        break;
       case "relative-selector":
-        queue.push(selector.selector, selector.relative);
+        queue.push(selector.left, selector.right);
     }
   }
 
