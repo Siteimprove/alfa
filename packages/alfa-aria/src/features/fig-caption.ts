@@ -5,5 +5,5 @@ import * as Roles from "../roles";
  */
 export const FigCaption: Feature = {
   element: "figcaption",
-  allowedRoles: [Roles.Group, Roles.None, Roles.Presentation]
+  allowedRoles: [Roles.Group, Roles.Presentation] || [Roles.Group, Roles.None]
 };
