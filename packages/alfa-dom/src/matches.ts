@@ -158,7 +158,9 @@ function matchesAttribute(
   element: Element,
   selector: AttributeSelector
 ): boolean {
-  let value = getAttribute(element, selector.name);
+  let value = getAttribute(element, selector.name, {
+    lowerCase: selector.modifier === "i"
+  });
 
   if (selector.value === null) {
     return value !== null;
@@ -166,10 +168,6 @@ function matchesAttribute(
 
   if (value === null) {
     return false;
-  }
-
-  if (selector.modifier === "i") {
-    value = value.toLowerCase();
   }
 
   if (selector.matcher === null) {
