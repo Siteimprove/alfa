@@ -1,0 +1,19 @@
+{
+  "name": "@siteimprove/alfa-html",
+  "version": "0.0.0",
+  "description": "alfa!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository":
+    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-html",
+  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@siteimprove/alfa-lang": "^0.0.0",
+    "@siteimprove/alfa-util": "^0.0.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.0.0"
+  }
+}

@@ -4,11 +4,19 @@ import { spawn } from "@foreman/tap";
 export async function test(path: string): Promise<void> {
   const { ok, assertions } = await spawn(path);
 
+  if (assertions.length === 0) {
+    notify({
+      message: "No assertions run",
+      type: "error"
+    });
+
+    throw new Error("No assertions run");
+  }
+
   if (ok) {
     return notify({
       message: "Tests passed",
-      type: "success",
-      desktop: false
+      type: "success"
     });
   }
 
@@ -18,7 +26,7 @@ export async function test(path: string): Promise<void> {
     }
 
     notify({
-      message: `Assertion failed`,
+      message: "Assertion failed",
       type: "error",
       error
     });

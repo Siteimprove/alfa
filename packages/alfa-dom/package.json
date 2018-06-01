@@ -1,0 +1,23 @@
+{
+  "name": "@siteimprove/alfa-dom",
+  "version": "0.0.0",
+  "description": "alfa!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository":
+    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-dom",
+  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@siteimprove/alfa-crypto": "^0.0.0",
+    "@siteimprove/alfa-css": "^0.0.0",
+    "@siteimprove/alfa-lang": "^0.0.0",
+    "@siteimprove/alfa-util": "^0.0.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-bench": "^0.0.0",
+    "@siteimprove/alfa-jsx": "^0.0.0",
+    "@siteimprove/alfa-test": "^0.0.0"
+  }
+}

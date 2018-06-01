@@ -1,10 +1,10 @@
 import { read, write } from "@foreman/fs";
-import { extension } from "@foreman/path";
 import { notify } from "@foreman/notify";
 import * as prettier from "@foreman/prettier";
 
 export async function transform(path: string): Promise<boolean> {
   const source = await read(path);
+
   try {
     if (prettier.isSupported(path)) {
       const { code } = prettier.transform(source, {
@@ -16,8 +16,7 @@ export async function transform(path: string): Promise<boolean> {
 
         notify({
           message: "Linting succeeded",
-          type: "success",
-          desktop: false
+          type: "success"
         });
 
         return true;
@@ -26,8 +25,7 @@ export async function transform(path: string): Promise<boolean> {
 
     notify({
       message: "Linting skipped",
-      type: "watch",
-      desktop: false
+      type: "skip"
     });
   } catch (error) {
     notify({

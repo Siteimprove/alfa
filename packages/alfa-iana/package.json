@@ -1,0 +1,25 @@
+{
+  "name": "@siteimprove/alfa-iana",
+  "version": "0.0.0",
+  "description": "alfa!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository":
+    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-iana",
+  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "prepare": "foreman build/subtags.ts"
+  },
+  "dependencies": {
+    "@siteimprove/alfa-util": "^0.0.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.0.0",
+    "@types/got": "^8.3.1",
+    "@types/node": "^10.0.4",
+    "got": "^8.3.1",
+    "record-jar": "^1.0.4"
+  }
+}

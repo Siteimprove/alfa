@@ -4,14 +4,13 @@ import { notify } from "@foreman/notify";
 import * as tap from "./tasks/tap";
 import * as typescript from "./tasks/typescript";
 
-async function build(): Promise<void> {
+(async () => {
   const paths = await expand(["packages/**/test/**/*.spec.ts{,x}"]);
 
   for (const path of paths) {
     notify({
       message: "Testing",
-      value: path,
-      desktop: false
+      value: path
     });
 
     const tasks: Array<Task> = [typescript.diagnose, tap.test];
@@ -22,6 +21,4 @@ async function build(): Promise<void> {
       process.exit(1);
     }
   }
-}
-
-build();
+})();
