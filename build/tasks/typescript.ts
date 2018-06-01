@@ -47,7 +47,16 @@ export async function compile(path: string): Promise<void> {
   try {
     const files = await typescript.compile(workspaceFor(path), path);
 
-    for (const { name, text } of files) {
+    for (let { name, text } of files) {
+      // The TypeScript compiler is hell-bent on ensuring that EVERY output file
+      // maps to a path in the output directory. For this reason, whenever a
+      // file outside the specified root directory enters a compilation unit,
+      // the compiler simply changes the root directory in order to be able to
+      // map the file to the output directory. When this happens, a file at
+      // `src/foo.ts` will no longer be output to `dist/foo.ts` but rather
+      // `dist/src/foo.ts` which is obviously not what we want. Let's fix that.
+      name = name.replace(/dist\/src/, "dist");
+
       await write(name, text);
     }
 
