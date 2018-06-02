@@ -1,6 +1,12 @@
 import { last } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
+import {
+  Grammar,
+  Expression,
+  Stream,
+  Command,
+  Char
+} from "@siteimprove/alfa-lang";
 import { PseudoClass, PseudoElement } from "../types";
 import {
   Token,
@@ -9,14 +15,11 @@ import {
   Ident,
   Comma,
   Colon,
-  Bracket,
-  isIdent,
-  isFunctionName,
-  isString,
-  isDelim
+  Bracket
 } from "../alphabet";
 
 const { isArray } = Array;
+const { fromCharCode } = String;
 
 export type IdSelector = { type: "id-selector"; name: string };
 
@@ -123,36 +126,40 @@ export function isSelector(selector: Selector): selector is Selector {
 }
 
 function isImplicitDescendant(token: Token): boolean {
-  switch (token.type) {
-    case "ident":
-    case "[":
-    case ":":
-      return true;
-    case "delim":
-      return token.value === "." || token.value === "#" || token.value === "*";
+  if (token.type === "ident" || token.type === "[" || token.type === ":") {
+    return true;
+  }
+
+  if (token.type === "delim") {
+    const { value } = token;
+    return (
+      value === Char.FullStop ||
+      value === Char.NumberSign ||
+      value === Char.Asterisk
+    );
   }
 
   return false;
 }
 
 function idSelector(stream: Stream<Token>): IdSelector | null {
-  const ident = stream.accept(isIdent, 1);
+  const next = stream.next();
 
-  if (ident === false) {
+  if (next === null || next.type !== "ident") {
     return null;
   }
 
-  return { type: "id-selector", name: ident.value };
+  return { type: "id-selector", name: next.value };
 }
 
 function classSelector(stream: Stream<Token>): ClassSelector | null {
-  const ident = stream.accept(isIdent, 1);
+  const next = stream.next();
 
-  if (ident === false) {
+  if (next === null || next.type !== "ident") {
     return null;
   }
 
-  return { type: "class-selector", name: ident.value };
+  return { type: "class-selector", name: next.value };
 }
 
 function typeSelector(
@@ -162,21 +169,36 @@ function typeSelector(
   let name: string | null = null;
   let namespace: string | null = null;
 
-  if (isDelim(token) && token.value === "|") {
+  if (token.type === "delim" && token.value === Char.VerticalLine) {
     namespace = "";
-  } else if (stream.accept(token => isDelim(token) && token.value === "|", 1)) {
-    namespace = token.value.toLowerCase();
   } else {
-    name = token.value.toLowerCase();
+    const value =
+      token.type === "delim" ? fromCharCode(token.value) : token.value;
+
+    const next = stream.peek();
+
+    if (
+      next !== null &&
+      next.type === "delim" &&
+      token.value === Char.VerticalLine
+    ) {
+      stream.advance();
+      namespace = value.toLowerCase();
+    } else {
+      name = value.toLowerCase();
+    }
   }
 
   if (name === null) {
     const next = stream.next();
 
-    if (
-      next !== null &&
-      (isIdent(next) || (isDelim(next) && next.value === "*"))
-    ) {
+    if (next === null) {
+      return null;
+    }
+
+    if (next.type === "delim" && next.value === Char.Asterisk) {
+      name = "*";
+    } else if (next.type === "ident") {
       name = next.value.toLowerCase();
     } else {
       return null;
@@ -191,76 +213,96 @@ function typeSelector(
 }
 
 function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
-  const attribute = stream.accept(isIdent, 1);
+  let next = stream.next();
 
-  if (attribute === false) {
+  if (next === null || next.type !== "ident") {
     return null;
   }
 
-  if (stream.accept(token => token.type === "]", 1) !== false) {
+  const name = next.value;
+
+  next = stream.peek();
+
+  if (next !== null && next.type === "]") {
+    stream.advance();
+
     return {
       type: "attribute-selector",
-      name: attribute.value,
+      name,
       value: null,
       matcher: null,
       modifier: null
     };
   }
 
-  let matcher: AttributeSelector["matcher"] = null;
+  let matcher: "~" | "|" | "^" | "$" | "*" | null = null;
 
-  stream.accept(token => {
-    if (isDelim(token)) {
-      switch (token.value) {
-        case "~":
-        case "|":
-        case "^":
-        case "$":
-        case "*":
-          matcher = token.value;
-          return true;
-      }
+  next = stream.peek();
+
+  if (next !== null && next.type === "delim") {
+    switch (next.value) {
+      case Char.Tilde:
+        matcher = "~";
+        break;
+      case Char.VerticalLine:
+        matcher = "|";
+        break;
+      case Char.CircumflexAccent:
+        matcher = "^";
+        break;
+      case Char.DollarSign:
+        matcher = "$";
+        break;
+      case Char.Asterisk:
+        matcher = "*";
     }
 
-    return false;
-  }, 1);
+    if (matcher !== null) {
+      stream.advance();
+    }
+  }
 
-  if (
-    stream.accept(token => isDelim(token) && token.value === "=", 1) === false
-  ) {
+  next = stream.next();
+
+  if (next === null || next.type !== "delim" || next.value !== Char.EqualSign) {
     return null;
   }
 
-  const value = stream.next();
+  next = stream.next();
 
-  if (value === null || !(isIdent(value) || isString(value))) {
+  if (next === null || (next.type !== "string" && next.type !== "ident")) {
     return null;
   }
+
+  const value = next.value;
 
   stream.accept(token => token.type === "whitespace");
 
-  let modifier: AttributeSelector["modifier"] = null;
+  let modifier: "i" | null = null;
 
-  stream.accept(token => {
-    if (isIdent(token)) {
-      switch (token.value) {
-        case "i":
-          modifier = token.value;
-          return true;
-      }
+  next = stream.peek();
+
+  if (next !== null && next.type === "ident") {
+    switch (next.value) {
+      case "i":
+        modifier = "i";
     }
 
-    return false;
-  }, 1);
+    if (modifier !== null) {
+      stream.advance();
+    }
+  }
 
-  if (stream.accept(token => token.type === "]", 1) === false) {
+  next = stream.next();
+
+  if (next === null || next.type !== "]") {
     return null;
   }
 
   return {
     type: "attribute-selector",
-    name: attribute.value,
-    value: modifier === "i" ? value.value.toLowerCase() : value.value,
+    name,
+    value: modifier === "i" ? value.toLowerCase() : value,
     matcher,
     modifier
   };
@@ -272,16 +314,22 @@ function pseudoSelector(
 ): PseudoElementSelector | PseudoClassSelector | null {
   let selector: PseudoElementSelector | PseudoClassSelector;
 
-  if (stream.accept(next => next.type === ":", 1) !== false) {
-    const ident = stream.accept(isIdent, 1);
+  let next = stream.next();
 
-    if (ident === false) {
+  if (next === null) {
+    return null;
+  }
+
+  if (next.type === ":") {
+    next = stream.next();
+
+    if (next === null || next.type !== "ident") {
       return null;
     }
 
     let name: PseudoElement;
 
-    switch (ident.value) {
+    switch (next.value) {
       case "first-line":
       case "first-letter":
       case "selection":
@@ -292,7 +340,7 @@ function pseudoSelector(
       case "after":
       case "marker":
       case "placeholder":
-        name = ident.value;
+        name = next.value;
         break;
       default:
         return null;
@@ -300,15 +348,13 @@ function pseudoSelector(
 
     selector = { type: "pseudo-element-selector", name };
   } else {
-    const ident = stream.next();
-
-    if (ident === null || (!isIdent(ident) && !isFunctionName(ident))) {
+    if (next.type !== "ident" && next.type !== "function-name") {
       return null;
     }
 
     let name: PseudoClass;
 
-    switch (ident.value) {
+    switch (next.value) {
       case "matches":
       case "not":
       case "something":
@@ -362,18 +408,20 @@ function pseudoSelector(
       case "only-of-type":
       case "nth-col":
       case "nth-last-col":
-        name = ident.value;
+        name = next.value;
         break;
       default:
         return null;
     }
 
-    if (isIdent(ident)) {
+    if (next.type === "ident") {
       selector = { type: "pseudo-class-selector", name, value: null };
     } else {
       const value = expression();
 
-      if (stream.accept(token => token.type === ")", 1) === false) {
+      next = stream.next();
+
+      if (next === null || next.type !== ")") {
         return null;
       }
 
@@ -534,12 +582,12 @@ const delim: Production<Delim> = {
 
   prefix(token, stream) {
     switch (token.value) {
-      case "#":
+      case Char.NumberSign:
         return idSelector(stream);
-      case ".":
+      case Char.FullStop:
         return classSelector(stream);
-      case "*":
-      case "|":
+      case Char.Asterisk:
+      case Char.VerticalLine:
         return typeSelector(token, stream);
     }
 
@@ -548,18 +596,20 @@ const delim: Production<Delim> = {
 
   infix(token, stream, expression, left) {
     switch (token.value) {
-      case "#":
+      case Char.NumberSign:
         return combineSelectors(left, idSelector(stream));
-      case ".":
+      case Char.FullStop:
         return combineSelectors(left, classSelector(stream));
-      case "*":
-      case "|":
+      case Char.Asterisk:
+      case Char.VerticalLine:
         return combineSelectors(left, typeSelector(token, stream));
 
-      case ">":
-      case "+":
-      case "~":
-        return combineSelectors(left, expression(), token.value);
+      case Char.GreaterThanSign:
+        return combineSelectors(left, expression(), ">");
+      case Char.PlusSign:
+        return combineSelectors(left, expression(), "+");
+      case Char.Tilde:
+        return combineSelectors(left, expression(), "~");
     }
 
     return null;

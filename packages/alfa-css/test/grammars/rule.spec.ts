@@ -1,5 +1,5 @@
 import { test, Test } from "@siteimprove/alfa-test";
-import { parse, lex } from "@siteimprove/alfa-lang";
+import { Char, parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { Rule, RuleGrammar } from "../../src/grammars/rule";
 
@@ -105,7 +105,7 @@ test("Can parse a rule with a class selector", t =>
     prelude: [
       {
         type: "delim",
-        value: "."
+        value: Char.FullStop
       },
       {
         type: "ident",
@@ -121,7 +121,7 @@ test("Can parse a rule with an ID selector", t =>
     prelude: [
       {
         type: "delim",
-        value: "#"
+        value: Char.NumberSign
       },
       {
         type: "ident",

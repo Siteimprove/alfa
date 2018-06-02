@@ -1,5 +1,5 @@
 import { test, Test } from "@siteimprove/alfa-test";
-import { lex } from "@siteimprove/alfa-lang";
+import { lex, Char } from "@siteimprove/alfa-lang";
 import { Alphabet, Token } from "../src/alphabet";
 
 function css(t: Test, input: string, expected: Array<Token>) {
@@ -108,6 +108,15 @@ test("Can lex an integer", t =>
     }
   ]));
 
+test("Can lex a negative integer", t =>
+  css(t, "-123", [
+    {
+      type: "number",
+      value: -123,
+      integer: true
+    }
+  ]));
+
 test("Can lex a decimal", t =>
   css(t, "123.456", [
     {
@@ -117,11 +126,29 @@ test("Can lex a decimal", t =>
     }
   ]));
 
-test("Can lex a number in E-notation", t =>
+test("Can lex a negative decimal", t =>
+  css(t, "-123.456", [
+    {
+      type: "number",
+      value: -123.456,
+      integer: false
+    }
+  ]));
+
+test("Can lex a decimal in E-notation", t =>
   css(t, "123.456e2", [
     {
       type: "number",
       value: 123.456e2,
+      integer: false
+    }
+  ]));
+
+test("Can lex a negative decimal in E-notation", t =>
+  css(t, "-123.456e2", [
+    {
+      type: "number",
+      value: -123.456e2,
       integer: false
     }
   ]));
@@ -176,7 +203,7 @@ test("Can lex an ID selector", t =>
   css(t, "#foo", [
     {
       type: "delim",
-      value: "#"
+      value: Char.NumberSign
     },
     {
       type: "ident",
@@ -188,7 +215,7 @@ test("Can lex a class selector", t =>
   css(t, ".foo", [
     {
       type: "delim",
-      value: "."
+      value: Char.FullStop
     },
     {
       type: "ident",
@@ -204,7 +231,7 @@ test("Can lex a type selector with a namespace", t =>
     },
     {
       type: "delim",
-      value: "|"
+      value: Char.VerticalLine
     },
     {
       type: "ident",

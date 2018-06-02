@@ -12,25 +12,32 @@ import {
 } from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
-
-export type Whitespace = Readonly<{ type: "whitespace" }>;
+const { pow } = Math;
 
 export type Ident = Readonly<{ type: "ident"; value: string }>;
+
 export type FunctionName = Readonly<{ type: "function-name"; value: string }>;
+
 export type AtKeyword = Readonly<{ type: "at-keyword"; value: string }>;
+
 export type String = Readonly<{ type: "string"; value: string }>;
+
 export type Url = Readonly<{ type: "url"; value: string }>;
-export type Delim = Readonly<{ type: "delim"; value: string }>;
+
+export type Delim = Readonly<{ type: "delim"; value: number }>;
+
 export type Number = Readonly<{
   type: "number";
   value: number;
   integer: boolean;
 }>;
+
 export type Percentage = Readonly<{
   type: "percentage";
   value: number;
   integer: boolean;
 }>;
+
 export type Dimension = Readonly<{
   type: "dimension";
   value: number;
@@ -38,16 +45,22 @@ export type Dimension = Readonly<{
   unit: string;
 }>;
 
+export type Whitespace = Readonly<{ type: "whitespace" }>;
+
 export type Colon = Readonly<{ type: ":" }>;
+
 export type Semicolon = Readonly<{ type: ";" }>;
+
 export type Comma = Readonly<{ type: "," }>;
 
 export type Bracket<Type extends "[" | "]" = "[" | "]"> = Readonly<{
   type: Type;
 }>;
+
 export type Paren<Type extends "(" | ")" = "(" | ")"> = Readonly<{
   type: Type;
 }>;
+
 export type Brace<Type extends "{" | "}" = "{" | "}"> = Readonly<{
   type: Type;
 }>;
@@ -56,8 +69,6 @@ export type Brace<Type extends "{" | "}" = "{" | "}"> = Readonly<{
  * @see https://www.w3.org/TR/css-syntax/#tokenization
  */
 export type Token =
-  | Whitespace
-
   // Value tokens
   | Ident
   | FunctionName
@@ -68,8 +79,8 @@ export type Token =
   | Number
   | Percentage
   | Dimension
-
   // Character tokens
+  | Whitespace
   | Colon
   | Semicolon
   | Comma
@@ -83,22 +94,6 @@ export type State = {
 };
 
 export type Pattern = Lang.Pattern<Token, State>;
-
-export function isIdent(token: Token): token is Ident {
-  return token.type === "ident";
-}
-
-export function isFunctionName(token: Token): token is FunctionName {
-  return token.type === "function-name";
-}
-
-export function isString(token: Token): token is String {
-  return token.type === "string";
-}
-
-export function isDelim(token: Token): token is Delim {
-  return token.type === "delim";
-}
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
@@ -173,32 +168,32 @@ function isName(char: number): boolean {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
-const name: (stream: Stream<number>) => string = stream => {
+function name(stream: Stream<number>): string {
   let result = "";
   let next = stream.next();
 
   while (next !== null) {
     if (startsValidEscape(next, stream.peek())) {
-      result += escapedCodePoint(stream);
+      result += fromCharCode(escapedCodePoint(stream));
     } else if (isName(next)) {
       result += fromCharCode(next);
     } else {
       stream.backup();
-      return result;
+      break;
     }
 
     next = stream.next();
   }
 
   return result;
-};
+}
 
-const replacementCharacter = "\ufffd";
+const replacementCharacter = 0xfffd;
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-escaped-code-point
  */
-const escapedCodePoint: (stream: Stream<number>) => string = stream => {
+function escapedCodePoint(stream: Stream<number>): number {
   let code = stream.next();
 
   if (code === null) {
@@ -228,13 +223,90 @@ const escapedCodePoint: (stream: Stream<number>) => string = stream => {
 
     stream.accept(isWhitespace, 1);
 
-    if (code === 0) {
+    if (code === 0 || isBetween(code, 0xd800, 0xdfff) || code > 0x10ffff) {
       return replacementCharacter;
     }
   }
 
-  return fromCharCode(code);
-};
+  return code;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
+ */
+function integer(input: Array<number>): number {
+  let result = 0;
+  let sign = 1;
+
+  for (let i = 0, n = input.length; i < n; i++) {
+    const char = input[i];
+
+    if (char === Char.HyphenMinus) {
+      sign = -1;
+      continue;
+    }
+
+    if (char === Char.PlusSign) {
+      continue;
+    }
+
+    if (char === Char.FullStop) {
+      return fraction(input, i + 1, result) * sign;
+    }
+
+    if (char === Char.SmallLetterE || char === Char.CapitalLetterE) {
+      return exponent(input, i + 1, result) * sign;
+    }
+
+    result = result * 10 + char - Char.DigitZero;
+  }
+
+  return result * sign;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
+ */
+function fraction(input: Array<number>, start: number, result: number): number {
+  let power = 0.1;
+
+  for (let i = start, n = input.length; i < n; i++, power /= 10) {
+    const char = input[i];
+
+    if (char === Char.SmallLetterE || char === Char.CapitalLetterE) {
+      return exponent(input, i + 1, result);
+    }
+
+    result = result + power * (char - Char.DigitZero);
+  }
+
+  return result;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
+ */
+function exponent(input: Array<number>, start: number, result: number): number {
+  let power = 0;
+  let sign = 1;
+
+  for (let i = start, n = input.length; i < n; i++) {
+    const char = input[i];
+
+    if (char === Char.HyphenMinus) {
+      sign = -1;
+      continue;
+    }
+
+    if (char === Char.PlusSign) {
+      continue;
+    }
+
+    power = power * 10 + char - Char.DigitZero;
+  }
+
+  return result * pow(10, power * sign);
+}
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
@@ -318,7 +390,7 @@ const initial: Pattern = (stream, emit, state) => {
     return number;
   }
 
-  emit({ type: "delim", value: fromCharCode(char) });
+  emit({ type: "delim", value: char });
 };
 
 const comment: Pattern = (stream, emit, state) => {
@@ -385,31 +457,29 @@ const number: Pattern = (stream, emit, state) => {
     return;
   }
 
-  if (
-    stream.peek() === Char.SmallLetterE ||
-    stream.peek() === Char.CapitalLetterE
-  ) {
-    let offset = 1;
+  let next = stream.peek();
+  let offset = 0;
+
+  if (next === Char.SmallLetterE || next === Char.CapitalLetterE) {
+    offset = 1;
+    next = stream.peek(offset);
 
     if (
       stream.peek(1) === Char.PlusSign ||
       stream.peek(1) === Char.HyphenMinus
     ) {
       offset = 2;
+      next = stream.peek(offset);
     }
-
-    const next = stream.peek(offset);
 
     if (next !== null && isNumeric(next)) {
       stream.advance(offset) && stream.accept(isNumeric);
     }
   }
 
-  const value = fromCharCode(...stream.result());
-
   state.number = {
     type: "number",
-    value: isInteger ? parseInt(value, 10) : parseFloat(value),
+    value: integer(stream.result()),
     integer: isInteger
   };
 
