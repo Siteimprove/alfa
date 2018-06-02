@@ -1,12 +1,11 @@
-import { Selector } from "@siteimprove/alfa-css";
-import { StyleRule } from "./types";
+import { Selector, Declaration } from "@siteimprove/alfa-css";
 
 /**
  * @internal
  */
 export interface RuleEntry {
   readonly selector: Selector;
-  readonly rule: StyleRule;
+  readonly declarations: Array<Declaration>;
   readonly parent: RuleEntry | null;
   readonly children: Array<RuleEntry>;
 }
@@ -18,15 +17,15 @@ export class RuleTree {
   private children: Array<RuleEntry> = [];
 
   public insert(
-    rules: Array<Readonly<{ selector: Selector; rule: StyleRule }>>
+    rules: Array<Pick<RuleEntry, "selector" | "declarations">>
   ): RuleEntry | null {
     let parent: RuleEntry | null = null;
     let { children } = this;
 
     for (let i = 0, n = rules.length; i < n; i++) {
-      const { selector, rule } = rules[i];
+      const { selector, declarations } = rules[i];
 
-      parent = insert(parent, children, selector, rule);
+      parent = insert(parent, children, selector, declarations);
       children = parent.children;
     }
 
@@ -38,21 +37,21 @@ function insert(
   parent: RuleEntry | null,
   children: Array<RuleEntry>,
   selector: Selector,
-  rule: StyleRule
+  declarations: Array<Declaration>
 ): RuleEntry {
-  if (parent !== null && parent.rule === rule) {
+  if (parent !== null && parent.selector === selector) {
     return parent;
   }
 
   for (let i = 0, n = children.length; i < n; i++) {
     const child = children[i];
 
-    if (child.rule === rule) {
-      return insert(child, child.children, selector, rule);
+    if (child.selector === selector) {
+      return insert(child, child.children, selector, declarations);
     }
   }
 
-  const entry = { selector, rule, parent, children: [] };
+  const entry = { selector, declarations, parent, children: [] };
 
   children.push(entry);
 

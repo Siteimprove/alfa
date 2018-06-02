@@ -1,5 +1,10 @@
-import { Selector, parseSelector } from "@siteimprove/alfa-css";
-import { Node, Element, StyleSheet, StyleRule } from "./types";
+import {
+  Selector,
+  Declaration,
+  parseSelector,
+  parseDeclaration
+} from "@siteimprove/alfa-css";
+import { Node, Element, StyleSheet } from "./types";
 import { isStyleRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { matches, MatchingOptions } from "./matches";
@@ -15,9 +20,9 @@ const { isArray } = Array;
  */
 export type SelectorEntry = {
   readonly selector: Selector;
-  readonly rule: StyleRule;
   readonly order: number;
   readonly specificity: number;
+  readonly declarations: Array<Declaration>;
 };
 
 /**
@@ -49,26 +54,38 @@ export class SelectorMap {
             return;
           }
 
-          let selectors: Selector | Array<Selector> | null = null;
-          try {
-            selectors = parseSelector(rule.selectorText);
-          } catch (err) {}
+          let selectors: Selector | Array<Selector> | null = parseSelector(
+            rule.selectorText
+          );
 
           if (selectors === null) {
             return;
           }
 
+          selectors = isArray(selectors) ? selectors : [selectors];
+
+          let declarations:
+            | Declaration
+            | Array<Declaration>
+            | null = parseDeclaration(rule.style.cssText);
+
+          if (declarations === null) {
+            return;
+          }
+
+          declarations = isArray(declarations) ? declarations : [declarations];
+
           order++;
 
-          for (const selector of isArray(selectors) ? selectors : [selectors]) {
+          for (const selector of selectors) {
             const keySelector = getKeySelector(selector);
             const specificity = getSpecificity(selector);
 
             const entry: SelectorEntry = {
               selector,
-              rule,
               order,
-              specificity
+              specificity,
+              declarations
             };
 
             if (keySelector === null) {

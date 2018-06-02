@@ -70,7 +70,7 @@ export function getCascadedStyle(
       entry !== null;
       entry = entry.parent
     ) {
-      const { selector, rule } = entry;
+      const { selector } = entry;
       const pseudo = getPseudoElement(selector);
 
       if (pseudo === null) {
@@ -93,15 +93,7 @@ export function getCascadedStyle(
           pseudo: true
         })
       ) {
-        const declaration = parseDeclaration(rule.style.cssText);
-
-        if (declaration !== null) {
-          if (isArray(declaration)) {
-            declarations.push(...declaration);
-          } else {
-            declarations.push(declaration);
-          }
-        }
+        declarations.push(...entry.declarations);
       }
     }
   }
