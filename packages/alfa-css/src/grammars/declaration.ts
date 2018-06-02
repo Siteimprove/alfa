@@ -46,8 +46,10 @@ export function declaration(
   const snd = value[value.length - 1];
 
   if (
+    fst !== undefined &&
     fst.type === "delim" &&
     fst.value === Char.ExclamationMark &&
+    snd !== undefined &&
     snd.type === "ident" &&
     snd.value === "important"
   ) {
