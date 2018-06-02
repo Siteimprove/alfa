@@ -135,21 +135,21 @@ function isImplicitDescendant(token: Token): boolean {
   return false;
 }
 
-function idSelector(stream: Stream<Token>): IdSelector {
+function idSelector(stream: Stream<Token>): IdSelector | null {
   const ident = stream.accept(isIdent, 1);
 
   if (ident === false) {
-    throw new Error("Expected ident");
+    return null;
   }
 
   return { type: "id-selector", name: ident.value };
 }
 
-function classSelector(stream: Stream<Token>): ClassSelector {
+function classSelector(stream: Stream<Token>): ClassSelector | null {
   const ident = stream.accept(isIdent, 1);
 
   if (ident === false) {
-    throw new Error("Expected ident");
+    return null;
   }
 
   return { type: "class-selector", name: ident.value };
@@ -158,7 +158,7 @@ function classSelector(stream: Stream<Token>): ClassSelector {
 function typeSelector(
   token: Delim | Ident,
   stream: Stream<Token>
-): TypeSelector {
+): TypeSelector | null {
   let name: string | null = null;
   let namespace: string | null = null;
 
@@ -179,7 +179,7 @@ function typeSelector(
     ) {
       name = next.value.toLowerCase();
     } else {
-      throw new Error("Expected ident or delim");
+      return null;
     }
   }
 
@@ -190,11 +190,11 @@ function typeSelector(
   };
 }
 
-function attributeSelector(stream: Stream<Token>): AttributeSelector {
+function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
   const attribute = stream.accept(isIdent, 1);
 
   if (attribute === false) {
-    throw new Error("Expected ident");
+    return null;
   }
 
   if (stream.accept(token => token.type === "]", 1) !== false) {
@@ -228,13 +228,13 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
   if (
     stream.accept(token => isDelim(token) && token.value === "=", 1) === false
   ) {
-    throw new Error("Expected equals sign");
+    return null;
   }
 
   const value = stream.next();
 
   if (value === null || !(isIdent(value) || isString(value))) {
-    throw new Error("Expected ident or string");
+    return null;
   }
 
   stream.accept(token => token.type === "whitespace");
@@ -254,7 +254,7 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
   }, 1);
 
   if (stream.accept(token => token.type === "]", 1) === false) {
-    throw new Error("Expected end of attribute selector");
+    return null;
   }
 
   return {
@@ -269,14 +269,14 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
 function pseudoSelector(
   stream: Stream<Token>,
   expression: Expression<Selector | Array<Selector>>
-): PseudoElementSelector | PseudoClassSelector {
+): PseudoElementSelector | PseudoClassSelector | null {
   let selector: PseudoElementSelector | PseudoClassSelector;
 
   if (stream.accept(next => next.type === ":", 1) !== false) {
     const ident = stream.accept(isIdent, 1);
 
     if (ident === false) {
-      throw new Error("Excepted ident");
+      return null;
     }
 
     let name: PseudoElement;
@@ -295,7 +295,7 @@ function pseudoSelector(
         name = ident.value;
         break;
       default:
-        throw new Error(`Unknown pseudo-element "${ident.value}"`);
+        return null;
     }
 
     selector = { type: "pseudo-element-selector", name };
@@ -303,7 +303,7 @@ function pseudoSelector(
     const ident = stream.next();
 
     if (ident === null || (!isIdent(ident) && !isFunctionName(ident))) {
-      throw new Error("Excepted ident or function name");
+      return null;
     }
 
     let name: PseudoClass;
@@ -365,7 +365,7 @@ function pseudoSelector(
         name = ident.value;
         break;
       default:
-        throw new Error(`Unknown pseudo-class "${ident.value}"`);
+        return null;
     }
 
     if (isIdent(ident)) {
@@ -374,7 +374,7 @@ function pseudoSelector(
       const value = expression();
 
       if (stream.accept(token => token.type === ")", 1) === false) {
-        throw new Error("Expected end of arguments");
+        return null;
       }
 
       selector = { type: "pseudo-class-selector", name, value };
@@ -386,18 +386,19 @@ function pseudoSelector(
 
 function compoundSelector(
   left: ComplexSelector,
-  right: ComplexSelector
-): CompoundSelector {
+  right: ComplexSelector | null
+): CompoundSelector | null {
   if (isPseudoElementSelector(left)) {
-    throw new Error("Unexpected pseudo-element selector");
+    return null;
   }
 
   if (isCompoundSelector(left)) {
-    return {
-      type: "compound-selector",
-      left: left.left,
-      right: compoundSelector(left.right, right)
-    };
+    right = compoundSelector(left.right, right);
+    left = left.left;
+  }
+
+  if (right === null) {
+    return null;
   }
 
   return {
@@ -409,38 +410,66 @@ function compoundSelector(
 
 function relativeSelector(
   left: Selector,
-  right: Selector,
+  right: Selector | null,
   combinator: RelativeSelector["combinator"]
-): RelativeSelector {
+): RelativeSelector | null {
   if (isPseudoElementSelector(left)) {
-    throw new Error("Unexpected pseudo-element selector");
+    return null;
   }
 
   if (isRelativeSelector(left)) {
-    return {
-      type: "relative-selector",
-      combinator: left.combinator,
-      left: left.left,
-      right: relativeSelector(left.right, right, combinator)
-    };
+    right = relativeSelector(left.right, right, combinator);
+    combinator = left.combinator;
+    left = left.left;
+  }
+
+  if (right === null) {
+    return null;
   }
 
   return {
     type: "relative-selector",
-    combinator: combinator,
+    combinator,
     left,
     right
   };
 }
 
+function selector(
+  left: Selector,
+  right: ComplexSelector | null
+): Selector | null {
+  if (isComplexSelector(left)) {
+    return compoundSelector(left, right);
+  }
+
+  if (isComplexSelector(left.right)) {
+    return relativeSelector(
+      left.left,
+      compoundSelector(left.right, right),
+      left.combinator
+    );
+  }
+
+  return relativeSelector(
+    left.left,
+    selector(left.right, right),
+    left.combinator
+  );
+}
+
 function selectorList(
   left: Selector | Array<Selector>,
-  right: Selector | Array<Selector>
-): Array<Selector> {
+  right: Selector | Array<Selector> | null
+): Array<Selector> | null {
+  if (right === null) {
+    return null;
+  }
+
   const selectors = isArray(left) ? left : [left];
 
   if (isPseudoElementSelector(last(selectors)!)) {
-    throw new Error("Unexpected pseudo-element selector");
+    return null;
   }
 
   if (isArray(right)) {
@@ -454,26 +483,26 @@ function selectorList(
 
 function combineSelectors(
   left: Selector | Array<Selector>,
-  right: Selector | Array<Selector>,
+  right: Selector | Array<Selector> | null,
   combinator?: RelativeSelector["combinator"]
-): Selector | Array<Selector> {
+): Selector | Array<Selector> | null {
+  if (right === null) {
+    return null;
+  }
+
   if (isArray(left) || isArray(right)) {
     return selectorList(left, right);
   }
 
-  if (combinator === undefined) {
-    if (!isComplexSelector(left)) {
-      throw new Error("Expected complex selector");
-    }
-
-    if (!isComplexSelector(right)) {
-      throw new Error("Expected complex selector");
-    }
-
-    return compoundSelector(left, right);
+  if (combinator !== undefined) {
+    return relativeSelector(left, right, combinator);
   }
 
-  return relativeSelector(left, right, combinator);
+  if (isComplexSelector(right)) {
+    return selector(left, right);
+  }
+
+  return null;
 }
 
 type Production<T extends Token> = Lang.Production<
@@ -493,11 +522,7 @@ const whitespace: Production<Whitespace> = {
     const next = stream.peek();
 
     if (next !== null && isImplicitDescendant(next)) {
-      const right = expression();
-
-      if (right !== null) {
-        return combineSelectors(left, right, " ");
-      }
+      return combineSelectors(left, expression(), " ");
     }
 
     return Command.Continue;
@@ -518,7 +543,7 @@ const delim: Production<Delim> = {
         return typeSelector(token, stream);
     }
 
-    throw new Error("Expected ID or class name");
+    return null;
   },
 
   infix(token, stream, expression, left) {
@@ -534,16 +559,10 @@ const delim: Production<Delim> = {
       case ">":
       case "+":
       case "~":
-        const right = expression();
-
-        if (right === null) {
-          throw new Error("Expected selector");
-        }
-
-        return combineSelectors(left, right, token.value);
+        return combineSelectors(left, expression(), token.value);
     }
 
-    throw new Error("Expected ID or class name or combinator");
+    return null;
   }
 };
 
@@ -559,13 +578,7 @@ const comma: Production<Comma> = {
   token: ",",
 
   infix(token, stream, expression, left) {
-    const right = expression();
-
-    if (right === null) {
-      throw new Error("Expected selector");
-    }
-
-    return selectorList(left, right);
+    return selectorList(left, expression());
   }
 };
 

@@ -3,16 +3,12 @@ import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { SelectorGrammar, Selector } from "../../src/grammars/selector";
 
-function parseSelector(input: string): Selector | Array<Selector> | null {
-  return parse(lex(input, Alphabet), SelectorGrammar);
-}
-
 function selector(
   t: Test,
   input: string,
-  expected: Selector | Array<Selector>
+  expected: Selector | Array<Selector> | null
 ) {
-  t.deepEqual(parseSelector(input), expected, t.title);
+  t.deepEqual(parse(lex(input, Alphabet), SelectorGrammar), expected, t.title);
 }
 
 test("Can parse a type selector", t =>
@@ -557,8 +553,8 @@ test("Can parse a pseudo-element selector when part of a compound selector relat
   }));
 
 test("Only allows pseudo-element selectors as the last selector", t => {
-  t.throws(() => parseSelector("::foo.foo"));
-  t.throws(() => parseSelector("::foo+foo"));
+  selector(t, "::foo.foo", null);
+  selector(t, "::foo+foo", null);
 });
 
 test("Can parse a named pseudo-class selector", t =>
@@ -645,3 +641,57 @@ test("Can parse a compound type, class, and pseudo-class selector relative to a 
       }
     }
   }));
+
+test("Can parse a simple selector relative to a compound selector", t => {
+  selector(t, ".foo > div.bar", {
+    type: "relative-selector",
+    combinator: ">",
+    left: {
+      type: "class-selector",
+      name: "foo"
+    },
+    right: {
+      type: "compound-selector",
+      left: {
+        type: "type-selector",
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: "class-selector",
+        name: "bar"
+      }
+    }
+  });
+});
+
+test("Can parse a relative selector relative to a compound selector", t => {
+  selector(t, ".foo > .bar + div.baz", {
+    type: "relative-selector",
+    combinator: ">",
+    left: {
+      type: "class-selector",
+      name: "foo"
+    },
+    right: {
+      type: "relative-selector",
+      combinator: "+",
+      left: {
+        type: "class-selector",
+        name: "bar"
+      },
+      right: {
+        type: "compound-selector",
+        left: {
+          type: "type-selector",
+          name: "div",
+          namespace: null
+        },
+        right: {
+          type: "class-selector",
+          name: "baz"
+        }
+      }
+    }
+  });
+});
