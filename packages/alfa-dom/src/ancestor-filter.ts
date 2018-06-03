@@ -13,23 +13,6 @@ export class AncestorFilter {
 
   private types: AncestorBucket = new Map();
 
-  private process(
-    element: Element,
-    fn: (bucket: AncestorBucket, entry: string) => void
-  ) {
-    const id = getAttribute(element, "id");
-
-    if (id !== null) {
-      fn(this.ids, id);
-    }
-
-    fn(this.types, element.localName);
-
-    for (const className of getClassList(element)) {
-      fn(this.classes, className);
-    }
-  }
-
   public add(element: Element): void {
     this.process(element, addEntry);
   }
@@ -54,6 +37,28 @@ export class AncestorFilter {
     }
 
     return bucket.has(selector.name);
+  }
+
+  private process(
+    element: Element,
+    fn: (bucket: AncestorBucket, entry: string) => void
+  ) {
+    // Elements with no child nodes are not relevant for ancestor filtering.
+    if (element.childNodes.length === 0) {
+      return;
+    }
+
+    const id = getAttribute(element, "id");
+
+    if (id !== null) {
+      fn(this.ids, id);
+    }
+
+    fn(this.types, element.localName);
+
+    for (const className of getClassList(element)) {
+      fn(this.classes, className);
+    }
   }
 }
 
