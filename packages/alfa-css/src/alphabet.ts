@@ -481,7 +481,7 @@ const initial: Pattern = (stream, emit, state) => {
 
   if (isWhitespace(char)) {
     stream.accept(isWhitespace);
-    return emit(Constants.Whitespace);
+    return emit({ type: TokenType.Whitespace });
   }
 
   switch (char) {
@@ -490,24 +490,24 @@ const initial: Pattern = (stream, emit, state) => {
       return emit(consumeString(stream, char));
 
     case Char.Comma:
-      return emit(Constants.Comma);
+      return emit({ type: TokenType.Comma });
     case Char.Colon:
-      return emit(Constants.Colon);
+      return emit({ type: TokenType.Colon });
     case Char.Semicolon:
-      return emit(Constants.Semicolon);
+      return emit({ type: TokenType.Semicolon });
 
     case Char.LeftParenthesis:
-      return emit(Constants.LeftParenthesis);
+      return emit({ type: TokenType.LeftParenthesis });
     case Char.RightParenthesis:
-      return emit(Constants.RightParenthesis);
+      return emit({ type: TokenType.RightParenthesis });
     case Char.LeftSquareBracket:
-      return emit(Constants.LeftSquareBracket);
+      return emit({ type: TokenType.LeftSquareBracket });
     case Char.RightSquareBracket:
-      return emit(Constants.RightSquareBracket);
+      return emit({ type: TokenType.RightSquareBracket });
     case Char.LeftCurlyBracket:
-      return emit(Constants.LeftCurlyBracket);
+      return emit({ type: TokenType.LeftCurlyBracket });
     case Char.RightCurlyBracket:
-      return emit(Constants.RightCurlyBracket);
+      return emit({ type: TokenType.RightCurlyBracket });
 
     case Char.Solidus: {
       if (stream.peek(0) === Char.Asterisk) {
@@ -550,34 +550,6 @@ const initial: Pattern = (stream, emit, state) => {
     return emit(consumeNumeric(stream));
   }
 
-  // CSS uses a fairly limited set of delimiters so there's quite a bit to be
-  // gained from defining the most common delimiters as constants, saving both
-  // time and memory.
-  switch (char) {
-    case Char.FullStop:
-      return emit(Constants.FullStop);
-    case Char.ExclamationMark:
-      return emit(Constants.ExclamationMark);
-    case Char.NumberSign:
-      return emit(Constants.NumberSign);
-    case Char.Asterisk:
-      return emit(Constants.Asterisk);
-    case Char.EqualSign:
-      return emit(Constants.EqualSign);
-    case Char.HyphenMinus:
-      return emit(Constants.HyphenMinus);
-    case Char.PlusSign:
-      return emit(Constants.PlusSign);
-    case Char.Tilde:
-      return emit(Constants.Tilde);
-    case Char.GreaterThanSign:
-      return emit(Constants.GreaterThanSign);
-    case Char.Solidus:
-      return emit(Constants.Solidus);
-    case Char.CircumflexAccent:
-      return emit(Constants.CircumflexAccent);
-  }
-
   emit({ type: TokenType.Delim, value: char });
 };
 
@@ -585,80 +557,3 @@ export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
   initial,
   () => null
 );
-
-namespace Constants {
-  export const Whitespace: Whitespace = { type: TokenType.Whitespace };
-  export const Comma: Comma = { type: TokenType.Comma };
-  export const Colon: Colon = { type: TokenType.Colon };
-  export const Semicolon: Semicolon = { type: TokenType.Semicolon };
-
-  export const LeftParenthesis: Parenthesis = {
-    type: TokenType.LeftParenthesis
-  };
-  export const RightParenthesis: Parenthesis = {
-    type: TokenType.RightParenthesis
-  };
-
-  export const LeftSquareBracket: SquareBracket = {
-    type: TokenType.LeftSquareBracket
-  };
-  export const RightSquareBracket: SquareBracket = {
-    type: TokenType.RightSquareBracket
-  };
-
-  export const LeftCurlyBracket: CurlyBracket = {
-    type: TokenType.LeftCurlyBracket
-  };
-  export const RightCurlyBracket: CurlyBracket = {
-    type: TokenType.RightCurlyBracket
-  };
-
-  export const FullStop: Delim = {
-    type: TokenType.Delim,
-    value: Char.FullStop
-  };
-
-  export const ExclamationMark: Delim = {
-    type: TokenType.Delim,
-    value: Char.ExclamationMark
-  };
-
-  export const NumberSign: Delim = {
-    type: TokenType.Delim,
-    value: Char.NumberSign
-  };
-
-  export const Asterisk: Delim = {
-    type: TokenType.Delim,
-    value: Char.Asterisk
-  };
-
-  export const EqualSign: Delim = {
-    type: TokenType.Delim,
-    value: Char.EqualSign
-  };
-
-  export const HyphenMinus: Delim = {
-    type: TokenType.Delim,
-    value: Char.HyphenMinus
-  };
-
-  export const PlusSign: Delim = {
-    type: TokenType.Delim,
-    value: Char.PlusSign
-  };
-
-  export const Tilde: Delim = { type: TokenType.Delim, value: Char.Tilde };
-
-  export const GreaterThanSign: Delim = {
-    type: TokenType.Delim,
-    value: Char.GreaterThanSign
-  };
-
-  export const Solidus: Delim = { type: TokenType.Delim, value: Char.Solidus };
-
-  export const CircumflexAccent: Delim = {
-    type: TokenType.Delim,
-    value: Char.CircumflexAccent
-  };
-}
