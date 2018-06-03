@@ -45,51 +45,48 @@ function virtualizeElement(element: Element): V.Element {
   return virtual;
 }
 
-function virtualizeText({ data }: Text): V.Text {
-  return { nodeType: 3, data, childNodes: [] };
+function virtualizeText(text: Text): V.Text {
+  return { nodeType: 3, data: text.data, childNodes: [] };
 }
 
-function virtualizeComment({ data }: Comment): V.Comment {
-  return { nodeType: 8, data, childNodes: [] };
+function virtualizeComment(comment: Comment): V.Comment {
+  return { nodeType: 8, data: comment.data, childNodes: [] };
 }
 
 function virtualizeDocument(document: Document): V.Document {
-  const virtual: V.Document = {
+  return {
     nodeType: 9,
     childNodes: map(document.childNodes, child => virtualizeNode(child)),
     styleSheets: map(document.styleSheets, styleSheet =>
       virtualizeStyleSheet(styleSheet as CSSStyleSheet)
     )
   };
-
-  return virtual;
 }
 
-function virtualizeDocumentType({ name }: DocumentType): V.DocumentType {
-  return { nodeType: 10, name, childNodes: [] };
+function virtualizeDocumentType(documentType: DocumentType): V.DocumentType {
+  return { nodeType: 10, name: documentType.name, childNodes: [] };
 }
 
 function virtualizeDocumentFragment(
   documentFragment: DocumentFragment
 ): V.DocumentFragment {
-  const virtual: V.DocumentFragment = {
+  return {
     nodeType: 11,
     childNodes: map(documentFragment.childNodes, child => virtualizeNode(child))
   };
-
-  return virtual;
 }
 
 function virtualizeShadowRoot(
   shadowRoot: ShadowRoot,
   host: V.Element
 ): V.ShadowRoot {
-  const virtual: V.ShadowRoot = {
+  return {
     nodeType: 11,
-    childNodes: map(shadowRoot.childNodes, child => virtualizeNode(child))
+    childNodes: map(shadowRoot.childNodes, child => virtualizeNode(child)),
+    // We can only ever access open shadow roots, so the `mode` will always be
+    // "open". If it were "closed", we would have never gotten this far.
+    mode: "open"
   };
-
-  return virtual;
 }
 
 function virtualizeStyleSheet(styleSheet: CSSStyleSheet): V.StyleSheet {

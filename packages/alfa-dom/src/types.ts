@@ -147,7 +147,12 @@ export interface DocumentFragment extends Node {
 /**
  * @see https://www.w3.org/TR/dom41/#interface-shadowroot
  */
-export interface ShadowRoot extends DocumentFragment {}
+export interface ShadowRoot extends DocumentFragment {
+  /**
+   * @see https://www.w3.org/TR/dom41/#dom-shadowroot-mode
+   */
+  readonly mode: "open";
+}
 
 /**
  * @see https://www.w3.org/TR/cssom/#cssstylesheet
