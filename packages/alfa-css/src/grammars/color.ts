@@ -25,7 +25,7 @@ function functionArguments(stream: Stream<Token>): Array<Token> {
     }
 
     if (next.type === "," || next.type === ")") {
-      return args;
+      break;
     }
 
     args.push(next);
@@ -40,7 +40,7 @@ function functionArguments(stream: Stream<Token>): Array<Token> {
 
     if (next !== null && next.type === ")") {
       stream.advance();
-      return args;
+      break;
     }
   }
 
