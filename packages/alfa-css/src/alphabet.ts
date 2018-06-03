@@ -394,14 +394,12 @@ const initial: Pattern = (stream, emit, state) => {
 };
 
 const comment: Pattern = (stream, emit, state) => {
-  stream.ignore();
-
   if (
     stream.accept(
-      () => stream.peek() !== Char.Asterisk || stream.peek(1) !== Char.Solidus
+      token => token !== Char.Asterisk || stream.peek() !== Char.Solidus
     )
   ) {
-    stream.advance(2);
+    stream.advance();
     return initial;
   }
 };
