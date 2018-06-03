@@ -118,34 +118,48 @@ export type Pattern = Lang.Pattern<Token>;
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
  */
-function startsValidEscape(fst: number, snd: number | null): boolean {
-  return fst === Char.ReverseSolidus && snd !== Char.LineFeed;
+function startsValidEscape(fst: number, stream: Stream<number>): boolean {
+  if (fst !== Char.ReverseSolidus) {
+    return false;
+  }
+
+  const snd = stream.peek(1);
+
+  return snd !== Char.LineFeed;
 }
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-number
  */
-function startsNumber(
-  fst: number,
-  snd: number | null,
-  thd: number | null
-): boolean {
+function startsNumber(fst: number, stream: Stream<number>): boolean {
   if (fst === Char.PlusSign || fst === Char.HyphenMinus) {
-    if (snd === Char.FullStop) {
-      if (thd !== null) {
-        fst = thd;
+    const snd = stream.peek(1);
+
+    if (snd !== null) {
+      if (isNumeric(snd)) {
+        return true;
       }
-    } else {
-      if (snd !== null) {
-        fst = snd;
+
+      if (snd === Char.FullStop) {
+        const thd = stream.peek(2);
+
+        if (thd !== null) {
+          return isNumeric(thd);
+        }
       }
     }
+
+    return false;
   }
 
   if (fst === Char.FullStop) {
+    const snd = stream.peek(1);
+
     if (snd !== null) {
-      fst = snd;
+      return isNumeric(snd);
     }
+
+    return false;
   }
 
   return isNumeric(fst);
@@ -154,21 +168,36 @@ function startsNumber(
 /**
  * @see https://www.w3.org/TR/css-syntax/#would-start-an-identifier
  */
-function startsIdentifier(
-  fst: number,
-  snd: number | null,
-  thd: number | null
-): boolean {
+function startsIdentifier(fst: number, stream: Stream<number>): boolean {
   if (fst === Char.HyphenMinus) {
-    if (snd === null) {
-      return false;
+    const snd = stream.peek(1);
+
+    if (snd !== null) {
+      if (isNameStart(snd)) {
+        return true;
+      }
+
+      const thd = stream.peek(2);
+
+      if (thd !== null) {
+        return isValidEscape(snd, thd);
+      }
     }
 
-    fst = snd;
-    snd = thd;
+    return false;
   }
 
-  return isNameStart(fst) || (snd !== null && startsValidEscape(fst, snd));
+  if (fst === Char.ReverseSolidus) {
+    const snd = stream.peek(1);
+
+    if (snd !== null) {
+      return isValidEscape(fst, snd);
+    }
+
+    return false;
+  }
+
+  return isNameStart(fst);
 }
 
 /**
@@ -186,6 +215,13 @@ function isName(char: number): boolean {
 }
 
 /**
+ * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
+ */
+function isValidEscape(fst: number, snd: number): boolean {
+  return fst === Char.ReverseSolidus && snd !== Char.LineFeed;
+}
+
+/**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
 function consumeName(stream: Stream<number>): string {
@@ -196,7 +232,7 @@ function consumeName(stream: Stream<number>): string {
     if (isName(next)) {
       stream.advance(1);
       result += fromCharCode(next);
-    } else if (startsValidEscape(next, stream.peek(1))) {
+    } else if (startsValidEscape(next, stream)) {
       stream.advance(1);
       result += fromCharCode(consumeEscapedCodePoint(stream));
     } else {
@@ -415,7 +451,7 @@ function consumeNumeric(
 
   const next = stream.peek(0);
 
-  if (next !== null && startsIdentifier(next, stream.peek(1), stream.peek(2))) {
+  if (next !== null && startsIdentifier(next, stream)) {
     return {
       type: TokenType.Dimension,
       value: number.value,
@@ -472,85 +508,93 @@ function consumeString(
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
  */
-const initial: Pattern = (stream, emit, state) => {
-  const char = stream.next();
+function consumeToken(stream: Stream<number>): Token | null {
+  let char = stream.peek(0);
 
   if (char === null) {
-    return Command.End;
+    return null;
   }
 
   if (isWhitespace(char)) {
+    stream.advance(1);
     stream.accept(isWhitespace);
-    return emit({ type: TokenType.Whitespace });
+
+    return { type: TokenType.Whitespace };
   }
+
+  if (startsIdentifier(char, stream)) {
+    return consumeIdentLike(stream);
+  }
+
+  if (startsNumber(char, stream)) {
+    return consumeNumeric(stream);
+  }
+
+  stream.advance(1);
 
   switch (char) {
     case Char.QuotationMark:
     case Char.Apostrophe:
-      return emit(consumeString(stream, char));
+      return consumeString(stream, char);
 
     case Char.Comma:
-      return emit({ type: TokenType.Comma });
+      return { type: TokenType.Comma };
     case Char.Colon:
-      return emit({ type: TokenType.Colon });
+      return { type: TokenType.Colon };
     case Char.Semicolon:
-      return emit({ type: TokenType.Semicolon });
+      return { type: TokenType.Semicolon };
 
     case Char.LeftParenthesis:
-      return emit({ type: TokenType.LeftParenthesis });
+      return { type: TokenType.LeftParenthesis };
     case Char.RightParenthesis:
-      return emit({ type: TokenType.RightParenthesis });
+      return { type: TokenType.RightParenthesis };
     case Char.LeftSquareBracket:
-      return emit({ type: TokenType.LeftSquareBracket });
+      return { type: TokenType.LeftSquareBracket };
     case Char.RightSquareBracket:
-      return emit({ type: TokenType.RightSquareBracket });
+      return { type: TokenType.RightSquareBracket };
     case Char.LeftCurlyBracket:
-      return emit({ type: TokenType.LeftCurlyBracket });
+      return { type: TokenType.LeftCurlyBracket };
     case Char.RightCurlyBracket:
-      return emit({ type: TokenType.RightCurlyBracket });
+      return { type: TokenType.RightCurlyBracket };
+  }
 
-    case Char.Solidus: {
-      if (stream.peek(0) === Char.Asterisk) {
-        stream.advance(1);
+  if (char === Char.Solidus) {
+    const char = stream.peek(0);
 
-        if (
-          stream.accept(
-            char => char !== Char.Asterisk && stream.peek(0) !== Char.Solidus
-          )
-        ) {
-          stream.advance(2);
-        }
+    if (char === Char.Asterisk) {
+      stream.advance(1);
 
-        return;
-      }
-      break;
-    }
-
-    case Char.AtSign: {
-      const char = stream.peek(0);
       if (
-        char !== null &&
-        startsIdentifier(char, stream.peek(1), stream.peek(2))
+        stream.accept(
+          char => char !== Char.Asterisk && stream.peek(0) !== Char.Solidus
+        )
       ) {
-        return emit({ type: TokenType.AtKeyword, value: consumeName(stream) });
+        stream.advance(2);
       }
+
+      return consumeToken(stream);
     }
   }
 
-  const snd = stream.peek(0);
-  const thd = stream.peek(1);
+  if (char === Char.AtSign) {
+    const char = stream.peek(0);
 
-  if (startsIdentifier(char, snd, thd)) {
-    stream.backup(1);
-    return emit(consumeIdentLike(stream));
+    if (char !== null && startsIdentifier(char, stream)) {
+      return { type: TokenType.AtKeyword, value: consumeName(stream) };
+    }
   }
 
-  if (startsNumber(char, snd, thd)) {
-    stream.backup(1);
-    return emit(consumeNumeric(stream));
+  return { type: TokenType.Delim, value: char };
+}
+
+const initial: Pattern = (stream, emit) => {
+  const token = consumeToken(stream);
+
+  if (token === null) {
+    return Command.End;
   }
 
-  emit({ type: TokenType.Delim, value: char });
+  emit(token);
 };
 
 export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
