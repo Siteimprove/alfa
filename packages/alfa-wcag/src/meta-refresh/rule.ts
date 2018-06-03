@@ -36,7 +36,7 @@ export const MetaRefresh: Rule<"document", Element> = {
  * @see https://www.w3.org/TR/html/document-metadata.html#statedef-http-equiv-refresh
  */
 function getRefreshTime(content: string): number | null {
-  const stream = new Stream(content);
+  const stream = new Stream(content.length, i => content[i]);
 
   stream.accept(char => /\s/.test(char));
 

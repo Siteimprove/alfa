@@ -10,13 +10,7 @@ export function lex<T extends Token, S = null>(
 
   const emit: (token: T) => void = token => tokens.push(token);
 
-  const characters: Array<number> = new Array(input.length);
-
-  for (let i = 0, n = input.length; i < n; i++) {
-    characters[i] = input.charCodeAt(i);
-  }
-
-  const stream = new Stream(characters);
+  const stream = new Stream(input.length, i => input.charCodeAt(i));
 
   const state = alphabet.state(stream);
 

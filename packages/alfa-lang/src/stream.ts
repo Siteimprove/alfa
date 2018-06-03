@@ -2,23 +2,28 @@ import { Predicate } from "@siteimprove/alfa-util";
 
 const { max, min } = Math;
 
+export type StreamReader<T> = (index: number) => T;
+
 export class Stream<T> {
-  private input: ArrayLike<T>;
+  private length: number;
+
+  private read: StreamReader<T>;
 
   public position: number = 0;
 
-  public constructor(input: ArrayLike<T>) {
-    this.input = input;
+  public constructor(length: number, reader: StreamReader<T>) {
+    this.length = length;
+    this.read = reader;
   }
 
   public peek(offset: number): T | null {
-    const position = this.position + offset;
+    const i = this.position + offset;
 
-    if (position < 0 || position >= this.input.length) {
+    if (i < 0 || i >= this.length) {
       return null;
     }
 
-    return this.input[position];
+    return this.read(i);
   }
 
   public next(): T | null {
@@ -31,7 +36,7 @@ export class Stream<T> {
     const result: Array<T> = new Array(end - start);
 
     for (let i = start, j = 0; i < end; i++, j++) {
-      result[j] = this.input[i];
+      result[j] = this.read(i);
     }
 
     return result;
@@ -46,7 +51,7 @@ export class Stream<T> {
     let result = initial;
 
     for (let i = start; i < end; i++) {
-      result = reducer(result, this.input[i]);
+      result = reducer(result, this.read(i));
     }
 
     return result;
@@ -65,7 +70,7 @@ export class Stream<T> {
   }
 
   public advance(times: number): boolean {
-    const position = min(this.position + times, this.input.length);
+    const position = min(this.position + times, this.length);
     const success = position - this.position !== 0;
 
     this.position = position;
