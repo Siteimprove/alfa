@@ -224,9 +224,9 @@ function isValidEscape(fst: number, snd: number): boolean {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
-function consumeName(stream: Stream<number>): string {
+function consumeName(char: number, stream: Stream<number>): string {
   let result = "";
-  let next = stream.peek(0);
+  let next: number | null = char;
 
   while (next !== null) {
     if (isName(next)) {
@@ -456,7 +456,7 @@ function consumeNumeric(
       type: TokenType.Dimension,
       value: number.value,
       integer: number.integer,
-      unit: consumeName(stream)
+      unit: consumeName(next, stream)
     };
   }
 
@@ -476,8 +476,11 @@ function consumeNumeric(
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
  */
-function consumeIdentLike(stream: Stream<number>): Ident | FunctionName {
-  const value = consumeName(stream);
+function consumeIdentLike(
+  char: number,
+  stream: Stream<number>
+): Ident | FunctionName {
+  const value = consumeName(char, stream);
 
   if (stream.peek(0) === Char.LeftParenthesis) {
     stream.advance(1);
@@ -523,7 +526,7 @@ function consumeToken(stream: Stream<number>): Token | null {
   }
 
   if (startsIdentifier(char, stream)) {
-    return consumeIdentLike(stream);
+    return consumeIdentLike(char, stream);
   }
 
   if (startsNumber(char, stream)) {
@@ -580,7 +583,7 @@ function consumeToken(stream: Stream<number>): Token | null {
     const char = stream.peek(0);
 
     if (char !== null && startsIdentifier(char, stream)) {
-      return { type: TokenType.AtKeyword, value: consumeName(stream) };
+      return { type: TokenType.AtKeyword, value: consumeName(char, stream) };
     }
   }
 
