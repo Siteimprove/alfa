@@ -12,7 +12,7 @@ function escape(
   input: string,
   options: { attributeMode?: boolean } = {}
 ): string {
-  input = input.replace(/&/g, "&amp;").replace(/\u00A0/g, "&nbsp;");
+  input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");
 
   if (options.attributeMode) {
     input = input.replace(/"/g, "&quot;");
@@ -32,17 +32,13 @@ export function serialize(node: Node, context: Node = node): string {
 
     let name = node.localName;
 
-    if (namespace !== null) {
-      switch (namespace) {
-        case Namespace.HTML:
-        case Namespace.MathML:
-        case Namespace.SVG:
-          break;
-        default:
-          if (node.prefix !== null) {
-            name = node.prefix + ":" + node.localName;
-          }
-      }
+    if (
+      node.prefix !== null &&
+      namespace !== Namespace.HTML &&
+      namespace !== Namespace.MathML &&
+      namespace !== Namespace.SVG
+    ) {
+      name = node.prefix + ":" + node.localName;
     }
 
     let element = `<${name}`;
@@ -75,9 +71,9 @@ export function serialize(node: Node, context: Node = node): string {
         }
       }
 
-      element += ` ${name}="${escape(attribute.value, {
-        attributeMode: true
-      })}"`;
+      const value = escape(attribute.value, { attributeMode: true });
+
+      element += ` ${name}="${value}"`;
     }
 
     element += ">";
