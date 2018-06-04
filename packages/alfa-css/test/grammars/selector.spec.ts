@@ -142,21 +142,21 @@ test("Can parse a double descendant selector", t =>
     type: "relative-selector",
     combinator: " ",
     left: {
-      type: "type-selector",
-      name: "div",
-      namespace: null
-    },
-    right: {
       type: "relative-selector",
       combinator: " ",
       left: {
-        type: "class-selector",
-        name: "foo"
+        type: "type-selector",
+        name: "div",
+        namespace: null
       },
       right: {
-        type: "id-selector",
-        name: "bar"
+        type: "class-selector",
+        name: "foo"
       }
+    },
+    right: {
+      type: "id-selector",
+      name: "bar"
     }
   }));
 
@@ -371,24 +371,24 @@ test("Can parse a compound selector relative to a compound selector", t =>
 test("Can parse a descendant selector relative to a sibling selector", t =>
   selector(t, "div ~ span .foo", {
     type: "relative-selector",
-    combinator: "~",
+    combinator: " ",
     left: {
-      type: "type-selector",
-      name: "div",
-      namespace: null
-    },
-    right: {
       type: "relative-selector",
-      combinator: " ",
+      combinator: "~",
       left: {
         type: "type-selector",
-        name: "span",
+        name: "div",
         namespace: null
       },
       right: {
-        type: "class-selector",
-        name: "foo"
+        type: "type-selector",
+        name: "span",
+        namespace: null
       }
+    },
+    right: {
+      type: "class-selector",
+      name: "foo"
     }
   }));
 
@@ -668,29 +668,29 @@ test("Can parse a simple selector relative to a compound selector", t => {
 test("Can parse a relative selector relative to a compound selector", t => {
   selector(t, ".foo > .bar + div.baz", {
     type: "relative-selector",
-    combinator: ">",
+    combinator: "+",
     left: {
-      type: "class-selector",
-      name: "foo"
-    },
-    right: {
       type: "relative-selector",
-      combinator: "+",
+      combinator: ">",
       left: {
         type: "class-selector",
-        name: "bar"
+        name: "foo"
       },
       right: {
-        type: "compound-selector",
-        left: {
-          type: "type-selector",
-          name: "div",
-          namespace: null
-        },
-        right: {
-          type: "class-selector",
-          name: "baz"
-        }
+        type: "class-selector",
+        name: "bar"
+      }
+    },
+    right: {
+      type: "compound-selector",
+      left: {
+        type: "type-selector",
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: "class-selector",
+        name: "baz"
       }
     }
   });

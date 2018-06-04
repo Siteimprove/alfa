@@ -215,14 +215,28 @@ function matchesRelative(
   selector: RelativeSelector,
   options: MatchingOptions
 ): boolean {
-  if (options.filter !== undefined && canReject(selector, options.filter)) {
-    return false;
+  // Before any other work is done, check if the left part of the selector can
+  // be rejected by the ancestor filter optionally passed to `matches()`. Only
+  // descendant and direct-descendant selectors can potentially be rejected.
+  if (options.filter !== undefined) {
+    switch (selector.combinator) {
+      case " ":
+      case ">":
+        if (canReject(selector.left, options.filter)) {
+          return false;
+        }
+    }
   }
 
+  // Otherwise, make sure that the right part of the selector, i.e. the part
+  // that relates to the current element, matches.
   if (!matches(element, context, selector.right, options)) {
     return false;
   }
 
+  // If it does, move on the heavy part of the work: Looking either up the tree
+  // for a descendant match or looking to the side of the tree for a sibling
+  // match.
   switch (selector.combinator) {
     case " ":
       return matchesDescendant(element, context, selector.left, options);
@@ -400,11 +414,19 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
     case "type-selector":
       return !filter.matches(selector);
 
+    case "compound-selector":
+      return (
+        canReject(selector.left, filter) || canReject(selector.right, filter)
+      );
+
     case "relative-selector":
       switch (selector.combinator) {
         case " ":
         case ">":
-          return canReject(selector.left, filter);
+          return (
+            canReject(selector.right, filter) ||
+            canReject(selector.left, filter)
+          );
       }
   }
 

@@ -50,14 +50,20 @@ test("Matches an element against a descendant selector", t => {
     </div>
   );
 
-  t.true(matches(foo, document, "div #foo"));
+  t.true(matches(foo, document, "div p #foo"));
+  t.false(matches(foo, document, "p div #foo"));
 });
 
 test("Matches an element against a direct descendant selector", t => {
   const foo = <span id="foo" />;
-  const document = <div>{foo}</div>;
+  const document = (
+    <div>
+      <p>{foo}</p>
+    </div>
+  );
 
-  t.true(matches(foo, document, "div > #foo"));
+  t.true(matches(foo, document, "div > p > #foo"));
+  t.false(matches(foo, document, "p > div > #foo"));
 });
 
 test("Matches an element against a sibling selector", t => {
@@ -70,7 +76,8 @@ test("Matches an element against a sibling selector", t => {
     </div>
   );
 
-  t.true(matches(foo, document, "p ~ #foo"));
+  t.true(matches(foo, document, "p ~ b ~ #foo"));
+  t.false(matches(foo, document, "b ~ p ~ #foo"));
 });
 
 test("Matches an element against a direct sibling selector", t => {
@@ -78,11 +85,13 @@ test("Matches an element against a direct sibling selector", t => {
   const document = (
     <div>
       <p />
+      <b />
       {foo}
     </div>
   );
 
-  t.true(matches(foo, document, "p + #foo"));
+  t.true(matches(foo, document, "p + b + #foo"));
+  t.false(matches(foo, document, "b + p + #foo"));
 });
 
 test("Matches an element against a scope selector", t => {

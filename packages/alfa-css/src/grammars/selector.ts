@@ -69,8 +69,8 @@ export type ComplexSelector = SimpleSelector | CompoundSelector;
 export type RelativeSelector = {
   type: "relative-selector";
   combinator: " " | ">" | "+" | "~";
-  left: ComplexSelector;
-  right: ComplexSelector | RelativeSelector;
+  left: ComplexSelector | RelativeSelector;
+  right: ComplexSelector;
 };
 
 export type Selector = ComplexSelector | RelativeSelector;
@@ -461,17 +461,11 @@ function relativeSelector(
   right: Selector | null,
   combinator: RelativeSelector["combinator"]
 ): RelativeSelector | null {
-  if (isPseudoElementSelector(left)) {
-    return null;
-  }
-
-  if (isRelativeSelector(left)) {
-    right = relativeSelector(left.right, right, combinator);
-    combinator = left.combinator;
-    left = left.left;
-  }
-
-  if (right === null) {
+  if (
+    right === null ||
+    isRelativeSelector(right) ||
+    isPseudoElementSelector(left)
+  ) {
     return null;
   }
 
