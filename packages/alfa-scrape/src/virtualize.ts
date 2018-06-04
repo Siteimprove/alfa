@@ -1,9 +1,6 @@
-import { Mutable, map } from "@siteimprove/alfa-util";
-import * as V from "@siteimprove/alfa-dom";
+/// <reference path="./v.ts" />
 
-export function virtualize(node: Node): V.Node {
-  return virtualizeNode(node);
-}
+const { assign } = Object;
 
 function virtualizeNode(node: Node): V.Node {
   switch (node.nodeType) {
@@ -25,21 +22,25 @@ function virtualizeNode(node: Node): V.Node {
 }
 
 function virtualizeElement(element: Element): V.Element {
-  const virtual: Mutable<V.Element> = {
+  const virtual: V.Element = {
     nodeType: 1,
     prefix: element.prefix,
     localName: element.localName || "",
-    attributes: map(element.attributes, attribute => ({
+    attributes: Array.from(element.attributes).map(attribute => ({
       prefix: attribute.prefix,
       localName: attribute.localName || "",
       value: attribute.value
     })),
     shadowRoot: null,
-    childNodes: map(element.childNodes, child => virtualizeNode(child))
+    childNodes: Array.from(element.childNodes).map(child =>
+      virtualizeNode(child)
+    )
   };
 
   if (element.shadowRoot !== null) {
-    virtual.shadowRoot = virtualizeShadowRoot(element.shadowRoot, virtual);
+    assign(virtual, {
+      shadowRoot: virtualizeShadowRoot(element.shadowRoot, virtual)
+    });
   }
 
   return virtual;
@@ -56,8 +57,10 @@ function virtualizeComment(comment: Comment): V.Comment {
 function virtualizeDocument(document: Document): V.Document {
   return {
     nodeType: 9,
-    childNodes: map(document.childNodes, child => virtualizeNode(child)),
-    styleSheets: map(document.styleSheets, styleSheet =>
+    childNodes: Array.from(document.childNodes).map(child =>
+      virtualizeNode(child)
+    ),
+    styleSheets: Array.from(document.styleSheets).map(styleSheet =>
       virtualizeStyleSheet(styleSheet as CSSStyleSheet)
     )
   };
@@ -72,7 +75,9 @@ function virtualizeDocumentFragment(
 ): V.DocumentFragment {
   return {
     nodeType: 11,
-    childNodes: map(documentFragment.childNodes, child => virtualizeNode(child))
+    childNodes: Array.from(documentFragment.childNodes).map(child =>
+      virtualizeNode(child)
+    )
   };
 }
 
@@ -82,7 +87,9 @@ function virtualizeShadowRoot(
 ): V.ShadowRoot {
   return {
     nodeType: 11,
-    childNodes: map(shadowRoot.childNodes, child => virtualizeNode(child)),
+    childNodes: Array.from(shadowRoot.childNodes).map(child =>
+      virtualizeNode(child)
+    ),
     // We can only ever access open shadow roots, so the `mode` will always be
     // "open". If it were "closed", we would have never gotten this far.
     mode: "open"
@@ -91,7 +98,9 @@ function virtualizeShadowRoot(
 
 function virtualizeStyleSheet(styleSheet: CSSStyleSheet): V.StyleSheet {
   return {
-    cssRules: map(styleSheet.cssRules, cssRule => virtualizeRule(cssRule))
+    cssRules: Array.from(styleSheet.cssRules).map(cssRule =>
+      virtualizeRule(cssRule)
+    )
   };
 }
 
@@ -148,7 +157,7 @@ function virtualizeImportRule(importRule: CSSImportRule): V.ImportRule {
 function virtualizeMediaRule(mediaRule: CSSMediaRule): V.MediaRule {
   return {
     type: 4,
-    cssRules: map(mediaRule.cssRules, rule => virtualizeRule(rule)),
+    cssRules: Array.from(mediaRule.cssRules).map(rule => virtualizeRule(rule)),
     media: Array.from(mediaRule.media)
   };
 }
@@ -174,7 +183,9 @@ function virtualizeKeyframesRule(
   return {
     type: 7,
     name: keyframesRule.name,
-    cssRules: map(keyframesRule.cssRules, rule => virtualizeRule(rule))
+    cssRules: Array.from(keyframesRule.cssRules).map(rule =>
+      virtualizeRule(rule)
+    )
   };
 }
 
@@ -199,7 +210,9 @@ function virtualizeNamespaceRule(
 function virtualizeSupportsRule(supportsRule: CSSSupportsRule): V.SupportsRule {
   return {
     type: 12,
-    cssRules: map(supportsRule.cssRules, rule => virtualizeRule(rule)),
+    cssRules: Array.from(supportsRule.cssRules).map(rule =>
+      virtualizeRule(rule)
+    ),
     conditionText: supportsRule.conditionText
   };
 }
