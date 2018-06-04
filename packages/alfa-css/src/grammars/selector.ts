@@ -180,7 +180,7 @@ function typeSelector(
     if (
       next !== null &&
       next.type === "delim" &&
-      token.value === Char.VerticalLine
+      next.value === Char.VerticalLine
     ) {
       stream.advance();
       namespace = value.toLowerCase();
