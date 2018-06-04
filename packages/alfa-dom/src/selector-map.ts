@@ -26,6 +26,28 @@ export type SelectorEntry = {
 };
 
 /**
+ * The selector map is a data structure used for providing indexed access to the
+ * rules that are likely to match a given element. Rules are indexed according
+ * to their key selector, which is the selector that a given element MUST match
+ * in order for the rest of the selector to also match. A key selector can be
+ * either an ID selector, a class selector, or a type selector. In a relative
+ * selector, the key selector will be the right-most selector, e.g. given
+ * `main .foo + div` the key selector would be `div`. In a compound selector,
+ * the key selector will be left-most selector, e.g. given `div.foo` the key
+ * selector would also be `div`.
+ *
+ * Internally, the selector map has three maps and a list in one of which it
+ * will store a given selector. The three maps are used for selectors for which
+ * a key selector exist; one for ID selectors, one for class selectors, and one
+ * for type selectors. The list is used for any remaining selectors. When
+ * looking up the rules that match an element, the ID, class names, and type of
+ * the element are used for looking up potentially matching selectors in the
+ * three maps. Selector matching is then performed against this list of
+ * potentially matching selectors, plus the list of remaining selectors, in
+ * order to determine the final set of matches.
+ *
+ * @see http://doc.servo.org/style/selector_map/struct.SelectorMap.html
+ *
  * @internal
  */
 export class SelectorMap {
