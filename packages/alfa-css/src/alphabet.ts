@@ -458,25 +458,15 @@ function consumeString(
   stream: Stream<number>,
   mark: Char.QuotationMark | Char.Apostrophe
 ): String {
-  const start = stream.position;
-  let end = start;
+  let value = "";
+  let char = stream.next();
 
-  let next = stream.next();
-
-  while (next !== null && next !== mark) {
-    end++;
-    next = stream.next();
+  while (char !== null && char !== mark) {
+    value += fromCharCode(char);
+    char = stream.next();
   }
 
-  return {
-    type: TokenType.String,
-    value: stream.reduce(
-      start,
-      end,
-      (value, char) => value + fromCharCode(char),
-      ""
-    )
-  };
+  return { type: TokenType.String, value };
 }
 
 /**
