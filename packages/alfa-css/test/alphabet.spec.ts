@@ -36,6 +36,9 @@ test("Can lex a semicolon", t =>
 
 test("Can lex a comment", t => css(t, "/*Hello world*/", []));
 
+test("Can lex a comment followed by an ident", t =>
+  css(t, "/*Hello world*/foo", [{ type: TokenType.Ident, value: "foo" }]));
+
 test("Can lex an ident", t =>
   css(t, "foo", [
     {

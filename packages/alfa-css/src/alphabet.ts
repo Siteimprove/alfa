@@ -527,13 +527,17 @@ const initial: Pattern = (stream, emit, state) => {
       return initial;
 
     case Char.Solidus: {
-      if (
-        stream.peek(0) === Char.Asterisk &&
-        stream.accept(
-          token => token !== Char.Asterisk || stream.peek(0) !== Char.Solidus
-        )
-      ) {
+      if (stream.peek(0) === Char.Asterisk) {
         stream.advance(1);
+
+        if (
+          stream.accept(
+            char => char !== Char.Asterisk && stream.peek(0) !== Char.Solidus
+          )
+        ) {
+          stream.advance(2);
+        }
+
         return initial;
       }
       break;
