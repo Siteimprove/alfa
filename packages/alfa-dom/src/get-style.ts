@@ -1,6 +1,7 @@
 import { Mutable, keys, union } from "@siteimprove/alfa-util";
 import {
   Selector,
+  SelectorType,
   Declaration,
   Stage,
   Style,
@@ -269,11 +270,11 @@ function getParentStyle(
 
 function getPseudoElement(selector: Selector): PseudoElement | null {
   switch (selector.type) {
-    case "pseudo-element-selector":
+    case SelectorType.PseudoElementSelector:
       return selector.name;
 
-    case "compound-selector":
-    case "relative-selector":
+    case SelectorType.CompoundSelector:
+    case SelectorType.RelativeSelector:
       return getPseudoElement(selector.right);
   }
 

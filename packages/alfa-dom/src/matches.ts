@@ -1,10 +1,14 @@
 import {
   Selector,
+  SelectorType,
+  SelectorCombinator,
   RelativeSelector,
   TypeSelector,
   ClassSelector,
   IdSelector,
   AttributeSelector,
+  AttributeMatcher,
+  AttributeModifier,
   CompoundSelector,
   PseudoClassSelector,
   PseudoElementSelector,
@@ -104,21 +108,28 @@ export function matches(
   }
 
   switch (selector.type) {
-    case "id-selector":
+    case SelectorType.IdSelector:
       return matchesId(element, selector);
-    case "class-selector":
+
+    case SelectorType.ClassSelector:
       return matchesClass(element, selector);
-    case "type-selector":
+
+    case SelectorType.TypeSelector:
       return matchesType(element, selector);
-    case "attribute-selector":
+
+    case SelectorType.AttributeSelector:
       return matchesAttribute(element, selector);
-    case "compound-selector":
+
+    case SelectorType.CompoundSelector:
       return matchesCompound(element, context, selector, options);
-    case "relative-selector":
+
+    case SelectorType.RelativeSelector:
       return matchesRelative(element, context, selector, options);
-    case "pseudo-class-selector":
+
+    case SelectorType.PseudoClassSelector:
       return matchesPseudoClass(element, context, selector, options);
-    case "pseudo-element-selector":
+
+    case SelectorType.PseudoElementSelector:
       return matchesPseudoElement(element, context, selector, options);
   }
 }
@@ -158,8 +169,8 @@ function matchesAttribute(
   element: Element,
   selector: AttributeSelector
 ): boolean {
-  let value = getAttribute(element, selector.name, {
-    lowerCase: selector.modifier === "i"
+  const value = getAttribute(element, selector.name, {
+    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) > 0
   });
 
   if (selector.value === null) {
@@ -175,15 +186,19 @@ function matchesAttribute(
   }
 
   switch (selector.matcher) {
-    case "^":
+    case AttributeMatcher.Prefix:
       return value.startsWith(selector.value);
-    case "$":
+
+    case AttributeMatcher.Suffix:
       return value.endsWith(selector.value);
-    case "*":
+
+    case AttributeMatcher.Substring:
       return value.includes(selector.value);
-    case "~":
+
+    case AttributeMatcher.Includes:
       return value.split(whitespace).some(value => value === selector.value);
-    case "|":
+
+    case AttributeMatcher.DashMatch:
       return value === selector.value || value.startsWith(selector.value + "-");
   }
 
@@ -220,8 +235,8 @@ function matchesRelative(
   // descendant and direct-descendant selectors can potentially be rejected.
   if (options.filter !== undefined) {
     switch (selector.combinator) {
-      case " ":
-      case ">":
+      case SelectorCombinator.Descendant:
+      case SelectorCombinator.DirectDescendant:
         if (canReject(selector.left, options.filter)) {
           return false;
         }
@@ -242,13 +257,16 @@ function matchesRelative(
   // for a descendant match or looking to the side of the tree for a sibling
   // match.
   switch (selector.combinator) {
-    case " ":
+    case SelectorCombinator.Descendant:
       return matchesDescendant(element, context, selector.left, options);
-    case ">":
+
+    case SelectorCombinator.DirectDescendant:
       return matchesDirectDescendant(element, context, selector.left, options);
-    case "~":
+
+    case SelectorCombinator.Sibling:
       return matchesSibling(element, context, selector.left, options);
-    case "+":
+
+    case SelectorCombinator.DirectSibling:
       return matchesDirectSibling(element, context, selector.left, options);
   }
 }
@@ -413,24 +431,25 @@ function matchesPseudoElement(
  */
 function canReject(selector: Selector, filter: AncestorFilter): boolean {
   switch (selector.type) {
-    case "id-selector":
-    case "class-selector":
-    case "type-selector":
+    case SelectorType.IdSelector:
+    case SelectorType.ClassSelector:
+    case SelectorType.TypeSelector:
       return !filter.matches(selector);
 
-    case "compound-selector":
+    case SelectorType.CompoundSelector:
       return (
         canReject(selector.left, filter) || canReject(selector.right, filter)
       );
 
-    case "relative-selector":
-      switch (selector.combinator) {
-        case " ":
-        case ">":
-          return (
-            canReject(selector.right, filter) ||
-            canReject(selector.left, filter)
-          );
+    case SelectorType.RelativeSelector:
+      const { combinator } = selector;
+      if (
+        combinator === SelectorCombinator.Descendant ||
+        combinator === SelectorCombinator.DirectDescendant
+      ) {
+        return (
+          canReject(selector.right, filter) || canReject(selector.left, filter)
+        );
       }
   }
 

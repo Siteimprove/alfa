@@ -1,4 +1,9 @@
-import { IdSelector, ClassSelector, TypeSelector } from "@siteimprove/alfa-css";
+import {
+  SelectorType,
+  IdSelector,
+  ClassSelector,
+  TypeSelector
+} from "@siteimprove/alfa-css";
 import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";
@@ -25,13 +30,13 @@ export class AncestorFilter {
     let bucket: AncestorBucket;
 
     switch (selector.type) {
-      case "id-selector":
+      case SelectorType.IdSelector:
         bucket = this.ids;
         break;
-      case "class-selector":
+      case SelectorType.ClassSelector:
         bucket = this.classes;
         break;
-      case "type-selector":
+      case SelectorType.TypeSelector:
       default:
         bucket = this.types;
     }
@@ -42,7 +47,7 @@ export class AncestorFilter {
   private process(
     element: Element,
     fn: (bucket: AncestorBucket, entry: string) => void
-  ) {
+  ): void {
     // Elements with no child nodes are not relevant for ancestor filtering.
     if (element.childNodes.length === 0) {
       return;

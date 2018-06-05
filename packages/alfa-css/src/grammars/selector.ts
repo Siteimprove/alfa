@@ -22,32 +22,88 @@ import {
 const { isArray } = Array;
 const { fromCharCode } = String;
 
-export type IdSelector = { type: "id-selector"; name: string };
+export const enum SelectorType {
+  IdSelector = 1,
+  ClassSelector = 2,
+  AttributeSelector = 4,
+  TypeSelector = 8,
+  PseudoClassSelector = 16,
+  PseudoElementSelector = 32,
+  CompoundSelector = 64,
+  RelativeSelector = 128
+}
 
-export type ClassSelector = { type: "class-selector"; name: string };
+export type IdSelector = Readonly<{
+  type: SelectorType.IdSelector;
+  name: string;
+}>;
 
-export type AttributeSelector = {
-  type: "attribute-selector";
+export type ClassSelector = Readonly<{
+  type: SelectorType.ClassSelector;
+  name: string;
+}>;
+
+export const enum AttributeMatcher {
+  /**
+   * @example [foo=bar]
+   */
+  Equal,
+
+  /**
+   * @example [foo~=bar]
+   */
+  Includes,
+
+  /**
+   * @example [foo|=bar]
+   */
+  DashMatch,
+
+  /**
+   * @example [foo^=bar]
+   */
+  Prefix,
+
+  /**
+   * @example [foo$=bar]
+   */
+  Suffix,
+
+  /**
+   * @example [foo*=bar]
+   */
+  Substring
+}
+
+export const enum AttributeModifier {
+  /**
+   * @example [foo=bar i]
+   */
+  CaseInsensitive
+}
+
+export type AttributeSelector = Readonly<{
+  type: SelectorType.AttributeSelector;
   name: string;
   value: string | null;
-  matcher: "~" | "|" | "^" | "$" | "*" | null;
-  modifier: "i" | null;
-};
+  matcher: AttributeMatcher | null;
+  modifier: number;
+}>;
 
-export type TypeSelector = {
-  type: "type-selector";
+export type TypeSelector = Readonly<{
+  type: SelectorType.TypeSelector;
   name: string;
   namespace: string | null;
-};
+}>;
 
-export type PseudoClassSelector = {
-  type: "pseudo-class-selector";
+export type PseudoClassSelector = Readonly<{
+  type: SelectorType.PseudoClassSelector;
   name: PseudoClass;
   value: Selector | Array<Selector> | null;
-};
+}>;
 
 export type PseudoElementSelector = {
-  type: "pseudo-element-selector";
+  type: SelectorType.PseudoElementSelector;
   name: PseudoElement;
 };
 
@@ -60,66 +116,88 @@ export type SimpleSelector =
   | PseudoElementSelector;
 
 export type CompoundSelector = {
-  type: "compound-selector";
+  type: SelectorType.CompoundSelector;
   left: SimpleSelector;
   right: SimpleSelector | CompoundSelector;
 };
 
 export type ComplexSelector = SimpleSelector | CompoundSelector;
 
+export const enum SelectorCombinator {
+  /**
+   * @example div span
+   */
+  Descendant,
+
+  /**
+   * @example div > span
+   */
+  DirectDescendant,
+
+  /**
+   * @example div ~ span
+   */
+  Sibling,
+
+  /**
+   * @example div + span
+   */
+  DirectSibling
+}
+
 export type RelativeSelector = {
-  type: "relative-selector";
-  combinator: " " | ">" | "+" | "~";
+  type: SelectorType.RelativeSelector;
+  combinator: SelectorCombinator;
   left: ComplexSelector | RelativeSelector;
   right: ComplexSelector;
 };
 
 export type Selector = ComplexSelector | RelativeSelector;
 
+const simpleSelector =
+  SelectorType.IdSelector |
+  SelectorType.ClassSelector |
+  SelectorType.TypeSelector |
+  SelectorType.AttributeSelector |
+  SelectorType.PseudoClassSelector |
+  SelectorType.PseudoElementSelector;
+
 export function isSimpleSelector(
   selector: Selector
 ): selector is SimpleSelector {
-  switch (selector.type) {
-    case "id-selector":
-    case "class-selector":
-    case "attribute-selector":
-    case "type-selector":
-    case "pseudo-class-selector":
-    case "pseudo-element-selector":
-      return true;
-    default:
-      return false;
-  }
+  return (selector.type & simpleSelector) > 0;
 }
 
 export function isCompoundSelector(
   selector: Selector
 ): selector is CompoundSelector {
-  return selector.type === "compound-selector";
+  return selector.type === SelectorType.CompoundSelector;
 }
+
+const complexSelector = simpleSelector | SelectorType.CompoundSelector;
 
 export function isComplexSelector(
   selector: Selector
 ): selector is ComplexSelector {
-  return isSimpleSelector(selector) || isCompoundSelector(selector);
+  return (selector.type & complexSelector) > 0;
 }
 
 export function isRelativeSelector(
   selector: Selector
 ): selector is RelativeSelector {
-  return selector.type === "relative-selector";
+  return selector.type === SelectorType.RelativeSelector;
 }
 
 export function isPseudoClassSelector(
   selector: Selector
 ): selector is PseudoClassSelector {
-  return selector.type === "pseudo-class-selector";
+  return selector.type === SelectorType.PseudoClassSelector;
 }
 
 export function isPseudoElementSelector(
   selector: Selector
 ): selector is PseudoElementSelector {
-  return selector.type === "pseudo-element-selector";
+  return selector.type === SelectorType.PseudoElementSelector;
 }
 
 export function isSelector(selector: Selector): selector is Selector {
@@ -154,7 +232,7 @@ function idSelector(stream: Stream<Token>): IdSelector | null {
     return null;
   }
 
-  return { type: "id-selector", name: next.value };
+  return { type: SelectorType.IdSelector, name: next.value };
 }
 
 function classSelector(stream: Stream<Token>): ClassSelector | null {
@@ -164,7 +242,7 @@ function classSelector(stream: Stream<Token>): ClassSelector | null {
     return null;
   }
 
-  return { type: "class-selector", name: next.value };
+  return { type: SelectorType.ClassSelector, name: next.value };
 }
 
 function typeSelector(
@@ -211,7 +289,7 @@ function typeSelector(
   }
 
   return {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name,
     namespace
   };
@@ -232,34 +310,34 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
     stream.advance(1);
 
     return {
-      type: "attribute-selector",
+      type: SelectorType.AttributeSelector,
       name,
       value: null,
       matcher: null,
-      modifier: null
+      modifier: 0
     };
   }
 
-  let matcher: "~" | "|" | "^" | "$" | "*" | null = null;
+  let matcher: AttributeMatcher | null = null;
 
   next = stream.peek(0);
 
   if (next !== null && next.type === TokenType.Delim) {
     switch (next.value) {
       case Char.Tilde:
-        matcher = "~";
+        matcher = AttributeMatcher.Includes;
         break;
       case Char.VerticalLine:
-        matcher = "|";
+        matcher = AttributeMatcher.DashMatch;
         break;
       case Char.CircumflexAccent:
-        matcher = "^";
+        matcher = AttributeMatcher.Prefix;
         break;
       case Char.DollarSign:
-        matcher = "$";
+        matcher = AttributeMatcher.Suffix;
         break;
       case Char.Asterisk:
-        matcher = "*";
+        matcher = AttributeMatcher.Substring;
     }
 
     if (matcher !== null) {
@@ -286,21 +364,22 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
     return null;
   }
 
-  const value = next.value;
+  let value = next.value;
 
   stream.accept(token => token.type === TokenType.Whitespace);
 
-  let modifier: "i" | null = null;
+  let modifier = 0;
 
   next = stream.peek(0);
 
   if (next !== null && next.type === TokenType.Ident) {
     switch (next.value) {
       case "i":
-        modifier = "i";
+        modifier |= AttributeModifier.CaseInsensitive;
+        value = value.toLowerCase();
     }
 
-    if (modifier !== null) {
+    if (modifier !== 0) {
       stream.advance(1);
     }
   }
@@ -312,9 +391,9 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
   }
 
   return {
-    type: "attribute-selector",
+    type: SelectorType.AttributeSelector,
     name,
-    value: modifier === "i" ? value.toLowerCase() : value,
+    value,
     matcher,
     modifier
   };
@@ -358,7 +437,7 @@ function pseudoSelector(
         return null;
     }
 
-    selector = { type: "pseudo-element-selector", name };
+    selector = { type: SelectorType.PseudoElementSelector, name };
   } else {
     if (next.type !== TokenType.Ident && next.type !== TokenType.FunctionName) {
       return null;
@@ -427,7 +506,7 @@ function pseudoSelector(
     }
 
     if (next.type === TokenType.Ident) {
-      selector = { type: "pseudo-class-selector", name, value: null };
+      selector = { type: SelectorType.PseudoClassSelector, name, value: null };
     } else {
       const value = expression();
 
@@ -437,7 +516,7 @@ function pseudoSelector(
         return null;
       }
 
-      selector = { type: "pseudo-class-selector", name, value };
+      selector = { type: SelectorType.PseudoClassSelector, name, value };
     }
   }
 
@@ -462,7 +541,7 @@ function compoundSelector(
   }
 
   return {
-    type: "compound-selector",
+    type: SelectorType.CompoundSelector,
     left,
     right
   };
@@ -471,7 +550,7 @@ function compoundSelector(
 function relativeSelector(
   left: Selector,
   right: Selector | null,
-  combinator: RelativeSelector["combinator"]
+  combinator: SelectorCombinator
 ): RelativeSelector | null {
   if (
     right === null ||
@@ -482,7 +561,7 @@ function relativeSelector(
   }
 
   return {
-    type: "relative-selector",
+    type: SelectorType.RelativeSelector,
     combinator,
     left,
     right
@@ -538,7 +617,7 @@ function selectorList(
 function combineSelectors(
   left: Selector | Array<Selector>,
   right: Selector | Array<Selector> | null,
-  combinator?: RelativeSelector["combinator"]
+  combinator?: SelectorCombinator
 ): Selector | Array<Selector> | null {
   if (right === null) {
     return null;
@@ -576,7 +655,11 @@ const whitespace: Production<Whitespace> = {
     const next = stream.peek(0);
 
     if (next !== null && isImplicitDescendant(next)) {
-      return combineSelectors(left, expression(), " ");
+      return combineSelectors(
+        left,
+        expression(),
+        SelectorCombinator.Descendant
+      );
     }
 
     return Command.Continue;
@@ -611,11 +694,19 @@ const delim: Production<Delim> = {
         return combineSelectors(left, typeSelector(token, stream));
 
       case Char.GreaterThanSign:
-        return combineSelectors(left, expression(), ">");
+        return combineSelectors(
+          left,
+          expression(),
+          SelectorCombinator.DirectDescendant
+        );
       case Char.PlusSign:
-        return combineSelectors(left, expression(), "+");
+        return combineSelectors(
+          left,
+          expression(),
+          SelectorCombinator.DirectSibling
+        );
       case Char.Tilde:
-        return combineSelectors(left, expression(), "~");
+        return combineSelectors(left, expression(), SelectorCombinator.Sibling);
     }
 
     return null;

@@ -1,5 +1,6 @@
 import {
   Selector,
+  SelectorType,
   Declaration,
   parseSelector,
   parseDeclaration
@@ -118,13 +119,13 @@ export class SelectorMap {
               const key = keySelector.name;
 
               switch (keySelector.type) {
-                case "id-selector":
+                case SelectorType.IdSelector:
                   addEntry(ids, key, entry);
                   break;
-                case "class-selector":
+                case SelectorType.ClassSelector:
                   addEntry(classes, key, entry);
                   break;
-                case "type-selector":
+                case SelectorType.TypeSelector:
                   addEntry(types, key, entry);
               }
             }
@@ -161,12 +162,14 @@ export class SelectorMap {
       options
     );
 
-    for (const className of getClassList(element)) {
+    const classList = getClassList(element);
+
+    for (let i = 0, n = classList.length; i < n; i++) {
       collectEntries(
         element,
         context,
         rules,
-        getEntries(this.classes, className),
+        getEntries(this.classes, classList[i]),
         options
       );
     }
