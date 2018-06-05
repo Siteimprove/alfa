@@ -1,4 +1,4 @@
-import { Token, Production } from "./types";
+import { Token, TokenIdentifier, Production } from "./types";
 
 const { isArray } = Array;
 
@@ -8,7 +8,7 @@ export type GrammarEntry<T extends Token, R> = Readonly<{
 }>;
 
 export class Grammar<T extends Token, R> {
-  private entries: Map<string, GrammarEntry<T, R>> = new Map();
+  private entries: Map<TokenIdentifier<T>, GrammarEntry<T, R>> = new Map();
 
   public constructor(
     productions: Array<Production<T, R> | Array<Production<T, R>>>
@@ -24,8 +24,6 @@ export class Grammar<T extends Token, R> {
   }
 
   public get(token: Token): GrammarEntry<T, R> | null {
-    return (
-      this.entries.get(typeof token === "string" ? token : token.type) || null
-    );
+    return this.entries.get(token.type) || null;
   }
 }

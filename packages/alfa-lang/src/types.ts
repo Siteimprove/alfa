@@ -1,14 +1,8 @@
 import { Stream } from "./stream";
 
-export type SimpleToken = string;
+export type Token = Readonly<{ type: number }>;
 
-export type ObjectToken = Readonly<{ type: string }>;
-
-export type Token = SimpleToken | ObjectToken;
-
-export type TokenIdentifier<T extends Token> = T extends ObjectToken
-  ? T["type"]
-  : T;
+export type TokenIdentifier<T extends Token> = T["type"];
 
 export enum Command {
   End,

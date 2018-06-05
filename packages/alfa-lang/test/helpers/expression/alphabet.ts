@@ -4,12 +4,21 @@ import { Char } from "../../../src/char";
 import { isWhitespace } from "../../../src/is-whitespace";
 import { isNumeric } from "../../../src/is-numeric";
 
-export type Number = Readonly<{ type: "number"; value: number }>;
-export type Add = "+";
-export type Subtract = "-";
-export type Multiply = "*";
-export type Divide = "/";
-export type Exponentiate = "^";
+export enum TokenType {
+  Number,
+  Add,
+  Subtract,
+  Multiply,
+  Divide,
+  Exponentiate
+}
+
+export type Number = Readonly<{ type: TokenType.Number; value: number }>;
+export type Add = Readonly<{ type: TokenType.Add }>;
+export type Subtract = Readonly<{ type: TokenType.Subtract }>;
+export type Multiply = Readonly<{ type: TokenType.Multiply }>;
+export type Divide = Readonly<{ type: TokenType.Divide }>;
+export type Exponentiate = Readonly<{ type: TokenType.Exponentiate }>;
 
 export type ExpressionToken =
   | Number
@@ -22,7 +31,7 @@ export type ExpressionToken =
 export type ExpressionPattern = Pattern<ExpressionToken>;
 
 export function isNumber(token: ExpressionToken): token is Number {
-  return typeof token === "object" && token.type === "number";
+  return token.type === TokenType.Number;
 }
 
 const initial: ExpressionPattern = (stream, emit) => {
@@ -42,19 +51,19 @@ const initial: ExpressionPattern = (stream, emit) => {
 
   switch (char) {
     case Char.PlusSign:
-      emit("+");
+      emit({ type: TokenType.Add });
       return;
     case Char.HyphenMinus:
-      emit("-");
+      emit({ type: TokenType.Subtract });
       return;
     case Char.Asterisk:
-      emit("*");
+      emit({ type: TokenType.Multiply });
       return;
     case Char.Solidus:
-      emit("/");
+      emit({ type: TokenType.Divide });
       return;
     case Char.CircumflexAccent:
-      emit("^");
+      emit({ type: TokenType.Exponentiate });
   }
 };
 
@@ -62,7 +71,7 @@ const number: ExpressionPattern = (stream, emit) => {
   stream.ignore();
   stream.accept(isNumeric);
   emit({
-    type: "number",
+    type: TokenType.Number,
     value: stream
       .result()
       .reduce((value, n) => 10 * value + n - Char.DigitZero, 0)
