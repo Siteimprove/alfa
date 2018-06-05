@@ -74,8 +74,9 @@ export class Scraper {
 
       try {
         document = await page.evaluate(`{
+          const exports = {};
           ${virtualize};
-          virtualizeNode(window.document);
+          exports.virtualizeNode(window.document);
         }`);
       } catch (err) {
         error = err;

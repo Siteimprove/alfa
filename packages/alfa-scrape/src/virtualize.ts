@@ -1,8 +1,8 @@
-/// <reference path="./v.ts" />
+import * as V from "@siteimprove/alfa-dom";
 
 const { assign } = Object;
 
-function virtualizeNode(node: Node): V.Node {
+export function virtualizeNode(node: Node): V.Node {
   switch (node.nodeType) {
     case node.ELEMENT_NODE:
       return virtualizeElement(node as Element);
