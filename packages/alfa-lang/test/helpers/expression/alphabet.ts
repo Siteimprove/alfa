@@ -4,7 +4,7 @@ import { Char } from "../../../src/char";
 import { isWhitespace } from "../../../src/is-whitespace";
 import { isNumeric } from "../../../src/is-numeric";
 
-export enum TokenType {
+export const enum TokenType {
   Number,
   Add,
   Subtract,

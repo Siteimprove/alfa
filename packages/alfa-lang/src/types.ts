@@ -4,7 +4,7 @@ export type Token = Readonly<{ type: number }>;
 
 export type TokenIdentifier<T extends Token> = T["type"];
 
-export enum Command {
+export const enum Command {
   End,
   Continue
 }

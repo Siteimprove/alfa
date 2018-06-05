@@ -14,7 +14,7 @@ import {
 const { fromCharCode } = String;
 const { pow } = Math;
 
-export enum TokenType {
+export const enum TokenType {
   Ident,
   FunctionName,
   AtKeyword,

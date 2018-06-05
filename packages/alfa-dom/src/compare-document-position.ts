@@ -1,7 +1,7 @@
 import { Node } from "./types";
 import { getParentNode } from "./get-parent-node";
 
-export enum DocumentPosition {
+export const enum DocumentPosition {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_position_disconnected
    */

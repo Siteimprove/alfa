@@ -5,7 +5,7 @@ import { Token, TokenType, Ident, FunctionName } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
-enum Component {
+const enum Component {
   Red = 0,
   Green,
   Blue,

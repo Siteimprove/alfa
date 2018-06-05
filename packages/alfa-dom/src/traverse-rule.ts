@@ -2,7 +2,7 @@ import { Rule } from "./types";
 import { isImportRule, isGroupingRule, isKeyframesRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 
-enum Action {
+const enum Action {
   Enter,
   Exit
 }

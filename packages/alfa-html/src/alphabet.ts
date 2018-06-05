@@ -4,7 +4,7 @@ import { Command, Char, isWhitespace, isAlpha } from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
 
-export enum TokenType {
+export const enum TokenType {
   StartTag,
   EndTag,
   Comment,

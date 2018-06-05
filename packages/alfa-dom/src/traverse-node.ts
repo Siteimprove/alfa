@@ -1,7 +1,7 @@
 import { Node } from "./types";
 import { isElement } from "./guards";
 
-enum Action {
+const enum Action {
   Enter,
   Exit
 }

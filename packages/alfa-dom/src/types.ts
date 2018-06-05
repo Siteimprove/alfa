@@ -376,7 +376,7 @@ export interface SupportsRule extends ConditionRule {
 /**
  * @see https://www.w3.org/TR/html/infrastructure.html#namespaces
  */
-export enum Namespace {
+export const enum Namespace {
   /**
    * @see https://www.w3.org/TR/html/infrastructure.html#html-namespace
    */

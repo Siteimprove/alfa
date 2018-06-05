@@ -4,7 +4,7 @@ import { Document } from "@siteimprove/alfa-dom";
 
 const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
-export enum Wait {
+export const enum Wait {
   Ready = "domcontentloaded",
   Loaded = "load",
   Idle = "networkidle0"
