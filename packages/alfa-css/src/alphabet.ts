@@ -193,12 +193,12 @@ function consumeName(stream: Stream<number>): string {
   let next = stream.peek(0);
 
   while (next !== null) {
-    if (startsValidEscape(next, stream.peek(1))) {
-      stream.advance(1);
-      result += fromCharCode(consumeEscapedCodePoint(stream));
-    } else if (isName(next)) {
+    if (isName(next)) {
       stream.advance(1);
       result += fromCharCode(next);
+    } else if (startsValidEscape(next, stream.peek(1))) {
+      stream.advance(1);
+      result += fromCharCode(consumeEscapedCodePoint(stream));
     } else {
       break;
     }
@@ -356,15 +356,19 @@ function consumeExponent(
 function consumeNumber(stream: Stream<number>): Number {
   const start = stream.position;
 
-  if (stream.peek(0) === Char.PlusSign || stream.peek(0) === Char.HyphenMinus) {
+  let next = stream.peek(0);
+
+  if (next === Char.PlusSign || next === Char.HyphenMinus) {
     stream.advance(1);
   }
 
   stream.accept(isNumeric);
 
+  next = stream.peek(0);
+
   let isInteger = true;
 
-  if (stream.peek(0) === Char.FullStop) {
+  if (next === Char.FullStop) {
     const next = stream.peek(1);
 
     if (next !== null && isNumeric(next)) {
@@ -375,23 +379,20 @@ function consumeNumber(stream: Stream<number>): Number {
     }
   }
 
-  let next = stream.peek(0);
   let offset = 0;
 
   if (next === Char.SmallLetterE || next === Char.CapitalLetterE) {
     offset = 1;
     next = stream.peek(offset);
 
-    if (
-      stream.peek(1) === Char.PlusSign ||
-      stream.peek(1) === Char.HyphenMinus
-    ) {
+    if (next === Char.PlusSign || next === Char.HyphenMinus) {
       offset = 2;
       next = stream.peek(offset);
     }
 
     if (next !== null && isNumeric(next)) {
-      stream.advance(offset) && stream.accept(isNumeric);
+      stream.advance(offset);
+      stream.accept(isNumeric);
     }
   }
 
@@ -488,43 +489,32 @@ const initial: Pattern = (stream, emit, state) => {
 
   if (isWhitespace(char)) {
     stream.accept(isWhitespace);
-    emit({ type: TokenType.Whitespace });
-    return initial;
+    return emit({ type: TokenType.Whitespace });
   }
 
   switch (char) {
     case Char.QuotationMark:
     case Char.Apostrophe:
-      emit(consumeString(stream, char));
-      return initial;
+      return emit(consumeString(stream, char));
 
     case Char.LeftParenthesis:
-      emit({ type: TokenType.LeftParenthesis });
-      return initial;
+      return emit({ type: TokenType.LeftParenthesis });
     case Char.RightParenthesis:
-      emit({ type: TokenType.RightParenthesis });
-      return initial;
+      return emit({ type: TokenType.RightParenthesis });
     case Char.LeftSquareBracket:
-      emit({ type: TokenType.LeftSquareBracket });
-      return initial;
+      return emit({ type: TokenType.LeftSquareBracket });
     case Char.RightSquareBracket:
-      emit({ type: TokenType.RightSquareBracket });
-      return initial;
+      return emit({ type: TokenType.RightSquareBracket });
     case Char.LeftCurlyBracket:
-      emit({ type: TokenType.LeftCurlyBracket });
-      return initial;
+      return emit({ type: TokenType.LeftCurlyBracket });
     case Char.RightCurlyBracket:
-      emit({ type: TokenType.RightCurlyBracket });
-      return initial;
+      return emit({ type: TokenType.RightCurlyBracket });
     case Char.Comma:
-      emit({ type: TokenType.Comma });
-      return initial;
+      return emit({ type: TokenType.Comma });
     case Char.Colon:
-      emit({ type: TokenType.Colon });
-      return initial;
+      return emit({ type: TokenType.Colon });
     case Char.Semicolon:
-      emit({ type: TokenType.Semicolon });
-      return initial;
+      return emit({ type: TokenType.Semicolon });
 
     case Char.Solidus: {
       if (stream.peek(0) === Char.Asterisk) {
@@ -538,7 +528,7 @@ const initial: Pattern = (stream, emit, state) => {
           stream.advance(2);
         }
 
-        return initial;
+        return;
       }
       break;
     }
@@ -549,8 +539,7 @@ const initial: Pattern = (stream, emit, state) => {
         char !== null &&
         startsIdentifier(char, stream.peek(1), stream.peek(2))
       ) {
-        emit({ type: TokenType.AtKeyword, value: consumeName(stream) });
-        return initial;
+        return emit({ type: TokenType.AtKeyword, value: consumeName(stream) });
       }
     }
   }
@@ -560,19 +549,15 @@ const initial: Pattern = (stream, emit, state) => {
 
   if (startsIdentifier(char, snd, thd)) {
     stream.backup(1);
-    emit(consumeIdentLike(stream));
-    return initial;
+    return emit(consumeIdentLike(stream));
   }
 
   if (startsNumber(char, snd, thd)) {
     stream.backup(1);
-    emit(consumeNumeric(stream));
-    return initial;
+    return emit(consumeNumeric(stream));
   }
 
   emit({ type: TokenType.Delim, value: char });
-
-  return initial;
 };
 
 export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(

@@ -13,7 +13,7 @@ export type Pattern<T extends Token, S = null> = (
   stream: Stream<number>,
   emit: <U extends T>(token: U) => void,
   state: S
-) => Pattern<T, S> | Command.End;
+) => Pattern<T, S> | Command.End | void;
 
 export type Expression<T> = () => T | null;
 
