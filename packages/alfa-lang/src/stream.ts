@@ -65,45 +65,38 @@ export class Stream<T> {
   }
 
   public advance(times: number): boolean {
-    const position = min(this.position + max(times, 1), this.input.length);
-
-    if (position === this.position) {
-      return false;
-    }
+    const position = min(this.position + times, this.input.length);
+    const success = position - this.position !== 0;
 
     this.position = position;
 
-    return true;
+    return success;
   }
 
   public backup(times: number): boolean {
-    const position = max(this.position - max(times, 1), 0);
-
-    if (position === this.position) {
-      return false;
-    }
+    const position = max(this.position - times, 0);
+    const success = position - this.position !== 0;
 
     this.position = position;
 
-    return true;
+    return success;
   }
 
   public accept<U extends T>(predicate: Predicate<T, U>): Array<U> | false {
+    const result: Array<U> = [];
+
     let next = this.peek(0);
-    let start = this.position;
 
     while (next !== null && predicate(next)) {
-      if (this.advance(1)) {
-        next = this.peek(0);
-      } else {
-        break;
-      }
+      result.push(next);
+      this.advance(1);
+      next = this.peek(0);
     }
 
-    if (start === this.position) {
+    if (result.length === 0) {
       return false;
     }
 
-    return this.range(start, this.position) as Array<U>;
+    return result;
   }
 }
