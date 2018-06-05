@@ -369,7 +369,7 @@ function consumeNumber(stream: Stream<number>): Number {
   let isInteger = true;
 
   if (next === Char.FullStop) {
-    const next = stream.peek(1);
+    next = stream.peek(1);
 
     if (next !== null && isNumeric(next)) {
       stream.advance(2);
@@ -377,6 +377,8 @@ function consumeNumber(stream: Stream<number>): Number {
 
       isInteger = false;
     }
+
+    next = stream.peek(0);
   }
 
   let offset = 0;
