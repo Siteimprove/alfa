@@ -7,7 +7,8 @@ import {
   Properties,
   PropertyName,
   PseudoElement,
-  parseDeclaration
+  parseDeclaration,
+  TokenType
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { isDocument } from "./guards";
@@ -280,7 +281,9 @@ function getPseudoElement(selector: Selector): PseudoElement | null {
 }
 
 function isInitial(declaration: Declaration): boolean {
-  const value = declaration.value.filter(token => token.type !== "whitespace");
+  const value = declaration.value.filter(
+    token => token.type !== TokenType.Whitespace
+  );
 
   if (value.length !== 1) {
     return false;
@@ -288,11 +291,13 @@ function isInitial(declaration: Declaration): boolean {
 
   const [token] = value;
 
-  return token.type === "ident" && token.value === "initial";
+  return token.type === TokenType.Ident && token.value === "initial";
 }
 
 function isInherited(declaration: Declaration): boolean {
-  const value = declaration.value.filter(token => token.type !== "whitespace");
+  const value = declaration.value.filter(
+    token => token.type !== TokenType.Whitespace
+  );
 
   if (value.length !== 1) {
     return false;
@@ -300,5 +305,5 @@ function isInherited(declaration: Declaration): boolean {
 
   const [token] = value;
 
-  return token.type === "ident" && token.value === "inherit";
+  return token.type === TokenType.Ident && token.value === "inherit";
 }

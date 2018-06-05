@@ -1,7 +1,7 @@
 import { Mutable, clamp } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, Ident, FunctionName } from "../alphabet";
+import { Token, TokenType, Ident, FunctionName } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
@@ -15,31 +15,34 @@ enum Component {
 function functionArguments(stream: Stream<Token>): Array<Token> {
   const args: Array<Token> = [];
 
-  let next = stream.peek();
+  let next = stream.peek(0);
 
   while (next !== null) {
-    if (next.type === "whitespace") {
-      stream.advance();
-      next = stream.peek();
+    if (next.type === TokenType.Whitespace) {
+      stream.advance(1);
+      next = stream.peek(0);
       continue;
     }
 
-    if (next.type === "," || next.type === ")") {
+    if (
+      next.type === TokenType.Comma ||
+      next.type === TokenType.RightParenthesis
+    ) {
       break;
     }
 
     args.push(next);
 
-    stream.advance();
-    next = stream.peek();
+    stream.advance(1);
+    next = stream.peek(0);
 
-    if (next !== null && next.type === ",") {
-      stream.advance();
-      next = stream.peek();
+    if (next !== null && next.type === TokenType.Comma) {
+      stream.advance(1);
+      next = stream.peek(0);
     }
 
-    if (next !== null && next.type === ")") {
-      stream.advance();
+    if (next !== null && next.type === TokenType.RightParenthesis) {
+      stream.advance(1);
       break;
     }
   }
@@ -59,7 +62,10 @@ function rgbaColor(stream: Stream<Token>): Color {
   for (let i = 0, n = args.length; i < n; i++) {
     const component = args[i];
 
-    if (component.type !== "number" && component.type !== "percentage") {
+    if (
+      component.type !== TokenType.Number &&
+      component.type !== TokenType.Percentage
+    ) {
       continue;
     }
 
@@ -68,7 +74,7 @@ function rgbaColor(stream: Stream<Token>): Color {
     if (i === Component.Alpha) {
       value = clamp(value, 0, 1);
     } else {
-      if (component.type === "percentage") {
+      if (component.type === TokenType.Percentage) {
         value *= 0xff;
       }
 
@@ -97,7 +103,7 @@ function rgbaColor(stream: Stream<Token>): Color {
 type Production<T extends Token> = Lang.Production<Token, Color, T>;
 
 const ident: Production<Ident> = {
-  token: "ident",
+  token: TokenType.Ident,
   prefix(token) {
     if (token.value === "transparent") {
       return Transparent;
@@ -108,7 +114,7 @@ const ident: Production<Ident> = {
 };
 
 const functionName: Production<FunctionName> = {
-  token: "function-name",
+  token: TokenType.FunctionName,
   prefix(token, stream) {
     switch (token.value) {
       case "rgb":

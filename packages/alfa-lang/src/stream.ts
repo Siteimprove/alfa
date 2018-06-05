@@ -1,18 +1,20 @@
 import { Predicate } from "@siteimprove/alfa-util";
 
+const { max, min } = Math;
+
 export class Stream<T> {
-  protected input: ArrayLike<T>;
-  protected position: number = 0;
-  protected start: number = 0;
+  private input: ArrayLike<T>;
+
+  public position: number = 0;
 
   public constructor(input: ArrayLike<T>) {
     this.input = input;
   }
 
-  public peek(offset: number = 0): T | null {
+  public peek(offset: number): T | null {
     const position = this.position + offset;
 
-    if (position >= this.input.length) {
+    if (position < 0 || position >= this.input.length) {
       return null;
     }
 
@@ -20,13 +22,9 @@ export class Stream<T> {
   }
 
   public next(): T | null {
-    const next = this.peek();
-    this.advance();
+    const next = this.peek(0);
+    this.advance(1);
     return next;
-  }
-
-  public ignore(): void {
-    this.start = this.position;
   }
 
   public range(start: number, end: number): Array<T> {
@@ -39,12 +37,19 @@ export class Stream<T> {
     return result;
   }
 
-  public result(): Array<T> {
-    return this.range(this.start, this.position);
-  }
+  public reduce<U>(
+    start: number,
+    end: number,
+    reducer: (accumulator: U, next: T) => U,
+    initial: U
+  ): U {
+    let result = initial;
 
-  public progressed(): boolean {
-    return this.start !== this.position;
+    for (let i = start; i < end; i++) {
+      result = reducer(result, this.input[i]);
+    }
+
+    return result;
   }
 
   public restore(position: number): void {
@@ -59,87 +64,43 @@ export class Stream<T> {
     }
   }
 
-  public advance(times: number = 1): boolean {
-    let advanced = false;
+  public advance(times: number): boolean {
+    const position = min(this.position + max(times, 1), this.input.length);
 
-    do {
-      if (this.position < this.input.length) {
-        advanced = true;
-        this.position++;
-      }
-    } while (--times > 0);
-
-    return advanced;
-  }
-
-  public backup(times: number = 1): boolean {
-    let backedup = false;
-
-    do {
-      if (this.position > 0) {
-        backedup = true;
-        this.position--;
-      }
-    } while (--times > 0);
-
-    return backedup;
-  }
-
-  public accept<U extends T>(predicate: Predicate<T, U>): Array<U> | false;
-
-  public accept<U extends T>(predicate: Predicate<T, U>, times: 1): U | false;
-
-  public accept<U extends T>(
-    predicate: Predicate<T, U>,
-    times: number
-  ): Array<U> | false;
-
-  public accept<U extends T>(
-    predicate: Predicate<T, U>,
-    minimum: number,
-    maximum: number
-  ): Array<U> | false;
-
-  public accept<U extends T>(
-    predicate: Predicate<T, U>,
-    minimum?: number,
-    maximum?: number
-  ): U | Array<U> | false {
-    if (minimum === undefined) {
-      minimum = 0;
-      maximum = Infinity;
-    }
-
-    if (maximum === undefined) {
-      maximum = minimum;
-    }
-
-    let next = this.peek();
-
-    if (minimum === 1 && maximum === 1) {
-      if (next !== null && predicate(next)) {
-        this.advance();
-        return next;
-      }
-
+    if (position === this.position) {
       return false;
     }
 
-    let accepted = 0;
+    this.position = position;
+
+    return true;
+  }
+
+  public backup(times: number): boolean {
+    const position = max(this.position - max(times, 1), 0);
+
+    if (position === this.position) {
+      return false;
+    }
+
+    this.position = position;
+
+    return true;
+  }
+
+  public accept<U extends T>(predicate: Predicate<T, U>): Array<U> | false {
+    let next = this.peek(0);
     let start = this.position;
 
     while (next !== null && predicate(next)) {
-      accepted++;
-
-      if (accepted === maximum || !this.advance()) {
+      if (this.advance(1)) {
+        next = this.peek(0);
+      } else {
         break;
       }
-
-      next = this.peek();
     }
 
-    if (accepted < minimum) {
-      this.restore(start);
+    if (start === this.position) {
       return false;
     }
 

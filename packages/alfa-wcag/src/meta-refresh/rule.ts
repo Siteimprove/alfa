@@ -46,7 +46,7 @@ function getRefreshTime(content: string): number | null {
     return null;
   }
 
-  const next = stream.peek();
+  const next = stream.peek(0);
 
   // As long as the time of the refresh is ended correctly, the URL won't matter
   // in terms of the validity of the refresh. If the URL is therefore invalid,

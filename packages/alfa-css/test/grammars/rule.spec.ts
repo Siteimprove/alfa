@@ -1,6 +1,6 @@
 import { test, Test } from "@siteimprove/alfa-test";
 import { Char, parse, lex } from "@siteimprove/alfa-lang";
-import { Alphabet } from "../../src/alphabet";
+import { Alphabet, TokenType } from "../../src/alphabet";
 import { Rule, RuleGrammar } from "../../src/grammars/rule";
 
 function rule(t: Test, input: string, expected: Rule | Array<Rule>) {
@@ -12,20 +12,20 @@ test("Can parse a single qualified rule", t =>
     type: "qualified-rule",
     prelude: [
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "div"
       }
     ],
     value: [
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "color"
       },
       {
-        type: ":"
+        type: TokenType.Colon
       },
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "red"
       }
     ]
@@ -37,20 +37,20 @@ test("Can parse a list of qualified rules", t =>
       type: "qualified-rule",
       prelude: [
         {
-          type: "ident",
+          type: TokenType.Ident,
           value: "div"
         }
       ],
       value: [
         {
-          type: "ident",
+          type: TokenType.Ident,
           value: "color"
         },
         {
-          type: ":"
+          type: TokenType.Colon
         },
         {
-          type: "ident",
+          type: TokenType.Ident,
           value: "red"
         }
       ]
@@ -59,20 +59,20 @@ test("Can parse a list of qualified rules", t =>
       type: "qualified-rule",
       prelude: [
         {
-          type: "ident",
+          type: TokenType.Ident,
           value: "span"
         }
       ],
       value: [
         {
-          type: "ident",
+          type: TokenType.Ident,
           value: "color"
         },
         {
-          type: ":"
+          type: TokenType.Colon
         },
         {
-          type: "ident",
+          type: TokenType.Ident,
           value: "blue"
         }
       ]
@@ -86,14 +86,14 @@ test("Can parse a single at-rule", t =>
     prelude: [],
     value: [
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "color"
       },
       {
-        type: ":"
+        type: TokenType.Colon
       },
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "red"
       }
     ]
@@ -104,11 +104,11 @@ test("Can parse a rule with a class selector", t =>
     type: "qualified-rule",
     prelude: [
       {
-        type: "delim",
+        type: TokenType.Delim,
         value: Char.FullStop
       },
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "foo"
       }
     ],
@@ -120,11 +120,11 @@ test("Can parse a rule with an ID selector", t =>
     type: "qualified-rule",
     prelude: [
       {
-        type: "delim",
+        type: TokenType.Delim,
         value: Char.NumberSign
       },
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "foo"
       }
     ],
@@ -136,14 +136,14 @@ test("Can parse a rule with an attribute selector", t =>
     type: "qualified-rule",
     prelude: [
       {
-        type: "["
+        type: TokenType.LeftSquareBracket
       },
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "foo"
       },
       {
-        type: "]"
+        type: TokenType.RightSquareBracket
       }
     ],
     value: []

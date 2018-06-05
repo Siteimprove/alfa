@@ -76,7 +76,7 @@ const subtraction: ExpressionProduction<Subtract, Constant | Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "-", left, right };
   }
 };
 
@@ -90,7 +90,7 @@ const multiplication: ExpressionProduction<Multiply, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "*", left, right };
   }
 };
 
@@ -104,7 +104,7 @@ const division: ExpressionProduction<Divide, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "/", left, right };
   }
 };
 
@@ -119,7 +119,7 @@ const exponentiation: ExpressionProduction<Exponentiate, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "^", left, right };
   }
 };
 

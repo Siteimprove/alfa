@@ -14,55 +14,80 @@ import {
 const { fromCharCode } = String;
 const { pow } = Math;
 
-export type Ident = Readonly<{ type: "ident"; value: string }>;
+export enum TokenType {
+  Ident,
+  FunctionName,
+  AtKeyword,
+  String,
+  Url,
+  Delim,
+  Number,
+  Percentage,
+  Dimension,
+  Whitespace,
+  Colon,
+  Semicolon,
+  Comma,
+  LeftParenthesis,
+  RightParenthesis,
+  LeftSquareBracket,
+  RightSquareBracket,
+  LeftCurlyBracket,
+  RightCurlyBracket
+}
 
-export type FunctionName = Readonly<{ type: "function-name"; value: string }>;
+export type Ident = Readonly<{ type: TokenType.Ident; value: string }>;
 
-export type AtKeyword = Readonly<{ type: "at-keyword"; value: string }>;
+export type FunctionName = Readonly<{
+  type: TokenType.FunctionName;
+  value: string;
+}>;
 
-export type String = Readonly<{ type: "string"; value: string }>;
+export type AtKeyword = Readonly<{ type: TokenType.AtKeyword; value: string }>;
 
-export type Url = Readonly<{ type: "url"; value: string }>;
+export type String = Readonly<{ type: TokenType.String; value: string }>;
 
-export type Delim = Readonly<{ type: "delim"; value: number }>;
+export type Url = Readonly<{ type: TokenType.Url; value: string }>;
+
+export type Delim = Readonly<{ type: TokenType.Delim; value: number }>;
 
 export type Number = Readonly<{
-  type: "number";
+  type: TokenType.Number;
   value: number;
   integer: boolean;
 }>;
 
 export type Percentage = Readonly<{
-  type: "percentage";
+  type: TokenType.Percentage;
   value: number;
   integer: boolean;
 }>;
 
 export type Dimension = Readonly<{
-  type: "dimension";
+  type: TokenType.Dimension;
   value: number;
   integer: boolean;
   unit: string;
 }>;
 
-export type Whitespace = Readonly<{ type: "whitespace" }>;
+export type Whitespace = Readonly<{ type: TokenType.Whitespace }>;
 
-export type Colon = Readonly<{ type: ":" }>;
+export type Colon = Readonly<{ type: TokenType.Colon }>;
 
-export type Semicolon = Readonly<{ type: ";" }>;
+export type Semicolon = Readonly<{ type: TokenType.Semicolon }>;
 
-export type Comma = Readonly<{ type: "," }>;
+export type Comma = Readonly<{ type: TokenType.Comma }>;
 
-export type Bracket<Type extends "[" | "]" = "[" | "]"> = Readonly<{
-  type: Type;
+export type Parenthesis = Readonly<{
+  type: TokenType.LeftParenthesis | TokenType.RightParenthesis;
 }>;
 
-export type Paren<Type extends "(" | ")" = "(" | ")"> = Readonly<{
-  type: Type;
+export type SquareBracket = Readonly<{
+  type: TokenType.LeftSquareBracket | TokenType.RightSquareBracket;
 }>;
 
-export type Brace<Type extends "{" | "}" = "{" | "}"> = Readonly<{
-  type: Type;
+export type CurlyBracket = Readonly<{
+  type: TokenType.LeftCurlyBracket | TokenType.RightCurlyBracket;
 }>;
 
 /**
@@ -84,9 +109,9 @@ export type Token =
   | Colon
   | Semicolon
   | Comma
-  | Bracket
-  | Paren
-  | Brace;
+  | Parenthesis
+  | SquareBracket
+  | CurlyBracket;
 
 export type State = {
   number: Number | null;
@@ -170,19 +195,20 @@ function isName(char: number): boolean {
  */
 function name(stream: Stream<number>): string {
   let result = "";
-  let next = stream.next();
+  let next = stream.peek(0);
 
   while (next !== null) {
-    if (startsValidEscape(next, stream.peek())) {
+    if (startsValidEscape(next, stream.peek(1))) {
+      stream.advance(1);
       result += fromCharCode(escapedCodePoint(stream));
     } else if (isName(next)) {
+      stream.advance(1);
       result += fromCharCode(next);
     } else {
-      stream.backup();
       break;
     }
 
-    next = stream.next();
+    next = stream.peek(0);
   }
 
   return result;
@@ -201,7 +227,16 @@ function escapedCodePoint(stream: Stream<number>): number {
   }
 
   if (isHex(char)) {
-    const bytes = [char, ...(stream.accept(isHex, 0, 5) || [])];
+    const bytes = [char];
+
+    for (let i = 0; i < 5; i++) {
+      const next = stream.peek(0);
+
+      if (next !== null && isHex(next)) {
+        stream.advance(1);
+        bytes.push(next);
+      }
+    }
 
     let code = 0;
 
@@ -219,7 +254,11 @@ function escapedCodePoint(stream: Stream<number>): number {
       code = 0x10 * code + byte;
     }
 
-    stream.accept(isWhitespace, 1);
+    const next = stream.peek(0);
+
+    if (next !== null && isWhitespace(next)) {
+      stream.advance(1);
+    }
 
     if (code === 0 || isBetween(code, 0xd800, 0xdfff) || code > 0x10ffff) {
       return replacementCharacter;
@@ -320,8 +359,8 @@ const initial: Pattern = (stream, emit, state) => {
 
   if (isWhitespace(char)) {
     stream.accept(isWhitespace);
-    emit({ type: "whitespace" });
-    return;
+    emit({ type: TokenType.Whitespace });
+    return initial;
   }
 
   switch (char) {
@@ -331,77 +370,83 @@ const initial: Pattern = (stream, emit, state) => {
       return string;
 
     case Char.LeftParenthesis:
-      emit({ type: "(" });
-      return;
+      emit({ type: TokenType.LeftParenthesis });
+      return initial;
     case Char.RightParenthesis:
-      emit({ type: ")" });
-      return;
+      emit({ type: TokenType.RightParenthesis });
+      return initial;
     case Char.LeftSquareBracket:
-      emit({ type: "[" });
-      return;
+      emit({ type: TokenType.LeftSquareBracket });
+      return initial;
     case Char.RightSquareBracket:
-      emit({ type: "]" });
-      return;
+      emit({ type: TokenType.RightSquareBracket });
+      return initial;
     case Char.LeftCurlyBracket:
-      emit({ type: "{" });
-      return;
+      emit({ type: TokenType.LeftCurlyBracket });
+      return initial;
     case Char.RightCurlyBracket:
-      emit({ type: "}" });
-      return;
+      emit({ type: TokenType.RightCurlyBracket });
+      return initial;
     case Char.Comma:
-      emit({ type: "," });
-      return;
+      emit({ type: TokenType.Comma });
+      return initial;
     case Char.Colon:
-      emit({ type: ":" });
-      return;
+      emit({ type: TokenType.Colon });
+      return initial;
     case Char.Semicolon:
-      emit({ type: ";" });
-      return;
+      emit({ type: TokenType.Semicolon });
+      return initial;
 
-    case Char.Solidus:
-      if (stream.accept(char => char === Char.Asterisk, 1)) {
+    case Char.Solidus: {
+      if (stream.peek(0) === Char.Asterisk) {
+        stream.advance(1);
         return comment;
       }
       break;
+    }
 
     case Char.AtSign: {
-      const char = stream.peek();
+      const char = stream.peek(0);
 
       if (
         char !== null &&
         startsIdentifier(char, stream.peek(1), stream.peek(2))
       ) {
-        emit({ type: "at-keyword", value: name(stream) });
-        return;
+        emit({ type: TokenType.AtKeyword, value: name(stream) });
+        return initial;
       }
     }
   }
 
-  const snd = stream.peek();
+  const snd = stream.peek(0);
   const thd = stream.peek(1);
 
   if (startsIdentifier(char, snd, thd)) {
-    stream.backup();
+    stream.backup(1);
     return ident;
   }
 
   if (startsNumber(char, snd, thd)) {
-    stream.backup();
+    stream.backup(1);
     return number;
   }
 
-  emit({ type: "delim", value: char });
+  emit({ type: TokenType.Delim, value: char });
+
+  return initial;
 };
 
 const comment: Pattern = (stream, emit, state) => {
   if (
     stream.accept(
-      token => token !== Char.Asterisk || stream.peek() !== Char.Solidus
+      token => token !== Char.Asterisk || stream.peek(0) !== Char.Solidus
     )
   ) {
-    stream.advance();
+    stream.advance(1);
     return initial;
   }
+
+  return comment;
 };
 
 /**
@@ -410,10 +455,11 @@ const comment: Pattern = (stream, emit, state) => {
 const ident: Pattern = (stream, emit) => {
   const value = name(stream);
 
-  if (stream.accept(char => char === Char.LeftParenthesis, 1)) {
-    emit({ type: "function-name", value });
+  if (stream.peek(0) === Char.LeftParenthesis) {
+    stream.advance(1);
+    emit({ type: TokenType.FunctionName, value });
   } else {
-    emit({ type: "ident", value });
+    emit({ type: TokenType.Ident, value });
   }
 
   return initial;
@@ -423,39 +469,55 @@ const ident: Pattern = (stream, emit) => {
  * @see https://www.w3.org/TR/css-syntax/#consume-a-string-token
  */
 const string: Pattern = (stream, emit, state) => {
-  stream.ignore();
+  const start = stream.position;
+  let end = start;
 
-  if (stream.accept(char => char !== state.mark)) {
-    const value = fromCharCode(...stream.result());
-    stream.advance();
-    emit({ type: "string", value });
-    return initial;
+  let next = stream.next();
+
+  while (next !== null && next !== state.mark) {
+    end++;
+    next = stream.next();
   }
+
+  emit({
+    type: TokenType.String,
+    value: stream.reduce(
+      start,
+      end,
+      (value, char) => value + fromCharCode(char),
+      ""
+    )
+  });
+
+  return initial;
 };
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
 const number: Pattern = (stream, emit, state) => {
-  stream.ignore();
+  const start = stream.position;
 
-  if (stream.peek() === Char.PlusSign || stream.peek() === Char.HyphenMinus) {
-    stream.advance();
+  if (stream.peek(0) === Char.PlusSign || stream.peek(0) === Char.HyphenMinus) {
+    stream.advance(1);
   }
 
-  const isInteger =
-    stream.accept(isNumeric) !== false && stream.peek() !== Char.FullStop;
+  stream.accept(isNumeric);
 
-  const isDecimal =
-    stream.peek() === Char.FullStop &&
-    stream.advance() !== false &&
-    stream.accept(isNumeric) !== false;
+  let isInteger = true;
 
-  if (!isInteger && !isDecimal) {
-    return;
+  if (stream.peek(0) === Char.FullStop) {
+    const next = stream.peek(1);
+
+    if (next !== null && isNumeric(next)) {
+      stream.advance(2);
+      stream.accept(isNumeric);
+
+      isInteger = false;
+    }
   }
 
-  let next = stream.peek();
+  let next = stream.peek(0);
   let offset = 0;
 
   if (next === Char.SmallLetterE || next === Char.CapitalLetterE) {
@@ -475,9 +537,11 @@ const number: Pattern = (stream, emit, state) => {
     }
   }
 
+  const end = stream.position;
+
   state.number = {
-    type: "number",
-    value: integer(stream.result()),
+    type: TokenType.Number,
+    value: integer(stream.range(start, end)),
     integer: isInteger
   };
 
@@ -489,23 +553,23 @@ const number: Pattern = (stream, emit, state) => {
  */
 const numeric: Pattern = (stream, emit, state) => {
   let token: Number | Percentage | Dimension = {
-    type: "number",
+    type: TokenType.Number,
     value: state.number === null ? NaN : state.number.value,
     integer: state.number === null ? true : state.number.integer
   };
 
-  const next = stream.peek();
+  const next = stream.peek(0);
 
   if (next !== null && startsIdentifier(next, stream.peek(1), stream.peek(2))) {
     token = {
-      type: "dimension",
+      type: TokenType.Dimension,
       value: token.value,
       integer: token.integer,
       unit: name(stream)
     };
-  } else if (stream.peek() === Char.PercentSign && stream.advance()) {
+  } else if (stream.peek(0) === Char.PercentSign && stream.advance(1)) {
     token = {
-      type: "percentage",
+      type: TokenType.Percentage,
       value: token.value / 100,
       integer: token.integer
     };

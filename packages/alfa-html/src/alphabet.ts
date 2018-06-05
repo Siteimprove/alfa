@@ -4,25 +4,39 @@ import { Command, Char, isWhitespace, isAlpha } from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
 
+export enum TokenType {
+  StartTag,
+  EndTag,
+  Comment,
+  Character
+}
+
 export type Attribute = Readonly<{
   name: string;
   value: string;
 }>;
 
 export type StartTag = Readonly<{
-  type: "start-tag";
+  type: TokenType.StartTag;
   value: string;
   closed: boolean;
   attributes: Array<Attribute>;
 }>;
 
 export type EndTag = Readonly<{
-  type: "end-tag";
+  type: TokenType.EndTag;
   value: string;
 }>;
 
-export type Comment = Readonly<{ type: "comment"; value: string }>;
-export type Character = Readonly<{ type: "character"; value: string }>;
+export type Comment = Readonly<{
+  type: TokenType.Comment;
+  value: string;
+}>;
+
+export type Character = Readonly<{
+  type: TokenType.Character;
+  value: string;
+}>;
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tokenization
@@ -37,6 +51,7 @@ export type Token =
   | Comment;
 
 export type State = {
+  start: number;
   tag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
@@ -58,30 +73,31 @@ const initial: Pattern = (stream, emit, state) => {
     return Command.End;
   }
 
-  emit({ type: "character", value: fromCharCode(char) });
+  emit({ type: TokenType.Character, value: fromCharCode(char) });
+
+  return initial;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
  */
 const tagOpen: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.ExclamationMark) {
-    stream.advance();
+    stream.advance(1);
     return markupDeclarationOpen;
   }
 
   if (char === Char.Solidus) {
-    stream.advance();
+    stream.advance(1);
     return endTagOpen;
   }
 
   if (char !== null && isAlpha(char)) {
-    stream.ignore();
-
+    state.start = stream.position;
     state.tag = {
-      type: "start-tag",
+      type: TokenType.StartTag,
       value: "",
       closed: false,
       attributes: []
@@ -91,17 +107,16 @@ const tagOpen: Pattern = (stream, emit, state) => {
   }
 
   if (char === Char.QuestionMark) {
+    state.start = stream.position;
     state.comment = {
-      type: "comment",
+      type: TokenType.Comment,
       value: ""
     };
-
-    stream.ignore();
 
     return bogusComment;
   }
 
-  emit({ type: "character", value: "<" });
+  emit({ type: TokenType.Character, value: "<" });
 
   return initial;
 };
@@ -111,19 +126,19 @@ const tagOpen: Pattern = (stream, emit, state) => {
  */
 const markupDeclarationOpen: Pattern = (stream, emit, state) => {
   state.comment = {
-    type: "comment",
+    type: TokenType.Comment,
     value: ""
   };
 
   if (
-    stream.peek() === Char.HyphenMinus &&
+    stream.peek(0) === Char.HyphenMinus &&
     stream.peek(1) === Char.HyphenMinus
   ) {
     stream.advance(2);
     return commentStart;
   }
 
-  stream.ignore();
+  state.start = stream.position;
 
   return bogusComment;
 };
@@ -132,15 +147,15 @@ const markupDeclarationOpen: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#comment-start-state
  */
 const commentStart: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.HyphenMinus) {
-    stream.advance();
+    stream.advance(1);
     return commentStartDash;
   }
 
   if (char === Char.GreaterThanSign) {
-    stream.advance();
+    stream.advance(1);
 
     if (state.comment !== null) {
       emit(state.comment);
@@ -156,15 +171,15 @@ const commentStart: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
  */
 const commentStartDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.HyphenMinus) {
-    stream.advance();
+    stream.advance(1);
     return commentEnd;
   }
 
   if (char === Char.GreaterThanSign || char === null) {
-    stream.advance();
+    stream.advance(1);
 
     if (state.comment !== null) {
       emit(state.comment);
@@ -214,16 +229,18 @@ const comment: Pattern = (stream, emit, state) => {
   if (state.comment !== null) {
     state.comment.value += fromCharCode(char);
   }
+
+  return comment;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-state
  */
 const commentLessThanSign: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.ExclamationMark || char === Char.LessThanSign) {
-    stream.advance();
+    stream.advance(1);
 
     if (state.comment !== null) {
       state.comment.value += fromCharCode(char);
@@ -231,7 +248,7 @@ const commentLessThanSign: Pattern = (stream, emit, state) => {
   }
 
   if (char === Char.ExclamationMark) {
-    stream.advance();
+    stream.advance(1);
     return commentLessThanSignBang;
   }
 
@@ -242,8 +259,8 @@ const commentLessThanSign: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-state
  */
 const commentLessThanSignBang: Pattern = stream => {
-  if (stream.peek() === Char.HyphenMinus) {
-    stream.advance();
+  if (stream.peek(0) === Char.HyphenMinus) {
+    stream.advance(1);
     return commentLessThanSignBangDash;
   }
 
@@ -254,8 +271,8 @@ const commentLessThanSignBang: Pattern = stream => {
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-state
  */
 const commentLessThanSignBangDash: Pattern = stream => {
-  if (stream.peek() === Char.HyphenMinus) {
-    stream.advance();
+  if (stream.peek(0) === Char.HyphenMinus) {
+    stream.advance(1);
     return commentEnd;
   }
 
@@ -266,10 +283,10 @@ const commentLessThanSignBangDash: Pattern = stream => {
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
  */
 const commentEndDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.HyphenMinus || char === null) {
-    stream.advance();
+    stream.advance(1);
   }
 
   if (char === Char.HyphenMinus) {
@@ -287,10 +304,10 @@ const commentEndDash: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
  */
 const commentEnd: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.GreaterThanSign) {
-    stream.advance();
+    stream.advance(1);
 
     if (state.comment !== null) {
       emit(state.comment);
@@ -300,7 +317,7 @@ const commentEnd: Pattern = (stream, emit, state) => {
   }
 
   if (char === Char.ExclamationMark) {
-    stream.advance();
+    stream.advance(1);
     return commentEndBang;
   }
 
@@ -315,10 +332,10 @@ const commentEnd: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
  */
 const commentEndBang: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.HyphenMinus) {
-    stream.advance();
+    stream.advance(1);
 
     if (state.comment !== null) {
       state.comment.value += "-!";
@@ -352,19 +369,18 @@ const commentEndBang: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#end-tag-open-state
  */
 const endTagOpen: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === null) {
-    emit({ type: "character", value: "<" });
-    emit({ type: "character", value: "/" });
+    emit({ type: TokenType.Character, value: "<" });
+    emit({ type: TokenType.Character, value: "/" });
     return Command.End;
   }
 
   if (isAlpha(char)) {
-    stream.ignore();
-
+    state.start = stream.position;
     state.tag = {
-      type: "end-tag",
+      type: TokenType.EndTag,
       value: ""
     };
 
@@ -372,16 +388,15 @@ const endTagOpen: Pattern = (stream, emit, state) => {
   }
 
   if (char === Char.GreaterThanSign) {
-    stream.advance();
+    stream.advance(1);
     return initial;
   }
 
+  state.start = stream.position;
   state.comment = {
-    type: "comment",
+    type: TokenType.Comment,
     value: ""
   };
-
-  stream.ignore();
 
   return bogusComment;
 };
@@ -390,7 +405,7 @@ const endTagOpen: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tag-name-state
  */
 const tagName: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === null) {
     return Command.End;
@@ -402,11 +417,16 @@ const tagName: Pattern = (stream, emit, state) => {
     char === Char.GreaterThanSign
   ) {
     if (state.tag !== null) {
-      state.tag.value = fromCharCode(...stream.result());
+      state.tag.value = stream.reduce(
+        state.start,
+        stream.position,
+        (value, char) => value + fromCharCode(char),
+        ""
+      );
     }
   }
 
-  stream.advance();
+  stream.advance(1);
 
   if (isWhitespace(char)) {
     return beforeAttributeName;
@@ -423,19 +443,21 @@ const tagName: Pattern = (stream, emit, state) => {
 
     return initial;
   }
+
+  return tagName;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
  */
 const selfClosingStartTag: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.GreaterThanSign) {
-    stream.advance();
+    stream.advance(1);
 
     if (state.tag !== null) {
-      if (state.tag.type === "start-tag") {
+      if (state.tag.type === TokenType.StartTag) {
         state.tag.closed = true;
       }
 
@@ -458,7 +480,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state) => {
 const beforeAttributeName: Pattern = (stream, emit, state) => {
   stream.accept(isWhitespace);
 
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   state.attribute = { name: "", value: "" };
 
@@ -466,11 +488,11 @@ const beforeAttributeName: Pattern = (stream, emit, state) => {
     return afterAttributeName;
   }
 
-  if (state.tag !== null && state.tag.type === "start-tag") {
+  if (state.tag !== null && state.tag.type === TokenType.StartTag) {
     state.tag.attributes.push(state.attribute);
   }
 
-  stream.ignore();
+  state.start = stream.position;
 
   return attributeName;
 };
@@ -479,7 +501,7 @@ const beforeAttributeName: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#attribute-name-state
  */
 const attributeName: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (
     char === null ||
@@ -488,7 +510,12 @@ const attributeName: Pattern = (stream, emit, state) => {
     char === Char.GreaterThanSign
   ) {
     if (state.attribute !== null) {
-      state.attribute.name = fromCharCode(...stream.result());
+      state.attribute.name = stream.reduce(
+        state.start,
+        stream.position,
+        (value, char) => value + fromCharCode(char),
+        ""
+      );
     }
 
     return afterAttributeName;
@@ -496,15 +523,22 @@ const attributeName: Pattern = (stream, emit, state) => {
 
   if (char === Char.EqualSign) {
     if (state.attribute !== null) {
-      state.attribute.name = fromCharCode(...stream.result());
+      state.attribute.name = stream.reduce(
+        state.start,
+        stream.position,
+        (value, char) => value + fromCharCode(char),
+        ""
+      );
     }
 
-    stream.advance();
+    stream.advance(1);
 
     return beforeAttributeValue;
   }
 
-  stream.advance();
+  stream.advance(1);
+
+  return attributeName;
 };
 
 /**
@@ -513,20 +547,20 @@ const attributeName: Pattern = (stream, emit, state) => {
 const afterAttributeName: Pattern = (stream, emit, state) => {
   stream.accept(isWhitespace);
 
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.Solidus) {
-    stream.advance();
+    stream.advance(1);
     return selfClosingStartTag;
   }
 
   if (char === Char.EqualSign) {
-    stream.advance();
+    stream.advance(1);
     return beforeAttributeValue;
   }
 
   if (char === Char.GreaterThanSign) {
-    stream.advance();
+    stream.advance(1);
 
     if (state.tag !== null) {
       emit(state.tag);
@@ -547,16 +581,16 @@ const afterAttributeName: Pattern = (stream, emit, state) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-value-state
  */
-const beforeAttributeValue: Pattern = (stream, emit) => {
+const beforeAttributeValue: Pattern = (stream, emit, state) => {
   stream.accept(isWhitespace);
 
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.QuotationMark || char === Char.Apostrophe) {
-    stream.advance();
+    stream.advance(1);
   }
 
-  stream.ignore();
+  state.start = stream.position;
 
   if (char === Char.QuotationMark) {
     return attributeValueDoubleQuoted;
@@ -573,53 +607,67 @@ const beforeAttributeValue: Pattern = (stream, emit) => {
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
  */
 const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.QuotationMark) {
     if (state.attribute !== null) {
-      state.attribute.value = fromCharCode(...stream.result());
+      state.attribute.value = stream.reduce(
+        state.start,
+        stream.position,
+        (value, char) => value + fromCharCode(char),
+        ""
+      );
     }
 
-    stream.advance();
+    stream.advance(1);
 
     return afterAttributeValueQuoted;
   }
 
-  stream.advance();
+  stream.advance(1);
 
   if (char === null) {
     return Command.End;
   }
+
+  return attributeValueDoubleQuoted;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
  */
 const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === Char.Apostrophe) {
     if (state.attribute !== null) {
-      state.attribute.value = fromCharCode(...stream.result());
+      state.attribute.value = stream.reduce(
+        state.start,
+        stream.position,
+        (value, char) => value + fromCharCode(char),
+        ""
+      );
     }
 
-    stream.advance();
+    stream.advance(1);
 
     return afterAttributeValueQuoted;
   }
 
-  stream.advance();
+  stream.advance(1);
 
   if (char === null) {
     return Command.End;
   }
+
+  return attributeValueSingleQuoted;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-unquoted-state
  */
 const attributeValueUnquoted: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === null) {
     return Command.End;
@@ -627,11 +675,16 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
   if (isWhitespace(char) || char === Char.GreaterThanSign) {
     if (state.attribute !== null) {
-      state.attribute.value = fromCharCode(...stream.result());
+      state.attribute.value = stream.reduce(
+        state.start,
+        stream.position,
+        (value, char) => value + fromCharCode(char),
+        ""
+      );
     }
   }
 
-  stream.advance();
+  stream.advance(1);
 
   if (isWhitespace(char)) {
     return beforeAttributeName;
@@ -644,13 +697,15 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
     return initial;
   }
+
+  return attributeValueUnquoted;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-value-quoted-state
  */
 const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === null) {
     return Command.End;
@@ -661,7 +716,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
     char === Char.Solidus ||
     char === Char.GreaterThanSign
   ) {
-    stream.advance();
+    stream.advance(1);
   }
 
   if (isWhitespace(char)) {
@@ -691,7 +746,12 @@ const bogusComment: Pattern = (stream, emit, state) => {
 
   if (char === Char.GreaterThanSign || char === null) {
     if (state.comment !== null) {
-      state.comment.value += fromCharCode(...stream.result());
+      state.comment.value += stream.reduce(
+        state.start,
+        stream.position,
+        (value, char) => value + fromCharCode(char),
+        ""
+      );
       emit(state.comment);
     }
   }
@@ -703,9 +763,11 @@ const bogusComment: Pattern = (stream, emit, state) => {
   if (char === null) {
     return Command.End;
   }
+
+  return bogusComment;
 };
 
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   initial,
-  () => ({ tag: null, attribute: null, comment: null })
+  () => ({ start: 0, tag: null, attribute: null, comment: null })
 );

@@ -25,10 +25,6 @@ export function lex<T extends Token, S = null>(
   while (true) {
     const next = pattern(stream, emit, state);
 
-    if (next === undefined) {
-      continue;
-    }
-
     if (typeof next === "function") {
       pattern = next;
     } else {

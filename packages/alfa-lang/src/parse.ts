@@ -9,7 +9,7 @@ export function parse<T extends Token, R>(
   const stream = new Stream(input);
 
   function expression(power: number): R | null {
-    let token = stream.peek();
+    let token = stream.peek(0);
 
     if (token === null) {
       return null;
@@ -27,7 +27,7 @@ export function parse<T extends Token, R>(
       return null;
     }
 
-    stream.advance();
+    stream.advance(1);
 
     let left = production.prefix(token, stream, () => expression(-1));
 
@@ -39,7 +39,7 @@ export function parse<T extends Token, R>(
       return expression(power);
     }
 
-    token = stream.peek();
+    token = stream.peek(0);
 
     while (token !== null) {
       const entry = grammar.get(token);
@@ -62,7 +62,7 @@ export function parse<T extends Token, R>(
         break;
       }
 
-      stream.advance();
+      stream.advance(1);
 
       const right = production.infix(
         token,
@@ -75,7 +75,7 @@ export function parse<T extends Token, R>(
         return null;
       }
 
-      token = stream.peek();
+      token = stream.peek(0);
 
       if (right === Command.Continue) {
         continue;
@@ -89,7 +89,7 @@ export function parse<T extends Token, R>(
 
   const result = expression(-1);
 
-  if (stream.peek() !== null) {
+  if (stream.peek(0) !== null) {
     return null;
   }
 

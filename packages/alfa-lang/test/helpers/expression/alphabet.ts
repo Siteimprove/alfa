@@ -37,7 +37,7 @@ export function isNumber(token: ExpressionToken): token is Number {
 const initial: ExpressionPattern = (stream, emit) => {
   stream.accept(isWhitespace);
 
-  const char = stream.peek();
+  const char = stream.peek(0);
 
   if (char === null) {
     return Command.End;
@@ -47,35 +47,45 @@ const initial: ExpressionPattern = (stream, emit) => {
     return number;
   }
 
-  stream.advance();
+  stream.advance(1);
 
   switch (char) {
     case Char.PlusSign:
       emit({ type: TokenType.Add });
-      return;
+      break;
     case Char.HyphenMinus:
       emit({ type: TokenType.Subtract });
-      return;
+      break;
     case Char.Asterisk:
       emit({ type: TokenType.Multiply });
-      return;
+      break;
     case Char.Solidus:
       emit({ type: TokenType.Divide });
-      return;
+      break;
     case Char.CircumflexAccent:
       emit({ type: TokenType.Exponentiate });
   }
+
+  return initial;
 };
 
 const number: ExpressionPattern = (stream, emit) => {
-  stream.ignore();
+  const start = stream.position;
+
   stream.accept(isNumeric);
+
+  const end = stream.position;
+
   emit({
     type: TokenType.Number,
-    value: stream
-      .result()
-      .reduce((value, n) => 10 * value + n - Char.DigitZero, 0)
+    value: stream.reduce(
+      start,
+      end,
+      (value, char) => 10 * value + char - Char.DigitZero,
+      0
+    )
   });
+
   return initial;
 };
 
