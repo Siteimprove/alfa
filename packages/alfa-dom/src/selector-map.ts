@@ -20,9 +20,9 @@ const { isArray } = Array;
  */
 export type SelectorEntry = {
   readonly selector: Selector;
+  readonly declarations: Array<Declaration>;
   readonly order: number;
   readonly specificity: number;
-  readonly declarations: Array<Declaration>;
 };
 
 /**
@@ -99,7 +99,9 @@ export class SelectorMap {
 
           order++;
 
-          for (const selector of selectors) {
+          for (let i = 0, n = selectors.length; i < n; i++) {
+            const selector = selectors[i];
+
             const keySelector = getKeySelector(selector);
             const specificity = getSpecificity(selector);
 

@@ -1,22 +1,22 @@
 import { Predicate } from "@siteimprove/alfa-util";
 
 export class Stream<T> {
-  protected _input: ArrayLike<T>;
-  protected _position: number = 0;
-  protected _start: number = 0;
+  protected input: ArrayLike<T>;
+  protected position: number = 0;
+  protected start: number = 0;
 
   public constructor(input: ArrayLike<T>) {
-    this._input = input;
+    this.input = input;
   }
 
   public peek(offset: number = 0): T | null {
-    const position = this._position + offset;
+    const position = this.position + offset;
 
-    if (position < this._input.length) {
-      return this._input[position];
+    if (position >= this.input.length) {
+      return null;
     }
 
-    return null;
+    return this.input[position];
   }
 
   public next(): T | null {
@@ -26,29 +26,29 @@ export class Stream<T> {
   }
 
   public ignore(): void {
-    this._start = this._position;
+    this.start = this.position;
   }
 
   public range(start: number, end: number): Array<T> {
     const result: Array<T> = new Array(end - start);
 
     for (let i = start, j = 0; i < end; i++, j++) {
-      result[j] = this._input[i];
+      result[j] = this.input[i];
     }
 
     return result;
   }
 
   public result(): Array<T> {
-    return this.range(this._start, this._position);
+    return this.range(this.start, this.position);
   }
 
   public progressed(): boolean {
-    return this._start !== this._position;
+    return this.start !== this.position;
   }
 
   public restore(position: number): void {
-    const difference = position - this._position;
+    const difference = position - this.position;
 
     if (difference > 0) {
       this.advance(difference);
@@ -63,9 +63,9 @@ export class Stream<T> {
     let advanced = false;
 
     do {
-      if (this._position < this._input.length) {
+      if (this.position < this.input.length) {
         advanced = true;
-        this._position++;
+        this.position++;
       }
     } while (--times > 0);
 
@@ -76,9 +76,9 @@ export class Stream<T> {
     let backedup = false;
 
     do {
-      if (this._position > 0) {
+      if (this.position > 0) {
         backedup = true;
-        this._position--;
+        this.position--;
       }
     } while (--times > 0);
 
@@ -126,7 +126,7 @@ export class Stream<T> {
     }
 
     let accepted = 0;
-    let start = this._position;
+    let start = this.position;
 
     while (next !== null && predicate(next)) {
       accepted++;
@@ -143,6 +143,6 @@ export class Stream<T> {
       return false;
     }
 
-    return this.range(start, this._position) as Array<U>;
+    return this.range(start, this.position) as Array<U>;
   }
 }

@@ -225,6 +225,10 @@ function matchesRelative(
         if (canReject(selector.left, options.filter)) {
           return false;
         }
+
+        // If the selector cannot be rejected, unset the ancestor filter as it
+        // no longer applies when we start recursively moving up the tree.
+        options = { ...options, filter: undefined };
     }
   }
 

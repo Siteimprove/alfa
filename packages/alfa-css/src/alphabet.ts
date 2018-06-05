@@ -194,27 +194,25 @@ const replacementCharacter = 0xfffd;
  * @see https://www.w3.org/TR/css-syntax/#consume-an-escaped-code-point
  */
 function escapedCodePoint(stream: Stream<number>): number {
-  let code = stream.next();
+  const char = stream.next();
 
-  if (code === null) {
+  if (char === null) {
     return replacementCharacter;
   }
 
-  if (isHex(code)) {
-    const bytes = [code, ...(stream.accept(isHex, 0, 5) || [])];
+  if (isHex(char)) {
+    const bytes = [char, ...(stream.accept(isHex, 0, 5) || [])];
+
+    let code = 0;
 
     for (let i = 0, n = bytes.length; i < n; i++) {
       let byte = bytes[i];
 
       if (isNumeric(byte)) {
         byte = byte - Char.DigitZero;
-      }
-
-      if (isBetween(byte, Char.SmallLetterA, Char.SmallLetterF)) {
+      } else if (isBetween(byte, Char.SmallLetterA, Char.SmallLetterF)) {
         byte = byte - Char.SmallLetterA + 10;
-      }
-
-      if (isBetween(byte, Char.CapitalLetterA, Char.CapitalLetterF)) {
+      } else if (isBetween(byte, Char.CapitalLetterA, Char.CapitalLetterF)) {
         byte = byte - Char.CapitalLetterA + 10;
       }
 
@@ -226,9 +224,11 @@ function escapedCodePoint(stream: Stream<number>): number {
     if (code === 0 || isBetween(code, 0xd800, 0xdfff) || code > 0x10ffff) {
       return replacementCharacter;
     }
+
+    return code;
   }
 
-  return code;
+  return char;
 }
 
 /**
@@ -394,14 +394,12 @@ const initial: Pattern = (stream, emit, state) => {
 };
 
 const comment: Pattern = (stream, emit, state) => {
-  stream.ignore();
-
   if (
     stream.accept(
-      () => stream.peek() !== Char.Asterisk || stream.peek(1) !== Char.Solidus
+      token => token !== Char.Asterisk || stream.peek() !== Char.Solidus
     )
   ) {
-    stream.advance(2);
+    stream.advance();
     return initial;
   }
 };

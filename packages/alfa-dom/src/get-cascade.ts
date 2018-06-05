@@ -28,15 +28,7 @@ export function getCascade(context: Document): Cascade | null {
     const ruleTree = new RuleTree();
 
     traverseNode(context, {
-      enter(node, parentNode) {
-        if (
-          parentNode !== null &&
-          isElement(parentNode) &&
-          parentNode.childNodes[0] === node
-        ) {
-          filter.add(parentNode);
-        }
-
+      enter(node) {
         if (isElement(node)) {
           const rules = selectorMap.getRules(node, context, {
             filter,
@@ -64,6 +56,8 @@ export function getCascade(context: Document): Cascade | null {
           if (entry !== null) {
             entries.set(node, entry);
           }
+
+          filter.add(node);
         }
       },
       exit(node) {
