@@ -193,14 +193,14 @@ function isName(char: number): boolean {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-name
  */
-function name(stream: Stream<number>): string {
+function consumeName(stream: Stream<number>): string {
   let result = "";
   let next = stream.peek(0);
 
   while (next !== null) {
     if (startsValidEscape(next, stream.peek(1))) {
       stream.advance(1);
-      result += fromCharCode(escapedCodePoint(stream));
+      result += fromCharCode(consumeEscapedCodePoint(stream));
     } else if (isName(next)) {
       stream.advance(1);
       result += fromCharCode(next);
@@ -219,7 +219,7 @@ const replacementCharacter = 0xfffd;
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-escaped-code-point
  */
-function escapedCodePoint(stream: Stream<number>): number {
+function consumeEscapedCodePoint(stream: Stream<number>): number {
   const char = stream.next();
 
   if (char === null) {
@@ -273,7 +273,7 @@ function escapedCodePoint(stream: Stream<number>): number {
 /**
  * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
  */
-function integer(input: Array<number>): number {
+function consumeInteger(input: Array<number>): number {
   let result = 0;
   let sign = 1;
 
@@ -290,11 +290,11 @@ function integer(input: Array<number>): number {
     }
 
     if (char === Char.FullStop) {
-      return fraction(input, i + 1, result) * sign;
+      return consumeFraction(input, i + 1, result) * sign;
     }
 
     if (char === Char.SmallLetterE || char === Char.CapitalLetterE) {
-      return exponent(input, i + 1, result) * sign;
+      return consumeExponent(input, i + 1, result) * sign;
     }
 
     result = result * 10 + char - Char.DigitZero;
@@ -306,14 +306,18 @@ function integer(input: Array<number>): number {
 /**
  * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
  */
-function fraction(input: Array<number>, start: number, result: number): number {
+function consumeFraction(
+  input: Array<number>,
+  start: number,
+  result: number
+): number {
   let power = 0.1;
 
   for (let i = start, n = input.length; i < n; i++, power /= 10) {
     const char = input[i];
 
     if (char === Char.SmallLetterE || char === Char.CapitalLetterE) {
-      return exponent(input, i + 1, result);
+      return consumeExponent(input, i + 1, result);
     }
 
     result = result + power * (char - Char.DigitZero);
@@ -325,7 +329,11 @@ function fraction(input: Array<number>, start: number, result: number): number {
 /**
  * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
  */
-function exponent(input: Array<number>, start: number, result: number): number {
+function consumeExponent(
+  input: Array<number>,
+  start: number,
+  result: number
+): number {
   let power = 0;
   let sign = 1;
 
@@ -412,7 +420,7 @@ const initial: Pattern = (stream, emit, state) => {
         char !== null &&
         startsIdentifier(char, stream.peek(1), stream.peek(2))
       ) {
-        emit({ type: TokenType.AtKeyword, value: name(stream) });
+        emit({ type: TokenType.AtKeyword, value: consumeName(stream) });
         return initial;
       }
     }
@@ -453,7 +461,7 @@ const comment: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
  */
 const ident: Pattern = (stream, emit) => {
-  const value = name(stream);
+  const value = consumeName(stream);
 
   if (stream.peek(0) === Char.LeftParenthesis) {
     stream.advance(1);
@@ -541,7 +549,7 @@ const number: Pattern = (stream, emit, state) => {
 
   state.number = {
     type: TokenType.Number,
-    value: integer(stream.range(start, end)),
+    value: consumeInteger(stream.range(start, end)),
     integer: isInteger
   };
 
@@ -565,9 +573,11 @@ const numeric: Pattern = (stream, emit, state) => {
       type: TokenType.Dimension,
       value: token.value,
       integer: token.integer,
-      unit: name(stream)
+      unit: consumeName(stream)
     };
-  } else if (stream.peek(0) === Char.PercentSign && stream.advance(1)) {
+  } else if (next === Char.PercentSign) {
+    stream.advance(1);
+
     token = {
       type: TokenType.Percentage,
       value: token.value / 100,
@@ -576,6 +586,7 @@ const numeric: Pattern = (stream, emit, state) => {
   }
 
   emit(token);
+
   return initial;
 };
 
