@@ -113,12 +113,7 @@ export type Token =
   | SquareBracket
   | CurlyBracket;
 
-export type State = {
-  number: Number | null;
-  mark: Char.QuotationMark | Char.Apostrophe | null;
-};
-
-export type Pattern = Lang.Pattern<Token, State>;
+export type Pattern = Lang.Pattern<Token>;
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
@@ -356,154 +351,9 @@ function consumeExponent(
 }
 
 /**
- * @see https://www.w3.org/TR/css-syntax/#consume-a-token
- */
-const initial: Pattern = (stream, emit, state) => {
-  const char = stream.next();
-
-  if (char === null) {
-    return Command.End;
-  }
-
-  if (isWhitespace(char)) {
-    stream.accept(isWhitespace);
-    emit({ type: TokenType.Whitespace });
-    return initial;
-  }
-
-  switch (char) {
-    case Char.QuotationMark:
-    case Char.Apostrophe:
-      state.mark = char;
-      return string;
-
-    case Char.LeftParenthesis:
-      emit({ type: TokenType.LeftParenthesis });
-      return initial;
-    case Char.RightParenthesis:
-      emit({ type: TokenType.RightParenthesis });
-      return initial;
-    case Char.LeftSquareBracket:
-      emit({ type: TokenType.LeftSquareBracket });
-      return initial;
-    case Char.RightSquareBracket:
-      emit({ type: TokenType.RightSquareBracket });
-      return initial;
-    case Char.LeftCurlyBracket:
-      emit({ type: TokenType.LeftCurlyBracket });
-      return initial;
-    case Char.RightCurlyBracket:
-      emit({ type: TokenType.RightCurlyBracket });
-      return initial;
-    case Char.Comma:
-      emit({ type: TokenType.Comma });
-      return initial;
-    case Char.Colon:
-      emit({ type: TokenType.Colon });
-      return initial;
-    case Char.Semicolon:
-      emit({ type: TokenType.Semicolon });
-      return initial;
-
-    case Char.Solidus: {
-      if (stream.peek(0) === Char.Asterisk) {
-        stream.advance(1);
-        return comment;
-      }
-      break;
-    }
-
-    case Char.AtSign: {
-      const char = stream.peek(0);
-
-      if (
-        char !== null &&
-        startsIdentifier(char, stream.peek(1), stream.peek(2))
-      ) {
-        emit({ type: TokenType.AtKeyword, value: consumeName(stream) });
-        return initial;
-      }
-    }
-  }
-
-  const snd = stream.peek(0);
-  const thd = stream.peek(1);
-
-  if (startsIdentifier(char, snd, thd)) {
-    stream.backup(1);
-    return ident;
-  }
-
-  if (startsNumber(char, snd, thd)) {
-    stream.backup(1);
-    return number;
-  }
-
-  emit({ type: TokenType.Delim, value: char });
-
-  return initial;
-};
-
-const comment: Pattern = (stream, emit, state) => {
-  if (
-    stream.accept(
-      token => token !== Char.Asterisk || stream.peek(0) !== Char.Solidus
-    )
-  ) {
-    stream.advance(1);
-    return initial;
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
- */
-const ident: Pattern = (stream, emit) => {
-  const value = consumeName(stream);
-
-  if (stream.peek(0) === Char.LeftParenthesis) {
-    stream.advance(1);
-    emit({ type: TokenType.FunctionName, value });
-  } else {
-    emit({ type: TokenType.Ident, value });
-  }
-
-  return initial;
-};
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#consume-a-string-token
- */
-const string: Pattern = (stream, emit, state) => {
-  const start = stream.position;
-  let end = start;
-
-  let next = stream.next();
-
-  while (next !== null && next !== state.mark) {
-    end++;
-    next = stream.next();
-  }
-
-  emit({
-    type: TokenType.String,
-    value: stream.reduce(
-      start,
-      end,
-      (value, char) => value + fromCharCode(char),
-      ""
-    )
-  });
-
-  return initial;
-};
-
-/**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
-const number: Pattern = (stream, emit, state) => {
+function consumeNumber(stream: Stream<number>): Number {
   const start = stream.position;
 
   if (stream.peek(0) === Char.PlusSign || stream.peek(0) === Char.HyphenMinus) {
@@ -545,52 +395,183 @@ const number: Pattern = (stream, emit, state) => {
     }
   }
 
-  const end = stream.position;
-
-  state.number = {
+  return {
     type: TokenType.Number,
-    value: consumeInteger(stream.range(start, end)),
+    value: consumeInteger(stream.range(start, stream.position)),
     integer: isInteger
   };
-
-  return numeric;
-};
+}
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-numeric-token
  */
-const numeric: Pattern = (stream, emit, state) => {
-  let token: Number | Percentage | Dimension = {
-    type: TokenType.Number,
-    value: state.number === null ? NaN : state.number.value,
-    integer: state.number === null ? true : state.number.integer
-  };
+function consumeNumeric(
+  stream: Stream<number>
+): Number | Dimension | Percentage {
+  const number = consumeNumber(stream);
 
   const next = stream.peek(0);
 
   if (next !== null && startsIdentifier(next, stream.peek(1), stream.peek(2))) {
-    token = {
+    return {
       type: TokenType.Dimension,
-      value: token.value,
-      integer: token.integer,
+      value: number.value,
+      integer: number.integer,
       unit: consumeName(stream)
-    };
-  } else if (next === Char.PercentSign) {
-    stream.advance(1);
-
-    token = {
-      type: TokenType.Percentage,
-      value: token.value / 100,
-      integer: token.integer
     };
   }
 
-  emit(token);
+  if (next === Char.PercentSign) {
+    stream.advance(1);
+
+    return {
+      type: TokenType.Percentage,
+      value: number.value / 100,
+      integer: number.integer
+    };
+  }
+
+  return number;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
+ */
+function consumeIdentLike(stream: Stream<number>): Ident | FunctionName {
+  const value = consumeName(stream);
+
+  if (stream.peek(0) === Char.LeftParenthesis) {
+    stream.advance(1);
+    return { type: TokenType.FunctionName, value };
+  }
+
+  return { type: TokenType.Ident, value };
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#consume-a-string-token
+ */
+function consumeString(
+  stream: Stream<number>,
+  mark: Char.QuotationMark | Char.Apostrophe
+): String {
+  const start = stream.position;
+  let end = start;
+
+  let next = stream.next();
+
+  while (next !== null && next !== mark) {
+    end++;
+    next = stream.next();
+  }
+
+  return {
+    type: TokenType.String,
+    value: stream.reduce(
+      start,
+      end,
+      (value, char) => value + fromCharCode(char),
+      ""
+    )
+  };
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#consume-a-token
+ */
+const initial: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  if (char === null) {
+    return Command.End;
+  }
+
+  if (isWhitespace(char)) {
+    stream.accept(isWhitespace);
+    emit({ type: TokenType.Whitespace });
+    return initial;
+  }
+
+  switch (char) {
+    case Char.QuotationMark:
+    case Char.Apostrophe:
+      emit(consumeString(stream, char));
+      return initial;
+
+    case Char.LeftParenthesis:
+      emit({ type: TokenType.LeftParenthesis });
+      return initial;
+    case Char.RightParenthesis:
+      emit({ type: TokenType.RightParenthesis });
+      return initial;
+    case Char.LeftSquareBracket:
+      emit({ type: TokenType.LeftSquareBracket });
+      return initial;
+    case Char.RightSquareBracket:
+      emit({ type: TokenType.RightSquareBracket });
+      return initial;
+    case Char.LeftCurlyBracket:
+      emit({ type: TokenType.LeftCurlyBracket });
+      return initial;
+    case Char.RightCurlyBracket:
+      emit({ type: TokenType.RightCurlyBracket });
+      return initial;
+    case Char.Comma:
+      emit({ type: TokenType.Comma });
+      return initial;
+    case Char.Colon:
+      emit({ type: TokenType.Colon });
+      return initial;
+    case Char.Semicolon:
+      emit({ type: TokenType.Semicolon });
+      return initial;
+
+    case Char.Solidus: {
+      if (
+        stream.peek(0) === Char.Asterisk &&
+        stream.accept(
+          token => token !== Char.Asterisk || stream.peek(0) !== Char.Solidus
+        )
+      ) {
+        stream.advance(1);
+        return initial;
+      }
+      break;
+    }
+
+    case Char.AtSign: {
+      const char = stream.peek(0);
+      if (
+        char !== null &&
+        startsIdentifier(char, stream.peek(1), stream.peek(2))
+      ) {
+        emit({ type: TokenType.AtKeyword, value: consumeName(stream) });
+        return initial;
+      }
+    }
+  }
+
+  const snd = stream.peek(0);
+  const thd = stream.peek(1);
+
+  if (startsIdentifier(char, snd, thd)) {
+    stream.backup(1);
+    emit(consumeIdentLike(stream));
+    return initial;
+  }
+
+  if (startsNumber(char, snd, thd)) {
+    stream.backup(1);
+    emit(consumeNumeric(stream));
+    return initial;
+  }
+
+  emit({ type: TokenType.Delim, value: char });
 
   return initial;
 };
 
-export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
+export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
   initial,
-  () => ({ number: null, mark: null })
+  () => null
 );
