@@ -1,7 +1,7 @@
 import { Document, Element } from "./types";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
-import { SelectorMap } from "./selector-map";
+import { SelectorMap, SelectorEntry } from "./selector-map";
 import { AncestorFilter } from "./ancestor-filter";
 import { RuleTree, RuleEntry } from "./rule-tree";
 
@@ -38,18 +38,7 @@ export function getCascade(context: Document): Cascade | null {
             pseudo: true
           });
 
-          rules.sort((a, b) => {
-            // If the specificities of the rules are equal, the declaration
-            // order will determine the cascade. The rule with the highest
-            // order gets the highest priority.
-            if (a.specificity === b.specificity) {
-              return a.order - b.order;
-            }
-
-            // Otherwise, the specificity will determine the cascade. The rule
-            // with the highest specificity gets the highest priority.
-            return a.specificity - b.specificity;
-          });
+          sort(rules);
 
           const entry = ruleTree.insert(rules);
 
@@ -72,4 +61,33 @@ export function getCascade(context: Document): Cascade | null {
   }
 
   return cascade;
+}
+
+function sort(selectors: Array<SelectorEntry>): void {
+  for (let i = 0, n = selectors.length; i < n; i++) {
+    const a = selectors[i];
+
+    let j = i - 1;
+
+    while (j >= 0) {
+      const b = selectors[j];
+
+      // If the specificities of the rules are equal, the declaration order
+      // will determine the cascade. The rule with the highest order gets the
+      // highest priority.
+      if (a.specificity === b.specificity && a.order > b.order) {
+        break;
+      }
+
+      // Otherwise, the specificity will determine the cascade. The rule with
+      // the highest specificity gets the highest priority.
+      if (a.specificity > b.specificity) {
+        break;
+      }
+
+      selectors[j + 1] = selectors[j--];
+    }
+
+    selectors[j + 1] = a;
+  }
 }
