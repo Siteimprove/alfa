@@ -5,7 +5,7 @@ import {
   TypeSelector
 } from "@siteimprove/alfa-css";
 import { Element } from "./types";
-import { getAttribute } from "./get-attribute";
+import { getId } from "./get-id";
 import { getClassList } from "./get-class-list";
 
 /**
@@ -85,7 +85,7 @@ export class AncestorFilter {
       return;
     }
 
-    const id = getAttribute(element, "id");
+    const id = getId(element);
 
     if (id !== null) {
       fn(this.ids, id);
