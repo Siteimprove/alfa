@@ -389,10 +389,10 @@ function consumeExponent(
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
-function consumeNumber(stream: Stream<number>): Number {
+function consumeNumber(char: number, stream: Stream<number>): Number {
   const start = stream.position;
 
-  let next = stream.peek(0);
+  let next: number | null = char;
 
   if (next === Char.PlusSign || next === Char.HyphenMinus) {
     stream.advance(1);
@@ -445,9 +445,10 @@ function consumeNumber(stream: Stream<number>): Number {
  * @see https://www.w3.org/TR/css-syntax/#consume-a-numeric-token
  */
 function consumeNumeric(
+  char: number,
   stream: Stream<number>
 ): Number | Dimension | Percentage {
-  const number = consumeNumber(stream);
+  const number = consumeNumber(char, stream);
 
   const next = stream.peek(0);
 
@@ -530,7 +531,7 @@ function consumeToken(stream: Stream<number>): Token | null {
   }
 
   if (startsNumber(char, stream)) {
-    return consumeNumeric(stream);
+    return consumeNumeric(char, stream);
   }
 
   stream.advance(1);
