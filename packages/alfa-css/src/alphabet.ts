@@ -536,18 +536,35 @@ function consumeToken(stream: Stream<number>): Token | null {
     return null;
   }
 
-  if (isWhitespace(char)) {
-    stream.advance(1);
-    stream.accept(isWhitespace);
+  switch (char) {
+    case Char.PlusSign:
+    case Char.FullStop:
+      if (startsNumber(char, stream)) {
+        return consumeNumeric(char, stream);
+      }
+      break;
 
-    return { type: TokenType.Whitespace };
+    case Char.HyphenMinus:
+      if (startsIdentifier(char, stream)) {
+        return consumeIdentLike(char, stream);
+      }
+      if (startsNumber(char, stream)) {
+        return consumeNumeric(char, stream);
+      }
+      break;
+
+    case Char.ReverseSolidus:
+      if (startsValidEscape(char, stream)) {
+        return consumeIdentLike(char, stream);
+      }
+      break;
   }
 
-  if (startsIdentifier(char, stream)) {
+  if (isNameStart(char)) {
     return consumeIdentLike(char, stream);
   }
 
-  if (startsNumber(char, stream)) {
+  if (isNumeric(char)) {
     return consumeNumeric(char, stream);
   }
 
@@ -577,32 +594,34 @@ function consumeToken(stream: Stream<number>): Token | null {
       return { type: TokenType.LeftCurlyBracket };
     case Char.RightCurlyBracket:
       return { type: TokenType.RightCurlyBracket };
-  }
 
-  if (char === Char.Solidus) {
-    const char = stream.peek(0);
-
-    if (char === Char.Asterisk) {
-      stream.advance(1);
-
-      if (
-        stream.accept(
-          char => char !== Char.Asterisk && stream.peek(0) !== Char.Solidus
-        )
-      ) {
-        stream.advance(2);
+    case Char.Solidus: {
+      const char = stream.peek(0);
+      if (char === Char.Asterisk) {
+        stream.advance(1);
+        if (
+          stream.accept(
+            char => char !== Char.Asterisk && stream.peek(0) !== Char.Solidus
+          )
+        ) {
+          stream.advance(2);
+        }
+        return consumeToken(stream);
       }
+      break;
+    }
 
-      return consumeToken(stream);
+    case Char.AtSign: {
+      const char = stream.peek(0);
+      if (char !== null && startsIdentifier(char, stream)) {
+        return { type: TokenType.AtKeyword, value: consumeName(char, stream) };
+      }
     }
   }
 
-  if (char === Char.AtSign) {
-    const char = stream.peek(0);
-
-    if (char !== null && startsIdentifier(char, stream)) {
-      return { type: TokenType.AtKeyword, value: consumeName(char, stream) };
-    }
+  if (isWhitespace(char)) {
+    stream.accept(isWhitespace);
+    return { type: TokenType.Whitespace };
   }
 
   return { type: TokenType.Delim, value: char };
