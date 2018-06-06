@@ -9,6 +9,38 @@ import { getAttribute } from "./get-attribute";
 import { getClassList } from "./get-class-list";
 
 /**
+ * The ancestor filter is a data structure used for optimising selector matching
+ * in the case of descendant selectors. When traversing down through the DOM
+ * tree during selector matching, the ancestor filter stores information about
+ * the ancestor elements that are found up the path from the element that is
+ * currently being visited. Given an element and a descendant selector, we can
+ * therefore quickly determine if the selector might match an ancestor of the
+ * current element.
+ *
+ * The information stored about elements includes their ID, classes, and type
+ * which are what the majority of selectors make use of. A bucket exists for
+ * each of these and whenever an element is added to the filter, its associated
+ * ID, classes, and type are added to the three buckets. The buckets also keep
+ * count of how many elements in the current path match a given ID, class, or
+ * type, in order to evict these from the filter when the last element with a
+ * given ID, class, or type is removed from the filter.
+ *
+ * For example, consider the following tree:
+ *
+ * section#content
+ * +-- blockquote
+ * +-- p.highlight
+ *     +-- b
+ *
+ * If we assume that we're currently visiting the `<b>` element, the ancestor
+ * ancestor filter would contain the `section` and `p` types, the `#content` ID,
+ * and the `.highlight` class. Given a selector `main b`, we can therefore
+ * reject that the selector would match `<b>` as the ancestor filter does not
+ * contain an entry for the type `main`.
+ *
+ *
+ * @see http://doc.servo.org/style/bloom/struct.StyleBloom.html
+ *
  * @internal
  */
 export class AncestorFilter {
