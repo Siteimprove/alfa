@@ -390,53 +390,70 @@ function consumeExponent(
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
 function consumeNumber(char: number, stream: Stream<number>): Number {
-  const start = stream.position;
+  const result: Array<number> = [];
 
   let next: number | null = char;
 
   if (next === Char.PlusSign || next === Char.HyphenMinus) {
+    result.push(next);
     stream.advance(1);
   }
 
-  stream.accept(isNumeric);
+  const numbers = stream.accept(isNumeric);
+
+  if (numbers !== false) {
+    result.push(...numbers);
+  }
 
   next = stream.peek(0);
 
   let isInteger = true;
 
   if (next === Char.FullStop) {
-    next = stream.peek(1);
+    const char = stream.peek(1);
 
-    if (next !== null && isNumeric(next)) {
+    if (char !== null && isNumeric(char)) {
+      result.push(next, char);
       stream.advance(2);
-      stream.accept(isNumeric);
-
       isInteger = false;
-    }
 
-    next = stream.peek(0);
+      const numbers = stream.accept(isNumeric);
+
+      if (numbers !== false) {
+        result.push(...numbers);
+      }
+
+      next = stream.peek(0);
+    }
   }
 
   let offset = 0;
 
   if (next === Char.SmallLetterE || next === Char.CapitalLetterE) {
+    result.push(next);
     offset = 1;
     next = stream.peek(offset);
 
     if (next === Char.PlusSign || next === Char.HyphenMinus) {
       offset = 2;
+      result.push(next);
       next = stream.peek(offset);
     }
 
     if (next !== null && isNumeric(next)) {
       stream.advance(offset);
-      stream.accept(isNumeric);
+
+      const numbers = stream.accept(isNumeric);
+
+      if (numbers !== false) {
+        result.push(...numbers);
+      }
     }
   }
 
   return {
     type: TokenType.Number,
-    value: consumeInteger(stream.range(start, stream.position)),
+    value: consumeInteger(result),
     integer: isInteger
   };
 }
