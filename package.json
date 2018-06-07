@@ -8,7 +8,9 @@
     "precommit": "foreman build/lint.ts",
     "bench": "foreman --prof"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@foreman/api": "^0.0.0",
     "@foreman/cli": "^0.4.1",
@@ -22,8 +24,8 @@
     "@foreman/tap": "^0.2.3",
     "@foreman/typescript": "^0.4.2",
     "husky": "^0.14.3",
-    "lerna": "^2.8.0",
-    "prettier": "1.12.1",
-    "typescript": "^2.8.4"
+    "lerna": "^2.9.0",
+    "prettier": "1.13.4",
+    "typescript": "^2.9.1"
   }
 }

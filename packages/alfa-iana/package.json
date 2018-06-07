@@ -4,9 +4,10 @@
   "description": "alfa!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository":
-    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-iana",
-  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-iana",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -18,7 +19,7 @@
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
     "@types/got": "^8.3.1",
-    "@types/node": "^10.0.4",
+    "@types/node": "^10.3.1",
     "got": "^8.3.1",
     "record-jar": "^1.0.4"
   }

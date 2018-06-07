@@ -6,6 +6,7 @@
     "jsx": "react",
     "jsxFactory": "jsx",
     "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "stripInternal": true,
     "strict": true,
