@@ -38,9 +38,7 @@ export function getCascade(context: Document): Cascade | null {
             pseudo: true
           });
 
-          sort(rules);
-
-          const entry = ruleTree.insert(rules);
+          const entry = ruleTree.insert(sort(rules));
 
           if (entry !== null) {
             entries.set(node, entry);
@@ -63,7 +61,7 @@ export function getCascade(context: Document): Cascade | null {
   return cascade;
 }
 
-function sort(selectors: Array<SelectorEntry>): void {
+function sort(selectors: Array<SelectorEntry>): Array<SelectorEntry> {
   for (let i = 0, n = selectors.length; i < n; i++) {
     const a = selectors[i];
 
@@ -90,4 +88,6 @@ function sort(selectors: Array<SelectorEntry>): void {
 
     selectors[j + 1] = a;
   }
+
+  return selectors;
 }

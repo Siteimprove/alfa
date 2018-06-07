@@ -61,8 +61,6 @@ export class SelectorMap {
   private other: Array<SelectorEntry> = [];
 
   constructor(styleSheets: ArrayLike<StyleSheet>) {
-    const { other, ids, classes, types } = this;
-
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -72,31 +70,22 @@ export class SelectorMap {
 
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
-        enter(rule) {
+        enter: rule => {
           if (!isStyleRule(rule)) {
             return;
           }
 
-          let selectors: Selector | Array<Selector> | null = parseSelector(
-            rule.selectorText
-          );
+          const selectors = parseSelectors(rule.selectorText);
 
-          if (selectors === null) {
+          if (selectors.length === 0) {
             return;
           }
 
-          selectors = isArray(selectors) ? selectors : [selectors];
+          const declarations = parseDeclarations(rule.style.cssText);
 
-          let declarations:
-            | Declaration
-            | Array<Declaration>
-            | null = parseDeclaration(rule.style.cssText);
-
-          if (declarations === null) {
+          if (declarations.length === 0) {
             return;
           }
-
-          declarations = isArray(declarations) ? declarations : [declarations];
 
           order++;
 
@@ -108,25 +97,25 @@ export class SelectorMap {
 
             const entry: SelectorEntry = {
               selector,
+              declarations,
               order,
-              specificity,
-              declarations
+              specificity
             };
 
             if (keySelector === null) {
-              other.push(entry);
+              this.other.push(entry);
             } else {
               const key = keySelector.name;
 
               switch (keySelector.type) {
                 case SelectorType.IdSelector:
-                  addEntry(ids, key, entry);
+                  addEntry(this.ids, key, entry);
                   break;
                 case SelectorType.ClassSelector:
-                  addEntry(classes, key, entry);
+                  addEntry(this.classes, key, entry);
                   break;
                 case SelectorType.TypeSelector:
-                  addEntry(types, key, entry);
+                  addEntry(this.types, key, entry);
               }
             }
           }
@@ -221,4 +210,27 @@ function collectEntries(
       target.push(entry);
     }
   }
+}
+
+function parseSelectors(input: string): Array<Selector> {
+  const selectors: Selector | Array<Selector> | null = parseSelector(input);
+
+  if (selectors === null) {
+    return [];
+  }
+
+  return isArray(selectors) ? selectors : [selectors];
+}
+
+function parseDeclarations(input: string): Array<Declaration> {
+  const declarations:
+    | Declaration
+    | Array<Declaration>
+    | null = parseDeclaration(input);
+
+  if (declarations === null) {
+    return [];
+  }
+
+  return isArray(declarations) ? declarations : [declarations];
 }
