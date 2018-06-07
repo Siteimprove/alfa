@@ -6,7 +6,9 @@ export function parse<T extends Token, R>(
   input: ArrayLike<T>,
   grammar: Grammar<T, R>
 ): R | null {
-  const stream = new Stream(input.length, i => input[i]);
+  const readToken: (i: number) => T = i => input[i];
+
+  const stream = new Stream(input.length, readToken);
 
   function expression(power: number): R | null {
     let token = stream.peek(0);
