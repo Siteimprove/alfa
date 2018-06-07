@@ -526,6 +526,28 @@ function consumeString(
   return { type: TokenType.String, value };
 }
 
+const tokens: { [char: number]: Token } = {
+  [Char.Comma]: { type: TokenType.Comma },
+  [Char.Colon]: { type: TokenType.Colon },
+  [Char.Semicolon]: { type: TokenType.Semicolon },
+
+  [Char.LeftParenthesis]: { type: TokenType.LeftParenthesis },
+  [Char.RightParenthesis]: { type: TokenType.RightParenthesis },
+  [Char.LeftSquareBracket]: { type: TokenType.LeftSquareBracket },
+  [Char.RightSquareBracket]: { type: TokenType.RightSquareBracket },
+  [Char.LeftCurlyBracket]: { type: TokenType.LeftCurlyBracket },
+  [Char.RightCurlyBracket]: { type: TokenType.RightCurlyBracket }
+};
+
+const whitespace: Whitespace = { type: TokenType.Whitespace };
+
+// CSS uses a fairly limited set of delimiters so there's quite a bit to be
+// gained from caching them as they are encoutered. Even in the case that every
+// single character in the UTF-16 range is somehow treated as a delimiter, the
+// cache won't contain more than 2^16 = 65536 entries, amounting to no more than
+// at most a couple of megabytes.
+const delims: Map<number, Delim> = new Map();
+
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
  */
@@ -570,30 +592,14 @@ function consumeToken(stream: Stream<number>): Token | null {
 
   stream.advance(1);
 
+  if (char in tokens) {
+    return tokens[char];
+  }
+
   switch (char) {
     case Char.QuotationMark:
     case Char.Apostrophe:
       return consumeString(stream, char);
-
-    case Char.Comma:
-      return { type: TokenType.Comma };
-    case Char.Colon:
-      return { type: TokenType.Colon };
-    case Char.Semicolon:
-      return { type: TokenType.Semicolon };
-
-    case Char.LeftParenthesis:
-      return { type: TokenType.LeftParenthesis };
-    case Char.RightParenthesis:
-      return { type: TokenType.RightParenthesis };
-    case Char.LeftSquareBracket:
-      return { type: TokenType.LeftSquareBracket };
-    case Char.RightSquareBracket:
-      return { type: TokenType.RightSquareBracket };
-    case Char.LeftCurlyBracket:
-      return { type: TokenType.LeftCurlyBracket };
-    case Char.RightCurlyBracket:
-      return { type: TokenType.RightCurlyBracket };
 
     case Char.Solidus: {
       const char = stream.peek(0);
@@ -614,17 +620,27 @@ function consumeToken(stream: Stream<number>): Token | null {
     case Char.AtSign: {
       const char = stream.peek(0);
       if (char !== null && startsIdentifier(char, stream)) {
-        return { type: TokenType.AtKeyword, value: consumeName(char, stream) };
+        return {
+          type: TokenType.AtKeyword,
+          value: consumeName(char, stream)
+        };
       }
     }
   }
 
   if (isWhitespace(char)) {
     stream.accept(isWhitespace);
-    return { type: TokenType.Whitespace };
+    return whitespace;
   }
 
-  return { type: TokenType.Delim, value: char };
+  let delim = delims.get(char);
+
+  if (delim === undefined) {
+    delim = { type: TokenType.Delim, value: char };
+    delims.set(char, delim);
+  }
+
+  return delim;
 }
 
 const initial: Pattern = (stream, emit) => {
