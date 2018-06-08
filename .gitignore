@@ -1,3 +1,10 @@
 node_modules
-dist
-*.log
+
+**/*.log
+
+**/*.js
+**/*.d.ts
+**/*.map
+
+!build/**/*.js
+!types/**/*.d.ts
