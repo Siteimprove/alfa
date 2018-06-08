@@ -4,28 +4,32 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 const TypeScript = require("typescript");
-const tsconfig = require("tsconfig");
 
 class Project {
-  constructor(root, registry) {
-    this.host = new InMemoryLanguageServiceHost(root);
+  constructor(configFile, registry) {
+    this.host = new InMemoryLanguageServiceHost(configFile);
     this.service = TypeScript.createLanguageService(this.host, registry);
   }
 
+  /**
+   * @private
+   * @param {string} file
+   * @return {string}
+   */
   resolve(file) {
     return path.resolve(process.cwd(), file);
   }
 
-  index(file) {
-    this.host.addFile(file);
-  }
-
+  /**
+   * @param {string} file
+   * @return {Array}
+   */
   diagnose(file) {
     file = this.resolve(file);
 
     const { service } = this;
 
-    this.index(file);
+    this.host.addFile(file);
 
     return [
       ...service.getSyntacticDiagnostics(file),
@@ -33,40 +37,38 @@ class Project {
     ];
   }
 
+  /**
+   * @param {string} file
+   * @return {object}
+   */
   compile(file) {
     file = this.resolve(file);
 
     const { service } = this;
 
-    this.index(file);
+    this.host.addFile(file);
 
     return service.getEmitOutput(file).outputFiles;
   }
 }
 
 class InMemoryLanguageServiceHost {
-  constructor(root) {
+  constructor(configFile) {
     this.files = new Map();
     this.version = "";
-    this.options = this.getOptions(root);
+    this.options = this.getOptions(configFile);
   }
 
-  getOptions(root) {
-    const configPath = tsconfig.findSync(root);
-
-    if (typeof configPath !== "string") {
-      return {};
-    }
-
+  getOptions(configFile) {
     const { config } = TypeScript.parseConfigFileTextToJson(
-      configPath,
-      fs.readFileSync(configPath, "utf8")
+      configFile,
+      fs.readFileSync(configFile, "utf8")
     );
 
     const { options } = TypeScript.parseJsonConfigFileContent(
       config,
       TypeScript.sys,
-      path.dirname(configPath)
+      path.dirname(configFile)
     );
 
     return options;

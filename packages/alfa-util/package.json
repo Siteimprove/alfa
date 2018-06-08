@@ -2,8 +2,8 @@
   "name": "@siteimprove/alfa-util",
   "version": "0.0.0",
   "description": "alfa!",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "repository":
     "https://github.com/siteimprove/alfa/tree/master/packages/alfa-util",
   "contributors": ["Kasper Isager <kki@siteimprove.com>"],

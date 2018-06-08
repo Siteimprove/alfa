@@ -2,6 +2,7 @@
 
 const path = require("path");
 const fs = require("fs");
+const git = require("./git");
 
 /**
  * @param {string} path
@@ -41,6 +42,9 @@ function removeFile(file) {
   return fs.unlinkSync(file);
 }
 
+/** @type {Array<RegExp>} */
+const ignoredFiles = [/node_modules/];
+
 /**
  * @param {string} directory
  * @param {Function} predicate
@@ -50,6 +54,14 @@ function findFiles(directory, predicate) {
   const files = [];
 
   for (let file of readDirectory(directory)) {
+    if (ignoredFiles.some(ignore => ignore.test(file))) {
+      continue;
+    }
+
+    if (git.isIgnored(file)) {
+      continue;
+    }
+
     file = path.resolve(directory, file);
 
     if (isFile(file) && predicate(file)) {

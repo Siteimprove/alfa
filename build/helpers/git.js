@@ -14,4 +14,8 @@ function getStagedFiles() {
   return git("diff", ["--name-only", "--cached"]).split("\n");
 }
 
-module.exports = { git, stageFile, getStagedFiles };
+function isIgnored(file) {
+  return git("check-ignore", [file]) === file;
+}
+
+module.exports = { git, stageFile, getStagedFiles, isIgnored };

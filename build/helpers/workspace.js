@@ -11,49 +11,64 @@ class Workspace {
     this.registry = TypeScript.createDocumentRegistry(false, process.cwd());
   }
 
+  /**
+   * @param {string} file
+   * @return {Project}
+   */
   projectFor(file) {
-    const configurationFile = findConfigurationFile(path.dirname(file))
+    const configFile = findConfigFile(path.dirname(file));
 
-    if (configurationFile === null) {
+    if (configFile === null) {
       throw new Error(`${file} has no associated TypeScript configuration`);
     }
 
-    const root = path.dirname(configurationFile);
-
-    let project = this.projects.get(root);
+    let project = this.projects.get(configFile);
 
     if (project === undefined) {
-      project = new Project(root, this.registry);
-      this.projects.set(root, project);
+      project = new Project(configFile, this.registry);
+      this.projects.set(configFile, project);
     }
 
     return project;
   }
 
+  /**
+   * @param {string} file
+   * @return {object}
+   */
   diagnose(file) {
     return this.projectFor(file).diagnose(file);
   }
 
+  /**
+   * @param {string} file
+   * @return {object}
+   */
   compile(file) {
     return this.projectFor(file).compile(file);
   }
 }
 
-function findConfigurationFile(directory) {
+/**
+ * @param {string} directory
+ * @return {string | null}
+ */
+function findConfigFile(directory) {
   const configFile = path.resolve(directory, "tsconfig.json");
-  const stats = fs.statSync(configFile);
 
-  if (stats.isFile()) {
-    return configFile;
-  }
+  try {
+    if (fs.statSync(configFile).isFile()) {
+      return configFile;
+    }
+  } catch {}
 
   const parentDirectory = path.dirname(directory);
 
   if (directory === parentDirectory) {
-    return null
+    return null;
   }
 
-  return findConfigurationFile(parentDirectory);
+  return findConfigFile(parentDirectory);
 }
 
 module.exports = { Workspace };

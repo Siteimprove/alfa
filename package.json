@@ -6,9 +6,11 @@
   },
   "workspaces": ["packages/*"],
   "devDependencies": {
+    "chalk": "^2.4.1",
     "husky": "^0.14.3",
     "lerna": "^2.9.0",
     "prettier": "1.13.4",
+    "signale": "^1.1.0",
     "typescript": "^2.9.1"
   }
 }
