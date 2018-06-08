@@ -25,7 +25,7 @@ export function getKeySelector(
       return selector.name === "*" ? null : selector;
 
     case SelectorType.CompoundSelector:
-      return getKeySelector(selector.left);
+      return getKeySelector(selector.left) || getKeySelector(selector.right);
 
     case SelectorType.RelativeSelector:
       return getKeySelector(selector.right);
