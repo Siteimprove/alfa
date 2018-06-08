@@ -1,4 +1,4 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { lex } from "../src/lex";
 import {
   TokenType,
@@ -6,8 +6,12 @@ import {
   ExpressionAlphabet
 } from "./helpers/expression";
 
-function expression(t: Test, input: string, expected: Array<ExpressionToken>) {
-  t.deepEqual(lex(input, ExpressionAlphabet), expected, "Token lists match");
+function expression(
+  t: Assertions,
+  input: string,
+  expected: Array<ExpressionToken>
+) {
+  t.deepEqual(lex(input, ExpressionAlphabet), expected, input);
 }
 
 test("Can lex an expression", t =>

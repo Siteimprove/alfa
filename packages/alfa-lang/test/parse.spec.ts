@@ -1,4 +1,4 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse } from "../src/parse";
 import {
   TokenType,
@@ -8,7 +8,7 @@ import {
 } from "./helpers/expression";
 
 function expression(
-  t: Test,
+  t: Assertions,
   input: Array<ExpressionToken>,
   expected: Expression
 ) {

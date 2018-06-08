@@ -1,9 +1,9 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { lex, Char } from "@siteimprove/alfa-lang";
 import { Alphabet, Token, TokenType } from "../src/alphabet";
 
-function css(t: Test, input: string, expected: Array<Token>) {
-  t.deepEqual(lex(input, Alphabet), expected, t.title);
+function css(t: Assertions, input: string, expected: Array<Token>) {
+  t.deepEqual(lex(input, Alphabet), expected, input);
 }
 
 test("Can lex whitespace", t =>

@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { serialize } from "../src/serialize";
 
 test("Serializes DOM nodes to HTML", t => {
-  t.is(
+  t.equal(
     serialize(
       <div class="foo">
         <p>Hello world</p>
@@ -14,14 +14,14 @@ test("Serializes DOM nodes to HTML", t => {
 });
 
 test("Correctly escapes attribute values", t => {
-  t.is(
+  t.equal(
     serialize(<div class="&lt; &gt; &amp; &quot; &nbsp;" />),
     '<div class="< > &amp; &quot; &nbsp;"></div>'
   );
 });
 
 test("Correctly escapes text content", t => {
-  t.is(
+  t.equal(
     serialize(<div>&lt; &gt; &amp; &quot; &nbsp;</div>),
     '<div>&lt; &gt; &amp; " &nbsp;</div>'
   );

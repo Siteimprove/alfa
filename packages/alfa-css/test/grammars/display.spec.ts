@@ -1,11 +1,11 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { Display } from "../../src/properties/display";
 import { DisplayGrammar } from "../../src/grammars/display";
 
-function display(t: Test, input: string, expected: Display) {
-  t.deepEqual(parse(lex(input, Alphabet), DisplayGrammar), expected, t.title);
+function display(t: Assertions, input: string, expected: Display) {
+  t.deepEqual(parse(lex(input, Alphabet), DisplayGrammar), expected, input);
 }
 
 test("Can parse block display", t => {

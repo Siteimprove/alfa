@@ -1,4 +1,4 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import {
@@ -11,11 +11,11 @@ import {
 } from "../../src/grammars/selector";
 
 function selector(
-  t: Test,
+  t: Assertions,
   input: string,
   expected: Selector | Array<Selector> | null
 ) {
-  t.deepEqual(parse(lex(input, Alphabet), SelectorGrammar), expected, t.title);
+  t.deepEqual(parse(lex(input, Alphabet), SelectorGrammar), expected, input);
 }
 
 test("Can parse a type selector", t =>

@@ -11,6 +11,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/node": "^10.3.1",
     "chalk": "^2.4.1",
     "concordance": "^3.0.0",

@@ -1,9 +1,9 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { lex } from "@siteimprove/alfa-lang";
 import { Alphabet, Token, TokenType } from "../src/alphabet";
 
-function html(t: Test, input: string, expected: Array<Token>) {
-  t.deepEqual(lex(input, Alphabet), expected, t.title);
+function html(t: Assertions, input: string, expected: Array<Token>) {
+  t.deepEqual(lex(input, Alphabet), expected, input);
 }
 
 test("Can lex a start tag", t =>

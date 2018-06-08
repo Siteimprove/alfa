@@ -1,9 +1,8 @@
+import * as path from "path";
 import { AssertionError } from "assert";
+import chalk from "chalk";
 
-const path = require("path");
 const Stack = require("error-stack-parser");
-const chalk = require("chalk");
-
 const { diff } = require("concordance");
 const { theme } = require("concordance-theme-ava");
 

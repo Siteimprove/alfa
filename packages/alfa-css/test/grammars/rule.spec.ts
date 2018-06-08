@@ -1,10 +1,10 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { Char, parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet, TokenType } from "../../src/alphabet";
 import { Rule, RuleGrammar } from "../../src/grammars/rule";
 
-function rule(t: Test, input: string, expected: Rule | Array<Rule>) {
-  t.deepEqual(parse(lex(input, Alphabet), RuleGrammar), expected, t.title);
+function rule(t: Assertions, input: string, expected: Rule | Array<Rule>) {
+  t.deepEqual(parse(lex(input, Alphabet), RuleGrammar), expected, input);
 }
 
 test("Can parse a single qualified rule", t =>

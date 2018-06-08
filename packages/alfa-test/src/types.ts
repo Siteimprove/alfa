@@ -30,11 +30,6 @@ export interface Assertions {
   fail(message?: string): void;
 
   /**
-   * @see https://nodejs.org/api/assert.html#assert_assert_ok_value_message
-   */
-  ok(value: any, message?: string): void;
-
-  /**
    * @see https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message
    */
   rejects(

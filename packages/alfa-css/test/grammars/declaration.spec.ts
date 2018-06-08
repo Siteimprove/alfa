@@ -1,4 +1,4 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet, TokenType } from "../../src/alphabet";
 import {
@@ -7,15 +7,11 @@ import {
 } from "../../src/grammars/declaration";
 
 function declaration(
-  t: Test,
+  t: Assertions,
   input: string,
   expected: Declaration | Array<Declaration>
 ) {
-  t.deepEqual(
-    parse(lex(input, Alphabet), DeclarationGrammar),
-    expected,
-    t.title
-  );
+  t.deepEqual(parse(lex(input, Alphabet), DeclarationGrammar), expected, input);
 }
 
 test("Can parse a single declaration", t =>

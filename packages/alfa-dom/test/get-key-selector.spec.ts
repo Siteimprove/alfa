@@ -43,19 +43,19 @@ test("Gets the key selector of a type selector", t => {
 });
 
 test("Returns null when given the universal selector", t => {
-  t.is(getKeySelector(selector("*")), null);
+  t.equal(getKeySelector(selector("*")), null);
 });
 
 test("Returns null when given an attribute selector", t => {
-  t.deepEqual(getKeySelector(selector("[foo]")), null);
+  t.equal(getKeySelector(selector("[foo]")), null);
 });
 
 test("Returns null when given a pseudo-element selector", t => {
-  t.deepEqual(getKeySelector(selector("::before")), null);
+  t.equal(getKeySelector(selector("::before")), null);
 });
 
 test("Returns null when given a pseudo-class selector", t => {
-  t.deepEqual(getKeySelector(selector(":hover")), null);
+  t.equal(getKeySelector(selector(":hover")), null);
 });
 
 test("Gets the key selector of a compound selector", t => {

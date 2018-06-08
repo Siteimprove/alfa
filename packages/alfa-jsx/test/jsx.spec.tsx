@@ -20,7 +20,7 @@ test("Transforms JSX into DOM nodes", t => {
         nodeType: 3,
         data: "Hello world",
         childNodes: []
-      }
+      } as JSX.Text
     ]
   });
 });
@@ -48,7 +48,7 @@ test("Handles boolean attributes when falsey", t => {
     attribute => attribute.localName === "hidden"
   );
 
-  t.is(hidden, null);
+  t.equal(hidden, null);
 });
 
 test("Converts numbers in attributes to strings", t => {
@@ -74,7 +74,7 @@ test("Handles attributes with null values", t => {
     attribute => attribute.localName === "foo"
   );
 
-  t.is(foo, null);
+  t.equal(foo, null);
 });
 
 test("Handles attributes with undefined values", t => {
@@ -85,7 +85,7 @@ test("Handles attributes with undefined values", t => {
     attribute => attribute.localName === "foo"
   );
 
-  t.is(foo, null);
+  t.equal(foo, null);
 });
 
 test("Handles attributes with NaN values", t => {

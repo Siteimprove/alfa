@@ -1,4 +1,4 @@
-import { Test } from "@siteimprove/alfa-test";
+import { Assertions } from "@siteimprove/alfa-test";
 import {
   Outcome,
   Result,
@@ -9,7 +9,7 @@ import {
 import { serialize } from "@siteimprove/alfa-dom";
 
 export function outcome<T extends Target>(
-  t: Test,
+  t: Assertions,
   results: Array<Result<T> | Question<T>>,
   assert: { [O in Outcome]?: Array<T> }
 ) {
@@ -21,7 +21,7 @@ export function outcome<T extends Target>(
       .filter(result => result.outcome === outcome);
     const expected = assert[outcome] || [];
 
-    t.is(
+    t.equal(
       actual.length,
       expected.length,
       `There must be ${expected.length} ${outcome} results`
@@ -35,7 +35,7 @@ export function outcome<T extends Target>(
             result.outcome === "inapplicable" || result.target === target
         );
 
-        t.true(holds, `${serialize(target)} must be ${outcome}, was `);
+        t(holds, `${serialize(target)} must be ${outcome}, was `);
       }
     }
   }

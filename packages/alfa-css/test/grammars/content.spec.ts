@@ -1,11 +1,11 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { Content } from "../../src/properties/content";
 import { ContentGrammar } from "../../src/grammars/content";
 
-function content(t: Test, input: string, expected: Content) {
-  t.deepEqual(parse(lex(input, Alphabet), ContentGrammar), expected, t.title);
+function content(t: Assertions, input: string, expected: Content) {
+  t.deepEqual(parse(lex(input, Alphabet), ContentGrammar), expected, input);
 }
 
 test("Can parse normal content", t => content(t, "normal", "normal"));
