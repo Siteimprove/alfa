@@ -4,6 +4,18 @@ const path = require("path");
 const fs = require("fs");
 
 /**
+ * @param {string} path
+ * @return {boolean}
+ */
+function isFile(path) {
+  try {
+    return fs.statSync(path).isFile();
+  } catch {
+    return false;
+  }
+}
+
+/**
  * @param {string} file
  * @return {string}
  */
@@ -27,6 +39,41 @@ function writeFile(file, data) {
  */
 function removeFile(file) {
   return fs.unlinkSync(file);
+}
+
+/**
+ * @param {string} directory
+ * @param {Function} predicate
+ * @return {Array<string>}
+ */
+function findFiles(directory, predicate) {
+  const files = [];
+
+  for (let file of readDirectory(directory)) {
+    file = path.resolve(directory, file);
+
+    if (isFile(file) && predicate(file)) {
+      files.push(file);
+    }
+
+    if (isDirectory(file)) {
+      files.push(...findFiles(file, predicate));
+    }
+  }
+
+  return files;
+}
+
+/**
+ * @param {string} path
+ * @return {boolean}
+ */
+function isDirectory(path) {
+  try {
+    return fs.statSync(path).isDirectory();
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -67,9 +114,12 @@ function removeDirectory(directory) {
 }
 
 module.exports = {
+  isFile,
   readFile,
   writeFile,
   removeFile,
+  findFiles,
+  isDirectory,
   readDirectory,
   makeDirectory,
   removeDirectory
