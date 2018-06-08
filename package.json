@@ -2,27 +2,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepare": "foreman build/build.ts",
-    "test": "foreman build/test.ts",
-    "start": "foreman build/watch.ts",
-    "precommit": "foreman build/lint.ts",
-    "bench": "foreman --prof"
+    "prepare": "node build/build.js"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "devDependencies": {
-    "@foreman/api": "^0.0.0",
-    "@foreman/cli": "^0.4.1",
-    "@foreman/dependant": "^0.1.0",
-    "@foreman/fs": "^0.1.0",
-    "@foreman/git": "^0.1.0",
-    "@foreman/notify": "^0.4.0",
-    "@foreman/path": "^0.0.0",
-    "@foreman/prettier": "^0.2.0",
-    "@foreman/register": "^0.1.0",
-    "@foreman/tap": "^0.2.3",
-    "@foreman/typescript": "^0.4.2",
     "husky": "^0.14.3",
     "lerna": "^2.9.0",
     "prettier": "1.13.4",
