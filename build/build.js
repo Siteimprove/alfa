@@ -10,11 +10,17 @@ const { packages } = require("./helpers/meta");
 
 const { build } = require("./tasks/build");
 
+const isSpec = endsWith(".spec.ts", ".spec.tsx");
+
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
   const files = findFiles(root, endsWith(".ts", ".tsx"));
 
   for (const file of files) {
+    if (isSpec(file)) {
+      continue;
+    }
+
     if (build(file)) {
       notify.success(chalk.dim(file));
     } else {
