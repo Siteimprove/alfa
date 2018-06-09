@@ -305,7 +305,7 @@ function consumeEscapedCodePoint(stream: Stream<number>): number {
  * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
  */
 function consumeInteger(input: Array<number>): number {
-  let result = 0;
+  let integer = 0;
   let sign = 1;
 
   for (let i = 0, n = input.length; i < n; i++) {
@@ -321,17 +321,17 @@ function consumeInteger(input: Array<number>): number {
     }
 
     if (char === Char.FullStop) {
-      return consumeFraction(input, i + 1, result) * sign;
+      return sign * consumeFraction(input, i + 1, integer);
     }
 
     if (char === Char.SmallLetterE || char === Char.CapitalLetterE) {
-      return consumeExponent(input, i + 1, result) * sign;
+      return sign * consumeExponent(input, i + 1, integer);
     }
 
-    result = result * 10 + char - Char.DigitZero;
+    integer = integer * 10 + char - Char.DigitZero;
   }
 
-  return result * sign;
+  return sign * integer;
 }
 
 /**
@@ -340,21 +340,27 @@ function consumeInteger(input: Array<number>): number {
 function consumeFraction(
   input: Array<number>,
   start: number,
-  result: number
+  integer: number
 ): number {
-  let power = 0.1;
+  let fraction = 0;
+  let digits = 0;
 
-  for (let i = start, n = input.length; i < n; i++, power /= 10) {
+  for (let i = start, n = input.length; i < n; i++) {
     const char = input[i];
 
     if (char === Char.SmallLetterE || char === Char.CapitalLetterE) {
-      return consumeExponent(input, i + 1, result);
+      return consumeExponent(
+        input,
+        i + 1,
+        integer + fraction * pow(10, -digits)
+      );
     }
 
-    result = result + power * (char - Char.DigitZero);
+    fraction = fraction * 10 + char - Char.DigitZero;
+    digits++;
   }
 
-  return result;
+  return integer + fraction * pow(10, -digits);
 }
 
 /**
@@ -363,9 +369,9 @@ function consumeFraction(
 function consumeExponent(
   input: Array<number>,
   start: number,
-  result: number
+  number: number
 ): number {
-  let power = 0;
+  let exponent = 0;
   let sign = 1;
 
   for (let i = start, n = input.length; i < n; i++) {
@@ -380,10 +386,10 @@ function consumeExponent(
       continue;
     }
 
-    power = power * 10 + char - Char.DigitZero;
+    exponent = exponent * 10 + char - Char.DigitZero;
   }
 
-  return result * pow(10, power * sign);
+  return number * pow(10, sign * exponent);
 }
 
 /**
