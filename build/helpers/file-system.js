@@ -53,6 +53,10 @@ const ignoredFiles = [/node_modules/];
 function findFiles(directory, predicate) {
   const files = [];
 
+  if (!fs.existsSync(directory)) {
+    return files;
+  }
+
   for (let file of readDirectory(directory)) {
     if (ignoredFiles.some(ignore => ignore.test(file))) {
       continue;

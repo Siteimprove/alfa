@@ -3,11 +3,15 @@
 const path = require("path");
 
 /**
- * @param {Array<string>} extensions
- * @return {Function}
+ * @param {string} file
+ * @param {string} extension
+ * @return {string}
  */
-function withExtension(...extensions) {
-  return file => extensions.indexOf(path.extname(file)) !== -1;
+function withExtension(file, extension) {
+  return path.join(
+    path.dirname(file),
+    path.basename(file, path.extname(file)) + extension
+  );
 }
 
 module.exports = { withExtension };

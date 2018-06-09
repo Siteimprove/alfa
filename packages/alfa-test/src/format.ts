@@ -16,11 +16,12 @@ export function format(name: string, error: AssertionError): string {
 
   const message = `
 ${chalk.bold(name)}
-${chalk.gray(`${filePath}:${lineNumber}`)}
-
+${chalk.dim(`${filePath}:${lineNumber}`)}
+${error.generatedMessage ? "" : "\n" + error.message + "\n"}
 Difference:
 
-${diff(error.actual, error.expected, { theme })}`;
+${diff(error.actual, error.expected, { theme })}
+  `;
 
-  return message;
+  return "\n" + message.trim() + "\n";
 }
