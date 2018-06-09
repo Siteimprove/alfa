@@ -6,5 +6,5 @@ node_modules
 **/*.d.ts
 **/*.map
 
-!build/**/*.js
-!types/**/*.d.ts
+!**/build/**/*.js
+!**/types/**/*.d.ts

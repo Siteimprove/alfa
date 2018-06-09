@@ -11,16 +11,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepare": "foreman build/subtags.ts"
+    "prepare": "node build/subtags.js"
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "@types/got": "^8.3.1",
     "@types/node": "^10.3.1",
     "got": "^8.3.1",
-    "record-jar": "^1.0.4"
+    "record-jar": "^1.0.4",
+    "stringify-object": "^3.2.2"
   }
 }
