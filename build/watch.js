@@ -24,3 +24,5 @@ watchFiles("packages", (event, file) => {
     notify.success(chalk.dim(file));
   }
 });
+
+notify.watch("Watching files for changes");

@@ -1,7 +1,18 @@
 // @ts-check
 
-const signale = require("signale");
+const { Signale } = require("signale");
+const figures = require("figures");
 
-signale.config({ displayTimestamp: true });
+const notify = new Signale({
+  types: {
+    skip: {
+      badge: figures.ellipsis,
+      color: "gray",
+      label: "skipped"
+    }
+  }
+});
 
-module.exports = { notify: signale };
+notify.config({ displayTimestamp: true });
+
+module.exports = { notify };

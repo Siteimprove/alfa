@@ -1,3 +1,5 @@
+// @ts-check
+
 const { readDirectory } = require("./file-system");
 const { Graph } = require("./graph");
 

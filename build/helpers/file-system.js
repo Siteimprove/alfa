@@ -101,15 +101,9 @@ function watchFiles(directory, listener) {
       return;
     }
 
-    try {
-      if (!fs.statSync(file).isFile()) {
-        return;
-      }
-    } catch (err) {
-      return;
+    if (isFile(file)) {
+      listener(event, file);
     }
-
-    listener(event, file);
   });
 }
 
