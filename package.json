@@ -1,5 +1,4 @@
 {
-  "license": "MIT",
   "private": true,
   "scripts": {
     "prepare": "node build/build.js",

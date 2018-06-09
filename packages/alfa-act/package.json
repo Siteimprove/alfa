@@ -1,15 +1,17 @@
 {
+  "private": true,
   "name": "@siteimprove/alfa-act",
+  "author": "Siteimprove A/S",
+  "homepage": "https://github.com/siteimprove/alfa",
   "version": "0.0.0",
+  "license": "MIT",
   "description": "alfa!",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
-  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-act",
   "contributors": [
     "Kasper Isager <kki@siteimprove.com>"
   ],
-  "license": "MIT",
-  "private": true,
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-act",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "dependencies": {
     "@siteimprove/alfa-dom": "^0.0.0"
   },

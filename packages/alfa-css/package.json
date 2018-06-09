@@ -1,14 +1,17 @@
 {
+  "private": true,
   "name": "@siteimprove/alfa-css",
+  "author": "Siteimprove A/S",
+  "homepage": "https://github.com/siteimprove/alfa",
   "version": "0.0.0",
+  "license": "MIT",
   "description": "alfa!",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-css",
   "main": "src/index.js",
   "types": "src/index.d.ts",
-  "repository":
-    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-css",
-  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
-  "license": "MIT",
-  "private": true,
   "dependencies": {
     "@siteimprove/alfa-lang": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0"
