@@ -79,7 +79,7 @@ export const enum AttributeModifier {
   /**
    * @example [foo=bar i]
    */
-  CaseInsensitive
+  CaseInsensitive = 1
 }
 
 export type AttributeSelector = Readonly<{
@@ -342,10 +342,9 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
 
     if (matcher !== null) {
       stream.advance(1);
+      next = stream.peek(0);
     }
   }
-
-  next = stream.next();
 
   if (
     next === null ||
@@ -355,7 +354,8 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
     return null;
   }
 
-  next = stream.next();
+  stream.advance(1);
+  next = stream.peek(0);
 
   if (
     next === null ||
@@ -363,6 +363,8 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
   ) {
     return null;
   }
+
+  stream.advance(1);
 
   let value = next.value;
 
@@ -381,14 +383,15 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
 
     if (modifier !== 0) {
       stream.advance(1);
+      next = stream.peek(0);
     }
   }
-
-  next = stream.next();
 
   if (next === null || next.type !== TokenType.RightSquareBracket) {
     return null;
   }
+
+  stream.advance(1);
 
   return {
     type: SelectorType.AttributeSelector,
