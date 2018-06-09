@@ -4,6 +4,9 @@ const path = require("path");
 const fs = require("fs");
 const git = require("./git");
 
+/** @type {Array<RegExp>} */
+const ignoredFiles = [/node_modules/];
+
 /**
  * @param {string} path
  * @return {boolean}
@@ -42,12 +45,9 @@ function removeFile(file) {
   return fs.unlinkSync(file);
 }
 
-/** @type {Array<RegExp>} */
-const ignoredFiles = [/node_modules/];
-
 /**
  * @param {string} directory
- * @param {Function} predicate
+ * @param {function(string): boolean} predicate
  * @return {Array<string>}
  */
 function findFiles(directory, predicate) {
@@ -66,7 +66,7 @@ function findFiles(directory, predicate) {
       continue;
     }
 
-    file = path.resolve(directory, file);
+    file = path.join(directory, file);
 
     if (isFile(file) && predicate(file)) {
       files.push(file);
@@ -78,6 +78,39 @@ function findFiles(directory, predicate) {
   }
 
   return files;
+}
+
+/**
+ * @param {string} directory
+ * @param {function(string, string)} listener
+ * @return {object}
+ */
+function watchFiles(directory, listener) {
+  return fs.watch(directory, { recursive: true }, (event, file) => {
+    if (file === undefined) {
+      return;
+    }
+
+    file = path.join(directory, file);
+
+    if (ignoredFiles.some(ignore => ignore.test(file))) {
+      return;
+    }
+
+    if (git.isIgnored(file)) {
+      return;
+    }
+
+    try {
+      if (!fs.statSync(file).isFile()) {
+        return;
+      }
+    } catch (err) {
+      return;
+    }
+
+    listener(event, file);
+  });
 }
 
 /**
@@ -135,6 +168,7 @@ module.exports = {
   writeFile,
   removeFile,
   findFiles,
+  watchFiles,
   isDirectory,
   readDirectory,
   makeDirectory,

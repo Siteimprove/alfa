@@ -8,15 +8,15 @@ const { notify } = require("./helpers/notify");
 const { endsWith } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 
-const typescript = require("./tasks/typescript");
+const { build } = require("./tasks/build");
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
   const files = findFiles(root, endsWith(".ts", ".tsx"));
 
   for (const file of files) {
-    if (typescript.compile(file)) {
-      notify.success(chalk.dim(path.relative(process.cwd(), file)));
+    if (build(file)) {
+      notify.success(chalk.dim(file));
     } else {
       process.exit(1);
     }

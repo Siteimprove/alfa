@@ -10,7 +10,7 @@ const { Workspace } = require("../helpers/workspace");
 
 const workspace = new Workspace();
 
-function compile(file) {
+function build(file) {
   const diagnostics = workspace.diagnose(file);
 
   if (diagnostics.length > 0) {
@@ -55,4 +55,4 @@ function formatDiagnostic(diagnostic) {
   return message;
 }
 
-module.exports = { compile };
+module.exports = { build };
