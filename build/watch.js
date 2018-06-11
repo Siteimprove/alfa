@@ -10,13 +10,14 @@ const { build } = require("./tasks/build");
 const { test } = require("./tasks/test");
 
 const isSpec = endsWith(".spec.ts", ".spec.tsx");
+const isSrc = endsWith(".ts", ".tsx");
 
 watchFiles("packages", (event, file) => {
   let success;
 
   if (isSpec(file)) {
     success = test(file);
-  } else {
+  } else if (isSrc(file)) {
     success = build(file);
   }
 
