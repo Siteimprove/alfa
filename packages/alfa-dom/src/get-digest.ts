@@ -13,7 +13,7 @@ const digests: WeakMap<Node, string> = new WeakMap();
  *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export function getDigest(node: Node, context: Node = node): string | null {
+export function getDigest(node: Node, context: Node): string | null {
   if (isComment(node) || isDocumentType(node)) {
     return null;
   }

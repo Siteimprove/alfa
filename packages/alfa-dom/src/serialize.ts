@@ -6,27 +6,9 @@ import { getElementNamespace } from "./get-element-namespace";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
- */
-function escape(
-  input: string,
-  options: { attributeMode?: boolean } = {}
-): string {
-  input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");
-
-  if (options.attributeMode) {
-    input = input.replace(/"/g, "&quot;");
-  } else {
-    input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
-  return input;
-}
-
-/**
  * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
  */
-export function serialize(node: Node, context: Node = node): string {
+export function serialize(node: Node, context: Node): string {
   if (isElement(node)) {
     const namespace = getElementNamespace(node, context);
 
@@ -138,4 +120,22 @@ export function serialize(node: Node, context: Node = node): string {
   }
 
   return map(node.childNodes, child => serialize(child, context)).join("");
+}
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
+ */
+function escape(
+  input: string,
+  options: { attributeMode?: boolean } = {}
+): string {
+  input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");
+
+  if (options.attributeMode) {
+    input = input.replace(/"/g, "&quot;");
+  } else {
+    input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  return input;
 }
