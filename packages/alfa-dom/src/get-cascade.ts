@@ -61,6 +61,15 @@ export function getCascade(context: Document): Cascade | null {
   return cascade;
 }
 
+/**
+ * Perform an in-place insertion sort of an array of selector entries. Since
+ * insertion sort performs well on small arrays compared to other sorting
+ * algorithms, it's a good choice for sorting selector entries during cascade
+ * as the number of declarations that match an element will more often than not
+ * be relatively small.
+ *
+ * @see https://en.wikipedia.org/wiki/Insertion_sort
+ */
 function sort(selectors: Array<SelectorEntry>): Array<SelectorEntry> {
   for (let i = 0, n = selectors.length; i < n; i++) {
     const a = selectors[i];
