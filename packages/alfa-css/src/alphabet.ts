@@ -612,16 +612,27 @@ function consumeToken(stream: Stream<number>): Token | null {
       return consumeString(stream, char);
 
     case Char.Solidus: {
-      const char = stream.peek(0);
-      if (char === Char.Asterisk) {
+      let next = stream.peek(0);
+      if (next === Char.Asterisk) {
         stream.advance(1);
-        if (
-          stream.accept(
-            char => char !== Char.Asterisk && stream.peek(0) !== Char.Solidus
-          )
-        ) {
-          stream.advance(2);
+
+        let prev = stream.peek(0);
+        let next = stream.peek(1);
+
+        while (prev !== null) {
+          if (prev === Char.Asterisk && next === Char.Solidus) {
+            break;
+          }
+
+          stream.advance(1);
+          prev = next;
+          next = stream.peek(0);
         }
+
+        if (prev === Char.Asterisk && next === Char.Solidus) {
+          stream.advance(1);
+        }
+
         return consumeToken(stream);
       }
       break;
