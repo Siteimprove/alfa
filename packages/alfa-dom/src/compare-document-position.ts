@@ -10,27 +10,27 @@ export const enum DocumentPosition {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_position_preceding
    */
-  Preceding = 1 << 1,
+  Preceding = 2,
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_position_following
    */
-  Following = 1 << 2,
+  Following = 4,
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_position_contains
    */
-  Contains = 1 << 3,
+  Contains = 8,
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_position_contained_by
    */
-  ContainedBy = 1 << 4,
+  ContainedBy = 16,
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_position_implementation_specific
    */
-  ImplementationSpecific = 1 << 5
+  ImplementationSpecific = 32
 }
 
 /**
@@ -57,34 +57,63 @@ export function compareDocumentPosition(
   const referencePath = getPathFromRoot(reference, context);
   const otherPath = getPathFromRoot(other, context);
 
+  // Find the point at which the two paths fork, i.e. the index of the lowest
+  // common ancestor of the two nodes.
   const forkingPoint = getForkingPoint(referencePath, otherPath);
 
+  // If the two nodes to not share any parent nodes then the nodes are not in
+  // the same tree.
   if (forkingPoint === -1) {
     return (
       DocumentPosition.Disconnected | DocumentPosition.ImplementationSpecific
     );
   }
 
+  // If the reference node is the lowest common ancestor of the two nodes then
+  // the other node is contained by the reference node.
   if (reference === referencePath[forkingPoint]) {
     return -1 * (DocumentPosition.ContainedBy | DocumentPosition.Following);
   }
 
+  // If the other node is the lowest common ancestor of the two nodes then the
+  // other node contains the reference node.
   if (other === otherPath[forkingPoint]) {
     return DocumentPosition.Contains | DocumentPosition.Preceding;
   }
 
-  const { childNodes } = referencePath[forkingPoint];
-
+  // For each of the two nodes, find the node directly after the lowest common
+  // ancestor. This node will be unique to each of the two nodes as the lowest
+  // common ancestor is the first node they share; the nodes directly after this
+  // they do therefore not share. For example, consider the following tree:
+  //
+  // div
+  // +-- em
+  // +-- span
+  // |   +-- #reference
+  // +-- p
+  //     +-- #other
+  //
+  // In the case above, the lowest common ancestor would be "div" while the new
+  // reference node would be "span" and the new other node would be "be".
   reference = referencePath[forkingPoint + 1];
   other = otherPath[forkingPoint + 1];
 
+  const { childNodes } = referencePath[forkingPoint];
+
+  // Go through the children of the lowest common ancestor and see which of the
+  // above nodes is encountered first. Building on the example above, the first
+  // encountered node would be "span".
   for (let i = 0, n = childNodes.length; i < n; i++) {
     const child = childNodes[i];
 
+    // If the reference node is encountered first then other node is following
+    // the reference node.
     if (child === reference) {
       return -1 * DocumentPosition.Following;
     }
 
+    // If the other node is encountered first the the other node is preceeding
+    // the reference node.
     if (child === other) {
       return DocumentPosition.Preceding;
     }
