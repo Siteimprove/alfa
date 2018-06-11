@@ -2,7 +2,7 @@
 
 /**
  * @param {Array<string>} endings
- * @return {Function}
+ * @return {function(string): boolean}
  */
 function endsWith(...endings) {
   return string => endings.some(ending => string.endsWith(ending));
