@@ -38,6 +38,13 @@ import { getClassList } from "./get-class-list";
  * reject that the selector would match `<b>` as the ancestor filter does not
  * contain an entry for the type `main`.
  *
+ * NB: None of the operations of the ancestor filter are idempontent to avoid
+ * keeping track of more information than strictly necessary. This is however
+ * not a problem when ancestor filters are used during top-down traversal of the
+ * DOM, in which case an element is only ever visited once. If used elsewhere
+ * care must however be taken when adding and removing elements; elements must
+ * only ever be added and removed once, and an element must not be removed
+ * before being added.
  *
  * @see http://doc.servo.org/style/bloom/struct.StyleBloom.html
  *
@@ -59,28 +66,26 @@ export class AncestorFilter {
   }
 
   public matches(selector: IdSelector | ClassSelector | TypeSelector): boolean {
-    let bucket: AncestorBucket;
+    const { name } = selector;
 
     switch (selector.type) {
       case SelectorType.IdSelector:
-        bucket = this.ids;
-        break;
-      case SelectorType.ClassSelector:
-        bucket = this.classes;
-        break;
-      case SelectorType.TypeSelector:
-      default:
-        bucket = this.types;
-    }
+        return this.ids.has(name);
 
-    return bucket.has(selector.name);
+      case SelectorType.ClassSelector:
+        return this.classes.has(name);
+
+      case SelectorType.TypeSelector:
+        return this.types.has(name);
+    }
   }
 
   private process(
     element: Element,
     fn: (bucket: AncestorBucket, entry: string) => void
   ): void {
-    // Elements with no child nodes are not relevant for ancestor filtering.
+    // Elements with no child nodes are not relevant for ancestor filtering so
+    // we can bail out early.
     if (element.childNodes.length === 0) {
       return;
     }
@@ -102,6 +107,11 @@ export class AncestorFilter {
 }
 
 /**
+ * An ancestor bucket stores entries with associated counts in order to keep
+ * track of how many elements are associated with the entry. When the number of
+ * elements associated with a given entry drops to zero then the entry can be
+ * removed from the bucket.
+ *
  * While most browser implementations use bloom filters for ancestor filters, we
  * can make do with native maps for two reasons: Memory is not much of a concern
  * as we only ever compute cascade once for every context, and native maps are
