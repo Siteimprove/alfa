@@ -1,9 +1,11 @@
+import { concat } from "@siteimprove/alfa-util";
 import { Document, Element } from "./types";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { SelectorMap, SelectorEntry } from "./selector-map";
 import { AncestorFilter } from "./ancestor-filter";
 import { RuleTree, RuleEntry } from "./rule-tree";
+import { UserAgent } from "./user-agent";
 
 /**
  * @internal
@@ -23,9 +25,12 @@ export function getCascade(context: Document): Cascade | null {
   if (cascade === undefined) {
     const entries: WeakMap<Element, RuleEntry> = new WeakMap();
 
-    const selectorMap = new SelectorMap(context.styleSheets);
     const filter = new AncestorFilter();
     const ruleTree = new RuleTree();
+
+    const selectorMap = new SelectorMap(
+      concat([UserAgent], context.styleSheets)
+    );
 
     traverseNode(context, {
       enter(node) {

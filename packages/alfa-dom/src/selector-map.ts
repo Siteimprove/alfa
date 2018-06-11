@@ -60,7 +60,7 @@ export class SelectorMap {
 
   private other: Array<SelectorEntry> = [];
 
-  constructor(styleSheets: ArrayLike<StyleSheet>) {
+  constructor(styleSheets: Array<StyleSheet>) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
