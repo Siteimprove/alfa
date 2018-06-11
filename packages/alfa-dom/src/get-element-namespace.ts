@@ -32,28 +32,23 @@ export function getElementNamespace(
           return;
         }
 
-        let parentNamespace: Namespace | null = null;
-
-        if (parentNode !== null && isElement(parentNode)) {
-          // As we're doing a top-down traversal, setting the namespace of
-          // every parent element before visiting its children, we can safely
-          // assert that the parent node will have a namespace defined.
-          parentNamespace = namespaceMap!.get(parentNode)!;
-        } else {
+        if (parentNode === null || !isElement(parentNode)) {
           namespaceMap!.set(node, Namespace.HTML);
           return;
         }
 
-        switch (parentNamespace) {
-          case Namespace.SVG:
-            if (node.localName === "foreignObject") {
-              namespaceMap!.set(node, Namespace.HTML);
-            } else {
-              namespaceMap!.set(node, parentNamespace);
-            }
-            break;
-          default:
-            namespaceMap!.set(node, parentNamespace);
+        // As we're doing a top-down traversal, setting the namespace of every
+        // parent element before visiting its children, we can safely assert
+        // that the parent node will have a namespace defined.
+        const parentNamespace = namespaceMap!.get(parentNode)!;
+
+        if (
+          node.localName === "foreignObject" &&
+          parentNamespace === Namespace.SVG
+        ) {
+          namespaceMap!.set(node, Namespace.HTML);
+        } else {
+          namespaceMap!.set(node, parentNamespace);
         }
       }
     });
