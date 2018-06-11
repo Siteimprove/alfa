@@ -35,7 +35,7 @@ export function outcome<T extends Target>(
             result.outcome === "inapplicable" || result.target === target
         );
 
-        t(holds, `${serialize(target)} must be ${outcome}, was `);
+        t(holds, `${serialize(target, target)} must be ${outcome}, was `);
       }
     }
   }
