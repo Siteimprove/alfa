@@ -140,6 +140,15 @@ test("Can lex a decimal", t =>
     }
   ]));
 
+test("Correctly lexes odd decimals", t =>
+  css(t, "0.3", [
+    {
+      type: TokenType.Number,
+      value: 0.3,
+      integer: false
+    }
+  ]));
+
 test("Can lex a negative decimal", t =>
   css(t, "-123.456", [
     {
@@ -163,6 +172,15 @@ test("Can lex a negative decimal in E-notation", t =>
     {
       type: TokenType.Number,
       value: -123.456e2,
+      integer: false
+    }
+  ]));
+
+test("Correctly lexes odd E-notations", t =>
+  css(t, "3e-1", [
+    {
+      type: TokenType.Number,
+      value: 3e-1,
       integer: false
     }
   ]));

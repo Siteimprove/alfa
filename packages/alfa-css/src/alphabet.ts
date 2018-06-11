@@ -339,6 +339,9 @@ function consumeInteger(input: Array<number>): number {
 }
 
 /**
+ * NB: To account for floating point precision errors, we flip the sign of the
+ * number of digits and divide rather than multiply it with the given number.
+ *
  * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
  */
 function consumeFraction(
@@ -356,7 +359,7 @@ function consumeFraction(
       return consumeExponent(
         input,
         i + 1,
-        integer + fraction * pow(10, -digits)
+        integer + fraction / pow(10, digits)
       );
     }
 
@@ -364,10 +367,13 @@ function consumeFraction(
     digits++;
   }
 
-  return integer + fraction * pow(10, -digits);
+  return integer + fraction / pow(10, digits);
 }
 
 /**
+ * NB: To account for floating point precision errors, we flip the sign of the
+ * exponent and divide rather than multiply it with the given number.
+ *
  * @see https://www.w3.org/TR/css-syntax/#convert-a-string-to-a-number
  */
 function consumeExponent(
@@ -376,13 +382,13 @@ function consumeExponent(
   number: number
 ): number {
   let exponent = 0;
-  let sign = 1;
+  let sign = -1;
 
   for (let i = start, n = input.length; i < n; i++) {
     const char = input[i];
 
     if (char === Char.HyphenMinus) {
-      sign = -1;
+      sign = 1;
       continue;
     }
 
@@ -393,7 +399,7 @@ function consumeExponent(
     exponent = exponent * 10 + char - Char.DigitZero;
   }
 
-  return number * pow(10, sign * exponent);
+  return number / pow(10, sign * exponent);
 }
 
 /**
@@ -443,6 +449,7 @@ function consumeNumber(char: number, stream: Stream<number>): Number {
     result.push(next);
     offset = 1;
     next = stream.peek(offset);
+    isInteger = false;
 
     if (next === Char.PlusSign || next === Char.HyphenMinus) {
       offset = 2;
