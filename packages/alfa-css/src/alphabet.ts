@@ -45,7 +45,11 @@ export type FunctionName = Readonly<{
 
 export type AtKeyword = Readonly<{ type: TokenType.AtKeyword; value: string }>;
 
-export type String = Readonly<{ type: TokenType.String; value: string }>;
+export type String = Readonly<{
+  type: TokenType.String;
+  value: string;
+  mark: Char.QuotationMark | Char.Apostrophe;
+}>;
 
 export type Url = Readonly<{ type: TokenType.Url; value: string }>;
 
@@ -529,7 +533,7 @@ function consumeString(
     char = stream.next();
   }
 
-  return { type: TokenType.String, value };
+  return { type: TokenType.String, value, mark };
 }
 
 const tokens: { [char: number]: Token } = {

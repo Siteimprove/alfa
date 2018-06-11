@@ -90,7 +90,8 @@ test("Can lex a double quoted string", t =>
   css(t, '"foo"', [
     {
       type: TokenType.String,
-      value: "foo"
+      value: "foo",
+      mark: Char.QuotationMark
     }
   ]));
 
@@ -98,7 +99,8 @@ test("Can lex a single quoted string", t =>
   css(t, "'foo'", [
     {
       type: TokenType.String,
-      value: "foo"
+      value: "foo",
+      mark: Char.Apostrophe
     }
   ]));
 
