@@ -512,12 +512,19 @@ function consumeNumeric(
  * @see https://www.w3.org/TR/css-syntax/#consume-an-ident-like-token
  */
 function consumeIdentLike(
-  char: number,
+  start: number,
   stream: Stream<number>
-): Ident | FunctionName {
-  const value = consumeName(char, stream);
+): Ident | FunctionName | Url {
+  const value = consumeName(start, stream);
 
-  if (stream.peek(0) === Char.LeftParenthesis) {
+  const char = stream.peek(0);
+
+  if (value.toLowerCase() === "url" && char === Char.LeftParenthesis) {
+    stream.advance(1);
+    return consumeUrl(stream);
+  }
+
+  if (char === Char.LeftParenthesis) {
     stream.advance(1);
     return { type: TokenType.FunctionName, value };
   }
@@ -541,6 +548,40 @@ function consumeString(
   }
 
   return { type: TokenType.String, value, mark };
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#consume-a-url-token
+ */
+function consumeUrl(stream: Stream<number>): Url {
+  stream.accept(isWhitespace);
+
+  let char = stream.next();
+
+  if (char === null) {
+    return { type: TokenType.Url, value: "" };
+  }
+
+  if (char === Char.QuotationMark || char === Char.Apostrophe) {
+    const { value } = consumeString(stream, char);
+
+    stream.accept(isWhitespace);
+
+    char = stream.next();
+
+    if (char === null || char === Char.RightParenthesis) {
+      return { type: TokenType.Url, value };
+    }
+  }
+
+  let value = "";
+
+  while (char !== null && char !== Char.RightParenthesis) {
+    value += fromCharCode(char);
+    char = stream.next();
+  }
+
+  return { type: TokenType.Url, value };
 }
 
 const tokens: { [char: number]: Token } = {

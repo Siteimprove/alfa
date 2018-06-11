@@ -231,6 +231,22 @@ test("Can lex a function with a single argument", t =>
     }
   ]));
 
+test("Can lex a URL", t =>
+  css(t, "url(https://example.com)", [
+    {
+      type: TokenType.Url,
+      value: "https://example.com"
+    }
+  ]));
+
+test("Can lex a URL with a string value", t =>
+  css(t, "url('https://example.com')", [
+    {
+      type: TokenType.Url,
+      value: "https://example.com"
+    }
+  ]));
+
 test("Can lex an ID selector", t =>
   css(t, "#foo", [
     {
