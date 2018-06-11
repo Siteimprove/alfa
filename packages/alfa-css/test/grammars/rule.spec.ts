@@ -99,6 +99,28 @@ test("Can parse a single at-rule", t =>
     ]
   }));
 
+test("Can parse an at-rule with a prelude", t =>
+  rule(t, "@page foo", {
+    type: "at-rule",
+    name: "page",
+    prelude: [
+      {
+        type: TokenType.Whitespace
+      },
+      {
+        type: TokenType.Ident,
+        value: "foo"
+      }
+    ]
+  }));
+
+test("Can parse an at-rule terminated by a semicolon", t =>
+  rule(t, "@page;", {
+    type: "at-rule",
+    name: "page",
+    prelude: []
+  }));
+
 test("Can parse a rule with a class selector", t =>
   rule(t, ".foo{}", {
     type: "qualified-rule",

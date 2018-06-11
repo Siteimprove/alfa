@@ -5,6 +5,7 @@ import {
   TokenType,
   Ident,
   Delim,
+  Colon,
   SquareBracket,
   AtKeyword
 } from "../alphabet";
@@ -56,6 +57,8 @@ function atRule(stream: Stream<Token>, name: string): AtRule {
     stream.advance(1);
     next = stream.peek(0);
   }
+
+  stream.advance(1);
 
   return {
     type: "at-rule",
@@ -172,6 +175,16 @@ const delim: Production<Delim> = {
   }
 };
 
+const colon: Production<Colon> = {
+  token: TokenType.Colon,
+  prefix(token, stream) {
+    return rule(token, stream);
+  },
+  infix(token, stream, expression, left) {
+    return ruleList(stream, expression, left);
+  }
+};
+
 const squareBracket: Production<SquareBracket> = {
   token: TokenType.LeftSquareBracket,
   prefix(token, stream) {
@@ -195,6 +208,7 @@ const atKeyword: Production<AtKeyword> = {
 export const RuleGrammar: Grammar<Token, Rule | Array<Rule>> = new Grammar([
   ident,
   delim,
+  colon,
   squareBracket,
   atKeyword,
   whitespace
