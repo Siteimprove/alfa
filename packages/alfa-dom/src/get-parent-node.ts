@@ -23,7 +23,7 @@ const composedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
 export function getParentNode(
   node: Node,
   context: Node,
-  options: { composed?: boolean; flattened?: boolean } = {}
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): Node | null {
   let parentMap: ParentMap | undefined;
 

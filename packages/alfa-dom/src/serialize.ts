@@ -127,7 +127,7 @@ export function serialize(node: Node, context: Node): string {
  */
 function escape(
   input: string,
-  options: { attributeMode?: boolean } = {}
+  options: Readonly<{ attributeMode?: boolean }> = {}
 ): string {
   input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");
 

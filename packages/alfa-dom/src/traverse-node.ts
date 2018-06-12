@@ -12,7 +12,7 @@ export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
 export function traverseNode(
   context: Node,
   visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
-  options: { composed?: boolean; flattened?: boolean } = {}
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): void {
   const nodes: Array<Node> = [];
   const actions: Array<Action> = [];

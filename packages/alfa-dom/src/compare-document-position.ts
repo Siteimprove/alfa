@@ -49,7 +49,7 @@ export function compareDocumentPosition(
   reference: Node,
   other: Node,
   context: Node,
-  options: { composed?: boolean } = {}
+  options: Readonly<{ composed?: boolean }> = {}
 ): number {
   if (reference === other) {
     return 0;

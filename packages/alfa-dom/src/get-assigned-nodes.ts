@@ -10,7 +10,7 @@ import { getAssignedSlot } from "./get-assigned-slot";
 export function getAssignedNodes(
   element: Element,
   context: Node,
-  options: { flattened?: boolean } = {}
+  options: Readonly<{ flattened?: boolean }> = {}
 ): Array<Node> {
   if (element.localName !== "slot") {
     return [];
