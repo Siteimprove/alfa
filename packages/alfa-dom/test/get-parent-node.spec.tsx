@@ -17,3 +17,21 @@ test("Gets the correct parent depending on context", t => {
   t.equal(getParentNode(child, <div>{parent1}</div>), parent1);
   t.equal(getParentNode(child, <div>{parent2}</div>), parent2);
 });
+
+test("Returns the flattened parent of an element", t => {
+  const child = <span class="child" />;
+  const parent = (
+    <span class="parent">
+      <slot />
+    </span>
+  );
+
+  const context = (
+    <div>
+      {child}
+      <shadow>{parent}</shadow>
+    </div>
+  );
+
+  t.equal(getParentNode(child, context, { flattened: true }), parent);
+});

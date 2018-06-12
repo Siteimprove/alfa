@@ -2,7 +2,11 @@ import { Node } from "./types";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 
-const parentMaps: WeakMap<Node, WeakMap<Node, Node>> = new WeakMap();
+type ParentMap = WeakMap<Node, Node>;
+
+const flattenedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
+
+const composedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
 
 /**
  * Given a node and a context, get the parent node of the node within the
@@ -19,9 +23,15 @@ const parentMaps: WeakMap<Node, WeakMap<Node, Node>> = new WeakMap();
 export function getParentNode(
   node: Node,
   context: Node,
-  options: { composed?: boolean } = {}
+  options: { composed?: boolean; flattened?: boolean } = {}
 ): Node | null {
-  let parentMap = parentMaps.get(context);
+  let parentMap: ParentMap | undefined;
+
+  if (options.flattened) {
+    parentMap = flattenedParentMaps.get(context);
+  } else {
+    parentMap = composedParentMaps.get(context);
+  }
 
   if (parentMap === undefined) {
     parentMap = new WeakMap();
@@ -35,10 +45,17 @@ export function getParentNode(
           }
         }
       },
-      { composed: true }
+      {
+        composed: !options.flattened,
+        flattened: options.flattened
+      }
     );
 
-    parentMaps.set(context, parentMap);
+    if (options.flattened) {
+      flattenedParentMaps.set(context, parentMap);
+    } else {
+      composedParentMaps.set(context, parentMap);
+    }
   }
 
   const parentNode = parentMap.get(node);

@@ -45,7 +45,7 @@ export function traverseNode(
           const childNodes = getAssignedNodes(node, context);
 
           for (let i = childNodes.length - 1; i >= 0; i--) {
-            push(Action.Enter, childNodes[i], node);
+            push(Action.Enter, childNodes[i], parentNode);
           }
 
           continue;
