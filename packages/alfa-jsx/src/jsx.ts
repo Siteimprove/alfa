@@ -3,43 +3,73 @@
 const { keys } = Object;
 
 export function jsx(
-  localName: string,
-  attributes: { [name: string]: any } | null,
-  ...childNodes: Array<JSX.Element | string>
+  type: string,
+  properties?: { [name: string]: any } | null,
+  ...children: Array<JSX.Element | string>
 ): JSX.Element {
+  if (properties === undefined || properties === null) {
+    properties = {};
+  }
+
+  const childNodes: Array<JSX.Element | JSX.Text> = [];
+
+  let shadowRoot: JSX.ShadowRoot | null = null;
+
+  for (let i = 0, n = children.length; i < n; i++) {
+    const child = children[i];
+
+    if (typeof child === "string") {
+      childNodes.push({ nodeType: 3, childNodes: [], data: child });
+    } else {
+      // We use the first <shadow> element as a mount point for a shadow root.
+      // Since the <shadow> is now obsolete and therefore isn'be needed for
+      // anything else we can safely make use of it for this purpose.
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/shadow
+      if (shadowRoot === null && child.localName === "shadow") {
+        shadowRoot = {
+          nodeType: 11,
+          mode: "open",
+          childNodes: child.childNodes
+        };
+      } else {
+        childNodes.push(child);
+      }
+    }
+  }
+
+  const attributes: Array<JSX.Attribute> = [];
+
+  const propertyNames = keys(properties);
+
+  for (let i = 0, n = propertyNames.length; i < n; i++) {
+    const name = propertyNames[i];
+    const value = properties[name];
+
+    if (value !== false && value !== null && value !== undefined) {
+      attributes.push({
+        prefix: null,
+        localName: name,
+        value: toString(name, value)
+      });
+    }
+  }
+
   return {
     nodeType: 1,
     prefix: null,
-    localName,
-    attributes:
-      attributes === null
-        ? []
-        : keys(attributes)
-            .filter(name => {
-              const value = attributes[name];
-              return value !== false && value !== null && value !== undefined;
-            })
-            .map(name => {
-              const value = attributes[name];
-              return {
-                prefix: null,
-                localName: name,
-                value:
-                  typeof value === "number"
-                    ? value.toString(10)
-                    : typeof value === "boolean"
-                      ? name
-                      : typeof value === "string"
-                        ? value
-                        : value.toString()
-              };
-            }),
-    shadowRoot: null,
-    childNodes: childNodes.map(
-      childNode =>
-        typeof childNode === "string"
-          ? { nodeType: 3, childNodes: [], data: childNode }
-          : childNode
-    )
+    localName: type,
+    attributes,
+    shadowRoot,
+    childNodes
   };
+}
+
+function toString(name: string, value: any): string {
+  return typeof value === "number"
+    ? value.toString(10)
+    : typeof value === "boolean"
+      ? name
+      : typeof value === "string"
+        ? value
+        : value.toString();
 }

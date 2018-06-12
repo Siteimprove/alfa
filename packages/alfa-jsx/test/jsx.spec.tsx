@@ -132,3 +132,30 @@ test("Handles attributes with object values", t => {
     value: "[object Object]"
   });
 });
+
+test("Constructs and attaches shadow roots from <shadow> elements", t => {
+  const element = (
+    <div>
+      <shadow>I'm in the shadows!</shadow>
+    </div>
+  );
+
+  t.deepEqual(element, {
+    nodeType: 1,
+    prefix: null,
+    localName: "div",
+    attributes: [],
+    shadowRoot: {
+      nodeType: 11,
+      mode: "open",
+      childNodes: [
+        {
+          nodeType: 3,
+          data: "I'm in the shadows!",
+          childNodes: []
+        } as JSX.Text
+      ]
+    },
+    childNodes: []
+  });
+});

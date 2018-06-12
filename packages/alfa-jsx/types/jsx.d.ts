@@ -19,11 +19,16 @@ declare namespace JSX {
     readonly prefix: string | null;
     readonly localName: string;
     readonly attributes: ArrayLike<Attribute>;
-    readonly shadowRoot: null;
+    readonly shadowRoot: ShadowRoot | null;
   }
 
   interface Text extends Node {
     readonly nodeType: 3;
     readonly data: string;
+  }
+
+  interface ShadowRoot extends Node {
+    readonly nodeType: 11;
+    readonly mode: "open";
   }
 }
