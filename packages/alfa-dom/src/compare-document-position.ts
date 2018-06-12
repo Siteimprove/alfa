@@ -64,8 +64,15 @@ export function compareDocumentPosition(
   // If the two nodes to not share any parent nodes then the nodes are not in
   // the same tree.
   if (forkingPoint === -1) {
+    const referenceOrdering = getImplementationSpecificOrdering(reference);
+    const otherOrdering = getImplementationSpecificOrdering(other);
+
     return (
-      DocumentPosition.Disconnected | DocumentPosition.ImplementationSpecific
+      DocumentPosition.Disconnected |
+      DocumentPosition.ImplementationSpecific |
+      (referenceOrdering > otherOrdering
+        ? DocumentPosition.Following
+        : DocumentPosition.Preceding)
     );
   }
 
@@ -148,4 +155,22 @@ function getForkingPoint(first: Array<any>, second: Array<any>): number {
   }
 
   return forkingPoint;
+}
+
+// For nodes that are disconnected we maintain a cache with arbitrary orderings
+// assigned. This ensures that we maintain the constraint that implementation
+// specific orderings for disconnected nodes should be consistent, i.e. if
+// "foo" and "bar" are disconnected, "foo" compared to "bar" will return the
+// opposite ordering of "bar" compared to "foo".
+const orderings: WeakMap<Node, number> = new WeakMap();
+
+function getImplementationSpecificOrdering(node: Node): number {
+  let ordering = orderings.get(node);
+
+  if (ordering === undefined) {
+    ordering = Math.random();
+    orderings.set(node, ordering);
+  }
+
+  return ordering;
 }
