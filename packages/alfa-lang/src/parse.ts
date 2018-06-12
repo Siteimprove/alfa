@@ -17,7 +17,7 @@ export function parse<T extends Token, R>(
       return null;
     }
 
-    const entry = grammar.get(token);
+    const entry = grammar.get(token.type);
 
     if (entry === null) {
       return null;
@@ -44,7 +44,7 @@ export function parse<T extends Token, R>(
     token = stream.peek(0);
 
     while (token !== null) {
-      const entry = grammar.get(token);
+      const entry = grammar.get(token.type);
 
       if (entry === null) {
         break;
@@ -52,11 +52,7 @@ export function parse<T extends Token, R>(
 
       const { production, precedence } = entry;
 
-      if (production.infix === undefined) {
-        break;
-      }
-
-      if (precedence < power) {
+      if (precedence < power || production.infix === undefined) {
         break;
       }
 
