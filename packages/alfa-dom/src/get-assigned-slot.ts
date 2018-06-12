@@ -11,7 +11,14 @@ export function getAssignedSlot(
   node: Element | Text,
   context: Node
 ): Element | null {
-  const parentElement = getParentElement(node, context);
+  return findSlot(node, context);
+}
+
+/**
+ * @see https://www.w3.org/TR/dom41/#find-a-slot
+ */
+function findSlot(slotable: Element | Text, context: Node): Element | null {
+  const parentElement = getParentElement(slotable, context);
 
   if (parentElement === null) {
     return null;
@@ -23,8 +30,8 @@ export function getAssignedSlot(
     return null;
   }
 
-  const name: string | null = isElement(node)
-    ? getAttribute(node, "slot")
+  const name: string | null = isElement(slotable)
+    ? getAttribute(slotable, "slot")
     : null;
 
   let assignedSlot: Element | null = null;
