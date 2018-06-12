@@ -94,7 +94,7 @@ function qualifiedRule(
   return null;
 }
 
-export function block(stream: Stream<Token>): Array<Token> {
+function block(stream: Stream<Token>): Array<Token> {
   const values: Array<Token> = [];
 
   stream.advance(1);
