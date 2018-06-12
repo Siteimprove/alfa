@@ -11,7 +11,7 @@ import { getParentNode } from "./get-parent-node";
 export function getParentElement(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean }> = {}
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): Element | null {
   const parentNode = getParentNode(node, context, options);
 
