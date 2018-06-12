@@ -16,6 +16,7 @@ import { isDocument } from "./guards";
 import { matches } from "./matches";
 import { getAttribute } from "./get-attribute";
 import { getParentElement } from "./get-parent-element";
+import { getRootNode } from "./get-root-node";
 import { getCascade } from "./get-cascade";
 
 const { isArray } = Array;
@@ -50,7 +51,8 @@ export function getCascadedStyle(
   const cascadedStyle: Mutable<Style<Stage.Cascaded>> = {};
 
   const style = getAttribute(element, "style");
-  const cascade = isDocument(context) ? getCascade(context) : null;
+  const rootNode = getRootNode(element, context);
+  const cascade = isDocument(rootNode) ? getCascade(rootNode) : null;
 
   const declarations: Array<Declaration> = [];
 
@@ -242,7 +244,7 @@ function getParentStyle(
   context: Node,
   options: StyleOptions
 ): Style<Stage.Computed> {
-  const parentElement = getParentElement(element, context);
+  const parentElement = getParentElement(element, context, { flattened: true });
 
   if (parentElement === null) {
     return {};

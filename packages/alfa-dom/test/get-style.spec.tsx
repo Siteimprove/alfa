@@ -95,3 +95,29 @@ test("Gets no properties when none are specified nor inherited", t => {
 
   t.deepEqual(style, {});
 });
+
+test("Correctly handles light DOM inheriting from shadow DOM", t => {
+  const span = <span />;
+
+  const context = (
+    <div>
+      {span}
+      <shadow>
+        <p style="color: red">
+          <slot />
+        </p>
+      </shadow>
+    </div>
+  );
+
+  const style = getComputedStyle(span, context);
+
+  t.deepEqual(style, {
+    color: {
+      red: 255,
+      green: 0,
+      blue: 0,
+      alpha: 1
+    }
+  });
+});
