@@ -1,5 +1,6 @@
 import { Node } from "./types";
 import { isElement } from "./guards";
+import { getAssignedNodes } from "./get-assigned-nodes";
 
 const enum Action {
   Enter,
@@ -11,7 +12,7 @@ export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
 export function traverseNode(
   context: Node,
   visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
-  options: { composed?: boolean } = {}
+  options: { composed?: boolean; flattened?: boolean } = {}
 ): void {
   const nodes: Array<Node> = [];
   const actions: Array<Action> = [];
@@ -36,6 +37,31 @@ export function traverseNode(
     action = actions.pop(), node = nodes.pop(), parentNode = nodes.pop()
   ) {
     if (action === Action.Enter) {
+      const shadowRoot = isElement(node) ? node.shadowRoot : null;
+
+      // https://drafts.csswg.org/css-scoping/#flattening
+      if (options.flattened) {
+        if (isElement(node) && node.localName === "slot") {
+          const childNodes = getAssignedNodes(node, context);
+
+          for (let i = childNodes.length - 1; i >= 0; i--) {
+            push(Action.Enter, childNodes[i], node);
+          }
+
+          continue;
+        }
+
+        if (shadowRoot !== null) {
+          const { childNodes } = shadowRoot;
+
+          for (let i = childNodes.length - 1; i >= 0; i--) {
+            push(Action.Enter, childNodes[i], node);
+          }
+
+          continue;
+        }
+      }
+
       if (
         visitors.enter !== undefined &&
         visitors.enter(node, parentNode || null) === false
@@ -44,8 +70,6 @@ export function traverseNode(
       }
 
       const { childNodes } = node;
-
-      const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
       if (visitors.exit !== undefined) {
         if (childNodes.length > 0 || shadowRoot !== null) {
