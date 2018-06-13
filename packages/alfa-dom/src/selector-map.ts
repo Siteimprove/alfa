@@ -9,7 +9,7 @@ import { Node, Element, StyleSheet } from "./types";
 import { isStyleRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { matches, MatchingOptions } from "./matches";
-import { getAttribute } from "./get-attribute";
+import { getId } from "./get-id";
 import { getClassList } from "./get-class-list";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
@@ -68,55 +68,39 @@ export class SelectorMap {
     // combined.
     let order: number = 0;
 
+    // The same declarations are often repeated across several rules, which
+    // is especially true for simple declarations such as `display: none`. We
+    // can therefore save quite a few roundtrips to the parser by caching and
+    // reusing parsed declarations.
+    const declarationsCache: Map<string, Array<Declaration>> = new Map();
+
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
         enter: rule => {
-          if (!isStyleRule(rule)) {
-            return;
-          }
+          if (isStyleRule(rule)) {
+            const selectors = parseSelectors(rule.selectorText);
 
-          const selectors = parseSelectors(rule.selectorText);
+            if (selectors.length === 0) {
+              return;
+            }
 
-          if (selectors.length === 0) {
-            return;
-          }
+            const { cssText } = rule.style;
 
-          const declarations = parseDeclarations(rule.style.cssText);
+            let declarations = declarationsCache.get(cssText);
 
-          if (declarations.length === 0) {
-            return;
-          }
+            if (declarations === undefined) {
+              declarations = parseDeclarations(cssText);
+              declarationsCache.set(cssText, declarations);
+            }
 
-          order++;
+            if (declarations.length === 0) {
+              return;
+            }
 
-          for (let i = 0, n = selectors.length; i < n; i++) {
-            const selector = selectors[i];
+            order++;
 
-            const keySelector = getKeySelector(selector);
-            const specificity = getSpecificity(selector);
-
-            const entry: SelectorEntry = {
-              selector,
-              declarations,
-              order,
-              specificity
-            };
-
-            if (keySelector === null) {
-              this.other.push(entry);
-            } else {
-              const key = keySelector.name;
-
-              switch (keySelector.type) {
-                case SelectorType.IdSelector:
-                  addEntry(this.ids, key, entry);
-                  break;
-                case SelectorType.ClassSelector:
-                  addEntry(this.classes, key, entry);
-                  break;
-                case SelectorType.TypeSelector:
-                  addEntry(this.types, key, entry);
-              }
+            for (let i = 0, n = selectors.length; i < n; i++) {
+              this.addRule(selectors[i], declarations, order);
             }
           }
         }
@@ -131,7 +115,7 @@ export class SelectorMap {
   ): Array<SelectorEntry> {
     const rules: Array<SelectorEntry> = [];
 
-    const id = getAttribute(element, "id");
+    const id = getId(element);
 
     if (id !== null) {
       collectEntries(
@@ -166,6 +150,39 @@ export class SelectorMap {
     collectEntries(element, context, rules, this.other, options);
 
     return rules;
+  }
+
+  private addRule(
+    selector: Selector,
+    declarations: Array<Declaration>,
+    order: number
+  ): void {
+    const keySelector = getKeySelector(selector);
+    const specificity = getSpecificity(selector);
+
+    const entry: SelectorEntry = {
+      selector,
+      declarations,
+      order,
+      specificity
+    };
+
+    if (keySelector === null) {
+      this.other.push(entry);
+    } else {
+      const key = keySelector.name;
+
+      switch (keySelector.type) {
+        case SelectorType.IdSelector:
+          addEntry(this.ids, key, entry);
+          break;
+        case SelectorType.ClassSelector:
+          addEntry(this.classes, key, entry);
+          break;
+        case SelectorType.TypeSelector:
+          addEntry(this.types, key, entry);
+      }
+    }
   }
 }
 
