@@ -19,9 +19,9 @@ export function parseStyleSheet(input: string): StyleSheet {
     if (rule.type === "qualified-rule") {
       cssRules.push({
         type: RuleType.Style,
-        selectorText: serialize(rule.prelude),
+        selectorText: serializeTokenList(rule.prelude),
         style: {
-          cssText: serialize(rule.value)
+          cssText: serializeTokenList(rule.value)
         }
       });
     }
@@ -30,60 +30,66 @@ export function parseStyleSheet(input: string): StyleSheet {
   return { cssRules };
 }
 
-function serialize(tokens: Array<Token>): string {
-  return tokens
-    .reduce((result, token) => {
-      switch (token.type) {
-        case TokenType.Ident:
-          return result + token.value;
+function serializeTokenList(tokens: Array<Token>): string {
+  let result = "";
 
-        case TokenType.FunctionName:
-          return result + `${token.value}(`;
+  for (let i = 0, n = tokens.length; i < n; i++) {
+    result += serializeToken(tokens[i]);
+  }
 
-        case TokenType.AtKeyword:
-          return result + `@${token.value}`;
+  return result;
+}
 
-        case TokenType.String:
-          return result + `${token.mark}${token.value}${token.mark}`;
+function serializeToken(token: Token): string {
+  switch (token.type) {
+    case TokenType.Ident:
+      return token.value;
 
-        case TokenType.Url:
-          return result + `url(${token.value})`;
+    case TokenType.FunctionName:
+      return `${token.value}(`;
 
-        case TokenType.Delim:
-          return result + fromCharCode(token.value);
+    case TokenType.AtKeyword:
+      return `@${token.value}`;
 
-        case TokenType.Number:
-          return result + `${token.value}`;
+    case TokenType.String:
+      return `${token.mark}${token.value}${token.mark}`;
 
-        case TokenType.Percentage:
-          return result + `${token.value * 100}%`;
+    case TokenType.Url:
+      return `url(${token.value})`;
 
-        case TokenType.Dimension:
-          return result + `${token.value}${token.unit}`;
+    case TokenType.Delim:
+      return fromCharCode(token.value);
 
-        case TokenType.Whitespace:
-          return result + " ";
+    case TokenType.Number:
+      return `${token.value}`;
 
-        case TokenType.Colon:
-          return result + ":";
-        case TokenType.Semicolon:
-          return result + ";";
-        case TokenType.Comma:
-          return result + ",";
+    case TokenType.Percentage:
+      return `${token.value * 100}%`;
 
-        case TokenType.LeftParenthesis:
-          return result + "(";
-        case TokenType.RightParenthesis:
-          return result + ")";
-        case TokenType.LeftSquareBracket:
-          return result + "[";
-        case TokenType.RightSquareBracket:
-          return result + "]";
-        case TokenType.LeftCurlyBracket:
-          return result + "{";
-        case TokenType.RightCurlyBracket:
-          return result + "}";
-      }
-    }, "")
-    .trim();
+    case TokenType.Dimension:
+      return `${token.value}${token.unit}`;
+
+    case TokenType.Whitespace:
+      return " ";
+
+    case TokenType.Colon:
+      return ":";
+    case TokenType.Semicolon:
+      return ";";
+    case TokenType.Comma:
+      return ",";
+
+    case TokenType.LeftParenthesis:
+      return "(";
+    case TokenType.RightParenthesis:
+      return ")";
+    case TokenType.LeftSquareBracket:
+      return "[";
+    case TokenType.RightSquareBracket:
+      return "]";
+    case TokenType.LeftCurlyBracket:
+      return "{";
+    case TokenType.RightCurlyBracket:
+      return "}";
+  }
 }
