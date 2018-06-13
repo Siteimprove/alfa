@@ -87,7 +87,7 @@ export function parse<T extends Token, R>(
 
   const result = expression(-1);
 
-  if (stream.peek(0) !== null) {
+  if (stream.advance(1) !== false) {
     return null;
   }
 
