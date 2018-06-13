@@ -30,7 +30,7 @@ export class Scraper {
     args: ["--disable-web-security"]
   });
 
-  async scrape(
+  public async scrape(
     url: string,
     options: ScrapeOptions = {}
   ): Promise<{ document: Document }> {
@@ -98,7 +98,7 @@ export class Scraper {
     return { document };
   }
 
-  async close(): Promise<void> {
+  public async close(): Promise<void> {
     const browser = await this.browser;
     await browser.close();
   }

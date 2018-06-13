@@ -5,9 +5,9 @@ const { max, min } = Math;
 export type StreamReader<T> = (index: number) => T;
 
 export class Stream<T> {
-  private length: number;
+  private readonly length: number;
 
-  private read: StreamReader<T>;
+  private readonly read: StreamReader<T>;
 
   public position: number = 0;
 

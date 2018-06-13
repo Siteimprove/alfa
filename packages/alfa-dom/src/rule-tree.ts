@@ -55,7 +55,7 @@ export interface RuleEntry {
  * @internal
  */
 export class RuleTree {
-  private children: Array<RuleEntry> = [];
+  private readonly children: Array<RuleEntry> = [];
 
   public insert(
     rules: Array<Pick<RuleEntry, "selector" | "declarations">>

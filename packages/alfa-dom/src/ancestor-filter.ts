@@ -51,11 +51,11 @@ import { getClassList } from "./get-class-list";
  * @internal
  */
 export class AncestorFilter {
-  private ids: AncestorBucket = new Map();
+  private readonly ids: AncestorBucket = new Map();
 
-  private classes: AncestorBucket = new Map();
+  private readonly classes: AncestorBucket = new Map();
 
-  private types: AncestorBucket = new Map();
+  private readonly types: AncestorBucket = new Map();
 
   public add(element: Element): void {
     this.process(element, addEntry);

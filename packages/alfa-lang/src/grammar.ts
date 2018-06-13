@@ -8,7 +8,10 @@ export type GrammarEntry<T extends Token, R> = Readonly<{
 }>;
 
 export class Grammar<T extends Token, R> {
-  private entries: Map<TokenIdentifier<T>, GrammarEntry<T, R>> = new Map();
+  private readonly entries: Map<
+    TokenIdentifier<T>,
+    GrammarEntry<T, R>
+  > = new Map();
 
   public constructor(
     productions: Array<Production<T, R> | Array<Production<T, R>>>

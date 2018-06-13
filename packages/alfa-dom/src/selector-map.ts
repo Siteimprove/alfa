@@ -52,15 +52,15 @@ export type SelectorEntry = {
  * @internal
  */
 export class SelectorMap {
-  private ids: SelectorBucket = new Map();
+  private readonly ids: SelectorBucket = new Map();
 
-  private classes: SelectorBucket = new Map();
+  private readonly classes: SelectorBucket = new Map();
 
-  private types: SelectorBucket = new Map();
+  private readonly types: SelectorBucket = new Map();
 
-  private other: Array<SelectorEntry> = [];
+  private readonly other: Array<SelectorEntry> = [];
 
-  constructor(styleSheets: Array<StyleSheet>) {
+  public constructor(styleSheets: Array<StyleSheet>) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
