@@ -4,10 +4,14 @@ import { RuleVisitor, traverseRule } from "./traverse-rule";
 export function traverseStyleSheet(
   context: StyleSheet,
   visitors: Readonly<{ enter?: RuleVisitor; exit?: RuleVisitor }>
-): void {
+): boolean {
   const { cssRules } = context;
 
   for (let i = 0, n = cssRules.length; i < n; i++) {
-    traverseRule(cssRules[i], visitors);
+    if (!traverseRule(cssRules[i], visitors)) {
+      return false;
+    }
   }
+
+  return true;
 }
