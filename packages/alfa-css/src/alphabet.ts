@@ -413,15 +413,14 @@ function consumeNumber(char: number, stream: Stream<number>): Number {
   if (next === Char.PlusSign || next === Char.HyphenMinus) {
     result.push(next);
     stream.advance(1);
+    next = stream.peek(0);
   }
 
-  const numbers = stream.accept(isNumeric);
-
-  if (numbers !== false) {
-    result.push(...numbers);
+  while (next !== null && isNumeric(next)) {
+    result.push(next);
+    stream.advance(1);
+    next = stream.peek(0);
   }
-
-  next = stream.peek(0);
 
   let isInteger = true;
 
@@ -431,15 +430,14 @@ function consumeNumber(char: number, stream: Stream<number>): Number {
     if (char !== null && isNumeric(char)) {
       result.push(next, char);
       stream.advance(2);
+      next = stream.peek(0);
       isInteger = false;
 
-      const numbers = stream.accept(isNumeric);
-
-      if (numbers !== false) {
-        result.push(...numbers);
+      while (next !== null && isNumeric(next)) {
+        result.push(next);
+        stream.advance(1);
+        next = stream.peek(0);
       }
-
-      next = stream.peek(0);
     }
   }
 
@@ -459,11 +457,12 @@ function consumeNumber(char: number, stream: Stream<number>): Number {
 
     if (next !== null && isNumeric(next)) {
       stream.advance(offset);
+      next = stream.peek(0);
 
-      const numbers = stream.accept(isNumeric);
-
-      if (numbers !== false) {
-        result.push(...numbers);
+      while (next !== null && isNumeric(next)) {
+        result.push(next);
+        stream.advance(1);
+        next = stream.peek(0);
       }
     }
   }
@@ -554,9 +553,11 @@ function consumeString(
  * @see https://www.w3.org/TR/css-syntax/#consume-a-url-token
  */
 function consumeUrl(stream: Stream<number>): Url {
-  stream.accept(isWhitespace);
-
   let char = stream.next();
+
+  while (char !== null && isWhitespace(char)) {
+    char = stream.next();
+  }
 
   if (char === null) {
     return { type: TokenType.Url, value: "" };
@@ -565,11 +566,17 @@ function consumeUrl(stream: Stream<number>): Url {
   if (char === Char.QuotationMark || char === Char.Apostrophe) {
     const { value } = consumeString(stream, char);
 
-    stream.accept(isWhitespace);
-
     char = stream.next();
 
-    if (char === null || char === Char.RightParenthesis) {
+    while (char !== null && isWhitespace(char)) {
+      char = stream.next();
+    }
+
+    if (char === null) {
+      return { type: TokenType.Url, value };
+    }
+
+    if (char === Char.RightParenthesis) {
       return { type: TokenType.Url, value };
     }
   }
