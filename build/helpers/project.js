@@ -31,10 +31,16 @@ class Project {
 
     this.host.addFile(file);
 
-    return [
+    const diagnostics = [
       ...service.getSyntacticDiagnostics(file),
       ...service.getSemanticDiagnostics(file)
     ];
+
+    diagnostics.sort((a, b) => {
+      return a.start - b.start;
+    });
+
+    return diagnostics;
   }
 
   /**
