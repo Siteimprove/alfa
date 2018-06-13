@@ -115,39 +115,31 @@ export class SelectorMap {
   ): Array<SelectorEntry> {
     const rules: Array<SelectorEntry> = [];
 
+    function collectEntries(entries: Array<SelectorEntry>) {
+      for (let i = 0, n = entries.length; i < n; i++) {
+        const entry = entries[i];
+
+        if (matches(element, context, entry.selector, options)) {
+          rules.push(entry);
+        }
+      }
+    }
+
     const id = getId(element);
 
     if (id !== null) {
-      collectEntries(
-        element,
-        context,
-        rules,
-        getEntries(this.ids, id),
-        options
-      );
+      collectEntries(getEntries(this.ids, id));
     }
 
-    collectEntries(
-      element,
-      context,
-      rules,
-      getEntries(this.types, element.localName),
-      options
-    );
+    collectEntries(getEntries(this.types, element.localName));
 
     const classList = getClassList(element);
 
     for (let i = 0, n = classList.length; i < n; i++) {
-      collectEntries(
-        element,
-        context,
-        rules,
-        getEntries(this.classes, classList[i]),
-        options
-      );
+      collectEntries(getEntries(this.classes, classList[i]));
     }
 
-    collectEntries(element, context, rules, this.other, options);
+    collectEntries(this.other);
 
     return rules;
   }
@@ -211,22 +203,6 @@ function getEntries(bucket: SelectorBucket, key: string): Array<SelectorEntry> {
   }
 
   return entries;
-}
-
-function collectEntries(
-  element: Element,
-  context: Node,
-  target: Array<SelectorEntry>,
-  entries: Array<SelectorEntry>,
-  options?: MatchingOptions
-) {
-  for (let i = 0, n = entries.length; i < n; i++) {
-    const entry = entries[i];
-
-    if (matches(element, context, entry.selector, options)) {
-      target.push(entry);
-    }
-  }
 }
 
 function parseSelectors(input: string): Array<Selector> {
