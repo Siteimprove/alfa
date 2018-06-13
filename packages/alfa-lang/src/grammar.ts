@@ -23,7 +23,7 @@ export class Grammar<T extends Token, R> {
     }
   }
 
-  public get(token: Token): GrammarEntry<T, R> | null {
-    return this.entries.get(token.type) || null;
+  public get(type: TokenIdentifier<T>): GrammarEntry<T, R> | null {
+    return this.entries.get(type) || null;
   }
 }

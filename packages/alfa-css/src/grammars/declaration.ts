@@ -18,10 +18,7 @@ export type Declaration = {
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-declaration
  */
-export function declaration(
-  stream: Stream<Token>,
-  name: string
-): Declaration | null {
+function declaration(stream: Stream<Token>, name: string): Declaration | null {
   let value: Array<Token> = [];
   let important: boolean = false;
 
