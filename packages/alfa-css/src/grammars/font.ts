@@ -1,13 +1,13 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
-import { Token, Ident, Dimension, Percentage } from "../alphabet";
+import { Token, TokenType, Ident, Dimension, Percentage } from "../alphabet";
 import { whitespace } from "../grammar";
 import { FontSize } from "../properties/font";
 
 type Production<T extends Token> = Lang.Production<Token, FontSize, T>;
 
 const ident: Production<Ident> = {
-  token: "ident",
+  token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
       case "xx-small":
@@ -28,7 +28,7 @@ const ident: Production<Ident> = {
 };
 
 const dimension: Production<Dimension> = {
-  token: "dimension",
+  token: TokenType.Dimension,
   prefix(token) {
     switch (token.unit) {
       // Absolute lengths
@@ -58,7 +58,7 @@ const dimension: Production<Dimension> = {
 };
 
 const percentage: Production<Percentage> = {
-  token: "percentage",
+  token: TokenType.Percentage,
   prefix(token) {
     return { type: "percentage", value: token.value };
   }

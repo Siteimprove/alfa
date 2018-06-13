@@ -1,40 +1,18 @@
-import * as tape from "tape";
+import { install } from "source-map-support";
+import { Assertions } from "./types";
+import { assert } from "./assert";
+import { format } from "./format";
 
-const { assign } = Object;
+install();
 
-export type Test = tape.Test & { title: string };
-export type TestOptions = tape.TestOptions;
-export type TestCase = (test: Test) => void | Promise<void>;
-
-export function test(title: string, callback: TestCase): void;
-
-export function test(
-  title: string,
-  options: TestOptions,
-  callback: TestCase
-): void;
-
-export function test(
-  title: string,
-  options: TestOptions | TestCase,
-  callback: TestCase = () => {}
-): void {
-  if (typeof options === "function") {
-    callback = options;
-    options = {};
+export async function test(
+  name: string,
+  assertion: (assert: Assertions) => void | Promise<void>
+): Promise<void> {
+  try {
+    await assertion(assert);
+  } catch (err) {
+    console.error(format(name, err));
+    process.exit(1);
   }
-
-  tape(title, options, t => {
-    try {
-      const result = callback(assign(t, { title }));
-
-      if (result && result.constructor === Promise) {
-        result.then(() => t.end()).catch(err => t.error(err));
-      } else {
-        t.end();
-      }
-    } catch (err) {
-      t.error(err);
-    }
-  });
 }

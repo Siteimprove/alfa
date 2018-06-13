@@ -2,6 +2,7 @@ import { Production } from "../../../src/types";
 import { Grammar } from "../../../src/grammar";
 import { Expression, Constant, Operator } from "../expression";
 import {
+  TokenType,
   ExpressionToken,
   Number,
   Add,
@@ -18,7 +19,7 @@ export type ExpressionProduction<
 > = Production<ExpressionToken, Expression, T, U>;
 
 const number: ExpressionProduction<Number, Constant> = {
-  token: "number",
+  token: TokenType.Number,
 
   prefix(token) {
     return { type: "constant", value: token.value };
@@ -26,7 +27,7 @@ const number: ExpressionProduction<Number, Constant> = {
 };
 
 const addition: ExpressionProduction<Add, Constant | Operator> = {
-  token: "+",
+  token: TokenType.Add,
 
   prefix(token, stream) {
     const numbers = stream.accept(isNumber);
@@ -53,7 +54,7 @@ const addition: ExpressionProduction<Add, Constant | Operator> = {
 };
 
 const subtraction: ExpressionProduction<Subtract, Constant | Operator> = {
-  token: "-",
+  token: TokenType.Subtract,
 
   prefix(token, stream) {
     const numbers = stream.accept(isNumber);
@@ -75,12 +76,12 @@ const subtraction: ExpressionProduction<Subtract, Constant | Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "-", left, right };
   }
 };
 
 const multiplication: ExpressionProduction<Multiply, Operator> = {
-  token: "*",
+  token: TokenType.Multiply,
 
   infix(token, stream, expression, left) {
     const right = expression();
@@ -89,12 +90,12 @@ const multiplication: ExpressionProduction<Multiply, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "*", left, right };
   }
 };
 
 const division: ExpressionProduction<Divide, Operator> = {
-  token: "/",
+  token: TokenType.Divide,
 
   infix(token, stream, expression, left) {
     const right = expression();
@@ -103,12 +104,12 @@ const division: ExpressionProduction<Divide, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "/", left, right };
   }
 };
 
 const exponentiation: ExpressionProduction<Exponentiate, Operator> = {
-  token: "^",
+  token: TokenType.Exponentiate,
   associate: "right",
 
   infix(token, stream, expression, left) {
@@ -118,7 +119,7 @@ const exponentiation: ExpressionProduction<Exponentiate, Operator> = {
       throw new Error("Expected right-hand-side expression");
     }
 
-    return { type: "operator", value: token, left, right };
+    return { type: "operator", value: "^", left, right };
   }
 };
 

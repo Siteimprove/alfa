@@ -11,8 +11,12 @@ const { isNaN } = Number;
 export function getTabIndex(element: Element): number | null {
   const tabIndex = getAttribute(element, "tabindex");
 
-  if (tabIndex !== null && !isNaN(parseInt(tabIndex))) {
-    return parseInt(tabIndex);
+  if (tabIndex !== null) {
+    const parsed = parseInt(tabIndex);
+
+    if (!isNaN(parsed)) {
+      return parsed;
+    }
   }
 
   if (isSuggestedFocusableElement(element)) {

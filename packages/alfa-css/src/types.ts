@@ -52,7 +52,7 @@ export type Inherit = "inherit";
 /**
  * @see https://www.w3.org/TR/css-cascade/#value-stages
  */
-export enum Stage {
+export const enum Stage {
   /**
    * @see https://www.w3.org/TR/css-cascade/#cascaded
    */

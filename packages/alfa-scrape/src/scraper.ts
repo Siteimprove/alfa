@@ -1,10 +1,10 @@
+import { readFileSync } from "fs";
 import { launch } from "puppeteer";
 import { Document } from "@siteimprove/alfa-dom";
-import { bundle } from "./bundle";
 
-const Virtualize = require.resolve("./virtualize");
+const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
-export enum Wait {
+export const enum Wait {
   Ready = "domcontentloaded",
   Loaded = "load",
   Idle = "networkidle0"
@@ -25,21 +25,16 @@ export type ScrapeOptions = Readonly<{
 }>;
 
 export class Scraper {
-  private readonly _browser = launch({
+  private readonly browser = launch({
     headless: true,
     args: ["--disable-web-security"]
-  });
-
-  private readonly _virtualize = bundle(Virtualize, {
-    builtins: false
   });
 
   async scrape(
     url: string,
     options: ScrapeOptions = {}
   ): Promise<{ document: Document }> {
-    const browser = await this._browser;
-    const virtualize = await this._virtualize;
+    const browser = await this.browser;
 
     const page = await browser.newPage();
 
@@ -79,9 +74,8 @@ export class Scraper {
 
       try {
         document = await page.evaluate(`{
-          const require = ${virtualize};
-          const { virtualize } = require("${Virtualize}");
-          virtualize(window.document);
+          ${virtualize};
+          virtualizeNode(window.document);
         }`);
       } catch (err) {
         error = err;
@@ -105,7 +99,7 @@ export class Scraper {
   }
 
   async close(): Promise<void> {
-    const browser = await this._browser;
+    const browser = await this.browser;
     await browser.close();
   }
 }

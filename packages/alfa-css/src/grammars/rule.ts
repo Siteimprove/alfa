@@ -1,6 +1,14 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, Ident, Delim, Bracket, AtKeyword } from "../alphabet";
+import {
+  Token,
+  TokenType,
+  Ident,
+  Delim,
+  Colon,
+  SquareBracket,
+  AtKeyword
+} from "../alphabet";
 import { whitespace } from "../grammar";
 
 const { isArray } = Array;
@@ -32,23 +40,25 @@ export type Rule = AtRule | QualifiedRule;
 function atRule(stream: Stream<Token>, name: string): AtRule {
   const prelude: Array<Token> = [];
 
-  let next = stream.peek();
+  let next = stream.peek(0);
 
-  while (next !== null && next.type !== ";") {
-    if (next.type === "{") {
+  while (next !== null && next.type !== TokenType.Semicolon) {
+    if (next.type === TokenType.LeftCurlyBracket) {
       return {
         type: "at-rule",
         name,
         prelude,
-        value: block(stream, next.type)
+        value: block(stream)
       };
     }
 
     prelude.push(next);
 
-    stream.advance();
-    next = stream.peek();
+    stream.advance(1);
+    next = stream.peek(0);
   }
+
+  stream.advance(1);
 
   return {
     type: "at-rule",
@@ -64,52 +74,47 @@ function qualifiedRule(
   stream: Stream<Token>,
   prelude: Array<Token>
 ): QualifiedRule | null {
-  let next = stream.peek();
+  let next = stream.peek(0);
 
   while (next !== null) {
-    if (next.type === "{") {
+    if (next.type === TokenType.LeftCurlyBracket) {
       return {
         type: "qualified-rule",
         prelude,
-        value: block(stream, next.type)
+        value: block(stream)
       };
     }
 
     prelude.push(next);
 
-    stream.advance();
-    next = stream.peek();
+    stream.advance(1);
+    next = stream.peek(0);
   }
 
   return null;
 }
 
-export function block<Name extends "[" | "(" | "{">(
-  stream: Stream<Token>,
-  name: Name
-): Array<Token> {
+export function block(stream: Stream<Token>): Array<Token> {
   const values: Array<Token> = [];
-  const mirror =
-    name === "[" ? "]" : name === "(" ? ")" : name === "{" ? "}" : null;
 
-  stream.advance();
-  let next = stream.peek();
+  stream.advance(1);
+  let next = stream.peek(0);
 
-  while (next !== null && next.type !== mirror) {
+  while (next !== null && next.type !== TokenType.RightCurlyBracket) {
     values.push(next);
-    stream.advance();
-    next = stream.peek();
+    stream.advance(1);
+    next = stream.peek(0);
   }
 
-  if (next !== null && next.type === mirror) {
-    stream.advance();
+  if (next !== null && next.type === TokenType.RightCurlyBracket) {
+    stream.advance(1);
   }
 
   return values;
 }
 
 function rule(token: Token, stream: Stream<Token>): Rule | null {
-  if (token.type === "at-keyword") {
+  if (token.type === TokenType.AtKeyword) {
     return atRule(stream, token.value);
   }
 
@@ -121,7 +126,7 @@ function ruleList(
   expression: () => Rule | Array<Rule> | null,
   left: Rule | Array<Rule>
 ): Array<Rule> {
-  stream.backup();
+  stream.backup(1);
 
   const rules: Array<Rule> = [];
 
@@ -151,7 +156,7 @@ type Production<T extends Token> = Lang.Production<
 >;
 
 const ident: Production<Ident> = {
-  token: "ident",
+  token: TokenType.Ident,
   prefix(token, stream) {
     return rule(token, stream);
   },
@@ -161,7 +166,7 @@ const ident: Production<Ident> = {
 };
 
 const delim: Production<Delim> = {
-  token: "delim",
+  token: TokenType.Delim,
   prefix(token, stream) {
     return rule(token, stream);
   },
@@ -170,8 +175,18 @@ const delim: Production<Delim> = {
   }
 };
 
-const bracket: Production<Bracket> = {
-  token: "[",
+const colon: Production<Colon> = {
+  token: TokenType.Colon,
+  prefix(token, stream) {
+    return rule(token, stream);
+  },
+  infix(token, stream, expression, left) {
+    return ruleList(stream, expression, left);
+  }
+};
+
+const squareBracket: Production<SquareBracket> = {
+  token: TokenType.LeftSquareBracket,
   prefix(token, stream) {
     return rule(token, stream);
   },
@@ -181,7 +196,7 @@ const bracket: Production<Bracket> = {
 };
 
 const atKeyword: Production<AtKeyword> = {
-  token: "at-keyword",
+  token: TokenType.AtKeyword,
   prefix(token, stream) {
     return rule(token, stream);
   },
@@ -193,7 +208,8 @@ const atKeyword: Production<AtKeyword> = {
 export const RuleGrammar: Grammar<Token, Rule | Array<Rule>> = new Grammar([
   ident,
   delim,
-  bracket,
+  colon,
+  squareBracket,
   atKeyword,
   whitespace
 ]);

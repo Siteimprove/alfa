@@ -1,5 +1,11 @@
-import { Selector, parseSelector } from "@siteimprove/alfa-css";
-import { Node, Element, StyleSheet, StyleRule } from "./types";
+import {
+  Selector,
+  SelectorType,
+  Declaration,
+  parseSelector,
+  parseDeclaration
+} from "@siteimprove/alfa-css";
+import { Node, Element, StyleSheet } from "./types";
 import { isStyleRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { matches, MatchingOptions } from "./matches";
@@ -15,12 +21,34 @@ const { isArray } = Array;
  */
 export type SelectorEntry = {
   readonly selector: Selector;
-  readonly rule: StyleRule;
+  readonly declarations: Array<Declaration>;
   readonly order: number;
   readonly specificity: number;
 };
 
 /**
+ * The selector map is a data structure used for providing indexed access to the
+ * rules that are likely to match a given element. Rules are indexed according
+ * to their key selector, which is the selector that a given element MUST match
+ * in order for the rest of the selector to also match. A key selector can be
+ * either an ID selector, a class selector, or a type selector. In a relative
+ * selector, the key selector will be the right-most selector, e.g. given
+ * `main .foo + div` the key selector would be `div`. In a compound selector,
+ * the key selector will be left-most selector, e.g. given `div.foo` the key
+ * selector would also be `div`.
+ *
+ * Internally, the selector map has three maps and a list in one of which it
+ * will store a given selector. The three maps are used for selectors for which
+ * a key selector exist; one for ID selectors, one for class selectors, and one
+ * for type selectors. The list is used for any remaining selectors. When
+ * looking up the rules that match an element, the ID, class names, and type of
+ * the element are used for looking up potentially matching selectors in the
+ * three maps. Selector matching is then performed against this list of
+ * potentially matching selectors, plus the list of remaining selectors, in
+ * order to determine the final set of matches.
+ *
+ * @see http://doc.servo.org/style/selector_map/struct.SelectorMap.html
+ *
  * @internal
  */
 export class SelectorMap {
@@ -32,9 +60,7 @@ export class SelectorMap {
 
   private other: Array<SelectorEntry> = [];
 
-  constructor(styleSheets: ArrayLike<StyleSheet>) {
-    const { other, ids, classes, types } = this;
-
+  constructor(styleSheets: Array<StyleSheet>) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -44,45 +70,52 @@ export class SelectorMap {
 
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
-        enter(rule) {
+        enter: rule => {
           if (!isStyleRule(rule)) {
             return;
           }
 
-          let selectors: Selector | Array<Selector> | null = null;
-          try {
-            selectors = parseSelector(rule.selectorText);
-          } catch (err) {}
+          const selectors = parseSelectors(rule.selectorText);
 
-          if (selectors === null) {
+          if (selectors.length === 0) {
             return;
           }
 
-          for (const selector of isArray(selectors) ? selectors : [selectors]) {
+          const declarations = parseDeclarations(rule.style.cssText);
+
+          if (declarations.length === 0) {
+            return;
+          }
+
+          order++;
+
+          for (let i = 0, n = selectors.length; i < n; i++) {
+            const selector = selectors[i];
+
             const keySelector = getKeySelector(selector);
             const specificity = getSpecificity(selector);
 
             const entry: SelectorEntry = {
               selector,
-              rule,
-              order: order++,
+              declarations,
+              order,
               specificity
             };
 
             if (keySelector === null) {
-              other.push(entry);
+              this.other.push(entry);
             } else {
               const key = keySelector.name;
 
               switch (keySelector.type) {
-                case "id-selector":
-                  addEntry(ids, key, entry);
+                case SelectorType.IdSelector:
+                  addEntry(this.ids, key, entry);
                   break;
-                case "class-selector":
-                  addEntry(classes, key, entry);
+                case SelectorType.ClassSelector:
+                  addEntry(this.classes, key, entry);
                   break;
-                case "type-selector":
-                  addEntry(types, key, entry);
+                case SelectorType.TypeSelector:
+                  addEntry(this.types, key, entry);
               }
             }
           }
@@ -118,12 +151,14 @@ export class SelectorMap {
       options
     );
 
-    for (const className of getClassList(element)) {
+    const classList = getClassList(element);
+
+    for (let i = 0, n = classList.length; i < n; i++) {
       collectEntries(
         element,
         context,
         rules,
-        getEntries(this.classes, className),
+        getEntries(this.classes, classList[i]),
         options
       );
     }
@@ -175,4 +210,27 @@ function collectEntries(
       target.push(entry);
     }
   }
+}
+
+function parseSelectors(input: string): Array<Selector> {
+  const selectors: Selector | Array<Selector> | null = parseSelector(input);
+
+  if (selectors === null) {
+    return [];
+  }
+
+  return isArray(selectors) ? selectors : [selectors];
+}
+
+function parseDeclarations(input: string): Array<Declaration> {
+  const declarations:
+    | Declaration
+    | Array<Declaration>
+    | null = parseDeclaration(input);
+
+  if (declarations === null) {
+    return [];
+  }
+
+  return isArray(declarations) ? declarations : [declarations];
 }

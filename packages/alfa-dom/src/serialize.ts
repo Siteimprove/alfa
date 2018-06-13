@@ -6,43 +6,21 @@ import { getElementNamespace } from "./get-element-namespace";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
- */
-function escape(
-  input: string,
-  options: { attributeMode?: boolean } = {}
-): string {
-  input = input.replace(/&/g, "&amp;").replace(/\u00A0/g, "&nbsp;");
-
-  if (options.attributeMode) {
-    input = input.replace(/"/g, "&quot;");
-  } else {
-    input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
-  return input;
-}
-
-/**
  * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
  */
-export function serialize(node: Node, context: Node = node): string {
+export function serialize(node: Node, context: Node): string {
   if (isElement(node)) {
     const namespace = getElementNamespace(node, context);
 
     let name = node.localName;
 
-    if (namespace !== null) {
-      switch (namespace) {
-        case Namespace.HTML:
-        case Namespace.MathML:
-        case Namespace.SVG:
-          break;
-        default:
-          if (node.prefix !== null) {
-            name = node.prefix + ":" + node.localName;
-          }
-      }
+    if (
+      node.prefix !== null &&
+      namespace !== Namespace.HTML &&
+      namespace !== Namespace.MathML &&
+      namespace !== Namespace.SVG
+    ) {
+      name = node.prefix + ":" + node.localName;
     }
 
     let element = `<${name}`;
@@ -75,9 +53,9 @@ export function serialize(node: Node, context: Node = node): string {
         }
       }
 
-      element += ` ${name}="${escape(attribute.value, {
-        attributeMode: true
-      })}"`;
+      const value = escape(attribute.value, { attributeMode: true });
+
+      element += ` ${name}="${value}"`;
     }
 
     element += ">";
@@ -142,4 +120,22 @@ export function serialize(node: Node, context: Node = node): string {
   }
 
   return map(node.childNodes, child => serialize(child, context)).join("");
+}
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
+ */
+function escape(
+  input: string,
+  options: Readonly<{ attributeMode?: boolean }> = {}
+): string {
+  input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");
+
+  if (options.attributeMode) {
+    input = input.replace(/"/g, "&quot;");
+  } else {
+    input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  return input;
 }

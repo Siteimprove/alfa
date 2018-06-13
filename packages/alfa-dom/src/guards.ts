@@ -46,7 +46,7 @@ export function isDocumentFragment(node: Node): node is DocumentFragment {
 }
 
 export function isShadowRoot(node: Node): node is ShadowRoot {
-  return isDocumentFragment(node);
+  return isDocumentFragment(node) && "mode" in node;
 }
 
 export function isGroupingRule(rule: Rule): rule is GroupingRule {

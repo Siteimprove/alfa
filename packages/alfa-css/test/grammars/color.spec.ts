@@ -1,11 +1,11 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { Color } from "../../src/properties/color";
 import { ColorGrammar } from "../../src/grammars/color";
 
-function color(t: Test, input: string, expected: Color) {
-  t.deepEqual(parse(lex(input, Alphabet), ColorGrammar), expected, t.title);
+function color(t: Assertions, input: string, expected: Color) {
+  t.deepEqual(parse(lex(input, Alphabet), ColorGrammar), expected, input);
 }
 
 test("Can parse a named color", t =>

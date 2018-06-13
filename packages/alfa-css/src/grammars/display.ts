@@ -1,13 +1,13 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
-import { Token, Ident } from "../alphabet";
+import { Token, TokenType, Ident } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Display } from "../properties/display";
 
 type Production<T extends Token> = Lang.Production<Token, Display, T>;
 
 const ident: Production<Ident> = {
-  token: "ident",
+  token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
       case "block":

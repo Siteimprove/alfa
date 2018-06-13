@@ -1,10 +1,14 @@
 import {
   Selector,
+  SelectorType,
+  SelectorCombinator,
   RelativeSelector,
   TypeSelector,
   ClassSelector,
   IdSelector,
   AttributeSelector,
+  AttributeMatcher,
+  AttributeModifier,
   CompoundSelector,
   PseudoClassSelector,
   PseudoElementSelector,
@@ -94,25 +98,38 @@ export function matches(
   }
 
   if (isArray(selector)) {
-    return matchesList(element, context, selector, options);
+    for (let i = 0, n = selector.length; i < n; i++) {
+      if (matches(element, context, selector[i], options)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   switch (selector.type) {
-    case "id-selector":
+    case SelectorType.IdSelector:
       return matchesId(element, selector);
-    case "class-selector":
+
+    case SelectorType.ClassSelector:
       return matchesClass(element, selector);
-    case "type-selector":
+
+    case SelectorType.TypeSelector:
       return matchesType(element, selector);
-    case "attribute-selector":
+
+    case SelectorType.AttributeSelector:
       return matchesAttribute(element, selector);
-    case "compound-selector":
+
+    case SelectorType.CompoundSelector:
       return matchesCompound(element, context, selector, options);
-    case "relative-selector":
+
+    case SelectorType.RelativeSelector:
       return matchesRelative(element, context, selector, options);
-    case "pseudo-class-selector":
+
+    case SelectorType.PseudoClassSelector:
       return matchesPseudoClass(element, context, selector, options);
-    case "pseudo-element-selector":
+
+    case SelectorType.PseudoElementSelector:
       return matchesPseudoElement(element, context, selector, options);
   }
 }
@@ -152,7 +169,9 @@ function matchesAttribute(
   element: Element,
   selector: AttributeSelector
 ): boolean {
-  let value = getAttribute(element, selector.name);
+  const value = getAttribute(element, selector.name, {
+    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) > 0
+  });
 
   if (selector.value === null) {
     return value !== null;
@@ -162,24 +181,24 @@ function matchesAttribute(
     return false;
   }
 
-  if (selector.modifier === "i") {
-    value = value.toLowerCase();
-  }
-
   if (selector.matcher === null) {
     return selector.value === value;
   }
 
   switch (selector.matcher) {
-    case "^":
+    case AttributeMatcher.Prefix:
       return value.startsWith(selector.value);
-    case "$":
+
+    case AttributeMatcher.Suffix:
       return value.endsWith(selector.value);
-    case "*":
+
+    case AttributeMatcher.Substring:
       return value.includes(selector.value);
-    case "~":
+
+    case AttributeMatcher.Includes:
       return value.split(whitespace).some(value => value === selector.value);
-    case "|":
+
+    case AttributeMatcher.DashMatch:
       return value === selector.value || value.startsWith(selector.value + "-");
   }
 
@@ -192,34 +211,14 @@ function matchesAttribute(
 function matchesCompound(
   element: Element,
   context: Node,
-  { selectors }: CompoundSelector,
+  selector: CompoundSelector,
   options: MatchingOptions
 ): boolean {
-  for (let i = 0, n = selectors.length; i < n; i++) {
-    if (!matches(element, context, selectors[i], options)) {
-      return false;
-    }
+  if (!matches(element, context, selector.left, options)) {
+    return false;
   }
 
-  return true;
-}
-
-/**
- * @see https://www.w3.org/TR/selectors/#grouping
- */
-function matchesList(
-  element: Element,
-  context: Node,
-  selectors: Array<Selector>,
-  options: MatchingOptions
-): boolean {
-  for (let i = 0, n = selectors.length; i < n; i++) {
-    if (matches(element, context, selectors[i], options)) {
-      return true;
-    }
-  }
-
-  return false;
+  return matches(element, context, selector.right, options);
 }
 
 /**
@@ -231,25 +230,44 @@ function matchesRelative(
   selector: RelativeSelector,
   options: MatchingOptions
 ): boolean {
-  if (options.filter !== undefined && canReject(selector, options.filter)) {
+  // Before any other work is done, check if the left part of the selector can
+  // be rejected by the ancestor filter optionally passed to `matches()`. Only
+  // descendant and direct-descendant selectors can potentially be rejected.
+  if (options.filter !== undefined) {
+    switch (selector.combinator) {
+      case SelectorCombinator.Descendant:
+      case SelectorCombinator.DirectDescendant:
+        if (canReject(selector.left, options.filter)) {
+          return false;
+        }
+
+        // If the selector cannot be rejected, unset the ancestor filter as it
+        // no longer applies when we start recursively moving up the tree.
+        options = { ...options, filter: undefined };
+    }
+  }
+
+  // Otherwise, make sure that the right part of the selector, i.e. the part
+  // that relates to the current element, matches.
+  if (!matches(element, context, selector.right, options)) {
     return false;
   }
 
-  if (!matches(element, context, selector.selector, options)) {
-    return false;
-  }
+  // If it does, move on the heavy part of the work: Looking either up the tree
+  // for a descendant match or looking to the side of the tree for a sibling
+  // match.
+  switch (selector.combinator) {
+    case SelectorCombinator.Descendant:
+      return matchesDescendant(element, context, selector.left, options);
 
-  const { combinator, relative } = selector;
+    case SelectorCombinator.DirectDescendant:
+      return matchesDirectDescendant(element, context, selector.left, options);
 
-  switch (combinator) {
-    case " ":
-      return matchesDescendant(element, context, relative, options);
-    case ">":
-      return matchesDirectDescendant(element, context, relative, options);
-    case "~":
-      return matchesSibling(element, context, relative, options);
-    case "+":
-      return matchesDirectSibling(element, context, relative, options);
+    case SelectorCombinator.Sibling:
+      return matchesSibling(element, context, selector.left, options);
+
+    case SelectorCombinator.DirectSibling:
+      return matchesDirectSibling(element, context, selector.left, options);
   }
 }
 
@@ -412,20 +430,28 @@ function matchesPseudoElement(
  * Check if a selector can be rejected based on an ancestor filter.
  */
 function canReject(selector: Selector, filter: AncestorFilter): boolean {
-  while (true) {
-    switch (selector.type) {
-      case "id-selector":
-      case "class-selector":
-      case "type-selector":
-        return !filter.matches(selector);
-      case "relative-selector":
-        const { combinator } = selector;
-        if (combinator === " " || combinator === ">") {
-          selector = selector.relative;
-          continue;
-        }
-    }
+  switch (selector.type) {
+    case SelectorType.IdSelector:
+    case SelectorType.ClassSelector:
+    case SelectorType.TypeSelector:
+      return !filter.matches(selector);
 
-    return false;
+    case SelectorType.CompoundSelector:
+      return (
+        canReject(selector.left, filter) || canReject(selector.right, filter)
+      );
+
+    case SelectorType.RelativeSelector:
+      const { combinator } = selector;
+      if (
+        combinator === SelectorCombinator.Descendant ||
+        combinator === SelectorCombinator.DirectDescendant
+      ) {
+        return (
+          canReject(selector.right, filter) || canReject(selector.left, filter)
+        );
+      }
   }
+
+  return false;
 }

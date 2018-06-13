@@ -1,5 +1,6 @@
 import {
   Selector,
+  SelectorType,
   IdSelector,
   ClassSelector,
   TypeSelector
@@ -16,26 +17,18 @@ export function getKeySelector(
   selector: Selector
 ): IdSelector | ClassSelector | TypeSelector | null {
   switch (selector.type) {
-    case "id-selector":
-    case "class-selector":
+    case SelectorType.IdSelector:
+    case SelectorType.ClassSelector:
       return selector;
 
-    case "type-selector":
+    case SelectorType.TypeSelector:
       return selector.name === "*" ? null : selector;
 
-    case "relative-selector":
-      return getKeySelector(selector.selector);
+    case SelectorType.CompoundSelector:
+      return getKeySelector(selector.left) || getKeySelector(selector.right);
 
-    case "compound-selector":
-      const { selectors } = selector;
-
-      for (let i = 0, n = selectors.length; i < n; i++) {
-        const selector = getKeySelector(selectors[i]);
-
-        if (selector !== null) {
-          return selector;
-        }
-      }
+    case SelectorType.RelativeSelector:
+      return getKeySelector(selector.right);
   }
 
   return null;

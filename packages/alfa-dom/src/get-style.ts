@@ -1,19 +1,22 @@
-import { Mutable, keys, union, last } from "@siteimprove/alfa-util";
+import { Mutable, keys, union } from "@siteimprove/alfa-util";
 import {
   Selector,
+  SelectorType,
   Declaration,
   Stage,
   Style,
   Properties,
   PropertyName,
   PseudoElement,
-  parseDeclaration
+  parseDeclaration,
+  TokenType
 } from "@siteimprove/alfa-css";
 import { Node, Element } from "./types";
 import { isDocument } from "./guards";
 import { matches } from "./matches";
 import { getAttribute } from "./get-attribute";
 import { getParentElement } from "./get-parent-element";
+import { getRootNode } from "./get-root-node";
 import { getCascade } from "./get-cascade";
 
 const { isArray } = Array;
@@ -48,7 +51,8 @@ export function getCascadedStyle(
   const cascadedStyle: Mutable<Style<Stage.Cascaded>> = {};
 
   const style = getAttribute(element, "style");
-  const cascade = isDocument(context) ? getCascade(context) : null;
+  const rootNode = getRootNode(element, context);
+  const cascade = isDocument(rootNode) ? getCascade(rootNode) : null;
 
   const declarations: Array<Declaration> = [];
 
@@ -65,42 +69,35 @@ export function getCascadedStyle(
   }
 
   if (cascade !== null) {
-    const entries = cascade.get(element);
+    for (
+      let entry = cascade.get(element) || null;
+      entry !== null;
+      entry = entry.parent
+    ) {
+      const { selector } = entry;
+      const pseudo = getPseudoElement(selector);
 
-    if (entries !== undefined) {
-      for (const { selector, rule } of entries) {
-        const pseudo = getPseudoElement(selector);
-
-        if (pseudo === null) {
-          if (options.pseudo !== undefined) {
-            continue;
-          }
-        } else {
-          if (options.pseudo !== pseudo) {
-            continue;
-          }
+      if (pseudo === null) {
+        if (options.pseudo !== undefined) {
+          continue;
         }
-
-        const { hover, active, focus } = options;
-
-        if (
-          matches(element, context, selector, {
-            hover,
-            active,
-            focus,
-            pseudo: true
-          })
-        ) {
-          const declaration = parseDeclaration(rule.style.cssText);
-
-          if (declaration !== null) {
-            if (isArray(declaration)) {
-              declarations.push(...declaration);
-            } else {
-              declarations.push(declaration);
-            }
-          }
+      } else {
+        if (options.pseudo !== pseudo) {
+          continue;
         }
+      }
+
+      const { hover, active, focus } = options;
+
+      if (
+        matches(element, context, selector, {
+          hover,
+          active,
+          focus,
+          pseudo: true
+        })
+      ) {
+        declarations.push(...entry.declarations);
       }
     }
   }
@@ -247,7 +244,7 @@ function getParentStyle(
   context: Node,
   options: StyleOptions
 ): Style<Stage.Computed> {
-  const parentElement = getParentElement(element, context);
+  const parentElement = getParentElement(element, context, { flattened: true });
 
   if (parentElement === null) {
     return {};
@@ -274,23 +271,22 @@ function getParentStyle(
 }
 
 function getPseudoElement(selector: Selector): PseudoElement | null {
-  if (selector.type === "relative-selector") {
-    return getPseudoElement(selector.selector);
-  }
+  switch (selector.type) {
+    case SelectorType.PseudoElementSelector:
+      return selector.name;
 
-  if (selector.type === "compound-selector") {
-    return getPseudoElement(last(selector.selectors)!);
-  }
-
-  if (selector.type === "pseudo-element-selector") {
-    return selector.name;
+    case SelectorType.CompoundSelector:
+    case SelectorType.RelativeSelector:
+      return getPseudoElement(selector.right);
   }
 
   return null;
 }
 
 function isInitial(declaration: Declaration): boolean {
-  const value = declaration.value.filter(token => token.type !== "whitespace");
+  const value = declaration.value.filter(
+    token => token.type !== TokenType.Whitespace
+  );
 
   if (value.length !== 1) {
     return false;
@@ -298,11 +294,13 @@ function isInitial(declaration: Declaration): boolean {
 
   const [token] = value;
 
-  return token.type === "ident" && token.value === "initial";
+  return token.type === TokenType.Ident && token.value === "initial";
 }
 
 function isInherited(declaration: Declaration): boolean {
-  const value = declaration.value.filter(token => token.type !== "whitespace");
+  const value = declaration.value.filter(
+    token => token.type !== TokenType.Whitespace
+  );
 
   if (value.length !== 1) {
     return false;
@@ -310,5 +308,5 @@ function isInherited(declaration: Declaration): boolean {
 
   const [token] = value;
 
-  return token.type === "ident" && token.value === "inherit";
+  return token.type === TokenType.Ident && token.value === "inherit";
 }

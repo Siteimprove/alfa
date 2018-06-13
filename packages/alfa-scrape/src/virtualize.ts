@@ -1,11 +1,4 @@
-import { Mutable, map } from "@siteimprove/alfa-util";
-import * as V from "@siteimprove/alfa-dom";
-
-export function virtualize(node: Node): V.Node {
-  return virtualizeNode(node);
-}
-
-function virtualizeNode(node: Node): V.Node {
+function virtualizeNode(node: Node): import("@siteimprove/alfa-dom").Node {
   switch (node.nodeType) {
     case node.ELEMENT_NODE:
       return virtualizeElement(node as Element);
@@ -24,89 +17,108 @@ function virtualizeNode(node: Node): V.Node {
   throw new Error(`Cannot virtualize node of type "${node.nodeType}"`);
 }
 
-function virtualizeElement(element: Element): V.Element {
-  const virtual: Mutable<V.Element> = {
+function virtualizeElement(
+  element: Element
+): import("@siteimprove/alfa-dom").Element {
+  const virtual: import("@siteimprove/alfa-dom").Element = {
     nodeType: 1,
     prefix: element.prefix,
     localName: element.localName || "",
-    attributes: map(element.attributes, attribute => ({
+    attributes: Array.from(element.attributes).map(attribute => ({
       prefix: attribute.prefix,
       localName: attribute.localName || "",
       value: attribute.value
     })),
     shadowRoot: null,
-    childNodes: map(element.childNodes, child => virtualizeNode(child))
+    childNodes: Array.from(element.childNodes).map(child =>
+      virtualizeNode(child)
+    )
   };
 
   if (element.shadowRoot !== null) {
-    virtual.shadowRoot = virtualizeShadowRoot(element.shadowRoot, virtual);
+    Object.assign(virtual, {
+      shadowRoot: virtualizeShadowRoot(element.shadowRoot, virtual)
+    });
   }
 
   return virtual;
 }
 
-function virtualizeText({ data }: Text): V.Text {
-  return { nodeType: 3, data, childNodes: [] };
+function virtualizeText(text: Text): import("@siteimprove/alfa-dom").Text {
+  return { nodeType: 3, data: text.data, childNodes: [] };
 }
 
-function virtualizeComment({ data }: Comment): V.Comment {
-  return { nodeType: 8, data, childNodes: [] };
+function virtualizeComment(
+  comment: Comment
+): import("@siteimprove/alfa-dom").Comment {
+  return { nodeType: 8, data: comment.data, childNodes: [] };
 }
 
-function virtualizeDocument(document: Document): V.Document {
-  const virtual: V.Document = {
+function virtualizeDocument(
+  document: Document
+): import("@siteimprove/alfa-dom").Document {
+  return {
     nodeType: 9,
-    childNodes: map(document.childNodes, child => virtualizeNode(child)),
-    styleSheets: map(document.styleSheets, styleSheet =>
+    childNodes: Array.from(document.childNodes).map(child =>
+      virtualizeNode(child)
+    ),
+    styleSheets: Array.from(document.styleSheets).map(styleSheet =>
       virtualizeStyleSheet(styleSheet as CSSStyleSheet)
     )
   };
-
-  return virtual;
 }
 
-function virtualizeDocumentType({ name }: DocumentType): V.DocumentType {
-  return { nodeType: 10, name, childNodes: [] };
+function virtualizeDocumentType(
+  documentType: DocumentType
+): import("@siteimprove/alfa-dom").DocumentType {
+  return { nodeType: 10, name: documentType.name, childNodes: [] };
 }
 
 function virtualizeDocumentFragment(
   documentFragment: DocumentFragment
-): V.DocumentFragment {
-  const virtual: V.DocumentFragment = {
+): import("@siteimprove/alfa-dom").DocumentFragment {
+  return {
     nodeType: 11,
-    childNodes: map(documentFragment.childNodes, child => virtualizeNode(child))
+    childNodes: Array.from(documentFragment.childNodes).map(child =>
+      virtualizeNode(child)
+    )
   };
-
-  return virtual;
 }
 
 function virtualizeShadowRoot(
   shadowRoot: ShadowRoot,
-  host: V.Element
-): V.ShadowRoot {
-  const virtual: V.ShadowRoot = {
+  host: import("@siteimprove/alfa-dom").Element
+): import("@siteimprove/alfa-dom").ShadowRoot {
+  return {
     nodeType: 11,
-    childNodes: map(shadowRoot.childNodes, child => virtualizeNode(child))
+    childNodes: Array.from(shadowRoot.childNodes).map(child =>
+      virtualizeNode(child)
+    ),
+    // We can only ever access open shadow roots, so the `mode` will always be
+    // "open". If it were "closed", we would have never gotten this far.
+    mode: "open"
   };
-
-  return virtual;
 }
 
-function virtualizeStyleSheet(styleSheet: CSSStyleSheet): V.StyleSheet {
+function virtualizeStyleSheet(
+  styleSheet: CSSStyleSheet
+): import("@siteimprove/alfa-dom").StyleSheet {
   return {
-    cssRules: map(styleSheet.cssRules, cssRule => virtualizeRule(cssRule))
+    cssRules: Array.from(styleSheet.cssRules).map(cssRule =>
+      virtualizeRule(cssRule)
+    )
   };
 }
 
 function virtualizeStyleDeclaration(
   styleDeclaration: CSSStyleDeclaration
-): V.StyleDeclaration {
+): import("@siteimprove/alfa-dom").StyleDeclaration {
   return {
     cssText: styleDeclaration.cssText
   };
 }
 
-function virtualizeRule(rule: CSSRule): V.Rule {
+function virtualizeRule(rule: CSSRule): import("@siteimprove/alfa-dom").Rule {
   switch (rule.type) {
     case rule.STYLE_RULE:
       return virtualizeStyleRule(rule as CSSStyleRule);
@@ -131,7 +143,9 @@ function virtualizeRule(rule: CSSRule): V.Rule {
   throw new Error(`Cannot virtualize rule of type ${rule.type}`);
 }
 
-function virtualizeStyleRule(styleRule: CSSStyleRule): V.StyleRule {
+function virtualizeStyleRule(
+  styleRule: CSSStyleRule
+): import("@siteimprove/alfa-dom").StyleRule {
   return {
     type: 1,
     selectorText: styleRule.selectorText,
@@ -139,7 +153,9 @@ function virtualizeStyleRule(styleRule: CSSStyleRule): V.StyleRule {
   };
 }
 
-function virtualizeImportRule(importRule: CSSImportRule): V.ImportRule {
+function virtualizeImportRule(
+  importRule: CSSImportRule
+): import("@siteimprove/alfa-dom").ImportRule {
   return {
     type: 3,
     href: importRule.href,
@@ -148,22 +164,28 @@ function virtualizeImportRule(importRule: CSSImportRule): V.ImportRule {
   };
 }
 
-function virtualizeMediaRule(mediaRule: CSSMediaRule): V.MediaRule {
+function virtualizeMediaRule(
+  mediaRule: CSSMediaRule
+): import("@siteimprove/alfa-dom").MediaRule {
   return {
     type: 4,
-    cssRules: map(mediaRule.cssRules, rule => virtualizeRule(rule)),
+    cssRules: Array.from(mediaRule.cssRules).map(rule => virtualizeRule(rule)),
     media: Array.from(mediaRule.media)
   };
 }
 
-function virtualizeFontFaceRule(fontFaceRule: CSSFontFaceRule): V.FontFaceRule {
+function virtualizeFontFaceRule(
+  fontFaceRule: CSSFontFaceRule
+): import("@siteimprove/alfa-dom").FontFaceRule {
   return {
     type: 5,
     style: virtualizeStyleDeclaration(fontFaceRule.style)
   };
 }
 
-function virtualizePageRule(pageRule: CSSPageRule): V.PageRule {
+function virtualizePageRule(
+  pageRule: CSSPageRule
+): import("@siteimprove/alfa-dom").PageRule {
   return {
     type: 6,
     selectorText: pageRule.selectorText,
@@ -173,15 +195,19 @@ function virtualizePageRule(pageRule: CSSPageRule): V.PageRule {
 
 function virtualizeKeyframesRule(
   keyframesRule: CSSKeyframesRule
-): V.KeyframesRule {
+): import("@siteimprove/alfa-dom").KeyframesRule {
   return {
     type: 7,
     name: keyframesRule.name,
-    cssRules: map(keyframesRule.cssRules, rule => virtualizeRule(rule))
+    cssRules: Array.from(keyframesRule.cssRules).map(rule =>
+      virtualizeRule(rule)
+    )
   };
 }
 
-function virtualizeKeyframeRule(keyframeRule: CSSKeyframeRule): V.KeyframeRule {
+function virtualizeKeyframeRule(
+  keyframeRule: CSSKeyframeRule
+): import("@siteimprove/alfa-dom").KeyframeRule {
   return {
     type: 8,
     keyText: keyframeRule.keyText,
@@ -191,7 +217,7 @@ function virtualizeKeyframeRule(keyframeRule: CSSKeyframeRule): V.KeyframeRule {
 
 function virtualizeNamespaceRule(
   namespaceRule: CSSNamespaceRule
-): V.NamespaceRule {
+): import("@siteimprove/alfa-dom").NamespaceRule {
   return {
     type: 10,
     namespaceURI: namespaceRule.namespaceURI,
@@ -199,10 +225,14 @@ function virtualizeNamespaceRule(
   };
 }
 
-function virtualizeSupportsRule(supportsRule: CSSSupportsRule): V.SupportsRule {
+function virtualizeSupportsRule(
+  supportsRule: CSSSupportsRule
+): import("@siteimprove/alfa-dom").SupportsRule {
   return {
     type: 12,
-    cssRules: map(supportsRule.cssRules, rule => virtualizeRule(rule)),
+    cssRules: Array.from(supportsRule.cssRules).map(rule =>
+      virtualizeRule(rule)
+    ),
     conditionText: supportsRule.conditionText
   };
 }

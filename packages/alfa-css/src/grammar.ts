@@ -1,11 +1,11 @@
 import { Production, Command } from "@siteimprove/alfa-lang";
-import { Token, Whitespace } from "./alphabet";
+import { Token, TokenType, Whitespace } from "./alphabet";
 
 /**
  * @internal
  */
 export const whitespace: Production<Token, never, Whitespace> = {
-  token: "whitespace",
+  token: TokenType.Whitespace,
   prefix() {
     return Command.Continue;
   },

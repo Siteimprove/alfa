@@ -1,6 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, Ident, Semicolon } from "../alphabet";
+import { Grammar, Stream, Char } from "@siteimprove/alfa-lang";
+import { Token, TokenType, Ident, Semicolon } from "../alphabet";
 import { whitespace } from "../grammar";
 
 const { isArray } = Array;
@@ -22,47 +22,42 @@ export function declaration(
   stream: Stream<Token>,
   name: string
 ): Declaration | null {
-  let values: Array<Token> = [];
+  let value: Array<Token> = [];
   let important: boolean = false;
 
-  stream.accept(token => token.type === "whitespace");
+  stream.accept(token => token.type === TokenType.Whitespace);
 
-  let next = stream.peek();
+  let next = stream.peek(0);
 
-  if (next === null || next.type !== ":") {
+  if (next === null || next.type !== TokenType.Colon) {
     return null;
   }
 
-  stream.advance();
-  next = stream.peek();
+  stream.advance(1);
+  next = stream.peek(0);
 
-  while (next !== null && next.type !== ";") {
-    values.push(next);
-    stream.advance();
-    next = stream.peek();
+  while (next !== null && next.type !== TokenType.Semicolon) {
+    value.push(next);
+    stream.advance(1);
+    next = stream.peek(0);
   }
 
-  const fst = values[values.length - 2];
-  const snd = values[values.length - 1];
+  const fst = value[value.length - 2];
+  const snd = value[value.length - 1];
 
   if (
-    fst &&
-    fst.type === "delim" &&
-    fst.value === "!" &&
-    snd &&
-    snd.type === "ident" &&
+    fst !== undefined &&
+    fst.type === TokenType.Delim &&
+    fst.value === Char.ExclamationMark &&
+    snd !== undefined &&
+    snd.type === TokenType.Ident &&
     snd.value === "important"
   ) {
     important = true;
-    values = values.slice(0, -2);
+    value = value.slice(0, -2);
   }
 
-  return {
-    type: "declaration",
-    name,
-    value: values,
-    important
-  };
+  return { type: "declaration", name, value, important };
 }
 
 type Production<T extends Token> = Lang.Production<
@@ -72,14 +67,14 @@ type Production<T extends Token> = Lang.Production<
 >;
 
 const ident: Production<Ident> = {
-  token: "ident",
+  token: TokenType.Ident,
   prefix(token, stream) {
     return declaration(stream, token.value);
   }
 };
 
 const semicolon: Production<Semicolon> = {
-  token: ";",
+  token: TokenType.Semicolon,
   infix(token, stream, expression, left) {
     const declarations = isArray(left) ? left : [left];
 

@@ -1,15 +1,15 @@
-import { write } from "@foreman/fs";
-import * as prettier from "@foreman/prettier";
-import * as got from "got";
-import { Subtag } from "../src/types";
+// @ts-check
+
+const prettier = require("prettier");
+const got = require("got");
 const stringify = require("stringify-object");
 const RecordJar = require("record-jar");
 
-const { assign } = Object;
+const { writeFile } = require("../../../build/helpers/file-system");
 
-const Registry = "https://www.iana.org/assignments/language-subtag-registry";
+const registry = "https://www.iana.org/assignments/language-subtag-registry";
 
-function type(subtag: Subtag): string | null {
+function type(subtag) {
   switch (subtag.type) {
     case "language":
       return "PrimaryLanguage";
@@ -26,14 +26,16 @@ function type(subtag: Subtag): string | null {
   }
 }
 
-function name(subtag: Subtag): string {
+function name(subtag) {
   return subtag.name.toUpperCase().replace(/^(\d)/, "_$1");
 }
 
-function range(from: string, to: string): Array<string> {
+function range(from, to) {
   const start = from.charCodeAt(0);
   const end = to.charCodeAt(0);
-  const result: Array<string> = [];
+
+  /** @type {Array<string>} */
+  const result = [];
 
   for (let i = start; i <= end; i++) {
     result.push(String.fromCharCode(i));
@@ -42,22 +44,22 @@ function range(from: string, to: string): Array<string> {
   return result;
 }
 
-function rest(input: string): string {
+function rest(input) {
   return input.substring(1, input.length);
 }
 
-function concat<T>(target: Array<T>, input: Array<T>): Array<T> {
+function concat(target, input) {
   return target.concat(input);
 }
 
-function expand(query: string): Array<string> {
+function expand(query) {
   const [from, to] = query.split("..");
 
   if (!from || !to || from.length !== to.length) {
     return [query];
   }
 
-  function generate(from: string, to: string): Array<string> {
+  function generate(from, to) {
     if (from.length === 0 && to.length === 0) {
       return [""];
     }
@@ -72,18 +74,17 @@ function expand(query: string): Array<string> {
   return generate(from, to).sort();
 }
 
-async function subtags() {
-  const { body } = await got(Registry);
-  const { records } = new RecordJar(body);
+got(registry).then(response => {
+  const { records } = new RecordJar(response.body);
 
-  const subtags: Array<Subtag> = [];
+  const subtags = [];
 
   for (const record of records) {
     const { Type, Subtag, Tag, Prefix, Scope } = record;
 
     if (Subtag || Tag) {
       for (const name of expand(Subtag || Tag)) {
-        const subtag = assign(
+        const subtag = Object.assign(
           {
             type: Type,
             name: name.toLowerCase()
@@ -106,29 +107,26 @@ async function subtags() {
     }
   }
 
-  const groups = subtags.reduce<Map<string, Array<Subtag>>>(
-    (groups, subtag) => {
-      const group = type(subtag) + "s";
+  const groups = subtags.reduce((groups, subtag) => {
+    const group = type(subtag) + "s";
 
-      let subtags = groups.get(group);
+    let subtags = groups.get(group);
 
-      if (subtags === undefined) {
-        subtags = [];
-        groups.set(group, subtags);
-      }
+    if (subtags === undefined) {
+      subtags = [];
+      groups.set(group, subtags);
+    }
 
-      subtags.push(subtag);
+    subtags.push(subtag);
 
-      return groups;
-    },
-    new Map()
-  );
+    return groups;
+  }, new Map());
 
   const lines = [
     `
     // This file has been automatically generated based on the IANA Language Subtag
     // Registry. Do therefore not modify it directly! If you wish to make changes,
-    // do so in \`build/subtags.ts\` and run \`yarn prepare\` to rebuild this file.
+    // do so in \`build/subtags.js\` and run \`yarn prepare\` to rebuild this file.
 
     import { values } from "@siteimprove/alfa-util";
     import { PrimaryLanguage, ExtendedLanguage, Script, Region, Variant } from "./types";
@@ -159,11 +157,9 @@ async function subtags() {
     `);
   }
 
-  const { code } = prettier.transform(lines.join("\n\n"), {
+  const code = prettier.format(lines.join("\n\n"), {
     parser: "typescript"
   });
 
-  await write("src/subtags.ts", code);
-}
-
-subtags();
+  writeFile("src/subtags.ts", code);
+});

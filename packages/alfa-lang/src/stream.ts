@@ -1,54 +1,64 @@
 import { Predicate } from "@siteimprove/alfa-util";
 
-export class Stream<T> {
-  protected _input: ArrayLike<T>;
-  protected _position: number = 0;
-  protected _start: number = 0;
+const { max, min } = Math;
 
-  public constructor(input: ArrayLike<T>) {
-    this._input = input;
+export type StreamReader<T> = (index: number) => T;
+
+export class Stream<T> {
+  private length: number;
+
+  private read: StreamReader<T>;
+
+  public position: number = 0;
+
+  public constructor(length: number, reader: StreamReader<T>) {
+    this.length = length;
+    this.read = reader;
   }
 
-  public peek(offset: number = 0): T | null {
-    const position = this._position + offset;
+  public peek(offset: number): T | null {
+    const i = this.position + offset;
 
-    if (position < this._input.length) {
-      return this._input[position];
+    if (i < 0 || i >= this.length) {
+      return null;
     }
 
-    return null;
+    return this.read(i);
   }
 
   public next(): T | null {
-    const next = this.peek();
-    this.advance();
+    const next = this.peek(0);
+    this.advance(1);
     return next;
-  }
-
-  public ignore(): void {
-    this._start = this._position;
   }
 
   public range(start: number, end: number): Array<T> {
     const result: Array<T> = new Array(end - start);
 
     for (let i = start, j = 0; i < end; i++, j++) {
-      result[j] = this._input[i];
+      result[j] = this.read(i);
     }
 
     return result;
   }
 
-  public result(): Array<T> {
-    return this.range(this._start, this._position);
-  }
+  public reduce<U>(
+    start: number,
+    end: number,
+    reducer: (accumulator: U, next: T) => U,
+    initial: U
+  ): U {
+    let result = initial;
 
-  public progressed(): boolean {
-    return this._start !== this._position;
+    for (let i = start; i < end; i++) {
+      result = reducer(result, this.read(i));
+    }
+
+    return result;
   }
 
   public restore(position: number): void {
-    const difference = position - this._position;
+    const difference = position - this.position;
 
     if (difference > 0) {
       this.advance(difference);
@@ -59,90 +69,39 @@ export class Stream<T> {
     }
   }
 
-  public advance(times: number = 1): boolean {
-    let advanced = false;
+  public advance(times: number): boolean {
+    const position = min(this.position + times, this.length);
+    const success = position - this.position !== 0;
 
-    do {
-      if (this._position < this._input.length) {
-        advanced = true;
-        this._position++;
-      }
-    } while (--times > 0);
+    this.position = position;
 
-    return advanced;
+    return success;
   }
 
-  public backup(times: number = 1): boolean {
-    let backedup = false;
+  public backup(times: number): boolean {
+    const position = max(this.position - times, 0);
+    const success = position - this.position !== 0;
 
-    do {
-      if (this._position > 0) {
-        backedup = true;
-        this._position--;
-      }
-    } while (--times > 0);
+    this.position = position;
 
-    return backedup;
+    return success;
   }
 
-  public accept<U extends T>(predicate: Predicate<T, U>): Array<U> | false;
+  public accept<U extends T>(predicate: Predicate<T, U>): Array<U> | false {
+    const result: Array<U> = [];
 
-  public accept<U extends T>(predicate: Predicate<T, U>, times: 1): U | false;
-
-  public accept<U extends T>(
-    predicate: Predicate<T, U>,
-    times: number
-  ): Array<U> | false;
-
-  public accept<U extends T>(
-    predicate: Predicate<T, U>,
-    minimum: number,
-    maximum: number
-  ): Array<U> | false;
-
-  public accept<U extends T>(
-    predicate: Predicate<T, U>,
-    minimum?: number,
-    maximum?: number
-  ): U | Array<U> | false {
-    if (minimum === undefined) {
-      minimum = 0;
-      maximum = Infinity;
-    }
-
-    if (maximum === undefined) {
-      maximum = minimum;
-    }
-
-    let next = this.peek();
-
-    if (minimum === 1 && maximum === 1) {
-      if (next !== null && predicate(next)) {
-        this.advance();
-        return next;
-      }
-
-      return false;
-    }
-
-    let accepted = 0;
-    let start = this._position;
+    let next = this.peek(0);
 
     while (next !== null && predicate(next)) {
-      accepted++;
-
-      if (accepted === maximum || !this.advance()) {
-        break;
-      }
-
-      next = this.peek();
+      result.push(next);
+      this.advance(1);
+      next = this.peek(0);
     }
 
-    if (accepted < minimum) {
-      this.restore(start);
+    if (result.length === 0) {
       return false;
     }
 
-    return this.range(start, this._position) as Array<U>;
+    return result;
   }
 }

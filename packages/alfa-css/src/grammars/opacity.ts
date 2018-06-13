@@ -1,20 +1,20 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
-import { Token, Number, Percentage } from "../alphabet";
+import { Token, TokenType, Number, Percentage } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Opacity } from "../properties/opacity";
 
 type Production<T extends Token> = Lang.Production<Token, Opacity, T>;
 
 const number: Production<Number> = {
-  token: "number",
+  token: TokenType.Number,
   prefix(token) {
     return token.value;
   }
 };
 
 const percentage: Production<Percentage> = {
-  token: "percentage",
+  token: TokenType.Percentage,
   prefix(token) {
     return token.value;
   }

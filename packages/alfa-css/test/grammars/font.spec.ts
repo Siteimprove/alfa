@@ -1,11 +1,11 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
 import { FontSize } from "../../src/properties/font";
 import { FontSizeGrammar } from "../../src/grammars/font";
 
-function fontSize(t: Test, input: string, expected: FontSize) {
-  t.deepEqual(parse(lex(input, Alphabet), FontSizeGrammar), expected, t.title);
+function fontSize(t: Assertions, input: string, expected: FontSize) {
+  t.deepEqual(parse(lex(input, Alphabet), FontSizeGrammar), expected, input);
 }
 
 test("Can parse a px font size", t =>

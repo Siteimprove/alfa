@@ -9,7 +9,7 @@ import { getParentNode } from "./get-parent-node";
 export function getRootNode(
   node: Node,
   context: Node,
-  options: { composed?: boolean } = {}
+  options: Readonly<{ composed?: boolean }> = {}
 ): Node {
   let rootNode: Node | null = node;
 

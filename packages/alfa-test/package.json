@@ -1,16 +1,25 @@
 {
-  "name": "@siteimprove/alfa-test",
-  "version": "0.0.0",
-  "description": "alfa!",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "repository":
-    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-test",
-  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
-  "license": "MIT",
   "private": true,
+  "name": "@siteimprove/alfa-test",
+  "author": "Siteimprove A/S",
+  "homepage": "https://github.com/siteimprove/alfa",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "alfa!",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-test",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "dependencies": {
-    "@types/tape": "^4.2.31",
-    "tape": "^4.9.0"
+    "@types/chalk": "^2.2.0",
+    "@types/node": "^10.3.1",
+    "@types/source-map-support": "^0.4.1",
+    "chalk": "^2.4.1",
+    "concordance": "^3.0.0",
+    "concordance-theme-ava": "^1.0.1",
+    "error-stack-parser": "^2.0.2",
+    "source-map-support": "^0.5.6"
   }
 }

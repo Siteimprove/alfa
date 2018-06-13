@@ -37,6 +37,7 @@ export * from "./is-labelable";
 export * from "./is-rendered";
 export * from "./is-tabbable";
 export * from "./matches";
+export * from "./rule-tree";
 export * from "./selector-map";
 export * from "./serialize";
 export * from "./traverse-node";

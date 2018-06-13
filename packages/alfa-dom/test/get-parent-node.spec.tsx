@@ -6,7 +6,7 @@ test("Returns the parent of an element", t => {
   const child = <span class="child" />;
   const parent = <span class="parent">{child}</span>;
 
-  t.is(getParentNode(child, <div>{parent}</div>), parent);
+  t.equal(getParentNode(child, <div>{parent}</div>), parent);
 });
 
 test("Gets the correct parent depending on context", t => {
@@ -14,6 +14,24 @@ test("Gets the correct parent depending on context", t => {
   const parent1 = <span class="parent1">{child}</span>;
   const parent2 = <span class="parent2">{child}</span>;
 
-  t.is(getParentNode(child, <div>{parent1}</div>), parent1);
-  t.is(getParentNode(child, <div>{parent2}</div>), parent2);
+  t.equal(getParentNode(child, <div>{parent1}</div>), parent1);
+  t.equal(getParentNode(child, <div>{parent2}</div>), parent2);
+});
+
+test("Returns the flattened parent of an element", t => {
+  const child = <span class="child" />;
+  const parent = (
+    <span class="parent">
+      <slot />
+    </span>
+  );
+
+  const context = (
+    <div>
+      {child}
+      <shadow>{parent}</shadow>
+    </div>
+  );
+
+  t.equal(getParentNode(child, context, { flattened: true }), parent);
 });

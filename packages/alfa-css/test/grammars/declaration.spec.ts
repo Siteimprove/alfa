@@ -1,21 +1,17 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
-import { Alphabet } from "../../src/alphabet";
+import { Alphabet, TokenType } from "../../src/alphabet";
 import {
   Declaration,
   DeclarationGrammar
 } from "../../src/grammars/declaration";
 
 function declaration(
-  t: Test,
+  t: Assertions,
   input: string,
   expected: Declaration | Array<Declaration>
 ) {
-  t.deepEqual(
-    parse(lex(input, Alphabet), DeclarationGrammar),
-    expected,
-    t.title
-  );
+  t.deepEqual(parse(lex(input, Alphabet), DeclarationGrammar), expected, input);
 }
 
 test("Can parse a single declaration", t =>
@@ -24,7 +20,7 @@ test("Can parse a single declaration", t =>
     name: "color",
     value: [
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "red"
       }
     ],
@@ -38,7 +34,7 @@ test("Can parse a list of declarations", t =>
       name: "color",
       value: [
         {
-          type: "ident",
+          type: TokenType.Ident,
           value: "red"
         }
       ],
@@ -49,7 +45,7 @@ test("Can parse a list of declarations", t =>
       name: "font-size",
       value: [
         {
-          type: "dimension",
+          type: TokenType.Dimension,
           value: 24,
           integer: true,
           unit: "px"
@@ -65,7 +61,7 @@ test("Can parse an important declaration", t =>
     name: "color",
     value: [
       {
-        type: "ident",
+        type: TokenType.Ident,
         value: "red"
       }
     ],

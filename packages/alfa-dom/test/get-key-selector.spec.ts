@@ -1,6 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
-import { Selector, Alphabet, SelectorGrammar } from "@siteimprove/alfa-css";
+import {
+  Selector,
+  SelectorType,
+  Alphabet,
+  SelectorGrammar
+} from "@siteimprove/alfa-css";
 import { getKeySelector } from "../src/get-key-selector";
 
 const { isArray } = Array;
@@ -17,58 +22,45 @@ function selector(input: string): Selector {
 
 test("Gets the key selector of an ID selector", t => {
   t.deepEqual(getKeySelector(selector("#foo")), {
-    type: "id-selector",
+    type: SelectorType.IdSelector,
     name: "foo"
   });
 });
 
 test("Gets the key selector of a class selector", t => {
   t.deepEqual(getKeySelector(selector(".foo")), {
-    type: "class-selector",
+    type: SelectorType.ClassSelector,
     name: "foo"
   });
 });
 
 test("Gets the key selector of a type selector", t => {
   t.deepEqual(getKeySelector(selector("foo")), {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "foo",
     namespace: null
   });
 });
 
 test("Returns null when given the universal selector", t => {
-  t.is(getKeySelector(selector("*")), null);
+  t.equal(getKeySelector(selector("*")), null);
 });
 
-test("Gets the key selector of an attribute selector", t => {
-  t.deepEqual(getKeySelector(selector("[foo]")), {
-    type: "attribute-selector",
-    name: "foo",
-    value: null,
-    matcher: null,
-    modifier: null
-  });
+test("Returns null when given an attribute selector", t => {
+  t.equal(getKeySelector(selector("[foo]")), null);
 });
 
-test("Gets the key selector of a pseudo-element selector", t => {
-  t.deepEqual(getKeySelector(selector("::before")), {
-    type: "pseudo-element-selector",
-    name: "before"
-  });
+test("Returns null when given a pseudo-element selector", t => {
+  t.equal(getKeySelector(selector("::before")), null);
 });
 
-test("Gets the key selector of a pseudo-class selector", t => {
-  t.deepEqual(getKeySelector(selector(":hover")), {
-    type: "pseudo-class-selector",
-    name: "hover",
-    value: null
-  });
+test("Returns null when given a pseudo-class selector", t => {
+  t.equal(getKeySelector(selector(":hover")), null);
 });
 
 test("Gets the key selector of a compound selector", t => {
   t.deepEqual(getKeySelector(selector("div.foo")), {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "div",
     namespace: null
   });
@@ -76,28 +68,28 @@ test("Gets the key selector of a compound selector", t => {
 
 test("Ignores the universal selector in a compound selector", t => {
   t.deepEqual(getKeySelector(selector("*.foo")), {
-    type: "class-selector",
+    type: SelectorType.ClassSelector,
     name: "foo"
   });
 });
 
 test("Gets the key selector of a single descendant selector", t => {
   t.deepEqual(getKeySelector(selector("#foo .foo")), {
-    type: "class-selector",
+    type: SelectorType.ClassSelector,
     name: "foo"
   });
 });
 
 test("Gets the key selector of a double descendant selector", t => {
   t.deepEqual(getKeySelector(selector("div #foo .foo")), {
-    type: "class-selector",
+    type: SelectorType.ClassSelector,
     name: "foo"
   });
 });
 
 test("Gets the key selector of a sibling selector", t => {
   t.deepEqual(getKeySelector(selector("#foo ~ .foo")), {
-    type: "class-selector",
+    type: SelectorType.ClassSelector,
     name: "foo"
   });
 });

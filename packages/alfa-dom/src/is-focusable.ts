@@ -4,6 +4,8 @@ import { isDisabled } from "./is-disabled";
 import { isRendered } from "./is-rendered";
 
 /**
+ * Check if an element is focusable within a given context.
+ *
  * @see https://www.w3.org/TR/html/editing.html#focusable
  */
 export function isFocusable(element: Element, context: Node): boolean {

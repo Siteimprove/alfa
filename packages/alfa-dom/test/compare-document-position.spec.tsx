@@ -13,13 +13,13 @@ const context = (
 );
 
 test("Returns 0 when a node is compared to itself", t => {
-  t.is(compareDocumentPosition(foo, foo, context), 0);
+  t.equal(compareDocumentPosition(foo, foo, context), 0);
 });
 
 test("Returns < 0 when the first node comes before the second", t => {
-  t.true(compareDocumentPosition(foo, bar, context) < 0);
+  t(compareDocumentPosition(foo, bar, context) < 0);
 });
 
 test("Returns > 0 when the first node comes after the second", t => {
-  t.true(compareDocumentPosition(bar, foo, context) > 0);
+  t(compareDocumentPosition(bar, foo, context) > 0);
 });

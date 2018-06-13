@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2016",
-    "lib": ["es2016"],
+    "alwaysStrict": true,
+    "declaration": true,
+    "declarationMap": true,
     "jsx": "react",
     "jsxFactory": "jsx",
-    "declaration": true,
-    "sourceMap": true,
-    "stripInternal": true,
-    "strict": true,
+    "lib": ["es2016"],
+    "module": "commonjs",
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "strict": true,
+    "stripInternal": true,
+    "target": "es2016"
   }
 }

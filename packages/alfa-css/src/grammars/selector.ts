@@ -1,121 +1,203 @@
 import { last } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Expression, Stream, Command } from "@siteimprove/alfa-lang";
+import {
+  Grammar,
+  Expression,
+  Stream,
+  Command,
+  Char
+} from "@siteimprove/alfa-lang";
 import { PseudoClass, PseudoElement } from "../types";
 import {
   Token,
+  TokenType,
   Whitespace,
   Delim,
   Ident,
   Comma,
   Colon,
-  Bracket,
-  isIdent,
-  isFunctionName,
-  isString,
-  isDelim
+  SquareBracket
 } from "../alphabet";
 
 const { isArray } = Array;
+const { fromCharCode } = String;
 
-export type IdSelector = { type: "id-selector"; name: string };
+export const enum SelectorType {
+  IdSelector = 1,
+  ClassSelector = 2,
+  AttributeSelector = 4,
+  TypeSelector = 8,
+  PseudoClassSelector = 16,
+  PseudoElementSelector = 32,
+  CompoundSelector = 64,
+  RelativeSelector = 128
+}
 
-export type ClassSelector = { type: "class-selector"; name: string };
+export type IdSelector = Readonly<{
+  type: SelectorType.IdSelector;
+  name: string;
+}>;
 
-export type AttributeSelector = {
-  type: "attribute-selector";
+export type ClassSelector = Readonly<{
+  type: SelectorType.ClassSelector;
+  name: string;
+}>;
+
+export const enum AttributeMatcher {
+  /**
+   * @example [foo=bar]
+   */
+  Equal,
+
+  /**
+   * @example [foo~=bar]
+   */
+  Includes,
+
+  /**
+   * @example [foo|=bar]
+   */
+  DashMatch,
+
+  /**
+   * @example [foo^=bar]
+   */
+  Prefix,
+
+  /**
+   * @example [foo$=bar]
+   */
+  Suffix,
+
+  /**
+   * @example [foo*=bar]
+   */
+  Substring
+}
+
+export const enum AttributeModifier {
+  /**
+   * @example [foo=bar i]
+   */
+  CaseInsensitive = 1
+}
+
+export type AttributeSelector = Readonly<{
+  type: SelectorType.AttributeSelector;
   name: string;
   value: string | null;
-  matcher: "~" | "|" | "^" | "$" | "*" | null;
-  modifier: "i" | null;
-};
+  matcher: AttributeMatcher | null;
+  modifier: number;
+}>;
 
-export type TypeSelector = {
-  type: "type-selector";
+export type TypeSelector = Readonly<{
+  type: SelectorType.TypeSelector;
   name: string;
   namespace: string | null;
-};
+}>;
 
-export type PseudoClassSelector = {
-  type: "pseudo-class-selector";
+export type PseudoClassSelector = Readonly<{
+  type: SelectorType.PseudoClassSelector;
   name: PseudoClass;
   value: Selector | Array<Selector> | null;
-};
+}>;
 
 export type PseudoElementSelector = {
-  type: "pseudo-element-selector";
+  type: SelectorType.PseudoElementSelector;
   name: PseudoElement;
 };
 
-export type SubclassSelector =
+export type SimpleSelector =
   | IdSelector
   | ClassSelector
+  | TypeSelector
   | AttributeSelector
   | PseudoClassSelector
   | PseudoElementSelector;
 
-export type SimpleSelector = TypeSelector | SubclassSelector;
-
 export type CompoundSelector = {
-  type: "compound-selector";
-  selectors: Array<SimpleSelector>;
+  type: SelectorType.CompoundSelector;
+  left: SimpleSelector;
+  right: SimpleSelector | CompoundSelector;
 };
 
 export type ComplexSelector = SimpleSelector | CompoundSelector;
 
+export const enum SelectorCombinator {
+  /**
+   * @example div span
+   */
+  Descendant,
+
+  /**
+   * @example div > span
+   */
+  DirectDescendant,
+
+  /**
+   * @example div ~ span
+   */
+  Sibling,
+
+  /**
+   * @example div + span
+   */
+  DirectSibling
+}
+
 export type RelativeSelector = {
-  type: "relative-selector";
-  combinator: " " | ">" | "+" | "~";
-  relative: Selector;
-  selector: ComplexSelector;
+  type: SelectorType.RelativeSelector;
+  combinator: SelectorCombinator;
+  left: ComplexSelector | RelativeSelector;
+  right: ComplexSelector;
 };
 
 export type Selector = ComplexSelector | RelativeSelector;
 
+const simpleSelector =
+  SelectorType.IdSelector |
+  SelectorType.ClassSelector |
+  SelectorType.TypeSelector |
+  SelectorType.AttributeSelector |
+  SelectorType.PseudoClassSelector |
+  SelectorType.PseudoElementSelector;
+
 export function isSimpleSelector(
   selector: Selector
 ): selector is SimpleSelector {
-  switch (selector.type) {
-    case "id-selector":
-    case "class-selector":
-    case "attribute-selector":
-    case "type-selector":
-    case "pseudo-class-selector":
-    case "pseudo-element-selector":
-      return true;
-    default:
-      return false;
-  }
+  return (selector.type & simpleSelector) > 0;
 }
 
 export function isCompoundSelector(
   selector: Selector
 ): selector is CompoundSelector {
-  return selector.type === "compound-selector";
+  return selector.type === SelectorType.CompoundSelector;
 }
+
+const complexSelector = simpleSelector | SelectorType.CompoundSelector;
 
 export function isComplexSelector(
   selector: Selector
 ): selector is ComplexSelector {
-  return isSimpleSelector(selector) || isCompoundSelector(selector);
+  return (selector.type & complexSelector) > 0;
 }
 
 export function isRelativeSelector(
   selector: Selector
 ): selector is RelativeSelector {
-  return selector.type === "relative-selector";
+  return selector.type === SelectorType.RelativeSelector;
 }
 
 export function isPseudoClassSelector(
   selector: Selector
 ): selector is PseudoClassSelector {
-  return selector.type === "pseudo-class-selector";
+  return selector.type === SelectorType.PseudoClassSelector;
 }
 
 export function isPseudoElementSelector(
   selector: Selector
 ): selector is PseudoElementSelector {
-  return selector.type === "pseudo-element-selector";
+  return selector.type === SelectorType.PseudoElementSelector;
 }
 
 export function isSelector(selector: Selector): selector is Selector {
@@ -123,144 +205,198 @@ export function isSelector(selector: Selector): selector is Selector {
 }
 
 function isImplicitDescendant(token: Token): boolean {
-  switch (token.type) {
-    case "ident":
-    case "[":
-    case ":":
-      return true;
-    case "delim":
-      return token.value === "." || token.value === "#" || token.value === "*";
+  if (
+    token.type === TokenType.Ident ||
+    token.type === TokenType.LeftSquareBracket ||
+    token.type === TokenType.Colon
+  ) {
+    return true;
+  }
+
+  if (token.type === TokenType.Delim) {
+    const { value } = token;
+    return (
+      value === Char.FullStop ||
+      value === Char.NumberSign ||
+      value === Char.Asterisk
+    );
   }
 
   return false;
 }
 
-function idSelector(stream: Stream<Token>): IdSelector {
-  const ident = stream.accept(isIdent, 1);
+function idSelector(stream: Stream<Token>): IdSelector | null {
+  const next = stream.next();
 
-  if (ident === false) {
-    throw new Error("Expected ident");
+  if (next === null || next.type !== TokenType.Ident) {
+    return null;
   }
 
-  return { type: "id-selector", name: ident.value };
+  return { type: SelectorType.IdSelector, name: next.value };
 }
 
-function classSelector(stream: Stream<Token>): ClassSelector {
-  const ident = stream.accept(isIdent, 1);
+function classSelector(stream: Stream<Token>): ClassSelector | null {
+  const next = stream.next();
 
-  if (ident === false) {
-    throw new Error("Expected ident");
+  if (next === null || next.type !== TokenType.Ident) {
+    return null;
   }
 
-  return { type: "class-selector", name: ident.value };
+  return { type: SelectorType.ClassSelector, name: next.value };
 }
 
 function typeSelector(
   token: Delim | Ident,
   stream: Stream<Token>
-): TypeSelector {
+): TypeSelector | null {
   let name: string | null = null;
   let namespace: string | null = null;
 
-  if (isDelim(token) && token.value === "|") {
+  if (token.type === TokenType.Delim && token.value === Char.VerticalLine) {
     namespace = "";
-  } else if (stream.accept(token => isDelim(token) && token.value === "|", 1)) {
-    namespace = token.value.toLowerCase();
   } else {
-    name = token.value.toLowerCase();
+    const value =
+      token.type === TokenType.Delim ? fromCharCode(token.value) : token.value;
+
+    const next = stream.peek(0);
+
+    if (
+      next !== null &&
+      next.type === TokenType.Delim &&
+      next.value === Char.VerticalLine
+    ) {
+      stream.advance(1);
+      namespace = value.toLowerCase();
+    } else {
+      name = value.toLowerCase();
+    }
   }
 
   if (name === null) {
     const next = stream.next();
 
-    if (
-      next !== null &&
-      (isIdent(next) || (isDelim(next) && next.value === "*"))
-    ) {
+    if (next === null) {
+      return null;
+    }
+
+    if (next.type === TokenType.Delim && next.value === Char.Asterisk) {
+      name = "*";
+    } else if (next.type === TokenType.Ident) {
       name = next.value.toLowerCase();
     } else {
-      throw new Error("Expected ident or delim");
+      return null;
     }
   }
 
   return {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name,
     namespace
   };
 }
 
-function attributeSelector(stream: Stream<Token>): AttributeSelector {
-  const attribute = stream.accept(isIdent, 1);
+function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
+  let next = stream.next();
 
-  if (attribute === false) {
-    throw new Error("Expected ident");
+  if (next === null || next.type !== TokenType.Ident) {
+    return null;
   }
 
-  if (stream.accept(token => token.type === "]", 1) !== false) {
+  const name = next.value;
+
+  next = stream.peek(0);
+
+  if (next !== null && next.type === TokenType.RightSquareBracket) {
+    stream.advance(1);
+
     return {
-      type: "attribute-selector",
-      name: attribute.value,
+      type: SelectorType.AttributeSelector,
+      name,
       value: null,
       matcher: null,
-      modifier: null
+      modifier: 0
     };
   }
 
-  let matcher: AttributeSelector["matcher"] = null;
+  let matcher: AttributeMatcher | null = null;
 
-  stream.accept(token => {
-    if (isDelim(token)) {
-      switch (token.value) {
-        case "~":
-        case "|":
-        case "^":
-        case "$":
-        case "*":
-          matcher = token.value;
-          return true;
-      }
+  next = stream.peek(0);
+
+  if (next !== null && next.type === TokenType.Delim) {
+    switch (next.value) {
+      case Char.Tilde:
+        matcher = AttributeMatcher.Includes;
+        break;
+      case Char.VerticalLine:
+        matcher = AttributeMatcher.DashMatch;
+        break;
+      case Char.CircumflexAccent:
+        matcher = AttributeMatcher.Prefix;
+        break;
+      case Char.DollarSign:
+        matcher = AttributeMatcher.Suffix;
+        break;
+      case Char.Asterisk:
+        matcher = AttributeMatcher.Substring;
     }
 
-    return false;
-  }, 1);
+    if (matcher !== null) {
+      stream.advance(1);
+      next = stream.peek(0);
+    }
+  }
 
   if (
-    stream.accept(token => isDelim(token) && token.value === "=", 1) === false
+    next === null ||
+    next.type !== TokenType.Delim ||
+    next.value !== Char.EqualSign
   ) {
-    throw new Error("Expected equals sign");
+    return null;
   }
 
-  const value = stream.next();
+  stream.advance(1);
+  next = stream.peek(0);
 
-  if (value === null || !(isIdent(value) || isString(value))) {
-    throw new Error("Expected ident or string");
+  if (
+    next === null ||
+    (next.type !== TokenType.String && next.type !== TokenType.Ident)
+  ) {
+    return null;
   }
 
-  stream.accept(token => token.type === "whitespace");
+  stream.advance(1);
 
-  let modifier: AttributeSelector["modifier"] = null;
+  let value = next.value;
 
-  stream.accept(token => {
-    if (isIdent(token)) {
-      switch (token.value) {
-        case "i":
-          modifier = token.value;
-          return true;
-      }
+  stream.accept(token => token.type === TokenType.Whitespace);
+
+  let modifier = 0;
+
+  next = stream.peek(0);
+
+  if (next !== null && next.type === TokenType.Ident) {
+    switch (next.value) {
+      case "i":
+        modifier |= AttributeModifier.CaseInsensitive;
+        value = value.toLowerCase();
     }
 
-    return false;
-  }, 1);
-
-  if (stream.accept(token => token.type === "]", 1) === false) {
-    throw new Error("Expected end of attribute selector");
+    if (modifier !== 0) {
+      stream.advance(1);
+      next = stream.peek(0);
+    }
   }
 
+  if (next === null || next.type !== TokenType.RightSquareBracket) {
+    return null;
+  }
+
+  stream.advance(1);
+
   return {
-    type: "attribute-selector",
-    name: attribute.value,
-    value: modifier === "i" ? value.value.toLowerCase() : value.value,
+    type: SelectorType.AttributeSelector,
+    name,
+    value,
     matcher,
     modifier
   };
@@ -269,19 +405,25 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector {
 function pseudoSelector(
   stream: Stream<Token>,
   expression: Expression<Selector | Array<Selector>>
-): PseudoElementSelector | PseudoClassSelector {
+): PseudoElementSelector | PseudoClassSelector | null {
   let selector: PseudoElementSelector | PseudoClassSelector;
 
-  if (stream.accept(next => next.type === ":", 1) !== false) {
-    const ident = stream.accept(isIdent, 1);
+  let next = stream.next();
 
-    if (ident === false) {
-      throw new Error("Excepted ident");
+  if (next === null) {
+    return null;
+  }
+
+  if (next.type === TokenType.Colon) {
+    next = stream.next();
+
+    if (next === null || next.type !== TokenType.Ident) {
+      return null;
     }
 
     let name: PseudoElement;
 
-    switch (ident.value) {
+    switch (next.value) {
       case "first-line":
       case "first-letter":
       case "selection":
@@ -292,23 +434,21 @@ function pseudoSelector(
       case "after":
       case "marker":
       case "placeholder":
-        name = ident.value;
+        name = next.value;
         break;
       default:
-        throw new Error(`Unknown pseudo-element "${ident.value}"`);
+        return null;
     }
 
-    selector = { type: "pseudo-element-selector", name };
+    selector = { type: SelectorType.PseudoElementSelector, name };
   } else {
-    const ident = stream.next();
-
-    if (ident === null || (!isIdent(ident) && !isFunctionName(ident))) {
-      throw new Error("Excepted ident or function name");
+    if (next.type !== TokenType.Ident && next.type !== TokenType.FunctionName) {
+      return null;
     }
 
     let name: PseudoClass;
 
-    switch (ident.value) {
+    switch (next.value) {
       case "matches":
       case "not":
       case "something":
@@ -362,68 +502,110 @@ function pseudoSelector(
       case "only-of-type":
       case "nth-col":
       case "nth-last-col":
-        name = ident.value;
+        name = next.value;
         break;
       default:
-        throw new Error(`Unknown pseudo-class "${ident.value}"`);
+        return null;
     }
 
-    if (isIdent(ident)) {
-      selector = { type: "pseudo-class-selector", name, value: null };
+    if (next.type === TokenType.Ident) {
+      selector = { type: SelectorType.PseudoClassSelector, name, value: null };
     } else {
       const value = expression();
 
-      if (stream.accept(token => token.type === ")", 1) === false) {
-        throw new Error("Expected end of arguments");
+      next = stream.next();
+
+      if (next === null || next.type !== TokenType.RightParenthesis) {
+        return null;
       }
 
-      selector = { type: "pseudo-class-selector", name, value };
+      selector = { type: SelectorType.PseudoClassSelector, name, value };
     }
   }
 
   return selector;
 }
 
-function relativeSelector(
-  left: Selector,
-  right: ComplexSelector,
-  combinator: RelativeSelector["combinator"]
-): RelativeSelector {
+function compoundSelector(
+  left: ComplexSelector,
+  right: ComplexSelector | null
+): CompoundSelector | null {
   if (isPseudoElementSelector(left)) {
-    throw new Error("Unexpected pseudo-element selector");
+    return null;
+  }
+
+  if (isCompoundSelector(left)) {
+    right = compoundSelector(left.right, right);
+    left = left.left;
+  }
+
+  if (right === null) {
+    return null;
   }
 
   return {
-    type: "relative-selector",
-    combinator,
-    relative: left,
-    selector: right
+    type: SelectorType.CompoundSelector,
+    left,
+    right
   };
 }
 
-function compoundSelector(
-  left: SimpleSelector | Array<SimpleSelector>,
-  right: SimpleSelector
-): CompoundSelector {
-  const selectors = isArray(left) ? left : [left];
-
-  if (isPseudoElementSelector(last(selectors)!)) {
-    throw new Error("Unexpected pseudo-element selector");
+function relativeSelector(
+  left: Selector,
+  right: Selector | null,
+  combinator: SelectorCombinator
+): RelativeSelector | null {
+  if (
+    right === null ||
+    isRelativeSelector(right) ||
+    isPseudoElementSelector(left)
+  ) {
+    return null;
   }
 
-  selectors.push(right);
+  return {
+    type: SelectorType.RelativeSelector,
+    combinator,
+    left,
+    right
+  };
+}
 
-  return { type: "compound-selector", selectors };
+function selector(
+  left: Selector,
+  right: ComplexSelector | null
+): Selector | null {
+  if (isComplexSelector(left)) {
+    return compoundSelector(left, right);
+  }
+
+  if (isComplexSelector(left.right)) {
+    return relativeSelector(
+      left.left,
+      compoundSelector(left.right, right),
+      left.combinator
+    );
+  }
+
+  return relativeSelector(
+    left.left,
+    selector(left.right, right),
+    left.combinator
+  );
 }
 
 function selectorList(
   left: Selector | Array<Selector>,
-  right: Selector | Array<Selector>
-): Array<Selector> {
+  right: Selector | Array<Selector> | null
+): Array<Selector> | null {
+  if (right === null) {
+    return null;
+  }
+
   const selectors = isArray(left) ? left : [left];
 
   if (isPseudoElementSelector(last(selectors)!)) {
-    throw new Error("Unexpected pseudo-element selector");
+    return null;
   }
 
   if (isArray(right)) {
@@ -437,53 +619,26 @@ function selectorList(
 
 function combineSelectors(
   left: Selector | Array<Selector>,
-  right: Selector | Array<Selector>,
-  combinator?: RelativeSelector["combinator"]
-): Selector | Array<Selector> {
+  right: Selector | Array<Selector> | null,
+  combinator?: SelectorCombinator
+): Selector | Array<Selector> | null {
+  if (right === null) {
+    return null;
+  }
+
   if (isArray(left) || isArray(right)) {
     return selectorList(left, right);
   }
 
   if (combinator !== undefined) {
-    if (!isComplexSelector(right)) {
-      throw new Error("Exepected complex selector");
-    }
-
     return relativeSelector(left, right, combinator);
   }
 
-  if (isSimpleSelector(left)) {
-    if (!isSimpleSelector(right)) {
-      throw new Error("Expected simple selector");
-    }
-
-    return compoundSelector(left, right);
+  if (isComplexSelector(right)) {
+    return selector(left, right);
   }
 
-  if (isComplexSelector(left)) {
-    if (!isSimpleSelector(right)) {
-      throw new Error("Expected simple selector");
-    }
-
-    return compoundSelector(left.selectors, right);
-  }
-
-  if (!isSimpleSelector(right)) {
-    throw new Error("Expected simple selector");
-  }
-
-  const { relative, selector } = left;
-
-  combinator = left.combinator;
-
-  return relativeSelector(
-    relative,
-    compoundSelector(
-      isCompoundSelector(selector) ? selector.selectors : selector,
-      right
-    ),
-    combinator
-  );
+  return null;
 }
 
 type Production<T extends Token> = Lang.Production<
@@ -493,21 +648,21 @@ type Production<T extends Token> = Lang.Production<
 >;
 
 const whitespace: Production<Whitespace> = {
-  token: "whitespace",
+  token: TokenType.Whitespace,
 
   prefix(token, stream, expression) {
     return Command.Continue;
   },
 
   infix(token, stream, expression, left) {
-    const next = stream.peek();
+    const next = stream.peek(0);
 
     if (next !== null && isImplicitDescendant(next)) {
-      const right = expression();
-
-      if (right !== null) {
-        return combineSelectors(left, right, " ");
-      }
+      return combineSelectors(
+        left,
+        expression(),
+        SelectorCombinator.Descendant
+      );
     }
 
     return Command.Continue;
@@ -515,50 +670,54 @@ const whitespace: Production<Whitespace> = {
 };
 
 const delim: Production<Delim> = {
-  token: "delim",
+  token: TokenType.Delim,
 
   prefix(token, stream) {
     switch (token.value) {
-      case "#":
+      case Char.NumberSign:
         return idSelector(stream);
-      case ".":
+      case Char.FullStop:
         return classSelector(stream);
-      case "*":
-      case "|":
+      case Char.Asterisk:
+      case Char.VerticalLine:
         return typeSelector(token, stream);
     }
 
-    throw new Error("Expected ID or class name");
+    return null;
   },
 
   infix(token, stream, expression, left) {
     switch (token.value) {
-      case "#":
+      case Char.NumberSign:
         return combineSelectors(left, idSelector(stream));
-      case ".":
+      case Char.FullStop:
         return combineSelectors(left, classSelector(stream));
-      case "*":
-      case "|":
+      case Char.Asterisk:
+      case Char.VerticalLine:
         return combineSelectors(left, typeSelector(token, stream));
 
-      case ">":
-      case "+":
-      case "~":
-        const right = expression();
-
-        if (right === null) {
-          throw new Error("Expected selector");
-        }
-
-        return combineSelectors(left, right, token.value);
+      case Char.GreaterThanSign:
+        return combineSelectors(
+          left,
+          expression(),
+          SelectorCombinator.DirectDescendant
+        );
+      case Char.PlusSign:
+        return combineSelectors(
+          left,
+          expression(),
+          SelectorCombinator.DirectSibling
+        );
+      case Char.Tilde:
+        return combineSelectors(left, expression(), SelectorCombinator.Sibling);
     }
 
-    throw new Error("Expected ID or class name or combinator");
+    return null;
   }
 };
 
 const ident: Production<Ident> = {
-  token: "ident",
+  token: TokenType.Ident,
 
   prefix(token, stream) {
     return typeSelector(token, stream);
@@ -566,21 +725,15 @@ const ident: Production<Ident> = {
 };
 
 const comma: Production<Comma> = {
-  token: ",",
+  token: TokenType.Comma,
 
   infix(token, stream, expression, left) {
-    const right = expression();
-
-    if (right === null) {
-      throw new Error("Expected selector");
-    }
-
-    return selectorList(left, right);
+    return selectorList(left, expression());
   }
 };
 
-const bracket: Production<Bracket> = {
-  token: "[",
+const squareBracket: Production<SquareBracket> = {
+  token: TokenType.LeftSquareBracket,
 
   prefix(token, stream) {
     return attributeSelector(stream);
@@ -592,7 +745,7 @@ const bracket: Production<Bracket> = {
 };
 
 const colon: Production<Colon> = {
-  token: ":",
+  token: TokenType.Colon,
 
   prefix(token, stream, expression) {
     return pseudoSelector(stream, expression);
@@ -606,4 +759,4 @@ const colon: Production<Colon> = {
 export const SelectorGrammar: Grammar<
   Token,
   Selector | Array<Selector>
-> = new Grammar([[delim, ident, colon, bracket, whitespace], comma]);
+> = new Grammar([[delim, ident, colon, squareBracket], whitespace, comma]);

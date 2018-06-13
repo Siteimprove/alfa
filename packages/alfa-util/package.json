@@ -1,14 +1,17 @@
 {
-  "name": "@siteimprove/alfa-util",
-  "version": "0.0.0",
-  "description": "alfa!",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "repository":
-    "https://github.com/siteimprove/alfa/tree/master/packages/alfa-util",
-  "contributors": ["Kasper Isager <kki@siteimprove.com>"],
-  "license": "MIT",
   "private": true,
+  "name": "@siteimprove/alfa-util",
+  "author": "Siteimprove A/S",
+  "homepage": "https://github.com/siteimprove/alfa",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "alfa!",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-util",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
   }

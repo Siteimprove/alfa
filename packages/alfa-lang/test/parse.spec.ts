@@ -1,13 +1,14 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse } from "../src/parse";
 import {
+  TokenType,
   Expression,
   ExpressionToken,
   ExpressionGrammar
 } from "./helpers/expression";
 
 function expression(
-  t: Test,
+  t: Assertions,
   input: Array<ExpressionToken>,
   expected: Expression
 ) {
@@ -18,11 +19,11 @@ test("Correctly handles operator precedence", t =>
   expression(
     t,
     [
-      { type: "number", value: 1 },
-      "*",
-      { type: "number", value: 2 },
-      "+",
-      { type: "number", value: 3 }
+      { type: TokenType.Number, value: 1 },
+      { type: TokenType.Multiply },
+      { type: TokenType.Number, value: 2 },
+      { type: TokenType.Add },
+      { type: TokenType.Number, value: 3 }
     ],
     {
       type: "operator",

@@ -1,6 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
-import { Token, Ident, String } from "../alphabet";
+import { Token, TokenType, Ident, String } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Content } from "../properties/content";
 
@@ -9,7 +9,7 @@ const { isArray } = Array;
 type Production<T extends Token> = Lang.Production<Token, Content, T>;
 
 const ident: Production<Ident> = {
-  token: "ident",
+  token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
       case "normal":
@@ -22,7 +22,7 @@ const ident: Production<Ident> = {
 };
 
 const string: Production<String> = {
-  token: "string",
+  token: TokenType.String,
   prefix(token) {
     return [token.value];
   },

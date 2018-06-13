@@ -8,17 +8,11 @@ export function lex<T extends Token, S = null>(
 ): Array<T> {
   const tokens: Array<T> = [];
 
-  function emit<U extends T>(token: U): void {
-    tokens.push(token);
-  }
+  const emit: (token: T) => void = token => tokens.push(token);
 
-  const characters: Array<number> = new Array(input.length);
+  const readCharacter: (i: number) => number = i => input.charCodeAt(i);
 
-  for (let i = 0, n = input.length; i < n; i++) {
-    characters[i] = input.charCodeAt(i);
-  }
-
-  const stream = new Stream(characters);
+  const stream = new Stream(input.length, readCharacter);
 
   const state = alphabet.state(stream);
 

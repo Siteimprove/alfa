@@ -1,3 +1,12 @@
+export const enum NodeType {
+  Element = 1,
+  Text = 3,
+  Comment = 8,
+  Document = 9,
+  DocumentType = 10,
+  DocumentFragment = 11
+}
+
 /**
  * NB: Notice that we explicitly do NOT define the `parentNode` property. There
  * is a very good reason for this: Serialization. Since `parentNode` introduces
@@ -19,7 +28,7 @@ export interface Node {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-nodetype
    */
-  readonly nodeType: number;
+  readonly nodeType: NodeType;
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-childnodes
@@ -64,7 +73,7 @@ export interface Element extends Node {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-element_node
    */
-  readonly nodeType: 1;
+  readonly nodeType: NodeType.Element;
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-element-prefix
@@ -94,14 +103,14 @@ export interface Text extends CharacterData {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-text_node
    */
-  readonly nodeType: 3;
+  readonly nodeType: NodeType.Text;
 }
 
 /**
  * @see https://www.w3.org/TR/dom/#interface-comment
  */
 export interface Comment extends CharacterData {
-  readonly nodeType: 8;
+  readonly nodeType: NodeType.Comment;
 }
 
 /**
@@ -111,7 +120,7 @@ export interface Document extends Node {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_node
    */
-  readonly nodeType: 9;
+  readonly nodeType: NodeType.Document;
 
   /**
    * @see https://www.w3.org/TR/cssom/#dom-document-stylesheets
@@ -126,7 +135,7 @@ export interface DocumentType extends Node {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_type_node
    */
-  readonly nodeType: 10;
+  readonly nodeType: NodeType.DocumentType;
 
   /**
    * @see https://www.w3.org/TR/dom/#dom-documenttype-name
@@ -141,13 +150,18 @@ export interface DocumentFragment extends Node {
   /**
    * @see https://www.w3.org/TR/dom/#dom-node-document_fragment_node
    */
-  readonly nodeType: 11;
+  readonly nodeType: NodeType.DocumentFragment;
 }
 
 /**
  * @see https://www.w3.org/TR/dom41/#interface-shadowroot
  */
-export interface ShadowRoot extends DocumentFragment {}
+export interface ShadowRoot extends DocumentFragment {
+  /**
+   * @see https://www.w3.org/TR/dom41/#dom-shadowroot-mode
+   */
+  readonly mode: "open";
+}
 
 /**
  * @see https://www.w3.org/TR/cssom/#cssstylesheet
@@ -169,6 +183,18 @@ export interface StyleDeclaration {
   readonly cssText: string;
 }
 
+export const enum RuleType {
+  Style = 1,
+  Import = 3,
+  Media = 4,
+  FontFace = 5,
+  Page = 6,
+  Keyframes = 7,
+  Keyframe = 8,
+  Namespace = 10,
+  Supports = 12
+}
+
 /**
  * @see https://www.w3.org/TR/cssom/#cssrule
  */
@@ -176,7 +202,7 @@ export interface Rule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-type
    */
-  readonly type: number;
+  readonly type: RuleType;
 }
 
 /**
@@ -206,7 +232,7 @@ export interface StyleRule extends Rule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-style_rule
    */
-  readonly type: 1;
+  readonly type: RuleType.Style;
 
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssstylerule-selectortext
@@ -226,7 +252,7 @@ export interface ImportRule extends Rule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-import_rule
    */
-  readonly type: 3;
+  readonly type: RuleType.Import;
 
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssimportrule-href
@@ -251,7 +277,7 @@ export interface MediaRule extends GroupingRule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-media_rule
    */
-  readonly type: 4;
+  readonly type: RuleType.Media;
 
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssmediarule-media
@@ -266,7 +292,7 @@ export interface FontFaceRule extends Rule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-font_face_rule
    */
-  readonly type: 5;
+  readonly type: RuleType.FontFace;
 
   /**
    * @see https://www.w3.org/TR/css-fonts/#dom-cssfontfacerule-style
@@ -285,7 +311,7 @@ export interface PageRule extends Rule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-page_rule
    */
-  readonly type: 6;
+  readonly type: RuleType.Page;
 
   /**
    * @see https://www.w3.org/TR/cssom/#dom-csspagerule-selectortext
@@ -305,7 +331,7 @@ export interface KeyframesRule extends Rule {
   /**
    * @see https://www.w3.org/TR/css-animations/#dom-cssrule-keyframes_rule
    */
-  readonly type: 7;
+  readonly type: RuleType.Keyframes;
 
   /**
    * @see https://www.w3.org/TR/css-animations/#dom-csskeyframesrule-name
@@ -325,7 +351,7 @@ export interface KeyframeRule extends Rule {
   /**
    * @see https://www.w3.org/TR/css-animations/#dom-cssrule-keyframe_rule
    */
-  readonly type: 8;
+  readonly type: RuleType.Keyframe;
 
   /**
    * @see https://www.w3.org/TR/css-animations/#dom-csskeyframerule-keytext
@@ -345,7 +371,7 @@ export interface NamespaceRule extends Rule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-namespace_rule
    */
-  readonly type: 10;
+  readonly type: RuleType.Namespace;
 
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssnamespacerule-namespaceuri
@@ -365,13 +391,13 @@ export interface SupportsRule extends ConditionRule {
   /**
    * @see https://www.w3.org/TR/css-conditional/#dom-cssrule-supports_rule
    */
-  readonly type: 12;
+  readonly type: RuleType.Supports;
 }
 
 /**
  * @see https://www.w3.org/TR/html/infrastructure.html#namespaces
  */
-export enum Namespace {
+export const enum Namespace {
   /**
    * @see https://www.w3.org/TR/html/infrastructure.html#html-namespace
    */

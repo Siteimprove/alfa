@@ -1,145 +1,144 @@
-import { test, Test } from "@siteimprove/alfa-test";
+import { test, Assertions } from "@siteimprove/alfa-test";
 import { parse, lex } from "@siteimprove/alfa-lang";
 import { Alphabet } from "../../src/alphabet";
-import { SelectorGrammar, Selector } from "../../src/grammars/selector";
-
-function parseSelector(input: string): Selector | Array<Selector> | null {
-  return parse(lex(input, Alphabet), SelectorGrammar);
-}
+import {
+  SelectorGrammar,
+  Selector,
+  SelectorType,
+  SelectorCombinator,
+  AttributeMatcher,
+  AttributeModifier
+} from "../../src/grammars/selector";
 
 function selector(
-  t: Test,
+  t: Assertions,
   input: string,
-  expected: Selector | Array<Selector>
+  expected: Selector | Array<Selector> | null
 ) {
-  t.deepEqual(parseSelector(input), expected, t.title);
+  t.deepEqual(parse(lex(input, Alphabet), SelectorGrammar), expected, input);
 }
 
 test("Can parse a type selector", t =>
   selector(t, "div", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "div",
     namespace: null
   }));
 
 test("Can parse an uppercase type selector", t =>
   selector(t, "DIV", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "div",
     namespace: null
   }));
 
 test("Can parse a type selector with a namespace", t =>
   selector(t, "svg|a", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "a",
     namespace: "svg"
   }));
 
 test("Can parse a type selector with an empty namespace", t =>
   selector(t, "|a", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "a",
     namespace: ""
   }));
 
 test("Can parse the universal selector with an empty namespace", t =>
   selector(t, "|*", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "*",
     namespace: ""
   }));
 
 test("Can parse a type selector with the universal namespace", t =>
   selector(t, "*|a", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "a",
     namespace: "*"
   }));
 
 test("Can parse the universal selector with the universal namespace", t =>
   selector(t, "*|*", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "*",
     namespace: "*"
   }));
 
 test("Can parse a class selector", t =>
   selector(t, ".foo", {
-    type: "class-selector",
+    type: SelectorType.ClassSelector,
     name: "foo"
   }));
 
 test("Can parse an ID selector", t =>
   selector(t, "#foo", {
-    type: "id-selector",
+    type: SelectorType.IdSelector,
     name: "foo"
   }));
 
 test("Can parse a compound selector", t =>
   selector(t, "#foo.bar", {
-    type: "compound-selector",
-    selectors: [
-      {
-        type: "id-selector",
-        name: "foo"
-      },
-      {
-        type: "class-selector",
-        name: "bar"
-      }
-    ]
+    type: SelectorType.CompoundSelector,
+    left: {
+      type: SelectorType.IdSelector,
+      name: "foo"
+    },
+    right: {
+      type: SelectorType.ClassSelector,
+      name: "bar"
+    }
   }));
 
 test("Can parse the universal selector", t =>
   selector(t, "*", {
-    type: "type-selector",
+    type: SelectorType.TypeSelector,
     name: "*",
     namespace: null
   }));
 
 test("Can parse a compound selector with a type in prefix position", t =>
   selector(t, "div.foo", {
-    type: "compound-selector",
-    selectors: [
-      {
-        type: "type-selector",
-        name: "div",
-        namespace: null
-      },
-      {
-        type: "class-selector",
-        name: "foo"
-      }
-    ]
+    type: SelectorType.CompoundSelector,
+    left: {
+      type: SelectorType.TypeSelector,
+      name: "div",
+      namespace: null
+    },
+    right: {
+      type: SelectorType.ClassSelector,
+      name: "foo"
+    }
   }));
 
 test("Can parse a single descendant selector", t =>
   selector(t, "div .foo", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.TypeSelector,
       name: "div",
       namespace: null
     },
-    selector: {
-      type: "class-selector",
+    right: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     }
   }));
 
 test("Can parse a single descendant selector with a right-hand type selector", t =>
   selector(t, "div span", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.TypeSelector,
       name: "div",
       namespace: null
     },
-    selector: {
-      type: "type-selector",
+    right: {
+      type: SelectorType.TypeSelector,
       name: "span",
       namespace: null
     }
@@ -147,68 +146,68 @@ test("Can parse a single descendant selector with a right-hand type selector", t
 
 test("Can parse a double descendant selector", t =>
   selector(t, "div .foo #bar", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "relative-selector",
-      combinator: " ",
-      relative: {
-        type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.RelativeSelector,
+      combinator: SelectorCombinator.Descendant,
+      left: {
+        type: SelectorType.TypeSelector,
         name: "div",
         namespace: null
       },
-      selector: {
-        type: "class-selector",
+      right: {
+        type: SelectorType.ClassSelector,
         name: "foo"
       }
     },
-    selector: {
-      type: "id-selector",
+    right: {
+      type: SelectorType.IdSelector,
       name: "bar"
     }
   }));
 
 test("Can parse a direct descendant selector", t =>
   selector(t, "div > .foo", {
-    type: "relative-selector",
-    combinator: ">",
-    relative: {
-      type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.DirectDescendant,
+    left: {
+      type: SelectorType.TypeSelector,
       name: "div",
       namespace: null
     },
-    selector: {
-      type: "class-selector",
+    right: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     }
   }));
 
 test("Can parse a sibling selector", t =>
   selector(t, "div ~ .foo", {
-    type: "relative-selector",
-    combinator: "~",
-    relative: {
-      type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Sibling,
+    left: {
+      type: SelectorType.TypeSelector,
       name: "div",
       namespace: null
     },
-    selector: {
-      type: "class-selector",
+    right: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     }
   }));
 
 test("Can parse a direct sibling selector", t =>
   selector(t, "div + .foo", {
-    type: "relative-selector",
-    combinator: "+",
-    relative: {
-      type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.DirectSibling,
+    left: {
+      type: SelectorType.TypeSelector,
       name: "div",
       namespace: null
     },
-    selector: {
-      type: "class-selector",
+    right: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     }
   }));
@@ -216,15 +215,15 @@ test("Can parse a direct sibling selector", t =>
 test("Can parse a list of simple selectors", t =>
   selector(t, ".foo, .bar, .baz", [
     {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
     {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "bar"
     },
     {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "baz"
     }
   ]));
@@ -232,49 +231,47 @@ test("Can parse a list of simple selectors", t =>
 test("Can parse a list of simple and compound selectors", t =>
   selector(t, ".foo, #bar.baz", [
     {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
     {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "id-selector",
-          name: "bar"
-        },
-        {
-          type: "class-selector",
-          name: "baz"
-        }
-      ]
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.IdSelector,
+        name: "bar"
+      },
+      right: {
+        type: SelectorType.ClassSelector,
+        name: "baz"
+      }
     }
   ]));
 
 test("Can parse a list of descendant selectors", t =>
   selector(t, "div .foo, span .baz", [
     {
-      type: "relative-selector",
-      combinator: " ",
-      relative: {
-        type: "type-selector",
+      type: SelectorType.RelativeSelector,
+      combinator: SelectorCombinator.Descendant,
+      left: {
+        type: SelectorType.TypeSelector,
         name: "div",
         namespace: null
       },
-      selector: {
-        type: "class-selector",
+      right: {
+        type: SelectorType.ClassSelector,
         name: "foo"
       }
     },
     {
-      type: "relative-selector",
-      combinator: " ",
-      relative: {
-        type: "type-selector",
+      type: SelectorType.RelativeSelector,
+      combinator: SelectorCombinator.Descendant,
+      left: {
+        type: SelectorType.TypeSelector,
         name: "span",
         namespace: null
       },
-      selector: {
-        type: "class-selector",
+      right: {
+        type: SelectorType.ClassSelector,
         name: "baz"
       }
     }
@@ -283,28 +280,28 @@ test("Can parse a list of descendant selectors", t =>
 test("Can parse a list of sibling selectors", t =>
   selector(t, "div ~ .foo, span ~ .baz", [
     {
-      type: "relative-selector",
-      combinator: "~",
-      relative: {
-        type: "type-selector",
+      type: SelectorType.RelativeSelector,
+      combinator: SelectorCombinator.Sibling,
+      left: {
+        type: SelectorType.TypeSelector,
         name: "div",
         namespace: null
       },
-      selector: {
-        type: "class-selector",
+      right: {
+        type: SelectorType.ClassSelector,
         name: "foo"
       }
     },
     {
-      type: "relative-selector",
-      combinator: "~",
-      relative: {
-        type: "type-selector",
+      type: SelectorType.RelativeSelector,
+      combinator: SelectorCombinator.Sibling,
+      left: {
+        type: SelectorType.TypeSelector,
         name: "span",
         namespace: null
       },
-      selector: {
-        type: "class-selector",
+      right: {
+        type: SelectorType.ClassSelector,
         name: "baz"
       }
     }
@@ -313,358 +310,395 @@ test("Can parse a list of sibling selectors", t =>
 test("Can parse a list of selectors with no whitespace", t =>
   selector(t, ".foo,.bar,.baz", [
     {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
     {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "bar"
     },
     {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "baz"
     }
   ]));
 
 test("Can parse a compound selector relative to a class selector", t =>
   selector(t, ".foo div.bar", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "class-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
-    selector: {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "type-selector",
-          name: "div",
-          namespace: null
-        },
-        {
-          type: "class-selector",
-          name: "bar"
-        }
-      ]
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.ClassSelector,
+        name: "bar"
+      }
     }
   }));
 
 test("Can parse a compound selector relative to a compound selector", t =>
   selector(t, "span.foo div.bar", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "type-selector",
-          name: "span",
-          namespace: null
-        },
-        {
-          type: "class-selector",
-          name: "foo"
-        }
-      ]
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "span",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.ClassSelector,
+        name: "foo"
+      }
     },
-    selector: {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "type-selector",
-          name: "div",
-          namespace: null
-        },
-        {
-          type: "class-selector",
-          name: "bar"
-        }
-      ]
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.ClassSelector,
+        name: "bar"
+      }
     }
   }));
 
 test("Can parse a descendant selector relative to a sibling selector", t =>
   selector(t, "div ~ span .foo", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "relative-selector",
-      combinator: "~",
-      relative: {
-        type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.RelativeSelector,
+      combinator: SelectorCombinator.Sibling,
+      left: {
+        type: SelectorType.TypeSelector,
         name: "div",
         namespace: null
       },
-      selector: {
-        type: "type-selector",
+      right: {
+        type: SelectorType.TypeSelector,
         name: "span",
         namespace: null
       }
     },
-    selector: {
-      type: "class-selector",
+    right: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     }
   }));
 
 test("Can parse an attribute selector without a value", t =>
   selector(t, "[foo]", {
-    type: "attribute-selector",
+    type: SelectorType.AttributeSelector,
     name: "foo",
     value: null,
     matcher: null,
-    modifier: null
+    modifier: 0
   }));
 
 test("Can parse an attribute selector with an ident value", t =>
   selector(t, "[foo=bar]", {
-    type: "attribute-selector",
+    type: SelectorType.AttributeSelector,
     name: "foo",
     value: "bar",
     matcher: null,
-    modifier: null
+    modifier: 0
   }));
 
 test("Can parse an attribute selector with a string value", t =>
   selector(t, '[foo="bar"]', {
-    type: "attribute-selector",
+    type: SelectorType.AttributeSelector,
     name: "foo",
     value: "bar",
     matcher: null,
-    modifier: null
+    modifier: 0
   }));
 
 test("Can parse an attribute selector with a matcher", t =>
   selector(t, "[foo*=bar]", {
-    type: "attribute-selector",
+    type: SelectorType.AttributeSelector,
     name: "foo",
     value: "bar",
-    matcher: "*",
-    modifier: null
+    matcher: AttributeMatcher.Substring,
+    modifier: 0
   }));
 
 test("Can parse an attribute selector with a casing modifier", t =>
   selector(t, "[foo=bar i]", {
-    type: "attribute-selector",
+    type: SelectorType.AttributeSelector,
     name: "foo",
     value: "bar",
     matcher: null,
-    modifier: "i"
+    modifier: AttributeModifier.CaseInsensitive
   }));
 
 test("Can parse an attribute selector when part of a compound selector", t =>
   selector(t, ".foo[foo]", {
-    type: "compound-selector",
-    selectors: [
-      {
-        type: "class-selector",
-        name: "foo"
-      },
-      {
-        type: "attribute-selector",
-        name: "foo",
-        value: null,
-        matcher: null,
-        modifier: null
-      }
-    ]
+    type: SelectorType.CompoundSelector,
+    left: {
+      type: SelectorType.ClassSelector,
+      name: "foo"
+    },
+    right: {
+      type: SelectorType.AttributeSelector,
+      name: "foo",
+      value: null,
+      matcher: null,
+      modifier: 0
+    }
   }));
 
 test("Can parse an attribute selector when part of a descendant selector", t =>
   selector(t, "div [foo]", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.TypeSelector,
       name: "div",
       namespace: null
     },
-    selector: {
-      type: "attribute-selector",
+    right: {
+      type: SelectorType.AttributeSelector,
       name: "foo",
       value: null,
       matcher: null,
-      modifier: null
+      modifier: 0
     }
   }));
 
 test("Can parse an attribute selector when part of a compound selector relative to a class selector", t =>
   selector(t, ".foo div[foo]", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "class-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
-    selector: {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "type-selector",
-          name: "div",
-          namespace: null
-        },
-        {
-          type: "attribute-selector",
-          name: "foo",
-          value: null,
-          matcher: null,
-          modifier: null
-        }
-      ]
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.AttributeSelector,
+        name: "foo",
+        value: null,
+        matcher: null,
+        modifier: 0
+      }
     }
   }));
 
 test("Can parse a pseudo-element selector", t =>
   selector(t, "::before", {
-    type: "pseudo-element-selector",
+    type: SelectorType.PseudoElementSelector,
     name: "before"
   }));
 
 test("Can parse a pseudo-element selector when part of a compound selector", t =>
   selector(t, ".foo::before", {
-    type: "compound-selector",
-    selectors: [
-      {
-        type: "class-selector",
-        name: "foo"
-      },
-      {
-        type: "pseudo-element-selector",
-        name: "before"
-      }
-    ]
+    type: SelectorType.CompoundSelector,
+    left: {
+      type: SelectorType.ClassSelector,
+      name: "foo"
+    },
+    right: {
+      type: SelectorType.PseudoElementSelector,
+      name: "before"
+    }
   }));
 
 test("Can parse a pseudo-element selector when part of a descendant selector", t =>
   selector(t, "div ::before", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "type-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.TypeSelector,
       name: "div",
       namespace: null
     },
-    selector: {
-      type: "pseudo-element-selector",
+    right: {
+      type: SelectorType.PseudoElementSelector,
       name: "before"
     }
   }));
 
 test("Can parse a pseudo-element selector when part of a compound selector relative to a class selector", t =>
   selector(t, ".foo div::before", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "class-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
-    selector: {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "type-selector",
-          name: "div",
-          namespace: null
-        },
-        {
-          type: "pseudo-element-selector",
-          name: "before"
-        }
-      ]
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.PseudoElementSelector,
+        name: "before"
+      }
     }
   }));
 
 test("Only allows pseudo-element selectors as the last selector", t => {
-  t.throws(() => parseSelector("::foo.foo"));
-  t.throws(() => parseSelector("::foo+foo"));
+  selector(t, "::foo.foo", null);
+  selector(t, "::foo+foo", null);
 });
 
 test("Can parse a named pseudo-class selector", t =>
   selector(t, ":hover", {
-    type: "pseudo-class-selector",
+    type: SelectorType.PseudoClassSelector,
     name: "hover",
     value: null
   }));
 
 test("Can parse a functional pseudo-class selector", t =>
   selector(t, ":not(.foo)", {
-    type: "pseudo-class-selector",
+    type: SelectorType.PseudoClassSelector,
     name: "not",
     value: {
-      type: "class-selector",
+      type: SelectorType.ClassSelector,
       name: "foo"
     }
   }));
 
 test("Can parse a pseudo-class selector when part of a compound selector", t =>
   selector(t, "div:hover", {
-    type: "compound-selector",
-    selectors: [
-      {
-        type: "type-selector",
-        name: "div",
-        namespace: null
-      },
-      {
-        type: "pseudo-class-selector",
-        name: "hover",
-        value: null
-      }
-    ]
+    type: SelectorType.CompoundSelector,
+    left: {
+      type: SelectorType.TypeSelector,
+      name: "div",
+      namespace: null
+    },
+    right: {
+      type: SelectorType.PseudoClassSelector,
+      name: "hover",
+      value: null
+    }
   }));
 
 test("Can parse a pseudo-class selector when part of a compound selector relative to a class selector", t =>
   selector(t, ".foo div:hover", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "class-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
-    selector: {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "type-selector",
-          name: "div",
-          namespace: null
-        },
-        {
-          type: "pseudo-class-selector",
-          name: "hover",
-          value: null
-        }
-      ]
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.PseudoClassSelector,
+        name: "hover",
+        value: null
+      }
     }
   }));
 
 test("Can parse a compound type, class, and pseudo-class selector relative to a class selector", t =>
   selector(t, ".foo div.bar:hover", {
-    type: "relative-selector",
-    combinator: " ",
-    relative: {
-      type: "class-selector",
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.Descendant,
+    left: {
+      type: SelectorType.ClassSelector,
       name: "foo"
     },
-    selector: {
-      type: "compound-selector",
-      selectors: [
-        {
-          type: "type-selector",
-          name: "div",
-          namespace: null
-        },
-        {
-          type: "class-selector",
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.CompoundSelector,
+        left: {
+          type: SelectorType.ClassSelector,
           name: "bar"
         },
-        {
-          type: "pseudo-class-selector",
+        right: {
+          type: SelectorType.PseudoClassSelector,
           name: "hover",
           value: null
         }
-      ]
+      }
     }
   }));
+
+test("Can parse a simple selector relative to a compound selector", t => {
+  selector(t, ".foo > div.bar", {
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.DirectDescendant,
+    left: {
+      type: SelectorType.ClassSelector,
+      name: "foo"
+    },
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.ClassSelector,
+        name: "bar"
+      }
+    }
+  });
+});
+
+test("Can parse a relative selector relative to a compound selector", t => {
+  selector(t, ".foo > .bar + div.baz", {
+    type: SelectorType.RelativeSelector,
+    combinator: SelectorCombinator.DirectSibling,
+    left: {
+      type: SelectorType.RelativeSelector,
+      combinator: SelectorCombinator.DirectDescendant,
+      left: {
+        type: SelectorType.ClassSelector,
+        name: "foo"
+      },
+      right: {
+        type: SelectorType.ClassSelector,
+        name: "bar"
+      }
+    },
+    right: {
+      type: SelectorType.CompoundSelector,
+      left: {
+        type: SelectorType.TypeSelector,
+        name: "div",
+        namespace: null
+      },
+      right: {
+        type: SelectorType.ClassSelector,
+        name: "baz"
+      }
+    }
+  });
+});

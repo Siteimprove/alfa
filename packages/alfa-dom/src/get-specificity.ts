@@ -1,4 +1,4 @@
-import { Selector } from "@siteimprove/alfa-css";
+import { Selector, SelectorType } from "@siteimprove/alfa-css";
 
 const { min } = Math;
 
@@ -33,27 +33,25 @@ export function getSpecificity(selector: Selector): Specificity {
     }
 
     switch (selector.type) {
-      case "id-selector":
+      case SelectorType.IdSelector:
         a++;
         break;
-      case "class-selector":
-      case "attribute-selector":
-      case "pseudo-class-selector":
+      case SelectorType.ClassSelector:
+      case SelectorType.AttributeSelector:
+      case SelectorType.PseudoClassSelector:
         b++;
         break;
-      case "type-selector":
+      case SelectorType.TypeSelector:
         if (selector.name !== "*") {
           c++;
         }
         break;
-      case "pseudo-element-selector":
+      case SelectorType.PseudoElementSelector:
         c++;
         break;
-      case "compound-selector":
-        queue.push(...selector.selectors);
-        break;
-      case "relative-selector":
-        queue.push(selector.selector, selector.relative);
+      case SelectorType.CompoundSelector:
+      case SelectorType.RelativeSelector:
+        queue.push(selector.left, selector.right);
     }
   }
 
