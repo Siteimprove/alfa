@@ -60,7 +60,7 @@ function findConfigFile(directory) {
     if (fs.statSync(configFile).isFile()) {
       return configFile;
     }
-  } catch {}
+  } catch (err) {}
 
   const parentDirectory = path.dirname(directory);
 

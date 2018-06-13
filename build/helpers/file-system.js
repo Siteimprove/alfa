@@ -14,7 +14,7 @@ const ignoredFiles = [/node_modules/];
 function isFile(path) {
   try {
     return fs.statSync(path).isFile();
-  } catch {
+  } catch (err) {
     return false;
   }
 }
@@ -114,7 +114,7 @@ function watchFiles(directory, listener) {
 function isDirectory(path) {
   try {
     return fs.statSync(path).isDirectory();
-  } catch {
+  } catch (err) {
     return false;
   }
 }

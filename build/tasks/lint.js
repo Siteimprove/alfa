@@ -17,7 +17,7 @@ function lint(file) {
   let formatted;
   try {
     formatted = prettier.format(code, { filepath: file });
-  } catch {}
+  } catch (err) {}
 
   if (formatted !== undefined && formatted !== code) {
     writeFile(file, formatted);
