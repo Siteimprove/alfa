@@ -1,4 +1,4 @@
-import { hasTextContent } from "@siteimprove/alfa-dom";
+import { hasTextAlternative } from "../";
 import { Feature } from "../types";
 import * as Roles from "../roles";
 
@@ -7,6 +7,7 @@ import * as Roles from "../roles";
  */
 export const Form: Feature = {
   element: "form",
-  role: form => (hasTextContent(form) === null ? Roles.Form : undefined),
+  role: (form, context) =>
+    hasTextAlternative(form, context) ? Roles.Form : undefined,
   allowedRoles: [Roles.Search, Roles.None, Roles.Presentation]
 };

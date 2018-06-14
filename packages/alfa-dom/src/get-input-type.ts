@@ -22,7 +22,8 @@ export type InputType =
   | "submit"
   | "image"
   | "reset"
-  | "button";
+  | "button"
+  | "week";
 
 /**
  * @see https://www.w3.org/TR/html5/sec-forms.html#element-attrdef-input-type
@@ -60,6 +61,7 @@ export function getInputType(element: Element): InputType | null {
       case "image":
       case "reset":
       case "button":
+      case "week":
         return type;
     }
   }

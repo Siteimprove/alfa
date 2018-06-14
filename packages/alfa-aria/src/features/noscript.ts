@@ -1,9 +1,10 @@
-import { Feature, NoRole } from "../types";
+import { Feature, None } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#noscript
  */
 export const NoScript: Feature = {
   element: "noscript",
-  allowedRoles: NoRole
+  allowedRoles: None,
+  allowedAttributes: None
 };

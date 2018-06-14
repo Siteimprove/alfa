@@ -7,5 +7,5 @@ import * as Roles from "../roles";
 export const Summary: Feature = {
   element: "summary",
   role: Roles.Button,
-  allowedRoles: [Roles.Button] //TODO clarify ambiguity in the documentation
+  allowedRoles: [Roles.Button]
 };

@@ -1,8 +1,10 @@
-import { Feature, AnyRole } from "../types";
+import { Feature, Any } from "../types";
+import * as Roles from "../roles";
+
 /**
- * @see https://www.w3.org/TR/html-aria/#pre
+ * @see https://www.w3.org/TR/html-aria/#text-level-semantics
  */
 export const Pre: Feature = {
   element: "pre",
-  allowedRoles: AnyRole
+  allowedRoles: Any(Roles)
 };

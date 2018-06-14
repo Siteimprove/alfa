@@ -1,11 +1,5 @@
-import {
-  getClosest,
-  getTagName,
-  Element,
-  isElement,
-  Node
-} from "@siteimprove/alfa-dom";
-import { Feature, NoRole, Role } from "../types";
+import { getClosest } from "@siteimprove/alfa-dom";
+import { Feature, None } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -13,30 +7,9 @@ import * as Roles from "../roles";
  */
 export const Option: Feature = {
   element: "option",
-  role,
-  allowedRoles: NoRole
+  role: (option, context) =>
+    getClosest(option, context, "select, optgroup, datalist") !== null
+      ? Roles.Option
+      : undefined,
+  allowedRoles: None
 };
-
-function role(option: Element, context: Node): Role | undefined {
-  if (
-    getClosest(option, context, option => {
-      if (isElement(option)) {
-        switch (getTagName(option, context)) {
-          case "select":
-            return true;
-          case "optgroup":
-            return true;
-          case "datalist":
-            return true;
-          default:
-            return false;
-        }
-      }
-      return false;
-    }) !== null
-  ) {
-    return Roles.Option;
-  }
-
-  return undefined;
-}

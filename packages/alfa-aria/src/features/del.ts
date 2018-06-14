@@ -1,8 +1,10 @@
-import { Feature, AnyRole } from "../types";
+import { Feature, Any } from "../types";
+import * as Roles from "../roles";
+
 /**
- * @see https://www.w3.org/TR/html-aria/#del
+ * @see https://www.w3.org/TR/html-aria/#ins-del
  */
 export const Del: Feature = {
   element: "del",
-  allowedRoles: AnyRole
+  allowedRoles: Any(Roles)
 };

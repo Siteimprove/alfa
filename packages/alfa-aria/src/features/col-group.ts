@@ -1,9 +1,10 @@
-import { Feature, NoRole } from "../types";
+import { Feature, None } from "../types";
 
 /**
- * @see https://www.w3.org/TR/html-aria/#colgroup
+ * @see https://www.w3.org/TR/html-aria/#col-colgroup.
  */
 export const ColGroup: Feature = {
   element: "colgroup",
-  allowedRoles: NoRole
+  allowedRoles: None,
+  allowedAttributes: None
 };

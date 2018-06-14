@@ -1,5 +1,5 @@
 import { hasAttribute } from "@siteimprove/alfa-dom";
-import { AnyRole, Feature } from "../types";
+import { Any, Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -9,7 +9,7 @@ import * as Roles from "../roles";
 export const Anchor: Feature = {
   element: "a",
   role: anchor => (hasAttribute(anchor, "href") ? Roles.Link : undefined),
-  allowedRoles: anchor =>
+  allowedRoles: (anchor: any) =>
     hasAttribute(anchor, "href")
       ? [
           Roles.Button,
@@ -23,5 +23,5 @@ export const Anchor: Feature = {
           Roles.Tab,
           Roles.TreeItem
         ]
-      : AnyRole
+      : Any(Roles)
 };

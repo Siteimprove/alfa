@@ -1,4 +1,4 @@
-import { Feature, NoRole } from "../types";
+import { Feature, None } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -7,5 +7,5 @@ import * as Roles from "../roles";
 export const Math: Feature = {
   element: "math",
   role: Roles.Math,
-  allowedRoles: NoRole
+  allowedRoles: None
 };

@@ -1,9 +1,10 @@
-import { Feature, NoRole } from "../types";
+import { Feature, None } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#base
  */
 export const Base: Feature = {
   element: "base",
-  allowedRoles: NoRole
+  allowedRoles: None,
+  allowedAttributes: None
 };

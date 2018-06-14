@@ -1,6 +1,7 @@
 import { values } from "@siteimprove/alfa-util";
-import { Node, Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import * as Roles from "./roles";
+import * as Attributes from "./attributes";
 
 export type ValueType =
   /**
@@ -115,13 +116,17 @@ export type Role = Readonly<{
 
 export type Aspect<T> = T | ((element: Element, context: Node) => T);
 
-export const AnyRole: Array<Role> = values(Roles);
+export const Any: <T extends typeof Roles | typeof Attributes>(
+  type: T
+) => Array<T[keyof T]> = types => values(types);
 
-export const NoRole: Array<Role> = [];
+export const Except: <T extends typeof Roles | typeof Attributes>(
+  type: T,
+  exclude: Array<T[keyof T]>
+) => Array<T[keyof T]> = (types, exclude) =>
+  Any(types).filter(type => exclude.includes(type));
 
-export const AnyRoleExcept: (...roles: Array<Role>) => Array<Role> = (
-  ...roles
-) => AnyRole.filter(role => roles.includes(role));
+export const None: Array<any> = [];
 
 /**
  * @see https://www.w3.org/TR/html-aria/
@@ -129,6 +134,7 @@ export const AnyRoleExcept: (...roles: Array<Role>) => Array<Role> = (
 export type Feature = Readonly<{
   element: string;
   role?: Aspect<Role>;
-  allowedRoles: Aspect<Array<Role> | typeof AnyRole | typeof NoRole>;
+  allowedRoles: Aspect<Array<Role>>;
   allowedAttributes?: Aspect<Array<Attribute>>;
+  obsolete?: true | undefined;
 }>;

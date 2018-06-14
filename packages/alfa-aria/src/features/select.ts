@@ -1,10 +1,5 @@
-import {
-  Element,
-  getAttribute,
-  hasAttribute,
-  Node
-} from "@siteimprove/alfa-dom";
-import { Feature, Role, NoRole } from "../types";
+import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
+import { Feature, Role, None } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -13,40 +8,13 @@ import * as Roles from "../roles";
 export const Select: Feature = {
   element: "select",
   role,
-  allowedRoles
+  allowedRoles: role === Roles.Combobox ? [Roles.Menu] : None
 };
 
 function role(select: Element, context: Node): Role | undefined {
-  if (
-    !hasAttribute(select, "multiple") &&
-    Number(getAttribute(select, "size")) <= 1
-  ) {
+  const attMult = getAttribute(select, "mulitple");
+  const attSize = getAttribute(select, "size");
+  if (attMult === null && attSize !== null && parseInt(attSize) <= 1) {
     return Roles.Combobox;
-  }
-  if (
-    hasAttribute(select, "multiple") ||
-    Number(getAttribute(select, "size")) > 1
-  ) {
-    return Roles.ListBox;
-  }
-  return undefined;
-}
-
-function allowedRoles(
-  select: Element,
-  context: Node
-): Array<Role> | typeof NoRole {
-  if (
-    !hasAttribute(select, "multiple") &&
-    Number(getAttribute(select, "size")) <= 1
-  ) {
-    return [Roles.Menu];
-  }
-  if (
-    hasAttribute(select, "multiple") ||
-    Number(getAttribute(select, "size")) > 1
-  ) {
-    NoRole;
-  }
-  return NoRole; //The documentation does not explicitly state this
+  } else return Roles.ListBox;
 }

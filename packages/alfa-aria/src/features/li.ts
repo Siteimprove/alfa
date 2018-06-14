@@ -1,10 +1,4 @@
-import {
-  Element,
-  getParentNode,
-  getTagName,
-  isElement,
-  Node
-} from "@siteimprove/alfa-dom";
+import { Element, getParentElement, Node } from "@siteimprove/alfa-dom";
 import { Feature, Role } from "../types";
 import * as Roles from "../roles";
 
@@ -29,11 +23,10 @@ export const Li: Feature = {
 };
 
 function role(il: Element, context: Node): Role | undefined {
-  const parent = getParentNode(il, context);
-  if (parent != null && isElement(parent)) {
-    switch (getTagName(parent, context)) {
+  const parent = getParentElement(il, context);
+  if (parent != null) {
+    switch (parent.localName) {
       case "ol":
-        return Roles.ListItem;
       case "ul":
         return Roles.ListItem;
       default:

@@ -1,5 +1,5 @@
 import { hasAttribute } from "@siteimprove/alfa-dom";
-import { NoRole, Feature } from "../types";
+import { None, Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -8,5 +8,5 @@ import * as Roles from "../roles";
 export const Area: Feature = {
   element: "area",
   role: area => (hasAttribute(area, "href") ? Roles.Link : undefined),
-  allowedRoles: NoRole
+  allowedRoles: None
 };

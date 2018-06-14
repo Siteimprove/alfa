@@ -1,4 +1,4 @@
-import { Feature, NoRole } from "../types";
+import { Feature, None } from "../types";
 import * as Roles from "../roles";
 /**
  * @see https://www.w3.org/TR/html-aria/#dt
@@ -6,5 +6,5 @@ import * as Roles from "../roles";
 export const Dt: Feature = {
   element: "dt",
   role: Roles.ListItem,
-  allowedRoles: NoRole
+  allowedRoles: None
 };

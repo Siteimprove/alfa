@@ -2,9 +2,9 @@ import { Feature, Any } from "../types";
 import * as Roles from "../roles";
 
 /**
- * @see https://www.w3.org/TR/html-aria/#text-level-semantics
+ * @see https://www.w3.org/TR/html-aria/#g
  */
-export const Var: Feature = {
-  element: "var",
+export const Q: Feature = {
+  element: "q",
   allowedRoles: Any(Roles)
 };

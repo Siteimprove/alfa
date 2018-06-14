@@ -1,9 +1,9 @@
-import { Feature, NoRole } from "../types";
+import { Feature, None } from "../types";
 
 /**
- * @see https://www.w3.org/TR/html-aria/#col
+ * @see https://www.w3.org/TR/html-aria/#col-colgroup.
  */
 export const Col: Feature = {
   element: "col",
-  allowedRoles: NoRole
+  allowedRoles: None
 };
