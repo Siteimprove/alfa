@@ -117,7 +117,19 @@ export type Token =
   | SquareBracket
   | CurlyBracket;
 
-export type Pattern = Lang.Pattern<Token>;
+export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
+  (stream, emit) => {
+    let token = consumeToken(stream);
+
+    while (token !== null) {
+      emit(token);
+      token = consumeToken(stream);
+    }
+
+    return Command.End;
+  },
+  () => null
+);
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#starts-with-a-valid-escape
@@ -127,9 +139,7 @@ function startsValidEscape(fst: number, stream: Stream<number>): boolean {
     return false;
   }
 
-  const snd = stream.peek(1);
-
-  return snd !== Char.LineFeed;
+  return stream.peek(1) !== Char.LineFeed;
 }
 
 /**
@@ -718,18 +728,3 @@ function consumeToken(stream: Stream<number>): Token | null {
 
   return delim;
 }
-
-const initial: Pattern = (stream, emit) => {
-  const token = consumeToken(stream);
-
-  if (token === null) {
-    return Command.End;
-  }
-
-  emit(token);
-};
-
-export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
-  initial,
-  () => null
-);
