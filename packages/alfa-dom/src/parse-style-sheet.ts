@@ -37,7 +37,7 @@ function serializeTokenList(tokens: Array<Token>): string {
     result += serializeToken(tokens[i]);
   }
 
-  return result;
+  return result.trim();
 }
 
 function serializeToken(token: Token): string {
