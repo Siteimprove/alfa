@@ -1,4 +1,4 @@
-import { hasTextAlternative } from "../";
+import { hasTextAlternative } from "../has-text-alternative";
 import { Feature } from "../types";
 import * as Roles from "../roles";
 
