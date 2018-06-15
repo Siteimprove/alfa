@@ -7,14 +7,6 @@ import * as Roles from "../roles";
  */
 export const H6: Feature = {
   element: "h6",
-  role,
+  role: Roles.Heading;
   allowedRoles: [Roles.Tab, Roles.None, Roles.Presentation]
 };
-
-function role(h6: Element, context: Node): Role | undefined {
-  const att = getAttribute(h6, "aria-level");
-  if (att !== null && parseInt(att) > 0) {
-    return Roles.Heading;
-  }
-  return undefined;
-}
