@@ -136,5 +136,5 @@ export type Feature = Readonly<{
   role?: Aspect<Role>;
   allowedRoles: Aspect<Array<Role>>;
   allowedAttributes?: Aspect<Array<Attribute>>;
-  obsolete?: true | undefined;
+  obsolete?: true;
 }>;
