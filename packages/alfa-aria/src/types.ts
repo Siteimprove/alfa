@@ -123,8 +123,10 @@ export const Any: <T extends typeof Roles | typeof Attributes>(
 export const Except: <T extends typeof Roles | typeof Attributes>(
   type: T,
   exclude: Array<T[keyof T]>
-) => Array<T[keyof T]> = (types, exclude) =>
-  Any(types).filter(type => exclude.includes(type));
+) => Array<T[keyof T]> = (types, exclude) => {
+  const filter = new Set(exclude);
+  return Any(types).filter(type => !filter.has(type));
+};
 
 export const None: Array<any> = [];
 
