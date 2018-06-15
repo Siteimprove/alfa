@@ -18,7 +18,7 @@ const site = "https://alphagov.github.io/accessibility-tool-audit";
 scraper.scrape(`${site}/test-cases.html`).then(async page => {
   fs.rmdirSync("docs/examples/scrape-and-check/result");
 
-  for (const { id, url } of await getUrls(page.document)) {
+  for (const { id, url } of getUrls(page.document)) {
     console.log("Auditing", url);
 
     const page = await scraper.scrape(`${site}/${url}`);
@@ -40,9 +40,9 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
   await scraper.close();
 });
 
-async function getUrls(
+function getUrls(
   document: Document
-): Promise<Array<Readonly<{ id: string; url: string }>>> {
+): Array<Readonly<{ id: string; url: string }>> {
   return findAll(document, document, "h3[id]").map(header => {
     const example = getNextElementSibling(header, document);
     const id = getAttribute(header, "id")!;
