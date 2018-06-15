@@ -195,11 +195,17 @@ function matchesAttribute(
     case AttributeMatcher.Substring:
       return value.includes(selector.value);
 
-    case AttributeMatcher.Includes:
-      return value.split(whitespace).some(value => value === selector.value);
-
     case AttributeMatcher.DashMatch:
       return value === selector.value || value.startsWith(selector.value + "-");
+
+    case AttributeMatcher.Includes:
+      const parts = value.split(whitespace);
+      for (let i = 0, n = parts.length; i < n; i++) {
+        if (parts[i] === selector.value) {
+          return true;
+        }
+      }
+      return false;
   }
 
   return false;

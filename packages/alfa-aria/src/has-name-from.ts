@@ -4,5 +4,17 @@ export function hasNameFrom(
   role: Role,
   nameFrom: "contents" | "author"
 ): boolean {
-  return role.label !== undefined && role.label.from.includes(nameFrom);
+  const { label } = role;
+
+  if (label === undefined) {
+    return false;
+  }
+
+  for (let i = 0, n = label.from.length; i < n; i++) {
+    if (label.from[i] === nameFrom) {
+      return true;
+    }
+  }
+
+  return false;
 }
