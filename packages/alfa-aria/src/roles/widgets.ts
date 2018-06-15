@@ -1,5 +1,6 @@
 export * from "./widgets/button";
 export * from "./widgets/checkbox";
+export * from "./widgets/combobox";
 export * from "./widgets/grid-cell";
 export * from "./widgets/grid";
 export * from "./widgets/link";

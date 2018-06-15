@@ -17,7 +17,13 @@ export function isLandmark(element: Element, context: Node): boolean {
     return false;
   }
 
-  const { inherits = [] } = role;
+  const inherits =
+    typeof role.inherits === "function"
+      ? role.inherits(element, context)
+      : role.inherits;
 
-  return inherits.some(ancestor => ancestor === Landmark);
+  return (
+    inherits !== undefined &&
+    inherits.some((ancestor: any) => ancestor === Landmark)
+  );
 }

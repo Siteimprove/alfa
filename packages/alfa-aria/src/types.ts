@@ -1,4 +1,7 @@
-import { Node, Element } from "@siteimprove/alfa-dom";
+import { values } from "@siteimprove/alfa-util";
+import { Element, Node } from "@siteimprove/alfa-dom";
+import * as Roles from "./roles";
+import * as Attributes from "./attributes";
 
 export type ValueType =
   /**
@@ -88,7 +91,7 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#superclassrole
    */
-  inherits?: Array<Role>;
+  inherits?: Aspect<Array<Role>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#scope
@@ -98,7 +101,7 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#mustContain
    */
-  owned?: Array<Role | [Role, Role]>;
+  owned?: Aspect<Array<Role | [Role, Role]>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#requiredState
@@ -111,18 +114,27 @@ export type Role = Readonly<{
   supported?: Array<Attribute>;
 }>;
 
-export type FeatureAspect<T> = T | ((element: Element, context: Node) => T);
+export type Aspect<T> = T | ((element: Element, context: Node) => T);
 
-export const Any = "any";
+export const Any: <T extends typeof Roles | typeof Attributes>(
+  type: T
+) => Array<T[keyof T]> = types => values(types);
 
-export const None = "none";
+export const Except: <T extends typeof Roles | typeof Attributes>(
+  type: T,
+  exclude: Array<T[keyof T]>
+) => Array<T[keyof T]> = (types, exclude) =>
+  Any(types).filter(type => exclude.includes(type));
+
+export const None: Array<any> = [];
 
 /**
  * @see https://www.w3.org/TR/html-aria/
  */
 export type Feature = Readonly<{
   element: string;
-  role?: FeatureAspect<Role>;
-  allowedRoles: FeatureAspect<Array<Role> | typeof Any | typeof None>;
-  allowedAttributes?: FeatureAspect<Array<Attribute>>;
+  role?: Aspect<Role>;
+  allowedRoles: Aspect<Array<Role>>;
+  allowedAttributes?: Aspect<Array<Attribute>>;
+  obsolete?: true;
 }>;

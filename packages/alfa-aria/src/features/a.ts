@@ -1,19 +1,17 @@
-import { getAttribute } from "@siteimprove/alfa-dom";
-import { Feature, Any } from "../types";
+import { hasAttribute } from "@siteimprove/alfa-dom";
+import { Any, Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#ahref
  * @see https://www.w3.org/TR/html-aria/#anohref
  */
-export const Anchor: Feature = {
+export const A: Feature = {
   element: "a",
-  role: anchor =>
-    getAttribute(anchor, "href") === null ? undefined : Roles.Link,
-  allowedRoles: anchor =>
-    getAttribute(anchor, "href") === null
-      ? Any
-      : [
+  role: anchor => (hasAttribute(anchor, "href") ? Roles.Link : undefined),
+  allowedRoles: (anchor: any) =>
+    hasAttribute(anchor, "href")
+      ? [
           Roles.Button,
           Roles.Checkbox,
           Roles.MenuItem,
@@ -25,4 +23,5 @@ export const Anchor: Feature = {
           Roles.Tab,
           Roles.TreeItem
         ]
+      : Any(Roles)
 };

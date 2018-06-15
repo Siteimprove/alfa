@@ -11,6 +11,7 @@ export type InputType =
   | "password"
   | "date"
   | "month"
+  | "week"
   | "time"
   | "datetime-local"
   | "number"
@@ -60,6 +61,7 @@ export function getInputType(element: Element): InputType | null {
       case "image":
       case "reset":
       case "button":
+      case "week":
         return type;
     }
   }
