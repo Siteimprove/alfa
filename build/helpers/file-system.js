@@ -4,9 +4,6 @@ const path = require("path");
 const fs = require("fs");
 const git = require("./git");
 
-/** @type {Array<RegExp>} */
-const ignoredFiles = [/node_modules/];
-
 /**
  * @param {string} path
  * @return {boolean}
@@ -58,10 +55,6 @@ function findFiles(directory, predicate) {
   }
 
   for (let file of readDirectory(directory)) {
-    if (ignoredFiles.some(ignore => ignore.test(file))) {
-      continue;
-    }
-
     if (git.isIgnored(file)) {
       continue;
     }
@@ -92,10 +85,6 @@ function watchFiles(directory, listener) {
     }
 
     file = path.join(directory, file);
-
-    if (ignoredFiles.some(ignore => ignore.test(file))) {
-      return;
-    }
 
     if (git.isIgnored(file)) {
       return;
