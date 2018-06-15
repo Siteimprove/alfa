@@ -8,18 +8,19 @@ Alfa is an open and standards-based accessibility conformance testing engine use
 
 ## Contents
 
-* [Goals](#goals)
-* [Overview](#overview)
-* [Funding](#funding)
-* [License](#license)
+- [Goals](#goals)
+- [Overview](#overview)
+- [Requirements](#requirements)
+- [Funding](#funding)
+- [License](#license)
 
 ## Goals
 
-* Alfa sets out to strike a balance between false positives and negatives with the goal of having result sets reach a high [F<sub>1</sub> score](https://en.wikipedia.org/wiki/F1_score). If a false positive is encountered, it is therefore just as important to avoid introducing a potential false negative as it is fixing the false positive.
+- Alfa sets out to strike a balance between false positives and negatives with the goal of having result sets reach a high [F<sub>1</sub> score](https://en.wikipedia.org/wiki/F1_score). If a false positive is encountered, it is therefore just as important to avoid introducing a potential false negative as it is fixing the false positive.
 
-* Alfa is committed to complete transparency on how test results came to be. Every line of code that has the potential to influence test results will therefore always reside within Alfa itself and never with a third-party. This does not mean that you will never encounter a dependency from a third-party, only that there are limitations to what third-party dependencies may be used for.
+- Alfa is committed to complete transparency on how test results came to be. Every line of code that has the potential to influence test results will therefore always reside within Alfa itself and never with a third-party. This does not mean that you will never encounter a dependency from a third-party, only that there are limitations to what third-party dependencies may be used for.
 
-* Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure.
+- Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure.
 
 ## Overview
 
@@ -29,13 +30,17 @@ By implementing browser aspects, such as a style system and the accessibility tr
 
 At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. The primary packages are:
 
-* [**DOM**](packages/alfa-dom)
-* [**CSS**](packages/alfa-css)
-* [**ARIA**](packages/alfa-aria)
-* [**ACT**](packages/alfa-act)
-* [**WCAG**](packages/alfa-wcag)
+- [**DOM**](packages/alfa-dom)
+- [**CSS**](packages/alfa-css)
+- [**ARIA**](packages/alfa-aria)
+- [**ACT**](packages/alfa-act)
+- [**WCAG**](packages/alfa-wcag)
 
 You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
+
+## Requirements
+
+Alfa will run in any [ECMAScript 2015](https://www.ecma-international.org/ecma-262/6.0/) compatible JavaScript environment including, but not limited to, [Node.js](https://nodejs.org/en/) and modern browsers. While it should be possible to compile Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is highly reliant on especially data structures introduced in newer versions of ECMAScript.
 
 ## Funding
 
