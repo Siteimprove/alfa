@@ -6,7 +6,7 @@ import * as Roles from "../roles";
  * @see https://www.w3.org/TR/html-aria/#ahref
  * @see https://www.w3.org/TR/html-aria/#anohref
  */
-export const Anchor: Feature = {
+export const A: Feature = {
   element: "a",
   role: anchor => (hasAttribute(anchor, "href") ? Roles.Link : undefined),
   allowedRoles: (anchor: any) =>
