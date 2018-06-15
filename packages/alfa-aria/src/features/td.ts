@@ -5,7 +5,7 @@ import * as Roles from "../roles";
 /**
  * @see https://www.w3.org/TR/html-aria/#td
  */
-export const TableCell: Feature = {
+export const Td: Feature = {
   element: "td",
   role: (td, context) =>
     getClosest(td, context, "table") !== null ? Roles.Cell : undefined,
