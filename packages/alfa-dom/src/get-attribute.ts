@@ -10,6 +10,8 @@ export type AttributeOptions = Readonly<{
 /**
  * Given an element, get the value of the specified attribute of the element.
  *
+ * @see https://www.w3.org/TR/dom/#dom-element-getattribute
+ *
  * @example
  * const div = <div title="Foo" />;
  * getAttribute(div, "title");

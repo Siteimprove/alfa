@@ -4,7 +4,7 @@ import { getAttribute } from "./get-attribute";
 export type ButtonType = "submit" | "reset" | "button";
 
 /**
- * @see https://www.w3.org/TR/html5/sec-forms.html#element-attrdef-button-type
+ * @see https://www.w3.org/TR/html/sec-forms.html#element-attrdef-button-type
  */
 export function getButtonType(element: Element): ButtonType | null {
   if (element.localName !== "button") {

@@ -1,13 +1,13 @@
 import { parseStyleSheet } from "./parse-style-sheet";
 
 /**
- * @see https://www.w3.org/TR/html5/rendering.html
+ * @see https://www.w3.org/TR/html/rendering.html
  */
 export const UserAgent = parseStyleSheet(`
   @namespace url(http://www.w3.org/1999/xhtml);
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#hidden-elements
+   * @see https://www.w3.org/TR/html/rendering.html#hidden-elements
    */
 
   [hidden], area, base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title {
@@ -23,7 +23,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#the-page
+   * @see https://www.w3.org/TR/html/rendering.html#the-page
    */
 
   html, body {
@@ -31,7 +31,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#non-replaced-elements-flow-content
+   * @see https://www.w3.org/TR/html/rendering.html#non-replaced-elements-flow-content
    */
 
   address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp {
@@ -51,7 +51,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#non-replaced-elements-phrasing-content
+   * @see https://www.w3.org/TR/html/rendering.html#non-replaced-elements-phrasing-content
    */
 
   big {
@@ -87,7 +87,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#sections-and-headings
+   * @see https://www.w3.org/TR/html/rendering.html#sections-and-headings
    */
 
   article, aside, h1, h2, h3, h4, h5, h6, hgroup, nav, section {
@@ -125,7 +125,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#section-lists
+   * @see https://www.w3.org/TR/html/rendering.html#section-lists
    */
 
   dir, dd, dl, dt, ol, ul {
@@ -137,7 +137,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#tables
+   * @see https://www.w3.org/TR/html/rendering.html#tables
    */
 
   table {
@@ -189,7 +189,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#the-hr-element-rendering
+   * @see https://www.w3.org/TR/html/rendering.html#the-hr-element-rendering
    */
 
   hr {
@@ -197,7 +197,7 @@ export const UserAgent = parseStyleSheet(`
   }
 
   /**
-   * @see https://www.w3.org/TR/html5/rendering.html#the-fieldset-and-legend-elements
+   * @see https://www.w3.org/TR/html/rendering.html#the-fieldset-and-legend-elements
    */
 
   fieldset {
