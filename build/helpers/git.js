@@ -1,5 +1,7 @@
 // @ts-check
 
+const fs = require("fs");
+const ignore = require("ignore");
 const { spawn } = require("./child-process");
 
 /**
@@ -39,12 +41,14 @@ function isStaged(file) {
   return getStagedFiles().indexOf(file) !== -1;
 }
 
+const gitignore = ignore().add(fs.readFileSync(".gitignore", "utf8"));
+
 /**
  * @param {string} file
  * @return {boolean}
  */
 function isIgnored(file) {
-  return git("check-ignore", [file]) === file;
+  return gitignore.ignores(file);
 }
 
 module.exports = { git, stageFile, getStagedFiles, isStaged, isIgnored };
