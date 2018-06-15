@@ -25,7 +25,7 @@ export type InputType =
   | "button";
 
 /**
- * @see https://www.w3.org/TR/html5/sec-forms.html#element-attrdef-input-type
+ * @see https://www.w3.org/TR/html/sec-forms.html#element-attrdef-input-type
  */
 export function getInputType(element: Element): InputType | null {
   if (element.localName !== "input") {
