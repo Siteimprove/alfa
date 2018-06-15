@@ -3,7 +3,7 @@ import {
   Element,
   Namespace,
   isElement,
-  find,
+  querySelector,
   getElementNamespace,
   hasTextContent
 } from "@siteimprove/alfa-dom";
@@ -15,13 +15,13 @@ export const Title: Rule<"document", Element, Context> = {
   criteria: ["wcag:2.4.2"],
   locales: [],
   context: ({ document }) => {
-    const root = find(document, document, "html");
+    const root = querySelector(document, document, "html");
 
     if (root === null) {
       return { root, title: null };
     }
 
-    const title = find<Element>(
+    const title = querySelector<Element>(
       root,
       document,
       node =>

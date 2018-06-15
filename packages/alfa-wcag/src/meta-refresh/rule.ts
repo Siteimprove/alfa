@@ -1,6 +1,11 @@
 import { Stream } from "@siteimprove/alfa-lang";
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, isElement, find, getAttribute } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  isElement,
+  querySelector,
+  getAttribute
+} from "@siteimprove/alfa-dom";
 
 export const MetaRefresh: Rule<"document", Element> = {
   id: "alfa:wcag:meta-refresh",
@@ -8,7 +13,7 @@ export const MetaRefresh: Rule<"document", Element> = {
   locales: [],
   context: () => null,
   applicability: ({ document }) =>
-    find<Element>(document, document, node => {
+    querySelector<Element>(document, document, node => {
       if (
         !isElement(node) ||
         node.localName !== "meta" ||

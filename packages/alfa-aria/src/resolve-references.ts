@@ -1,7 +1,7 @@
 import {
   Node,
   Element,
-  find,
+  querySelector,
   getAttribute,
   isElement
 } from "@siteimprove/alfa-dom";
@@ -19,7 +19,7 @@ export function resolveReferences(
   const elements: Array<Element> = [];
 
   for (const id of references.split(whitespace)) {
-    const element = find<Element>(
+    const element = querySelector<Element>(
       node,
       context,
       node => isElement(node) && getAttribute(node, "id") === id

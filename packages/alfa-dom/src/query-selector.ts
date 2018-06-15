@@ -4,27 +4,33 @@ import { isElement } from "./guards";
 import { matches } from "./matches";
 import { traverseNode } from "./traverse-node";
 
-export type FindOptions = Readonly<{ composed?: boolean }>;
+export type QuerySelectorOptions = Readonly<{ composed?: boolean }>;
 
-export function find(
+/**
+ * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
+ */
+export function querySelector(
   scope: Node,
   context: Node,
   query: string,
-  options?: FindOptions
-): Element | null;
+  options?: QuerySelectorOptions
+): Element;
 
-export function find<T extends Node>(
+/**
+ * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
+ */
+export function querySelector<T extends Node>(
   scope: Node,
   context: Node,
   query: Predicate<Node, T>,
-  options?: FindOptions
-): T | null;
+  options?: QuerySelectorOptions
+): T;
 
-export function find<T extends Node>(
+export function querySelector<T extends Node>(
   scope: Node,
   context: Node,
-  query: Predicate<Node, T> | string,
-  options?: FindOptions
+  query: string | Predicate<Node, T>,
+  options?: QuerySelectorOptions
 ): T | null {
   let predicate: Predicate<Node, T>;
 
@@ -54,25 +60,31 @@ export function find<T extends Node>(
   return found;
 }
 
-export function findAll(
+/**
+ * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
+ */
+export function querySelectorAll(
   scope: Node,
   context: Node,
   query: string,
-  options?: FindOptions
+  options?: QuerySelectorOptions
 ): Array<Element>;
 
-export function findAll<T extends Node>(
+/**
+ * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
+ */
+export function querySelectorAll<T extends Node>(
   scope: Node,
   context: Node,
   query: Predicate<Node, T>,
-  options?: FindOptions
+  options?: QuerySelectorOptions
 ): Array<T>;
 
-export function findAll<T extends Node>(
+export function querySelectorAll<T extends Node>(
   scope: Node,
   context: Node,
-  query: Predicate<Node, T> | string,
-  options: FindOptions = {}
+  query: string | Predicate<Node, T>,
+  options: QuerySelectorOptions = {}
 ): Array<T> {
   let predicate: Predicate<Node, T>;
 

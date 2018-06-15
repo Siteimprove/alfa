@@ -1,7 +1,6 @@
 export * from "./ancestor-filter";
 export * from "./compare-document-position";
 export * from "./contains";
-export * from "./find";
 export * from "./get-attribute-namespace";
 export * from "./get-attribute";
 export * from "./get-button-type";
@@ -37,6 +36,7 @@ export * from "./is-labelable";
 export * from "./is-rendered";
 export * from "./is-tabbable";
 export * from "./matches";
+export * from "./query-selector";
 export * from "./rule-tree";
 export * from "./selector-map";
 export * from "./serialize";

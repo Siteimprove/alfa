@@ -1,5 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, isElement, find, getAttribute } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  isElement,
+  querySelector,
+  getAttribute
+} from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
 
 export const HtmlXmlLangMatch: Rule<"document", Element> = {
@@ -8,7 +13,7 @@ export const HtmlXmlLangMatch: Rule<"document", Element> = {
   locales: [],
   context: () => null,
   applicability: ({ document }) =>
-    find<Element>(document, document, node => {
+    querySelector<Element>(document, document, node => {
       if (!isElement(node) || node.localName !== "html") {
         return false;
       }

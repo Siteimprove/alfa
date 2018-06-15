@@ -1,6 +1,6 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import { find, findAll } from "../src/find";
+import { querySelector, querySelectorAll } from "../src/query-selector";
 
 test("Finds all elements matching a selector", t => {
   const foo1 = <div class="foo">Foo 1</div>;
@@ -13,7 +13,7 @@ test("Finds all elements matching a selector", t => {
     </div>
   );
 
-  t.deepEqual(findAll(context, context, ".foo"), [foo1, foo2]);
+  t.deepEqual(querySelectorAll(context, context, ".foo"), [foo1, foo2]);
 });
 
 test("Finds the first element matching a selector", t => {
@@ -27,5 +27,5 @@ test("Finds the first element matching a selector", t => {
     </div>
   );
 
-  t.deepEqual(find(context, context, ".foo"), foo1);
+  t.deepEqual(querySelector(context, context, ".foo"), foo1);
 });

@@ -2,7 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
   isElement,
-  findAll,
+  querySelectorAll,
   getAttribute
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
@@ -13,7 +13,7 @@ export const Lang: Rule<"document", Element> = {
   locales: [],
   context: () => null,
   applicability: ({ document }) =>
-    findAll<Element>(document, document, node => {
+    querySelectorAll<Element>(document, document, node => {
       if (!isElement(node) || node.localName === "html") {
         return false;
       }

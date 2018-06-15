@@ -6,7 +6,7 @@ import {
   Namespace,
   isText,
   isElement,
-  find,
+  querySelector,
   getAttribute,
   getRootNode,
   getTextContent,
@@ -298,7 +298,7 @@ function getHtmlTextAlternative(
 
     // https://www.w3.org/TR/html-aam/#fieldset-and-legend-elements
     case "fieldset": {
-      const legend = find(element, context, "legend");
+      const legend = querySelector(element, context, "legend");
       if (legend) {
         return getTextAlternative(legend, context, visited, {
           recursing: true,
@@ -310,7 +310,7 @@ function getHtmlTextAlternative(
 
     // https://www.w3.org/TR/html-aam/#figure-and-figcaption-elements
     case "figure": {
-      const caption = find(element, context, "figcaption");
+      const caption = querySelector(element, context, "figcaption");
       if (caption) {
         return getTextAlternative(caption, context, visited, {
           recursing: true,
@@ -331,7 +331,7 @@ function getHtmlTextAlternative(
 
     // https://www.w3.org/TR/html-aam/#table-element
     case "table": {
-      const caption = find(element, context, "caption");
+      const caption = querySelector(element, context, "caption");
       if (caption) {
         return getTextContent(caption);
       }
@@ -354,7 +354,7 @@ function getSvgTextAlternative(
     return getTextContent(element);
   }
 
-  const title = find(element, context, ":scope > title");
+  const title = querySelector(element, context, ":scope > title");
   if (title) {
     return getTextAlternative(title, context, visited, {
       recursing: true,
