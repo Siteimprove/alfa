@@ -11,6 +11,7 @@ export type InputType =
   | "password"
   | "date"
   | "month"
+  | "week"
   | "time"
   | "datetime-local"
   | "number"
@@ -22,8 +23,7 @@ export type InputType =
   | "submit"
   | "image"
   | "reset"
-  | "button"
-  | "week";
+  | "button";
 
 /**
  * @see https://www.w3.org/TR/html5/sec-forms.html#element-attrdef-input-type
