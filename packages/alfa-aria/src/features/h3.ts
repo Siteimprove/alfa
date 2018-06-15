@@ -1,5 +1,4 @@
-import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
-import { Feature, Role } from "../types";
+import { Feature } from "../types";
 import * as Roles from "../roles";
 
 /**
@@ -7,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const H3: Feature = {
   element: "h3",
-  role: Roles.Heading;
+  role: Roles.Heading,
   allowedRoles: [Roles.Tab, Roles.None, Roles.Presentation]
 };

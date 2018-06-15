@@ -1,4 +1,9 @@
-import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  getAttribute,
+  hasAttribute,
+  Node
+} from "@siteimprove/alfa-dom";
 import { Feature, Role, None } from "../types";
 import * as Roles from "../roles";
 
@@ -12,9 +17,12 @@ export const Select: Feature = {
 };
 
 function role(select: Element, context: Node): Role | undefined {
-  const attMult = getAttribute(select, "mulitple");
-  const attSize = getAttribute(select, "size");
-  if (attMult === null && attSize !== null && parseInt(attSize) <= 1) {
+  const size = getAttribute(select, "size");
+  if (
+    !hasAttribute(select, "multiple") &&
+    (size === null || parseInt(size) > 1)
+  ) {
     return Roles.Combobox;
-  } else return Roles.ListBox;
+  }
+  return Roles.ListBox;
 }

@@ -20,6 +20,6 @@ function role(th: Element): Role | undefined {
     case "colgroup":
       return Roles.ColumnHeader;
     default:
-      return undefined; //Need to handle the auto state
+      return undefined; // Need to handle the auto state
   }
 }
