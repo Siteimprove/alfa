@@ -1,5 +1,4 @@
-import { write, remove } from "@foreman/fs";
-import { notify } from "@foreman/notify";
+import * as fs from "fs";
 import { Scraper } from "@siteimprove/alfa-scrape";
 import {
   Document,
@@ -17,10 +16,10 @@ const scraper = new Scraper();
 const site = "https://alphagov.github.io/accessibility-tool-audit";
 
 scraper.scrape(`${site}/test-cases.html`).then(async page => {
-  await remove(`docs/examples/scrape-and-check/result`);
+  fs.rmdirSync("docs/examples/scrape-and-check/result");
 
   for (const { id, url } of await getUrls(page.document)) {
-    notify({ message: "Auditing", value: url });
+    console.log("Auditing", url);
 
     const page = await scraper.scrape(`${site}/${url}`);
 
@@ -32,12 +31,10 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
       return result;
     });
 
-    await write(
+    fs.writeFileSync(
       `docs/examples/scrape-and-check/result/${id}.json`,
       JSON.stringify(results, null, 2)
     );
-
-    notify({ message: "Audit complete", type: "success" });
   }
 
   await scraper.close();
