@@ -17,7 +17,7 @@ export function getAssignedNodes(
   }
 
   return options.flattened
-    ? findFlattenedSlotable(element, context)
+    ? findFlattenedSlotables(element, context)
     : findSlotables(element, context);
 }
 
@@ -57,7 +57,7 @@ function findSlotables(slot: Element, context: Node): Array<Node> {
 /**
  * @see https://www.w3.org/TR/dom41/#find-flattened-slotables
  */
-function findFlattenedSlotable(slot: Element, context: Node): Array<Node> {
+function findFlattenedSlotables(slot: Element, context: Node): Array<Node> {
   const result: Array<Node> = [];
 
   const rootNode = getRootNode(slot, context);
@@ -87,7 +87,7 @@ function findFlattenedSlotable(slot: Element, context: Node): Array<Node> {
       const rootNode = getRootNode(slotable, context);
 
       if (rootNode !== null && isShadowRoot(rootNode)) {
-        result.push(...findFlattenedSlotable(slotable, context));
+        result.push(...findFlattenedSlotables(slotable, context));
         continue;
       }
     }
