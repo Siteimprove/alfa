@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "@siteimprove/alfa-http",
+  "author": "Siteimprove A/S",
+  "homepage": "https://github.com/siteimprove/alfa",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "alfa!",
+  "contributors": [
+    "Kasper Isager <kki@siteimprove.com>"
+  ],
+  "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-http",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.0.0"
+  }
+}
