@@ -24,7 +24,7 @@ function stageFile(file) {
  * @return {Array<string>}
  */
 function getStagedFiles() {
-  const diff = git("diff", ["--name-only", "--cached"]);
+  const diff = git("diff", ["--name-only", "--cached", "--diff-filter", "d"]);
 
   if (diff === "") {
     return [];
