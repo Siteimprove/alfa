@@ -8,10 +8,6 @@ import { getAttribute } from "./get-attribute";
  * const div = <div title="Foo" />;
  * hasAttribute(div, "title");
  * // => true
- *
- * @param element
- * @param name
- * @return
  */
 export function hasAttribute(element: Element, name: string): boolean {
   return getAttribute(element, name) !== null;
