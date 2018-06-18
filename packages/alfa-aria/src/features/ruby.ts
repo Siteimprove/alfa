@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Ruby: Feature = {
   element: "ruby",
-  allowedRoles: Any(Roles)
+  allowedRoles: () => Any(Roles)
 };

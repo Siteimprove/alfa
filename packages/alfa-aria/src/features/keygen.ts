@@ -5,5 +5,5 @@ import { Feature, None } from "../types";
  */
 export const Keygen: Feature = {
   element: "keygen",
-  allowedRoles: None
+  allowedRoles: () => None
 };

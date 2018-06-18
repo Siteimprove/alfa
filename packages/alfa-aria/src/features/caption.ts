@@ -5,5 +5,5 @@ import { Feature, None } from "../types";
  */
 export const Caption: Feature = {
   element: "caption",
-  allowedRoles: None
+  allowedRoles: () => None
 };

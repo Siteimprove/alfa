@@ -6,6 +6,6 @@ import { List } from "./list";
  */
 export const Directory: Role = {
   name: "directory",
-  inherits: [List],
+  inherits: () => [List],
   label: { from: ["author"] }
 };

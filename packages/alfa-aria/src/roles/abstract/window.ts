@@ -8,6 +8,6 @@ import { Roletype } from "./roletype";
 export const Window: Role = {
   name: "window",
   abstract: true,
-  inherits: [Roletype],
-  supported: [Attributes.Expanded, Attributes.Modal]
+  inherits: () => [Roletype],
+  supported: () => [Attributes.Expanded, Attributes.Modal]
 };

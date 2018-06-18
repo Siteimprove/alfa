@@ -7,7 +7,7 @@ import { Command } from "../abstract/command";
  */
 export const Link: Role = {
   name: "link",
-  inherits: [Command],
-  supported: [Attributes.Expanded],
+  inherits: () => [Command],
+  supported: () => [Attributes.Expanded],
   label: { from: ["contents", "author"], required: true }
 };

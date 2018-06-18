@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Math: Feature = {
   element: "math",
-  role: Roles.Math,
-  allowedRoles: None
+  role: () => Roles.Math,
+  allowedRoles: () => None
 };

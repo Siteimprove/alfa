@@ -9,9 +9,9 @@ import { TabList } from "./tab-list";
  */
 export const Tab: Role = {
   name: "tab",
-  inherits: [SectionHead, Widget],
-  context: [TabList],
-  supported: [
+  inherits: () => [SectionHead, Widget],
+  context: () => [TabList],
+  supported: () => [
     Attributes.PositionInSet,
     Attributes.Selected,
     Attributes.SetSize

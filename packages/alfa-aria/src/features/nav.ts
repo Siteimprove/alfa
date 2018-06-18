@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Nav: Feature = {
   element: "nav",
-  role: Roles.Navigation,
-  allowedRoles: None
+  role: () => Roles.Navigation,
+  allowedRoles: () => None
 };

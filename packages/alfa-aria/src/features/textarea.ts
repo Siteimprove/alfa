@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Textarea: Feature = {
   element: "textarea",
-  role: Roles.TextBox,
-  allowedRoles: None
+  role: () => Roles.TextBox,
+  allowedRoles: () => None
 };

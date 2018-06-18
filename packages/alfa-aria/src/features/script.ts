@@ -5,6 +5,6 @@ import { Feature, None } from "../types";
  */
 export const Script: Feature = {
   element: "script",
-  allowedRoles: None,
-  allowedAttributes: None
+  allowedRoles: () => None,
+  allowedAttributes: () => None
 };

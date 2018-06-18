@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Object: Feature = {
   element: "object",
-  allowedRoles: [Roles.Application, Roles.Document, Roles.Img]
+  allowedRoles: () => [Roles.Application, Roles.Document, Roles.Img]
 };

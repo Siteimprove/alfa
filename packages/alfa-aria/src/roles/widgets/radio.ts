@@ -7,8 +7,8 @@ import { Input } from "../abstract/input";
  */
 export const Radio: Role = {
   name: "radio",
-  inherits: [Input],
-  required: [Attributes.Checked],
-  supported: [Attributes.PositionInSet, Attributes.SetSize],
+  inherits: () => [Input],
+  required: () => [Attributes.Checked],
+  supported: () => [Attributes.PositionInSet, Attributes.SetSize],
   label: { from: ["contents", "author"], required: true }
 };

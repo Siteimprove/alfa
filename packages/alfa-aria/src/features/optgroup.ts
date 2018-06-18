@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const OptGroup: Feature = {
   element: "optgroup",
-  role: Roles.Group,
-  allowedRoles: None
+  role: () => Roles.Group,
+  allowedRoles: () => None
 };

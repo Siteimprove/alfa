@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Hr: Feature = {
   element: "hr",
-  role: Roles.Separator,
-  allowedRoles: [Roles.None, Roles.Presentation]
+  role: () => Roles.Separator,
+  allowedRoles: () => [Roles.None, Roles.Presentation]
 };

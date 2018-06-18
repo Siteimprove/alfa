@@ -10,8 +10,8 @@ import { MenuBar } from "./menu-bar";
  */
 export const MenuItem: Role = {
   name: "menuitem",
-  inherits: [Command],
-  context: [Group, Menu, MenuBar],
-  supported: [Attributes.Expanded],
+  inherits: () => [Command],
+  context: () => [Group, Menu, MenuBar],
+  supported: () => [Attributes.Expanded],
   label: { from: ["contents", "author"], required: true }
 };

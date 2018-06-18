@@ -1,21 +1,10 @@
-import { keys } from "@siteimprove/alfa-util";
+import { values } from "@siteimprove/alfa-util";
 import { Node, Element, getAttribute } from "@siteimprove/alfa-dom";
-import { Role, Feature } from "./types";
+import { Role } from "./types";
 import * as Roles from "./roles";
 import * as Features from "./features";
 
 const whitespace = /\s+/;
-
-const roles: Map<string, Role> = new Map();
-const features: Map<string, Feature> = new Map();
-
-for (const key of keys(Roles)) {
-  roles.set(Roles[key].name, Roles[key]);
-}
-
-for (const key of keys(Features)) {
-  features.set(Features[key].element, Features[key]);
-}
 
 /**
  * Get the semantic role of an element.
@@ -34,7 +23,9 @@ export function getRole(element: Element, context: Node): Role | null {
   const role = getAttribute(element, "role");
 
   if (role === null) {
-    const feature = features.get(element.localName);
+    const feature = values(Features).find(
+      feature => feature.element === element.localName
+    );
 
     if (feature !== undefined) {
       const role =
@@ -48,7 +39,7 @@ export function getRole(element: Element, context: Node): Role | null {
     }
   } else {
     for (const name of role.split(whitespace)) {
-      const role = roles.get(name);
+      const role = values(Roles).find(role => role.name === name);
 
       if (role !== undefined && !role.abstract) {
         return role;

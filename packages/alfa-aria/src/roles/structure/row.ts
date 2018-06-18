@@ -16,10 +16,10 @@ import { RowHeader } from "./row-header";
  */
 export const Row: Role = {
   name: "row",
-  inherits: [Widget, Group],
-  context: [Grid, RowGroup, Table, TreeGrid],
-  owned: [Cell, ColumnHeader, GridCell, RowHeader],
-  supported: [
+  inherits: () => [Widget, Group],
+  context: () => [Grid, RowGroup, Table, TreeGrid],
+  owned: () => [Cell, ColumnHeader, GridCell, RowHeader],
+  supported: () => [
     Attributes.ColumnIndex,
     Attributes.Level,
     Attributes.RowIndex,

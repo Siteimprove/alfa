@@ -8,8 +8,8 @@ import { Widget } from "./widget";
 export const Range: Role = {
   name: "range",
   abstract: true,
-  inherits: [Widget],
-  supported: [
+  inherits: () => [Widget],
+  supported: () => [
     Attributes.ValueMaximum,
     Attributes.ValueMinimum,
     Attributes.ValueNow,

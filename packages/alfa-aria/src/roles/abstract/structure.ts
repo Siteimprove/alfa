@@ -7,5 +7,5 @@ import { Roletype } from "./roletype";
 export const Structure: Role = {
   name: "structure",
   abstract: true,
-  inherits: [Roletype]
+  inherits: () => [Roletype]
 };

@@ -9,8 +9,12 @@ import { Row } from "../structure/row";
  */
 export const GridCell: Role = {
   name: "gridcell",
-  inherits: [Cell, Widget],
-  context: [Row],
-  supported: [Attributes.ReadOnly, Attributes.Required, Attributes.Selected],
+  inherits: () => [Cell, Widget],
+  context: () => [Row],
+  supported: () => [
+    Attributes.ReadOnly,
+    Attributes.Required,
+    Attributes.Selected
+  ],
   label: { from: ["contents", "author"], required: true }
 };

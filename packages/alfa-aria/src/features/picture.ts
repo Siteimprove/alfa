@@ -5,5 +5,5 @@ import { Feature, None } from "../types";
  */
 export const Picture: Feature = {
   element: "picture",
-  allowedRoles: None
+  allowedRoles: () => None
 };

@@ -10,6 +10,6 @@ export const Footer: Feature = {
   role: (footer, context) =>
     getClosest(footer, context, "article, aside, main, nav, section") === null
       ? Roles.ContentInfo
-      : undefined,
-  allowedRoles: [Roles.Group, Roles.None, Roles.Presentation]
+      : null,
+  allowedRoles: () => [Roles.Group, Roles.None, Roles.Presentation]
 };

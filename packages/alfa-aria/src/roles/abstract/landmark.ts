@@ -7,6 +7,6 @@ import { Section } from "./section";
 export const Landmark: Role = {
   name: "landmark",
   abstract: true,
-  inherits: [Section],
+  inherits: () => [Section],
   label: { from: ["author"] }
 };

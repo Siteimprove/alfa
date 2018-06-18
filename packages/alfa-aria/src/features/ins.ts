@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Ins: Feature = {
   element: "ins",
-  allowedRoles: Any(Roles)
+  allowedRoles: () => Any(Roles)
 };

@@ -8,6 +8,6 @@ import * as Roles from "../roles";
 export const Form: Feature = {
   element: "form",
   role: (form, context) =>
-    hasTextAlternative(form, context) ? Roles.Form : undefined,
-  allowedRoles: [Roles.Search, Roles.None, Roles.Presentation]
+    hasTextAlternative(form, context) ? Roles.Form : null,
+  allowedRoles: () => [Roles.Search, Roles.None, Roles.Presentation]
 };

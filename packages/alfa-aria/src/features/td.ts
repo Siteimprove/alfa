@@ -8,6 +8,6 @@ import * as Roles from "../roles";
 export const Td: Feature = {
   element: "td",
   role: (td, context) =>
-    getClosest(td, context, "table") !== null ? Roles.Cell : undefined,
-  allowedRoles: Any(Roles)
+    getClosest(td, context, "table") !== null ? Roles.Cell : null,
+  allowedRoles: () => Any(Roles)
 };

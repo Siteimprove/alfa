@@ -6,6 +6,6 @@ import { Status } from "./status";
  */
 export const Timer: Role = {
   name: "timer",
-  inherits: [Status],
+  inherits: () => [Status],
   label: { from: ["author"], required: true }
 };

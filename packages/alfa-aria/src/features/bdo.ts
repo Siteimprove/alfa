@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Bdo: Feature = {
   element: "bdo",
-  allowedRoles: Any(Roles)
+  allowedRoles: () => Any(Roles)
 };

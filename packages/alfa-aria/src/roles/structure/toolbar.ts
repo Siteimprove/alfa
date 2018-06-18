@@ -6,7 +6,7 @@ import { Group } from "./group";
  */
 export const Toolbar: Role = {
   name: "toolbar",
-  inherits: [Group],
-  supported: [Attributes.Orientation],
+  inherits: () => [Group],
+  supported: () => [Attributes.Orientation],
   label: { from: ["author"] }
 };

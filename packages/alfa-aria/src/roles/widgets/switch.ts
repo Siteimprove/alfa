@@ -7,7 +7,7 @@ import { Checkbox } from "./checkbox";
  */
 export const Switch: Role = {
   name: "switch",
-  inherits: [Checkbox],
-  required: [Attributes.Checked],
+  inherits: () => [Checkbox],
+  required: () => [Attributes.Checked],
   label: { from: ["contents", "author"], required: true }
 };

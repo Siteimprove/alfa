@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Blockquote: Feature = {
   element: "blockquote",
-  allowedRoles: Any(Roles)
+  allowedRoles: () => Any(Roles)
 };

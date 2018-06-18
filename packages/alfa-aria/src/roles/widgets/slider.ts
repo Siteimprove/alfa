@@ -8,12 +8,12 @@ import { Range } from "../abstract/range";
  */
 export const Slider: Role = {
   name: "slider",
-  inherits: [Input, Range],
-  required: [
+  inherits: () => [Input, Range],
+  required: () => [
     Attributes.ValueMaximum,
     Attributes.ValueMinimum,
     Attributes.ValueNow
   ],
-  supported: [Attributes.Orientation, Attributes.ReadOnly],
+  supported: () => [Attributes.Orientation, Attributes.ReadOnly],
   label: { from: ["author"], required: true }
 };

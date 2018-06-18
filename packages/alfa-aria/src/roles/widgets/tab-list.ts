@@ -8,9 +8,9 @@ import { Tab } from "./tab";
  */
 export const TabList: Role = {
   name: "tablist",
-  inherits: [Composite],
-  owned: [Tab],
-  supported: [
+  inherits: () => [Composite],
+  owned: () => [Tab],
+  supported: () => [
     Attributes.Level,
     Attributes.Multiselectable,
     Attributes.Orientation

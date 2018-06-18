@@ -13,10 +13,10 @@ import { Grid } from "./grid";
  */
 export const Combobox: Role = {
   name: "combobox",
-  inherits: [Select],
+  inherits: () => [Select],
   owned,
-  required: [Attributes.Controls, Attributes.Expanded],
-  supported: [
+  required: () => [Attributes.Controls, Attributes.Expanded],
+  supported: () => [
     Attributes.Autocomplete,
     Attributes.ReadOnly,
     Attributes.Required

@@ -8,7 +8,7 @@ import { Structure } from "./structure";
 export const SectionHead: Role = {
   name: "sectionhead",
   abstract: true,
-  inherits: [Structure],
-  supported: [Attributes.Expanded],
+  inherits: () => [Structure],
+  supported: () => [Attributes.Expanded],
   label: { from: ["contents", "author"] }
 };

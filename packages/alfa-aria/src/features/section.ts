@@ -8,8 +8,8 @@ import * as Roles from "../roles";
 export const Section: Feature = {
   element: "section",
   role: (section, context) =>
-    hasTextAlternative(section, context) ? Roles.Region : undefined,
-  allowedRoles: [
+    hasTextAlternative(section, context) ? Roles.Region : null,
+  allowedRoles: () => [
     Roles.Alert,
     Roles.AlertDialog,
     Roles.Application,

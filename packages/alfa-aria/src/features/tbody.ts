@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Tbody: Feature = {
   element: "tbody",
-  role: Roles.RowGroup,
-  allowedRoles: Any(Roles)
+  role: () => Roles.RowGroup,
+  allowedRoles: () => Any(Roles)
 };

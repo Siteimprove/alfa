@@ -5,6 +5,6 @@ import { Section } from "../abstract/section";
  */
 export const Tooltip: Role = {
   name: "tooltip",
-  inherits: [Section],
+  inherits: () => [Section],
   label: { from: ["contents", "author"], required: true }
 };

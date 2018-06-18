@@ -10,8 +10,8 @@ import { Table } from "./table";
  */
 export const RowGroup: Role = {
   name: "rowgroup",
-  inherits: [Structure],
-  context: [Grid, Table, TreeGrid],
-  owned: [Row],
+  inherits: () => [Structure],
+  context: () => [Grid, Table, TreeGrid],
+  owned: () => [Row],
   label: { from: ["contents", "author"] }
 };

@@ -7,8 +7,8 @@ import { Range } from "../abstract/range";
  */
 export const ScrollBar: Role = {
   name: "scrollbar",
-  inherits: [Range],
-  supported: [
+  inherits: () => [Range],
+  supported: () => [
     Attributes.Controls,
     Attributes.Orientation,
     Attributes.ValueMaximum,

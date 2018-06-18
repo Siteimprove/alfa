@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Audio: Feature = {
   element: "audio",
-  allowedRoles: [Roles.Application]
+  allowedRoles: () => [Roles.Application]
 };

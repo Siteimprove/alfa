@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Figure: Feature = {
   element: "figure",
-  role: Roles.Figure,
-  allowedRoles: [Roles.Group, Roles.None, Roles.Presentation]
+  role: () => Roles.Figure,
+  allowedRoles: () => [Roles.Group, Roles.None, Roles.Presentation]
 };

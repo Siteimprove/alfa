@@ -6,6 +6,6 @@ import { Window } from "../abstract/window";
  */
 export const Dialog: Role = {
   name: "dialog",
-  inherits: [Window],
+  inherits: () => [Window],
   label: { from: ["author"], required: true }
 };

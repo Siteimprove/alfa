@@ -10,8 +10,8 @@ import * as Roles from "../roles";
  */
 export const Button: Feature = {
   element: "button",
-  role: Roles.Button,
-  allowedRoles: [
+  role: () => Roles.Button,
+  allowedRoles: () => [
     Roles.Checkbox,
     Roles.Link,
     Roles.MenuItem,

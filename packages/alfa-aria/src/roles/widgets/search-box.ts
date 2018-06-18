@@ -6,6 +6,6 @@ import { TextBox } from "./text-box";
  */
 export const SearchBox: Role = {
   name: "searchbox",
-  inherits: [TextBox],
+  inherits: () => [TextBox],
   label: { from: ["author"], required: true }
 };

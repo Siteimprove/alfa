@@ -7,7 +7,7 @@ import { Structure } from "../abstract/structure";
  */
 export const Application: Role = {
   name: "application",
-  inherits: [Structure],
-  supported: [Attributes.ActiveDescendant],
+  inherits: () => [Structure],
+  supported: () => [Attributes.ActiveDescendant],
   label: { from: ["author"], required: true }
 };

@@ -8,9 +8,13 @@ import { ListBox } from "./list-box";
  */
 export const Option: Role = {
   name: "option",
-  inherits: [Input],
-  context: [ListBox],
-  required: [Attributes.Selected],
-  supported: [Attributes.Checked, Attributes.PositionInSet, Attributes.SetSize],
+  inherits: () => [Input],
+  context: () => [ListBox],
+  required: () => [Attributes.Selected],
+  supported: () => [
+    Attributes.Checked,
+    Attributes.PositionInSet,
+    Attributes.SetSize
+  ],
   label: { from: ["contents", "author"], required: true }
 };

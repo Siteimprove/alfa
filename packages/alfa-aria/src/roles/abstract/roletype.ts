@@ -7,7 +7,7 @@ import * as Attributes from "../../attributes";
 export const Roletype: Role = {
   name: "roletype",
   abstract: true,
-  supported: [
+  supported: () => [
     Attributes.Atomic,
     Attributes.Busy,
     Attributes.Controls,

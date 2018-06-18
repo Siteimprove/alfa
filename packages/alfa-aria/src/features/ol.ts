@@ -6,8 +6,8 @@ import * as Roles from "../roles";
  */
 export const Ol: Feature = {
   element: "ol",
-  role: Roles.List,
-  allowedRoles: [
+  role: () => Roles.List,
+  allowedRoles: () => [
     Roles.Directory,
     Roles.Group,
     Roles.ListBox,

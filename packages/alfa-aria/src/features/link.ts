@@ -7,6 +7,6 @@ import * as Roles from "../roles";
  */
 export const Link: Feature = {
   element: "link",
-  role: link => (hasAttribute(link, "href") ? Roles.Link : undefined),
-  allowedRoles: None
+  role: link => (hasAttribute(link, "href") ? Roles.Link : null),
+  allowedRoles: () => None
 };

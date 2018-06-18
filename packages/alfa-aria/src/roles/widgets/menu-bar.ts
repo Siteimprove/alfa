@@ -10,7 +10,12 @@ import { MenuItemRadio } from "./menu-item-radio";
  */
 export const MenuBar: Role = {
   name: "menubar",
-  inherits: [Menu],
-  owned: [MenuItem, MenuItemCheckbox, MenuItemRadio, [Group, MenuItemRadio]],
+  inherits: () => [Menu],
+  owned: () => [
+    MenuItem,
+    MenuItemCheckbox,
+    MenuItemRadio,
+    [Group, MenuItemRadio]
+  ],
   label: { from: ["author"] }
 };

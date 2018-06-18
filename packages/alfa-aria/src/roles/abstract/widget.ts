@@ -7,5 +7,5 @@ import { Roletype } from "./roletype";
 export const Widget: Role = {
   name: "widget",
   abstract: true,
-  inherits: [Roletype]
+  inherits: () => [Roletype]
 };

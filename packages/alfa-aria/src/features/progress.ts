@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Progress: Feature = {
   element: "progress",
-  role: Roles.ProgressBar,
-  allowedRoles: None
+  role: () => Roles.ProgressBar,
+  allowedRoles: () => None
 };

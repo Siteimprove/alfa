@@ -10,9 +10,9 @@ import { RowGroup } from "../structure/row-group";
  */
 export const Grid: Role = {
   name: "grid",
-  inherits: [Composite, Table],
-  owned: [Row, [RowGroup, Row]],
-  supported: [
+  inherits: () => [Composite, Table],
+  owned: () => [Row, [RowGroup, Row]],
+  supported: () => [
     Attributes.Level,
     Attributes.Multiselectable,
     Attributes.ReadOnly

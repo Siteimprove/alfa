@@ -3,15 +3,17 @@ import { Any, Feature, Role } from "../types";
 import * as Roles from "../roles";
 
 /**
+ * @todo Need to handle the auto state
+ *
  * @see https://www.w3.org/TR/html-aria/#th
  */
 export const Th: Feature = {
   element: "th",
   role,
-  allowedRoles: Any(Roles)
+  allowedRoles: () => Any(Roles)
 };
 
-function role(th: Element): Role | undefined {
+function role(th: Element): Role | null {
   switch (getAttribute(th, "scope")) {
     case "row":
     case "rowgroup":
@@ -19,7 +21,7 @@ function role(th: Element): Role | undefined {
     case "col":
     case "colgroup":
       return Roles.ColumnHeader;
-    default:
-      return undefined; // Need to handle the auto state
   }
+
+  return null;
 }

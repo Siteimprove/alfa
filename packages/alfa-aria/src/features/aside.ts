@@ -6,8 +6,8 @@ import * as Roles from "../roles";
  */
 export const Aside: Feature = {
   element: "aside",
-  role: Roles.Complementary,
-  allowedRoles: [
+  role: () => Roles.Complementary,
+  allowedRoles: () => [
     Roles.Feed,
     Roles.Note,
     Roles.Presentation,

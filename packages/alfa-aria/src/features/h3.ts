@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const H3: Feature = {
   element: "h3",
-  role: Roles.Heading,
-  allowedRoles: [Roles.Tab, Roles.None, Roles.Presentation]
+  role: () => Roles.Heading,
+  allowedRoles: () => [Roles.Tab, Roles.None, Roles.Presentation]
 };

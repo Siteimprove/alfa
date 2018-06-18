@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Body: Feature = {
   element: "body",
-  role: Roles.Document,
-  allowedRoles: None
+  role: () => Roles.Document,
+  allowedRoles: () => None
 };

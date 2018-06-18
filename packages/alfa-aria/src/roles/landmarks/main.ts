@@ -6,6 +6,6 @@ import { Landmark } from "../abstract/landmark";
  */
 export const Main: Role = {
   name: "main",
-  inherits: [Landmark],
+  inherits: () => [Landmark],
   label: { from: ["author"] }
 };

@@ -7,7 +7,7 @@ import { Command } from "../abstract/command";
  */
 export const Button: Role = {
   name: "button",
-  inherits: [Command],
-  supported: [Attributes.Expanded, Attributes.Pressed],
+  inherits: () => [Command],
+  supported: () => [Attributes.Expanded, Attributes.Pressed],
   label: { from: ["contents", "author"], required: true }
 };

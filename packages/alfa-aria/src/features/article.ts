@@ -6,8 +6,8 @@ import * as Roles from "../roles";
  */
 export const Article: Feature = {
   element: "article",
-  role: Roles.Article,
-  allowedRoles: [
+  role: () => Roles.Article,
+  allowedRoles: () => [
     Roles.Feed,
     Roles.Presentation,
     Roles.None,

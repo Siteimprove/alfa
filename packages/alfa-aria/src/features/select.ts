@@ -13,10 +13,11 @@ import * as Roles from "../roles";
 export const Select: Feature = {
   element: "select",
   role,
-  allowedRoles: role === Roles.Combobox ? [Roles.Menu] : None
+  allowedRoles: (select, context) =>
+    role(select, context) === Roles.Combobox ? [Roles.Menu] : None
 };
 
-function role(select: Element, context: Node): Role | undefined {
+function role(select: Element, context: Node): Role {
   const size = getAttribute(select, "size");
   if (
     !hasAttribute(select, "multiple") &&

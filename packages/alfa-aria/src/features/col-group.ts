@@ -5,6 +5,6 @@ import { Feature, None } from "../types";
  */
 export const ColGroup: Feature = {
   element: "colgroup",
-  allowedRoles: None,
-  allowedAttributes: None
+  allowedRoles: () => None,
+  allowedAttributes: () => None
 };

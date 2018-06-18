@@ -5,5 +5,5 @@ import { Feature, None } from "../types";
  */
 export const Col: Feature = {
   element: "col",
-  allowedRoles: None
+  allowedRoles: () => None
 };

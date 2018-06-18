@@ -5,5 +5,5 @@ import { Feature, None } from "../types";
  */
 export const Label: Feature = {
   element: "label",
-  allowedRoles: None
+  allowedRoles: () => None
 };

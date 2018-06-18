@@ -10,7 +10,7 @@ import { MenuBar } from "./menu-bar";
  */
 export const MenuItemRadio: Role = {
   name: "menuitemradio",
-  inherits: [Radio, MenuItem],
-  context: [Group, Menu, MenuBar],
+  inherits: () => [Radio, MenuItem],
+  context: () => [Group, Menu, MenuBar],
   label: { from: ["contents", "author"], required: true }
 };

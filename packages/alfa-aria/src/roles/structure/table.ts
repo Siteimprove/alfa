@@ -9,8 +9,8 @@ import { RowGroup } from "./row-group";
  */
 export const Table: Role = {
   name: "table",
-  inherits: [Section],
-  owned: [Row, [RowGroup, Row]],
-  supported: [Attributes.ColumnCount, Attributes.RowCount],
+  inherits: () => [Section],
+  owned: () => [Row, [RowGroup, Row]],
+  supported: () => [Attributes.ColumnCount, Attributes.RowCount],
   label: { from: ["author"], required: true }
 };

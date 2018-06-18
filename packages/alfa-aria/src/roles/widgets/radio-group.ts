@@ -8,8 +8,8 @@ import { Radio } from "./radio";
  */
 export const RadioGroup: Role = {
   name: "radiogroup",
-  inherits: [Select],
-  owned: [Radio],
-  supported: [Attributes.ReadOnly, Attributes.Required],
+  inherits: () => [Select],
+  owned: () => [Radio],
+  supported: () => [Attributes.ReadOnly, Attributes.Required],
   label: { from: ["author"], required: true }
 };

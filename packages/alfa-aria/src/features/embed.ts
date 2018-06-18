@@ -6,7 +6,7 @@ import * as Roles from "../roles";
  */
 export const Embed: Feature = {
   element: "embed",
-  allowedRoles: [
+  allowedRoles: () => [
     Roles.Application,
     Roles.Document,
     Roles.Presentation,

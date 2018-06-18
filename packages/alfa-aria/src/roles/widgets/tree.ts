@@ -9,8 +9,8 @@ import { TreeItem } from "./tree-item";
  */
 export const Tree: Role = {
   name: "tree",
-  inherits: [Select],
-  owned: [TreeItem, [Group, TreeItem]],
-  supported: [Attributes.Multiselectable, Attributes.Required],
+  inherits: () => [Select],
+  owned: () => [TreeItem, [Group, TreeItem]],
+  supported: () => [Attributes.Multiselectable, Attributes.Required],
   label: { from: ["author"], required: true }
 };

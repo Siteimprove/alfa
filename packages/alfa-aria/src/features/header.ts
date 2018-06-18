@@ -10,6 +10,6 @@ export const Header: Feature = {
   role: (header, context) =>
     getClosest(header, context, "article, aside, main, nav, section") === null
       ? Roles.Banner
-      : undefined,
-  allowedRoles: [Roles.Group, Roles.None, Roles.Presentation]
+      : null,
+  allowedRoles: () => [Roles.Group, Roles.None, Roles.Presentation]
 };

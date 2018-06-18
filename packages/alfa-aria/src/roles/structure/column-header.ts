@@ -10,8 +10,8 @@ import { Row } from "./row";
  */
 export const ColumnHeader: Role = {
   name: "columnheader",
-  inherits: [Cell, GridCell, SectionHead],
-  context: [Row],
-  supported: [Attributes.Sort],
+  inherits: () => [Cell, GridCell, SectionHead],
+  context: () => [Row],
+  supported: () => [Attributes.Sort],
   label: { from: ["contents", "author"], required: true }
 };

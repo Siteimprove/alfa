@@ -8,7 +8,7 @@ import { ListItem } from "./list-item";
  */
 export const List: Role = {
   name: "list",
-  inherits: [Section],
-  owned: [ListItem, [Group, ListItem]],
+  inherits: () => [Section],
+  owned: () => [ListItem, [Group, ListItem]],
   label: { from: ["author"] }
 };

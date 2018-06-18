@@ -5,6 +5,6 @@ import { Feature, None } from "../types";
  */
 export const Map: Feature = {
   element: "map",
-  allowedRoles: None,
-  allowedAttributes: None
+  allowedRoles: () => None,
+  allowedAttributes: () => None
 };

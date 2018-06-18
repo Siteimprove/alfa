@@ -69,6 +69,8 @@ export type Attribute = Readonly<{
   deprecated?: true;
 }>;
 
+export type Aspect<T> = (element: Element, context: Node) => T;
+
 /**
  * @see https://www.w3.org/TR/wai-aria/#dfn-role
  */
@@ -96,7 +98,7 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#scope
    */
-  context?: Array<Role>;
+  context?: Aspect<Array<Role>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#mustContain
@@ -106,20 +108,24 @@ export type Role = Readonly<{
   /**
    * @see https://www.w3.org/TR/wai-aria/#requiredState
    */
-  required?: Array<Attribute>;
+  required?: Aspect<Array<Attribute>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#supportedState
    */
-  supported?: Array<Attribute>;
+  supported?: Aspect<Array<Attribute>>;
 }>;
 
-export type Aspect<T> = T | ((element: Element, context: Node) => T);
-
+/**
+ * @internal
+ */
 export const Any: <T extends typeof Roles | typeof Attributes>(
   type: T
 ) => Array<T[keyof T]> = types => values(types);
 
+/**
+ * @internal
+ */
 export const Except: <T extends typeof Roles | typeof Attributes>(
   type: T,
   exclude: Array<T[keyof T]>
@@ -128,6 +134,9 @@ export const Except: <T extends typeof Roles | typeof Attributes>(
   return Any(types).filter(type => !filter.has(type));
 };
 
+/**
+ * @internal
+ */
 export const None: Array<any> = [];
 
 /**
@@ -135,7 +144,7 @@ export const None: Array<any> = [];
  */
 export type Feature = Readonly<{
   element: string;
-  role?: Aspect<Role>;
+  role?: Aspect<Role | null>;
   allowedRoles: Aspect<Array<Role>>;
   allowedAttributes?: Aspect<Array<Attribute>>;
   obsolete?: true;

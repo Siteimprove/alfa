@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Cite: Feature = {
   element: "cite",
-  allowedRoles: Any(Roles)
+  allowedRoles: () => Any(Roles)
 };

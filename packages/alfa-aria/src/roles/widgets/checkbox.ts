@@ -7,8 +7,8 @@ import { Input } from "../abstract/input";
  */
 export const Checkbox: Role = {
   name: "checkbox",
-  inherits: [Input],
-  required: [Attributes.Checked],
-  supported: [Attributes.ReadOnly],
+  inherits: () => [Input],
+  required: () => [Attributes.Checked],
+  supported: () => [Attributes.ReadOnly],
   label: { from: ["contents", "author"], required: true }
 };

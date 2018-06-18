@@ -7,7 +7,7 @@ import { List } from "./list";
  */
 export const Feed: Role = {
   name: "feed",
-  inherits: [List],
-  owned: [Article],
+  inherits: () => [List],
+  owned: () => [Article],
   label: { from: ["author"] }
 };

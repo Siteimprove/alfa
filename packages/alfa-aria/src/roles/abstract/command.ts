@@ -7,6 +7,6 @@ import { Widget } from "./widget";
 export const Command: Role = {
   name: "command",
   abstract: true,
-  inherits: [Widget],
+  inherits: () => [Widget],
   label: { from: ["author"] }
 };

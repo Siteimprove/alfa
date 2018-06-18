@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const IFrame: Feature = {
   element: "iframe",
-  allowedRoles: [Roles.Application, Roles.Document, Roles.Img]
+  allowedRoles: () => [Roles.Application, Roles.Document, Roles.Img]
 };

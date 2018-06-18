@@ -7,8 +7,8 @@ import { Input } from "../abstract/input";
  */
 export const TextBox: Role = {
   name: "textbox",
-  inherits: [Input],
-  supported: [
+  inherits: () => [Input],
+  supported: () => [
     Attributes.ActiveDescendant,
     Attributes.Autocomplete,
     Attributes.Multiline,

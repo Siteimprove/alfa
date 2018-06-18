@@ -6,7 +6,7 @@ import { SectionHead } from "../abstract/section-head";
  */
 export const Heading: Role = {
   name: "heading",
-  inherits: [SectionHead],
-  required: [Attributes.Level],
+  inherits: () => [SectionHead],
+  required: () => [Attributes.Level],
   label: { from: ["contents", "author"], required: true }
 };

@@ -8,7 +8,7 @@ import * as Roles from "../roles";
 export const Li: Feature = {
   element: "li",
   role,
-  allowedRoles: [
+  allowedRoles: () => [
     Roles.MenuItem,
     Roles.MenuItemCheckbox,
     Roles.MenuItemRadio,
@@ -22,16 +22,16 @@ export const Li: Feature = {
   ]
 };
 
-function role(il: Element, context: Node): Role | undefined {
+function role(il: Element, context: Node): Role | null {
   const parent = getParentElement(il, context);
-  if (parent != null) {
+
+  if (parent !== null) {
     switch (parent.localName) {
       case "ol":
       case "ul":
         return Roles.ListItem;
-      default:
-        return undefined;
     }
   }
-  return undefined;
+
+  return null;
 }

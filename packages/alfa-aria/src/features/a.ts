@@ -8,7 +8,7 @@ import * as Roles from "../roles";
  */
 export const A: Feature = {
   element: "a",
-  role: anchor => (hasAttribute(anchor, "href") ? Roles.Link : undefined),
+  role: anchor => (hasAttribute(anchor, "href") ? Roles.Link : null),
   allowedRoles: (anchor: any) =>
     hasAttribute(anchor, "href")
       ? [

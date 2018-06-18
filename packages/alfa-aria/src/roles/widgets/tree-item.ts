@@ -10,8 +10,8 @@ import { Option } from "./option";
  */
 export const TreeItem: Role = {
   name: "treeitem",
-  inherits: [ListItem, Option],
-  context: [Group, Tree],
-  required: [Attributes.Selected],
+  inherits: () => [ListItem, Option],
+  context: () => [Group, Tree],
+  required: () => [Attributes.Selected],
   label: { from: ["contents", "author"], required: true }
 };

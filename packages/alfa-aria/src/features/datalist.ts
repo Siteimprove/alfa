@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Datalist: Feature = {
   element: "datalist",
-  role: Roles.ListBox,
-  allowedRoles: None
+  role: () => Roles.ListBox,
+  allowedRoles: () => None
 };

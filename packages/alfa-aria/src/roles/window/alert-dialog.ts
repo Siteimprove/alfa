@@ -7,6 +7,6 @@ import { Dialog } from "./dialog";
  */
 export const AlertDialog: Role = {
   name: "alertdialog",
-  inherits: [Alert, Dialog],
+  inherits: () => [Alert, Dialog],
   label: { from: ["author"], required: true }
 };

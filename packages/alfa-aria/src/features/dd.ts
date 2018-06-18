@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Dd: Feature = {
   element: "dd",
-  role: Roles.Definition,
-  allowedRoles: None
+  role: () => Roles.Definition,
+  allowedRoles: () => None
 };

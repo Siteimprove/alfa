@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const SVG: Feature = {
   element: "svg",
-  allowedRoles: [Roles.Application, Roles.Document, Roles.Img]
+  allowedRoles: () => [Roles.Application, Roles.Document, Roles.Img]
 };

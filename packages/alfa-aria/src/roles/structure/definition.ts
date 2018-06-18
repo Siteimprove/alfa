@@ -6,6 +6,6 @@ import { Section } from "../abstract/section";
  */
 export const Definition: Role = {
   name: "definition",
-  inherits: [Section],
+  inherits: () => [Section],
   label: { from: ["author"] }
 };

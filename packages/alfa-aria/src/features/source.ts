@@ -5,6 +5,6 @@ import { Feature, None } from "../types";
  */
 export const Source: Feature = {
   element: "source",
-  allowedRoles: None,
-  allowedAttributes: None
+  allowedRoles: () => None,
+  allowedAttributes: () => None
 };

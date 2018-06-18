@@ -9,7 +9,7 @@ import { MenuBar } from "./menu-bar";
  */
 export const MenuItemCheckbox: Role = {
   name: "menuitemcheckbox",
-  inherits: [Checkbox, MenuItem],
-  context: [Menu, MenuBar],
+  inherits: () => [Checkbox, MenuItem],
+  context: () => [Menu, MenuBar],
   label: { from: ["contents", "author"], required: true }
 };

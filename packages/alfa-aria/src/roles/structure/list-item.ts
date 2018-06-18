@@ -9,8 +9,12 @@ import { List } from "./list";
  */
 export const ListItem: Role = {
   name: "listitem",
-  inherits: [Section],
-  context: [Group, List],
-  supported: [Attributes.Level, Attributes.PositionInSet, Attributes.SetSize],
+  inherits: () => [Section],
+  context: () => [Group, List],
+  supported: () => [
+    Attributes.Level,
+    Attributes.PositionInSet,
+    Attributes.SetSize
+  ],
   label: { from: ["author"] }
 };

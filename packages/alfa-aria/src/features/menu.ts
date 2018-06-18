@@ -7,8 +7,7 @@ import * as Roles from "../roles";
  */
 export const Menu: Feature = {
   element: "menu",
-  role: menu =>
-    getAttribute(menu, "type") === "context" ? Roles.Menu : undefined,
-  allowedRoles: None,
+  role: menu => (getAttribute(menu, "type") === "context" ? Roles.Menu : null),
+  allowedRoles: () => None,
   obsolete: true
 };

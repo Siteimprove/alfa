@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Thead: Feature = {
   element: "thead",
-  role: Roles.RowGroup,
-  allowedRoles: Any(Roles)
+  role: () => Roles.RowGroup,
+  allowedRoles: () => Any(Roles)
 };

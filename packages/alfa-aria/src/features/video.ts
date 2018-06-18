@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Video: Feature = {
   element: "video",
-  allowedRoles: [Roles.Application]
+  allowedRoles: () => [Roles.Application]
 };

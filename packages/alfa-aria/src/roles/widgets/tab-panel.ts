@@ -6,6 +6,6 @@ import { Section } from "../abstract/section";
  */
 export const TabPanel: Role = {
   name: "tabpanel",
-  inherits: [Section],
+  inherits: () => [Section],
   label: { from: ["author"], required: true }
 };

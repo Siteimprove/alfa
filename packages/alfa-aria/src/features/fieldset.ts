@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Fieldset: Feature = {
   element: "fieldset",
-  allowedRoles: [Roles.Group, Roles.None, Roles.Presentation]
+  allowedRoles: () => [Roles.Group, Roles.None, Roles.Presentation]
 };

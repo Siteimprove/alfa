@@ -8,6 +8,6 @@ import { Structure } from "./structure";
 export const Section: Role = {
   name: "section",
   abstract: true,
-  inherits: [Structure],
-  supported: [Attributes.Expanded]
+  inherits: () => [Structure],
+  supported: () => [Attributes.Expanded]
 };

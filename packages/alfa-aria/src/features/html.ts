@@ -5,6 +5,6 @@ import { Feature, None } from "../types";
  */
 export const Html: Feature = {
   element: "html",
-  allowedRoles: None,
-  allowedAttributes: None
+  allowedRoles: () => None,
+  allowedAttributes: () => None
 };

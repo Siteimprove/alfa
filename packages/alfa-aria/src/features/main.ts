@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Main: Feature = {
   element: "main",
-  role: Roles.Main,
-  allowedRoles: None
+  role: () => Roles.Main,
+  allowedRoles: () => None
 };

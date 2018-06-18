@@ -9,21 +9,20 @@ import * as Attributes from "../attributes";
 export const Img: Feature = {
   element: "img",
   role,
-  allowedRoles: (img: any) =>
-    role(img) === undefined
+  allowedRoles: img =>
+    role(img) === null
       ? [Roles.None, Roles.Presentation]
       : Except(Roles, [Roles.None, Roles.Presentation]),
-  allowedAttributes: (img: any) =>
-    role(img) === undefined ? [Attributes.Hidden] : Any(Attributes)
+  allowedAttributes: img =>
+    role(img) === null ? [Attributes.Hidden] : Any(Attributes)
 };
 
-function role(img: Element): Role | undefined {
+function role(img: Element): Role | null {
   const alt = getAttribute(img, "alt");
+
   if (alt === "") {
-    return undefined;
+    return null;
   }
-  // The specification leaves out the case where alt is null. Thus, this case
-  // is handled in the same manner as the case where alt is specified to non-
-  // empty value.
+
   return Roles.Img;
 }

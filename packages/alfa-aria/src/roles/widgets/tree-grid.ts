@@ -9,7 +9,7 @@ import { Tree } from "./tree";
  */
 export const TreeGrid: Role = {
   name: "treegrid",
-  inherits: [Grid, Tree],
-  owned: [Row, [RowGroup, Row]],
+  inherits: () => [Grid, Tree],
+  owned: () => [Row, [RowGroup, Row]],
   label: { from: ["author"], required: true }
 };

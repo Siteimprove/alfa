@@ -7,6 +7,6 @@ import { Widget } from "./widget";
 export const Input: Role = {
   name: "input",
   abstract: true,
-  inherits: [Widget],
+  inherits: () => [Widget],
   label: { from: ["author"] }
 };

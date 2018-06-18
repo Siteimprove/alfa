@@ -6,5 +6,5 @@ import * as Roles from "../roles";
  */
 export const Kbd: Feature = {
   element: "kbd",
-  allowedRoles: Any(Roles)
+  allowedRoles: () => Any(Roles)
 };

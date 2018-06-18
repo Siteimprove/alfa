@@ -8,9 +8,9 @@ import { Row } from "./row";
  */
 export const Cell: Role = {
   name: "cell",
-  inherits: [Section],
-  context: [Row],
-  supported: [
+  inherits: () => [Section],
+  context: () => [Row],
+  supported: () => [
     Attributes.ColumnIndex,
     Attributes.ColumnSpan,
     Attributes.RowIndex,

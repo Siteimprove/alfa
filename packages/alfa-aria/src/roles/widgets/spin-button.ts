@@ -9,12 +9,12 @@ import { Range } from "../abstract/range";
  */
 export const SpinButton: Role = {
   name: "spinbutton",
-  inherits: [Composite, Input, Range],
-  required: [
+  inherits: () => [Composite, Input, Range],
+  required: () => [
     Attributes.ValueMaximum,
     Attributes.ValueMinimum,
     Attributes.ValueNow
   ],
-  supported: [Attributes.ReadOnly, Attributes.Required],
+  supported: () => [Attributes.ReadOnly, Attributes.Required],
   label: { from: ["author"], required: true }
 };

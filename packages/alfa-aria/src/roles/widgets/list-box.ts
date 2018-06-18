@@ -8,10 +8,10 @@ import { Option } from "./option";
  */
 export const ListBox: Role = {
   name: "listbox",
-  inherits: [Select],
-  owned: [Option],
-  required: [Attributes.Selected],
-  supported: [
+  inherits: () => [Select],
+  owned: () => [Option],
+  required: () => [Attributes.Selected],
+  supported: () => [
     Attributes.Multiselectable,
     Attributes.ReadOnly,
     Attributes.Required

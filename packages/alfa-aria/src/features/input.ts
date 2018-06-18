@@ -16,44 +16,29 @@ export const Input: Feature = {
   allowedRoles
 };
 
-function role(input: Element, context: Node): Role | undefined {
+function role(input: Element, context: Node): Role | null {
   switch (getInputType(input)) {
     case "button":
+    case "image":
+    case "reset":
+    case "submit":
       return Roles.Button;
     case "checkbox":
       return Roles.Checkbox;
-    case "email":
-      if (!hasAttribute(input, "list")) {
-        return Roles.TextBox;
-      }
-      return Roles.Combobox;
-    case "image":
-      return Roles.Button;
     case "number":
       return Roles.SpinButton;
     case "radio":
       return Roles.Radio;
     case "range":
       return Roles.Slider;
-    case "reset":
-      return Roles.Button;
     case "search":
       if (!hasAttribute(input, "list")) {
         return Roles.SearchBox;
       }
       return Roles.Combobox;
-    case "submit":
-      return Roles.Button;
+    case "email":
     case "tel":
-      if (!hasAttribute(input, "list")) {
-        return Roles.TextBox;
-      }
-      return Roles.Combobox;
     case "text":
-      if (!hasAttribute(input, "list")) {
-        return Roles.TextBox;
-      }
-      return Roles.Combobox;
     case "url":
       if (!hasAttribute(input, "list")) {
         return Roles.TextBox;
@@ -69,15 +54,11 @@ function role(input: Element, context: Node): Role | undefined {
     case "time":
     case "week":
     case null:
-    default:
-      return undefined;
+      return null;
   }
 }
 
-function allowedRoles(
-  input: Element,
-  context: Node
-): Array<Role> | typeof None {
+function allowedRoles(input: Element, context: Node): Array<Role> {
   switch (getInputType(input)) {
     case "button":
       return [

@@ -5,6 +5,6 @@ import { Feature, None } from "../types";
  */
 export const Track: Feature = {
   element: "track",
-  allowedRoles: None,
-  allowedAttributes: None
+  allowedRoles: () => None,
+  allowedAttributes: () => None
 };

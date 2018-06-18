@@ -6,6 +6,6 @@ import * as Roles from "../roles";
  */
 export const Dialog: Feature = {
   element: "dialog",
-  role: Roles.Dialog,
-  allowedRoles: [Roles.AlertDialog]
+  role: () => Roles.Dialog,
+  allowedRoles: () => [Roles.AlertDialog]
 };
