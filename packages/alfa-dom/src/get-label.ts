@@ -1,6 +1,6 @@
 import { Node, Element } from "./types";
 import { isElement } from "./guards";
-import { find } from "./find";
+import { querySelector } from "./query-selector";
 import { getClosest } from "./get-closest";
 import { getRootNode } from "./get-root-node";
 import { getAttribute } from "./get-attribute";
@@ -29,7 +29,7 @@ export function getLabel(element: Element, context: Node): Element | null {
     const rootNode = getRootNode(element, context);
 
     if (rootNode !== null) {
-      const label = find<Element>(
+      const label = querySelector<Element>(
         rootNode,
         context,
         node =>

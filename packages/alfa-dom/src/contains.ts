@@ -1,16 +1,15 @@
 import { Predicate } from "@siteimprove/alfa-util";
 import { Node } from "./types";
-import { find } from "./find";
+import { querySelector } from "./query-selector";
 import { getClosest } from "./get-closest";
-
-export type ContainsOptions = Readonly<{ composed?: boolean }>;
 
 /**
  * Given a node and a context, check if the node contains another node that
  * matches the given query. One node is said to contain another node if the
- * other node is a descendant of the first.
+ * other node is an inclusive descendant of the first.
  *
- * @see https://dom.spec.whatwg.org/#dom-node-contains
+ * @see https://www.w3.org/TR/dom/#dom-node-contains
+ * @see https://www.w3.org/TR/dom/#concept-tree-inclusive-descendant
  *
  * @example
  * const div = <div><span /></div>;
@@ -27,15 +26,15 @@ export function contains<T extends Node>(
   scope: Node,
   context: Node,
   query: Predicate<Node, T> | T | string,
-  options: ContainsOptions = {}
+  options: Readonly<{ composed?: boolean }> = {}
 ): boolean {
   if (typeof query === "object") {
     return getClosest(query, context, node => node === scope) !== null;
   }
 
   if (typeof query === "string") {
-    return find(scope, context, query, options) !== null;
+    return querySelector(scope, context, query, options) !== null;
   }
 
-  return find(scope, context, query, options) !== null;
+  return querySelector(scope, context, query, options) !== null;
 }

@@ -1,7 +1,7 @@
 import { Node, Element } from "./types";
 import { getClosest } from "./get-closest";
 import { hasAttribute } from "./has-attribute";
-import { find } from "./find";
+import { querySelector } from "./query-selector";
 import { contains } from "./contains";
 
 /**
@@ -26,7 +26,7 @@ export function isDisabled(element: Element, context: Node): boolean {
         return false;
       }
 
-      const legend = find(fieldset, context, "legend");
+      const legend = querySelector(fieldset, context, "legend");
 
       return legend !== null && !contains(legend, context, element);
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-option-disabled
