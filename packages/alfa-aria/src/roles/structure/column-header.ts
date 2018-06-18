@@ -1,8 +1,9 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Cell, Row } from "../structure";
-import { GridCell } from "../widgets";
-import { SectionHead } from "../abstract";
+import { SectionHead } from "../abstract/section-head";
+import { GridCell } from "../widgets/grid-cell";
+import { Cell } from "./cell";
+import { Row } from "./row";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#columnheader

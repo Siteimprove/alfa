@@ -1,6 +1,6 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Structure } from "../abstract";
+import { Structure } from "../abstract/structure";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#application

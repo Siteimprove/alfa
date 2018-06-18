@@ -1,6 +1,8 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Composite, Input, Range } from "../abstract";
+import { Composite } from "../abstract/composite";
+import { Input } from "../abstract/input";
+import { Range } from "../abstract/range";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#spinbutton

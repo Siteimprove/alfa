@@ -1,7 +1,7 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Composite } from "../abstract";
-import { Tab } from "../widgets";
+import { Composite } from "../abstract/composite";
+import { Tab } from "./tab";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#tablist

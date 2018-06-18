@@ -1,9 +1,12 @@
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Select } from "../abstract";
-import { TextBox, ListBox, Tree, Grid } from "../widgets";
-import { Dialog } from "../window";
+import { Select } from "../abstract/select";
+import { Dialog } from "../window/dialog";
+import { TextBox } from "./text-box";
+import { ListBox } from "./list-box";
+import { Tree } from "./tree";
+import { Grid } from "./grid";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#combobox
@@ -24,5 +27,7 @@ export const Combobox: Role = {
 function owned(combobox: Element, context: Node): Array<Role | [Role, Role]> {
   if (getAttribute(combobox, "expanded") === "true") {
     return [TextBox, ListBox, Tree, Grid, Dialog];
-  } else return [TextBox];
+  }
+
+  return [TextBox];
 }

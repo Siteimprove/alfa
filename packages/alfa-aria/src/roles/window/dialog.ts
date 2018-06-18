@@ -1,5 +1,5 @@
 import { Role } from "../../types";
-import { Window } from "../abstract";
+import { Window } from "../abstract/window";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#dialog

@@ -1,5 +1,5 @@
 import { Role } from "../../types";
-import { List } from "../structure";
+import { List } from "./list";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#directory

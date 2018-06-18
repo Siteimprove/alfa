@@ -1,7 +1,8 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Widget } from "../abstract";
-import { Cell, Row } from "../structure";
+import { Widget } from "../abstract/widget";
+import { Cell } from "../structure/cell";
+import { Row } from "../structure/row";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#gridcell

@@ -1,6 +1,9 @@
 import { Role } from "../../types";
-import { Group } from "../structure";
-import { Radio, Menu, MenuItem, MenuBar } from "../widgets";
+import { Group } from "../structure/group";
+import { Radio } from "./radio";
+import { Menu } from "./menu";
+import { MenuItem } from "./menu-item";
+import { MenuBar } from "./menu-bar";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#menuitemradio

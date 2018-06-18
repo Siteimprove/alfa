@@ -1,6 +1,6 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Section } from "../abstract";
+import { Section } from "../abstract/section";
 import { Row } from "./row";
 
 /**

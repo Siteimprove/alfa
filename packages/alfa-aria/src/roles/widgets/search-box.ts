@@ -1,5 +1,5 @@
 import { Role } from "../../types";
-import { TextBox } from "../widgets";
+import { TextBox } from "./text-box";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#searchbox

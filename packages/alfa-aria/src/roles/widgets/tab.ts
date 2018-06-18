@@ -1,7 +1,8 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Widget, SectionHead } from "../abstract";
-import { TabList } from "../widgets";
+import { Widget } from "../abstract/widget";
+import { SectionHead } from "../abstract/section-head";
+import { TabList } from "./tab-list";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#tab

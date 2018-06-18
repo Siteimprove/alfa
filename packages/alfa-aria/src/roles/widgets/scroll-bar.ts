@@ -1,6 +1,6 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Range } from "../abstract";
+import { Range } from "../abstract/range";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#scrollbar

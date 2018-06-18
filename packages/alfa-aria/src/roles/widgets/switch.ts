@@ -1,6 +1,6 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Checkbox } from "../widgets";
+import { Checkbox } from "./checkbox";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#switch

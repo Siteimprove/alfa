@@ -1,6 +1,8 @@
 import { Role } from "../../types";
-import { Row, RowGroup } from "../structure";
-import { Grid, Tree } from "../widgets";
+import { Row } from "../structure/row";
+import { RowGroup } from "../structure/row-group";
+import { Grid } from "./grid";
+import { Tree } from "./tree";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#treegrid

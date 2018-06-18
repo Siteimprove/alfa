@@ -1,7 +1,9 @@
 import { Role } from "../../types";
-import { Select } from "../abstract";
-import { Group } from "../structure";
-import { MenuItem, MenuItemCheckbox, MenuItemRadio } from "../widgets";
+import { Select } from "../abstract/select";
+import { Group } from "../structure/group";
+import { MenuItem } from "./menu-item";
+import { MenuItemCheckbox } from "./menu-item-checkbox";
+import { MenuItemRadio } from "./menu-item-radio";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#menu

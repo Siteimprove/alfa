@@ -1,5 +1,5 @@
 import { Role } from "../../types";
-import { Status } from "../live-region";
+import { Status } from "./status";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#timer

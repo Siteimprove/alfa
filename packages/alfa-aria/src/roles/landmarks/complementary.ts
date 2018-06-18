@@ -1,5 +1,5 @@
 import { Role } from "../../types";
-import { Landmark } from "../abstract";
+import { Landmark } from "../abstract/landmark";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#complementary

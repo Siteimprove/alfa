@@ -1,5 +1,6 @@
 import { Role } from "../../types";
-import { Article, List } from "../structure";
+import { Article } from "./article";
+import { List } from "./list";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#feed

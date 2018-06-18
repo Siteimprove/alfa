@@ -1,7 +1,9 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Group, ListItem } from "../structure";
-import { Tree, Option } from "../widgets";
+import { Group } from "../structure/group";
+import { ListItem } from "../structure/list-item";
+import { Tree } from "./tree";
+import { Option } from "./option";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#treeitem

@@ -1,6 +1,6 @@
 import { Role } from "../../types";
-import { Alert } from "../live-region";
-import { Dialog } from "../window";
+import { Alert } from "../live-region/alert";
+import { Dialog } from "./dialog";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#alertdialog

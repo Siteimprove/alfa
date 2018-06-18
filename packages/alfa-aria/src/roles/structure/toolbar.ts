@@ -1,6 +1,6 @@
 import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Group } from "../structure";
+import { Group } from "./group";
 /**
  * @see https://www.w3.org/TR/wai-aria/#toolbar
  */
