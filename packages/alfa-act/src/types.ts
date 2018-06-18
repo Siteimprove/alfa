@@ -1,3 +1,4 @@
+import { Response } from "@siteimprove/alfa-http";
 import { Node } from "@siteimprove/alfa-dom";
 
 export type Criterion = string;
@@ -8,6 +9,7 @@ export type Target = Node;
  * @see https://www.w3.org/TR/act-rules-format/#input-aspects
  */
 export interface Aspects {
+  readonly response: Response;
   readonly document: Node;
 }
 

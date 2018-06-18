@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import * as puppeteer from "puppeteer";
 import { Document } from "@siteimprove/alfa-dom";
+import { Response } from "@siteimprove/alfa-http";
 
 const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
@@ -33,7 +34,7 @@ export class Scraper {
   public async scrape(
     url: string,
     options: ScrapeOptions = {}
-  ): Promise<{ document: Document }> {
+  ): Promise<{ response: Response; document: Document }> {
     const browser = await this.browser;
 
     const page = await browser.newPage();
@@ -56,8 +57,11 @@ export class Scraper {
 
     const start = Date.now();
 
+    let response: Response | null = null;
     try {
-      await page.goto(url, { timeout, waitUntil: wait });
+      response = await parseResponse(
+        await page.goto(url, { timeout, waitUntil: wait })
+      );
     } catch (err) {
       await page.close();
       throw err;
@@ -84,22 +88,39 @@ export class Scraper {
         // was performed. If so, we should now be on the correct domain; reload
         // the page using whatever is left of the timeout and try again.
         try {
-          await page.reload({ timeout: timeout - elapsed, waitUntil: wait });
+          response = await parseResponse(
+            await page.reload({ timeout: timeout - elapsed, waitUntil: wait })
+          );
         } catch (err) {}
       }
     } while (document === null);
 
     await page.close();
 
-    if (document === null) {
+    if (document === null || response === null) {
       throw error || new Error("Failed to scrape document");
     }
 
-    return { document };
+    return { response, document };
   }
 
   public async close(): Promise<void> {
     const browser = await this.browser;
     await browser.close();
   }
+}
+
+async function parseResponse(
+  response: puppeteer.Response | null
+): Promise<Response | null> {
+  if (response === null) {
+    return null;
+  }
+
+  return {
+    url: await response.url(),
+    status: await response.status(),
+    headers: response.headers(),
+    body: await response.text()
+  };
 }

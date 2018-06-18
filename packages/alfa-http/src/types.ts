@@ -1,7 +1,12 @@
 /**
  * @see https://fetch.spec.whatwg.org/#headers-class
  */
-export type Headers = Iterable<[string, string]>;
+export interface Headers {
+  /**
+   * @see https://fetch.spec.whatwg.org/#dom-headers-get
+   */
+  [name: string]: string;
+}
 
 /**
  * @see https://fetch.spec.whatwg.org/#body-mixin
