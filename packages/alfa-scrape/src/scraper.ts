@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { launch } from "puppeteer";
+import * as puppeteer from "puppeteer";
 import { Document } from "@siteimprove/alfa-dom";
 
 const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
@@ -25,7 +25,7 @@ export type ScrapeOptions = Readonly<{
 }>;
 
 export class Scraper {
-  private readonly browser = launch({
+  private readonly browser = puppeteer.launch({
     headless: true,
     args: ["--disable-web-security"]
   });

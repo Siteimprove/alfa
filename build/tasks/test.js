@@ -11,7 +11,7 @@ const { build } = require("./build");
 
 function test(file) {
   if (build(file)) {
-    const child = spawn("node", [withExtension(file, ".js")], {
+    const child = spawn("node", ["-r", "esm", withExtension(file, ".js")], {
       stdio: "inherit"
     });
 
