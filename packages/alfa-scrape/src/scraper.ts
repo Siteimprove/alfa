@@ -11,20 +11,6 @@ export const enum Wait {
   Idle = "networkidle0"
 }
 
-export type ScrapeOptions = Readonly<{
-  timeout?: number;
-  wait?: Wait;
-  viewport?: Readonly<{
-    width: number;
-    height: number;
-    scale?: number;
-  }>;
-  credentials?: Readonly<{
-    username: string;
-    password: string;
-  }>;
-}>;
-
 export class Scraper {
   private readonly browser = puppeteer.launch({
     headless: true,
@@ -33,7 +19,19 @@ export class Scraper {
 
   public async scrape(
     url: string,
-    options: ScrapeOptions = {}
+    options: Readonly<{
+      timeout?: number;
+      wait?: Wait;
+      viewport?: Readonly<{
+        width: number;
+        height: number;
+        scale?: number;
+      }>;
+      credentials?: Readonly<{
+        username: string;
+        password: string;
+      }>;
+    }> = {}
   ): Promise<{ response: Response; document: Document }> {
     const browser = await this.browser;
 

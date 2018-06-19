@@ -2,11 +2,6 @@ import { Element } from "./types";
 
 const attributeMaps: WeakMap<Element, Map<string, string>> = new WeakMap();
 
-export type AttributeOptions = Readonly<{
-  trim?: boolean;
-  lowerCase?: boolean;
-}>;
-
 /**
  * Given an element, get the value of the specified attribute of the element.
  *
@@ -20,7 +15,10 @@ export type AttributeOptions = Readonly<{
 export function getAttribute(
   element: Element,
   name: string,
-  options: AttributeOptions = {}
+  options: Readonly<{
+    trim?: boolean;
+    lowerCase?: boolean;
+  }> = {}
 ): string | null {
   let attributeMap = attributeMaps.get(element);
 
