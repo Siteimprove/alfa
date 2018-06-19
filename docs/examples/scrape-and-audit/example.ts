@@ -2,8 +2,8 @@ import * as fs from "fs";
 import { Scraper } from "@siteimprove/alfa-scrape";
 import {
   Document,
-  find,
-  findAll,
+  querySelector,
+  querySelectorAll,
   getAttribute,
   getNextElementSibling,
   serialize
@@ -43,19 +43,23 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
 function getUrls(
   document: Document
 ): Array<Readonly<{ id: string; url: string }>> {
-  return findAll(document, document, "h3[id]").map(header => {
+  return querySelectorAll(document, document, "h3[id]").map(header => {
     const example = getNextElementSibling(header, document);
     const id = getAttribute(header, "id")!;
 
     if (example !== null) {
-      const anchor = find(example, document, "a[href^='example-pages/']");
+      const anchor = querySelector(
+        example,
+        document,
+        "a[href^='example-pages/']"
+      );
 
       if (anchor !== null) {
         return { id, url: getAttribute(anchor, "href")! };
       }
     }
 
-    const anchor = find(header, document, "a")!;
+    const anchor = querySelector(header, document, "a")!;
 
     return { id, url: getAttribute(anchor, "href")! };
   });
