@@ -1,4 +1,3 @@
-import { last } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import {
   Grammar,
@@ -604,7 +603,7 @@ function selectorList(
 
   const selectors = isArray(left) ? left : [left];
 
-  if (isPseudoElementSelector(last(selectors)!)) {
+  if (isPseudoElementSelector(selectors[selectors.length - 1]!)) {
     return null;
   }
 
