@@ -41,7 +41,10 @@ function isStaged(file) {
   return getStagedFiles().indexOf(file) !== -1;
 }
 
-const gitignore = ignore().add(fs.readFileSync(".gitignore", "utf8"));
+const gitignore = ignore();
+try {
+  gitignore.add(fs.readFileSync(".gitignore", "utf8"));
+} catch (err) {}
 
 /**
  * @param {string} file
