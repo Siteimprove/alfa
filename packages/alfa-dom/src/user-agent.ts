@@ -1,9 +1,10 @@
+import { StyleSheet } from "./types";
 import { parseStyleSheet } from "./parse-style-sheet";
 
 /**
  * @see https://www.w3.org/TR/html/rendering.html
  */
-export const UserAgent = parseStyleSheet(`
+export const UserAgent: StyleSheet = parseStyleSheet(`
   @namespace url(http://www.w3.org/1999/xhtml);
 
   /**

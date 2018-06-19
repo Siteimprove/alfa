@@ -17,7 +17,7 @@
     "ignore": "^3.3.8",
     "lerna": "^2.9.0",
     "prettier": "1.13.5",
-    "signale": "^1.1.0",
-    "typescript": "^2.9.1"
+    "signale": "^1.2.1",
+    "typescript": "^2.9.2"
   }
 }

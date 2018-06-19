@@ -14,11 +14,11 @@
   "types": "src/index.d.ts",
   "dependencies": {
     "@types/chalk": "^2.2.0",
-    "@types/node": "^10.3.1",
+    "@types/node": "^10.3.4",
     "@types/source-map-support": "^0.4.1",
     "chalk": "^2.4.1",
     "concordance": "^3.0.0",
-    "concordance-theme-ava": "^1.0.1",
+    "concordance-theme-ava": "^1.0.2",
     "error-stack-parser": "^2.0.2",
     "source-map-support": "^0.5.6"
   }
