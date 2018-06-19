@@ -1,13 +1,32 @@
 // @ts-check
 
+const fs = require("fs");
+const https = require("https");
 const prettier = require("prettier");
-const got = require("got");
-const stringify = require("stringify-object");
 const RecordJar = require("record-jar");
 
-const { writeFile } = require("../../../build/helpers/file-system");
+const registry =
+  "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry";
 
-const registry = "https://www.iana.org/assignments/language-subtag-registry";
+function fetch(url) {
+  return new Promise((resolve, reject) => {
+    https
+      .get(url, response => {
+        let data = "";
+
+        response.on("data", chunk => {
+          data += chunk;
+        });
+
+        response.on("end", () => {
+          resolve(data);
+        });
+      })
+      .on("error", err => {
+        reject(err);
+      });
+  });
+}
 
 function type(subtag) {
   switch (subtag.type) {
@@ -74,8 +93,8 @@ function expand(query) {
   return generate(from, to).sort();
 }
 
-got(registry).then(response => {
-  const { records } = new RecordJar(response.body);
+fetch(registry).then(body => {
+  const { records } = new RecordJar(body);
 
   const subtags = [];
 
@@ -138,9 +157,8 @@ got(registry).then(response => {
       export namespace ${group} {
         ${subtags
           .map(subtag => {
-            return `export const ${name(subtag)}: ${type(subtag)} = ${stringify(
-              subtag
-            )}`;
+            const value = JSON.stringify(subtag, null, 2);
+            return `export const ${name(subtag)}: ${type(subtag)} = ${value}`;
           })
           .join("\n\n")}
       }
@@ -161,5 +179,5 @@ got(registry).then(response => {
     parser: "typescript"
   });
 
-  writeFile("src/subtags.ts", code);
+  fs.writeFileSync("src/subtags.ts", code);
 });

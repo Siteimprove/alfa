@@ -21,8 +21,6 @@
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
     "@types/node": "^10.3.4",
-    "got": "^8.3.1",
-    "record-jar": "^1.0.4",
-    "stringify-object": "^3.2.2"
+    "record-jar": "^1.0.4"
   }
 }

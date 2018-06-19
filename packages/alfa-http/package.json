@@ -12,7 +12,6 @@
   "repository": "https://github.com/siteimprove/alfa/tree/master/packages/alfa-http",
   "main": "src/index.js",
   "types": "src/index.d.ts",
-  "dependencies": {},
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
   }
