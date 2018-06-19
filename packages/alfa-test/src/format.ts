@@ -1,27 +1,36 @@
 import * as path from "path";
 import { AssertionError } from "assert";
 import chalk from "chalk";
-
-const Stack = require("error-stack-parser");
-const { diff } = require("concordance");
-const { theme } = require("concordance-theme-ava");
+import * as stack from "error-stack-parser";
 
 /**
  * @internal
  */
-export function format(name: string, error: AssertionError): string {
-  const [{ fileName, lineNumber }] = Stack.parse(error);
+export function format(name: string, error: Error & AssertionError): string {
+  const message = error.generatedMessage ? "" : "\n" + error.message + "\n";
 
-  const filePath = path.relative(process.cwd(), fileName);
+  const [{ fileName, lineNumber }] = stack.parse(error);
 
-  const message = `
+  const filePath =
+    fileName === undefined ? "unknown" : path.relative(process.cwd(), fileName);
+
+  error = new AssertionError({
+    actual: error.actual,
+    expected: error.expected,
+    operator: error.operator
+  });
+
+  const difference = error.message
+    .split("\n")
+    .slice(1)
+    .join("\n");
+
+  const output = `
 ${chalk.bold(name)}
 ${chalk.dim(`${filePath}:${lineNumber}`)}
-${error.generatedMessage ? "" : "\n" + error.message + "\n"}
-Difference:
-
-${diff(error.actual, error.expected, { theme })}
+${message}
+${difference}
   `;
 
-  return "\n" + message.trim() + "\n";
+  return "\n" + output.trim() + "\n";
 }
