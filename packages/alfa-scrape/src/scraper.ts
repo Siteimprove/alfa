@@ -33,25 +33,22 @@ export class Scraper {
       }>;
     }> = {}
   ): Promise<{ response: Response; document: Document }> {
-    const browser = await this.browser;
-
-    const page = await browser.newPage();
+    const page = await (await this.browser).newPage();
 
     const {
-      viewport = { width: 1280, height: 720 },
-      credentials = null
+      viewport = { width: 1280, height: 720, scale: 1 },
+      credentials = null,
+      wait = Wait.Loaded,
+      timeout = 10000
     } = options;
 
     await page.setViewport({
       width: viewport.width,
       height: viewport.width,
-      deviceScaleFactor: viewport.scale || 1
+      deviceScaleFactor: viewport.scale
     });
 
     await page.authenticate(credentials);
-
-    const wait = options.wait || Wait.Loaded;
-    const timeout = options.timeout || 10000;
 
     const start = Date.now();
 
@@ -89,7 +86,9 @@ export class Scraper {
           response = await parseResponse(
             await page.reload({ timeout: timeout - elapsed, waitUntil: wait })
           );
-        } catch (err) {}
+        } catch (err) {
+          error = err;
+        }
       }
     } while (document === null);
 
@@ -103,8 +102,7 @@ export class Scraper {
   }
 
   public async close(): Promise<void> {
-    const browser = await this.browser;
-    await browser.close();
+    await (await this.browser).close();
   }
 }
 
