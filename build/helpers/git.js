@@ -39,10 +39,9 @@ export function isStaged(file) {
   return getStagedFiles().indexOf(file) !== -1;
 }
 
-const gitignore = ignore();
-try {
-  gitignore.add(fs.readFileSync(require.resolve("../.gitignore"), "utf8"));
-} catch (err) {}
+const gitignore = ignore().add(
+  fs.readFileSync(require.resolve("../../.gitignore"), "utf8")
+);
 
 /**
  * @param {string} file

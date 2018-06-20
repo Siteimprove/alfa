@@ -11,10 +11,12 @@ const isSrc = endsWith(".ts", ".tsx");
 watchFiles("packages", (event, file) => {
   let success;
 
-  if (isSpec(file)) {
-    success = test(file);
-  } else if (isSrc(file)) {
-    success = build(file);
+  switch (true) {
+    case isSpec(file):
+      success = test(file);
+      break;
+    case isSrc(file):
+      success = build(file);
   }
 
   if (success) {

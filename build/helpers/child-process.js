@@ -24,10 +24,14 @@ export function spawn(command, args, options = {}) {
 }
 
 /**
- * @param {Buffer} input
- * @return {Buffer}
+ * @param {Buffer | null} input
+ * @return {Buffer | null}
  */
 function trim(input) {
+  if (input === null) {
+    return null;
+  }
+
   const last = input.length - 1;
 
   if (
