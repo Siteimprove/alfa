@@ -1,11 +1,10 @@
-// @ts-check
-
-const { readDirectory } = require("./file-system");
-const { Graph } = require("./graph");
+import { readDirectory } from "./file-system";
+import { Graph } from "./graph";
 
 const graph = new Graph();
 
 for (const pkg of readDirectory("packages")) {
+  /** @type {object} */
   let info;
   try {
     info = require(require.resolve(`../../packages/${pkg}/package.json`));
@@ -27,4 +26,4 @@ for (const pkg of readDirectory("packages")) {
   }
 }
 
-module.exports = { packages: graph.sort() };
+export const packages = graph.sort();

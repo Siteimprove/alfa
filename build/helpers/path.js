@@ -1,17 +1,13 @@
-// @ts-check
-
-const path = require("path");
+import * as path from "path";
 
 /**
  * @param {string} file
  * @param {string} extension
  * @return {string}
  */
-function withExtension(file, extension) {
+export function withExtension(file, extension) {
   return path.join(
     path.dirname(file),
     path.basename(file, path.extname(file)) + extension
   );
 }
-
-module.exports = { withExtension };

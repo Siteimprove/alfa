@@ -1,14 +1,12 @@
 // @ts-check
 
-const chalk = require("chalk");
+import * as git from "./helpers/git";
+import * as notify from "./helpers/notify";
 
-const git = require("./helpers/git");
-const { notify } = require("./helpers/notify");
-
-const { lint } = require("./tasks/lint");
+import { lint } from "./tasks/lint";
 
 for (const file of git.getStagedFiles()) {
   if (lint(file)) {
-    notify.success(chalk.dim(file));
+    notify.success(file);
   }
 }

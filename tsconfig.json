@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "alwaysStrict": true,
+    "checkJs": true,
     "declaration": true,
     "declarationMap": true,
     "jsx": "react",

@@ -1,13 +1,11 @@
-// @ts-check
-
-const childProcess = require("child_process");
+import * as childProcess from "child_process";
 
 /**
  * @param {string} command
  * @param {Array<string>} args
  * @return {object}
  */
-function spawn(command, args, options = {}) {
+export function spawn(command, args, options = {}) {
   options = Object.assign(
     {},
     {
@@ -19,19 +17,25 @@ function spawn(command, args, options = {}) {
 
   const child = childProcess.spawnSync(command, args, options);
 
-  for (const pipe of ["stdout", "stderr"]) {
-    const output = child[pipe];
-
-    if (output !== null) {
-      const last = output.length - 1;
-
-      if (output[last] === "\n" || output[last] === "\r") {
-        child[pipe] = output.substring(0, last);
-      }
-    }
-  }
+  child.stdout = trim(child.stdout);
+  child.stderr = trim(child.stderr);
 
   return child;
 }
 
-module.exports = { spawn };
+/**
+ * @param {Buffer} input
+ * @return {Buffer}
+ */
+function trim(input) {
+  const last = input.length - 1;
+
+  if (
+    input[last] === "\n".charCodeAt(0) ||
+    input[last] === "\r".charCodeAt(0)
+  ) {
+    return input.slice(0, last);
+  }
+
+  return input;
+}

@@ -1,6 +1,4 @@
-// @ts-check
-
-class Graph {
+export class Graph {
   constructor() {
     /** @type {Set<string>} */
     this.nodes = new Set();
@@ -45,7 +43,11 @@ class Graph {
     this.addNode(from);
     this.addNode(to);
 
-    this.edges.get(from).add(to);
+    const edges = this.edges.get(from);
+
+    if (edges !== undefined) {
+      edges.add(to);
+    }
 
     return true;
   }
@@ -56,7 +58,13 @@ class Graph {
    * @return {boolean}
    */
   hasEdge(from, to) {
-    return this.edges.has(from) && this.edges.get(from).has(to);
+    const edges = this.edges.get(from);
+
+    if (edges === undefined) {
+      return false;
+    }
+
+    return edges.has(to);
   }
 
   /**
@@ -69,7 +77,7 @@ class Graph {
     /** @type {Map<string, number>} */
     const indegrees = new Map();
 
-    for (const [node, neighbours] of this.edges) {
+    for (const neighbours of this.edges.values()) {
       for (const node of neighbours) {
         const indegree = indegrees.get(node);
 
@@ -85,24 +93,30 @@ class Graph {
       node => indegrees.get(node) === undefined
     );
 
-    while (leaves.length > 0) {
-      const next = leaves.pop();
+    let next = leaves.pop();
 
+    while (next !== undefined) {
       result.unshift(next);
 
-      for (const node of this.edges.get(next)) {
-        const indegree = indegrees.get(node) - 1;
+      const edges = this.edges.get(next);
 
-        indegrees.set(node, indegree)
+      for (const node of edges || []) {
+        const indegree = indegrees.get(node);
 
-        if (indegree === 0) {
+        if (indegree === undefined) {
+          continue;
+        }
+
+        indegrees.set(node, indegree - 1);
+
+        if (indegree === 1) {
           leaves.push(node);
         }
       }
+
+      next = leaves.pop();
     }
 
     return result;
   }
 }
-
-module.exports = { Graph };

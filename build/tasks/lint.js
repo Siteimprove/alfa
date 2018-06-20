@@ -1,17 +1,15 @@
-// @ts-check
+import * as prettier from "prettier";
+import chalk from "chalk";
 
-const prettier = require("prettier");
-const chalk = require("chalk");
-
-const { readFile, writeFile } = require("../helpers/file-system");
-const { stageFile, isStaged } = require("../helpers/git");
-const { notify } = require("../helpers/notify");
+import { readFile, writeFile } from "../helpers/file-system";
+import { stageFile, isStaged } from "../helpers/git";
+import * as notify from "../helpers/notify";
 
 /**
  * @param {string} file
  * @return {boolean}
  */
-function lint(file) {
+export function lint(file) {
   const code = readFile(file);
 
   let formatted;
@@ -33,5 +31,3 @@ function lint(file) {
 
   return false;
 }
-
-module.exports = { lint };

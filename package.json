@@ -1,23 +1,23 @@
 {
   "private": true,
   "scripts": {
-    "prepare": "node build/build.js",
-    "test": "node build/test.js",
-    "start": "node build/watch.js",
-    "precommit": "node build/lint.js"
+    "prepare": "node -r esm build/build.js",
+    "test": "node  -r esm build/test.js",
+    "start": "node -r esm build/watch.js",
+    "precommit": "node -r esm build/lint.js"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
+    "@types/node": "^10.3.4",
+    "@types/prettier": "^1.13.1",
     "chalk": "^2.4.1",
     "esm": "^3.0.51",
-    "figures": "^2.0.0",
     "husky": "^0.14.3",
     "ignore": "^3.3.8",
     "lerna": "^2.9.0",
     "prettier": "1.13.5",
-    "signale": "^1.2.1",
     "typescript": "^2.9.2"
   }
 }

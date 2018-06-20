@@ -1,14 +1,9 @@
-// @ts-check
+import { findFiles } from "./helpers/file-system";
+import { endsWith } from "./helpers/predicates";
+import { packages } from "./helpers/meta";
+import * as notify from "./helpers/notify";
 
-const path = require("path");
-const chalk = require("chalk");
-
-const { findFiles } = require("./helpers/file-system");
-const { notify } = require("./helpers/notify");
-const { endsWith } = require("./helpers/predicates");
-const { packages } = require("./helpers/meta");
-
-const { build } = require("./tasks/build");
+import { build } from "./tasks/build";
 
 const isSpec = endsWith(".spec.ts", ".spec.tsx");
 
@@ -22,7 +17,7 @@ for (const pkg of packages) {
     }
 
     if (build(file)) {
-      notify.success(chalk.dim(file));
+      notify.success(file);
     } else {
       process.exit(1);
     }

@@ -1,16 +1,18 @@
-// @ts-check
+import * as path from "path";
+import * as TypeScript from "typescript";
+import chalk from "chalk";
 
-const path = require("path");
-const TypeScript = require("typescript");
-const chalk = require("chalk");
-
-const { writeFile } = require("../helpers/file-system");
-const { notify } = require("../helpers/notify");
-const { Workspace } = require("../helpers/workspace");
+import { writeFile } from "../helpers/file-system";
+import { Workspace } from "../helpers/workspace";
+import * as notify from "../helpers/notify";
 
 const workspace = new Workspace();
 
-function build(file) {
+/**
+ * @param {string} file
+ * @return {boolean}
+ */
+export function build(file) {
   const diagnostics = workspace.diagnose(file);
 
   if (diagnostics.length > 0) {
@@ -43,9 +45,7 @@ function formatDiagnostic(diagnostic) {
   const { file } = diagnostic;
 
   if (file) {
-    const { line, character } = file.getLineAndCharacterOfPosition(
-      diagnostic.start
-    );
+    const { line } = file.getLineAndCharacterOfPosition(diagnostic.start);
 
     const filePath = path.relative(process.cwd(), file.fileName);
 
@@ -54,5 +54,3 @@ function formatDiagnostic(diagnostic) {
 
   return message;
 }
-
-module.exports = { build };

@@ -1,15 +1,16 @@
-// @ts-check
+import chalk from "chalk";
 
-const path = require("path");
-const chalk = require("chalk");
+import { withExtension } from "../helpers/path";
+import { spawn } from "../helpers/child-process";
+import * as notify from "../helpers/notify";
 
-const { withExtension } = require("../helpers/path");
-const { notify } = require("../helpers/notify");
-const { spawn } = require("../helpers/child-process");
+import { build } from "./build";
 
-const { build } = require("./build");
-
-function test(file) {
+/**
+ * @param {string} file
+ * @return {boolean}
+ */
+export function test(file) {
   if (build(file)) {
     const child = spawn("node", ["-r", "esm", withExtension(file, ".js")], {
       stdio: "inherit"
@@ -24,5 +25,3 @@ function test(file) {
 
   return false;
 }
-
-module.exports = { test };

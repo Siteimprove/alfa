@@ -1,11 +1,9 @@
-// @ts-check
+import * as path from "path";
+import * as fs from "fs";
+import * as TypeScript from "typescript";
+import { Project } from "./project";
 
-const path = require("path");
-const fs = require("fs");
-const TypeScript = require("typescript");
-const { Project } = require("./project");
-
-class Workspace {
+export class Workspace {
   constructor() {
     this.projects = new Map();
     this.registry = TypeScript.createDocumentRegistry(false, process.cwd());
@@ -70,5 +68,3 @@ function findConfigFile(directory) {
 
   return findConfigFile(parentDirectory);
 }
-
-module.exports = { Workspace };

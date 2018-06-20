@@ -1,14 +1,12 @@
-// @ts-check
-
-const path = require("path");
-const fs = require("fs");
-const git = require("./git");
+import * as path from "path";
+import * as fs from "fs";
+import * as git from "./git";
 
 /**
  * @param {string} path
  * @return {boolean}
  */
-function isFile(path) {
+export function isFile(path) {
   try {
     return fs.statSync(path).isFile();
   } catch (err) {
@@ -20,7 +18,7 @@ function isFile(path) {
  * @param {string} file
  * @return {string}
  */
-function readFile(file) {
+export function readFile(file) {
   return fs.readFileSync(file, "utf8");
 }
 
@@ -29,7 +27,7 @@ function readFile(file) {
  * @param {string} data
  * @return {void}
  */
-function writeFile(file, data) {
+export function writeFile(file, data) {
   makeDirectory(path.dirname(file));
   fs.writeFileSync(file, data);
 }
@@ -38,7 +36,7 @@ function writeFile(file, data) {
  * @param {string} file
  * @return {void}
  */
-function removeFile(file) {
+export function removeFile(file) {
   return fs.unlinkSync(file);
 }
 
@@ -47,7 +45,8 @@ function removeFile(file) {
  * @param {function(string): boolean} predicate
  * @return {Array<string>}
  */
-function findFiles(directory, predicate) {
+export function findFiles(directory, predicate) {
+  /** @type {Array<string>} */
   const files = [];
 
   if (!fs.existsSync(directory)) {
@@ -55,11 +54,11 @@ function findFiles(directory, predicate) {
   }
 
   for (let file of readDirectory(directory)) {
+    file = path.join(directory, file);
+
     if (git.isIgnored(file)) {
       continue;
     }
-
-    file = path.join(directory, file);
 
     if (isFile(file) && predicate(file)) {
       files.push(file);
@@ -76,9 +75,9 @@ function findFiles(directory, predicate) {
 /**
  * @param {string} directory
  * @param {function(string, string)} listener
- * @return {object}
+ * @return {fs.FSWatcher}
  */
-function watchFiles(directory, listener) {
+export function watchFiles(directory, listener) {
   return fs.watch(directory, { recursive: true }, (event, file) => {
     if (file === undefined) {
       return;
@@ -100,7 +99,7 @@ function watchFiles(directory, listener) {
  * @param {string} path
  * @return {boolean}
  */
-function isDirectory(path) {
+export function isDirectory(path) {
   try {
     return fs.statSync(path).isDirectory();
   } catch (err) {
@@ -112,7 +111,7 @@ function isDirectory(path) {
  * @param {string} directory
  * @return {object}
  */
-function readDirectory(directory) {
+export function readDirectory(directory) {
   return fs.readdirSync(directory);
 }
 
@@ -120,7 +119,7 @@ function readDirectory(directory) {
  * @param {string} directory
  * @return {void}
  */
-function makeDirectory(directory) {
+export function makeDirectory(directory) {
   directory = path.resolve(directory);
 
   try {
@@ -141,19 +140,6 @@ function makeDirectory(directory) {
  * @param {string} directory
  * @return {void}
  */
-function removeDirectory(directory) {
+export function removeDirectory(directory) {
   fs.rmdirSync(directory);
 }
-
-module.exports = {
-  isFile,
-  readFile,
-  writeFile,
-  removeFile,
-  findFiles,
-  watchFiles,
-  isDirectory,
-  readDirectory,
-  makeDirectory,
-  removeDirectory
-};

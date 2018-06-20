@@ -1,13 +1,9 @@
-// @ts-check
+import { watchFiles } from "./helpers/file-system";
+import { endsWith } from "./helpers/predicates";
+import * as notify from "./helpers/notify";
 
-const chalk = require("chalk");
-
-const { watchFiles } = require("./helpers/file-system");
-const { notify } = require("./helpers/notify");
-const { endsWith } = require("./helpers/predicates");
-
-const { build } = require("./tasks/build");
-const { test } = require("./tasks/test");
+import { build } from "./tasks/build";
+import { test } from "./tasks/test";
 
 const isSpec = endsWith(".spec.ts", ".spec.tsx");
 const isSrc = endsWith(".ts", ".tsx");
@@ -22,7 +18,7 @@ watchFiles("packages", (event, file) => {
   }
 
   if (success) {
-    notify.success(chalk.dim(file));
+    notify.success(file);
   }
 });
 

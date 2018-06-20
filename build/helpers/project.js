@@ -1,13 +1,25 @@
-// @ts-check
+import * as path from "path";
+import * as fs from "fs";
+import * as crypto from "crypto";
+import * as TypeScript from "typescript";
 
-const path = require("path");
-const fs = require("fs");
-const crypto = require("crypto");
-const TypeScript = require("typescript");
+/**
+ * @typedef {Object} ScriptInfo
+ * @property {string} version
+ * @property {TypeScript.IScriptSnapshot} snapshot
+ * @property {TypeScript.ScriptKind} kind
+ */
 
-class Project {
+export class Project {
+  /**
+   * @param {string} configFile
+   * @param {TypeScript.DocumentRegistry} registry
+   */
   constructor(configFile, registry) {
+    /** @type {InMemoryLanguageServiceHost} */
     this.host = new InMemoryLanguageServiceHost(configFile);
+
+    /** @type {TypeScript.LanguageService} */
     this.service = TypeScript.createLanguageService(this.host, registry);
   }
 
@@ -22,7 +34,7 @@ class Project {
 
   /**
    * @param {string} file
-   * @return {Array}
+   * @return {Array<TypeScript.Diagnostic>}
    */
   diagnose(file) {
     file = this.resolve(file);
@@ -37,7 +49,7 @@ class Project {
     ];
 
     diagnostics.sort((a, b) => {
-      return a.start - b.start;
+      return (a.start || 0) - (b.start || 0);
     });
 
     return diagnostics;
@@ -45,7 +57,7 @@ class Project {
 
   /**
    * @param {string} file
-   * @return {object}
+   * @return {Array<TypeScript.OutputFile>}
    */
   compile(file) {
     file = this.resolve(file);
@@ -59,12 +71,25 @@ class Project {
 }
 
 class InMemoryLanguageServiceHost {
+  /**
+   * @param {string} configFile
+   */
   constructor(configFile) {
+    /** @type {Map<string, ScriptInfo>} */
     this.files = new Map();
+
+    /** @type {string} */
     this.version = "";
+
+    /** @type {object} */
     this.options = this.getOptions(configFile);
   }
 
+  /**
+   * @private
+   * @param {string} configFile
+   * @return {TypeScript.CompilerOptions}
+   */
   getOptions(configFile) {
     const { config } = TypeScript.parseConfigFileTextToJson(
       configFile,
@@ -80,61 +105,112 @@ class InMemoryLanguageServiceHost {
     return options;
   }
 
+  /**
+   * @return {TypeScript.CompilerOptions}
+   */
   getCompilationSettings() {
     return this.options;
   }
 
+  /**
+   * @return {string}
+   */
   getNewLine() {
     return "\n";
   }
 
+  /**
+   * @return {string}
+   */
   getProjectVersion() {
     return this.version;
   }
 
+  /**
+   * @return {Array<string>}
+   */
   getScriptFileNames() {
     return [...this.files.keys()];
   }
 
+  /**
+   * @param {string} file
+   * @return {TypeScript.ScriptKind}
+   */
   getScriptKind(file) {
     const { kind } = this.files.get(file) || this.addFile(file);
     return kind;
   }
 
+  /**
+   * @param {string} file
+   * @return {string}
+   */
   getScriptVersion(file) {
     const { version } = this.files.get(file) || this.addFile(file);
     return version;
   }
 
+  /**
+   * @param {string} file
+   * @return {TypeScript.IScriptSnapshot}
+   */
   getScriptSnapshot(file) {
     const { snapshot } = this.files.get(file) || this.addFile(file);
     return snapshot;
   }
 
+  /**
+   * @return {string}
+   */
   getCurrentDirectory() {
     return process.cwd();
   }
 
+  /**
+   * @param {TypeScript.CompilerOptions} options
+   * @return {string}
+   */
   getDefaultLibFileName(options) {
     return TypeScript.getDefaultLibFilePath(options);
   }
 
+  /**
+   * @return {boolean}
+   */
   useCaseSensitivefiles() {
     return false;
   }
 
+  /**
+   * @param {string} file
+   * @param {string} [encoding]
+   * @return {string}
+   */
   readFile(file, encoding = "utf8") {
     return fs.readFileSync(file, encoding);
   }
 
+  /**
+   * @param {string} file
+   * @return {string}
+   */
   realpath(file) {
     return fs.realpathSync(file);
   }
 
+  /**
+   * @param {string} file
+   * @return {boolean}
+   */
   fileExists(file) {
     return fs.existsSync(file);
   }
 
+  /**
+   * @param {string} directory
+   * @return {Array<string>}
+   */
   getDirectories(directory) {
     if (!fs.existsSync(directory)) {
       return [];
@@ -145,6 +221,10 @@ class InMemoryLanguageServiceHost {
       .filter(entry => fs.statSync(path.join(directory, entry)).isDirectory());
   }
 
+  /**
+   * @param {string} file
+   * @return {ScriptInfo}
+   */
   addFile(file) {
     const text = fs.readFileSync(file, "utf8");
     const version = getDigest(text);
@@ -182,16 +262,21 @@ class InMemoryLanguageServiceHost {
     return current;
   }
 
+  /**
+   * @param {string} file
+   */
   removeFile(file) {
     this.files.delete(file);
   }
 }
 
+/**
+ * @param {string} file
+ * @return {string}
+ */
 function getDigest(file) {
   return crypto
     .createHash("md5")
     .update(file)
     .digest("hex");
 }
-
-module.exports = { Project };
