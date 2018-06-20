@@ -112,7 +112,7 @@ export function getCascadedStyle(
     // If the property name is already present in the cascaded style then this
     // means that the property was set inline and that we're now trying to set
     // it from the cascaded styles. However, only important declarations from
-    // the cascaded styles can override those set inline to we move on if the
+    // the cascaded styles can override those set inline so we move on if the
     // declaration is not important.
     if (propertyName in cascadedStyle && !declaration.important) {
       continue;

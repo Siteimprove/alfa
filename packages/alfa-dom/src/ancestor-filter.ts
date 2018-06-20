@@ -52,9 +52,7 @@ import { getClassList } from "./get-class-list";
  */
 export class AncestorFilter {
   private readonly ids: AncestorBucket = new Map();
-
   private readonly classes: AncestorBucket = new Map();
-
   private readonly types: AncestorBucket = new Map();
 
   public add(element: Element): void {

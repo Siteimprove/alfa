@@ -208,6 +208,21 @@ export const UserAgent: StyleSheet = {
   ]
 };
 
+/**
+ * @internal
+ */
+export function isUserAgentRule(rule: Rule): boolean {
+  const { cssRules } = UserAgent;
+
+  for (let i = 0, n = cssRules.length; i < n; i++) {
+    if (cssRules[i] === rule) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function cssRule(
   prelude: string,
   style: { [P in keyof Style]: string } = {}

@@ -84,15 +84,19 @@ function sort(selectors: Array<SelectorEntry>): Array<SelectorEntry> {
     while (j >= 0) {
       const b = selectors[j];
 
+      // If the origins of the rules are not equal, the origin of the rules
+      // will determine the cascade.
+      if (a.origin !== b.origin && a.origin > b.origin) {
+        break;
+      }
+
       // If the specificities of the rules are equal, the declaration order
-      // will determine the cascade. The rule with the highest order gets the
-      // highest priority.
+      // will determine the cascade.
       if (a.specificity === b.specificity && a.order > b.order) {
         break;
       }
 
-      // Otherwise, the specificity will determine the cascade. The rule with
-      // the highest specificity gets the highest priority.
+      // Otherwise, the specificity will determine the cascade.
       if (a.specificity > b.specificity) {
         break;
       }

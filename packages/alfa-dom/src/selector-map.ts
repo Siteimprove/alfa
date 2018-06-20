@@ -13,8 +13,27 @@ import { getId } from "./get-id";
 import { getClassList } from "./get-class-list";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
+import { isUserAgentRule } from "./user-agent";
 
 const { isArray } = Array;
+
+/**
+ * Cascading origins defined in ascending order; origins defined first have
+ * lower precedence than origins defined later.
+ *
+ * @see https://www.w3.org/TR/css-cascade/#cascading-origins
+ */
+export const enum Origin {
+  /**
+   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-ua
+   */
+  UserAgent,
+
+  /**
+   * @see https://www.w3.org/TR/css-cascade/#cascade-origin-author
+   */
+  Author
+}
 
 /**
  * @internal
@@ -22,6 +41,7 @@ const { isArray } = Array;
 export type SelectorEntry = {
   readonly selector: Selector;
   readonly declarations: Array<Declaration>;
+  readonly origin: Origin;
   readonly order: number;
   readonly specificity: number;
 };
@@ -53,11 +73,8 @@ export type SelectorEntry = {
  */
 export class SelectorMap {
   private readonly ids: SelectorBucket = new Map();
-
   private readonly classes: SelectorBucket = new Map();
-
   private readonly types: SelectorBucket = new Map();
-
   private readonly other: Array<SelectorEntry> = [];
 
   public constructor(styleSheets: Array<StyleSheet>) {
@@ -97,10 +114,14 @@ export class SelectorMap {
               return;
             }
 
+            const origin = isUserAgentRule(rule)
+              ? Origin.UserAgent
+              : Origin.Author;
+
             order++;
 
             for (let i = 0, n = selectors.length; i < n; i++) {
-              this.addRule(selectors[i], declarations, order);
+              this.addRule(selectors[i], declarations, origin, order);
             }
           }
         }
@@ -147,6 +168,7 @@ export class SelectorMap {
   private addRule(
     selector: Selector,
     declarations: Array<Declaration>,
+    origin: Origin,
     order: number
   ): void {
     const keySelector = getKeySelector(selector);
@@ -155,6 +177,7 @@ export class SelectorMap {
     const entry: SelectorEntry = {
       selector,
       declarations,
+      origin,
       order,
       specificity
     };
