@@ -7,8 +7,9 @@ import { test } from "./tasks/test";
 
 const isSpec = endsWith(".spec.ts", ".spec.tsx");
 const isSrc = endsWith(".ts", ".tsx");
+const isBuild = endsWith(".js");
 
-watchFiles("packages", (event, file) => {
+watchFiles(".", (event, file) => {
   let success;
 
   switch (true) {
@@ -16,6 +17,7 @@ watchFiles("packages", (event, file) => {
       success = test(file);
       break;
     case isSrc(file):
+    case isBuild(file):
       success = build(file);
   }
 
