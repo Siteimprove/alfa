@@ -45,9 +45,9 @@ function getRefreshTime(content: string): number | null {
 
   stream.accept(char => /\s/.test(char));
 
-  const time = stream.accept(char => /\d/.test(char));
+  const time: Array<string> = [];
 
-  if (time === false) {
+  if (!stream.accept(char => /\d/.test(char), time)) {
     return null;
   }
 

@@ -70,20 +70,13 @@ const initial: ExpressionPattern = (stream, emit) => {
 };
 
 const number: ExpressionPattern = (stream, emit) => {
-  const start = stream.position;
+  const result: Array<number> = [];
 
-  stream.accept(isNumeric);
-
-  const end = stream.position;
+  stream.accept(isNumeric, result);
 
   emit({
     type: TokenType.Number,
-    value: stream.reduce(
-      start,
-      end,
-      (value, char) => 10 * value + char - Char.DigitZero,
-      0
-    )
+    value: result.reduce((value, char) => 10 * value + char - Char.DigitZero, 0)
   });
 
   return initial;

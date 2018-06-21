@@ -87,21 +87,23 @@ export class Stream<T> {
     return success;
   }
 
-  public accept<U extends T>(predicate: Predicate<T, U>): Array<U> | false {
-    const result: Array<U> = [];
+  public accept<U extends T>(
+    predicate: Predicate<T, U>,
+    result?: Array<U>
+  ): boolean {
+    const start = this.position;
 
     let next = this.peek(0);
 
     while (next !== null && predicate(next)) {
-      result.push(next);
+      if (result !== undefined) {
+        result.push(next);
+      }
+
       this.advance(1);
       next = this.peek(0);
     }
 
-    if (result.length === 0) {
-      return false;
-    }
-
-    return result;
+    return start !== this.position;
   }
 }

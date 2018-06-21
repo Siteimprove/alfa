@@ -30,15 +30,15 @@ const addition: ExpressionProduction<Add, Constant | Operator> = {
   token: TokenType.Add,
 
   prefix(token, stream) {
-    const numbers = stream.accept(isNumber);
+    const next = stream.next();
 
-    if (numbers === false) {
+    if (next === null || !isNumber(next)) {
       throw new Error("Expected number");
     }
 
     return {
       type: "constant",
-      value: numbers.reduce((number, { value }) => 10 * number + value, 0)
+      value: next.value
     };
   },
 
@@ -57,15 +57,15 @@ const subtraction: ExpressionProduction<Subtract, Constant | Operator> = {
   token: TokenType.Subtract,
 
   prefix(token, stream) {
-    const numbers = stream.accept(isNumber);
+    const next = stream.next();
 
-    if (numbers === false) {
+    if (next === null || !isNumber(next)) {
       throw new Error("Expected number");
     }
 
     return {
       type: "constant",
-      value: -1 * numbers.reduce((number, { value }) => 10 * number + value, 0)
+      value: next.value * -1
     };
   },
 
