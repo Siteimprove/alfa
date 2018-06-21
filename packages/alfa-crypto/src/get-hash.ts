@@ -2,27 +2,27 @@ import * as sjcl from "sjcl";
 import { Algorithm, Encoding, Hash, Bits } from "./types";
 
 const HashImplementation = class Hash {
-  private _hash: sjcl.SjclHash;
+  private hash: sjcl.SjclHash;
 
-  constructor(algorithm: Algorithm) {
+  public constructor(algorithm: Algorithm) {
     switch (algorithm) {
       case "sha1":
-        this._hash = new sjcl.hash.sha1();
+        this.hash = new sjcl.hash.sha1();
         break;
       case "sha256":
       default:
-        this._hash = new sjcl.hash.sha256();
+        this.hash = new sjcl.hash.sha256();
         break;
       case "sha512":
-        this._hash = new sjcl.hash.sha512();
+        this.hash = new sjcl.hash.sha512();
     }
   }
 
   public update(data: string | Bits): Hash {
     if (typeof data === "string") {
-      this._hash.update(data);
+      this.hash.update(data);
     } else {
-      this._hash.update(data);
+      this.hash.update(data);
     }
     return this;
   }
@@ -31,7 +31,7 @@ const HashImplementation = class Hash {
   public digest(encoding: Encoding): string;
 
   public digest(encoding?: Encoding): Bits | string {
-    const bits = this._hash.finalize();
+    const bits = this.hash.finalize();
 
     if (encoding === undefined) {
       return bits;
