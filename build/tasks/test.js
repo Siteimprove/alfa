@@ -12,9 +12,13 @@ import { build } from "./build";
  */
 export function test(file) {
   if (build(file)) {
-    const child = spawn("node", ["-r", "esm", withExtension(file, ".js")], {
-      stdio: "inherit"
-    });
+    const child = spawn(
+      process.execPath,
+      [...process.execArgv, withExtension(file, ".js")],
+      {
+        stdio: "inherit"
+      }
+    );
 
     if (child.status === 0) {
       return true;
