@@ -1,5 +1,19 @@
 {
   "private": true,
+  "author": "Siteimprove A/S",
+  "homepage": "https://siteimprove.com",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
+  "keywords": [
+    "a11y",
+    "accessibility",
+    "aria",
+    "typescript",
+    "wcag"
+  ],
+  "repository": "https://github.com/siteimprove/alfa",
+  "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
     "prepare": "node -r esm build/build.js",
     "test": "node -r esm build/test.js",
@@ -16,7 +30,7 @@
     "esm": "^3.0.52",
     "husky": "^0.14.3",
     "ignore": "^3.3.10",
-    "lerna": "^2.9.0",
+    "oao": "^1.5.1",
     "prettier": "1.13.5",
     "typescript": "^2.9.2"
   }
