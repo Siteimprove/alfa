@@ -62,20 +62,22 @@ export type Pattern = Lang.Pattern<Token, State>;
 /**
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
-const initial: Pattern = (stream, emit, state) => {
+const data: Pattern = (stream, emit, state) => {
   const char = stream.next();
 
-  if (char === Char.LessThanSign) {
-    return tagOpen;
-  }
+  switch (char) {
+    // case Char.Ampersand:
+    //   state.return = data;
+    //   return characterReference;
 
-  if (char === null) {
-    return Command.End;
+    case Char.LessThanSign:
+      return tagOpen;
+
+    case null:
+      return Command.End;
   }
 
   emit({ type: TokenType.Character, value: fromCharCode(char) });
-
-  return initial;
 };
 
 /**
@@ -84,14 +86,22 @@ const initial: Pattern = (stream, emit, state) => {
 const tagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.ExclamationMark) {
-    stream.advance(1);
-    return markupDeclarationOpen;
-  }
+  switch (char) {
+    case Char.ExclamationMark:
+      stream.advance(1);
+      return markupDeclarationOpen;
 
-  if (char === Char.Solidus) {
-    stream.advance(1);
-    return endTagOpen;
+    case Char.Solidus:
+      stream.advance(1);
+      return endTagOpen;
+
+    case Char.QuestionMark:
+      state.comment = {
+        type: TokenType.Comment,
+        value: ""
+      };
+
+      return bogusComment;
   }
 
   if (char !== null && isAlpha(char)) {
@@ -105,18 +115,9 @@ const tagOpen: Pattern = (stream, emit, state) => {
     return tagName;
   }
 
-  if (char === Char.QuestionMark) {
-    state.comment = {
-      type: TokenType.Comment,
-      value: ""
-    };
-
-    return bogusComment;
-  }
-
   emit({ type: TokenType.Character, value: "<" });
 
-  return initial;
+  return data;
 };
 
 /**
@@ -145,19 +146,19 @@ const markupDeclarationOpen: Pattern = (stream, emit, state) => {
 const commentStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.HyphenMinus) {
-    stream.advance(1);
-    return commentStartDash;
-  }
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      return commentStartDash;
 
-  if (char === Char.GreaterThanSign) {
-    stream.advance(1);
+    case Char.GreaterThanSign:
+      stream.advance(1);
 
-    if (state.comment !== null) {
-      emit(state.comment);
-    }
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
 
-    return initial;
+      return data;
   }
 
   return comment;
@@ -169,25 +170,28 @@ const commentStart: Pattern = (stream, emit, state) => {
 const commentStartDash: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.HyphenMinus) {
-    stream.advance(1);
-    return commentEnd;
-  }
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      return commentEnd;
 
-  if (char === Char.GreaterThanSign || char === null) {
-    stream.advance(1);
+    case Char.GreaterThanSign:
+      stream.advance(1);
 
-    if (state.comment !== null) {
-      emit(state.comment);
-    }
-  }
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
 
-  if (char === Char.GreaterThanSign) {
-    return initial;
-  }
+      return data;
 
-  if (char === null) {
-    return Command.End;
+    case null:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
   }
 
   if (state.comment !== null) {
@@ -328,7 +332,7 @@ const commentEnd: Pattern = (stream, emit, state) => {
         emit(state.comment);
       }
 
-      return initial;
+      return data;
 
     case Char.ExclamationMark:
       stream.advance(1);
@@ -381,7 +385,7 @@ const commentEndBang: Pattern = (stream, emit, state) => {
         emit(state.comment);
       }
 
-      return initial;
+      return data;
 
     case null:
       if (state.comment !== null) {
@@ -421,7 +425,7 @@ const endTagOpen: Pattern = (stream, emit, state) => {
 
   if (char === Char.GreaterThanSign) {
     stream.advance(1);
-    return initial;
+    return data;
   }
 
   state.comment = {
@@ -453,7 +457,7 @@ const tagName: Pattern = (stream, emit, state) => {
         emit(state.tag);
       }
 
-      return initial;
+      return data;
 
     case Char.Null:
       if (state.tag !== null) {
@@ -494,7 +498,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state) => {
         emit(state.tag);
       }
 
-      return initial;
+      return data;
 
     case null:
       return Command.End;
@@ -611,7 +615,7 @@ const afterAttributeName: Pattern = (stream, emit, state) => {
         emit(state.tag);
       }
 
-      return initial;
+      return data;
 
     case null:
       return Command.End;
@@ -732,7 +736,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
         emit(state.tag);
       }
 
-      return initial;
+      return data;
 
     case Char.Null:
       if (state.attribute !== null) {
@@ -774,7 +778,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
         emit(state.tag);
       }
 
-      return initial;
+      return data;
 
     case null:
       return Command.End;
@@ -795,7 +799,7 @@ const bogusComment: Pattern = (stream, emit, state) => {
         emit(state.comment);
       }
 
-      return initial;
+      return data;
 
     case null:
       if (state.comment !== null) {
@@ -818,7 +822,7 @@ const bogusComment: Pattern = (stream, emit, state) => {
 };
 
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
-  initial,
+  data,
   () => ({
     start: 0,
     tag: null,
