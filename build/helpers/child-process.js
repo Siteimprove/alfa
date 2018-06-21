@@ -25,11 +25,11 @@ export function spawn(command, args, options = {}) {
 
 /**
  * @param {Buffer | null} input
- * @return {Buffer | null}
+ * @return {Buffer}
  */
 function trim(input) {
   if (input === null) {
-    return null;
+    return Buffer.alloc(0);
   }
 
   const last = input.length - 1;
