@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "prepare": "node -r esm build/build.js",
-    "test": "node  -r esm build/test.js",
+    "test": "node -r esm build/test.js",
     "start": "node -r esm build/watch.js",
     "precommit": "node -r esm build/lint.js"
   },
@@ -13,9 +13,9 @@
     "@types/node": "^10.3.4",
     "@types/prettier": "^1.13.1",
     "chalk": "^2.4.1",
-    "esm": "^3.0.51",
+    "esm": "^3.0.52",
     "husky": "^0.14.3",
-    "ignore": "^3.3.8",
+    "ignore": "^3.3.10",
     "lerna": "^2.9.0",
     "prettier": "1.13.5",
     "typescript": "^2.9.2"
