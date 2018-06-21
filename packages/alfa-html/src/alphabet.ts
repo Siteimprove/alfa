@@ -1,6 +1,6 @@
 import { Mutable } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
-import { Command, Char, isWhitespace, isAlpha } from "@siteimprove/alfa-lang";
+import { Command, Char, isAlpha } from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
 
@@ -51,10 +51,10 @@ export type Token =
   | Comment;
 
 export type State = {
-  start: number;
   tag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
+  return: Pattern | null;
 };
 
 export type Pattern = Lang.Pattern<Token, State>;
@@ -95,7 +95,6 @@ const tagOpen: Pattern = (stream, emit, state) => {
   }
 
   if (char !== null && isAlpha(char)) {
-    state.start = stream.position;
     state.tag = {
       type: TokenType.StartTag,
       value: "",
@@ -107,7 +106,6 @@ const tagOpen: Pattern = (stream, emit, state) => {
   }
 
   if (char === Char.QuestionMark) {
-    state.start = stream.position;
     state.comment = {
       type: TokenType.Comment,
       value: ""
@@ -137,8 +135,6 @@ const markupDeclarationOpen: Pattern = (stream, emit, state) => {
     stream.advance(2);
     return commentStart;
   }
-
-  state.start = stream.position;
 
   return bogusComment;
 };
@@ -207,27 +203,33 @@ const commentStartDash: Pattern = (stream, emit, state) => {
 const comment: Pattern = (stream, emit, state) => {
   const char = stream.next();
 
-  if (char === Char.LessThanSign) {
-    if (state.comment !== null) {
-      state.comment.value += fromCharCode(char);
-    }
+  switch (char) {
+    case Char.LessThanSign:
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
 
-    return commentLessThanSign;
-  }
+      return commentLessThanSign;
 
-  if (char === Char.HyphenMinus) {
-    return commentEndDash;
-  }
+    case Char.HyphenMinus:
+      return commentEndDash;
 
-  if (char === null) {
-    if (state.comment !== null) {
-      emit(state.comment);
-    }
-    return Command.End;
-  }
+    case Char.Null:
+      if (state.comment !== null) {
+        state.comment.value += "\ufffd";
+      }
+      break;
 
-  if (state.comment !== null) {
-    state.comment.value += fromCharCode(char);
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+      return Command.End;
+
+    default:
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
   }
 
   return comment;
@@ -239,17 +241,24 @@ const comment: Pattern = (stream, emit, state) => {
 const commentLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.ExclamationMark || char === Char.LessThanSign) {
-    stream.advance(1);
+  switch (char) {
+    case Char.ExclamationMark:
+      stream.advance(1);
 
-    if (state.comment !== null) {
-      state.comment.value += fromCharCode(char);
-    }
-  }
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
 
-  if (char === Char.ExclamationMark) {
-    stream.advance(1);
-    return commentLessThanSignBang;
+      return commentLessThanSignBang;
+
+    case Char.LessThanSign:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
+
+      return commentLessThanSign;
   }
 
   return comment;
@@ -285,16 +294,21 @@ const commentLessThanSignBangDash: Pattern = stream => {
 const commentEndDash: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.HyphenMinus || char === null) {
-    stream.advance(1);
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      return commentEnd;
+
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
   }
 
-  if (char === Char.HyphenMinus) {
-    return commentEnd;
-  }
-
-  if (char === null) {
-    return Command.End;
+  if (state.comment !== null) {
+    state.comment.value += "-";
   }
 
   return comment;
@@ -306,23 +320,39 @@ const commentEndDash: Pattern = (stream, emit, state) => {
 const commentEnd: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.GreaterThanSign) {
-    stream.advance(1);
+  switch (char) {
+    case Char.GreaterThanSign:
+      stream.advance(1);
 
-    if (state.comment !== null) {
-      emit(state.comment);
-    }
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
 
-    return initial;
+      return initial;
+
+    case Char.ExclamationMark:
+      stream.advance(1);
+      return commentEndBang;
+
+    case Char.HyphenMinus:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        state.comment.value += "-";
+      }
+
+      return commentEnd;
+
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
   }
 
-  if (char === Char.ExclamationMark) {
-    stream.advance(1);
-    return commentEndBang;
-  }
-
-  if (char === null) {
-    return Command.End;
+  if (state.comment !== null) {
+    state.comment.value += "--";
   }
 
   return comment;
@@ -334,28 +364,31 @@ const commentEnd: Pattern = (stream, emit, state) => {
 const commentEndBang: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.HyphenMinus) {
-    stream.advance(1);
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
 
-    if (state.comment !== null) {
-      state.comment.value += "-!";
-    }
+      if (state.comment !== null) {
+        state.comment.value += "-!";
+      }
 
-    return commentEndDash;
-  }
+      return commentEndDash;
 
-  if (char === Char.GreaterThanSign || char === null) {
-    if (state.comment !== null) {
-      emit(state.comment);
-    }
-  }
+    case Char.GreaterThanSign:
+      stream.advance(1);
 
-  if (char === Char.GreaterThanSign) {
-    return initial;
-  }
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
 
-  if (char === null) {
-    return Command.End;
+      return initial;
+
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
   }
 
   if (state.comment !== null) {
@@ -378,7 +411,6 @@ const endTagOpen: Pattern = (stream, emit, state) => {
   }
 
   if (isAlpha(char)) {
-    state.start = stream.position;
     state.tag = {
       type: TokenType.EndTag,
       value: ""
@@ -392,7 +424,6 @@ const endTagOpen: Pattern = (stream, emit, state) => {
     return initial;
   }
 
-  state.start = stream.position;
   state.comment = {
     type: TokenType.Comment,
     value: ""
@@ -405,43 +436,41 @@ const endTagOpen: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tag-name-state
  */
 const tagName: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
+  const char = stream.next();
 
-  if (char === null) {
-    return Command.End;
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return beforeAttributeName;
+
+    case Char.Solidus:
+      return selfClosingStartTag;
+
+    case Char.GreaterThanSign:
+      if (state.tag) {
+        emit(state.tag);
+      }
+
+      return initial;
+
+    case Char.Null:
+      if (state.tag !== null) {
+        state.tag.value += "\ufffd";
+      }
+      break;
+
+    case null:
+      return Command.End;
   }
 
-  if (
-    isWhitespace(char) ||
-    char === Char.Solidus ||
-    char === Char.GreaterThanSign
-  ) {
-    if (state.tag !== null) {
-      state.tag.value = stream.reduce(
-        state.start,
-        stream.position,
-        (value, char) => value + fromCharCode(char),
-        ""
-      );
+  if (state.tag) {
+    if (isAlpha(char)) {
+      state.tag.value += fromCharCode(char).toLowerCase();
+    } else {
+      state.tag.value += fromCharCode(char);
     }
-  }
-
-  stream.advance(1);
-
-  if (isWhitespace(char)) {
-    return beforeAttributeName;
-  }
-
-  if (char === Char.Solidus) {
-    return selfClosingStartTag;
-  }
-
-  if (char === Char.GreaterThanSign) {
-    if (state.tag !== null) {
-      emit(state.tag);
-    }
-
-    return initial;
   }
 
   return tagName;
@@ -453,22 +482,22 @@ const tagName: Pattern = (stream, emit, state) => {
 const selfClosingStartTag: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === Char.GreaterThanSign) {
-    stream.advance(1);
+  switch (char) {
+    case Char.GreaterThanSign:
+      stream.advance(1);
 
-    if (state.tag !== null) {
-      if (state.tag.type === TokenType.StartTag) {
-        state.tag.closed = true;
+      if (state.tag !== null) {
+        if (state.tag.type === TokenType.StartTag) {
+          state.tag.closed = true;
+        }
+
+        emit(state.tag);
       }
 
-      emit(state.tag);
-    }
+      return initial;
 
-    return initial;
-  }
-
-  if (char === null) {
-    return Command.End;
+    case null:
+      return Command.End;
   }
 
   return beforeAttributeName;
@@ -478,21 +507,38 @@ const selfClosingStartTag: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
  */
 const beforeAttributeName: Pattern = (stream, emit, state) => {
-  stream.accept(isWhitespace);
-
   const char = stream.peek(0);
 
-  state.attribute = { name: "", value: "" };
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      return beforeAttributeName;
 
-  if (char === Char.Solidus || char === Char.GreaterThanSign || char === null) {
-    return afterAttributeName;
+    case Char.Solidus:
+    case Char.GreaterThanSign:
+    case null:
+      return afterAttributeName;
+
+    case Char.EqualSign:
+      stream.advance(1);
+
+      state.attribute = { name: fromCharCode(char), value: "" };
+
+      if (state.tag !== null && state.tag.type === TokenType.StartTag) {
+        state.tag.attributes.push(state.attribute);
+      }
+
+      return attributeName;
   }
+
+  state.attribute = { name: "", value: "" };
 
   if (state.tag !== null && state.tag.type === TokenType.StartTag) {
     state.tag.attributes.push(state.attribute);
   }
-
-  state.start = stream.position;
 
   return attributeName;
 };
@@ -503,40 +549,35 @@ const beforeAttributeName: Pattern = (stream, emit, state) => {
 const attributeName: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (
-    char === null ||
-    isWhitespace(char) ||
-    char === Char.Solidus ||
-    char === Char.GreaterThanSign
-  ) {
-    if (state.attribute !== null) {
-      state.attribute.name = stream.reduce(
-        state.start,
-        stream.position,
-        (value, char) => value + fromCharCode(char),
-        ""
-      );
-    }
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+    case Char.Solidus:
+    case Char.GreaterThanSign:
+    case null:
+      return afterAttributeName;
 
-    return afterAttributeName;
-  }
+    case Char.EqualSign:
+      stream.advance(1);
+      return beforeAttributeValue;
 
-  if (char === Char.EqualSign) {
-    if (state.attribute !== null) {
-      state.attribute.name = stream.reduce(
-        state.start,
-        stream.position,
-        (value, char) => value + fromCharCode(char),
-        ""
-      );
-    }
+    case Char.Null:
+      stream.advance(1);
 
-    stream.advance(1);
+      if (state.attribute !== null) {
+        state.attribute.name += "\ufffd";
+      }
 
-    return beforeAttributeValue;
+      return attributeName;
   }
 
   stream.advance(1);
+
+  if (state.attribute !== null) {
+    state.attribute.name += fromCharCode(char);
+  }
 
   return attributeName;
 };
@@ -545,35 +586,42 @@ const attributeName: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-name-state
  */
 const afterAttributeName: Pattern = (stream, emit, state) => {
-  stream.accept(isWhitespace);
-
   const char = stream.peek(0);
 
-  if (char === Char.Solidus) {
-    stream.advance(1);
-    return selfClosingStartTag;
-  }
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      return;
 
-  if (char === Char.EqualSign) {
-    stream.advance(1);
-    return beforeAttributeValue;
-  }
+    case Char.Solidus:
+      stream.advance(1);
+      return selfClosingStartTag;
 
-  if (char === Char.GreaterThanSign) {
-    stream.advance(1);
+    case Char.EqualSign:
+      stream.advance(1);
+      return beforeAttributeValue;
 
-    if (state.tag !== null) {
-      emit(state.tag);
-    }
+    case Char.GreaterThanSign:
+      stream.advance(1);
 
-    return initial;
-  }
+      if (state.tag) {
+        emit(state.tag);
+      }
 
-  if (char === null) {
-    return Command.End;
+      return initial;
+
+    case null:
+      return Command.End;
   }
 
   state.attribute = { name: "", value: "" };
+
+  if (state.tag !== null && state.tag.type === TokenType.StartTag) {
+    state.tag.attributes.push(state.attribute);
+  }
 
   return attributeName;
 };
@@ -582,22 +630,23 @@ const afterAttributeName: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-value-state
  */
 const beforeAttributeValue: Pattern = (stream, emit, state) => {
-  stream.accept(isWhitespace);
-
   const char = stream.peek(0);
 
-  if (char === Char.QuotationMark || char === Char.Apostrophe) {
-    stream.advance(1);
-  }
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      return;
 
-  state.start = stream.position;
+    case Char.QuotationMark:
+      stream.advance(1);
+      return attributeValueDoubleQuoted;
 
-  if (char === Char.QuotationMark) {
-    return attributeValueDoubleQuoted;
-  }
-
-  if (char === Char.Apostrophe) {
-    return attributeValueSingleQuoted;
+    case Char.Apostrophe:
+      stream.advance(1);
+      return attributeValueSingleQuoted;
   }
 
   return attributeValueUnquoted;
@@ -607,98 +656,97 @@ const beforeAttributeValue: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
  */
 const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
+  const char = stream.next();
 
-  if (char === Char.QuotationMark) {
-    if (state.attribute !== null) {
-      state.attribute.value = stream.reduce(
-        state.start,
-        stream.position,
-        (value, char) => value + fromCharCode(char),
-        ""
-      );
-    }
+  switch (char) {
+    case Char.QuotationMark:
+      return afterAttributeValueQuoted;
 
-    stream.advance(1);
+    // case Char.Ampersand:
+    //   state.return = attributeValueDoubleQuoted;
+    //   return characterReference;
 
-    return afterAttributeValueQuoted;
+    case Char.Null:
+      if (state.attribute !== null) {
+        state.attribute.value += "\ufffd";
+      }
+      return;
+
+    case null:
+      return Command.End;
   }
 
-  stream.advance(1);
-
-  if (char === null) {
-    return Command.End;
+  if (state.attribute !== null) {
+    state.attribute.value += fromCharCode(char);
   }
-
-  return attributeValueDoubleQuoted;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
  */
 const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
+  const char = stream.next();
 
-  if (char === Char.Apostrophe) {
-    if (state.attribute !== null) {
-      state.attribute.value = stream.reduce(
-        state.start,
-        stream.position,
-        (value, char) => value + fromCharCode(char),
-        ""
-      );
-    }
+  switch (char) {
+    case Char.Apostrophe:
+      return afterAttributeValueQuoted;
 
-    stream.advance(1);
+    // case Char.Ampersand:
+    //   state.return = attributeValueSingleQuoted;
+    //   return characterReference;
 
-    return afterAttributeValueQuoted;
+    case Char.Null:
+      if (state.attribute !== null) {
+        state.attribute.value += "\ufffd";
+      }
+      return;
+
+    case null:
+      return Command.End;
   }
 
-  stream.advance(1);
-
-  if (char === null) {
-    return Command.End;
+  if (state.attribute !== null) {
+    state.attribute.value += fromCharCode(char);
   }
-
-  return attributeValueSingleQuoted;
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-unquoted-state
  */
 const attributeValueUnquoted: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
+  const char = stream.next();
 
-  if (char === null) {
-    return Command.End;
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return beforeAttributeName;
+
+    // case Char.Ampersand:
+    //   state.return = attributeValueUnquoted;
+    //   return characterReference;
+
+    case Char.GreaterThanSign:
+      if (state.tag !== null) {
+        emit(state.tag);
+      }
+
+      return initial;
+
+    case Char.Null:
+      if (state.attribute !== null) {
+        state.attribute.value += "\ufffd";
+      }
+      return;
+
+    case null:
+      return Command.End;
   }
 
-  if (isWhitespace(char) || char === Char.GreaterThanSign) {
-    if (state.attribute !== null) {
-      state.attribute.value = stream.reduce(
-        state.start,
-        stream.position,
-        (value, char) => value + fromCharCode(char),
-        ""
-      );
-    }
+  if (state.attribute !== null) {
+    state.attribute.value += fromCharCode(char);
   }
-
-  stream.advance(1);
-
-  if (isWhitespace(char)) {
-    return beforeAttributeName;
-  }
-
-  if (char === Char.GreaterThanSign) {
-    if (state.tag !== null) {
-      emit(state.tag);
-    }
-
-    return initial;
-  }
-
-  return attributeValueUnquoted;
 };
 
 /**
@@ -707,32 +755,29 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === null) {
-    return Command.End;
-  }
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      return beforeAttributeName;
 
-  if (
-    isWhitespace(char) ||
-    char === Char.Solidus ||
-    char === Char.GreaterThanSign
-  ) {
-    stream.advance(1);
-  }
+    case Char.Solidus:
+      stream.advance(1);
+      return selfClosingStartTag;
 
-  if (isWhitespace(char)) {
-    return beforeAttributeName;
-  }
+    case Char.GreaterThanSign:
+      stream.advance(1);
 
-  if (char === Char.Solidus) {
-    return selfClosingStartTag;
-  }
+      if (state.tag !== null) {
+        emit(state.tag);
+      }
 
-  if (char === Char.GreaterThanSign) {
-    if (state.tag !== null) {
-      emit(state.tag);
-    }
+      return initial;
 
-    return initial;
+    case null:
+      return Command.End;
   }
 
   return beforeAttributeName;
@@ -744,30 +789,41 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
 const bogusComment: Pattern = (stream, emit, state) => {
   const char = stream.next();
 
-  if (char === Char.GreaterThanSign || char === null) {
-    if (state.comment !== null) {
-      state.comment.value += stream.reduce(
-        state.start,
-        stream.position,
-        (value, char) => value + fromCharCode(char),
-        ""
-      );
-      emit(state.comment);
-    }
-  }
+  switch (char) {
+    case Char.GreaterThanSign:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
 
-  if (char === Char.GreaterThanSign) {
-    return initial;
-  }
+      return initial;
 
-  if (char === null) {
-    return Command.End;
-  }
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
 
-  return bogusComment;
+      return Command.End;
+
+    case Char.Null:
+      if (state.comment !== null) {
+        state.comment.value += "\ufffd";
+      }
+      break;
+
+    default:
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
+  }
 };
 
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   initial,
-  () => ({ start: 0, tag: null, attribute: null, comment: null })
+  () => ({
+    start: 0,
+    tag: null,
+    attribute: null,
+    comment: null,
+    return: null
+  })
 );

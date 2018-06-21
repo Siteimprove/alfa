@@ -6,10 +6,8 @@ export type StreamReader<T> = (index: number) => T;
 
 export class Stream<T> {
   private readonly length: number;
-
   private readonly read: StreamReader<T>;
-
-  public position: number = 0;
+  private position: number = 0;
 
   public constructor(length: number, reader: StreamReader<T>) {
     this.length = length;
@@ -30,31 +28,6 @@ export class Stream<T> {
     const next = this.peek(0);
     this.advance(1);
     return next;
-  }
-
-  public range(start: number, end: number): Array<T> {
-    const result: Array<T> = new Array(end - start);
-
-    for (let i = start, j = 0; i < end; i++, j++) {
-      result[j] = this.read(i);
-    }
-
-    return result;
-  }
-
-  public reduce<U>(
-    start: number,
-    end: number,
-    reducer: (accumulator: U, next: T) => U,
-    initial: U
-  ): U {
-    let result = initial;
-
-    for (let i = start; i < end; i++) {
-      result = reducer(result, this.read(i));
-    }
-
-    return result;
   }
 
   public restore(position: number): void {
