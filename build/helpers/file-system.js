@@ -24,11 +24,16 @@ export function readFile(file) {
 
 /**
  * @param {string} file
- * @param {string} data
+ * @param {any} data
  * @return {void}
  */
 export function writeFile(file, data) {
   makeDirectory(path.dirname(file));
+
+  if (typeof data !== "string") {
+    data = JSON.stringify(data, null, 2) + "\n";
+  }
+
   fs.writeFileSync(file, data);
 }
 
