@@ -3,19 +3,15 @@ import * as childProcess from "child_process";
 /**
  * @param {string} command
  * @param {Array<string>} args
- * @return {object}
+ * @param {childProcess.SpawnSyncOptions} [options]
+ * @return {childProcess.SpawnSyncReturns<string>}
  */
 export function spawn(command, args, options = {}) {
-  options = Object.assign(
-    {},
-    {
-      maxBuffer: 10000 * 1024,
-      encoding: "utf8"
-    },
-    options
-  );
-
-  const child = childProcess.spawnSync(command, args, options);
+  const child = childProcess.spawnSync(command, args, {
+    maxBuffer: 10000 * 1024,
+    encoding: "utf8",
+    stdio: options.stdio
+  });
 
   child.stdout = trim(child.stdout);
   child.stderr = trim(child.stderr);
@@ -24,20 +20,17 @@ export function spawn(command, args, options = {}) {
 }
 
 /**
- * @param {Buffer | null} input
- * @return {Buffer}
+ * @param {string | null} input
+ * @return {string}
  */
 function trim(input) {
   if (input === null) {
-    return Buffer.alloc(0);
+    return "";
   }
 
   const last = input.length - 1;
 
-  if (
-    input[last] === "\n".charCodeAt(0) ||
-    input[last] === "\r".charCodeAt(0)
-  ) {
+  if (input[last] === "\n" || input[last] === "\r") {
     return input.slice(0, last);
   }
 

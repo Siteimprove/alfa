@@ -28,7 +28,7 @@ export function getStagedFiles() {
     return [];
   }
 
-  return diff.split("\n").filter(file => file !== "");
+  return diff.split("\n");
 }
 
 /**
