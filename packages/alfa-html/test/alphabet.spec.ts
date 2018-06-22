@@ -146,3 +146,15 @@ test("Can lex a comment", t =>
       value: "foo"
     }
   ]));
+
+test("Can lex a named character reference", t =>
+  html(t, "&lt;&gt;", [
+    {
+      type: TokenType.Character,
+      value: "<"
+    },
+    {
+      type: TokenType.Character,
+      value: ">"
+    }
+  ]));

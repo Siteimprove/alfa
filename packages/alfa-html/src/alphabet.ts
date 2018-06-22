@@ -1,4 +1,4 @@
-import { Mutable } from "@siteimprove/alfa-util";
+import { Mutable, keys } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import {
   Command,
@@ -6,8 +6,19 @@ import {
   isBetween,
   isAlpha,
   isHex,
-  isNumeric
+  isNumeric,
+  isAlphanumeric
 } from "@siteimprove/alfa-lang";
+import { Entity, Entities } from "./entities";
+import { PrefixTree } from "./prefix-tree";
+
+const entities: PrefixTree<Entity> = new PrefixTree();
+
+for (const key of keys(Entities)) {
+  const entity = Entities[key];
+
+  entities.set(key as string, entity);
+}
 
 const { fromCharCode } = String;
 
@@ -751,7 +762,7 @@ const commentEndBang: Pattern = (stream, emit, state) => {
 const characterReference: Pattern = (stream, emit, state) => {
   state.temporaryBuffer = "&";
 
-  const char = stream.peek(0);
+  let char = stream.peek(0);
 
   switch (char) {
     case Char.CharacterTabulation:
@@ -765,9 +776,46 @@ const characterReference: Pattern = (stream, emit, state) => {
 
     case Char.NumberSign:
       stream.advance(1);
-      state.temporaryBuffer += "#";
+      state.temporaryBuffer += fromCharCode(char);
       return numericCharacterReference;
   }
+
+  while (char !== null) {
+    const reference = state.temporaryBuffer + fromCharCode(char);
+
+    if (!entities.has(reference, true)) {
+      break;
+    }
+
+    state.temporaryBuffer = reference;
+    stream.advance(1);
+    char = stream.peek(0);
+  }
+
+  const entity = entities.get(state.temporaryBuffer);
+
+  if (entity === null) {
+    return characterReferenceEnd;
+  }
+
+  switch (state.returnState) {
+    case attributeValueDoubleQuoted:
+    case attributeValueSingleQuoted:
+    case attributeValueUnquoted:
+      if (state.temporaryBuffer[state.temporaryBuffer.length - 1] !== ";") {
+        if (char === null) {
+          break;
+        }
+
+        if (char === Char.EqualSign || isAlphanumeric(char)) {
+          return characterReferenceEnd;
+        }
+      }
+  }
+
+  state.temporaryBuffer = entity.characters;
+
+  return characterReferenceEnd;
 };
 
 /**
