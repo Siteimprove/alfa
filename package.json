@@ -15,10 +15,10 @@
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
-    "prepare": "node -r esm build/build.js",
+    "prepare": "node -r esm build/prepare.js",
     "test": "node -r esm build/test.js",
-    "start": "node -r esm build/watch.js",
-    "precommit": "node -r esm build/lint.js"
+    "start": "node -r esm build/start.js",
+    "precommit": "node -r esm build/precommit.js"
   },
   "workspaces": [
     "packages/*"

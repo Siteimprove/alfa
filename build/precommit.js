@@ -1,5 +1,3 @@
-// @ts-check
-
 import * as git from "./helpers/git";
 import * as notify from "./helpers/notify";
 
