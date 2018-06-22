@@ -121,288 +121,6 @@ const tagOpen: Pattern = (stream, emit, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#markup-declaration-open-state
- */
-const markupDeclarationOpen: Pattern = (stream, emit, state) => {
-  state.comment = {
-    type: TokenType.Comment,
-    value: ""
-  };
-
-  if (
-    stream.peek(0) === Char.HyphenMinus &&
-    stream.peek(1) === Char.HyphenMinus
-  ) {
-    stream.advance(2);
-    return commentStart;
-  }
-
-  return bogusComment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-start-state
- */
-const commentStart: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-
-  switch (char) {
-    case Char.HyphenMinus:
-      stream.advance(1);
-      return commentStartDash;
-
-    case Char.GreaterThanSign:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return data;
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
- */
-const commentStartDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-
-  switch (char) {
-    case Char.HyphenMinus:
-      stream.advance(1);
-      return commentEnd;
-
-    case Char.GreaterThanSign:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return data;
-
-    case null:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return Command.End;
-  }
-
-  if (state.comment !== null) {
-    state.comment.value += "-";
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-state
- */
-const comment: Pattern = (stream, emit, state) => {
-  const char = stream.next();
-
-  switch (char) {
-    case Char.LessThanSign:
-      if (state.comment !== null) {
-        state.comment.value += fromCharCode(char);
-      }
-
-      return commentLessThanSign;
-
-    case Char.HyphenMinus:
-      return commentEndDash;
-
-    case Char.Null:
-      if (state.comment !== null) {
-        state.comment.value += "\ufffd";
-      }
-      break;
-
-    case null:
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-      return Command.End;
-
-    default:
-      if (state.comment !== null) {
-        state.comment.value += fromCharCode(char);
-      }
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-state
- */
-const commentLessThanSign: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-
-  switch (char) {
-    case Char.ExclamationMark:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        state.comment.value += fromCharCode(char);
-      }
-
-      return commentLessThanSignBang;
-
-    case Char.LessThanSign:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        state.comment.value += fromCharCode(char);
-      }
-
-      return commentLessThanSign;
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-state
- */
-const commentLessThanSignBang: Pattern = stream => {
-  if (stream.peek(0) === Char.HyphenMinus) {
-    stream.advance(1);
-    return commentLessThanSignBangDash;
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-state
- */
-const commentLessThanSignBangDash: Pattern = stream => {
-  if (stream.peek(0) === Char.HyphenMinus) {
-    stream.advance(1);
-    return commentEnd;
-  }
-
-  return commentEndDash;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
- */
-const commentEndDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-
-  switch (char) {
-    case Char.HyphenMinus:
-      stream.advance(1);
-      return commentEnd;
-
-    case null:
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return Command.End;
-  }
-
-  if (state.comment !== null) {
-    state.comment.value += "-";
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
- */
-const commentEnd: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-
-  switch (char) {
-    case Char.GreaterThanSign:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return data;
-
-    case Char.ExclamationMark:
-      stream.advance(1);
-      return commentEndBang;
-
-    case Char.HyphenMinus:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        state.comment.value += "-";
-      }
-
-      return commentEnd;
-
-    case null:
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return Command.End;
-  }
-
-  if (state.comment !== null) {
-    state.comment.value += "--";
-  }
-
-  return comment;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
- */
-const commentEndBang: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-
-  switch (char) {
-    case Char.HyphenMinus:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        state.comment.value += "-!";
-      }
-
-      return commentEndDash;
-
-    case Char.GreaterThanSign:
-      stream.advance(1);
-
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return data;
-
-    case null:
-      if (state.comment !== null) {
-        emit(state.comment);
-      }
-
-      return Command.End;
-  }
-
-  if (state.comment !== null) {
-    state.comment.value += "-!";
-  }
-
-  return comment;
-};
-
-/**
  * @see https://www.w3.org/TR/html/syntax.html#end-tag-open-state
  */
 const endTagOpen: Pattern = (stream, emit, state) => {
@@ -478,33 +196,6 @@ const tagName: Pattern = (stream, emit, state) => {
   }
 
   return tagName;
-};
-
-/**
- * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
- */
-const selfClosingStartTag: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-
-  switch (char) {
-    case Char.GreaterThanSign:
-      stream.advance(1);
-
-      if (state.tag !== null) {
-        if (state.tag.type === TokenType.StartTag) {
-          state.tag.closed = true;
-        }
-
-        emit(state.tag);
-      }
-
-      return data;
-
-    case null:
-      return Command.End;
-  }
-
-  return beforeAttributeName;
 };
 
 /**
@@ -788,6 +479,33 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
+ */
+const selfClosingStartTag: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.GreaterThanSign:
+      stream.advance(1);
+
+      if (state.tag !== null) {
+        if (state.tag.type === TokenType.StartTag) {
+          state.tag.closed = true;
+        }
+
+        emit(state.tag);
+      }
+
+      return data;
+
+    case null:
+      return Command.End;
+  }
+
+  return beforeAttributeName;
+};
+
+/**
  * @see https://www.w3.org/TR/html/syntax.html#bogus-comment-state
  */
 const bogusComment: Pattern = (stream, emit, state) => {
@@ -819,6 +537,295 @@ const bogusComment: Pattern = (stream, emit, state) => {
         state.comment.value += fromCharCode(char);
       }
   }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#markup-declaration-open-state
+ */
+const markupDeclarationOpen: Pattern = (stream, emit, state) => {
+  state.comment = {
+    type: TokenType.Comment,
+    value: ""
+  };
+
+  if (
+    stream.peek(0) === Char.HyphenMinus &&
+    stream.peek(1) === Char.HyphenMinus
+  ) {
+    stream.advance(2);
+    return commentStart;
+  }
+
+  return bogusComment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-start-state
+ */
+const commentStart: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      return commentStartDash;
+
+    case Char.GreaterThanSign:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return data;
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
+ */
+const commentStartDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      return commentEnd;
+
+    case Char.GreaterThanSign:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return data;
+
+    case null:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
+  }
+
+  if (state.comment !== null) {
+    state.comment.value += "-";
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-state
+ */
+const comment: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.LessThanSign:
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
+
+      return commentLessThanSign;
+
+    case Char.HyphenMinus:
+      return commentEndDash;
+
+    case Char.Null:
+      if (state.comment !== null) {
+        state.comment.value += "\ufffd";
+      }
+      break;
+
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+      return Command.End;
+
+    default:
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-state
+ */
+const commentLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.ExclamationMark:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
+
+      return commentLessThanSignBang;
+
+    case Char.LessThanSign:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        state.comment.value += fromCharCode(char);
+      }
+
+      return commentLessThanSign;
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-state
+ */
+const commentLessThanSignBang: Pattern = stream => {
+  if (stream.peek(0) === Char.HyphenMinus) {
+    stream.advance(1);
+    return commentLessThanSignBangDash;
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-state
+ */
+const commentLessThanSignBangDash: Pattern = stream => {
+  if (stream.peek(0) === Char.HyphenMinus) {
+    stream.advance(1);
+    return commentLessThanSignBangDashDash;
+  }
+
+  return commentEndDash;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-dash-state
+ */
+const commentLessThanSignBangDashDash: Pattern = stream => {
+  return commentEnd;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
+ */
+const commentEndDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      return commentEnd;
+
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
+  }
+
+  if (state.comment !== null) {
+    state.comment.value += "-";
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
+ */
+const commentEnd: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.GreaterThanSign:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return data;
+
+    case Char.ExclamationMark:
+      stream.advance(1);
+      return commentEndBang;
+
+    case Char.HyphenMinus:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        state.comment.value += "-";
+      }
+
+      return commentEnd;
+
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
+  }
+
+  if (state.comment !== null) {
+    state.comment.value += "--";
+  }
+
+  return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
+ */
+const commentEndBang: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        state.comment.value += "-!";
+      }
+
+      return commentEndDash;
+
+    case Char.GreaterThanSign:
+      stream.advance(1);
+
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return data;
+
+    case null:
+      if (state.comment !== null) {
+        emit(state.comment);
+      }
+
+      return Command.End;
+  }
+
+  if (state.comment !== null) {
+    state.comment.value += "-!";
+  }
+
+  return comment;
 };
 
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
