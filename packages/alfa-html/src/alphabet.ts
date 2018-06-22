@@ -1,6 +1,13 @@
 import { Mutable } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
-import { Command, Char, isAlpha } from "@siteimprove/alfa-lang";
+import {
+  Command,
+  Char,
+  isBetween,
+  isAlpha,
+  isHex,
+  isNumeric
+} from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
 
@@ -54,7 +61,21 @@ export type State = {
   tag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
-  return: Pattern | null;
+
+  /**
+   * @see https://www.w3.org/TR/html/syntax.html#return-state
+   */
+  returnState: Pattern | null;
+
+  /**
+   * @see https://www.w3.org/TR/html/syntax.html#temporary-buffer
+   */
+  temporaryBuffer: string;
+
+  /**
+   * @see https://www.w3.org/TR/html/syntax.html#character-reference-code
+   */
+  characterReferenceCode: number;
 };
 
 export type Pattern = Lang.Pattern<Token, State>;
@@ -66,9 +87,9 @@ const data: Pattern = (stream, emit, state) => {
   const char = stream.next();
 
   switch (char) {
-    // case Char.Ampersand:
-    //   state.return = data;
-    //   return characterReference;
+    case Char.Ampersand:
+      state.returnState = data;
+      return characterReference;
 
     case Char.LessThanSign:
       return tagOpen;
@@ -357,9 +378,9 @@ const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
     case Char.QuotationMark:
       return afterAttributeValueQuoted;
 
-    // case Char.Ampersand:
-    //   state.return = attributeValueDoubleQuoted;
-    //   return characterReference;
+    case Char.Ampersand:
+      state.returnState = attributeValueDoubleQuoted;
+      return characterReference;
 
     case Char.Null:
       if (state.attribute !== null) {
@@ -386,9 +407,9 @@ const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
     case Char.Apostrophe:
       return afterAttributeValueQuoted;
 
-    // case Char.Ampersand:
-    //   state.return = attributeValueSingleQuoted;
-    //   return characterReference;
+    case Char.Ampersand:
+      state.returnState = attributeValueSingleQuoted;
+      return characterReference;
 
     case Char.Null:
       if (state.attribute !== null) {
@@ -418,9 +439,9 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
     case Char.Space:
       return beforeAttributeName;
 
-    // case Char.Ampersand:
-    //   state.return = attributeValueUnquoted;
-    //   return characterReference;
+    case Char.Ampersand:
+      state.returnState = attributeValueUnquoted;
+      return characterReference;
 
     case Char.GreaterThanSign:
       if (state.tag !== null) {
@@ -828,13 +849,186 @@ const commentEndBang: Pattern = (stream, emit, state) => {
   return comment;
 };
 
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#character-reference-state
+ */
+const characterReference: Pattern = (stream, emit, state) => {
+  state.temporaryBuffer = "&";
+
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+    case Char.LessThanSign:
+    case Char.Ampersand:
+    case null:
+      return characterReferenceEnd;
+
+    case Char.NumberSign:
+      stream.advance(1);
+      state.temporaryBuffer += "#";
+      return numericCharacterReference;
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#numeric-character-reference-state
+ */
+const numericCharacterReference: Pattern = (stream, emit, state) => {
+  state.characterReferenceCode = 0;
+
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.SmallLetterX:
+    case Char.CapitalLetterX:
+      stream.advance(1);
+      state.temporaryBuffer += fromCharCode(char);
+      return hexadecimalCharacterReferenceStart;
+  }
+
+  return decimalCharacterReferenceStart;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#hexadecimal-character-reference-start-state
+ */
+const hexadecimalCharacterReferenceStart: Pattern = stream => {
+  const char = stream.peek(0);
+
+  if (char !== null && isHex(char)) {
+    return hexadecimalCharacterReference;
+  }
+
+  return characterReferenceEnd;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#decimal-character-reference-start-state
+ */
+const decimalCharacterReferenceStart: Pattern = stream => {
+  const char = stream.peek(0);
+
+  if (char !== null && isNumeric(char)) {
+    return decimalCharacterReference;
+  }
+
+  return characterReferenceEnd;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#hexadecimal-character-reference-state
+ */
+const hexadecimalCharacterReference: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char !== null) {
+    if (isNumeric(char)) {
+      state.characterReferenceCode =
+        state.characterReferenceCode * 0x10 + char - 0x30;
+    } else if (isBetween(char, Char.CapitalLetterA, Char.CapitalLetterF)) {
+      state.characterReferenceCode =
+        state.characterReferenceCode * 0x10 + char - 0x37;
+    } else if (isBetween(char, Char.SmallLetterA, Char.SmallLetterF)) {
+      state.characterReferenceCode =
+        state.characterReferenceCode * 0x10 + char - 0x57;
+    }
+  }
+
+  return numericCharacterReferenceEnd;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#decimal-character-reference-state
+ */
+const decimalCharacterReference: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char !== null && isNumeric(char)) {
+    state.characterReferenceCode * 0x10 + char - 0x30;
+  }
+
+  return numericCharacterReferenceEnd;
+};
+
+const replacementCodes: { [code: number]: number } = {
+  [0x30]: 0xfffd,
+  [0x80]: 0x20ac,
+  [0x82]: 0x201a,
+  [0x83]: 0x0192,
+  [0x84]: 0x201e,
+  [0x85]: 0x2026,
+  [0x86]: 0x2020,
+  [0x87]: 0x2021,
+  [0x88]: 0x02c6,
+  [0x89]: 0x2030,
+  [0x8a]: 0x0160,
+  [0x8b]: 0x2039,
+  [0x8c]: 0x0152,
+  [0x8e]: 0x017d,
+  [0x91]: 0x2018,
+  [0x92]: 0x2019,
+  [0x93]: 0x201c,
+  [0x94]: 0x201d,
+  [0x95]: 0x2022,
+  [0x96]: 0x2013,
+  [0x97]: 0x2014,
+  [0x98]: 0x02dc,
+  [0x99]: 0x2122,
+  [0x9a]: 0x0161,
+  [0x9b]: 0x203a,
+  [0x9c]: 0x0153,
+  [0x9e]: 0x017e,
+  [0x9f]: 0x0178
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#numeric-character-reference-end-state
+ */
+const numericCharacterReferenceEnd: Pattern = (stream, emit, state) => {
+  let code = state.characterReferenceCode;
+
+  if (code in replacementCodes) {
+    code = replacementCodes[code];
+  } else if (isBetween(code, 0xd800, 0xdfff) || code > 0x10ffff) {
+    code = 0xfffd;
+  }
+
+  state.temporaryBuffer = fromCharCode(code);
+
+  return characterReferenceEnd;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#character-reference-end-state
+ */
+const characterReferenceEnd: Pattern = (stream, emit, state) => {
+  switch (state.returnState) {
+    case attributeValueDoubleQuoted:
+    case attributeValueSingleQuoted:
+    case attributeValueUnquoted:
+      state.attribute!.value += state.temporaryBuffer;
+      break;
+    default:
+      for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
+        emit({ type: TokenType.Character, value: state.temporaryBuffer[i] });
+      }
+  }
+
+  return state.returnState!;
+};
+
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   data,
   () => ({
-    start: 0,
     tag: null,
     attribute: null,
     comment: null,
-    return: null
+    returnState: null,
+    temporaryBuffer: "",
+    characterReferenceCode: 0
   })
 );
