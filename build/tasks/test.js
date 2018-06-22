@@ -1,7 +1,7 @@
 import chalk from "chalk";
 
 import { withExtension } from "../helpers/path";
-import { spawn } from "../helpers/child-process";
+import { fork } from "../helpers/child-process";
 import * as notify from "../helpers/notify";
 
 import { build } from "./build";
@@ -12,13 +12,9 @@ import { build } from "./build";
  */
 export function test(file) {
   if (build(file)) {
-    const child = spawn(
-      process.execPath,
-      [...process.execArgv, withExtension(file, ".js")],
-      {
-        stdio: "inherit"
-      }
-    );
+    const child = fork(withExtension(file, ".js"), [], {
+      stdio: "inherit"
+    });
 
     if (child.status === 0) {
       return true;

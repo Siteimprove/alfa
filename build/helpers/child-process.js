@@ -20,6 +20,20 @@ export function spawn(command, args, options = {}) {
 }
 
 /**
+ * @param {string} module
+ * @param {Array<string>} args
+ * @param {childProcess.SpawnSyncOptions} [options]
+ * @return {childProcess.SpawnSyncReturns<string>}
+ */
+export function fork(module, args, options = {}) {
+  return spawn(
+    process.execPath,
+    process.execArgv.concat([module], args),
+    options
+  );
+}
+
+/**
  * @param {string | null} input
  * @return {string}
  */
