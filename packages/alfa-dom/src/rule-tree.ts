@@ -57,7 +57,7 @@ export interface RuleEntry {
 export class RuleTree {
   private readonly children: Array<RuleEntry> = [];
 
-  public insert(
+  public add(
     rules: Array<Pick<RuleEntry, "selector" | "declarations">>
   ): RuleEntry | null {
     let parent: RuleEntry | null = null;
@@ -70,7 +70,7 @@ export class RuleTree {
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the
       // caller.
-      parent = insert(parent, children, selector, declarations);
+      parent = add(parent, children, selector, declarations);
       children = parent.children;
     }
 
@@ -78,7 +78,7 @@ export class RuleTree {
   }
 }
 
-function insert(
+function add(
   parent: RuleEntry | null,
   children: Array<RuleEntry>,
   selector: Selector,
@@ -92,7 +92,7 @@ function insert(
     const child = children[i];
 
     if (child.selector === selector) {
-      return insert(child, child.children, selector, declarations);
+      return add(child, child.children, selector, declarations);
     }
   }
 

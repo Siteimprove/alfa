@@ -43,7 +43,7 @@ export function getCascade(context: Document): Cascade | null {
             pseudo: true
           });
 
-          const entry = ruleTree.insert(sort(rules));
+          const entry = ruleTree.add(sort(rules));
 
           if (entry !== null) {
             entries.set(node, entry);
