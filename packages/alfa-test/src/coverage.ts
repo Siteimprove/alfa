@@ -6,7 +6,6 @@ const session = new Session();
 session.connect();
 
 session.post("Profiler.enable");
-session.post("Runtime.enable");
 session.post("Profiler.startPreciseCoverage", {
   callCount: false,
   detailed: true
