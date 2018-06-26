@@ -10,8 +10,8 @@ test("Can lex a start tag", t =>
   html(t, "<span>", [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: false,
+      name: "span",
+      selfClosing: false,
       attributes: []
     }
   ]));
@@ -23,8 +23,8 @@ test("Can lex a self-closing start tag", t =>
   html(t, "<span/>", [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: true,
+      name: "span",
+      selfClosing: true,
       attributes: []
     }
   ]));
@@ -33,7 +33,7 @@ test("Can lex an orphaned less-than sign", t =>
   html(t, "<", [
     {
       type: TokenType.Character,
-      value: "<"
+      data: "<"
     }
   ]));
 
@@ -41,7 +41,7 @@ test("Can lex an end tag", t =>
   html(t, "</span>", [
     {
       type: TokenType.EndTag,
-      value: "span"
+      name: "span"
     }
   ]));
 
@@ -49,13 +49,13 @@ test("Can lex a start tag followed by an end tag", t =>
   html(t, "<span></span>", [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: false,
+      name: "span",
+      selfClosing: false,
       attributes: []
     },
     {
       type: TokenType.EndTag,
-      value: "span"
+      name: "span"
     }
   ]));
 
@@ -63,8 +63,8 @@ test("Can lex a start tag with a double-quoted attribute", t =>
   html(t, '<span foo="bar">', [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: false,
+      name: "span",
+      selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }]
     }
   ]));
@@ -73,8 +73,8 @@ test("Can lex a start tag with a single-quoted attribute", t =>
   html(t, "<span foo='bar'>", [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: false,
+      name: "span",
+      selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }]
     }
   ]));
@@ -83,8 +83,8 @@ test("Can lex a start tag with an unquoted attribute", t =>
   html(t, "<span foo=bar>", [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: false,
+      name: "span",
+      selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }]
     }
   ]));
@@ -93,8 +93,8 @@ test("Can lex a start tag with multiple attributes", t =>
   html(t, '<span foo="bar" baz="qux">', [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: false,
+      name: "span",
+      selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }, { name: "baz", value: "qux" }]
     }
   ]));
@@ -103,17 +103,17 @@ test("Can lex a start tag with a boolean attribute", t =>
   html(t, "<span foo>", [
     {
       type: TokenType.StartTag,
-      value: "span",
-      closed: false,
+      name: "span",
+      selfClosing: false,
       attributes: [{ name: "foo", value: "" }]
     }
   ]));
 
-test("Can lex an incorrectly closed end tag", t =>
+test("Can lex an incorrectly selfClosing end tag", t =>
   html(t, "</ ", [
     {
       type: TokenType.Comment,
-      value: " "
+      data: " "
     }
   ]));
 
@@ -121,21 +121,21 @@ test("Can lex character data within a tag", t =>
   html(t, "<p>Hi</p>", [
     {
       type: TokenType.StartTag,
-      value: "p",
-      closed: false,
+      name: "p",
+      selfClosing: false,
       attributes: []
     },
     {
       type: TokenType.Character,
-      value: "H"
+      data: "H"
     },
     {
       type: TokenType.Character,
-      value: "i"
+      data: "i"
     },
     {
       type: TokenType.EndTag,
-      value: "p"
+      name: "p"
     }
   ]));
 
@@ -143,7 +143,7 @@ test("Can lex a comment", t =>
   html(t, "<!--foo-->", [
     {
       type: TokenType.Comment,
-      value: "foo"
+      data: "foo"
     }
   ]));
 
@@ -151,10 +151,46 @@ test("Can lex a named character reference", t =>
   html(t, "&lt;&gt;", [
     {
       type: TokenType.Character,
-      value: "<"
+      data: "<"
     },
     {
       type: TokenType.Character,
-      value: ">"
+      data: ">"
     }
   ]));
+
+test("Can lex a simple doctype", t => {
+  html(t, "<!doctype html>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: null,
+      forceQuirks: false
+    }
+  ]);
+});
+
+test("Can lex a doctype with a public ID", t => {
+  html(t, '<!doctype html PUBLIC "foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: null,
+      forceQuirks: false
+    }
+  ]);
+});
+
+test("Can lex a doctype with a system ID", t => {
+  html(t, '<!doctype html SYSTEM "foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
+});

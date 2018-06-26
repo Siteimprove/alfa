@@ -1,6 +1,7 @@
 import { Mutable, keys } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import {
+  Stream,
   Command,
   Char,
   isBetween,
@@ -23,11 +24,20 @@ for (const key of keys(Entities)) {
 const { fromCharCode } = String;
 
 export const enum TokenType {
+  Doctype,
   StartTag,
   EndTag,
   Comment,
   Character
 }
+
+export type Doctype = Readonly<{
+  type: TokenType.Doctype;
+  name: string | null;
+  publicId: string | null;
+  systemId: string | null;
+  forceQuirks: boolean;
+}>;
 
 export type Attribute = Readonly<{
   name: string;
@@ -36,30 +46,32 @@ export type Attribute = Readonly<{
 
 export type StartTag = Readonly<{
   type: TokenType.StartTag;
-  value: string;
-  closed: boolean;
+  name: string;
+  selfClosing: boolean;
   attributes: Array<Attribute>;
 }>;
 
 export type EndTag = Readonly<{
   type: TokenType.EndTag;
-  value: string;
+  name: string;
 }>;
 
 export type Comment = Readonly<{
   type: TokenType.Comment;
-  value: string;
+  data: string;
 }>;
 
 export type Character = Readonly<{
   type: TokenType.Character;
-  value: string;
+  data: string;
 }>;
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tokenization
  */
 export type Token =
+  | Doctype
+
   // Tag tokens
   | StartTag
   | EndTag
@@ -69,6 +81,7 @@ export type Token =
   | Comment;
 
 export type State = {
+  doctype: Mutable<Doctype> | null;
   tag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
@@ -109,7 +122,7 @@ const data: Pattern = (stream, emit, state) => {
       return Command.End;
   }
 
-  emit({ type: TokenType.Character, value: fromCharCode(char) });
+  emit({ type: TokenType.Character, data: fromCharCode(char) });
 };
 
 /**
@@ -130,7 +143,7 @@ const tagOpen: Pattern = (stream, emit, state) => {
     case Char.QuestionMark:
       state.comment = {
         type: TokenType.Comment,
-        value: ""
+        data: ""
       };
 
       return bogusComment;
@@ -139,15 +152,15 @@ const tagOpen: Pattern = (stream, emit, state) => {
   if (char !== null && isAlpha(char)) {
     state.tag = {
       type: TokenType.StartTag,
-      value: "",
-      closed: false,
+      name: "",
+      selfClosing: false,
       attributes: []
     };
 
     return tagName;
   }
 
-  emit({ type: TokenType.Character, value: "<" });
+  emit({ type: TokenType.Character, data: "<" });
 
   return data;
 };
@@ -159,15 +172,15 @@ const endTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
   if (char === null) {
-    emit({ type: TokenType.Character, value: "<" });
-    emit({ type: TokenType.Character, value: "/" });
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
     return Command.End;
   }
 
   if (isAlpha(char)) {
     state.tag = {
       type: TokenType.EndTag,
-      value: ""
+      name: ""
     };
 
     return tagName;
@@ -180,7 +193,7 @@ const endTagOpen: Pattern = (stream, emit, state) => {
 
   state.comment = {
     type: TokenType.Comment,
-    value: ""
+    data: ""
   };
 
   return bogusComment;
@@ -207,7 +220,7 @@ const tagName: Pattern = (stream, emit, state) => {
       return data;
 
     case Char.Null:
-      state.tag!.value += "\ufffd";
+      state.tag!.name += "\ufffd";
       break;
 
     case null:
@@ -215,9 +228,9 @@ const tagName: Pattern = (stream, emit, state) => {
   }
 
   if (isAlpha(char)) {
-    state.tag!.value += fromCharCode(char).toLowerCase();
+    state.tag!.name += fromCharCode(char).toLowerCase();
   } else {
-    state.tag!.value += fromCharCode(char);
+    state.tag!.name += fromCharCode(char);
   }
 
   return tagName;
@@ -487,7 +500,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state) => {
       stream.advance(1);
 
       if (tag.type === TokenType.StartTag) {
-        tag.closed = true;
+        tag.selfClosing = true;
       }
 
       emit(tag);
@@ -517,11 +530,11 @@ const bogusComment: Pattern = (stream, emit, state) => {
       return Command.End;
 
     case Char.Null:
-      state.comment!.value += "\ufffd";
+      state.comment!.data += "\ufffd";
       break;
 
     default:
-      state.comment!.value += fromCharCode(char);
+      state.comment!.data += fromCharCode(char);
   }
 };
 
@@ -529,18 +542,27 @@ const bogusComment: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#markup-declaration-open-state
  */
 const markupDeclarationOpen: Pattern = (stream, emit, state) => {
-  state.comment = {
-    type: TokenType.Comment,
-    value: ""
-  };
+  if (startsWith(stream, "doctype", { lowerCase: true })) {
+    stream.advance(7);
+    return doctype;
+  }
 
   if (
     stream.peek(0) === Char.HyphenMinus &&
     stream.peek(1) === Char.HyphenMinus
   ) {
     stream.advance(2);
+    state.comment = {
+      type: TokenType.Comment,
+      data: ""
+    };
     return commentStart;
   }
+
+  state.comment = {
+    type: TokenType.Comment,
+    data: ""
+  };
 
   return bogusComment;
 };
@@ -591,7 +613,7 @@ const commentStartDash: Pattern = (stream, emit, state) => {
       return Command.End;
   }
 
-  state.comment!.value += "-";
+  state.comment!.data += "-";
 
   return comment;
 };
@@ -604,14 +626,14 @@ const comment: Pattern = (stream, emit, state) => {
 
   switch (char) {
     case Char.LessThanSign:
-      state.comment!.value += fromCharCode(char);
+      state.comment!.data += fromCharCode(char);
       return commentLessThanSign;
 
     case Char.HyphenMinus:
       return commentEndDash;
 
     case Char.Null:
-      state.comment!.value += "\ufffd";
+      state.comment!.data += "\ufffd";
       break;
 
     case null:
@@ -619,7 +641,7 @@ const comment: Pattern = (stream, emit, state) => {
       return Command.End;
 
     default:
-      state.comment!.value += fromCharCode(char);
+      state.comment!.data += fromCharCode(char);
   }
 
   return comment;
@@ -634,12 +656,12 @@ const commentLessThanSign: Pattern = (stream, emit, state) => {
   switch (char) {
     case Char.ExclamationMark:
       stream.advance(1);
-      state.comment!.value += fromCharCode(char);
+      state.comment!.data += fromCharCode(char);
       return commentLessThanSignBang;
 
     case Char.LessThanSign:
       stream.advance(1);
-      state.comment!.value += fromCharCode(char);
+      state.comment!.data += fromCharCode(char);
       return commentLessThanSign;
   }
 
@@ -693,7 +715,7 @@ const commentEndDash: Pattern = (stream, emit, state) => {
       return Command.End;
   }
 
-  state.comment!.value += "-";
+  state.comment!.data += "-";
 
   return comment;
 };
@@ -716,7 +738,7 @@ const commentEnd: Pattern = (stream, emit, state) => {
 
     case Char.HyphenMinus:
       stream.advance(1);
-      state.comment!.value += "-";
+      state.comment!.data += "-";
       return commentEnd;
 
     case null:
@@ -724,7 +746,7 @@ const commentEnd: Pattern = (stream, emit, state) => {
       return Command.End;
   }
 
-  state.comment!.value += "--";
+  state.comment!.data += "--";
 
   return comment;
 };
@@ -738,7 +760,7 @@ const commentEndBang: Pattern = (stream, emit, state) => {
   switch (char) {
     case Char.HyphenMinus:
       stream.advance(1);
-      state.comment!.value += "-!";
+      state.comment!.data += "-!";
       return commentEndDash;
 
     case Char.GreaterThanSign:
@@ -751,9 +773,557 @@ const commentEndBang: Pattern = (stream, emit, state) => {
       return Command.End;
   }
 
-  state.comment!.value += "-!";
+  state.comment!.data += "-!";
 
   return comment;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#doctype-state
+ */
+const doctype: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      return beforeDoctypeName;
+
+    case null:
+      state.doctype = {
+        type: TokenType.Doctype,
+        name: null,
+        publicId: null,
+        systemId: null,
+        forceQuirks: true
+      };
+
+      emit(state.doctype);
+
+      return Command.End;
+  }
+
+  return beforeDoctypeName;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#before-doctype-name-state
+ */
+const beforeDoctypeName: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return;
+
+    case Char.Null:
+      state.doctype = {
+        type: TokenType.Doctype,
+        name: "\ufffd",
+        publicId: null,
+        systemId: null,
+        forceQuirks: false
+      };
+
+      return doctypeName;
+
+    case Char.GreaterThanSign:
+      state.doctype = {
+        type: TokenType.Doctype,
+        name: null,
+        publicId: null,
+        systemId: null,
+        forceQuirks: true
+      };
+
+      return data;
+
+    case null:
+      state.doctype = {
+        type: TokenType.Doctype,
+        name: null,
+        publicId: null,
+        systemId: null,
+        forceQuirks: true
+      };
+
+      emit(state.doctype);
+
+      return Command.End;
+  }
+
+  let name = fromCharCode(char);
+
+  if (isAlpha(char)) {
+    name = name.toLowerCase();
+  }
+
+  state.doctype = {
+    type: TokenType.Doctype,
+    name,
+    publicId: null,
+    systemId: null,
+    forceQuirks: false
+  };
+
+  return doctypeName;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#doctype-name-state
+ */
+const doctypeName: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return afterDoctypeName;
+
+    case Char.GreaterThanSign:
+      emit(state.doctype!);
+      return data;
+
+    case Char.Null:
+      state.doctype!.name += "\ufffd";
+      break;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  if (isAlpha(char)) {
+    state.doctype!.name += fromCharCode(char).toLowerCase();
+  } else {
+    state.doctype!.name += fromCharCode(char);
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#after-doctype-name-state
+ */
+const afterDoctypeName: Pattern = (stream, emit, state) => {
+  if (startsWith(stream, "public", { lowerCase: true })) {
+    stream.advance(6);
+    return afterDoctypePublicKeyword;
+  }
+
+  if (startsWith(stream, "system", { lowerCase: true })) {
+    stream.advance(6);
+    return afterDoctypeSystemKeyword;
+  }
+
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return;
+
+    case Char.GreaterThanSign:
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.forceQuirks = true;
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-keyword-state
+ */
+const afterDoctypePublicKeyword: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return beforeDoctypePublicIdentifier;
+
+    case Char.QuotationMark:
+      state.doctype!.publicId = "";
+      return doctypePublicIdentifierDoubleQuoted;
+
+    case Char.Apostrophe:
+      state.doctype!.publicId = "";
+      return doctypePublicIdentifierSingleQuoted;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.forceQuirks = true;
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#before-doctype-public-identifier-state
+ */
+const beforeDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return;
+
+    case Char.QuotationMark:
+      state.doctype!.publicId = "";
+      return doctypePublicIdentifierDoubleQuoted;
+
+    case Char.Apostrophe:
+      state.doctype!.publicId = "";
+      return doctypePublicIdentifierSingleQuoted;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.forceQuirks = true;
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-double-quoted-state
+ */
+const doctypePublicIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.QuotationMark:
+      return afterDoctypePublicIdentifier;
+
+    case Char.Null:
+      state.doctype!.publicId += "\ufffd";
+      return;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.publicId += fromCharCode(char);
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-single-quoted-state
+ */
+const doctypePublicIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.Apostrophe:
+      return afterDoctypePublicIdentifier;
+
+    case Char.Null:
+      state.doctype!.publicId += "\ufffd";
+      return;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.publicId += fromCharCode(char);
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-identifier-state
+ */
+const afterDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return betweenDoctypePublicAndSystemIdentifiers;
+
+    case Char.GreaterThanSign:
+      emit(state.doctype!);
+      return data;
+
+    case Char.QuotationMark:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierDoubleQuoted;
+
+    case Char.Apostrophe:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierSingleQuoted;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.forceQuirks = true;
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#between-doctype-public-and-system-identifiers-state
+ */
+const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
+  stream,
+  emit,
+  state
+) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return;
+
+    case Char.GreaterThanSign:
+      emit(state.doctype!);
+      return data;
+
+    case Char.QuotationMark:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierDoubleQuoted;
+
+    case Char.Apostrophe:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierSingleQuoted;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.forceQuirks = true;
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-keyword-state
+ */
+const afterDoctypeSystemKeyword: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return beforeDoctypeSystemIdentifier;
+
+    case Char.QuotationMark:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierDoubleQuoted;
+
+    case Char.Apostrophe:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierSingleQuoted;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.forceQuirks = true;
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#before-doctype-system-identifier-state
+ */
+const beforeDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return;
+
+    case Char.QuotationMark:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierDoubleQuoted;
+
+    case Char.Apostrophe:
+      state.doctype!.systemId = "";
+      return doctypeSystemIdentifierSingleQuoted;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.forceQuirks = true;
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-double-quoted-state
+ */
+const doctypeSystemIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.QuotationMark:
+      return afterDoctypeSystemIdentifier;
+
+    case Char.Null:
+      state.doctype!.systemId += "\ufffd";
+      return;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.systemId += fromCharCode(char);
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-single-quoted-state
+ */
+const doctypeSystemIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.Apostrophe:
+      return afterDoctypeSystemIdentifier;
+
+    case Char.Null:
+      state.doctype!.systemId += "\ufffd";
+      return;
+
+    case Char.GreaterThanSign:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  state.doctype!.systemId += fromCharCode(char);
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-identifier-state
+ */
+const afterDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      return;
+
+    case Char.GreaterThanSign:
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      state.doctype!.forceQuirks = true;
+      emit(state.doctype!);
+      return Command.End;
+  }
+
+  return bogusDoctype;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#bogus-doctype-state
+ */
+const bogusDoctype: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.GreaterThanSign:
+      emit(state.doctype!);
+      return data;
+
+    case null:
+      emit(state.doctype!);
+      return Command.End;
+  }
 };
 
 /**
@@ -958,7 +1528,7 @@ const characterReferenceEnd: Pattern = (stream, emit, state) => {
       break;
     default:
       for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
-        emit({ type: TokenType.Character, value: state.temporaryBuffer[i] });
+        emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
       }
   }
 
@@ -968,6 +1538,7 @@ const characterReferenceEnd: Pattern = (stream, emit, state) => {
 export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   data,
   () => ({
+    doctype: null,
     tag: null,
     attribute: null,
     comment: null,
@@ -976,3 +1547,29 @@ export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
     characterReferenceCode: 0
   })
 );
+
+function startsWith(
+  stream: Stream<number>,
+  query: string,
+  options: { lowerCase?: boolean } = {}
+): boolean {
+  for (let i = 0, n = query.length; i < n; i++) {
+    const code = stream.peek(i);
+
+    if (code === null) {
+      return false;
+    }
+
+    let char = fromCharCode(code);
+
+    if (options.lowerCase) {
+      char = char.toLowerCase();
+    }
+
+    if (char !== query[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
