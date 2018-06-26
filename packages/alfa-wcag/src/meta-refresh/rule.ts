@@ -9,31 +9,30 @@ import {
 
 export const MetaRefresh: Rule<"document", Element> = {
   id: "alfa:wcag:meta-refresh",
-  criteria: ["wcag:2.2.1", "wcag:3.2.5"],
-  locales: [],
-  context: () => null,
-  applicability: ({ document }) =>
-    querySelector<Element>(document, document, node => {
-      if (
-        !isElement(node) ||
-        node.localName !== "meta" ||
-        getAttribute(node, "http-equiv", { lowerCase: true }) !== "refresh"
-      ) {
-        return false;
-      }
+  definition: (applicability, expectations, { document }) => {
+    applicability(() =>
+      querySelector<Element>(document, document, node => {
+        if (
+          !isElement(node) ||
+          node.localName !== "meta" ||
+          getAttribute(node, "http-equiv", { lowerCase: true }) !== "refresh"
+        ) {
+          return false;
+        }
 
-      const content = getAttribute(node, "content");
+        const content = getAttribute(node, "content");
 
-      if (content === null) {
-        return false;
-      }
+        if (content === null) {
+          return false;
+        }
 
-      return getRefreshTime(content) !== null;
-    }),
-  expectations: {
-    1: (element, aspects, question) => {
-      return getRefreshTime(getAttribute(element, "content")!) === 0;
-    }
+        return getRefreshTime(content) !== null;
+      })
+    );
+
+    expectations((target, expectation) => {
+      expectation(1, getRefreshTime(getAttribute(target, "content")!) === 0);
+    });
   }
 };
 

@@ -1,8 +1,6 @@
 import { Response } from "@siteimprove/alfa-http";
 import { Node } from "@siteimprove/alfa-dom";
 
-export type Criterion = string;
-
 export type Target = Node;
 
 /**
@@ -66,36 +64,30 @@ export interface Locale {
  */
 export type Applicability<
   A extends Aspect = Aspect,
-  T extends Target = Target,
-  C = any
-> = (aspects: Pick<Aspects, A>, context: C) => T | Array<T> | null;
+  T extends Target = Target
+> = () => T | Array<T> | null;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#expectations
  */
-export type Expectation<
+export type Expectations<
   A extends Aspect = Aspect,
-  T extends Target = Target,
-  C = any
+  T extends Target = Target
 > = (
   target: T,
-  aspects: Pick<Aspects, A>,
-  question: (question: string, target?: T) => boolean,
-  context: C
-) => boolean;
+  expectation: (id: number, holds: boolean) => void,
+  question: (question: string) => boolean
+) => void;
 
 /**
  * @see https://www.w3.org/TR/act-rules-format/#structure
  */
-export interface Rule<
-  A extends Aspect = Aspect,
-  T extends Target = Target,
-  C = any
-> {
+export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
   readonly id: string;
-  readonly criteria: Array<Criterion>;
-  readonly locales: Array<Locale>;
-  readonly context: (aspects: Pick<Aspects, A>) => C;
-  readonly applicability: Applicability<A, T, C>;
-  readonly expectations: Readonly<{ [id: string]: Expectation<A, T, C> }>;
+  readonly locales?: Array<Locale>;
+  readonly definition: (
+    applicability: (applicability: Applicability<A, T>) => void,
+    expectations: (expectations: Expectations<A, T>) => void,
+    aspects: Pick<Aspects, A>
+  ) => void;
 }

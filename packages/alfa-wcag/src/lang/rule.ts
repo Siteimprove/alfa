@@ -9,34 +9,33 @@ import { getLanguage } from "@siteimprove/alfa-iana";
 
 export const Lang: Rule<"document", Element> = {
   id: "alfa:wcag:lang",
-  criteria: ["wcag:3.1.2"],
-  locales: [],
-  context: () => null,
-  applicability: ({ document }) =>
-    querySelectorAll<Element>(document, document, node => {
-      if (!isElement(node) || node.localName === "html") {
-        return false;
-      }
+  definition: (applicability, expectations, { document }) => {
+    applicability(() =>
+      querySelectorAll<Element>(document, document, node => {
+        if (!isElement(node) || node.localName === "html") {
+          return false;
+        }
 
-      const lang = getAttribute(node, "lang", { trim: true });
+        const lang = getAttribute(node, "lang", { trim: true });
+
+        if (lang === null || lang === "") {
+          return false;
+        }
+
+        const xmlLang = getAttribute(node, "xml:lang", { trim: true });
+
+        return xmlLang === null || xmlLang === "";
+      })
+    );
+
+    expectations((target, expectation) => {
+      let lang = getAttribute(target, "lang", { trim: true });
 
       if (lang === null || lang === "") {
-        return false;
+        lang = getAttribute(target, "xml:lang", { trim: true })!;
       }
 
-      const xmlLang = getAttribute(node, "xml:lang", { trim: true });
-
-      return xmlLang === null || xmlLang === "";
-    }),
-  expectations: {
-    1: (element, aspects, question) => {
-      let lang = getAttribute(element, "lang", { trim: true });
-
-      if (lang === null || lang === "") {
-        lang = getAttribute(element, "xml:lang", { trim: true })!;
-      }
-
-      return getLanguage(lang) !== null;
-    }
+      expectation(1, getLanguage(lang) !== null);
+    });
   }
 };

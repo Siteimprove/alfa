@@ -3,38 +3,31 @@ import { Rule } from "../../src/types";
 
 export const Manual: Rule<"document", Element> = {
   id: "alfa:test:manual",
-  criteria: [],
-  locales: [],
-  context: () => null,
-  applicability: ({ document }) => {
-    return isElement(document) ? document : null;
-  },
-  expectations: {
-    1: (target, { document }, question) => {
-      if (getAttribute(target, "alt") === "") {
-        return true;
-      }
+  definition: (applicability, expectations, { document }) => {
+    applicability(() => (isElement(document) ? document : null));
 
-      return question("is-large-type", target);
-    }
+    expectations((target, expectation, question) => {
+      const hasAlt = getAttribute(target, "alt") !== "";
+      const isLargeType = question("is-large-type");
+
+      expectation(1, !hasAlt || isLargeType);
+    });
   }
 };
 
 export const Dependencies: Rule<"document", Element> = {
   id: "alfa:test:dependencies",
-  criteria: [],
-  locales: [],
-  context: () => null,
-  applicability: ({ document }) => {
-    return isElement(document) ? [document] : [];
-  },
-  expectations: {
-    1: (target, { document }) => {
-      return false;
-    },
+  definition: (applicability, expectations, { document }) => {
+    applicability(() => (isElement(document) ? document : null));
 
-    2: (target, { document }) => {
-      return true;
-    }
+    expectations((target, expectation) => {
+      const isBody = target.localName === "body";
+
+      expectation(1, isBody);
+
+      if (isBody) {
+        expectation(2, target.prefix === null);
+      }
+    });
   }
 };

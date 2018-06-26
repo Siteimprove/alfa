@@ -8,39 +8,26 @@ import {
   hasTextContent
 } from "@siteimprove/alfa-dom";
 
-export type Context = Readonly<{ root: Element | null; title: Element | null }>;
-
-export const Title: Rule<"document", Element, Context> = {
+export const Title: Rule<"document", Element> = {
   id: "alfa:wcag:title",
-  criteria: ["wcag:2.4.2"],
-  locales: [],
-  context: ({ document }) => {
-    const root = querySelector(document, document, "html");
+  definition: (applicability, expectations, { document }) => {
+    applicability(() => querySelector(document, document, "html"));
 
-    if (root === null) {
-      return { root, title: null };
-    }
+    expectations((target, expectation) => {
+      const title = querySelector<Element>(
+        target,
+        document,
+        node =>
+          isElement(node) &&
+          node.localName === "title" &&
+          getElementNamespace(node, document) === Namespace.HTML
+      );
 
-    const title = querySelector<Element>(
-      root,
-      document,
-      node =>
-        isElement(node) &&
-        node.localName === "title" &&
-        getElementNamespace(node, document) === Namespace.HTML
-    );
+      expectation(1, title !== null);
 
-    return { root, title };
-  },
-  applicability: (aspects, context) => {
-    return context.root;
-  },
-  expectations: {
-    1: (root, aspects, question, { title }) => {
-      return title !== null;
-    },
-    2: (root, aspects, question, { title }) => {
-      return title !== null && hasTextContent(title);
-    }
+      if (title !== null) {
+        expectation(2, hasTextContent(title));
+      }
+    });
   }
 };

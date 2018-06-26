@@ -8,7 +8,6 @@ import {
   Answer
 } from "./types";
 
-const { keys } = Object;
 const { isArray } = Array;
 
 export function audit<A extends Aspect, T extends Target>(
@@ -40,48 +39,65 @@ export function audit<A extends Aspect, T extends Target>(
   }
 
   for (const rule of isArray(rules) ? rules : [rules]) {
-    const context = rule.context(aspects);
+    const targets: Array<T> | null = [];
 
-    const applicability = rule.applicability(aspects, context);
+    rule.definition(
+      applicability => {
+        const target = applicability();
 
-    const targets =
-      applicability === null
-        ? []
-        : isArray(applicability)
-          ? applicability
-          : [applicability];
-
-    if (targets.length === 0) {
-      results.push({
-        rule: rule.id,
-        outcome: "inapplicable"
-      });
-    } else {
-      for (const target of targets) {
-        let passed = true;
-
-        for (const key of keys(rule.expectations)) {
-          const expectation = rule.expectations[key];
-          const holds = expectation(
-            target,
-            aspects,
-            (id, target) => question(rule, id, target),
-            context
-          );
-
-          if (!holds) {
-            passed = false;
+        if (target !== null) {
+          if (isArray(target)) {
+            targets.push(...target);
+          } else {
+            targets.push(target);
           }
         }
 
-        results.push({
-          rule: rule.id,
-          outcome: passed ? "passed" : "failed",
-          target
-        });
-      }
-    }
+        if (targets.length === 0) {
+          results.push({
+            rule: rule.id,
+            outcome: "inapplicable"
+          });
+        }
+      },
+      expectations => {
+        for (const target of targets) {
+          let holds = true;
+          try {
+            expectations(
+              target,
+              (id, holds) => {
+                if (!holds) {
+                  throw new ExpectationError(id);
+                }
+              },
+              id => question(rule, id, target)
+            );
+          } catch (err) {
+            holds = false;
+          }
+
+          results.push({
+            rule: rule.id,
+            outcome: holds ? "passed" : "failed",
+            target
+          });
+        }
+      },
+      aspects
+    );
   }
 
   return results;
+}
+
+class ExpectationError implements Error {
+  public readonly name = "ExpectationError";
+  public readonly message: string;
+  public readonly id: number;
+
+  public constructor(id: number) {
+    this.id = id;
+    this.message = `Expectation ${id} does not hold`;
+  }
 }
