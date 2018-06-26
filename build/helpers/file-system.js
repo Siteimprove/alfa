@@ -146,5 +146,19 @@ export function makeDirectory(directory) {
  * @return {void}
  */
 export function removeDirectory(directory) {
+  if (!fs.existsSync(directory)) {
+    return;
+  }
+
+  for (let file of readDirectory(directory)) {
+    file = path.join(directory, file);
+
+    if (isDirectory(file)) {
+      removeDirectory(file);
+    } else {
+      removeFile(file);
+    }
+  }
+
   fs.rmdirSync(directory);
 }
