@@ -1,10 +1,11 @@
-import { install } from "source-map-support";
+import * as maps from "source-map-support";
+import * as coverage from "./coverage";
 import { Assertions } from "./types";
 import { assert } from "./assert";
 import { format } from "./format";
-import "./coverage";
 
-install();
+maps.install();
+coverage.install();
 
 export async function test(
   name: string,
