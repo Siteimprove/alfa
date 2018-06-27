@@ -15,6 +15,7 @@ const fields = [
   "homepage",
   "license",
   "description",
+  "contributors",
   "keywords",
   "repository",
   "bugs"
