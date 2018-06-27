@@ -157,7 +157,7 @@ function parseLocation(lines: Array<Line>, offset: number): Location {
   };
 }
 
-export function getLineAtOffset(lines: Array<Line>, offset: number): Line {
+function getLineAtOffset(lines: Array<Line>, offset: number): Line {
   let lo = 0;
   let hi = lines.length - 2;
 
