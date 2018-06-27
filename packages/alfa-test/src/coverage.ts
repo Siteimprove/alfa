@@ -20,27 +20,38 @@ export interface Range {
   readonly end: Location;
 }
 
-export interface ScriptCoverage {
+export interface Script {
+  readonly url: string;
   readonly source: string;
   readonly lines: Array<Line>;
-  readonly coverage: Array<FunctionCoverage | BranchCoverage>;
+  readonly coverage: Array<
+    FunctionCoverage | BranchCoverage | StatementCoverage
+  >;
 }
 
 export const enum CoverageType {
   Function,
-  Branch
+  Branch,
+  Statement
 }
 
-export interface FunctionCoverage {
+export interface Coverage {
+  readonly type: CoverageType;
+  readonly range: Range;
+  readonly count: number;
+}
+
+export interface FunctionCoverage extends Coverage {
   readonly type: CoverageType.Function;
-  readonly range: Range;
-  readonly count: number;
+  readonly name: string;
 }
 
-export interface BranchCoverage {
+export interface BranchCoverage extends Coverage {
   readonly type: CoverageType.Branch;
-  readonly range: Range;
-  readonly count: number;
+}
+
+export interface StatementCoverage extends Coverage {
+  readonly type: CoverageType.Statement;
 }
 
 export function install() {
@@ -59,16 +70,18 @@ export function install() {
         console.error(err.message);
       } else {
         for (const scriptCoverage of result) {
-          parseScriptCoverage(scriptCoverage);
+          const script = parseScript(scriptCoverage);
+
+          if (script === null) {
+            continue;
+          }
         }
       }
     });
   });
 }
 
-function parseScriptCoverage(
-  scriptCoverage: Profiler.ScriptCoverage
-): ScriptCoverage | null {
+function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
   let source: string;
   try {
     source = fs.readFileSync(scriptCoverage.url, "utf8");
@@ -90,23 +103,49 @@ function parseScriptCoverage(
     return line;
   });
 
-  const coverage: Array<FunctionCoverage | BranchCoverage> = [];
+  const coverage: Array<
+    FunctionCoverage | BranchCoverage | StatementCoverage
+  > = [];
 
   for (const functionCoverage of scriptCoverage.functions) {
     for (const coverageRange of functionCoverage.ranges) {
+      const range = parseRange(lines, coverageRange);
+
+      const section = lines.filter(line => {
+        return range.start.line <= line.index && range.end.line >= line.index;
+      });
+
+      if (section.length === 0) {
+        continue;
+      }
+
       if (functionCoverage.isBlockCoverage) {
         coverage.push(
           parseBranchCoverage(lines, functionCoverage, coverageRange)
         );
-      } else {
+      } else if (functionCoverage.functionName) {
         coverage.push(
           parseFunctionCoverage(lines, functionCoverage, coverageRange)
         );
       }
+
+      for (const line of section) {
+        if (
+          range.start.offset <= line.offset &&
+          range.end.offset >= line.offset + line.value.length
+        ) {
+          coverage.push(parseStatementCoverage(line, coverageRange));
+        }
+      }
     }
   }
 
-  return { source, lines, coverage };
+  return {
+    url: scriptCoverage.url,
+    source,
+    lines,
+    coverage
+  };
 }
 
 function parseFunctionCoverage(
@@ -133,6 +172,28 @@ function parseBranchCoverage(
   return {
     type: CoverageType.Branch,
     range,
+    count: coverageRange.count
+  };
+}
+
+function parseStatementCoverage(
+  line: Line,
+  coverageRange: Profiler.CoverageRange
+): StatementCoverage {
+  return {
+    type: CoverageType.Statement,
+    range: {
+      start: {
+        offset: line.offset,
+        line: line.index,
+        column: 0
+      },
+      end: {
+        offset: line.offset + line.value.length,
+        line: line.index,
+        column: line.value.length
+      }
+    },
     count: coverageRange.count
   };
 }
