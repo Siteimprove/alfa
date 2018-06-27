@@ -78,10 +78,10 @@ function parseScriptCoverage(
 
   let offset = 0;
 
-  const lines: Array<Line> = source.split("\n").map((value, i) => {
+  const lines: Array<Line> = source.split("\n").map((value, index) => {
     const line: Line = {
       value,
-      index: i + 1,
+      index,
       offset
     };
 
