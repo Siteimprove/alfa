@@ -3,10 +3,13 @@ import { Session, Profiler } from "inspector";
 
 const [header] = require("module").wrapper;
 
+const { min, max } = Math;
+
 export interface Line {
   readonly value: string;
   readonly index: number;
-  readonly offset: number;
+  readonly start: number;
+  readonly end: number;
 }
 
 export interface Location {
@@ -20,19 +23,9 @@ export interface Range {
   readonly end: Location;
 }
 
-export interface Script {
-  readonly url: string;
-  readonly source: string;
-  readonly lines: Array<Line>;
-  readonly coverage: Array<
-    FunctionCoverage | BranchCoverage | StatementCoverage
-  >;
-}
-
 export const enum CoverageType {
   Function,
-  Branch,
-  Statement
+  Block
 }
 
 export interface Coverage {
@@ -46,12 +39,14 @@ export interface FunctionCoverage extends Coverage {
   readonly name: string;
 }
 
-export interface BranchCoverage extends Coverage {
-  readonly type: CoverageType.Branch;
+export interface BlockCoverage extends Coverage {
+  readonly type: CoverageType.Block;
 }
 
-export interface StatementCoverage extends Coverage {
-  readonly type: CoverageType.Statement;
+export interface Script {
+  readonly url: string;
+  readonly lines: Array<Line>;
+  readonly coverage: Array<FunctionCoverage | BlockCoverage>;
 }
 
 export function install() {
@@ -95,54 +90,37 @@ function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
     const line: Line = {
       value,
       index,
-      offset
+      start: offset,
+      end: offset + value.length
     };
 
-    offset += value.length + 1;
+    offset = line.end + 1;
 
     return line;
   });
 
-  const coverage: Array<
-    FunctionCoverage | BranchCoverage | StatementCoverage
-  > = [];
+  const coverage: Array<FunctionCoverage | BlockCoverage> = [];
 
   for (const functionCoverage of scriptCoverage.functions) {
-    for (const coverageRange of functionCoverage.ranges) {
-      const range = parseRange(lines, coverageRange);
+    if (functionCoverage.functionName !== "") {
+      // The first range will always be function granular if the coverage entry
+      // contains a non-empty funtion name.
+      const range = functionCoverage.ranges.shift();
 
-      const section = lines.filter(line => {
-        return range.start.line <= line.index && range.end.line >= line.index;
-      });
-
-      if (section.length === 0) {
+      if (range === undefined) {
         continue;
       }
 
-      if (functionCoverage.isBlockCoverage) {
-        coverage.push(
-          parseBranchCoverage(lines, functionCoverage, coverageRange)
-        );
-      } else if (functionCoverage.functionName) {
-        coverage.push(
-          parseFunctionCoverage(lines, functionCoverage, coverageRange)
-        );
-      }
+      coverage.push(parseFunctionCoverage(lines, functionCoverage, range));
+    }
 
-      for (const line of section) {
-        if (
-          range.start.offset <= line.offset &&
-          range.end.offset >= line.offset + line.value.length
-        ) {
-          coverage.push(parseStatementCoverage(line, coverageRange));
-        }
-      }
+    for (const range of functionCoverage.ranges) {
+      coverage.push(parseBlockCoverage(lines, functionCoverage, range));
     }
   }
 
   return {
     url: scriptCoverage.url,
-    source,
     lines,
     coverage
   };
@@ -158,49 +136,31 @@ function parseFunctionCoverage(
   return {
     type: CoverageType.Function,
     range,
-    count: coverageRange.count
+    count: coverageRange.count,
+    name: functionCoverage.functionName
   };
 }
 
-function parseBranchCoverage(
+function parseBlockCoverage(
   lines: Array<Line>,
   functionCoverage: Profiler.FunctionCoverage,
   coverageRange: Profiler.CoverageRange
-): BranchCoverage {
+): BlockCoverage {
   const range = parseRange(lines, coverageRange);
 
   return {
-    type: CoverageType.Branch,
+    type: CoverageType.Block,
     range,
     count: coverageRange.count
   };
 }
 
-function parseStatementCoverage(
-  line: Line,
-  coverageRange: Profiler.CoverageRange
-): StatementCoverage {
-  return {
-    type: CoverageType.Statement,
-    range: {
-      start: {
-        offset: line.offset,
-        line: line.index,
-        column: 0
-      },
-      end: {
-        offset: line.offset + line.value.length,
-        line: line.index,
-        column: line.value.length
-      }
-    },
-    count: coverageRange.count
-  };
-}
-
 function parseRange(lines: Array<Line>, range: Profiler.CoverageRange): Range {
-  const start = range.startOffset - header.length;
-  const end = range.endOffset - header.length;
+  const first = lines[0];
+  const last = lines[lines.length - 1];
+
+  const start = max(first.start, range.startOffset - header.length);
+  const end = min(last.end, range.endOffset - header.length);
 
   return {
     start: parseLocation(lines, start),
@@ -214,7 +174,7 @@ function parseLocation(lines: Array<Line>, offset: number): Location {
   return {
     offset,
     line: line.index,
-    column: offset - line.offset
+    column: offset - line.start
   };
 }
 
@@ -225,9 +185,9 @@ function getLineAtOffset(lines: Array<Line>, offset: number): Line {
   while (lo < hi) {
     const mid = (lo + (hi - lo) / 2) | 0;
 
-    if (offset < lines[mid].offset) {
+    if (offset < lines[mid].start) {
       hi = mid - 1;
-    } else if (offset >= lines[mid + 1].offset) {
+    } else if (offset >= lines[mid + 1].start) {
       lo = mid + 1;
     } else {
       return lines[mid];
