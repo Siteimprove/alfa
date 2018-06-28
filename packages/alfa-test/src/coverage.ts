@@ -159,14 +159,17 @@ function parseRange(
   lines: Array<Line>,
   coverageRange: Profiler.CoverageRange
 ): Range {
-  let { startOffset, endOffset } = coverageRange;
+  const first = lines[0];
+  const last = lines[lines.length - 1];
 
-  startOffset = max(lines[0].start, startOffset - header.length);
-  endOffset = min(lines[lines.length - 1].end, endOffset - header.length);
+  let { startOffset: start, endOffset: end } = coverageRange;
+
+  start = max(first.start, start - header.length);
+  end = min(last.end, end - header.length);
 
   return {
-    start: parseLocation(lines, startOffset),
-    end: parseLocation(lines, endOffset)
+    start: parseLocation(lines, start),
+    end: parseLocation(lines, end)
   };
 }
 
