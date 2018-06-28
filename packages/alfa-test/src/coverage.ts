@@ -104,7 +104,8 @@ function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
   for (const functionCoverage of scriptCoverage.functions) {
     if (functionCoverage.functionName !== "") {
       // The first range will always be function granular if the coverage entry
-      // contains a non-empty funtion name.
+      // contains a non-empty funtion name. We therefore grab this coverage
+      // range and store it as function coverage.
       const range = functionCoverage.ranges.shift();
 
       if (range === undefined) {
@@ -114,6 +115,9 @@ function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
       coverage.push(parseFunctionCoverage(lines, functionCoverage, range));
     }
 
+    // For the remaining ranges, store them as block coverage. If detailed
+    // coverage is disabled then no additional coverage ranges other than the
+    // function granular range parsed above will be present.
     for (const range of functionCoverage.ranges) {
       coverage.push(parseBlockCoverage(lines, functionCoverage, range));
     }
