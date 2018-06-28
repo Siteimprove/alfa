@@ -14,7 +14,7 @@ export interface Line {
 
 export interface Location {
   readonly offset: number;
-  readonly line: number;
+  readonly line: Line;
   readonly column: number;
 }
 
@@ -65,24 +65,19 @@ export function install() {
         console.error(err.message);
       } else {
         for (const scriptCoverage of result) {
-          const script = parseScript(scriptCoverage);
-
-          if (script === null) {
+          if (!fs.existsSync(scriptCoverage.url)) {
             continue;
           }
+
+          parseScript(scriptCoverage);
         }
       }
     });
   });
 }
 
-function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
-  let source: string;
-  try {
-    source = fs.readFileSync(scriptCoverage.url, "utf8");
-  } catch (err) {
-    return null;
-  }
+function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script {
+  const source = fs.readFileSync(scriptCoverage.url, "utf8");
 
   let offset = 0;
 
@@ -102,7 +97,9 @@ function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
   const coverage: Array<FunctionCoverage | BlockCoverage> = [];
 
   for (const functionCoverage of scriptCoverage.functions) {
-    if (functionCoverage.functionName !== "") {
+    const { functionName: name } = functionCoverage;
+
+    if (name !== "") {
       // The first range will always be function granular if the coverage entry
       // contains a non-empty funtion name. We therefore grab this coverage
       // range and store it as function coverage.
@@ -112,14 +109,14 @@ function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
         continue;
       }
 
-      coverage.push(parseFunctionCoverage(lines, functionCoverage, range));
+      coverage.push(parseFunctionCoverage(lines, range, name));
     }
 
     // For the remaining ranges, store them as block coverage. If detailed
     // coverage is disabled then no additional coverage ranges other than the
     // function granular range parsed above will be present.
     for (const range of functionCoverage.ranges) {
-      coverage.push(parseBlockCoverage(lines, functionCoverage, range));
+      coverage.push(parseBlockCoverage(lines, range));
     }
   }
 
@@ -132,8 +129,8 @@ function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script | null {
 
 function parseFunctionCoverage(
   lines: Array<Line>,
-  functionCoverage: Profiler.FunctionCoverage,
-  coverageRange: Profiler.CoverageRange
+  coverageRange: Profiler.CoverageRange,
+  name: string
 ): FunctionCoverage {
   const range = parseRange(lines, coverageRange);
 
@@ -141,13 +138,12 @@ function parseFunctionCoverage(
     type: CoverageType.Function,
     range,
     count: coverageRange.count,
-    name: functionCoverage.functionName
+    name
   };
 }
 
 function parseBlockCoverage(
   lines: Array<Line>,
-  functionCoverage: Profiler.FunctionCoverage,
   coverageRange: Profiler.CoverageRange
 ): BlockCoverage {
   const range = parseRange(lines, coverageRange);
@@ -159,16 +155,18 @@ function parseBlockCoverage(
   };
 }
 
-function parseRange(lines: Array<Line>, range: Profiler.CoverageRange): Range {
-  const first = lines[0];
-  const last = lines[lines.length - 1];
+function parseRange(
+  lines: Array<Line>,
+  coverageRange: Profiler.CoverageRange
+): Range {
+  let { startOffset, endOffset } = coverageRange;
 
-  const start = max(first.start, range.startOffset - header.length);
-  const end = min(last.end, range.endOffset - header.length);
+  startOffset = max(lines[0].start, startOffset - header.length);
+  endOffset = min(lines[lines.length - 1].end, endOffset - header.length);
 
   return {
-    start: parseLocation(lines, start),
-    end: parseLocation(lines, end)
+    start: parseLocation(lines, startOffset),
+    end: parseLocation(lines, endOffset)
   };
 }
 
@@ -177,7 +175,7 @@ function parseLocation(lines: Array<Line>, offset: number): Location {
 
   return {
     offset,
-    line: line.index,
+    line,
     column: offset - line.start
   };
 }
