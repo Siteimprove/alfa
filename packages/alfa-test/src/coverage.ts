@@ -179,20 +179,21 @@ function parseLocation(lines: Array<Line>, offset: number): Location {
 }
 
 function getLineAtOffset(lines: Array<Line>, offset: number): Line {
-  let lo = 0;
-  let hi = lines.length - 2;
+  let lower = 0;
+  let upper = lines.length - 2;
 
-  while (lo < hi) {
-    const mid = (lo + (hi - lo) / 2) | 0;
+  while (lower < upper) {
+    const middle = (lower + (upper - lower) / 2) | 0;
 
-    if (offset < lines[mid].start) {
-      hi = mid - 1;
-    } else if (offset >= lines[mid + 1].start) {
-      lo = mid + 1;
+    if (offset < lines[middle].start) {
+      upper = middle - 1;
+    } else if (offset >= lines[middle + 1].start) {
+      lower = middle + 1;
     } else {
-      return lines[mid];
+      lower = middle;
+      break;
     }
   }
 
-  return lines[lo];
+  return lines[lower];
 }
