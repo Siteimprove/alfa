@@ -32,19 +32,18 @@ export type Vocabulary = {
   readonly "@vocab": string;
 };
 
-export type Terms<C> = Exclude<keyof C, Keyword>;
-
-export type Definitions<C> = {
-  readonly [P in Terms<C>]: string | Identifier & Type
+export type Context<T> = {
+  readonly "@context": Definitions<T> & Partial<Identifier & Vocabulary>;
 };
 
-export type Properties<C> = {
-  readonly [P in Terms<C>]?: string | number | Identifier
+export type Terms<T> = Exclude<keyof T, Keyword>;
+
+export type Definitions<T> = {
+  readonly [P in Terms<T>]: string | Identifier & Type
 };
 
-export type Context<C> = Definitions<C> & Partial<Identifier & Vocabulary>;
+export type Properties<T> = {
+  readonly [P in Terms<T>]?: string | number | Identifier
+};
 
-export type Node<C extends Context<C>> = Properties<C> &
-  Partial<Identifier> & {
-    readonly "@context": C;
-  };
+export type Node<T> = Context<T> & Properties<T> & Partial<Identifier>;
