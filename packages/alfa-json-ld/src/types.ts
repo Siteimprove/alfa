@@ -28,23 +28,21 @@ export type Type = {
   readonly "@type": string;
 };
 
-export type Vocabulary<C> = {
-  readonly "@vocab": Context<C>;
+export type Vocabulary = {
+  readonly "@vocab": string;
 };
+
+export type Terms<C> = Exclude<keyof C, Keyword>;
 
 export type Definitions<C> = {
-  readonly [P in Exclude<keyof C, Keyword>]: string | Identifier & Type
+  readonly [P in Terms<C>]: string | Identifier & Type
 };
-
-export type Terms<C> = C extends Vocabulary<any>
-  ? Exclude<keyof C | keyof C["@vocab"], Keyword>
-  : Exclude<keyof C, Keyword>;
 
 export type Properties<C> = {
   readonly [P in Terms<C>]?: string | number | Identifier
 };
 
-export type Context<C> = Definitions<C> & Partial<Identifier>;
+export type Context<C> = Definitions<C> & Partial<Identifier & Vocabulary>;
 
 export type Node<C extends Context<C>> = Properties<C> &
   Partial<Identifier> & {
