@@ -22,13 +22,3 @@ test("Does not consider abstract roles", t => {
   const widget = <div role="widget" />;
   t.equal(getRole(widget, widget), null);
 });
-
-test("Returns the semantic role of an anchor that has an href attribute", t => {
-  const a = <a href="foo">Foo</a>;
-  t.equal(getRole(a, a), Roles.Link);
-});
-
-test("Returns null when an anchor has no href attribute", t => {
-  const a = <a>Foo</a>;
-  t.equal(getRole(a, a), null);
-});
