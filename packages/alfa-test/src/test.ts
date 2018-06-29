@@ -1,7 +1,7 @@
+import * as assert from "assert";
 import * as maps from "source-map-support";
 import * as coverage from "./coverage";
 import { Assertions } from "./types";
-import { assert } from "./assert";
 import { format } from "./format";
 
 maps.install();
