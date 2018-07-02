@@ -32,6 +32,10 @@ export type Vocabulary = {
   readonly "@vocab": string;
 };
 
+export type Prefix = {
+  readonly "@prefix": boolean;
+};
+
 export type Context<T> = {
   readonly "@context": Definitions<T> & Partial<Identifier & Vocabulary>;
 };
@@ -39,7 +43,7 @@ export type Context<T> = {
 export type Terms<T> = Exclude<keyof T, Keyword>;
 
 export type Definitions<T> = {
-  readonly [P in Terms<T>]: string | Identifier & Type
+  readonly [P in Terms<T>]: string | Identifier & (Type | Prefix)
 };
 
 export type Properties<T> = {
