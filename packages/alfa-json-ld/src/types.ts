@@ -20,34 +20,40 @@ export type Keyword =
   | "@version"
   | "@vocab";
 
-export type Identifier = {
+export const Id: "@id" = "@id";
+
+export type WithId = {
   readonly "@id": string;
 };
 
-export type Type = {
-  readonly "@type": string;
+export type WithType<T = any> = {
+  readonly "@type": T;
 };
 
-export type Vocabulary = {
+export type WithVocab = {
   readonly "@vocab": string;
 };
 
-export type Prefix = {
+export type WithPrefix = {
   readonly "@prefix": boolean;
 };
 
-export type Context<T> = {
-  readonly "@context": Definitions<T> & Partial<Identifier & Vocabulary>;
+export type WithContext<T> = {
+  readonly "@context": Definitions<T> & Partial<WithId & WithVocab>;
 };
 
 export type Terms<T> = Exclude<keyof T, Keyword>;
 
+export type Value<T> = T extends "@id" ? WithId : T;
+
 export type Definitions<T> = {
-  readonly [P in Terms<T>]: string | Identifier & (Type | Prefix)
+  readonly [P in Terms<T>]: string | WithId & (WithType | WithPrefix)
 };
 
 export type Properties<T> = {
-  readonly [P in Terms<T>]?: string | number | Identifier
+  readonly [P in Terms<T>]?: T[P] extends WithType<infer U>
+    ? Value<U>
+    : string | number | boolean
 };
 
-export type Node<T> = Context<T> & Properties<T> & Partial<Identifier>;
+export type Node<T> = WithContext<T> & Partial<WithId> & Properties<T>;
