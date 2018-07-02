@@ -44,16 +44,16 @@ export type WithContext<T> = {
 
 export type Terms<T> = Exclude<keyof T, Keyword>;
 
-export type Value<T> = T extends "@id" ? WithId : T;
+export type Value<T> = T extends "@id" ? WithId : string | number | boolean;
 
 export type Definitions<T> = {
-  readonly [P in Terms<T>]: string | WithId & (WithType | WithPrefix)
+  readonly [P in Terms<T>]: string | WithId & Partial<WithType | WithPrefix>
 };
 
 export type Properties<T> = {
-  readonly [P in Terms<T>]?: T[P] extends WithType<infer U>
-    ? Value<U>
-    : string | number | boolean
+  readonly [P in Terms<T>]?: Value<T[P] extends WithType<infer U> ? U : any>
 };
 
-export type Node<T> = WithContext<T> & Partial<WithId> & Properties<T>;
+export type Node<T> = WithContext<T> &
+  Partial<WithId & WithType> &
+  Properties<T>;
