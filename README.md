@@ -1,4 +1,4 @@
-# Alfa
+# <img alt="Alfa" src="media/logo.svg" height="40">
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
