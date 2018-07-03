@@ -19,27 +19,12 @@ function visitNode(
   visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
   options: Readonly<{ composed?: boolean; flattened?: boolean }>
 ): boolean {
-  const shadowRoot = isElement(node) ? node.shadowRoot : null;
-
-  // https://drafts.csswg.org/css-scoping/#flattening
   if (options.flattened) {
     if (isElement(node) && node.localName === "slot") {
       const childNodes = getAssignedNodes(node, context);
 
       for (let i = 0, n = childNodes.length; i < n; i++) {
         if (!visitNode(childNodes[i], parentNode, context, visitors, options)) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    if (shadowRoot !== null) {
-      const { childNodes } = shadowRoot;
-
-      for (let i = 0, n = childNodes.length; i < n; i++) {
-        if (!visitNode(childNodes[i], node, context, visitors, options)) {
           return false;
         }
       }
@@ -54,12 +39,28 @@ function visitNode(
     return false;
   }
 
-  // Shadow roots should be traversed as soon as they're encountered per the
-  // definition of shadow-including preorder depth-first traversal.
-  // https://www.w3.org/TR/dom41/#shadow-including-preorder-depth-first-traversal
-  if (options.composed && shadowRoot !== null) {
-    if (!visitNode(shadowRoot, node, context, visitors, options)) {
-      return false;
+  const shadowRoot = isElement(node) ? node.shadowRoot : null;
+
+  if (shadowRoot !== null) {
+    if (options.flattened) {
+      const { childNodes } = shadowRoot;
+
+      for (let i = 0, n = childNodes.length; i < n; i++) {
+        if (!visitNode(childNodes[i], node, context, visitors, options)) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    // Shadow roots should be traversed as soon as they're encountered per the
+    // definition of shadow-including preorder depth-first traversal.
+    // https://www.w3.org/TR/dom41/#shadow-including-preorder-depth-first-traversal
+    if (options.composed) {
+      if (!visitNode(shadowRoot, node, context, visitors, options)) {
+        return false;
+      }
     }
   }
 
