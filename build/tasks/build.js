@@ -1,18 +1,38 @@
 import * as path from "path";
 import * as TypeScript from "typescript";
+import * as TSLint from "tslint";
 import chalk from "chalk";
 
 import { writeFile } from "../helpers/file-system";
-import { Workspace } from "../helpers/workspace";
+import { workspace } from "../helpers/workspace";
 import * as notify from "../helpers/notify";
-
-const workspace = new Workspace();
 
 /**
  * @param {string} file
  * @return {boolean}
  */
 export function build(file) {
+  const failures = workspace.lint(file);
+
+  if (failures.length > 0) {
+    let error = false;
+
+    for (const failure of failures) {
+      switch (failure.getRuleSeverity()) {
+        case "error":
+          error = true;
+          notify.error(formatFailure(failure));
+          break;
+        case "warning":
+          notify.warn(formatFailure(failure));
+      }
+    }
+
+    if (error) {
+      return false;
+    }
+  }
+
   const diagnostics = workspace.diagnose(file);
 
   if (diagnostics.length > 0) {
@@ -33,7 +53,7 @@ export function build(file) {
 }
 
 /**
- * @param {object} diagnostic
+ * @param {TypeScript.Diagnostic} diagnostic
  * @return {string}
  */
 function formatDiagnostic(diagnostic) {
@@ -44,7 +64,7 @@ function formatDiagnostic(diagnostic) {
 
   const { file } = diagnostic;
 
-  if (file) {
+  if (file && diagnostic.start !== undefined) {
     const { line } = file.getLineAndCharacterOfPosition(diagnostic.start);
 
     const filePath = path.relative(process.cwd(), file.fileName);
@@ -53,4 +73,17 @@ function formatDiagnostic(diagnostic) {
   }
 
   return message;
+}
+
+/**
+ * @param {TSLint.RuleFailure} failure
+ * @return {string}
+ */
+function formatFailure(failure) {
+  const message = failure.getFailure();
+  const { line } = failure.getStartPosition().getLineAndCharacter();
+
+  const filePath = path.relative(process.cwd(), failure.getFileName());
+
+  return `${chalk.dim(`${filePath}:${line + 1}`)} ${message}`;
 }

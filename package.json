@@ -35,6 +35,7 @@
     "husky": "^0.14.3",
     "ignore": "^4.0.2",
     "prettier": "1.13.5",
+    "tslint": "^5.10.0",
     "typescript": "^2.9.2"
   }
 }

@@ -2,10 +2,12 @@ import * as path from "path";
 import * as fs from "fs";
 import * as crypto from "crypto";
 import * as TypeScript from "typescript";
+import * as TSLint from "tslint";
 
 /**
  * @typedef {Object} ScriptInfo
  * @property {string} version
+ * @property {string} text
  * @property {TypeScript.IScriptSnapshot} snapshot
  * @property {TypeScript.ScriptKind} kind
  */
@@ -62,11 +64,30 @@ export class Project {
   compile(file) {
     file = this.resolve(file);
 
-    const { service } = this;
-
     this.host.addFile(file);
 
-    return service.getEmitOutput(file).outputFiles;
+    return this.service.getEmitOutput(file).outputFiles;
+  }
+
+  /**
+   * @param {string} file
+   * @return {Array<TSLint.RuleFailure>}
+   */
+  lint(file) {
+    file = this.resolve(file);
+
+    const { text } = this.host.addFile(file);
+
+    const linter = new TSLint.Linter({ fix: false }, this.service.getProgram());
+
+    const { results: configuration } = TSLint.Configuration.findConfiguration(
+      "tslint.json",
+      file
+    );
+
+    linter.lint(file, text, configuration);
+
+    return linter.getResult().failures;
   }
 }
 
@@ -255,7 +276,7 @@ class InMemoryLanguageServiceHost {
         kind = TypeScript.ScriptKind.TSX;
     }
 
-    current = { snapshot, version, kind };
+    current = { version, text, kind, snapshot };
 
     this.files.set(file, current);
 

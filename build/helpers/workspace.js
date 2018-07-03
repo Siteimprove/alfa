@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as TypeScript from "typescript";
+import * as TSLint from "tslint";
 import { Project } from "./project";
 
 export class Workspace {
@@ -32,7 +33,7 @@ export class Workspace {
 
   /**
    * @param {string} file
-   * @return {object}
+   * @return {Array<TypeScript.Diagnostic>}
    */
   diagnose(file) {
     return this.projectFor(file).diagnose(file);
@@ -40,12 +41,27 @@ export class Workspace {
 
   /**
    * @param {string} file
-   * @return {object}
+   * @return {Array<TypeScript.OutputFile>}
    */
   compile(file) {
     return this.projectFor(file).compile(file);
   }
+
+  /**
+   * @param {string} file
+   * @return {Array<TSLint.RuleFailure>}
+   */
+  lint(file) {
+    return this.projectFor(file).lint(file);
+  }
 }
+
+/**
+ * Shared workspace used between different tasks.
+ *
+ * @type {Workspace}
+ */
+export const workspace = new Workspace();
 
 /**
  * @param {string} directory

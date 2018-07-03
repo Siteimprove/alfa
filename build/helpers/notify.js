@@ -21,6 +21,14 @@ export function error(format, ...args) {
  * @param {string} format
  * @param {...any} args
  */
+export function warn(format, ...args) {
+  log(chalk.yellow, "\u26a0", "warning", format, ...args);
+}
+
+/**
+ * @param {string} format
+ * @param {...any} args
+ */
 export function skip(format, ...args) {
   log(chalk.gray, "\u2026", "skipped", format, ...args);
 }
