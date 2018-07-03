@@ -204,21 +204,19 @@ export function isSelector(selector: Selector): selector is Selector {
 }
 
 function isImplicitDescendant(token: Token): boolean {
-  if (
-    token.type === TokenType.Ident ||
-    token.type === TokenType.LeftSquareBracket ||
-    token.type === TokenType.Colon
-  ) {
-    return true;
-  }
+  switch (token.type) {
+    case TokenType.Ident:
+    case TokenType.LeftSquareBracket:
+    case TokenType.Colon:
+      return true;
 
-  if (token.type === TokenType.Delim) {
-    const { value } = token;
-    return (
-      value === Char.FullStop ||
-      value === Char.NumberSign ||
-      value === Char.Asterisk
-    );
+    case TokenType.Delim:
+      const { value } = token;
+      return (
+        value === Char.FullStop ||
+        value === Char.NumberSign ||
+        value === Char.Asterisk
+      );
   }
 
   return false;

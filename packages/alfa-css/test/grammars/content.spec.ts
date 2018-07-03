@@ -8,9 +8,14 @@ function content(t: Assertions, input: string, expected: Content) {
   t.deepEqual(parse(lex(input, Alphabet), ContentGrammar), expected, input);
 }
 
-test("Can parse normal content", t => content(t, "normal", "normal"));
+test("Can parse normal content", t => {
+  content(t, "normal", "normal");
+});
 
-test("Can parse none content", t => content(t, "none", "none"));
+test("Can parse none content", t => {
+  content(t, "none", "none");
+});
 
-test("Can parse a list of string content", t =>
-  content(t, '"Hello" " " "world"', ["Hello", " ", "world"]));
+test("Can parse a list of string content", t => {
+  content(t, '"Hello" " " "world"', ["Hello", " ", "world"]);
+});

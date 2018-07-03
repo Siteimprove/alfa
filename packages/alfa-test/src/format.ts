@@ -7,7 +7,7 @@ import * as path from "path";
  * @internal
  */
 export function format(name: string, error: Error & AssertionError): string {
-  const message = error.generatedMessage ? "" : "\n" + error.message + "\n";
+  const message = error.generatedMessage ? "" : `\n${error.message}\n`;
 
   const [{ fileName, lineNumber }] = stack.parse(error);
 
@@ -32,5 +32,5 @@ ${message}
 ${difference}
   `;
 
-  return "\n" + output.trim() + "\n";
+  return `\n${output.trim()}\n`;
 }

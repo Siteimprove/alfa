@@ -1,3 +1,4 @@
+import * as Roles from "../roles";
 import { Feature, None } from "../types";
 
 /**
@@ -5,5 +6,5 @@ import { Feature, None } from "../types";
  */
 export const Meta: Feature = {
   element: "meta",
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

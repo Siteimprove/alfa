@@ -20,7 +20,7 @@ export function serialize(node: Node, context: Node): string {
       namespace !== Namespace.MathML &&
       namespace !== Namespace.SVG
     ) {
-      name = node.prefix + ":" + node.localName;
+      name = `${node.prefix}:${node.localName}`;
     }
 
     let element = `<${name}`;
@@ -36,19 +36,19 @@ export function serialize(node: Node, context: Node): string {
       if (namespace !== null) {
         switch (namespace) {
           case Namespace.XML:
-            name = "xml:" + attribute.localName;
+            name = `xml:${attribute.localName}`;
             break;
           case Namespace.XMLNS:
             if (attribute.localName !== "xmlns") {
-              name = "xmlns:" + attribute.localName;
+              name = `xmlns:${attribute.localName}`;
             }
             break;
           case Namespace.XLink:
-            name = "xlink:" + attribute.localName;
+            name = `xlink:${attribute.localName}`;
             break;
           default:
             if (attribute.prefix !== null) {
-              name = attribute.prefix + ":" + attribute.localName;
+              name = `${attribute.prefix}:${attribute.localName}`;
             }
         }
       }

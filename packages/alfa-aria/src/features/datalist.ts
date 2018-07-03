@@ -7,5 +7,5 @@ import { Feature, None } from "../types";
 export const Datalist: Feature = {
   element: "datalist",
   role: () => Roles.ListBox,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

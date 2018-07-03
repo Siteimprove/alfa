@@ -7,5 +7,5 @@ import { Feature, None } from "../types";
 export const Nav: Feature = {
   element: "nav",
   role: () => Roles.Navigation,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

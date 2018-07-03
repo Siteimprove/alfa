@@ -14,7 +14,7 @@ function expression(
   t.deepEqual(lex(input, ExpressionAlphabet), expected, input);
 }
 
-test("Can lex an expression", t =>
+test("Can lex an expression", t => {
   expression(t, "1 + 2", [
     {
       type: TokenType.Number,
@@ -27,4 +27,5 @@ test("Can lex an expression", t =>
       type: TokenType.Number,
       value: 2
     }
-  ]));
+  ]);
+});

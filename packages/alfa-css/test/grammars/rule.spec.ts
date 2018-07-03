@@ -7,7 +7,7 @@ function rule(t: Assertions, input: string, expected: Rule | Array<Rule>) {
   t.deepEqual(parse(lex(input, Alphabet), RuleGrammar), expected, input);
 }
 
-test("Can parse a single qualified rule", t =>
+test("Can parse a single qualified rule", t => {
   rule(t, "div{color:red}", {
     type: "qualified-rule",
     prelude: [
@@ -29,9 +29,10 @@ test("Can parse a single qualified rule", t =>
         value: "red"
       }
     ]
-  }));
+  });
+});
 
-test("Can parse a list of qualified rules", t =>
+test("Can parse a list of qualified rules", t => {
   rule(t, "div{color:red}span{color:blue}", [
     {
       type: "qualified-rule",
@@ -77,9 +78,10 @@ test("Can parse a list of qualified rules", t =>
         }
       ]
     }
-  ]));
+  ]);
+});
 
-test("Can parse a single at-rule", t =>
+test("Can parse a single at-rule", t => {
   rule(t, "@page{color:red}", {
     type: "at-rule",
     name: "page",
@@ -97,9 +99,10 @@ test("Can parse a single at-rule", t =>
         value: "red"
       }
     ]
-  }));
+  });
+});
 
-test("Can parse an at-rule with a prelude", t =>
+test("Can parse an at-rule with a prelude", t => {
   rule(t, "@page foo", {
     type: "at-rule",
     name: "page",
@@ -112,16 +115,18 @@ test("Can parse an at-rule with a prelude", t =>
         value: "foo"
       }
     ]
-  }));
+  });
+});
 
-test("Can parse an at-rule terminated by a semicolon", t =>
+test("Can parse an at-rule terminated by a semicolon", t => {
   rule(t, "@page;", {
     type: "at-rule",
     name: "page",
     prelude: []
-  }));
+  });
+});
 
-test("Can parse a rule with a class selector", t =>
+test("Can parse a rule with a class selector", t => {
   rule(t, ".foo{}", {
     type: "qualified-rule",
     prelude: [
@@ -135,9 +140,10 @@ test("Can parse a rule with a class selector", t =>
       }
     ],
     value: []
-  }));
+  });
+});
 
-test("Can parse a rule with an ID selector", t =>
+test("Can parse a rule with an ID selector", t => {
   rule(t, "#foo{}", {
     type: "qualified-rule",
     prelude: [
@@ -151,9 +157,10 @@ test("Can parse a rule with an ID selector", t =>
       }
     ],
     value: []
-  }));
+  });
+});
 
-test("Can parse a rule with an attribute selector", t =>
+test("Can parse a rule with an attribute selector", t => {
   rule(t, "[foo]{}", {
     type: "qualified-rule",
     prelude: [
@@ -169,4 +176,5 @@ test("Can parse a rule with an attribute selector", t =>
       }
     ],
     value: []
-  }));
+  });
+});

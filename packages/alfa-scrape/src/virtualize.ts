@@ -30,9 +30,7 @@ function virtualizeElement(
       value: attribute.value
     })),
     shadowRoot: null,
-    childNodes: Array.from(element.childNodes).map(child =>
-      virtualizeNode(child)
-    )
+    childNodes: Array.from(element.childNodes).map(virtualizeNode)
   };
 
   if (element.shadowRoot !== null) {
@@ -54,17 +52,19 @@ function virtualizeComment(
   return { nodeType: 8, data: comment.data, childNodes: [] };
 }
 
+function hasCssRules(styleSheet: StyleSheet): styleSheet is CSSStyleSheet {
+  return "cssRules" in styleSheet;
+}
+
 function virtualizeDocument(
   document: Document
 ): import("@siteimprove/alfa-dom").Document {
   return {
     nodeType: 9,
-    childNodes: Array.from(document.childNodes).map(child =>
-      virtualizeNode(child)
-    ),
-    styleSheets: Array.from(document.styleSheets).map(styleSheet =>
-      virtualizeStyleSheet(styleSheet as CSSStyleSheet)
-    )
+    childNodes: Array.from(document.childNodes).map(virtualizeNode),
+    styleSheets: Array.from(document.styleSheets)
+      .filter(hasCssRules)
+      .map(virtualizeStyleSheet)
   };
 }
 
@@ -79,9 +79,7 @@ function virtualizeDocumentFragment(
 ): import("@siteimprove/alfa-dom").DocumentFragment {
   return {
     nodeType: 11,
-    childNodes: Array.from(documentFragment.childNodes).map(child =>
-      virtualizeNode(child)
-    )
+    childNodes: Array.from(documentFragment.childNodes).map(virtualizeNode)
   };
 }
 
@@ -91,9 +89,7 @@ function virtualizeShadowRoot(
 ): import("@siteimprove/alfa-dom").ShadowRoot {
   return {
     nodeType: 11,
-    childNodes: Array.from(shadowRoot.childNodes).map(child =>
-      virtualizeNode(child)
-    ),
+    childNodes: Array.from(shadowRoot.childNodes).map(virtualizeNode),
     // We can only ever access open shadow roots, so the `mode` will always be
     // "open". If it were "closed", we would have never gotten this far.
     mode: "open"
@@ -104,9 +100,7 @@ function virtualizeStyleSheet(
   styleSheet: CSSStyleSheet
 ): import("@siteimprove/alfa-dom").StyleSheet {
   return {
-    cssRules: Array.from(styleSheet.cssRules).map(cssRule =>
-      virtualizeRule(cssRule)
-    )
+    cssRules: Array.from(styleSheet.cssRules).map(virtualizeRule)
   };
 }
 
@@ -169,7 +163,7 @@ function virtualizeMediaRule(
 ): import("@siteimprove/alfa-dom").MediaRule {
   return {
     type: 4,
-    cssRules: Array.from(mediaRule.cssRules).map(rule => virtualizeRule(rule)),
+    cssRules: Array.from(mediaRule.cssRules).map(virtualizeRule),
     media: Array.from(mediaRule.media)
   };
 }
@@ -199,9 +193,7 @@ function virtualizeKeyframesRule(
   return {
     type: 7,
     name: keyframesRule.name,
-    cssRules: Array.from(keyframesRule.cssRules).map(rule =>
-      virtualizeRule(rule)
-    )
+    cssRules: Array.from(keyframesRule.cssRules).map(virtualizeRule)
   };
 }
 
@@ -230,9 +222,7 @@ function virtualizeSupportsRule(
 ): import("@siteimprove/alfa-dom").SupportsRule {
   return {
     type: 12,
-    cssRules: Array.from(supportsRule.cssRules).map(rule =>
-      virtualizeRule(rule)
-    ),
+    cssRules: Array.from(supportsRule.cssRules).map(virtualizeRule),
     conditionText: supportsRule.conditionText
   };
 }

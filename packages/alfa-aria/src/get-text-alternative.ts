@@ -341,7 +341,6 @@ function getHtmlTextAlternative(
       if (caption !== null) {
         return getTextContent(caption);
       }
-      break;
     }
   }
 

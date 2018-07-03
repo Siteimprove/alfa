@@ -654,7 +654,6 @@ function consumeToken(stream: Stream<number>): Token | null {
       if (startsValidEscape(char, stream)) {
         return consumeIdentLike(char, stream);
       }
-      break;
   }
 
   if (isNameStart(char)) {

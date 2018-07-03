@@ -14,7 +14,7 @@ export const Select: Feature = {
   element: "select",
   role,
   allowedRoles: (select, context) =>
-    role(select, context) === Roles.Combobox ? [Roles.Menu] : None
+    role(select, context) === Roles.Combobox ? [Roles.Menu] : None(Roles)
 };
 
 function role(select: Element, context: Node): Role {

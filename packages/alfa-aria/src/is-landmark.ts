@@ -23,7 +23,6 @@ export function isLandmark(element: Element, context: Node): boolean {
       : role.inherits;
 
   return (
-    inherits !== undefined &&
-    inherits.some((ancestor: any) => ancestor === Landmark)
+    inherits !== undefined && inherits.some(ancestor => ancestor === Landmark)
   );
 }

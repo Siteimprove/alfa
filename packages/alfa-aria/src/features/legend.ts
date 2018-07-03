@@ -1,3 +1,4 @@
+import * as Roles from "../roles";
 import { Feature, None } from "../types";
 
 /**
@@ -5,5 +6,5 @@ import { Feature, None } from "../types";
  */
 export const Legend: Feature = {
   element: "legend",
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

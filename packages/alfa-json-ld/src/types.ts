@@ -26,7 +26,7 @@ export interface WithId {
   readonly "@id": string;
 }
 
-export interface WithType<T = any> {
+export interface WithType<T = string> {
   readonly "@type": T;
 }
 
@@ -51,7 +51,7 @@ export type Definitions<T> = {
 };
 
 export type Properties<T> = {
-  readonly [P in Terms<T>]?: Value<T[P] extends WithType<infer U> ? U : any>
+  readonly [P in Terms<T>]?: Value<T[P] extends WithType<infer U> ? U : string>
 };
 
 export type Node<T> = WithContext<T> &

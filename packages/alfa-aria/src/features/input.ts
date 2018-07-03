@@ -112,6 +112,6 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
     case "week":
     case null:
     default:
-      return None;
+      return None(Roles);
   }
 }

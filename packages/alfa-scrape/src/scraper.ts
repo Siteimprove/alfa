@@ -75,12 +75,12 @@ export class Scraper {
       }
 
       try {
-        document = await page.evaluate(`{
+        document = (await page.evaluate(`{
           ${virtualize};
           virtualizeNode(window.document);
-        }`);
+        }`)) as Document;
       } catch (err) {
-        error = err;
+        error = err as Error;
 
         // If evaluation fails, this could indicate that a client side redirect
         // was performed. If so, we should now be on the correct domain; reload
@@ -90,7 +90,7 @@ export class Scraper {
             await page.reload({ timeout: timeout - elapsed, waitUntil: wait })
           );
         } catch (err) {
-          error = err;
+          error = err as Error;
         }
       }
     } while (document === null);
@@ -117,8 +117,8 @@ async function parseResponse(
   }
 
   return {
-    url: await response.url(),
-    status: await response.status(),
+    url: response.url(),
+    status: response.status(),
     headers: response.headers(),
     body: await response.text()
   };

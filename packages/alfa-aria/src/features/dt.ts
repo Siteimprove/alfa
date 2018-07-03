@@ -7,5 +7,5 @@ import { Feature, None } from "../types";
 export const Dt: Feature = {
   element: "dt",
   role: () => Roles.ListItem,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

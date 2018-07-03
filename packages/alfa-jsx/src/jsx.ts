@@ -4,7 +4,9 @@ const { keys } = Object;
 
 export function jsx(
   type: string,
-  properties?: { [name: string]: any } | null,
+  properties?: {
+    [name: string]: string | number | boolean | object | null | undefined;
+  } | null,
   ...children: Array<JSX.Element | string>
 ): JSX.Element {
   if (properties === undefined || properties === null) {
@@ -64,7 +66,10 @@ export function jsx(
   };
 }
 
-function toString(name: string, value: any): string {
+function toString(
+  name: string,
+  value: string | number | boolean | object
+): string {
   return typeof value === "number"
     ? value.toString(10)
     : typeof value === "boolean"

@@ -7,5 +7,5 @@ import { Feature, None } from "../types";
 export const OptGroup: Feature = {
   element: "optgroup",
   role: () => Roles.Group,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

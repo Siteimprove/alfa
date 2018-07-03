@@ -93,7 +93,6 @@ function rgbaColor(stream: Stream<Token>): Color {
         break;
       case Component.Alpha:
         color.alpha = value;
-        break;
     }
   }
 

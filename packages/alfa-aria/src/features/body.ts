@@ -7,5 +7,5 @@ import { Feature, None } from "../types";
 export const Body: Feature = {
   element: "body",
   role: () => Roles.Document,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

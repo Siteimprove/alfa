@@ -31,7 +31,7 @@ export function getAttribute(
       const { prefix, localName, value } = attributes[i];
 
       const qualifiedName =
-        prefix === null ? localName : prefix + ":" + localName;
+        prefix === null ? localName : `${prefix}:${localName}`;
 
       attributeMap.set(qualifiedName, value);
     }

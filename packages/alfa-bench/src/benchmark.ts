@@ -1,13 +1,19 @@
-import { Suite } from "benchmark";
+import { Event, Stats, Suite } from "benchmark";
 import chalk from "chalk";
 
-type Result = Readonly<{
-  id: number;
-  title: string;
-  frequency: number;
-  margin: number;
-  samples: number;
-}>;
+interface Target {
+  readonly name: string;
+  readonly hz: number;
+  readonly stats: Stats;
+  readonly error?: Error;
+}
+
+interface Result {
+  readonly title: string;
+  readonly frequency: number;
+  readonly margin: number;
+  readonly samples: number;
+}
 
 export interface Benchmark {
   add(title: string, callback: () => void | Promise<void>): Benchmark;
@@ -19,15 +25,14 @@ export function benchmark(): Benchmark {
 
   const results: Array<Result> = [];
 
-  suite.on("cycle", ({ target }: any) => {
-    const { error, hz, id, name, stats } = target;
+  suite.on("cycle", ({ target }: Event) => {
+    const { error, hz, name, stats } = target as Target;
 
-    if (error) {
+    if (error !== undefined) {
       return;
     }
 
     results.push({
-      id,
       title: name,
       frequency: round(hz, hz < 100 ? 2 : 0),
       margin: round(stats.rme, 2),
@@ -52,16 +57,15 @@ export function benchmark(): Benchmark {
 
     let output = chalk.blue(results.length.toString());
 
-    output += " " + (results.length === 1 ? "test" : "tests") + " completed";
+    output += ` ${results.length === 1 ? "test" : "tests"} completed`;
 
     for (let i = 0, n = results.length; i < n; i++) {
       const char = i === results.length - 1 ? "\u2514" : "\u251c";
 
-      output +=
-        "\n" + chalk.dim(char) + " " + format(results[i], fastest, longest);
+      output += `\n${chalk.dim(char)} ${format(results[i], fastest, longest)}`;
     }
 
-    console.log(output);
+    process.stdout.write(`${output}\n`);
   });
 
   return suite;

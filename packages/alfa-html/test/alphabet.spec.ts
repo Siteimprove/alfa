@@ -6,7 +6,7 @@ function html(t: Assertions, input: string, expected: Array<Token>) {
   t.deepEqual(lex(input, Alphabet), expected, input);
 }
 
-test("Can lex a start tag", t =>
+test("Can lex a start tag", t => {
   html(t, "<span>", [
     {
       type: TokenType.StartTag,
@@ -14,12 +14,14 @@ test("Can lex a start tag", t =>
       selfClosing: false,
       attributes: []
     }
-  ]));
+  ]);
+});
 
-test("Can lex a start tag with a missing closing brace", t =>
-  html(t, "<span", []));
+test("Can lex a start tag with a missing closing brace", t => {
+  html(t, "<span", []);
+});
 
-test("Can lex a self-closing start tag", t =>
+test("Can lex a self-closing start tag", t => {
   html(t, "<span/>", [
     {
       type: TokenType.StartTag,
@@ -27,25 +29,28 @@ test("Can lex a self-closing start tag", t =>
       selfClosing: true,
       attributes: []
     }
-  ]));
+  ]);
+});
 
-test("Can lex an orphaned less-than sign", t =>
+test("Can lex an orphaned less-than sign", t => {
   html(t, "<", [
     {
       type: TokenType.Character,
       data: "<"
     }
-  ]));
+  ]);
+});
 
-test("Can lex an end tag", t =>
+test("Can lex an end tag", t => {
   html(t, "</span>", [
     {
       type: TokenType.EndTag,
       name: "span"
     }
-  ]));
+  ]);
+});
 
-test("Can lex a start tag followed by an end tag", t =>
+test("Can lex a start tag followed by an end tag", t => {
   html(t, "<span></span>", [
     {
       type: TokenType.StartTag,
@@ -57,9 +62,10 @@ test("Can lex a start tag followed by an end tag", t =>
       type: TokenType.EndTag,
       name: "span"
     }
-  ]));
+  ]);
+});
 
-test("Can lex a start tag with a double-quoted attribute", t =>
+test("Can lex a start tag with a double-quoted attribute", t => {
   html(t, '<span foo="bar">', [
     {
       type: TokenType.StartTag,
@@ -67,9 +73,10 @@ test("Can lex a start tag with a double-quoted attribute", t =>
       selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }]
     }
-  ]));
+  ]);
+});
 
-test("Can lex a start tag with a single-quoted attribute", t =>
+test("Can lex a start tag with a single-quoted attribute", t => {
   html(t, "<span foo='bar'>", [
     {
       type: TokenType.StartTag,
@@ -77,9 +84,10 @@ test("Can lex a start tag with a single-quoted attribute", t =>
       selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }]
     }
-  ]));
+  ]);
+});
 
-test("Can lex a start tag with an unquoted attribute", t =>
+test("Can lex a start tag with an unquoted attribute", t => {
   html(t, "<span foo=bar>", [
     {
       type: TokenType.StartTag,
@@ -87,9 +95,10 @@ test("Can lex a start tag with an unquoted attribute", t =>
       selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }]
     }
-  ]));
+  ]);
+});
 
-test("Can lex a start tag with multiple attributes", t =>
+test("Can lex a start tag with multiple attributes", t => {
   html(t, '<span foo="bar" baz="qux">', [
     {
       type: TokenType.StartTag,
@@ -97,9 +106,10 @@ test("Can lex a start tag with multiple attributes", t =>
       selfClosing: false,
       attributes: [{ name: "foo", value: "bar" }, { name: "baz", value: "qux" }]
     }
-  ]));
+  ]);
+});
 
-test("Can lex a start tag with a boolean attribute", t =>
+test("Can lex a start tag with a boolean attribute", t => {
   html(t, "<span foo>", [
     {
       type: TokenType.StartTag,
@@ -107,17 +117,19 @@ test("Can lex a start tag with a boolean attribute", t =>
       selfClosing: false,
       attributes: [{ name: "foo", value: "" }]
     }
-  ]));
+  ]);
+});
 
-test("Can lex an incorrectly selfClosing end tag", t =>
+test("Can lex an incorrectly selfClosing end tag", t => {
   html(t, "</ ", [
     {
       type: TokenType.Comment,
       data: " "
     }
-  ]));
+  ]);
+});
 
-test("Can lex character data within a tag", t =>
+test("Can lex character data within a tag", t => {
   html(t, "<p>Hi</p>", [
     {
       type: TokenType.StartTag,
@@ -137,17 +149,19 @@ test("Can lex character data within a tag", t =>
       type: TokenType.EndTag,
       name: "p"
     }
-  ]));
+  ]);
+});
 
-test("Can lex a comment", t =>
+test("Can lex a comment", t => {
   html(t, "<!--foo-->", [
     {
       type: TokenType.Comment,
       data: "foo"
     }
-  ]));
+  ]);
+});
 
-test("Can lex a named character reference", t =>
+test("Can lex a named character reference", t => {
   html(t, "&lt;&gt;", [
     {
       type: TokenType.Character,
@@ -157,7 +171,8 @@ test("Can lex a named character reference", t =>
       type: TokenType.Character,
       data: ">"
     }
-  ]));
+  ]);
+});
 
 test("Can lex a simple doctype", t => {
   html(t, "<!doctype html>", [

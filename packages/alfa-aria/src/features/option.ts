@@ -11,5 +11,5 @@ export const Option: Feature = {
     getClosest(option, context, "select, optgroup, datalist") !== null
       ? Roles.Option
       : null,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

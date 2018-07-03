@@ -8,6 +8,6 @@ import { Feature, None } from "../types";
 export const Menu: Feature = {
   element: "menu",
   role: menu => (getAttribute(menu, "type") === "context" ? Roles.Menu : null),
-  allowedRoles: () => None,
+  allowedRoles: () => None(Roles),
   obsolete: true
 };

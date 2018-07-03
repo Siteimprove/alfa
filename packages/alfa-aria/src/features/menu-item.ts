@@ -8,7 +8,7 @@ import { Feature, None, Role } from "../types";
 export const MenuItem: Feature = {
   element: "menuitem",
   role,
-  allowedRoles: () => None,
+  allowedRoles: () => None(Roles),
   obsolete: true
 };
 

@@ -150,7 +150,7 @@ function getPathFromRoot(
   return pathFromRoot;
 }
 
-function getForkingPoint(first: Array<any>, second: Array<any>): number {
+function getForkingPoint<T>(first: Array<T>, second: Array<T>): number {
   let forkingPoint = -1;
 
   for (let i = 0, n = Math.min(first.length, second.length); i < n; i++) {

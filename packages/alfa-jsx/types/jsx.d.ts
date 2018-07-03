@@ -1,6 +1,14 @@
 declare namespace JSX {
   interface IntrinsicElements {
-    [tag: string]: any;
+    [tag: string]: Readonly<{
+      [attribute: string]:
+        | string
+        | number
+        | boolean
+        | object
+        | null
+        | undefined;
+    }>;
   }
 
   interface Node {

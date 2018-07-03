@@ -14,7 +14,11 @@ export async function test(
   try {
     await assertion(assert);
   } catch (err) {
-    console.error(format(name, err));
+    if (err instanceof assert.AssertionError) {
+      console.error(format(name, err));
+    } else {
+      console.error(err);
+    }
     process.exit(1);
   }
 }

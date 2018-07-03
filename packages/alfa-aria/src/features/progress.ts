@@ -7,5 +7,5 @@ import { Feature, None } from "../types";
 export const Progress: Feature = {
   element: "progress",
   role: () => Roles.ProgressBar,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

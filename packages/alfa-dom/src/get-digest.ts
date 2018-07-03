@@ -35,7 +35,7 @@ export function getDigest(node: Node, context: Node): string | null {
       if (namespace === null) {
         hash.update(node.localName);
       } else {
-        hash.update(namespace + ":" + node.localName);
+        hash.update(`${namespace}:${node.localName}`);
       }
 
       const attributes = Array.from(node.attributes).sort(
@@ -47,9 +47,9 @@ export function getDigest(node: Node, context: Node): string | null {
         const namespace = getAttributeNamespace(attribute, node, context);
 
         if (namespace === null) {
-          hash.update(attribute.localName + attribute.value);
+          hash.update(`${attribute.localName}${attribute.value}`);
         } else {
-          hash.update(namespace + ":" + attribute.localName + attribute.value);
+          hash.update(`${namespace}:${attribute.localName}${attribute.value}`);
         }
       }
     }

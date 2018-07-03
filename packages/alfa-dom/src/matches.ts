@@ -196,7 +196,7 @@ function matchesAttribute(
       return value.includes(selector.value);
 
     case AttributeMatcher.DashMatch:
-      return value === selector.value || value.startsWith(selector.value + "-");
+      return value === selector.value || value.startsWith(`${selector.value}-`);
 
     case AttributeMatcher.Includes:
       const parts = value.split(whitespace);

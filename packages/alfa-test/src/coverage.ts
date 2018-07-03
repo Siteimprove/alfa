@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import { Profiler, Session } from "inspector";
 
-const [header] = require("module").wrapper;
+// https://nodejs.org/api/modules.html#modules_the_module_wrapper
+const wrapper = "(function(exports, require, module, __filename, __dirname) { ";
 
 const { min, max } = Math;
 
@@ -164,8 +165,8 @@ function parseRange(
 
   let { startOffset: start, endOffset: end } = coverageRange;
 
-  start = max(first.start, start - header.length);
-  end = min(last.end, end - header.length);
+  start = max(first.start, start - wrapper.length);
+  end = min(last.end, end - wrapper.length);
 
   return {
     start: parseLocation(lines, start),

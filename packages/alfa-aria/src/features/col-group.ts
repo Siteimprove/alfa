@@ -1,3 +1,5 @@
+import * as Attributes from "../attributes";
+import * as Roles from "../roles";
 import { Feature, None } from "../types";
 
 /**
@@ -5,6 +7,6 @@ import { Feature, None } from "../types";
  */
 export const ColGroup: Feature = {
   element: "colgroup",
-  allowedRoles: () => None,
-  allowedAttributes: () => None
+  allowedRoles: () => None(Roles),
+  allowedAttributes: () => None(Attributes)
 };

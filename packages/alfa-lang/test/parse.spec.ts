@@ -15,7 +15,7 @@ function expression(
   t.deepEqual(parse(input, ExpressionGrammar), expected, "Parse trees match");
 }
 
-test("Correctly handles operator precedence", t =>
+test("Correctly handles operator precedence", t => {
   expression(
     t,
     [
@@ -36,4 +36,5 @@ test("Correctly handles operator precedence", t =>
       },
       right: { type: "constant", value: 3 }
     }
-  ));
+  );
+});

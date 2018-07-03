@@ -10,7 +10,7 @@ export function getTagName(element: Element, context: Node): string {
   let qualifiedName: string;
 
   if (element.prefix !== null) {
-    qualifiedName = element.prefix + ":" + element.localName;
+    qualifiedName = `${element.prefix}:${element.localName}`;
   } else {
     qualifiedName = element.localName;
   }

@@ -7,5 +7,5 @@ import { Feature, None } from "../types";
 export const Math: Feature = {
   element: "math",
   role: () => Roles.Math,
-  allowedRoles: () => None
+  allowedRoles: () => None(Roles)
 };

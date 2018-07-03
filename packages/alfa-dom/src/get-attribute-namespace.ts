@@ -45,7 +45,6 @@ export function getAttributeNamespace(
       if (attribute.localName === "xlink") {
         return Namespace.XMLNS;
       }
-      break;
   }
 
   return null;

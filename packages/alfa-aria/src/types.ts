@@ -121,7 +121,7 @@ export type Role = Readonly<{
  */
 export const Any: <T extends typeof Roles | typeof Attributes>(
   type: T
-) => Array<T[keyof T]> = types => values(types);
+) => Array<T[keyof T]> = values;
 
 /**
  * @internal
@@ -137,7 +137,9 @@ export const Except: <T extends typeof Roles | typeof Attributes>(
 /**
  * @internal
  */
-export const None: Array<any> = [];
+export const None: <T extends typeof Roles | typeof Attributes>(
+  type: T
+) => Array<T[keyof T]> = () => [];
 
 /**
  * @see https://www.w3.org/TR/html-aria/

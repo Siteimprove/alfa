@@ -2,7 +2,7 @@ export interface Assertions {
   /**
    * @see https://nodejs.org/api/assert.html#assert_assert_value_message
    */
-  (value: any, message?: string): void;
+  <T>(value: T, message?: string): void;
 
   /**
    * @see https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message
@@ -32,8 +32,8 @@ export interface Assertions {
   /**
    * @see https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message
    */
-  rejects(
-    block: Function | Promise<any>,
+  rejects<T>(
+    block: Function | Promise<T>,
     error?: RegExp | Function | Object | Error,
     message?: string
   ): void;
