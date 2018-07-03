@@ -9,7 +9,7 @@ import * as notify from "../helpers/notify";
  * @param {string} file
  * @return {boolean}
  */
-export function lint(file) {
+export function format(file) {
   const code = readFile(file);
 
   let formatted;
