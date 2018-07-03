@@ -1,6 +1,6 @@
-import { Rule } from "./types";
-import { isImportRule, isGroupingRule, isKeyframesRule } from "./guards";
+import { isGroupingRule, isImportRule, isKeyframesRule } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
+import { Rule } from "./types";
 
 export type RuleVisitor = (rule: Rule, parentRule: Rule | null) => false | void;
 

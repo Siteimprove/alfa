@@ -1,5 +1,5 @@
-import { Feature } from "../types";
 import * as Roles from "../roles";
+import { Feature } from "../types";
 
 /**
  * NB: Though the specification defines separate logic for `<button>` with

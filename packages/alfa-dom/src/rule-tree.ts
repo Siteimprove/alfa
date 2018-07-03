@@ -1,4 +1,4 @@
-import { Selector, Declaration } from "@siteimprove/alfa-css";
+import { Declaration, Selector } from "@siteimprove/alfa-css";
 
 /**
  * @internal
@@ -61,7 +61,7 @@ export class RuleTree {
     rules: Array<Pick<RuleEntry, "selector" | "declarations">>
   ): RuleEntry | null {
     let parent: RuleEntry | null = null;
-    let { children } = this;
+    let children = this.children;
 
     for (let i = 0, n = rules.length; i < n; i++) {
       const { selector, declarations } = rules[i];

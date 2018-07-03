@@ -1,12 +1,12 @@
 import {
-  Node,
   Element,
-  Text,
-  isElement,
-  isRendered,
   getAttribute,
   getComputedStyle,
-  getParentElement
+  getParentElement,
+  isElement,
+  isRendered,
+  Node,
+  Text
 } from "@siteimprove/alfa-dom";
 
 export function isVisible(node: Element | Text, context: Node): boolean {

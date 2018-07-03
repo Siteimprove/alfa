@@ -1,6 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Property } from "../types";
 import { VisibilityGrammar } from "../grammars/visibility";
+import { Property } from "../types";
 
 export type Visibility = "visible" | "hidden" | "collapse";
 

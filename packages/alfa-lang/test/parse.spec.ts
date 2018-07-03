@@ -1,10 +1,10 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { parse } from "../src/parse";
 import {
-  TokenType,
   Expression,
+  ExpressionGrammar,
   ExpressionToken,
-  ExpressionGrammar
+  TokenType
 } from "./helpers/expression";
 
 function expression(

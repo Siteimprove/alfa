@@ -1,5 +1,5 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#roletype

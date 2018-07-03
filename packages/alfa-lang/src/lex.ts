@@ -1,6 +1,6 @@
-import { Token, Pattern, Command } from "./types";
 import { Alphabet } from "./alphabet";
 import { Stream } from "./stream";
+import { Command, Pattern, Token } from "./types";
 
 export function lex<T extends Token, S = null>(
   input: string,

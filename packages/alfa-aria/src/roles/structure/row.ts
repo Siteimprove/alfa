@@ -1,15 +1,15 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 import { Widget } from "../abstract/widget";
 import { Grid } from "../widgets/grid";
 import { GridCell } from "../widgets/grid-cell";
 import { TreeGrid } from "../widgets/tree-grid";
-import { Group } from "./group";
-import { RowGroup } from "./row-group";
-import { Table } from "./table";
 import { Cell } from "./cell";
 import { ColumnHeader } from "./column-header";
+import { Group } from "./group";
+import { RowGroup } from "./row-group";
 import { RowHeader } from "./row-header";
+import { Table } from "./table";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#row

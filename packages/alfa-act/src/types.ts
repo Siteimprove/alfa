@@ -1,5 +1,5 @@
-import { Response } from "@siteimprove/alfa-http";
 import { Node } from "@siteimprove/alfa-dom";
+import { Response } from "@siteimprove/alfa-http";
 
 export type Target = Node;
 
@@ -36,14 +36,15 @@ export type Result<T extends Target = Target> = Readonly<
  */
 export type Outcome = Result["outcome"];
 
-export type Question<T extends Target = Target> = Readonly<{
-  rule: string;
-  question: string;
-  target?: T;
-}>;
+export interface Question<T extends Target = Target> {
+  readonly rule: string;
+  readonly question: string;
+  readonly target?: T;
+}
 
-export type Answer<T extends Target = Target> = Question<T> &
-  Readonly<{ answer: boolean }>;
+export interface Answer<T extends Target = Target> extends Question<T> {
+  readonly answer: boolean;
+}
 
 export interface Locale {
   readonly id: "en";

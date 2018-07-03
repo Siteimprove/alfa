@@ -1,7 +1,7 @@
 import { indexOf } from "@siteimprove/alfa-util";
-import { Node, Element } from "./types";
-import { isElement } from "./guards";
 import { getParentNode } from "./get-parent-node";
+import { isElement } from "./guards";
+import { Element, Node } from "./types";
 
 /**
  * @see https://www.w3.org/TR/dom/#dom-nondocumenttypechildnode-nextelementsibling

@@ -1,9 +1,9 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { lex } from "../src/lex";
 import {
-  TokenType,
+  ExpressionAlphabet,
   ExpressionToken,
-  ExpressionAlphabet
+  TokenType
 } from "./helpers/expression";
 
 function expression(

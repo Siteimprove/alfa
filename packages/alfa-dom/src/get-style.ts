@@ -1,23 +1,23 @@
-import { Mutable, keys, union } from "@siteimprove/alfa-util";
 import {
-  Selector,
-  SelectorType,
   Declaration,
-  Stage,
-  Style,
+  parseDeclaration,
   Properties,
   PropertyName,
   PseudoElement,
-  parseDeclaration,
+  Selector,
+  SelectorType,
+  Stage,
+  Style,
   TokenType
 } from "@siteimprove/alfa-css";
-import { Node, Element } from "./types";
-import { isDocument } from "./guards";
-import { matches } from "./matches";
+import { keys, Mutable, union } from "@siteimprove/alfa-util";
 import { getAttribute } from "./get-attribute";
+import { getCascade } from "./get-cascade";
 import { getParentElement } from "./get-parent-element";
 import { getRootNode } from "./get-root-node";
-import { getCascade } from "./get-cascade";
+import { isDocument } from "./guards";
+import { matches } from "./matches";
+import { Element, Node } from "./types";
 
 const { isArray } = Array;
 
@@ -70,7 +70,7 @@ export function getCascadedStyle(
 
   if (cascade !== null) {
     for (
-      let entry = cascade.get(element) || null;
+      let entry = cascade.get(element);
       entry !== null;
       entry = entry.parent
     ) {
@@ -168,7 +168,8 @@ export function getSpecifiedStyle(
     const inherited = parentStyle[propertyName];
 
     const shouldInherit =
-      value === "inherit" || (value === undefined && property.inherits);
+      value === "inherit" ||
+      (value === undefined && property.inherits === true);
 
     if (shouldInherit && inherited !== undefined) {
       specifiedStyle[propertyName] = inherited;

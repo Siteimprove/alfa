@@ -1,11 +1,11 @@
 import {
-  Target,
+  Answer,
   Aspect,
   Aspects,
-  Rule,
-  Result,
   Question,
-  Answer
+  Result,
+  Rule,
+  Target
 } from "./types";
 
 const { isArray } = Array;
@@ -25,7 +25,7 @@ export function audit<A extends Aspect, T extends Target>(
         answer.target === target
     );
 
-    if (answer) {
+    if (answer !== undefined) {
       return answer.answer;
     } else {
       results.push({

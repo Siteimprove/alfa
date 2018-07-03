@@ -1,12 +1,12 @@
 import {
-  SelectorType,
-  IdSelector,
   ClassSelector,
+  IdSelector,
+  SelectorType,
   TypeSelector
 } from "@siteimprove/alfa-css";
-import { Element } from "./types";
-import { getId } from "./get-id";
 import { getClassList } from "./get-class-list";
+import { getId } from "./get-id";
+import { Element } from "./types";
 
 /**
  * The ancestor filter is a data structure used for optimising selector matching

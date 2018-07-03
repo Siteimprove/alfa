@@ -1,11 +1,11 @@
 import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
-  Namespace,
-  isElement,
-  querySelector,
   getElementNamespace,
-  hasTextContent
+  hasTextContent,
+  isElement,
+  Namespace,
+  querySelector
 } from "@siteimprove/alfa-dom";
 
 export const Title: Rule<"document", Element> = {

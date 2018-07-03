@@ -1,5 +1,5 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 import { Widget } from "../abstract/widget";
 import { Cell } from "../structure/cell";
 import { Row } from "../structure/row";

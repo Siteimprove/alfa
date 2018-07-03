@@ -1,5 +1,5 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Radio } from "./radio";
 

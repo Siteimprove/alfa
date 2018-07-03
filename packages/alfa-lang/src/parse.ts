@@ -1,6 +1,6 @@
-import { Token, Command } from "./types";
 import { Grammar } from "./grammar";
 import { Stream } from "./stream";
+import { Command, Token } from "./types";
 
 export function parse<T extends Token, R>(
   input: ArrayLike<T>,

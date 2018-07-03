@@ -1,14 +1,14 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import {
-  Stream,
-  Command,
   Char,
-  isWhitespace,
+  Command,
   isAlpha,
+  isAscii,
   isBetween,
   isHex,
   isNumeric,
-  isAscii
+  isWhitespace,
+  Stream
 } from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
@@ -627,7 +627,7 @@ const delims: Map<number, Delim> = new Map();
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token
  */
 function consumeToken(stream: Stream<number>): Token | null {
-  let char = stream.peek(0);
+  const char = stream.peek(0);
 
   if (char === null) {
     return null;
@@ -677,7 +677,7 @@ function consumeToken(stream: Stream<number>): Token | null {
       return consumeString(stream, char);
 
     case Char.Solidus: {
-      let next = stream.peek(0);
+      const next = stream.peek(0);
       if (next === Char.Asterisk) {
         stream.advance(1);
 

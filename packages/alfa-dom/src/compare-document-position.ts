@@ -1,5 +1,5 @@
-import { Node } from "./types";
 import { getParentNode } from "./get-parent-node";
+import { Node } from "./types";
 
 export const enum DocumentPosition {
   /**
@@ -141,7 +141,7 @@ function getPathFromRoot(
 
   for (
     let next: Node | null = node;
-    next;
+    next !== null;
     next = getParentNode(next, context, { composed })
   ) {
     pathFromRoot.unshift(next);

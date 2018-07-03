@@ -1,13 +1,13 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
-import { parse, lex } from "@siteimprove/alfa-lang";
+import { lex, parse } from "@siteimprove/alfa-lang";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
 import {
-  SelectorGrammar,
-  Selector,
-  SelectorType,
-  SelectorCombinator,
   AttributeMatcher,
-  AttributeModifier
+  AttributeModifier,
+  Selector,
+  SelectorCombinator,
+  SelectorGrammar,
+  SelectorType
 } from "../../src/grammars/selector";
 
 function selector(

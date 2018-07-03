@@ -1,9 +1,9 @@
 import {
-  Node,
   Element,
-  querySelector,
   getAttribute,
-  isElement
+  isElement,
+  Node,
+  querySelector
 } from "@siteimprove/alfa-dom";
 
 const whitespace = /\s+/;

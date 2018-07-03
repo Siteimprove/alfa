@@ -1,8 +1,8 @@
 import { getHash } from "@siteimprove/alfa-crypto";
-import { Node } from "./types";
-import { isElement, isText, isComment, isDocumentType } from "./guards";
-import { getElementNamespace } from "./get-element-namespace";
 import { getAttributeNamespace } from "./get-attribute-namespace";
+import { getElementNamespace } from "./get-element-namespace";
+import { isComment, isDocumentType, isElement, isText } from "./guards";
+import { Node } from "./types";
 
 const digests: WeakMap<Node, string> = new WeakMap();
 
@@ -21,7 +21,7 @@ export function getDigest(node: Node, context: Node): string | null {
   let digest = digests.get(node);
 
   if (digest === undefined) {
-    let hash = getHash("sha256");
+    const hash = getHash("sha256");
 
     hash.update(String(node.nodeType));
 

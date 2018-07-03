@@ -1,5 +1,5 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 import { Composite } from "../abstract/composite";
 import { Input } from "../abstract/input";
 import { Range } from "../abstract/range";

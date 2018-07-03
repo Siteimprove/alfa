@@ -1,5 +1,5 @@
-import { Node } from "./types";
 import { getParentNode } from "./get-parent-node";
+import { Node } from "./types";
 
 /**
  * Given a node and a context, get the root of the node within the context.
@@ -11,9 +11,9 @@ export function getRootNode(
   context: Node,
   options: Readonly<{ composed?: boolean }> = {}
 ): Node {
-  let rootNode: Node | null = node;
+  let rootNode: Node = node;
 
-  while (rootNode) {
+  while (true) {
     const parentNode = getParentNode(rootNode, context, options);
 
     if (parentNode === null) {

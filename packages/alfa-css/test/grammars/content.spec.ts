@@ -1,8 +1,8 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
-import { parse, lex } from "@siteimprove/alfa-lang";
+import { lex, parse } from "@siteimprove/alfa-lang";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
-import { Content } from "../../src/properties/content";
 import { ContentGrammar } from "../../src/grammars/content";
+import { Content } from "../../src/properties/content";
 
 function content(t: Assertions, input: string, expected: Content) {
   t.deepEqual(parse(lex(input, Alphabet), ContentGrammar), expected, input);

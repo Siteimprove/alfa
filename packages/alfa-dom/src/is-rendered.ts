@@ -1,6 +1,6 @@
-import { Node, Element } from "./types";
 import { getParentElement } from "./get-parent-element";
 import { getComputedStyle } from "./get-style";
+import { Element, Node } from "./types";
 
 /**
  * Check if an element is being rendered within a given context. An element is

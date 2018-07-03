@@ -1,5 +1,5 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
-import { Char, parse, lex } from "@siteimprove/alfa-lang";
+import { Char, lex, parse } from "@siteimprove/alfa-lang";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet, TokenType } from "../../src/alphabet";
 import { Rule, RuleGrammar } from "../../src/grammars/rule";
 

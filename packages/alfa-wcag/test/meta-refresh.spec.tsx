@@ -1,6 +1,6 @@
+import { audit } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import { audit } from "@siteimprove/alfa-act";
 
 import { MetaRefresh } from "../src/meta-refresh/rule";
 import { outcome } from "./helpers/outcome";

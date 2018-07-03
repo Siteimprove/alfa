@@ -1,8 +1,8 @@
 import { Predicate } from "@siteimprove/alfa-util";
-import { Node, Element } from "./types";
+import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { matches } from "./matches";
-import { getParentNode } from "./get-parent-node";
+import { Element, Node } from "./types";
 
 /**
  * Given a node and a context, get the closest parent (or the node itself) that
@@ -63,7 +63,7 @@ export function getClosest<T extends Node>(
 
   for (
     let next: Node | null = scope;
-    next;
+    next !== null;
     next = getParentNode(next, context)
   ) {
     if (predicate(next)) {

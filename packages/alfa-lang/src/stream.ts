@@ -7,7 +7,7 @@ export type StreamReader<T> = (index: number) => T;
 export class Stream<T> {
   private readonly length: number;
   private readonly read: StreamReader<T>;
-  private position: number = 0;
+  private position = 0;
 
   public constructor(length: number, reader: StreamReader<T>) {
     this.length = length;

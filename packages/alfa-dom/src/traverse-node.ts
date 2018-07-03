@@ -1,6 +1,6 @@
-import { Node } from "./types";
-import { isElement } from "./guards";
 import { getAssignedNodes } from "./get-assigned-nodes";
+import { isElement } from "./guards";
+import { Node } from "./types";
 
 export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
 
@@ -19,7 +19,7 @@ function visitNode(
   visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
   options: Readonly<{ composed?: boolean; flattened?: boolean }>
 ): boolean {
-  if (options.flattened) {
+  if (options.flattened === true) {
     if (isElement(node) && node.localName === "slot") {
       const childNodes = getAssignedNodes(node, context);
 
@@ -35,14 +35,14 @@ function visitNode(
 
   const { enter, exit } = visitors;
 
-  if (enter !== undefined && enter(node, parentNode || null) === false) {
+  if (enter !== undefined && enter(node, parentNode) === false) {
     return false;
   }
 
   const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
   if (shadowRoot !== null) {
-    if (options.flattened) {
+    if (options.flattened === true) {
       const { childNodes } = shadowRoot;
 
       for (let i = 0, n = childNodes.length; i < n; i++) {
@@ -57,7 +57,7 @@ function visitNode(
     // Shadow roots should be traversed as soon as they're encountered per the
     // definition of shadow-including preorder depth-first traversal.
     // https://www.w3.org/TR/dom41/#shadow-including-preorder-depth-first-traversal
-    if (options.composed) {
+    if (options.composed === true) {
       if (!visitNode(shadowRoot, node, context, visitors, options)) {
         return false;
       }
@@ -72,7 +72,7 @@ function visitNode(
     }
   }
 
-  if (exit !== undefined && exit(node, parentNode || null) === false) {
+  if (exit !== undefined && exit(node, parentNode) === false) {
     return false;
   }
 

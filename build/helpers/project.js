@@ -23,6 +23,12 @@ export class Project {
 
     /** @type {TypeScript.LanguageService} */
     this.service = TypeScript.createLanguageService(this.host, registry);
+
+    /** @type {TSLint.Configuration.IConfigurationFile | undefined} */
+    this.tslint = TSLint.Configuration.findConfiguration(
+      "tslint.json",
+      configFile
+    ).results;
   }
 
   /**
@@ -80,14 +86,17 @@ export class Project {
 
     const linter = new TSLint.Linter({ fix: false }, this.service.getProgram());
 
-    const { results: configuration } = TSLint.Configuration.findConfiguration(
-      "tslint.json",
-      file
-    );
+    linter.lint(file, text, this.tslint);
 
-    linter.lint(file, text, configuration);
+    const { failures } = linter.getResult();
 
-    return linter.getResult().failures;
+    failures.sort((a, b) => {
+      return (
+        a.getStartPosition().getPosition() - b.getStartPosition().getPosition()
+      );
+    });
+
+    return failures;
   }
 }
 

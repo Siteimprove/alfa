@@ -1,11 +1,11 @@
-import { test } from "@siteimprove/alfa-test";
-import { parse, lex } from "@siteimprove/alfa-lang";
 import {
-  Selector,
-  SelectorType,
   Alphabet,
-  SelectorGrammar
+  Selector,
+  SelectorGrammar,
+  SelectorType
 } from "@siteimprove/alfa-css";
+import { lex, parse } from "@siteimprove/alfa-lang";
+import { test } from "@siteimprove/alfa-test";
 import { getKeySelector } from "../src/get-key-selector";
 
 const { isArray } = Array;

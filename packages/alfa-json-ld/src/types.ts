@@ -22,25 +22,25 @@ export type Keyword =
 
 export const Id: "@id" = "@id";
 
-export type WithId = {
+export interface WithId {
   readonly "@id": string;
-};
+}
 
-export type WithType<T = any> = {
+export interface WithType<T = any> {
   readonly "@type": T;
-};
+}
 
-export type WithVocab = {
+export interface WithVocab {
   readonly "@vocab": string;
-};
+}
 
-export type WithPrefix = {
+export interface WithPrefix {
   readonly "@prefix": boolean;
-};
+}
 
-export type WithContext<T> = {
+export interface WithContext<T> {
   readonly "@context": Definitions<T> & Partial<WithId & WithVocab>;
-};
+}
 
 export type Terms<T> = Exclude<keyof T, Keyword>;
 

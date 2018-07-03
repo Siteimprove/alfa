@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-util";
-import { Node } from "./types";
-import { querySelector } from "./query-selector";
 import { getClosest } from "./get-closest";
+import { querySelector } from "./query-selector";
+import { Node } from "./types";
 
 /**
  * Given a node and a context, check if the node contains another node that

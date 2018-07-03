@@ -1,5 +1,5 @@
-import { Token, Pattern } from "./types";
 import { Stream } from "./stream";
+import { Pattern, Token } from "./types";
 
 export class Alphabet<T extends Token, S = null> {
   public readonly pattern: Pattern<T, S>;

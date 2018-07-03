@@ -1,6 +1,6 @@
-import { Node } from "./types";
 import { isText } from "./guards";
 import { traverseNode } from "./traverse-node";
+import { Node } from "./types";
 
 /**
  * Given a node, check if the node or its descendants contain non-empty text.

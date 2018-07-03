@@ -1,27 +1,27 @@
 import {
-  Selector,
-  SelectorType,
-  SelectorCombinator,
-  RelativeSelector,
-  TypeSelector,
-  ClassSelector,
-  IdSelector,
-  AttributeSelector,
   AttributeMatcher,
   AttributeModifier,
+  AttributeSelector,
+  ClassSelector,
   CompoundSelector,
+  IdSelector,
+  parseSelector,
   PseudoClassSelector,
   PseudoElementSelector,
-  parseSelector
+  RelativeSelector,
+  Selector,
+  SelectorCombinator,
+  SelectorType,
+  TypeSelector
 } from "@siteimprove/alfa-css";
-import { Node, Element } from "./types";
+import { AncestorFilter } from "./ancestor-filter";
 import { contains } from "./contains";
-import { getId } from "./get-id";
 import { getAttribute } from "./get-attribute";
+import { getId } from "./get-id";
 import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
 import { hasClass } from "./has-class";
-import { AncestorFilter } from "./ancestor-filter";
+import { Element, Node } from "./types";
 
 const { isArray } = Array;
 
@@ -308,7 +308,7 @@ function matchesDirectDescendant(
   selector: Selector,
   options: MatchingOptions
 ): boolean {
-  let parentElement = getParentElement(element, context);
+  const parentElement = getParentElement(element, context);
 
   if (parentElement === null) {
     return false;
@@ -351,7 +351,7 @@ function matchesDirectSibling(
   selector: Selector,
   options: MatchingOptions
 ): boolean {
-  let previousElementSibling = getPreviousElementSibling(element, context);
+  const previousElementSibling = getPreviousElementSibling(element, context);
 
   if (previousElementSibling === null) {
     return false;

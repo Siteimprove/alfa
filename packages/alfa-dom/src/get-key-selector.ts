@@ -1,8 +1,8 @@
 import {
+  ClassSelector,
+  IdSelector,
   Selector,
   SelectorType,
-  IdSelector,
-  ClassSelector,
   TypeSelector
 } from "@siteimprove/alfa-css";
 
@@ -25,7 +25,13 @@ export function getKeySelector(
       return selector.name === "*" ? null : selector;
 
     case SelectorType.CompoundSelector:
-      return getKeySelector(selector.left) || getKeySelector(selector.right);
+      const left = getKeySelector(selector.left);
+
+      if (left === null) {
+        return getKeySelector(selector.right);
+      }
+
+      return left;
 
     case SelectorType.RelativeSelector:
       return getKeySelector(selector.right);

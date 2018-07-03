@@ -1,6 +1,6 @@
-import { Element, Node } from "./types";
-import { isFocusable } from "./is-focusable";
 import { getTabIndex } from "./get-tab-index";
+import { isFocusable } from "./is-focusable";
+import { Element, Node } from "./types";
 
 /**
  * Check if an element is tabbable within a given context. An element is

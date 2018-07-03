@@ -22,7 +22,7 @@ export class PrefixTree<T> {
     set(this.children, key, value, 0);
   }
 
-  public has(key: string, prefix: boolean = false): boolean {
+  public has(key: string, prefix = false): boolean {
     return has(this.children, key, prefix, 0);
   }
 }
@@ -34,17 +34,17 @@ function get<T>(
 ): T | null {
   const char = key.charCodeAt(depth);
 
-  const child = children[char];
+  if (char in children) {
+    const child = children[char];
 
-  if (child === undefined) {
-    return null;
+    if (depth === key.length - 1) {
+      return child.value;
+    }
+
+    return get(child.children, key, depth + 1);
   }
 
-  if (depth === key.length - 1) {
-    return child.value;
-  }
-
-  return get(child.children, key, depth + 1);
+  return null;
 }
 
 function set<T>(
@@ -55,9 +55,11 @@ function set<T>(
 ): void {
   const char = key.charCodeAt(depth);
 
-  let child = children[char];
+  let child: PrefixTreeEntry<T>;
 
-  if (child === undefined) {
+  if (char in children) {
+    child = children[char];
+  } else {
     child = { value: null, children: [] };
     children[char] = child;
   }
@@ -77,15 +79,15 @@ function has<T>(
 ): boolean {
   const char = key.charCodeAt(depth);
 
-  const child = children[char];
+  if (char in children) {
+    const child = children[char];
 
-  if (child === undefined) {
-    return false;
+    if (depth === key.length - 1) {
+      return prefix ? true : child.value !== null;
+    }
+
+    return has(child.children, key, prefix, depth + 1);
   }
 
-  if (depth === key.length - 1) {
-    return prefix ? true : child.value !== null;
-  }
-
-  return has(child.children, key, prefix, depth + 1);
+  return false;
 }

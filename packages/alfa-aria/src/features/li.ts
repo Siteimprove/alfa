@@ -1,6 +1,6 @@
 import { Element, getParentElement, Node } from "@siteimprove/alfa-dom";
-import { Feature, Role } from "../types";
 import * as Roles from "../roles";
+import { Feature, Role } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#li

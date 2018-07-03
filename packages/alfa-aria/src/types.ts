@@ -1,7 +1,7 @@
-import { values } from "@siteimprove/alfa-util";
 import { Element, Node } from "@siteimprove/alfa-dom";
-import * as Roles from "./roles";
+import { values } from "@siteimprove/alfa-util";
 import * as Attributes from "./attributes";
+import * as Roles from "./roles";
 
 export type ValueType =
   /**

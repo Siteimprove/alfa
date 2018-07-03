@@ -1,9 +1,9 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 import { Composite } from "../abstract/composite";
-import { Table } from "../structure/table";
 import { Row } from "../structure/row";
 import { RowGroup } from "../structure/row-group";
+import { Table } from "../structure/table";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#grid

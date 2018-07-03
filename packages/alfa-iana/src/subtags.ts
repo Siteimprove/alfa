@@ -4,10 +4,10 @@
 
 import { values } from "@siteimprove/alfa-util";
 import {
-  PrimaryLanguage,
   ExtendedLanguage,
-  Script,
+  PrimaryLanguage,
   Region,
+  Script,
   Variant
 } from "./types";
 

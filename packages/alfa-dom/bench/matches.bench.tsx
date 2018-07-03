@@ -1,6 +1,6 @@
 import { benchmark } from "@siteimprove/alfa-bench";
-import { jsx } from "@siteimprove/alfa-jsx";
 import { parseSelector } from "@siteimprove/alfa-css";
+import { jsx } from "@siteimprove/alfa-jsx";
 import { matches } from "../src/matches";
 
 const element = <div id="foo" class="foo" href="foo" />;

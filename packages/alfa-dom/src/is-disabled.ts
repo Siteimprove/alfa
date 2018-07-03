@@ -1,8 +1,8 @@
-import { Node, Element } from "./types";
+import { contains } from "./contains";
 import { getClosest } from "./get-closest";
 import { hasAttribute } from "./has-attribute";
 import { querySelector } from "./query-selector";
-import { contains } from "./contains";
+import { Element, Node } from "./types";
 
 /**
  * @see https://www.w3.org/TR/html/disabled-elements.html#disabling

@@ -1,4 +1,4 @@
-import { Token, TokenIdentifier, Production } from "./types";
+import { Production, Token, TokenIdentifier } from "./types";
 
 const { isArray } = Array;
 
@@ -27,6 +27,12 @@ export class Grammar<T extends Token, R> {
   }
 
   public get(type: TokenIdentifier<T>): GrammarEntry<T, R> | null {
-    return this.entries.get(type) || null;
+    const entry = this.entries.get(type);
+
+    if (entry === undefined) {
+      return null;
+    }
+
+    return entry;
   }
 }

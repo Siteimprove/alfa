@@ -1,6 +1,6 @@
-import { values } from "@siteimprove/alfa-util";
-import { Element } from "@siteimprove/alfa-dom";
 import { Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { values } from "@siteimprove/alfa-util";
 
 import * as rules from "./rules";
 

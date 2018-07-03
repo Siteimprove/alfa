@@ -1,4 +1,4 @@
-import { Production, Command } from "@siteimprove/alfa-lang";
+import { Command, Production } from "@siteimprove/alfa-lang";
 import { Token, TokenType, Whitespace } from "./alphabet";
 
 /**

@@ -1,5 +1,5 @@
-import { Node, Element, Namespace } from "./types";
 import { getElementNamespace } from "./get-element-namespace";
+import { Element, Namespace, Node } from "./types";
 
 /**
  * Given an element and a context, get the tag name of the element.

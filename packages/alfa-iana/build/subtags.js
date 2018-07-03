@@ -148,7 +148,7 @@ fetch(registry).then(body => {
     // do so in \`build/subtags.js\` and run \`yarn prepare\` to rebuild this file.
 
     import { values } from "@siteimprove/alfa-util";
-    import { PrimaryLanguage, ExtendedLanguage, Script, Region, Variant } from "./types";
+    import { ExtendedLanguage, PrimaryLanguage, Region, Script, Region } from "./types";
     `
   ];
 

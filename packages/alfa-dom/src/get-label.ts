@@ -1,10 +1,10 @@
-import { Node, Element } from "./types";
-import { isElement } from "./guards";
-import { querySelector } from "./query-selector";
+import { getAttribute } from "./get-attribute";
 import { getClosest } from "./get-closest";
 import { getRootNode } from "./get-root-node";
-import { getAttribute } from "./get-attribute";
+import { isElement } from "./guards";
 import { isLabelable } from "./is-labelable";
+import { querySelector } from "./query-selector";
+import { Element, Node } from "./types";
 
 /**
  * Given an element and a context, get the form label associated with the
@@ -28,7 +28,7 @@ export function getLabel(element: Element, context: Node): Element | null {
   if (id !== null && id !== "") {
     const rootNode = getRootNode(element, context);
 
-    if (rootNode !== null) {
+    if (rootNode !== element) {
       const label = querySelector<Element>(
         rootNode,
         context,

@@ -1,6 +1,6 @@
-import { Node, Element } from "./types";
-import { isElement } from "./guards";
 import { getParentNode } from "./get-parent-node";
+import { isElement } from "./guards";
+import { Element, Node } from "./types";
 
 /**
  * Given a node and a context, get the parent element of the node within the

@@ -1,9 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
-  traverseNode,
   getAttribute,
-  isElement
+  isElement,
+  traverseNode
 } from "@siteimprove/alfa-dom";
 
 import { EN } from "./locale/en";
@@ -19,7 +19,7 @@ export const UniqueId: Rule<"document", Element> = {
         if (isElement(node)) {
           const id = getAttribute(node, "id");
 
-          if (id) {
+          if (id !== null) {
             let set = ids.get(id);
 
             if (set === undefined) {

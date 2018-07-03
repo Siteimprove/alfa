@@ -1,5 +1,5 @@
-import { StyleSheet } from "./types";
 import { RuleVisitor, traverseRule } from "./traverse-rule";
+import { StyleSheet } from "./types";
 
 export function traverseStyleSheet(
   context: StyleSheet,

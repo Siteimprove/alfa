@@ -1,9 +1,9 @@
-import { test } from "@siteimprove/alfa-test";
 import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import {
   getCascadedStyle,
-  getSpecifiedStyle,
-  getComputedStyle
+  getComputedStyle,
+  getSpecifiedStyle
 } from "../src/get-style";
 
 const span = <span style="font-size: 1.2em; color: inherit" />;

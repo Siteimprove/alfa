@@ -1,8 +1,8 @@
-import { Node, Element } from "./types";
-import { isElement, isText, isShadowRoot } from "./guards";
-import { getRootNode } from "./get-root-node";
-import { getParentNode } from "./get-parent-node";
 import { getAssignedSlot } from "./get-assigned-slot";
+import { getParentNode } from "./get-parent-node";
+import { getRootNode } from "./get-root-node";
+import { isElement, isShadowRoot, isText } from "./guards";
+import { Element, Node } from "./types";
 
 /**
  * @see https://www.w3.org/TR/dom41/#slot-assigned-nodes
@@ -16,7 +16,7 @@ export function getAssignedNodes(
     return [];
   }
 
-  return options.flattened
+  return options.flattened === true
     ? findFlattenedSlotables(element, context)
     : findSlotables(element, context);
 }
@@ -84,9 +84,7 @@ function findFlattenedSlotables(slot: Element, context: Node): Array<Node> {
     const slotable = slotables[i];
 
     if (isElement(slotable) && slotable.localName === "slot") {
-      const rootNode = getRootNode(slotable, context);
-
-      if (rootNode !== null && isShadowRoot(rootNode)) {
+      if (isShadowRoot(getRootNode(slotable, context))) {
         result.push(...findFlattenedSlotables(slotable, context));
         continue;
       }

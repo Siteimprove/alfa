@@ -1,7 +1,7 @@
-import { getAttribute, Element } from "@siteimprove/alfa-dom";
-import { Any, Feature, Role, Except } from "../types";
-import * as Roles from "../roles";
+import { Element, getAttribute } from "@siteimprove/alfa-dom";
 import * as Attributes from "../attributes";
+import * as Roles from "../roles";
+import { Any, Except, Feature, Role } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#img

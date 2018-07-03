@@ -1,8 +1,8 @@
 import { Role } from "../../types";
 import { Checkbox } from "./checkbox";
 import { Menu } from "./menu";
-import { MenuItem } from "./menu-item";
 import { MenuBar } from "./menu-bar";
+import { MenuItem } from "./menu-item";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#menuitemcheckbox

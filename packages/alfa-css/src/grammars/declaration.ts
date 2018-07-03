@@ -1,6 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Stream, Char } from "@siteimprove/alfa-lang";
-import { Token, TokenType, Ident, Semicolon } from "../alphabet";
+import { Char, Grammar, Stream } from "@siteimprove/alfa-lang";
+import { Ident, Semicolon, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 
 const { isArray } = Array;
@@ -8,19 +8,19 @@ const { isArray } = Array;
 /**
  * @see https://www.w3.org/TR/css-syntax/#declaration
  */
-export type Declaration = {
-  type: "declaration";
-  name: string;
-  value: Array<Token>;
-  important: boolean;
-};
+export interface Declaration {
+  readonly type: "declaration";
+  readonly name: string;
+  readonly value: Array<Token>;
+  readonly important: boolean;
+}
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-declaration
  */
 function declaration(stream: Stream<Token>, name: string): Declaration | null {
   let value: Array<Token> = [];
-  let important: boolean = false;
+  let important = false;
 
   stream.accept(token => token.type === TokenType.Whitespace);
 
@@ -39,14 +39,14 @@ function declaration(stream: Stream<Token>, name: string): Declaration | null {
     next = stream.peek(0);
   }
 
-  const fst = value[value.length - 2];
-  const snd = value[value.length - 1];
+  const fst = value.length >= 2 ? value[value.length - 2] : null;
+  const snd = value.length >= 1 ? value[value.length - 1] : null;
 
   if (
-    fst !== undefined &&
+    fst !== null &&
     fst.type === TokenType.Delim &&
     fst.value === Char.ExclamationMark &&
-    snd !== undefined &&
+    snd !== null &&
     snd.type === TokenType.Ident &&
     snd.value === "important"
   ) {

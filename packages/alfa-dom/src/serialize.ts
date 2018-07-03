@@ -1,9 +1,9 @@
 import { map } from "@siteimprove/alfa-util";
-import { Node, Namespace } from "./types";
-import { isDocumentType, isElement, isText, isComment } from "./guards";
-import { getParentElement } from "./get-parent-element";
-import { getElementNamespace } from "./get-element-namespace";
 import { getAttributeNamespace } from "./get-attribute-namespace";
+import { getElementNamespace } from "./get-element-namespace";
+import { getParentElement } from "./get-parent-element";
+import { isComment, isDocumentType, isElement, isText } from "./guards";
+import { Namespace, Node } from "./types";
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
@@ -90,21 +90,19 @@ export function serialize(node: Node, context: Node): string {
   }
 
   if (isText(node)) {
-    if (context !== null) {
-      const parentElement = getParentElement(node, context);
+    const parentElement = getParentElement(node, context);
 
-      if (parentElement !== null) {
-        switch (parentElement.localName) {
-          case "style":
-          case "script":
-          case "xmp":
-          case "iframe":
-          case "noembed":
-          case "noframes":
-          case "plaintext":
-          case "noscript":
-            return node.data;
-        }
+    if (parentElement !== null) {
+      switch (parentElement.localName) {
+        case "style":
+        case "script":
+        case "xmp":
+        case "iframe":
+        case "noembed":
+        case "noframes":
+        case "plaintext":
+        case "noscript":
+          return node.data;
       }
     }
 
@@ -131,7 +129,7 @@ function escape(
 ): string {
   input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");
 
-  if (options.attributeMode) {
+  if (options.attributeMode === true) {
     input = input.replace(/"/g, "&quot;");
   } else {
     input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");

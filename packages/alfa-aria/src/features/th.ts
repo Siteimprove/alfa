@@ -1,6 +1,6 @@
 import { Element, getAttribute } from "@siteimprove/alfa-dom";
-import { Any, Feature, Role } from "../types";
 import * as Roles from "../roles";
+import { Any, Feature, Role } from "../types";
 
 /**
  * @todo Need to handle the auto state

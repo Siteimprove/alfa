@@ -1,6 +1,6 @@
+import { Alphabet, Selector, SelectorGrammar } from "@siteimprove/alfa-css";
+import { lex, parse } from "@siteimprove/alfa-lang";
 import { test } from "@siteimprove/alfa-test";
-import { parse, lex } from "@siteimprove/alfa-lang";
-import { Selector, Alphabet, SelectorGrammar } from "@siteimprove/alfa-css";
 import { getSpecificity } from "../src/get-specificity";
 
 const { isArray } = Array;

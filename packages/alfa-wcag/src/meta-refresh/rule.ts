@@ -1,11 +1,11 @@
-import { Stream } from "@siteimprove/alfa-lang";
 import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
+  getAttribute,
   isElement,
-  querySelector,
-  getAttribute
+  querySelector
 } from "@siteimprove/alfa-dom";
+import { Stream } from "@siteimprove/alfa-lang";
 
 export const MetaRefresh: Rule<"document", Element> = {
   id: "alfa:wcag:meta-refresh",

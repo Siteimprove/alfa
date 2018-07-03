@@ -1,7 +1,7 @@
-import { Element } from "./types";
 import { getAttribute } from "./get-attribute";
-import { hasAttribute } from "./has-attribute";
 import { getInputType } from "./get-input-type";
+import { hasAttribute } from "./has-attribute";
+import { Element } from "./types";
 
 const { isNaN } = Number;
 

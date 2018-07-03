@@ -1,9 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
+  getAttribute,
   isElement,
-  querySelectorAll,
-  getAttribute
+  querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
 

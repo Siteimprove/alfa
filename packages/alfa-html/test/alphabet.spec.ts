@@ -1,5 +1,5 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
 import { lex } from "@siteimprove/alfa-lang";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet, Token, TokenType } from "../src/alphabet";
 
 function html(t: Assertions, input: string, expected: Array<Token>) {

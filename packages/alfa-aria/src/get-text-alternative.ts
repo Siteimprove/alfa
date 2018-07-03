@@ -1,25 +1,25 @@
-import { map } from "@siteimprove/alfa-util";
 import {
-  Node,
   Element,
-  Text,
-  Namespace,
-  isText,
-  isElement,
-  querySelector,
   getAttribute,
-  getRootNode,
-  getTextContent,
-  getLabel,
+  getComputedStyle,
   getElementNamespace,
   getInputType,
-  getComputedStyle
+  getLabel,
+  getRootNode,
+  getTextContent,
+  isElement,
+  isText,
+  Namespace,
+  Node,
+  querySelector,
+  Text
 } from "@siteimprove/alfa-dom";
-import * as Roles from "./roles";
+import { map } from "@siteimprove/alfa-util";
 import { getRole } from "./get-role";
+import { hasNameFrom } from "./has-name-from";
 import { isVisible } from "./is-visible";
 import { resolveReferences } from "./resolve-references";
-import { hasNameFrom } from "./has-name-from";
+import * as Roles from "./roles";
 
 const { isArray } = Array;
 
@@ -70,14 +70,14 @@ export function getTextAlternative(
   visited: Set<Element | Text> = new Set(),
   options: TextAlternativeOptions = {}
 ): string | null {
-  if (visited.has(node) && !options.revisiting) {
+  if (visited.has(node) && options.revisiting !== true) {
     return null;
   }
 
   visited.add(node);
 
   // https://www.w3.org/TR/accname/#step2A
-  if (!isVisible(node, context) && !options.referencing) {
+  if (!isVisible(node, context) && options.referencing !== true) {
     return null;
   }
 
@@ -86,7 +86,13 @@ export function getTextAlternative(
   // remaining steps below.
   // https://www.w3.org/TR/accname/#step2G
   if (isText(node)) {
-    return flatten(node.data, options) || null;
+    const label = flatten(node.data, options);
+
+    if (label === "") {
+      return null;
+    }
+
+    return label;
   }
 
   // https://www.w3.org/TR/accname/#step2B
@@ -95,28 +101,26 @@ export function getTextAlternative(
     labelledBy !== null &&
     labelledBy !== "" &&
     labelledBy !== "aria-labelledby" &&
-    !options.referencing
+    options.referencing !== true
   ) {
     const rootNode = getRootNode(node, context);
 
-    if (rootNode !== null) {
-      const references = resolveReferences(rootNode, context, labelledBy).map(
-        element =>
-          getTextAlternative(element, context, visited, {
-            recursing: true,
-            referencing: true
-          })
-      );
+    const references = resolveReferences(rootNode, context, labelledBy).map(
+      element =>
+        getTextAlternative(element, context, visited, {
+          recursing: true,
+          referencing: true
+        })
+    );
 
-      if (references.length > 0) {
-        return flatten(references.join(" "), options);
-      }
+    if (references.length > 0) {
+      return flatten(references.join(" "), options);
     }
   }
 
   // https://www.w3.org/TR/accname/#step2C
   const label = getAttribute(node, "aria-label", { trim: true });
-  if (label && label !== "aria-label") {
+  if (label !== null && label !== "" && label !== "aria-label") {
     return flatten(label, options);
   }
 
@@ -131,7 +135,7 @@ export function getTextAlternative(
   }
 
   // https://www.w3.org/TR/accname/#step2E
-  if (options.labelling || options.referencing) {
+  if (options.labelling === true || options.referencing === true) {
     switch (role) {
       case Roles.TextBox:
         switch (node.localName) {
@@ -161,8 +165,8 @@ export function getTextAlternative(
   // https://www.w3.org/TR/accname/#step2G
   if (
     (role !== null && hasNameFrom(role, "contents")) ||
-    options.referencing ||
-    options.descending ||
+    options.referencing === true ||
+    options.descending === true ||
     isNativeTextAlternativeElement(node)
   ) {
     const children = map(
@@ -214,7 +218,9 @@ const whitespace = /\s+/g;
  * @see https://www.w3.org/TR/accname/#terminology
  */
 function flatten(string: string, options: TextAlternativeOptions): string {
-  return options.recursing ? string : string.replace(whitespace, " ").trim();
+  return options.recursing === true
+    ? string
+    : string.replace(whitespace, " ").trim();
 }
 
 /**
@@ -299,7 +305,7 @@ function getHtmlTextAlternative(
     // https://www.w3.org/TR/html-aam/#fieldset-and-legend-elements
     case "fieldset": {
       const legend = querySelector(element, context, "legend");
-      if (legend) {
+      if (legend !== null) {
         return getTextAlternative(legend, context, visited, {
           recursing: true,
           descending: true
@@ -311,7 +317,7 @@ function getHtmlTextAlternative(
     // https://www.w3.org/TR/html-aam/#figure-and-figcaption-elements
     case "figure": {
       const caption = querySelector(element, context, "figcaption");
-      if (caption) {
+      if (caption !== null) {
         return getTextAlternative(caption, context, visited, {
           recursing: true,
           descending: true
@@ -332,7 +338,7 @@ function getHtmlTextAlternative(
     // https://www.w3.org/TR/html-aam/#table-element
     case "table": {
       const caption = querySelector(element, context, "caption");
-      if (caption) {
+      if (caption !== null) {
         return getTextContent(caption);
       }
       break;
@@ -355,7 +361,7 @@ function getSvgTextAlternative(
   }
 
   const title = querySelector(element, context, ":scope > title");
-  if (title) {
+  if (title !== null) {
     return getTextAlternative(title, context, visited, {
       recursing: true,
       descending: true

@@ -72,7 +72,7 @@ function round(number: number, digits: number): number {
   return Math.round(number * power) / power;
 }
 
-function repeat(times: number, string: string = " "): string {
+function repeat(times: number, string = " "): string {
   let output = "";
 
   while (times-- > 0) {

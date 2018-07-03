@@ -1,6 +1,6 @@
-import { Node } from "./types";
 import { isText } from "./guards";
 import { traverseNode } from "./traverse-node";
+import { Node } from "./types";
 
 /**
  * Given a node, get the text content of all descendants of the node.

@@ -1,6 +1,6 @@
+import { parseRule, Style } from "@siteimprove/alfa-css";
 import { keys } from "@siteimprove/alfa-util";
-import { Style, parseRule } from "@siteimprove/alfa-css";
-import { StyleSheet, Rule, RuleType, StyleRule } from "./types";
+import { Rule, RuleType, StyleRule, StyleSheet } from "./types";
 
 /**
  * @see https://www.w3.org/TR/html/rendering.html

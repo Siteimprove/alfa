@@ -1,8 +1,8 @@
-import { Node, Element, Text } from "./types";
+import { getAttribute } from "./get-attribute";
+import { getParentElement } from "./get-parent-element";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
-import { getParentElement } from "./get-parent-element";
-import { getAttribute } from "./get-attribute";
+import { Element, Node, Text } from "./types";
 
 /**
  * @see https://www.w3.org/TR/dom41/#dom-slotable-assignedslot

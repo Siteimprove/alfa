@@ -1,7 +1,7 @@
-import { clamp } from "@siteimprove/alfa-util";
 import { parse } from "@siteimprove/alfa-lang";
-import { Property } from "../types";
+import { clamp } from "@siteimprove/alfa-util";
 import { OpacityGrammar } from "../grammars/opacity";
+import { Property } from "../types";
 
 export type Opacity = number;
 

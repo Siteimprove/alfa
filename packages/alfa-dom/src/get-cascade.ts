@@ -1,17 +1,31 @@
 import { concat } from "@siteimprove/alfa-util";
-import { Document, Element } from "./types";
-import { isElement } from "./guards";
-import { traverseNode } from "./traverse-node";
-import { SelectorMap, SelectorEntry } from "./selector-map";
 import { AncestorFilter } from "./ancestor-filter";
-import { RuleTree, RuleEntry } from "./rule-tree";
+import { isElement } from "./guards";
+import { RuleEntry, RuleTree } from "./rule-tree";
+import { SelectorEntry, SelectorMap } from "./selector-map";
+import { traverseNode } from "./traverse-node";
+import { Document, Element } from "./types";
 import { UserAgent } from "./user-agent";
 
 /**
  * @internal
  */
-export interface Cascade {
-  get(element: Element): RuleEntry | undefined;
+export class Cascade {
+  private readonly entries: WeakMap<Element, RuleEntry>;
+
+  public constructor(entries: WeakMap<Element, RuleEntry>) {
+    this.entries = entries;
+  }
+
+  public get(element: Element): RuleEntry | null {
+    const entry = this.entries.get(element);
+
+    if (entry === undefined) {
+      return null;
+    }
+
+    return entry;
+  }
 }
 
 const cascades: WeakMap<Document, Cascade> = new WeakMap();
@@ -59,7 +73,7 @@ export function getCascade(context: Document): Cascade | null {
       }
     });
 
-    cascade = entries;
+    cascade = new Cascade(entries);
     cascades.set(context, cascade);
   }
 

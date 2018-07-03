@@ -1,8 +1,8 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
-import { parse, lex } from "@siteimprove/alfa-lang";
+import { lex, parse } from "@siteimprove/alfa-lang";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
-import { FontSize } from "../../src/properties/font";
 import { FontSizeGrammar } from "../../src/grammars/font";
+import { FontSize } from "../../src/properties/font";
 
 function fontSize(t: Assertions, input: string, expected: FontSize) {
   t.deepEqual(parse(lex(input, Alphabet), FontSizeGrammar), expected, input);

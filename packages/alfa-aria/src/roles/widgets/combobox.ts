@@ -1,12 +1,12 @@
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Dialog } from "../window/dialog";
-import { TextBox } from "./text-box";
-import { ListBox } from "./list-box";
-import { Tree } from "./tree";
 import { Grid } from "./grid";
+import { ListBox } from "./list-box";
+import { TextBox } from "./text-box";
+import { Tree } from "./tree";
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#combobox

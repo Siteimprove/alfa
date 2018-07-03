@@ -9,11 +9,11 @@ import { keys } from "./keys";
  * given object!
  */
 export function values<T, K extends keyof T>(target: T): Array<T[K]> {
-  const values: Array<T[K]> = [];
+  const result: Array<T[K]> = [];
 
   for (const key of keys(target)) {
-    values.push(target[key] as T[K]);
+    result.push(target[key] as T[K]);
   }
 
-  return values;
+  return result;
 }

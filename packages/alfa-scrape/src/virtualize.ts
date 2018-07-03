@@ -23,10 +23,10 @@ function virtualizeElement(
   const virtual: import("@siteimprove/alfa-dom").Element = {
     nodeType: 1,
     prefix: element.prefix,
-    localName: element.localName || "",
+    localName: element.localName === null ? "" : element.localName,
     attributes: Array.from(element.attributes).map(attribute => ({
       prefix: attribute.prefix,
-      localName: attribute.localName || "",
+      localName: attribute.localName === null ? "" : attribute.localName,
       value: attribute.value
     })),
     shadowRoot: null,

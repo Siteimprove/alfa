@@ -1,4 +1,4 @@
-import { Target, Result, Question } from "./types";
+import { Question, Result, Target } from "./types";
 
 export function isResult<T extends Target>(
   input: Result<T> | Question<T>

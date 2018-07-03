@@ -1,8 +1,8 @@
-import { test, Assertions } from "@siteimprove/alfa-test";
-import { parse, lex } from "@siteimprove/alfa-lang";
+import { lex, parse } from "@siteimprove/alfa-lang";
+import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
-import { Opacity } from "../../src/properties/opacity";
 import { OpacityGrammar } from "../../src/grammars/opacity";
+import { Opacity } from "../../src/properties/opacity";
 
 function opacity(t: Assertions, input: string, expected: Opacity) {
   t.deepEqual(parse(lex(input, Alphabet), OpacityGrammar), expected, input);

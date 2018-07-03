@@ -1,8 +1,8 @@
 import { Predicate } from "@siteimprove/alfa-util";
-import { Node, Element } from "./types";
 import { isElement } from "./guards";
 import { matches } from "./matches";
 import { traverseNode } from "./traverse-node";
+import { Element, Node } from "./types";
 
 export type QuerySelectorOptions = Readonly<{ composed?: boolean }>;
 
@@ -14,7 +14,7 @@ export function querySelector(
   context: Node,
   query: string,
   options?: QuerySelectorOptions
-): Element;
+): Element | null;
 
 /**
  * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
@@ -24,7 +24,7 @@ export function querySelector<T extends Node>(
   context: Node,
   query: Predicate<Node, T>,
   options?: QuerySelectorOptions
-): T;
+): T | null;
 
 export function querySelector<T extends Node>(
   scope: Node,

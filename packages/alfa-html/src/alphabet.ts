@@ -1,16 +1,16 @@
-import { Mutable, keys } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import {
-  Stream,
-  Command,
   Char,
-  isBetween,
+  Command,
   isAlpha,
+  isAlphanumeric,
+  isBetween,
   isHex,
   isNumeric,
-  isAlphanumeric
+  Stream
 } from "@siteimprove/alfa-lang";
-import { Entity, Entities } from "./entities";
+import { keys, Mutable } from "@siteimprove/alfa-util";
+import { Entities, Entity } from "./entities";
 import { PrefixTree } from "./prefix-tree";
 
 const entities: PrefixTree<Entity> = new PrefixTree();
@@ -31,40 +31,40 @@ export const enum TokenType {
   Character
 }
 
-export type Doctype = Readonly<{
-  type: TokenType.Doctype;
-  name: string | null;
-  publicId: string | null;
-  systemId: string | null;
-  forceQuirks: boolean;
-}>;
+export interface Doctype {
+  readonly type: TokenType.Doctype;
+  readonly name: string | null;
+  readonly publicId: string | null;
+  readonly systemId: string | null;
+  readonly forceQuirks: boolean;
+}
 
-export type Attribute = Readonly<{
-  name: string;
-  value: string;
-}>;
+export interface Attribute {
+  readonly name: string;
+  readonly value: string;
+}
 
-export type StartTag = Readonly<{
-  type: TokenType.StartTag;
-  name: string;
-  selfClosing: boolean;
-  attributes: Array<Attribute>;
-}>;
+export interface StartTag {
+  readonly type: TokenType.StartTag;
+  readonly name: string;
+  readonly selfClosing: boolean;
+  readonly attributes: Array<Attribute>;
+}
 
-export type EndTag = Readonly<{
-  type: TokenType.EndTag;
-  name: string;
-}>;
+export interface EndTag {
+  readonly type: TokenType.EndTag;
+  readonly name: string;
+}
 
-export type Comment = Readonly<{
-  type: TokenType.Comment;
-  data: string;
-}>;
+export interface Comment {
+  readonly type: TokenType.Comment;
+  readonly data: string;
+}
 
-export type Character = Readonly<{
-  type: TokenType.Character;
-  data: string;
-}>;
+export interface Character {
+  readonly type: TokenType.Character;
+  readonly data: string;
+}
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tokenization
@@ -80,7 +80,7 @@ export type Token =
   | Character
   | Comment;
 
-export type State = {
+export interface State {
   doctype: Mutable<Doctype> | null;
   tag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
@@ -100,7 +100,7 @@ export type State = {
    * @see https://www.w3.org/TR/html/syntax.html#character-reference-code
    */
   characterReferenceCode: number;
-};
+}
 
 export type Pattern = Lang.Pattern<Token, State>;
 
@@ -1562,7 +1562,7 @@ function startsWith(
 
     let char = fromCharCode(code);
 
-    if (options.lowerCase) {
+    if (options.lowerCase === true) {
       char = char.toLowerCase();
     }
 

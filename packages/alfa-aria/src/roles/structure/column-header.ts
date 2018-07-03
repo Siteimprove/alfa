@@ -1,5 +1,5 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
+import { Role } from "../../types";
 import { SectionHead } from "../abstract/section-head";
 import { GridCell } from "../widgets/grid-cell";
 import { Cell } from "./cell";

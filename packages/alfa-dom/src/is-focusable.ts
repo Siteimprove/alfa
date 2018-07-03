@@ -1,7 +1,7 @@
-import { Node, Element } from "./types";
 import { getTabIndex } from "./get-tab-index";
 import { isDisabled } from "./is-disabled";
 import { isRendered } from "./is-rendered";
+import { Element, Node } from "./types";
 
 /**
  * Check if an element is focusable within a given context.

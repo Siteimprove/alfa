@@ -1,7 +1,7 @@
-import { readFileSync } from "fs";
-import * as puppeteer from "puppeteer";
 import { Document } from "@siteimprove/alfa-dom";
 import { Response } from "@siteimprove/alfa-http";
+import { readFileSync } from "fs";
+import * as puppeteer from "puppeteer";
 
 const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
@@ -98,7 +98,7 @@ export class Scraper {
     await page.close();
 
     if (document === null || response === null) {
-      throw error || new Error("Failed to scrape document");
+      throw error === null ? new Error("Failed to scrape document") : error;
     }
 
     return { response, document };

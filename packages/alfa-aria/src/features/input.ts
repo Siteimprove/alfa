@@ -4,8 +4,8 @@ import {
   hasAttribute,
   Node
 } from "@siteimprove/alfa-dom";
-import { Feature, Role, None } from "../types";
 import * as Roles from "../roles";
+import { Feature, None, Role } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#input

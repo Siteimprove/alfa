@@ -1,6 +1,6 @@
 import { getClosest } from "@siteimprove/alfa-dom";
-import { Feature } from "../types";
 import * as Roles from "../roles";
+import { Feature } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#header

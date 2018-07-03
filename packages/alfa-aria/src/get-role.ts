@@ -1,8 +1,8 @@
+import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { values } from "@siteimprove/alfa-util";
-import { Node, Element, getAttribute } from "@siteimprove/alfa-dom";
-import { Role } from "./types";
-import * as Roles from "./roles";
 import * as Features from "./features";
+import * as Roles from "./roles";
+import { Role } from "./types";
 
 const whitespace = /\s+/;
 
@@ -41,7 +41,7 @@ export function getRole(element: Element, context: Node): Role | null {
     for (const name of role.split(whitespace)) {
       const role = values(Roles).find(role => role.name === name);
 
-      if (role !== undefined && !role.abstract) {
+      if (role !== undefined && role.abstract !== true) {
         return role;
       }
     }

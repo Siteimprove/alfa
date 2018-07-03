@@ -45,11 +45,11 @@ export function getAttribute(
     return null;
   }
 
-  if (options.trim) {
+  if (options.trim === true) {
     value = value.trim();
   }
 
-  if (options.lowerCase) {
+  if (options.lowerCase === true) {
     value = value.toLowerCase();
   }
 

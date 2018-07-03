@@ -1,5 +1,5 @@
-import { test } from "@siteimprove/alfa-test";
 import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import { hasClass } from "../src/has-class";
 
 test("Returns true when an element has a given class name", t => {

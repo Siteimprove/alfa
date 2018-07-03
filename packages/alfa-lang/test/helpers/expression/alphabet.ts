@@ -1,8 +1,8 @@
-import { Pattern, Command } from "../../../src/types";
 import { Alphabet } from "../../../src/alphabet";
 import { Char } from "../../../src/char";
-import { isWhitespace } from "../../../src/is-whitespace";
 import { isNumeric } from "../../../src/is-numeric";
+import { isWhitespace } from "../../../src/is-whitespace";
+import { Command, Pattern } from "../../../src/types";
 
 export const enum TokenType {
   Number,

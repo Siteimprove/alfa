@@ -1,7 +1,7 @@
-import * as path from "path";
 import { AssertionError } from "assert";
 import chalk from "chalk";
 import * as stack from "error-stack-parser";
+import * as path from "path";
 
 /**
  * @internal

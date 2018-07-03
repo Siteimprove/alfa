@@ -1,6 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
-import { Token, TokenType, Ident, Dimension, Percentage } from "../alphabet";
+import { Dimension, Ident, Percentage, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 import { FontSize } from "../properties/font";
 

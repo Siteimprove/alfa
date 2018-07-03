@@ -1,5 +1,5 @@
-import { Node, Element, Attribute, Namespace } from "./types";
 import { getElementNamespace } from "./get-element-namespace";
+import { Attribute, Element, Namespace, Node } from "./types";
 
 /**
  * @see https://www.w3.org/TR/dom/#dom-attr-namespaceuri

@@ -1,6 +1,6 @@
 import * as Attributes from "./attributes";
-import * as Roles from "./roles";
 import * as Features from "./features";
+import * as Roles from "./roles";
 
 export { Attributes, Roles, Features };
 

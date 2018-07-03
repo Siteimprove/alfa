@@ -1,16 +1,16 @@
-import { Production } from "../../../src/types";
 import { Grammar } from "../../../src/grammar";
-import { Expression, Constant, Operator } from "../expression";
+import { Production } from "../../../src/types";
+import { Constant, Expression, Operator } from "../expression";
 import {
-  TokenType,
-  ExpressionToken,
-  Number,
   Add,
-  Subtract,
-  Multiply,
   Divide,
   Exponentiate,
-  isNumber
+  ExpressionToken,
+  isNumber,
+  Multiply,
+  Number,
+  Subtract,
+  TokenType
 } from "./alphabet";
 
 export type ExpressionProduction<

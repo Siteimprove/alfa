@@ -3,6 +3,12 @@ import { find } from "@siteimprove/alfa-util";
 import { jsx } from "../src/jsx";
 
 test("Transforms JSX into DOM nodes", t => {
+  const text: JSX.Text = {
+    nodeType: 3,
+    data: "Hello world",
+    childNodes: []
+  };
+
   t.deepEqual(<div class="foo">Hello world</div>, {
     nodeType: 1,
     prefix: null,
@@ -15,13 +21,7 @@ test("Transforms JSX into DOM nodes", t => {
       }
     ],
     shadowRoot: null,
-    childNodes: [
-      {
-        nodeType: 3,
-        data: "Hello world",
-        childNodes: []
-      } as JSX.Text
-    ]
+    childNodes: [text]
   });
 });
 
@@ -140,6 +140,12 @@ test("Constructs and attaches shadow roots from <shadow> elements", t => {
     </div>
   );
 
+  const text: JSX.Text = {
+    nodeType: 3,
+    data: "I'm in the shadows!",
+    childNodes: []
+  };
+
   t.deepEqual(element, {
     nodeType: 1,
     prefix: null,
@@ -148,13 +154,7 @@ test("Constructs and attaches shadow roots from <shadow> elements", t => {
     shadowRoot: {
       nodeType: 11,
       mode: "open",
-      childNodes: [
-        {
-          nodeType: 3,
-          data: "I'm in the shadows!",
-          childNodes: []
-        } as JSX.Text
-      ]
+      childNodes: [text]
     },
     childNodes: []
   });

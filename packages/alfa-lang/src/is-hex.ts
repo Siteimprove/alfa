@@ -1,6 +1,6 @@
 import { Char } from "./char";
-import { isNumeric } from "./is-numeric";
 import { isBetween } from "./is-between";
+import { isNumeric } from "./is-numeric";
 
 export function isHex(char: number): boolean {
   return (

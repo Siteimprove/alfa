@@ -1,5 +1,5 @@
-import { Element } from "./types";
 import { getInputType } from "./get-input-type";
+import { Element } from "./types";
 
 /**
  * Given an element, check if the element can be associated with a form label.

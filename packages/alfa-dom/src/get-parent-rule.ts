@@ -1,6 +1,6 @@
-import { Node, Rule } from "./types";
 import { isDocument } from "./guards";
 import { traverseStyleSheet } from "./traverse-style-sheet";
+import { Node, Rule } from "./types";
 
 const parentMaps: WeakMap<Node, WeakMap<Rule, Rule>> = new WeakMap();
 
@@ -34,5 +34,11 @@ export function getParentRule(rule: Rule, context: Node): Rule | null {
     parentMaps.set(context, parentMap);
   }
 
-  return parentMap.get(rule) || null;
+  const parent = parentMap.get(rule);
+
+  if (parent === undefined) {
+    return null;
+  }
+
+  return parent;
 }

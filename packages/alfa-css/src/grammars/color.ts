@@ -1,7 +1,7 @@
-import { Mutable, clamp } from "@siteimprove/alfa-util";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Token, TokenType, Ident, FunctionName } from "../alphabet";
+import { clamp, Mutable } from "@siteimprove/alfa-util";
+import { FunctionName, Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
@@ -105,11 +105,17 @@ type Production<T extends Token> = Lang.Production<Token, Color, T>;
 const ident: Production<Ident> = {
   token: TokenType.Ident,
   prefix(token) {
-    if (token.value === "transparent") {
+    const { value } = token;
+
+    if (value === "transparent") {
       return Transparent;
     }
 
-    return NamedColors[token.value] || null;
+    if (value in NamedColors) {
+      return NamedColors[token.value];
+    }
+
+    return null;
   }
 };
 

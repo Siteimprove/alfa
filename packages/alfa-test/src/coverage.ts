@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { Session, Profiler } from "inspector";
+import { Profiler, Session } from "inspector";
 
 const [header] = require("module").wrapper;
 
@@ -61,7 +61,7 @@ export function install() {
 
   process.on("exit", () => {
     session.post("Profiler.takePreciseCoverage", (err, { result }) => {
-      if (err) {
+      if (err !== null) {
         console.error(err.message);
       } else {
         for (const scriptCoverage of result) {

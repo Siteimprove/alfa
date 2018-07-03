@@ -1,5 +1,5 @@
-import { test } from "@siteimprove/alfa-test";
 import { jsx } from "@siteimprove/alfa-jsx";
+import { test } from "@siteimprove/alfa-test";
 import { compareDocumentPosition } from "../src/compare-document-position";
 
 const foo = <em />;

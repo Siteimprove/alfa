@@ -1,6 +1,6 @@
-import { Node, Element, Namespace } from "./types";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
+import { Element, Namespace, Node } from "./types";
 
 const namespaceMaps: WeakMap<Node, WeakMap<Element, Namespace>> = new WeakMap();
 
@@ -56,5 +56,11 @@ export function getElementNamespace(
     namespaceMaps.set(context, namespaceMap);
   }
 
-  return namespaceMap.get(element) || null;
+  const namespace = namespaceMap.get(element);
+
+  if (namespace === undefined) {
+    return null;
+  }
+
+  return namespace;
 }

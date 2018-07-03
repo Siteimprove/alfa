@@ -1,6 +1,6 @@
 import { hasAttribute } from "@siteimprove/alfa-dom";
-import { Any, Feature } from "../types";
 import * as Roles from "../roles";
+import { Any, Feature } from "../types";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#ahref

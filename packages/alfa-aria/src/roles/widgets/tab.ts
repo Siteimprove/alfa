@@ -1,7 +1,7 @@
-import { Role } from "../../types";
 import * as Attributes from "../../attributes";
-import { Widget } from "../abstract/widget";
+import { Role } from "../../types";
 import { SectionHead } from "../abstract/section-head";
+import { Widget } from "../abstract/widget";
 import { TabList } from "./tab-list";
 
 /**

@@ -1,6 +1,6 @@
 import { indexOf } from "@siteimprove/alfa-util";
-import { Node } from "./types";
 import { getParentNode } from "./get-parent-node";
+import { Node } from "./types";
 
 /**
  * @see https://www.w3.org/TR/dom/#dom-node-nextsibling
@@ -17,5 +17,11 @@ export function getNextSibling<T extends Node>(
 
   const { childNodes } = parentNode;
 
-  return childNodes[indexOf(childNodes, node) + 1] || null;
+  const nextIndex = indexOf(childNodes, node) + 1;
+
+  if (nextIndex in childNodes) {
+    return childNodes[nextIndex];
+  }
+
+  return null;
 }

@@ -1,18 +1,18 @@
 import {
-  Selector,
-  SelectorType,
   Declaration,
+  parseDeclaration,
   parseSelector,
-  parseDeclaration
+  Selector,
+  SelectorType
 } from "@siteimprove/alfa-css";
-import { Node, Element, StyleSheet } from "./types";
-import { isStyleRule } from "./guards";
-import { traverseStyleSheet } from "./traverse-style-sheet";
-import { matches, MatchingOptions } from "./matches";
-import { getId } from "./get-id";
 import { getClassList } from "./get-class-list";
+import { getId } from "./get-id";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
+import { isStyleRule } from "./guards";
+import { matches, MatchingOptions } from "./matches";
+import { traverseStyleSheet } from "./traverse-style-sheet";
+import { Element, Node, StyleSheet } from "./types";
 import { isUserAgentRule } from "./user-agent";
 
 const { isArray } = Array;
@@ -38,13 +38,13 @@ export const enum Origin {
 /**
  * @internal
  */
-export type SelectorEntry = {
+export interface SelectorEntry {
   readonly selector: Selector;
   readonly declarations: Array<Declaration>;
   readonly origin: Origin;
   readonly order: number;
   readonly specificity: number;
-};
+}
 
 /**
  * The selector map is a data structure used for providing indexed access to the
@@ -83,7 +83,7 @@ export class SelectorMap {
     // order in which they were declared, information related to ordering will
     // otherwise no longer be available once rules from different buckets are
     // combined.
-    let order: number = 0;
+    let order = 0;
 
     // The same declarations are often repeated across several rules, which
     // is especially true for simple declarations such as `display: none`. We
@@ -219,7 +219,7 @@ function addEntry(
 }
 
 function getEntries(bucket: SelectorBucket, key: string): Array<SelectorEntry> {
-  let entries = bucket.get(key);
+  const entries = bucket.get(key);
 
   if (entries === undefined) {
     return [];

@@ -1,12 +1,12 @@
-import { Assertions } from "@siteimprove/alfa-test";
 import {
+  isResult,
   Outcome,
-  Result,
-  Target,
   Question,
-  isResult
+  Result,
+  Target
 } from "@siteimprove/alfa-act";
 import { serialize } from "@siteimprove/alfa-dom";
+import { Assertions } from "@siteimprove/alfa-test";
 
 export function outcome<T extends Target>(
   t: Assertions,
@@ -19,7 +19,8 @@ export function outcome<T extends Target>(
     const actual = results
       .filter(isResult)
       .filter(result => result.outcome === outcome);
-    const expected = assert[outcome] || [];
+
+    const expected = outcome in assert ? assert[outcome]! : [];
 
     t.equal(
       actual.length,

@@ -1,6 +1,6 @@
-import { Node } from "./types";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
+import { Node } from "./types";
 
 type ParentMap = WeakMap<Node, Node>;
 
@@ -27,7 +27,7 @@ export function getParentNode(
 ): Node | null {
   let parentMap: ParentMap | undefined;
 
-  if (options.flattened) {
+  if (options.flattened === true) {
     parentMap = flattenedParentMaps.get(context);
   } else {
     parentMap = composedParentMaps.get(context);
@@ -46,12 +46,12 @@ export function getParentNode(
         }
       },
       {
-        composed: !options.flattened,
+        composed: options.flattened !== true,
         flattened: options.flattened
       }
     );
 
-    if (options.flattened) {
+    if (options.flattened === true) {
       flattenedParentMaps.set(context, parentMap);
     } else {
       composedParentMaps.set(context, parentMap);

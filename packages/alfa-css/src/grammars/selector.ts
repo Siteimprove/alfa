@@ -1,22 +1,22 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import {
-  Grammar,
-  Expression,
-  Stream,
+  Char,
   Command,
-  Char
+  Expression,
+  Grammar,
+  Stream
 } from "@siteimprove/alfa-lang";
-import { PseudoClass, PseudoElement } from "../types";
 import {
-  Token,
-  TokenType,
-  Whitespace,
+  Colon,
+  Comma,
   Delim,
   Ident,
-  Comma,
-  Colon,
-  SquareBracket
+  SquareBracket,
+  Token,
+  TokenType,
+  Whitespace
 } from "../alphabet";
+import { PseudoClass, PseudoElement } from "../types";
 
 const { isArray } = Array;
 const { fromCharCode } = String;
@@ -32,15 +32,15 @@ export const enum SelectorType {
   RelativeSelector = 128
 }
 
-export type IdSelector = Readonly<{
-  type: SelectorType.IdSelector;
-  name: string;
-}>;
+export interface IdSelector {
+  readonly type: SelectorType.IdSelector;
+  readonly name: string;
+}
 
-export type ClassSelector = Readonly<{
-  type: SelectorType.ClassSelector;
-  name: string;
-}>;
+export interface ClassSelector {
+  readonly type: SelectorType.ClassSelector;
+  readonly name: string;
+}
 
 export const enum AttributeMatcher {
   /**
@@ -81,30 +81,30 @@ export const enum AttributeModifier {
   CaseInsensitive = 1
 }
 
-export type AttributeSelector = Readonly<{
-  type: SelectorType.AttributeSelector;
-  name: string;
-  value: string | null;
-  matcher: AttributeMatcher | null;
-  modifier: number;
-}>;
+export interface AttributeSelector {
+  readonly type: SelectorType.AttributeSelector;
+  readonly name: string;
+  readonly value: string | null;
+  readonly matcher: AttributeMatcher | null;
+  readonly modifier: number;
+}
 
-export type TypeSelector = Readonly<{
-  type: SelectorType.TypeSelector;
-  name: string;
-  namespace: string | null;
-}>;
+export interface TypeSelector {
+  readonly type: SelectorType.TypeSelector;
+  readonly name: string;
+  readonly namespace: string | null;
+}
 
-export type PseudoClassSelector = Readonly<{
-  type: SelectorType.PseudoClassSelector;
-  name: PseudoClass;
-  value: Selector | Array<Selector> | null;
-}>;
+export interface PseudoClassSelector {
+  readonly type: SelectorType.PseudoClassSelector;
+  readonly name: PseudoClass;
+  readonly value: Selector | Array<Selector> | null;
+}
 
-export type PseudoElementSelector = {
-  type: SelectorType.PseudoElementSelector;
-  name: PseudoElement;
-};
+export interface PseudoElementSelector {
+  readonly type: SelectorType.PseudoElementSelector;
+  readonly name: PseudoElement;
+}
 
 export type SimpleSelector =
   | IdSelector
@@ -114,11 +114,11 @@ export type SimpleSelector =
   | PseudoClassSelector
   | PseudoElementSelector;
 
-export type CompoundSelector = {
-  type: SelectorType.CompoundSelector;
-  left: SimpleSelector;
-  right: SimpleSelector | CompoundSelector;
-};
+export interface CompoundSelector {
+  readonly type: SelectorType.CompoundSelector;
+  readonly left: SimpleSelector;
+  readonly right: SimpleSelector | CompoundSelector;
+}
 
 export type ComplexSelector = SimpleSelector | CompoundSelector;
 
@@ -144,12 +144,12 @@ export const enum SelectorCombinator {
   DirectSibling
 }
 
-export type RelativeSelector = {
-  type: SelectorType.RelativeSelector;
-  combinator: SelectorCombinator;
-  left: ComplexSelector | RelativeSelector;
-  right: ComplexSelector;
-};
+export interface RelativeSelector {
+  readonly type: SelectorType.RelativeSelector;
+  readonly combinator: SelectorCombinator;
+  readonly left: ComplexSelector | RelativeSelector;
+  readonly right: ComplexSelector;
+}
 
 export type Selector = ComplexSelector | RelativeSelector;
 
@@ -603,7 +603,7 @@ function selectorList(
 
   const selectors = isArray(left) ? left : [left];
 
-  if (isPseudoElementSelector(selectors[selectors.length - 1]!)) {
+  if (isPseudoElementSelector(selectors[selectors.length - 1])) {
     return null;
   }
 

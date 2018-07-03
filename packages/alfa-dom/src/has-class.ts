@@ -1,5 +1,5 @@
-import { Element } from "./types";
 import { getClassList } from "./get-class-list";
+import { Element } from "./types";
 
 /**
  * Given an element, check if the element has the specified class name.

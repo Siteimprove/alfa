@@ -1,8 +1,8 @@
 import * as sjcl from "sjcl";
-import { Algorithm, Encoding, Hash, Bits } from "./types";
+import { Algorithm, Bits, Encoding, Hash } from "./types";
 
-const HashImplementation = class Hash {
-  private hash: sjcl.SjclHash;
+class HashImplementation {
+  private readonly hash: sjcl.SjclHash;
 
   public constructor(algorithm: Algorithm) {
     switch (algorithm) {
@@ -53,7 +53,7 @@ const HashImplementation = class Hash {
 
     return codec.fromBits(bits);
   }
-};
+}
 
 export function getHash(algorithm: Algorithm): Hash {
   return new HashImplementation(algorithm);
