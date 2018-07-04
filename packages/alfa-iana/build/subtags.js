@@ -1,21 +1,38 @@
-// @ts-check
-
-const fs = require("fs");
-const https = require("https");
-const prettier = require("prettier");
-const RecordJar = require("record-jar");
+import * as fs from "fs";
+import * as https from "https";
+import * as prettier from "prettier";
 
 const registry =
   "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry";
 
-function fetch(url) {
+/**
+ * @typedef {{ name: string, value: string }} Field
+ */
+
+/**
+ * @typedef {Array<Field>} Record
+ */
+
+/**
+ * @typedef {Object} Subtag
+ * @property {string} name
+ * @property {string} type
+ * @property {string | Array<string>} [prefix]
+ * @property {string} [scope]
+ */
+
+/**
+ * @param {string} url
+ * @return {Promise<string>}
+ */
+async function fetch(url) {
   return new Promise((resolve, reject) => {
     https
       .get(url, response => {
         let data = "";
 
         response.on("data", chunk => {
-          data += chunk;
+          data += chunk.toString();
         });
 
         response.on("end", () => {
@@ -28,7 +45,11 @@ function fetch(url) {
   });
 }
 
-function type(subtag) {
+/**
+ * @param {Subtag} subtag
+ * @return {string | null}
+ */
+function getType(subtag) {
   switch (subtag.type) {
     case "language":
       return "PrimaryLanguage";
@@ -40,15 +61,24 @@ function type(subtag) {
       return "Region";
     case "variant":
       return "Variant";
-    default:
-      return null;
   }
+
+  return null;
 }
 
-function name(subtag) {
+/**
+ * @param {Subtag} subtag
+ * @return {string | null}
+ */
+function getName(subtag) {
   return subtag.name.toUpperCase().replace(/^(\d)/, "_$1");
 }
 
+/**
+ * @param {string} from
+ * @param {string} to
+ * @return {Array<string>}
+ */
 function range(from, to) {
   const start = from.charCodeAt(0);
   const end = to.charCodeAt(0);
@@ -63,14 +93,28 @@ function range(from, to) {
   return result;
 }
 
+/**
+ * @param {string} input
+ * @return {string}
+ */
 function rest(input) {
   return input.substring(1, input.length);
 }
 
+/**
+ * @template T
+ * @param {Array<T>} target
+ * @param {Array<T>} input
+ * @return {Array<T>}
+ */
 function concat(target, input) {
   return target.concat(input);
 }
 
+/**
+ * @param {string} query
+ * @return {Array<string>}
+ */
 function expand(query) {
   const [from, to] = query.split("..");
 
@@ -78,6 +122,11 @@ function expand(query) {
     return [query];
   }
 
+  /**
+   * @param {string} from
+   * @param {string} to
+   * @return {Array<string>}
+   */
   function generate(from, to) {
     if (from.length === 0 && to.length === 0) {
       return [""];
@@ -93,41 +142,72 @@ function expand(query) {
   return generate(from, to).sort();
 }
 
-fetch(registry).then(body => {
-  const { records } = new RecordJar(body);
+/**
+ * @param {string} input
+ * @return {Array<Record>}
+ */
+function parseRecords(input) {
+  return input.split(/\n+%%\n+/).map(record =>
+    record
+      .replace(/\n\s+/g, " ")
+      .split(/\n+/)
+      .map(field => {
+        const separator = field.indexOf(":");
+        return {
+          name: field.substring(0, separator).trim(),
+          value: field.substring(separator + 1).trim()
+        };
+      })
+  );
+}
 
+fetch(registry).then(body => {
+  const records = parseRecords(body);
+
+  /** @type {Array<Subtag>} */
   const subtags = [];
 
   for (const record of records) {
-    const { Type, Subtag, Tag, Prefix, Scope } = record;
+    const tag = record.find(
+      field => field.name === "Tag" || field.name === "Subtag"
+    );
 
-    if (Subtag || Tag) {
-      for (const name of expand(Subtag || Tag)) {
-        const subtag = Object.assign(
-          {
-            type: Type,
-            name: name.toLowerCase()
-          },
-          Prefix
-            ? {
-                prefix:
-                  typeof Prefix === "string"
-                    ? Prefix.toLowerCase()
-                    : Prefix.map(prefix => prefix.toLowerCase())
-              }
-            : {},
-          Scope ? { scope: Scope } : {}
-        );
+    const type = record.find(field => field.name === "Type");
 
-        if (type(subtag) !== null) {
-          subtags.push(subtag);
-        }
+    if (tag === undefined || type === undefined) {
+      continue;
+    }
+
+    const prefix = record.filter(field => field.name === "Prefix");
+    const scope = record.find(field => field.name === "Scope");
+
+    for (const name of expand(tag.value)) {
+      /** @type {Subtag} */
+      const subtag = Object.assign(
+        {
+          type: type.value,
+          name: name.toLowerCase()
+        },
+        prefix.length > 0
+          ? {
+              prefix:
+                prefix.length > 1
+                  ? prefix.map(prefix => prefix.value.toLowerCase())
+                  : prefix[0].value.toLowerCase()
+            }
+          : {},
+        scope !== undefined ? { scope: scope.value } : {}
+      );
+
+      if (getType(subtag) !== null) {
+        subtags.push(subtag);
       }
     }
   }
 
+  /** @type {Map<string, Array<Subtag>>} */
   const groups = subtags.reduce((groups, subtag) => {
-    const group = type(subtag) + "s";
+    const group = getType(subtag) + "s";
 
     let subtags = groups.get(group);
 
@@ -148,7 +228,7 @@ fetch(registry).then(body => {
     // do so in \`build/subtags.js\` and run \`yarn prepare\` to rebuild this file.
 
     import { values } from "@siteimprove/alfa-util";
-    import { ExtendedLanguage, PrimaryLanguage, Region, Script, Region } from "./types";
+    import { ExtendedLanguage, PrimaryLanguage, Region, Script, Variant } from "./types";
     `
   ];
 
@@ -158,7 +238,9 @@ fetch(registry).then(body => {
         ${subtags
           .map(subtag => {
             const value = JSON.stringify(subtag, null, 2);
-            return `export const ${name(subtag)}: ${type(subtag)} = ${value}`;
+            return `export const ${getName(subtag)}: ${getType(
+              subtag
+            )} = ${value}`;
           })
           .join("\n\n")}
       }

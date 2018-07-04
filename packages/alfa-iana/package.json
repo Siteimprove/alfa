@@ -22,14 +22,13 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {
-    "prepare": "node build/subtags.js"
+    "prepare": "node -r esm build/subtags.js"
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "@types/node": "^10.3.4",
-    "record-jar": "^1.0.4"
+    "@types/node": "^10.3.4"
   }
 }
