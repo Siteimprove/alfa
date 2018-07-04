@@ -63,7 +63,7 @@ export function install() {
   process.on("exit", () => {
     session.post("Profiler.takePreciseCoverage", (err, { result }) => {
       if (err !== null) {
-        console.error(err.message);
+        process.stderr.write(`${err.message}\n`);
       } else {
         for (const scriptCoverage of result) {
           if (!fs.existsSync(scriptCoverage.url)) {

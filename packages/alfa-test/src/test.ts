@@ -14,11 +14,15 @@ export async function test(
   try {
     await assertion(assert);
   } catch (err) {
-    if (err instanceof assert.AssertionError) {
-      console.error(format(name, err));
-    } else {
-      console.error(err);
+    const error = err as Error;
+
+    let message = error.message;
+
+    if (error instanceof assert.AssertionError) {
+      message = format(name, error);
     }
+
+    process.stderr.write(`${message}\n`);
     process.exit(1);
   }
 }
