@@ -12,7 +12,7 @@ test("Returns the semantic role of an image with a non-empty string alt attribut
   t.equal(Img.role!(img, img), Roles.Img, "Image role is not Img");
 });
 
-test("Returns null if an image has the alt attribute set to the empty-string", t => {
+test("Returns no role if an image has the alt attribute set to the empty-string", t => {
   const img = <img alt="" />;
   t.equal(Img.role!(img, img), null, "Image role is not null");
 });

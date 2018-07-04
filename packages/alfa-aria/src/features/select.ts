@@ -21,7 +21,7 @@ function role(select: Element, context: Node): Role {
   const size = getAttribute(select, "size");
   if (
     !hasAttribute(select, "multiple") &&
-    (size === null || parseInt(size) > 1)
+    (size === null || !(parseInt(size) > 1))
   ) {
     return Roles.Combobox;
   }
