@@ -456,6 +456,62 @@ const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
 };
 
 //TODO implement 8.2.4.25 and 8.2.4.26
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-escaped-end-tag-name-state
+ */
+const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null) {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    state.temporaryBuffer.split("").forEach(char => {
+      emit({ type: TokenType.Character, data: char });
+    });
+    return scriptDataEscaped;
+  }
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      //TODO: appropriate end tag?
+      return beforeAttributeName;
+    case Char.Solidus:
+      stream.advance(1);
+      //TODO: appropriate end tag?
+      return selfClosingStartTag;
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      //TODO: appropriate end tag?
+      return data;
+    case char
+      .toString()
+      .toUpperCase()
+      .charCodeAt(0):
+      stream.advance(1);
+      state.temporaryBuffer += char.toString().toLowerCase();
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
+    case char
+      .toString()
+      .toLowerCase()
+      .charCodeAt(0):
+      stream.advance(1);
+      state.temporaryBuffer += char.toString();
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
+    default:
+      emit({ type: TokenType.Character, data: "<" });
+      emit({ type: TokenType.Character, data: "/" });
+      state.temporaryBuffer.split("").forEach(char => {
+        emit({ type: TokenType.Character, data: char });
+      });
+      return scriptDataEscaped;
+  }
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-state
@@ -547,6 +603,50 @@ const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
   }
 
   return scriptDataDoubleEscaped;
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-double-escape-end-state
+ */
+const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null) {
+    return scriptDataDoubleEscaped;
+  }
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+    case Char.Solidus:
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      if (state.temporaryBuffer === "script") {
+        return scriptDataEscaped;
+      } else {
+        emit({ type: TokenType.Character, data: fromCharCode(char) });
+        return scriptDataDoubleEscaped;
+      }
+    case char
+      .toString()
+      .toUpperCase()
+      .charCodeAt(0):
+      stream.advance(1);
+      state.temporaryBuffer += char.toString().toLowerCase();
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
+    case char
+      .toString()
+      .toLowerCase()
+      .charCodeAt(0):
+      stream.advance(1);
+      state.temporaryBuffer += char.toString();
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
+    default:
+      return scriptDataDoubleEscaped;
+  }
 };
 
 /**
