@@ -209,3 +209,96 @@ test("Can lex a doctype with a system ID", t => {
     }
   ]);
 });
+
+test("Can lex a simple script element", t => {
+  html(t, "<script></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
+test("Can lex a script element with an apparent tag", t => {
+  html(t, "<script><tag></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: "<"
+    },
+    {
+      type: TokenType.Character,
+      data: "t"
+    },
+    {
+      type: TokenType.Character,
+      data: "a"
+    },
+    {
+      type: TokenType.Character,
+      data: "g"
+    },
+    {
+      type: TokenType.Character,
+      data: ">"
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
+test("Can lex a script element with an apparent comment", t => {
+  html(t, "<script><!-- -></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: "<"
+    },
+    {
+      type: TokenType.Character,
+      data: "!"
+    },
+    {
+      type: TokenType.Character,
+      data: "-"
+    },
+    {
+      type: TokenType.Character,
+      data: "-"
+    },
+    {
+      type: TokenType.Character,
+      data: " "
+    },
+    {
+      type: TokenType.Character,
+      data: "-"
+    },
+    {
+      type: TokenType.Character,
+      data: ">"
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
