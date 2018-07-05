@@ -237,6 +237,26 @@ const tagName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-state
+ */
+const scriptData: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  stream.advance(1);
+  switch (char) {
+    case Char.LessThanSign:
+      return scriptDataLessThanSign;
+    case Char.Null:
+      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      break;
+    case null:
+      //TODO emit end of file token
+      break;
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+  }
+};
+
+/**
  * @see https://www.w3.org/TR/html/syntax.html#script-data-less-than-sign-state
  */
 const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
@@ -249,10 +269,9 @@ const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
       return scriptDataEndTagOpen;
     case Char.ExclamationMark:
       stream.advance(1);
-      const returnState = scriptDataEscapeStart;
       emit({ type: TokenType.Character, data: "<" });
       emit({ type: TokenType.Character, data: "!" });
-      return returnState;
+      return scriptDataEscapeStart;
     default:
       emit({ type: TokenType.Character, data: "<" });
       return scriptData;
@@ -298,14 +317,14 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
 const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === null || char !== Char.HyphenMinus) {
-    stream.advance(1);
-    return scriptData;
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataEscapeStartDash;
+    default:
+      return scriptData;
   }
-
-  const returnState = scriptDataEscapeStartDash;
-  emit({ type: TokenType.Character, data: "-" });
-  return returnState;
 };
 
 /**
@@ -314,14 +333,14 @@ const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
 const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === null || char !== Char.HyphenMinus) {
-    stream.advance(1);
-    return scriptData;
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataEscapedDashDash;
+    default:
+      return scriptData;
   }
-
-  const returnState = scriptDataEscapedDashDash;
-  emit({ type: TokenType.Character, data: "-" });
-  return returnState;
 };
 
 /**
@@ -331,21 +350,90 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
   stream.advance(1);
   switch (char) {
-    case null:
-      //TODO emit end of file tokens
-      break;
     case Char.HyphenMinus:
-      const returnState = scriptDataEscapedDash;
       emit({ type: TokenType.Character, data: "-" });
-      return returnState;
+      return scriptDataEscapedDash;
     case Char.LessThanSign:
       return scriptDataLessThanSign;
     case Char.Null:
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       break;
+    case null:
+      //TODO emit end of file token
+      break;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
   }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-state
+ */
+const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  stream.advance(1);
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataEscapedDashDash;
+    case Char.LessThanSign:
+      return scriptDataEscapedLessThanSign;
+    case Char.Null:
+      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      return scriptDataEscaped;
+    case null:
+      //TODO emit end of file token
+      break;
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataEscaped;
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-dash-state
+ */
+const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  stream.advance(1);
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      break;
+    case Char.LessThanSign:
+      return scriptDataEscapedLessThanSign;
+    case Char.GreaterThanSign:
+      emit({ type: TokenType.Character, data: ">" });
+      return scriptData;
+    case Char.Null:
+      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      return scriptDataEscaped;
+    case null:
+      //TODO emit end of file token
+      break;
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataEscaped;
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-less-than-sign-state
+ */
+const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  if (char === null || !isAlpha(char)) {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    return scriptDataEscaped;
+  }
+
+  state.tag = {
+    type: TokenType.EndTag,
+    name: ""
+  };
+  return scriptDataEscapedEndTagName;
 };
 
 /**
