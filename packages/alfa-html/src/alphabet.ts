@@ -423,6 +423,25 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
  */
 const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
+  if (char === Char.Solidus) {
+    stream.advance(1);
+    return scriptDataEscapedEndTagOpen;
+  } else if (char !== null && isAlpha(char)) {
+    stream.advance(1);
+    state.temporaryBuffer = "";
+    emit({ type: TokenType.Character, data: "<" });
+    return scriptDataDoubleEscapeStart;
+  } else {
+    emit({ type: TokenType.Character, data: "<" });
+    return scriptDataEscaped;
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-end-tag-open-state
+ */
+const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
   if (char === null || !isAlpha(char)) {
     emit({ type: TokenType.Character, data: "<" });
     emit({ type: TokenType.Character, data: "/" });
@@ -431,7 +450,7 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
 
   state.tag = {
     type: TokenType.EndTag,
-    name: ""
+    name: "" //TODO fix
   };
   return scriptDataEscapedEndTagName;
 };
@@ -513,6 +532,21 @@ const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataDoubleEscaped;
   }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-less-than-sign-state
+ */
+const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  if (char === Char.Solidus) {
+    stream.advance(1);
+    state.temporaryBuffer = "";
+    emit({ type: TokenType.Character, data: "/" });
+    return scriptDataDoubleEscapeEndState;
+  }
+
+  return scriptDataDoubleEscaped;
 };
 
 /**
