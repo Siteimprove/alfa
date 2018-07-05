@@ -237,6 +237,77 @@ const tagName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-less-than-sign-state
+ */
+const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.Solidus:
+      stream.advance(1);
+      state.temporaryBuffer = "";
+      return scriptDataEndTagOpen;
+    case Char.ExclamationMark:
+      stream.advance(1);
+      const returnState = scriptDataEscapeStart;
+      emit({ type: TokenType.Character, data: "<" });
+      emit({ type: TokenType.Character, data: "!" });
+      return returnState;
+    default:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptData;
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-end-tag-open-state
+ */
+const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  if (char === null || !isAlpha(char)) {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    return scriptData;
+  }
+
+  state.tag = {
+    type: TokenType.EndTag,
+    name: ""
+  };
+  return scriptDataEndTagName;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-end-tag-name-state
+ */
+const scriptDataEndTagName: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+    //TODO: Fix this
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
+ */
+const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null || char !== Char.HyphenMinus) {
+    return scriptData;
+  }
+
+  const returnState = scriptDataEscapeStartDash;
+  emit({ type: TokenType.Character, data: "-" });
+  return returnState;
+};
+
+/**
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
  */
 const beforeAttributeName: Pattern = (stream, emit, state) => {
