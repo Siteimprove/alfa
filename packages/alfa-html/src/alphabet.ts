@@ -436,6 +436,85 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
   return scriptDataEscapedEndTagName;
 };
 
+//TODO implement 8.2.4.25 and 8.2.4.26
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-state
+ */
+const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  stream.advance(1);
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataDoubleEscapedDash;
+    case Char.LessThanSign:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptDataDoubleEscapedLessThanSign;
+    case Char.Null:
+      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      break;
+    case null:
+      //TODO emit end of file token
+      break;
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-state
+ */
+const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  stream.advance(1);
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataDoubleEscapedDashDash;
+    case Char.LessThanSign:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptDataDoubleEscapedLessThanSign;
+    case Char.Null:
+      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      return scriptDataDoubleEscaped;
+    case null:
+      //TODO emit end of file token
+      break;
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataDoubleEscaped;
+  }
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-dash-state
+ */
+const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  stream.advance(1);
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      break;
+    case Char.LessThanSign:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptDataDoubleEscapedLessThanSign;
+    case Char.GreaterThanSign:
+      emit({ type: TokenType.Character, data: ">" });
+      return scriptData;
+    case Char.Null:
+      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      return scriptDataDoubleEscaped;
+    case null:
+      //TODO emit end of file token
+      break;
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataDoubleEscaped;
+  }
+};
+
 /**
  * @see https://www.w3.org/TR/html/syntax.html#script-data-double-escape-end-state
  */
