@@ -46,31 +46,48 @@ export function removeFile(file) {
 }
 
 /**
- * @param {string} directory
+ * @param {string | Array<string>} directories
  * @param {function(string): boolean} predicate
+ * @param {{ gitIgnore?: boolean }} [options]
+ * @param {Set<string>} [visited]
  * @return {Array<string>}
  */
-export function findFiles(directory, predicate) {
+export function findFiles(
+  directories,
+  predicate,
+  options = {},
+  visited = new Set()
+) {
   /** @type {Array<string>} */
   const files = [];
 
-  if (!fs.existsSync(directory)) {
-    return files;
+  if (typeof directories === "string") {
+    directories = [directories];
   }
 
-  for (let file of readDirectory(directory)) {
-    file = path.join(directory, file);
-
-    if (git.isIgnored(file)) {
+  for (const directory of directories) {
+    if (visited.has(directory)) {
       continue;
     }
 
-    if (isFile(file) && predicate(file)) {
-      files.push(file);
+    visited.add(directory);
+
+    if (!fs.existsSync(directory)) {
+      return files;
     }
 
-    if (isDirectory(file)) {
-      files.push(...findFiles(file, predicate));
+    for (let file of readDirectory(directory)) {
+      file = path.join(directory, file);
+
+      if (options.gitIgnore !== false && git.isIgnored(file)) {
+        continue;
+      }
+
+      if (isDirectory(file)) {
+        files.push(...findFiles(file, predicate, options, visited));
+      } else if (predicate(file)) {
+        files.push(file);
+      }
     }
   }
 
@@ -80,9 +97,10 @@ export function findFiles(directory, predicate) {
 /**
  * @param {string} directory
  * @param {function(string, string)} listener
+ * @param {{ gitIgnore?: boolean }} [options]
  * @return {fs.FSWatcher}
  */
-export function watchFiles(directory, listener) {
+export function watchFiles(directory, listener, options = {}) {
   return fs.watch(directory, { recursive: true }, (event, file) => {
     if (file === undefined) {
       return;
@@ -90,7 +108,7 @@ export function watchFiles(directory, listener) {
 
     file = path.join(directory, file);
 
-    if (git.isIgnored(file)) {
+    if (options.gitIgnore !== false && git.isIgnored(file)) {
       return;
     }
 

@@ -4,10 +4,13 @@ import { packages } from "./helpers/meta";
 import * as notify from "./helpers/notify";
 
 import { build } from "./tasks/build";
+import { clean } from "./tasks/clean";
 
 const files = findFiles("build", endsWith(".js"));
 
 for (const pkg of packages) {
+  clean(`packages/${pkg}`);
+
   files.push(
     ...findFiles(`packages/${pkg}`, endsWith(".ts", ".tsx")).filter(
       not(endsWith(".spec.ts", ".spec.tsx"))
