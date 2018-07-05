@@ -35,7 +35,7 @@ test("Returns the allowed roles of a list item whose parent is an ordered list",
       Roles.Tab,
       Roles.TreeItem
     ],
-    "Allowed roles are incorrect"
+    "List allowed roles are incorrect"
   );
 });
 
@@ -56,6 +56,6 @@ test("Returns the allowed roles of a list item whose parent is an unordered list
       Roles.Tab,
       Roles.TreeItem
     ],
-    "Allowed roles are incorrect"
+    "List allowed roles are incorrect"
   );
 });

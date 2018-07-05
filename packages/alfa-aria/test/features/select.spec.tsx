@@ -40,7 +40,7 @@ test("Returns the allowed roles of a select with no multiple attribute and no si
   t.deepEqual(
     Select.allowedRoles(select, select),
     [Roles.Menu],
-    "Incorrect allowed roles"
+    "Select allowed roles allowed roles are incorrect"
   );
 });
 
@@ -49,6 +49,6 @@ test("Returns the allowed roles of a select with a multiple attribute and a size
   t.deepEqual(
     Select.allowedRoles(select, select),
     None,
-    "Incorrect allowed roles"
+    "Select allowed roles allowed roles are incorrect"
   );
 });

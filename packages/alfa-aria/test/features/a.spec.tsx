@@ -20,22 +20,20 @@ test("Returns no role when an anchor has no href attribute", t => {
 
 test("Returns the allowed roles of an anchor that has an href attribute", t => {
   const a = <a href="foo">Foo</a>;
-  t.deepEqual(
-    A.allowedRoles(a, a),
-    [
-      Roles.Button,
-      Roles.Checkbox,
-      Roles.MenuItem,
-      Roles.MenuItemCheckbox,
-      Roles.MenuItemRadio,
-      Roles.Option,
-      Roles.Radio,
-      Roles.Switch,
-      Roles.Tab,
-      Roles.TreeItem
-    ],
-    "Anchor allowed roles are incorrect"
-  );
+  const actual = A.allowedRoles(a, a);
+  const expected = [
+    Roles.Button,
+    Roles.Checkbox,
+    Roles.MenuItem,
+    Roles.MenuItemCheckbox,
+    Roles.MenuItemRadio,
+    Roles.Option,
+    Roles.Radio,
+    Roles.Switch,
+    Roles.Tab,
+    Roles.TreeItem
+  ];
+  t.deepEqual(actual, expected, "Anchor allowed roles are incorrect");
 });
 
 test("Returns all roles if an anchor has no href attribute", t => {
