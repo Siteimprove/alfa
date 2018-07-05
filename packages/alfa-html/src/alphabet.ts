@@ -437,6 +437,51 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-double-escape-end-state
+ */
+const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null) {
+    return scriptDataDoubleEscaped;
+  }
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+    case Char.Solidus:
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      if (state.temporaryBuffer === "script") {
+        return scriptDataEscaped;
+      } else {
+        emit({ type: TokenType.Character, data: fromCharCode(char) });
+        return scriptDataDoubleEscaped;
+      }
+    case char
+      .toString()
+      .toUpperCase()
+      .charCodeAt(0):
+      stream.advance(1);
+      state.temporaryBuffer += char.toString().toLowerCase();
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
+    case char
+      .toString()
+      .toLowerCase()
+      .charCodeAt(0):
+      stream.advance(1);
+      state.temporaryBuffer += char.toString();
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
+    default:
+      return scriptDataDoubleEscaped;
+  }
+};
+
+/**
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
  */
 const beforeAttributeName: Pattern = (stream, emit, state) => {
