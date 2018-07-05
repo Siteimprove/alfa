@@ -293,18 +293,59 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escape-start-state
  */
 const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
   if (char === null || char !== Char.HyphenMinus) {
+    stream.advance(1);
     return scriptData;
   }
 
   const returnState = scriptDataEscapeStartDash;
   emit({ type: TokenType.Character, data: "-" });
   return returnState;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#ref-for-tokenizer-script-data-escapse-start-dash-state
+ */
+const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null || char !== Char.HyphenMinus) {
+    stream.advance(1);
+    return scriptData;
+  }
+
+  const returnState = scriptDataEscapedDashDash;
+  emit({ type: TokenType.Character, data: "-" });
+  return returnState;
+};
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-state
+ */
+const scriptDataEscaped: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+  stream.advance(1);
+  switch (char) {
+    case null:
+      //TODO emit end of file tokens
+      break;
+    case Char.HyphenMinus:
+      const returnState = scriptDataEscapedDash;
+      emit({ type: TokenType.Character, data: "-" });
+      return returnState;
+    case Char.LessThanSign:
+      return scriptDataLessThanSign;
+    case Char.Null:
+      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      break;
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+  }
 };
 
 /**
