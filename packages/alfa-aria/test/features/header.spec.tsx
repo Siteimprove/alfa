@@ -6,6 +6,7 @@ import { Header } from "../../src/features/header";
 /**
  * @see https://www.w3.org/TR/html-aria/#header
  */
+
 test("Returns the semantic role of a header that is not a descendant of an article, aside, main, nav or section", t => {
   const header = <header>Foo</header>;
   t.equal(

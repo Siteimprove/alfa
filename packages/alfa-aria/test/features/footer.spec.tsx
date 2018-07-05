@@ -6,6 +6,7 @@ import { Footer } from "../../src/features/footer";
 /**
  * @see https://www.w3.org/TR/html-aria/#footer
  */
+
 test("Returns the semantic role of a footer that is not a descendant of an article, aside, main, nav or section", t => {
   const footer = <footer />;
   t.equal(

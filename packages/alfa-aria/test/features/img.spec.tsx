@@ -7,6 +7,7 @@ import { Except } from "../../src/types";
 /**
  * @see https://www.w3.org/TR/html-aria/#img
  */
+
 test("Returns the semantic role of an image with a non-empty string alt attribute", t => {
   const img = <img alt="Foobar" />;
   t.equal(Img.role!(img, img), Roles.Img, "Image role is not Img");

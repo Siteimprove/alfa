@@ -8,6 +8,7 @@ import { Any } from "../../src/types";
  * @see https://www.w3.org/TR/html-aria/#ahref
  * @see https://www.w3.org/TR/html-aria/#anohref
  */
+
 test("Returns the semantic role of an anchor that has an href attribute", t => {
   const a = <a href="foo">Foo</a>;
   t.equal(A.role!(a, a), Roles.Link, "Anchor role is not Link");

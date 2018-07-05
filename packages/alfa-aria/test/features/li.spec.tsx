@@ -6,6 +6,7 @@ import { Li } from "../../src/features/li";
 /**
  * @see https://www.w3.org/TR/html-aria/#li
  */
+
 test("Returns the semantic role of a list item whose parent is an ordered list", t => {
   const li = <li />;
   const ol = <ol>{li}</ol>;

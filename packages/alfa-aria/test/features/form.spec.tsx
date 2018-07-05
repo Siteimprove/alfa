@@ -6,6 +6,7 @@ import { Form } from "../../src/features/form";
 /**
  * @see https://www.w3.org/TR/html-aria/#form
  */
+
 test("Returns the semantic role of a form that has an accessible name", t => {
   const form = <form title="foo">Foo</form>;
   t.equal(Form.role!(form, form), Roles.Form, "Form role is not Form");
