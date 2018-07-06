@@ -20,16 +20,11 @@ export function format(name: string, error: Error & AssertionError): string {
     operator: error.operator
   });
 
-  const difference = error.message
-    .split("\n")
-    .slice(1)
-    .join("\n");
-
   const output = `
 ${chalk.bold(name)}
 ${chalk.dim(`${filePath}:${lineNumber}`)}
 ${message}
-${difference}
+${error.message}
   `;
 
   return `\n${output.trim()}\n`;
