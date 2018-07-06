@@ -25,13 +25,13 @@ export function getParentNode(
   context: Node,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): Node | null {
-  let parentMap: ParentMap | undefined;
+  let parentMaps = composedParentMaps;
 
   if (options.flattened === true) {
-    parentMap = flattenedParentMaps.get(context);
-  } else {
-    parentMap = composedParentMaps.get(context);
+    parentMaps = flattenedParentMaps;
   }
+
+  let parentMap = parentMaps.get(context);
 
   if (parentMap === undefined) {
     parentMap = new WeakMap();
@@ -40,8 +40,8 @@ export function getParentNode(
       context,
       {
         enter(node, parentNode) {
-          if (parentNode !== null && parentMap !== undefined) {
-            parentMap.set(node, parentNode);
+          if (parentNode !== null) {
+            parentMap!.set(node, parentNode);
           }
         }
       },
@@ -51,11 +51,7 @@ export function getParentNode(
       }
     );
 
-    if (options.flattened === true) {
-      flattenedParentMaps.set(context, parentMap);
-    } else {
-      composedParentMaps.set(context, parentMap);
-    }
+    parentMaps.set(context, parentMap);
   }
 
   const parentNode = parentMap.get(node);
@@ -65,8 +61,8 @@ export function getParentNode(
   }
 
   if (
-    isElement(parentNode) &&
     options.composed !== true &&
+    isElement(parentNode) &&
     parentNode.shadowRoot === node
   ) {
     return null;

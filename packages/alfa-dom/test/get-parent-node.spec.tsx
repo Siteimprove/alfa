@@ -18,6 +18,20 @@ test("Gets the correct parent depending on context", t => {
   t.equal(getParentNode(child, <div>{parent2}</div>), parent2);
 });
 
+test("Returns the composed parent of an element", t => {
+  const child = <span class="child" />;
+
+  const context = (
+    <div>
+      <shadow>{child}</shadow>
+    </div>
+  );
+
+  const parent = context.shadowRoot;
+
+  t.equal(getParentNode(child, context, { composed: true }), parent);
+});
+
 test("Returns the flattened parent of an element", t => {
   const child = <span class="child" />;
   const parent = (

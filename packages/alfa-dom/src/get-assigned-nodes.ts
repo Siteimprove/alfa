@@ -33,13 +33,13 @@ function findSlotables(slot: Element, context: Node): Array<Node> {
     return result;
   }
 
-  const parentNode = getParentNode(rootNode, context, { composed: true });
+  const host = getParentNode(rootNode, context, { composed: true });
 
-  if (parentNode === null) {
+  if (host === null) {
     return result;
   }
 
-  const { childNodes } = parentNode;
+  const { childNodes } = host;
 
   for (let i = 0, n = childNodes.length; i < n; i++) {
     const childNode = childNodes[i];
