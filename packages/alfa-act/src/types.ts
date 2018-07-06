@@ -1,5 +1,5 @@
 import { Node } from "@siteimprove/alfa-dom";
-import { Response } from "@siteimprove/alfa-http";
+import { Request, Response } from "@siteimprove/alfa-http";
 
 export type Target = Node;
 
@@ -7,6 +7,7 @@ export type Target = Node;
  * @see https://www.w3.org/TR/act-rules-format/#input-aspects
  */
 export interface Aspects {
+  readonly request: Request;
   readonly response: Response;
   readonly document: Node;
 }

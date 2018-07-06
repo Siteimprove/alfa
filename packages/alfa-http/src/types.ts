@@ -9,6 +9,26 @@ export interface Headers {
 }
 
 /**
+ * @see https://fetch.spec.whatwg.org/#request-class
+ */
+export interface Request {
+  /**
+   * @see https://fetch.spec.whatwg.org/#dom-request-method
+   */
+  readonly method: string;
+
+  /**
+   * @see https://fetch.spec.whatwg.org/#dom-request-url
+   */
+  readonly url: string;
+
+  /**
+   * @see https://fetch.spec.whatwg.org/#dom-request-headers
+   */
+  readonly headers: Headers;
+}
+
+/**
  * @see https://fetch.spec.whatwg.org/#body-mixin
  */
 export interface Body {
@@ -26,11 +46,6 @@ export interface Body {
  * @see https://fetch.spec.whatwg.org/#response-class
  */
 export interface Response extends Body {
-  /**
-   * @see https://fetch.spec.whatwg.org/#dom-response-url
-   */
-  readonly url: string;
-
   /**
    * @see https://fetch.spec.whatwg.org/#dom-response-status
    */

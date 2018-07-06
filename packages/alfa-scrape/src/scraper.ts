@@ -1,5 +1,5 @@
 import { Document } from "@siteimprove/alfa-dom";
-import { Response } from "@siteimprove/alfa-http";
+import { Request, Response } from "@siteimprove/alfa-http";
 import { readFileSync } from "fs";
 import * as puppeteer from "puppeteer";
 
@@ -35,7 +35,7 @@ export class Scraper {
         password: string;
       }>;
     }> = {}
-  ): Promise<{ response: Response; document: Document }> {
+  ): Promise<{ request: Request; response: Response; document: Document }> {
     const page = await (await this.browser).newPage();
 
     const {
@@ -55,11 +55,9 @@ export class Scraper {
 
     const start = Date.now();
 
-    let response: Response | null = null;
+    let response: puppeteer.Response | null = null;
     try {
-      response = await parseResponse(
-        await page.goto(url, { timeout, waitUntil: wait })
-      );
+      response = await page.goto(url, { timeout, waitUntil: wait });
     } catch (err) {
       await page.close();
       throw err;
@@ -71,6 +69,7 @@ export class Scraper {
       const elapsed = Date.now() - start;
 
       if (elapsed > timeout) {
+        await page.close();
         break;
       }
 
@@ -86,22 +85,29 @@ export class Scraper {
         // was performed. If so, we should now be on the correct domain; reload
         // the page using whatever is left of the timeout and try again.
         try {
-          response = await parseResponse(
-            await page.reload({ timeout: timeout - elapsed, waitUntil: wait })
-          );
+          response = await page.reload({
+            timeout: timeout - elapsed,
+            waitUntil: wait
+          });
         } catch (err) {
           error = err as Error;
         }
       }
     } while (document === null);
 
-    await page.close();
-
     if (document === null || response === null) {
       throw error === null ? new Error("Failed to scrape document") : error;
     }
 
-    return { response, document };
+    const result = {
+      request: await parseRequest(response.request()),
+      response: await parseResponse(response),
+      document
+    };
+
+    await page.close();
+
+    return result;
   }
 
   public async close(): Promise<void> {
@@ -109,15 +115,16 @@ export class Scraper {
   }
 }
 
-async function parseResponse(
-  response: puppeteer.Response | null
-): Promise<Response | null> {
-  if (response === null) {
-    return null;
-  }
-
+async function parseRequest(request: puppeteer.Request): Promise<Request> {
   return {
-    url: response.url(),
+    method: request.method(),
+    url: request.url(),
+    headers: request.headers()
+  };
+}
+
+async function parseResponse(response: puppeteer.Response): Promise<Response> {
+  return {
     status: response.status(),
     headers: response.headers(),
     body: await response.text()
