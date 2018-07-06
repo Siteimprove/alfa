@@ -49,16 +49,14 @@ export function compareDocumentPosition(
   reference: Node,
   other: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean }> = {}
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): number {
   if (reference === other) {
     return 0;
   }
 
-  const composed = options.composed === true;
-
-  const referencePath = getPathFromRoot(reference, context, composed);
-  const otherPath = getPathFromRoot(other, context, composed);
+  const referencePath = getPathFromRoot(reference, context, options);
+  const otherPath = getPathFromRoot(other, context, options);
 
   // Find the point at which the two paths fork, i.e. the index of the lowest
   // common ancestor of the two nodes.
@@ -135,14 +133,14 @@ export function compareDocumentPosition(
 function getPathFromRoot(
   node: Node,
   context: Node,
-  composed: boolean
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): Array<Node> {
   const pathFromRoot: Array<Node> = [];
 
   for (
     let next: Node | null = node;
     next !== null;
-    next = getParentNode(next, context, { composed })
+    next = getParentNode(next, context, options)
   ) {
     pathFromRoot.unshift(next);
   }
