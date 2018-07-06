@@ -51,6 +51,10 @@ function visitNode(
         }
       }
 
+      if (exit !== undefined && exit(node, parentNode) === false) {
+        return false;
+      }
+
       return true;
     }
 
