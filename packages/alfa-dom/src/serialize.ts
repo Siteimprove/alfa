@@ -1,123 +1,146 @@
-import { map } from "@siteimprove/alfa-util";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getElementNamespace } from "./get-element-namespace";
 import { getParentElement } from "./get-parent-element";
 import { isComment, isDocumentType, isElement, isText } from "./guards";
+import { traverseNode } from "./traverse-node";
 import { Namespace, Node } from "./types";
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
  */
-export function serialize(node: Node, context: Node): string {
-  if (isElement(node)) {
-    const namespace = getElementNamespace(node, context);
+export function serialize(
+  node: Node,
+  context: Node,
+  options: Readonly<{ flattened?: boolean }> = {}
+): string {
+  let result = "";
 
-    let name = node.localName;
+  traverseNode(
+    node,
+    {
+      enter(node) {
+        if (isElement(node)) {
+          const namespace = getElementNamespace(node, context);
 
-    if (
-      node.prefix !== null &&
-      namespace !== Namespace.HTML &&
-      namespace !== Namespace.MathML &&
-      namespace !== Namespace.SVG
-    ) {
-      name = `${node.prefix}:${node.localName}`;
-    }
+          let name = node.localName;
 
-    let element = `<${name}`;
+          if (
+            node.prefix !== null &&
+            namespace !== Namespace.HTML &&
+            namespace !== Namespace.MathML &&
+            namespace !== Namespace.SVG
+          ) {
+            name = `${node.prefix}:${node.localName}`;
+          }
 
-    const { attributes } = node;
+          result += `<${name}`;
 
-    for (let i = 0, n = attributes.length; i < n; i++) {
-      const attribute = attributes[i];
-      const namespace = getAttributeNamespace(attribute, node, context);
+          const { attributes } = node;
 
-      let name = attribute.localName;
+          for (let i = 0, n = attributes.length; i < n; i++) {
+            const attribute = attributes[i];
+            const namespace = getAttributeNamespace(attribute, node, context);
 
-      if (namespace !== null) {
-        switch (namespace) {
-          case Namespace.XML:
-            name = `xml:${attribute.localName}`;
-            break;
-          case Namespace.XMLNS:
-            if (attribute.localName !== "xmlns") {
-              name = `xmlns:${attribute.localName}`;
+            let name = attribute.localName;
+
+            if (namespace !== null) {
+              switch (namespace) {
+                case Namespace.XML:
+                  name = `xml:${attribute.localName}`;
+                  break;
+                case Namespace.XMLNS:
+                  if (attribute.localName !== "xmlns") {
+                    name = `xmlns:${attribute.localName}`;
+                  }
+                  break;
+                case Namespace.XLink:
+                  name = `xlink:${attribute.localName}`;
+                  break;
+                default:
+                  if (attribute.prefix !== null) {
+                    name = `${attribute.prefix}:${attribute.localName}`;
+                  }
+              }
             }
-            break;
-          case Namespace.XLink:
-            name = `xlink:${attribute.localName}`;
-            break;
-          default:
-            if (attribute.prefix !== null) {
-              name = `${attribute.prefix}:${attribute.localName}`;
+
+            const value = escape(attribute.value, { attributeMode: true });
+
+            result += ` ${name}="${value}"`;
+          }
+
+          result += ">";
+        } else if (isText(node)) {
+          const parentElement = getParentElement(node, context);
+
+          if (parentElement !== null) {
+            switch (parentElement.localName) {
+              case "style":
+              case "script":
+              case "xmp":
+              case "iframe":
+              case "noembed":
+              case "noframes":
+              case "plaintext":
+              case "noscript":
+                result += node.data;
+                break;
+              default:
+                result += escape(node.data);
             }
+          } else {
+            result += escape(node.data);
+          }
+        } else if (isComment(node)) {
+          result += `<!--${node.data}-->`;
+        } else if (isDocumentType(node)) {
+          result += `<!DOCTYPE ${node.name}>`;
+        }
+      },
+
+      exit(node) {
+        if (isElement(node)) {
+          switch (node.localName) {
+            case "area":
+            case "base":
+            case "basefont":
+            case "bgsound":
+            case "br":
+            case "col":
+            case "embed":
+            case "frame":
+            case "hr":
+            case "img":
+            case "input":
+            case "link":
+            case "meta":
+            case "param":
+            case "source":
+            case "track":
+            case "wbr":
+              break;
+            default:
+              const namespace = getElementNamespace(node, context);
+
+              let name = node.localName;
+
+              if (
+                node.prefix !== null &&
+                namespace !== Namespace.HTML &&
+                namespace !== Namespace.MathML &&
+                namespace !== Namespace.SVG
+              ) {
+                name = `${node.prefix}:${node.localName}`;
+              }
+
+              result += `</${name}>`;
+          }
         }
       }
+    },
+    options
+  );
 
-      const value = escape(attribute.value, { attributeMode: true });
-
-      element += ` ${name}="${value}"`;
-    }
-
-    element += ">";
-
-    switch (node.localName) {
-      case "area":
-      case "base":
-      case "basefont":
-      case "bgsound":
-      case "br":
-      case "col":
-      case "embed":
-      case "frame":
-      case "hr":
-      case "img":
-      case "input":
-      case "link":
-      case "meta":
-      case "param":
-      case "source":
-      case "track":
-      case "wbr":
-        break;
-      default:
-        element += map(node.childNodes, child =>
-          serialize(child, context)
-        ).join("");
-        element += `</${name}>`;
-    }
-
-    return element;
-  }
-
-  if (isText(node)) {
-    const parentElement = getParentElement(node, context);
-
-    if (parentElement !== null) {
-      switch (parentElement.localName) {
-        case "style":
-        case "script":
-        case "xmp":
-        case "iframe":
-        case "noembed":
-        case "noframes":
-        case "plaintext":
-        case "noscript":
-          return node.data;
-      }
-    }
-
-    return escape(node.data);
-  }
-
-  if (isComment(node)) {
-    return `<!--${node.data}-->`;
-  }
-
-  if (isDocumentType(node)) {
-    return `<!DOCTYPE ${node.name}>`;
-  }
-
-  return map(node.childNodes, child => serialize(child, context)).join("");
+  return result;
 }
 
 /**

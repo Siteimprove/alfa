@@ -15,6 +15,24 @@ test("Serializes DOM nodes to HTML", t => {
   );
 });
 
+test("Serializes DOM nodes to flattened HTML", t => {
+  const foo = (
+    <div class="foo">
+      <p>Hello world</p>
+      <shadow>
+        <div class="bar">
+          <slot />
+        </div>
+      </shadow>
+    </div>
+  );
+
+  t.equal(
+    serialize(foo, <div>{foo}</div>, { flattened: true }),
+    '<div class="foo"><div class="bar"><p>Hello world</p></div></div>'
+  );
+});
+
 test("Correctly escapes attribute values", t => {
   const div = <div class="&lt; &gt; &amp; &quot; &nbsp;" />;
 
