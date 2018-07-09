@@ -322,11 +322,12 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
     }
     return scriptData;
   }
+
   const char = stream.peek(0);
   if (char === null) {
     return anythingElse;
   }
-  console.log(fromCharCode(char));
+
   switch (char) {
     case Char.CharacterTabulation:
     case Char.LineFeed:
@@ -346,7 +347,7 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       stream.advance(1);
       if (isAppropriateEndTagToken()) {
-        emit({ type: TokenType.Character, data: fromCharCode(char) });
+        emit(state.tag!);
         return data;
       }
       return anythingElse;
@@ -568,7 +569,7 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       stream.advance(1);
       if (isAppropriateEndTagToken()) {
-        emit({ type: TokenType.Character, data: fromCharCode(char) });
+        emit(state.tag!);
         return data;
       }
       return anythingElse;
