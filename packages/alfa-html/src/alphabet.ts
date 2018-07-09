@@ -6,7 +6,9 @@ import {
   isAlphanumeric,
   isBetween,
   isHex,
+  isLowercase,
   isNumeric,
+  isUppercase,
   Stream
 } from "@siteimprove/alfa-lang";
 import { keys, Mutable } from "@siteimprove/alfa-util";
@@ -301,13 +303,72 @@ const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
  */
 const scriptDataEndTagName: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
-
+  if(char === null) {
+    return anythingElse;
+  }
   switch (char) {
     case Char.CharacterTabulation:
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-    //TODO: Fix this
+      stream.advance(1);
+      if (isAppropriateEndTagToken) {
+        return beforeAttributeName;
+      }
+      return anythingElse;
+    case Char.Solidus:
+      stream.advance(1);
+      if (state.tag !== null && state.tag.name == "script") {
+        return selfClosingStartTag;
+      }
+      return anythingElse;
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      if(isAppropriateEndTagToken) {
+        emit({ type: TokenType.Character, data: fromCharCode(char) });
+        return data;
+      }
+      return anythingElse;
+    default:
+      if(isUppercase(char)) {
+        stream.advance(1);
+        if(state.tag !== null) {
+          state.tag.name += char.toString().toLowerCase();
+        }
+        state.tag = {
+          type: TokenType.EndTag,
+          name: char.toString().toLowerCase()
+        }
+        state.temporaryBuffer += char
+        break;
+      }
+      if (isLowercase(char)) {
+        stream.advance(1);
+        if(state.tag !== null) {
+          state.tag.name += char.toString().toLowerCase();
+        }
+        state.tag = {
+          type: TokenType.EndTag,
+          name: char.toString()
+        }
+        state.temporaryBuffer += char
+        break;
+     }
+    return anythingElse;
+  }
+
+
+
+  function isAppropriateEndTagToken() : Boolean {
+    return state.tag !== null && state.tag.name == "script";
+  };
+  function anythingElse() {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    state.temporaryBuffer.split("").forEach(char => {
+      emit({ type: TokenType.Character, data: char });
+    });
+    return scriptData;
   }
 };
 
