@@ -244,7 +244,7 @@ const tagName: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
-      return data;
+      return findAppropriateState(state);
 
     case Char.Null:
       state.tag!.name += "\ufffd";
@@ -994,7 +994,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
-      return data;
+      return findAppropriateState(state);
 
     case Char.Null:
       state.attribute!.value += "\ufffd";
@@ -1029,7 +1029,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       stream.advance(1);
       emit(state.tag!);
-      return data;
+      return findAppropriateState(state);
 
     case null:
       return Command.End;
@@ -2159,4 +2159,13 @@ function startsWith(
   }
 
   return true;
+}
+
+function findAppropriateState(state) {
+  switch (state.tag!.name) {
+    case "script":
+      return scriptData;
+    default:
+      return data;
+  }
 }
