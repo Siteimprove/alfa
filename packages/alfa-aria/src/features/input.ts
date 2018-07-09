@@ -92,6 +92,11 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
       ];
     case "radio":
       return [Roles.MenuItemRadio];
+    case "text":
+      if (!hasAttribute(input, "list")) {
+        return [Roles.Combobox, Roles.SearchBox, Roles.SpinButton];
+      }
+      return None;
     case "color":
     case "date":
     case "datetime-local":
@@ -106,7 +111,6 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
     case "search":
     case "submit":
     case "tel":
-    case "text":
     case "time":
     case "url":
     case "week":
