@@ -2164,7 +2164,10 @@ function startsWith(
 function findAppropriateState(state: State) {
   switch (state.tag!.name) {
     case "script":
-      return scriptData;
+      if (state.tag!.type === TokenType.StartTag) {
+        return scriptData;
+      }
+      return data;
     default:
       return data;
   }
