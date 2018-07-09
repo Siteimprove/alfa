@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import * as Roles from "../../src/roles";
 import { Option } from "../../src/features/option";
+import * as Roles from "../../src/roles";
 
 /**
  * @see https://www.w3.org/TR/html-aria/#option
