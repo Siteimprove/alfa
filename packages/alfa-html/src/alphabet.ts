@@ -310,10 +310,23 @@ const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-end-tag-name-state
  */
 const scriptDataEndTagName: Pattern = (stream, emit, state) => {
+  function isAppropriateEndTagToken(): boolean {
+    return state.tag !== null && state.tag.name === "script";
+  }
+
+  function anythingElse() {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    for (let i = 0; i < state.temporaryBuffer.length; i++) {
+      emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+    }
+    return scriptData;
+  }
   const char = stream.peek(0);
   if (char === null) {
     return anythingElse;
   }
+  console.log(fromCharCode(char));
   switch (char) {
     case Char.CharacterTabulation:
     case Char.LineFeed:
@@ -341,43 +354,30 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
       if (isUpperCase(char)) {
         stream.advance(1);
         if (state.tag !== null) {
-          state.tag.name += char.toString().toLowerCase();
+          state.tag.name += fromCharCode(char).toLowerCase();
         } else {
           state.tag = {
             type: TokenType.EndTag,
-            name: char.toString().toLowerCase()
+            name: fromCharCode(char).toLowerCase()
           };
         }
-        state.temporaryBuffer += char;
+        state.temporaryBuffer += fromCharCode(char);
         break;
       }
       if (isLowerCase(char)) {
         stream.advance(1);
         if (state.tag !== null) {
-          state.tag.name += char.toString();
+          state.tag.name += fromCharCode(char);
         } else {
           state.tag = {
             type: TokenType.EndTag,
-            name: char.toString()
+            name: fromCharCode(char)
           };
         }
-        state.temporaryBuffer += char;
+        state.temporaryBuffer += fromCharCode(char);
         break;
       }
       return anythingElse;
-  }
-
-  function isAppropriateEndTagToken(): boolean {
-    return state.tag !== null && state.tag.name === "script";
-  }
-
-  function anythingElse() {
-    emit({ type: TokenType.Character, data: "<" });
-    emit({ type: TokenType.Character, data: "/" });
-    state.temporaryBuffer.split("").forEach(char => {
-      emit({ type: TokenType.Character, data: char });
-    });
-    return scriptData;
   }
 };
 
@@ -533,6 +533,18 @@ const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-end-tag-name-state
  */
 const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
+  function isAppropriateEndTagToken(): boolean {
+    return state.tag !== null && state.tag.name === "script";
+  }
+
+  function anythingElse() {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    for (let i = 0; i < state.temporaryBuffer.length; i++) {
+      emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+    }
+    return scriptDataEscaped;
+  }
   const char = stream.peek(0);
   if (char === null) {
     return anythingElse;
@@ -564,43 +576,30 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
       if (isUpperCase(char)) {
         stream.advance(1);
         if (state.tag !== null) {
-          state.tag.name += char.toString().toLowerCase();
+          state.tag.name += fromCharCode(char).toLowerCase();
         } else {
           state.tag = {
             type: TokenType.EndTag,
-            name: char.toString().toLowerCase()
+            name: fromCharCode(char).toLowerCase()
           };
         }
-        state.temporaryBuffer += char;
+        state.temporaryBuffer += fromCharCode(char);
         break;
       }
       if (isLowerCase(char)) {
         stream.advance(1);
         if (state.tag !== null) {
-          state.tag.name += char.toString();
+          state.tag.name += fromCharCode(char);
         } else {
           state.tag = {
             type: TokenType.EndTag,
-            name: char.toString()
+            name: fromCharCode(char)
           };
         }
-        state.temporaryBuffer += char;
+        state.temporaryBuffer += fromCharCode(char);
         break;
       }
       return anythingElse;
-  }
-
-  function isAppropriateEndTagToken(): boolean {
-    return state.tag !== null && state.tag.name === "script";
-  }
-
-  function anythingElse() {
-    emit({ type: TokenType.Character, data: "<" });
-    emit({ type: TokenType.Character, data: "/" });
-    state.temporaryBuffer.split("").forEach(char => {
-      emit({ type: TokenType.Character, data: char });
-    });
-    return scriptDataEscaped;
   }
 };
 
@@ -635,7 +634,7 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
       }
       if (isLowerCase(char)) {
         stream.advance(1);
-        state.temporaryBuffer += char;
+        state.temporaryBuffer += fromCharCode(char);
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
@@ -764,13 +763,13 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
     default:
       if (isUpperCase(char)) {
         stream.advance(1);
-        state.temporaryBuffer += char.toString().toLowerCase();
+        state.temporaryBuffer += fromCharCode(char).toLowerCase();
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
       if (isLowerCase(char)) {
         stream.advance(1);
-        state.temporaryBuffer += char.toString();
+        state.temporaryBuffer += fromCharCode(char);
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
