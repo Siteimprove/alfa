@@ -6,7 +6,9 @@ import {
   isAlphanumeric,
   isBetween,
   isHex,
+  isLowercase,
   isNumeric,
+  isUppercase,
   Stream
 } from "@siteimprove/alfa-lang";
 import { keys, Mutable } from "@siteimprove/alfa-util";
@@ -249,10 +251,10 @@ const scriptData: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       break;
     case null:
-      //TODO emit end of file token
-      break;
+      return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
+      break;
   }
 };
 
@@ -354,13 +356,12 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: "-" });
       return scriptDataEscapedDash;
     case Char.LessThanSign:
-      return scriptDataLessThanSign;
+      return scriptDataEscapedLessThanSign;
     case Char.Null:
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       break;
     case null:
-      //TODO emit end of file token
-      break;
+      return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       break;
@@ -383,8 +384,7 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       return scriptDataEscaped;
     case null:
-      //TODO emit end of file token
-      break;
+      return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataEscaped;
@@ -410,8 +410,7 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       return scriptDataEscaped;
     case null:
-      //TODO emit end of file token
-      break;
+      return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataEscaped;
@@ -425,9 +424,9 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
   if (char === Char.Solidus) {
     stream.advance(1);
+    state.temporaryBuffer = "";
     return scriptDataEscapedEndTagOpen;
   } else if (char !== null && isAlpha(char)) {
-    stream.advance(1);
     state.temporaryBuffer = "";
     emit({ type: TokenType.Character, data: "<" });
     return scriptDataDoubleEscapeStart;
@@ -450,12 +449,11 @@ const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
 
   state.tag = {
     type: TokenType.EndTag,
-    name: "" //TODO fix
+    name: ""
   };
   return scriptDataEscapedEndTagName;
 };
 
-//TODO implement 8.2.4.25 and 8.2.4.26
 /**
  * @see https://www.w3.org/TR/html/syntax.html#script-data-escaped-end-tag-name-state
  */
@@ -530,8 +528,7 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       break;
     case null:
-      //TODO emit end of file token
-      break;
+      return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
   }
@@ -554,8 +551,7 @@ const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       return scriptDataDoubleEscaped;
     case null:
-      //TODO emit end of file token
-      break;
+      return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataDoubleEscaped;
@@ -582,8 +578,7 @@ const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(65533) });
       return scriptDataDoubleEscaped;
     case null:
-      //TODO emit end of file token
-      break;
+      return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataDoubleEscaped;
@@ -599,10 +594,11 @@ const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
     stream.advance(1);
     state.temporaryBuffer = "";
     emit({ type: TokenType.Character, data: "/" });
-    return scriptDataDoubleEscapeEndState;
+    return scriptDataDoubleEscapeEnd;
   }
 
   return scriptDataDoubleEscaped;
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#script-data-double-escape-end-state
@@ -624,27 +620,23 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
       stream.advance(1);
       if (state.temporaryBuffer === "script") {
         return scriptDataEscaped;
-      } else {
-        emit({ type: TokenType.Character, data: fromCharCode(char) });
-        return scriptDataDoubleEscaped;
       }
-    case char
-      .toString()
-      .toUpperCase()
-      .charCodeAt(0):
-      stream.advance(1);
-      state.temporaryBuffer += char.toString().toLowerCase();
+
       emit({ type: TokenType.Character, data: fromCharCode(char) });
-      break;
-    case char
-      .toString()
-      .toLowerCase()
-      .charCodeAt(0):
-      stream.advance(1);
-      state.temporaryBuffer += char.toString();
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
-      break;
+      return scriptDataDoubleEscaped;
     default:
+      if (isUppercase(char)) {
+        stream.advance(1);
+        state.temporaryBuffer += char.toString().toLowerCase();
+        emit({ type: TokenType.Character, data: fromCharCode(char) });
+        break;
+      }
+      if (isLowercase(char)) {
+        stream.advance(1);
+        state.temporaryBuffer += char.toString();
+        emit({ type: TokenType.Character, data: fromCharCode(char) });
+        break;
+      }
       return scriptDataDoubleEscaped;
   }
 };
