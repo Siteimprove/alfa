@@ -2161,7 +2161,7 @@ function startsWith(
   return true;
 }
 
-function findAppropriateState(state) {
+function findAppropriateState(state: State) {
   switch (state.tag!.name) {
     case "script":
       return scriptData;
