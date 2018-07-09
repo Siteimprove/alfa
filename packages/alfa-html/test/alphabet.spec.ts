@@ -260,6 +260,37 @@ test("Can lex a script element with an apparent tag", t => {
   ]);
 });
 
+test("Can lex a script element with an atribute", t => {
+  html(t, "<script type='text/javascript'></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: [
+        {
+          name: "type",
+          value: "text/javascript"
+        }
+      ]
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
+test("Can lex a self-closing script element", t => {
+  html(t, "<script />", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: true,
+      attributes: []
+    }
+  ]);
+});
+
 test("Can lex a script element with an apparent comment", t => {
   html(t, "<script><!-- -></script>", [
     {
