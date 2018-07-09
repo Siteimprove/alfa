@@ -254,7 +254,6 @@ const scriptData: Pattern = (stream, emit, state) => {
       return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
-      break;
   }
 };
 
@@ -312,19 +311,19 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.FormFeed:
     case Char.Space:
       stream.advance(1);
-      if (isAppropriateEndTagToken) {
+      if (isAppropriateEndTagToken()) {
         return beforeAttributeName;
       }
       return anythingElse;
     case Char.Solidus:
       stream.advance(1);
-      if (isAppropriateEndTagToken) {
+      if (isAppropriateEndTagToken()) {
         return selfClosingStartTag;
       }
       return anythingElse;
     case Char.GreaterThanSign:
       stream.advance(1);
-      if (isAppropriateEndTagToken) {
+      if (isAppropriateEndTagToken()) {
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         return data;
       }
@@ -359,9 +358,10 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
       return anythingElse;
   }
 
-  function isAppropriateEndTagToken(): Boolean {
-    return state.tag !== null && state.tag.name == "script";
+  function isAppropriateEndTagToken(): boolean {
+    return state.tag !== null && state.tag.name === "script";
   }
+
   function anythingElse() {
     emit({ type: TokenType.Character, data: "<" });
     emit({ type: TokenType.Character, data: "/" });
@@ -423,7 +423,6 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
       return Command.End;
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
-      break;
   }
 };
 
@@ -527,19 +526,19 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     case Char.FormFeed:
     case Char.Space:
       stream.advance(1);
-      if (isAppropriateEndTagToken) {
+      if (isAppropriateEndTagToken()) {
         return beforeAttributeName;
       }
       return anythingElse;
     case Char.Solidus:
       stream.advance(1);
-      if (isAppropriateEndTagToken) {
+      if (isAppropriateEndTagToken()) {
         return selfClosingStartTag;
       }
       return anythingElse;
     case Char.GreaterThanSign:
       stream.advance(1);
-      if (isAppropriateEndTagToken) {
+      if (isAppropriateEndTagToken()) {
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         return data;
       }
@@ -574,9 +573,10 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
       return anythingElse;
   }
 
-  function isAppropriateEndTagToken(): Boolean {
-    return state.tag !== null && state.tag.name == "script";
+  function isAppropriateEndTagToken(): boolean {
+    return state.tag !== null && state.tag.name === "script";
   }
+
   function anythingElse() {
     emit({ type: TokenType.Character, data: "<" });
     emit({ type: TokenType.Character, data: "/" });
