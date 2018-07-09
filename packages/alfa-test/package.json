@@ -22,7 +22,7 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "dependencies": {
-    "@types/node": "^10.3.4",
+    "@types/node": "^10.5.2",
     "@types/source-map-support": "^0.4.1",
     "chalk": "^2.4.1",
     "error-stack-parser": "^2.0.2",

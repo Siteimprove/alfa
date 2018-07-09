@@ -10,17 +10,21 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
 
-"@types/node@*", "@types/node@^10.3.4":
+"@types/node@*":
   version "10.3.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.4.tgz#c74e8aec19e555df44609b8057311052a2c84d9e"
+
+"@types/node@^10.5.2":
+  version "10.5.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.2.tgz#f19f05314d5421fe37e74153254201a7bf00a707"
 
 "@types/prettier@^1.13.1":
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.13.1.tgz#5dd359398de96863a0629156f382913a06ebe013"
 
-"@types/puppeteer@^1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.3.4.tgz#6fff43968792924ac2b68744641566e6acefdc20"
+"@types/puppeteer@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.5.0.tgz#95b6feff9522d3a054ed09b49798e7232f24d558"
   dependencies:
     "@types/events" "*"
     "@types/node" "*"
@@ -188,9 +192,9 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-esm@^3.0.52:
-  version "3.0.52"
-  resolved "https://registry.yarnpkg.com/esm/-/esm-3.0.52.tgz#a3ada5b2811548a5824f448d372c5b35388cf771"
+esm@^3.0.65:
+  version "3.0.65"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.0.65.tgz#dcc3d9ba1c6acf5728146c77caad7f3310b466fb"
 
 esprima@^4.0.0:
   version "4.0.0"
@@ -345,9 +349,9 @@ platform@^1.3.3:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/platform/-/platform-1.3.5.tgz#fb6958c696e07e2918d2eeda0f0bc9448d733444"
 
-prettier@1.13.5:
-  version "1.13.5"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.5.tgz#7ae2076998c8edce79d63834e9b7b09fead6bfd0"
+prettier@1.13.7:
+  version "1.13.7"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.7.tgz#850f3b8af784a49a6ea2d2eaa7ed1428a34b7281"
 
 process-nextick-args@~2.0.0:
   version "2.0.0"
@@ -385,10 +389,6 @@ readable-stream@^2.2.2:
     safe-buffer "~5.1.1"
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
-
-record-jar@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/record-jar/-/record-jar-1.0.4.tgz#e97c355f651ec4c2ced658f7c762d90d2aeb054d"
 
 resolve@^1.3.2:
   version "1.8.1"

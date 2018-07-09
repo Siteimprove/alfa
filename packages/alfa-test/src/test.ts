@@ -12,7 +12,7 @@ export async function test(
   assertion: (assert: Assertions) => void | Promise<void>
 ): Promise<void> {
   try {
-    await assertion(assert);
+    await assertion("strict" in assert ? assert.strict : assert);
   } catch (err) {
     const error = err as Error;
 

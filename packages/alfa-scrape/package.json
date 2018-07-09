@@ -24,8 +24,8 @@
   "dependencies": {
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-http": "^0.0.0",
-    "@types/node": "^10.3.4",
-    "@types/puppeteer": "^1.3.4",
+    "@types/node": "^10.5.2",
+    "@types/puppeteer": "^1.5.0",
     "puppeteer": "^1.5.0"
   },
   "devDependencies": {
