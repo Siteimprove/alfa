@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import * as Roles from "../../src/roles";
 import { Select } from "../../src/features/select";
+import * as Roles from "../../src/roles";
 import { None } from "../../src/types";
 
 /**
@@ -48,7 +48,7 @@ test("Returns the allowed roles of a select with a multiple attribute and a size
   const select = <select multiple size="2" />;
   t.deepEqual(
     Select.allowedRoles(select, select),
-    None,
+    None(Roles),
     "Select allowed roles allowed roles are incorrect"
   );
 });

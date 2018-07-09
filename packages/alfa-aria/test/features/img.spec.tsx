@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import * as Roles from "../../src/roles";
 import { Img } from "../../src/features/img";
+import * as Roles from "../../src/roles";
 import { Except } from "../../src/types";
 
 /**

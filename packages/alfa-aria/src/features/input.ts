@@ -96,7 +96,7 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
       if (!hasAttribute(input, "list")) {
         return [Roles.Combobox, Roles.SearchBox, Roles.SpinButton];
       }
-      return None;
+      return None(Roles);
     case "color":
     case "date":
     case "datetime-local":
