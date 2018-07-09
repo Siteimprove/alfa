@@ -6,9 +6,9 @@ import {
   isAlphanumeric,
   isBetween,
   isHex,
-  isLowercase,
+  isLowerCase,
   isNumeric,
-  isUppercase,
+  isUpperCase,
   Stream
 } from "@siteimprove/alfa-lang";
 import { keys, Mutable } from "@siteimprove/alfa-util";
@@ -625,13 +625,13 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataDoubleEscaped;
     default:
-      if (isUppercase(char)) {
+      if (isUpperCase(char)) {
         stream.advance(1);
         state.temporaryBuffer += char.toString().toLowerCase();
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
-      if (isLowercase(char)) {
+      if (isLowerCase(char)) {
         stream.advance(1);
         state.temporaryBuffer += char.toString();
         emit({ type: TokenType.Character, data: fromCharCode(char) });

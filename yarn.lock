@@ -386,10 +386,6 @@ readable-stream@^2.2.2:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-record-jar@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/record-jar/-/record-jar-1.0.4.tgz#e97c355f651ec4c2ced658f7c762d90d2aeb054d"
-
 resolve@^1.3.2:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.8.1.tgz#82f1ec19a423ac1fbd080b0bab06ba36e84a7a26"
