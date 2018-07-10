@@ -6,9 +6,7 @@ import {
   isAlphanumeric,
   isBetween,
   isHex,
-  isLowerCase,
   isNumeric,
-  isUpperCase,
   Stream
 } from "@siteimprove/alfa-lang";
 import { keys, Mutable } from "@siteimprove/alfa-util";
@@ -604,10 +602,6 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
 const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === null) {
-    return scriptDataEscaped;
-  }
-
   switch (char) {
     case Char.CharacterTabulation:
     case Char.LineFeed:
@@ -623,16 +617,9 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
       return scriptDataEscaped;
 
     default:
-      if (isUpperCase(char)) {
+      if (char !== null && isAlpha(char)) {
         stream.advance(1);
         state.temporaryBuffer += fromCharCode(char).toLowerCase();
-        emit({ type: TokenType.Character, data: fromCharCode(char) });
-        break;
-      }
-
-      if (isLowerCase(char)) {
-        stream.advance(1);
-        state.temporaryBuffer += fromCharCode(char);
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
@@ -755,10 +742,6 @@ const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
 const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
-  if (char === null) {
-    return scriptDataDoubleEscaped;
-  }
-
   switch (char) {
     case Char.CharacterTabulation:
     case Char.LineFeed:
@@ -775,16 +758,9 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
       return scriptDataDoubleEscaped;
 
     default:
-      if (isUpperCase(char)) {
+      if (char !== null && isAlpha(char)) {
         stream.advance(1);
         state.temporaryBuffer += fromCharCode(char).toLowerCase();
-        emit({ type: TokenType.Character, data: fromCharCode(char) });
-        break;
-      }
-
-      if (isLowerCase(char)) {
-        stream.advance(1);
-        state.temporaryBuffer += fromCharCode(char);
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
