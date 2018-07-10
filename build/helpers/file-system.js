@@ -1,5 +1,8 @@
+/// <reference path="../types/gaze.d.ts" />
+
 import * as path from "path";
 import * as fs from "fs";
+import gaze from "gaze";
 import * as git from "./git";
 
 /**
@@ -95,18 +98,21 @@ export function findFiles(
 }
 
 /**
- * @param {string} directory
+ * @param {string | Array<string>} pattern
  * @param {function(string, string)} listener
  * @param {{ gitIgnore?: boolean }} [options]
- * @return {fs.FSWatcher}
  */
-export function watchFiles(directory, listener, options = {}) {
-  return fs.watch(directory, { recursive: true }, (event, file) => {
+export function watchFiles(pattern, listener, options = {}) {
+  /**
+   * @param {string} event
+   * @param {string} file
+   */
+  const handler = (event, file) => {
     if (file === undefined) {
       return;
     }
 
-    file = path.join(directory, file);
+    file = path.resolve(process.cwd(), file);
 
     if (options.gitIgnore !== false && git.isIgnored(file)) {
       return;
@@ -115,6 +121,20 @@ export function watchFiles(directory, listener, options = {}) {
     if (isFile(file)) {
       listener(event, file);
     }
+  };
+
+  gaze(pattern, (err, watcher) => {
+    if (err !== null) {
+      throw err;
+    }
+
+    watcher.on("changed", file => {
+      handler("changed", file);
+    });
+
+    watcher.on("added", file => {
+      handler("added", file);
+    });
   });
 }
 

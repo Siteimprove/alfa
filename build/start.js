@@ -9,21 +9,24 @@ const isSpec = endsWith(".spec.ts", ".spec.tsx");
 const isSrc = endsWith(".ts", ".tsx");
 const isBuild = endsWith(".js");
 
-watchFiles(".", (event, file) => {
-  let success;
+watchFiles(
+  ["packages/**/*.ts", "packages/**/*.tsx", "build/**/*.js"],
+  (event, file) => {
+    let success;
 
-  switch (true) {
-    case isSpec(file):
-      success = test(file);
-      break;
-    case isSrc(file):
-    case isBuild(file):
-      success = build(file);
-  }
+    switch (true) {
+      case isSpec(file):
+        success = test(file);
+        break;
+      case isSrc(file):
+      case isBuild(file):
+        success = build(file);
+    }
 
-  if (success) {
-    notify.success(file);
+    if (success) {
+      notify.success(file);
+    }
   }
-});
+);
 
 notify.watch("Watching files for changes");
