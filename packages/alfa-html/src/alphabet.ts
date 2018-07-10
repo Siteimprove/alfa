@@ -140,7 +140,7 @@ const scriptData: Pattern = (stream, emit, state) => {
     case Char.LessThanSign:
       return scriptDataLessThanSign;
     case Char.Null:
-      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      emit({ type: TokenType.Character, data: "\ufffd" });
       break;
     case null:
       return Command.End;
@@ -430,7 +430,7 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
     case Char.Null:
-      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      emit({ type: TokenType.Character, data: "\ufffd" });
       break;
     case null:
       return Command.End;
@@ -453,7 +453,7 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
     case Char.Null:
-      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataEscaped;
     case null:
       return Command.End;
@@ -480,7 +480,7 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: ">" });
       return scriptData;
     case Char.Null:
-      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataEscaped;
     case null:
       return Command.End;
@@ -658,7 +658,7 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: "<" });
       return scriptDataDoubleEscapedLessThanSign;
     case Char.Null:
-      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      emit({ type: TokenType.Character, data: "\ufffd" });
       break;
     case null:
       return Command.End;
@@ -682,7 +682,7 @@ const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: "<" });
       return scriptDataDoubleEscapedLessThanSign;
     case Char.Null:
-      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataDoubleEscaped;
     case null:
       return Command.End;
@@ -710,7 +710,7 @@ const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
       emit({ type: TokenType.Character, data: ">" });
       return scriptData;
     case Char.Null:
-      emit({ type: TokenType.Character, data: fromCharCode(65533) });
+      emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataDoubleEscaped;
     case null:
       return Command.End;
