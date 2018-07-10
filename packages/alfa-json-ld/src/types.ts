@@ -1,59 +1,62 @@
 /**
- * @see https://json-ld.org/spec/latest/json-ld/#syntax-tokens-and-keywords
+ * @see https://www.w3.org/TR/json-ld/#syntax-tokens-and-keywords
  */
 export type Keyword =
-  | "@base"
-  | "@container"
   | "@context"
-  | "@graph"
   | "@id"
-  | "@index"
-  | "@language"
-  | "@list"
-  | "@nest"
-  | "@none"
-  | "@prefix"
-  | "@reverse"
-  | "@set"
-  | "@type"
   | "@value"
-  | "@version"
-  | "@vocab";
+  | "@language"
+  | "@type"
+  | "@container"
+  | "@list"
+  | "@set"
+  | "@reverse"
+  | "@index"
+  | "@base"
+  | "@vocab"
+  | "@graph";
 
-export const Id: "@id" = "@id";
+/**
+ * @see https://www.w3.org/TR/json-ld-api/#dfn-scalar
+ */
+export type Scalar = string | number | boolean;
 
-export interface WithId {
+/**
+ * @see https://www.w3.org/TR/json-ld-api/#dfn-list
+ */
+export type List = Array<Scalar | Dictionary | null>;
+
+export interface Dictionary {
+  readonly [key: string]: Scalar | List | Dictionary | null | undefined;
+}
+
+/**
+ * @see https://www.w3.org/TR/json-ld-api/#dfn-list-object
+ */
+export interface ListObject extends Dictionary {
+  readonly "@list"?: List;
+}
+
+/**
+ * @see https://www.w3.org/TR/json-ld-api/#dfn-value-object
+ */
+export interface ValueObject extends Dictionary {
+  readonly "@value"?: Scalar;
+}
+
+export interface Definition extends Dictionary {
   readonly "@id": string;
+  readonly "@reverse": boolean;
+  readonly "@type"?: string;
+  readonly "@language"?: string;
+  readonly "@container"?: string;
 }
 
-export interface WithType<T = string> {
-  readonly "@type": T;
+export interface Context extends Dictionary {
+  readonly "@version"?: 1.1;
+  readonly "@base"?: string;
 }
 
-export interface WithVocab {
-  readonly "@vocab": string;
+export interface Document extends Dictionary {
+  readonly "@context"?: Context;
 }
-
-export interface WithPrefix {
-  readonly "@prefix": boolean;
-}
-
-export interface WithContext<T> {
-  readonly "@context": Definitions<T> & Partial<WithId & WithVocab>;
-}
-
-export type Terms<T> = Exclude<keyof T, Keyword>;
-
-export type Value<T> = T extends "@id" ? WithId : string | number | boolean;
-
-export type Definitions<T> = {
-  readonly [P in Terms<T>]: string | WithId & Partial<WithType | WithPrefix>
-};
-
-export type Properties<T> = {
-  readonly [P in Terms<T>]?: Value<T[P] extends WithType<infer U> ? U : string>
-};
-
-export type Node<T> = WithContext<T> &
-  Partial<WithId & WithType> &
-  Properties<T>;

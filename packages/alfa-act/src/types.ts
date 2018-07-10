@@ -20,14 +20,17 @@ export type Aspect = keyof Aspects;
 /**
  * @see https://www.w3.org/TR/act-rules-format/#output
  */
-export type Result<T extends Target = Target> = Readonly<
+export type Result<
+  A extends Aspect = Aspect,
+  T extends Target = Target
+> = Readonly<
   | {
-      rule: string;
+      rule: Rule<A, T>;
       outcome: "passed" | "failed";
       target: T;
     }
   | {
-      rule: string;
+      rule: Rule<A, T>;
       outcome: "inapplicable";
     }
 >;

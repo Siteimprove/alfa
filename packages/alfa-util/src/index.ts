@@ -1,5 +1,8 @@
+export * from "./url";
+
 export * from "./array/concat";
 export * from "./array/find";
+export * from "./array/group-by";
 export * from "./array/index-of";
 export * from "./array/map";
 export * from "./array/union";
