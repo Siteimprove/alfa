@@ -139,6 +139,30 @@ const data: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.3
+ * @see https://www.w3.org/TR/html/syntax.html#rawtext-state
+ */
+
+const RawText: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.LessThanSign:
+      return RawTextLessThanSign;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      break;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+  }
+};
+
+/**
  * 8.2.4.4
  * @see https://www.w3.org/TR/html/syntax.html#script-data-state
  */
@@ -274,6 +298,100 @@ const tagName: Pattern = (stream, emit, state) => {
   }
 
   return tagName;
+};
+
+/**
+ * 8.2.4.12
+ * @see https://www.w3.org/TR/html/syntax.html#rawtext-less-than-sign-state
+ */
+const RawTextLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === Char.Solidus) {
+    stream.advance(1);
+    state.temporaryBuffer = "";
+    return RawTextEndTagOpen;
+  }
+
+  emit({ type: TokenType.Character, data: "<" });
+  return RawText;
+};
+
+/**
+ * 8.2.4.13
+ * @see https://www.w3.org/TR/html/syntax.html#rawtext-end-tag-open-state
+ */
+const RawTextEndTagOpen: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null || !isAlpha(char)) {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    return RawText;
+  }
+
+  state.tag = {
+    name: "",
+    type: TokenType.EndTag
+  };
+
+  return RawTextEndTagName;
+};
+
+/**
+ * 8.2.4.14
+ * @see https://www.w3.org/TR/html/syntax.html#rawtext-end-tag-name-state
+ */
+const RawTextEndTagName: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        return beforeAttributeName;
+      }
+      break;
+
+    case Char.Solidus:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        return selfClosingStartTag;
+      }
+      break;
+
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        emit(state.tag!);
+
+        return data;
+      }
+      break;
+
+    default:
+      if (char !== null && isAlpha(char)) {
+        stream.advance(1);
+
+        const str = fromCharCode(char);
+
+        state.tag!.name += str.toLowerCase();
+        state.temporaryBuffer += str;
+        return;
+      }
+  }
+
+  emit({ type: TokenType.Character, data: "<" });
+  emit({ type: TokenType.Character, data: "/" });
+
+  for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
+    emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+  }
+
+  return RawText;
 };
 
 /**
@@ -2169,8 +2287,13 @@ function findAppropriateState(state: State) {
       if (state.tag!.type === TokenType.StartTag) {
         return scriptData;
       }
-      return data;
-    default:
-      return data;
+      break;
+
+    case "noscript":
+    case "noframes":
+      if (state.tag!.type === TokenType.StartTag) {
+        return RawText;
+      }
   }
+  return data;
 }
