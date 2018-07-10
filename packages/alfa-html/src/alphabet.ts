@@ -134,8 +134,8 @@ const data: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#script-data-state
  */
 const scriptData: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-  stream.advance(1);
+  const char = stream.next();
+
   switch (char) {
     case Char.LessThanSign:
       return scriptDataLessThanSign;
@@ -421,8 +421,8 @@ const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-state
  */
 const scriptDataEscaped: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-  stream.advance(1);
+  const char = stream.next();
+
   switch (char) {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
@@ -444,8 +444,8 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-state
  */
 const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-  stream.advance(1);
+  const char = stream.next();
+
   switch (char) {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
@@ -468,8 +468,8 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-dash-state
  */
 const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-  stream.advance(1);
+  const char = stream.next();
+
   switch (char) {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
@@ -496,6 +496,7 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
  */
 const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
+
   if (char === Char.Solidus) {
     stream.advance(1);
     state.temporaryBuffer = "";
@@ -516,6 +517,7 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
  */
 const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
+
   if (char === null || !isAlpha(char)) {
     emit({ type: TokenType.Character, data: "<" });
     emit({ type: TokenType.Character, data: "/" });
@@ -546,7 +548,9 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     }
     return scriptDataEscaped;
   }
+
   const char = stream.peek(0);
+
   if (char === null) {
     return anythingElse;
   }
@@ -610,6 +614,7 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
  */
 const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
+
   if (char === null) {
     return scriptDataEscaped;
   }
@@ -648,8 +653,8 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-state
  */
 const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-  stream.advance(1);
+  const char = stream.next();
+
   switch (char) {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
@@ -672,8 +677,8 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-state
  */
 const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-  stream.advance(1);
+  const char = stream.next();
+
   switch (char) {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
@@ -697,8 +702,8 @@ const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-dash-state
  */
 const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
-  const char = stream.peek(0);
-  stream.advance(1);
+  const char = stream.next();
+
   switch (char) {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
@@ -726,6 +731,7 @@ const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
  */
 const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
+
   if (char === Char.Solidus) {
     stream.advance(1);
     state.temporaryBuffer = "";
