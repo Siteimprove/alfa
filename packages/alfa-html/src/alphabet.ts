@@ -67,6 +67,17 @@ export interface Character {
 }
 
 /**
+ * @see https://www.w3.org/TR/html/syntax.html#appropriate-end-tag-token
+ */
+function isAppropriateEndTagToken(
+  tag: StartTag | EndTag,
+  name: string
+): boolean {
+  return tag.type === TokenType.StartTag && tag.name === name;
+}
+
+/**
+ * 8.2.4
  * @see https://www.w3.org/TR/html/syntax.html#tokenization
  */
 export type Token =
@@ -83,6 +94,7 @@ export type Token =
 export interface State {
   doctype: Mutable<Doctype> | null;
   tag: Mutable<StartTag | EndTag> | null;
+  startTag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
 
@@ -105,6 +117,7 @@ export interface State {
 export type Pattern = Lang.Pattern<Token, State>;
 
 /**
+ * 8.2.4.1
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
 const data: Pattern = (stream, emit, state) => {
@@ -126,6 +139,30 @@ const data: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.4
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-state
+ */
+const scriptData: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.LessThanSign:
+      return scriptDataLessThanSign;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      break;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+  }
+};
+
+/**
+ * 8.2.4.6
  * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
  */
 const tagOpen: Pattern = (stream, emit, state) => {
@@ -166,6 +203,7 @@ const tagOpen: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.7
  * @see https://www.w3.org/TR/html/syntax.html#end-tag-open-state
  */
 const endTagOpen: Pattern = (stream, emit, state) => {
@@ -200,6 +238,7 @@ const endTagOpen: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.8
  * @see https://www.w3.org/TR/html/syntax.html#tag-name-state
  */
 const tagName: Pattern = (stream, emit, state) => {
@@ -217,7 +256,8 @@ const tagName: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
-      return data;
+      state.startTag = state.tag;
+      return findAppropriateState(state);
 
     case Char.Null:
       state.tag!.name += "\ufffd";
@@ -237,6 +277,508 @@ const tagName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.15
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-less-than-sign-state
+ */
+const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.Solidus:
+      stream.advance(1);
+      state.temporaryBuffer = "";
+      return scriptDataEndTagOpen;
+
+    case Char.ExclamationMark:
+      stream.advance(1);
+      emit({ type: TokenType.Character, data: "<" });
+      emit({ type: TokenType.Character, data: "!" });
+      return scriptDataEscapeStart;
+
+    default:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptData;
+  }
+};
+
+/**
+ * 8.2.4.16
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-end-tag-open-state
+ */
+const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null || !isAlpha(char)) {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    return scriptData;
+  }
+
+  state.tag = {
+    type: TokenType.EndTag,
+    name: ""
+  };
+  return scriptDataEndTagName;
+};
+
+/**
+ * 8.2.4.17
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-end-tag-name-state
+ */
+const scriptDataEndTagName: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        return beforeAttributeName;
+      }
+      break;
+
+    case Char.Solidus:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        return selfClosingStartTag;
+      }
+      break;
+
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        emit(state.tag!);
+        return data;
+      }
+      break;
+
+    default:
+      if (char !== null && isAlpha(char)) {
+        stream.advance(1);
+
+        const str = fromCharCode(char);
+
+        state.tag!.name += str.toLowerCase();
+        state.temporaryBuffer += str;
+        return;
+      }
+  }
+
+  emit({ type: TokenType.Character, data: "<" });
+  emit({ type: TokenType.Character, data: "/" });
+
+  for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
+    emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+  }
+
+  return scriptData;
+};
+
+/**
+ * 8.2.4.18
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escape-start-state
+ */
+const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataEscapeStartDash;
+
+    default:
+      return scriptData;
+  }
+};
+
+/**
+ * 8.2.4.19
+ * @see https://www.w3.org/TR/html/syntax.html#ref-for-tokenizer-script-data-escapse-start-dash-state
+ */
+const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.HyphenMinus:
+      stream.advance(1);
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataEscapedDashDash;
+
+    default:
+      return scriptData;
+  }
+};
+
+/**
+ * 8.2.4.20
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-state
+ */
+const scriptDataEscaped: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataEscapedDash;
+
+    case Char.LessThanSign:
+      return scriptDataEscapedLessThanSign;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      break;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+  }
+};
+
+/**
+ * 8.2.4.21
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-state
+ */
+const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataEscapedDashDash;
+
+    case Char.LessThanSign:
+      return scriptDataEscapedLessThanSign;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      return scriptDataEscaped;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataEscaped;
+  }
+};
+
+/**
+ * 8.2.4.22
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-dash-state
+ */
+const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      break;
+
+    case Char.LessThanSign:
+      return scriptDataEscapedLessThanSign;
+
+    case Char.GreaterThanSign:
+      emit({ type: TokenType.Character, data: ">" });
+      return scriptData;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      return scriptDataEscaped;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataEscaped;
+  }
+};
+
+/**
+ * 8.2.4.23
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-less-than-sign-state
+ */
+const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === Char.Solidus) {
+    stream.advance(1);
+    state.temporaryBuffer = "";
+    return scriptDataEscapedEndTagOpen;
+  }
+
+  if (char !== null && isAlpha(char)) {
+    state.temporaryBuffer = "";
+    emit({ type: TokenType.Character, data: "<" });
+    return scriptDataDoubleEscapeStart;
+  }
+
+  emit({ type: TokenType.Character, data: "<" });
+  return scriptDataEscaped;
+};
+
+/**
+ * 8.2.4.24
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-end-tag-open-state
+ */
+const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === null || !isAlpha(char)) {
+    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: "/" });
+    return scriptDataEscaped;
+  }
+
+  state.tag = {
+    type: TokenType.EndTag,
+    name: ""
+  };
+  return scriptDataEscapedEndTagName;
+};
+
+/**
+ * 8.2.4.25
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-end-tag-name-state
+ */
+const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        return beforeAttributeName;
+      }
+      break;
+
+    case Char.Solidus:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        return selfClosingStartTag;
+      }
+      break;
+
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        emit(state.tag!);
+        return data;
+      }
+      break;
+
+    default:
+      if (char !== null && isAlpha(char)) {
+        stream.advance(1);
+
+        const str = fromCharCode(char);
+
+        state.tag!.name += str.toLowerCase();
+        state.temporaryBuffer += str;
+        return;
+      }
+  }
+
+  emit({ type: TokenType.Character, data: "<" });
+  emit({ type: TokenType.Character, data: "/" });
+
+  for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
+    emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+  }
+
+  return scriptDataEscaped;
+};
+
+/**
+ * 8.2.4.26
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escape-start-state
+ */
+const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+    case Char.Solidus:
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      if (state.temporaryBuffer === "script") {
+        return scriptDataDoubleEscaped;
+      }
+      return scriptDataEscaped;
+
+    default:
+      if (char !== null && isAlpha(char)) {
+        stream.advance(1);
+
+        const str = fromCharCode(char);
+
+        state.temporaryBuffer += str.toLowerCase();
+        emit({ type: TokenType.Character, data: str });
+        break;
+      }
+
+      return scriptDataEscaped;
+  }
+};
+
+/**
+ * 8.2.4.27
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-state
+ */
+const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataDoubleEscapedDash;
+
+    case Char.LessThanSign:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptDataDoubleEscapedLessThanSign;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      break;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+  }
+};
+
+/**
+ * 8.2.4.28
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-state
+ */
+const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      return scriptDataDoubleEscapedDashDash;
+
+    case Char.LessThanSign:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptDataDoubleEscapedLessThanSign;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      return scriptDataDoubleEscaped;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataDoubleEscaped;
+  }
+};
+
+/**
+ * 8.2.4.29
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-dash-state
+ */
+const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.HyphenMinus:
+      emit({ type: TokenType.Character, data: "-" });
+      break;
+
+    case Char.LessThanSign:
+      emit({ type: TokenType.Character, data: "<" });
+      return scriptDataDoubleEscapedLessThanSign;
+
+    case Char.GreaterThanSign:
+      emit({ type: TokenType.Character, data: ">" });
+      return scriptData;
+
+    case Char.Null:
+      emit({ type: TokenType.Character, data: "\ufffd" });
+      return scriptDataDoubleEscaped;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataDoubleEscaped;
+  }
+};
+
+/**
+ * 8.2.4.30
+ * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-less-than-sign-state
+ */
+const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  if (char === Char.Solidus) {
+    stream.advance(1);
+    state.temporaryBuffer = "";
+    emit({ type: TokenType.Character, data: "/" });
+    return scriptDataDoubleEscapeEnd;
+  }
+
+  return scriptDataDoubleEscaped;
+};
+
+/**
+ * 8.2.4.31
+ * @see https://www.w3.org/TR/html/syntax.html#script-data-double-escape-end-state
+ */
+const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.CharacterTabulation:
+    case Char.LineFeed:
+    case Char.FormFeed:
+    case Char.Space:
+    case Char.Solidus:
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      if (state.temporaryBuffer === "script") {
+        return scriptDataEscaped;
+      }
+
+      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      return scriptDataDoubleEscaped;
+
+    default:
+      if (char !== null && isAlpha(char)) {
+        stream.advance(1);
+
+        const str = fromCharCode(char);
+
+        state.temporaryBuffer += str.toLowerCase();
+        emit({ type: TokenType.Character, data: str });
+        break;
+      }
+
+      return scriptDataDoubleEscaped;
+  }
+};
+
+/**
+ * 8.2.4.32
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
  */
 const beforeAttributeName: Pattern = (stream, emit, state) => {
@@ -278,6 +820,7 @@ const beforeAttributeName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.33
  * @see https://www.w3.org/TR/html/syntax.html#attribute-name-state
  */
 const attributeName: Pattern = (stream, emit, state) => {
@@ -310,6 +853,7 @@ const attributeName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.34
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-name-state
  */
 const afterAttributeName: Pattern = (stream, emit, state) => {
@@ -351,6 +895,7 @@ const afterAttributeName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.35
  * @see https://www.w3.org/TR/html/syntax.html#before-attribute-value-state
  */
 const beforeAttributeValue: Pattern = (stream, emit, state) => {
@@ -377,6 +922,7 @@ const beforeAttributeValue: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.36
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
  */
 const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
@@ -402,6 +948,7 @@ const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.37
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
  */
 const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
@@ -427,6 +974,7 @@ const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.38
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-unquoted-state
  */
 const attributeValueUnquoted: Pattern = (stream, emit, state) => {
@@ -445,7 +993,8 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
-      return data;
+      state.startTag = state.tag;
+      return findAppropriateState(state);
 
     case Char.Null:
       state.attribute!.value += "\ufffd";
@@ -459,6 +1008,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.39
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-value-quoted-state
  */
 const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
@@ -479,7 +1029,8 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       stream.advance(1);
       emit(state.tag!);
-      return data;
+      state.startTag = state.tag;
+      return findAppropriateState(state);
 
     case null:
       return Command.End;
@@ -489,6 +1040,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.40
  * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
  */
 const selfClosingStartTag: Pattern = (stream, emit, state) => {
@@ -515,6 +1067,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.41
  * @see https://www.w3.org/TR/html/syntax.html#bogus-comment-state
  */
 const bogusComment: Pattern = (stream, emit, state) => {
@@ -539,6 +1092,7 @@ const bogusComment: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.42
  * @see https://www.w3.org/TR/html/syntax.html#markup-declaration-open-state
  */
 const markupDeclarationOpen: Pattern = (stream, emit, state) => {
@@ -568,6 +1122,7 @@ const markupDeclarationOpen: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.43
  * @see https://www.w3.org/TR/html/syntax.html#comment-start-state
  */
 const commentStart: Pattern = (stream, emit, state) => {
@@ -588,6 +1143,7 @@ const commentStart: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.44
  * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
  */
 const commentStartDash: Pattern = (stream, emit, state) => {
@@ -619,6 +1175,7 @@ const commentStartDash: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.45
  * @see https://www.w3.org/TR/html/syntax.html#comment-state
  */
 const comment: Pattern = (stream, emit, state) => {
@@ -648,6 +1205,7 @@ const comment: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.46
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-state
  */
 const commentLessThanSign: Pattern = (stream, emit, state) => {
@@ -669,6 +1227,7 @@ const commentLessThanSign: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.47
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-state
  */
 const commentLessThanSignBang: Pattern = stream => {
@@ -681,6 +1240,7 @@ const commentLessThanSignBang: Pattern = stream => {
 };
 
 /**
+ * 8.2.4.48
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-state
  */
 const commentLessThanSignBangDash: Pattern = stream => {
@@ -693,6 +1253,7 @@ const commentLessThanSignBangDash: Pattern = stream => {
 };
 
 /**
+ * 8.2.4.49
  * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-dash-state
  */
 const commentLessThanSignBangDashDash: Pattern = stream => {
@@ -700,6 +1261,7 @@ const commentLessThanSignBangDashDash: Pattern = stream => {
 };
 
 /**
+ * 8.2.4.50
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
  */
 const commentEndDash: Pattern = (stream, emit, state) => {
@@ -721,6 +1283,7 @@ const commentEndDash: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.51
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
  */
 const commentEnd: Pattern = (stream, emit, state) => {
@@ -752,6 +1315,7 @@ const commentEnd: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.52
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
  */
 const commentEndBang: Pattern = (stream, emit, state) => {
@@ -779,6 +1343,7 @@ const commentEndBang: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.53
  * @see https://www.w3.org/TR/html/syntax.html#doctype-state
  */
 const doctype: Pattern = (stream, emit, state) => {
@@ -810,6 +1375,7 @@ const doctype: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.54
  * @see https://www.w3.org/TR/html/syntax.html#before-doctype-name-state
  */
 const beforeDoctypeName: Pattern = (stream, emit, state) => {
@@ -876,6 +1442,7 @@ const beforeDoctypeName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.55
  * @see https://www.w3.org/TR/html/syntax.html#doctype-name-state
  */
 const doctypeName: Pattern = (stream, emit, state) => {
@@ -910,6 +1477,7 @@ const doctypeName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.56
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-name-state
  */
 const afterDoctypeName: Pattern = (stream, emit, state) => {
@@ -948,6 +1516,7 @@ const afterDoctypeName: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.57
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-keyword-state
  */
 const afterDoctypePublicKeyword: Pattern = (stream, emit, state) => {
@@ -985,6 +1554,7 @@ const afterDoctypePublicKeyword: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.58
  * @see https://www.w3.org/TR/html/syntax.html#before-doctype-public-identifier-state
  */
 const beforeDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
@@ -1022,6 +1592,7 @@ const beforeDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.59
  * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-double-quoted-state
  */
 const doctypePublicIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
@@ -1050,6 +1621,7 @@ const doctypePublicIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.60
  * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-single-quoted-state
  */
 const doctypePublicIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
@@ -1078,6 +1650,7 @@ const doctypePublicIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.61
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-identifier-state
  */
 const afterDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
@@ -1114,6 +1687,7 @@ const afterDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.62
  * @see https://www.w3.org/TR/html/syntax.html#between-doctype-public-and-system-identifiers-state
  */
 const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
@@ -1154,6 +1728,7 @@ const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
 };
 
 /**
+ * 8.2.4.63
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-keyword-state
  */
 const afterDoctypeSystemKeyword: Pattern = (stream, emit, state) => {
@@ -1191,6 +1766,7 @@ const afterDoctypeSystemKeyword: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.64
  * @see https://www.w3.org/TR/html/syntax.html#before-doctype-system-identifier-state
  */
 const beforeDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
@@ -1228,6 +1804,7 @@ const beforeDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.65
  * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-double-quoted-state
  */
 const doctypeSystemIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
@@ -1256,6 +1833,7 @@ const doctypeSystemIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.66
  * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-single-quoted-state
  */
 const doctypeSystemIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
@@ -1284,6 +1862,7 @@ const doctypeSystemIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.67
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-identifier-state
  */
 const afterDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
@@ -1310,6 +1889,7 @@ const afterDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.68
  * @see https://www.w3.org/TR/html/syntax.html#bogus-doctype-state
  */
 const bogusDoctype: Pattern = (stream, emit, state) => {
@@ -1327,6 +1907,7 @@ const bogusDoctype: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.72
  * @see https://www.w3.org/TR/html/syntax.html#character-reference-state
  */
 const characterReference: Pattern = (stream, emit, state) => {
@@ -1389,6 +1970,7 @@ const characterReference: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.73
  * @see https://www.w3.org/TR/html/syntax.html#numeric-character-reference-state
  */
 const numericCharacterReference: Pattern = (stream, emit, state) => {
@@ -1408,6 +1990,7 @@ const numericCharacterReference: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.74
  * @see https://www.w3.org/TR/html/syntax.html#hexadecimal-character-reference-start-state
  */
 const hexadecimalCharacterReferenceStart: Pattern = stream => {
@@ -1421,6 +2004,7 @@ const hexadecimalCharacterReferenceStart: Pattern = stream => {
 };
 
 /**
+ * 8.2.4.75
  * @see https://www.w3.org/TR/html/syntax.html#decimal-character-reference-start-state
  */
 const decimalCharacterReferenceStart: Pattern = stream => {
@@ -1434,6 +2018,7 @@ const decimalCharacterReferenceStart: Pattern = stream => {
 };
 
 /**
+ * 8.2.4.76
  * @see https://www.w3.org/TR/html/syntax.html#hexadecimal-character-reference-state
  */
 const hexadecimalCharacterReference: Pattern = (stream, emit, state) => {
@@ -1456,6 +2041,7 @@ const hexadecimalCharacterReference: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.77
  * @see https://www.w3.org/TR/html/syntax.html#decimal-character-reference-state
  */
 const decimalCharacterReference: Pattern = (stream, emit, state) => {
@@ -1500,6 +2086,7 @@ const replacementCodes: { [code: number]: number } = {
 };
 
 /**
+ * 8.2.4.78
  * @see https://www.w3.org/TR/html/syntax.html#numeric-character-reference-end-state
  */
 const numericCharacterReferenceEnd: Pattern = (stream, emit, state) => {
@@ -1517,6 +2104,7 @@ const numericCharacterReferenceEnd: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.79
  * @see https://www.w3.org/TR/html/syntax.html#character-reference-end-state
  */
 const characterReferenceEnd: Pattern = (stream, emit, state) => {
@@ -1540,6 +2128,7 @@ export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   () => ({
     doctype: null,
     tag: null,
+    startTag: null,
     attribute: null,
     comment: null,
     returnState: null,
@@ -1572,4 +2161,16 @@ function startsWith(
   }
 
   return true;
+}
+
+function findAppropriateState(state: State) {
+  switch (state.tag!.name) {
+    case "script":
+      if (state.tag!.type === TokenType.StartTag) {
+        return scriptData;
+      }
+      return data;
+    default:
+      return data;
+  }
 }
