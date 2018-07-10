@@ -139,11 +139,14 @@ const scriptData: Pattern = (stream, emit, state) => {
   switch (char) {
     case Char.LessThanSign:
       return scriptDataLessThanSign;
+
     case Char.Null:
       emit({ type: TokenType.Character, data: "\ufffd" });
       break;
+
     case null:
       return Command.End;
+
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
   }
@@ -275,11 +278,13 @@ const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
       stream.advance(1);
       state.temporaryBuffer = "";
       return scriptDataEndTagOpen;
+
     case Char.ExclamationMark:
       stream.advance(1);
       emit({ type: TokenType.Character, data: "<" });
       emit({ type: TokenType.Character, data: "!" });
       return scriptDataEscapeStart;
+
     default:
       emit({ type: TokenType.Character, data: "<" });
       return scriptData;
@@ -292,6 +297,7 @@ const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
  */
 const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
+
   if (char === null || !isAlpha(char)) {
     emit({ type: TokenType.Character, data: "<" });
     emit({ type: TokenType.Character, data: "/" });
@@ -317,9 +323,11 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
   function anythingElse() {
     emit({ type: TokenType.Character, data: "<" });
     emit({ type: TokenType.Character, data: "/" });
+
     for (let i = 0; i < state.temporaryBuffer.length; i++) {
       emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
     }
+
     return scriptData;
   }
 
@@ -338,12 +346,14 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
         return beforeAttributeName;
       }
       return anythingElse;
+
     case Char.Solidus:
       stream.advance(1);
       if (isAppropriateEndTagToken()) {
         return selfClosingStartTag;
       }
       return anythingElse;
+
     case Char.GreaterThanSign:
       stream.advance(1);
       if (isAppropriateEndTagToken()) {
@@ -351,6 +361,7 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
         return data;
       }
       return anythingElse;
+
     default:
       if (isUpperCase(char)) {
         stream.advance(1);
@@ -394,6 +405,7 @@ const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
       stream.advance(1);
       emit({ type: TokenType.Character, data: "-" });
       return scriptDataEscapeStartDash;
+
     default:
       return scriptData;
   }
@@ -411,6 +423,7 @@ const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
       stream.advance(1);
       emit({ type: TokenType.Character, data: "-" });
       return scriptDataEscapedDashDash;
+
     default:
       return scriptData;
   }
@@ -427,13 +440,17 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
       return scriptDataEscapedDash;
+
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
+
     case Char.Null:
       emit({ type: TokenType.Character, data: "\ufffd" });
       break;
+
     case null:
       return Command.End;
+
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
   }
@@ -450,13 +467,17 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
       return scriptDataEscapedDashDash;
+
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
+
     case Char.Null:
       emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataEscaped;
+
     case null:
       return Command.End;
+
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataEscaped;
@@ -474,16 +495,21 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
       break;
+
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
+
     case Char.GreaterThanSign:
       emit({ type: TokenType.Character, data: ">" });
       return scriptData;
+
     case Char.Null:
       emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataEscaped;
+
     case null:
       return Command.End;
+
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataEscaped;
@@ -543,9 +569,11 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
   function anythingElse() {
     emit({ type: TokenType.Character, data: "<" });
     emit({ type: TokenType.Character, data: "/" });
+
     for (let i = 0; i < state.temporaryBuffer.length; i++) {
       emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
     }
+
     return scriptDataEscaped;
   }
 
@@ -564,12 +592,14 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
         return beforeAttributeName;
       }
       return anythingElse;
+
     case Char.Solidus:
       stream.advance(1);
       if (isAppropriateEndTagToken()) {
         return selfClosingStartTag;
       }
       return anythingElse;
+
     case Char.GreaterThanSign:
       stream.advance(1);
       if (isAppropriateEndTagToken()) {
@@ -577,6 +607,7 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
         return data;
       }
       return anythingElse;
+
     default:
       if (isUpperCase(char)) {
         stream.advance(1);
@@ -591,6 +622,7 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
         state.temporaryBuffer += fromCharCode(char);
         break;
       }
+
       if (isLowerCase(char)) {
         stream.advance(1);
         if (state.tag !== null) {
@@ -604,6 +636,7 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
         state.temporaryBuffer += fromCharCode(char);
         break;
       }
+
       return anythingElse;
   }
 };
@@ -618,6 +651,7 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
   if (char === null) {
     return scriptDataEscaped;
   }
+
   switch (char) {
     case Char.CharacterTabulation:
     case Char.LineFeed:
@@ -631,6 +665,7 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
         return scriptDataDoubleEscaped;
       }
       return scriptDataEscaped;
+
     default:
       if (isUpperCase(char)) {
         stream.advance(1);
@@ -638,12 +673,14 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
+
       if (isLowerCase(char)) {
         stream.advance(1);
         state.temporaryBuffer += fromCharCode(char);
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
+
       return scriptDataEscaped;
   }
 };
@@ -659,14 +696,18 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
       return scriptDataDoubleEscapedDash;
+
     case Char.LessThanSign:
       emit({ type: TokenType.Character, data: "<" });
       return scriptDataDoubleEscapedLessThanSign;
+
     case Char.Null:
       emit({ type: TokenType.Character, data: "\ufffd" });
       break;
+
     case null:
       return Command.End;
+
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
   }
@@ -683,14 +724,18 @@ const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
       return scriptDataDoubleEscapedDashDash;
+
     case Char.LessThanSign:
       emit({ type: TokenType.Character, data: "<" });
       return scriptDataDoubleEscapedLessThanSign;
+
     case Char.Null:
       emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataDoubleEscaped;
+
     case null:
       return Command.End;
+
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataDoubleEscaped;
@@ -708,17 +753,22 @@ const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
     case Char.HyphenMinus:
       emit({ type: TokenType.Character, data: "-" });
       break;
+
     case Char.LessThanSign:
       emit({ type: TokenType.Character, data: "<" });
       return scriptDataDoubleEscapedLessThanSign;
+
     case Char.GreaterThanSign:
       emit({ type: TokenType.Character, data: ">" });
       return scriptData;
+
     case Char.Null:
       emit({ type: TokenType.Character, data: "\ufffd" });
       return scriptDataDoubleEscaped;
+
     case null:
       return Command.End;
+
     default:
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataDoubleEscaped;
@@ -767,6 +817,7 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
 
       emit({ type: TokenType.Character, data: fromCharCode(char) });
       return scriptDataDoubleEscaped;
+
     default:
       if (isUpperCase(char)) {
         stream.advance(1);
@@ -774,12 +825,14 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
+
       if (isLowerCase(char)) {
         stream.advance(1);
         state.temporaryBuffer += fromCharCode(char);
         emit({ type: TokenType.Character, data: fromCharCode(char) });
         break;
       }
+
       return scriptDataDoubleEscaped;
   }
 };
