@@ -371,7 +371,7 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
   emit({ type: TokenType.Character, data: "<" });
   emit({ type: TokenType.Character, data: "/" });
 
-  for (let i = 0; i < state.temporaryBuffer.length; i++) {
+  for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
     emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
   }
 
@@ -590,7 +590,7 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
   emit({ type: TokenType.Character, data: "<" });
   emit({ type: TokenType.Character, data: "/" });
 
-  for (let i = 0; i < state.temporaryBuffer.length; i++) {
+  for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
     emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
   }
 
