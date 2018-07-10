@@ -510,7 +510,9 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
     stream.advance(1);
     state.temporaryBuffer = "";
     return scriptDataEscapedEndTagOpen;
-  } else if (char !== null && isAlpha(char)) {
+  }
+
+  if (char !== null && isAlpha(char)) {
     state.temporaryBuffer = "";
     emit({ type: TokenType.Character, data: "<" });
     return scriptDataDoubleEscapeStart;
@@ -619,8 +621,11 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
     default:
       if (char !== null && isAlpha(char)) {
         stream.advance(1);
-        state.temporaryBuffer += fromCharCode(char).toLowerCase();
-        emit({ type: TokenType.Character, data: fromCharCode(char) });
+
+        const str = fromCharCode(char);
+
+        state.temporaryBuffer += str.toLowerCase();
+        emit({ type: TokenType.Character, data: str });
         break;
       }
 
@@ -760,8 +765,11 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
     default:
       if (char !== null && isAlpha(char)) {
         stream.advance(1);
-        state.temporaryBuffer += fromCharCode(char).toLowerCase();
-        emit({ type: TokenType.Character, data: fromCharCode(char) });
+
+        const str = fromCharCode(char);
+
+        state.temporaryBuffer += str.toLowerCase();
+        emit({ type: TokenType.Character, data: str });
         break;
       }
 
