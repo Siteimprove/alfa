@@ -516,10 +516,10 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
     state.temporaryBuffer = "";
     emit({ type: TokenType.Character, data: "<" });
     return scriptDataDoubleEscapeStart;
-  } else {
-    emit({ type: TokenType.Character, data: "<" });
-    return scriptDataEscaped;
   }
+
+  emit({ type: TokenType.Character, data: "<" });
+  return scriptDataEscaped;
 };
 
 /**
