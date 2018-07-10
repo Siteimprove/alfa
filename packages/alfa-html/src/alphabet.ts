@@ -2292,12 +2292,11 @@ function findAppropriateState(state: State) {
         return scriptData;
       }
       break;
+
     case "textarea":
       if (state.tag!.type === TokenType.StartTag) {
         return RCData;
       }
-      break;
-    default:
   }
   return data;
 }
