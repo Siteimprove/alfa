@@ -210,6 +210,41 @@ test("Can lex a doctype with a system ID", t => {
   ]);
 });
 
+test("Can lex a textarea element with an apparent tag", t => {
+  html(t, "<textarea><tag></textarea>", [
+    {
+      type: TokenType.StartTag,
+      name: "textarea",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: "<"
+    },
+    {
+      type: TokenType.Character,
+      data: "t"
+    },
+    {
+      type: TokenType.Character,
+      data: "a"
+    },
+    {
+      type: TokenType.Character,
+      data: "g"
+    },
+    {
+      type: TokenType.Character,
+      data: ">"
+    },
+    {
+      type: TokenType.EndTag,
+      name: "textarea"
+    }
+  ]);
+});
+
 test("Can lex a simple script element", t => {
   html(t, "<script></script>", [
     {
