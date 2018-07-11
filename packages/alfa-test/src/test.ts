@@ -16,7 +16,7 @@ export async function test(
   } catch (err) {
     const error = err as Error;
 
-    let message = error.message;
+    let message = `${error.stack}`;
 
     if (error instanceof assert.AssertionError) {
       message = format(name, error);
