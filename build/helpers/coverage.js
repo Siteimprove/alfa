@@ -112,20 +112,28 @@ function parseScript(scriptCoverage) {
       // The first range will always be function granular if the coverage entry
       // contains a non-empty funtion name. We therefore grab this coverage
       // range and store it as function coverage.
-      const range = functionCoverage.ranges.shift();
+      const coverageRange = functionCoverage.ranges.shift();
 
-      if (range === undefined) {
+      if (coverageRange === undefined) {
         continue;
       }
 
-      coverage.push(parseFunctionCoverage(lines, range, name));
+      const parsed = parseFunctionCoverage(lines, source, coverageRange, name);
+
+      if (parsed !== null) {
+        coverage.push(parsed);
+      }
     }
 
     // For the remaining ranges, store them as block coverage. If detailed
     // coverage is disabled then no additional coverage ranges other than the
     // function granular range parsed above will be present.
-    for (const range of functionCoverage.ranges) {
-      coverage.push(parseBlockCoverage(lines, range));
+    for (const coverageRange of functionCoverage.ranges) {
+      const parsed = parseBlockCoverage(lines, source, coverageRange);
+
+      if (parsed !== null) {
+        coverage.push(parsed);
+      }
     }
   }
 
@@ -139,12 +147,17 @@ function parseScript(scriptCoverage) {
 
 /**
  * @param {Array<Line>} lines
+ * @param {string} source
  * @param {inspector.Profiler.CoverageRange} coverageRange
  * @param {string} name
- * @return {FunctionCoverage}
+ * @return {FunctionCoverage | null}
  */
-function parseFunctionCoverage(lines, coverageRange, name) {
-  const range = parseRange(lines, coverageRange);
+function parseFunctionCoverage(lines, source, coverageRange, name) {
+  const range = parseRange(lines, source, coverageRange);
+
+  if (range === null) {
+    return null;
+  }
 
   return {
     range,
@@ -155,11 +168,16 @@ function parseFunctionCoverage(lines, coverageRange, name) {
 
 /**
  * @param {Array<Line>} lines
+ * @param {string} source
  * @param {inspector.Profiler.CoverageRange} coverageRange
- * @return {BlockCoverage}
+ * @return {BlockCoverage | null}
  */
-function parseBlockCoverage(lines, coverageRange) {
-  const range = parseRange(lines, coverageRange);
+function parseBlockCoverage(lines, source, coverageRange) {
+  const range = parseRange(lines, source, coverageRange);
+
+  if (range === null) {
+    return null;
+  }
 
   return {
     range,
@@ -169,10 +187,11 @@ function parseBlockCoverage(lines, coverageRange) {
 
 /**
  * @param {Array<Line>} lines
+ * @param {string} source
  * @param {inspector.Profiler.CoverageRange} coverageRange
- * @return {Range}
+ * @return {Range | null}
  */
-function parseRange(lines, coverageRange) {
+function parseRange(lines, source, coverageRange) {
   const first = lines[0];
   const last = lines[lines.length - 1];
 
@@ -180,6 +199,26 @@ function parseRange(lines, coverageRange) {
 
   start = max(first.start, start - header.length);
   end = min(last.end, end - header.length);
+
+  if (isBlockBorder(source[start])) {
+    start++;
+  }
+
+  if (isBlockBorder(source[end - 1])) {
+    end--;
+  }
+
+  while (isWhitespace(source[start])) {
+    start++;
+  }
+
+  while (isWhitespace(source[end - 1])) {
+    end--;
+  }
+
+  if (start >= end) {
+    return null;
+  }
 
   return {
     start: getLocation(lines, start),
@@ -225,4 +264,22 @@ function getLineAtOffset(lines, offset) {
   }
 
   return lines[lower];
+}
+
+const whitespace = /\s/;
+
+/**
+ * @param {string} input
+ * @return {boolean}
+ */
+function isWhitespace(input) {
+  return whitespace.test(input);
+}
+
+/**
+ * @param {string} input
+ * @return {boolean}
+ */
+function isBlockBorder(input) {
+  return input === "{" || input === "}";
 }
