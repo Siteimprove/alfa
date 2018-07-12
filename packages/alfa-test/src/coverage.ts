@@ -1,10 +1,4 @@
-import * as fs from "fs";
 import { Profiler, Session } from "inspector";
-
-// https://nodejs.org/api/modules.html#modules_the_module_wrapper
-const [header] = (require("module") as { wrapper: Array<string> }).wrapper;
-
-const { min, max } = Math;
 
 export interface Line {
   readonly value: string;
@@ -54,7 +48,9 @@ export function install() {
   const session = new Session();
   session.connect();
 
+  session.post("Debugger.enable");
   session.post("Profiler.enable");
+
   session.post("Profiler.startPreciseCoverage", {
     callCount: true,
     detailed: true
@@ -64,25 +60,36 @@ export function install() {
     session.post("Profiler.takePreciseCoverage", (err, { result }) => {
       if (err !== null) {
         process.stderr.write(`${err.message}\n`);
-      } else {
-        for (const scriptCoverage of result) {
-          if (!fs.existsSync(scriptCoverage.url)) {
-            continue;
-          }
+        return;
+      }
 
-          parseScript(scriptCoverage);
-        }
+      for (const scriptCoverage of result) {
+        const { scriptId } = scriptCoverage;
+
+        session.post(
+          "Debugger.getScriptSource",
+          { scriptId },
+          (err, { scriptSource }) => {
+            if (err !== null) {
+              process.stderr.write(`${err.message}\n`);
+              return;
+            }
+
+            parseScript(scriptCoverage, scriptSource);
+          }
+        );
       }
     });
   });
 }
 
-function parseScript(scriptCoverage: Profiler.ScriptCoverage): Script {
-  const source = fs.readFileSync(scriptCoverage.url, "utf8");
-
+function parseScript(
+  scriptCoverage: Profiler.ScriptCoverage,
+  scriptSource: string
+): Script {
   let offset = 0;
 
-  const lines: Array<Line> = source.split("\n").map((value, index) => {
+  const lines: Array<Line> = scriptSource.split("\n").map((value, index) => {
     const line: Line = {
       value,
       index,
@@ -160,17 +167,11 @@ function parseRange(
   lines: Array<Line>,
   coverageRange: Profiler.CoverageRange
 ): Range {
-  const first = lines[0];
-  const last = lines[lines.length - 1];
-
-  let { startOffset: start, endOffset: end } = coverageRange;
-
-  start = max(first.start, start - header.length);
-  end = min(last.end, end - header.length);
+  const { startOffset, endOffset } = coverageRange;
 
   return {
-    start: parseLocation(lines, start),
-    end: parseLocation(lines, end)
+    start: parseLocation(lines, startOffset),
+    end: parseLocation(lines, endOffset)
   };
 }
 
