@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import * as fs from "fs";
 import * as path from "path";
 import * as inspector from "inspector";
@@ -31,7 +32,15 @@ process.on("exit", () => {
         continue;
       }
 
-      parseScript(scriptCoverage);
+      const script = parseScript(scriptCoverage);
+
+      if (script === null) {
+        continue;
+      }
+
+      for (const block of script.coverage) {
+        printCoverage(script, block);
+      }
     }
   });
 });
@@ -372,4 +381,51 @@ function isWhitespace(input) {
  */
 function isBlockBorder(input) {
   return input === "{" || input === "}";
+}
+
+/**
+ * @param {Script} script
+ * @param {FunctionCoverage | BlockCoverage} coverage
+ */
+function printCoverage(script, coverage) {
+  // Skip all blocks that are covered at least once.
+  if (coverage.count !== 0) {
+    return;
+  }
+
+  const { start, end } = coverage.range;
+
+  const source = script.sources.find(source => source.path === start.path);
+
+  if (source === undefined) {
+    return;
+  }
+
+  const uncovered = source.content.substring(start.offset, end.offset);
+
+  const filePath = path.relative(
+    process.cwd(),
+    path.resolve(script.base, source.path)
+  );
+
+  const above = `${source.lines[start.line - 1].value}`;
+  const below = `${source.lines[end.line + 1].value}`;
+
+  const before = source.lines[start.line].value.slice(0, start.column);
+  const after = source.lines[end.line].value.slice(end.column);
+
+  let output = `${chalk.bold("Uncovered block")}`;
+
+  output += `\n${chalk.dim(`${filePath}:${start.line + 1}`)}`;
+  output += "\n";
+
+  output += above.trim() === "" ? "" : `\n${above}`;
+  output += `\n${before}`;
+
+  output += `${chalk.bold.red(uncovered)}`;
+
+  output += `${after}\n`;
+  output += below.trim() === "" ? "" : `${below}\n`;
+
+  process.stdout.write(`\n${output}\n`);
 }
