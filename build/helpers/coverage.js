@@ -173,7 +173,7 @@ function parseFunctionCoverage(lines, source, coverageRange, name) {
  * @return {BlockCoverage | null}
  */
 function parseBlockCoverage(lines, source, coverageRange) {
-  const range = parseRange(lines, source, coverageRange);
+  const range = parseRange(lines, source, coverageRange, { trim: true });
 
   if (range === null) {
     return null;
@@ -189,9 +189,10 @@ function parseBlockCoverage(lines, source, coverageRange) {
  * @param {Array<Line>} lines
  * @param {string} source
  * @param {inspector.Profiler.CoverageRange} coverageRange
+ * @param {{ trim?: boolean }} [options]
  * @return {Range | null}
  */
-function parseRange(lines, source, coverageRange) {
+function parseRange(lines, source, coverageRange, options = {}) {
   const first = lines[0];
   const last = lines[lines.length - 1];
 
@@ -200,20 +201,22 @@ function parseRange(lines, source, coverageRange) {
   start = max(first.start, start - header.length);
   end = min(last.end, end - header.length);
 
-  if (isBlockBorder(source[start])) {
-    start++;
-  }
+  if (options.trim === true) {
+    if (isBlockBorder(source[start])) {
+      start++;
+    }
 
-  if (isBlockBorder(source[end - 1])) {
-    end--;
-  }
+    if (isBlockBorder(source[end - 1])) {
+      end--;
+    }
 
-  while (isWhitespace(source[start])) {
-    start++;
-  }
+    while (isWhitespace(source[start])) {
+      start++;
+    }
 
-  while (isWhitespace(source[end - 1])) {
-    end--;
+    while (isWhitespace(source[end - 1])) {
+      end--;
+    }
   }
 
   if (start >= end) {
