@@ -13,6 +13,7 @@ Alfa is an open and standards-based accessibility conformance testing engine use
 - [Goals](#goals)
 - [Overview](#overview)
 - [Requirements](#requirements)
+- [Building](#building)
 - [Funding](#funding)
 - [License](#license)
 
@@ -43,6 +44,26 @@ You can find more information on the overall architecture of Alfa in the [archit
 ## Requirements
 
 Alfa will run in any [ECMAScript 2015](https://www.ecma-international.org/ecma-262/6.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to compile Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is highly reliant on especially data structures introduced in newer versions of ECMAScript.
+
+## Building
+
+In order to build Alfa, a recent version (>= 9) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. For builds, [npm](https://www.npmjs.com/) is **not** supported as Alfa makes use of [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). Once Node.js and Yarn have been installed, go ahead and install the Alfa development dependencies:
+
+```console
+$ yarn install
+```
+
+The above will also perform an initial build of Alfa. When done, you can start a file watcher which will watch source files for changes and kick of the associated build steps when they change:
+
+```console
+$ yarn start
+```
+
+As new code is pulled from origin, changes to dependencies and code may require you to run the installation again or, if only code has changed, a full build:
+
+```console
+$ yarn prepare
+```
 
 ## Funding
 
