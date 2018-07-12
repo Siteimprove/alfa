@@ -13,7 +13,12 @@ import { build } from "./build";
 export function test(file) {
   if (build(file)) {
     const child = fork(withExtension(file, ".js"), [], {
-      stdio: "inherit"
+      stdio: "inherit",
+      execArgv: [
+        ...process.execArgv,
+        "--require",
+        require.resolve("../helpers/coverage")
+      ]
     });
 
     if (child.status === 0) {

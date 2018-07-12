@@ -1,10 +1,31 @@
 import * as childProcess from "child_process";
 
 /**
+ * @typedef {Object} ChildProcess
+ * @property {number} pid
+ * @property {string} stdout
+ * @property {string} stderr
+ * @property {number} status
+ * @property {Error | null} error
+ */
+
+/**
+ * @typedef {Object} SpawnOptions
+ * @property {string} [stdio]
+ */
+
+/**
+ * @typedef {Object} ForkOptions
+ * @property {string} [stdio]
+ * @property {string} [execPath]
+ * @property {Array<string>} [execArgv]
+ */
+
+/**
  * @param {string} command
  * @param {Array<string>} args
- * @param {childProcess.SpawnSyncOptions} [options]
- * @return {childProcess.SpawnSyncReturns<string>}
+ * @param {SpawnOptions} [options]
+ * @return {ChildProcess}
  */
 export function spawn(command, args, options = {}) {
   const child = childProcess.spawnSync(command, args, {
@@ -22,15 +43,17 @@ export function spawn(command, args, options = {}) {
 /**
  * @param {string} module
  * @param {Array<string>} args
- * @param {childProcess.SpawnSyncOptions} [options]
- * @return {childProcess.SpawnSyncReturns<string>}
+ * @param {ForkOptions} [options]
+ * @return {ChildProcess}
  */
 export function fork(module, args, options = {}) {
-  return spawn(
-    process.execPath,
-    process.execArgv.concat([module], args),
-    options
-  );
+  const {
+    execPath = process.execPath,
+    execArgv = process.execArgv,
+    ...rest
+  } = options;
+
+  return spawn(execPath, execArgv.concat([module], args), rest);
 }
 
 /**
