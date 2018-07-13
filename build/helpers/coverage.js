@@ -1,6 +1,9 @@
 import * as fs from "fs";
+import * as path from "path";
 import * as inspector from "inspector";
 import { Session } from "inspector";
+import * as sourceMap from "source-map";
+import { SourceMapConsumer } from "source-map";
 
 /**
  * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
@@ -24,10 +27,6 @@ session.post("Profiler.startPreciseCoverage", {
 process.on("exit", () => {
   session.post("Profiler.takePreciseCoverage", (err, { result }) => {
     for (const scriptCoverage of result) {
-      if (!fs.existsSync(scriptCoverage.url)) {
-        continue;
-      }
-
       if (scriptCoverage.url === __filename) {
         continue;
       }
@@ -47,8 +46,9 @@ process.on("exit", () => {
 
 /**
  * @typedef {Object} Location
+ * @property {string} path
  * @property {number} offset
- * @property {Line} line
+ * @property {number} line
  * @property {number} column
  */
 
@@ -72,24 +72,109 @@ process.on("exit", () => {
  */
 
 /**
- * @typedef {Object} Script
- * @property {string} url
- * @property {string} source
+ * @typedef {Object} Source
+ * @property {string} path
+ * @property {string} content
  * @property {Array<Line>} lines
+ */
+
+/**
+ * @typedef {Object} Script
+ * @property {string} base
+ * @property {Array<Source>} sources
  * @property {Array<FunctionCoverage | BlockCoverage>} coverage
  */
 
 /**
  * @param {inspector.Profiler.ScriptCoverage} scriptCoverage
- * @return {Script}
+ * @return {Script | null}
  */
-function parseScript(scriptCoverage) {
-  const source = fs.readFileSync(scriptCoverage.url, "utf8");
+function parseScript({ url, functions }) {
+  /** @type {Script} */
+  const script = { base: path.dirname(url), sources: [], coverage: [] };
 
-  let offset = 0;
+  /** @type {string} */
+  let source;
+  try {
+    source = fs.readFileSync(url, "utf8");
+  } catch (err) {
+    return null;
+  }
 
   /** @type {Array<Line>} */
-  const lines = source.split("\n").map((value, index) => {
+  const lines = parseLines(source);
+
+  script.sources.push({
+    path: path.basename(url),
+    content: source,
+    lines
+  });
+
+  /** @type {SourceMapConsumer | null} */
+  let map = null;
+  try {
+    /** @type {sourceMap.RawSourceMap} */
+    const rawMap = JSON.parse(fs.readFileSync(`${url}.map`, "utf8"));
+
+    for (const source of rawMap.sources) {
+      const content = fs.readFileSync(
+        path.resolve(script.base, source),
+        "utf8"
+      );
+
+      script.sources.push({
+        path: source,
+        content,
+        lines: parseLines(content)
+      });
+    }
+
+    map = new SourceMapConsumer(rawMap);
+  } catch (err) {}
+
+  for (const coverage of functions) {
+    const { functionName: name } = coverage;
+
+    if (name !== "") {
+      // The first range will always be function granular if the coverage entry
+      // contains a non-empty funtion name. We therefore grab this coverage
+      // range and store it as function coverage.
+      const range = coverage.ranges.shift();
+
+      if (range === undefined) {
+        continue;
+      }
+
+      const parsed = parseFunctionCoverage(script, map, range, name);
+
+      if (parsed !== null) {
+        script.coverage.push(parsed);
+      }
+    }
+
+    // For the remaining ranges, store them as block coverage. If detailed
+    // coverage is disabled then no additional coverage ranges other than the
+    // function granular range parsed above will be present.
+    for (const range of coverage.ranges) {
+      const parsed = parseBlockCoverage(script, map, range);
+
+      if (parsed !== null) {
+        script.coverage.push(parsed);
+      }
+    }
+  }
+
+  return script;
+}
+
+/**
+ * @param {string} input
+ * @return {Array<Line>}
+ */
+function parseLines(input) {
+  let offset = 0;
+
+  return input.split("\n").map((value, index) => {
     const line = {
       value,
       index,
@@ -101,146 +186,150 @@ function parseScript(scriptCoverage) {
 
     return line;
   });
-
-  /** @type {Array<FunctionCoverage | BlockCoverage>} */
-  const coverage = [];
-
-  for (const functionCoverage of scriptCoverage.functions) {
-    const { functionName: name } = functionCoverage;
-
-    if (name !== "") {
-      // The first range will always be function granular if the coverage entry
-      // contains a non-empty funtion name. We therefore grab this coverage
-      // range and store it as function coverage.
-      const coverageRange = functionCoverage.ranges.shift();
-
-      if (coverageRange === undefined) {
-        continue;
-      }
-
-      const parsed = parseFunctionCoverage(lines, source, coverageRange, name);
-
-      if (parsed !== null) {
-        coverage.push(parsed);
-      }
-    }
-
-    // For the remaining ranges, store them as block coverage. If detailed
-    // coverage is disabled then no additional coverage ranges other than the
-    // function granular range parsed above will be present.
-    for (const coverageRange of functionCoverage.ranges) {
-      const parsed = parseBlockCoverage(lines, source, coverageRange);
-
-      if (parsed !== null) {
-        coverage.push(parsed);
-      }
-    }
-  }
-
-  return {
-    url: scriptCoverage.url,
-    source,
-    lines,
-    coverage
-  };
 }
 
 /**
- * @param {Array<Line>} lines
- * @param {string} source
- * @param {inspector.Profiler.CoverageRange} coverageRange
+ * @param {Script} script
+ * @param {SourceMapConsumer | null} map
+ * @param {inspector.Profiler.CoverageRange} range
  * @param {string} name
  * @return {FunctionCoverage | null}
  */
-function parseFunctionCoverage(lines, source, coverageRange, name) {
-  const range = parseRange(lines, source, coverageRange);
+function parseFunctionCoverage(script, map, range, name) {
+  const parsed = parseRange(script, map, range);
 
-  if (range === null) {
+  if (parsed === null) {
     return null;
   }
 
   return {
-    range,
-    count: coverageRange.count,
+    range: parsed,
+    count: range.count,
     name
   };
 }
 
 /**
- * @param {Array<Line>} lines
- * @param {string} source
- * @param {inspector.Profiler.CoverageRange} coverageRange
+ * @param {Script} script
+ * @param {SourceMapConsumer | null} map
+ * @param {inspector.Profiler.CoverageRange} range
  * @return {BlockCoverage | null}
  */
-function parseBlockCoverage(lines, source, coverageRange) {
-  const range = parseRange(lines, source, coverageRange, { trim: true });
+function parseBlockCoverage(script, map, range) {
+  const parsed = parseRange(script, map, range, {
+    trim: true
+  });
 
-  if (range === null) {
+  if (parsed === null) {
     return null;
   }
 
   return {
-    range,
-    count: coverageRange.count
+    range: parsed,
+    count: range.count
   };
 }
 
 /**
- * @param {Array<Line>} lines
- * @param {string} source
- * @param {inspector.Profiler.CoverageRange} coverageRange
+ * @param {Script} script
+ * @param {SourceMapConsumer | null} map
+ * @param {inspector.Profiler.CoverageRange} range
  * @param {{ trim?: boolean }} [options]
  * @return {Range | null}
  */
-function parseRange(lines, source, coverageRange, options = {}) {
+function parseRange(script, map, range, options = {}) {
+  const [{ content, lines }] = script.sources;
+
   const first = lines[0];
   const last = lines[lines.length - 1];
 
-  let { startOffset: start, endOffset: end } = coverageRange;
+  let { startOffset, endOffset } = range;
 
-  start = max(first.start, start - header.length);
-  end = min(last.end, end - header.length);
+  startOffset = max(first.start, startOffset - header.length);
+  endOffset = min(last.end, endOffset - header.length);
 
   if (options.trim === true) {
-    if (isBlockBorder(source[start])) {
-      start++;
+    while (
+      isBlockBorder(content[startOffset]) ||
+      isWhitespace(content[startOffset])
+    ) {
+      startOffset++;
     }
 
-    if (isBlockBorder(source[end - 1])) {
-      end--;
-    }
-
-    while (isWhitespace(source[start])) {
-      start++;
-    }
-
-    while (isWhitespace(source[end - 1])) {
-      end--;
+    while (
+      isBlockBorder(content[endOffset - 1]) ||
+      isWhitespace(content[endOffset - 1])
+    ) {
+      endOffset--;
     }
   }
 
-  if (start >= end) {
+  if (startOffset >= endOffset) {
+    return null;
+  }
+
+  const start = getLocation(script, map, startOffset);
+  const end = getLocation(script, map, endOffset);
+
+  if (start === null || end === null || start.path !== end.path) {
     return null;
   }
 
   return {
-    start: getLocation(lines, start),
-    end: getLocation(lines, end)
+    start,
+    end
   };
 }
 
 /**
- * @param {Array<Line>} lines
+ * @param {Script} script
+ * @param {SourceMapConsumer | null} map
  * @param {number} offset
- * @return {Location}
+ * @return {Location | null}
  */
-function getLocation(lines, offset) {
+function getLocation(script, map, offset) {
+  const [{ path, lines }] = script.sources;
+
   const line = getLineAtOffset(lines, offset);
 
-  return {
-    offset,
-    line,
+  if (map === null) {
+    return {
+      path,
+      offset,
+      line: line.index,
+      column: offset - line.start
+    };
+  }
+
+  return getOriginalLocation(script, map, offset, line);
+}
+
+/**
+ * @param {Script} script
+ * @param {SourceMapConsumer} map
+ * @param {number} offset
+ * @param {Line} line
+ * @return {Location | null}
+ */
+function getOriginalLocation(script, map, offset, line) {
+  const position = map.originalPositionFor({
+    line: line.index + 1,
     column: offset - line.start
+  });
+
+  const source = script.sources.find(source => source.path === position.source);
+
+  if (source === undefined) {
+    return null;
+  }
+
+  const index = position.line - 1;
+
+  return {
+    path: source.path,
+    offset: source.lines[index].start + position.column,
+    line: index,
+    column: position.column
   };
 }
 
@@ -269,14 +358,12 @@ function getLineAtOffset(lines, offset) {
   return lines[lower];
 }
 
-const whitespace = /\s/;
-
 /**
  * @param {string} input
  * @return {boolean}
  */
 function isWhitespace(input) {
-  return whitespace.test(input);
+  return input === " " || input === "\t" || input === "\n" || input === "\r";
 }
 
 /**
