@@ -1,7 +1,7 @@
 import * as sjcl from "sjcl";
-import { Algorithm, Bits, Encoding, Hash } from "./types";
+import { Algorithm, Bits, Encoding } from "./types";
 
-class HashImplementation {
+export class Hash {
   private readonly hash: sjcl.SjclHash;
 
   public constructor(algorithm: Algorithm) {
@@ -56,5 +56,5 @@ class HashImplementation {
 }
 
 export function getHash(algorithm: Algorithm): Hash {
-  return new HashImplementation(algorithm);
+  return new Hash(algorithm);
 }
