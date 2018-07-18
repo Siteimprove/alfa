@@ -102,7 +102,7 @@ export function compareDocumentPosition(
   //     +-- #other
   //
   // In the case above, the lowest common ancestor would be "div" while the new
-  // reference node would be "span" and the new other node would be "be".
+  // reference node would be "span" and the new other node would be "p".
   reference = referencePath[forkingPoint + 1];
   other = otherPath[forkingPoint + 1];
 
