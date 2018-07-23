@@ -402,14 +402,6 @@ function isWhitespace(input) {
 }
 
 /**
- * @param {string} input
- * @return {boolean}
- */
-function isBlockBorder(input) {
-  return input === "{" || input === "}";
-}
-
-/**
  * @param {Script} script
  * @param {Source} source
  */
