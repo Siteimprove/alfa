@@ -364,11 +364,3 @@ function getLineAtOffset(lines, offset) {
 function isWhitespace(input) {
   return input === " " || input === "\t" || input === "\n" || input === "\r";
 }
-
-/**
- * @param {string} input
- * @return {boolean}
- */
-function isBlockBorder(input) {
-  return input === "{" || input === "}";
-}
