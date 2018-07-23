@@ -32,15 +32,43 @@ process.on("exit", () => {
         continue;
       }
 
+      if (
+        scriptCoverage.url !==
+        "/home/nhe/Development/alfa/packages/alfa-test/test/foo.js"
+      ) {
+        continue;
+      }
+
       const script = parseScript(scriptCoverage);
 
       if (script === null) {
         continue;
       }
 
-      for (const block of script.coverage) {
-        printCoverage(script, block);
-      }
+      console.log(script);
+
+      /*try{
+        const specFile = process.argv[1];
+        const specFileName = specFile.split("/").reverse()[0];
+
+        let source = script.sources.filter(source => source.path == specFileName.replace(".spec.", "."))[0];
+
+        console.log(source, script.coverage.length);
+
+        if(source == undefined){
+          continue;
+        }
+
+        printCoverageStatistics(script, source);
+
+        for (const block of script.coverage) {
+          console.log(block);
+          printCoverage(script, block, source);
+        }
+
+      }catch(e){
+        console.log(e);
+      }*/
     }
   });
 });
@@ -385,22 +413,51 @@ function isBlockBorder(input) {
 
 /**
  * @param {Script} script
- * @param {FunctionCoverage | BlockCoverage} coverage
+ * @param {Source} source
  */
-function printCoverage(script, coverage) {
+function printCoverageStatistics(script, source) {
+  let max = 0;
+  let uncovered = 0;
+
+  for (const block of script.coverage) {
+    if (block.range.end.offset > max) {
+      max = block.range.end.offset;
+    }
+
+    if (block.count === 0) {
+      uncovered += block.range.end.offset - block.range.start.offset;
+    }
+  }
+
+  const timestamp = new Date().toLocaleTimeString();
+  const percentage = 100 - (uncovered / max) * 100;
+
+  if (percentage >= 90) {
+    return;
+  }
+
+  let output = chalk.dim(`[${timestamp}] \u203a`);
+
+  output = `${output} ${chalk.yellow("\u26a0 ")}`;
+  output = `${output} ${chalk.underline(chalk.yellow("warning "))}`;
+  output = `${output} Low coverage (${percentage.toFixed(
+    2
+  )}%) in ${path.relative(process.cwd(), source.path)}`;
+  process.stdout.write(`\n${output}\n`);
+}
+
+/**
+ * @param {Script} script
+ * @param {FunctionCoverage | BlockCoverage} coverage
+ * @param {Source} source
+ */
+function printCoverage(script, coverage, source) {
   // Skip all blocks that are covered at least once.
   if (coverage.count !== 0) {
     return;
   }
 
   const { start, end } = coverage.range;
-
-  const source = script.sources.find(source => source.path === start.path);
-
-  if (source === undefined) {
-    return;
-  }
-
   const uncovered = source.content.substring(start.offset, end.offset);
 
   const filePath = path.relative(
