@@ -285,17 +285,16 @@ function parseRange(script, map, range, options = {}) {
   endOffset = min(last.end, endOffset - header.length);
 
   if (options.trim === true) {
-    while (
-      isBlockBorder(content[startOffset]) ||
-      isWhitespace(content[startOffset])
-    ) {
+    if (content[startOffset] === "{" && content[endOffset - 1] === "}") {
+      startOffset--;
+      endOffset--;
+    }
+
+    while (isWhitespace(content[startOffset])) {
       startOffset++;
     }
 
-    while (
-      isBlockBorder(content[endOffset - 1]) ||
-      isWhitespace(content[endOffset - 1])
-    ) {
+    while (isWhitespace(content[endOffset - 1])) {
       endOffset--;
     }
   }
