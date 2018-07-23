@@ -32,13 +32,6 @@ process.on("exit", () => {
         continue;
       }
 
-      if (
-        scriptCoverage.url !==
-        "/home/nhe/Development/alfa/packages/alfa-test/test/foo.js"
-      ) {
-        continue;
-      }
-
       const script = parseScript(scriptCoverage);
 
       if (script === null) {
@@ -47,15 +40,13 @@ process.on("exit", () => {
 
       try {
         const specFile = process.argv[1];
-        const specFileName = specFile.split("/").reverse()[0];
+        const specFileName = specFile.split("\\").reverse()[0];
 
         let source = script.sources.filter(
-          source => source.path == specFileName.replace(".spec.", ".")
+          source => source.path === specFileName.replace(".spec.", ".")
         )[0];
 
-        console.log(source, script.coverage.length);
-
-        if (source == undefined) {
+        if (source === undefined) {
           continue;
         }
 
