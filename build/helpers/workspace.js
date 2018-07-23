@@ -54,6 +54,14 @@ export class Workspace {
   lint(file) {
     return this.projectFor(file).lint(file);
   }
+
+  /**
+   * @param {string} file
+   * @param {function(TypeScript.Node): void} visitor
+   */
+  walk(file, visitor) {
+    this.projectFor(file).walk(file, visitor);
+  }
 }
 
 /**

@@ -18,13 +18,22 @@ export class Project {
    * @param {TypeScript.DocumentRegistry} registry
    */
   constructor(configFile, registry) {
-    /** @type {InMemoryLanguageServiceHost} */
+    /**
+     * @private
+     * @type {InMemoryLanguageServiceHost}
+     */
     this.host = new InMemoryLanguageServiceHost(configFile);
 
-    /** @type {TypeScript.LanguageService} */
+    /**
+     * @private
+     * @type {TypeScript.LanguageService}
+     */
     this.service = TypeScript.createLanguageService(this.host, registry);
 
-    /** @type {TSLint.Configuration.IConfigurationFile | undefined} */
+    /**
+     * @private
+     * @type {TSLint.Configuration.IConfigurationFile | undefined}
+     */
     this.tslint = TSLint.Configuration.findConfiguration(
       "tslint.json",
       configFile
@@ -97,6 +106,18 @@ export class Project {
     });
 
     return failures;
+  }
+
+  /**
+   * @param {string} file
+   * @param {function(TypeScript.Node): void} visitor
+   */
+  walk(file, visitor) {
+    const source = this.service.getProgram().getSourceFile(file);
+
+    if (source !== undefined) {
+      TypeScript.forEachChild(source, visitor);
+    }
   }
 }
 
