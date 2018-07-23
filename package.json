@@ -22,6 +22,7 @@
     "prepare": "node -r esm build/prepare.js",
     "test": "node -r esm build/test.js",
     "start": "node -r esm build/start.js",
+    "prepublish": "node -r esm build/prepublish.js",
     "precommit": "node -r esm build/precommit.js"
   },
   "workspaces": [

@@ -112,7 +112,7 @@ export function watchFiles(pattern, listener, options = {}) {
       return;
     }
 
-    file = path.resolve(process.cwd(), file);
+    file = path.relative(process.cwd(), file);
 
     if (options.gitIgnore !== false && git.isIgnored(file)) {
       return;
