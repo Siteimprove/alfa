@@ -45,17 +45,17 @@ process.on("exit", () => {
         continue;
       }
 
-      console.log(script);
-
-      /*try{
+      try {
         const specFile = process.argv[1];
         const specFileName = specFile.split("/").reverse()[0];
 
-        let source = script.sources.filter(source => source.path == specFileName.replace(".spec.", "."))[0];
+        let source = script.sources.filter(
+          source => source.path == specFileName.replace(".spec.", ".")
+        )[0];
 
         console.log(source, script.coverage.length);
 
-        if(source == undefined){
+        if (source == undefined) {
           continue;
         }
 
@@ -65,10 +65,9 @@ process.on("exit", () => {
           console.log(block);
           printCoverage(script, block, source);
         }
-
-      }catch(e){
+      } catch (e) {
         console.log(e);
-      }*/
+      }
     }
   });
 });
