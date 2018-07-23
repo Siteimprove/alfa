@@ -243,9 +243,13 @@ function parseFunctionCoverage(script, map, range, name) {
  * @return {BlockCoverage | null}
  */
 function parseBlockCoverage(script, map, range) {
-  const parsed = parseRange(script, map, range, {
+  let parsed = parseRange(script, map, range, {
     trim: true
   });
+
+  if (parsed === null) {
+    parsed = parseRange(script, map, range);
+  }
 
   if (parsed === null) {
     return null;
@@ -276,16 +280,17 @@ function parseRange(script, map, range, options = {}) {
   endOffset = min(last.end, endOffset - header.length);
 
   if (options.trim === true) {
-    if (content[startOffset] === "{" && content[endOffset - 1] === "}") {
-      startOffset--;
-      endOffset--;
-    }
-
-    while (isWhitespace(content[startOffset])) {
+    while (
+      isBlockBorder(content[startOffset]) ||
+      isWhitespace(content[startOffset])
+    ) {
       startOffset++;
     }
 
-    while (isWhitespace(content[endOffset - 1])) {
+    while (
+      isBlockBorder(content[endOffset - 1]) ||
+      isWhitespace(content[endOffset - 1])
+    ) {
       endOffset--;
     }
   }
@@ -382,6 +387,14 @@ function getLineAtOffset(lines, offset) {
   }
 
   return lines[lower];
+}
+
+/**
+ * @param {string} input
+ * @return {boolean}
+ */
+function isBlockBorder(input) {
+  return input === "{" || input === "}";
 }
 
 /**
