@@ -2,6 +2,7 @@ import chalk from "chalk";
 import * as fs from "fs";
 import * as path from "path";
 import * as inspector from "inspector";
+import * as notify from "./notify";
 import { Session } from "inspector";
 import * as sourceMap from "source-map";
 import { SourceMapConsumer } from "source-map";
@@ -27,8 +28,15 @@ session.post("Profiler.startPreciseCoverage", {
 
 process.on("exit", () => {
   session.post("Profiler.takePreciseCoverage", (err, { result }) => {
+    const spec = process.argv[1];
+    const impl = spec.replace("/test/", "/src/").replace(".spec.js", ".js");
+
     for (const scriptCoverage of result) {
       if (scriptCoverage.url === __filename) {
+        continue;
+      }
+
+      if (scriptCoverage.url !== impl) {
         continue;
       }
 
@@ -39,25 +47,13 @@ process.on("exit", () => {
       }
 
       try {
-        const specFile = process.argv[1];
-        const specFileName = specFile.split("\\").reverse()[0];
-
-        let source = script.sources.filter(
-          source => source.path === specFileName.replace(".spec.", ".")
-        )[0];
-
-        if (source === undefined) {
-          continue;
-        }
-
-        printCoverageStatistics(script, source);
-
-        for (const block of script.coverage) {
-          console.log(block);
-          printCoverage(script, block, source);
-        }
+        printCoverageStatistics(script);
       } catch (e) {
         console.log(e);
+      }
+
+      for (const block of script.coverage) {
+        printCoverage(script, block);
       }
     }
   });
@@ -407,51 +403,56 @@ function isWhitespace(input) {
 
 /**
  * @param {Script} script
- * @param {Source} source
  */
-function printCoverageStatistics(script, source) {
-  let max = 0;
-  let uncovered = 0;
+function printCoverageStatistics(script) {
+  let bytes = 0;
+  let uncoveredBytes = 0;
+
+  if (script.sources.length > 1) {
+    // typescript
+    for (let i = 1, n = script.sources.length; i < n; i++) {
+      bytes += script.sources[i].content.length;
+    }
+  } else {
+    // javascript
+    bytes = script.sources[0].content.length;
+  }
 
   for (const block of script.coverage) {
-    if (block.range.end.offset > max) {
-      max = block.range.end.offset;
-    }
-
+    console.log(block);
     if (block.count === 0) {
-      uncovered += block.range.end.offset - block.range.start.offset;
+      uncoveredBytes += block.range.end.offset - block.range.start.offset;
     }
   }
 
-  const timestamp = new Date().toLocaleTimeString();
-  const percentage = 100 - (uncovered / max) * 100;
+  const percentage = 100 - (uncoveredBytes / bytes) * 100;
 
   if (percentage >= 90) {
+    console.log(percentage, bytes, uncoveredBytes);
     return;
   }
 
-  let output = chalk.dim(`[${timestamp}] \u203a`);
-
-  output = `${output} ${chalk.yellow("\u26a0 ")}`;
-  output = `${output} ${chalk.underline(chalk.yellow("warning "))}`;
-  output = `${output} Low coverage (${percentage.toFixed(
-    2
-  )}%) in ${path.relative(process.cwd(), source.path)}`;
-  process.stdout.write(`\n${output}\n`);
+  notify.warn(`Low coverage (${percentage.toFixed(2)}%)`);
 }
 
 /**
  * @param {Script} script
  * @param {FunctionCoverage | BlockCoverage} coverage
- * @param {Source} source
  */
-function printCoverage(script, coverage, source) {
+function printCoverage(script, coverage) {
   // Skip all blocks that are covered at least once.
   if (coverage.count !== 0) {
     return;
   }
 
   const { start, end } = coverage.range;
+
+  const source = script.sources.find(source => source.path === start.path);
+
+  if (source === undefined) {
+    return;
+  }
+
   const uncovered = source.content.substring(start.offset, end.offset);
 
   const filePath = path.relative(
