@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as inspector from "inspector";
 import * as notify from "./notify";
+import { byteCoverage } from "./coverage-heuristics/byte";
 import { Session } from "inspector";
 import * as sourceMap from "source-map";
 import { SourceMapConsumer } from "source-map";
@@ -16,6 +17,11 @@ const [header] = require("module").wrapper;
 const { min, max } = Math;
 
 const session = new Session();
+
+const heuristics = [byteCoverage];
+const weights = {
+  byteCoverage: 1.0
+};
 
 session.connect();
 
@@ -46,14 +52,22 @@ process.on("exit", () => {
         continue;
       }
 
-      try {
-        printCoverageStatistics(script);
-      } catch (e) {
-        console.log(e);
-      }
+      let sortedBlocks = script.coverage.sort(function(a, b) {
+        if (a.points < b.points) {
+          return 1;
+        }
 
-      for (const block of script.coverage) {
-        printCoverage(script, block);
+        if (a.points > b.points) {
+          return -1;
+        }
+
+        return 0;
+      });
+
+      //printCoverageStatistics(script);
+
+      if (sortedBlocks.length > 0) {
+        printCoverage(script, sortedBlocks[0]);
       }
     }
   });
@@ -85,6 +99,7 @@ process.on("exit", () => {
  * @typedef {Object} FunctionCoverage
  * @property {Range} range
  * @property {number} count
+ * @property {number} points
  * @property {string} name
  */
 
@@ -92,6 +107,7 @@ process.on("exit", () => {
  * @typedef {Object} BlockCoverage
  * @property {Range} range
  * @property {number} count
+ * @property {number} points
  */
 
 /**
@@ -225,11 +241,24 @@ function parseFunctionCoverage(script, map, range, name) {
     return null;
   }
 
-  return {
+  let block = {
     range: parsed,
     count: range.count,
+    points: 0,
     name
   };
+
+  if (block.count !== 0) {
+    return block;
+  }
+
+  let points = 0;
+  for (let i = 0, n = heuristics.length; i < n; i++) {
+    points += heuristics[i](script, block);
+  }
+
+  block.points = points;
+  return block;
 }
 
 /**
@@ -251,10 +280,23 @@ function parseBlockCoverage(script, map, range) {
     return null;
   }
 
-  return {
+  let block = {
     range: parsed,
-    count: range.count
+    count: range.count,
+    points: 0
   };
+
+  if (block.count !== 0) {
+    return block;
+  }
+
+  let points = 0;
+  for (let i = 0, n = heuristics.length; i < n; i++) {
+    points += heuristics[i](script, block);
+  }
+
+  block.points = points;
+  return block;
 }
 
 /**
@@ -405,10 +447,9 @@ function isWhitespace(input) {
  * @param {Script} script
  */
 function printCoverageStatistics(script) {
-  let bytes = 0;
-  let uncoveredBytes = 0;
+  let points = 0;
 
-  if (script.sources.length > 1) {
+  /*if (script.sources.length > 1) {
     // typescript
     for (let i = 1, n = script.sources.length; i < n; i++) {
       bytes += script.sources[i].content.length;
@@ -416,19 +457,15 @@ function printCoverageStatistics(script) {
   } else {
     // javascript
     bytes = script.sources[0].content.length;
-  }
+  }*/
 
   for (const block of script.coverage) {
-    console.log(block);
-    if (block.count === 0) {
-      uncoveredBytes += block.range.end.offset - block.range.start.offset;
-    }
+    points += block.points;
   }
 
-  const percentage = 100 - (uncoveredBytes / bytes) * 100;
+  const percentage = 100 - (100 / points) * 100;
 
-  if (percentage >= 90) {
-    console.log(percentage, bytes, uncoveredBytes);
+  if (percentage < 10) {
     return;
   }
 
