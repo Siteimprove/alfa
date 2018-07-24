@@ -6,7 +6,16 @@ import { Project } from "./project";
 
 export class Workspace {
   constructor() {
+    /**
+     * @private
+     * @type {Map<string, Project>}
+     */
     this.projects = new Map();
+
+    /**
+     * @private
+     * @type {TypeScript.DocumentRegistry}
+     */
     this.registry = TypeScript.createDocumentRegistry(false, process.cwd());
   }
 
