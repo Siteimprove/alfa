@@ -3,7 +3,10 @@ import * as fs from "fs";
 import * as path from "path";
 import * as inspector from "inspector";
 import * as notify from "./notify";
-import { byteCoverage } from "./coverage-heuristics/byte";
+import {
+  byteLengthTotalCoverage,
+  byteLengthBlockCoverage
+} from "./coverage-heuristics/byte";
 import { Session } from "inspector";
 import * as sourceMap from "source-map";
 import { SourceMapConsumer } from "source-map";
@@ -20,7 +23,8 @@ const session = new Session();
 
 const heuristics = [
   {
-    heuristic: byteCoverage,
+    heuristicTotal: byteLengthTotalCoverage,
+    heuristicBlock: byteLengthBlockCoverage,
     weight: 1.0
   }
 ];
@@ -37,7 +41,7 @@ session.post("Profiler.startPreciseCoverage", {
 process.on("exit", () => {
   session.post("Profiler.takePreciseCoverage", (err, { result }) => {
     const spec = process.argv[1];
-    const impl = spec.replace("/test/", "/src/").replace(".spec.js", ".js");
+    const impl = spec.replace("\\test\\", "\\src\\").replace(".spec.js", ".js");
 
     for (const scriptCoverage of result) {
       if (scriptCoverage.url === __filename) {
@@ -47,7 +51,6 @@ process.on("exit", () => {
       if (scriptCoverage.url !== impl) {
         continue;
       }
-
       const script = parseScript(scriptCoverage);
 
       if (script === null) {
@@ -66,8 +69,7 @@ process.on("exit", () => {
         return 0;
       });
 
-      //printCoverageStatistics(script);
-
+      printCoverageStatistics(script);
       if (sortedBlocks.length > 0) {
         printCoverage(script, sortedBlocks[0]);
       }
@@ -254,7 +256,7 @@ function parseFunctionCoverage(script, map, range, name) {
     return block;
   }
 
-  block.points = calculatePoints(script, block);
+  block.points = calculateBlockCoverage(script, block);
   return block;
 }
 
@@ -287,7 +289,7 @@ function parseBlockCoverage(script, map, range) {
     return block;
   }
 
-  block.points = calculatePoints(script, block);
+  block.points = calculateBlockCoverage(script, block);
   return block;
 }
 
@@ -439,29 +441,15 @@ function isWhitespace(input) {
  * @param {Script} script
  */
 function printCoverageStatistics(script) {
-  let points = 0;
-
-  /*if (script.sources.length > 1) {
-    // typescript
-    for (let i = 1, n = script.sources.length; i < n; i++) {
-      bytes += script.sources[i].content.length;
-    }
-  } else {
-    // javascript
-    bytes = script.sources[0].content.length;
-  }*/
-
-  for (const block of script.coverage) {
-    points += block.points;
+  let file = "";
+  if ((script.sources.length = 1)) {
+    file += " in " + script.sources[0].path;
+  } else if ((script.sources.length = 2)) {
+    file += " in " + script.sources[1].path;
   }
-
-  const percentage = 100 - (100 / points) * 100;
-
-  if (percentage < 10) {
-    return;
-  }
-
-  notify.warn(`Low coverage (${percentage.toFixed(2)}%)`);
+  notify.warn(
+    `Low coverage (${calculateTotalCoverage(script).toFixed(2)}%)` + file
+  );
 }
 
 /**
@@ -481,6 +469,7 @@ function printCoverage(script, coverage) {
   if (source === undefined) {
     return;
   }
+  console.log("I am here");
 
   const uncovered = source.content.substring(start.offset, end.offset);
 
@@ -511,10 +500,26 @@ function printCoverage(script, coverage) {
   process.stdout.write(`\n${output}\n`);
 }
 
-function calculatePoints(script, block) {
+/**
+ * @param {Script} script
+ */
+function calculateTotalCoverage(script) {
   let points = 0;
   for (let i = 0, n = heuristics.length; i < n; i++) {
-    points += heuristics[i].heuristic(script, block) * heuristics[i].weight;
+    points += heuristics[i].heuristicTotal(script) * heuristics[i].weight;
+  }
+  return points;
+}
+
+/**
+ * @param {Script} script
+ * @param {FunctionCoverage | BlockCoverage} block
+ */
+function calculateBlockCoverage(script, block) {
+  let points = 0;
+  for (let i = 0, n = heuristics.length; i < n; i++) {
+    points +=
+      heuristics[i].heuristicBlock(script, block) * heuristics[i].weight;
   }
   return points;
 }
