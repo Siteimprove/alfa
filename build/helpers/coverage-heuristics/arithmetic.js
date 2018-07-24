@@ -43,9 +43,9 @@ function visit(node) {
   let visitChild = node => {
     switch (node.kind) {
       case TypeScript.SyntaxKind.BinaryExpression:
-        switch (
-          /** @type {TypeScript.BinaryExpression} */ (node.operatorToken.kind)
-        ) {
+        const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
+
+        switch (binaryExpression.operatorToken.kind) {
           case TypeScript.SyntaxKind.SlashToken:
           case TypeScript.SyntaxKind.PlusToken:
           case TypeScript.SyntaxKind.MinusToken:
