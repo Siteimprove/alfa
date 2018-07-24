@@ -116,7 +116,15 @@ export class Project {
     const source = this.service.getProgram().getSourceFile(file);
 
     if (source !== undefined) {
-      TypeScript.forEachChild(source, visitor);
+      visit(source);
+    }
+
+    /**
+     * @param {TypeScript.Node} node
+     */
+    function visit(node) {
+      visitor(node);
+      TypeScript.forEachChild(node, visit);
     }
   }
 }
