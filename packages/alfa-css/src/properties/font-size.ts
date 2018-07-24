@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { FontSizeGrammar } from "../grammars/font";
+import { FontSizeGrammar } from "../grammars/font-size";
 import { AbsoluteLength, Property, RelativeLength } from "../types";
 
 export type FontSize = Readonly<
@@ -30,7 +30,9 @@ export const FontSizeProperty: Property<FontSize> = {
   parse(input) {
     return parse(input, FontSizeGrammar);
   },
-  initial: { type: "absolute", value: "medium" },
+  initial() {
+    return { type: "absolute", value: "medium" };
+  },
   computed(own, parent) {
     const value = own.fontSize;
     const parentValue = parent.fontSize;

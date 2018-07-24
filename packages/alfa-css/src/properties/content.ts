@@ -13,7 +13,9 @@ export const ContentProperty: Property<Content> = {
   parse(input) {
     return parse(input, ContentGrammar);
   },
-  initial: "normal",
+  initial() {
+    return "normal";
+  },
   computed(own, parent) {
     return own.content === undefined ? null : own.content;
   }

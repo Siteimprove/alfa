@@ -209,7 +209,7 @@ export interface Property<T> {
 
   parse(input: Array<Token>): T | null;
 
-  initial: T;
+  initial(own: Style<Stage.Specified>, parent: Style<Stage.Computed>): T;
 
   computed(
     own: Style<Stage.Specified>,

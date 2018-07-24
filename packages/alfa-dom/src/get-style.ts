@@ -174,7 +174,10 @@ export function getSpecifiedStyle(
     if (shouldInherit && inherited !== undefined) {
       specifiedStyle[propertyName] = inherited;
     } else if (value === undefined || value === "initial") {
-      specifiedStyle[propertyName] = property.initial;
+      specifiedStyle[propertyName] = property.initial(
+        specifiedStyle,
+        parentStyle
+      );
     } else if (value !== "inherit") {
       specifiedStyle[propertyName] = value;
     }
