@@ -12,6 +12,7 @@ export function foo(foo: string): "foo" | "bar" {
 
   let a = 8;
   a = a + 1;
+  const beeeeeeeeeeeeeeeta = "foo";
 
-  return "bar";
+  return beeeeeeeeeeeeeeeta === "foo" ? "foo" : "bar";
 }

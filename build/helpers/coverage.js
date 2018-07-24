@@ -29,12 +29,12 @@ const heuristics = [
   {
     heuristicTotal: byteLengthTotalCoverage,
     heuristicBlock: byteLengthBlockCoverage,
-    weight: 0.0
+    weight: 0.1
   },
   {
     heuristicTotal: arithmeticTotalCoverage,
     heuristicBlock: arithmeticBlockCoverage,
-    weight: 1.0
+    weight: 0.9
   }
 ];
 
@@ -492,7 +492,7 @@ function printCoverage(script, coverage) {
   const before = source.lines[start.line].value.slice(0, start.column);
   const after = source.lines[end.line].value.slice(end.column);
 
-  let output = `${chalk.bold("Uncovered block")}`;
+  let output = `${chalk.bold("Suggested Block to Cover")}`;
 
   output += `\n${chalk.dim(`${filePath}:${start.line + 1}-${end.line + 1}`)}`;
   output += "\n";

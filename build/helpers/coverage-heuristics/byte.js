@@ -20,7 +20,7 @@ export function byteLengthTotalCoverage(script) {
  */
 export function byteLengthBlockCoverage(script, block) {
   const { start, end } = block.range;
-  return (1 - (end.offset - start.offset) / totalLength(script)) * 100;
+  return ((end.offset - start.offset) / totalLength(script)) * 100;
 }
 
 /**
