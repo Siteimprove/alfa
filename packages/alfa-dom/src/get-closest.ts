@@ -4,9 +4,13 @@ import { isElement } from "./guards";
 import { matches } from "./matches";
 import { Element, Node } from "./types";
 
+export type GetClosestResult<T extends Node, Q> = Q extends string
+  ? Element
+  : T;
+
 /**
  * Given a node and a context, get the closest parent (or the node itself) that
- * matches the given selector.
+ * matches the given selector or predicate.
  *
  * @see https://dom.spec.whatwg.org/#dom-element-closest
  *
@@ -18,18 +22,6 @@ import { Element, Node } from "./types";
  *   ".foo"
  * );
  * // => <div class="foo">...</div>
- */
-export function getClosest(
-  scope: Node,
-  context: Node,
-  query: string
-): Element | null;
-
-/**
- * Given a node and a context, get the closest parent (or the node itself) that
- * matches the given predicate.
- *
- * @see https://dom.spec.whatwg.org/#dom-element-closest
  *
  * @example
  * const span = <span />;
@@ -40,17 +32,10 @@ export function getClosest(
  * );
  * // => <div class="bar">...</div>
  */
-export function getClosest<T extends Node>(
-  scope: Node,
-  context: Node,
-  query: Predicate<Node, T>
-): T | null;
-
-export function getClosest<T extends Node>(
-  scope: Node,
-  context: Node,
-  query: Predicate<Node, T> | string
-): T | null {
+export function getClosest<
+  T extends Node,
+  Q extends string | Predicate<Node, T>
+>(scope: Node, context: Node, query: Q): GetClosestResult<T, Q> | null {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
@@ -58,7 +43,7 @@ export function getClosest<T extends Node>(
     predicate = node =>
       isElement(node) && matches(node, context, query, options);
   } else {
-    predicate = query;
+    predicate = query as Predicate<Node, T>;
   }
 
   for (
@@ -67,7 +52,7 @@ export function getClosest<T extends Node>(
     next = getParentNode(next, context)
   ) {
     if (predicate(next)) {
-      return next;
+      return next as GetClosestResult<T, Q>;
     }
   }
 

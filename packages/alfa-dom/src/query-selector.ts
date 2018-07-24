@@ -6,32 +6,22 @@ import { Element, Node } from "./types";
 
 export type QuerySelectorOptions = Readonly<{ composed?: boolean }>;
 
-/**
- * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
- */
-export function querySelector(
-  scope: Node,
-  context: Node,
-  query: string,
-  options?: QuerySelectorOptions
-): Element | null;
+export type QuerySelectorResult<T extends Node, Q> = Q extends string
+  ? Element
+  : T;
 
 /**
  * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
  */
-export function querySelector<T extends Node>(
+export function querySelector<
+  T extends Node,
+  Q extends string | Predicate<Node, T>
+>(
   scope: Node,
   context: Node,
-  query: Predicate<Node, T>,
+  query: Q,
   options?: QuerySelectorOptions
-): T | null;
-
-export function querySelector<T extends Node>(
-  scope: Node,
-  context: Node,
-  query: string | Predicate<Node, T>,
-  options?: QuerySelectorOptions
-): T | null {
+): QuerySelectorResult<T, Q> | null {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
@@ -39,17 +29,17 @@ export function querySelector<T extends Node>(
     predicate = node =>
       isElement(node) && matches(node, context, query, options);
   } else {
-    predicate = query;
+    predicate = query as Predicate<Node, T>;
   }
 
-  let found: T | null = null;
+  let found: QuerySelectorResult<T, Q> | null = null;
 
   traverseNode(
     scope,
     {
       enter(node, parent) {
         if (predicate(node)) {
-          found = node;
+          found = node as QuerySelectorResult<T, Q>;
           return false;
         }
       }
@@ -63,29 +53,15 @@ export function querySelector<T extends Node>(
 /**
  * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
  */
-export function querySelectorAll(
+export function querySelectorAll<
+  T extends Node,
+  Q extends string | Predicate<Node, T>
+>(
   scope: Node,
   context: Node,
-  query: string,
-  options?: QuerySelectorOptions
-): Array<Element>;
-
-/**
- * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
- */
-export function querySelectorAll<T extends Node>(
-  scope: Node,
-  context: Node,
-  query: Predicate<Node, T>,
-  options?: QuerySelectorOptions
-): Array<T>;
-
-export function querySelectorAll<T extends Node>(
-  scope: Node,
-  context: Node,
-  query: string | Predicate<Node, T>,
+  query: Q,
   options: QuerySelectorOptions = {}
-): Array<T> {
+): Array<QuerySelectorResult<T, Q>> {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
@@ -93,17 +69,17 @@ export function querySelectorAll<T extends Node>(
     predicate = node =>
       isElement(node) && matches(node, context, query, options);
   } else {
-    predicate = query;
+    predicate = query as Predicate<Node, T>;
   }
 
-  const found: Array<T> = [];
+  const found: Array<QuerySelectorResult<T, Q>> = [];
 
   traverseNode(
     scope,
     {
       enter(node, parent) {
         if (predicate(node)) {
-          found.push(node);
+          found.push(node as QuerySelectorResult<T, Q>);
         }
       }
     },

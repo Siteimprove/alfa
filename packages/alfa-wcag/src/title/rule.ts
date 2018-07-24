@@ -14,14 +14,14 @@ export const Title: Rule<"document", Element> = {
     applicability(() => querySelector(document, document, "html"));
 
     expectations((target, expectation) => {
-      const title = querySelector<Element>(
+      const title = querySelector(
         target,
         document,
         node =>
           isElement(node) &&
           node.localName === "title" &&
           getElementNamespace(node, document) === Namespace.HTML
-      );
+      ) as Element | null;
 
       expectation(1, title !== null);
 
