@@ -18,10 +18,12 @@ const { min, max } = Math;
 
 const session = new Session();
 
-const heuristics = [byteCoverage];
-const weights = {
-  byteCoverage: 1.0
-};
+const heuristics = [
+  {
+    heuristic: byteCoverage,
+    weight: 1.0
+  }
+];
 
 session.connect();
 
@@ -252,12 +254,7 @@ function parseFunctionCoverage(script, map, range, name) {
     return block;
   }
 
-  let points = 0;
-  for (let i = 0, n = heuristics.length; i < n; i++) {
-    points += heuristics[i](script, block);
-  }
-
-  block.points = points;
+  block.points = calculatePoints(script, block);
   return block;
 }
 
@@ -290,12 +287,7 @@ function parseBlockCoverage(script, map, range) {
     return block;
   }
 
-  let points = 0;
-  for (let i = 0, n = heuristics.length; i < n; i++) {
-    points += heuristics[i](script, block);
-  }
-
-  block.points = points;
+  block.points = calculatePoints(script, block);
   return block;
 }
 
@@ -517,4 +509,12 @@ function printCoverage(script, coverage) {
   output += below.trim() === "" ? "" : `${below}\n`;
 
   process.stdout.write(`\n${output}\n`);
+}
+
+function calculatePoints(script, block) {
+  let points = 0;
+  for (let i = 0, n = heuristics.length; i < n; i++) {
+    points += heuristics[i].heuristic(script, block) * heuristics[i].weight;
+  }
+  return points;
 }
