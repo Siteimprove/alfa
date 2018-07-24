@@ -61,7 +61,7 @@ export const DisplayProperty: Property<Display> = {
   initial() {
     return ["inline", "flow"];
   },
-  computed(own, parent) {
-    return own.display === undefined ? null : own.display;
+  computed(getProperty) {
+    return getProperty("display");
   }
 };

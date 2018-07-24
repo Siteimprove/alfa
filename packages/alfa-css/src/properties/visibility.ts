@@ -15,7 +15,7 @@ export const VisibilityProperty: Property<Visibility> = {
   initial() {
     return "visible";
   },
-  computed(own, parent) {
-    return own.visibility === undefined ? null : own.visibility;
+  computed(getProperty) {
+    return getProperty("visibility");
   }
 };

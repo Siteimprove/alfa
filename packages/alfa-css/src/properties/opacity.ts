@@ -15,7 +15,8 @@ export const OpacityProperty: Property<Opacity> = {
   initial() {
     return 1;
   },
-  computed(own, parent) {
-    return own.opacity === undefined ? null : clamp(own.opacity, 0, 1);
+  computed(getProperty) {
+    const opacity = getProperty("opacity");
+    return opacity === undefined ? opacity : clamp(opacity, 0, 1);
   }
 };

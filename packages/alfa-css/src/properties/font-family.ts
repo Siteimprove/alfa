@@ -15,7 +15,7 @@ export const FontFamilyProperty: Property<FontFamily> = {
   initial() {
     return "serif";
   },
-  computed(own) {
-    return own.fontFamily === undefined ? null : own.fontFamily;
+  computed(getProperty) {
+    return getProperty("fontFamily");
   }
 };

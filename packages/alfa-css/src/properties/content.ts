@@ -16,7 +16,7 @@ export const ContentProperty: Property<Content> = {
   initial() {
     return "normal";
   },
-  computed(own, parent) {
-    return own.content === undefined ? null : own.content;
+  computed(getProperty) {
+    return getProperty("content");
   }
 };

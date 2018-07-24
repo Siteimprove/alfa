@@ -20,7 +20,7 @@ export const ColorProperty: Property<Color> = {
   initial() {
     return { red: 0, green: 0, blue: 0, alpha: 1 };
   },
-  computed(own, parent) {
-    return own.color === undefined ? null : own.color;
+  computed(getProperty) {
+    return getProperty("color");
   }
 };
