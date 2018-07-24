@@ -7,6 +7,10 @@ import {
   byteLengthTotalCoverage,
   byteLengthBlockCoverage
 } from "./coverage-heuristics/byte";
+import {
+  arithmeticTotalCoverage,
+  arithmeticBlockCoverage
+} from "./coverage-heuristics/arithmetic";
 import { Session } from "inspector";
 import * as sourceMap from "source-map";
 import { SourceMapConsumer } from "source-map";
@@ -25,6 +29,11 @@ const heuristics = [
   {
     heuristicTotal: byteLengthTotalCoverage,
     heuristicBlock: byteLengthBlockCoverage,
+    weight: 0.0
+  },
+  {
+    heuristicTotal: arithmeticTotalCoverage,
+    heuristicBlock: arithmeticBlockCoverage,
     weight: 1.0
   }
 ];
@@ -442,9 +451,9 @@ function isWhitespace(input) {
  */
 function printCoverageStatistics(script) {
   let file = "";
-  if ((script.sources.length = 1)) {
+  if (script.sources.length === 1) {
     file += " in " + script.sources[0].path;
-  } else if ((script.sources.length = 2)) {
+  } else if (script.sources.length === 2) {
     file += " in " + script.sources[1].path;
   }
   notify.warn(
@@ -469,7 +478,6 @@ function printCoverage(script, coverage) {
   if (source === undefined) {
     return;
   }
-  console.log("I am here");
 
   const uncovered = source.content.substring(start.offset, end.offset);
 
@@ -486,7 +494,7 @@ function printCoverage(script, coverage) {
 
   let output = `${chalk.bold("Uncovered block")}`;
 
-  output += `\n${chalk.dim(`${filePath}:${start.line + 1}`)}`;
+  output += `\n${chalk.dim(`${filePath}:${start.line + 1}-${end.line + 1}`)}`;
   output += "\n";
 
   output += above.trim() === "" ? "" : `\n${above}`;
