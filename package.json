@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/node": "^10.5.2",
     "@types/prettier": "^1.13.1",
+    "axios": "^0.18.0",
     "chalk": "^2.4.1",
     "esm": "^3.0.65",
     "gaze": "^1.1.3",
