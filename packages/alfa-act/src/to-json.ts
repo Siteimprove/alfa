@@ -67,8 +67,10 @@ export function toJson<A extends Aspect, T extends Target>(
           result.outcome === "inapplicable"
             ? undefined
             : {
+                "@context": Contexts.OffsetPointer,
                 "@type": "ptr:OffsetPointer",
-                "@value": getDocumentPosition(result.target, aspects.document)
+                reference: { "@id": "_:document" },
+                offset: getDocumentPosition(result.target, aspects.document)
               }
       }))
     });

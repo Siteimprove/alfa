@@ -162,6 +162,9 @@ export namespace Contexts {
     statusCodeValue: "http:statusCodeValue"
   };
 
+  /**
+   * @see https://www.w3.org/TR/Content-in-RDF/#ContentClass
+   */
   export const Content: Context = {
     ...Namespaces,
 
@@ -176,5 +179,27 @@ export namespace Contexts {
      * @see https://www.w3.org/TR/Content-in-RDF/#charsProperty
      */
     chars: "cnt:chars"
+  };
+
+  /**
+   * @see https://www.w3.org/TR/Pointers-in-RDF/#offsetPointerClass
+   */
+  export const OffsetPointer: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    /**
+     * @see https://www.w3.org/TR/Pointers-in-RDF/#referenceProperty
+     */
+    reference: {
+      "@id": "ptr:reference",
+      "@type": "earl:TestSubject"
+    },
+
+    /**
+     * @see https://www.w3.org/TR/Pointers-in-RDF/#offsetProperty
+     */
+    offset: "ptr:offset"
   };
 }
