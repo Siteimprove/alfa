@@ -113,7 +113,13 @@ export class Project {
    * @param {function(TypeScript.Node): void} visitor
    */
   walk(file, visitor) {
-    const source = this.service.getProgram().getSourceFile(file);
+    const program = this.service.getProgram();
+
+    if (program === undefined) {
+      return;
+    }
+
+    const source = program.getSourceFile(file);
 
     if (source !== undefined) {
       visit(source);
