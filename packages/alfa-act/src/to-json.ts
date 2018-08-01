@@ -70,7 +70,9 @@ export function toJson<A extends Aspect, T extends Target>(
                 "@context": Contexts.OffsetPointer,
                 "@type": "ptr:OffsetPointer",
                 reference: { "@id": "_:document" },
-                offset: getDocumentPosition(result.target, aspects.document)
+                offset: getDocumentPosition(result.target, aspects.document, {
+                  flattened: true
+                })
               }
       }))
     });
