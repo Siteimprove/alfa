@@ -5,10 +5,16 @@ import { BlockCoverage, FunctionCoverage, Script } from "../coverage";
  */
 export function byteLengthTotalCoverage(script) {
   let uncovered = 0;
+  const totalLength = totalLength(script);
+
   for (const block of script.coverage) {
     if (block.count === 0) {
       uncovered += block.range.end.offset - block.range.start.offset;
     }
+  }
+
+  if (totalLength === 0) {
+    return 100;
   }
 
   return (uncovered / totalLength(script)) * 100;
@@ -20,6 +26,12 @@ export function byteLengthTotalCoverage(script) {
  */
 export function byteLengthBlockCoverage(script, block) {
   const { start, end } = block.range;
+  const totalLength = totalLength(script);
+
+  if (totalLength === 0) {
+    return 100;
+  }
+
   return ((end.offset - start.offset) / totalLength(script)) * 100;
 }
 
@@ -28,6 +40,7 @@ export function byteLengthBlockCoverage(script, block) {
  */
 function totalLength(script) {
   let total = 0;
+
   if (script.sources.length > 1) {
     // typescript
     for (let i = 1, n = script.sources.length; i < n; i++) {
@@ -37,5 +50,6 @@ function totalLength(script) {
     // javascript
     total = script.sources[0].content.length;
   }
+
   return total;
 }

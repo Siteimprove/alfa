@@ -65,7 +65,7 @@ function visit(node) {
  * @param {Script} script
  */
 export function arithmeticTotalCoverage(script) {
-  let total = totalOperations(script);
+  const total = totalOperations(script);
   let uncovered = 0;
 
   for (let block of script.coverage) {
@@ -90,7 +90,11 @@ export function arithmeticTotalCoverage(script) {
       );
     }
   }
-  console.log(uncovered, total);
+
+  if (total === 0) {
+    return 100;
+  }
+
   return (1 - uncovered / total) * 100;
 }
 
@@ -100,6 +104,7 @@ export function arithmeticTotalCoverage(script) {
  * @return {number}
  */
 export function arithmeticBlockCoverage(script, block) {
+  const total = totalOperations(script);
   const file = script.sources.find(source => {
     return source.path === block.range.start.path;
   });
@@ -115,5 +120,10 @@ export function arithmeticBlockCoverage(script, block) {
       TypeScript.ScriptTarget.ES2015
     )
   );
-  return (uncovered / totalOperations(script)) * 100;
+
+  if (total === 0) {
+    return 100;
+  }
+
+  return (uncovered / total) * 100;
 }
