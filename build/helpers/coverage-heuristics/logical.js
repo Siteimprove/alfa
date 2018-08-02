@@ -42,13 +42,18 @@ function visit(node) {
    * @param {TypeScript.Node} node
    */
   let visitChild = node => {
-    console.log(node);
     switch (node.kind) {
       case TypeScript.SyntaxKind.BinaryExpression:
         const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
-
         switch (binaryExpression.operatorToken.kind) {
-          case TypeScript.SyntaxKind.AmpersandToken:
+          case TypeScript.SyntaxKind.AmpersandAmpersandToken:
+          case TypeScript.SyntaxKind.BarBarToken:
+          case TypeScript.SyntaxKind.GreaterThanToken:
+          case TypeScript.SyntaxKind.GreaterThanEqualsToken:
+          case TypeScript.SyntaxKind.LessThanToken:
+          case TypeScript.SyntaxKind.LessThanEqualsToken:
+          case TypeScript.SyntaxKind.EqualsEqualsToken:
+          case TypeScript.SyntaxKind.EqualsEqualsEqualsToken:
             total += Math.pow(1.1, depth);
         }
     }
