@@ -42,18 +42,14 @@ function visit(node) {
    * @param {TypeScript.Node} node
    */
   let visitChild = node => {
+    console.log(node);
     switch (node.kind) {
       case TypeScript.SyntaxKind.BinaryExpression:
         const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
 
         switch (binaryExpression.operatorToken.kind) {
-          case TypeScript.SyntaxKind.SlashToken:
-          case TypeScript.SyntaxKind.PlusToken:
-          case TypeScript.SyntaxKind.MinusToken:
-          case TypeScript.SyntaxKind.AsteriskToken:
-          case TypeScript.SyntaxKind.PercentToken:
+          case TypeScript.SyntaxKind.AmpersandToken:
             total += Math.pow(1.1, depth);
-            console.log(depth);
         }
     }
     depth++;
@@ -68,7 +64,7 @@ function visit(node) {
 /**
  * @param {Script} script
  */
-export function arithmeticTotalCoverage(script) {
+export function logicalTotalCoverage(script) {
   const total = totalOperations(script);
   let uncovered = 0;
 
@@ -107,7 +103,7 @@ export function arithmeticTotalCoverage(script) {
  * @param {BlockCoverage | FunctionCoverage} block
  * @return {number}
  */
-export function arithmeticBlockCoverage(script, block) {
+export function logicalBlockCoverage(script, block) {
   const total = totalOperations(script);
   const file = script.sources.find(source => {
     return source.path === block.range.start.path;

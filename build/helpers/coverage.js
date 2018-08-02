@@ -8,6 +8,10 @@ import {
   byteLengthBlockCoverage
 } from "./coverage-heuristics/byte";
 import {
+  logicalTotalCoverage,
+  logicalBlockCoverage
+} from "./coverage-heuristics/logical";
+import {
   arithmeticTotalCoverage,
   arithmeticBlockCoverage
 } from "./coverage-heuristics/arithmetic";
@@ -34,7 +38,12 @@ const heuristics = [
   {
     heuristicTotal: arithmeticTotalCoverage,
     heuristicBlock: arithmeticBlockCoverage,
-    weight: 0.9
+    weight: 0.1
+  },
+  {
+    heuristicTotal: logicalTotalCoverage,
+    heuristicBlock: logicalBlockCoverage,
+    weight: 0.8
   }
 ];
 
@@ -50,7 +59,7 @@ session.post("Profiler.startPreciseCoverage", {
 process.on("exit", () => {
   session.post("Profiler.takePreciseCoverage", (err, { result }) => {
     const spec = process.argv[1];
-    const impl = spec.replace("\\test\\", "\\src\\").replace(".spec.js", ".js");
+    const impl = spec.replace("/test/", "/src/").replace(".spec.js", ".js");
 
     for (const scriptCoverage of result) {
       if (scriptCoverage.url === __filename) {
