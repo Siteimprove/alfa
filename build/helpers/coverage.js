@@ -459,9 +459,10 @@ function printCoverageStatistics(script) {
   } else if (script.sources.length === 2) {
     file += " in " + script.sources[1].path;
   }
-  notify.warn(
-    `Low coverage (${calculateTotalCoverage(script).toFixed(2)}%)` + file
-  );
+  const total = calculateTotalCoverage(script);
+  if (total < 90) {
+    notify.warn(`Low coverage (${total.toFixed(2)}%)` + file);
+  }
 }
 
 /**
