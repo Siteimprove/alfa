@@ -33,17 +33,17 @@ const heuristics = [
   {
     heuristicTotal: byteLengthTotalCoverage,
     heuristicBlock: byteLengthBlockCoverage,
-    weight: 0.1
+    weight: 0.0
   },
   {
     heuristicTotal: arithmeticTotalCoverage,
     heuristicBlock: arithmeticBlockCoverage,
-    weight: 0.1
+    weight: 1.0
   },
   {
     heuristicTotal: logicalTotalCoverage,
     heuristicBlock: logicalBlockCoverage,
-    weight: 0.8
+    weight: 0.0
   }
 ];
 
