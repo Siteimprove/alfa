@@ -59,7 +59,9 @@ session.post("Profiler.startPreciseCoverage", {
 process.on("exit", () => {
   session.post("Profiler.takePreciseCoverage", (err, { result }) => {
     const spec = process.argv[1];
-    const impl = spec.replace("/test/", "/src/").replace(".spec.js", ".js");
+    const impl = spec
+      .replace(`${path.sep}test${path.sep}`, `${path.sep}src{path.sep}`)
+      .replace(".spec.js", ".js");
 
     for (const scriptCoverage of result) {
       if (scriptCoverage.url === __filename) {
