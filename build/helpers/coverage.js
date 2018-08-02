@@ -80,6 +80,7 @@ process.on("exit", () => {
 
       printCoverageStatistics(script);
       if (sortedBlocks.length > 0) {
+        console.log(process.argv);
         printCoverage(script, sortedBlocks[0]);
       }
     }

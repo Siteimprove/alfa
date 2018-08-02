@@ -2,41 +2,7 @@ import { BlockCoverage, FunctionCoverage, Script } from "../coverage";
 
 /**
  * @param {Script} script
- */
-export function byteLengthTotalCoverage(script) {
-  let uncovered = 0;
-  const totalLength = totalLength(script);
-
-  for (const block of script.coverage) {
-    if (block.count === 0) {
-      uncovered += block.range.end.offset - block.range.start.offset;
-    }
-  }
-
-  if (totalLength === 0) {
-    return 100;
-  }
-
-  return (uncovered / totalLength(script)) * 100;
-}
-
-/**
- * @param {Script} script
- * @param {BlockCoverage | FunctionCoverage} block
- */
-export function byteLengthBlockCoverage(script, block) {
-  const { start, end } = block.range;
-  const totalLength = totalLength(script);
-
-  if (totalLength === 0) {
-    return 100;
-  }
-
-  return ((end.offset - start.offset) / totalLength(script)) * 100;
-}
-
-/**
- * @param {Script} script
+ * @return {Number}
  */
 function totalLength(script) {
   let total = 0;
@@ -52,4 +18,39 @@ function totalLength(script) {
   }
 
   return total;
+}
+
+/**
+ * @param {Script} script
+ */
+export function byteLengthTotalCoverage(script) {
+  let uncovered = 0;
+  const total = /** @type {Number} */ (totalLength(script));
+
+  for (const block of script.coverage) {
+    if (block.count === 0) {
+      uncovered += block.range.end.offset - block.range.start.offset;
+    }
+  }
+
+  if (total === 0) {
+    return 100;
+  }
+
+  return (uncovered / total) * 100;
+}
+
+/**
+ * @param {Script} script
+ * @param {BlockCoverage | FunctionCoverage} block
+ */
+export function byteLengthBlockCoverage(script, block) {
+  const { start, end } = block.range;
+  const total = /** @type {Number} */ (totalLength(script));
+
+  if (total === 0) {
+    return 100;
+  }
+
+  return ((end.offset - start.offset) / total) * 100;
 }
