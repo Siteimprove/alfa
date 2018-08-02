@@ -36,6 +36,7 @@ function totalOperations(script) {
  */
 function visit(node) {
   let total = 0;
+  let depth = 0;
 
   /**
    * @param {TypeScript.Node} node
@@ -50,11 +51,13 @@ function visit(node) {
           case TypeScript.SyntaxKind.PlusToken:
           case TypeScript.SyntaxKind.MinusToken:
           case TypeScript.SyntaxKind.AsteriskToken:
-            total++;
+            total += Math.pow(1.1, depth);
+            console.log(depth);
         }
     }
-
+    depth++;
     TypeScript.forEachChild(node, visitChild);
+    depth--;
   };
 
   TypeScript.forEachChild(node, visitChild);
