@@ -79,8 +79,10 @@ process.on("exit", () => {
       });
 
       printCoverageStatistics(script);
-      if (sortedBlocks.length > 0) {
-        console.log(process.argv);
+      if (
+        sortedBlocks.length > 0 &&
+        process.env.npm_lifecycle_event === "start"
+      ) {
         printCoverage(script, sortedBlocks[0]);
       }
     }
