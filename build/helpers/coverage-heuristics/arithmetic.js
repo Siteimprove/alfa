@@ -41,7 +41,6 @@ function visit(node) {
    * @param {TypeScript.Node} node
    */
   let visitChild = node => {
-    console.log(node.kind);
     switch (node.kind) {
       case TypeScript.SyntaxKind.BinaryExpression:
         const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
@@ -122,8 +121,6 @@ export function arithmeticTotalCoverage(script) {
   if (total === 0) {
     return 100;
   }
-  console.log("uncovered: " + uncovered);
-  console.log("total: " + total);
   return (1 - uncovered / total) * 100;
 }
 
