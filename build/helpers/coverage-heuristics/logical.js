@@ -36,7 +36,6 @@ function totalOperations(script) {
  */
 function visit(node) {
   let total = 0;
-  let depth = 0;
 
   /**
    * @param {TypeScript.Node} node
@@ -54,12 +53,10 @@ function visit(node) {
           case TypeScript.SyntaxKind.LessThanEqualsToken:
           case TypeScript.SyntaxKind.EqualsEqualsToken:
           case TypeScript.SyntaxKind.EqualsEqualsEqualsToken:
-            total += Math.pow(1.1, depth);
+            total++;
         }
     }
-    depth++;
     TypeScript.forEachChild(node, visitChild);
-    depth--;
   };
 
   TypeScript.forEachChild(node, visitChild);
