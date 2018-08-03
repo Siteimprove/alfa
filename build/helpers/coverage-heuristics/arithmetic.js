@@ -53,9 +53,33 @@ function visit(node) {
           case TypeScript.SyntaxKind.AsteriskToken:
           case TypeScript.SyntaxKind.PercentToken:
             total += Math.pow(1.1, depth);
-            console.log(depth);
+            break;
         }
+        break;
+      case TypeScript.SyntaxKind.PrefixUnaryExpression:
+        const prefixUnaryExpression = /**@type {TypeScript.PrefixUnaryExpression} */ (node);
+
+        switch (prefixUnaryExpression.operator) {
+          case TypeScript.SyntaxKind.PlusPlusToken:
+          case TypeScript.SyntaxKind.MinusMinusToken:
+            console.log(depth);
+            total += Math.pow(1.1, depth);
+            break;
+        }
+        break;
+      case TypeScript.SyntaxKind.PostfixUnaryExpression:
+        const postfixUnaryOperator = /**@type {TypeScript.PostfixUnaryExpression} */ (node);
+
+        switch (postfixUnaryOperator.operator) {
+          case TypeScript.SyntaxKind.PlusPlusToken:
+          case TypeScript.SyntaxKind.MinusMinusToken:
+            console.log(depth);
+            total += Math.pow(1.1, depth);
+            break;
+        }
+        break;
     }
+
     depth++;
     TypeScript.forEachChild(node, visitChild);
     depth--;
