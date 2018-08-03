@@ -36,12 +36,12 @@ function totalOperations(script) {
  */
 function visit(node) {
   let total = 0;
-  let depth = 0;
 
   /**
    * @param {TypeScript.Node} node
    */
   let visitChild = node => {
+    console.log(node.kind);
     switch (node.kind) {
       case TypeScript.SyntaxKind.BinaryExpression:
         const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
@@ -52,7 +52,11 @@ function visit(node) {
           case TypeScript.SyntaxKind.MinusToken:
           case TypeScript.SyntaxKind.AsteriskToken:
           case TypeScript.SyntaxKind.PercentToken:
-            total += Math.pow(1.1, depth);
+          case TypeScript.SyntaxKind.PlusEqualsToken:
+          case TypeScript.SyntaxKind.MinusEqualsToken:
+          case TypeScript.SyntaxKind.AsteriskEqualsToken:
+          case TypeScript.SyntaxKind.SlashEqualsToken:
+            total++;
             break;
         }
         break;
@@ -62,8 +66,7 @@ function visit(node) {
         switch (prefixUnaryExpression.operator) {
           case TypeScript.SyntaxKind.PlusPlusToken:
           case TypeScript.SyntaxKind.MinusMinusToken:
-            console.log(depth);
-            total += Math.pow(1.1, depth);
+            total++;
             break;
         }
         break;
@@ -73,16 +76,13 @@ function visit(node) {
         switch (postfixUnaryOperator.operator) {
           case TypeScript.SyntaxKind.PlusPlusToken:
           case TypeScript.SyntaxKind.MinusMinusToken:
-            console.log(depth);
-            total += Math.pow(1.1, depth);
+            total++;
             break;
         }
         break;
     }
 
-    depth++;
     TypeScript.forEachChild(node, visitChild);
-    depth--;
   };
 
   TypeScript.forEachChild(node, visitChild);
@@ -122,7 +122,8 @@ export function arithmeticTotalCoverage(script) {
   if (total === 0) {
     return 100;
   }
-
+  console.log("uncovered: " + uncovered);
+  console.log("total: " + total);
   return (1 - uncovered / total) * 100;
 }
 
