@@ -25,5 +25,5 @@ export function getButtonType(element: Element): ButtonType | null {
     }
   }
 
-  return null;
+  return "submit";
 }
