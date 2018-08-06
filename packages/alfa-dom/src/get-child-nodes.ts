@@ -9,7 +9,7 @@ export function getChildNodes(
   node: Node,
   context: Node,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
-): Array<Node> {
+): Readonly<Array<Node>> {
   const result: Array<Node> = [];
 
   if (options.flattened === true) {
