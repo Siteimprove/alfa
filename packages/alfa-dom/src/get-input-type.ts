@@ -66,5 +66,5 @@ export function getInputType(element: Element): InputType | null {
     }
   }
 
-  return null;
+  return "text";
 }
