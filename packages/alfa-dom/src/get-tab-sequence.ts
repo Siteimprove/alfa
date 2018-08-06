@@ -1,42 +1,58 @@
 import { getTabIndex } from "./get-tab-index";
+import { traverseNode } from "./traverse-node";
 import { Element, NodeType } from "./types";
 
-export interface TabIndexedElement extends Element {
-  index: number;
+function binaryInsert(
+  arr: Array<Element>,
+  element: Element,
+  index: number,
+  i: number,
+  depth = 0
+) {
+  if (arr.length === 0) {
+    arr.push(element);
+  }
+
+  const competitorIndex = getTabIndex(arr[i]);
+
+  if (competitorIndex === null) {
+    return;
+  }
+
+  if (competitorIndex < index) {
+    binaryInsert(arr, element, index, i + i / 2);
+  }
+
+  if (competitorIndex > index) {
+    binaryInsert(arr, element, index, i - i / 2);
+  }
+
+  arr.splice(i, 0, element);
 }
 
 /**
  * @see https://www.w3.org/TR/html/editing.html#the-tabindex-attribute
  */
-export function getTabSequence(
-  element: Element,
-  tabSequence: Array<TabIndexedElement> = []
-): Array<TabIndexedElement> {
-  element.childNodes.length;
-  for (let i = 0, n = element.childNodes.length; i < n; i++) {
-    const child = element.childNodes[i];
-    if (child.nodeType === NodeType.Element) {
-      getTabSequence(<TabIndexedElement>child, tabSequence);
+export function getTabSequence(element: Element): Array<Element> {
+  const result = <Array<Element>>[];
+
+  traverseNode(element, {
+    enter(node, parent) {
+      if (node.nodeType !== NodeType.Element) {
+        return;
+      }
+
+      const index = getTabIndex(<Element>node);
+      if (index !== null && index >= 0) {
+        binaryInsert(
+          result,
+          <Element>node,
+          index,
+          Math.floor(result.length / 2)
+        );
+      }
     }
-  }
+  });
 
-  const index = getTabIndex(element);
-
-  if (index === null || index === -1) {
-    return tabSequence;
-  }
-
-  const weightedElement = <TabIndexedElement>element;
-
-  if (index > 0) {
-    weightedElement.index = index - 1;
-  }
-
-  if (index === 0) {
-    weightedElement.index = Number.MAX_SAFE_INTEGER;
-  }
-
-  tabSequence.push(weightedElement);
-
-  return tabSequence.sort((a, b) => a.index - b.index);
+  return result;
 }
