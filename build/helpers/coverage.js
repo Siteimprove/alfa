@@ -72,7 +72,7 @@ process.on("exit", () => {
 
       let computedPoints = computePoints(script);
       let sortedBlocks = script.coverage
-        .filter(block => block.count == 0)
+        .filter(block => block.count === 0)
         .sort((a, b) => {
           const aPoints = computedPoints.get(a);
           const bPoints = computedPoints.get(b);
@@ -543,9 +543,9 @@ function computePoints(script) {
   const total = calculateTotalCoverage(script);
   const map = new Map();
 
-  script.coverage.forEach(block => {
+  for (let block of script.coverage) {
     map.set(block, calculateBlockCoverage(script, block, total));
-  });
+  }
 
   return map;
 }

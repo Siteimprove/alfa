@@ -2,7 +2,7 @@ import { BlockCoverage, FunctionCoverage, Script } from "../coverage";
 
 /**
  * @param {Script} script
- * @return {Number}
+ * @return {number}
  */
 function totalLength(script) {
   let total = 0;
@@ -26,7 +26,7 @@ export const Byte = {
    */
   total(script) {
     let uncovered = 0;
-    const total = /** @type {Number} */ (totalLength(script));
+    const total = totalLength(script);
 
     for (const block of script.coverage) {
       if (block.count === 0) {
