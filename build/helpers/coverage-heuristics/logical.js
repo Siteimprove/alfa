@@ -34,32 +34,29 @@ function totalOperations(script) {
 /**
  * @param {TypeScript.Node} node
  */
-function visit(node) {
+function visit(node, depth = 0) {
   let total = 0;
 
-  /**
-   * @param {TypeScript.Node} node
-   */
-  let visitChild = node => {
-    switch (node.kind) {
-      case TypeScript.SyntaxKind.BinaryExpression:
-        const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
-        switch (binaryExpression.operatorToken.kind) {
-          case TypeScript.SyntaxKind.AmpersandAmpersandToken:
-          case TypeScript.SyntaxKind.BarBarToken:
-          case TypeScript.SyntaxKind.GreaterThanToken:
-          case TypeScript.SyntaxKind.GreaterThanEqualsToken:
-          case TypeScript.SyntaxKind.LessThanToken:
-          case TypeScript.SyntaxKind.LessThanEqualsToken:
-          case TypeScript.SyntaxKind.EqualsEqualsToken:
-          case TypeScript.SyntaxKind.EqualsEqualsEqualsToken:
-            total++;
-        }
-    }
-    TypeScript.forEachChild(node, visitChild);
-  };
+  switch (node.kind) {
+    case TypeScript.SyntaxKind.BinaryExpression:
+      const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
+      switch (binaryExpression.operatorToken.kind) {
+        case TypeScript.SyntaxKind.AmpersandAmpersandToken:
+        case TypeScript.SyntaxKind.BarBarToken:
+        case TypeScript.SyntaxKind.GreaterThanToken:
+        case TypeScript.SyntaxKind.GreaterThanEqualsToken:
+        case TypeScript.SyntaxKind.LessThanToken:
+        case TypeScript.SyntaxKind.LessThanEqualsToken:
+        case TypeScript.SyntaxKind.EqualsEqualsToken:
+        case TypeScript.SyntaxKind.EqualsEqualsEqualsToken:
+          total++;
+      }
+  }
 
-  TypeScript.forEachChild(node, visitChild);
+  TypeScript.forEachChild(node, node => {
+    total += visit(node, depth + 1);
+  });
+
   return total;
 }
 
