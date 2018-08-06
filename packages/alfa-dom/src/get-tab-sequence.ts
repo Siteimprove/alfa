@@ -1,5 +1,5 @@
 import { getTabIndex } from "./get-tab-index";
-import { Element, Node, NodeType } from "./types";
+import { Element, NodeType } from "./types";
 
 export interface TabIndexedElement extends Element {
   index: number;
@@ -12,11 +12,13 @@ export function getTabSequence(
   element: Element,
   tabSequence: Array<TabIndexedElement> = []
 ): Array<TabIndexedElement> {
-  (<Array<Node>>element.childNodes).forEach(element => {
-    if (element.nodeType === NodeType.Element) {
-      getTabSequence(<TabIndexedElement>element, tabSequence);
+  element.childNodes.length;
+  for (let i = 0, n = element.childNodes.length; i < n; i++) {
+    const child = element.childNodes[i];
+    if (child.nodeType === NodeType.Element) {
+      getTabSequence(<TabIndexedElement>child, tabSequence);
     }
-  });
+  }
 
   const index = getTabIndex(element);
 
