@@ -2,19 +2,36 @@ import { getHash } from "@siteimprove/alfa-crypto";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getElementNamespace } from "./get-element-namespace";
 import { isComment, isDocumentType, isElement, isText } from "./guards";
-import { Node } from "./types";
+import { Attribute, Element, Node } from "./types";
 
 const digests: WeakMap<Node, string> = new WeakMap();
 
+export type NodeFilter = (node: Node, context: Node) => boolean;
+
+export type AttributeFilter = (
+  attribute: Attribute,
+  element: Element,
+  context: Node
+) => boolean;
+
 /**
- * Compute the digest of a node. The digest algorithm is based on DOMHASH
- * (RFC2803) and provides a means of identifying identical subtrees of a DOM
- * structure.
+ * Given a node and a context, compute the digest of the node within the
+ * context. The digest algorithm is based on DOMHASH (RFC2803) and provides a
+ * means of identifying identical subtrees of a DOM structure. If no digest can
+ * be computed for the node then `null` is returned.
  *
  * @see https://www.ietf.org/rfc/rfc2803.txt
  */
-export function getDigest(node: Node, context: Node): string | null {
+export function getDigest(
+  node: Node,
+  context: Node,
+  filters: Readonly<{ node?: NodeFilter; attribute?: AttributeFilter }> = {}
+): string | null {
   if (isComment(node) || isDocumentType(node)) {
+    return null;
+  }
+
+  if (filters.node !== undefined && !filters.node(node, context)) {
     return null;
   }
 
@@ -44,6 +61,13 @@ export function getDigest(node: Node, context: Node): string | null {
       );
 
       for (const attribute of attributes) {
+        if (
+          filters.attribute !== undefined &&
+          !filters.attribute(attribute, node, context)
+        ) {
+          continue;
+        }
+
         const namespace = getAttributeNamespace(attribute, node, context);
 
         if (namespace === null) {
@@ -57,7 +81,7 @@ export function getDigest(node: Node, context: Node): string | null {
     const { childNodes } = node;
 
     for (let i = 0, n = childNodes.length; i < n; i++) {
-      const childDigest = getDigest(childNodes[i], context);
+      const childDigest = getDigest(childNodes[i], context, filters);
 
       if (childDigest !== null) {
         hash.update(childDigest);
