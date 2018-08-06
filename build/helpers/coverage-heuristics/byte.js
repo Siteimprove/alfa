@@ -44,10 +44,10 @@ export const Byte = {
   /**
    * @param {Script} script
    * @param {BlockCoverage | FunctionCoverage} block
+   * @param {number} total
    */
-  block(script, block) {
+  block(script, block, total) {
     const { start, end } = block.range;
-    const total = /** @type {Number} */ (totalLength(script));
 
     if (total === 0) {
       return 100;

@@ -124,10 +124,10 @@ export const Arithmetic = {
   /**
    * @param {Script} script
    * @param {BlockCoverage | FunctionCoverage} block
+   * @param {number} total
    * @return {number}
    */
-  block(script, block) {
-    const total = totalOperations(script);
+  block(script, block, total) {
     const file = script.sources.find(source => {
       return source.path === block.range.start.path;
     });

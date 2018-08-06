@@ -70,7 +70,17 @@ process.on("exit", () => {
         continue;
       }
 
-      let sortedBlocks = script.coverage.sort((a, b) => a.points - b.points);
+      let computedPoints = computePoints(script);
+      let sortedBlocks = script.coverage
+        .filter(block => block.count == 0)
+        .sort((a, b) => {
+          const aPoints = computedPoints.get(a);
+          const bPoints = computedPoints.get(b);
+          return (
+            (bPoints === undefined ? 0 : bPoints) -
+            (aPoints === undefined ? 0 : aPoints)
+          );
+        });
 
       printCoverageStatistics(script);
       if (
@@ -109,7 +119,6 @@ process.on("exit", () => {
  * @typedef {Object} FunctionCoverage
  * @property {Range} range
  * @property {number} count
- * @property {number} points
  * @property {string} name
  */
 
@@ -117,7 +126,6 @@ process.on("exit", () => {
  * @typedef {Object} BlockCoverage
  * @property {Range} range
  * @property {number} count
- * @property {number} points
  */
 
 /**
@@ -251,17 +259,9 @@ function parseFunctionCoverage(script, map, range, name) {
     return null;
   }
 
-  let block = {
-    range: parsed,
-    count: range.count,
-    points: 0,
-    name
-  };
-
   return {
     range: parsed,
     count: range.count,
-    points: block.count === 0 ? 0 : calculateBlockCoverage(script, block),
     name
   };
 }
@@ -285,16 +285,9 @@ function parseBlockCoverage(script, map, range) {
     return null;
   }
 
-  let block = {
-    range: parsed,
-    count: range.count,
-    points: 0
-  };
-
   return {
     range: parsed,
-    count: range.count,
-    points: block.count === 0 ? 0 : calculateBlockCoverage(script, block)
+    count: range.count
   };
 }
 
@@ -532,11 +525,27 @@ function calculateTotalCoverage(script) {
 /**
  * @param {Script} script
  * @param {FunctionCoverage | BlockCoverage} block
+ * @param {number} total
  */
-function calculateBlockCoverage(script, block) {
+function calculateBlockCoverage(script, block, total) {
   let points = 0;
   for (let i = 0, n = heuristics.length; i < n; i++) {
-    points += heuristics[i].block(script, block) * heuristics[i].weight;
+    points += heuristics[i].block(script, block, total) * heuristics[i].weight;
   }
   return points;
+}
+
+/**
+ * @param {Script} script
+ * @returns {Map<BlockCoverage | FunctionCoverage, number>}
+ */
+function computePoints(script) {
+  const total = calculateTotalCoverage(script);
+  const map = new Map();
+
+  script.coverage.forEach(block => {
+    map.set(block, calculateBlockCoverage(script, block, total));
+  });
+
+  return map;
 }
