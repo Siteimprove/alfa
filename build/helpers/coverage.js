@@ -258,12 +258,12 @@ function parseFunctionCoverage(script, map, range, name) {
     name
   };
 
-  if (block.count !== 0) {
-    return block;
-  }
-
-  block.points = calculateBlockCoverage(script, block);
-  return block;
+  return {
+    range: parsed,
+    count: range.count,
+    points: block.count === 0 ? 0 : calculateBlockCoverage(script, block),
+    name
+  };
 }
 
 /**
@@ -291,12 +291,11 @@ function parseBlockCoverage(script, map, range) {
     points: 0
   };
 
-  if (block.count !== 0) {
-    return block;
-  }
-
-  block.points = calculateBlockCoverage(script, block);
-  return block;
+  return {
+    range: parsed,
+    count: range.count,
+    points: block.count === 0 ? 0 : calculateBlockCoverage(script, block)
+  };
 }
 
 /**
