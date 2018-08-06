@@ -40,7 +40,11 @@ export function getChildNodes(
       isElement(childNode) &&
       childNode.localName === "slot"
     ) {
-      result.push(...getAssignedNodes(childNode, context));
+      const childNodes = getAssignedNodes(childNode, context);
+
+      for (let i = 0, n = childNodes.length; i < n; i++) {
+        result.push(childNodes[i]);
+      }
     } else {
       result.push(childNode);
     }
