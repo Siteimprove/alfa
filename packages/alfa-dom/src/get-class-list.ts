@@ -17,7 +17,7 @@ const classLists: WeakMap<Element, Array<string>> = new WeakMap();
  * getClassList(div);
  * // => ["foo", "bar"]
  */
-export function getClassList(element: Element): ReadonlyArray<string> {
+export function getClassList(element: Element): ArrayLike<string> {
   let classList = classLists.get(element);
 
   if (classList === undefined) {
