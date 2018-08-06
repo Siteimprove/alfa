@@ -447,15 +447,28 @@ function isWhitespace(input) {
  * @param {Script} script
  */
 function printCoverageStatistics(script) {
-  let file = "";
-  if (script.sources.length === 1) {
-    file += " in " + script.sources[0].path;
-  } else if (script.sources.length === 2) {
-    file += " in " + script.sources[1].path;
+  let source;
+
+  switch (script.sources.length) {
+    case 1:
+      source = script.sources[0];
+      break;
+    case 2:
+      source = script.sources[1];
+      break;
+    default:
+      return;
   }
+
   const total = calculateTotalCoverage(script);
+
+  const filePath = path.relative(
+    process.cwd(),
+    path.resolve(script.base, source.path)
+  );
+
   if (total < 90) {
-    notify.warn(`Low coverage (${total.toFixed(2)}%)` + file);
+    notify.warn(`${chalk.dim(filePath)} Low coverage (${total.toFixed(2)}%)`);
   }
 }
 
