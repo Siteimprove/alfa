@@ -14,8 +14,8 @@ export function audit<A extends Aspect, T extends Target>(
   aspects: Pick<Aspects, A>,
   rules: Rule<A, T> | Array<Rule<A, T>>,
   answers: Array<Answer> = []
-): Array<Result<T> | Question<T>> {
-  const results: Array<Result<T> | Question<T>> = [];
+): Array<Result<A, T> | Question<T>> {
+  const results: Array<Result<A, T> | Question<T>> = [];
 
   function question(rule: Rule<A, T>, question: string, target?: T): boolean {
     const answer = answers.find(
@@ -55,7 +55,7 @@ export function audit<A extends Aspect, T extends Target>(
 
         if (targets.length === 0) {
           results.push({
-            rule: rule.id,
+            rule,
             outcome: "inapplicable"
           });
         }
@@ -78,7 +78,7 @@ export function audit<A extends Aspect, T extends Target>(
           }
 
           results.push({
-            rule: rule.id,
+            rule,
             outcome: holds ? "passed" : "failed",
             target
           });

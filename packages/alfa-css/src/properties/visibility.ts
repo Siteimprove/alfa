@@ -12,8 +12,10 @@ export const VisibilityProperty: Property<Visibility> = {
   parse(input) {
     return parse(input, VisibilityGrammar);
   },
-  initial: "visible",
-  computed(own, parent) {
-    return own.visibility === undefined ? null : own.visibility;
+  initial() {
+    return "visible";
+  },
+  computed(getProperty) {
+    return getProperty("visibility");
   }
 };

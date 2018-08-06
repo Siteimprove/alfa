@@ -29,7 +29,7 @@ export function getLabel(element: Element, context: Node): Element | null {
     const rootNode = getRootNode(element, context);
 
     if (rootNode !== element) {
-      const label = querySelector<Element>(
+      const label = querySelector(
         rootNode,
         context,
         node =>
@@ -39,7 +39,7 @@ export function getLabel(element: Element, context: Node): Element | null {
       );
 
       if (label !== null) {
-        return label;
+        return label as Element;
       }
     }
   }

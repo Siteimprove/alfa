@@ -1,4 +1,5 @@
 import {
+  Aspect,
   isResult,
   Outcome,
   Question,
@@ -8,9 +9,9 @@ import {
 import { serialize } from "@siteimprove/alfa-dom";
 import { Assertions } from "@siteimprove/alfa-test";
 
-export function outcome<T extends Target>(
+export function outcome<A extends Aspect, T extends Target>(
   t: Assertions,
-  results: Array<Result<T> | Question<T>>,
+  results: Array<Result<A, T> | Question<T>>,
   assert: { [O in Outcome]?: Array<T> }
 ) {
   const outcomes: Array<Outcome> = ["passed", "failed", "inapplicable"];

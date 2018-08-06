@@ -28,7 +28,6 @@
     "@siteimprove/alfa-util": "^0.0.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "@types/node": "^10.5.2"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

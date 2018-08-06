@@ -6,7 +6,16 @@ import { Project } from "./project";
 
 export class Workspace {
   constructor() {
+    /**
+     * @private
+     * @type {Map<string, Project>}
+     */
     this.projects = new Map();
+
+    /**
+     * @private
+     * @type {TypeScript.DocumentRegistry}
+     */
     this.registry = TypeScript.createDocumentRegistry(false, process.cwd());
   }
 
@@ -53,6 +62,14 @@ export class Workspace {
    */
   lint(file) {
     return this.projectFor(file).lint(file);
+  }
+
+  /**
+   * @param {string} file
+   * @param {function(TypeScript.Node): void} visitor
+   */
+  walk(file, visitor) {
+    this.projectFor(file).walk(file, visitor);
   }
 }
 

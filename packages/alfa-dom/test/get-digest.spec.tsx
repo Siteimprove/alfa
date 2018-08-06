@@ -37,3 +37,27 @@ test("Correctly handles cases of sorted boolean attributes", t => {
     getDigest(bar, <div>{bar}</div>)
   );
 });
+
+test("Can filter out unwanted nodes", t => {
+  const foo = <div>Foo</div>;
+  const bar = <div />;
+
+  t.equal(
+    getDigest(foo, foo, {
+      node: node => node.nodeType === 1
+    }),
+    getDigest(bar, bar)
+  );
+});
+
+test("Can filter out unwanted attributes", t => {
+  const foo = <div id="foo" class="foo" />;
+  const bar = <div class="foo" />;
+
+  t.equal(
+    getDigest(foo, foo, {
+      attribute: attribute => attribute.localName !== "id"
+    }),
+    getDigest(bar, bar)
+  );
+});

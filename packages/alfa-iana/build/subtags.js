@@ -1,9 +1,9 @@
 import * as fs from "fs";
-import * as https from "https";
 import * as prettier from "prettier";
 
-const registry =
-  "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry";
+import { fetch } from "../../../build/helpers/http";
+
+const registry = "https://www.iana.org/assignments/language-subtag-registry";
 
 /**
  * @typedef {{ name: string, value: string }} Field
@@ -20,30 +20,6 @@ const registry =
  * @property {string | Array<string>} [prefix]
  * @property {string} [scope]
  */
-
-/**
- * @param {string} url
- * @return {Promise<string>}
- */
-async function fetch(url) {
-  return new Promise((resolve, reject) => {
-    https
-      .get(url, response => {
-        let data = "";
-
-        response.on("data", chunk => {
-          data += chunk.toString();
-        });
-
-        response.on("end", () => {
-          resolve(data);
-        });
-      })
-      .on("error", err => {
-        reject(err);
-      });
-  });
-}
 
 /**
  * @param {Subtag} subtag

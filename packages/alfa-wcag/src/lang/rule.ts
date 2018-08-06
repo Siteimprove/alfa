@@ -10,22 +10,23 @@ import { getLanguage } from "@siteimprove/alfa-iana";
 export const Lang: Rule<"document", Element> = {
   id: "alfa:wcag:lang",
   definition: (applicability, expectations, { document }) => {
-    applicability(() =>
-      querySelectorAll<Element>(document, document, node => {
-        if (!isElement(node) || node.localName === "html") {
-          return false;
-        }
+    applicability(
+      () =>
+        querySelectorAll(document, document, node => {
+          if (!isElement(node) || node.localName === "html") {
+            return false;
+          }
 
-        const lang = getAttribute(node, "lang", { trim: true });
+          const lang = getAttribute(node, "lang", { trim: true });
 
-        if (lang === null || lang === "") {
-          return false;
-        }
+          if (lang === null || lang === "") {
+            return false;
+          }
 
-        const xmlLang = getAttribute(node, "xml:lang", { trim: true });
+          const xmlLang = getAttribute(node, "xml:lang", { trim: true });
 
-        return xmlLang === null || xmlLang === "";
-      })
+          return xmlLang === null || xmlLang === "";
+        }) as Array<Element>
     );
 
     expectations((target, expectation) => {

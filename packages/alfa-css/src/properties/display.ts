@@ -58,8 +58,10 @@ export const DisplayProperty: Property<Display> = {
   parse(input) {
     return parse(input, DisplayGrammar);
   },
-  initial: ["inline", "flow"],
-  computed(own, parent) {
-    return own.display === undefined ? null : own.display;
+  initial() {
+    return ["inline", "flow"];
+  },
+  computed(getProperty) {
+    return getProperty("display");
   }
 };

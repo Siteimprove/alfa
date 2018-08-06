@@ -12,8 +12,11 @@ export const OpacityProperty: Property<Opacity> = {
   parse(input) {
     return parse(input, OpacityGrammar);
   },
-  initial: 1,
-  computed(own, parent) {
-    return own.opacity === undefined ? null : clamp(own.opacity, 0, 1);
+  initial() {
+    return 1;
+  },
+  computed(getProperty) {
+    const opacity = getProperty("opacity");
+    return opacity === undefined ? opacity : clamp(opacity, 0, 1);
   }
 };

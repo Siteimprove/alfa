@@ -2,6 +2,7 @@ import {
   Declaration,
   parseDeclaration,
   Properties,
+  PropertyGetter,
   PropertyName,
   PseudoElement,
   Selector,
@@ -162,22 +163,45 @@ export function getSpecifiedStyle(
 
   const propertyNames = union(keys(cascadedStyle), keys(parentStyle));
 
-  for (const propertyName of propertyNames) {
+  const getParentProperty: PropertyGetter<Stage.Computed> = propertyName => {
+    return parentStyle[propertyName];
+  };
+
+  const getProperty: PropertyGetter<Stage.Specified> = propertyName => {
+    if (propertyName in specifiedStyle) {
+      return specifiedStyle[propertyName];
+    }
+
     const property = Properties[propertyName];
-    const value = cascadedStyle[propertyName];
-    const inherited = parentStyle[propertyName];
+
+    const cascadedValue = cascadedStyle[propertyName];
 
     const shouldInherit =
-      value === "inherit" ||
-      (value === undefined && property.inherits === true);
+      cascadedValue === "inherit" ||
+      (propertyName in cascadedStyle === false && property.inherits === true);
 
-    if (shouldInherit && inherited !== undefined) {
-      specifiedStyle[propertyName] = inherited;
-    } else if (value === undefined || value === "initial") {
-      specifiedStyle[propertyName] = property.initial;
-    } else if (value !== "inherit") {
-      specifiedStyle[propertyName] = value;
+    if (shouldInherit && propertyName in parentStyle) {
+      specifiedStyle[propertyName] = parentStyle[propertyName];
+    } else if (
+      propertyName in cascadedStyle === false ||
+      cascadedValue === "initial"
+    ) {
+      specifiedStyle[propertyName] = property.initial(otherPropertyName => {
+        if (propertyName === otherPropertyName) {
+          return cascadedStyle[otherPropertyName];
+        }
+
+        return getProperty(otherPropertyName);
+      }, getParentProperty);
+    } else if (cascadedValue !== "inherit") {
+      specifiedStyle[propertyName] = cascadedValue;
     }
+
+    return specifiedStyle[propertyName];
+  };
+
+  for (const propertyName of propertyNames) {
+    getProperty(propertyName);
   }
 
   return specifiedStyle;
@@ -216,13 +240,34 @@ export function getComputedStyle(
 
   const propertyNames = keys(specifiedStyle);
 
-  for (const propertyName of propertyNames) {
-    const property = Properties[propertyName];
-    const computed = property.computed(specifiedStyle, parentStyle);
+  const getParentProperty: PropertyGetter<Stage.Computed> = propertyName => {
+    return parentStyle[propertyName];
+  };
 
-    if (computed !== null) {
-      computedStyle[propertyName] = computed;
+  const getProperty: PropertyGetter<Stage.Specified> = propertyName => {
+    if (propertyName in computedStyle) {
+      return computedStyle[propertyName];
     }
+
+    const property = Properties[propertyName];
+
+    const computedValue = property.computed(otherPropertyName => {
+      if (propertyName === otherPropertyName) {
+        return specifiedStyle[otherPropertyName];
+      }
+
+      return getProperty(otherPropertyName);
+    }, getParentProperty);
+
+    if (computedValue !== undefined) {
+      computedStyle[propertyName] = computedValue;
+    }
+
+    return computedValue;
+  };
+
+  for (const propertyName of propertyNames) {
+    getProperty(propertyName);
   }
 
   return computedStyle;

@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { FontSizeGrammar } from "../grammars/font";
+import { FontSizeGrammar } from "../grammars/font-size";
 import { AbsoluteLength, Property, RelativeLength } from "../types";
 
 export type FontSize = Readonly<
@@ -30,17 +30,19 @@ export const FontSizeProperty: Property<FontSize> = {
   parse(input) {
     return parse(input, FontSizeGrammar);
   },
-  initial: { type: "absolute", value: "medium" },
-  computed(own, parent) {
-    const value = own.fontSize;
-    const parentValue = parent.fontSize;
+  initial() {
+    return { type: "absolute", value: "medium" };
+  },
+  computed(getProperty, getParentProperty) {
+    const value = getProperty("fontSize");
+    const parentValue = getParentProperty("fontSize");
 
     if (value === undefined) {
-      return null;
+      return value;
     }
 
     if (value.type === "absolute") {
-      let factor: number;
+      let factor = 1;
 
       switch (value.value) {
         case "xx-small":
@@ -53,7 +55,6 @@ export const FontSizeProperty: Property<FontSize> = {
           factor = 8 / 9;
           break;
         case "medium":
-        default:
           factor = 1;
           break;
         case "large":
@@ -66,9 +67,15 @@ export const FontSizeProperty: Property<FontSize> = {
           factor = 2;
       }
 
+      let base = 16;
+
+      if (getProperty("fontFamily") === "monospace") {
+        base = 13;
+      }
+
       return {
         type: "length",
-        value: Math.round(factor * 16),
+        value: Math.round(factor * base),
         unit: "px"
       };
     }

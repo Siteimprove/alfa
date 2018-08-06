@@ -10,24 +10,25 @@ import { Stream } from "@siteimprove/alfa-lang";
 export const MetaRefresh: Rule<"document", Element> = {
   id: "alfa:wcag:meta-refresh",
   definition: (applicability, expectations, { document }) => {
-    applicability(() =>
-      querySelector<Element>(document, document, node => {
-        if (
-          !isElement(node) ||
-          node.localName !== "meta" ||
-          getAttribute(node, "http-equiv", { lowerCase: true }) !== "refresh"
-        ) {
-          return false;
-        }
+    applicability(
+      () =>
+        querySelector(document, document, node => {
+          if (
+            !isElement(node) ||
+            node.localName !== "meta" ||
+            getAttribute(node, "http-equiv", { lowerCase: true }) !== "refresh"
+          ) {
+            return false;
+          }
 
-        const content = getAttribute(node, "content");
+          const content = getAttribute(node, "content");
 
-        if (content === null) {
-          return false;
-        }
+          if (content === null) {
+            return false;
+          }
 
-        return getRefreshTime(content) !== null;
-      })
+          return getRefreshTime(content) !== null;
+        }) as Element | null
     );
 
     expectations((target, expectation) => {

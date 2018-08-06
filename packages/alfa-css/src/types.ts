@@ -204,17 +204,24 @@ export type PropertyName = keyof typeof Properties;
 
 export type PropertyType<P> = P extends Property<infer T> ? T : never;
 
+export type PropertyGetter<S extends Stage> = <P extends PropertyName>(
+  propertyName: P
+) => Style<S>[P];
+
 export interface Property<T> {
   readonly inherits?: true;
 
   parse(input: Array<Token>): T | null;
 
-  initial: T;
+  initial(
+    getProperty: PropertyGetter<Stage.Specified>,
+    getParentProperty: PropertyGetter<Stage.Computed>
+  ): T;
 
   computed(
-    own: Style<Stage.Specified>,
-    parent: Style<Stage.Computed>
-  ): T | null;
+    getProperty: PropertyGetter<Stage.Specified>,
+    getParentProperty: PropertyGetter<Stage.Computed>
+  ): T | undefined;
 }
 
 export type StyleValue<S extends Stage, V> = S extends Stage.Cascaded
