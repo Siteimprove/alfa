@@ -2,8 +2,8 @@ import { audit } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { UniqueId } from "../src/unique-id/rule";
-import { outcome } from "./helpers/outcome";
+import { UniqueId } from "../../src/unique-id/rule";
+import { outcome } from "../helpers/outcome";
 
 test("Passes when no duplicate IDs exist within a document", t => {
   const bar = <div id="bar" />;
