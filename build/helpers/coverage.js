@@ -492,7 +492,7 @@ function printCoverage(script, coverage) {
 
   let output = `${chalk.bold("Suggested Block to Cover")}`;
 
-  output += `\n${chalk.dim(`${filePath}:${start.line + 1}`;
+  output += `\n${chalk.dim(`${filePath}:${start.line + 1}`)}`;
   output += "\n";
 
   output += above.trim() === "" ? "" : `\n${above}`;
