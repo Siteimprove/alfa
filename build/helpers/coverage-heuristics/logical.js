@@ -1,13 +1,13 @@
-import { BlockCoverage, FunctionCoverage, Script, Source } from "../coverage";
+import { BlockCoverage, FunctionCoverage, Script } from "../coverage";
 import * as TypeScript from "typescript";
 
 /**
- * @param {Source} source
+ * @param {String} source
  */
 const createSource = source =>
   TypeScript.createSourceFile(
     "anon.ts",
-    source.content,
+    source,
     TypeScript.ScriptTarget.ES2015
   );
 
@@ -19,11 +19,11 @@ function totalOperations(script) {
   if (script.sources.length > 1) {
     // typescript
     for (let i = 1, n = script.sources.length; i < n; i++) {
-      total += visit(createSource(script.sources[i]));
+      total += visit(createSource(script.sources[i].content));
     }
   } else {
     // javascript
-    total += visit(createSource(script.sources[0]));
+    total += visit(createSource(script.sources[0].content));
   }
 
   return total;
@@ -78,13 +78,11 @@ export const Logical = {
         }
 
         uncovered += visit(
-          TypeScript.createSourceFile(
-            "anon.ts",
+          createSource(
             file.content.substring(
               block.range.start.offset,
               block.range.end.offset
-            ),
-            TypeScript.ScriptTarget.ES2015
+            )
           )
         );
       }
@@ -113,13 +111,8 @@ export const Logical = {
     }
 
     let uncovered = visit(
-      TypeScript.createSourceFile(
-        "anon.ts",
-        file.content.substring(
-          block.range.start.offset,
-          block.range.end.offset
-        ),
-        TypeScript.ScriptTarget.ES2015
+      createSource(
+        file.content.substring(block.range.start.offset, block.range.end.offset)
       )
     );
 
