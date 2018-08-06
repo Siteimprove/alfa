@@ -13,8 +13,9 @@
     "wcag"
   ],
   "contributors": [
+    "Búgvi Magnussen <bbm@siteimprove.com>",
     "Kasper Isager <kki@siteimprove.com>",
-    "Búgvi Magnussen <bbm@siteimprove.com>"
+    "Niclas Hedam <nhe@siteimprove.com>"
   ],
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
