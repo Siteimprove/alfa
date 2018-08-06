@@ -241,3 +241,16 @@ test("Computes the text alternative of an SVG with a title element", t => {
   );
   t.equal(getTextAlternative(svg, svg), "Hello world");
 });
+
+test("Computes the text alternative of an element with content in Shadow DOM", t => {
+  const button = <button aria-labelledby="foo" />;
+  const document = (
+    <div>
+      <p id="foo">
+        <shadow>Hello world</shadow>
+      </p>
+      {button}
+    </div>
+  );
+  t.equal(getTextAlternative(button, document), "Hello world");
+});

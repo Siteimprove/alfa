@@ -26,10 +26,10 @@ export function contains<T extends Node>(
   scope: Node,
   context: Node,
   query: Predicate<Node, T> | T | string,
-  options: Readonly<{ composed?: boolean }> = {}
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): boolean {
   if (typeof query === "object") {
-    return getClosest(query, context, node => node === scope) !== null;
+    return getClosest(query, context, node => node === scope, options) !== null;
   }
 
   return querySelector(scope, context, query, options) !== null;
