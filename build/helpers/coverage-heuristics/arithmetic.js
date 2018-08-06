@@ -34,57 +34,53 @@ function totalOperations(script) {
 /**
  * @param {TypeScript.Node} node
  */
-function visit(node) {
+function visit(node, depth = 0) {
   let total = 0;
 
-  /**
-   * @param {TypeScript.Node} node
-   */
-  let visitChild = node => {
-    switch (node.kind) {
-      case TypeScript.SyntaxKind.BinaryExpression:
-        const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
+  switch (node.kind) {
+    case TypeScript.SyntaxKind.BinaryExpression:
+      const binaryExpression = /** @type {TypeScript.BinaryExpression} */ (node);
 
-        switch (binaryExpression.operatorToken.kind) {
-          case TypeScript.SyntaxKind.SlashToken:
-          case TypeScript.SyntaxKind.PlusToken:
-          case TypeScript.SyntaxKind.MinusToken:
-          case TypeScript.SyntaxKind.AsteriskToken:
-          case TypeScript.SyntaxKind.PercentToken:
-          case TypeScript.SyntaxKind.PlusEqualsToken:
-          case TypeScript.SyntaxKind.MinusEqualsToken:
-          case TypeScript.SyntaxKind.AsteriskEqualsToken:
-          case TypeScript.SyntaxKind.SlashEqualsToken:
-            total++;
-            break;
-        }
-        break;
-      case TypeScript.SyntaxKind.PrefixUnaryExpression:
-        const prefixUnaryExpression = /**@type {TypeScript.PrefixUnaryExpression} */ (node);
+      switch (binaryExpression.operatorToken.kind) {
+        case TypeScript.SyntaxKind.SlashToken:
+        case TypeScript.SyntaxKind.PlusToken:
+        case TypeScript.SyntaxKind.MinusToken:
+        case TypeScript.SyntaxKind.AsteriskToken:
+        case TypeScript.SyntaxKind.PercentToken:
+        case TypeScript.SyntaxKind.PlusEqualsToken:
+        case TypeScript.SyntaxKind.MinusEqualsToken:
+        case TypeScript.SyntaxKind.AsteriskEqualsToken:
+        case TypeScript.SyntaxKind.SlashEqualsToken:
+          total++;
+          break;
+      }
+      break;
+    case TypeScript.SyntaxKind.PrefixUnaryExpression:
+      const prefixUnaryExpression = /**@type {TypeScript.PrefixUnaryExpression} */ (node);
 
-        switch (prefixUnaryExpression.operator) {
-          case TypeScript.SyntaxKind.PlusPlusToken:
-          case TypeScript.SyntaxKind.MinusMinusToken:
-            total++;
-            break;
-        }
-        break;
-      case TypeScript.SyntaxKind.PostfixUnaryExpression:
-        const postfixUnaryOperator = /**@type {TypeScript.PostfixUnaryExpression} */ (node);
+      switch (prefixUnaryExpression.operator) {
+        case TypeScript.SyntaxKind.PlusPlusToken:
+        case TypeScript.SyntaxKind.MinusMinusToken:
+          total++;
+          break;
+      }
+      break;
+    case TypeScript.SyntaxKind.PostfixUnaryExpression:
+      const postfixUnaryOperator = /**@type {TypeScript.PostfixUnaryExpression} */ (node);
 
-        switch (postfixUnaryOperator.operator) {
-          case TypeScript.SyntaxKind.PlusPlusToken:
-          case TypeScript.SyntaxKind.MinusMinusToken:
-            total++;
-            break;
-        }
-        break;
-    }
+      switch (postfixUnaryOperator.operator) {
+        case TypeScript.SyntaxKind.PlusPlusToken:
+        case TypeScript.SyntaxKind.MinusMinusToken:
+          total++;
+          break;
+      }
+      break;
+  }
 
-    TypeScript.forEachChild(node, visitChild);
-  };
+  TypeScript.forEachChild(node, node => {
+    total += visit(node, depth + 1);
+  });
 
-  TypeScript.forEachChild(node, visitChild);
   return total;
 }
 
