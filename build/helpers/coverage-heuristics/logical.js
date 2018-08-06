@@ -1,5 +1,15 @@
-import { BlockCoverage, FunctionCoverage, Script } from "../coverage";
+import { BlockCoverage, FunctionCoverage, Script, Source } from "../coverage";
 import * as TypeScript from "typescript";
+
+/**
+ * @param {Source} source
+ */
+const createSource = source =>
+  TypeScript.createSourceFile(
+    "anon.ts",
+    source.content,
+    TypeScript.ScriptTarget.ES2015
+  );
 
 /**
  * @param {Script} script
@@ -9,23 +19,11 @@ function totalOperations(script) {
   if (script.sources.length > 1) {
     // typescript
     for (let i = 1, n = script.sources.length; i < n; i++) {
-      total += visit(
-        TypeScript.createSourceFile(
-          "anon.ts",
-          script.sources[i].content,
-          TypeScript.ScriptTarget.ES2015
-        )
-      );
+      total += visit(createSource(script.sources[i]));
     }
   } else {
     // javascript
-    total += visit(
-      TypeScript.createSourceFile(
-        "anon.ts",
-        script.sources[0].content,
-        TypeScript.ScriptTarget.ES2015
-      )
-    );
+    total += visit(createSource(script.sources[0]));
   }
 
   return total;
