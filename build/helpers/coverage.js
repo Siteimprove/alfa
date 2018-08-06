@@ -3,18 +3,9 @@ import * as fs from "fs";
 import * as path from "path";
 import * as inspector from "inspector";
 import * as notify from "./notify";
-import {
-  byteLengthTotalCoverage,
-  byteLengthBlockCoverage
-} from "./coverage-heuristics/byte";
-import {
-  logicalTotalCoverage,
-  logicalBlockCoverage
-} from "./coverage-heuristics/logical";
-import {
-  arithmeticTotalCoverage,
-  arithmeticBlockCoverage
-} from "./coverage-heuristics/arithmetic";
+import { Byte } from "./coverage-heuristics/byte";
+import { Logical } from "./coverage-heuristics/logical";
+import { Arithmetic } from "./coverage-heuristics/arithmetic";
 import { Session } from "inspector";
 import * as sourceMap from "source-map";
 import { SourceMapConsumer } from "source-map";
@@ -31,18 +22,15 @@ const session = new Session();
 
 const heuristics = [
   {
-    heuristicTotal: byteLengthTotalCoverage,
-    heuristicBlock: byteLengthBlockCoverage,
+    ...Arithmetic,
     weight: 1 / 3
   },
   {
-    heuristicTotal: arithmeticTotalCoverage,
-    heuristicBlock: arithmeticBlockCoverage,
+    ...Byte,
     weight: 1 / 3
   },
   {
-    heuristicTotal: logicalTotalCoverage,
-    heuristicBlock: logicalBlockCoverage,
+    ...Logical,
     weight: 1 / 3
   }
 ];
@@ -82,17 +70,7 @@ process.on("exit", () => {
         continue;
       }
 
-      let sortedBlocks = script.coverage.sort(function(a, b) {
-        if (a.points < b.points) {
-          return 1;
-        }
-
-        if (a.points > b.points) {
-          return -1;
-        }
-
-        return 0;
-      });
+      let sortedBlocks = script.coverage.sort((a, b) => a.points - b.points);
 
       printCoverageStatistics(script);
       if (
@@ -534,7 +512,7 @@ function printCoverage(script, coverage) {
 function calculateTotalCoverage(script) {
   let points = 0;
   for (let i = 0, n = heuristics.length; i < n; i++) {
-    points += heuristics[i].heuristicTotal(script) * heuristics[i].weight;
+    points += heuristics[i].total(script) * heuristics[i].weight;
   }
   return points;
 }
@@ -546,8 +524,7 @@ function calculateTotalCoverage(script) {
 function calculateBlockCoverage(script, block) {
   let points = 0;
   for (let i = 0, n = heuristics.length; i < n; i++) {
-    points +=
-      heuristics[i].heuristicBlock(script, block) * heuristics[i].weight;
+    points += heuristics[i].block(script, block) * heuristics[i].weight;
   }
   return points;
 }

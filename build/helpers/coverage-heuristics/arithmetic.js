@@ -84,69 +84,75 @@ function visit(node, depth = -1) {
   return total;
 }
 
-/**
- * @param {Script} script
- */
-export function arithmeticTotalCoverage(script) {
-  const total = totalOperations(script);
-  let uncovered = 0;
+export const Arithmetic = {
+  /**
+   * @param {Script} script
+   * @param {BlockCoverage | FunctionCoverage} block
+   * @return {number}
+   */
+  total(script) {
+    const total = totalOperations(script);
+    let uncovered = 0;
 
-  for (let block of script.coverage) {
-    if (block.count < 1) {
-      const file = script.sources.find(source => {
-        return source.path === block.range.start.path;
-      });
+    for (let block of script.coverage) {
+      if (block.count < 1) {
+        const file = script.sources.find(source => {
+          return source.path === block.range.start.path;
+        });
 
-      if (file === undefined) {
-        continue;
+        if (file === undefined) {
+          continue;
+        }
+
+        uncovered += visit(
+          TypeScript.createSourceFile(
+            "anon.ts",
+            file.content.substring(
+              block.range.start.offset,
+              block.range.end.offset
+            ),
+            TypeScript.ScriptTarget.ES2015
+          )
+        );
       }
-
-      uncovered += visit(
-        TypeScript.createSourceFile(
-          "anon.ts",
-          file.content.substring(
-            block.range.start.offset,
-            block.range.end.offset
-          ),
-          TypeScript.ScriptTarget.ES2015
-        )
-      );
     }
+
+    if (total === 0) {
+      return 100;
+    }
+
+    return (1 - uncovered / total) * 100;
+  },
+  /**
+   * @param {Script} script
+   * @param {BlockCoverage | FunctionCoverage} block
+   * @return {number}
+   */
+  block(script, block) {
+    const total = totalOperations(script);
+    const file = script.sources.find(source => {
+      return source.path === block.range.start.path;
+    });
+
+    if (file === undefined) {
+      return 0;
+    }
+
+    let uncovered = visit(
+      TypeScript.createSourceFile(
+        "anon.ts",
+        file.content.substring(
+          block.range.start.offset,
+          block.range.end.offset
+        ),
+        TypeScript.ScriptTarget.ES2015
+      )
+    );
+
+    if (total === 0) {
+      return 100;
+    }
+
+    return (uncovered / total) * 100;
   }
-
-  if (total === 0) {
-    return 100;
-  }
-
-  return (1 - uncovered / total) * 100;
-}
-
-/**
- * @param {Script} script
- * @param {BlockCoverage | FunctionCoverage} block
- * @return {number}
- */
-export function arithmeticBlockCoverage(script, block) {
-  const total = totalOperations(script);
-  const file = script.sources.find(source => {
-    return source.path === block.range.start.path;
-  });
-
-  if (file === undefined) {
-    return 0;
-  }
-
-  let uncovered = visit(
-    TypeScript.createSourceFile(
-      "anon.ts",
-      file.content.substring(block.range.start.offset, block.range.end.offset),
-      TypeScript.ScriptTarget.ES2015
-    )
-  );
-
-  if (total === 0) {
-    return 100;
-  }
-
-  return (uncovered / total) * 100;
-}
+};
