@@ -14,12 +14,14 @@ import { Node } from "./types";
  */
 export function getTextContent(
   node: Node,
+  context: Node,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): string {
   let text = "";
 
   traverseNode(
     node,
+    context,
     {
       enter(node, parent) {
         if (isText(node)) {

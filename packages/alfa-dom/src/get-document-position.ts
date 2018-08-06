@@ -36,6 +36,7 @@ export function getDocumentPosition(
 
     traverseNode(
       context,
+      context,
       {
         enter(node) {
           positionMap!.set(node, position++);

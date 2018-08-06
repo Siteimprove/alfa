@@ -42,6 +42,7 @@ export function querySelector<
 
   traverseNode(
     scope,
+    context,
     {
       enter(node, parent) {
         if (predicate(node)) {
@@ -82,6 +83,7 @@ export function querySelectorAll<
 
   traverseNode(
     scope,
+    context,
     {
       enter(node, parent) {
         if (predicate(node)) {

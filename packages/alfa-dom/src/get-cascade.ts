@@ -46,7 +46,7 @@ export function getCascade(context: Document): Cascade | null {
       concat([UserAgent], context.styleSheets)
     );
 
-    traverseNode(context, {
+    traverseNode(context, context, {
       enter(node) {
         if (isElement(node)) {
           const rules = selectorMap.getRules(node, context, {

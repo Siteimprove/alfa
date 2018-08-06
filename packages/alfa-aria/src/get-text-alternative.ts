@@ -146,7 +146,10 @@ export function getTextAlternative(
             }
             break;
           default:
-            return flatten(getTextContent(node, { flattened: true }), options);
+            return flatten(
+              getTextContent(node, context, { flattened: true }),
+              options
+            );
         }
         break;
       case Roles.Button:
@@ -341,7 +344,7 @@ function getHtmlTextAlternative(
     case "table": {
       const caption = querySelector(element, context, "caption");
       if (caption !== null) {
-        return getTextContent(caption, { flattened: true });
+        return getTextContent(caption, context, { flattened: true });
       }
     }
   }
@@ -358,7 +361,7 @@ function getSvgTextAlternative(
   visited: Set<Element | Text>
 ): string | null {
   if (element.localName === "title") {
-    return getTextContent(element);
+    return getTextContent(element, context);
   }
 
   const title = querySelector(element, context, ":scope > title");

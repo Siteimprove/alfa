@@ -14,7 +14,7 @@ export const UniqueId: Rule<"document", Element> = {
   definition: (applicability, expectations, { document }) => {
     const ids: Map<string, Set<Element>> = new Map();
 
-    traverseNode(document, {
+    traverseNode(document, document, {
       enter(node) {
         if (isElement(node)) {
           const id = getAttribute(node, "id");
