@@ -25,27 +25,31 @@ import { Element, Node } from "./types";
 
 const { isArray } = Array;
 
-/**
- * @internal
- */
-export type MatchingOptions = Readonly<{
+export type MatchesOptions = Readonly<{
+  composed?: boolean;
+  flattened?: boolean;
+
   /**
    * @see https://www.w3.org/TR/selectors/#scope-element
+   * @internal
    */
   scope?: Element;
 
   /**
    * @see https://www.w3.org/TR/selectors/#the-hover-pseudo
+   * @internal
    */
   hover?: Element | boolean;
 
   /**
    * @see https://www.w3.org/TR/selectors/#the-active-pseudo
+   * @internal
    */
   active?: Element | boolean;
 
   /**
    * @see https://www.w3.org/TR/selectors/#the-focus-pseudo
+   * @internal
    */
   focus?: Element | boolean;
 
@@ -53,11 +57,14 @@ export type MatchingOptions = Readonly<{
    * Whether or not to perform selector matching against pseudo-elements.
    *
    * @see https://www.w3.org/TR/selectors/#pseudo-elements
+   * @internal
    */
   pseudo?: boolean;
 
   /**
    * Ancestor filter used for fast-rejecting elements during selector matching.
+   *
+   * @internal
    */
   filter?: AncestorFilter;
 }>;
@@ -68,24 +75,8 @@ export type MatchingOptions = Readonly<{
 export function matches(
   element: Element,
   context: Node,
-  selector: string
-): boolean;
-
-/**
- * @internal
- */
-export function matches(
-  element: Element,
-  context: Node,
   selector: string | Selector | Array<Selector>,
-  options?: MatchingOptions
-): boolean;
-
-export function matches(
-  element: Element,
-  context: Node,
-  selector: string | Selector | Array<Selector>,
-  options: MatchingOptions = {}
+  options: MatchesOptions = {}
 ): boolean {
   if (typeof selector === "string") {
     const parsed = parseSelector(selector);
@@ -218,7 +209,7 @@ function matchesCompound(
   element: Element,
   context: Node,
   selector: CompoundSelector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
   if (!matches(element, context, selector.left, options)) {
     return false;
@@ -234,7 +225,7 @@ function matchesRelative(
   element: Element,
   context: Node,
   selector: RelativeSelector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
   // Before any other work is done, check if the left part of the selector can
   // be rejected by the ancestor filter optionally passed to `matches()`. Only
@@ -284,16 +275,16 @@ function matchesDescendant(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
-  let parentElement = getParentElement(element, context);
+  let parentElement = getParentElement(element, context, options);
 
   while (parentElement !== null) {
     if (matches(parentElement, context, selector, options)) {
       return true;
     }
 
-    parentElement = getParentElement(parentElement, context);
+    parentElement = getParentElement(parentElement, context, options);
   }
 
   return false;
@@ -306,9 +297,9 @@ function matchesDirectDescendant(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
-  const parentElement = getParentElement(element, context);
+  const parentElement = getParentElement(element, context, options);
 
   if (parentElement === null) {
     return false;
@@ -324,9 +315,13 @@ function matchesSibling(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
-  let previousElementSibling = getPreviousElementSibling(element, context);
+  let previousElementSibling = getPreviousElementSibling(
+    element,
+    context,
+    options
+  );
 
   while (previousElementSibling !== null) {
     if (matches(previousElementSibling, context, selector, options)) {
@@ -335,7 +330,8 @@ function matchesSibling(
 
     previousElementSibling = getPreviousElementSibling(
       previousElementSibling,
-      context
+      context,
+      options
     );
   }
 
@@ -349,9 +345,13 @@ function matchesDirectSibling(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
-  const previousElementSibling = getPreviousElementSibling(element, context);
+  const previousElementSibling = getPreviousElementSibling(
+    element,
+    context,
+    options
+  );
 
   if (previousElementSibling === null) {
     return false;
@@ -367,7 +367,7 @@ function matchesPseudoClass(
   element: Element,
   context: Node,
   selector: PseudoClassSelector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
   switch (selector.name) {
     // https://www.w3.org/TR/selectors/#scope-pseudo
@@ -427,7 +427,7 @@ function matchesPseudoElement(
   element: Element,
   context: Node,
   selector: PseudoElementSelector,
-  options: MatchingOptions
+  options: MatchesOptions
 ): boolean {
   return options.pseudo === true;
 }

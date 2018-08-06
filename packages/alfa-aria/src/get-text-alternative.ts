@@ -146,7 +146,7 @@ export function getTextAlternative(
             }
             break;
           default:
-            return flatten(getTextContent(node), options);
+            return flatten(getTextContent(node, { flattened: true }), options);
         }
         break;
       case Roles.Button:
@@ -339,7 +339,7 @@ function getHtmlTextAlternative(
     case "table": {
       const caption = querySelector(element, context, "caption");
       if (caption !== null) {
-        return getTextContent(caption);
+        return getTextContent(caption, { flattened: true });
       }
     }
   }

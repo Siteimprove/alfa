@@ -8,9 +8,10 @@ import { Element, Node } from "./types";
  */
 export function getNextElementSibling<T extends Node>(
   node: Node,
-  context: Node
+  context: Node,
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): Element | null {
-  const parentNode = getParentNode(node, context);
+  const parentNode = getParentNode(node, context, options);
 
   if (parentNode === null) {
     return null;

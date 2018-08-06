@@ -7,9 +7,10 @@ import { Node } from "./types";
  */
 export function getPreviousSibling<T extends Node>(
   node: Node,
-  context: Node
+  context: Node,
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): Node | null {
-  const parentNode = getParentNode(node, context);
+  const parentNode = getParentNode(node, context, options);
 
   if (parentNode === null) {
     return null;

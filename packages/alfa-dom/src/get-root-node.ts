@@ -9,7 +9,7 @@ import { Node } from "./types";
 export function getRootNode(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean }> = {}
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): Node {
   let rootNode: Node = node;
 

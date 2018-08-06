@@ -19,7 +19,7 @@ export function isRendered(element: Element, context: Node): boolean {
   for (
     let next: Element | null = element;
     next !== null;
-    next = getParentElement(next, context)
+    next = getParentElement(next, context, { flattened: true })
   ) {
     if (getComputedStyle(next, context).display === "none") {
       return false;
