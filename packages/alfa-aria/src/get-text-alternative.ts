@@ -1,6 +1,7 @@
 import {
   Element,
   getAttribute,
+  getChildNodes,
   getComputedStyle,
   getElementNamespace,
   getInputType,
@@ -14,7 +15,6 @@ import {
   querySelector,
   Text
 } from "@siteimprove/alfa-dom";
-import { map } from "@siteimprove/alfa-util";
 import { getRole } from "./get-role";
 import { hasNameFrom } from "./has-name-from";
 import { isVisible } from "./is-visible";
@@ -169,20 +169,22 @@ export function getTextAlternative(
     options.descending === true ||
     isNativeTextAlternativeElement(node)
   ) {
-    const children = map(
-      node.childNodes,
-      child =>
-        isElement(child) || isText(child)
-          ? getTextAlternative(child, context, visited, {
-              recursing: true,
-              descending: true,
-              // Pass down the labelling flag as the current call may have been
-              // initiated from a labelling element; the subtree will therefore
-              // also have to be considered part of the labelling element.
-              labelling: options.labelling
-            })
-          : null
-    ).filter(child => child !== null);
+    const children = getChildNodes(node, context, { flattened: true })
+      .map(
+        child =>
+          isElement(child) || isText(child)
+            ? getTextAlternative(child, context, visited, {
+                recursing: true,
+                descending: true,
+                // Pass down the labelling flag as the current call may have
+                // been initiated from a labelling element; the subtree will
+                // therefore also have to be considered part of the labelling
+                // element.
+                labelling: options.labelling
+              })
+            : null
+      )
+      .filter(child => child !== null);
 
     const before = getComputedStyle(node, context, { pseudo: "before" });
 
