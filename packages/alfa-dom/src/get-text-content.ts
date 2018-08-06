@@ -12,16 +12,23 @@ import { Node } from "./types";
  * getTextContent(div);
  * // => "Hello world"
  */
-export function getTextContent(node: Node): string {
+export function getTextContent(
+  node: Node,
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+): string {
   let text = "";
 
-  traverseNode(node, {
-    enter(node, parent) {
-      if (isText(node)) {
-        text += node.data;
+  traverseNode(
+    node,
+    {
+      enter(node, parent) {
+        if (isText(node)) {
+          text += node.data;
+        }
       }
-    }
-  });
+    },
+    options
+  );
 
   return text;
 }

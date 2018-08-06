@@ -4,7 +4,10 @@ import { matches } from "./matches";
 import { traverseNode } from "./traverse-node";
 import { Element, Node } from "./types";
 
-export type QuerySelectorOptions = Readonly<{ composed?: boolean }>;
+export type QuerySelectorOptions = Readonly<{
+  composed?: boolean;
+  flattened?: boolean;
+}>;
 
 export type QuerySelectorResult<T extends Node, Q> = Q extends string
   ? Element
@@ -25,9 +28,12 @@ export function querySelector<
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
-    const options = { scope: isElement(scope) ? scope : undefined };
+    const matchesOptions = {
+      ...options,
+      scope: isElement(scope) ? scope : undefined
+    };
     predicate = node =>
-      isElement(node) && matches(node, context, query, options);
+      isElement(node) && matches(node, context, query, matchesOptions);
   } else {
     predicate = query as Predicate<Node, T>;
   }
