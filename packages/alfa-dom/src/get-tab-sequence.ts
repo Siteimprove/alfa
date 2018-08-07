@@ -28,7 +28,7 @@ function indexWithin(array: Array<Element>, element: Element) {
  * @see https://www.w3.org/TR/html/editing.html#the-tabindex-attribute
  */
 export function getTabSequence(element: Element): Array<Element> {
-  const result = <Array<Element>>[];
+  const result: Array<Element> = [];
 
   traverseNode(element, {
     enter(node, parent) {
