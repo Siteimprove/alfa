@@ -1,4 +1,4 @@
-import { getInputType } from "./get-input-type";
+import { getInputType, InputType } from "./get-input-type";
 import { Element } from "./types";
 
 /**
@@ -27,7 +27,7 @@ export function isLabelable(element: Element): boolean {
       return true;
 
     case "input":
-      return getInputType(element) !== "hidden";
+      return getInputType(element) !== InputType.Hidden;
   }
 
   return false;
