@@ -30,7 +30,7 @@ function indexWithin(array: Array<Element>, element: Element) {
 export function getTabSequence(element: Element): Array<Element> {
   const result: Array<Element> = [];
 
-  traverseNode(element, {
+  traverseNode(element, element, {
     enter(node, parent) {
       if (!isElement(node)) {
         return;
