@@ -38,7 +38,7 @@ export const Byte = {
       return 100;
     }
 
-    return (uncovered / total) * 100;
+    return (1 - uncovered / total) * 100;
   },
 
   /**
