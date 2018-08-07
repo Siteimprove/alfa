@@ -2,32 +2,24 @@ import { getTabIndex } from "./get-tab-index";
 import { traverseNode } from "./traverse-node";
 import { Element, NodeType } from "./types";
 
-function binaryInsert(
-  arr: Array<Element>,
-  element: Element,
-  index: number,
-  i: number,
-  depth = 0
-) {
-  if (arr.length === 0) {
-    arr.push(element);
+function binaryIndexSearch(array: Array<Element>, index: number) {
+  let low = 0;
+  let high = array.length;
+
+  if (index === 0) {
+    return high;
   }
 
-  const competitorIndex = getTabIndex(arr[i]);
-
-  if (competitorIndex === null) {
-    return;
+  while (low < high) {
+    const mid = (low + high) >>> 1;
+    const other = <number>getTabIndex(array[mid]);
+    if (other <= index && other !== 0) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
   }
-
-  if (competitorIndex < index) {
-    binaryInsert(arr, element, index, i + i / 2);
-  }
-
-  if (competitorIndex > index) {
-    binaryInsert(arr, element, index, i - i / 2);
-  }
-
-  arr.splice(i, 0, element);
+  return low;
 }
 
 /**
@@ -44,12 +36,8 @@ export function getTabSequence(element: Element): Array<Element> {
 
       const index = getTabIndex(<Element>node);
       if (index !== null && index >= 0) {
-        binaryInsert(
-          result,
-          <Element>node,
-          index,
-          Math.floor(result.length / 2)
-        );
+        const location = binaryIndexSearch(result, index);
+        result.splice(location, 0, <Element>node);
       }
     }
   });
