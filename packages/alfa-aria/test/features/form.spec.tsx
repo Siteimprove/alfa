@@ -9,10 +9,10 @@ import * as Roles from "../../src/roles";
 
 test("Returns the semantic role of a form that has an accessible name", t => {
   const form = <form title="foo">Foo</form>;
-  t.equal(Form.role!(form, form), Roles.Form, "Form role is not Form");
+  t.equal(Form.role!(form, form), Roles.Form);
 });
 
 test("Returns no role when a form has no accessible name", t => {
   const form = <form />;
-  t.equal(Form.role!(form, form), null, "Form role is not null");
+  t.equal(Form.role!(form, form), null);
 });

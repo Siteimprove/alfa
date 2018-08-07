@@ -6,6 +6,8 @@ import { Element } from "./types";
 const { isNaN } = Number;
 
 /**
+ * Given an element, get the tab index of the element.
+ *
  * @see https://www.w3.org/TR/html/editing.html#the-tabindex-attribute
  */
 export function getTabIndex(element: Element): number | null {

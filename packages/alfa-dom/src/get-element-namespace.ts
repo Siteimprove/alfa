@@ -5,6 +5,9 @@ import { Element, Namespace, Node } from "./types";
 const namespaceMaps: WeakMap<Node, WeakMap<Element, Namespace>> = new WeakMap();
 
 /**
+ * Given an element and a context, get the namespace of the element within the
+ * context.
+ *
  * @see https://www.w3.org/TR/dom/#dom-element-namespaceuri
  */
 export function getElementNamespace(

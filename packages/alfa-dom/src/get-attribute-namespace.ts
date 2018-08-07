@@ -2,6 +2,10 @@ import { getElementNamespace } from "./get-element-namespace";
 import { Attribute, Element, Namespace, Node } from "./types";
 
 /**
+ * Given an attribute, the element that the attribute belongs to, and a context,
+ * get the namespace of the attribute of the element within the context. If the
+ * attribute does not have an associated namespace then `null` is returned.
+ *
  * @see https://www.w3.org/TR/dom/#dom-attr-namespaceuri
  */
 export function getAttributeNamespace(

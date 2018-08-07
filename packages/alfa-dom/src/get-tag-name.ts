@@ -2,7 +2,9 @@ import { getElementNamespace } from "./get-element-namespace";
 import { Element, Namespace, Node } from "./types";
 
 /**
- * Given an element and a context, get the tag name of the element.
+ * Given an element and a context, get the tag name of the element within the
+ * context. For elements in the HTML namespace, the tag name will be upper
+ * cased.
  *
  * @see https://www.w3.org/TR/dom/#dom-element-tagname
  */

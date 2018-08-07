@@ -14,6 +14,10 @@ export type QuerySelectorResult<T extends Node, Q> = Q extends string
   : T;
 
 /**
+ * Given a scope and a context, get the first node within the scope that matches
+ * the given selector or predicate with the context. If no node is found that
+ * matches the given selector or predicate, `null` is returned.
+ *
  * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
  */
 export function querySelector<
@@ -58,6 +62,10 @@ export function querySelector<
 }
 
 /**
+ * Given a scope and a context, get all nodes within the scope that match the
+ * given selector or predicate with the context. If no nodes are found that
+ * match the given selector or predicate, an empty array is returned.
+ *
  * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
  */
 export function querySelectorAll<

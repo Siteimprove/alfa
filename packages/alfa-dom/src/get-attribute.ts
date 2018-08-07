@@ -3,7 +3,9 @@ import { Element } from "./types";
 const attributeMaps: WeakMap<Element, Map<string, string>> = new WeakMap();
 
 /**
- * Given an element, get the value of the specified attribute of the element.
+ * Given an element, get the value of the given attribute name of the element.
+ * If the element does not have an attribute with the given name then `null` is
+ * returned.
  *
  * @see https://www.w3.org/TR/dom/#dom-element-getattribute
  *

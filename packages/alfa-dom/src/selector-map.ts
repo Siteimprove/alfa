@@ -22,6 +22,8 @@ const { isArray } = Array;
  * lower precedence than origins defined later.
  *
  * @see https://www.w3.org/TR/css-cascade/#cascading-origins
+ *
+ * @internal
  */
 export const enum Origin {
   /**

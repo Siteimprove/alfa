@@ -4,6 +4,8 @@ import { Rule, RuleType, StyleRule, StyleSheet } from "./types";
 
 /**
  * @see https://www.w3.org/TR/html/rendering.html
+ *
+ * @internal
  */
 export const UserAgent: StyleSheet = {
   cssRules: [

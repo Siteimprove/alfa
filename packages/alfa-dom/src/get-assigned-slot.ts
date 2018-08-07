@@ -5,6 +5,10 @@ import { traverseNode } from "./traverse-node";
 import { Element, Node, Text } from "./types";
 
 /**
+ * Given an element, or a text node, and a context, get the `<slot>` that the
+ * element or text node is assigned to within the context. If the element or
+ * text node is not assigned to a `<slot>` then `null` is returned.
+ *
  * @see https://www.w3.org/TR/dom41/#dom-slotable-assignedslot
  */
 export function getAssignedSlot(

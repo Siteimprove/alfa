@@ -5,6 +5,9 @@ import { querySelector } from "./query-selector";
 import { Element, Node } from "./types";
 
 /**
+ * Given an element and a context, check if the element is disabled within the
+ * context.
+ *
  * @see https://www.w3.org/TR/html/disabled-elements.html#disabling
  */
 export function isDisabled(element: Element, context: Node): boolean {
