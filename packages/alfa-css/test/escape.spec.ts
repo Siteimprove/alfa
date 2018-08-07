@@ -9,46 +9,23 @@ test("Can escape null character correctly", t => {
 });
 
 test("Can escape bell character correctly", t => {
-  t.equal(
-    escape(fromCharCode(Char.Bell)),
-    `${fromCharCode(Char.Escape)}${Char.Bell.toString(16)}${fromCharCode(
-      Char.Space
-    )}`
-  );
+  t.equal(escape(fromCharCode(Char.Bell)), `\\${Char.Bell.toString(16)} `);
 });
 
 test("Can escape delete character correctly", t => {
-  t.equal(
-    escape(fromCharCode(Char.Delete)),
-    `${fromCharCode(Char.Escape)}${Char.Delete.toString(16)}${fromCharCode(
-      Char.Space
-    )}`
-  );
+  t.equal(escape(fromCharCode(Char.Delete)), `\\${Char.Delete.toString(16)} `);
 });
 
 test("Can escape 7 correctly", t => {
-  t.equal(
-    escape("7"),
-    `${fromCharCode(Char.Escape)}${Char.DigitSeven.toString(16)}${fromCharCode(
-      Char.Space
-    )}`
-  );
+  t.equal(escape("7"), `\\${Char.DigitSeven.toString(16)} `);
 });
 
 test("Can escape -7 correctly", t => {
-  t.equal(
-    escape("-7"),
-    `-${fromCharCode(Char.Escape)}${Char.DigitSeven.toString(16)}${fromCharCode(
-      Char.Space
-    )}`
-  );
+  t.equal(escape("-7"), `-\\${Char.DigitSeven.toString(16)} `);
 });
 
 test("Can escape - correctly", t => {
-  t.equal(
-    escape("-"),
-    `${fromCharCode(Char.Escape)}${Char.HyphenMinus.toString(16)}`
-  );
+  t.equal(escape("-"), `\\-`);
 });
 
 test("Can escape a7A-_ correctly", t => {
@@ -56,8 +33,5 @@ test("Can escape a7A-_ correctly", t => {
 });
 
 test("Can escape @ correctly", t => {
-  t.equal(
-    escape("@"),
-    `${fromCharCode(Char.Escape)}${Char.AtSign.toString(16)}`
-  );
+  t.equal(escape("@"), `\\@`);
 });

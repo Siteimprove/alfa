@@ -46,12 +46,12 @@ export function escape(input: string) {
  * @see https://www.w3.org/TR/cssom/#escape-a-character
  */
 function escapeCharacter(character: number) {
-  return `${fromCharCode(Char.Escape)}${character.toString(16)}`;
+  return `\\${fromCharCode(character)}`;
 }
 
 /**
  * @see https://www.w3.org/TR/cssom/#escape-a-character-as-code-point
  */
 function escapeCharacterAsCodePoint(character: number) {
-  return `${escapeCharacter(character)}${fromCharCode(Char.Space)}`;
+  return `\\${character.toString(16)} `;
 }
