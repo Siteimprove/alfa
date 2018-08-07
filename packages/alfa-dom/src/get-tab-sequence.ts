@@ -27,10 +27,13 @@ function indexWithin(array: Array<Element>, element: Element) {
 /**
  * @see https://www.w3.org/TR/html/editing.html#the-tabindex-attribute
  */
-export function getTabSequence(element: Element): Array<Element> {
+export function getTabSequence(
+  element: Element,
+  context: Element
+): Array<Element> {
   const result: Array<Element> = [];
 
-  traverseNode(element, element, {
+  traverseNode(element, context, {
     enter(node, parent) {
       if (!isElement(node)) {
         return;

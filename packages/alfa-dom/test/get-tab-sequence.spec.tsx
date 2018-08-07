@@ -13,7 +13,8 @@ test("Computes the tab sequence of three non-prioritized elements", t => {
         {a1}
         {a2}
         {input}
-      </div>
+      </div>,
+      <div id="context" />
     ),
     [a1, a2, input]
   );
@@ -34,7 +35,8 @@ test("Computes the tab sequence of three elements with priotization", t => {
         {a1}
         {a2}
         {input}
-      </div>
+      </div>,
+      <div id="context" />
     ),
     [a2, a1, input]
   );
@@ -51,7 +53,8 @@ test("Computes the tab sequence of three elements with ignoring priotization", t
         {a1}
         {a2}
         {input}
-      </div>
+      </div>,
+      <div id="context" />
     ),
     [a1, a2]
   );
@@ -76,7 +79,8 @@ test("Computes the tab sequence of colliding elements", t => {
         {a1}
         {a2}
         {input}
-      </div>
+      </div>,
+      <div id="context" />
     ),
     [a1, a2, input]
   );
@@ -97,7 +101,8 @@ test("Computes the tab sequence of three elements with out of bounds priotizatio
         {a1}
         {a2}
         {input}
-      </div>
+      </div>,
+      <div id="context" />
     ),
     [a2, input, a1]
   );
