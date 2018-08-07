@@ -6,23 +6,23 @@ test("Can escape null character correctly", t => {
 });
 
 test("Can escape bell character correctly", t => {
-  t.equal(escape("\u0007"), `\\7 `);
+  t.equal(escape("\u0007"), "\\7 ");
 });
 
 test("Can escape delete character correctly", t => {
-  t.equal(escape("\u007f"), `\\7f `);
+  t.equal(escape("\u007f"), "\\7f ");
 });
 
 test("Can escape 7 correctly", t => {
-  t.equal(escape("7"), `\\37 `);
+  t.equal(escape("7"), "\\37 ");
 });
 
 test("Can escape -7 correctly", t => {
-  t.equal(escape("-7"), `-\\37 `);
+  t.equal(escape("-7"), "-\\37 ");
 });
 
 test("Can escape - correctly", t => {
-  t.equal(escape("-"), `\\-`);
+  t.equal(escape("-"), "\\-");
 });
 
 test("Can escape a7A-_ correctly", t => {
@@ -30,5 +30,5 @@ test("Can escape a7A-_ correctly", t => {
 });
 
 test("Can escape @ correctly", t => {
-  t.equal(escape("@"), `\\@`);
+  t.equal(escape("@"), "\\@");
 });
