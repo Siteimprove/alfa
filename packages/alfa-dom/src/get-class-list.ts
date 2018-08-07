@@ -21,7 +21,7 @@ export function getClassList(element: Element): Readonly<Array<string>> {
   let classList = classLists.get(element);
 
   if (classList === undefined) {
-    const classNames = getAttribute(element, "class");
+    const classNames = getAttribute(element, "class", { trim: true });
 
     if (classNames === null) {
       classList = empty;

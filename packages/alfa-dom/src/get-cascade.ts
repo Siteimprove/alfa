@@ -33,7 +33,7 @@ const cascades: WeakMap<Document, Cascade> = new WeakMap();
 /**
  * @internal
  */
-export function getCascade(context: Document): Cascade | null {
+export function getCascade(context: Document): Cascade {
   let cascade = cascades.get(context);
 
   if (cascade === undefined) {
@@ -46,7 +46,7 @@ export function getCascade(context: Document): Cascade | null {
       concat([UserAgent], context.styleSheets)
     );
 
-    traverseNode(context, {
+    traverseNode(context, context, {
       enter(node) {
         if (isElement(node)) {
           const rules = selectorMap.getRules(node, context, {

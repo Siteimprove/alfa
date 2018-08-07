@@ -5,11 +5,12 @@ import { Node } from "./types";
 export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
 
 export function traverseNode(
+  node: Node,
   context: Node,
   visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): boolean {
-  return visitNode(context, null, context, visitors, options);
+  return visitNode(node, null, context, visitors, options);
 }
 
 function visitNode(

@@ -12,12 +12,14 @@ import { Node } from "./types";
  */
 export function hasTextContent(
   node: Node,
+  context: Node,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): boolean {
   let text = false;
 
   traverseNode(
     node,
+    context,
     {
       enter(node, parent) {
         if (isText(node) && node.data.trim() !== "") {
