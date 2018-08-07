@@ -35,13 +35,21 @@ export type GetClosestResult<T extends Node, Q> = Q extends string
 export function getClosest<
   T extends Node,
   Q extends string | Predicate<Node, T>
->(scope: Node, context: Node, query: Q): GetClosestResult<T, Q> | null {
+>(
+  scope: Node,
+  context: Node,
+  query: Q,
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+): GetClosestResult<T, Q> | null {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
-    const options = { scope: isElement(scope) ? scope : undefined };
+    const matchesOptions = {
+      ...options,
+      scope: isElement(scope) ? scope : undefined
+    };
     predicate = node =>
-      isElement(node) && matches(node, context, query, options);
+      isElement(node) && matches(node, context, query, matchesOptions);
   } else {
     predicate = query as Predicate<Node, T>;
   }
@@ -49,7 +57,7 @@ export function getClosest<
   for (
     let next: Node | null = scope;
     next !== null;
-    next = getParentNode(next, context)
+    next = getParentNode(next, context, options)
   ) {
     if (predicate(next)) {
       return next as GetClosestResult<T, Q>;

@@ -2,6 +2,7 @@ import {
   Element,
   getInputType,
   hasAttribute,
+  InputType,
   Node
 } from "@siteimprove/alfa-dom";
 import * as Roles from "../roles";
@@ -18,49 +19,47 @@ export const Input: Feature = {
 
 function role(input: Element, context: Node): Role | null {
   switch (getInputType(input)) {
-    case "button":
-    case "image":
-    case "reset":
-    case "submit":
+    case InputType.Button:
+    case InputType.Image:
+    case InputType.Reset:
+    case InputType.Submit:
       return Roles.Button;
-    case "checkbox":
+
+    case InputType.Checkbox:
       return Roles.Checkbox;
-    case "number":
+
+    case InputType.Number:
       return Roles.SpinButton;
-    case "radio":
+
+    case InputType.Radio:
       return Roles.Radio;
-    case "range":
+
+    case InputType.Range:
       return Roles.Slider;
-    case "search":
+
+    case InputType.Search:
       if (!hasAttribute(input, "list")) {
         return Roles.SearchBox;
       }
       return Roles.Combobox;
-    case "email":
-    case "tel":
-    case "text":
-    case "url":
+
+    case InputType.Email:
+    case InputType.Tel:
+    case InputType.Text:
+    case InputType.Url:
       if (!hasAttribute(input, "list")) {
         return Roles.TextBox;
       }
       return Roles.Combobox;
-    case "color":
-    case "date":
-    case "datetime-local":
-    case "file":
-    case "hidden":
-    case "month":
-    case "password":
-    case "time":
-    case "week":
-    case null:
+
+    default:
       return null;
   }
 }
 
 function allowedRoles(input: Element, context: Node): Array<Role> {
   switch (getInputType(input)) {
-    case "button":
+    case InputType.Button:
       return [
         Roles.Link,
         Roles.MenuItem,
@@ -71,7 +70,8 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
         Roles.Switch,
         Roles.Tab
       ];
-    case "checkbox":
+
+    case InputType.Checkbox:
       if (hasAttribute(input, "aria-pressed")) {
         return [
           Roles.Button,
@@ -81,7 +81,8 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
         ];
       }
       return [Roles.MenuItemCheckbox, Roles.Option, Roles.Switch];
-    case "image":
+
+    case InputType.Image:
       return [
         Roles.Link,
         Roles.MenuItem,
@@ -90,32 +91,15 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
         Roles.Radio,
         Roles.Switch
       ];
-    case "radio":
+
+    case InputType.Radio:
       return [Roles.MenuItemRadio];
-    case "text":
+
+    case InputType.Text:
       if (!hasAttribute(input, "list")) {
         return [Roles.Combobox, Roles.SearchBox, Roles.SpinButton];
       }
-      return None(Roles);
-    case "color":
-    case "date":
-    case "datetime-local":
-    case "email":
-    case "file":
-    case "hidden":
-    case "month":
-    case "number":
-    case "password":
-    case "range":
-    case "reset":
-    case "search":
-    case "submit":
-    case "tel":
-    case "time":
-    case "url":
-    case "week":
-    case null:
-    default:
-      return None(Roles);
   }
+
+  return None(Roles);
 }

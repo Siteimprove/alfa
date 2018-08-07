@@ -10,17 +10,26 @@ import { Node } from "./types";
  * hasText(div);
  * // => true
  */
-export function hasTextContent(node: Node): boolean {
+export function hasTextContent(
+  node: Node,
+  context: Node,
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+): boolean {
   let text = false;
 
-  traverseNode(node, {
-    enter(node, parent) {
-      if (isText(node) && node.data.trim() !== "") {
-        text = true;
-        return false;
+  traverseNode(
+    node,
+    context,
+    {
+      enter(node, parent) {
+        if (isText(node) && node.data.trim() !== "") {
+          text = true;
+          return false;
+        }
       }
-    }
-  });
+    },
+    options
+  );
 
   return text;
 }

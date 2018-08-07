@@ -17,6 +17,7 @@ export function serialize(
 
   traverseNode(
     node,
+    context,
     {
       enter(node) {
         if (isElement(node)) {

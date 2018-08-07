@@ -1,12 +1,14 @@
 import {
   Element,
   getAttribute,
+  getChildNodes,
   getComputedStyle,
   getElementNamespace,
   getInputType,
   getLabel,
   getRootNode,
   getTextContent,
+  InputType,
   isElement,
   isText,
   Namespace,
@@ -14,7 +16,6 @@ import {
   querySelector,
   Text
 } from "@siteimprove/alfa-dom";
-import { map } from "@siteimprove/alfa-util";
 import { getRole } from "./get-role";
 import { hasNameFrom } from "./has-name-from";
 import { isVisible } from "./is-visible";
@@ -146,7 +147,10 @@ export function getTextAlternative(
             }
             break;
           default:
-            return flatten(getTextContent(node), options);
+            return flatten(
+              getTextContent(node, context, { flattened: true }),
+              options
+            );
         }
         break;
       case Roles.Button:
@@ -169,20 +173,22 @@ export function getTextAlternative(
     options.descending === true ||
     isNativeTextAlternativeElement(node)
   ) {
-    const children = map(
-      node.childNodes,
-      child =>
-        isElement(child) || isText(child)
-          ? getTextAlternative(child, context, visited, {
-              recursing: true,
-              descending: true,
-              // Pass down the labelling flag as the current call may have been
-              // initiated from a labelling element; the subtree will therefore
-              // also have to be considered part of the labelling element.
-              labelling: options.labelling
-            })
-          : null
-    ).filter(child => child !== null);
+    const children = getChildNodes(node, context, { flattened: true })
+      .map(
+        child =>
+          isElement(child) || isText(child)
+            ? getTextAlternative(child, context, visited, {
+                recursing: true,
+                descending: true,
+                // Pass down the labelling flag as the current call may have
+                // been initiated from a labelling element; the subtree will
+                // therefore also have to be considered part of the labelling
+                // element.
+                labelling: options.labelling
+              })
+            : null
+      )
+      .filter(child => child !== null);
 
     const before = getComputedStyle(node, context, { pseudo: "before" });
 
@@ -264,39 +270,37 @@ function getHtmlTextAlternative(
   switch (element.localName) {
     case "input":
       const type = getInputType(element);
-      if (type !== null) {
-        switch (type) {
-          // https://www.w3.org/TR/html-aam/#input-type-button-input-type-submit-and-input-type-reset
-          case "button":
-          case "submit":
-          case "reset": {
-            const value = getAttribute(element, "value");
-            if (value !== null && value !== "") {
-              return value;
-            }
-
-            if (type === "submit") {
-              return "Submit";
-            }
-
-            if (type === "reset") {
-              return "Reset";
-            }
-
-            break;
+      switch (getInputType(element)) {
+        // https://www.w3.org/TR/html-aam/#input-type-button-input-type-submit-and-input-type-reset
+        case InputType.Button:
+        case InputType.Submit:
+        case InputType.Reset: {
+          const value = getAttribute(element, "value");
+          if (value !== null && value !== "") {
+            return value;
           }
 
-          // https://www.w3.org/TR/html-aam/#input-type-image
-          case "image": {
-            const alt = getAttribute(element, "alt");
-            if (alt !== null && alt !== "") {
-              return alt;
-            }
+          if (type === InputType.Submit) {
+            return "Submit";
+          }
 
-            const value = getAttribute(element, "value");
-            if (value !== null && value !== "") {
-              return value;
-            }
+          if (type === InputType.Reset) {
+            return "Reset";
+          }
+
+          break;
+        }
+
+        // https://www.w3.org/TR/html-aam/#input-type-image
+        case InputType.Image: {
+          const alt = getAttribute(element, "alt");
+          if (alt !== null && alt !== "") {
+            return alt;
+          }
+
+          const value = getAttribute(element, "value");
+          if (value !== null && value !== "") {
+            return value;
           }
         }
       }
@@ -339,7 +343,7 @@ function getHtmlTextAlternative(
     case "table": {
       const caption = querySelector(element, context, "caption");
       if (caption !== null) {
-        return getTextContent(caption);
+        return getTextContent(caption, context, { flattened: true });
       }
     }
   }
@@ -356,7 +360,7 @@ function getSvgTextAlternative(
   visited: Set<Element | Text>
 ): string | null {
   if (element.localName === "title") {
-    return getTextContent(element);
+    return getTextContent(element, context);
   }
 
   const title = querySelector(element, context, ":scope > title");

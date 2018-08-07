@@ -26,7 +26,7 @@ export const Title: Rule<"document", Element> = {
       expectation(1, title !== null);
 
       if (title !== null) {
-        expectation(2, hasTextContent(title));
+        expectation(2, hasTextContent(title, document));
       }
     });
   }

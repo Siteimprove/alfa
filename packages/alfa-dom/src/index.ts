@@ -7,6 +7,7 @@ export * from "./get-attribute-namespace";
 export * from "./get-attribute";
 export * from "./get-button-type";
 export * from "./get-cascade";
+export * from "./get-child-nodes";
 export * from "./get-class-list";
 export * from "./get-closest";
 export * from "./get-digest";

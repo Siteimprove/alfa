@@ -1,5 +1,5 @@
 import { getAttribute } from "./get-attribute";
-import { getInputType } from "./get-input-type";
+import { getInputType, InputType } from "./get-input-type";
 import { hasAttribute } from "./has-attribute";
 import { Element } from "./types";
 
@@ -35,7 +35,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
       }
       break;
     case "input":
-      if (getInputType(element) !== "hidden") {
+      if (getInputType(element) !== InputType.Hidden) {
         return true;
       }
       break;

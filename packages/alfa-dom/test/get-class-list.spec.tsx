@@ -7,3 +7,9 @@ test("Constructs a set of classes from an element", t => {
 
   t.deepEqual(classList, ["foo", "bar"]);
 });
+
+test("Ignores trailing whitespace", t => {
+  const classList = getClassList(<div class=" foo bar " />);
+
+  t.deepEqual(classList, ["foo", "bar"]);
+});

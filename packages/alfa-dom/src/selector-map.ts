@@ -10,7 +10,7 @@ import { getId } from "./get-id";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
 import { isStyleRule } from "./guards";
-import { matches, MatchingOptions } from "./matches";
+import { matches, MatchesOptions } from "./matches";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { Element, Node, StyleSheet } from "./types";
 import { isUserAgentRule } from "./user-agent";
@@ -132,7 +132,7 @@ export class SelectorMap {
   public getRules(
     element: Element,
     context: Node,
-    options?: MatchingOptions
+    options?: MatchesOptions
   ): Array<SelectorEntry> {
     const rules: Array<SelectorEntry> = [];
 

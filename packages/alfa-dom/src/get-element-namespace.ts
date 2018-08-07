@@ -16,7 +16,7 @@ export function getElementNamespace(
   if (namespaceMap === undefined) {
     namespaceMap = new WeakMap();
 
-    traverseNode(context, {
+    traverseNode(context, context, {
       enter(node, parentNode) {
         if (!isElement(node)) {
           return;

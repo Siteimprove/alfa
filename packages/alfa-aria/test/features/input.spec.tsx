@@ -36,11 +36,6 @@ test("Returns no role if an input has type date", t => {
   t.equal(Input.role!(input, input), null, "The role of input is not null");
 });
 
-test("Returns no role if an input has type datetime", t => {
-  const input = <input type="datetime" />;
-  t.equal(Input.role!(input, input), null, "The role of input is not null");
-});
-
 test("Returns the semantic role of an input if its type is email and it has no list attribute", t => {
   const input = <input type="email" />;
   t.equal(
@@ -306,15 +301,6 @@ test("Returns no allowed roles when an input has type color", t => {
 
 test("Returns no allowed roles when an input has type date", t => {
   const input = <input type="date" />;
-  t.deepEqual(
-    Input.allowedRoles(input, input),
-    None(Roles),
-    "Input allowed roles are incorrect"
-  );
-});
-
-test("Returns no allowed roles when an input has type datetime", t => {
-  const input = <input type="datetime" />;
   t.deepEqual(
     Input.allowedRoles(input, input),
     None(Roles),

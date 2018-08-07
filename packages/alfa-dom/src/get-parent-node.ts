@@ -38,6 +38,7 @@ export function getParentNode(
 
     traverseNode(
       context,
+      context,
       {
         enter(node, parentNode) {
           if (parentNode !== null) {
