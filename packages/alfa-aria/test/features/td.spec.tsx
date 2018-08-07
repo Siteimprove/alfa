@@ -10,10 +10,10 @@ import * as Roles from "../../src/roles";
 test("Returns the semantic role of a tablecell that is a descendant of table", t => {
   const td = <td />;
   const table = <table>{td}</table>;
-  t.equal(Td.role!(td, table), Roles.Cell, "tablecell role is not Cell");
+  t.equal(Td.role!(td, table), Roles.Cell);
 });
 
 test("Returns no role if a tablecell is not a descendant of a table", t => {
   const td = <td />;
-  t.equal(Td.role!(td, td), null, "tablecell role is not null");
+  t.equal(Td.role!(td, td), null);
 });

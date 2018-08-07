@@ -10,53 +10,45 @@ import * as Roles from "../../src/roles";
 test("Returns the semantic role of a list item whose parent is an ordered list", t => {
   const li = <li />;
   const ol = <ol>{li}</ol>;
-  t.equal(Li.role!(li, ol), Roles.ListItem, "List item role is not ListItem");
+  t.equal(Li.role!(li, ol), Roles.ListItem);
 });
 
 test("Returns the semantic role of a list item whose parent is an unordered list", t => {
   const li = <li />;
   const ul = <ul>{li}</ul>;
-  t.equal(Li.role!(li, ul), Roles.ListItem, "List item role is not ListItem");
+  t.equal(Li.role!(li, ul), Roles.ListItem);
 });
 
 test("Returns the allowed roles of a list item whose parent is an ordered list", t => {
   const li = <li />;
   const ol = <ol>{li}</ol>;
-  t.deepEqual(
-    Li.allowedRoles(li, ol),
-    [
-      Roles.MenuItem,
-      Roles.MenuItemCheckbox,
-      Roles.MenuItemRadio,
-      Roles.Option,
-      Roles.None,
-      Roles.Presentation,
-      Roles.Radio,
-      Roles.Separator,
-      Roles.Tab,
-      Roles.TreeItem
-    ],
-    "List allowed roles are incorrect"
-  );
+  t.deepEqual(Li.allowedRoles(li, ol), [
+    Roles.MenuItem,
+    Roles.MenuItemCheckbox,
+    Roles.MenuItemRadio,
+    Roles.Option,
+    Roles.None,
+    Roles.Presentation,
+    Roles.Radio,
+    Roles.Separator,
+    Roles.Tab,
+    Roles.TreeItem
+  ]);
 });
 
 test("Returns the allowed roles of a list item whose parent is an unordered list", t => {
   const li = <li />;
   const ul = <ul>{li}</ul>;
-  t.deepEqual(
-    Li.allowedRoles(li, ul),
-    [
-      Roles.MenuItem,
-      Roles.MenuItemCheckbox,
-      Roles.MenuItemRadio,
-      Roles.Option,
-      Roles.None,
-      Roles.Presentation,
-      Roles.Radio,
-      Roles.Separator,
-      Roles.Tab,
-      Roles.TreeItem
-    ],
-    "List allowed roles are incorrect"
-  );
+  t.deepEqual(Li.allowedRoles(li, ul), [
+    Roles.MenuItem,
+    Roles.MenuItemCheckbox,
+    Roles.MenuItemRadio,
+    Roles.Option,
+    Roles.None,
+    Roles.Presentation,
+    Roles.Radio,
+    Roles.Separator,
+    Roles.Tab,
+    Roles.TreeItem
+  ]);
 });

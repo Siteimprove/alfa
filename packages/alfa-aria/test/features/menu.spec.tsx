@@ -9,10 +9,10 @@ import * as Roles from "../../src/roles";
 
 test("Returns the semantic role of a menu with type context", t => {
   const menu = <menu type="context" />;
-  t.equal(Menu.role!(menu, menu), Roles.Menu, "Menu role is not Menu");
+  t.equal(Menu.role!(menu, menu), Roles.Menu);
 });
 
 test("Returns no role if a menu does not have type context", t => {
   const menu = <menu />;
-  t.equal(Menu.role!(menu, menu), null, "Menu role is not null");
+  t.equal(Menu.role!(menu, menu), null);
 });

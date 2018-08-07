@@ -9,27 +9,15 @@ import * as Roles from "../../src/roles";
 
 test("Returns the semantic role of a menuitem with type command", t => {
   const menuitem = <menuitem type="command" />;
-  t.equal(
-    MenuItem.role!(menuitem, menuitem),
-    Roles.MenuItem,
-    "Menuitem role is not MenuItem"
-  );
+  t.equal(MenuItem.role!(menuitem, menuitem), Roles.MenuItem);
 });
 
 test("Returns the semantic role of a menuitem with type checkbox", t => {
   const menuitem = <menuitem type="checkbox" />;
-  t.equal(
-    MenuItem.role!(menuitem, menuitem),
-    Roles.MenuItemCheckbox,
-    "Checkbox role is not MenuItemCheckbox"
-  );
+  t.equal(MenuItem.role!(menuitem, menuitem), Roles.MenuItemCheckbox);
 });
 
 test("Returns the semantic role of a menuitem with type radio", t => {
   const menuitem = <menuitem type="radio" />;
-  t.equal(
-    MenuItem.role!(menuitem, menuitem),
-    Roles.MenuItemRadio,
-    "Checkbox role is not MenuItemRadio"
-  );
+  t.equal(MenuItem.role!(menuitem, menuitem), Roles.MenuItemRadio);
 });
