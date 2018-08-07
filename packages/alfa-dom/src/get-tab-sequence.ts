@@ -7,7 +7,7 @@ import { Element, Node } from "./types";
  * @see https://www.w3.org/TR/html/editing.html#sequential-focus-navigation
  */
 export function getTabSequence(
-  element: Element,
+  element: Node,
   context: Node
 ): Readonly<Array<Element>> {
   const result: Array<Element> = [];
