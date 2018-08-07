@@ -10,7 +10,13 @@ const isSrc = endsWith(".ts", ".tsx");
 const isBuild = endsWith(".js");
 
 watchFiles(
-  ["packages/**/*.ts", "packages/**/*.tsx", "build/**/*.js"],
+  [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "build/**/*.js",
+    "docs/**/*.ts",
+    "docs/**/*.tsx"
+  ],
   (event, file) => {
     let success;
 
