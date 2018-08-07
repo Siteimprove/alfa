@@ -1,25 +1,27 @@
 import { getTabIndex } from "./get-tab-index";
+import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
-import { Element, NodeType } from "./types";
+import { Element } from "./types";
 
-function binaryIndexSearch(array: Array<Element>, index: number) {
-  let low = 0;
-  let high = array.length;
+function indexWithin(array: Array<Element>, element: Element) {
+  let lower = 0;
+  let upper = array.length;
+  const index = <number>getTabIndex(element);
 
   if (index === 0) {
-    return high;
+    return upper;
   }
 
-  while (low < high) {
-    const mid = (low + high) >>> 1;
-    const other = <number>getTabIndex(array[mid]);
+  while (lower < upper) {
+    const middle = (lower + (upper - lower) / 2) | 0;
+    const other = <number>getTabIndex(array[middle]);
     if (other <= index && other !== 0) {
-      low = mid + 1;
+      lower = middle + 1;
     } else {
-      high = mid;
+      upper = middle;
     }
   }
-  return low;
+  return lower;
 }
 
 /**
@@ -30,14 +32,14 @@ export function getTabSequence(element: Element): Array<Element> {
 
   traverseNode(element, {
     enter(node, parent) {
-      if (node.nodeType !== NodeType.Element) {
+      if (!isElement(node)) {
         return;
       }
 
-      const index = getTabIndex(<Element>node);
+      const index = getTabIndex(node);
       if (index !== null && index >= 0) {
-        const location = binaryIndexSearch(result, index);
-        result.splice(location, 0, <Element>node);
+        const location = indexWithin(result, node);
+        result.splice(location, 0, node);
       }
     }
   });
