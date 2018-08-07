@@ -17,7 +17,7 @@ function role(th: Element): Role | null {
   switch (getAttribute(th, "scope")) {
     case "row":
     case "rowgroup":
-      return Roles.Row;
+      return Roles.RowHeader;
     case "col":
     case "colgroup":
       return Roles.ColumnHeader;
