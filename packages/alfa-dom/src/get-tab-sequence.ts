@@ -1,7 +1,7 @@
 import { getTabIndex } from "./get-tab-index";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
 function indexWithin(array: Array<Element>, element: Element) {
   let lower = 0;
@@ -25,16 +25,16 @@ function indexWithin(array: Array<Element>, element: Element) {
 }
 
 /**
- * @see https://www.w3.org/TR/html/editing.html#the-tabindex-attribute
+ * @see https://www.w3.org/TR/html/editing.html#sequential-focus-navigation
  */
 export function getTabSequence(
   element: Element,
-  context: Element
+  context: Node
 ): Array<Element> {
   const result: Array<Element> = [];
 
   traverseNode(element, context, {
-    enter(node, parent) {
+    enter(node) {
       if (!isElement(node)) {
         return;
       }
