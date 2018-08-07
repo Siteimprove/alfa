@@ -8,11 +8,17 @@ import { Element, Node } from "./types";
 
 /**
  * Given an element and a context, get the form label associated with the
- * element, if any.
+ * element. If no form label is associated with the element within the context,
+ * `null` is returned.
  *
  * @example
  * const input = <input type="text" id="foo" />;
- * const form = <form><label for="foo">Foo</label>{input}</form>;
+ * const form = (
+ *   <form>
+ *     <label for="foo">Foo</label>
+ *     {input}
+ *   </form>
+ * );
  * getLabel(element, form);
  * // => <label for="foo">...</label>
  *

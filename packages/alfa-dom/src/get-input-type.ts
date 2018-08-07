@@ -27,6 +27,9 @@ export const enum InputType {
 }
 
 /**
+ * Given an `<input>` element, get the type of the element. If the element is
+ * not an `<input>`, `null` is returned.
+ *
  * @see https://www.w3.org/TR/html/sec-forms.html#element-attrdef-input-type
  */
 export function getInputType(element: Element): InputType | null {

@@ -8,6 +8,9 @@ export const enum ButtonType {
 }
 
 /**
+ * Given a `<button>` element, get the type of the element. If the element is
+ * not a `<button>`, `null` is returned.
+ *
  * @see https://www.w3.org/TR/html/sec-forms.html#element-attrdef-button-type
  */
 export function getButtonType(element: Element): ButtonType | null {

@@ -9,15 +9,15 @@ const flattenedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
 const composedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
 
 /**
- * Given a node and a context, get the parent node of the node within the
- * context.
+ * Given a node and a context, get the parent of the node within the context.
+ * If the node has no parent, `null` is returned.
  *
  * @see https://www.w3.org/TR/dom/#dom-node-parentnode
  *
  * @example
  * const span = <span />;
  * const div = <div>{span}</div>;
- * getParent(span, <section>{div}</section>);
+ * getParentNode(span, <section>{div}</section>);
  * // => <div>...</div>
  */
 export function getParentNode(

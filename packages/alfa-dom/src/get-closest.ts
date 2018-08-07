@@ -10,7 +10,8 @@ export type GetClosestResult<T extends Node, Q> = Q extends string
 
 /**
  * Given a node and a context, get the closest parent (or the node itself) that
- * matches the given selector or predicate.
+ * matches the given selector or predicate. If no match is found then `null` is
+ * returned.
  *
  * @see https://dom.spec.whatwg.org/#dom-element-closest
  *

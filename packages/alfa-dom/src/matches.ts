@@ -70,6 +70,9 @@ export type MatchesOptions = Readonly<{
 }>;
 
 /**
+ * Given an element and a context, check if the element matches the given
+ * selector within the context.
+ *
  * @see https://www.w3.org/TR/dom41/#dom-element-matches
  */
 export function matches(

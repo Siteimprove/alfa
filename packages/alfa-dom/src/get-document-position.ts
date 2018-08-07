@@ -11,14 +11,14 @@ const composedPositionMaps: WeakMap<Node, PositionMap> = new WeakMap();
 
 /**
  * Given a node and a context, get the document position of the node within the
- * context. If the node does not exist within the given context then `-1` is
+ * context. If the node does not exist within the given context then `null` is
  * returned.
  */
 export function getDocumentPosition(
   node: Node,
   context: Node,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
-): number {
+): number | null {
   let positionMaps = normalPositionMaps;
 
   if (options.flattened === true) {
@@ -51,7 +51,7 @@ export function getDocumentPosition(
   const position = positionMap.get(node);
 
   if (position === undefined) {
-    return -1;
+    return null;
   }
 
   return position;

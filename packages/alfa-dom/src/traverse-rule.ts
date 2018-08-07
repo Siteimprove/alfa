@@ -4,11 +4,20 @@ import { Rule } from "./types";
 
 export type RuleVisitor = (rule: Rule, parentRule: Rule | null) => false | void;
 
+/**
+ * Given a rule, perform a preorder, depth-first traversal of the rule,
+ * invoking the given visitors for the context itself and all of its children.
+ * A visitor may return `false` in order to stop the traversal, resulting in
+ * the function itself returning `false`. If traversal finishes without
+ * interruption, `true` is returned.
+ *
+ * @see https://www.w3.org/TR/dom/#concept-tree-order
+ */
 export function traverseRule(
-  context: Rule,
+  rule: Rule,
   visitors: Readonly<{ enter?: RuleVisitor; exit?: RuleVisitor }>
 ): boolean {
-  return visitRule(context, null, visitors);
+  return visitRule(rule, null, visitors);
 }
 
 function visitRule(

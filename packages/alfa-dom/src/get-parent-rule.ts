@@ -6,6 +6,7 @@ const parentMaps: WeakMap<Node, WeakMap<Rule, Rule>> = new WeakMap();
 
 /**
  * Given a rule and a context, get the parent of the rule within the context.
+ * If the rule has no parent within the context, `null` is returned.
  *
  * @see https://www.w3.org/TR/cssom/#dom-cssrule-parentrule
  */

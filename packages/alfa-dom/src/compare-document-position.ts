@@ -34,7 +34,8 @@ export const enum DocumentPosition {
 }
 
 /**
- * Compare the position of a reference node with the position of another node.
+ * Given a reference node, another node, and a context, compare the position of
+ * the reference node with the position the other node within the context.
  *
  * NB: Unlike `Node.compareDocumentPosition()` as specified in DOM, this
  * function also changes the sign of the returned number in order to allow use

@@ -6,6 +6,9 @@ import { traverseNode } from "./traverse-node";
 import { Namespace, Node } from "./types";
 
 /**
+ * Given a node and a context, construct an HTML serialization of the node
+ * within the context.
+ *
  * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
  */
 export function serialize(
