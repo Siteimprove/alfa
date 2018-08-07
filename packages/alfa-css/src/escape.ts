@@ -2,6 +2,9 @@ import { Char, isBetween } from "@siteimprove/alfa-lang";
 
 const { fromCharCode } = String;
 
+/**
+ * @see https://www.w3.org/TR/cssom/#the-css.escape%28%29-method
+ */
 export function escape(input: string) {
   let result = "";
 
@@ -39,10 +42,16 @@ export function escape(input: string) {
   return result;
 }
 
+/**
+ * @see https://www.w3.org/TR/cssom/#escape-a-character
+ */
 function escapeCharacter(character: number) {
   return `${fromCharCode(Char.Escape)}${character.toString(16)}`;
 }
 
+/**
+ * @see https://www.w3.org/TR/cssom/#escape-a-character-as-code-point
+ */
 function escapeCharacterAsCodePoint(character: number) {
   return `${escapeCharacter(character)}${fromCharCode(Char.Space)}`;
 }
