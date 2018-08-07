@@ -33,7 +33,7 @@ const cascades: WeakMap<Document, Cascade> = new WeakMap();
 /**
  * @internal
  */
-export function getCascade(context: Document): Cascade | null {
+export function getCascade(context: Document): Cascade {
   let cascade = cascades.get(context);
 
   if (cascade === undefined) {
