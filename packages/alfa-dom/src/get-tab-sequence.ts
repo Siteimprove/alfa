@@ -14,14 +14,12 @@ export function getTabSequence(
 
   traverseNode(node, context, {
     enter(node) {
-      if (!isElement(node)) {
-        return;
-      }
+      if (isElement(node)) {
+        const index = getTabIndex(node);
 
-      const index = getTabIndex(node);
-      if (index !== null && index >= 0) {
-        const location = indexWithin(result, node);
-        result.splice(location, 0, node);
+        if (index !== null && index >= 0) {
+          result.splice(indexWithin(result, node), 0, node);
+        }
       }
     }
   });
@@ -32,20 +30,23 @@ export function getTabSequence(
 function indexWithin(array: Array<Element>, element: Element) {
   let lower = 0;
   let upper = array.length;
-  const index = getTabIndex(element) as number;
 
-  if (index === 0) {
+  const reference = getTabIndex(element) as number;
+
+  if (reference === 0) {
     return upper;
   }
 
   while (lower < upper) {
     const middle = (lower + (upper - lower) / 2) | 0;
     const other = getTabIndex(array[middle]) as number;
-    if (other <= index && other !== 0) {
+
+    if (other <= reference && other !== 0) {
       lower = middle + 1;
     } else {
       upper = middle;
     }
   }
+
   return lower;
 }
