@@ -19,6 +19,7 @@ export * from "./get-key-selector";
 export * from "./get-label";
 export * from "./get-next-element-sibling";
 export * from "./get-next-sibling";
+export * from "./get-node";
 export * from "./get-parent-element";
 export * from "./get-parent-node";
 export * from "./get-parent-rule";
