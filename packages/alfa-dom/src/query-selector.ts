@@ -80,9 +80,12 @@ export function querySelectorAll<
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
-    const options = { scope: isElement(scope) ? scope : undefined };
+    const matchesOptions = {
+      ...options,
+      scope: isElement(scope) ? scope : undefined
+    };
     predicate = node =>
-      isElement(node) && matches(node, context, query, options);
+      isElement(node) && matches(node, context, query, matchesOptions);
   } else {
     predicate = query as Predicate<Node, T>;
   }
