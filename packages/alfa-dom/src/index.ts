@@ -29,6 +29,7 @@ export * from "./get-root-node";
 export * from "./get-specificity";
 export * from "./get-style";
 export * from "./get-tab-index";
+export * from "./get-tab-sequence";
 export * from "./get-tag-name";
 export * from "./get-text-content";
 export * from "./guards";
