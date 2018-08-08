@@ -16,11 +16,11 @@ export type AttributeFilter = (
 
 /**
  * Given a node and a context, compute the digest of the node within the
- * context. The digest algorithm is based on DOMHASH (RFC2803) and provides a
+ * context. The digest algorithm is based on DOMHASH (RFC 2803) and provides a
  * means of identifying identical subtrees of a DOM structure. If no digest can
  * be computed for the node then `null` is returned.
  *
- * @see https://www.ietf.org/rfc/rfc2803.txt
+ * @see https://tools.ietf.org/html/rfc2803
  */
 export function getDigest(
   node: Node,
