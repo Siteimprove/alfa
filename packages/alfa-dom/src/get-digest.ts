@@ -1,4 +1,4 @@
-import { getHash, Hash } from "@siteimprove/alfa-crypto";
+import { getHash } from "@siteimprove/alfa-crypto";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getChildNodes } from "./get-child-nodes";
 import { getElementNamespace } from "./get-element-namespace";
