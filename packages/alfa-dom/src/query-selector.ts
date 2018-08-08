@@ -48,7 +48,7 @@ export function querySelector<
     scope,
     context,
     {
-      enter(node, parent) {
+      enter(node) {
         if (predicate(node)) {
           found = node as QuerySelectorResult<T, Q>;
           return false;
@@ -93,7 +93,7 @@ export function querySelectorAll<
     scope,
     context,
     {
-      enter(node, parent) {
+      enter(node) {
         if (predicate(node)) {
           found.push(node as QuerySelectorResult<T, Q>);
         }
