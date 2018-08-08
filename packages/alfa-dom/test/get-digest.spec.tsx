@@ -2,12 +2,35 @@ import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getDigest } from "../src/get-digest";
 
-test("Computes the digest value of a DOM node", t => {
-  const foo = <div class="foo">Hello world!</div>;
+const foo = (
+  <div class="foo">
+    Hello world!
+    <shadow>
+      <p>
+        <slot />
+      </p>
+    </shadow>
+  </div>
+);
 
+test("Computes the digest value of a DOM node", t => {
   t.equal(
     getDigest(foo, <div>{foo}</div>),
     "uHv50qOfqUJBuFExof9E4o0SVhy0eSSpYTCbBpznFEk="
+  );
+});
+
+test("Computes the composed digest value of a DOM node", t => {
+  t.equal(
+    getDigest(foo, <div>{foo}</div>, { composed: true }),
+    "FQoawdaqE+YbzTjTzRjNj30K5gFBGCodOE2YWs21nCg="
+  );
+});
+
+test("Computes the flattened digest value of a DOM node", t => {
+  t.equal(
+    getDigest(foo, <div>{foo}</div>, { flattened: true }),
+    "hYWizjs+UvqWUlIM+xaGu0sU8yg3fxRBBLN52P2yJtQ="
   );
 });
 
@@ -44,7 +67,9 @@ test("Can filter out unwanted nodes", t => {
 
   t.equal(
     getDigest(foo, foo, {
-      node: node => node.nodeType === 1
+      filters: {
+        node: node => node.nodeType === 1
+      }
     }),
     getDigest(bar, bar)
   );
@@ -56,7 +81,9 @@ test("Can filter out unwanted attributes", t => {
 
   t.equal(
     getDigest(foo, foo, {
-      attribute: attribute => attribute.localName !== "id"
+      filters: {
+        attribute: attribute => attribute.localName !== "id"
+      }
     }),
     getDigest(bar, bar)
   );
