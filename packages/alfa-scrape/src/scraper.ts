@@ -14,6 +14,8 @@ export const enum Wait {
 export class Scraper {
   private readonly browser = puppeteer.launch({
     args: [
+      "--no-sandbox",
+
       // In order to be able to access external style sheets through CSSOM, we
       // have to disable CORS restrictions in Chromium.
       "--disable-web-security"

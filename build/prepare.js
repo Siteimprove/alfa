@@ -18,6 +18,8 @@ for (const pkg of packages) {
   );
 }
 
+files.push(...findFiles("docs", endsWith(".ts", ".tsx")));
+
 for (const file of files) {
   if (build(file)) {
     notify.success(file);
