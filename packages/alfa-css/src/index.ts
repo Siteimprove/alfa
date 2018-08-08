@@ -5,6 +5,7 @@ export * from "./alphabet";
 export * from "./grammar";
 export * from "./parse";
 export * from "./types";
+export * from "./escape";
 
 export * from "./grammars/color";
 export * from "./grammars/content";
