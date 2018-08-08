@@ -83,6 +83,10 @@ export function getDigest(
     for (let i = 0, n = attributes.length; i < n; i++) {
       const attribute = attributes[i];
 
+      if (attribute.localName === "xmlns" || attribute.prefix === "xmlns") {
+        continue;
+      }
+
       if (
         filters.attribute !== undefined &&
         filters.attribute(attribute, node, context) === false
