@@ -16,21 +16,21 @@ const foo = (
 test("Computes the digest value of a DOM node", t => {
   t.equal(
     getDigest(foo, <div>{foo}</div>),
-    "uHv50qOfqUJBuFExof9E4o0SVhy0eSSpYTCbBpznFEk="
+    "tDSQ3voWR9QMpPuaCUR32eba1JgFuu8KwAi0buXtj4g="
   );
 });
 
 test("Computes the composed digest value of a DOM node", t => {
   t.equal(
     getDigest(foo, <div>{foo}</div>, { composed: true }),
-    "FQoawdaqE+YbzTjTzRjNj30K5gFBGCodOE2YWs21nCg="
+    "1PauRFEfPMfAfTjJtPLaBuXox9rjdtXUDu0Ef9HcDUA="
   );
 });
 
 test("Computes the flattened digest value of a DOM node", t => {
   t.equal(
     getDigest(foo, <div>{foo}</div>, { flattened: true }),
-    "hYWizjs+UvqWUlIM+xaGu0sU8yg3fxRBBLN52P2yJtQ="
+    "eqCTo3DpLBAjrmWW3ARcgUzi8GDLwnsCF2r8uSNdjjk="
   );
 });
 
@@ -53,6 +53,16 @@ test("Correctly distinguishes literal boolean values from boolean attributes", t
 
 test("Correctly handles cases of sorted boolean attributes", t => {
   const foo = <div bar foo />;
+  const bar = <div bar="foo" />;
+
+  t.notEqual(
+    getDigest(foo, <div>{foo}</div>),
+    getDigest(bar, <div>{bar}</div>)
+  );
+});
+
+test("Correctly separates attribute names and values", t => {
+  const foo = <div barf="oo" />;
   const bar = <div bar="foo" />;
 
   t.notEqual(

@@ -1,4 +1,4 @@
-import { getHash } from "@siteimprove/alfa-crypto";
+import { getHash, Hash } from "@siteimprove/alfa-crypto";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getChildNodes } from "./get-child-nodes";
 import { getElementNamespace } from "./get-element-namespace";
@@ -56,7 +56,7 @@ export function getDigest(
 
   const hash = getHash("sha256");
 
-  hash.update(String(node.nodeType));
+  hash.update(node.nodeType.toString(10));
 
   if (isText(node)) {
     hash.update(node.data);
@@ -71,37 +71,58 @@ export function getDigest(
       hash.update(`${namespace}:${node.localName}`);
     }
 
+    hash.update("\u{0000}");
+
     const attributes = Array.from(node.attributes).sort(
       (a, b) =>
         a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0
     );
 
-    for (const attribute of attributes) {
+    const attributeDigests: Array<string> = [];
+
+    for (let i = 0, n = attributes.length; i < n; i++) {
+      const attribute = attributes[i];
+
       if (
         filters.attribute !== undefined &&
-        !filters.attribute(attribute, node, context)
+        filters.attribute(attribute, node, context) === false
       ) {
         continue;
       }
 
       const namespace = getAttributeNamespace(attribute, node, context);
 
+      const value = `${attribute.localName}\u{0000}${attribute.value}`;
+
       if (namespace === null) {
-        hash.update(`${attribute.localName}${attribute.value}`);
+        attributeDigests.push(value);
       } else {
-        hash.update(`${namespace}:${attribute.localName}${attribute.value}`);
+        attributeDigests.push(`${namespace}:${value}`);
       }
+    }
+
+    hash.update(attributeDigests.length.toString(10));
+
+    for (let i = 0, n = attributeDigests.length; i < n; i++) {
+      hash.update(attributeDigests[i]);
     }
   }
 
   const childNodes = getChildNodes(node, context, options);
+  const childDigests: Array<string> = [];
 
   for (let i = 0, n = childNodes.length; i < n; i++) {
     const childDigest = getDigest(childNodes[i], context, options);
 
     if (childDigest !== null) {
-      hash.update(childDigest);
+      childDigests.push(childDigest);
     }
+  }
+
+  hash.update(childDigests.length.toString(10));
+
+  for (let i = 0, n = childDigests.length; i < n; i++) {
+    hash.update(childDigests[i]);
   }
 
   return hash.digest("base64");
