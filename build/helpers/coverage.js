@@ -46,7 +46,11 @@ session.post("Profiler.startPreciseCoverage", {
   detailed: true
 });
 
-process.on("exit", () => {
+process.on("exit", code => {
+  if (code !== 0) {
+    return;
+  }
+
   session.post("Profiler.takePreciseCoverage", (err, { result }) => {
     const spec = process.argv[1];
 
