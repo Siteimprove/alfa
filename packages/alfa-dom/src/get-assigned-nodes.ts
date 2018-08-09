@@ -5,7 +5,24 @@ import { isElement, isShadowRoot, isText } from "./guards";
 import { Element, Node } from "./types";
 
 /**
+ * Given a `<slot>` element and a context, get the nodes assigned to the element
+ * within the context. If the element is not a `<slot>` or no nodes are assigned
+ * to the `<slot>`, an empty array is returned.
+ *
  * @see https://www.w3.org/TR/dom41/#slot-assigned-nodes
+ *
+ * @example
+ * const slot = <slot name="foo" />;
+ * const context = (
+ *   <div>
+ *     <p slot="foo">Hello world</p>
+ *     <shadow>
+ *       {slot}
+ *     </shadow>
+ *   </div>
+ * );
+ * getAssignedNodes(slot, context);
+ * // => [<p>Hello world</p>]
  */
 export function getAssignedNodes(
   element: Element,

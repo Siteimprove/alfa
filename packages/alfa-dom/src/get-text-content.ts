@@ -23,7 +23,7 @@ export function getTextContent(
     node,
     context,
     {
-      enter(node, parent) {
+      enter(node) {
         if (isText(node)) {
           text += node.data;
         }

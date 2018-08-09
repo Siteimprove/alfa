@@ -9,14 +9,10 @@ import * as Roles from "../../src/roles";
 
 test("Returns the semantic role of a section that has an accessible name", t => {
   const section = <section title="foo" />;
-  t.equal(
-    Section.role!(section, section),
-    Roles.Region,
-    "Section role is not Region"
-  );
+  t.equal(Section.role!(section, section), Roles.Region);
 });
 
 test("Returns no role if a section has no accessible name", t => {
   const section = <section />;
-  t.equal(Section.role!(section, section), null, "Section role is not null");
+  t.equal(Section.role!(section, section), null);
 });

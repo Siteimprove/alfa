@@ -4,7 +4,8 @@ import { isRendered } from "./is-rendered";
 import { Element, Node } from "./types";
 
 /**
- * Check if an element is focusable within a given context.
+ * Given an element and a context, check if the element is focusable within the
+ * context.
  *
  * @see https://www.w3.org/TR/html/editing.html#focusable
  */

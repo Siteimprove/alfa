@@ -2,12 +2,35 @@ import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getDigest } from "../src/get-digest";
 
-test("Computes the digest value of a DOM node", t => {
-  const foo = <div class="foo">Hello world!</div>;
+const foo = (
+  <div class="foo">
+    Hello world!
+    <shadow>
+      <p>
+        <slot />
+      </p>
+    </shadow>
+  </div>
+);
 
+test("Computes the digest value of a DOM node", t => {
   t.equal(
     getDigest(foo, <div>{foo}</div>),
-    "uHv50qOfqUJBuFExof9E4o0SVhy0eSSpYTCbBpznFEk="
+    "tDSQ3voWR9QMpPuaCUR32eba1JgFuu8KwAi0buXtj4g="
+  );
+});
+
+test("Computes the composed digest value of a DOM node", t => {
+  t.equal(
+    getDigest(foo, <div>{foo}</div>, { composed: true }),
+    "1PauRFEfPMfAfTjJtPLaBuXox9rjdtXUDu0Ef9HcDUA="
+  );
+});
+
+test("Computes the flattened digest value of a DOM node", t => {
+  t.equal(
+    getDigest(foo, <div>{foo}</div>, { flattened: true }),
+    "eqCTo3DpLBAjrmWW3ARcgUzi8GDLwnsCF2r8uSNdjjk="
   );
 });
 
@@ -38,13 +61,25 @@ test("Correctly handles cases of sorted boolean attributes", t => {
   );
 });
 
+test("Correctly separates attribute names and values", t => {
+  const foo = <div barf="oo" />;
+  const bar = <div bar="foo" />;
+
+  t.notEqual(
+    getDigest(foo, <div>{foo}</div>),
+    getDigest(bar, <div>{bar}</div>)
+  );
+});
+
 test("Can filter out unwanted nodes", t => {
   const foo = <div>Foo</div>;
   const bar = <div />;
 
   t.equal(
     getDigest(foo, foo, {
-      node: node => node.nodeType === 1
+      filters: {
+        node: node => node.nodeType === 1
+      }
     }),
     getDigest(bar, bar)
   );
@@ -56,7 +91,9 @@ test("Can filter out unwanted attributes", t => {
 
   t.equal(
     getDigest(foo, foo, {
-      attribute: attribute => attribute.localName !== "id"
+      filters: {
+        attribute: attribute => attribute.localName !== "id"
+      }
     }),
     getDigest(bar, bar)
   );

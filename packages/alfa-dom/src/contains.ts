@@ -5,8 +5,8 @@ import { Node } from "./types";
 
 /**
  * Given a node and a context, check if the node contains another node that
- * matches the given query. One node is said to contain another node if the
- * other node is an inclusive descendant of the first.
+ * matches the given selector, predicate, or node. One node is said to contain
+ * another node if the other node is an inclusive descendant of the first.
  *
  * @see https://www.w3.org/TR/dom/#dom-node-contains
  * @see https://www.w3.org/TR/dom/#concept-tree-inclusive-descendant
@@ -25,7 +25,7 @@ import { Node } from "./types";
 export function contains<T extends Node>(
   scope: Node,
   context: Node,
-  query: Predicate<Node, T> | T | string,
+  query: string | Predicate<Node, T> | T,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): boolean {
   if (typeof query === "object") {

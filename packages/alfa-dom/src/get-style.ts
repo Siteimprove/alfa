@@ -29,21 +29,9 @@ export type StyleOptions = Readonly<{
   pseudo?: PseudoElement;
 }>;
 
-export function getCascadedStyle(
-  element: Element,
-  context: Node,
-  options?: StyleOptions
-): Style<Stage.Cascaded>;
-
 /**
- * @internal
+ * @see https://www.w3.org/TR/css-cascade/#cascaded
  */
-export function getCascadedStyle(
-  element: Element,
-  context: Node,
-  options?: StyleOptions
-): Style<Stage.Cascaded>;
-
 export function getCascadedStyle(
   element: Element,
   context: Node,
@@ -135,6 +123,9 @@ export function getCascadedStyle(
   return cascadedStyle;
 }
 
+/**
+ * @see https://www.w3.org/TR/css-cascade/#specified
+ */
 export function getSpecifiedStyle(
   element: Element,
   context: Node,
@@ -207,6 +198,9 @@ export function getSpecifiedStyle(
   return specifiedStyle;
 }
 
+/**
+ * @see https://www.w3.org/TR/css-cascade/#computed
+ */
 export function getComputedStyle(
   element: Element,
   context: Node,

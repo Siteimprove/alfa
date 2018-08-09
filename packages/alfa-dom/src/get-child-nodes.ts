@@ -3,6 +3,9 @@ import { isElement } from "./guards";
 import { Node } from "./types";
 
 /**
+ * Given a node and a context, get the child nodes of the node within the
+ * context.
+ *
  * @see https://www.w3.org/TR/dom/#dom-node-childnodes
  */
 export function getChildNodes(

@@ -10,33 +10,28 @@ import { Except } from "../../src/types";
 
 test("Returns the semantic role of an image with a non-empty string alt attribute", t => {
   const img = <img alt="Foobar" />;
-  t.equal(Img.role!(img, img), Roles.Img, "Image role is not Img");
+  t.equal(Img.role!(img, img), Roles.Img);
 });
 
 test("Returns no role if an image has the alt attribute set to the empty-string", t => {
   const img = <img alt="" />;
-  t.equal(Img.role!(img, img), null, "Image role is not null");
+  t.equal(Img.role!(img, img), null);
 });
 
 test("Returns no role if an image does not have an alt attribute", t => {
   const img = <img alt="" />;
-  t.equal(Img.role!(img, img), null, "Image role is not null");
+  t.equal(Img.role!(img, img), null);
 });
 
 test("Returns the allowed roles of an image with an alt attribute set to the empty string", t => {
   const img = <img alt="" />;
-  t.deepEqual(
-    Img.allowedRoles(img, img),
-    [Roles.None, Roles.Presentation],
-    "Image allowed roles are incorrect"
-  );
+  t.deepEqual(Img.allowedRoles(img, img), [Roles.None, Roles.Presentation]);
 });
 
 test("Returns the allowed roles of an image with a non-empty string alt attribute", t => {
   const img = <img alt="Foobar" />;
   t.deepEqual(
     Img.allowedRoles(img, img),
-    Except(Roles, [Roles.Presentation, Roles.None]),
-    "Image allowed roles are incorrect"
+    Except(Roles, [Roles.Presentation, Roles.None])
   );
 });

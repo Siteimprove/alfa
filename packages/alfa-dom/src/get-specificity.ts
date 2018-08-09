@@ -16,6 +16,7 @@ const componentMax = (1 << componentBits) - 1;
 
 /**
  * @see https://www.w3.org/TR/selectors/#specificity
+ *
  * @internal
  */
 export function getSpecificity(selector: Selector): Specificity {

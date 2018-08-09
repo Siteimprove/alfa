@@ -1,25 +1,26 @@
-import * as fs from "fs";
-import { Scraper } from "@siteimprove/alfa-scrape";
+import { audit } from "../../../packages/alfa-act";
 import {
   Document,
-  querySelector,
-  querySelectorAll,
   getAttribute,
   getNextElementSibling,
+  querySelector,
+  querySelectorAll,
   serialize
-} from "@siteimprove/alfa-dom";
-import { audit } from "@siteimprove/alfa-act";
-import { Rules } from "@siteimprove/alfa-wcag";
+} from "../../../packages/alfa-dom";
+import { Scraper } from "../../../packages/alfa-scrape";
+import { Rules } from "../../../packages/alfa-wcag";
+
+import { removeDirectory, writeFile } from "../../../build/helpers/file-system";
 
 const scraper = new Scraper();
 
 const site = "https://alphagov.github.io/accessibility-tool-audit";
 
 scraper.scrape(`${site}/test-cases.html`).then(async page => {
-  fs.rmdirSync("docs/examples/scrape-and-check/result");
+  removeDirectory("docs/examples/scrape-and-audit/result");
 
   for (const { id, url } of getUrls(page.document)) {
-    console.log("Auditing", url);
+    process.stdout.write(`Auditing ${url}\n`);
 
     const page = await scraper.scrape(`${site}/${url}`);
 
@@ -31,8 +32,8 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
       return result;
     });
 
-    fs.writeFileSync(
-      `docs/examples/scrape-and-check/result/${id}.json`,
+    writeFile(
+      `docs/examples/scrape-and-audit/result/${id}.json`,
       JSON.stringify(results, null, 2)
     );
   }

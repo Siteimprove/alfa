@@ -4,6 +4,15 @@ import { Node } from "./types";
 
 export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
 
+/**
+ * Given a node and a context, perform a preorder, depth-first traversal of the
+ * node within the context, invoking the given visitors for the node itself and
+ * all of its children. A visitor may return `false` in order to stop the
+ * traversal, resulting in the function itself returning `false`. If traversal
+ * finishes without interruption, `true` is returned.
+ *
+ * @see https://www.w3.org/TR/dom/#concept-tree-order
+ */
 export function traverseNode(
   node: Node,
   context: Node,

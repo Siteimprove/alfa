@@ -3,8 +3,9 @@ import { getComputedStyle } from "./get-style";
 import { Element, Node } from "./types";
 
 /**
- * Check if an element is being rendered within a given context. An element is
- * considered as being rendered if it generates layout boxes.
+ * Given an element and a context, check if the element is being rendered
+ * within the context. An element is considered as being rendered if it
+ * generates layout boxes.
  *
  * @see https://www.w3.org/TR/html/rendering.html#being-rendered
  *

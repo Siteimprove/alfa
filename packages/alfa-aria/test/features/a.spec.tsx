@@ -11,7 +11,7 @@ import { Any } from "../../src/types";
 
 test("Returns the semantic role of an anchor that has an href attribute", t => {
   const a = <a href="foo">Foo</a>;
-  t.equal(A.role!(a, a), Roles.Link, "Anchor role is not Link");
+  t.equal(A.role!(a, a), Roles.Link);
 });
 
 test("Returns no role when an anchor has no href attribute", t => {
@@ -34,14 +34,10 @@ test("Returns the allowed roles of an anchor that has an href attribute", t => {
     Roles.Tab,
     Roles.TreeItem
   ];
-  t.deepEqual(actual, expected, "Anchor allowed roles are incorrect");
+  t.deepEqual(actual, expected);
 });
 
 test("Returns all roles if an anchor has no href attribute", t => {
   const a = <a>Foo</a>;
-  t.deepEqual(
-    A.allowedRoles(a, a),
-    Any(Roles),
-    "Anchor allowed roles are incorrect"
-  );
+  t.deepEqual(A.allowedRoles(a, a), Any(Roles));
 });

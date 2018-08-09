@@ -9,28 +9,20 @@ import * as Roles from "../../src/roles";
 
 test("Returns the semantic role of an tablecell header with scope row", t => {
   const th = <th scope="row" />;
-  t.equal(Th.role!(th, th), Roles.Row, "Tablecell header role is not Row");
+  t.equal(Th.role!(th, th), Roles.RowHeader);
 });
 
 test("Returns the semantic role of an tablecell header with scope rowgroup", t => {
   const th = <th scope="rowgroup" />;
-  t.equal(Th.role!(th, th), Roles.Row, "Tablecell header role is not Row");
+  t.equal(Th.role!(th, th), Roles.RowHeader);
 });
 
 test("Returns the semantic role of an tablecell header with scope col", t => {
   const th = <th scope="col" />;
-  t.equal(
-    Th.role!(th, th),
-    Roles.ColumnHeader,
-    "Tablecell header role is not ColumnHeader"
-  );
+  t.equal(Th.role!(th, th), Roles.ColumnHeader);
 });
 
 test("Returns the semantic role of an tablecell header with scope colgroup", t => {
   const th = <th scope="colgroup" />;
-  t.equal(
-    Th.role!(th, th),
-    Roles.ColumnHeader,
-    "Tablecell header role is not ColumnHeader"
-  );
+  t.equal(Th.role!(th, th), Roles.ColumnHeader);
 });
