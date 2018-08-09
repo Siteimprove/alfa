@@ -92,8 +92,10 @@ process.on("exit", code => {
 
       printCoverageStatistics(script, total);
 
-      if (uncovered.length > 0 && process.env.npm_lifecycle_event === "start") {
-        printCoverage(script, uncovered[0]);
+      if (process.env.npm_lifecycle_event === "start") {
+        for (let i = 0, n = min(3, uncovered.length); i < n; i++) {
+          printCoverage(script, uncovered[i]);
+        }
       }
     }
   });
