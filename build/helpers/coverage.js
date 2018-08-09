@@ -1,6 +1,11 @@
+import chalk from "chalk";
 import * as fs from "fs";
 import * as path from "path";
 import * as inspector from "inspector";
+import * as notify from "./notify";
+import { Byte } from "./coverage-heuristics/byte";
+import { Logical } from "./coverage-heuristics/logical";
+import { Arithmetic } from "./coverage-heuristics/arithmetic";
 import { Session } from "inspector";
 import * as sourceMap from "source-map";
 import { SourceMapConsumer } from "source-map";
@@ -14,6 +19,21 @@ const [header] = require("module").wrapper;
 const { min, max } = Math;
 
 const session = new Session();
+
+const heuristics = [
+  {
+    ...Arithmetic,
+    weight: 1 / 3
+  },
+  {
+    ...Byte,
+    weight: 1 / 3
+  },
+  {
+    ...Logical,
+    weight: 1 / 3
+  }
+];
 
 session.connect();
 
@@ -41,7 +61,34 @@ process.on("exit", () => {
         continue;
       }
 
-      parseScript(scriptCoverage);
+      if (scriptCoverage.url !== impl) {
+        continue;
+      }
+      const script = parseScript(scriptCoverage);
+
+      if (script === null) {
+        continue;
+      }
+
+      let computedPoints = computePoints(script);
+      let sortedBlocks = script.coverage
+        .filter(block => block.count === 0)
+        .sort((a, b) => {
+          const aPoints = computedPoints.get(a);
+          const bPoints = computedPoints.get(b);
+          return (
+            (bPoints === undefined ? 0 : bPoints) -
+            (aPoints === undefined ? 0 : aPoints)
+          );
+        });
+
+      printCoverageStatistics(script);
+      if (
+        sortedBlocks.length > 0 &&
+        process.env.npm_lifecycle_event === "start"
+      ) {
+        printCoverage(script, sortedBlocks[0]);
+      }
     }
   });
 });
@@ -386,4 +433,119 @@ function isBlockBorder(input) {
  */
 function isWhitespace(input) {
   return input === " " || input === "\t" || input === "\n" || input === "\r";
+}
+
+/**
+ * @param {Script} script
+ */
+function printCoverageStatistics(script) {
+  let source;
+
+  switch (script.sources.length) {
+    case 1:
+      source = script.sources[0];
+      break;
+    case 2:
+      source = script.sources[1];
+      break;
+    default:
+      return;
+  }
+
+  const total = calculateTotalCoverage(script);
+
+  const filePath = path.relative(
+    process.cwd(),
+    path.resolve(script.base, source.path)
+  );
+
+  if (total < 90) {
+    notify.warn(`${chalk.dim(filePath)} Low coverage (${total.toFixed(2)}%)`);
+  }
+}
+
+/**
+ * @param {Script} script
+ * @param {FunctionCoverage | BlockCoverage} coverage
+ */
+function printCoverage(script, coverage) {
+  // Skip all blocks that are covered at least once.
+  if (coverage.count !== 0) {
+    return;
+  }
+
+  const { start, end } = coverage.range;
+
+  const source = script.sources.find(source => source.path === start.path);
+
+  if (source === undefined) {
+    return;
+  }
+
+  const uncovered = source.content.substring(start.offset, end.offset);
+
+  const filePath = path.relative(
+    process.cwd(),
+    path.resolve(script.base, source.path)
+  );
+
+  const above = `${source.lines[start.line - 1].value}`;
+  const below = `${source.lines[end.line + 1].value}`;
+
+  const before = source.lines[start.line].value.slice(0, start.column);
+  const after = source.lines[end.line].value.slice(end.column);
+
+  let output = `${chalk.bold("Suggested Block to Cover")}`;
+
+  output += `\n${chalk.dim(`${filePath}:${start.line + 1}`)}`;
+  output += "\n";
+
+  output += above.trim() === "" ? "" : `\n${above}`;
+  output += `\n${before}`;
+
+  output += `${chalk.bold.red(uncovered)}`;
+
+  output += `${after}\n`;
+  output += below.trim() === "" ? "" : `${below}\n`;
+
+  process.stdout.write(`\n${output}\n`);
+}
+
+/**
+ * @param {Script} script
+ */
+function calculateTotalCoverage(script) {
+  let points = 0;
+  for (let i = 0, n = heuristics.length; i < n; i++) {
+    points += heuristics[i].total(script) * heuristics[i].weight;
+  }
+  return points;
+}
+
+/**
+ * @param {Script} script
+ * @param {FunctionCoverage | BlockCoverage} block
+ * @param {number} total
+ */
+function calculateBlockCoverage(script, block, total) {
+  let points = 0;
+  for (let i = 0, n = heuristics.length; i < n; i++) {
+    points += heuristics[i].block(script, block, total) * heuristics[i].weight;
+  }
+  return points;
+}
+
+/**
+ * @param {Script} script
+ * @returns {Map<BlockCoverage | FunctionCoverage, number>}
+ */
+function computePoints(script) {
+  const total = calculateTotalCoverage(script);
+  const map = new Map();
+
+  for (let block of script.coverage) {
+    map.set(block, calculateBlockCoverage(script, block, total));
+  }
+
+  return map;
 }
