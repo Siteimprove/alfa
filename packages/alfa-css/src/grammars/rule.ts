@@ -205,11 +205,7 @@ const atKeyword: Production<AtKeyword> = {
   }
 };
 
-export const RuleGrammar: Grammar<Token, Rule | Array<Rule>> = new Grammar([
-  ident,
-  delim,
-  colon,
-  squareBracket,
-  atKeyword,
-  whitespace
-]);
+export const RuleGrammar: Grammar<Token, Rule | Array<Rule>> = new Grammar(
+  [ident, delim, colon, squareBracket, atKeyword, whitespace],
+  () => null
+);

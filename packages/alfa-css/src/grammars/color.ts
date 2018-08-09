@@ -131,11 +131,10 @@ const functionName: Production<FunctionName> = {
   }
 };
 
-export const ColorGrammar: Grammar<Token, Color> = new Grammar([
-  ident,
-  functionName,
-  whitespace
-]);
+export const ColorGrammar: Grammar<Token, Color> = new Grammar(
+  [ident, functionName, whitespace],
+  () => null
+);
 
 /**
  * @see https://www.w3.org/TR/css-color/#transparent-color

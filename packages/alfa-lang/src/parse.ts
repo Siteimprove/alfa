@@ -2,13 +2,15 @@ import { Grammar } from "./grammar";
 import { Stream } from "./stream";
 import { Command, Token } from "./types";
 
-export function parse<T extends Token, R>(
+export function parse<T extends Token, R, S = null>(
   input: ArrayLike<T>,
-  grammar: Grammar<T, R>
+  grammar: Grammar<T, R, S>
 ): R | null {
   const readToken: (i: number) => T = i => input[i];
 
   const stream = new Stream(input.length, readToken);
+
+  const state = grammar.state();
 
   function expression(power: number): R | null {
     let token = stream.peek(0);
@@ -31,7 +33,7 @@ export function parse<T extends Token, R>(
 
     stream.advance(1);
 
-    let left = production.prefix(token, stream, () => expression(-1));
+    let left = production.prefix(token, stream, () => expression(-1), state);
 
     if (left === null) {
       return null;
@@ -66,7 +68,8 @@ export function parse<T extends Token, R>(
         token,
         stream,
         () => expression(precedence),
-        left
+        left,
+        state
       );
 
       if (right === null) {

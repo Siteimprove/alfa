@@ -55,9 +55,7 @@ const comma: Production<Comma> = {
   }
 };
 
-export const FontFamilyGrammar: Grammar<Token, FontFamily> = new Grammar([
-  whitespace,
-  ident,
-  string,
-  comma
-]);
+export const FontFamilyGrammar: Grammar<Token, FontFamily> = new Grammar(
+  [whitespace, ident, string, comma],
+  () => null
+);

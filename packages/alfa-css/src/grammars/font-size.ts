@@ -64,9 +64,7 @@ const percentage: Production<Percentage> = {
   }
 };
 
-export const FontSizeGrammar: Grammar<Token, FontSize> = new Grammar([
-  whitespace,
-  ident,
-  dimension,
-  percentage
-]);
+export const FontSizeGrammar: Grammar<Token, FontSize> = new Grammar(
+  [whitespace, ident, dimension, percentage],
+  () => null
+);

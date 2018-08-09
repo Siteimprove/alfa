@@ -2,20 +2,27 @@ import { Production, Token, TokenIdentifier } from "./types";
 
 const { isArray } = Array;
 
-export type GrammarEntry<T extends Token, R> = Readonly<{
-  production: Production<T, R>;
+export type GrammarEntry<T extends Token, R, S = null> = Readonly<{
+  production: Production<T, R, T, R, S>;
   precedence: number;
 }>;
 
-export class Grammar<T extends Token, R> {
+export class Grammar<T extends Token, R, S = null> {
   private readonly entries: Map<
     TokenIdentifier<T>,
-    GrammarEntry<T, R>
+    GrammarEntry<T, R, S>
   > = new Map();
 
+  public readonly state: () => S;
+
   public constructor(
-    productions: Array<Production<T, R> | Array<Production<T, R>>>
+    productions: Array<
+      Production<T, R, T, R, S> | Array<Production<T, R, T, R, S>>
+    >,
+    state: () => S
   ) {
+    this.state = state;
+
     for (let i = 0; i < productions.length; i++) {
       const precedence = productions.length - i;
       const group = productions[i];
@@ -26,7 +33,7 @@ export class Grammar<T extends Token, R> {
     }
   }
 
-  public get(type: TokenIdentifier<T>): GrammarEntry<T, R> | null {
+  public get(type: TokenIdentifier<T>): GrammarEntry<T, R, S> | null {
     const entry = this.entries.get(type);
 
     if (entry === undefined) {

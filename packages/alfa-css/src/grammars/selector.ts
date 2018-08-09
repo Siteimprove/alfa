@@ -756,4 +756,7 @@ const colon: Production<Colon> = {
 export const SelectorGrammar: Grammar<
   Token,
   Selector | Array<Selector>
-> = new Grammar([[delim, ident, colon, squareBracket], whitespace, comma]);
+> = new Grammar(
+  [[delim, ident, colon, squareBracket], whitespace, comma],
+  () => null
+);

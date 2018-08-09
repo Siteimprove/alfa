@@ -126,9 +126,7 @@ const exponentiation: ExpressionProduction<Exponentiate, Operator> = {
 export const ExpressionGrammar: Grammar<
   ExpressionToken,
   Expression
-> = new Grammar([
-  number,
-  exponentiation,
-  [multiplication, division],
-  [addition, subtraction]
-]);
+> = new Grammar(
+  [number, exponentiation, [multiplication, division], [addition, subtraction]],
+  () => null
+);

@@ -92,4 +92,4 @@ const semicolon: Production<Semicolon> = {
 export const DeclarationGrammar: Grammar<
   Token,
   Declaration | Array<Declaration>
-> = new Grammar([ident, semicolon, whitespace]);
+> = new Grammar([ident, semicolon, whitespace], () => null);

@@ -45,7 +45,7 @@ const ident: Production<Ident> = {
   }
 };
 
-export const DisplayGrammar: Grammar<Token, Display> = new Grammar([
-  whitespace,
-  ident
-]);
+export const DisplayGrammar: Grammar<Token, Display> = new Grammar(
+  [whitespace, ident],
+  () => null
+);

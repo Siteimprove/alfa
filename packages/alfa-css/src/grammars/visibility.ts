@@ -20,7 +20,7 @@ const ident: Production<Ident> = {
   }
 };
 
-export const VisibilityGrammar: Grammar<Token, Visibility> = new Grammar([
-  whitespace,
-  ident
-]);
+export const VisibilityGrammar: Grammar<Token, Visibility> = new Grammar(
+  [whitespace, ident],
+  () => null
+);

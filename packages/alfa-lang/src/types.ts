@@ -21,7 +21,8 @@ export interface Production<
   T extends Token,
   R,
   U extends T = T,
-  P extends R = R
+  P extends R = R,
+  S = null
 > {
   readonly token: TokenIdentifier<U>;
 
@@ -30,13 +31,15 @@ export interface Production<
   prefix?(
     token: U,
     stream: Stream<T>,
-    expression: Expression<R>
+    expression: Expression<R>,
+    state: S
   ): P | Command.Continue | null;
 
   infix?(
     token: U,
     stream: Stream<T>,
     expression: Expression<R>,
-    left: R
+    left: R,
+    state: S
   ): P | Command.Continue | null;
 }

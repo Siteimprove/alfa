@@ -20,8 +20,7 @@ const percentage: Production<Percentage> = {
   }
 };
 
-export const OpacityGrammar: Grammar<Token, Opacity> = new Grammar([
-  whitespace,
-  number,
-  percentage
-]);
+export const OpacityGrammar: Grammar<Token, Opacity> = new Grammar(
+  [whitespace, number, percentage],
+  () => null
+);

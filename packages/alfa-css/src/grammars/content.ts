@@ -36,8 +36,7 @@ const string: Production<String> = {
   }
 };
 
-export const ContentGrammar: Grammar<Token, Content> = new Grammar([
-  whitespace,
-  ident,
-  string
-]);
+export const ContentGrammar: Grammar<Token, Content> = new Grammar(
+  [whitespace, ident, string],
+  () => null
+);
