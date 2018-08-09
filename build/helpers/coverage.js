@@ -2,13 +2,15 @@ import chalk from "chalk";
 import * as fs from "fs";
 import * as path from "path";
 import * as inspector from "inspector";
-import * as notify from "./notify";
-import { Byte } from "./coverage-heuristics/byte";
-import { Logical } from "./coverage-heuristics/logical";
-import { Arithmetic } from "./coverage-heuristics/arithmetic";
 import { Session } from "inspector";
 import * as sourceMap from "source-map";
 import { SourceMapConsumer } from "source-map";
+
+import * as notify from "./notify";
+
+import { Byte } from "./metrics/byte";
+import { Logical } from "./metrics/logical";
+import { Arithmetic } from "./metrics/arithmetic";
 
 /**
  * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
@@ -20,7 +22,7 @@ const { min, max } = Math;
 
 const session = new Session();
 
-const heuristics = [
+const metrics = [
   {
     ...Arithmetic,
     weight: 1 / 3
@@ -61,33 +63,33 @@ process.on("exit", () => {
         continue;
       }
 
-      if (scriptCoverage.url !== impl) {
-        continue;
-      }
       const script = parseScript(scriptCoverage);
 
       if (script === null) {
         continue;
       }
 
-      let computedPoints = computePoints(script);
-      let sortedBlocks = script.coverage
+      const total = calculateTotalCoverage(script);
+
+      const blocks = new Map();
+
+      for (const block of script.coverage) {
+        blocks.set(block, calculateBlockCoverage(script, block, total));
+      }
+
+      const uncovered = script.coverage
         .filter(block => block.count === 0)
         .sort((a, b) => {
-          const aPoints = computedPoints.get(a);
-          const bPoints = computedPoints.get(b);
-          return (
-            (bPoints === undefined ? 0 : bPoints) -
-            (aPoints === undefined ? 0 : aPoints)
-          );
+          const ap = blocks.get(a);
+          const bp = blocks.get(b);
+
+          return (bp === undefined ? 0 : bp) - (ap === undefined ? 0 : ap);
         });
 
-      printCoverageStatistics(script);
-      if (
-        sortedBlocks.length > 0 &&
-        process.env.npm_lifecycle_event === "start"
-      ) {
-        printCoverage(script, sortedBlocks[0]);
+      printCoverageStatistics(script, total);
+
+      if (uncovered.length > 0 && process.env.npm_lifecycle_event === "start") {
+        printCoverage(script, uncovered[0]);
       }
     }
   });
@@ -437,8 +439,9 @@ function isWhitespace(input) {
 
 /**
  * @param {Script} script
+ * @param {number} total
  */
-function printCoverageStatistics(script) {
+function printCoverageStatistics(script, total) {
   let source;
 
   switch (script.sources.length) {
@@ -451,8 +454,6 @@ function printCoverageStatistics(script) {
     default:
       return;
   }
-
-  const total = calculateTotalCoverage(script);
 
   const filePath = path.relative(
     process.cwd(),
@@ -513,39 +514,22 @@ function printCoverage(script, coverage) {
 
 /**
  * @param {Script} script
+ * @return {number}
  */
 function calculateTotalCoverage(script) {
-  let points = 0;
-  for (let i = 0, n = heuristics.length; i < n; i++) {
-    points += heuristics[i].total(script) * heuristics[i].weight;
-  }
-  return points;
+  return metrics.reduce((coverage, metric) => {
+    return coverage + metric.total(script) * metric.weight;
+  }, 0);
 }
 
 /**
  * @param {Script} script
  * @param {FunctionCoverage | BlockCoverage} block
  * @param {number} total
+ * @return {number}
  */
 function calculateBlockCoverage(script, block, total) {
-  let points = 0;
-  for (let i = 0, n = heuristics.length; i < n; i++) {
-    points += heuristics[i].block(script, block, total) * heuristics[i].weight;
-  }
-  return points;
-}
-
-/**
- * @param {Script} script
- * @returns {Map<BlockCoverage | FunctionCoverage, number>}
- */
-function computePoints(script) {
-  const total = calculateTotalCoverage(script);
-  const map = new Map();
-
-  for (let block of script.coverage) {
-    map.set(block, calculateBlockCoverage(script, block, total));
-  }
-
-  return map;
+  return metrics.reduce((coverage, metric) => {
+    return coverage + metric.block(script, block, total) * metric.weight;
+  }, 0);
 }
