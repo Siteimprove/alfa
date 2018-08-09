@@ -27,6 +27,37 @@ test("Matches an element against an attribute with a value", t => {
   t(matches(div, div, "[foo=bar]"));
 });
 
+test("Matches an element against an attribute with a prefix modifier", t => {
+  const div = <div foo="bar" />;
+  t(matches(div, div, "[foo^=ba]"));
+  t(!matches(div, div, "[foo^=ar]"));
+});
+
+test("Matches an element against an attribute with a suffix modifier", t => {
+  const div = <div foo="bar" />;
+  t(matches(div, div, "[foo$=ar]"));
+  t(!matches(div, div, "[foo$=ba]"));
+});
+
+test("Matches an element against an attribute with a substring modifier", t => {
+  const div = <div foo="bar" />;
+  t(matches(div, div, "[foo*=a]"));
+  t(!matches(div, div, "[foo*=q]"));
+});
+
+test("Matches an element against an attribute with a dash match modifier", t => {
+  const div = <div foo="bar-baz" />;
+  t(matches(div, div, "[foo|=bar]"));
+  t(!matches(div, div, "[foo|=baz]"));
+});
+
+test("Matches an element against an attribute with an includes modifier", t => {
+  const div = <div foo="bar baz" />;
+  t(matches(div, div, "[foo~=bar]"));
+  t(matches(div, div, "[foo~=baz]"));
+  t(!matches(div, div, "[foo~=foo]"));
+});
+
 test("Matches an element against an attribute with a casing modifier", t => {
   const div = <div foo="bAR" />;
   t(matches(div, div, "[foo=Bar i]"));
@@ -97,4 +128,28 @@ test("Matches an element against a direct sibling selector", t => {
 test("Matches an element against a scope selector", t => {
   const div = <div />;
   t(matches(div, div, ":scope", { scope: div }));
+});
+
+test("Matches an element against a negation selector", t => {
+  const div = <div />;
+  t(matches(div, div, ":not(span)"));
+  t(!matches(div, div, ":not(div)"));
+});
+
+test("Matches an element against a hover selector", t => {
+  const div = <div />;
+  t(matches(div, div, "div:hover", { hover: div }));
+  t(!matches(div, div, "span:hover", { hover: div }));
+});
+
+test("Matches an element against a focus selector", t => {
+  const div = <div />;
+  t(matches(div, div, "div:focus", { focus: div }));
+  t(!matches(div, div, "span:focus", { focus: div }));
+});
+
+test("Matches an element against an active selector", t => {
+  const div = <div />;
+  t(matches(div, div, "div:active", { active: div }));
+  t(!matches(div, div, "span:active", { active: div }));
 });
