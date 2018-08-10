@@ -15,9 +15,13 @@ export function isVisible(node: Element | Text, context: Node): boolean {
       return false;
     }
 
-    const parent = getParentElement(node, context);
-    if (parent !== null && !isVisible(parent, context)) {
-      return false;
+    let parent = getParentElement(node, context);
+    while (parent !== null) {
+      if (getAttribute(parent, "aria-hidden") === "true") {
+        return false;
+      }
+
+      parent = getParentElement(parent, context);
     }
 
     const { visibility } = getComputedStyle(node, context);
