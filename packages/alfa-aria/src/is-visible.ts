@@ -1,6 +1,7 @@
 import {
   Element,
   getAttribute,
+  getClosest,
   getComputedStyle,
   getParentElement,
   isElement,
@@ -10,20 +11,18 @@ import {
 } from "@siteimprove/alfa-dom";
 
 export function isVisible(node: Element | Text, context: Node): boolean {
+  if (
+    getClosest(
+      node,
+      context,
+      node => isElement(node) && getAttribute(node, "aria-hidden") === "true",
+      { flattened: true }
+    ) !== null
+  ) {
+    return false;
+  }
+
   if (isElement(node)) {
-    if (getAttribute(node, "aria-hidden") === "true") {
-      return false;
-    }
-
-    let parent = getParentElement(node, context);
-    while (parent !== null) {
-      if (getAttribute(parent, "aria-hidden") === "true") {
-        return false;
-      }
-
-      parent = getParentElement(parent, context);
-    }
-
     const { visibility } = getComputedStyle(node, context);
 
     if (visibility === "hidden" || visibility === "collapse") {
