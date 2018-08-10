@@ -15,6 +15,11 @@ export function isVisible(node: Element | Text, context: Node): boolean {
       return false;
     }
 
+    const parent = getParentElement(node, context);
+    if (parent !== null && !isVisible(parent, context)) {
+      return false;
+    }
+
     const { visibility } = getComputedStyle(node, context);
 
     if (visibility === "hidden" || visibility === "collapse") {
