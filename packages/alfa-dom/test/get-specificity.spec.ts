@@ -37,3 +37,18 @@ test("Single ID selectors have the same specificity", t => {
 test("An ID is more specific than a class", t => {
   t(getSpecificity(selector("#foo")) > getSpecificity(selector(".bar")));
 });
+
+test("A class is as specific as a pseudo-class-selector", t => {
+  t(getSpecificity(selector(".foo")) === getSpecificity(selector(":visited")));
+});
+
+test("A class is more specific than a type-selector", t => {
+  t(getSpecificity(selector(".foo")) > getSpecificity(selector("a")));
+});
+
+test("A class is more specific than a pseudo-element-selector", t => {
+  t(
+    getSpecificity(selector(".foo")) >
+      getSpecificity(selector("::first-letter"))
+  );
+});
