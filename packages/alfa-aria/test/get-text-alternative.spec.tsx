@@ -40,11 +40,6 @@ test("Falls through when aria-label is the empty string", t => {
   t.equal(getTextAlternative(button, button), "Button");
 });
 
-test("Falls through when aria-label is a boolean attribute", t => {
-  const button = <button aria-label>Button</button>;
-  t.equal(getTextAlternative(button, button), "Button");
-});
-
 test("Computes the text alternative of a button with an aria-labelledby", t => {
   const button = <button aria-labelledby="h w">Button</button>;
   const document = (

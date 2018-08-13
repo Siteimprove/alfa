@@ -101,7 +101,6 @@ export function getTextAlternative(
   if (
     labelledBy !== null &&
     labelledBy !== "" &&
-    labelledBy !== "aria-labelledby" &&
     options.referencing !== true
   ) {
     const rootNode = getRootNode(node, context);
@@ -121,7 +120,7 @@ export function getTextAlternative(
 
   // https://www.w3.org/TR/accname/#step2C
   const label = getAttribute(node, "aria-label", { trim: true });
-  if (label !== null && label !== "" && label !== "aria-label") {
+  if (label !== null && label !== "") {
     return flatten(label, options);
   }
 
