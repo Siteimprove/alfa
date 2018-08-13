@@ -18,6 +18,7 @@ export const enum TokenType {
   Ident,
   FunctionName,
   AtKeyword,
+  Hash,
   String,
   Url,
   Delim,
@@ -44,6 +45,12 @@ export type FunctionName = Readonly<{
 }>;
 
 export type AtKeyword = Readonly<{ type: TokenType.AtKeyword; value: string }>;
+
+export type Hash = Readonly<{
+  type: TokenType.Hash;
+  typeFlag: "id" | "unrestricted";
+  value: string;
+}>;
 
 export type String = Readonly<{
   type: TokenType.String;
@@ -102,6 +109,7 @@ export type Token =
   | Ident
   | FunctionName
   | AtKeyword
+  | Hash
   | String
   | Url
   | Delim
@@ -654,6 +662,35 @@ function consumeToken(stream: Stream<number>): Token | null {
       if (startsValidEscape(char, stream)) {
         return consumeIdentLike(char, stream);
       }
+      break;
+
+    case Char.NumberSign:
+      stream.advance(1);
+      const next = stream.peek(0);
+      const next2 = stream.peek(1);
+      if (
+        (next !== null && isName(next)) ||
+        (next !== null && next2 !== null && isValidEscape(next, next2))
+      ) {
+        if (startsIdentifier(next, stream)) {
+          return {
+            type: TokenType.Hash,
+            value: consumeName(char, stream),
+            typeFlag: "id"
+          };
+        }
+
+        return {
+          type: TokenType.Hash,
+          value: consumeName(char, stream),
+          typeFlag: "unrestricted"
+        };
+      }
+
+      return {
+        type: TokenType.Delim,
+        value: char
+      };
   }
 
   if (isNameStart(char)) {

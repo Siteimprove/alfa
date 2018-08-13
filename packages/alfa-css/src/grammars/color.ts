@@ -1,7 +1,7 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import { FunctionName, Ident, Token, TokenType } from "../alphabet";
+import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
@@ -99,13 +99,49 @@ function rgbaColor(stream: Stream<Token>): Color {
   return color;
 }
 
+function hexColor(stream: Stream<Token>): Color {
+  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
+
+  const args = functionArguments(stream);
+
+  if (args.length !== 1 || args[0].type !== TokenType.Ident) {
+    return Transparent;
+  }
+
+  let hex = (<Ident>args[0]).value;
+
+  if (hex.length === 8) {
+    color.alpha = parseInt(hex.slice(6, 8), 16) / 255;
+    hex = hex.substring(0, 6);
+  }
+
+  if (hex.length === 4) {
+    color.alpha = parseInt(hex.slice(3, 4).repeat(2), 16) / 255;
+    hex = hex.substring(0, 3);
+  }
+
+  if (hex.length === 3) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  }
+
+  if (hex.length !== 6) {
+    return Transparent;
+  }
+
+  const num = parseInt(hex, 16);
+  color.red = num >> 16;
+  color.green = (num >> 8) & 255;
+  color.blue = num & 255;
+
+  return color;
+}
+
 type Production<T extends Token> = Lang.Production<Token, Color, T>;
 
 const ident: Production<Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     const { value } = token;
-
     if (value === "transparent") {
       return Transparent;
     }
@@ -131,8 +167,15 @@ const functionName: Production<FunctionName> = {
   }
 };
 
+const hash: Production<Hash> = {
+  token: TokenType.Hash,
+  prefix(token, stream) {
+    return hexColor(stream);
+  }
+};
+
 export const ColorGrammar: Grammar<Token, Color> = new Grammar(
-  [ident, functionName, whitespace],
+  [ident, hash, functionName, whitespace],
   () => null
 );
 

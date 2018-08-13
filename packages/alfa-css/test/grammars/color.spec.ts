@@ -35,6 +35,60 @@ test("Can parse an RGBA color", t => {
   });
 });
 
+test("Can parse a short HEX color", t => {
+  color(t, "#ABC", {
+    red: 170,
+    green: 187,
+    blue: 204,
+    alpha: 1
+  });
+});
+
+test("Can parse a HEX color", t => {
+  color(t, "#ABCDEF", {
+    red: 171,
+    green: 205,
+    blue: 239,
+    alpha: 1
+  });
+});
+
+test("Can parse a medium-long HEX color", t => {
+  color(t, "#ABCD", {
+    red: 170,
+    green: 187,
+    blue: 204,
+    alpha: 0.8666666666666667
+  });
+});
+
+test("Can parse a long HEX color", t => {
+  color(t, "#ABCDEFCC", {
+    red: 171,
+    green: 205,
+    blue: 239,
+    alpha: 0.8
+  });
+});
+
+test("Invalid hex colors fall back to transparent", t => {
+  color(t, "#AB", {
+    red: 0,
+    green: 0,
+    blue: 0,
+    alpha: 0
+  });
+});
+
+test("Parses transparent color", t => {
+  color(t, "transparent", {
+    red: 0,
+    green: 0,
+    blue: 0,
+    alpha: 0
+  });
+});
+
 test("Clamps values to their minimums", t => {
   color(t, "rgba(-20, -20, -20, -0.5)", {
     red: 0,
