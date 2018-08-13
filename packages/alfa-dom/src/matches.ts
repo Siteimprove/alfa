@@ -428,7 +428,7 @@ function matchesPseudoClass(
     case "scope":
       return options.scope === element;
 
-    // https://www.w3.org/TR/css-scoping-1/#selectordef-host0
+    // https://www.w3.org/TR/css-scoping/#host-selector
     case "host":
       return (
         root === selector &&
