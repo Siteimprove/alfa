@@ -6,6 +6,10 @@ function html(t: Assertions, input: string, expected: Array<Token>) {
   t.deepEqual(lex(input, Alphabet), expected, input);
 }
 
+function char(input: string): number {
+  return input.charCodeAt(0);
+}
+
 test("Can lex a start tag", t => {
   html(t, "<span>", [
     {
@@ -36,7 +40,7 @@ test("Can lex an orphaned less-than sign", t => {
   html(t, "<", [
     {
       type: TokenType.Character,
-      data: "<"
+      data: char("<")
     }
   ]);
 });
@@ -120,6 +124,17 @@ test("Can lex a start tag with a boolean attribute", t => {
   ]);
 });
 
+test("Discards duplicate attributes from start tags", t => {
+  html(t, '<span foo="foo" foo="bar">', [
+    {
+      type: TokenType.StartTag,
+      name: "span",
+      selfClosing: false,
+      attributes: [{ name: "foo", value: "foo" }]
+    }
+  ]);
+});
+
 test("Can lex an incorrectly selfClosing end tag", t => {
   html(t, "</ ", [
     {
@@ -139,11 +154,11 @@ test("Can lex character data within a tag", t => {
     },
     {
       type: TokenType.Character,
-      data: "H"
+      data: char("H")
     },
     {
       type: TokenType.Character,
-      data: "i"
+      data: char("i")
     },
     {
       type: TokenType.EndTag,
@@ -165,11 +180,11 @@ test("Can lex a named character reference", t => {
   html(t, "&lt;&gt;", [
     {
       type: TokenType.Character,
-      data: "<"
+      data: char("<")
     },
     {
       type: TokenType.Character,
-      data: ">"
+      data: char(">")
     }
   ]);
 });
@@ -220,23 +235,23 @@ test("Can lex a textarea element with an apparent tag", t => {
     },
     {
       type: TokenType.Character,
-      data: "<"
+      data: char("<")
     },
     {
       type: TokenType.Character,
-      data: "t"
+      data: char("t")
     },
     {
       type: TokenType.Character,
-      data: "a"
+      data: char("a")
     },
     {
       type: TokenType.Character,
-      data: "g"
+      data: char("g")
     },
     {
       type: TokenType.Character,
-      data: ">"
+      data: char(">")
     },
     {
       type: TokenType.EndTag,
@@ -270,23 +285,23 @@ test("Can lex a noscript element with an apparent tag", t => {
     },
     {
       type: TokenType.Character,
-      data: "<"
+      data: char("<")
     },
     {
       type: TokenType.Character,
-      data: "t"
+      data: char("t")
     },
     {
       type: TokenType.Character,
-      data: "a"
+      data: char("a")
     },
     {
       type: TokenType.Character,
-      data: "g"
+      data: char("g")
     },
     {
       type: TokenType.Character,
-      data: ">"
+      data: char(">")
     },
     {
       type: TokenType.EndTag,
@@ -305,23 +320,23 @@ test("Can lex a script element with an apparent tag", t => {
     },
     {
       type: TokenType.Character,
-      data: "<"
+      data: char("<")
     },
     {
       type: TokenType.Character,
-      data: "t"
+      data: char("t")
     },
     {
       type: TokenType.Character,
-      data: "a"
+      data: char("a")
     },
     {
       type: TokenType.Character,
-      data: "g"
+      data: char("g")
     },
     {
       type: TokenType.Character,
-      data: ">"
+      data: char(">")
     },
     {
       type: TokenType.EndTag,
@@ -371,31 +386,31 @@ test("Can lex a script element with an apparent comment", t => {
     },
     {
       type: TokenType.Character,
-      data: "<"
+      data: char("<")
     },
     {
       type: TokenType.Character,
-      data: "!"
+      data: char("!")
     },
     {
       type: TokenType.Character,
-      data: "-"
+      data: char("-")
     },
     {
       type: TokenType.Character,
-      data: "-"
+      data: char("-")
     },
     {
       type: TokenType.Character,
-      data: " "
+      data: char(" ")
     },
     {
       type: TokenType.Character,
-      data: "-"
+      data: char("-")
     },
     {
       type: TokenType.Character,
-      data: ">"
+      data: char(">")
     },
     {
       type: TokenType.EndTag,
