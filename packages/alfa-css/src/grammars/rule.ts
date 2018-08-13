@@ -4,6 +4,7 @@ import {
   AtKeyword,
   Colon,
   Delim,
+  Hash,
   Ident,
   SquareBracket,
   Token,
@@ -175,6 +176,16 @@ const delim: Production<Delim> = {
   }
 };
 
+const hash: Production<Hash> = {
+  token: TokenType.Hash,
+  prefix(token, stream) {
+    return rule(token, stream);
+  },
+  infix(token, stream, expression, left) {
+    return ruleList(stream, expression, left);
+  }
+};
+
 const colon: Production<Colon> = {
   token: TokenType.Colon,
   prefix(token, stream) {
@@ -206,6 +217,6 @@ const atKeyword: Production<AtKeyword> = {
 };
 
 export const RuleGrammar: Grammar<Token, Rule | Array<Rule>> = new Grammar(
-  [ident, delim, colon, squareBracket, atKeyword, whitespace],
+  [ident, hash, delim, colon, squareBracket, atKeyword, whitespace],
   () => null
 );
