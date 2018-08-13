@@ -100,38 +100,69 @@ function rgbaColor(stream: Stream<Token>): Color {
 }
 
 function hexColor(stream: Stream<Token>): Color {
-  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
+  const ident = stream.next();
 
-  const args = functionArguments(stream);
-  if (args.length !== 1 || args[0].type !== TokenType.Ident) {
+  if (ident === null || ident.type !== TokenType.Ident) {
     return Transparent;
   }
-  let hex = (<Ident>args[0]).value;
+  const hex = ident.value;
 
-  if (hex.length === 8) {
-    color.alpha = parseInt(hex.slice(6, 8), 16) / 255;
-    hex = hex.substring(0, 6);
+  let repetitions;
+  let hasAlpha;
+
+  switch (hex.length) {
+    case 3:
+      repetitions = 2;
+      hasAlpha = false;
+      break;
+    case 4:
+      repetitions = 2;
+      hasAlpha = true;
+      break;
+    case 6:
+      repetitions = 1;
+      hasAlpha = false;
+      break;
+    case 8:
+      repetitions = 1;
+      hasAlpha = true;
+      break;
+    default:
+      return Transparent;
   }
 
-  if (hex.length === 4) {
-    color.alpha = parseInt(hex.slice(3, 4).repeat(2), 16) / 255;
-    hex = hex.substring(0, 3);
+  const bytes = [];
+  for (let i = 0, n = hex.length; i < n; i++) {
+    const byte = hex.charCodeAt(i);
+
+    if (Lang.isNumeric(byte)) {
+      bytes[i] = byte - Lang.Char.DigitZero;
+    } else if (
+      Lang.isBetween(byte, Lang.Char.SmallLetterA, Lang.Char.SmallLetterF)
+    ) {
+      bytes[i] = byte - Lang.Char.SmallLetterA + 10;
+    } else if (
+      Lang.isBetween(byte, Lang.Char.CapitalLetterA, Lang.Char.CapitalLetterF)
+    ) {
+      bytes[i] = byte - Lang.Char.CapitalLetterA + 10;
+    }
   }
 
-  if (hex.length === 3) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  if (repetitions === 1) {
+    return {
+      red: bytes[0] * 16 + bytes[1],
+      green: bytes[2] * 16 + bytes[3],
+      blue: bytes[4] * 16 + bytes[5],
+      alpha: hasAlpha ? (bytes[6] * 16 + bytes[7]) / 255 : 1
+    };
   }
 
-  if (hex.length !== 6) {
-    return Transparent;
-  }
-
-  const num = parseInt(hex, 16);
-  color.red = num >> 16;
-  color.green = (num >> 8) & 255;
-  color.blue = num & 255;
-
-  return color;
+  return {
+    red: bytes[0] * 16 + bytes[0],
+    green: bytes[1] * 16 + bytes[1],
+    blue: bytes[2] * 16 + bytes[2],
+    alpha: hasAlpha ? (bytes[3] * 16 + bytes[3]) / 255 : 1
+  };
 }
 
 type Production<T extends Token> = Lang.Production<Token, Color, T>;
