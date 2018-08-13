@@ -103,11 +103,9 @@ function hexColor(stream: Stream<Token>): Color {
   const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
 
   const args = functionArguments(stream);
-
   if (args.length !== 1 || args[0].type !== TokenType.Ident) {
     return Transparent;
   }
-
   let hex = (<Ident>args[0]).value;
 
   if (hex.length === 8) {

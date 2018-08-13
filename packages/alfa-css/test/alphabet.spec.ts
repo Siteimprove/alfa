@@ -280,7 +280,7 @@ test("Can lex an ID selector", t => {
   css(t, "#foo", [
     {
       type: TokenType.Hash,
-      typeFlag: "id",
+      unrestricted: false,
       value: ""
     },
     {

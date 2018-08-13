@@ -149,7 +149,7 @@ test("Can parse a rule with an ID selector", t => {
     prelude: [
       {
         type: TokenType.Hash,
-        typeFlag: "id",
+        unrestricted: false,
         value: ""
       },
       {
