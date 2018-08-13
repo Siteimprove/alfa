@@ -215,7 +215,7 @@ function isImplicitDescendant(token: Token): boolean {
       const { value } = token;
       return value === Char.FullStop || value === Char.Asterisk;
     case TokenType.Hash:
-      return token.typeFlag === "id";
+      return !token.unrestricted;
   }
 
   return false;
@@ -668,7 +668,7 @@ const whitespace: Production<Whitespace> = {
 const hash: Production<Hash> = {
   token: TokenType.Hash,
   prefix(token, stream) {
-    if (token.typeFlag === "id") {
+    if (!token.unrestricted) {
       return idSelector(stream);
     }
 
@@ -676,7 +676,7 @@ const hash: Production<Hash> = {
   },
 
   infix(token, stream, expression, left) {
-    if (token.typeFlag === "id") {
+    if (!token.unrestricted) {
       return combineSelectors(left, idSelector(stream));
     }
 

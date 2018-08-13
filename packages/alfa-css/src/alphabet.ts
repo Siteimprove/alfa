@@ -48,7 +48,7 @@ export type AtKeyword = Readonly<{ type: TokenType.AtKeyword; value: string }>;
 
 export type Hash = Readonly<{
   type: TokenType.Hash;
-  typeFlag: "id" | "unrestricted";
+  unrestricted: boolean;
   value: string;
 }>;
 
@@ -669,25 +669,18 @@ function consumeToken(stream: Stream<number>): Token | null {
 
     case Char.NumberSign:
       stream.advance(1);
-      const next = stream.peek(0);
-      const next2 = stream.peek(1);
-      if (
-        (next !== null && isName(next)) ||
-        (next !== null && next2 !== null && isValidEscape(next, next2))
-      ) {
-        if (startsIdentifier(next, stream)) {
+      const fst = stream.peek(0);
+
+      if (fst !== null) {
+        const snd = stream.peek(1);
+
+        if (isName(fst) || (snd !== null && isValidEscape(fst, snd))) {
           return {
             type: TokenType.Hash,
-            value: consumeName(char, stream),
-            typeFlag: "id"
+            unrestricted: !startsIdentifier(fst, stream),
+            value: consumeName(fst, stream)
           };
         }
-
-        return {
-          type: TokenType.Hash,
-          value: consumeName(char, stream),
-          typeFlag: "unrestricted"
-        };
       }
 
       return {
