@@ -9,3 +9,5 @@ package-lock.json
 
 !**/build/**/*.js
 !**/types/**/*.d.ts
+
+.vscode

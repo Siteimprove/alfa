@@ -20,6 +20,7 @@ import { getAttribute } from "./get-attribute";
 import { getId } from "./get-id";
 import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
+import { isShadowRoot } from "./guards";
 import { hasClass } from "./has-class";
 import { Element, Node } from "./types";
 
@@ -34,6 +35,12 @@ export type MatchesOptions = Readonly<{
    * @internal
    */
   scope?: Element;
+
+  /**
+   * @see https://drafts.csswg.org/css-scoping/#tree-context
+   * @internal
+   */
+  treeContext?: Node;
 
   /**
    * @see https://www.w3.org/TR/selectors/#the-hover-pseudo
@@ -79,7 +86,26 @@ export function matches(
   element: Element,
   context: Node,
   selector: string | Selector | Array<Selector>,
-  options: MatchesOptions = {}
+  options?: MatchesOptions
+): boolean;
+
+/**
+ * @internal
+ */
+export function matches(
+  element: Element,
+  context: Node,
+  selector: string | Selector | Array<Selector>,
+  options: MatchesOptions,
+  root: Selector
+): boolean;
+
+export function matches(
+  element: Element,
+  context: Node,
+  selector: string | Selector | Array<Selector>,
+  options: MatchesOptions = {},
+  root: Selector | null = null
 ): boolean {
   if (typeof selector === "string") {
     const parsed = parseSelector(selector);
@@ -93,12 +119,18 @@ export function matches(
 
   if (isArray(selector)) {
     for (let i = 0, n = selector.length; i < n; i++) {
-      if (matches(element, context, selector[i], options)) {
+      const root = selector[i];
+
+      if (matches(element, context, root, options, root)) {
         return true;
       }
     }
 
     return false;
+  }
+
+  if (root === null) {
+    root = selector;
   }
 
   switch (selector.type) {
@@ -115,16 +147,16 @@ export function matches(
       return matchesAttribute(element, selector);
 
     case SelectorType.CompoundSelector:
-      return matchesCompound(element, context, selector, options);
+      return matchesCompound(element, context, selector, options, root);
 
     case SelectorType.RelativeSelector:
-      return matchesRelative(element, context, selector, options);
+      return matchesRelative(element, context, selector, options, root);
 
     case SelectorType.PseudoClassSelector:
-      return matchesPseudoClass(element, context, selector, options);
+      return matchesPseudoClass(element, context, selector, options, root);
 
     case SelectorType.PseudoElementSelector:
-      return matchesPseudoElement(element, context, selector, options);
+      return matchesPseudoElement(element, context, selector, options, root);
   }
 }
 
@@ -212,13 +244,14 @@ function matchesCompound(
   element: Element,
   context: Node,
   selector: CompoundSelector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
-  if (!matches(element, context, selector.left, options)) {
+  if (!matches(element, context, selector.left, options, root)) {
     return false;
   }
 
-  return matches(element, context, selector.right, options);
+  return matches(element, context, selector.right, options, root);
 }
 
 /**
@@ -228,7 +261,8 @@ function matchesRelative(
   element: Element,
   context: Node,
   selector: RelativeSelector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
   // Before any other work is done, check if the left part of the selector can
   // be rejected by the ancestor filter optionally passed to `matches()`. Only
@@ -249,7 +283,7 @@ function matchesRelative(
 
   // Otherwise, make sure that the right part of the selector, i.e. the part
   // that relates to the current element, matches.
-  if (!matches(element, context, selector.right, options)) {
+  if (!matches(element, context, selector.right, options, root)) {
     return false;
   }
 
@@ -258,16 +292,28 @@ function matchesRelative(
   // match.
   switch (selector.combinator) {
     case SelectorCombinator.Descendant:
-      return matchesDescendant(element, context, selector.left, options);
+      return matchesDescendant(element, context, selector.left, options, root);
 
     case SelectorCombinator.DirectDescendant:
-      return matchesDirectDescendant(element, context, selector.left, options);
+      return matchesDirectDescendant(
+        element,
+        context,
+        selector.left,
+        options,
+        root
+      );
 
     case SelectorCombinator.Sibling:
-      return matchesSibling(element, context, selector.left, options);
+      return matchesSibling(element, context, selector.left, options, root);
 
     case SelectorCombinator.DirectSibling:
-      return matchesDirectSibling(element, context, selector.left, options);
+      return matchesDirectSibling(
+        element,
+        context,
+        selector.left,
+        options,
+        root
+      );
   }
 }
 
@@ -278,12 +324,13 @@ function matchesDescendant(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
   let parentElement = getParentElement(element, context, options);
 
   while (parentElement !== null) {
-    if (matches(parentElement, context, selector, options)) {
+    if (matches(parentElement, context, selector, options, root)) {
       return true;
     }
 
@@ -300,7 +347,8 @@ function matchesDirectDescendant(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
   const parentElement = getParentElement(element, context, options);
 
@@ -308,7 +356,7 @@ function matchesDirectDescendant(
     return false;
   }
 
-  return matches(parentElement, context, selector, options);
+  return matches(parentElement, context, selector, options, root);
 }
 
 /**
@@ -318,7 +366,8 @@ function matchesSibling(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
   let previousElementSibling = getPreviousElementSibling(
     element,
@@ -327,7 +376,7 @@ function matchesSibling(
   );
 
   while (previousElementSibling !== null) {
-    if (matches(previousElementSibling, context, selector, options)) {
+    if (matches(previousElementSibling, context, selector, options, root)) {
       return true;
     }
 
@@ -348,7 +397,8 @@ function matchesDirectSibling(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
   const previousElementSibling = getPreviousElementSibling(
     element,
@@ -360,7 +410,7 @@ function matchesDirectSibling(
     return false;
   }
 
-  return matches(previousElementSibling, context, selector, options);
+  return matches(previousElementSibling, context, selector, options, root);
 }
 
 /**
@@ -370,18 +420,29 @@ function matchesPseudoClass(
   element: Element,
   context: Node,
   selector: PseudoClassSelector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
   switch (selector.name) {
     // https://www.w3.org/TR/selectors/#scope-pseudo
     case "scope":
       return options.scope === element;
 
+    // https://www.w3.org/TR/css-scoping-1/#selectordef-host0
+    case "host":
+      return (
+        root === selector &&
+        options.treeContext !== undefined &&
+        isShadowRoot(options.treeContext) &&
+        getParentElement(options.treeContext, context, { composed: true }) ===
+          element
+      );
+
     // https://www.w3.org/TR/selectors/#negation-pseudo
     case "not":
       return (
         selector.value === null ||
-        !matches(element, context, selector.value, options)
+        !matches(element, context, selector.value, options, root)
       );
 
     // https://www.w3.org/TR/selectors/#hover-pseudo
@@ -430,7 +491,8 @@ function matchesPseudoElement(
   element: Element,
   context: Node,
   selector: PseudoElementSelector,
-  options: MatchesOptions
+  options: MatchesOptions,
+  root: Selector
 ): boolean {
   return options.pseudo === true;
 }

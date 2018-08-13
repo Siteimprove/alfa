@@ -153,3 +153,17 @@ test("Matches an element against an active selector", t => {
   t(matches(div, div, "div:active", { active: div }));
   t(!matches(div, div, "span:active", { active: div }));
 });
+
+test("Matches an element against a host selector", t => {
+  const host = (
+    <div>
+      <shadow>
+        <span class="child" />
+      </shadow>
+    </div>
+  );
+
+  const root = host.shadowRoot!;
+
+  t(matches(host, host, ":host", { treeContext: root }));
+});
