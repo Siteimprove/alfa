@@ -119,11 +119,14 @@ export type Token =
 
 export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
   (stream, emit) => {
-    let token = consumeToken(stream);
+    while (true) {
+      const token = consumeToken(stream);
 
-    while (token !== null) {
+      if (token === null) {
+        break;
+      }
+
       emit(token);
-      token = consumeToken(stream);
     }
 
     return Command.End;
