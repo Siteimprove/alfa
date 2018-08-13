@@ -18,7 +18,7 @@ export function resolveReferences(
 ): Array<Element> {
   const elements: Array<Element> = [];
 
-  for (const id of references.split(whitespace)) {
+  for (const id of references.trim().split(whitespace)) {
     const element = querySelector(
       node,
       context,
