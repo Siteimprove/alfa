@@ -63,7 +63,7 @@ export interface Comment {
 
 export interface Character {
   readonly type: TokenType.Character;
-  readonly data: string;
+  readonly data: number;
 }
 
 /**
@@ -91,7 +91,7 @@ export type Token =
   | Character
   | Comment;
 
-export interface State {
+export interface AlphabetState {
   doctype: Mutable<Doctype> | null;
   tag: Mutable<StartTag | EndTag> | null;
   startTag: Mutable<StartTag | EndTag> | null;
@@ -114,7 +114,7 @@ export interface State {
   characterReferenceCode: number;
 }
 
-export type Pattern = Lang.Pattern<Token, State>;
+export type Pattern = Lang.Pattern<Token, AlphabetState>;
 
 /**
  * 8.2.4.1
@@ -135,7 +135,7 @@ const data: Pattern = (stream, emit, state) => {
       return Command.End;
   }
 
-  emit({ type: TokenType.Character, data: fromCharCode(char) });
+  emit({ type: TokenType.Character, data: char });
 };
 
 /**
@@ -155,14 +155,14 @@ const RCData: Pattern = (stream, emit, state) => {
       return RCDataLessThanSign;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       break;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
   }
 };
 
@@ -178,14 +178,14 @@ const RawText: Pattern = (stream, emit, state) => {
       return RawTextLessThanSign;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       break;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
   }
 };
 
@@ -201,14 +201,14 @@ const scriptData: Pattern = (stream, emit, state) => {
       return scriptDataLessThanSign;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       break;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
   }
 };
 
@@ -248,7 +248,7 @@ const tagOpen: Pattern = (stream, emit, state) => {
     return tagName;
   }
 
-  emit({ type: TokenType.Character, data: "<" });
+  emit({ type: TokenType.Character, data: 0x003c });
 
   return data;
 };
@@ -261,8 +261,8 @@ const endTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
   if (char === null) {
-    emit({ type: TokenType.Character, data: "<" });
-    emit({ type: TokenType.Character, data: "/" });
+    emit({ type: TokenType.Character, data: 0x003c });
+    emit({ type: TokenType.Character, data: 0x002f });
     return Command.End;
   }
 
@@ -308,7 +308,7 @@ const tagName: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       emit(state.tag!);
       state.startTag = state.tag;
-      return findAppropriateState(state);
+      return findAppropriateState(state.tag!);
 
     case Char.Null:
       state.tag!.name += "\ufffd";
@@ -340,7 +340,7 @@ const RCDataLessThanSign: Pattern = (stream, emit, state) => {
     return RCDataEndTagOpenState;
   }
 
-  emit({ type: TokenType.Character, data: "<" });
+  emit({ type: TokenType.Character, data: 0x003c });
   return RCData;
 };
 
@@ -352,8 +352,8 @@ const RCDataEndTagOpenState: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
   if (char === null || !isAlpha(char)) {
-    emit({ type: TokenType.Character, data: "<" });
-    emit({ type: TokenType.Character, data: "/" });
+    emit({ type: TokenType.Character, data: 0x003c });
+    emit({ type: TokenType.Character, data: 0x002f });
     return RCData;
   }
 
@@ -411,11 +411,14 @@ const RCDataEndTagName: Pattern = (stream, emit, state) => {
       }
   }
 
-  emit({ type: TokenType.Character, data: "<" });
-  emit({ type: TokenType.Character, data: "/" });
+  emit({ type: TokenType.Character, data: 0x003c });
+  emit({ type: TokenType.Character, data: 0x002f });
 
   for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
-    emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+    emit({
+      type: TokenType.Character,
+      data: state.temporaryBuffer.charCodeAt(i)
+    });
   }
 
   return RCData;
@@ -434,7 +437,7 @@ const RawTextLessThanSign: Pattern = (stream, emit, state) => {
     return RawTextEndTagOpen;
   }
 
-  emit({ type: TokenType.Character, data: "<" });
+  emit({ type: TokenType.Character, data: 0x003c });
   return RawText;
 };
 
@@ -446,8 +449,8 @@ const RawTextEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
   if (char === null || !isAlpha(char)) {
-    emit({ type: TokenType.Character, data: "<" });
-    emit({ type: TokenType.Character, data: "/" });
+    emit({ type: TokenType.Character, data: 0x003c });
+    emit({ type: TokenType.Character, data: 0x002f });
     return RawText;
   }
 
@@ -505,11 +508,14 @@ const RawTextEndTagName: Pattern = (stream, emit, state) => {
       }
   }
 
-  emit({ type: TokenType.Character, data: "<" });
-  emit({ type: TokenType.Character, data: "/" });
+  emit({ type: TokenType.Character, data: 0x003c });
+  emit({ type: TokenType.Character, data: 0x002f });
 
   for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
-    emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+    emit({
+      type: TokenType.Character,
+      data: state.temporaryBuffer.charCodeAt(i)
+    });
   }
 
   return RawText;
@@ -530,12 +536,12 @@ const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
 
     case Char.ExclamationMark:
       stream.advance(1);
-      emit({ type: TokenType.Character, data: "<" });
-      emit({ type: TokenType.Character, data: "!" });
+      emit({ type: TokenType.Character, data: 0x003c });
+      emit({ type: TokenType.Character, data: 0x0021 });
       return scriptDataEscapeStart;
 
     default:
-      emit({ type: TokenType.Character, data: "<" });
+      emit({ type: TokenType.Character, data: 0x003c });
       return scriptData;
   }
 };
@@ -548,8 +554,8 @@ const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
   if (char === null || !isAlpha(char)) {
-    emit({ type: TokenType.Character, data: "<" });
-    emit({ type: TokenType.Character, data: "/" });
+    emit({ type: TokenType.Character, data: 0x003c });
+    emit({ type: TokenType.Character, data: 0x002f });
     return scriptData;
   }
 
@@ -605,11 +611,14 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
       }
   }
 
-  emit({ type: TokenType.Character, data: "<" });
-  emit({ type: TokenType.Character, data: "/" });
+  emit({ type: TokenType.Character, data: 0x003c });
+  emit({ type: TokenType.Character, data: 0x002f });
 
   for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
-    emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+    emit({
+      type: TokenType.Character,
+      data: state.temporaryBuffer.charCodeAt(i)
+    });
   }
 
   return scriptData;
@@ -625,7 +634,7 @@ const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
   switch (char) {
     case Char.HyphenMinus:
       stream.advance(1);
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       return scriptDataEscapeStartDash;
 
     default:
@@ -643,7 +652,7 @@ const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
   switch (char) {
     case Char.HyphenMinus:
       stream.advance(1);
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       return scriptDataEscapedDashDash;
 
     default:
@@ -660,21 +669,21 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
 
   switch (char) {
     case Char.HyphenMinus:
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       return scriptDataEscapedDash;
 
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       break;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
   }
 };
 
@@ -687,21 +696,21 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
 
   switch (char) {
     case Char.HyphenMinus:
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       return scriptDataEscapedDashDash;
 
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       return scriptDataEscaped;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
       return scriptDataEscaped;
   }
 };
@@ -715,25 +724,25 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
 
   switch (char) {
     case Char.HyphenMinus:
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       break;
 
     case Char.LessThanSign:
       return scriptDataEscapedLessThanSign;
 
     case Char.GreaterThanSign:
-      emit({ type: TokenType.Character, data: ">" });
+      emit({ type: TokenType.Character, data: 0x003e });
       return scriptData;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       return scriptDataEscaped;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
       return scriptDataEscaped;
   }
 };
@@ -753,11 +762,11 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
 
   if (char !== null && isAlpha(char)) {
     state.temporaryBuffer = "";
-    emit({ type: TokenType.Character, data: "<" });
+    emit({ type: TokenType.Character, data: 0x003c });
     return scriptDataDoubleEscapeStart;
   }
 
-  emit({ type: TokenType.Character, data: "<" });
+  emit({ type: TokenType.Character, data: 0x003c });
   return scriptDataEscaped;
 };
 
@@ -769,8 +778,8 @@ const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
 
   if (char === null || !isAlpha(char)) {
-    emit({ type: TokenType.Character, data: "<" });
-    emit({ type: TokenType.Character, data: "/" });
+    emit({ type: TokenType.Character, data: 0x003c });
+    emit({ type: TokenType.Character, data: 0x002f });
     return scriptDataEscaped;
   }
 
@@ -826,11 +835,14 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
       }
   }
 
-  emit({ type: TokenType.Character, data: "<" });
-  emit({ type: TokenType.Character, data: "/" });
+  emit({ type: TokenType.Character, data: 0x003c });
+  emit({ type: TokenType.Character, data: 0x002f });
 
   for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
-    emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+    emit({
+      type: TokenType.Character,
+      data: state.temporaryBuffer.charCodeAt(i)
+    });
   }
 
   return scriptDataEscaped;
@@ -851,7 +863,7 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
     case Char.Solidus:
     case Char.GreaterThanSign:
       stream.advance(1);
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
       if (state.temporaryBuffer === "script") {
         return scriptDataDoubleEscaped;
       }
@@ -860,11 +872,8 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
     default:
       if (char !== null && isAlpha(char)) {
         stream.advance(1);
-
-        const str = fromCharCode(char);
-
-        state.temporaryBuffer += str.toLowerCase();
-        emit({ type: TokenType.Character, data: str });
+        state.temporaryBuffer += fromCharCode(char).toLowerCase();
+        emit({ type: TokenType.Character, data: char });
         break;
       }
 
@@ -881,22 +890,22 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
 
   switch (char) {
     case Char.HyphenMinus:
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       return scriptDataDoubleEscapedDash;
 
     case Char.LessThanSign:
-      emit({ type: TokenType.Character, data: "<" });
+      emit({ type: TokenType.Character, data: 0x003c });
       return scriptDataDoubleEscapedLessThanSign;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       break;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
   }
 };
 
@@ -909,22 +918,22 @@ const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
 
   switch (char) {
     case Char.HyphenMinus:
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       return scriptDataDoubleEscapedDashDash;
 
     case Char.LessThanSign:
-      emit({ type: TokenType.Character, data: "<" });
+      emit({ type: TokenType.Character, data: 0x003c });
       return scriptDataDoubleEscapedLessThanSign;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       return scriptDataDoubleEscaped;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
       return scriptDataDoubleEscaped;
   }
 };
@@ -938,26 +947,26 @@ const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
 
   switch (char) {
     case Char.HyphenMinus:
-      emit({ type: TokenType.Character, data: "-" });
+      emit({ type: TokenType.Character, data: 0x002d });
       break;
 
     case Char.LessThanSign:
-      emit({ type: TokenType.Character, data: "<" });
+      emit({ type: TokenType.Character, data: 0x003c });
       return scriptDataDoubleEscapedLessThanSign;
 
     case Char.GreaterThanSign:
-      emit({ type: TokenType.Character, data: ">" });
+      emit({ type: TokenType.Character, data: 0x003e });
       return scriptData;
 
     case Char.Null:
-      emit({ type: TokenType.Character, data: "\ufffd" });
+      emit({ type: TokenType.Character, data: 0xfffd });
       return scriptDataDoubleEscaped;
 
     case null:
       return Command.End;
 
     default:
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
       return scriptDataDoubleEscaped;
   }
 };
@@ -972,7 +981,7 @@ const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
   if (char === Char.Solidus) {
     stream.advance(1);
     state.temporaryBuffer = "";
-    emit({ type: TokenType.Character, data: "/" });
+    emit({ type: TokenType.Character, data: 0x002f });
     return scriptDataDoubleEscapeEnd;
   }
 
@@ -998,17 +1007,14 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
         return scriptDataEscaped;
       }
 
-      emit({ type: TokenType.Character, data: fromCharCode(char) });
+      emit({ type: TokenType.Character, data: char });
       return scriptDataDoubleEscaped;
 
     default:
       if (char !== null && isAlpha(char)) {
         stream.advance(1);
-
-        const str = fromCharCode(char);
-
-        state.temporaryBuffer += str.toLowerCase();
-        emit({ type: TokenType.Character, data: str });
+        state.temporaryBuffer += fromCharCode(char).toLowerCase();
+        emit({ type: TokenType.Character, data: char });
         break;
       }
 
@@ -1072,12 +1078,27 @@ const attributeName: Pattern = (stream, emit, state) => {
     case Char.Space:
     case Char.Solidus:
     case Char.GreaterThanSign:
-    case null:
-      return afterAttributeName;
+    case null: {
+      const tag = state.tag!;
 
-    case Char.EqualSign:
+      if (tag.type === TokenType.StartTag) {
+        removeAttributeIfDuplicate(tag.attributes, state.attribute!);
+      }
+
+      return afterAttributeName;
+    }
+
+    case Char.EqualSign: {
       stream.advance(1);
+
+      const tag = state.tag!;
+
+      if (tag.type === TokenType.StartTag) {
+        removeAttributeIfDuplicate(tag.attributes, state.attribute!);
+      }
+
       return beforeAttributeValue;
+    }
 
     case Char.Null:
       stream.advance(1);
@@ -1233,7 +1254,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       emit(state.tag!);
       state.startTag = state.tag;
-      return findAppropriateState(state);
+      return findAppropriateState(state.tag!);
 
     case Char.Null:
       state.attribute!.value += "\ufffd";
@@ -1269,7 +1290,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
       stream.advance(1);
       emit(state.tag!);
       state.startTag = state.tag;
-      return findAppropriateState(state);
+      return findAppropriateState(state.tag!);
 
     case null:
       return Command.End;
@@ -2355,14 +2376,17 @@ const characterReferenceEnd: Pattern = (stream, emit, state) => {
       break;
     default:
       for (let i = 0, n = state.temporaryBuffer.length; i < n; i++) {
-        emit({ type: TokenType.Character, data: state.temporaryBuffer[i] });
+        emit({
+          type: TokenType.Character,
+          data: state.temporaryBuffer.charCodeAt(i)
+        });
       }
   }
 
   return state.returnState!;
 };
 
-export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
+export const Alphabet: Lang.Alphabet<Token, AlphabetState> = new Lang.Alphabet(
   data,
   () => ({
     doctype: null,
@@ -2402,25 +2426,41 @@ function startsWith(
   return true;
 }
 
-function findAppropriateState(state: State) {
-  switch (state.tag!.name) {
+function findAppropriateState(tag: StartTag | EndTag) {
+  switch (tag.name) {
     case "script":
-      if (state.tag!.type === TokenType.StartTag) {
+      if (tag.type === TokenType.StartTag) {
         return scriptData;
       }
       break;
 
     case "textarea":
-      if (state.tag!.type === TokenType.StartTag) {
+      if (tag.type === TokenType.StartTag) {
         return RCData;
       }
       break;
 
     case "noscript":
     case "noframes":
-      if (state.tag!.type === TokenType.StartTag) {
+      if (tag.type === TokenType.StartTag) {
         return RawText;
       }
   }
+
   return data;
+}
+
+function removeAttributeIfDuplicate(
+  attributes: Array<Attribute>,
+  attribute: Attribute
+) {
+  const name = attribute.name.toLowerCase();
+
+  const duplicate = attributes.find(
+    found => found !== attribute && found.name.toLowerCase() === name
+  );
+
+  if (duplicate !== undefined) {
+    attributes.splice(attributes.indexOf(attribute), 1);
+  }
 }
