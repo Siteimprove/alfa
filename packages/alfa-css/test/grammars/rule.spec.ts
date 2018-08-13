@@ -148,8 +148,9 @@ test("Can parse a rule with an ID selector", t => {
     type: "qualified-rule",
     prelude: [
       {
-        type: TokenType.Delim,
-        value: Char.NumberSign
+        type: TokenType.Hash,
+        typeFlag: "id",
+        value: ""
       },
       {
         type: TokenType.Ident,
