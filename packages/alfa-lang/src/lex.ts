@@ -14,7 +14,7 @@ export function lex<T extends Token, S = null>(
 
   const stream = new Stream(input.length, readCharacter);
 
-  const state = alphabet.state(stream);
+  const state = alphabet.state();
 
   let pattern: Pattern<T, S> = alphabet.pattern;
 

@@ -6,6 +6,9 @@ import { Role } from "./types";
 
 const whitespace = /\s+/;
 
+const features = values(Features);
+const roles = values(Roles);
+
 /**
  * Get the semantic role of an element.
  *
@@ -20,10 +23,10 @@ const whitespace = /\s+/;
  * @return The semantic role of the element if one exists, otherwise `null`.
  */
 export function getRole(element: Element, context: Node): Role | null {
-  const role = getAttribute(element, "role");
+  const role = getAttribute(element, "role", { trim: true });
 
   if (role === null) {
-    const feature = values(Features).find(
+    const feature = features.find(
       feature => feature.element === element.localName
     );
 
@@ -39,7 +42,7 @@ export function getRole(element: Element, context: Node): Role | null {
     }
   } else {
     for (const name of role.split(whitespace)) {
-      const role = values(Roles).find(role => role.name === name);
+      const role = roles.find(role => role.name === name);
 
       if (role !== undefined && role.abstract !== true) {
         return role;
