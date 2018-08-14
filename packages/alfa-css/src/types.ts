@@ -148,6 +148,8 @@ export type PseudoClass =
   | "required"
   // https://www.w3.org/TR/selectors/#user-invalid-pseudo
   | "user-invalid"
+  // https://drafts.csswg.org/css-scoping/#host-selector
+  | "host"
   // https://www.w3.org/TR/selectors/#root-pseudo
   | "root"
   // https://www.w3.org/TR/selectors/#empty-pseudo
