@@ -221,11 +221,7 @@ function isImplicitDescendant(token: Token): boolean {
   return false;
 }
 
-function idSelector(token: Token): IdSelector | null {
-  if (token.type !== TokenType.Hash) {
-    return null;
-  }
-
+function idSelector(token: Hash): IdSelector | null {
   return { type: SelectorType.IdSelector, name: token.value };
 }
 
