@@ -9,9 +9,12 @@ const { min } = Math;
 
 const enum Component {
   Red = 0,
-  Green,
-  Blue,
-  Alpha
+  Green = 1,
+  Blue = 2,
+  Hue = 0,
+  Saturation = 1,
+  Light = 2,
+  Alpha = 3
 }
 
 function functionArguments(stream: Stream<Token>): Array<Token> {
@@ -77,7 +80,7 @@ function rgbaColor(stream: Stream<Token>): Color {
       value = clamp(value, 0, 1);
     } else {
       if (component.type === TokenType.Percentage) {
-        value *= 0xff;
+        value *= 255;
       }
 
       value = clamp(value, 0, 255);
@@ -104,14 +107,14 @@ function rgbaColor(stream: Stream<Token>): Color {
 function hslaColor(stream: Stream<Token>): Color {
   const args = functionArguments(stream);
 
-  if (args.length !== 3 && args.length !== 4) {
+  if (args.length < 3) {
     return Transparent;
   }
 
-  let h = 0;
-  let s = 0;
-  let l = 0;
-  let a = 1;
+  let hue = 0;
+  let saturation = 0;
+  let light = 0;
+  let alpha = 1;
 
   for (let i = 0, n = args.length; i < n; i++) {
     const component = args[i];
@@ -128,6 +131,9 @@ function hslaColor(stream: Stream<Token>): Color {
         if (component.type !== TokenType.Percentage) {
           return Transparent;
         }
+        break;
+      default:
+        return Transparent;
     }
 
     let { value } = component;
@@ -136,35 +142,35 @@ function hslaColor(stream: Stream<Token>): Color {
       value = clamp(value, 0, 1);
     } else {
       if (component.type === TokenType.Percentage) {
-        value *= 0x64;
+        value *= 100;
       }
 
       value = clamp(value, 0, 360);
     }
 
     switch (i) {
-      case Component.Red:
-        h = value;
+      case Component.Hue:
+        hue = value;
         break;
-      case Component.Green:
-        s = value;
+      case Component.Saturation:
+        saturation = value;
         break;
-      case Component.Blue:
-        l = value;
+      case Component.Light:
+        light = value;
         break;
       case Component.Alpha:
-        a = value;
+        alpha = value;
     }
   }
 
-  const rgb = hslToRgb(h / 60, s / 100, l / 100);
+  const [red, green, blue] = hslToRgb(hue / 60, saturation / 100, light / 100);
   const { round } = Math;
 
   return {
-    red: round(rgb[0] * 255),
-    green: round(rgb[1] * 255),
-    blue: round(rgb[2] * 255),
-    alpha: a
+    red: round(red * 255),
+    green: round(green * 255),
+    blue: round(blue * 255),
+    alpha
   };
 }
 

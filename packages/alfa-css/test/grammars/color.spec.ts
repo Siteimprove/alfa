@@ -99,6 +99,13 @@ test("Can not parse an HSLA color with wrong paramter size", t => {
     blue: 0,
     alpha: 0
   });
+
+  color(t, "hsla(23, 0%, 52%, 1, 50%)", {
+    red: 0,
+    green: 0,
+    blue: 0,
+    alpha: 0
+  });
 });
 
 test("Can parse a short HEX color", t => {
