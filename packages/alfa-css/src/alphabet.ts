@@ -678,7 +678,7 @@ function consumeToken(stream: Stream<number>): Token | null {
           return {
             type: TokenType.Hash,
             unrestricted: !startsIdentifier(fst, stream),
-            value: consumeName(char, stream)
+            value: consumeName(fst, stream)
           };
         }
       }
