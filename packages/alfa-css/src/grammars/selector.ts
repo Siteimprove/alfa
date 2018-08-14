@@ -221,14 +221,12 @@ function isImplicitDescendant(token: Token): boolean {
   return false;
 }
 
-function idSelector(stream: Stream<Token>): IdSelector | null {
-  const next = stream.next();
-
-  if (next === null || next.type !== TokenType.Ident) {
+function idSelector(token: Token): IdSelector | null {
+  if (token.type !== TokenType.Hash) {
     return null;
   }
 
-  return { type: SelectorType.IdSelector, name: next.value };
+  return { type: SelectorType.IdSelector, name: token.value };
 }
 
 function classSelector(stream: Stream<Token>): ClassSelector | null {
@@ -669,7 +667,7 @@ const hash: Production<Hash> = {
   token: TokenType.Hash,
   prefix(token, stream) {
     if (!token.unrestricted) {
-      return idSelector(stream);
+      return idSelector(token);
     }
 
     return null;
@@ -677,7 +675,7 @@ const hash: Production<Hash> = {
 
   infix(token, stream, expression, left) {
     if (!token.unrestricted) {
-      return combineSelectors(left, idSelector(stream));
+      return combineSelectors(left, idSelector(token));
     }
 
     return null;

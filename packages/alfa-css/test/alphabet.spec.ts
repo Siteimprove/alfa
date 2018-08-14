@@ -281,10 +281,6 @@ test("Can lex an ID selector", t => {
     {
       type: TokenType.Hash,
       unrestricted: false,
-      value: ""
-    },
-    {
-      type: TokenType.Ident,
       value: "foo"
     }
   ]);
