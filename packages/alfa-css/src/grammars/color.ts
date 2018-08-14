@@ -1,7 +1,15 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
+import {
+  FunctionName,
+  Hash,
+  Ident,
+  Number,
+  Percentage,
+  Token,
+  TokenType
+} from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
@@ -101,6 +109,121 @@ function rgbaColor(stream: Stream<Token>): Color {
   return color;
 }
 
+function hslaColor(stream: Stream<Token>): Color {
+  const args = functionArguments(stream);
+
+  if (args.length !== 3 && args.length !== 4) {
+    return Transparent;
+  }
+
+  let h = 0;
+  let s = 0;
+  let l = 0;
+  let a = 1;
+
+  for (let i = 0, n = args.length; i < n; i++) {
+    const component = args[i];
+
+    switch (i) {
+      case 0:
+      case 3:
+        if (args[i].type !== TokenType.Number) {
+          return Transparent;
+        }
+        break;
+      case 1:
+      case 2:
+        if (args[i].type !== TokenType.Percentage) {
+          return Transparent;
+        }
+    }
+
+    let { value } = <Number | Percentage>component;
+
+    if (i === Component.Alpha) {
+      value = clamp(value, 0, 1);
+    } else {
+      if (component.type === TokenType.Percentage) {
+        value *= 0x64;
+      }
+
+      value = clamp(value, 0, 360);
+    }
+
+    switch (i) {
+      case Component.Red:
+        h = value;
+        break;
+      case Component.Green:
+        s = value;
+        break;
+      case Component.Blue:
+        l = value;
+        break;
+      case Component.Alpha:
+        a = value;
+    }
+  }
+
+  const { r, g, b } = hslToRgb(h / 360, s / 100, l / 100);
+
+  return { red: r, green: g, blue: b, alpha: a };
+}
+
+/**
+ * Converts an HSL color value to RGB. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+ * Assumes h, s, and l are contained in the set [0, 1] and
+ * returns r, g, and b in the set [0, 255].
+ *
+ * @see https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
+ *
+ * @param   h       The hue
+ * @param   s       The saturation
+ * @param   l       The lightness
+ * @return          The RGB representation
+ */
+function hslToRgb(h: number, s: number, l: number) {
+  let r;
+  let g;
+  let b;
+
+  if (s === 0) {
+    r = g = b = l; // achromatic
+  } else {
+    const hue2rgb = function hue2rgb(p: number, q: number, t: number) {
+      if (t < 0) {
+        t += 1;
+      }
+      if (t > 1) {
+        t -= 1;
+      }
+      if (t < 1 / 6) {
+        return p + (q - p) * 6 * t;
+      }
+      if (t < 1 / 2) {
+        return q;
+      }
+      if (t < 2 / 3) {
+        return p + (q - p) * (2 / 3 - t) * 6;
+      }
+      return p;
+    };
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+
+  return {
+    r: Math.round(r * 255),
+    g: Math.round(g * 255),
+    b: Math.round(b * 255)
+  };
+}
+
 /**
  * @see https://www.w3.org/TR/css-color/#typedef-hex-color
  */
@@ -182,6 +305,9 @@ const functionName: Production<FunctionName> = {
       case "rgb":
       case "rgba":
         return rgbaColor(stream);
+      case "hsl":
+      case "hsla":
+        return hslaColor(stream);
     }
 
     return null;
