@@ -1,3 +1,4 @@
+import { isFeatureSupported } from "@siteimprove/alfa-compatibility";
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
@@ -126,6 +127,10 @@ function hexColor(token: Hash): Color {
       break;
     default:
       return Transparent;
+  }
+
+  if (alpha && !isFeatureSupported("css-rrggbbaa")) {
+    return Transparent;
   }
 
   let hex = 0;
