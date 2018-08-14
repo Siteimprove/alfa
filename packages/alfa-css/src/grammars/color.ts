@@ -1,15 +1,7 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import {
-  FunctionName,
-  Hash,
-  Ident,
-  Number,
-  Percentage,
-  Token,
-  TokenType
-} from "../alphabet";
+import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
@@ -127,18 +119,18 @@ function hslaColor(stream: Stream<Token>): Color {
     switch (i) {
       case 0:
       case 3:
-        if (args[i].type !== TokenType.Number) {
+        if (component.type !== TokenType.Number) {
           return Transparent;
         }
         break;
       case 1:
       case 2:
-        if (args[i].type !== TokenType.Percentage) {
+        if (component.type !== TokenType.Percentage) {
           return Transparent;
         }
     }
 
-    let { value } = <Number | Percentage>component;
+    let { value } = component;
 
     if (i === Component.Alpha) {
       value = clamp(value, 0, 1);
