@@ -1,8 +1,7 @@
 /// <reference path="../types/browserslist.d.ts" />
 
 import browserslist = require("browserslist");
-
-const supportedBrowsers = new Set(browserslist());
+import { getSupportedBrowsers } from "./supported-browsers";
 
 const whitespace = /\s+/;
 
@@ -15,14 +14,15 @@ const whitespace = /\s+/;
  */
 export function isBrowserSupported(
   browser: string,
-  options: Readonly<{ browsers?: string | Array<string> }> = {}
+  options: Readonly<{ browsers?: string | ReadonlyArray<string> }> = {}
 ): boolean {
   browser = browser.toLowerCase();
 
-  const browsers =
+  const browsers = new Set(
     options.browsers === undefined
-      ? supportedBrowsers
-      : new Set(browserslist(options.browsers));
+      ? getSupportedBrowsers()
+      : browserslist(options.browsers)
+  );
 
   switch (browser) {
     case "chrome":
