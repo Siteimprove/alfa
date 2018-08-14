@@ -165,63 +165,39 @@ function hslaColor(stream: Stream<Token>): Color {
     }
   }
 
-  const { r, g, b } = hslToRgb(h / 360, s / 100, l / 100);
+  const { r, g, b } = hslToRgb(h / 60, s / 100, l / 100);
 
   return { red: r, green: g, blue: b, alpha: a };
 }
 
-/**
- * Converts an HSL color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
- *
- * @see https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
- *
- * @param   h       The hue
- * @param   s       The saturation
- * @param   l       The lightness
- * @return          The RGB representation
- */
 function hslToRgb(h: number, s: number, l: number) {
-  let r;
-  let g;
-  let b;
-
-  if (s === 0) {
-    r = g = b = l; // achromatic
-  } else {
-    const hue2rgb = function hue2rgb(p: number, q: number, t: number) {
-      if (t < 0) {
-        t += 1;
-      }
-      if (t > 1) {
-        t -= 1;
-      }
-      if (t < 1 / 6) {
-        return p + (q - p) * 6 * t;
-      }
-      if (t < 1 / 2) {
-        return q;
-      }
-      if (t < 2 / 3) {
-        return p + (q - p) * (2 / 3 - t) * 6;
-      }
-      return p;
-    };
-
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1 / 3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1 / 3);
-  }
+  const snd = l <= 0.5 ? l * (s + 1) : l + s - l * s;
+  const fst = l * 2 - snd;
+  const { round } = Math;
 
   return {
-    r: Math.round(r * 255),
-    g: Math.round(g * 255),
-    b: Math.round(b * 255)
+    r: round(hueToRgb(fst, snd, h + 2) * 255),
+    g: round(hueToRgb(fst, snd, h) * 255),
+    b: round(hueToRgb(fst, snd, h - 2) * 255)
   };
+}
+
+function hueToRgb(fst: number, snd: number, hue: number) {
+  if (hue >= 6) {
+    hue -= 6;
+  } else if (hue < 0) {
+    hue += 6;
+  }
+
+  if (hue < 1) {
+    return (snd - fst) * hue + fst;
+  } else if (hue < 3) {
+    return snd;
+  } else if (hue < 4) {
+    return (snd - fst) * (4 - hue) + fst;
+  } else {
+    return fst;
+  }
 }
 
 /**
