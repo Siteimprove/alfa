@@ -150,10 +150,6 @@ test("Can parse a rule with an ID selector", t => {
       {
         type: TokenType.Hash,
         unrestricted: false,
-        value: ""
-      },
-      {
-        type: TokenType.Ident,
         value: "foo"
       }
     ],
