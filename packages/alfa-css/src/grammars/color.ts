@@ -5,6 +5,8 @@ import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
+const { min } = Math;
+
 const enum Component {
   Red = 0,
   Green,
@@ -104,31 +106,31 @@ function rgbaColor(stream: Stream<Token>): Color {
  */
 function hexColor(token: Hash): Color {
   const { value } = token;
+  const { length } = value;
 
-  let hasAlpha = false;
   let shorthand = false;
+  let alpha = false;
 
-  switch (value.length) {
+  switch (length) {
     case 3:
       shorthand = true;
       break;
     case 4:
-      hasAlpha = true;
       shorthand = true;
+      alpha = true;
       break;
     case 6:
       break;
     case 8:
-      hasAlpha = true;
+      alpha = true;
       break;
     default:
       return Transparent;
   }
 
   let hex = 0;
-  let alpha = hasAlpha ? 0 : 0xff;
 
-  for (let i = 0, n = shorthand ? 3 : 6; i < n; i++) {
+  for (let i = 0, n = min(shorthand ? 4 : 8, length); i < n; i++) {
     const number = getNumericValue(value.charCodeAt(i));
 
     if (number === null) {
@@ -142,27 +144,16 @@ function hexColor(token: Hash): Color {
     }
   }
 
-  if (hasAlpha) {
-    for (let i = shorthand ? 3 : 6, n = shorthand ? 4 : 8; i < n; i++) {
-      const number = getNumericValue(value.charCodeAt(i));
-
-      if (number === null) {
-        return Transparent;
-      }
-
-      alpha = alpha * 0x10 + number;
-
-      if (shorthand) {
-        alpha = alpha * 0x10 + number;
-      }
-    }
+  if (!alpha) {
+    hex = hex * 0x10 + 0xf;
+    hex = hex * 0x10 + 0xf;
   }
 
   return {
-    red: hex >> 16,
-    green: (hex >> 8) & 0xff,
-    blue: hex & 0xff,
-    alpha: alpha / 0xff
+    red: (hex >> 24) & 0xff,
+    green: (hex >> 16) & 0xff,
+    blue: (hex >> 8) & 0xff,
+    alpha: (hex & 0xff) / 0xff
   };
 }
 
