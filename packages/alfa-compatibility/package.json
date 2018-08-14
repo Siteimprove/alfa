@@ -22,7 +22,6 @@
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
-  "types": "src/index.d.ts",
   "dependencies": {
     "browserslist": "^4.0.2",
     "caniuse-api": "^3.0.0"

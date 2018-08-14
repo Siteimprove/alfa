@@ -1,3 +1,4 @@
+import { setSupportedBrowsers } from "@siteimprove/alfa-compatibility";
 import { lex, parse } from "@siteimprove/alfa-lang";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
@@ -53,21 +54,41 @@ test("Can parse a HEX color", t => {
   });
 });
 
-test("Can parse a medium-long HEX color", t => {
-  color(t, "#ABCD", {
-    red: 170,
-    green: 187,
-    blue: 204,
-    alpha: 0.8666666666666667
+test("Can parse a medium-long HEX color in browsers that support it", t => {
+  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+    color(t, "#ABCD", {
+      red: 170,
+      green: 187,
+      blue: 204,
+      alpha: 0.8666666666666667
+    });
+  });
+  setSupportedBrowsers("firefox <= 48, chrome <= 61", () => {
+    color(t, "#ABCD", {
+      red: 0,
+      green: 0,
+      blue: 0,
+      alpha: 0
+    });
   });
 });
 
 test("Can parse a long HEX color", t => {
-  color(t, "#ABCDEFCC", {
-    red: 171,
-    green: 205,
-    blue: 239,
-    alpha: 0.8
+  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+    color(t, "#ABCDEFCC", {
+      red: 171,
+      green: 205,
+      blue: 239,
+      alpha: 0.8
+    });
+  });
+  setSupportedBrowsers("firefox <= 48, chrome <= 61", () => {
+    color(t, "#ABCD", {
+      red: 0,
+      green: 0,
+      blue: 0,
+      alpha: 0
+    });
   });
 });
 

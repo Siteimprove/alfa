@@ -10,7 +10,7 @@ let supportedBrowsers = browserslist();
 /**
  * Get the current scope of supported browsers.
  */
-export function getSupportedBrowsers(): ReadonlyArray<string> {
+export function getSupportedBrowsers(): Array<string> {
   return supportedBrowsers;
 }
 
@@ -20,7 +20,7 @@ export function getSupportedBrowsers(): ReadonlyArray<string> {
  * browser scope and resetting to the previous browser scope when done.
  */
 export function setSupportedBrowsers(
-  browsers: string | ReadonlyArray<string>,
+  browsers: string | Array<string>,
   scope?: () => void
 ): void {
   if (scope === undefined) {
