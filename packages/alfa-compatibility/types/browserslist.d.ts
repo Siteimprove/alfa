@@ -9,7 +9,7 @@ declare module "browserslist" {
   }
 
   function browserslist(
-    browsers?: string | Array<string>,
+    browsers?: string | ReadonlyArray<string>,
     options?: BrowserslistOptions
   ): Array<string>;
 
