@@ -1,9 +1,11 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Stream } from "@siteimprove/alfa-lang";
+import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import { FunctionName, Ident, Token, TokenType } from "../alphabet";
+import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
+
+const { min } = Math;
 
 const enum Component {
   Red = 0,
@@ -99,13 +101,68 @@ function rgbaColor(stream: Stream<Token>): Color {
   return color;
 }
 
+/**
+ * @see https://www.w3.org/TR/css-color/#typedef-hex-color
+ */
+function hexColor(token: Hash): Color {
+  const { value } = token;
+  const { length } = value;
+
+  let shorthand = false;
+  let alpha = false;
+
+  switch (length) {
+    case 3:
+      shorthand = true;
+      break;
+    case 4:
+      shorthand = true;
+      alpha = true;
+      break;
+    case 6:
+      break;
+    case 8:
+      alpha = true;
+      break;
+    default:
+      return Transparent;
+  }
+
+  let hex = 0;
+
+  for (let i = 0, n = min(shorthand ? 4 : 8, length); i < n; i++) {
+    const number = getNumericValue(value.charCodeAt(i));
+
+    if (number === null) {
+      return Transparent;
+    }
+
+    hex = hex * 0x10 + number;
+
+    if (shorthand) {
+      hex = hex * 0x10 + number;
+    }
+  }
+
+  if (!alpha) {
+    hex = hex * 0x10 + 0xf;
+    hex = hex * 0x10 + 0xf;
+  }
+
+  return {
+    red: (hex >> 24) & 0xff,
+    green: (hex >> 16) & 0xff,
+    blue: (hex >> 8) & 0xff,
+    alpha: (hex & 0xff) / 0xff
+  };
+}
+
 type Production<T extends Token> = Lang.Production<Token, Color, T>;
 
 const ident: Production<Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     const { value } = token;
-
     if (value === "transparent") {
       return Transparent;
     }
@@ -131,8 +188,15 @@ const functionName: Production<FunctionName> = {
   }
 };
 
+const hash: Production<Hash> = {
+  token: TokenType.Hash,
+  prefix(token, stream) {
+    return hexColor(token);
+  }
+};
+
 export const ColorGrammar: Grammar<Token, Color> = new Grammar(
-  [ident, functionName, whitespace],
+  [ident, hash, functionName, whitespace],
   () => null
 );
 

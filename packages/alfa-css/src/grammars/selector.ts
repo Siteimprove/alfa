@@ -10,6 +10,7 @@ import {
   Colon,
   Comma,
   Delim,
+  Hash,
   Ident,
   SquareBracket,
   Token,
@@ -212,24 +213,16 @@ function isImplicitDescendant(token: Token): boolean {
 
     case TokenType.Delim:
       const { value } = token;
-      return (
-        value === Char.FullStop ||
-        value === Char.NumberSign ||
-        value === Char.Asterisk
-      );
+      return value === Char.FullStop || value === Char.Asterisk;
+    case TokenType.Hash:
+      return !token.unrestricted;
   }
 
   return false;
 }
 
-function idSelector(stream: Stream<Token>): IdSelector | null {
-  const next = stream.next();
-
-  if (next === null || next.type !== TokenType.Ident) {
-    return null;
-  }
-
-  return { type: SelectorType.IdSelector, name: next.value };
+function idSelector(token: Hash): IdSelector | null {
+  return { type: SelectorType.IdSelector, name: token.value };
 }
 
 function classSelector(stream: Stream<Token>): ClassSelector | null {
@@ -243,7 +236,7 @@ function classSelector(stream: Stream<Token>): ClassSelector | null {
 }
 
 function typeSelector(
-  token: Delim | Ident,
+  token: Delim | Ident | Hash,
   stream: Stream<Token>
 ): TypeSelector | null {
   let name: string | null = null;
@@ -667,13 +660,30 @@ const whitespace: Production<Whitespace> = {
   }
 };
 
+const hash: Production<Hash> = {
+  token: TokenType.Hash,
+  prefix(token, stream) {
+    if (!token.unrestricted) {
+      return idSelector(token);
+    }
+
+    return null;
+  },
+
+  infix(token, stream, expression, left) {
+    if (!token.unrestricted) {
+      return combineSelectors(left, idSelector(token));
+    }
+
+    return null;
+  }
+};
+
 const delim: Production<Delim> = {
   token: TokenType.Delim,
 
   prefix(token, stream) {
     switch (token.value) {
-      case Char.NumberSign:
-        return idSelector(stream);
       case Char.FullStop:
         return classSelector(stream);
       case Char.Asterisk:
@@ -686,8 +696,6 @@ const delim: Production<Delim> = {
 
   infix(token, stream, expression, left) {
     switch (token.value) {
-      case Char.NumberSign:
-        return combineSelectors(left, idSelector(stream));
       case Char.FullStop:
         return combineSelectors(left, classSelector(stream));
       case Char.Asterisk:
@@ -758,6 +766,6 @@ export const SelectorGrammar: Grammar<
   Token,
   Selector | Array<Selector>
 > = new Grammar(
-  [[delim, ident, colon, squareBracket], whitespace, comma],
+  [[hash, delim, ident, colon, squareBracket], whitespace, comma],
   () => null
 );

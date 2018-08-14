@@ -1,5 +1,6 @@
 export * from "./alphabet";
 export * from "./char";
+export * from "./get-numeric-value";
 export * from "./grammar";
 export * from "./is-alpha";
 export * from "./is-alphanumeric";

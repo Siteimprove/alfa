@@ -279,11 +279,8 @@ test("Can lex a URL with a string value", t => {
 test("Can lex an ID selector", t => {
   css(t, "#foo", [
     {
-      type: TokenType.Delim,
-      value: Char.NumberSign
-    },
-    {
-      type: TokenType.Ident,
+      type: TokenType.Hash,
+      unrestricted: false,
       value: "foo"
     }
   ]);
