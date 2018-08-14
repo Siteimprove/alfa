@@ -484,6 +484,7 @@ function pseudoSelector(
       case "out-of-range":
       case "required":
       case "user-invalid":
+      case "host":
       case "root":
       case "empty":
       case "blank":
