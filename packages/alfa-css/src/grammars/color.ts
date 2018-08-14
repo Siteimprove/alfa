@@ -1,5 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Stream } from "@siteimprove/alfa-lang";
+import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
 import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
@@ -99,69 +99,70 @@ function rgbaColor(stream: Stream<Token>): Color {
   return color;
 }
 
-function hexColor(stream: Stream<Token>): Color {
-  const ident = stream.next();
+/**
+ * @see https://www.w3.org/TR/css-color/#typedef-hex-color
+ */
+function hexColor(token: Hash): Color {
+  const { value } = token;
 
-  if (ident === null || ident.type !== TokenType.Ident) {
-    return Transparent;
-  }
-  const hex = ident.value;
+  let hasAlpha = false;
+  let shorthand = false;
 
-  let repetitions;
-  let hasAlpha;
-
-  switch (hex.length) {
+  switch (value.length) {
     case 3:
-      repetitions = 2;
-      hasAlpha = false;
+      shorthand = true;
       break;
     case 4:
-      repetitions = 2;
       hasAlpha = true;
+      shorthand = true;
       break;
     case 6:
-      repetitions = 1;
-      hasAlpha = false;
       break;
     case 8:
-      repetitions = 1;
       hasAlpha = true;
       break;
     default:
       return Transparent;
   }
 
-  const bytes = [];
-  for (let i = 0, n = hex.length; i < n; i++) {
-    const byte = hex.charCodeAt(i);
+  let hex = 0;
+  let alpha = hasAlpha ? 0 : 0xff;
 
-    if (Lang.isNumeric(byte)) {
-      bytes[i] = byte - Lang.Char.DigitZero;
-    } else if (
-      Lang.isBetween(byte, Lang.Char.SmallLetterA, Lang.Char.SmallLetterF)
-    ) {
-      bytes[i] = byte - Lang.Char.SmallLetterA + 10;
-    } else if (
-      Lang.isBetween(byte, Lang.Char.CapitalLetterA, Lang.Char.CapitalLetterF)
-    ) {
-      bytes[i] = byte - Lang.Char.CapitalLetterA + 10;
+  for (let i = 0, n = shorthand ? 3 : 6; i < n; i++) {
+    const number = getNumericValue(value.charCodeAt(i));
+
+    if (number === null) {
+      return Transparent;
+    }
+
+    hex = hex * 0x10 + number;
+
+    if (shorthand) {
+      hex = hex * 0x10 + number;
     }
   }
 
-  if (repetitions === 1) {
-    return {
-      red: bytes[0] * 16 + bytes[1],
-      green: bytes[2] * 16 + bytes[3],
-      blue: bytes[4] * 16 + bytes[5],
-      alpha: hasAlpha ? (bytes[6] * 16 + bytes[7]) / 255 : 1
-    };
+  if (hasAlpha) {
+    for (let i = shorthand ? 3 : 6, n = shorthand ? 4 : 8; i < n; i++) {
+      const number = getNumericValue(value.charCodeAt(i));
+
+      if (number === null) {
+        return Transparent;
+      }
+
+      alpha = alpha * 0x10 + number;
+
+      if (shorthand) {
+        alpha = alpha * 0x10 + number;
+      }
+    }
   }
 
   return {
-    red: bytes[0] * 16 + bytes[0],
-    green: bytes[1] * 16 + bytes[1],
-    blue: bytes[2] * 16 + bytes[2],
-    alpha: hasAlpha ? (bytes[3] * 16 + bytes[3]) / 255 : 1
+    red: hex >> 16,
+    green: (hex >> 8) & 0xff,
+    blue: hex & 0xff,
+    alpha: alpha / 0xff
   };
 }
 
@@ -199,7 +200,7 @@ const functionName: Production<FunctionName> = {
 const hash: Production<Hash> = {
   token: TokenType.Hash,
   prefix(token, stream) {
-    return hexColor(stream);
+    return hexColor(token);
   }
 };
 
