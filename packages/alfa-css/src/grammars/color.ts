@@ -1,14 +1,22 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
+import {
+  FunctionName,
+  Hash,
+  Ident,
+  Number,
+  Percentage,
+  Token,
+  TokenType
+} from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
-const { min } = Math;
+const { min, round } = Math;
 
-const enum Component {
-  Red = 0,
+const enum RgbComponent {
+  Red,
   Green,
   Blue,
   Alpha
@@ -52,14 +60,36 @@ function functionArguments(stream: Stream<Token>): Array<Token> {
   return args;
 }
 
-function rgbaColor(stream: Stream<Token>): Color {
-  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
-
-  const args = functionArguments(stream);
-
-  if (args.length !== 3 && args.length !== 4) {
-    return Transparent;
+function getNumber(tokens: Array<Token>, index: number): Number | null {
+  if (index in tokens === false) {
+    return null;
   }
+
+  const token = tokens[index];
+
+  if (token.type !== TokenType.Number) {
+    return null;
+  }
+
+  return token;
+}
+
+function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
+  if (index in tokens === false) {
+    return null;
+  }
+
+  const token = tokens[index];
+
+  if (token.type !== TokenType.Percentage) {
+    return null;
+  }
+
+  return token;
+}
+
+function rgbaColor(args: Array<Token>): Color {
+  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
 
   for (let i = 0, n = args.length; i < n; i++) {
     const component = args[i];
@@ -73,32 +103,104 @@ function rgbaColor(stream: Stream<Token>): Color {
 
     let { value } = component;
 
-    if (i === Component.Alpha) {
+    if (i === RgbComponent.Alpha) {
       value = clamp(value, 0, 1);
     } else {
       if (component.type === TokenType.Percentage) {
-        value *= 0xff;
+        value *= 255;
       }
 
       value = clamp(value, 0, 255);
     }
 
     switch (i) {
-      case Component.Red:
+      case RgbComponent.Red:
         color.red = value;
         break;
-      case Component.Green:
+      case RgbComponent.Green:
         color.green = value;
         break;
-      case Component.Blue:
+      case RgbComponent.Blue:
         color.blue = value;
         break;
-      case Component.Alpha:
+      case RgbComponent.Alpha:
         color.alpha = value;
     }
   }
 
   return color;
+}
+
+function hslaColor(args: Array<Token>): Color {
+  const hue = getNumber(args, 0);
+  const saturation = getPercentage(args, 1);
+  const lightness = getPercentage(args, 2);
+
+  if (hue === null || saturation === null || lightness === null) {
+    return Transparent;
+  }
+
+  const alpha = getNumber(args, 3);
+
+  if (args.length === 4 && alpha === null) {
+    return Transparent;
+  }
+
+  const [red, green, blue] = hslToRgb(
+    clamp(hue.value, 0, 360) / 60,
+    clamp(saturation.value * 100, 0, 360) / 100,
+    clamp(lightness.value * 100, 0, 360) / 100
+  );
+
+  return {
+    red: round(red * 255),
+    green: round(green * 255),
+    blue: round(blue * 255),
+    alpha: alpha === null ? 1 : clamp(alpha.value, 0, 1)
+  };
+}
+
+/**
+ * @copyright  Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
+ *             trademark and document use rules apply.
+ * @license    https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+ */
+function hslToRgb(hue: number, sat: number, light: number) {
+  let t2;
+  if (light <= 0.5) {
+    t2 = light * (sat + 1);
+  } else {
+    t2 = light + sat - light * sat;
+  }
+  const t1 = light * 2 - t2;
+  const r = hueToRgb(t1, t2, hue + 2);
+  const g = hueToRgb(t1, t2, hue);
+  const b = hueToRgb(t1, t2, hue - 2);
+  return [r, g, b];
+}
+
+/**
+ * @copyright  Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
+ *             trademark and document use rules apply.
+ * @license    https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+ */
+function hueToRgb(t1: number, t2: number, hue: number) {
+  if (hue < 0) {
+    hue += 6;
+  }
+  if (hue >= 6) {
+    hue -= 6;
+  }
+
+  if (hue < 1) {
+    return (t2 - t1) * hue + t1;
+  } else if (hue < 3) {
+    return t2;
+  } else if (hue < 4) {
+    return (t2 - t1) * (4 - hue) + t1;
+  } else {
+    return t1;
+  }
 }
 
 /**
@@ -178,10 +280,18 @@ const ident: Production<Ident> = {
 const functionName: Production<FunctionName> = {
   token: TokenType.FunctionName,
   prefix(token, stream) {
+    const args = functionArguments(stream);
+    const { length } = args;
+
     switch (token.value) {
       case "rgb":
+        return length === 3 ? rgbaColor(args) : Transparent;
       case "rgba":
-        return rgbaColor(stream);
+        return length === 4 ? rgbaColor(args) : Transparent;
+      case "hsl":
+        return length === 3 ? hslaColor(args) : Transparent;
+      case "hsla":
+        return length === 4 ? hslaColor(args) : Transparent;
     }
 
     return null;
