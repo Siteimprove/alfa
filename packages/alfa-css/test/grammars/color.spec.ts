@@ -47,11 +47,21 @@ test("Can parse an RGBA color", t => {
 });
 
 test("Can parse an HSL color", t => {
-  color(t, "hsl(225, 55%, 26%)", {
-    red: 30,
-    green: 48,
-    blue: 103,
-    alpha: 1
+  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+    color(t, "hsl(225, 55%, 26%)", {
+      red: 30,
+      green: 48,
+      blue: 103,
+      alpha: 1
+    });
+  });
+  setSupportedBrowsers("ie 8, firefox 52", () => {
+    color(t, "hsl(225, 55%, 26%)", {
+      red: 0,
+      green: 0,
+      blue: 0,
+      alpha: 0
+    });
   });
 });
 

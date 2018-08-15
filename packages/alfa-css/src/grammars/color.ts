@@ -112,6 +112,10 @@ function rgbaColor(stream: Stream<Token>): Color {
 function hslaColor(stream: Stream<Token>): Color {
   const args = functionArguments(stream);
 
+  if (!isFeatureSupported("css3-colors")) {
+    return Transparent;
+  }
+
   if (args.length < 3) {
     return Transparent;
   }
