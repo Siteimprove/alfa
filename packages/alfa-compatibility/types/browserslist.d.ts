@@ -11,7 +11,7 @@ declare module "browserslist" {
   function browserslist(
     browsers?: string | ReadonlyArray<string>,
     options?: BrowserslistOptions
-  ): Array<string>;
+  ): ReadonlyArray<string>;
 
   export = browserslist;
 }
