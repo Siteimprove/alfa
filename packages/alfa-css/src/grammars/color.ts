@@ -2,18 +2,19 @@ import { isFeatureSupported } from "@siteimprove/alfa-compatibility";
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
+import {
+  FunctionName,
+  Hash,
+  Ident,
+  Number,
+  Percentage,
+  Token,
+  TokenType
+} from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
-const { min } = Math;
-
-const enum HslComponent {
-  Hue,
-  Saturation,
-  Lightness,
-  Alpha
-}
+const { min, round } = Math;
 
 const enum RgbComponent {
   Red,
@@ -60,14 +61,36 @@ function functionArguments(stream: Stream<Token>): Array<Token> {
   return args;
 }
 
-function rgbaColor(stream: Stream<Token>): Color {
-  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
-
-  const args = functionArguments(stream);
-
-  if (args.length !== 3 && args.length !== 4) {
-    return Transparent;
+function getNumber(tokens: Array<Token>, index: number): Number | null {
+  if (index in tokens === false) {
+    return null;
   }
+
+  const token = tokens[index];
+
+  if (token.type !== TokenType.Number) {
+    return null;
+  }
+
+  return token;
+}
+
+function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
+  if (index in tokens === false) {
+    return null;
+  }
+
+  const token = tokens[index];
+
+  if (token.type !== TokenType.Percentage) {
+    return null;
+  }
+
+  return token;
+}
+
+function rgbaColor(args: Array<Token>): Color {
+  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
 
   if (args.length === 4 && !isFeatureSupported("css3-colors")) {
     return Transparent;
@@ -113,81 +136,36 @@ function rgbaColor(stream: Stream<Token>): Color {
   return color;
 }
 
-function hslaColor(stream: Stream<Token>): Color {
-  const args = functionArguments(stream);
-
+function hslaColor(args: Array<Token>): Color {
   if (!isFeatureSupported("css3-colors")) {
     return Transparent;
   }
 
-  if (args.length < 3) {
+  const hue = getNumber(args, 0);
+  const saturation = getPercentage(args, 1);
+  const lightness = getPercentage(args, 2);
+
+  if (hue === null || saturation === null || lightness === null) {
     return Transparent;
   }
 
-  let hue = 0;
-  let saturation = 0;
-  let lightness = 0;
-  let alpha = 1;
+  const alpha = getNumber(args, 3);
 
-  for (let i = 0, n = args.length; i < n; i++) {
-    const component = args[i];
-
-    switch (i) {
-      case 0:
-      case 3:
-        if (component.type !== TokenType.Number) {
-          return Transparent;
-        }
-        break;
-      case 1:
-      case 2:
-        if (component.type !== TokenType.Percentage) {
-          return Transparent;
-        }
-        break;
-      default:
-        return Transparent;
-    }
-
-    let { value } = component;
-
-    if (i === HslComponent.Alpha) {
-      value = clamp(value, 0, 1);
-    } else {
-      if (component.type === TokenType.Percentage) {
-        value *= 100;
-      }
-
-      value = clamp(value, 0, 360);
-    }
-
-    switch (i) {
-      case HslComponent.Hue:
-        hue = value;
-        break;
-      case HslComponent.Saturation:
-        saturation = value;
-        break;
-      case HslComponent.Lightness:
-        lightness = value;
-        break;
-      case HslComponent.Alpha:
-        alpha = value;
-    }
+  if (args.length === 4 && alpha === null) {
+    return Transparent;
   }
 
   const [red, green, blue] = hslToRgb(
-    hue / 60,
-    saturation / 100,
-    lightness / 100
+    clamp(hue.value, 0, 360) / 60,
+    clamp(saturation.value * 100, 0, 360) / 100,
+    clamp(lightness.value * 100, 0, 360) / 100
   );
-  const { round } = Math;
 
   return {
     red: round(red * 255),
     green: round(green * 255),
     blue: round(blue * 255),
-    alpha
+    alpha: alpha === null ? 1 : clamp(alpha.value, 0, 1)
   };
 }
 
@@ -315,13 +293,18 @@ const ident: Production<Ident> = {
 const functionName: Production<FunctionName> = {
   token: TokenType.FunctionName,
   prefix(token, stream) {
+    const args = functionArguments(stream);
+    const { length } = args;
+
     switch (token.value) {
       case "rgb":
+        return length === 3 ? rgbaColor(args) : Transparent;
       case "rgba":
-        return rgbaColor(stream);
+        return length === 4 ? rgbaColor(args) : Transparent;
       case "hsl":
+        return length === 3 ? hslaColor(args) : Transparent;
       case "hsla":
-        return hslaColor(stream);
+        return length === 4 ? hslaColor(args) : Transparent;
     }
 
     return null;

@@ -66,7 +66,7 @@ test("Can parse an HSL color", t => {
 });
 
 test("Can parse an HSLA color", t => {
-  color(t, "hsl(3, 55%, 26%, 0.5)", {
+  color(t, "hsla(3, 55%, 26%, 0.5)", {
     red: 103,
     green: 33,
     blue: 30,
@@ -84,21 +84,21 @@ test("Can parse an achromatic HSL color", t => {
 });
 
 test("Can not parse an HSLA color with wrong paramter type", t => {
-  color(t, "hsl(23%, 0%, 26%, 1)", {
+  color(t, "hsla(23%, 0%, 26%, 1)", {
     red: 0,
     green: 0,
     blue: 0,
     alpha: 0
   });
 
-  color(t, "hsl(23, 0, 26%, 1)", {
+  color(t, "hsla(23, 0, 26%, 1)", {
     red: 0,
     green: 0,
     blue: 0,
     alpha: 0
   });
 
-  color(t, "hsl(23, 0%, 26, 1)", {
+  color(t, "hsla(23, 0%, 26, 1)", {
     red: 0,
     green: 0,
     blue: 0,
