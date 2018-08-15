@@ -435,19 +435,25 @@ function matchesPseudoClass(
         return false;
       }
 
-      if (options.treeContext === undefined) {
+      if (
+        options.treeContext === undefined ||
+        !isShadowRoot(options.treeContext)
+      ) {
         return false;
       }
 
       const host = getParentElement(options.treeContext, context, {
         composed: true
       });
-      const isHostMatched =
-        selector.value === null ||
-        matches(element, context, selector.value, options, root);
 
+      if (host !== element) {
+        return false;
+      }
+
+      // Match host with possible selector argument (e.g. ":host(.foo)")
       return (
-        isShadowRoot(options.treeContext) && host === element && isHostMatched
+        selector.value === null ||
+        matches(element, context, selector.value, options, root)
       );
 
     // https://www.w3.org/TR/selectors/#negation-pseudo
