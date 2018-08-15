@@ -5,7 +5,7 @@ import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
-const { min } = Math;
+const { min, round } = Math;
 
 const enum HslComponent {
   Hue,
@@ -124,14 +124,14 @@ function hslaColor(stream: Stream<Token>): Color {
     const component = args[i];
 
     switch (i) {
-      case 0:
-      case 3:
+      case HslComponent.Hue:
+      case HslComponent.Alpha:
         if (component.type !== TokenType.Number) {
           return Transparent;
         }
         break;
-      case 1:
-      case 2:
+      case HslComponent.Saturation:
+      case HslComponent.Lightness:
         if (component.type !== TokenType.Percentage) {
           return Transparent;
         }
@@ -172,7 +172,6 @@ function hslaColor(stream: Stream<Token>): Color {
     saturation / 100,
     lightness / 100
   );
-  const { round } = Math;
 
   return {
     red: round(red * 255),
