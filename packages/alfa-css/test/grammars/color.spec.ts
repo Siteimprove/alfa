@@ -55,41 +55,53 @@ test("Can parse a HEX color", t => {
 });
 
 test("Can parse a medium-long HEX color in browsers that support it", t => {
-  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
-    color(t, "#ABCD", {
-      red: 170,
-      green: 187,
-      blue: 204,
-      alpha: 0.8666666666666667
-    });
-  });
-  setSupportedBrowsers("firefox <= 48, chrome <= 61", () => {
-    color(t, "#ABCD", {
-      red: 0,
-      green: 0,
-      blue: 0,
-      alpha: 0
-    });
-  });
+  setSupportedBrowsers(
+    "firefox > 48, chrome > 61, safari >= 10, ios >= 10",
+    () => {
+      color(t, "#ABCD", {
+        red: 170,
+        green: 187,
+        blue: 204,
+        alpha: 0.8666666666666667
+      });
+    }
+  );
+  setSupportedBrowsers(
+    "firefox <= 48, chrome <= 61, safari < 10, ios < 10, edge > 11, ie > 6",
+    () => {
+      color(t, "#ABCD", {
+        red: 0,
+        green: 0,
+        blue: 0,
+        alpha: 0
+      });
+    }
+  );
 });
 
 test("Can parse a long HEX color", t => {
-  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
-    color(t, "#ABCDEFCC", {
-      red: 171,
-      green: 205,
-      blue: 239,
-      alpha: 0.8
-    });
-  });
-  setSupportedBrowsers("firefox <= 48, chrome <= 61", () => {
-    color(t, "#ABCD", {
-      red: 0,
-      green: 0,
-      blue: 0,
-      alpha: 0
-    });
-  });
+  setSupportedBrowsers(
+    "firefox > 48, chrome > 61, safari >= 10, ios >= 10",
+    () => {
+      color(t, "#ABCDEFCC", {
+        red: 171,
+        green: 205,
+        blue: 239,
+        alpha: 0.8
+      });
+    }
+  );
+  setSupportedBrowsers(
+    "firefox <= 48, chrome <= 61, safari < 10, ios < 10, edge > 11, ie > 6",
+    () => {
+      color(t, "#ABCDEFCC", {
+        red: 0,
+        green: 0,
+        blue: 0,
+        alpha: 0
+      });
+    }
+  );
 });
 
 test("Invalid hex colors fall back to transparent", t => {
