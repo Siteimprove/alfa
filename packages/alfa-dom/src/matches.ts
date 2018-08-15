@@ -430,12 +430,30 @@ function matchesPseudoClass(
 
     // https://drafts.csswg.org/css-scoping/#host-selector
     case "host":
+      // Do not allow prefix (e.g. "div:host")
+      if (root !== selector) {
+        return false;
+      }
+
+      if (
+        options.treeContext === undefined ||
+        !isShadowRoot(options.treeContext)
+      ) {
+        return false;
+      }
+
+      const host = getParentElement(options.treeContext, context, {
+        composed: true
+      });
+
+      if (host !== element) {
+        return false;
+      }
+
+      // Match host with possible selector argument (e.g. ":host(.foo)")
       return (
-        root === selector &&
-        options.treeContext !== undefined &&
-        isShadowRoot(options.treeContext) &&
-        getParentElement(options.treeContext, context, { composed: true }) ===
-          element
+        selector.value === null ||
+        matches(element, context, selector.value, options, root)
       );
 
     // https://www.w3.org/TR/selectors/#negation-pseudo
