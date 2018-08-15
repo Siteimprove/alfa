@@ -8,19 +8,19 @@ test("Returns False on Unfocusable Element", t => {
   t.equal(isTabbable(foo, bar), false);
 });
 
-test("Returns False on Focusable Element with negative TabIndex ", t => {
+test("Returns False on Focusable Element with negative TabIndex", t => {
   const foo = <button tabindex="-1">Foo</button>;
   const bar = <div>{foo}</div>;
   t.equal(isTabbable(foo, bar), false);
 });
 
-test("Returns True on Unfocusable Element with positive TabIndex ", t => {
+test("Returns True on Unfocusable Element with positive TabIndex", t => {
   const foo = <p tabindex="5">Foo</p>;
   const bar = <div>{foo}</div>;
   t.equal(isTabbable(foo, bar), true);
 });
 
-test("Returns True on Focusable Element with Implicit TabIndex ", t => {
+test("Returns True on Focusable Element with Implicit TabIndex", t => {
   const foo = <button>Foo</button>;
   const bar = <div>{foo}</div>;
   t.equal(isTabbable(foo, bar), true);
