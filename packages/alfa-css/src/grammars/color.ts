@@ -111,7 +111,7 @@ function rgbaColor(stream: Stream<Token>): Color {
 function hslaColor(stream: Stream<Token>): Color {
   const args = functionArguments(stream);
 
-  if (args.length < 3) {
+  if (args.length !== 3 && args.length !== 4) {
     return Transparent;
   }
 
@@ -136,8 +136,6 @@ function hslaColor(stream: Stream<Token>): Color {
           return Transparent;
         }
         break;
-      default:
-        return Transparent;
     }
 
     let { value } = component;
