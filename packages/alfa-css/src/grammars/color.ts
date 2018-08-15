@@ -90,11 +90,11 @@ function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
 }
 
 function rgbaColor(args: Array<Token>): Color {
-  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
-
   if (args.length === 4 && !isFeatureSupported("css3-colors")) {
     return Transparent;
   }
+
+  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
 
   for (let i = 0, n = args.length; i < n; i++) {
     const component = args[i];

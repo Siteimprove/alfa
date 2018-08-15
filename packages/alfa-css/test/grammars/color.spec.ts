@@ -18,7 +18,7 @@ test("Can parse a named color", t => {
   });
 });
 
-test("Can parse an RGB color", t => {
+test("Can parse a RGB color", t => {
   color(t, "rgb(0, 50%, 100)", {
     red: 0,
     green: 127.5,
@@ -27,7 +27,7 @@ test("Can parse an RGB color", t => {
   });
 });
 
-test("Can parse an RGBA color", t => {
+test("Can parse a RGBA color", t => {
   setSupportedBrowsers("firefox > 48, chrome > 61", () => {
     color(t, "rgba(0, 50%, 100, 0.5)", {
       red: 0,
@@ -65,7 +65,7 @@ test("Can parse an HSL color", t => {
   });
 });
 
-test("Can parse an HSLA color", t => {
+test("Can parse a HSLA color", t => {
   color(t, "hsla(3, 55%, 26%, 0.5)", {
     red: 103,
     green: 33,
@@ -83,7 +83,7 @@ test("Can parse an achromatic HSL color", t => {
   });
 });
 
-test("Can not parse an HSLA color with wrong paramter type", t => {
+test("Can not parse a HSLA color with wrong paramter type", t => {
   color(t, "hsla(23%, 0%, 26%, 1)", {
     red: 0,
     green: 0,
@@ -113,7 +113,7 @@ test("Can not parse an HSLA color with wrong paramter type", t => {
   });
 });
 
-test("Can not parse an HSLA color with wrong paramter size", t => {
+test("Can not parse a HSLA color with wrong paramter size", t => {
   color(t, "hsla(23, 0%)", {
     red: 0,
     green: 0,
