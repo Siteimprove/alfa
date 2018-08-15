@@ -3,7 +3,7 @@ import { FontWeightGrammar } from "../grammars/font-weight";
 import { Property } from "../types";
 
 export type FontWeight = Readonly<
-  // https://www.w3.org/TR/css-fonts/#absolute-size-value
+  // https://www.w3.org/TR/css-fonts/#font-weight-absolute-values
   | {
       type: "absolute";
       value: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
@@ -15,7 +15,7 @@ export type FontWeight = Readonly<
 >;
 
 /**
- * @see https://www.w3.org/TR/css-fonts/#propdef-font-family
+ * @see https://www.w3.org/TR/css-fonts/#propdef-font-weight
  */
 export const FontWeightProperty: Property<FontWeight> = {
   inherits: true,
