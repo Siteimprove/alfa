@@ -28,11 +28,21 @@ test("Can parse an RGB color", t => {
 });
 
 test("Can parse an RGBA color", t => {
-  color(t, "rgba(0, 50%, 100, 0.5)", {
-    red: 0,
-    green: 127.5,
-    blue: 100,
-    alpha: 0.5
+  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+    color(t, "rgba(0, 50%, 100, 0.5)", {
+      red: 0,
+      green: 127.5,
+      blue: 100,
+      alpha: 0.5
+    });
+  });
+  setSupportedBrowsers("ie 8, firefox 52", () => {
+    color(t, "rgba(0, 50%, 100, 0.5)", {
+      red: 0,
+      green: 0,
+      blue: 0,
+      alpha: 0
+    });
   });
 });
 

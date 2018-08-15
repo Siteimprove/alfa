@@ -62,6 +62,10 @@ function rgbaColor(stream: Stream<Token>): Color {
     return Transparent;
   }
 
+  if (args.length === 4 && !isFeatureSupported("css3-colors")) {
+    return Transparent;
+  }
+
   for (let i = 0, n = args.length; i < n; i++) {
     const component = args[i];
 
