@@ -439,15 +439,38 @@ function matchesPseudoClass(
         return false;
       }
 
+      const host = getParentElement(options.treeContext, context, {
+        composed: true
+      });
       const isHostMatched =
         selector.value === null ||
         matches(element, context, selector.value, options, root);
 
       return (
+        isShadowRoot(options.treeContext) && host === element && isHostMatched
+      );
+
+    case "host-context":
+      // Do not allow prefix (e.g. "div:host")
+      if (root !== selector) {
+        return false;
+      }
+
+      if (options.treeContext === undefined) {
+        return false;
+      }
+
+      const host2 = getParentElement(options.treeContext, context, {
+        composed: true
+      });
+      const isAncestorMatched =
+        selector.value === null ||
+        matches(element, context, selector.value, options, root);
+
+      return (
         isShadowRoot(options.treeContext) &&
-        getParentElement(options.treeContext, context, { composed: true }) ===
-          element &&
-        isHostMatched
+        host2 === element &&
+        isAncestorMatched
       );
 
     // https://www.w3.org/TR/selectors/#negation-pseudo
