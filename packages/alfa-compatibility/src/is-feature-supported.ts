@@ -1,10 +1,7 @@
-/// <reference path="../types/browserslist.d.ts" />
 /// <reference path="../types/caniuse-api.d.ts" />
 
-import browserslist = require("browserslist");
 import { isSupported } from "caniuse-api";
-
-const supportedBrowsers = browserslist();
+import { getSupportedBrowsers } from "./supported-browsers";
 
 /**
  * Given the name of a feature, check if it is supported by the current browser
@@ -14,10 +11,10 @@ const supportedBrowsers = browserslist();
  */
 export function isFeatureSupported(
   feature: string,
-  options: Readonly<{ browsers?: string | Array<string> }> = {}
+  options: Readonly<{ browsers?: string | ReadonlyArray<string> }> = {}
 ): boolean {
   const browsers =
-    options.browsers === undefined ? supportedBrowsers : options.browsers;
+    options.browsers === undefined ? getSupportedBrowsers() : options.browsers;
 
   return isSupported(feature, browsers);
 }
