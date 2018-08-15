@@ -166,4 +166,20 @@ test("Matches an element against a host selector", t => {
   const root = host.shadowRoot!;
 
   t(matches(host, host, ":host", { treeContext: root }));
+  t(!matches(host, host, "div:host", { treeContext: root }));
+});
+
+test("Matches an element against a functional host selector", t => {
+  const host = (
+    <div class="foo">
+      <shadow>
+        <span class="child" />
+      </shadow>
+    </div>
+  );
+
+  const root = host.shadowRoot!;
+
+  t(matches(host, host, ":host(.foo)", { treeContext: root }));
+  t(!matches(host, host, ":host(.bar)", { treeContext: root }));
 });

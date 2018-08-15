@@ -1,3 +1,4 @@
+import { isFeatureSupported } from "@siteimprove/alfa-compatibility";
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
@@ -89,6 +90,10 @@ function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
 }
 
 function rgbaColor(args: Array<Token>): Color {
+  if (args.length === 4 && !isFeatureSupported("css3-colors")) {
+    return Transparent;
+  }
+
   const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
 
   for (let i = 0, n = args.length; i < n; i++) {
@@ -132,6 +137,10 @@ function rgbaColor(args: Array<Token>): Color {
 }
 
 function hslaColor(args: Array<Token>): Color {
+  if (!isFeatureSupported("css3-colors")) {
+    return Transparent;
+  }
+
   const hue = getNumber(args, 0);
   const saturation = getPercentage(args, 1);
   const lightness = getPercentage(args, 2);
@@ -228,6 +237,10 @@ function hexColor(token: Hash): Color {
       break;
     default:
       return Transparent;
+  }
+
+  if (alpha && !isFeatureSupported("css-rrggbbaa")) {
+    return Transparent;
   }
 
   let hex = 0;
