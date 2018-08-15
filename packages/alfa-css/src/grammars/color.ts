@@ -88,14 +88,8 @@ function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
   return token;
 }
 
-function rgbaColor(stream: Stream<Token>): Color {
+function rgbaColor(args: Array<Token>): Color {
   const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
-
-  const args = functionArguments(stream);
-
-  if (args.length !== 3 && args.length !== 4) {
-    return Transparent;
-  }
 
   for (let i = 0, n = args.length; i < n; i++) {
     const component = args[i];
@@ -137,15 +131,7 @@ function rgbaColor(stream: Stream<Token>): Color {
   return color;
 }
 
-function hslaColor(stream: Stream<Token>): Color {
-  const args = functionArguments(stream);
-
-  const { length } = args;
-
-  if (length !== 3 && length !== 4) {
-    return Transparent;
-  }
-
+function hslaColor(args: Array<Token>): Color {
   const hue = getNumber(args, 0);
   const saturation = getPercentage(args, 1);
   const lightness = getPercentage(args, 2);
@@ -156,7 +142,7 @@ function hslaColor(stream: Stream<Token>): Color {
 
   const alpha = getNumber(args, 3);
 
-  if (length === 4 && alpha === null) {
+  if (args.length === 4 && alpha === null) {
     return Transparent;
   }
 
@@ -294,13 +280,18 @@ const ident: Production<Ident> = {
 const functionName: Production<FunctionName> = {
   token: TokenType.FunctionName,
   prefix(token, stream) {
+    const args = functionArguments(stream);
+    const { length } = args;
+
     switch (token.value) {
       case "rgb":
+        return length === 3 ? rgbaColor(args) : null;
       case "rgba":
-        return rgbaColor(stream);
+        return length === 4 ? rgbaColor(args) : null;
       case "hsl":
+        return length === 3 ? hslaColor(args) : null;
       case "hsla":
-        return hslaColor(stream);
+        return length === 4 ? hslaColor(args) : null;
     }
 
     return null;
