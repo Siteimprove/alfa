@@ -8,14 +8,18 @@ import { Color } from "../properties/color";
 
 const { min } = Math;
 
-const enum Component {
-  Red = 0,
-  Green = 1,
-  Blue = 2,
-  Hue = 0,
-  Saturation = 1,
-  Light = 2,
-  Alpha = 3
+const enum HslComponent {
+  Hue,
+  Saturation,
+  Lightness,
+  Alpha
+}
+
+const enum RgbComponent {
+  Red,
+  Green,
+  Blue,
+  Alpha
 }
 
 function functionArguments(stream: Stream<Token>): Array<Token> {
@@ -81,7 +85,7 @@ function rgbaColor(stream: Stream<Token>): Color {
 
     let { value } = component;
 
-    if (i === Component.Alpha) {
+    if (i === RgbComponent.Alpha) {
       value = clamp(value, 0, 1);
     } else {
       if (component.type === TokenType.Percentage) {
@@ -92,16 +96,16 @@ function rgbaColor(stream: Stream<Token>): Color {
     }
 
     switch (i) {
-      case Component.Red:
+      case RgbComponent.Red:
         color.red = value;
         break;
-      case Component.Green:
+      case RgbComponent.Green:
         color.green = value;
         break;
-      case Component.Blue:
+      case RgbComponent.Blue:
         color.blue = value;
         break;
-      case Component.Alpha:
+      case RgbComponent.Alpha:
         color.alpha = value;
     }
   }
@@ -122,7 +126,7 @@ function hslaColor(stream: Stream<Token>): Color {
 
   let hue = 0;
   let saturation = 0;
-  let light = 0;
+  let lightness = 0;
   let alpha = 1;
 
   for (let i = 0, n = args.length; i < n; i++) {
@@ -147,7 +151,7 @@ function hslaColor(stream: Stream<Token>): Color {
 
     let { value } = component;
 
-    if (i === Component.Alpha) {
+    if (i === HslComponent.Alpha) {
       value = clamp(value, 0, 1);
     } else {
       if (component.type === TokenType.Percentage) {
@@ -158,21 +162,25 @@ function hslaColor(stream: Stream<Token>): Color {
     }
 
     switch (i) {
-      case Component.Hue:
+      case HslComponent.Hue:
         hue = value;
         break;
-      case Component.Saturation:
+      case HslComponent.Saturation:
         saturation = value;
         break;
-      case Component.Light:
-        light = value;
+      case HslComponent.Lightness:
+        lightness = value;
         break;
-      case Component.Alpha:
+      case HslComponent.Alpha:
         alpha = value;
     }
   }
 
-  const [red, green, blue] = hslToRgb(hue / 60, saturation / 100, light / 100);
+  const [red, green, blue] = hslToRgb(
+    hue / 60,
+    saturation / 100,
+    lightness / 100
+  );
   const { round } = Math;
 
   return {
