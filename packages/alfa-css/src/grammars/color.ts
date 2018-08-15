@@ -285,13 +285,13 @@ const functionName: Production<FunctionName> = {
 
     switch (token.value) {
       case "rgb":
-        return length === 3 ? rgbaColor(args) : null;
+        return length === 3 ? rgbaColor(args) : Transparent;
       case "rgba":
-        return length === 4 ? rgbaColor(args) : null;
+        return length === 4 ? rgbaColor(args) : Transparent;
       case "hsl":
-        return length === 3 ? hslaColor(args) : null;
+        return length === 3 ? hslaColor(args) : Transparent;
       case "hsla":
-        return length === 4 ? hslaColor(args) : null;
+        return length === 4 ? hslaColor(args) : Transparent;
     }
 
     return null;
