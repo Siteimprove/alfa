@@ -1,18 +1,19 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import { FunctionName, Hash, Ident, Token, TokenType } from "../alphabet";
+import {
+  FunctionName,
+  Hash,
+  Ident,
+  Number,
+  Percentage,
+  Token,
+  TokenType
+} from "../alphabet";
 import { whitespace } from "../grammar";
 import { Color } from "../properties/color";
 
 const { min, round } = Math;
-
-const enum HslComponent {
-  Hue,
-  Saturation,
-  Lightness,
-  Alpha
-}
 
 const enum RgbComponent {
   Red,
@@ -57,6 +58,34 @@ function functionArguments(stream: Stream<Token>): Array<Token> {
   }
 
   return args;
+}
+
+function getNumber(tokens: Array<Token>, index: number): Number | null {
+  if (index in tokens === false) {
+    return null;
+  }
+
+  const token = tokens[index];
+
+  if (token.type !== TokenType.Number) {
+    return null;
+  }
+
+  return token;
+}
+
+function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
+  if (index in tokens === false) {
+    return null;
+  }
+
+  const token = tokens[index];
+
+  if (token.type !== TokenType.Percentage) {
+    return null;
+  }
+
+  return token;
 }
 
 function rgbaColor(stream: Stream<Token>): Color {
@@ -111,71 +140,37 @@ function rgbaColor(stream: Stream<Token>): Color {
 function hslaColor(stream: Stream<Token>): Color {
   const args = functionArguments(stream);
 
-  if (args.length !== 3 && args.length !== 4) {
+  const { length } = args;
+
+  if (length !== 3 && length !== 4) {
     return Transparent;
   }
 
-  let hue = 0;
-  let saturation = 0;
-  let lightness = 0;
-  let alpha = 1;
+  const hue = getNumber(args, 0);
+  const saturation = getPercentage(args, 1);
+  const lightness = getPercentage(args, 2);
 
-  for (let i = 0, n = args.length; i < n; i++) {
-    const component = args[i];
+  if (hue === null || saturation === null || lightness === null) {
+    return Transparent;
+  }
 
-    switch (i) {
-      case HslComponent.Hue:
-      case HslComponent.Alpha:
-        if (component.type !== TokenType.Number) {
-          return Transparent;
-        }
-        break;
-      case HslComponent.Saturation:
-      case HslComponent.Lightness:
-        if (component.type !== TokenType.Percentage) {
-          return Transparent;
-        }
-        break;
-    }
+  const alpha = getNumber(args, 3);
 
-    let { value } = component;
-
-    if (i === HslComponent.Alpha) {
-      value = clamp(value, 0, 1);
-    } else {
-      if (component.type === TokenType.Percentage) {
-        value *= 100;
-      }
-
-      value = clamp(value, 0, 360);
-    }
-
-    switch (i) {
-      case HslComponent.Hue:
-        hue = value;
-        break;
-      case HslComponent.Saturation:
-        saturation = value;
-        break;
-      case HslComponent.Lightness:
-        lightness = value;
-        break;
-      case HslComponent.Alpha:
-        alpha = value;
-    }
+  if (length === 4 && alpha === null) {
+    return Transparent;
   }
 
   const [red, green, blue] = hslToRgb(
-    hue / 60,
-    saturation / 100,
-    lightness / 100
+    clamp(hue.value, 0, 360) / 60,
+    clamp(saturation.value * 100, 0, 360) / 100,
+    clamp(lightness.value * 100, 0, 360) / 100
   );
 
   return {
     red: round(red * 255),
     green: round(green * 255),
     blue: round(blue * 255),
-    alpha
+    alpha: alpha === null ? 1 : clamp(alpha.value, 0, 1)
   };
 }
 
