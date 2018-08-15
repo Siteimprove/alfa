@@ -10,9 +10,12 @@ const { min } = Math;
 
 const enum Component {
   Red = 0,
-  Green,
-  Blue,
-  Alpha
+  Green = 1,
+  Blue = 2,
+  Hue = 0,
+  Saturation = 1,
+  Light = 2,
+  Alpha = 3
 }
 
 function functionArguments(stream: Stream<Token>): Array<Token> {
@@ -82,7 +85,7 @@ function rgbaColor(stream: Stream<Token>): Color {
       value = clamp(value, 0, 1);
     } else {
       if (component.type === TokenType.Percentage) {
-        value *= 0xff;
+        value *= 255;
       }
 
       value = clamp(value, 0, 255);
@@ -104,6 +107,119 @@ function rgbaColor(stream: Stream<Token>): Color {
   }
 
   return color;
+}
+
+function hslaColor(stream: Stream<Token>): Color {
+  const args = functionArguments(stream);
+
+  if (args.length < 3) {
+    return Transparent;
+  }
+
+  let hue = 0;
+  let saturation = 0;
+  let light = 0;
+  let alpha = 1;
+
+  for (let i = 0, n = args.length; i < n; i++) {
+    const component = args[i];
+
+    switch (i) {
+      case 0:
+      case 3:
+        if (component.type !== TokenType.Number) {
+          return Transparent;
+        }
+        break;
+      case 1:
+      case 2:
+        if (component.type !== TokenType.Percentage) {
+          return Transparent;
+        }
+        break;
+      default:
+        return Transparent;
+    }
+
+    let { value } = component;
+
+    if (i === Component.Alpha) {
+      value = clamp(value, 0, 1);
+    } else {
+      if (component.type === TokenType.Percentage) {
+        value *= 100;
+      }
+
+      value = clamp(value, 0, 360);
+    }
+
+    switch (i) {
+      case Component.Hue:
+        hue = value;
+        break;
+      case Component.Saturation:
+        saturation = value;
+        break;
+      case Component.Light:
+        light = value;
+        break;
+      case Component.Alpha:
+        alpha = value;
+    }
+  }
+
+  const [red, green, blue] = hslToRgb(hue / 60, saturation / 100, light / 100);
+  const { round } = Math;
+
+  return {
+    red: round(red * 255),
+    green: round(green * 255),
+    blue: round(blue * 255),
+    alpha
+  };
+}
+
+/**
+ * @copyright  Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
+ *             trademark and document use rules apply.
+ * @license    https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+ */
+function hslToRgb(hue: number, sat: number, light: number) {
+  let t2;
+  if (light <= 0.5) {
+    t2 = light * (sat + 1);
+  } else {
+    t2 = light + sat - light * sat;
+  }
+  const t1 = light * 2 - t2;
+  const r = hueToRgb(t1, t2, hue + 2);
+  const g = hueToRgb(t1, t2, hue);
+  const b = hueToRgb(t1, t2, hue - 2);
+  return [r, g, b];
+}
+
+/**
+ * @copyright  Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
+ *             trademark and document use rules apply.
+ * @license    https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+ */
+function hueToRgb(t1: number, t2: number, hue: number) {
+  if (hue < 0) {
+    hue += 6;
+  }
+  if (hue >= 6) {
+    hue -= 6;
+  }
+
+  if (hue < 1) {
+    return (t2 - t1) * hue + t1;
+  } else if (hue < 3) {
+    return t2;
+  } else if (hue < 4) {
+    return (t2 - t1) * (4 - hue) + t1;
+  } else {
+    return t1;
+  }
 }
 
 /**
@@ -191,6 +307,9 @@ const functionName: Production<FunctionName> = {
       case "rgb":
       case "rgba":
         return rgbaColor(stream);
+      case "hsl":
+      case "hsla":
+        return hslaColor(stream);
     }
 
     return null;
