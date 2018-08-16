@@ -150,6 +150,8 @@ export type PseudoClass =
   | "user-invalid"
   // https://drafts.csswg.org/css-scoping/#host-selector
   | "host"
+  // https://drafts.csswg.org/css-scoping/#host-selector
+  | "host-context"
   // https://www.w3.org/TR/selectors/#root-pseudo
   | "root"
   // https://www.w3.org/TR/selectors/#empty-pseudo
