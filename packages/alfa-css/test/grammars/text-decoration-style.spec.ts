@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { TextDecorationStyleGrammar } from "../../src/grammars/text-decoration-style";
 import { TextDecorationStyle } from "../../src/properties/text-decoration-style";
 
-function content(
+function textDecorationStyle(
   t: Assertions,
   input: string,
   expected: TextDecorationStyle | null
@@ -17,9 +17,9 @@ function content(
 }
 
 test("Can parse initial text-decoration-style", t => {
-  content(t, "initial", "none");
+  textDecorationStyle(t, "initial", "none");
 });
 
 test("Can parse initial text-decoration-style", t => {
-  content(t, "none", "none");
+  textDecorationStyle(t, "none", "none");
 });
