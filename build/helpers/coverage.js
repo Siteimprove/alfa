@@ -92,7 +92,8 @@ process.on("exit", code => {
 
       printCoverageStatistics(script, total);
 
-      if (process.env.npm_lifecycle_event === "start") {
+      if (process.env.npm_lifecycle_event === "start" && uncovered.length > 0) {
+        process.stdout.write(chalk.bold("\nSuggested Blocks to Cover:\n"));
         for (let i = 0, n = min(3, uncovered.length); i < n; i++) {
           printCoverage(script, uncovered[i]);
         }
@@ -317,6 +318,11 @@ function parseRange(script, map, range, options = {}) {
   startOffset = max(first.start, startOffset - header.length);
   endOffset = min(last.end, endOffset - header.length);
 
+  const uncovered = content.substring(startOffset, endOffset).trim();
+  if (uncovered === "}" || uncovered === "") {
+    return null;
+  }
+
   if (options.trim === true) {
     while (
       isBlockBorder(content[startOffset]) ||
@@ -502,9 +508,9 @@ function printCoverage(script, coverage) {
   const before = source.lines[start.line].value.slice(0, start.column);
   const after = source.lines[end.line].value.slice(end.column);
 
-  let output = `${chalk.bold("Suggested Block to Cover")}`;
-
-  output += `\n${chalk.dim(`${filePath}:${start.line + 1}`)}`;
+  //let output = `${chalk.bold("Suggested Block to Cover")}`;
+  let output = "";
+  output += `${chalk.dim(`${filePath}:${start.line + 1}`)}`;
   output += "\n";
 
   output += above.trim() === "" ? "" : `\n${above}`;
@@ -514,7 +520,6 @@ function printCoverage(script, coverage) {
 
   output += `${after}\n`;
   output += below.trim() === "" ? "" : `${below}\n`;
-
   process.stdout.write(`\n${output}\n`);
 }
 
