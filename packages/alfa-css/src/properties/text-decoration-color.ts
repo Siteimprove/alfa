@@ -13,7 +13,7 @@ export const TextDecorationColorProperty: Property<Color> = {
   initial() {
     return Transparent; // TODO: Should be currentColor when supported in colorGrammar
   },
-  computed(getProperty, getParentProperty) {
+  computed(getProperty) {
     return getProperty("textDecorationColor");
   }
 };
