@@ -478,6 +478,7 @@ function pseudoSelector(
       case "required":
       case "user-invalid":
       case "host":
+      case "host-context":
       case "root":
       case "empty":
       case "blank":
