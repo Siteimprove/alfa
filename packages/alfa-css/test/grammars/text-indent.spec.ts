@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { TextIndentGrammar } from "../../src/grammars/text-indent";
 import { TextIndent } from "../../src/properties/text-indent";
 
-function textIndent(t: Assertions, input: string, expected: TextIndent) {
+function textIndent(t: Assertions, input: string, expected: TextIndent | null) {
   t.deepEqual(parse(lex(input, Alphabet), TextIndentGrammar), expected, input);
 }
 
