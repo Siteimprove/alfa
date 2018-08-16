@@ -14,6 +14,7 @@ export * from "./grammars/font-family";
 export * from "./grammars/font-size";
 export * from "./grammars/rule";
 export * from "./grammars/selector";
+export * from "./grammars/text-decoration-line";
 export * from "./grammars/text-decoration-style";
 
 export * from "./properties/color";
@@ -22,5 +23,6 @@ export * from "./properties/display";
 export * from "./properties/font-family";
 export * from "./properties/font-size";
 export * from "./properties/text-decoration-color";
+export * from "./properties/text-decoration-line";
 export * from "./properties/text-decoration-style";
 export * from "./properties/visibility";

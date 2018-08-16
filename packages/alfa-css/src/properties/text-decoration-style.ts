@@ -4,9 +4,11 @@ import { Property } from "../types";
 
 export type TextDecorationStyle =
   | "none"
-  | "underline"
-  | "overline"
-  | "line-through"
+  | "solid"
+  | "double"
+  | "dotted"
+  | "dashed"
+  | "wavy"
   | "inherit";
 
 /**

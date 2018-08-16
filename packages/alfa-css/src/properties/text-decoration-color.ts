@@ -4,7 +4,7 @@ import { Property } from "../types";
 import { Color } from "./color";
 
 /**
- * @see https://www.w3.org/TR/css-text-decor-3/#text-decoration-style-property
+ * @see https://www.w3.org/TR/css-text-decor-3/#text-decoration-color-property
  */
 export const TextDecorationColorProperty: Property<Color> = {
   parse(input) {

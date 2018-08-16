@@ -2,11 +2,11 @@ import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar } from "@siteimprove/alfa-lang";
 import { Ident, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
-import { TextDecorationStyle } from "../properties/text-decoration-style";
+import { TextDecorationLine } from "../properties/text-decoration-line";
 
 type Production<T extends Token> = Lang.Production<
   Token,
-  TextDecorationStyle,
+  TextDecorationLine,
   T
 >;
 
@@ -17,11 +17,9 @@ const ident: Production<Ident> = {
       case "initial":
         return "none";
       case "none":
-      case "solid":
-      case "double":
-      case "dotted":
-      case "dashed":
-      case "wavy":
+      case "underline":
+      case "overline":
+      case "line-through":
       case "inherit":
         return token.value;
     }
@@ -30,7 +28,7 @@ const ident: Production<Ident> = {
   }
 };
 
-export const TextDecorationStyleGrammar: Grammar<
+export const TextDecorationLineGrammar: Grammar<
   Token,
-  TextDecorationStyle
+  TextDecorationLine
 > = new Grammar([whitespace, ident], () => null);

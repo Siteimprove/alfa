@@ -8,6 +8,9 @@ export {
   TextDecorationColorProperty as textDecorationColor
 } from "./properties/text-decoration-color";
 export {
+  TextDecorationLineProperty as textDecorationLine
+} from "./properties/text-decoration-line";
+export {
   TextDecorationStyleProperty as textDecorationStyle
 } from "./properties/text-decoration-style";
 export { VisibilityProperty as visibility } from "./properties/visibility";
