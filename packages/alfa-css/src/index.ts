@@ -21,5 +21,6 @@ export * from "./properties/content";
 export * from "./properties/display";
 export * from "./properties/font-family";
 export * from "./properties/font-size";
+export * from "./properties/text-decoration-color";
 export * from "./properties/text-decoration-style";
 export * from "./properties/visibility";
