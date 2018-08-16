@@ -4,4 +4,5 @@ export { DisplayProperty as display } from "./properties/display";
 export { FontFamilyProperty as fontFamily } from "./properties/font-family";
 export { FontSizeProperty as fontSize } from "./properties/font-size";
 export { OpacityProperty as opacity } from "./properties/opacity";
+export { TextIndentProperty as textIndent } from "./properties/text-indent";
 export { VisibilityProperty as visibility } from "./properties/visibility";
