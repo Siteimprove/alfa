@@ -197,7 +197,7 @@ test("Matches an element against a host-context selector", t => {
   const root = host.shadowRoot!;
 
   t(matches(host, context, ":host-context(.foo)", { treeContext: root }));
-  t(matches(host, host, ":host-context(.bar)", { treeContext: root }));
+  t(matches(host, context, ":host-context(.bar)", { treeContext: root }));
   t(!matches(host, context, ":host-context", { treeContext: root }));
   t(!matches(host, context, ":host-context(.barfoo)", { treeContext: root }));
 });

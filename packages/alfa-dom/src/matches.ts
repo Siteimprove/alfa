@@ -436,13 +436,13 @@ function matchesPseudoClass(
         return false;
       }
 
-      const treeCtx = options.treeContext;
+      const { treeContext } = options;
 
-      if (treeCtx === undefined || !isShadowRoot(treeCtx)) {
+      if (treeContext === undefined || !isShadowRoot(treeContext)) {
         return false;
       }
 
-      const host = getParentElement(treeCtx, context, { composed: true });
+      const host = getParentElement(treeContext, context, { composed: true });
 
       if (host !== element) {
         return false;
@@ -461,14 +461,18 @@ function matchesPseudoClass(
         return false;
       }
 
-      const treeCtx = options.treeContext;
+      const { treeContext } = options;
       const query = selector.value;
 
-      if (treeCtx === undefined || !isShadowRoot(treeCtx) || query === null) {
+      if (
+        treeContext === undefined ||
+        !isShadowRoot(treeContext) ||
+        query === null
+      ) {
         return false;
       }
 
-      const host = getParentElement(treeCtx, context, { composed: true });
+      const host = getParentElement(treeContext, context, { composed: true });
 
       if (host !== element) {
         return false;
