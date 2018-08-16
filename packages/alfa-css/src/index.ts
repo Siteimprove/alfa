@@ -14,10 +14,12 @@ export * from "./grammars/font-family";
 export * from "./grammars/font-size";
 export * from "./grammars/rule";
 export * from "./grammars/selector";
+export * from "./grammars/text-decoration-style";
 
 export * from "./properties/color";
 export * from "./properties/content";
 export * from "./properties/display";
 export * from "./properties/font-family";
 export * from "./properties/font-size";
+export * from "./properties/text-decoration-style";
 export * from "./properties/visibility";
