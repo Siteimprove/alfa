@@ -50,3 +50,7 @@ test("Can parse a absolute-eachline indent", t => {
     eachLine: true
   });
 });
+
+test("Does not accept repeated keywords", t => {
+  textIndent(t, "7px hanging hanging", null);
+});
