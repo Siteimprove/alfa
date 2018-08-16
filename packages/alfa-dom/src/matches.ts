@@ -17,10 +17,11 @@ import {
 import { AncestorFilter } from "./ancestor-filter";
 import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
+import { getClosest } from "./get-closest";
 import { getId } from "./get-id";
 import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
-import { isShadowRoot } from "./guards";
+import { isElement, isShadowRoot } from "./guards";
 import { hasClass } from "./has-class";
 import { Element, Node } from "./types";
 
@@ -429,22 +430,19 @@ function matchesPseudoClass(
       return options.scope === element;
 
     // https://drafts.csswg.org/css-scoping/#host-selector
-    case "host":
+    case "host": {
       // Do not allow prefix (e.g. "div:host")
       if (root !== selector) {
         return false;
       }
 
-      if (
-        options.treeContext === undefined ||
-        !isShadowRoot(options.treeContext)
-      ) {
+      const { treeContext } = options;
+
+      if (treeContext === undefined || !isShadowRoot(treeContext)) {
         return false;
       }
 
-      const host = getParentElement(options.treeContext, context, {
-        composed: true
-      });
+      const host = getParentElement(treeContext, context, { composed: true });
 
       if (host !== element) {
         return false;
@@ -455,6 +453,36 @@ function matchesPseudoClass(
         selector.value === null ||
         matches(element, context, selector.value, options, root)
       );
+    }
+
+    case "host-context": {
+      // Do not allow prefix (e.g. "div:host")
+      if (root !== selector) {
+        return false;
+      }
+
+      const { treeContext } = options;
+      const query = selector.value;
+
+      if (
+        treeContext === undefined ||
+        !isShadowRoot(treeContext) ||
+        query === null
+      ) {
+        return false;
+      }
+
+      const host = getParentElement(treeContext, context, { composed: true });
+
+      if (host !== element) {
+        return false;
+      }
+
+      const predicate = (node: Node) =>
+        isElement(node) && matches(node, context, query, options, root);
+
+      return getClosest(host, context, predicate) !== null;
+    }
 
     // https://www.w3.org/TR/selectors/#negation-pseudo
     case "not":
