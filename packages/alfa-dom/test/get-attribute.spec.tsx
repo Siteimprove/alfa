@@ -2,22 +2,22 @@ import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getAttribute } from "../src/get-attribute";
 
-test("Get Attribute Value when Defined", t => {
+test("Gets an attribute value when it is defined", t => {
   const foo = <div aria-labelledby="foobar">Foo</div>;
   t.equal(getAttribute(foo, "aria-labelledby"), "foobar");
 });
 
-test("Get Attribute Value when not Defined", t => {
+test("Gets an attribute value when it is not defined", t => {
   const foo = <div>Foo</div>;
   t.equal(getAttribute(foo, "aria-labelledby"), null);
 });
 
-test("Get Attribute Value when Defined and Trim=true", t => {
+test("Gets an attribute balue when it is defined and trim=true", t => {
   const foo = <div aria-labelledby="  foobar">Foo</div>;
   t.equal(getAttribute(foo, "aria-labelledby", { trim: true }), "foobar");
 });
 
-test("Get Attribute Value when Defined and LowerCase=true", t => {
+test("Gets an attribute value when it is defined and lowercase=true", t => {
   const foo = <div aria-labelledby="fooBar">Foo</div>;
   t.equal(getAttribute(foo, "aria-labelledby", { lowerCase: true }), "foobar");
 });
