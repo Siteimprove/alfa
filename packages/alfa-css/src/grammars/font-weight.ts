@@ -11,12 +11,12 @@ const ident: Production<Ident> = {
   prefix(token) {
     switch (token.value) {
       case "normal":
-        return { type: "absolute", value: 400 };
+        return 400;
       case "bold":
-        return { type: "absolute", value: 700 };
+        return 700;
       case "bolder":
       case "lighter":
-        return { type: "relative", value: token.value };
+        return token.value;
     }
 
     return null;
@@ -26,19 +26,10 @@ const ident: Production<Ident> = {
 const number: Production<Number> = {
   token: TokenType.Number,
   prefix(token) {
-    switch (token.value) {
-      case 100:
-      case 200:
-      case 300:
-      case 400:
-      case 500:
-      case 600:
-      case 700:
-      case 800:
-      case 900:
-        return { type: "absolute", value: token.value };
+    if (token.value > 0 && token.value <= 1000) {
+      return token.value;
     }
-    return { type: "absolute", value: 400 };
+    return null;
   }
 };
 
