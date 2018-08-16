@@ -4,7 +4,7 @@ import { Alphabet } from "../../src/alphabet";
 import { TextDecorationLineGrammar } from "../../src/grammars/text-decoration-line";
 import { TextDecorationLine } from "../../src/properties/text-decoration-line";
 
-function content(
+function textDecorationLine(
   t: Assertions,
   input: string,
   expected: TextDecorationLine | null
@@ -17,9 +17,9 @@ function content(
 }
 
 test("Can parse initial text-decoration-line", t => {
-  content(t, "initial", "none");
+  textDecorationLine(t, "initial", "none");
 });
 
 test("Can parse initial text-decoration-line", t => {
-  content(t, "none", "none");
+  textDecorationLine(t, "none", "none");
 });
