@@ -319,7 +319,7 @@ function parseRange(script, map, range, options = {}) {
   endOffset = min(last.end, endOffset - header.length);
 
   const uncovered = content.substring(startOffset, endOffset).trim();
-  if (uncovered === "}" || uncovered === "") {
+  if (isBlockBorder(uncovered) || uncovered === "") {
     return null;
   }
 
@@ -508,9 +508,7 @@ function printCoverage(script, coverage) {
   const before = source.lines[start.line].value.slice(0, start.column);
   const after = source.lines[end.line].value.slice(end.column);
 
-  //let output = `${chalk.bold("Suggested Block to Cover")}`;
-  let output = "";
-  output += `${chalk.dim(`${filePath}:${start.line + 1}`)}`;
+  let output = `${chalk.dim(`${filePath}:${start.line + 1}`)}`;
   output += "\n";
 
   output += above.trim() === "" ? "" : `\n${above}`;
