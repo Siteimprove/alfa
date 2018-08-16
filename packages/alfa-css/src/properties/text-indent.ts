@@ -19,7 +19,7 @@ export type TextIndent =
     };
 
 /**
- * @see https://www.w3.org/TR/css-content/#propdef-content
+ * @see https://www.w3.org/TR/css-text-3/#propdef-text-indent
  */
 export const TextIndentProperty: Property<TextIndent> = {
   inherits: true,
