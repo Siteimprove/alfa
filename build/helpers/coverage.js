@@ -93,7 +93,7 @@ process.on("exit", code => {
       printCoverageStatistics(script, total);
 
       if (process.env.npm_lifecycle_event === "start" && uncovered.length > 0) {
-        process.stdout.write(chalk.bold("\nSuggested Blocks to Cover:\n"));
+        process.stdout.write(chalk.bold("\nSuggested blocks to cover:\n"));
         for (let i = 0, n = min(3, uncovered.length); i < n; i++) {
           printCoverage(script, uncovered[i]);
         }
