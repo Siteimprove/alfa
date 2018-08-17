@@ -27,7 +27,7 @@ function totalOperations(script) {
   }
 
   if (total === 0) {
-    applicable[0] = false;
+    applicable = false;
   }
   return total;
 }
@@ -85,7 +85,7 @@ function visit(node, depth = -1) {
   return total;
 }
 
-const applicable = [true];
+let applicable = true;
 
 export const Arithmetic = {
   /**
@@ -153,6 +153,6 @@ export const Arithmetic = {
   },
 
   applicable() {
-    return applicable[0];
+    return applicable;
   }
 };

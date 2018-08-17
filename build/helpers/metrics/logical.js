@@ -26,7 +26,7 @@ function totalOperations(script) {
     total += visit(createSource(script.sources[0].content));
   }
   if (total === 0) {
-    applicable[0] = false;
+    applicable = false;
   }
   return total;
 }
@@ -61,7 +61,7 @@ function visit(node, depth = -1) {
   return total;
 }
 
-const applicable = [true];
+let applicable = true;
 
 export const Logical = {
   /**
@@ -128,6 +128,6 @@ export const Logical = {
   },
 
   applicable() {
-    return applicable[0];
+    return applicable;
   }
 };
