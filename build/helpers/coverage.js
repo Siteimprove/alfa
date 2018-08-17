@@ -282,7 +282,13 @@ function parseFunctionCoverage(script, map, range, name) {
  * @return {BlockCoverage | null}
  */
 function parseBlockCoverage(script, map, range) {
-  let parsed = parseRange(script, map, range);
+  let parsed = parseRange(script, map, range, {
+    trim: true
+  });
+
+  if (parsed === null) {
+    parsed = parseRange(script, map, range);
+  }
 
   if (parsed === null) {
     return null;
@@ -298,9 +304,10 @@ function parseBlockCoverage(script, map, range) {
  * @param {Script} script
  * @param {SourceMapConsumer | null} map
  * @param {inspector.Profiler.CoverageRange} range
+ * @param {{ trim?: boolean }} [options]
  * @return {Range | null}
  */
-function parseRange(script, map, range) {
+function parseRange(script, map, range, options = {}) {
   const [{ content, lines }] = script.sources;
 
   const first = lines[0];
@@ -311,18 +318,25 @@ function parseRange(script, map, range) {
   startOffset = max(first.start, startOffset - header.length);
   endOffset = min(last.end, endOffset - header.length);
 
-  while (
-    isBlockBorder(content[startOffset]) ||
-    isWhitespace(content[startOffset])
-  ) {
-    startOffset++;
+  const uncovered = content.substring(startOffset, endOffset).trim();
+  if (isBlockBorder(uncovered) || uncovered === "") {
+    return null;
   }
 
-  while (
-    isBlockBorder(content[endOffset - 1]) ||
-    isWhitespace(content[endOffset - 1])
-  ) {
-    endOffset--;
+  if (options.trim === true) {
+    while (
+      isBlockBorder(content[startOffset]) ||
+      isWhitespace(content[startOffset])
+    ) {
+      startOffset++;
+    }
+
+    while (
+      isBlockBorder(content[endOffset - 1]) ||
+      isWhitespace(content[endOffset - 1])
+    ) {
+      endOffset--;
+    }
   }
 
   if (startOffset >= endOffset) {
