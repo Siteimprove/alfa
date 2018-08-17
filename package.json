@@ -30,9 +30,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "esm": {
-    "cache": false
-  },
   "devDependencies": {
     "@types/node": "^10.5.5",
     "@types/prettier": "^1.13.2",
