@@ -16,22 +16,22 @@ test("Can parse an absolute indent in px", t => {
   });
 });
 
-test("Can parse an absolute indent in em", t => {
-  textIndent(t, "7em", {
-    type: "length",
-    value: 7,
-    unit: "em"
-  });
-});
-
-test("Can parse a relative indent", t => {
+test("Can parse a relative indent in percentage", t => {
   textIndent(t, "25%", {
     type: "percentage",
     value: 0.25
   });
 });
 
-test("Can parse a absolute-hanging indent in px", t => {
+test("Can parse a relative indent in em", t => {
+  textIndent(t, "25em", {
+    type: "percentage",
+    value: 0.25,
+    unit: "em"
+  });
+});
+
+test("Can parse a absolute hanging indent", t => {
   textIndent(t, "7px hanging", {
     type: "length",
     value: 7,
@@ -40,7 +40,15 @@ test("Can parse a absolute-hanging indent in px", t => {
   });
 });
 
-test("Can parse a absolute-hanging indent in em", t => {
+test("Can parse a relative hanging indent in percentage", t => {
+  textIndent(t, "7% hanging", {
+    type: "length",
+    value: 7,
+    hanging: true
+  });
+});
+
+test("Can parse a relative hanging indent in em", t => {
   textIndent(t, "7em hanging", {
     type: "length",
     value: 7,
