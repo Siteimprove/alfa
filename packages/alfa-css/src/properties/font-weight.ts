@@ -49,10 +49,6 @@ export const FontWeightProperty: Property<FontWeight> = {
       return isBolder ? 900 : 700;
     }
 
-    if (parentValue >= 900 && parentValue <= 999) {
-      return isBolder ? parentValue : 700;
-    }
-
-    return 400;
+    return isBolder ? parentValue : 700;
   }
 };
