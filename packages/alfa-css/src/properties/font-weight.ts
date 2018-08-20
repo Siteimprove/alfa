@@ -23,22 +23,38 @@ export const FontWeightProperty: Property<FontWeight> = {
     }
 
     const parentValue = getParentProperty("fontWeight");
-    const isLighter = value === "lighter";
+    const isBolder = value === "bolder";
 
-    switch (parentValue) {
-      case 100:
-      case 200:
-      case 300:
-        return isLighter ? 100 : 400;
-      case 400:
-      case 500:
-        return isLighter ? 100 : 700;
-      case 600:
-      case 700:
-        return isLighter ? 400 : 900;
-      case 800:
-      case 900:
-        return isLighter ? 700 : 900;
+    if (parentValue === undefined) {
+      return 400;
+    }
+
+    if (parentValue === "lighter" || parentValue === "bolder") {
+      return 400; // This was supposed to be computed
+    }
+
+    if (parentValue >= 1 && parentValue < 100) {
+      return isBolder ? 400 : parentValue;
+    }
+
+    if (parentValue >= 100 && parentValue <= 349) {
+      return isBolder ? 400 : 100;
+    }
+
+    if (parentValue >= 350 && parentValue <= 549) {
+      return isBolder ? 700 : 100;
+    }
+
+    if (parentValue >= 550 && parentValue <= 749) {
+      return isBolder ? 900 : 400;
+    }
+
+    if (parentValue >= 750 && parentValue <= 899) {
+      return isBolder ? 900 : 700;
+    }
+
+    if (parentValue >= 900 && parentValue <= 999) {
+      return isBolder ? parentValue : 700;
     }
 
     return 400;
