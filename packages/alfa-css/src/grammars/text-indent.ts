@@ -53,9 +53,7 @@ const dimension: Production<Dimension> = {
         return {
           type: "percentage",
           value: token.value,
-          unit: token.unit,
-          hanging: false,
-          eachLine: false
+          unit: token.unit
         };
     }
 
