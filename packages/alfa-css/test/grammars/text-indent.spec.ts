@@ -8,11 +8,19 @@ function textIndent(t: Assertions, input: string, expected: TextIndent | null) {
   t.deepEqual(parse(lex(input, Alphabet), TextIndentGrammar), expected, input);
 }
 
-test("Can parse an absolute indent", t => {
+test("Can parse an absolute indent in px", t => {
   textIndent(t, "7px", {
     type: "length",
     value: 7,
     unit: "px"
+  });
+});
+
+test("Can parse an absolute indent in em", t => {
+  textIndent(t, "7em", {
+    type: "length",
+    value: 7,
+    unit: "em"
   });
 });
 
@@ -23,11 +31,20 @@ test("Can parse a relative indent", t => {
   });
 });
 
-test("Can parse a absolute-hanging indent", t => {
+test("Can parse a absolute-hanging indent in px", t => {
   textIndent(t, "7px hanging", {
     type: "length",
     value: 7,
     unit: "px",
+    hanging: true
+  });
+});
+
+test("Can parse a absolute-hanging indent in em", t => {
+  textIndent(t, "7em hanging", {
+    type: "length",
+    value: 7,
+    unit: "em",
     hanging: true
   });
 });
