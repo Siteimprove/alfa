@@ -9,23 +9,21 @@ type Production<T extends Token> = Lang.Production<Token, TextIndent, T>;
 const ident: Production<Ident> = {
   token: TokenType.Ident,
   infix(token, stream, expression, left) {
-    switch (token.value) {
-      case "hanging":
-        if (left.hanging !== undefined) {
-          // If keyword was already enabled
-          return null;
-        }
-        left.hanging = true;
-        return left;
-      case "each-line":
-        if (left.eachLine !== undefined) {
-          // If keyword was already enabled
-          return null;
-        }
-        left.eachLine = true;
-        return left;
+    if (
+      token.value === "hanging" &&
+      left.hanging === undefined &&
+      left.eachLine === undefined
+    ) {
+      left.hanging = true;
+      return left;
     }
-    return left;
+
+    if (token.value === "each-line" && left.eachLine === undefined) {
+      left.eachLine = true;
+      return left;
+    }
+
+    return null;
   }
 };
 
