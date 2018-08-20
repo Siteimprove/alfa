@@ -14,4 +14,5 @@ export {
 export {
   TextDecorationStyleProperty as textDecorationStyle
 } from "./properties/text-decoration-style";
+export { TextIndentProperty as textIndent } from "./properties/text-indent";
 export { VisibilityProperty as visibility } from "./properties/visibility";

@@ -26,4 +26,5 @@ export * from "./properties/font-size";
 export * from "./properties/text-decoration-color";
 export * from "./properties/text-decoration-line";
 export * from "./properties/text-decoration-style";
+export * from "./properties/text-indent";
 export * from "./properties/visibility";
