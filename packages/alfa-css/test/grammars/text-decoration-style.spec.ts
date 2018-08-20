@@ -16,6 +16,6 @@ function textDecorationStyle(
   );
 }
 
-test("Can parse initial text-decoration-style", t => {
+test("Can parse a none text-decoration-style", t => {
   textDecorationStyle(t, "none", "none");
 });

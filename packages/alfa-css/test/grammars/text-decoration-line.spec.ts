@@ -16,6 +16,6 @@ function textDecorationLine(
   );
 }
 
-test("Can parse initial text-decoration-line", t => {
+test("Can parse a none text-decoration-line", t => {
   textDecorationLine(t, "none", "none");
 });
