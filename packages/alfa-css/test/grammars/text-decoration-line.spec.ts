@@ -17,7 +17,7 @@ function textDecorationLine(
 }
 
 test("Can parse initial text-decoration-line", t => {
-  textDecorationLine(t, "initial", "none");
+  textDecorationLine(t, "initial", null);
 });
 
 test("Can parse initial text-decoration-line", t => {
