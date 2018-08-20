@@ -25,11 +25,8 @@ export const FontWeightProperty: Property<FontWeight> = {
     const parentValue = getParentProperty("fontWeight");
     const isBolder = value === "bolder";
 
-    switch (parentValue) {
-      case undefined:
-      case "lighter":
-      case "bolder":
-        return 400;
+    if (typeof parentValue !== "number") {
+      return undefined;
     }
 
     if (parentValue >= 1 && parentValue <= 99) {
