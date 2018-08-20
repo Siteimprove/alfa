@@ -25,15 +25,15 @@ export const FontWeightProperty: Property<FontWeight> = {
     const parentValue = getParentProperty("fontWeight");
     const isBolder = value === "bolder";
 
-    if (parentValue === undefined) {
+    if (
+      parentValue === undefined ||
+      parentValue === "lighter" ||
+      parentValue === "bolder"
+    ) {
       return 400;
     }
 
-    if (parentValue === "lighter" || parentValue === "bolder") {
-      return 400; // This was supposed to be computed
-    }
-
-    if (parentValue >= 1 && parentValue < 100) {
+    if (parentValue >= 1 && parentValue <= 99) {
       return isBolder ? 400 : parentValue;
     }
 
