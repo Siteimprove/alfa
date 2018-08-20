@@ -23,11 +23,15 @@
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
+  "scripts": {
+    "prepare": "node -r esm build/features.js"
+  },
   "dependencies": {
-    "browserslist": "^4.0.2",
-    "caniuse-api": "^3.0.0"
+    "@siteimprove/alfa-util": "^0.0.0",
+    "browserslist": "^4.0.2"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0"
+    "@siteimprove/alfa-test": "^0.0.0",
+    "mdn-browser-compat-data": "^0.0.46"
   }
 }

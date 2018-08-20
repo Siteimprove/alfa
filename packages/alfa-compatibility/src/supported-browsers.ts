@@ -1,33 +1,36 @@
-/// <reference path="../types/browserslist.d.ts" />
-
-import browserslist = require("browserslist");
+import { expandBrowsers } from "./expand-browsers";
+import { resolveQuery } from "./resolve-query";
+import { Browser, Comparator, Version } from "./types";
 
 /**
  * The current scope of supported browsers.
  */
-let supportedBrowsers = browserslist();
+let supportedBrowsers = resolveQuery();
 
 /**
  * Get the current scope of supported browsers.
+ *
+ * @internal
  */
-export function getSupportedBrowsers(): ReadonlyArray<string> {
+export function getSupportedBrowsers(): Map<Browser, Set<Version>> {
   return supportedBrowsers;
 }
 
 /**
  * Set the current scope of supported browsers. An optional scope can be
  * provided, which is a function that will be invoked after setting the given
- * browser scope and resetting to the previous browser scope when done.
+ * browser scope and resetting to the previous browser scope when the function
+ * returns.
  */
 export function setSupportedBrowsers(
-  browsers: string | ReadonlyArray<string>,
+  browsers: ReadonlyArray<[Browser, Version] | [Browser, Comparator, Version]>,
   scope?: () => void
 ): void {
-  if (scope === undefined) {
-    supportedBrowsers = browserslist(browsers);
-  } else {
-    const previousBrowsers = supportedBrowsers;
-    supportedBrowsers = browserslist(browsers);
+  const previousBrowsers = supportedBrowsers;
+
+  supportedBrowsers = expandBrowsers(browsers);
+
+  if (scope !== undefined) {
     scope();
     supportedBrowsers = previousBrowsers;
   }
