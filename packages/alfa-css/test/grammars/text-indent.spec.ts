@@ -54,3 +54,7 @@ test("Can parse a absolute-eachline indent", t => {
 test("Does not accept repeated keywords", t => {
   textIndent(t, "7px hanging hanging", null);
 });
+
+test("Does not accept incorrectly ordered keywords", t => {
+  textIndent(t, "7px each-line hanging", null);
+});
