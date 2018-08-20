@@ -43,7 +43,7 @@ test("Can parse a absolute hanging indent", t => {
 test("Can parse a relative hanging indent in percentage", t => {
   textIndent(t, "7% hanging", {
     type: "percentage",
-    value: 0.7,
+    value: 0.07,
     hanging: true
   });
 });
