@@ -24,9 +24,9 @@ test("Can parse a relative indent in percentage", t => {
 });
 
 test("Can parse a relative indent in em", t => {
-  textIndent(t, "25em", {
+  textIndent(t, "2.5em", {
     type: "percentage",
-    value: 0.25,
+    value: 2.5,
     unit: "em"
   });
 });
@@ -42,15 +42,15 @@ test("Can parse a absolute hanging indent", t => {
 
 test("Can parse a relative hanging indent in percentage", t => {
   textIndent(t, "7% hanging", {
-    type: "length",
-    value: 7,
+    type: "percentage",
+    value: 0.7,
     hanging: true
   });
 });
 
 test("Can parse a relative hanging indent in em", t => {
   textIndent(t, "7em hanging", {
-    type: "length",
+    type: "percentage",
     value: 7,
     unit: "em",
     hanging: true
