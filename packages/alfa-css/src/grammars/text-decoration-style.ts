@@ -14,15 +14,12 @@ const ident: Production<Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
-      case "initial":
-        return "none";
       case "none":
       case "solid":
       case "double":
       case "dotted":
       case "dashed":
       case "wavy":
-      case "inherit":
         return token.value;
     }
 

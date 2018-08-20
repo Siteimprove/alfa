@@ -14,13 +14,10 @@ const ident: Production<Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
-      case "initial":
-        return "none";
       case "none":
       case "underline":
       case "overline":
       case "line-through":
-      case "inherit":
         return token.value;
     }
 

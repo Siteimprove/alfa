@@ -7,8 +7,7 @@ export type TextDecorationLine =
   | "underline"
   | "overline"
   | "line-through"
-  | "blink"
-  | "inherit";
+  | "blink";
 
 /**
  * @see https://www.w3.org/TR/css-text-decor-3/#text-decoration-line-property
@@ -21,11 +20,6 @@ export const TextDecorationLineProperty: Property<TextDecorationLine> = {
     return "none";
   },
   computed(getProperty, getParentProperty) {
-    const value = getProperty("textDecorationLine");
-    if (value === "inherit") {
-      return getParentProperty("textDecorationLine");
-    }
-
-    return value;
+    return getProperty("textDecorationLine");
   }
 };

@@ -8,8 +8,7 @@ export type TextDecorationStyle =
   | "double"
   | "dotted"
   | "dashed"
-  | "wavy"
-  | "inherit";
+  | "wavy";
 
 /**
  * @see https://www.w3.org/TR/css-text-decor-3/#text-decoration-style-property
@@ -22,11 +21,6 @@ export const TextDecorationStyleProperty: Property<TextDecorationStyle> = {
     return "none";
   },
   computed(getProperty, getParentProperty) {
-    const value = getProperty("textDecorationStyle");
-    if (value === "inherit") {
-      return getParentProperty("textDecorationStyle");
-    }
-
-    return value;
+    return getProperty("textDecorationStyle");
   }
 };
