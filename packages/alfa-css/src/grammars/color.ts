@@ -333,7 +333,7 @@ export const ColorGrammar: Grammar<Token, Color> = new Grammar(
 /**
  * @see https://www.w3.org/TR/css-color/#transparent-color
  */
-const Transparent: Color = { red: 0, green: 0, blue: 0, alpha: 0 };
+export const Transparent: Color = { red: 0, green: 0, blue: 0, alpha: 0 };
 
 /**
  * @see https://www.w3.org/TR/css-color/#named-colors
