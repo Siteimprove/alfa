@@ -1,3 +1,4 @@
+import { intersect } from "@siteimprove/alfa-util";
 import { BrowserSpecific } from "./browser-specific";
 import { isBrowserSpecific } from "./is-browser-specific";
 import { map } from "./map";
@@ -68,20 +69,4 @@ export function combine<T, U, V>(
   }
 
   return iteratee(value, other);
-}
-
-function intersect<T>(fst: Set<T>, snd: Set<T>): Set<T> {
-  if (fst.size > snd.size) {
-    [fst, snd] = [snd, fst];
-  }
-
-  const result: Set<T> = new Set();
-
-  for (const element of fst) {
-    if (snd.has(element)) {
-      result.add(element);
-    }
-  }
-
-  return result;
 }
