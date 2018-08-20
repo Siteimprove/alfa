@@ -11,9 +11,17 @@ const ident: Production<Ident> = {
   infix(token, stream, expression, left) {
     switch (token.value) {
       case "hanging":
+        if (left.hanging !== undefined) {
+          // If keyword was already enabled
+          return null;
+        }
         left.hanging = true;
         return left;
       case "each-line":
+        if (left.eachLine !== undefined) {
+          // If keyword was already enabled
+          return null;
+        }
         left.eachLine = true;
         return left;
     }
