@@ -4,6 +4,13 @@ import { isBrowserSpecific } from "./is-browser-specific";
 import { Browser, Version } from "./types";
 
 export function flatMap<T, U>(
+  value: BrowserSpecific<T>,
+  iteratee: (value: T) => U | BrowserSpecific<U>
+): BrowserSpecific<U>;
+
+export function flatMap<T, U>(value: T, iteratee: (value: T) => U): U;
+
+export function flatMap<T, U>(
   value: T | BrowserSpecific<T>,
   iteratee: (value: T) => U | BrowserSpecific<U>
 ): U | BrowserSpecific<U> {
