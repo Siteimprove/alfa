@@ -12,6 +12,7 @@ export * from "./grammars/content";
 export * from "./grammars/declaration";
 export * from "./grammars/font-family";
 export * from "./grammars/font-size";
+export * from "./grammars/font-weight";
 export * from "./grammars/rule";
 export * from "./grammars/selector";
 
