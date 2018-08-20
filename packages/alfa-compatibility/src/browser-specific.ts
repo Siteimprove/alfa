@@ -78,7 +78,7 @@ export class BrowserSpecific<T> {
   }
 
   public combine<U, V>(
-    other: BrowserSpecific<U>,
+    other: U | BrowserSpecific<U>,
     iteratee: (value: T, other: U) => V
   ): BrowserSpecific<V> {
     return combine(this, other, iteratee);

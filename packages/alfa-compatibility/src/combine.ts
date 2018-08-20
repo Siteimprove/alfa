@@ -4,20 +4,14 @@ import { map } from "./map";
 import { Browser, Version } from "./types";
 
 export function combine<T, U, V>(
-  value: BrowserSpecific<T>,
-  other: BrowserSpecific<U>,
-  iteratee: (value: T, other: U) => V
-): BrowserSpecific<V>;
-
-export function combine<T, U, V>(
-  value: T,
+  value: T | BrowserSpecific<T>,
   other: BrowserSpecific<U>,
   iteratee: (value: T, other: U) => V
 ): BrowserSpecific<V>;
 
 export function combine<T, U, V>(
   value: BrowserSpecific<T>,
-  other: U,
+  other: U | BrowserSpecific<U>,
   iteratee: (value: T, other: U) => V
 ): BrowserSpecific<V>;
 
