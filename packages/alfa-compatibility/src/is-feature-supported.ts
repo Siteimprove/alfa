@@ -1,7 +1,7 @@
 import { keys } from "@siteimprove/alfa-util";
 import { expandBrowsers } from "./expand-browsers";
+import { expandVersions } from "./expand-versions";
 import { FeatureName, Features } from "./features";
-import { resolveQuery } from "./resolve-query";
 import { getSupportedBrowsers } from "./supported-browsers";
 import { BrowserName, Comparator, Version } from "./types";
 
@@ -20,18 +20,19 @@ for (const name of keys(Features)) {
   for (const browser of keys(feature.support)) {
     const { added, removed } = feature.support[browser]!;
 
-    support.set(
-      browser,
-      added === true
-        ? true
-        : resolveQuery(
-            `${browser} >= ${added}${
-              removed !== undefined && removed !== false
-                ? `, not ${browser} >= ${removed}`
-                : ""
-            }`
-          ).get(browser)!
-    );
+    if (added === true) {
+      support.set(browser, true);
+    } else {
+      const versions = expandVersions([browser, ">=", added]);
+
+      if (removed !== undefined) {
+        for (const version of expandVersions([browser, "<=", removed])) {
+          versions.delete(version);
+        }
+      }
+
+      support.set(browser, versions);
+    }
   }
 }
 

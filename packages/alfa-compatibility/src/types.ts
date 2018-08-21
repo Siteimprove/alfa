@@ -26,8 +26,8 @@ export interface Browser {
  * @internal
  */
 export interface Support {
-  readonly added: Version | boolean;
-  readonly removed?: Version | boolean;
+  readonly added: Version | true;
+  readonly removed?: Version;
 }
 
 /**

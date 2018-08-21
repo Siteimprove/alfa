@@ -1,11 +1,11 @@
 import { expandBrowsers } from "./expand-browsers";
-import { resolveQuery } from "./resolve-query";
 import { BrowserName, Comparator, Version } from "./types";
+import { getDefaultBrowsers } from "./get-default-browsers";
 
 /**
  * The current scope of supported browsers.
  */
-let supportedBrowsers = resolveQuery();
+let supportedBrowsers = getDefaultBrowsers();
 
 /**
  * Get the current scope of supported browsers.
