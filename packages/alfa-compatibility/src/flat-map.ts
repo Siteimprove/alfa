@@ -1,7 +1,7 @@
 import { intersect } from "@siteimprove/alfa-util";
 import { BrowserSpecific } from "./browser-specific";
 import { isBrowserSpecific } from "./is-browser-specific";
-import { Browser, Version } from "./types";
+import { BrowserName, Version } from "./types";
 
 export function flatMap<T, U>(
   value: BrowserSpecific<T>,
@@ -17,7 +17,7 @@ export function flatMap<T, U>(
   if (isBrowserSpecific(value)) {
     const values: Array<{
       value: U;
-      browsers: Map<Browser, Set<Version>>;
+      browsers: Map<BrowserName, Set<Version>>;
     }> = [];
 
     for (const fst of value.values) {
@@ -25,7 +25,7 @@ export function flatMap<T, U>(
 
       if (isBrowserSpecific(value)) {
         for (const snd of value.values) {
-          const browsers: Map<Browser, Set<Version>> = new Map();
+          const browsers: Map<BrowserName, Set<Version>> = new Map();
 
           for (const [browser, thd] of fst.browsers) {
             const fth = snd.browsers.get(browser);

@@ -1,23 +1,21 @@
 /// <reference path="../types/browserslist.d.ts" />
 
 import browserslist = require("browserslist");
-import { getBrowser } from "./get-browser";
-import { Browser, Version } from "./types";
+import { isBrowserName } from "./is-browser-name";
+import { BrowserName, Version } from "./types";
 
 const whitespace = /\s+/;
 
 /**
  * @internal
  */
-export function resolveQuery(query?: string): Map<Browser, Set<Version>> {
-  const browsers: Map<Browser, Set<Version>> = new Map();
+export function resolveQuery(query?: string): Map<BrowserName, Set<Version>> {
+  const browsers: Map<BrowserName, Set<Version>> = new Map();
 
   for (const entry of browserslist(query)) {
-    const [name, version] = entry.split(whitespace);
+    const [browser, version] = entry.split(whitespace);
 
-    const browser = getBrowser(name);
-
-    if (browser === null) {
+    if (!isBrowserName(browser)) {
       continue;
     }
 

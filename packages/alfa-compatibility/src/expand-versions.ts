@@ -1,12 +1,16 @@
 import { resolveQuery } from "./resolve-query";
-import { Browser, Comparator, Version } from "./types";
+import { BrowserName, Comparator, Version } from "./types";
 
 /**
  * @internal
  */
 export function expandVersions(
-  browser: [Browser, Version] | [Browser, Comparator, Version]
+  browser: [BrowserName, Version] | [BrowserName, Comparator, Version]
 ): Set<Version> {
+  if (browser.length === 2) {
+    return new Set([browser[1]]);
+  }
+
   const query = browser.join(" ");
 
   const result = resolveQuery(query);

@@ -3,17 +3,17 @@ import { expandBrowsers } from "./expand-browsers";
 import { FeatureName, Features } from "./features";
 import { resolveQuery } from "./resolve-query";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { Browser, Comparator, Version } from "./types";
+import { BrowserName, Comparator, Version } from "./types";
 
 const features: Map<
   FeatureName,
-  Map<Browser, boolean | Set<Version>>
+  Map<BrowserName, boolean | Set<Version>>
 > = new Map();
 
 for (const name of keys(Features)) {
   const feature = Features[name];
 
-  const support: Map<Browser, boolean | Set<Version>> = new Map();
+  const support: Map<BrowserName, boolean | Set<Version>> = new Map();
 
   features.set(name, support);
 
@@ -43,7 +43,7 @@ export function isFeatureSupported(
   name: FeatureName,
   options: Readonly<{
     browsers?: ReadonlyArray<
-      [Browser, Version] | [Browser, Comparator, Version]
+      [BrowserName, Version] | [BrowserName, Comparator, Version]
     >;
   }> = {}
 ): boolean {

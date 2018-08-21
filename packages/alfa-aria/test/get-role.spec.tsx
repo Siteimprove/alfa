@@ -1,4 +1,4 @@
-import { Browser, setSupportedBrowsers } from "@siteimprove/alfa-compatibility";
+import { setSupportedBrowsers } from "@siteimprove/alfa-compatibility";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getRole } from "../src/get-role";
@@ -27,7 +27,7 @@ test("Does not consider abstract roles", t => {
 test("Is case-insensitive when not supporting Firefox", t => {
   const button = <div role="BUTTON">Button</div>;
 
-  setSupportedBrowsers([[Browser.Chrome, ">", "50"]], () => {
+  setSupportedBrowsers([["chrome", ">", "50"]], () => {
     t.equal(getRole(button, button), Roles.Button);
   });
 });
@@ -35,7 +35,7 @@ test("Is case-insensitive when not supporting Firefox", t => {
 test("Is case-sensitive when supporting Firefox", t => {
   const button = <div role="BUTTON">Button</div>;
 
-  setSupportedBrowsers([[Browser.Firefox, ">", "50"]], () => {
+  setSupportedBrowsers([["firefox", ">", "50"]], () => {
     t.equal(getRole(button, button), null);
   });
 });

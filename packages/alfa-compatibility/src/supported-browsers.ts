@@ -1,6 +1,6 @@
 import { expandBrowsers } from "./expand-browsers";
 import { resolveQuery } from "./resolve-query";
-import { Browser, Comparator, Version } from "./types";
+import { BrowserName, Comparator, Version } from "./types";
 
 /**
  * The current scope of supported browsers.
@@ -12,7 +12,7 @@ let supportedBrowsers = resolveQuery();
  *
  * @internal
  */
-export function getSupportedBrowsers(): Map<Browser, Set<Version>> {
+export function getSupportedBrowsers(): Map<BrowserName, Set<Version>> {
   return supportedBrowsers;
 }
 
@@ -23,7 +23,9 @@ export function getSupportedBrowsers(): Map<Browser, Set<Version>> {
  * returns.
  */
 export function setSupportedBrowsers(
-  browsers: ReadonlyArray<[Browser, Version] | [Browser, Comparator, Version]>,
+  browsers: ReadonlyArray<
+    [BrowserName, Version] | [BrowserName, Comparator, Version]
+  >,
   scope?: () => void
 ): void {
   const previousBrowsers = supportedBrowsers;

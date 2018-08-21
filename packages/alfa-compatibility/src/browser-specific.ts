@@ -1,8 +1,8 @@
 import { combine } from "./combine";
-import { expandVersions } from "./expand-versions";
+import { expandBrowsers } from "./expand-browsers";
 import { flatMap } from "./flat-map";
 import { map } from "./map";
-import { Browser, Comparator, Version } from "./types";
+import { BrowserName, Comparator, Version } from "./types";
 
 const { isArray } = Array;
 
@@ -12,7 +12,7 @@ export class BrowserSpecific<T> {
    */
   public readonly values: ReadonlyArray<{
     value: T;
-    browsers: Map<Browser, Set<Version>>;
+    browsers: Map<BrowserName, Set<Version>>;
   }>;
 
   public constructor(
@@ -20,7 +20,9 @@ export class BrowserSpecific<T> {
       Readonly<{
         value: T;
         browsers: ReadonlyArray<
-          Browser | [Browser, Version] | [Browser, Comparator, Version]
+          | BrowserName
+          | [BrowserName, Version]
+          | [BrowserName, Comparator, Version]
         >;
       }>
     >
@@ -33,7 +35,7 @@ export class BrowserSpecific<T> {
     values: ReadonlyArray<
       Readonly<{
         value: T;
-        browsers: Map<Browser, Set<Version>>;
+        browsers: Map<BrowserName, Set<Version>>;
       }>
     >
   );
@@ -44,32 +46,34 @@ export class BrowserSpecific<T> {
         value: T;
         browsers:
           | ReadonlyArray<
-              Browser | [Browser, Version] | [Browser, Comparator, Version]
+              | BrowserName
+              | [BrowserName, Version]
+              | [BrowserName, Comparator, Version]
             >
-          | Map<Browser, Set<Version>>;
+          | Map<BrowserName, Set<Version>>;
       }>
     >
   ) {
     this.values = values.map(({ value, browsers }) => {
-      let expanded: Map<Browser, Set<Version>>;
-
       if (browsers instanceof Map) {
-        expanded = browsers;
-      } else {
-        expanded = new Map();
+        return { value, browsers };
+      }
 
-        for (const browser of browsers) {
-          if (isArray(browser)) {
-            expanded.set(browser[0], expandVersions(browser));
-          } else {
-            expanded.set(browser, expandVersions([browser, ">", "0"]));
-          }
+      const expanded: Array<
+        [BrowserName, Version] | [BrowserName, Comparator, Version]
+      > = [];
+
+      for (const browser of browsers) {
+        if (isArray(browser)) {
+          expanded.push(browser);
+        } else {
+          expanded.push([browser, ">", "0"]);
         }
       }
 
       return {
         value,
-        browsers: expanded
+        browsers: expandBrowsers(expanded)
       };
     });
   }

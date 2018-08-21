@@ -1,7 +1,7 @@
 import { expandBrowsers } from "./expand-browsers";
 import { expandVersions } from "./expand-versions";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { Browser, Comparator, Version } from "./types";
+import { BrowserName, Comparator, Version } from "./types";
 
 const { isArray } = Array;
 
@@ -9,10 +9,13 @@ const { isArray } = Array;
  * Given a browser, optionally constrained
  */
 export function isBrowserSupported(
-  browser: Browser | [Browser, Version] | [Browser, Comparator, Version],
+  browser:
+    | BrowserName
+    | [BrowserName, Version]
+    | [BrowserName, Comparator, Version],
   options: Readonly<{
     browsers?: ReadonlyArray<
-      [Browser, Version] | [Browser, Comparator, Version]
+      [BrowserName, Version] | [BrowserName, Comparator, Version]
     >;
   }> = {}
 ): boolean {
