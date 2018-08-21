@@ -1,9 +1,11 @@
+import { Browsers } from "./browsers";
 import { combine } from "./combine";
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
 import { BrowserName, Comparator, Version } from "./types";
 
 const { isArray } = Array;
+const { keys } = Object;
 
 export class BrowserSpecific<T> {
   /**
@@ -66,7 +68,8 @@ export class BrowserSpecific<T> {
         if (isArray(browser)) {
           expanded.push(browser);
         } else {
-          expanded.push([browser, ">", "0"]);
+          const [first] = keys(Browsers[browser].releases);
+          expanded.push([browser, ">=", first]);
         }
       }
 
