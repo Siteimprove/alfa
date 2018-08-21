@@ -1,4 +1,5 @@
 export * from "./browser-specific";
+export * from "./browsers";
 export * from "./combine";
 export * from "./expand-browsers";
 export * from "./expand-versions";
@@ -8,7 +9,7 @@ export * from "./is-browser-name";
 export * from "./is-browser-specific";
 export * from "./is-browser-supported";
 export * from "./is-feature-supported";
-export * from "./features";
 export * from "./map";
 export * from "./supported-browsers";
 export * from "./types";
+export * from "./with-browsers";
