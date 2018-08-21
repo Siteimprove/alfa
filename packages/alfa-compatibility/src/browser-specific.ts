@@ -1,6 +1,5 @@
 import { combine } from "./combine";
 import { expandBrowsers } from "./expand-browsers";
-import { flatMap } from "./flat-map";
 import { map } from "./map";
 import { BrowserName, Comparator, Version } from "./types";
 
@@ -78,14 +77,10 @@ export class BrowserSpecific<T> {
     });
   }
 
-  public map<U>(iteratee: (value: T) => U): BrowserSpecific<U> {
-    return map(this, iteratee);
-  }
-
-  public flatMap<U>(
+  public map<U>(
     iteratee: (value: T) => U | BrowserSpecific<U>
   ): BrowserSpecific<U> {
-    return flatMap(this, iteratee);
+    return map(this, iteratee);
   }
 
   public combine<U, V>(

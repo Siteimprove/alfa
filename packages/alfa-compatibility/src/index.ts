@@ -3,7 +3,6 @@ export * from "./combine";
 export * from "./expand-browsers";
 export * from "./expand-versions";
 export * from "./features";
-export * from "./flat-map";
 export * from "./is-browser-name";
 export * from "./is-browser-specific";
 export * from "./is-browser-supported";
