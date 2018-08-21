@@ -16,8 +16,11 @@ for (const name of include) {
   for (const version of keys(browser.releases)) {
     const { status, release_date } = browser.releases[version];
 
-    if (status !== "retired" && status !== "current") {
-      continue;
+    switch (status) {
+      case "beta":
+      case "nightly":
+      case "planned":
+        continue;
     }
 
     if (release_date === undefined) {
