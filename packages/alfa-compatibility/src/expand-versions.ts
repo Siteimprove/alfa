@@ -18,6 +18,8 @@ export function expandVersions(
 
     if (version in releases) {
       versions.add(version);
+    } else {
+      throw new Error(`Invalid browser version: ${name} ${version}`);
     }
   } else {
     const comparator = browser[1];
@@ -54,6 +56,10 @@ export function expandVersions(
             }
         }
       }
+    } else {
+      throw new Error(
+        `Invalid browser version: ${name} ${comparator} ${version}`
+      );
     }
   }
 
