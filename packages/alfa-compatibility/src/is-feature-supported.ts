@@ -1,37 +1,38 @@
 import { keys } from "@siteimprove/alfa-util";
 import { expandBrowsers } from "./expand-browsers";
+import { expandVersions } from "./expand-versions";
 import { FeatureName, Features } from "./features";
-import { resolveQuery } from "./resolve-query";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { Browser, Comparator, Version } from "./types";
+import { BrowserName, BrowserQuery, Version } from "./types";
 
 const features: Map<
   FeatureName,
-  Map<Browser, boolean | Set<Version>>
+  Map<BrowserName, boolean | Set<Version>>
 > = new Map();
 
 for (const name of keys(Features)) {
   const feature = Features[name];
 
-  const support: Map<Browser, boolean | Set<Version>> = new Map();
+  const support: Map<BrowserName, boolean | Set<Version>> = new Map();
 
   features.set(name, support);
 
   for (const browser of keys(feature.support)) {
     const { added, removed } = feature.support[browser]!;
 
-    support.set(
-      browser,
-      added === true
-        ? true
-        : resolveQuery(
-            `${browser} >= ${added}${
-              removed !== undefined && removed !== false
-                ? `, not ${browser} >= ${removed}`
-                : ""
-            }`
-          ).get(browser)!
-    );
+    if (added === true) {
+      support.set(browser, true);
+    } else {
+      const versions = expandVersions([browser, ">=", added]);
+
+      if (removed !== undefined) {
+        for (const version of expandVersions([browser, "<=", removed])) {
+          versions.delete(version);
+        }
+      }
+
+      support.set(browser, versions);
+    }
   }
 }
 
@@ -41,11 +42,7 @@ for (const name of keys(Features)) {
  */
 export function isFeatureSupported(
   name: FeatureName,
-  options: Readonly<{
-    browsers?: ReadonlyArray<
-      [Browser, Version] | [Browser, Comparator, Version]
-    >;
-  }> = {}
+  options: Readonly<{ browsers?: ReadonlyArray<BrowserQuery> }> = {}
 ): boolean {
   const browsers =
     options.browsers === undefined

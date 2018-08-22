@@ -1,50 +1,59 @@
+import { BrowserName } from "./browsers";
+
+export { BrowserName };
+export { FeatureName } from "./features";
+
 export type Comparator = ">" | "<" | ">=" | "<=";
 
 export type Version = string;
 
-export const enum Browser {
+export type BrowserQuery =
   /**
-   * @see https://en.wikipedia.org/wiki/Google_Chrome
+   * Request all versions of a given browser.
    */
-  Chrome = "chrome",
+  | BrowserName
 
   /**
-   * @see https://en.wikipedia.org/wiki/Microsoft_Edge
+   * Request a specific version of a given browser.
    */
-  Edge = "edge",
+  | [BrowserName, Version]
 
   /**
-   * @see https://en.wikipedia.org/wiki/Firefox
+   * Request a range of browsers that satisfy a comparator.
    */
-  Firefox = "firefox",
+  | [BrowserName, Comparator, Version]
 
   /**
-   * @see https://en.wikipedia.org/wiki/Internet_Explorer
+   * Request an inclusive range of browsers.
    */
-  IE = "ie",
+  | [BrowserName, Version, Version];
 
-  /**
-   * @see https://en.wikipedia.org/wiki/Opera_(web_browser)
-   */
-  Opera = "opera",
-
-  /**
-   * @see https://en.wikipedia.org/wiki/Safari_(web_browser)
-   */
-  Safari = "safari"
+/**
+ * @internal
+ */
+export interface Release {
+  readonly date: number;
 }
 
 /**
  * @internal
  */
-export interface FeatureSupport {
-  readonly added: Version | boolean;
-  readonly removed?: Version | boolean;
+export interface Browser {
+  readonly name: string;
+  readonly releases: Readonly<{ [version: string]: Release }>;
+}
+
+/**
+ * @internal
+ */
+export interface Support {
+  readonly added: Version | true;
+  readonly removed?: Version;
 }
 
 /**
  * @internal
  */
 export interface Feature {
-  readonly support: Readonly<{ [browser in Browser]?: FeatureSupport }>;
+  readonly support: Readonly<{ [P in BrowserName]?: Support }>;
 }

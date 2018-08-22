@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as prettier from "prettier";
 import data from "mdn-browser-compat-data";
-import browserslist from "browserslist";
 
 // This contains the list of features to generate definitions for from the MDN
 // browser compatibility data. To add more features, add an entry to the JSON
