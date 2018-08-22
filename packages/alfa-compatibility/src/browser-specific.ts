@@ -1,3 +1,4 @@
+import { branch } from "./branch";
 import { Browsers } from "./browsers";
 import { combine } from "./combine";
 import { expandBrowsers } from "./expand-browsers";
@@ -93,5 +94,12 @@ export class BrowserSpecific<T> {
     iteratee: (value: T, other: U) => V | BrowserSpecific<V>
   ): BrowserSpecific<V> {
     return combine(this, other, iteratee);
+  }
+
+  public branch(
+    value: T,
+    browsers: ReadonlyArray<BrowserQuery>
+  ): BrowserSpecific<T> {
+    return branch(this, value, browsers);
   }
 }

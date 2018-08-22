@@ -1,3 +1,4 @@
+export * from "./branch";
 export * from "./browser-specific";
 export * from "./browsers";
 export * from "./combine";
