@@ -8,9 +8,25 @@ export type Comparator = ">" | "<" | ">=" | "<=";
 export type Version = string;
 
 export type BrowserQuery =
+  /**
+   * Request all versions of a given browser.
+   */
   | BrowserName
+
+  /**
+   * Request a specific version of a given browser.
+   */
   | [BrowserName, Version]
-  | [BrowserName, Comparator, Version];
+
+  /**
+   * Request a range of browsers that satisfy a comparator.
+   */
+  | [BrowserName, Comparator, Version]
+
+  /**
+   * Request an inclusive range of browsers.
+   */
+  | [BrowserName, Version, Version];
 
 /**
  * @internal

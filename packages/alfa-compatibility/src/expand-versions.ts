@@ -28,50 +28,69 @@ export function expandVersions(browser: BrowserQuery): Set<Version> {
     if (version in releases) {
       versions.add(version);
     } else {
-      throw new Error(`Invalid browser version: ${name} ${version}`);
+      throw new Error(`Invalid browser query: [${browser.join(", ")}]`);
     }
 
     return versions;
   }
 
-  const comparator = browser[1];
-  const version = browser[2];
+  let lower = 0;
+  let upper = Infinity;
 
-  if (version in releases) {
-    const release = releases[version];
+  switch (browser[1]) {
+    case "<": {
+      const version = browser[2];
+      if (version in releases) {
+        upper = releases[version].date - 1;
+      }
+      break;
+    }
 
-    for (const version of keys(releases)) {
-      const found = releases[version];
+    case ">": {
+      const version = browser[2];
+      if (version in releases) {
+        lower = releases[version].date + 1;
+      }
+      break;
+    }
 
-      switch (comparator) {
-        case "<":
-          if (found.date < release.date) {
-            versions.add(version);
-          }
-          break;
+    case "<=": {
+      const version = browser[2];
+      if (version in releases) {
+        upper = releases[version].date;
+      }
+      break;
+    }
 
-        case ">":
-          if (found.date > release.date) {
-            versions.add(version);
-          }
-          break;
+    case ">=": {
+      const version = browser[2];
+      if (version in releases) {
+        lower = releases[version].date;
+      }
+      break;
+    }
 
-        case "<=":
-          if (found.date <= release.date) {
-            versions.add(version);
-          }
-          break;
+    default: {
+      const from = browser[1];
+      const to = browser[2];
 
-        case ">=":
-          if (found.date >= release.date) {
-            versions.add(version);
-          }
+      if (from in releases && to in releases) {
+        lower = releases[from].date;
+        upper = releases[to].date;
       }
     }
-  } else {
-    throw new Error(
-      `Invalid browser version: ${name} ${comparator} ${version}`
-    );
+  }
+
+  if (lower === 0 && upper === Infinity) {
+    throw new Error(`Invalid browser query: [${browser.join(", ")}]`);
+  }
+
+  for (const version of keys(releases)) {
+    const { date } = releases[version];
+
+    if (date >= lower && date <= upper) {
+      versions.add(version);
+    }
   }
 
   return versions;
