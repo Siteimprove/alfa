@@ -510,54 +510,45 @@ function printCoverage(script, coverage) {
     path.resolve(script.base, source.path)
   );
 
-  let above = `${source.lines[start.line - 1].value}`;
-  let below = `${source.lines[end.line + 1].value}`;
+  const localSource = JSON.parse(JSON.stringify(source));
 
-  let i = 0;
-  while (isWhitespace(above[i])) {
-    i++;
+  let min = Number.MAX_VALUE;
+  for (let counter = start.line - 1; counter <= end.line + 1; counter++) {
+    let leadingWS =
+      localSource.lines[counter].value.length -
+      localSource.lines[counter].value.trimLeft().length;
+    min = Math.min(min, leadingWS);
   }
-
-  let numberOfWhiteSpacesToRemoveAbove = (i / 2 - 1) * 2;
-
-  let j = 0;
-  while (isWhitespace(below[j])) {
-    j++;
-  }
-
-  let numberOfWhiteSpacesToRemoveBelow = (j / 2 - 1) * 2;
-  let numberOfWhiteSpacesToRemove = 0;
-  if (i <= j) {
-    numberOfWhiteSpacesToRemove = numberOfWhiteSpacesToRemoveAbove;
-    above = "  " + above.substring(i, above.length);
-    below =
-      " ".repeat(i - numberOfWhiteSpacesToRemove) +
-      below.substring(i, below.length);
+  process.stdout.write(min.toString());
+  if (min <= 0) {
+    localSource.lines = localSource.lines.map(x => {
+      x.value = "  " + x.value;
+      return x;
+    });
+  } else if (min === 1) {
+    localSource.lines = localSource.lines.map(x => {
+      x.value = " " + x.value;
+      return x;
+    });
   } else {
-    numberOfWhiteSpacesToRemove = numberOfWhiteSpacesToRemoveBelow;
-    above =
-      " ".repeat(j - numberOfWhiteSpacesToRemove) +
-      above.substring(j, above.length);
-    below = "  " + below.substring(j, below.length);
+    localSource.lines = localSource.lines.map(x => {
+      x.value = x.value.substring(min - 2, x.value.length);
+      return x;
+    });
   }
 
-  if (numberOfWhiteSpacesToRemove <= 0) {
-    uncovered = "  " + uncovered.replace(/\n/g, "\n  ");
-  }
+  const above = `${localSource.lines[start.line - 1].value.substring(
+    -(min - 2)
+  )}`;
+  const below = `${localSource.lines[end.line + 1].value}`;
 
-  let before = source.lines[start.line].value.slice(
-    numberOfWhiteSpacesToRemove,
-    start.column
-  );
-  const after = source.lines[end.line].value.slice(end.column);
+  const before = localSource.lines[start.line].value.slice(0, start.column);
+  const after = localSource.lines[end.line].value.slice(end.column);
 
   let output = `${chalk.dim(`${filePath}:${start.line + 1}`)}`;
   output += "\n";
   let trim = above.trim();
-  output +=
-    trim === "" || trim === "*/" || trim.substring(0, 2) === "//"
-      ? ""
-      : `\n${above}`;
+  output += trim === "" || trim === "*/" ? "" : `\n${above}`;
   output += `\n${before}`;
 
   output += `${chalk.bold.red(uncovered)}`;
