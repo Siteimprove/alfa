@@ -53,7 +53,7 @@ export function map<T, U>(
       }
     }
 
-    return new BrowserSpecific(values);
+    return BrowserSpecific.of(values);
   }
 
   return iteratee(value);

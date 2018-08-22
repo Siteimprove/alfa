@@ -7,6 +7,11 @@ export type Comparator = ">" | "<" | ">=" | "<=";
 
 export type Version = string;
 
+export type BrowserQuery =
+  | BrowserName
+  | [BrowserName, Version]
+  | [BrowserName, Comparator, Version];
+
 /**
  * @internal
  */
