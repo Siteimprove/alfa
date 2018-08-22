@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "mdn-browser-compat-data": "^0.0.46"
+    "mdn-browser-compat-data": "0.0.47"
   }
 }
