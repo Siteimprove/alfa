@@ -1,8 +1,8 @@
 import { branch } from "./branch";
 import { Browsers } from "./browsers";
-import { combine } from "./combine";
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
+import { merge } from "./merge";
 import { BrowserName, BrowserQuery, Comparator, Version } from "./types";
 
 const { isArray } = Array;
@@ -89,11 +89,11 @@ export class BrowserSpecific<T> {
     return map(this, iteratee);
   }
 
-  public combine<U, V>(
+  public merge<U, V>(
     other: U | BrowserSpecific<U>,
     iteratee: (value: T, other: U) => V | BrowserSpecific<V>
   ): BrowserSpecific<V> {
-    return combine(this, other, iteratee);
+    return merge(this, other, iteratee);
   }
 
   public branch(
