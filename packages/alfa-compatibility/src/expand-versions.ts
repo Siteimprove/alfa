@@ -1,15 +1,24 @@
 import { Browsers } from "./browsers";
-import { BrowserName, Comparator, Version } from "./types";
+import { BrowserQuery, Version } from "./types";
 
 const { keys } = Object;
 
 /**
  * @internal
  */
-export function expandVersions(
-  browser: [BrowserName, Version] | [BrowserName, Comparator, Version]
-): Set<Version> {
+export function expandVersions(browser: BrowserQuery): Set<Version> {
   const versions: Set<Version> = new Set();
+
+  if (typeof browser === "string") {
+    const { releases } = Browsers[browser];
+
+    for (const version of keys(releases)) {
+      versions.add(version);
+    }
+
+    return versions;
+  }
+
   const name = browser[0];
   const { releases } = Browsers[name];
 
@@ -21,46 +30,48 @@ export function expandVersions(
     } else {
       throw new Error(`Invalid browser version: ${name} ${version}`);
     }
-  } else {
-    const comparator = browser[1];
-    const version = browser[2];
 
-    if (version in releases) {
-      const release = releases[version];
+    return versions;
+  }
 
-      for (const version of keys(releases)) {
-        const found = releases[version];
+  const comparator = browser[1];
+  const version = browser[2];
 
-        switch (comparator) {
-          case "<":
-            if (found.date < release.date) {
-              versions.add(version);
-            }
-            break;
+  if (version in releases) {
+    const release = releases[version];
 
-          case ">":
-            if (found.date > release.date) {
-              versions.add(version);
-            }
-            break;
+    for (const version of keys(releases)) {
+      const found = releases[version];
 
-          case "<=":
-            if (found.date <= release.date) {
-              versions.add(version);
-            }
-            break;
+      switch (comparator) {
+        case "<":
+          if (found.date < release.date) {
+            versions.add(version);
+          }
+          break;
 
-          case ">=":
-            if (found.date >= release.date) {
-              versions.add(version);
-            }
-        }
+        case ">":
+          if (found.date > release.date) {
+            versions.add(version);
+          }
+          break;
+
+        case "<=":
+          if (found.date <= release.date) {
+            versions.add(version);
+          }
+          break;
+
+        case ">=":
+          if (found.date >= release.date) {
+            versions.add(version);
+          }
       }
-    } else {
-      throw new Error(
-        `Invalid browser version: ${name} ${comparator} ${version}`
-      );
     }
+  } else {
+    throw new Error(
+      `Invalid browser version: ${name} ${comparator} ${version}`
+    );
   }
 
   return versions;

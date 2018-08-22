@@ -3,7 +3,7 @@ import { expandBrowsers } from "./expand-browsers";
 import { expandVersions } from "./expand-versions";
 import { FeatureName, Features } from "./features";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { BrowserName, Comparator, Version } from "./types";
+import { BrowserName, BrowserQuery, Version } from "./types";
 
 const features: Map<
   FeatureName,
@@ -42,11 +42,7 @@ for (const name of keys(Features)) {
  */
 export function isFeatureSupported(
   name: FeatureName,
-  options: Readonly<{
-    browsers?: ReadonlyArray<
-      [BrowserName, Version] | [BrowserName, Comparator, Version]
-    >;
-  }> = {}
+  options: Readonly<{ browsers?: ReadonlyArray<BrowserQuery> }> = {}
 ): boolean {
   const browsers =
     options.browsers === undefined

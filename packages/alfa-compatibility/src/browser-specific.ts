@@ -1,12 +1,8 @@
 import { branch } from "./branch";
-import { Browsers } from "./browsers";
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
 import { merge } from "./merge";
-import { BrowserName, BrowserQuery, Comparator, Version } from "./types";
-
-const { isArray } = Array;
-const { keys } = Object;
+import { BrowserName, BrowserQuery, Version } from "./types";
 
 /**
  * @internal
@@ -63,22 +59,9 @@ export class BrowserSpecific<T> {
         return { value, browsers };
       }
 
-      const expanded: Array<
-        [BrowserName, Version] | [BrowserName, Comparator, Version]
-      > = [];
-
-      for (const browser of browsers) {
-        if (isArray(browser)) {
-          expanded.push(browser);
-        } else {
-          const [first] = keys(Browsers[browser].releases);
-          expanded.push([browser, ">=", first]);
-        }
-      }
-
       return {
         value,
-        browsers: expandBrowsers(expanded)
+        browsers: expandBrowsers(browsers)
       };
     });
   }

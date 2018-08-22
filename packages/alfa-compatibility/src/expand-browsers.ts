@@ -1,22 +1,22 @@
 import { expandVersions } from "./expand-versions";
-import { BrowserName, Comparator, Version } from "./types";
+import { BrowserName, BrowserQuery, Version } from "./types";
 
 /**
  * @internal
  */
 export function expandBrowsers(
-  browsers: ReadonlyArray<
-    [BrowserName, Version] | [BrowserName, Comparator, Version]
-  >
+  browsers: ReadonlyArray<BrowserQuery>
 ): Map<BrowserName, Set<Version>> {
   const result: Map<BrowserName, Set<Version>> = new Map();
 
   for (const browser of browsers) {
-    let versions = result.get(browser[0]);
+    const name = typeof browser === "string" ? browser : browser[0];
+
+    let versions = result.get(name);
 
     if (versions === undefined) {
       versions = new Set();
-      result.set(browser[0], versions);
+      result.set(name, versions);
     }
 
     for (const version of expandVersions(browser)) {
