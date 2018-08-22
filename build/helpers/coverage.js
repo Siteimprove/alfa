@@ -519,27 +519,31 @@ function printCoverage(script, coverage) {
       localSource.lines[counter].value.trimLeft().length;
     min = Math.min(min, leadingWS);
   }
-  process.stdout.write(min.toString());
+
   if (min <= 0) {
-    localSource.lines = localSource.lines.map(x => {
-      x.value = "  " + x.value;
-      return x;
-    });
+    localSource.lines = localSource.lines.map(
+      /** @param {Line} x */ x => {
+        x.value = "  " + x.value;
+        return x;
+      }
+    );
   } else if (min === 1) {
-    localSource.lines = localSource.lines.map(x => {
-      x.value = " " + x.value;
-      return x;
-    });
+    localSource.lines = localSource.lines.map(
+      /** @param {Line} x */ x => {
+        x.value = " " + x.value;
+        return x;
+      }
+    );
   } else {
-    localSource.lines = localSource.lines.map(x => {
-      x.value = x.value.substring(min - 2, x.value.length);
-      return x;
-    });
+    localSource.lines = localSource.lines.map(
+      /** @param {Line} x */ x => {
+        x.value = x.value.substring(min - 2, x.value.length);
+        return x;
+      }
+    );
   }
 
-  const above = `${localSource.lines[start.line - 1].value.substring(
-    -(min - 2)
-  )}`;
+  const above = `${localSource.lines[start.line - 1].value}`;
   const below = `${localSource.lines[end.line + 1].value}`;
 
   const before = localSource.lines[start.line].value.slice(0, start.column);
