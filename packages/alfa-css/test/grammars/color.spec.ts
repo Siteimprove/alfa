@@ -1,4 +1,4 @@
-import { setSupportedBrowsers } from "@siteimprove/alfa-compatibility";
+import { withBrowsers } from "@siteimprove/alfa-compatibility";
 import { lex, parse } from "@siteimprove/alfa-lang";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
@@ -28,7 +28,7 @@ test("Can parse a RGB color", t => {
 });
 
 test("Can parse a RGBA color", t => {
-  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+  withBrowsers([["chrome", ">", "61"], ["firefox", ">", "48"]], () => {
     color(t, "rgba(0, 50%, 100, 0.5)", {
       red: 0,
       green: 127.5,
@@ -36,7 +36,8 @@ test("Can parse a RGBA color", t => {
       alpha: 0.5
     });
   });
-  setSupportedBrowsers("ie 8, firefox 52", () => {
+
+  withBrowsers([["firefox", "52"], ["ie", "8"]], () => {
     color(t, "rgba(0, 50%, 100, 0.5)", {
       red: 0,
       green: 0,
@@ -47,7 +48,7 @@ test("Can parse a RGBA color", t => {
 });
 
 test("Can parse an HSL color", t => {
-  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+  withBrowsers([["chrome", ">", "61"], ["firefox", ">", "48"]], () => {
     color(t, "hsl(225, 55%, 26%)", {
       red: 30,
       green: 48,
@@ -55,7 +56,7 @@ test("Can parse an HSL color", t => {
       alpha: 1
     });
   });
-  setSupportedBrowsers("ie 8, firefox 52", () => {
+  withBrowsers([["firefox", "52"], ["ie", "8"]], () => {
     color(t, "hsl(225, 55%, 26%)", {
       red: 0,
       green: 0,
@@ -148,7 +149,7 @@ test("Can parse a HEX color", t => {
 });
 
 test("Can parse a medium-long HEX color in browsers that support it", t => {
-  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+  withBrowsers([["chrome", ">=", "63"], ["firefox", ">=", "49"]], () => {
     color(t, "#ABCD", {
       red: 170,
       green: 187,
@@ -156,7 +157,8 @@ test("Can parse a medium-long HEX color in browsers that support it", t => {
       alpha: 0.8666666666666667
     });
   });
-  setSupportedBrowsers("firefox > 48, ie > 6", () => {
+
+  withBrowsers([["firefox", "<=", "48"], ["ie", "<=", "6"]], () => {
     color(t, "#ABCD", {
       red: 0,
       green: 0,
@@ -167,7 +169,7 @@ test("Can parse a medium-long HEX color in browsers that support it", t => {
 });
 
 test("Can parse a long HEX color", t => {
-  setSupportedBrowsers("firefox > 48, chrome > 61", () => {
+  withBrowsers([["chrome", ">=", "63"], ["firefox", ">=", "49"]], () => {
     color(t, "#ABCDEFCC", {
       red: 171,
       green: 205,
@@ -175,7 +177,8 @@ test("Can parse a long HEX color", t => {
       alpha: 0.8
     });
   });
-  setSupportedBrowsers("firefox > 48, ie > 6", () => {
+
+  withBrowsers([["firefox", "<=", "48"], ["ie", "<=", "6"]], () => {
     color(t, "#ABCDEFCC", {
       red: 0,
       green: 0,

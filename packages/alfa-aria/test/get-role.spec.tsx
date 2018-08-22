@@ -1,3 +1,4 @@
+import { withBrowsers } from "@siteimprove/alfa-compatibility";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getRole } from "../src/get-role";
@@ -21,4 +22,20 @@ test("Returns the first valid role when multiple roles are set", t => {
 test("Does not consider abstract roles", t => {
   const widget = <div role="widget" />;
   t.equal(getRole(widget, widget), null);
+});
+
+test("Is case-insensitive when not supporting Firefox", t => {
+  const button = <div role="BUTTON">Button</div>;
+
+  withBrowsers([["chrome", ">", "50"]], () => {
+    t.equal(getRole(button, button), Roles.Button);
+  });
+});
+
+test("Is case-sensitive when supporting Firefox", t => {
+  const button = <div role="BUTTON">Button</div>;
+
+  withBrowsers([["firefox", ">", "50"]], () => {
+    t.equal(getRole(button, button), null);
+  });
 });

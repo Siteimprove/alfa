@@ -1,46 +1,35 @@
-/// <reference path="../types/browserslist.d.ts" />
-
-import browserslist = require("browserslist");
+import { expandBrowsers } from "./expand-browsers";
+import { expandVersions } from "./expand-versions";
 import { getSupportedBrowsers } from "./supported-browsers";
-
-const whitespace = /\s+/;
+import { BrowserQuery } from "./types";
 
 /**
- * Given the name of a browser, or a browserslist query, check if the browser,
- * or the browsers that the browserslist query resolves to, are supported by the
- * current browser scope.
- *
- * @see http://browserl.ist/
+ * Given a browser, optionally constrained
  */
 export function isBrowserSupported(
-  browser: string,
-  options: Readonly<{ browsers?: string | ReadonlyArray<string> }> = {}
+  browser: BrowserQuery,
+  options: Readonly<{ browsers?: ReadonlyArray<BrowserQuery> }> = {}
 ): boolean {
-  browser = browser.toLowerCase();
-
-  const browsers = new Set(
+  const browsers =
     options.browsers === undefined
       ? getSupportedBrowsers()
-      : browserslist(options.browsers)
-  );
+      : expandBrowsers(options.browsers);
 
-  switch (browser) {
-    case "chrome":
-    case "edge":
-    case "firefox":
-    case "ie":
-    case "opera":
-    case "safari":
-      for (const found of browsers) {
-        const [name] = found.split(whitespace);
-
-        if (name === browser) {
-          return true;
-        }
-      }
-
-      return false;
+  if (typeof browser === "string") {
+    return browsers.has(browser);
   }
 
-  return browserslist(browser).every(browser => browsers.has(browser));
+  const supported = browsers.get(browser[0]);
+
+  if (supported === undefined) {
+    return false;
+  }
+
+  for (const version of expandVersions(browser)) {
+    if (!supported.has(version)) {
+      return false;
+    }
+  }
+
+  return true;
 }

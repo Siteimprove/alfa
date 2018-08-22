@@ -90,7 +90,7 @@ function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
 }
 
 function rgbaColor(args: Array<Token>): Color {
-  if (args.length === 4 && !isFeatureSupported("css3-colors")) {
+  if (args.length === 4 && !isFeatureSupported("css.properties.color.alpha")) {
     return Transparent;
   }
 
@@ -137,7 +137,11 @@ function rgbaColor(args: Array<Token>): Color {
 }
 
 function hslaColor(args: Array<Token>): Color {
-  if (!isFeatureSupported("css3-colors")) {
+  if (!isFeatureSupported("css.properties.color.hsl")) {
+    return Transparent;
+  }
+
+  if (args.length === 4 && !isFeatureSupported("css.properties.color.alpha")) {
     return Transparent;
   }
 
@@ -239,7 +243,10 @@ function hexColor(token: Hash): Color {
       return Transparent;
   }
 
-  if (alpha && !isFeatureSupported("css-rrggbbaa")) {
+  if (
+    alpha &&
+    !isFeatureSupported("css.properties.color.alpha_hexadecimal_notation")
+  ) {
     return Transparent;
   }
 
@@ -326,7 +333,7 @@ export const ColorGrammar: Grammar<Token, Color> = new Grammar(
 /**
  * @see https://www.w3.org/TR/css-color/#transparent-color
  */
-const Transparent: Color = { red: 0, green: 0, blue: 0, alpha: 0 };
+export const Transparent: Color = { red: 0, green: 0, blue: 0, alpha: 0 };
 
 /**
  * @see https://www.w3.org/TR/css-color/#named-colors
