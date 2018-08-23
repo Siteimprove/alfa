@@ -3,9 +3,9 @@ import { Element } from "./types";
 
 const whitespace = /\s+/;
 
-const empty: Readonly<Array<string>> = [];
+const empty: ReadonlyArray<string> = [];
 
-const classLists: WeakMap<Element, Readonly<Array<string>>> = new WeakMap();
+const classLists: WeakMap<Element, ReadonlyArray<string>> = new WeakMap();
 
 /**
  * Given an element, get the class list of the element.
@@ -17,7 +17,7 @@ const classLists: WeakMap<Element, Readonly<Array<string>>> = new WeakMap();
  * getClassList(div);
  * // => ["foo", "bar"]
  */
-export function getClassList(element: Element): Readonly<Array<string>> {
+export function getClassList(element: Element): ReadonlyArray<string> {
   let classList = classLists.get(element);
 
   if (classList === undefined) {

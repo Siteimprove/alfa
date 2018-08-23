@@ -28,7 +28,7 @@ export function getAssignedNodes(
   element: Element,
   context: Node,
   options: Readonly<{ flattened?: boolean }> = {}
-): Readonly<Array<Node>> {
+): ReadonlyArray<Node> {
   if (element.localName !== "slot") {
     return [];
   }

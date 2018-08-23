@@ -76,7 +76,7 @@ export function querySelectorAll<
   context: Node,
   query: Q,
   options: QuerySelectorOptions = {}
-): Readonly<Array<QuerySelectorResult<T, Q>>> {
+): ReadonlyArray<QuerySelectorResult<T, Q>> {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
