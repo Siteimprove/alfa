@@ -1,6 +1,6 @@
 import { intersect } from "@siteimprove/alfa-util";
 import { BrowserSpecific } from "./browser-specific";
-import { isBrowserSpecific } from "./is-browser-specific";
+import { isBrowserSpecific } from "./guards";
 import { BrowserName, VersionSet } from "./types";
 
 export function map<T, U>(

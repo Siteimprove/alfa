@@ -2,7 +2,7 @@
 
 import browserslist = require("browserslist");
 import { Browsers } from "./browsers";
-import { isBrowserName } from "./is-browser-name";
+import { isBrowserName } from "./guards";
 import { BrowserName, Version, VersionSet } from "./types";
 
 const whitespace = /\s+/;

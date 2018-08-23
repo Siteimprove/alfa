@@ -1,5 +1,5 @@
 import { BrowserSpecific } from "./browser-specific";
-import { isBrowserSpecific } from "./is-browser-specific";
+import { isBrowserSpecific } from "./guards";
 import { map } from "./map";
 
 export function merge<T, U, V>(

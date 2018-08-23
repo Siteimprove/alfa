@@ -1,7 +1,16 @@
 import { BrowserSpecific } from "./browser-specific";
+import { Browsers } from "./browsers";
+import { BrowserName } from "./types";
 
 /**
- * Given a value, check if the value is browser specific.
+ * @internal
+ */
+export function isBrowserName(name: string): name is BrowserName {
+  return name in Browsers;
+}
+
+/**
+ * @internal
  */
 export function isBrowserSpecific<T>(
   value: T | BrowserSpecific<T>
