@@ -3,7 +3,7 @@ import { expandBrowsers } from "./expand-browsers";
 import { FeatureName, Features } from "./features";
 import { getFeatureSupport } from "./get-feature-support";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { BrowserName, BrowserQuery, VersionSet } from "./types";
+import { BrowserName, VersionSet } from "./types";
 
 const features: Map<FeatureName, Map<BrowserName, VersionSet>> = new Map();
 
