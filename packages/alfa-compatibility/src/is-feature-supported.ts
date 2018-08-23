@@ -1,39 +1,16 @@
 import { keys } from "@siteimprove/alfa-util";
 import { expandBrowsers } from "./expand-browsers";
-import { expandVersions } from "./expand-versions";
 import { FeatureName, Features } from "./features";
+import { getFeatureSupport } from "./get-feature-support";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { BrowserName, BrowserQuery, Version } from "./types";
+import { BrowserName, BrowserQuery, VersionSet } from "./types";
 
-const features: Map<
-  FeatureName,
-  Map<BrowserName, boolean | Set<Version>>
-> = new Map();
+const features: Map<FeatureName, Map<BrowserName, VersionSet>> = new Map();
 
 for (const name of keys(Features)) {
-  const feature = Features[name];
+  const { supported } = getFeatureSupport(name);
 
-  const support: Map<BrowserName, boolean | Set<Version>> = new Map();
-
-  features.set(name, support);
-
-  for (const browser of keys(feature.support)) {
-    const { added, removed } = feature.support[browser]!;
-
-    if (added === true) {
-      support.set(browser, true);
-    } else {
-      const versions = expandVersions([browser, ">=", added]);
-
-      if (removed !== undefined) {
-        for (const version of expandVersions([browser, "<=", removed])) {
-          versions.delete(version);
-        }
-      }
-
-      support.set(browser, versions);
-    }
-  }
+  features.set(name, expandBrowsers(supported));
 }
 
 /**
@@ -58,7 +35,7 @@ export function isFeatureSupported(
       return false;
     }
 
-    if (support === true) {
+    if (support === true || versions === true) {
       return true;
     }
 

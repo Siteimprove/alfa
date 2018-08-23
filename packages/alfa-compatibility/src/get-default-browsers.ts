@@ -3,16 +3,20 @@
 import browserslist = require("browserslist");
 import { Browsers } from "./browsers";
 import { isBrowserName } from "./is-browser-name";
-import { BrowserName, Version } from "./types";
+import { BrowserName, Version, VersionSet } from "./types";
 
 const whitespace = /\s+/;
 
+/**
+ * NB: Since browserslist forces separate versions of browsers, we map browsers
+ * to actual sets of version numbers rather than `VersionSet`.
+ */
 let defaultBrowsers: Map<BrowserName, Set<Version>> | undefined;
 
 /**
  * @internal
  */
-export function getDefaultBrowsers(): Map<BrowserName, Set<Version>> {
+export function getDefaultBrowsers(): Map<BrowserName, VersionSet> {
   if (defaultBrowsers === undefined) {
     defaultBrowsers = new Map();
 

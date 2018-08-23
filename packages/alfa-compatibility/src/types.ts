@@ -7,53 +7,52 @@ export type Comparator = ">" | "<" | ">=" | "<=";
 
 export type Version = string;
 
-export type BrowserQuery =
+export type BrowserQuery<T extends BrowserName = BrowserName> =
   /**
-   * Request all versions of a given browser.
+   * Request any version of a given browser.
    */
-  | BrowserName
+  | T
 
   /**
    * Request a specific version of a given browser.
    */
-  | [BrowserName, Version]
+  | [T, Version]
 
   /**
-   * Request a range of browsers that satisfy a comparator.
+   * Request a range of browser versions that satisfy a comparator.
    */
-  | [BrowserName, Comparator, Version]
+  | [T, Comparator, Version]
 
   /**
-   * Request an inclusive range of browsers.
+   * Request an inclusive range of browser versions.
    */
-  | [BrowserName, Version, Version];
+  | [T, Version, Version];
 
 /**
  * @internal
  */
-export interface Release {
-  readonly date: number;
-}
+export type VersionSet = true | Set<Version>;
 
 /**
  * @internal
  */
 export interface Browser {
   readonly name: string;
-  readonly releases: Readonly<{ [version: string]: Release }>;
-}
-
-/**
- * @internal
- */
-export interface Support {
-  readonly added: Version | true;
-  readonly removed?: Version;
+  readonly releases: {
+    readonly [version: string]: {
+      readonly date: number;
+    };
+  };
 }
 
 /**
  * @internal
  */
 export interface Feature {
-  readonly support: Readonly<{ [P in BrowserName]?: Support }>;
+  readonly support: {
+    readonly [P in BrowserName]?: {
+      readonly added: Version | true;
+      readonly removed?: Version;
+    }
+  };
 }

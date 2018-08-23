@@ -1,24 +1,24 @@
 import { Browsers } from "./browsers";
-import { BrowserQuery, Version } from "./types";
+import { BrowserName, BrowserQuery, Version, VersionSet } from "./types";
 
 const { keys } = Object;
 
 /**
  * @internal
  */
-export function expandVersions(browser: BrowserQuery): Set<Version> {
-  const versions: Set<Version> = new Set();
+export function expandVersions(browser: BrowserName): true;
 
+/**
+ * @internal
+ */
+export function expandVersions(browser: BrowserQuery): Set<Version>;
+
+export function expandVersions(browser: BrowserQuery): VersionSet {
   if (typeof browser === "string") {
-    const { releases } = Browsers[browser];
-
-    for (const version of keys(releases)) {
-      versions.add(version);
-    }
-
-    return versions;
+    return true;
   }
 
+  const versions = new Set<Version>();
   const name = browser[0];
   const { releases } = Browsers[name];
 

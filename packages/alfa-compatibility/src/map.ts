@@ -1,7 +1,7 @@
 import { intersect } from "@siteimprove/alfa-util";
 import { BrowserSpecific } from "./browser-specific";
 import { isBrowserSpecific } from "./is-browser-specific";
-import { BrowserName, Version } from "./types";
+import { BrowserName, VersionSet } from "./types";
 
 export function map<T, U>(
   value: BrowserSpecific<T>,
@@ -17,7 +17,7 @@ export function map<T, U>(
   if (isBrowserSpecific(value)) {
     const values: Array<{
       value: U;
-      browsers: Map<BrowserName, Set<Version>>;
+      browsers: Map<BrowserName, VersionSet>;
     }> = [];
 
     for (const fst of value.values) {
@@ -25,7 +25,7 @@ export function map<T, U>(
 
       if (isBrowserSpecific(value)) {
         for (const snd of value.values) {
-          const browsers: Map<BrowserName, Set<Version>> = new Map();
+          const browsers = new Map<BrowserName, VersionSet>();
 
           for (const [browser, thd] of fst.browsers) {
             const fth = snd.browsers.get(browser);
@@ -34,10 +34,18 @@ export function map<T, U>(
               continue;
             }
 
-            const common = intersect(thd, fth);
+            if (thd === true && fth === true) {
+              browsers.set(browser, true);
+            } else if (thd === true) {
+              browsers.set(browser, fth);
+            } else if (fth === true) {
+              browsers.set(browser, thd);
+            } else {
+              const common = intersect(thd, fth);
 
-            if (common.size > 0) {
-              browsers.set(browser, common);
+              if (common.size > 0) {
+                browsers.set(browser, common);
+              }
             }
           }
 

@@ -25,6 +25,10 @@ export function isBrowserSupported(
     return false;
   }
 
+  if (supported === true) {
+    return true;
+  }
+
   for (const version of expandVersions(browser)) {
     if (!supported.has(version)) {
       return false;

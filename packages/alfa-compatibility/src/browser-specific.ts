@@ -2,14 +2,14 @@ import { branch } from "./branch";
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
 import { merge } from "./merge";
-import { BrowserName, BrowserQuery, Version } from "./types";
+import { BrowserName, BrowserQuery, VersionSet } from "./types";
 
 /**
  * @internal
  */
 export type BrowserList =
   | ReadonlyArray<BrowserQuery>
-  | Map<BrowserName, Set<Version>>;
+  | Map<BrowserName, VersionSet>;
 
 /**
  * @internal
@@ -48,7 +48,7 @@ export class BrowserSpecific<T> {
    */
   public readonly values: ReadonlyArray<{
     value: T;
-    browsers: Map<BrowserName, Set<Version>>;
+    browsers: Map<BrowserName, VersionSet>;
   }>;
 
   private constructor(
