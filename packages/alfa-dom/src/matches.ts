@@ -18,12 +18,13 @@ import { AncestorFilter } from "./ancestor-filter";
 import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
 import { getClosest } from "./get-closest";
+import { getElementNamespace } from "./get-element-namespace";
 import { getId } from "./get-id";
 import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
 import { isElement, isShadowRoot } from "./guards";
 import { hasClass } from "./has-class";
-import { Element, Node } from "./types";
+import { Element, Namespace, Node } from "./types";
 
 const { isArray } = Array;
 
@@ -75,6 +76,14 @@ export type MatchesOptions = Readonly<{
    * @internal
    */
   filter?: AncestorFilter;
+
+  /**
+   * Declared namespace prefixes mapped to namespace URLs.
+   *
+   * @see https://www.w3.org/TR/selectors/#type-nmsp
+   * @internal
+   */
+  namespaces?: Map<string | null, Namespace>;
 }>;
 
 /**
@@ -142,7 +151,7 @@ export function matches(
       return matchesClass(element, selector);
 
     case SelectorType.TypeSelector:
-      return matchesType(element, selector);
+      return matchesType(element, context, selector, options);
 
     case SelectorType.AttributeSelector:
       return matchesAttribute(element, selector);
@@ -178,13 +187,60 @@ function matchesClass(element: Element, selector: ClassSelector): boolean {
 /**
  * @see https://www.w3.org/TR/selectors/#type-selectors
  */
-function matchesType(element: Element, selector: TypeSelector): boolean {
+function matchesType(
+  element: Element,
+  context: Node,
+  selector: TypeSelector,
+  options: MatchesOptions
+): boolean {
   // https://www.w3.org/TR/selectors/#the-universal-selector
   if (selector.name === "*") {
     return true;
   }
 
+  if (matchesNamespace(element, context, selector, options) === false) {
+    return false;
+  }
+
   return element.localName === selector.name;
+}
+
+/**
+ * @see https://www.w3.org/TR/selectors/#type-nmsp
+ */
+function matchesNamespace(
+  element: Element,
+  context: Node,
+  selector: TypeSelector,
+  options: MatchesOptions
+): boolean {
+  if (selector.namespace === "*" || options.namespaces === undefined) {
+    return true;
+  }
+
+  const elementNamespace = getElementNamespace(element, context);
+
+  // As all elements in HTML5 will use the XHTML namespace,
+  // unless another namespace is explicitly specified, the
+  // only way to currently test the no-namespace selector
+  // (i.e. "|div") is to provide a disconnected context.
+  // @see https://www.w3.org/TR/selectors/#type-nmsp
+  if (selector.namespace === "" && elementNamespace === null) {
+    return true;
+  }
+
+  // The namespace must have been declared.
+  const declaration = options.namespaces.get(selector.namespace);
+
+  if (declaration === undefined) {
+    return false;
+  }
+
+  if (elementNamespace !== declaration) {
+    return false;
+  }
+
+  return true;
 }
 
 const whitespace = /\s+/;
