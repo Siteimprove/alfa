@@ -1,4 +1,3 @@
-import { expandBrowsers } from "./expand-browsers";
 import { expandVersions } from "./expand-versions";
 import { getSupportedBrowsers } from "./supported-browsers";
 import { BrowserQuery } from "./types";
