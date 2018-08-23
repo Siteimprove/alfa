@@ -91,6 +91,7 @@ process.on("exit", code => {
         });
 
       process.stdout.write(chalk.bold("\n" + "=".repeat(60)) + "\n");
+      // process.stdout.write("\n".repeat(2));
 
       printCoverageStatistics(script, total);
 
@@ -102,6 +103,7 @@ process.on("exit", code => {
 
           if (i + 1 < n) {
             process.stdout.write(chalk.bold("—".repeat(60)) + "\n");
+            // process.stdout.write("\n");
           }
         }
       }
@@ -510,47 +512,13 @@ function printCoverage(script, coverage) {
     path.resolve(script.base, source.path)
   );
 
-  const localSource = JSON.parse(JSON.stringify(source));
+  const above = `${source.lines[start.line - 1].value}`;
+  const below = `${source.lines[end.line + 1].value}`;
 
-  let min = Number.MAX_VALUE;
-  for (let counter = start.line - 1; counter <= end.line + 1; counter++) {
-    let leadingWS =
-      localSource.lines[counter].value.length -
-      localSource.lines[counter].value.trimLeft().length;
-    min = Math.min(min, leadingWS);
-  }
+  const before = source.lines[start.line].value.slice(0, start.column);
+  const after = source.lines[end.line].value.slice(end.column);
 
-  if (min <= 0) {
-    localSource.lines = localSource.lines.map(
-      /** @param {Line} x */ x => {
-        x.value = "  " + x.value;
-        return x;
-      }
-    );
-  } else if (min === 1) {
-    localSource.lines = localSource.lines.map(
-      /** @param {Line} x */ x => {
-        x.value = " " + x.value;
-        return x;
-      }
-    );
-  } else {
-    localSource.lines = localSource.lines.map(
-      /** @param {Line} x */ x => {
-        x.value = x.value.substring(min - 2, x.value.length);
-        return x;
-      }
-    );
-  }
-
-  const above = `${localSource.lines[start.line - 1].value}`;
-  const below = `${localSource.lines[end.line + 1].value}`;
-
-  const before = localSource.lines[start.line].value.slice(0, start.column);
-  const after = localSource.lines[end.line].value.slice(end.column);
-
-  let output = `${chalk.dim(`${filePath}:${start.line + 1}`)}`;
-  output += "\n";
+  let output = "\n";
   let trim = above.trim();
   output += trim === "" || trim === "*/" ? "" : `\n${above}`;
   output += `\n${before}`;
@@ -558,7 +526,20 @@ function printCoverage(script, coverage) {
   output += `${chalk.bold.red(uncovered)}`;
   output += `${after}\n`;
   output += below.trim() === "" ? "" : `${below}\n`;
-  process.stdout.write(`\n${output}\n`);
+  let split = output.split("\n");
+  let min = split.reduce((min, cur) => {
+    let count = cur.search(/\S/);
+    return count === -1 || count > min ? min : count;
+  }, Infinity);
+  let mapped = split.map(cur => {
+    return "  " + cur.substring(min);
+  });
+  let join =
+    `${chalk.dim(`${filePath}:${start.line + 1}`)}` +
+    mapped.reduce((acc, cur) => {
+      return acc + cur + "\n";
+    }, "");
+  process.stdout.write(`\n${join}\n`);
 }
 
 /**
