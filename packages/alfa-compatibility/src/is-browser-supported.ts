@@ -1,27 +1,21 @@
 import { expandBrowsers } from "./expand-browsers";
 import { expandVersions } from "./expand-versions";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { Browser, Comparator, Version } from "./types";
-
-const { isArray } = Array;
+import { BrowserQuery } from "./types";
 
 /**
  * Given a browser, optionally constrained
  */
 export function isBrowserSupported(
-  browser: Browser | [Browser, Version] | [Browser, Comparator, Version],
-  options: Readonly<{
-    browsers?: ReadonlyArray<
-      [Browser, Version] | [Browser, Comparator, Version]
-    >;
-  }> = {}
+  browser: BrowserQuery,
+  options: Readonly<{ browsers?: ReadonlyArray<BrowserQuery> }> = {}
 ): boolean {
   const browsers =
     options.browsers === undefined
       ? getSupportedBrowsers()
       : expandBrowsers(options.browsers);
 
-  if (!isArray(browser)) {
+  if (typeof browser === "string") {
     return browsers.has(browser);
   }
 

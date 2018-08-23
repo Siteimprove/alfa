@@ -12,5 +12,7 @@ export * from "./number/clamp";
 export * from "./object/keys";
 export * from "./object/values";
 
+export * from "./set/intersect";
+
 export * from "./type/mutable";
 export * from "./type/predicate";

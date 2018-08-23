@@ -1,86 +1,88 @@
-import { combine } from "./combine";
-import { expandVersions } from "./expand-versions";
+import { branch } from "./branch";
+import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
-import { Browser, Comparator, Version } from "./types";
+import { merge } from "./merge";
+import { BrowserName, BrowserQuery, Version } from "./types";
 
-const { isArray } = Array;
+/**
+ * @internal
+ */
+export type BrowserList =
+  | ReadonlyArray<BrowserQuery>
+  | Map<BrowserName, Set<Version>>;
+
+/**
+ * @internal
+ */
+export type ValueList<T> = ReadonlyArray<
+  Readonly<{ value: T; browsers: BrowserList }>
+>;
 
 export class BrowserSpecific<T> {
   /**
    * @internal
    */
-  public readonly values: ReadonlyArray<{
-    value: T;
-    browsers: Map<Browser, Set<Version>>;
-  }>;
-
-  public constructor(
-    values: ReadonlyArray<
-      Readonly<{
-        value: T;
-        browsers: ReadonlyArray<
-          Browser | [Browser, Version] | [Browser, Comparator, Version]
-        >;
-      }>
-    >
-  );
+  public static of<T>(value: T, browsers: BrowserList): BrowserSpecific<T>;
 
   /**
    * @internal
    */
-  public constructor(
-    values: ReadonlyArray<
-      Readonly<{
-        value: T;
-        browsers: Map<Browser, Set<Version>>;
-      }>
-    >
-  );
+  public static of<T>(values: ValueList<T>): BrowserSpecific<T>;
 
-  public constructor(
-    values: ReadonlyArray<
-      Readonly<{
-        value: T;
-        browsers:
-          | ReadonlyArray<
-              Browser | [Browser, Version] | [Browser, Comparator, Version]
-            >
-          | Map<Browser, Set<Version>>;
-      }>
-    >
+  /**
+   * @internal
+   */
+  public static of<T>(
+    values: T | ValueList<T>,
+    browsers?: BrowserList
+  ): BrowserSpecific<T> {
+    return new BrowserSpecific(
+      browsers === undefined
+        ? (values as ValueList<T>)
+        : [{ value: values as T, browsers }]
+    );
+  }
+
+  /**
+   * @internal
+   */
+  public readonly values: ReadonlyArray<{
+    value: T;
+    browsers: Map<BrowserName, Set<Version>>;
+  }>;
+
+  private constructor(
+    values: ReadonlyArray<Readonly<{ value: T; browsers: BrowserList }>>
   ) {
     this.values = values.map(({ value, browsers }) => {
-      let expanded: Map<Browser, Set<Version>>;
-
       if (browsers instanceof Map) {
-        expanded = browsers;
-      } else {
-        expanded = new Map();
-
-        for (const browser of browsers) {
-          if (isArray(browser)) {
-            expanded.set(browser[0], expandVersions(browser));
-          } else {
-            expanded.set(browser, expandVersions([browser, ">", "0"]));
-          }
-        }
+        return { value, browsers };
       }
 
       return {
         value,
-        browsers: expanded
+        browsers: expandBrowsers(browsers)
       };
     });
   }
 
-  public map<U>(iteratee: (value: T) => U): BrowserSpecific<U> {
+  public map<U>(
+    iteratee: (value: T) => U | BrowserSpecific<U>
+  ): BrowserSpecific<U> {
     return map(this, iteratee);
   }
 
-  public combine<U, V>(
-    other: BrowserSpecific<U>,
-    iteratee: (value: T, other: U) => V
+  public merge<U, V>(
+    other: U | BrowserSpecific<U>,
+    iteratee: (value: T, other: U) => V | BrowserSpecific<V>
   ): BrowserSpecific<V> {
-    return combine(this, other, iteratee);
+    return merge(this, other, iteratee);
+  }
+
+  public branch(
+    value: T,
+    browsers: ReadonlyArray<BrowserQuery>
+  ): BrowserSpecific<T> {
+    return branch(this, value, browsers);
   }
 }

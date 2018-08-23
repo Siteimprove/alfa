@@ -1,37 +1,31 @@
-import { expandBrowsers } from "./expand-browsers";
-import { resolveQuery } from "./resolve-query";
-import { Browser, Comparator, Version } from "./types";
+import { getDefaultBrowsers } from "./get-default-browsers";
+import { BrowserName, Version } from "./types";
 
 /**
  * The current scope of supported browsers.
  */
-let supportedBrowsers = resolveQuery();
+let supportedBrowsers = getDefaultBrowsers();
 
 /**
  * Get the current scope of supported browsers.
  *
  * @internal
  */
-export function getSupportedBrowsers(): Map<Browser, Set<Version>> {
+export function getSupportedBrowsers(): Map<BrowserName, Set<Version>> {
   return supportedBrowsers;
 }
 
 /**
- * Set the current scope of supported browsers. An optional scope can be
- * provided, which is a function that will be invoked after setting the given
- * browser scope and resetting to the previous browser scope when the function
- * returns.
+ * Set the current scope of supported browsers.
+ *
+ * @internal
  */
 export function setSupportedBrowsers(
-  browsers: ReadonlyArray<[Browser, Version] | [Browser, Comparator, Version]>,
-  scope?: () => void
-): void {
+  browsers: Map<BrowserName, Set<Version>>
+): Map<BrowserName, Set<Version>> {
   const previousBrowsers = supportedBrowsers;
 
-  supportedBrowsers = expandBrowsers(browsers);
+  supportedBrowsers = browsers;
 
-  if (scope !== undefined) {
-    scope();
-    supportedBrowsers = previousBrowsers;
-  }
+  return previousBrowsers;
 }
