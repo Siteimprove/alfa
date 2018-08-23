@@ -90,8 +90,6 @@ process.on("exit", code => {
           return (bp === undefined ? 0 : bp) - (ap === undefined ? 0 : ap);
         });
 
-      process.stdout.write(chalk.bold("\n" + "=".repeat(60)) + "\n");
-
       printCoverageStatistics(script, total);
 
       if (process.env.npm_lifecycle_event === "start" && uncovered.length > 0) {
@@ -110,7 +108,7 @@ process.on("exit", code => {
           path.resolve(script.base, source.path)
         );
 
-        process.stdout.write(`\n${filePath}`);
+        process.stdout.write(chalk.underline(`\n${filePath}`));
 
         let numOfUncovered = min(3, uncovered.length);
 
@@ -122,7 +120,7 @@ process.on("exit", code => {
           printCoverage(script, newUncovered[i]);
 
           if (i + 1 < numOfUncovered) {
-            process.stdout.write(chalk.bold("  " + ". ".repeat(3)));
+            process.stdout.write(chalk.bold(" ".repeat(6) + ". ".repeat(3)));
           }
         }
       }
@@ -533,8 +531,7 @@ function printCoverage(script, coverage) {
   const after = source.lines[end.line].value.slice(end.column);
 
   let output = "\n";
-  let trim = above.trim();
-  output += trim === "" || trim === "*/" ? "" : `\n${above}`;
+  output += above.trim() === "" ? "" : `\n${above}`;
   output += `\n${before}`;
 
   output += `${chalk.bold.red(uncovered)}`;
@@ -548,8 +545,16 @@ function printCoverage(script, coverage) {
     return count === -1 || count > min ? min : count;
   }, Infinity);
 
+  let lineNum = start.line;
+
   let mapped = split.map(cur => {
-    return "  " + cur.substring(min);
+    return cur.trim() === ""
+      ? ""
+      : `${" ".repeat(
+          end.line.toString().length - lineNum.toString().length
+        )}${chalk.grey(`${lineNum++}`)}${" ".repeat(
+          6 - start.line.toString().length
+        )}${cur.substring(min)}`;
   });
 
   process.stdout.write(
