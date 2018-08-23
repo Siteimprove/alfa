@@ -4,16 +4,11 @@ import { getSupportedBrowsers } from "./supported-browsers";
 import { BrowserQuery } from "./types";
 
 /**
- * Given a browser, optionally constrained
+ * Given a browser, optionally constrained by a version or a version range,
+ * check if the browser is supported by the current browser scope.
  */
-export function isBrowserSupported(
-  browser: BrowserQuery,
-  options: Readonly<{ browsers?: ReadonlyArray<BrowserQuery> }> = {}
-): boolean {
-  const browsers =
-    options.browsers === undefined
-      ? getSupportedBrowsers()
-      : expandBrowsers(options.browsers);
+export function isBrowserSupported(browser: BrowserQuery): boolean {
+  const browsers = getSupportedBrowsers();
 
   if (typeof browser === "string") {
     return browsers.has(browser);

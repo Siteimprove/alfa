@@ -17,18 +17,10 @@ for (const name of keys(Features)) {
  * Given the name of a feature, check if it is supported by the current browser
  * scope.
  */
-export function isFeatureSupported(
-  name: FeatureName,
-  options: Readonly<{ browsers?: ReadonlyArray<BrowserQuery> }> = {}
-): boolean {
-  const browsers =
-    options.browsers === undefined
-      ? getSupportedBrowsers()
-      : expandBrowsers(options.browsers);
-
+export function isFeatureSupported(name: FeatureName): boolean {
   const feature = features.get(name)!;
 
-  for (const [browser, versions] of browsers) {
+  for (const [browser, versions] of getSupportedBrowsers()) {
     const support = feature.get(browser);
 
     if (support === undefined || support === false) {
