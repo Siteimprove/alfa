@@ -7,24 +7,30 @@ import { BrowserQuery } from "./types";
  * check if the browser is supported by the current browser scope.
  */
 export function isBrowserSupported(browser: BrowserQuery): boolean {
-  const browsers = getSupportedBrowsers();
+  const supported = getSupportedBrowsers();
 
   if (typeof browser === "string") {
-    return browsers.has(browser);
+    return supported.has(browser);
   }
 
-  const supported = browsers.get(browser[0]);
+  const support = supported.get(browser[0]);
 
-  if (supported === undefined) {
+  if (support === undefined) {
     return false;
   }
 
-  if (supported === true) {
+  if (support === true) {
     return true;
   }
 
-  for (const version of expandVersions(browser)) {
-    if (!supported.has(version)) {
+  const versions = expandVersions(browser);
+
+  if (versions.size === 0) {
+    return false;
+  }
+
+  for (const version of versions) {
+    if (!support.has(version)) {
       return false;
     }
   }

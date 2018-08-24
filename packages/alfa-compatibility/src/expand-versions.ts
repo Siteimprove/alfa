@@ -1,34 +1,33 @@
 import { Browsers } from "./browsers";
+import { getSupportedBrowsers } from "./supported-browsers";
 import { BrowserName, BrowserQuery, Version, VersionSet } from "./types";
 
 const { keys } = Object;
 
-/**
- * @internal
- */
-export function expandVersions(browser: BrowserName): true;
-
-/**
- * @internal
- */
-export function expandVersions(browser: BrowserQuery): Set<Version>;
-
-export function expandVersions(browser: BrowserQuery): VersionSet {
-  if (typeof browser === "string") {
-    return true;
-  }
-
+export function expandVersions(
+  browser: Exclude<BrowserQuery, BrowserName>
+): Exclude<VersionSet, true> {
+  const supported = getSupportedBrowsers();
   const versions = new Set<Version>();
   const name = browser[0];
+
+  const support = supported.get(name);
+
+  if (support === undefined) {
+    return versions;
+  }
+
   const { releases } = Browsers[name];
 
   if (browser.length === 2) {
     const version = browser[1];
 
-    if (version in releases) {
-      versions.add(version);
-    } else {
+    if (version in releases === false) {
       throw new Error(`Invalid browser query: [${browser.join(", ")}]`);
+    }
+
+    if (support === true || support.has(version)) {
+      versions.add(version);
     }
 
     return versions;
@@ -89,7 +88,9 @@ export function expandVersions(browser: BrowserQuery): VersionSet {
     const { date } = releases[version];
 
     if (date >= lower && date <= upper) {
-      versions.add(version);
+      if (support === true || support.has(version)) {
+        versions.add(version);
+      }
     }
   }
 

@@ -12,7 +12,7 @@ import { Element, Node } from "./types";
 export function getTabSequence(
   node: Node,
   context: Node
-): Readonly<Array<Element>> {
+): ReadonlyArray<Element> {
   const result: Array<Element> = [];
 
   traverseNode(node, context, {
