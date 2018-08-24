@@ -12,6 +12,16 @@ import * as notify from "../helpers/notify";
  * @return {boolean}
  */
 export function build(file) {
+  const diagnostics = workspace.diagnose(file);
+
+  if (diagnostics.length > 0) {
+    for (const diagnostic of diagnostics) {
+      notify.error(formatDiagnostic(diagnostic));
+    }
+
+    return false;
+  }
+
   const failures = workspace.lint(file);
 
   if (failures.length > 0) {
@@ -31,16 +41,6 @@ export function build(file) {
     if (error) {
       return false;
     }
-  }
-
-  const diagnostics = workspace.diagnose(file);
-
-  if (diagnostics.length > 0) {
-    for (const diagnostic of diagnostics) {
-      notify.error(formatDiagnostic(diagnostic));
-    }
-
-    return false;
   }
 
   const compiled = workspace.compile(file);
