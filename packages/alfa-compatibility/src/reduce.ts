@@ -1,5 +1,5 @@
 import { BrowserSpecific } from "./browser-specific";
-import { merge } from "./merge";
+import { map } from "./map";
 
 export function reduce<T>(
   values: ArrayLike<T | BrowserSpecific<T>>,
@@ -32,7 +32,9 @@ export function reduce<T, U = T>(
   let accumulator = initial === undefined ? values[i++] : initial;
 
   for (const n = values.length; i < n; i++) {
-    accumulator = merge(accumulator, values[i], iteratee);
+    accumulator = map(accumulator, accumulator =>
+      map(values[i], value => iteratee(accumulator, value))
+    );
   }
 
   return accumulator;

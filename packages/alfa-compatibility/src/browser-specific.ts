@@ -1,7 +1,6 @@
 import { branch } from "./branch";
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
-import { merge } from "./merge";
 import { BrowserName, BrowserQuery, VersionSet } from "./types";
 
 /**
@@ -76,13 +75,6 @@ export class BrowserSpecific<T> {
     iteratee: (value: T) => U | BrowserSpecific<U>
   ): BrowserSpecific<U> {
     return map(this, iteratee);
-  }
-
-  public merge<U, V>(
-    other: U | BrowserSpecific<U>,
-    iteratee: (value: T, other: U) => V | BrowserSpecific<V>
-  ): BrowserSpecific<V> {
-    return merge(this, other, iteratee);
   }
 
   public branch(
