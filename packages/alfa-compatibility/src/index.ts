@@ -10,6 +10,7 @@ export * from "./is-browser-supported";
 export * from "./is-feature-supported";
 export * from "./map";
 export * from "./merge";
+export * from "./reduce";
 export * from "./supported-browsers";
 export * from "./types";
 export * from "./with-browsers";
