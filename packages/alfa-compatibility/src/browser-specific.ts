@@ -6,15 +6,8 @@ import { BrowserName, BrowserQuery, VersionSet } from "./types";
 /**
  * @internal
  */
-export type BrowserList =
-  | ReadonlyArray<BrowserQuery>
-  | Map<BrowserName, VersionSet>;
-
-/**
- * @internal
- */
 export type ValueList<T> = ReadonlyArray<
-  Readonly<{ value: T; browsers: BrowserList }>
+  Readonly<{ value: T; browsers: Map<BrowserName, VersionSet> }>
 >;
 
 export class BrowserSpecific<T> {
@@ -26,7 +19,10 @@ export class BrowserSpecific<T> {
   /**
    * @internal
    */
-  public static of<T>(value: T, browsers: BrowserList): BrowserSpecific<T>;
+  public static of<T>(
+    value: T,
+    browsers: Map<BrowserName, VersionSet>
+  ): BrowserSpecific<T>;
 
   /**
    * @internal
@@ -35,36 +31,32 @@ export class BrowserSpecific<T> {
 
   public static of<T>(
     values: T | ValueList<T>,
-    browsers?: BrowserList
+    browsers?: ReadonlyArray<BrowserQuery> | Map<BrowserName, VersionSet>
   ): BrowserSpecific<T> {
+    if (browsers === undefined) {
+      return new BrowserSpecific(values as ValueList<T>);
+    }
+
+    const value = values as T;
+
+    if (browsers instanceof Map) {
+      return new BrowserSpecific([{ value, browsers }]);
+    }
+
+    browsers = expandBrowsers(browsers);
+
     return new BrowserSpecific(
-      browsers === undefined
-        ? (values as ValueList<T>)
-        : [{ value: values as T, browsers }]
+      browsers.size === 0 ? [] : [{ value, browsers }]
     );
   }
 
   /**
    * @internal
    */
-  public readonly values: ReadonlyArray<{
-    value: T;
-    browsers: Map<BrowserName, VersionSet>;
-  }>;
+  public readonly values: ValueList<T>;
 
-  private constructor(
-    values: ReadonlyArray<Readonly<{ value: T; browsers: BrowserList }>>
-  ) {
-    this.values = values.map(({ value, browsers }) => {
-      if (browsers instanceof Map) {
-        return { value, browsers };
-      }
-
-      return {
-        value,
-        browsers: expandBrowsers(browsers)
-      };
-    });
+  private constructor(values: ValueList<T>) {
+    this.values = values;
   }
 
   public get(): T | BrowserSpecific<T> {

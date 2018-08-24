@@ -1,5 +1,4 @@
 import {
-  branch,
   BrowserSpecific,
   isBrowserSupported
 } from "@siteimprove/alfa-compatibility";
@@ -31,7 +30,7 @@ export function getRole(
 ): Role | null | BrowserSpecific<Role | null> {
   const value = getAttribute(element, "role", { trim: true });
 
-  let role: BrowserSpecific<string | null> | null = null;
+  let role: BrowserSpecific<string | null>;
 
   // Firefox currently treats the `role` attribute as case-sensitive so if it's
   // set and it's not lowercased, we branch off.
@@ -41,8 +40,7 @@ export function getRole(
     value !== value.toLowerCase() &&
     isBrowserSupported("firefox")
   ) {
-    role = branch(role, value, ["firefox"]);
-    role = branch(role, value.toLowerCase(), [
+    role = BrowserSpecific.of(value, ["firefox"]).branch(value.toLowerCase(), [
       "chrome",
       "edge",
       "ie",
@@ -50,7 +48,7 @@ export function getRole(
       "safari"
     ]);
   } else {
-    role = branch(role, value === null ? value : value.toLowerCase(), [
+    role = BrowserSpecific.of(value === null ? value : value.toLowerCase(), [
       "chrome",
       "edge",
       "firefox",
