@@ -1,5 +1,5 @@
 import { getDefaultBrowsers } from "./get-default-browsers";
-import { BrowserName, Version } from "./types";
+import { BrowserName, VersionSet } from "./types";
 
 /**
  * The current scope of supported browsers.
@@ -11,7 +11,7 @@ let supportedBrowsers = getDefaultBrowsers();
  *
  * @internal
  */
-export function getSupportedBrowsers(): Map<BrowserName, Set<Version>> {
+export function getSupportedBrowsers(): Map<BrowserName, VersionSet> {
   return supportedBrowsers;
 }
 
@@ -21,8 +21,8 @@ export function getSupportedBrowsers(): Map<BrowserName, Set<Version>> {
  * @internal
  */
 export function setSupportedBrowsers(
-  browsers: Map<BrowserName, Set<Version>>
-): Map<BrowserName, Set<Version>> {
+  browsers: Map<BrowserName, VersionSet>
+): Map<BrowserName, VersionSet> {
   const previousBrowsers = supportedBrowsers;
 
   supportedBrowsers = browsers;

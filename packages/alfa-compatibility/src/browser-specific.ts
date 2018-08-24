@@ -1,15 +1,14 @@
 import { branch } from "./branch";
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
-import { merge } from "./merge";
-import { BrowserName, BrowserQuery, Version } from "./types";
+import { BrowserName, BrowserQuery, VersionSet } from "./types";
 
 /**
  * @internal
  */
 export type BrowserList =
   | ReadonlyArray<BrowserQuery>
-  | Map<BrowserName, Set<Version>>;
+  | Map<BrowserName, VersionSet>;
 
 /**
  * @internal
@@ -19,6 +18,11 @@ export type ValueList<T> = ReadonlyArray<
 >;
 
 export class BrowserSpecific<T> {
+  public static of<T>(
+    value: T,
+    browsers: ReadonlyArray<BrowserQuery>
+  ): BrowserSpecific<T>;
+
   /**
    * @internal
    */
@@ -29,9 +33,6 @@ export class BrowserSpecific<T> {
    */
   public static of<T>(values: ValueList<T>): BrowserSpecific<T>;
 
-  /**
-   * @internal
-   */
   public static of<T>(
     values: T | ValueList<T>,
     browsers?: BrowserList
@@ -48,7 +49,7 @@ export class BrowserSpecific<T> {
    */
   public readonly values: ReadonlyArray<{
     value: T;
-    browsers: Map<BrowserName, Set<Version>>;
+    browsers: Map<BrowserName, VersionSet>;
   }>;
 
   private constructor(
@@ -66,17 +67,14 @@ export class BrowserSpecific<T> {
     });
   }
 
+  public get(): T | BrowserSpecific<T> {
+    return this.values.length === 1 ? this.values[0].value : this;
+  }
+
   public map<U>(
     iteratee: (value: T) => U | BrowserSpecific<U>
   ): BrowserSpecific<U> {
     return map(this, iteratee);
-  }
-
-  public merge<U, V>(
-    other: U | BrowserSpecific<U>,
-    iteratee: (value: T, other: U) => V | BrowserSpecific<V>
-  ): BrowserSpecific<V> {
-    return merge(this, other, iteratee);
   }
 
   public branch(

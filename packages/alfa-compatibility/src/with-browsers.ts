@@ -1,15 +1,29 @@
 import { expandBrowsers } from "./expand-browsers";
 import { setSupportedBrowsers } from "./supported-browsers";
-import { BrowserQuery } from "./types";
+import { BrowserName, BrowserQuery, VersionSet } from "./types";
 
-export function withBrowsers(
+export function withBrowsers<T>(
   browsers: ReadonlyArray<BrowserQuery>,
-  callback: () => void
-): void {
-  const previousBrowsers = setSupportedBrowsers(expandBrowsers(browsers));
+  callback: () => T
+): T;
+
+export function withBrowsers<T>(
+  browsers: Map<BrowserName, VersionSet>,
+  callback: () => T
+): T;
+
+export function withBrowsers<T>(
+  browsers: ReadonlyArray<BrowserQuery> | Map<BrowserName, VersionSet>,
+  callback: () => T
+): T {
+  const previousBrowsers = setSupportedBrowsers(
+    browsers instanceof Map
+      ? browsers
+      : expandBrowsers(browsers, { unsupported: true })
+  );
 
   try {
-    callback();
+    return callback();
   } catch (err) {
     throw err;
   } finally {
