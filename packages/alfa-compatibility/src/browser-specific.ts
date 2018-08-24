@@ -67,7 +67,7 @@ export class BrowserSpecific<T> {
     });
   }
 
-  public value(): T | BrowserSpecific<T> {
+  public get(): T | BrowserSpecific<T> {
     return this.values.length === 1 ? this.values[0].value : this;
   }
 

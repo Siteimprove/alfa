@@ -9,7 +9,7 @@ test("Returns true if a given feature is supported", t => {
 });
 
 test("Returns false if a given feature is not supported", t => {
-  withBrowsers([["ie", ">=", "8"]], () => {
+  withBrowsers([["ie", "<=", "8"]], () => {
     t(!isFeatureSupported("css.properties.border-radius"));
   });
 });

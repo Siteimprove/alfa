@@ -6,16 +6,15 @@ import { BrowserName, BrowserQuery, VersionSet } from "./types";
  * @internal
  */
 export function expandBrowsers(
-  browsers: ReadonlyArray<BrowserQuery>
+  browsers: ReadonlyArray<BrowserQuery>,
+  options: Readonly<{ unsupported?: boolean }> = {}
 ): Map<BrowserName, VersionSet> {
   const supported = getSupportedBrowsers();
   const result = new Map<BrowserName, VersionSet>();
 
   for (const browser of browsers) {
     if (typeof browser === "string") {
-      const support = supported.get(browser);
-
-      if (support !== undefined) {
+      if (options.unsupported === true || supported.has(browser)) {
         result.set(browser, true);
       }
     } else {
@@ -27,7 +26,7 @@ export function expandBrowsers(
         versions = new Set();
       }
 
-      for (const version of expandVersions(browser)) {
+      for (const version of expandVersions(browser, options)) {
         versions.add(version);
       }
 

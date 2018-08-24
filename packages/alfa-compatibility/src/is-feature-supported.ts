@@ -8,9 +8,12 @@ import { BrowserName, VersionSet } from "./types";
 const features: Map<FeatureName, Map<BrowserName, VersionSet>> = new Map();
 
 for (const name of keys(Features)) {
-  const { supported } = getFeatureSupport(name);
-
-  features.set(name, expandBrowsers(supported));
+  features.set(
+    name,
+    expandBrowsers(getFeatureSupport(name).supported, {
+      unsupported: true
+    })
+  );
 }
 
 /**
