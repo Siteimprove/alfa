@@ -22,7 +22,7 @@ export function format(name: string, error: Error & AssertionError): string {
 
   const output = `
 ${chalk.bold(name)}
-${chalk.dim(`${filePath}:${lineNumber}`)}
+${chalk.underline(`${filePath}:${lineNumber}`)}
 ${message}
 ${error.message}
   `;

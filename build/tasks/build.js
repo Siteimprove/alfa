@@ -69,7 +69,7 @@ function formatDiagnostic(diagnostic) {
 
     const filePath = path.relative(process.cwd(), file.fileName);
 
-    return `${chalk.dim(`${filePath}:${line + 1}`)} ${message}`;
+    return `${chalk.gray(`${filePath}:${line + 1}`)} ${message}`;
   }
 
   return message;
@@ -85,5 +85,5 @@ function formatFailure(failure) {
 
   const filePath = path.relative(process.cwd(), failure.getFileName());
 
-  return `${chalk.dim(`${filePath}:${line + 1}`)} ${message}`;
+  return `${chalk.gray(`${filePath}:${line + 1}`)} ${message}`;
 }

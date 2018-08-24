@@ -49,7 +49,7 @@ export function watch(format, ...args) {
  * @param {...string} args
  */
 function log(color, symbol, title, format, ...args) {
-  let output = chalk.dim(`[${timestamp()}] \u203a `);
+  let output = chalk.gray(`[${timestamp()}] \u203a `);
 
   output += color(`${symbol}  ${chalk.underline(pad(title, 8))} `);
   output += util.format(format, ...args);
