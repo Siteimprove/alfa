@@ -24,18 +24,17 @@ const session = new Session();
 
 const metrics = [
   {
-    ...Arithmetic,
-    weight: 1 / 3
+    ...Arithmetic
   },
   {
-    ...Byte,
-    weight: 1 / 3
+    ...Byte
   },
   {
-    ...Logical,
-    weight: 1 / 3
+    ...Logical
   }
 ];
+
+let weight = metrics.length;
 
 session.connect();
 
@@ -524,7 +523,11 @@ function printCoverage(script, coverage) {
  */
 function calculateTotalCoverage(script) {
   return metrics.reduce((coverage, metric) => {
-    return coverage + metric.total(script) * metric.weight;
+    if (!metric.applicable()) {
+      weight--;
+      return coverage;
+    }
+    return coverage + metric.total(script) * (1 / weight);
   }, 0);
 }
 
@@ -536,6 +539,9 @@ function calculateTotalCoverage(script) {
  */
 function calculateBlockCoverage(script, block, total) {
   return metrics.reduce((coverage, metric) => {
-    return coverage + metric.block(script, block, total) * metric.weight;
+    if (metric.applicable()) {
+      return coverage + metric.block(script, block, total) * (1 / weight);
+    }
+    return coverage;
   }, 0);
 }

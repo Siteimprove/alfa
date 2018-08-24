@@ -25,7 +25,9 @@ function totalOperations(script) {
     // javascript
     total += visit(createSource(script.sources[0].content));
   }
-
+  if (total === 0) {
+    applicable = false;
+  }
   return total;
 }
 
@@ -58,6 +60,8 @@ function visit(node, depth = -1) {
 
   return total;
 }
+
+let applicable = true;
 
 export const Logical = {
   /**
@@ -121,5 +125,9 @@ export const Logical = {
     }
 
     return (uncovered / total) * 100;
+  },
+
+  applicable() {
+    return applicable;
   }
 };

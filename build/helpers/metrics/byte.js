@@ -54,5 +54,9 @@ export const Byte = {
     }
 
     return ((end.offset - start.offset) / total) * 100;
+  },
+
+  applicable() {
+    return true;
   }
 };
