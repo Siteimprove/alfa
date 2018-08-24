@@ -20,6 +20,11 @@ export function format(name: string, error: Error & AssertionError): string {
     operator: error.operator
   });
 
+  error.message = error.message.replace(
+    "Input A expected to strictly deep-equal input B:\n",
+    ""
+  );
+
   const output = `
 ${chalk.bold(name)}
 ${chalk.underline(`${filePath}:${lineNumber}`)}
