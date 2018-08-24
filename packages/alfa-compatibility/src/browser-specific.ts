@@ -19,6 +19,11 @@ export type ValueList<T> = ReadonlyArray<
 >;
 
 export class BrowserSpecific<T> {
+  public static of<T>(
+    value: T,
+    browsers: ReadonlyArray<BrowserQuery>
+  ): BrowserSpecific<T>;
+
   /**
    * @internal
    */
@@ -29,9 +34,6 @@ export class BrowserSpecific<T> {
    */
   public static of<T>(values: ValueList<T>): BrowserSpecific<T>;
 
-  /**
-   * @internal
-   */
   public static of<T>(
     values: T | ValueList<T>,
     browsers?: BrowserList
