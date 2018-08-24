@@ -2,9 +2,10 @@ import { intersect } from "@siteimprove/alfa-util";
 import { BrowserSpecific } from "./browser-specific";
 import { isBrowserSpecific } from "./guards";
 import { BrowserName, VersionSet } from "./types";
+import { withBrowsers } from "./with-browsers";
 
 export function map<T, U>(
-  value: BrowserSpecific<T>,
+  value: T | BrowserSpecific<T>,
   iteratee: (value: T) => U | BrowserSpecific<U>
 ): BrowserSpecific<U>;
 
@@ -21,7 +22,7 @@ export function map<T, U>(
     }> = [];
 
     for (const fst of value.values) {
-      const value = iteratee(fst.value);
+      const value = withBrowsers(fst.browsers, () => iteratee(fst.value));
 
       if (isBrowserSpecific(value)) {
         for (const snd of value.values) {

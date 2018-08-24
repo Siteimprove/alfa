@@ -4,12 +4,6 @@ import { map } from "./map";
 
 export function merge<T, U, V>(
   value: T | BrowserSpecific<T>,
-  other: BrowserSpecific<U>,
-  iteratee: (value: T, other: U) => V | BrowserSpecific<V>
-): BrowserSpecific<V>;
-
-export function merge<T, U, V>(
-  value: BrowserSpecific<T>,
   other: U | BrowserSpecific<U>,
   iteratee: (value: T, other: U) => V | BrowserSpecific<V>
 ): BrowserSpecific<V>;

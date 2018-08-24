@@ -3,7 +3,7 @@
 import browserslist = require("browserslist");
 import { Browsers } from "./browsers";
 import { isBrowserName } from "./guards";
-import { BrowserName, Version, VersionSet } from "./types";
+import { BrowserName, VersionSet } from "./types";
 
 const whitespace = /\s+/;
 
@@ -11,7 +11,7 @@ const whitespace = /\s+/;
  * NB: Since browserslist forces separate versions of browsers, we map browsers
  * to actual sets of version numbers rather than `VersionSet`.
  */
-let defaultBrowsers: Map<BrowserName, Set<Version>> | undefined;
+let defaultBrowsers: Map<BrowserName, Exclude<VersionSet, true>> | undefined;
 
 /**
  * @internal
