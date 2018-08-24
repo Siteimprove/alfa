@@ -27,7 +27,7 @@ export function format(file) {
     return true;
   }
 
-  notify.skip(chalk.dim(file));
+  notify.skip(chalk.gray(file));
 
   return false;
 }

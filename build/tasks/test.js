@@ -25,7 +25,7 @@ export function test(file) {
       return true;
     }
 
-    notify.error(chalk.dim(file));
+    notify.error(chalk.gray(file));
   }
 
   return false;
