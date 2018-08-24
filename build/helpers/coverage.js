@@ -110,9 +110,9 @@ process.on("exit", code => {
 
         process.stdout.write(chalk.underline(`\n${filePath}`));
 
-        let numOfUncovered = min(3, uncovered.length);
+        const numOfUncovered = min(3, uncovered.length);
 
-        let newUncovered = uncovered.slice(0, numOfUncovered).sort((a, b) => {
+        const newUncovered = uncovered.slice(0, numOfUncovered).sort((a, b) => {
           return a.range.start.line - b.range.start.line;
         });
 
