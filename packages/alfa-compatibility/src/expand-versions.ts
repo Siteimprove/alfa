@@ -4,8 +4,12 @@ import { BrowserName, BrowserQuery, Version, VersionSet } from "./types";
 
 const { keys } = Object;
 
+/**
+ * @internal
+ */
 export function expandVersions(
-  browser: Exclude<BrowserQuery, BrowserName>
+  browser: Exclude<BrowserQuery, BrowserName>,
+  options: Readonly<{ unsupported?: boolean }> = {}
 ): Exclude<VersionSet, true> {
   const supported = getSupportedBrowsers();
   const versions = new Set<Version>();
@@ -26,7 +30,11 @@ export function expandVersions(
       throw new Error(`Invalid browser query: [${browser.join(", ")}]`);
     }
 
-    if (support === true || support.has(version)) {
+    if (
+      options.unsupported === true ||
+      support === true ||
+      support.has(version)
+    ) {
       versions.add(version);
     }
 
@@ -88,7 +96,11 @@ export function expandVersions(
     const { date } = releases[version];
 
     if (date >= lower && date <= upper) {
-      if (support === true || support.has(version)) {
+      if (
+        options.unsupported === true ||
+        support === true ||
+        support.has(version)
+      ) {
         versions.add(version);
       }
     }

@@ -17,7 +17,9 @@ export function withBrowsers<T>(
   callback: () => T
 ): T {
   const previousBrowsers = setSupportedBrowsers(
-    browsers instanceof Map ? browsers : expandBrowsers(browsers)
+    browsers instanceof Map
+      ? browsers
+      : expandBrowsers(browsers, { unsupported: true })
   );
 
   try {

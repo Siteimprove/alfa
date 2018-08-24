@@ -23,7 +23,7 @@ export function isBrowserSupported(browser: BrowserQuery): boolean {
     return true;
   }
 
-  const versions = expandVersions(browser);
+  const versions = expandVersions(browser, { unsupported: true });
 
   if (versions.size === 0) {
     return false;
