@@ -1,9 +1,15 @@
+import { BrowserSpecific, withBrowsers } from "@siteimprove/alfa-compatibility";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getTextAlternative } from "../src/get-text-alternative";
 
 test("Computes the text alternative of a button with text", t => {
   const button = <button>Button</button>;
+  t.equal(getTextAlternative(button, button), "Button");
+});
+
+test("Correctly resolves explicit roles", t => {
+  const button = <div role="button">Button</div>;
   t.equal(getTextAlternative(button, button), "Button");
 });
 
@@ -248,4 +254,20 @@ test("Computes the text alternative of an element with content in Shadow DOM", t
     </div>
   );
   t.equal(getTextAlternative(button, document), "Hello world");
+});
+
+test("Correctly handles browser specific case sensitivity of roles", t => {
+  const button = <div role="Button">Button</div>;
+  withBrowsers(["chrome", "firefox"], () => {
+    t.deepEqual(
+      getTextAlternative(button, button),
+      BrowserSpecific.of<string | null>(null, ["firefox"]).branch("Button", [
+        "chrome",
+        "edge",
+        "ie",
+        "opera",
+        "safari"
+      ])
+    );
+  });
 });
