@@ -90,10 +90,8 @@ process.on("exit", code => {
           return (bp === undefined ? 0 : bp) - (ap === undefined ? 0 : ap);
         });
 
-      printCoverageStatistics(script, total);
-
       if (process.env.npm_lifecycle_event === "start" && uncovered.length > 0) {
-        process.stdout.write(chalk.bold("\nSuggested blocks to cover:\n"));
+        process.stdout.write(chalk.bold("\nSuggested blocks to cover\n"));
 
         const source = script.sources.find(
           source => source.path === uncovered[0].range.start.path
@@ -108,7 +106,7 @@ process.on("exit", code => {
           path.resolve(script.base, source.path)
         );
 
-        process.stdout.write(chalk.underline(`\n${filePath}`));
+        process.stdout.write(chalk.underline(`${filePath}\n`));
 
         const numOfUncovered = min(3, uncovered.length);
 
@@ -120,10 +118,12 @@ process.on("exit", code => {
           printBlockCoverage(script, newUncovered[i]);
 
           if (i + 1 < numOfUncovered) {
-            process.stdout.write(chalk.bold(" ".repeat(6) + ". ".repeat(3)));
+            process.stdout.write(chalk.blue("...\n"));
           }
         }
       }
+
+      printCoverageStatistics(script, total);
     }
   });
 });
@@ -499,7 +499,6 @@ function printCoverageStatistics(script, total) {
   );
 
   if (total < 90) {
-    process.stdout.write("\n");
     notify.warn(`${chalk.dim(filePath)} Low coverage (${total.toFixed(2)}%)`);
   }
 }
@@ -530,11 +529,10 @@ function printBlockCoverage(script, coverage) {
   const before = source.lines[start.line].value.slice(0, start.column);
   const after = source.lines[end.line].value.slice(end.column);
 
-  let output = "\n";
-  output += above.trim() === "" ? "" : `\n${above}`;
+  let output = above.trim() === "" ? "" : `\n${above}`;
   output += `\n${before}`;
 
-  output += `${chalk.bold.red(uncovered)}`;
+  output += `${chalk.red(uncovered)}`;
   output += `${after}\n`;
   output += below.trim() === "" ? "" : `${below}\n`;
 
@@ -557,11 +555,7 @@ function printBlockCoverage(script, coverage) {
         )}${cur.substring(min)}`;
   });
 
-  process.stdout.write(
-    `\n${mapped.reduce((acc, cur) => {
-      return acc + cur + "\n";
-    }, "")}\n`
-  );
+  process.stdout.write(`${mapped.join("\n")}\n`);
 }
 
 /**
