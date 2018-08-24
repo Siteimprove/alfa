@@ -1,32 +1,36 @@
-import { expandBrowsers } from "./expand-browsers";
 import { expandVersions } from "./expand-versions";
 import { getSupportedBrowsers } from "./supported-browsers";
 import { BrowserQuery } from "./types";
 
 /**
- * Given a browser, optionally constrained
+ * Given a browser, optionally constrained by a version or a version range,
+ * check if the browser is supported by the current browser scope.
  */
-export function isBrowserSupported(
-  browser: BrowserQuery,
-  options: Readonly<{ browsers?: ReadonlyArray<BrowserQuery> }> = {}
-): boolean {
-  const browsers =
-    options.browsers === undefined
-      ? getSupportedBrowsers()
-      : expandBrowsers(options.browsers);
+export function isBrowserSupported(browser: BrowserQuery): boolean {
+  const supported = getSupportedBrowsers();
 
   if (typeof browser === "string") {
-    return browsers.has(browser);
+    return supported.has(browser);
   }
 
-  const supported = browsers.get(browser[0]);
+  const support = supported.get(browser[0]);
 
-  if (supported === undefined) {
+  if (support === undefined) {
     return false;
   }
 
-  for (const version of expandVersions(browser)) {
-    if (!supported.has(version)) {
+  if (support === true) {
+    return true;
+  }
+
+  const versions = expandVersions(browser, { unsupported: true });
+
+  if (versions.size === 0) {
+    return false;
+  }
+
+  for (const version of versions) {
+    if (!support.has(version)) {
       return false;
     }
   }

@@ -1,26 +1,38 @@
 import { expandVersions } from "./expand-versions";
-import { BrowserName, BrowserQuery, Version } from "./types";
+import { getSupportedBrowsers } from "./supported-browsers";
+import { BrowserName, BrowserQuery, VersionSet } from "./types";
 
 /**
  * @internal
  */
 export function expandBrowsers(
-  browsers: ReadonlyArray<BrowserQuery>
-): Map<BrowserName, Set<Version>> {
-  const result: Map<BrowserName, Set<Version>> = new Map();
+  browsers: ReadonlyArray<BrowserQuery>,
+  options: Readonly<{ unsupported?: boolean }> = {}
+): Map<BrowserName, VersionSet> {
+  const supported = getSupportedBrowsers();
+  const result = new Map<BrowserName, VersionSet>();
 
   for (const browser of browsers) {
-    const name = typeof browser === "string" ? browser : browser[0];
+    if (typeof browser === "string") {
+      if (options.unsupported === true || supported.has(browser)) {
+        result.set(browser, true);
+      }
+    } else {
+      const name = browser[0];
 
-    let versions = result.get(name);
+      let versions = result.get(name);
 
-    if (versions === undefined) {
-      versions = new Set();
-      result.set(name, versions);
-    }
+      if (versions === undefined || versions === true) {
+        versions = new Set();
+      }
 
-    for (const version of expandVersions(browser)) {
-      versions.add(version);
+      for (const version of expandVersions(browser, options)) {
+        versions.add(version);
+      }
+
+      if (versions.size > 0) {
+        result.set(name, versions);
+      }
     }
   }
 

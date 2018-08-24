@@ -63,7 +63,7 @@ test("Does not infitely recurse when recursive aria-labelledby references are en
       Hello <span aria-labelledby="button">world</span>
     </button>
   );
-  t.equal(getTextAlternative(button, button), "Hello");
+  t.equal(getTextAlternative(button, button), "Hello world");
 });
 
 test("Returns null when a button has no text alternative", t => {
