@@ -117,7 +117,7 @@ process.on("exit", code => {
         });
 
         for (let i = 0; i < numOfUncovered; i++) {
-          printCoverage(script, newUncovered[i]);
+          printBlockCoverage(script, newUncovered[i]);
 
           if (i + 1 < numOfUncovered) {
             process.stdout.write(chalk.bold(" ".repeat(6) + ". ".repeat(3)));
@@ -508,7 +508,7 @@ function printCoverageStatistics(script, total) {
  * @param {Script} script
  * @param {FunctionCoverage | BlockCoverage} coverage
  */
-function printCoverage(script, coverage) {
+function printBlockCoverage(script, coverage) {
   // Skip all blocks that are covered at least once.
   if (coverage.count !== 0) {
     return;
