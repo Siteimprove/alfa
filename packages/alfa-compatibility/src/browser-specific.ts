@@ -1,4 +1,3 @@
-import { branch } from "./branch";
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
 import { BrowserName, BrowserQuery, VersionSet } from "./types";
@@ -73,6 +72,18 @@ export class BrowserSpecific<T> {
     value: T,
     browsers: ReadonlyArray<BrowserQuery>
   ): BrowserSpecific<T> {
-    return branch(this, value, browsers);
+    const expanded = expandBrowsers(browsers);
+
+    if (expanded.size === 0) {
+      return this;
+    }
+
+    return BrowserSpecific.of([
+      ...this.values,
+      {
+        value,
+        browsers: expanded
+      }
+    ]);
   }
 }
