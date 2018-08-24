@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { matches } from "../src/matches";
-import { Namespace, NamespaceDeclarations } from "../src/types";
+import { Namespace } from "../src/types";
 
 test("Matches an element against a tag", t => {
   const div = <div />;
@@ -207,9 +207,10 @@ test("Matches an element against a declared namespace selector", t => {
   const circle = <circle />;
   const svg = <svg>{circle}</svg>;
 
-  const namespaces: NamespaceDeclarations = new Map();
-  namespaces.set("svg", Namespace.SVG);
-  namespaces.set("html", Namespace.HTML);
+  const namespaces = new Map([
+    ["svg", Namespace.SVG],
+    ["html", Namespace.HTML]
+  ]);
 
   t(matches(svg, svg, "svg|svg", { namespaces }));
   t(matches(circle, svg, "svg|circle", { namespaces }));
@@ -221,10 +222,14 @@ test("Matches an element against against all or no namespaces", t => {
   const svg = <svg />;
   const div = <div />;
 
-  const namespaces: NamespaceDeclarations = new Map();
-  namespaces.set("svg", Namespace.SVG);
+  const namespaces = new Map([["svg", Namespace.SVG]]);
 
   t(matches(svg, svg, "*|svg", { namespaces }));
+
+  // As all elements in HTML5 will use the XHTML namespace, unless another
+  // namespace is explicitly specified, the only way to currently test the
+  // no-namespace selector (i.e. "|div") is to provide a disconnected context.
+  // https://www.w3.org/TR/selectors/#type-nmsp
   t(matches(div, svg, "|div", { namespaces }));
 });
 
@@ -233,8 +238,7 @@ test("Matches an element against a default namespace selector", t => {
   const svg = <svg>{circle}</svg>;
   const div = <div />;
 
-  const namespaces: NamespaceDeclarations = new Map();
-  namespaces.set(null, Namespace.SVG);
+  const namespaces = new Map([[null, Namespace.SVG]]);
 
   t(matches(svg, svg, "svg", { namespaces }));
   t(matches(circle, svg, "circle", { namespaces }));

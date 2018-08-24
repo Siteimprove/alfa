@@ -432,10 +432,3 @@ export const enum Namespace {
    */
   XMLNS = "http://www.w3.org/2000/xmlns/"
 }
-
-/**
- * Map of namespace alias (key) and namespace URI (value).
- *
- * @see https://www.w3.org/TR/selectors/#type-nmsp
- */
-export type NamespaceDeclarations = Map<string | null, Namespace>;

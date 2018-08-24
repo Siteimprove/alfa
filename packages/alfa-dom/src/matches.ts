@@ -24,7 +24,7 @@ import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
 import { isElement, isShadowRoot } from "./guards";
 import { hasClass } from "./has-class";
-import { Element, NamespaceDeclarations, Node } from "./types";
+import { Element, Namespace, Node } from "./types";
 
 const { isArray } = Array;
 
@@ -83,7 +83,7 @@ export type MatchesOptions = Readonly<{
    * @see https://www.w3.org/TR/selectors/#type-nmsp
    * @internal
    */
-  namespaces?: NamespaceDeclarations;
+  namespaces?: Map<string | null, Namespace>;
 }>;
 
 /**
@@ -227,33 +227,29 @@ function matchesNamespace(
   selector: TypeSelector,
   options: MatchesOptions
 ): boolean {
-  if (selector.namespace === "*" || options.namespaces === undefined) {
+  if (selector.namespace === "*") {
+    return true;
+  }
+
+  if (options.namespaces === undefined && selector.namespace === null) {
     return true;
   }
 
   const elementNamespace = getElementNamespace(element, context);
 
-  // As all elements in HTML5 will use the XHTML namespace,
-  // unless another namespace is explicitly specified, the
-  // only way to currently test the no-namespace selector
-  // (i.e. "|div") is to provide a disconnected context.
-  // https://www.w3.org/TR/selectors/#type-nmsp
   if (selector.namespace === "" && elementNamespace === null) {
     return true;
   }
 
-  // The namespace must have been declared.
-  const declaration = options.namespaces.get(selector.namespace);
-
-  if (declaration === undefined) {
+  if (options.namespaces === undefined) {
     return false;
   }
 
-  if (elementNamespace !== declaration) {
-    return false;
-  }
+  const declaredNamespace = options.namespaces.get(selector.namespace);
 
-  return true;
+  return (
+    declaredNamespace === undefined || elementNamespace === declaredNamespace
+  );
 }
 
 const whitespace = /\s+/;
