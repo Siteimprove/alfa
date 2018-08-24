@@ -24,7 +24,7 @@ import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
 import { isElement, isShadowRoot } from "./guards";
 import { hasClass } from "./has-class";
-import { Element, Namespace, Node } from "./types";
+import { Element, NamespaceDeclarations, Node } from "./types";
 
 const { isArray } = Array;
 
@@ -78,12 +78,12 @@ export type MatchesOptions = Readonly<{
   filter?: AncestorFilter;
 
   /**
-   * Declared namespace prefixes mapped to namespace URLs.
+   * Declared prefixes mapped to namespace URI.
    *
    * @see https://www.w3.org/TR/selectors/#type-nmsp
    * @internal
    */
-  namespaces?: Map<string | null, Namespace>;
+  namespaces?: NamespaceDeclarations;
 }>;
 
 /**
@@ -137,6 +137,19 @@ export function matches(
     }
 
     return false;
+  }
+
+  const { namespaces } = options;
+
+  // Dismiss if element with non-type-selector does not match default namespace.
+  if (selector.type !== SelectorType.TypeSelector && namespaces !== undefined) {
+    const namespaceDefault = namespaces.get(null);
+    if (
+      namespaceDefault !== undefined &&
+      getElementNamespace(element, context) !== namespaceDefault
+    ) {
+      return false;
+    }
   }
 
   if (root === null) {
@@ -224,7 +237,7 @@ function matchesNamespace(
   // unless another namespace is explicitly specified, the
   // only way to currently test the no-namespace selector
   // (i.e. "|div") is to provide a disconnected context.
-  // @see https://www.w3.org/TR/selectors/#type-nmsp
+  // https://www.w3.org/TR/selectors/#type-nmsp
   if (selector.namespace === "" && elementNamespace === null) {
     return true;
   }

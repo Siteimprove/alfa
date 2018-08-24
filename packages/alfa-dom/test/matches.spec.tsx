@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { matches } from "../src/matches";
-import { Namespace } from "../src/types";
+import { Namespace, NamespaceDeclarations } from "../src/types";
 
 test("Matches an element against a tag", t => {
   const div = <div />;
@@ -203,21 +203,40 @@ test("Matches an element against a host-context selector", t => {
   t(!matches(host, context, ":host-context(.barfoo)", { treeContext: root }));
 });
 
-test("Matches a declared namespace selector", t => {
+test("Matches an element against a declared namespace selector", t => {
   const circle = <circle />;
   const svg = <svg>{circle}</svg>;
-  const xml = <xml />;
-  const div = <div />;
 
-  const namespaces: Map<string, Namespace> = new Map();
+  const namespaces: NamespaceDeclarations = new Map();
   namespaces.set("svg", Namespace.SVG);
   namespaces.set("html", Namespace.HTML);
 
   t(matches(svg, svg, "svg|svg", { namespaces }));
-  t(matches(svg, svg, "svg|*", { namespaces }));
   t(matches(circle, svg, "svg|circle", { namespaces }));
+  t(matches(svg, svg, "svg|*", { namespaces }));
+  t(!matches(svg, svg, "html|svg", { namespaces }));
+});
+
+test("Matches an element against against all or no namespaces", t => {
+  const svg = <svg />;
+  const div = <div />;
+
+  const namespaces: NamespaceDeclarations = new Map();
+  namespaces.set("svg", Namespace.SVG);
+
   t(matches(svg, svg, "*|svg", { namespaces }));
   t(matches(div, svg, "|div", { namespaces }));
-  t(!matches(svg, svg, "html|svg", { namespaces }));
-  t(!matches(xml, xml, "xml:xml", { namespaces }));
+});
+
+test("Matches an element against a default namespace selector", t => {
+  const circle = <circle />;
+  const svg = <svg>{circle}</svg>;
+  const div = <div />;
+
+  const namespaces: NamespaceDeclarations = new Map();
+  namespaces.set(null, Namespace.SVG);
+
+  t(matches(svg, svg, "svg", { namespaces }));
+  t(matches(circle, svg, "circle", { namespaces }));
+  t(!matches(div, div, "div", { namespaces }));
 });
