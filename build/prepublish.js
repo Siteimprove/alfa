@@ -1,8 +1,8 @@
-import { packages } from "./helpers/meta";
-import { writeFile } from "./helpers/file-system";
-import * as notify from "./helpers/notify";
+const { packages } = require("./helpers/meta");
+const { writeFile } = require("./helpers/file-system");
+const notify = require("./helpers/notify");
 
-import { sync } from "./tasks/sync";
+const { sync } = require("./tasks/sync");
 
 for (const pkg of packages) {
   const manifest = require(`../packages/${pkg}/package.json`);

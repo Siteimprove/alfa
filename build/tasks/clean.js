@@ -1,10 +1,10 @@
-import { findFiles, removeFile } from "../helpers/file-system";
-import { endsWith } from "../helpers/predicates";
+const { findFiles, removeFile } = require("../helpers/file-system");
+const { endsWith } = require("../helpers/predicates");
 
 /**
  * @param {string} directory
  */
-export function clean(directory) {
+function clean(directory) {
   const shouldClean = endsWith(".js", ".d.ts", ".map");
 
   const files = findFiles(
@@ -19,3 +19,5 @@ export function clean(directory) {
     removeFile(file);
   }
 }
+
+exports.clean = clean;

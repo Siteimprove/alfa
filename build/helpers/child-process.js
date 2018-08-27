@@ -1,4 +1,4 @@
-import * as childProcess from "child_process";
+const childProcess = require("child_process");
 
 /**
  * @typedef {Object} ChildProcess
@@ -27,7 +27,7 @@ import * as childProcess from "child_process";
  * @param {SpawnOptions} [options]
  * @return {ChildProcess}
  */
-export function spawn(command, args, options = {}) {
+function spawn(command, args, options = {}) {
   const child = childProcess.spawnSync(command, args, {
     maxBuffer: 10000 * 1024,
     encoding: "utf8",
@@ -40,13 +40,15 @@ export function spawn(command, args, options = {}) {
   return child;
 }
 
+exports.spawn = spawn;
+
 /**
  * @param {string} module
  * @param {Array<string>} args
  * @param {ForkOptions} [options]
  * @return {ChildProcess}
  */
-export function fork(module, args, options = {}) {
+function fork(module, args, options = {}) {
   const {
     execPath = process.execPath,
     execArgv = process.execArgv,
@@ -55,6 +57,8 @@ export function fork(module, args, options = {}) {
 
   return spawn(execPath, execArgv.concat([module], args), rest);
 }
+
+exports.fork = fork;
 
 /**
  * @param {string | null} input

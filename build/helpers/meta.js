@@ -1,5 +1,5 @@
-import { readDirectory } from "./file-system";
-import { Graph } from "./graph";
+const { readDirectory } = require("./file-system");
+const { Graph } = require("./graph");
 
 const graph = new Graph();
 
@@ -26,4 +26,4 @@ for (const pkg of readDirectory("packages")) {
   }
 }
 
-export const packages = graph.sort();
+exports.packages = graph.sort();

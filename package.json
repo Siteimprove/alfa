@@ -21,11 +21,11 @@
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
-    "prepare": "node -r esm build/prepare.js",
-    "test": "node -r esm build/test.js",
-    "start": "node -r esm build/start.js",
-    "prepublish": "node -r esm build/prepublish.js",
-    "precommit": "node -r esm build/precommit.js"
+    "prepare": "node build/prepare.js",
+    "test": "node build/test.js",
+    "start": "node build/start.js",
+    "prepublish": "node build/prepublish.js",
+    "precommit": "node build/precommit.js"
   },
   "workspaces": [
     "packages/*"
@@ -35,7 +35,6 @@
     "@types/prettier": "^1.13.2",
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
-    "esm": "^3.0.72",
     "gaze": "^1.1.3",
     "husky": "^0.14.3",
     "ignore": "^4.0.3",

@@ -1,27 +1,33 @@
-import * as fs from "fs";
-import ignore from "ignore";
-import { spawn } from "./child-process";
+/// <reference path="../types/ignore.d.ts" />
+
+const fs = require("fs");
+const ignore = require("ignore");
+const { spawn } = require("./child-process");
 
 /**
  * @param {string} command
  * @param {Array<string>} [options]
  * @return {string}
  */
-export function git(command, options = []) {
+function git(command, options = []) {
   return spawn("git", [command, ...options]).stdout;
 }
+
+exports.git = git;
 
 /**
  * @param {string} file
  */
-export function stageFile(file) {
+function stageFile(file) {
   git("add", [file]);
 }
+
+exports.stageFile = stageFile;
 
 /**
  * @return {Array<string>}
  */
-export function getStagedFiles() {
+function getStagedFiles() {
   const diff = git("diff", ["--name-only", "--cached", "--diff-filter", "d"]);
 
   if (diff === "") {
@@ -31,13 +37,17 @@ export function getStagedFiles() {
   return diff.split("\n");
 }
 
+exports.getStagedFiles = getStagedFiles;
+
 /**
  * @param {string} file
  * @return {boolean}
  */
-export function isStaged(file) {
+function isStaged(file) {
   return getStagedFiles().indexOf(file) !== -1;
 }
+
+exports.isStaged = isStaged;
 
 const gitignore = ignore().add(
   fs.readFileSync(require.resolve("../../.gitignore"), "utf8")
@@ -47,6 +57,8 @@ const gitignore = ignore().add(
  * @param {string} file
  * @return {boolean}
  */
-export function isIgnored(file) {
+function isIgnored(file) {
   return gitignore.ignores(file);
 }
+
+exports.isIgnored = isIgnored;

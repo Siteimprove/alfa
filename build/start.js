@@ -1,9 +1,9 @@
-import { watchFiles } from "./helpers/file-system";
-import { endsWith } from "./helpers/predicates";
-import * as notify from "./helpers/notify";
+const { watchFiles } = require("./helpers/file-system");
+const { endsWith } = require("./helpers/predicates");
+const notify = require("./helpers/notify");
 
-import { build } from "./tasks/build";
-import { test } from "./tasks/test";
+const { build } = require("./tasks/build");
+const { test } = require("./tasks/test");
 
 const isSpec = endsWith(".spec.ts", ".spec.tsx");
 const isSrc = endsWith(".ts", ".tsx");

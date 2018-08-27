@@ -25,7 +25,7 @@ const fields = [
  * @param {Manifest} manifest
  * @return {Manifest}
  */
-export function sync(manifest) {
+function sync(manifest) {
   const synced = Object.assign({}, manifest);
 
   for (const field of fields) {
@@ -34,3 +34,5 @@ export function sync(manifest) {
 
   return synced;
 }
+
+exports.sync = sync;

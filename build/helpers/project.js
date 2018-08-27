@@ -1,8 +1,8 @@
-import * as path from "path";
-import * as fs from "fs";
-import * as crypto from "crypto";
-import * as TypeScript from "typescript";
-import * as TSLint from "tslint";
+const path = require("path");
+const fs = require("fs");
+const crypto = require("crypto");
+const TypeScript = require("typescript");
+const TSLint = require("tslint");
 
 /**
  * @typedef {Object} ScriptInfo
@@ -12,7 +12,7 @@ import * as TSLint from "tslint";
  * @property {TypeScript.ScriptKind} kind
  */
 
-export class Project {
+class Project {
   /**
    * @param {string} configFile
    * @param {TypeScript.DocumentRegistry} registry
@@ -334,6 +334,8 @@ class InMemoryLanguageServiceHost {
     this.files.delete(file);
   }
 }
+
+exports.Project = Project;
 
 /**
  * @param {string} file

@@ -24,7 +24,7 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {
-    "prepare": "node -r esm build/characters.js"
+    "prepare": "node build/characters.js"
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0"

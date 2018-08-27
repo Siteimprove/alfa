@@ -6,14 +6,18 @@
  * @param {Array<string>} endings
  * @return {Predicate}
  */
-export function endsWith(...endings) {
+function endsWith(...endings) {
   return input => endings.some(ending => input.endsWith(ending));
 }
+
+exports.endsWith = endsWith;
 
 /**
  * @param {Predicate} predicate
  * @return {Predicate}
  */
-export function not(predicate) {
+function not(predicate) {
   return input => !predicate(input);
 }
+
+exports.not = not;

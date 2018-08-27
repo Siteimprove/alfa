@@ -1,16 +1,16 @@
-import chalk from "chalk";
-import * as fs from "fs";
-import * as path from "path";
-import * as inspector from "inspector";
-import { Session } from "inspector";
-import * as sourceMap from "source-map";
-import { SourceMapConsumer } from "source-map";
+const { default: chalk } = require("chalk");
+const fs = require("fs");
+const path = require("path");
+const inspector = require("inspector");
+const { Session } = require("inspector");
+const sourceMap = require("source-map");
+const { SourceMapConsumer } = require("source-map");
 
-import * as notify from "./notify";
+const notify = require("./notify");
 
-import { Byte } from "./metrics/byte";
-import { Logical } from "./metrics/logical";
-import { Arithmetic } from "./metrics/arithmetic";
+const { Byte } = require("./metrics/byte");
+const { Logical } = require("./metrics/logical");
+const { Arithmetic } = require("./metrics/arithmetic");
 
 /**
  * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper

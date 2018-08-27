@@ -1,16 +1,16 @@
-import chalk from "chalk";
+const { default: chalk } = require("chalk");
 
-import { withExtension } from "../helpers/path";
-import { fork } from "../helpers/child-process";
-import * as notify from "../helpers/notify";
+const { withExtension } = require("../helpers/path");
+const { fork } = require("../helpers/child-process");
+const notify = require("../helpers/notify");
 
-import { build } from "./build";
+const { build } = require("./build");
 
 /**
  * @param {string} file
  * @return {boolean}
  */
-export function test(file) {
+function test(file) {
   if (build(file)) {
     const child = fork(withExtension(file, ".js"), [], {
       stdio: "inherit",
@@ -30,3 +30,5 @@ export function test(file) {
 
   return false;
 }
+
+exports.test = test;

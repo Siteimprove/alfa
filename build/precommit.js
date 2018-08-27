@@ -1,7 +1,7 @@
-import * as git from "./helpers/git";
-import * as notify from "./helpers/notify";
+const git = require("./helpers/git");
+const notify = require("./helpers/notify");
 
-import { format } from "./tasks/format";
+const { format } = require("./tasks/format");
 
 for (const file of git.getStagedFiles()) {
   if (format(file)) {

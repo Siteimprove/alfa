@@ -1,6 +1,6 @@
-import * as fs from "fs";
-import * as prettier from "prettier";
-import data from "mdn-browser-compat-data";
+const fs = require("fs");
+const prettier = require("prettier");
+const data = require("mdn-browser-compat-data");
 
 const include = ["chrome", "edge", "firefox", "ie", "opera", "safari"];
 
