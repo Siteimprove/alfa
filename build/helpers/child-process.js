@@ -11,12 +11,11 @@ const childProcess = require("child_process");
 
 /**
  * @typedef {Object} SpawnOptions
- * @property {string} [stdio]
+ * @property {"pipe" | "ignore" | "inherit"} [stdio]
  */
 
 /**
  * @typedef {Object} ForkOptions
- * @property {string} [stdio]
  * @property {string} [execPath]
  * @property {Array<string>} [execArgv]
  */
@@ -45,7 +44,7 @@ exports.spawn = spawn;
 /**
  * @param {string} module
  * @param {Array<string>} args
- * @param {ForkOptions} [options]
+ * @param {SpawnOptions & ForkOptions} [options]
  * @return {ChildProcess}
  */
 function fork(module, args, options = {}) {
