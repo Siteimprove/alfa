@@ -1,7 +1,7 @@
-import * as fs from "fs";
-import * as prettier from "prettier";
+const fs = require("fs");
+const prettier = require("prettier");
 
-import { fetch } from "../../../build/helpers/http";
+const { fetch } = require("../../../build/helpers/http");
 
 const registry = "https://www.iana.org/assignments/language-subtag-registry";
 

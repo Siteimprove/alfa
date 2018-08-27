@@ -1,10 +1,10 @@
-import * as path from "path";
-import * as fs from "fs";
-import * as TypeScript from "typescript";
-import * as TSLint from "tslint";
-import { Project } from "./project";
+const path = require("path");
+const fs = require("fs");
+const TypeScript = require("typescript");
+const TSLint = require("tslint");
+const { Project } = require("./project");
 
-export class Workspace {
+class Workspace {
   constructor() {
     /**
      * @private
@@ -73,12 +73,14 @@ export class Workspace {
   }
 }
 
+exports.Workspace = Workspace;
+
 /**
  * Shared workspace used between different tasks.
  *
  * @type {Workspace}
  */
-export const workspace = new Workspace();
+exports.workspace = new Workspace();
 
 /**
  * @param {string} directory

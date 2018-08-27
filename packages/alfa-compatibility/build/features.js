@@ -1,6 +1,6 @@
-import * as fs from "fs";
-import * as prettier from "prettier";
-import data from "mdn-browser-compat-data";
+const fs = require("fs");
+const prettier = require("prettier");
+const data = require("mdn-browser-compat-data");
 
 // This contains the list of features to generate definitions for from the MDN
 // browser compatibility data. To add more features, add an entry to the JSON

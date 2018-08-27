@@ -1,17 +1,27 @@
-import * as path from "path";
-import * as TypeScript from "typescript";
-import * as TSLint from "tslint";
-import chalk from "chalk";
+const path = require("path");
+const TypeScript = require("typescript");
+const TSLint = require("tslint");
+const { default: chalk } = require("chalk");
 
-import { writeFile } from "../helpers/file-system";
-import { workspace } from "../helpers/workspace";
-import * as notify from "../helpers/notify";
+const { writeFile } = require("../helpers/file-system");
+const { workspace } = require("../helpers/workspace");
+const notify = require("../helpers/notify");
 
 /**
  * @param {string} file
  * @return {boolean}
  */
-export function build(file) {
+function build(file) {
+  const diagnostics = workspace.diagnose(file);
+
+  if (diagnostics.length > 0) {
+    for (const diagnostic of diagnostics) {
+      notify.error(formatDiagnostic(diagnostic));
+    }
+
+    return false;
+  }
+
   const failures = workspace.lint(file);
 
   if (failures.length > 0) {
@@ -33,16 +43,6 @@ export function build(file) {
     }
   }
 
-  const diagnostics = workspace.diagnose(file);
-
-  if (diagnostics.length > 0) {
-    for (const diagnostic of diagnostics) {
-      notify.error(formatDiagnostic(diagnostic));
-    }
-
-    return false;
-  }
-
   const compiled = workspace.compile(file);
 
   for (const { name, text } of compiled) {
@@ -51,6 +51,8 @@ export function build(file) {
 
   return true;
 }
+
+exports.build = build;
 
 /**
  * @param {TypeScript.Diagnostic} diagnostic

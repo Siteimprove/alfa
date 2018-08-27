@@ -1,45 +1,55 @@
-import * as util from "util";
-import chalk from "chalk";
+const util = require("util");
+const { default: chalk } = require("chalk");
 
 /**
  * @param {string} format
  * @param {...any} args
  */
-export function success(format, ...args) {
+function success(format, ...args) {
   log(chalk.green, "\u2714", "success", format, ...args);
 }
 
+exports.success = success;
+
 /**
  * @param {string} format
  * @param {...any} args
  */
-export function error(format, ...args) {
+function error(format, ...args) {
   log(chalk.red, "\u2716", "error", format, ...args);
 }
 
+exports.error = error;
+
 /**
  * @param {string} format
  * @param {...any} args
  */
-export function warn(format, ...args) {
+function warn(format, ...args) {
   log(chalk.yellow, "\u26a0", "warning", format, ...args);
 }
 
-/**
- * @param {string} format
- * @param {...any} args
- */
-export function skip(format, ...args) {
-  log(chalk.gray, "\u2026", "skipped", format, ...args);
-}
+exports.warn = warn;
 
 /**
  * @param {string} format
  * @param {...any} args
  */
-export function watch(format, ...args) {
+function skip(format, ...args) {
+  log(chalk.gray, "\u2026", "skipped", format, ...args);
+}
+
+exports.skip = skip;
+
+/**
+ * @param {string} format
+ * @param {...any} args
+ */
+function watch(format, ...args) {
   log(chalk.yellow, "\u2026", "watching", format, ...args);
 }
+
+exports.watch = watch;
 
 /**
  * @param {typeof chalk} color

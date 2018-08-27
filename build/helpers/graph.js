@@ -1,4 +1,4 @@
-export class Graph {
+class Graph {
   constructor() {
     /** @type {Set<string>} */
     this.nodes = new Set();
@@ -120,3 +120,5 @@ export class Graph {
     return result;
   }
 }
+
+exports.Graph = Graph;

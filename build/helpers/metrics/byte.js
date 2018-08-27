@@ -1,4 +1,14 @@
-import { BlockCoverage, FunctionCoverage, Script } from "../coverage";
+/**
+ * @typedef {import("../coverage").Script} Script
+ */
+
+/**
+ * @typedef {import("../coverage").FunctionCoverage} FunctionCoverage
+ */
+
+/**
+ * @typedef {import("../coverage").BlockCoverage} BlockCoverage
+ */
 
 /**
  * @param {Script} script
@@ -20,7 +30,7 @@ function totalLength(script) {
   return total;
 }
 
-export const Byte = {
+const Byte = {
   /**
    * @param {Script} script
    */
@@ -56,3 +66,5 @@ export const Byte = {
     return ((end.offset - start.offset) / total) * 100;
   }
 };
+
+exports.Byte = Byte;

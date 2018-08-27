@@ -1,15 +1,15 @@
-import * as prettier from "prettier";
-import chalk from "chalk";
+const prettier = require("prettier");
+const { default: chalk } = require("chalk");
 
-import { readFile, writeFile } from "../helpers/file-system";
-import { stageFile, isStaged } from "../helpers/git";
-import * as notify from "../helpers/notify";
+const { readFile, writeFile } = require("../helpers/file-system");
+const { stageFile, isStaged } = require("../helpers/git");
+const notify = require("../helpers/notify");
 
 /**
  * @param {string} file
  * @return {boolean}
  */
-export function format(file) {
+function format(file) {
   const code = readFile(file);
 
   let formatted;
@@ -31,3 +31,5 @@ export function format(file) {
 
   return false;
 }
+
+exports.format = format;

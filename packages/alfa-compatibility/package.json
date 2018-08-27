@@ -24,7 +24,7 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "scripts": {
-    "prepare": "node -r esm build/features.js && node -r esm build/browsers.js"
+    "prepare": "node build/features.js && node build/browsers.js"
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0",

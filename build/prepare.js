@@ -1,10 +1,10 @@
-import { findFiles } from "./helpers/file-system";
-import { endsWith, not } from "./helpers/predicates";
-import { packages } from "./helpers/meta";
-import * as notify from "./helpers/notify";
+const { findFiles } = require("./helpers/file-system");
+const { endsWith, not } = require("./helpers/predicates");
+const { packages } = require("./helpers/meta");
+const notify = require("./helpers/notify");
 
-import { build } from "./tasks/build";
-import { clean } from "./tasks/clean";
+const { build } = require("./tasks/build");
+const { clean } = require("./tasks/clean");
 
 const files = findFiles("build", endsWith(".js"));
 

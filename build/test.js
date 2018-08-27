@@ -1,9 +1,9 @@
-import { findFiles } from "./helpers/file-system";
-import { endsWith } from "./helpers/predicates";
-import { packages } from "./helpers/meta";
-import * as notify from "./helpers/notify";
+const { findFiles } = require("./helpers/file-system");
+const { endsWith } = require("./helpers/predicates");
+const { packages } = require("./helpers/meta");
+const notify = require("./helpers/notify");
 
-import { test } from "./tasks/test";
+const { test } = require("./tasks/test");
 
 for (const pkg of packages) {
   const root = `packages/${pkg}/test`;

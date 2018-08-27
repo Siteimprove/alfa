@@ -1,5 +1,16 @@
-import { BlockCoverage, FunctionCoverage, Script } from "../coverage";
-import * as TypeScript from "typescript";
+const TypeScript = require("typescript");
+
+/**
+ * @typedef {import("../coverage").Script} Script
+ */
+
+/**
+ * @typedef {import("../coverage").FunctionCoverage} FunctionCoverage
+ */
+
+/**
+ * @typedef {import("../coverage").BlockCoverage} BlockCoverage
+ */
 
 /**
  * @param {String} source
@@ -82,7 +93,7 @@ function visit(node, depth = -1) {
   return total;
 }
 
-export const Arithmetic = {
+const Arithmetic = {
   /**
    * @param {Script} script
    * @param {BlockCoverage | FunctionCoverage} block
@@ -147,3 +158,5 @@ export const Arithmetic = {
     return (uncovered / total) * 100;
   }
 };
+
+exports.Arithmetic = Arithmetic;

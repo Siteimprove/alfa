@@ -1,15 +1,15 @@
 /// <reference path="../types/gaze.d.ts" />
 
-import * as path from "path";
-import * as fs from "fs";
-import gaze from "gaze";
-import * as git from "./git";
+const path = require("path");
+const fs = require("fs");
+const gaze = require("gaze");
+const git = require("./git");
 
 /**
  * @param {string} path
  * @return {boolean}
  */
-export function isFile(path) {
+function isFile(path) {
   try {
     return fs.statSync(path).isFile();
   } catch (err) {
@@ -17,20 +17,24 @@ export function isFile(path) {
   }
 }
 
+exports.isFile = isFile;
+
 /**
  * @param {string} file
  * @return {string}
  */
-export function readFile(file) {
+function readFile(file) {
   return fs.readFileSync(file, "utf8");
 }
+
+exports.readFile = readFile;
 
 /**
  * @param {string} file
  * @param {any} data
  * @return {void}
  */
-export function writeFile(file, data) {
+function writeFile(file, data) {
   makeDirectory(path.dirname(file));
 
   if (typeof data !== "string") {
@@ -40,13 +44,17 @@ export function writeFile(file, data) {
   fs.writeFileSync(file, data);
 }
 
+exports.writeFile = writeFile;
+
 /**
  * @param {string} file
  * @return {void}
  */
-export function removeFile(file) {
+function removeFile(file) {
   return fs.unlinkSync(file);
 }
+
+exports.removeFile = removeFile;
 
 /**
  * @param {string | Array<string>} directories
@@ -55,12 +63,7 @@ export function removeFile(file) {
  * @param {Set<string>} [visited]
  * @return {Array<string>}
  */
-export function findFiles(
-  directories,
-  predicate,
-  options = {},
-  visited = new Set()
-) {
+function findFiles(directories, predicate, options = {}, visited = new Set()) {
   /** @type {Array<string>} */
   const files = [];
 
@@ -97,12 +100,14 @@ export function findFiles(
   return files;
 }
 
+exports.findFiles = findFiles;
+
 /**
  * @param {string | Array<string>} pattern
  * @param {function(string, string)} listener
  * @param {{ gitIgnore?: boolean }} [options]
  */
-export function watchFiles(pattern, listener, options = {}) {
+function watchFiles(pattern, listener, options = {}) {
   /**
    * @param {string} event
    * @param {string} file
@@ -138,11 +143,13 @@ export function watchFiles(pattern, listener, options = {}) {
   });
 }
 
+exports.watchFiles = watchFiles;
+
 /**
  * @param {string} path
  * @return {boolean}
  */
-export function isDirectory(path) {
+function isDirectory(path) {
   try {
     return fs.statSync(path).isDirectory();
   } catch (err) {
@@ -150,19 +157,23 @@ export function isDirectory(path) {
   }
 }
 
+exports.isDirectory = isDirectory;
+
 /**
  * @param {string} directory
  * @return {object}
  */
-export function readDirectory(directory) {
+function readDirectory(directory) {
   return fs.readdirSync(directory);
 }
+
+exports.readDirectory = readDirectory;
 
 /**
  * @param {string} directory
  * @return {void}
  */
-export function makeDirectory(directory) {
+function makeDirectory(directory) {
   directory = path.resolve(directory);
 
   try {
@@ -179,11 +190,13 @@ export function makeDirectory(directory) {
   }
 }
 
+exports.makeDirectory = makeDirectory;
+
 /**
  * @param {string} directory
  * @return {void}
  */
-export function removeDirectory(directory) {
+function removeDirectory(directory) {
   if (!fs.existsSync(directory)) {
     return;
   }
@@ -200,3 +213,5 @@ export function removeDirectory(directory) {
 
   fs.rmdirSync(directory);
 }
+
+exports.removeDirectory = removeDirectory;
