@@ -25,9 +25,7 @@
   "types": "src/index.d.ts",
   "dependencies": {
     "@types/node": "^10.9.2",
-    "@types/source-map-support": "^0.4.1",
     "chalk": "^2.4.1",
-    "error-stack-parser": "^2.0.2",
-    "source-map-support": "^0.5.9"
+    "error-stack-parser": "^2.0.2"
   }
 }
