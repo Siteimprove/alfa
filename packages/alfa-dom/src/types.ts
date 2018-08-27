@@ -1,9 +1,32 @@
 export const enum NodeType {
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-node-element_node
+   */
   Element = 1,
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-node-text_node
+   */
   Text = 3,
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-node-comment_node
+   */
   Comment = 8,
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-node-document_node
+   */
   Document = 9,
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-node-document_type_node
+   */
   DocumentType = 10,
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-node-document_fragment_node
+   */
   DocumentFragment = 11
 }
 
@@ -110,6 +133,9 @@ export interface Text extends CharacterData {
  * @see https://www.w3.org/TR/dom/#interface-comment
  */
 export interface Comment extends CharacterData {
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-node-comment_node
+   */
   readonly nodeType: NodeType.Comment;
 }
 
@@ -121,6 +147,11 @@ export interface Document extends Node {
    * @see https://www.w3.org/TR/dom/#dom-node-document_node
    */
   readonly nodeType: NodeType.Document;
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-document-compatmode
+   */
+  readonly compatMode: "CSS1Compat" | "BackCompat";
 
   /**
    * @see https://www.w3.org/TR/cssom/#dom-document-stylesheets
@@ -184,14 +215,49 @@ export interface StyleDeclaration {
 }
 
 export const enum RuleType {
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-cssrule-style_rule
+   */
   Style = 1,
+
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-cssrule-import_rule
+   */
   Import = 3,
+
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-cssrule-media_rule
+   */
   Media = 4,
+
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-cssrule-font_face_rule
+   */
   FontFace = 5,
+
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-cssrule-page_rule
+   */
   Page = 6,
+
+  /**
+   * @see https://www.w3.org/TR/css-animations/#dom-cssrule-keyframes_rule
+   */
   Keyframes = 7,
+
+  /**
+   * @see https://www.w3.org/TR/css-animations/#dom-cssrule-keyframe_rule
+   */
   Keyframe = 8,
+
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-cssrule-namespace_rule
+   */
   Namespace = 10,
+
+  /**
+   * @see https://www.w3.org/TR/css-conditional/#dom-cssrule-supports_rule
+   */
   Supports = 12
 }
 
