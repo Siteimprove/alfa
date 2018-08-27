@@ -46,12 +46,12 @@ session.post("Profiler.startPreciseCoverage", {
   detailed: true
 });
 
-process.on("exit", code => {
+process.on("beforeExit", code => {
   if (code !== 0) {
     return;
   }
 
-  session.post("Profiler.takePreciseCoverage", (err, { result }) => {
+  session.post("Profiler.takePreciseCoverage", async (err, { result }) => {
     const spec = process.argv[1];
 
     const dir = path
@@ -67,7 +67,7 @@ process.on("exit", code => {
         continue;
       }
 
-      const script = parseScript(scriptCoverage);
+      const script = await parseScript(scriptCoverage);
 
       if (script === null) {
         continue;
@@ -152,9 +152,9 @@ process.on("exit", code => {
 
 /**
  * @param {inspector.Profiler.ScriptCoverage} scriptCoverage
- * @return {Script | null}
+ * @return {Promise<Script | null>}
  */
-function parseScript({ url, functions }) {
+async function parseScript({ url, functions }) {
   /** @type {Script} */
   const script = { base: path.dirname(url), sources: [], coverage: [] };
 
@@ -175,7 +175,7 @@ function parseScript({ url, functions }) {
     lines
   });
 
-  /** @type {SourceMapConsumer | null} */
+  /** @type {sourceMap.SourceMapConsumer | null} */
   let map = null;
   try {
     /** @type {sourceMap.RawSourceMap} */
@@ -194,7 +194,7 @@ function parseScript({ url, functions }) {
       });
     }
 
-    map = new SourceMapConsumer(rawMap);
+    map = await new SourceMapConsumer(rawMap);
   } catch (err) {}
 
   for (const coverage of functions) {
@@ -229,6 +229,10 @@ function parseScript({ url, functions }) {
     }
   }
 
+  if (map !== null) {
+    map.destroy();
+  }
+
   return script;
 }
 
@@ -255,7 +259,7 @@ function parseLines(input) {
 
 /**
  * @param {Script} script
- * @param {SourceMapConsumer | null} map
+ * @param {sourceMap.SourceMapConsumer | null} map
  * @param {inspector.Profiler.CoverageRange} range
  * @param {string} name
  * @return {FunctionCoverage | null}
@@ -276,7 +280,7 @@ function parseFunctionCoverage(script, map, range, name) {
 
 /**
  * @param {Script} script
- * @param {SourceMapConsumer | null} map
+ * @param {sourceMap.SourceMapConsumer | null} map
  * @param {inspector.Profiler.CoverageRange} range
  * @return {BlockCoverage | null}
  */
@@ -301,7 +305,7 @@ function parseBlockCoverage(script, map, range) {
 
 /**
  * @param {Script} script
- * @param {SourceMapConsumer | null} map
+ * @param {sourceMap.SourceMapConsumer | null} map
  * @param {inspector.Profiler.CoverageRange} range
  * @param {{ trim?: boolean }} [options]
  * @return {Range | null}
@@ -352,7 +356,7 @@ function parseRange(script, map, range, options = {}) {
 
 /**
  * @param {Script} script
- * @param {SourceMapConsumer | null} map
+ * @param {sourceMap.SourceMapConsumer | null} map
  * @param {number} offset
  * @return {Location | null}
  */
@@ -375,7 +379,7 @@ function getLocation(script, map, offset) {
 
 /**
  * @param {Script} script
- * @param {SourceMapConsumer} map
+ * @param {sourceMap.SourceMapConsumer} map
  * @param {number} offset
  * @param {Line} line
  * @return {Location | null}
@@ -385,6 +389,14 @@ function getOriginalLocation(script, map, offset, line) {
     line: line.index + 1,
     column: offset - line.start
   });
+
+  if (
+    position.source === null ||
+    position.line === null ||
+    position.column === null
+  ) {
+    return null;
+  }
 
   const source = script.sources.find(source => source.path === position.source);
 
