@@ -3,7 +3,7 @@ import { find } from "@siteimprove/alfa-util";
 import { jsx } from "../src/jsx";
 
 test("Transforms JSX into DOM nodes", t => {
-  const text: JSX.Text = {
+  const text = {
     nodeType: 3,
     data: "Hello world",
     childNodes: []
@@ -140,7 +140,7 @@ test("Constructs and attaches shadow roots from <shadow> elements", t => {
     </div>
   );
 
-  const text: JSX.Text = {
+  const text = {
     nodeType: 3,
     data: "I'm in the shadows!",
     childNodes: []
