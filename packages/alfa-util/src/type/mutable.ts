@@ -16,8 +16,10 @@ interface MutableSet<T> extends Set<Mutable<T>> {}
  */
 export type Mutable<T> = T extends Primitive | Function
   ? T
-  : T extends ReadonlyArray<infer U>
-    ? MutableArray<U>
-    : T extends ReadonlyMap<infer U, infer V>
-      ? MutableMap<U, V>
-      : T extends ReadonlySet<infer U> ? MutableSet<U> : MutableObject<T>;
+  : T extends Readonly<infer U>
+    ? U
+    : T extends ReadonlyArray<infer U>
+      ? MutableArray<U>
+      : T extends ReadonlyMap<infer U, infer V>
+        ? MutableMap<U, V>
+        : T extends ReadonlySet<infer U> ? MutableSet<U> : MutableObject<T>;
