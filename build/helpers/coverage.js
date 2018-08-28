@@ -90,13 +90,46 @@ process.on("beforeExit", code => {
           return (bp === undefined ? 0 : bp) - (ap === undefined ? 0 : ap);
         });
 
-      printCoverageStatistics(script, total);
+      if (process.env.npm_lifecycle_event === "start" && uncovered.length > 0) {
+        process.stdout.write(chalk.bold("\nSuggested blocks to cover\n"));
 
-      if (process.env.npm_lifecycle_event === "start") {
-        for (let i = 0, n = min(3, uncovered.length); i < n; i++) {
-          printCoverage(script, uncovered[i]);
+        const source = script.sources.find(
+          source => source.path === uncovered[0].range.start.path
+        );
+
+        if (source === undefined) {
+          return;
+        }
+
+        const filePath = path.relative(
+          process.cwd(),
+          path.resolve(script.base, source.path)
+        );
+
+        process.stdout.write(chalk.underline(`${filePath}\n`));
+
+        const numOfUncovered = min(3, uncovered.length);
+
+        const newUncovered = uncovered.slice(0, numOfUncovered).sort((a, b) => {
+          return a.range.start.line - b.range.start.line;
+        });
+        let endLineLength = 0;
+        if (newUncovered.length !== 0) {
+          endLineLength = newUncovered[
+            newUncovered.length - 1
+          ].range.end.line.toString().length;
+        }
+
+        for (let i = 0; i < numOfUncovered; i++) {
+          printBlockCoverage(script, newUncovered[i], endLineLength);
+
+          if (i + 1 < numOfUncovered) {
+            process.stdout.write(chalk.blue("...\n"));
+          }
         }
       }
+
+      printCoverageStatistics(script, total);
     }
   });
 });
@@ -321,6 +354,11 @@ function parseRange(script, map, range, options = {}) {
   startOffset = max(first.start, startOffset - header.length);
   endOffset = min(last.end, endOffset - header.length);
 
+  const uncovered = content.substring(startOffset, endOffset).trim();
+  if (isBlockBorder(uncovered) || uncovered === "") {
+    return null;
+  }
+
   if (options.trim === true) {
     while (
       isBlockBorder(content[startOffset]) ||
@@ -486,8 +524,9 @@ function printCoverageStatistics(script, total) {
 /**
  * @param {Script} script
  * @param {FunctionCoverage | BlockCoverage} coverage
+ * @param {Number} endLineLength
  */
-function printCoverage(script, coverage) {
+function printBlockCoverage(script, coverage, endLineLength) {
   // Skip all blocks that are covered at least once.
   if (coverage.count !== 0) {
     return;
@@ -501,12 +540,7 @@ function printCoverage(script, coverage) {
     return;
   }
 
-  const uncovered = source.content.substring(start.offset, end.offset);
-
-  const filePath = path.relative(
-    process.cwd(),
-    path.resolve(script.base, source.path)
-  );
+  let uncovered = source.content.substring(start.offset, end.offset);
 
   const above = `${source.lines[start.line - 1].value}`;
   const below = `${source.lines[end.line + 1].value}`;
@@ -514,20 +548,31 @@ function printCoverage(script, coverage) {
   const before = source.lines[start.line].value.slice(0, start.column);
   const after = source.lines[end.line].value.slice(end.column);
 
-  let output = `${chalk.bold("Suggested Block to Cover")}`;
-
-  output += `\n${chalk.dim(`${filePath}:${start.line + 1}`)}`;
-  output += "\n";
-
-  output += above.trim() === "" ? "" : `\n${above}`;
+  let output = above.trim() === "" ? "" : `\n${above}`;
   output += `\n${before}`;
 
-  output += `${chalk.bold.red(uncovered)}`;
-
+  output += `${chalk.red(uncovered)}`;
   output += `${after}\n`;
   output += below.trim() === "" ? "" : `${below}\n`;
 
-  process.stdout.write(`\n${output}\n`);
+  let split = output.split("\n");
+
+  let min = split.reduce((min, cur) => {
+    let count = cur.search(/\S/);
+    return count === -1 || count > min ? min : count;
+  }, Infinity);
+
+  let lineNum = start.line;
+
+  let mapped = split.map(cur => {
+    return cur.trim() === ""
+      ? ""
+      : `${" ".repeat(endLineLength - lineNum.toString().length)}${chalk.grey(
+          `${lineNum++}`
+        )}${" ".repeat(6 - start.line.toString().length)}${cur.substring(min)}`;
+  });
+
+  process.stdout.write(`${mapped.join("\n")}\n`);
 }
 
 /**
