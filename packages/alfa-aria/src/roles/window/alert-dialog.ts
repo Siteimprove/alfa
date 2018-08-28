@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Alert } from "../live-region/alert";
 import { Dialog } from "./dialog";
 
@@ -7,6 +7,7 @@ import { Dialog } from "./dialog";
  */
 export const AlertDialog: Role = {
   name: "alertdialog",
+  category: Category.Window,
   inherits: () => [Alert, Dialog],
   label: { from: ["author"], required: true }
 };

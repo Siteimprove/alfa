@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Widget } from "./widget";
 
 /**
@@ -7,7 +7,7 @@ import { Widget } from "./widget";
  */
 export const Composite: Role = {
   name: "composite",
-  abstract: true,
+  category: Category.Abstract,
   inherits: () => [Widget],
   supported: () => [Attributes.ActiveDescendant],
   label: { from: ["author"] }

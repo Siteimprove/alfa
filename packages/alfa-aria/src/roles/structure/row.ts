@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Widget } from "../abstract/widget";
 import { Grid } from "../widgets/grid";
 import { GridCell } from "../widgets/grid-cell";
@@ -16,6 +16,7 @@ import { Table } from "./table";
  */
 export const Row: Role = {
   name: "row",
+  category: Category.Structure,
   inherits: () => [Widget, Group],
   context: () => [Grid, RowGroup, Table, TreeGrid],
   owned: () => [Cell, ColumnHeader, GridCell, RowHeader],

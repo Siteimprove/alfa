@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Article } from "./article";
 import { List } from "./list";
 
@@ -7,6 +7,7 @@ import { List } from "./list";
  */
 export const Feed: Role = {
   name: "feed",
+  category: Category.Structure,
   inherits: () => [List],
   owned: () => [Article],
   label: { from: ["author"] }

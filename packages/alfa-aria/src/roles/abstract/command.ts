@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Widget } from "./widget";
 
 /**
@@ -6,7 +6,7 @@ import { Widget } from "./widget";
  */
 export const Command: Role = {
   name: "command",
-  abstract: true,
+  category: Category.Abstract,
   inherits: () => [Widget],
   label: { from: ["author"] }
 };

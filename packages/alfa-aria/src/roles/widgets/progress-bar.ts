@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Range } from "../abstract/range";
 
 /**
@@ -6,6 +6,7 @@ import { Range } from "../abstract/range";
  */
 export const ProgressBar: Role = {
   name: "progressbar",
+  category: Category.Widget,
   inherits: () => [Range],
   label: { from: ["author"], required: true }
 };

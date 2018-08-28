@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Landmark } from "../abstract/landmark";
 
 /**
@@ -6,6 +6,7 @@ import { Landmark } from "../abstract/landmark";
  */
 export const Search: Role = {
   name: "search",
+  category: Category.Landmark,
   inherits: () => [Landmark],
   label: { from: ["author"] }
 };

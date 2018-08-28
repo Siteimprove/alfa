@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Radio } from "./radio";
 
@@ -8,6 +8,7 @@ import { Radio } from "./radio";
  */
 export const RadioGroup: Role = {
   name: "radiogroup",
+  category: Category.Widget,
   inherits: () => [Select],
   owned: () => [Radio],
   supported: () => [Attributes.ReadOnly, Attributes.Required],

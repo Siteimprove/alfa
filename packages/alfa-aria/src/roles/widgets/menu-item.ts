@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Command } from "../abstract/command";
 import { Group } from "../structure/group";
 import { Menu } from "./menu";
@@ -10,6 +10,7 @@ import { MenuBar } from "./menu-bar";
  */
 export const MenuItem: Role = {
   name: "menuitem",
+  category: Category.Widget,
   inherits: () => [Command],
   context: () => [Group, Menu, MenuBar],
   supported: () => [Attributes.PositionInSet, Attributes.SetSize],

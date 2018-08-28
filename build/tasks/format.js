@@ -1,9 +1,7 @@
 const prettier = require("prettier");
-const { default: chalk } = require("chalk");
 
 const { readFile, writeFile } = require("../helpers/file-system");
 const { stageFile, isStaged } = require("../helpers/git");
-const notify = require("../helpers/notify");
 
 /**
  * @param {string} file
@@ -26,8 +24,6 @@ function format(file) {
 
     return true;
   }
-
-  notify.skip(chalk.gray(file));
 
   return false;
 }

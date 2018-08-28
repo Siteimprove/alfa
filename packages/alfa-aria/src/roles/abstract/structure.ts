@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Roletype } from "./roletype";
 
 /**
@@ -6,6 +6,6 @@ import { Roletype } from "./roletype";
  */
 export const Structure: Role = {
   name: "structure",
-  abstract: true,
+  category: Category.Abstract,
   inherits: () => [Roletype]
 };
