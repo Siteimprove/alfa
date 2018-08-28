@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Group } from "../structure/group";
 import { ListItem } from "../structure/list-item";
 import { Option } from "./option";
@@ -10,6 +10,7 @@ import { Tree } from "./tree";
  */
 export const TreeItem: Role = {
   name: "treeitem",
+  category: Category.Widget,
   inherits: () => [ListItem, Option],
   context: () => [Group, Tree],
   required: () => [Attributes.Selected],

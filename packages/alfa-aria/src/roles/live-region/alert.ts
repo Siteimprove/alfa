@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Section } from "../abstract/section";
 
 /**
@@ -6,6 +6,7 @@ import { Section } from "../abstract/section";
  */
 export const Alert: Role = {
   name: "alert",
+  category: Category.LiveRegion,
   inherits: () => [Section],
   label: { from: ["author"] }
 };

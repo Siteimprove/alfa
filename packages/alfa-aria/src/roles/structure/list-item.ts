@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Section } from "../abstract/section";
 import { Group } from "./group";
 import { List } from "./list";
@@ -9,6 +9,7 @@ import { List } from "./list";
  */
 export const ListItem: Role = {
   name: "listitem",
+  category: Category.Structure,
   inherits: () => [Section],
   context: () => [Group, List],
   supported: () => [

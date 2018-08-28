@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Option } from "./option";
 
@@ -8,6 +8,7 @@ import { Option } from "./option";
  */
 export const ListBox: Role = {
   name: "listbox",
+  category: Category.Widget,
   inherits: () => [Select],
   owned: () => [Option],
   required: () => [Attributes.Selected],

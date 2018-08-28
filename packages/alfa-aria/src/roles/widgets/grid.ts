@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Composite } from "../abstract/composite";
 import { Row } from "../structure/row";
 import { RowGroup } from "../structure/row-group";
@@ -10,6 +10,7 @@ import { Table } from "../structure/table";
  */
 export const Grid: Role = {
   name: "grid",
+  category: Category.Widget,
   inherits: () => [Composite, Table],
   owned: () => [Row, [RowGroup, Row]],
   supported: () => [

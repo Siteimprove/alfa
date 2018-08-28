@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { List } from "./list";
 
 /**
@@ -6,6 +6,7 @@ import { List } from "./list";
  */
 export const Directory: Role = {
   name: "directory",
+  category: Category.Structure,
   inherits: () => [List],
   label: { from: ["author"] }
 };

@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Command } from "../abstract/command";
 
 /**
@@ -7,6 +7,7 @@ import { Command } from "../abstract/command";
  */
 export const Button: Role = {
   name: "button",
+  category: Category.Widget,
   inherits: () => [Command],
   supported: () => [Attributes.Expanded, Attributes.Pressed],
   label: { from: ["contents", "author"], required: true }

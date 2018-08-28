@@ -72,15 +72,46 @@ export type Attribute = Readonly<{
 export type Aspect<T> = (element: Element, context: Node) => T;
 
 /**
+ * @see https://www.w3.org/TR/wai-aria/#roles_categorization
+ */
+export const enum Category {
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#abstract_roles
+   */
+  Abstract,
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#widget_roles
+   */
+  Widget,
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#document_structure_roles
+   */
+  Structure,
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#landmark_roles
+   */
+  Landmark,
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#live_region_roles
+   */
+  LiveRegion,
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#window_roles
+   */
+  Window
+}
+
+/**
  * @see https://www.w3.org/TR/wai-aria/#dfn-role
  */
 export type Role = Readonly<{
   name: string;
-
-  /**
-   * @see https://www.w3.org/TR/wai-aria/#isAbstract
-   */
-  abstract?: true;
+  category: Category | Aspect<Category>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#namecalculation

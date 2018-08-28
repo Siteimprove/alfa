@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Range } from "../abstract/range";
 
 /**
@@ -7,6 +7,7 @@ import { Range } from "../abstract/range";
  */
 export const ScrollBar: Role = {
   name: "scrollbar",
+  category: Category.Widget,
   inherits: () => [Range],
   supported: () => [
     Attributes.Controls,

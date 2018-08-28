@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { SectionHead } from "../abstract/section-head";
 import { GridCell } from "../widgets/grid-cell";
 import { Cell } from "./cell";
@@ -10,6 +10,7 @@ import { Row } from "./row";
  */
 export const RowHeader: Role = {
   name: "rowheader",
+  category: Category.Structure,
   inherits: () => [Cell, GridCell, SectionHead],
   context: () => [Row],
   supported: () => [Attributes.Sort],

@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Section } from "../abstract/section";
 import { Group } from "./group";
 import { ListItem } from "./list-item";
@@ -8,6 +8,7 @@ import { ListItem } from "./list-item";
  */
 export const List: Role = {
   name: "list",
+  category: Category.Structure,
   inherits: () => [Section],
   owned: () => [ListItem, [Group, ListItem]],
   label: { from: ["author"] }
