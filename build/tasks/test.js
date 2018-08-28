@@ -17,6 +17,8 @@ function test(file) {
       execArgv: [
         ...process.execArgv,
         "--require",
+        require.resolve("source-map-support/register"),
+        "--require",
         require.resolve("../helpers/coverage")
       ]
     });

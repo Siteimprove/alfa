@@ -316,7 +316,7 @@ export const Features: { [P in FeatureName]: Feature } = {
   "css.properties.color.alpha_hexadecimal_notation": {
     support: {
       chrome: {
-        added: "63"
+        added: "62"
       },
       firefox: {
         added: "49"
@@ -376,6 +376,9 @@ export const Features: { [P in FeatureName]: Feature } = {
   },
   "css.properties.font-weight.number": {
     support: {
+      chrome: {
+        added: "62"
+      },
       firefox: {
         added: "61"
       }

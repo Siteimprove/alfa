@@ -28,10 +28,10 @@
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0",
-    "browserslist": "^4.0.2"
+    "browserslist": "^4.1.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "mdn-browser-compat-data": "0.0.47"
+    "mdn-browser-compat-data": "0.0.48"
   }
 }

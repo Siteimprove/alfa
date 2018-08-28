@@ -91,7 +91,7 @@ export type Token =
   | Character
   | Comment;
 
-export interface AlphabetState {
+interface State {
   doctype: Mutable<Doctype> | null;
   tag: Mutable<StartTag | EndTag> | null;
   startTag: Mutable<StartTag | EndTag> | null;
@@ -114,7 +114,7 @@ export interface AlphabetState {
   characterReferenceCode: number;
 }
 
-export type Pattern = Lang.Pattern<Token, AlphabetState>;
+type Pattern = Lang.Pattern<Token, State>;
 
 /**
  * 8.2.4.1
@@ -2386,7 +2386,7 @@ const characterReferenceEnd: Pattern = (stream, emit, state) => {
   return state.returnState!;
 };
 
-export const Alphabet: Lang.Alphabet<Token, AlphabetState> = new Lang.Alphabet(
+export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
   data,
   () => ({
     doctype: null,
