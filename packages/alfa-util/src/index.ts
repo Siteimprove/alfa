@@ -14,5 +14,7 @@ export * from "./object/values";
 
 export * from "./set/intersect";
 
+export * from "./type/immutable";
 export * from "./type/mutable";
 export * from "./type/predicate";
+export * from "./type/primitive";
