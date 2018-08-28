@@ -113,9 +113,15 @@ process.on("beforeExit", code => {
         const newUncovered = uncovered.slice(0, numOfUncovered).sort((a, b) => {
           return a.range.start.line - b.range.start.line;
         });
+        let endLineLength = 0;
+        if (newUncovered.length !== 0) {
+          endLineLength = newUncovered[
+            newUncovered.length - 1
+          ].range.end.line.toString().length;
+        }
 
         for (let i = 0; i < numOfUncovered; i++) {
-          printBlockCoverage(script, newUncovered[i]);
+          printBlockCoverage(script, newUncovered[i], endLineLength);
 
           if (i + 1 < numOfUncovered) {
             process.stdout.write(chalk.blue("...\n"));
@@ -518,8 +524,9 @@ function printCoverageStatistics(script, total) {
 /**
  * @param {Script} script
  * @param {FunctionCoverage | BlockCoverage} coverage
+ * @param {Number} endLineLength
  */
-function printBlockCoverage(script, coverage) {
+function printBlockCoverage(script, coverage, endLineLength) {
   // Skip all blocks that are covered at least once.
   if (coverage.count !== 0) {
     return;
@@ -560,11 +567,9 @@ function printBlockCoverage(script, coverage) {
   let mapped = split.map(cur => {
     return cur.trim() === ""
       ? ""
-      : `${" ".repeat(
-          end.line.toString().length - lineNum.toString().length
-        )}${chalk.grey(`${lineNum++}`)}${" ".repeat(
-          6 - start.line.toString().length
-        )}${cur.substring(min)}`;
+      : `${" ".repeat(endLineLength - lineNum.toString().length)}${chalk.grey(
+          `${lineNum++}`
+        )}${" ".repeat(6 - start.line.toString().length)}${cur.substring(min)}`;
   });
 
   process.stdout.write(`${mapped.join("\n")}\n`);
