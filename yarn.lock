@@ -14,13 +14,9 @@
   version "10.3.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.4.tgz#c74e8aec19e555df44609b8057311052a2c84d9e"
 
-"@types/node@^10.5.2":
-  version "10.5.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.2.tgz#f19f05314d5421fe37e74153254201a7bf00a707"
-
-"@types/node@^10.5.5":
-  version "10.5.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.5.tgz#8e84d24e896cd77b0d4f73df274027e3149ec2ba"
+"@types/node@^10.9.2":
+  version "10.9.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.2.tgz#f0ab8dced5cd6c56b26765e1c0d9e4fdcc9f2a00"
 
 "@types/prettier@^1.13.2":
   version "1.13.2"
@@ -36,12 +32,6 @@
 "@types/sjcl@^1.0.28":
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/@types/sjcl/-/sjcl-1.0.28.tgz#4693eb6943e385e844a70fb25b4699db286c7214"
-
-"@types/source-map-support@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@types/source-map-support/-/source-map-support-0.4.1.tgz#ad77158e8c6695a16629ef82b9fb9dfe7c610ac0"
-  dependencies:
-    "@types/node" "*"
 
 agent-base@^4.1.0:
   version "4.2.0"
@@ -106,12 +96,12 @@ brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
-browserslist@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.0.2.tgz#294388f5844bb3ab15ef7394ca17f49bf7a4e6f1"
+browserslist@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.1.0.tgz#81cbb8e52dfa09918f93c6e051d779cb7360785d"
   dependencies:
-    caniuse-lite "^1.0.30000876"
-    electron-to-chromium "^1.3.57"
+    caniuse-lite "^1.0.30000878"
+    electron-to-chromium "^1.3.61"
     node-releases "^1.0.0-alpha.11"
 
 buffer-from@^1.0.0:
@@ -122,9 +112,9 @@ builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
 
-caniuse-lite@^1.0.30000876:
-  version "1.0.30000876"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000876.tgz#69fc1b696a35fd91089061aa916f677ee7057ada"
+caniuse-lite@^1.0.30000878:
+  version "1.0.30000878"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000878.tgz#c644c39588dd42d3498e952234c372e5a40a4123"
 
 chalk@^1.1.3:
   version "1.1.3"
@@ -195,9 +185,9 @@ diff@^3.2.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
 
-electron-to-chromium@^1.3.57:
-  version "1.3.57"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.57.tgz#61b2446f16af26fb8873210007a7637ad644c82d"
+electron-to-chromium@^1.3.61:
+  version "1.3.61"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.61.tgz#a8ac295b28d0f03d85e37326fd16b6b6b17a1795"
 
 error-stack-parser@^2.0.2:
   version "2.0.2"
@@ -306,9 +296,9 @@ husky@^0.14.3:
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
 
-ignore@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.3.tgz#e2d58c9654d75b542529fa28d80ac95b29e4f467"
+ignore@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.0.2.tgz#42ae2651beb40c8c53b1e16b2af1c8387d492f88"
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -350,9 +340,9 @@ lodash@^4.17.4, lodash@~4.17.10:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
-mdn-browser-compat-data@0.0.47:
-  version "0.0.47"
-  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-0.0.47.tgz#ffc1d0375a8ee6d0f0f892926b2bb918b56c6b44"
+mdn-browser-compat-data@0.0.48:
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-0.0.48.tgz#8e818f55d767e6317e5a096af407117352f490cc"
   dependencies:
     extend "3.0.1"
 
@@ -412,9 +402,9 @@ platform@^1.3.3:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/platform/-/platform-1.3.5.tgz#fb6958c696e07e2918d2eeda0f0bc9448d733444"
 
-prettier@1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.0.tgz#847c235522035fd988100f1f43cf20a7d24f9372"
+prettier@1.14.2:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.2.tgz#0ac1c6e1a90baa22a62925f41963c841983282f9"
 
 process-nextick-args@~2.0.0:
   version "2.0.0"
@@ -428,9 +418,9 @@ proxy-from-env@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.0.0.tgz#33c50398f70ea7eb96d21f7b817630a55791c7ee"
 
-puppeteer@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.6.1.tgz#ae50021bf8b2172be8f8d79224bec215f1a0c7c7"
+puppeteer@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.7.0.tgz#edcba2300a50847202c0f19fd15e7a96171ff3bd"
   dependencies:
     debug "^3.1.0"
     extract-zip "^1.6.6"
@@ -477,9 +467,9 @@ sjcl@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/sjcl/-/sjcl-1.0.7.tgz#32b365a50dc9bba26b88ba3c9df8ea34217d9f45"
 
-source-map-support@^0.5.6:
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.6.tgz#4435cee46b1aab62b8e8610ce60f788091c51c13"
+source-map-support@^0.5.9:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.9.tgz#41bc953b2534267ea2d605bccfa7bfa3111ced5f"
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"

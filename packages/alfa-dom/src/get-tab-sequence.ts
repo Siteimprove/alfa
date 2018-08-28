@@ -11,21 +11,27 @@ import { Element, Node } from "./types";
  */
 export function getTabSequence(
   node: Node,
-  context: Node
+  context: Node,
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): ReadonlyArray<Element> {
   const result: Array<Element> = [];
 
-  traverseNode(node, context, {
-    enter(node) {
-      if (isElement(node)) {
-        const index = getTabIndex(node);
+  traverseNode(
+    node,
+    context,
+    {
+      enter(node) {
+        if (isElement(node)) {
+          const index = getTabIndex(node);
 
-        if (index !== null && index >= 0) {
-          result.splice(indexWithin(result, node), 0, node);
+          if (index !== null && index >= 0) {
+            result.splice(indexWithin(result, node), 0, node);
+          }
         }
       }
-    }
-  });
+    },
+    options
+  );
 
   return result;
 }

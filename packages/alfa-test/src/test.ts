@@ -1,9 +1,6 @@
 import * as assert from "assert";
-import * as maps from "source-map-support";
 import { format } from "./format";
 import { Assertions } from "./types";
-
-maps.install();
 
 export async function test(
   name: string,
