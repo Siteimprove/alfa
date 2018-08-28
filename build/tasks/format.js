@@ -1,6 +1,4 @@
-const { default: chalk } = require("chalk");
 const prettier = require("prettier");
-const notify = require("../helpers/notify");
 
 const { readFile, writeFile } = require("../helpers/file-system");
 const { stageFile, isStaged } = require("../helpers/git");
@@ -25,10 +23,6 @@ function format(file) {
     }
 
     return true;
-  }
-
-  if (process.env.CI !== "true") {
-    notify.skip(chalk.gray(file));
   }
 
   return false;
