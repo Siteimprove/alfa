@@ -6,12 +6,18 @@ const { default: chalk } = require("chalk");
 const { writeFile } = require("../helpers/file-system");
 const { workspace } = require("../helpers/workspace");
 const notify = require("../helpers/notify");
+const { format } = require("./format");
 
 /**
  * @param {string} file
  * @return {boolean}
  */
 function build(file) {
+  if (process.env.CI === "true" && format(file)) {
+    notify.error(`${chalk.gray(file)}: File has not been formatted`);
+    return false;
+  }
+
   const diagnostics = workspace.diagnose(file);
 
   if (diagnostics.length > 0) {
