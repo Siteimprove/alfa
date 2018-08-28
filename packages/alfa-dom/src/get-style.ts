@@ -11,7 +11,7 @@ import {
   Style,
   TokenType
 } from "@siteimprove/alfa-css";
-import { keys, Mutable, union } from "@siteimprove/alfa-util";
+import { keys, Mutable } from "@siteimprove/alfa-util";
 import { getAttribute } from "./get-attribute";
 import { getCascade } from "./get-cascade";
 import { getParentElement } from "./get-parent-element";
@@ -152,7 +152,11 @@ export function getSpecifiedStyle(
 
   const cascadedStyle = getCascadedStyle(element, context, options);
 
-  const propertyNames = union(keys(cascadedStyle), keys(parentStyle));
+  const propertyNames = new Set(keys(cascadedStyle));
+
+  for (const propertyName of keys(parentStyle)) {
+    propertyNames.add(propertyName);
+  }
 
   const getParentProperty: PropertyGetter<Stage.Computed> = propertyName => {
     return parentStyle[propertyName];
