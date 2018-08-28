@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Section } from "../abstract/section";
 
 /**
@@ -7,6 +7,7 @@ import { Section } from "../abstract/section";
  */
 export const Group: Role = {
   name: "group",
+  category: Category.Structure,
   inherits: () => [Section],
   supported: () => [Attributes.ActiveDescendant],
   label: { from: ["author"] }

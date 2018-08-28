@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Structure } from "./structure";
 
 /**
@@ -7,7 +7,7 @@ import { Structure } from "./structure";
  */
 export const SectionHead: Role = {
   name: "sectionhead",
-  abstract: true,
+  category: Category.Abstract,
   inherits: () => [Structure],
   supported: () => [Attributes.Expanded],
   label: { from: ["contents", "author"] }

@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Checkbox } from "./checkbox";
 
 /**
@@ -7,6 +7,7 @@ import { Checkbox } from "./checkbox";
  */
 export const Switch: Role = {
   name: "switch",
+  category: Category.Widget,
   inherits: () => [Checkbox],
   required: () => [Attributes.Checked],
   label: { from: ["contents", "author"], required: true }

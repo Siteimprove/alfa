@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Group } from "../structure/group";
 import { Menu } from "./menu";
 import { MenuBar } from "./menu-bar";
@@ -10,6 +10,7 @@ import { Radio } from "./radio";
  */
 export const MenuItemRadio: Role = {
   name: "menuitemradio",
+  category: Category.Widget,
   inherits: () => [Radio, MenuItem],
   context: () => [Group, Menu, MenuBar],
   label: { from: ["contents", "author"], required: true }

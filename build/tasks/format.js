@@ -1,9 +1,9 @@
-const prettier = require("prettier");
 const { default: chalk } = require("chalk");
+const prettier = require("prettier");
+const notify = require("../helpers/notify");
 
 const { readFile, writeFile } = require("../helpers/file-system");
 const { stageFile, isStaged } = require("../helpers/git");
-const notify = require("../helpers/notify");
 
 /**
  * @param {string} file

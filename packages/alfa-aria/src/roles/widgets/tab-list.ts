@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Composite } from "../abstract/composite";
 import { Tab } from "./tab";
 
@@ -8,6 +8,7 @@ import { Tab } from "./tab";
  */
 export const TabList: Role = {
   name: "tablist",
+  category: Category.Widget,
   inherits: () => [Composite],
   owned: () => [Tab],
   supported: () => [

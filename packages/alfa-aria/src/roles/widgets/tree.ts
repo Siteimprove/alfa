@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Group } from "../structure/group";
 import { TreeItem } from "./tree-item";
@@ -9,6 +9,7 @@ import { TreeItem } from "./tree-item";
  */
 export const Tree: Role = {
   name: "tree",
+  category: Category.Widget,
   inherits: () => [Select],
   owned: () => [TreeItem, [Group, TreeItem]],
   supported: () => [Attributes.Multiselectable, Attributes.Required],

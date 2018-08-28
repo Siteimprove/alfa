@@ -3,10 +3,10 @@ import {
   isBrowserSupported
 } from "@siteimprove/alfa-compatibility";
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+import { Option, values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
 import * as Roles from "./roles";
-import { Role } from "./types";
+import { Category, Role } from "./types";
 
 const whitespace = /\s+/;
 
@@ -27,7 +27,7 @@ const roles = values(Roles);
 export function getRole(
   element: Element,
   context: Node
-): Role | null | BrowserSpecific<Role | null> {
+): Option<Role> | BrowserSpecific<Option<Role>> {
   const value = getAttribute(element, "role", { trim: true });
 
   let role: BrowserSpecific<string | null>;
@@ -64,7 +64,7 @@ export function getRole(
         for (const name of role.split(whitespace)) {
           const role = roles.find(role => role.name === name);
 
-          if (role !== undefined && role.abstract !== true) {
+          if (role !== undefined && role.category !== Category.Abstract) {
             return role;
           }
         }
