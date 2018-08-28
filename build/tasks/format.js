@@ -27,7 +27,9 @@ function format(file) {
     return true;
   }
 
-  notify.skip(chalk.gray(file));
+  if (process.env.CI !== "true") {
+    notify.skip(chalk.gray(file));
+  }
 
   return false;
 }

@@ -25,8 +25,7 @@
     "test": "node build/test.js",
     "start": "node build/start.js",
     "prepublish": "node build/prepublish.js",
-    "precommit": "node build/precommit.js",
-    "style-check": "node build/style-check.js"
+    "precommit": "node build/precommit.js"
   },
   "workspaces": [
     "packages/*"
