@@ -23,6 +23,10 @@
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
   "dependencies": {
     "@types/node": "^10.9.2",
     "chalk": "^2.4.1",
