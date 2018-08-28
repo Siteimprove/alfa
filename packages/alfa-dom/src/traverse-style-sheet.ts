@@ -2,9 +2,9 @@ import { RuleVisitor, traverseRule } from "./traverse-rule";
 import { StyleSheet } from "./types";
 
 /**
- * Given a style sheet, perform a preorder, depth-first traversal of the rules
- * of the style sheet, invoking the visitors for all of its children. A visitor
- * may return `false` in order to stop the traversal, resulting in the function
+ * Given a style sheet, perform a depth-first traversal of the rules of the
+ * style sheet, invoking the visitors for all of its children. A visitor may
+ * return `false` in order to stop the traversal, resulting in the function
  * itself returning `false`. If traversal finishes without interruption, `true`
  * is returned.
  *
