@@ -88,9 +88,13 @@ process.on("beforeExit", code => {
           const bp = blocks.get(b);
 
           return (bp === undefined ? 0 : bp) - (ap === undefined ? 0 : ap);
+        })
+        .slice(0, 3)
+        .sort((a, b) => {
+          return a.range.start.line - b.range.start.line;
         });
 
-      if (process.env.npm_lifecycle_event === "start" && uncovered.length > 0) {
+      if (uncovered.length > 0 && process.env.npm_lifecycle_event === "start") {
         process.stdout.write(chalk.bold("\nSuggested blocks to cover\n"));
 
         const source = script.sources.find(
@@ -108,24 +112,18 @@ process.on("beforeExit", code => {
 
         process.stdout.write(chalk.underline(`${filePath}\n`));
 
-        const numOfUncovered = min(3, uncovered.length);
+        const widths = {
+          // Make the gutter width as wide as the line number of the last line
+          gutter: uncovered[uncovered.length - 1].range.end.line.toString()
+            .length
+        };
 
-        const newUncovered = uncovered.slice(0, numOfUncovered).sort((a, b) => {
-          return a.range.start.line - b.range.start.line;
-        });
-        let endLineLength = 0;
-        if (newUncovered.length !== 0) {
-          endLineLength = newUncovered[
-            newUncovered.length - 1
-          ].range.end.line.toString().length;
-        }
-
-        for (let i = 0; i < numOfUncovered; i++) {
-          printBlockCoverage(script, newUncovered[i], endLineLength);
-
-          if (i + 1 < numOfUncovered) {
-            process.stdout.write(chalk.blue("...\n"));
+        for (let i = 0, n = uncovered.length; i < n; i++) {
+          if (i !== 0) {
+            process.stdout.write(chalk.blue(`${"\u00b7".repeat(3)}\n`));
           }
+
+          printBlockCoverage(script, uncovered[i], widths);
         }
       }
 
@@ -355,6 +353,7 @@ function parseRange(script, map, range, options = {}) {
   endOffset = min(last.end, endOffset - header.length);
 
   const uncovered = content.substring(startOffset, endOffset).trim();
+
   if (isBlockBorder(uncovered) || uncovered === "") {
     return null;
   }
@@ -524,14 +523,9 @@ function printCoverageStatistics(script, total) {
 /**
  * @param {Script} script
  * @param {FunctionCoverage | BlockCoverage} coverage
- * @param {Number} endLineLength
+ * @param {{ gutter: number }} widths
  */
-function printBlockCoverage(script, coverage, endLineLength) {
-  // Skip all blocks that are covered at least once.
-  if (coverage.count !== 0) {
-    return;
-  }
-
+function printBlockCoverage(script, coverage, widths) {
   const { start, end } = coverage.range;
 
   const source = script.sources.find(source => source.path === start.path);
@@ -540,7 +534,9 @@ function printBlockCoverage(script, coverage, endLineLength) {
     return;
   }
 
-  let uncovered = source.content.substring(start.offset, end.offset);
+  let uncovered = source.content
+    .substring(start.offset, end.offset)
+    .replace(/[^\s]+/g, word => chalk.red(word));
 
   const above = `${source.lines[start.line - 1].value}`;
   const below = `${source.lines[end.line + 1].value}`;
@@ -548,31 +544,50 @@ function printBlockCoverage(script, coverage, endLineLength) {
   const before = source.lines[start.line].value.slice(0, start.column);
   const after = source.lines[end.line].value.slice(end.column);
 
-  let output = above.trim() === "" ? "" : `\n${above}`;
-  output += `\n${before}`;
+  let output = "";
+  let offset = start.line;
 
-  output += `${chalk.red(uncovered)}`;
-  output += `${after}\n`;
-  output += below.trim() === "" ? "" : `${below}\n`;
+  if (above.trim() !== "") {
+    output += `${above}\n`;
 
-  let split = output.split("\n");
+    // Decrement the offset as we've added an additional line.
+    offset--;
+  }
 
-  let min = split.reduce((min, cur) => {
-    let count = cur.search(/\S/);
-    return count === -1 || count > min ? min : count;
-  }, Infinity);
+  output += `${before}${uncovered}${after}`;
 
-  let lineNum = start.line;
+  if (below.trim() !== "") {
+    output += `\n${below}`;
+  }
 
-  let mapped = split.map(cur => {
-    return cur.trim() === ""
-      ? ""
-      : `${" ".repeat(endLineLength - lineNum.toString().length)}${chalk.grey(
-          `${lineNum++}`
-        )}${" ".repeat(6 - start.line.toString().length)}${cur.substring(min)}`;
-  });
+  const lines = output.split("\n");
 
-  process.stdout.write(`${mapped.join("\n")}\n`);
+  output = lines
+    .map((line, i) => {
+      const lineNo = (offset + i + 1).toString();
+
+      const padding = {
+        gutter: " ".repeat(widths.gutter - lineNo.length)
+      };
+
+      line = line.replace(/\s/g, whitespace => {
+        switch (whitespace) {
+          case " ":
+            return chalk.gray.dim("\u00b7");
+          case "\t":
+            return chalk.gray.dim("\u00bb");
+        }
+
+        return whitespace;
+      });
+
+      const eol = chalk.gray.dim("\u00ac");
+
+      return `${padding.gutter}${chalk.grey(lineNo)} ${line}${eol}`;
+    })
+    .join("\n");
+
+  process.stdout.write(`\n${output}\n\n`);
 }
 
 /**
