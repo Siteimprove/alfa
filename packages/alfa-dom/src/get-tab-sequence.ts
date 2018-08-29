@@ -22,10 +22,10 @@ export function getTabSequence(
     {
       enter(node) {
         if (isElement(node)) {
-          const index = getTabIndex(node);
+          const index = getTabIndex(node, context);
 
           if (index !== null && index >= 0) {
-            result.splice(indexWithin(result, node), 0, node);
+            result.splice(indexWithin(result, node, context), 0, node);
           }
         }
       }
@@ -36,11 +36,11 @@ export function getTabSequence(
   return result;
 }
 
-function indexWithin(array: Array<Element>, element: Element) {
+function indexWithin(array: Array<Element>, element: Element, context: Node) {
   let lower = 0;
   let upper = array.length;
 
-  const reference = getTabIndex(element) as number;
+  const reference = getTabIndex(element, context) as number;
 
   if (reference === 0) {
     return upper;
@@ -48,7 +48,7 @@ function indexWithin(array: Array<Element>, element: Element) {
 
   while (lower < upper) {
     const middle = (lower + (upper - lower) / 2) | 0;
-    const other = getTabIndex(array[middle]) as number;
+    const other = getTabIndex(array[middle], context) as number;
 
     if (other <= reference && other !== 0) {
       lower = middle + 1;
