@@ -11,5 +11,6 @@ export * from "./has-name-from";
 export * from "./has-text-alternative";
 export * from "./is-landmark";
 export * from "./is-visible";
+export * from "./is-widget";
 export * from "./resolve-references";
 export * from "./types";
