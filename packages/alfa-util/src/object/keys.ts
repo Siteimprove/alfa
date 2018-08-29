@@ -6,6 +6,6 @@
  * to use this function with anything but the most specific type of a given
  * object!
  */
-export function keys<T, K extends keyof T>(target: T): Array<K> {
-  return Object.keys(target) as Array<K>;
+export function keys<T>(target: T): Array<keyof T> {
+  return Object.keys(target) as Array<keyof T>;
 }
