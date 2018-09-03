@@ -28,6 +28,7 @@ export function expand(element: Scalar | List | Dictionary): List {
 
 /**
  * @see https://www.w3.org/TR/json-ld-api/#expansion-algorithm
+ *
  * @internal
  */
 export function expandElement(

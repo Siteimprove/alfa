@@ -5,6 +5,8 @@ const relativeIri = /^\/\//;
 
 /**
  * @see https://www.w3.org/TR/json-ld-api/#dfn-relative-iri
+ *
+ * @internal
  */
 export function isRelativeIri(url: string): boolean {
   return relativeIri.test(url);

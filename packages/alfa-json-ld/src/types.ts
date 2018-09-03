@@ -16,30 +16,18 @@ export type Keyword =
   | "@vocab"
   | "@graph";
 
-/**
- * @see https://www.w3.org/TR/json-ld-api/#dfn-scalar
- */
 export type Scalar = string | number | boolean;
 
-/**
- * @see https://www.w3.org/TR/json-ld-api/#dfn-list
- */
 export type List = Array<Scalar | Dictionary | null>;
 
 export interface Dictionary {
   readonly [key: string]: Scalar | List | Dictionary | null | undefined;
 }
 
-/**
- * @see https://www.w3.org/TR/json-ld-api/#dfn-list-object
- */
 export interface ListObject extends Dictionary {
   readonly "@list"?: List;
 }
 
-/**
- * @see https://www.w3.org/TR/json-ld-api/#dfn-value-object
- */
 export interface ValueObject extends Dictionary {
   readonly "@value"?: Scalar;
 }
