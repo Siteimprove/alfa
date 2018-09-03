@@ -7,6 +7,7 @@ import {
   querySelectorAll
 } from "../../../packages/alfa-dom";
 import { Scraper } from "../../../packages/alfa-scrape";
+import { values } from "../../../packages/alfa-util";
 import { Rules } from "../../../packages/alfa-wcag";
 
 import { removeDirectory, writeFile } from "../../../build/helpers/file-system";
@@ -22,7 +23,7 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
   for (const { id, url } of getUrls(page.document)) {
     const page = await scraper.scrape(`${site}/${url}`);
 
-    const results = audit(page, Rules).filter(isResult);
+    const results = audit(page, values(Rules)).filter(isResult);
 
     notify.success(url);
 
