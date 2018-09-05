@@ -11,29 +11,9 @@ import {
   TokenType
 } from "../alphabet";
 import { whitespace } from "../grammar";
+import { AtRule, QualifiedRule, Rule } from "../types";
 
 const { isArray } = Array;
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#at-rule
- */
-export interface AtRule {
-  readonly type: "at-rule";
-  readonly name: string;
-  readonly prelude: Array<Token>;
-  readonly value?: Array<Token>;
-}
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#qualified-rule
- */
-export interface QualifiedRule {
-  readonly type: "qualified-rule";
-  readonly prelude: Array<Token>;
-  readonly value: Array<Token>;
-}
-
-export type Rule = AtRule | QualifiedRule;
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-an-at-rule

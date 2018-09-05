@@ -1,10 +1,8 @@
 import { lex, parse } from "@siteimprove/alfa-lang";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet, TokenType } from "../../src/alphabet";
-import {
-  Declaration,
-  DeclarationGrammar
-} from "../../src/grammars/declaration";
+import { DeclarationGrammar } from "../../src/grammars/declaration";
+import { Declaration } from "../../src/types";
 
 function declaration(
   t: Assertions,

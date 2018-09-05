@@ -1,9 +1,10 @@
 import { lex, parse } from "@siteimprove/alfa-lang";
 import { Alphabet } from "./alphabet";
+import { Declaration, Rule, Selector } from "./types";
 
-import { Declaration, DeclarationGrammar } from "./grammars/declaration";
-import { Rule, RuleGrammar } from "./grammars/rule";
-import { Selector, SelectorGrammar } from "./grammars/selector";
+import { DeclarationGrammar } from "./grammars/declaration";
+import { RuleGrammar } from "./grammars/rule";
+import { SelectorGrammar } from "./grammars/selector";
 
 export function parseDeclaration(
   input: string

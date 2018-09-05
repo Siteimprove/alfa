@@ -17,142 +17,28 @@ import {
   TokenType,
   Whitespace
 } from "../alphabet";
-import { PseudoClass, PseudoElement } from "../types";
+import {
+  AttributeMatcher,
+  AttributeModifier,
+  AttributeSelector,
+  ClassSelector,
+  ComplexSelector,
+  CompoundSelector,
+  IdSelector,
+  PseudoClass,
+  PseudoClassSelector,
+  PseudoElement,
+  PseudoElementSelector,
+  RelativeSelector,
+  Selector,
+  SelectorCombinator,
+  SelectorType,
+  SimpleSelector,
+  TypeSelector
+} from "../types";
 
 const { isArray } = Array;
 const { fromCharCode } = String;
-
-export const enum SelectorType {
-  IdSelector = 1,
-  ClassSelector = 2,
-  AttributeSelector = 4,
-  TypeSelector = 8,
-  PseudoClassSelector = 16,
-  PseudoElementSelector = 32,
-  CompoundSelector = 64,
-  RelativeSelector = 128
-}
-
-export interface IdSelector {
-  readonly type: SelectorType.IdSelector;
-  readonly name: string;
-}
-
-export interface ClassSelector {
-  readonly type: SelectorType.ClassSelector;
-  readonly name: string;
-}
-
-export const enum AttributeMatcher {
-  /**
-   * @example [foo=bar]
-   */
-  Equal,
-
-  /**
-   * @example [foo~=bar]
-   */
-  Includes,
-
-  /**
-   * @example [foo|=bar]
-   */
-  DashMatch,
-
-  /**
-   * @example [foo^=bar]
-   */
-  Prefix,
-
-  /**
-   * @example [foo$=bar]
-   */
-  Suffix,
-
-  /**
-   * @example [foo*=bar]
-   */
-  Substring
-}
-
-export const enum AttributeModifier {
-  /**
-   * @example [foo=bar i]
-   */
-  CaseInsensitive = 1
-}
-
-export interface AttributeSelector {
-  readonly type: SelectorType.AttributeSelector;
-  readonly name: string;
-  readonly value: string | null;
-  readonly matcher: AttributeMatcher | null;
-  readonly modifier: number;
-}
-
-export interface TypeSelector {
-  readonly type: SelectorType.TypeSelector;
-  readonly name: string;
-  readonly namespace: string | null;
-}
-
-export interface PseudoClassSelector {
-  readonly type: SelectorType.PseudoClassSelector;
-  readonly name: PseudoClass;
-  readonly value: Selector | Array<Selector> | null;
-}
-
-export interface PseudoElementSelector {
-  readonly type: SelectorType.PseudoElementSelector;
-  readonly name: PseudoElement;
-}
-
-export type SimpleSelector =
-  | IdSelector
-  | ClassSelector
-  | TypeSelector
-  | AttributeSelector
-  | PseudoClassSelector
-  | PseudoElementSelector;
-
-export interface CompoundSelector {
-  readonly type: SelectorType.CompoundSelector;
-  readonly left: SimpleSelector;
-  readonly right: SimpleSelector | CompoundSelector;
-}
-
-export type ComplexSelector = SimpleSelector | CompoundSelector;
-
-export const enum SelectorCombinator {
-  /**
-   * @example div span
-   */
-  Descendant,
-
-  /**
-   * @example div > span
-   */
-  DirectDescendant,
-
-  /**
-   * @example div ~ span
-   */
-  Sibling,
-
-  /**
-   * @example div + span
-   */
-  DirectSibling
-}
-
-export interface RelativeSelector {
-  readonly type: SelectorType.RelativeSelector;
-  readonly combinator: SelectorCombinator;
-  readonly left: ComplexSelector | RelativeSelector;
-  readonly right: ComplexSelector;
-}
-
-export type Selector = ComplexSelector | RelativeSelector;
 
 const simpleSelector =
   SelectorType.IdSelector |
@@ -161,6 +47,8 @@ const simpleSelector =
   SelectorType.AttributeSelector |
   SelectorType.PseudoClassSelector |
   SelectorType.PseudoElementSelector;
+
+const complexSelector = simpleSelector | SelectorType.CompoundSelector;
 
 export function isSimpleSelector(
   selector: Selector
@@ -173,8 +61,6 @@ export function isCompoundSelector(
 ): selector is CompoundSelector {
   return selector.type === SelectorType.CompoundSelector;
 }
-
-const complexSelector = simpleSelector | SelectorType.CompoundSelector;
 
 export function isComplexSelector(
   selector: Selector
