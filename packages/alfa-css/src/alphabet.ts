@@ -36,12 +36,12 @@ export const enum TokenType {
   LeftCurlyBracket,
   RightCurlyBracket,
   VerticalLine,
+  Column,
   IncludeMatch,
   DashMatch,
   PrefixMatch,
   SuffixMatch,
-  SubstringMatch,
-  Column
+  SubstringMatch
 }
 
 export type Ident = Readonly<{ type: TokenType.Ident; value: string }>;
@@ -108,6 +108,10 @@ export type CurlyBracket = Readonly<{
   type: TokenType.LeftCurlyBracket | TokenType.RightCurlyBracket;
 }>;
 
+export type Column = Readonly<{
+  type: TokenType.Column;
+}>;
+
 export type IncludeMatch = Readonly<{
   type: TokenType.IncludeMatch;
 }>;
@@ -126,10 +130,6 @@ export type SuffixMatch = Readonly<{
 
 export type SubstringMatch = Readonly<{
   type: TokenType.SubstringMatch;
-}>;
-
-export type Column = Readonly<{
-  type: TokenType.Column;
 }>;
 
 /**
@@ -155,13 +155,13 @@ export type Token =
   | Parenthesis
   | SquareBracket
   | CurlyBracket
+  | Column
   // Match tokens
   | IncludeMatch
   | DashMatch
   | PrefixMatch
   | SuffixMatch
-  | SubstringMatch
-  | Column;
+  | SubstringMatch;
 
 export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
   (stream, emit) => {

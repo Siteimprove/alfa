@@ -378,21 +378,21 @@ test("Can lex an @-keyword", t => {
 test("Can lex an attribute selector with an includes matcher", t => {
   css(t, "[href~=com]", [
     {
-      type: 16
+      type: TokenType.LeftSquareBracket
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "href"
     },
     {
-      type: 21
+      type: TokenType.IncludeMatch
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "com"
     },
     {
-      type: 17
+      type: TokenType.RightSquareBracket
     }
   ]);
 });
@@ -400,21 +400,21 @@ test("Can lex an attribute selector with an includes matcher", t => {
 test("Can lex an attribute selector with a dash matcher", t => {
   css(t, "[href|=https]", [
     {
-      type: 16
+      type: TokenType.LeftSquareBracket
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "href"
     },
     {
-      type: 22
+      type: TokenType.DashMatch
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "https"
     },
     {
-      type: 17
+      type: TokenType.RightSquareBracket
     }
   ]);
 });
@@ -422,21 +422,21 @@ test("Can lex an attribute selector with a dash matcher", t => {
 test("Can lex an attribute selector with a prefix matcher", t => {
   css(t, "[href^=https]", [
     {
-      type: 16
+      type: TokenType.LeftSquareBracket
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "href"
     },
     {
-      type: 23
+      type: TokenType.PrefixMatch
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "https"
     },
     {
-      type: 17
+      type: TokenType.RightSquareBracket
     }
   ]);
 });
@@ -444,21 +444,21 @@ test("Can lex an attribute selector with a prefix matcher", t => {
 test("Can lex an attribute selector with a suffix matcher", t => {
   css(t, "[href$=com]", [
     {
-      type: 16
+      type: TokenType.LeftSquareBracket
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "href"
     },
     {
-      type: 24
+      type: TokenType.SuffixMatch
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "com"
     },
     {
-      type: 17
+      type: TokenType.RightSquareBracket
     }
   ]);
 });
@@ -466,21 +466,41 @@ test("Can lex an attribute selector with a suffix matcher", t => {
 test("Can lex an attribute selector with a substring matcher", t => {
   css(t, "[href*=com]", [
     {
-      type: 16
+      type: TokenType.LeftSquareBracket
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "href"
     },
     {
-      type: 25
+      type: TokenType.SubstringMatch
     },
     {
-      type: 0,
+      type: TokenType.Ident,
       value: "com"
     },
     {
-      type: 17
+      type: TokenType.RightSquareBracket
+    }
+  ]);
+});
+
+test("Can lex a column selector", t => {
+  css(t, "td||.column", [
+    {
+      type: TokenType.Ident,
+      value: "td"
+    },
+    {
+      type: TokenType.Column
+    },
+    {
+      type: TokenType.Delim,
+      value: Char.FullStop
+    },
+    {
+      type: TokenType.Ident,
+      value: "column"
     }
   ]);
 });
