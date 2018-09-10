@@ -12,7 +12,7 @@ export function isTabbable(element: Element, context: Node): boolean {
     return false;
   }
 
-  const tabIndex = getTabIndex(element);
+  const tabIndex = getTabIndex(element, context);
 
   return tabIndex !== null && tabIndex >= 0;
 }

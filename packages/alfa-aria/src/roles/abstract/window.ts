@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Roletype } from "./roletype";
 
 /**
@@ -7,7 +7,7 @@ import { Roletype } from "./roletype";
  */
 export const Window: Role = {
   name: "window",
-  abstract: true,
+  category: Category.Abstract,
   inherits: () => [Roletype],
   supported: () => [Attributes.Expanded, Attributes.Modal]
 };

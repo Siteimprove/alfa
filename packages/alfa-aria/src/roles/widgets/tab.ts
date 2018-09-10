@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { SectionHead } from "../abstract/section-head";
 import { Widget } from "../abstract/widget";
 import { TabList } from "./tab-list";
@@ -9,6 +9,7 @@ import { TabList } from "./tab-list";
  */
 export const Tab: Role = {
   name: "tab",
+  category: Category.Widget,
   inherits: () => [SectionHead, Widget],
   context: () => [TabList],
   supported: () => [

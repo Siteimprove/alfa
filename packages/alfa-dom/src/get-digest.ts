@@ -1,4 +1,4 @@
-import { getHash } from "@siteimprove/alfa-crypto";
+import { Algorithm, Encoding, getHash } from "@siteimprove/alfa-crypto";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getChildNodes } from "./get-child-nodes";
 import { getElementNamespace } from "./get-element-namespace";
@@ -41,6 +41,8 @@ export function getDigest(
   options: Readonly<{
     composed?: boolean;
     flattened?: boolean;
+    algorithm?: Algorithm;
+    encoding?: Encoding;
     filters?: Readonly<{ node?: NodeFilter; attribute?: AttributeFilter }>;
   }> = {}
 ): string | null {
@@ -48,13 +50,13 @@ export function getDigest(
     return null;
   }
 
-  const { filters = {} } = options;
+  const { algorithm = "sha256", encoding = "base64", filters = {} } = options;
 
   if (filters.node !== undefined && !filters.node(node, context)) {
     return null;
   }
 
-  const hash = getHash("sha256");
+  const hash = getHash(algorithm);
 
   hash.update(node.nodeType.toString(10));
 
@@ -129,5 +131,5 @@ export function getDigest(
     hash.update(childDigests[i]);
   }
 
-  return hash.digest("base64");
+  return hash.digest(encoding);
 }

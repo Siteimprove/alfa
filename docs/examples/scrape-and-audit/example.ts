@@ -1,16 +1,20 @@
-import { audit } from "../../../packages/alfa-act";
+import { audit, isResult, toJson } from "../../../packages/alfa-act";
 import {
   Document,
   getAttribute,
   getNextElementSibling,
   querySelector,
-  querySelectorAll,
-  serialize
+  querySelectorAll
 } from "../../../packages/alfa-dom";
 import { Scraper } from "../../../packages/alfa-scrape";
+import { values } from "../../../packages/alfa-util";
 import { Rules } from "../../../packages/alfa-wcag";
 
-import { removeDirectory, writeFile } from "../../../build/helpers/file-system";
+import {
+  removeDirectory,
+  writeFile
+} from "../../../scripts/helpers/file-system";
+import * as notify from "../../../scripts/helpers/notify";
 
 const scraper = new Scraper();
 
@@ -20,21 +24,15 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
   removeDirectory("docs/examples/scrape-and-audit/result");
 
   for (const { id, url } of getUrls(page.document)) {
-    process.stdout.write(`Auditing ${url}\n`);
-
     const page = await scraper.scrape(`${site}/${url}`);
 
-    const results = audit(page, Rules).map(result => {
-      if ("target" in result && result.target !== undefined) {
-        return { ...result, target: serialize(result.target, result.target) };
-      }
+    const results = audit(page, values(Rules)).filter(isResult);
 
-      return result;
-    });
+    notify.success(url);
 
     writeFile(
       `docs/examples/scrape-and-audit/result/${id}.json`,
-      JSON.stringify(results, null, 2)
+      JSON.stringify(toJson(results, page), null, 2)
     );
   }
 

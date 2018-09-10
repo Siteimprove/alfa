@@ -8,11 +8,11 @@ import { keys } from "./keys";
  * safe to use this function with anything but the most specific type of a
  * given object!
  */
-export function values<T, K extends keyof T>(target: T): Array<T[K]> {
-  const result: Array<T[K]> = [];
+export function values<T>(target: T): Array<T[keyof T]> {
+  const result: Array<T[keyof T]> = [];
 
   for (const key of keys(target)) {
-    result.push(target[key] as T[K]);
+    result.push(target[key]);
   }
 
   return result;

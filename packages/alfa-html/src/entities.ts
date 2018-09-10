@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export type Entity = Readonly<{
   codepoints: Array<number>;
   characters: string;
@@ -5,6 +8,8 @@ export type Entity = Readonly<{
 
 /**
  * @see https://www.w3.org/TR/html/entities.json
+ *
+ * @internal
  */
 export const Entities: { [reference: string]: Entity } = {
   "&Aacute;": { codepoints: [193], characters: "\u00C1" },

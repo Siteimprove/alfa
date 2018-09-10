@@ -1,12 +1,11 @@
-import { Alphabet, Selector, SelectorGrammar } from "@siteimprove/alfa-css";
-import { lex, parse } from "@siteimprove/alfa-lang";
+import { parseSelector, Selector } from "@siteimprove/alfa-css";
 import { test } from "@siteimprove/alfa-test";
 import { getSpecificity } from "../src/get-specificity";
 
 const { isArray } = Array;
 
 function selector(input: string): Selector {
-  const parsed = parse(lex(input, Alphabet), SelectorGrammar);
+  const parsed = parseSelector(input);
 
   if (parsed === null || isArray(parsed)) {
     throw new Error(`Invalid selector: ${input}`);

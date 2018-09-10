@@ -1,6 +1,6 @@
 // This file has been automatically generated based on the IANA Language Subtag
 // Registry. Do therefore not modify it directly! If you wish to make changes,
-// do so in `build/subtags.js` and run `yarn prepare` to rebuild this file.
+// do so in `scripts/subtags.js` and run `yarn prepare` to rebuild this file.
 
 import { values } from "@siteimprove/alfa-util";
 import {

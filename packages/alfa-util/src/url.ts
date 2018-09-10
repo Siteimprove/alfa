@@ -1,8 +1,8 @@
 /// <reference path="../types/url.d.ts" />
 
-const url =
+const _URL =
   typeof (URL as typeof URL | undefined) === "undefined"
     ? (require("url") as { URL: typeof URL }).URL
     : URL;
 
-export { url as URL };
+export { _URL as URL };

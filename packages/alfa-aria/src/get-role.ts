@@ -1,9 +1,13 @@
-import { isBrowserSupported } from "@siteimprove/alfa-compatibility";
+import {
+  BrowserSpecific,
+  isBrowserSupported,
+  map
+} from "@siteimprove/alfa-compatibility";
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+import { Option, values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
 import * as Roles from "./roles";
-import { Role } from "./types";
+import { Category, Role } from "./types";
 
 const whitespace = /\s+/;
 
@@ -11,7 +15,8 @@ const features = values(Features);
 const roles = values(Roles);
 
 /**
- * Get the semantic role of an element.
+ * Given an element and a context, get the semantic role of the element within
+ * the context. If the element does not have a role then `null` is returned.
  *
  * @see https://www.w3.org/TR/html/dom.html#aria-role-attribute
  *
@@ -19,21 +24,45 @@ const roles = values(Roles);
  * const button = <button>Foo</button>;
  * getRole(button, <section>{button}</section>);
  * // => Button
- *
- * @param element The element whose semantic role to get.
- * @return The semantic role of the element if one exists, otherwise `null`.
  */
-export function getRole(element: Element, context: Node): Role | null {
-  const role = getAttribute(element, "role", {
-    trim: true,
+export function getRole(
+  element: Element,
+  context: Node
+): Option<Role> | BrowserSpecific<Option<Role>> {
+  const value = getAttribute(element, "role", { trim: true });
 
-    // Firefox currently treats the `role` attribute as case-sensitive so we can
-    // only treat it as case-insensitive if Firefox is not supported.
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
-    lowerCase: !isBrowserSupported("firefox")
-  });
+  let role: Option<string> | BrowserSpecific<Option<string>>;
 
-  if (role === null) {
+  // Firefox currently treats the `role` attribute as case-sensitive so if it's
+  // set and it's not lowercased, we branch off.
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
+  if (
+    value !== null &&
+    value !== value.toLowerCase() &&
+    isBrowserSupported("firefox")
+  ) {
+    role = BrowserSpecific.of(value, ["firefox"]).branch(value.toLowerCase(), [
+      "chrome",
+      "edge",
+      "ie",
+      "opera",
+      "safari"
+    ]);
+  } else {
+    role = value === null ? value : value.toLowerCase();
+  }
+
+  return map(role, role => {
+    if (role !== null) {
+      for (const name of role.split(whitespace)) {
+        const role = roles.find(role => role.name === name);
+
+        if (role !== undefined && role.category !== Category.Abstract) {
+          return role;
+        }
+      }
+    }
+
     const feature = features.find(
       feature => feature.element === element.localName
     );
@@ -48,15 +77,7 @@ export function getRole(element: Element, context: Node): Role | null {
         return role;
       }
     }
-  } else {
-    for (const name of role.split(whitespace)) {
-      const role = roles.find(role => role.name === name);
 
-      if (role !== undefined && role.abstract !== true) {
-        return role;
-      }
-    }
-  }
-
-  return null;
+    return null;
+  });
 }

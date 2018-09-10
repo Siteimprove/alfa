@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { TextBox } from "./text-box";
 
 /**
@@ -6,6 +6,7 @@ import { TextBox } from "./text-box";
  */
 export const SearchBox: Role = {
   name: "searchbox",
+  category: Category.Widget,
   inherits: () => [TextBox],
   label: { from: ["author"], required: true }
 };

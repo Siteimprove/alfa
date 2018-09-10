@@ -1,10 +1,14 @@
 import { Char, lex, parse } from "@siteimprove/alfa-lang";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet, TokenType } from "../../src/alphabet";
-import { Rule, RuleGrammar } from "../../src/grammars/rule";
+import { RuleGrammar } from "../../src/grammars/rule";
+import { Rule } from "../../src/types";
 
 function rule(t: Assertions, input: string, expected: Rule | Array<Rule>) {
-  t.deepEqual(parse(lex(input, Alphabet), RuleGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, RuleGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a single qualified rule", t => {

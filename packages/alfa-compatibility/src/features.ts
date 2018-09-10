@@ -1,6 +1,6 @@
 // This file has been automatically generated based on the MDN browser
 // compatibility data. Do therefore not modify it directly! If you wish to make
-// changes, do so in `build/features.js` and run `yarn prepare` to rebuild this
+// changes, do so in `scripts/features.js` and run `yarn prepare` to rebuild this
 // file.
 
 import { Feature } from "./types";
@@ -316,7 +316,7 @@ export const Features: { [P in FeatureName]: Feature } = {
   "css.properties.color.alpha_hexadecimal_notation": {
     support: {
       chrome: {
-        added: "63"
+        added: "62"
       },
       firefox: {
         added: "49"
@@ -376,6 +376,9 @@ export const Features: { [P in FeatureName]: Feature } = {
   },
   "css.properties.font-weight.number": {
     support: {
+      chrome: {
+        added: "62"
+      },
       firefox: {
         added: "61"
       }
