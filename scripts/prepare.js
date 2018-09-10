@@ -19,7 +19,7 @@ const handle = files => {
   }
 };
 
-handle(findFiles("build", endsWith(".js")));
+handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
   clean(`packages/${pkg}`);

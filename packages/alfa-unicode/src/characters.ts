@@ -1,6 +1,6 @@
 // This file has been automatically generated based on the Unicode Character
 // Database. Do therefore not modify it directly! If you wish to make changes,
-// do so in `build/characters.js` and run `yarn prepare` to rebuild this file.
+// do so in `scripts/characters.js` and run `yarn prepare` to rebuild this file.
 
 import { Category, Character } from "./types";
 

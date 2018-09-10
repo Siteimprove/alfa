@@ -1,7 +1,7 @@
 const fs = require("fs");
 const prettier = require("prettier");
 
-const { fetch } = require("../../../build/helpers/http");
+const { fetch } = require("../../../scripts/helpers/http");
 
 const registry = "https://www.iana.org/assignments/language-subtag-registry";
 
@@ -201,7 +201,7 @@ fetch(registry).then(body => {
     `
     // This file has been automatically generated based on the IANA Language Subtag
     // Registry. Do therefore not modify it directly! If you wish to make changes,
-    // do so in \`build/subtags.js\` and run \`yarn prepare\` to rebuild this file.
+    // do so in \`scripts/subtags.js\` and run \`yarn prepare\` to rebuild this file.
 
     import { values } from "@siteimprove/alfa-util";
     import { ExtendedLanguage, PrimaryLanguage, Region, Script, Variant } from "./types";

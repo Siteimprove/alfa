@@ -45,7 +45,7 @@ for (const name of include) {
 let code = `
 // This file has been automatically generated based on the MDN browser
 // compatibility data. Do therefore not modify it directly! If you wish to make
-// changes, do so in \`build/browsers.js\` and run \`yarn prepare\` to rebuild this
+// changes, do so in \`scripts/browsers.js\` and run \`yarn prepare\` to rebuild this
 // file.
 
 import { Browser } from "./types";

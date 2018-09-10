@@ -7,7 +7,7 @@ package-lock.json
 **/*.d.ts
 **/*.map
 
-!**/build/**/*.js
+!**/scripts/**/*.js
 !**/types/**/*.d.ts
 
 .vscode
