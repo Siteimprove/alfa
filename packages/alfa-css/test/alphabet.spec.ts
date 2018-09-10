@@ -374,3 +374,113 @@ test("Can lex an @-keyword", t => {
     }
   ]);
 });
+
+test("Can lex an attribute selector with an includes matcher", t => {
+  css(t, "[href~=com]", [
+    {
+      type: 16
+    },
+    {
+      type: 0,
+      value: "href"
+    },
+    {
+      type: 21
+    },
+    {
+      type: 0,
+      value: "com"
+    },
+    {
+      type: 17
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a dash matcher", t => {
+  css(t, "[href|=https]", [
+    {
+      type: 16
+    },
+    {
+      type: 0,
+      value: "href"
+    },
+    {
+      type: 22
+    },
+    {
+      type: 0,
+      value: "https"
+    },
+    {
+      type: 17
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a prefix matcher", t => {
+  css(t, "[href^=https]", [
+    {
+      type: 16
+    },
+    {
+      type: 0,
+      value: "href"
+    },
+    {
+      type: 23
+    },
+    {
+      type: 0,
+      value: "https"
+    },
+    {
+      type: 17
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a suffix matcher", t => {
+  css(t, "[href$=com]", [
+    {
+      type: 16
+    },
+    {
+      type: 0,
+      value: "href"
+    },
+    {
+      type: 24
+    },
+    {
+      type: 0,
+      value: "com"
+    },
+    {
+      type: 17
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a substring matcher", t => {
+  css(t, "[href*=com]", [
+    {
+      type: 16
+    },
+    {
+      type: 0,
+      value: "href"
+    },
+    {
+      type: 25
+    },
+    {
+      type: 0,
+      value: "com"
+    },
+    {
+      type: 17
+    }
+  ]);
+});
