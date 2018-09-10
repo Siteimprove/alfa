@@ -5,7 +5,14 @@ import { TextIndentGrammar } from "../../../src/properties/text-indent/grammar";
 import { TextIndent } from "../../../src/properties/text-indent/types";
 
 function textIndent(t: Assertions, input: string, expected: TextIndent | null) {
-  t.deepEqual(parse(lex(input, Alphabet), TextIndentGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, TextIndentGrammar);
+
+  if (expected === null) {
+    t(parser.result === null || !parser.done);
+  } else {
+    t.deepEqual(parser.result, expected, input);
+  }
 }
 
 test("Can parse an absolute indent in px", t => {

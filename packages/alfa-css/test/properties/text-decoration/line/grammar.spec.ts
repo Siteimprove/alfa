@@ -7,13 +7,12 @@ import { TextDecorationLine } from "../../../../src/properties/text-decoration/t
 function textDecorationLine(
   t: Assertions,
   input: string,
-  expected: TextDecorationLine | null
+  expected: TextDecorationLine
 ) {
-  t.deepEqual(
-    parse(lex(input, Alphabet), TextDecorationLineGrammar),
-    expected,
-    input
-  );
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, TextDecorationLineGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a none text-decoration-line", t => {

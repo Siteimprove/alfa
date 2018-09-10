@@ -5,7 +5,10 @@ import { ContentGrammar } from "../../../src/properties/content/grammar";
 import { Content } from "../../../src/properties/content/types";
 
 function content(t: Assertions, input: string, expected: Content) {
-  t.deepEqual(parse(lex(input, Alphabet), ContentGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, ContentGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse normal content", t => {

@@ -1,14 +1,20 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Property } from "../../../types";
+import { Longhand } from "../../../types";
 import { TextDecorationStyle } from "../types";
 import { TextDecorationStyleGrammar } from "./grammar";
 
 /**
  * @see https://www.w3.org/TR/css-text-decor-3/#text-decoration-style-property
  */
-export const textDecorationStyle: Property<TextDecorationStyle> = {
+export const textDecorationStyle: Longhand<TextDecorationStyle> = {
   parse(input) {
-    return parse(input, TextDecorationStyleGrammar);
+    const parser = parse(input, TextDecorationStyleGrammar);
+
+    if (!parser.done) {
+      return null;
+    }
+
+    return parser.result;
   },
   initial() {
     return "none";

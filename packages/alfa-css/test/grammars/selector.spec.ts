@@ -15,7 +15,10 @@ function selector(
   input: string,
   expected: Selector | Array<Selector> | null
 ) {
-  t.deepEqual(parse(lex(input, Alphabet), SelectorGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, SelectorGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a type selector", t => {

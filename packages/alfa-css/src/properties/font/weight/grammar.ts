@@ -26,9 +26,10 @@ const ident: Production<Ident> = {
 const number: Production<Number> = {
   token: TokenType.Number,
   prefix(token) {
-    if (token.value > 0 && token.value <= 1000) {
+    if (token.value >= 1 && token.value <= 1000) {
       return token.value;
     }
+
     return null;
   }
 };

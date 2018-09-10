@@ -9,15 +9,51 @@ import { SelectorGrammar } from "./grammars/selector";
 export function parseDeclaration(
   input: string
 ): Declaration | Array<Declaration> | null {
-  return parse(lex(input, Alphabet), DeclarationGrammar);
+  const lexer = lex(input, Alphabet);
+
+  if (!lexer.done) {
+    return null;
+  }
+
+  const parser = parse(lexer.result, DeclarationGrammar);
+
+  if (!parser.done) {
+    return null;
+  }
+
+  return parser.result;
 }
 
 export function parseRule(input: string): Rule | Array<Rule> | null {
-  return parse(lex(input, Alphabet), RuleGrammar);
+  const lexer = lex(input, Alphabet);
+
+  if (!lexer.done) {
+    return null;
+  }
+
+  const parser = parse(lexer.result, RuleGrammar);
+
+  if (!parser.done) {
+    return null;
+  }
+
+  return parser.result;
 }
 
 export function parseSelector(
   input: string
 ): Selector | Array<Selector> | null {
-  return parse(lex(input, Alphabet), SelectorGrammar);
+  const lexer = lex(input, Alphabet);
+
+  if (!lexer.done) {
+    return null;
+  }
+
+  const parser = parse(lexer.result, SelectorGrammar);
+
+  if (!parser.done) {
+    return null;
+  }
+
+  return parser.result;
 }

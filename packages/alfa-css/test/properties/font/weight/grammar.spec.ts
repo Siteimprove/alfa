@@ -5,7 +5,14 @@ import { FontWeight } from "../../../../src/properties/font/types";
 import { FontWeightGrammar } from "../../../../src/properties/font/weight/grammar";
 
 function fontWeight(t: Assertions, input: string, expected: FontWeight | null) {
-  t.deepEqual(parse(lex(input, Alphabet), FontWeightGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, FontWeightGrammar);
+
+  if (expected === null) {
+    t(parser.result === null || !parser.done);
+  } else {
+    t.deepEqual(parser.result, expected, input);
+  }
 }
 
 test("Can parse a normal font-weight", t => {

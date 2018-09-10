@@ -1,15 +1,21 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Property } from "../../../types";
+import { Longhand } from "../../../types";
 import { FontSize } from "../types";
 import { FontSizeGrammar } from "./grammar";
 
 /**
  * @see https://www.w3.org/TR/css-fonts/#propdef-font-size
  */
-export const fontSize: Property<FontSize> = {
+export const fontSize: Longhand<FontSize> = {
   inherits: true,
   parse(input) {
-    return parse(input, FontSizeGrammar);
+    const parser = parse(input, FontSizeGrammar);
+
+    if (!parser.done) {
+      return null;
+    }
+
+    return parser.result;
   },
   initial() {
     return { type: "absolute", value: "medium" };
