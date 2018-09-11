@@ -104,12 +104,12 @@ exports.findFiles = findFiles;
 
 /**
  * @param {string | Array<string>} pattern
- * @param {function(string, string)} listener
+ * @param {function("changed" | "added", string)} listener
  * @param {{ gitIgnore?: boolean }} [options]
  */
 function watchFiles(pattern, listener, options = {}) {
   /**
-   * @param {string} event
+   * @param {"changed" | "added"} event
    * @param {string} file
    */
   const handler = (event, file) => {

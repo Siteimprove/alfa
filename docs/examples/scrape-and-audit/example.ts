@@ -10,8 +10,11 @@ import { Scraper } from "../../../packages/alfa-scrape";
 import { values } from "../../../packages/alfa-util";
 import { Rules } from "../../../packages/alfa-wcag";
 
-import { removeDirectory, writeFile } from "../../../build/helpers/file-system";
-import * as notify from "../../../build/helpers/notify";
+import {
+  removeDirectory,
+  writeFile
+} from "../../../scripts/helpers/file-system";
+import * as notify from "../../../scripts/helpers/notify";
 
 const scraper = new Scraper();
 

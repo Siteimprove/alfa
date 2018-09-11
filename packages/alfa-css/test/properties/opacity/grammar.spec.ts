@@ -5,7 +5,10 @@ import { OpacityGrammar } from "../../../src/properties/opacity/grammar";
 import { Opacity } from "../../../src/properties/opacity/types";
 
 function opacity(t: Assertions, input: string, expected: Opacity) {
-  t.deepEqual(parse(lex(input, Alphabet), OpacityGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, OpacityGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a number opacity", t => {

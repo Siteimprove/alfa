@@ -66,6 +66,11 @@
     "strict-type-predicates": true,
     "switch-final-break": true,
     "triple-equals": true,
-    "variable-name": [true, "check-format", "allow-pascal-case"]
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ]
   }
 }

@@ -7,7 +7,6 @@ import {
   getPropertyName,
   getSpecifiedPropertyValue,
   parseDeclaration,
-  PropertyName,
   PseudoElement,
   Selector,
   SelectorType,
@@ -100,19 +99,19 @@ export function getCascadedStyle(
       continue;
     }
 
-    // If the property name is already present in the cascaded style then this
-    // means that the property was set inline and that we're now trying to set
-    // it from the cascaded styles. However, only important declarations from
-    // the cascaded styles can override those set inline so we move on if the
-    // declaration is not important.
-    if (propertyName in cascadedStyle && !important) {
-      continue;
-    }
-
     const propertyValue = getCascadedPropertyValue(propertyName, value);
 
-    if (propertyValue !== undefined) {
-      cascadedStyle[propertyName] = propertyValue;
+    for (const propertyName of keys(propertyValue)) {
+      // If the property name is already present in the cascaded style then this
+      // means that the property was set inline and that we're now trying to set
+      // it from the cascaded styles. However, only important declarations from
+      // the cascaded styles can override those set inline so we move on if the
+      // declaration is not important.
+      if (propertyName in cascadedStyle && !important) {
+        continue;
+      }
+
+      cascadedStyle[propertyName] = propertyValue[propertyName];
     }
   }
 
@@ -148,15 +147,7 @@ export function getSpecifiedStyle(
 
   const cascadedStyle = getCascadedStyle(element, context, options);
 
-  const propertyNames = new Set<PropertyName>();
-
-  for (const propertyName of keys(cascadedStyle)) {
-    propertyNames.add(propertyName);
-  }
-
-  for (const propertyName of keys(parentStyle)) {
-    propertyNames.add(propertyName);
-  }
+  const propertyNames = new Set([...keys(cascadedStyle), ...keys(parentStyle)]);
 
   for (const propertyName of propertyNames) {
     const propertyValue = getSpecifiedPropertyValue(
@@ -166,8 +157,8 @@ export function getSpecifiedStyle(
       parentStyle
     );
 
-    if (propertyValue !== undefined) {
-      specifiedStyle[propertyName] = propertyValue;
+    for (const propertyName of keys(propertyValue)) {
+      specifiedStyle[propertyName] = propertyValue[propertyName];
     }
   }
 
@@ -218,8 +209,8 @@ export function getComputedStyle(
       parentStyle
     );
 
-    if (propertyValue !== undefined) {
-      computedStyle[propertyName] = propertyValue;
+    for (const propertyName of keys(propertyValue)) {
+      computedStyle[propertyName] = propertyValue[propertyName];
     }
   }
 

@@ -10,7 +10,14 @@ import { Alphabet } from "../src/alphabet";
 import { Grammar } from "../src/grammar";
 
 function html(t: Assertions, input: string, expected: Document | null) {
-  t.deepEqual(parse(lex(input, Alphabet), Grammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, Grammar);
+
+  if (expected === null) {
+    t(parser.result === null || !parser.done);
+  } else {
+    t.deepEqual(parser.result, expected, input);
+  }
 }
 
 test("Can parse an empty document", t => {

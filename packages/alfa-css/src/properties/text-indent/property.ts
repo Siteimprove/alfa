@@ -1,15 +1,21 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Property } from "../../types";
+import { Longhand } from "../../types";
 import { TextIndentGrammar } from "./grammar";
 import { TextIndent } from "./types";
 
 /**
  * @see https://www.w3.org/TR/css-text-3/#propdef-text-indent
  */
-export const textIndent: Property<TextIndent> = {
+export const textIndent: Longhand<TextIndent> = {
   inherits: true,
   parse(input) {
-    return parse(input, TextIndentGrammar);
+    const parser = parse(input, TextIndentGrammar);
+
+    if (!parser.done) {
+      return null;
+    }
+
+    return parser.result;
   },
   initial() {
     return {

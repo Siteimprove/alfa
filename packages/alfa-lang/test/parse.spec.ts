@@ -12,7 +12,10 @@ function expression(
   input: Array<ExpressionToken>,
   expected: Expression
 ) {
-  t.deepEqual(parse(input, ExpressionGrammar), expected, "Parse trees match");
+  const { result, done } = parse(input, ExpressionGrammar);
+
+  t(done);
+  t.deepEqual(result, expected);
 }
 
 test("Correctly handles operator precedence", t => {

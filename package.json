@@ -21,11 +21,11 @@
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
-    "prepare": "node build/prepare.js",
-    "test": "node build/test.js",
-    "start": "node build/start.js",
-    "prepublish": "node build/prepublish.js",
-    "precommit": "node build/precommit.js"
+    "prepare": "node scripts/prepare.js",
+    "test": "node scripts/test.js",
+    "start": "node scripts/start.js",
+    "prepublish": "node scripts/prepublish.js",
+    "precommit": "node scripts/precommit.js"
   },
   "workspaces": [
     "packages/*"
@@ -39,6 +39,7 @@
     "husky": "^0.14.3",
     "ignore": "^5.0.2",
     "prettier": "1.14.2",
+    "pretty-ms": "^3.2.0",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.9",
     "tslint": "^5.11.0",

@@ -6,7 +6,10 @@ import { ColorGrammar } from "../../../src/properties/color/grammar";
 import { Color } from "../../../src/properties/color/types";
 
 function color(t: Assertions, input: string, expected: Color) {
-  t.deepEqual(parse(lex(input, Alphabet), ColorGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, ColorGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a named color", t => {

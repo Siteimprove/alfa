@@ -12,17 +12,68 @@ const include = require("./features.json");
 const { isArray } = Array;
 const { keys } = Object;
 
-const get = key => key.split(".").reduce((data, key) => data[key], data);
+/**
+ * @typedef {Object} Feature
+ * @prop {string} key
+ * @prop {Array<Support>} support
+ */
 
+/**
+ * @typedef {Object} Support
+ * @prop {string} browser
+ * @prop {string | boolean} added
+ * @prop {string | boolean} removed
+ */
+
+/**
+ * @param {string} key
+ * @return {data["css"]}
+ */
+const get = key => {
+  const [entry, ...keys] = key.split(".");
+
+  switch (entry) {
+    case "css":
+      return keys.reduce((data, key) => {
+        const api = data[key];
+
+        if (api === undefined) {
+          throw new Error(`Unknown API "${key}"`);
+        }
+
+        return api;
+      }, data[entry]);
+  }
+
+  throw new Error(`Unknown API "${entry}"`);
+};
+
+/**
+ * @param {string | boolean} version
+ * @return {string | boolean}
+ */
 const version = version =>
   typeof version === "string" ? `"${version}"` : version;
 
+/**
+ * @type {Array<Feature>}
+ */
 const features = [];
 
+/**
+ * @param {string} key
+ */
 function parse(key) {
   const feature = get(key);
   const compatibility = feature.__compat;
 
+  if (compatibility === undefined) {
+    return;
+  }
+
+  /**
+   * @type {Array<Support>}
+   */
   const support = [];
 
   for (const browser of keys(compatibility.support)) {
@@ -40,11 +91,15 @@ function parse(key) {
 
     let statements = compatibility.support[browser];
 
+    if (statements === undefined) {
+      continue;
+    }
+
     if (!isArray(statements)) {
       statements = [statements];
     }
 
-    statements = statements
+    const mapped = statements
       .filter(statement => {
         return (
           statement.version_added !== null &&
@@ -55,14 +110,17 @@ function parse(key) {
         );
       })
       .map(statement => {
+        const { version_added, version_removed } = statement;
         return {
-          added: statement.version_added,
-          removed: statement.version_removed
+          added: typeof version_added === "string" ? version_added : false,
+          removed: typeof version_removed === "string" ? version_removed : false
         };
       });
 
-    if (statements.length === 1) {
-      support.push({ browser, ...statements[0] });
+    if (mapped.length === 1) {
+      const { added, removed } = mapped[0];
+
+      support.push({ browser, added, removed });
     }
   }
 
@@ -85,7 +143,7 @@ for (const key of include) {
 let code = `
 // This file has been automatically generated based on the MDN browser
 // compatibility data. Do therefore not modify it directly! If you wish to make
-// changes, do so in \`build/features.js\` and run \`yarn prepare\` to rebuild this
+// changes, do so in \`scripts/features.js\` and run \`yarn prepare\` to rebuild this
 // file.
 
 import { Feature } from "./types";

@@ -1,16 +1,13 @@
+import { keys, Mutable } from "@siteimprove/alfa-util";
 import { Token, TokenType } from "./alphabet";
-import * as Properties from "./properties";
-import {
-  CascadedStyle,
-  ComputedStyle,
-  PropertyName,
-  SpecifiedStyle
-} from "./types";
+import * as Longhands from "./properties/longhands";
+import * as Shorthands from "./properties/shorthands";
+import { CascadedStyle, ComputedStyle, SpecifiedStyle } from "./types";
 
-export function getCascadedPropertyValue<N extends PropertyName>(
-  propertyName: N,
+export function getCascadedPropertyValue(
+  propertyName: keyof typeof Longhands | keyof typeof Shorthands,
   tokens: Array<Token>
-): CascadedStyle[N] {
+): CascadedStyle {
   for (let i = 0, n = tokens.length; i < n; i++) {
     const token = tokens[i];
 
@@ -22,84 +19,112 @@ export function getCascadedPropertyValue<N extends PropertyName>(
       switch (token.value) {
         case "initial":
         case "inherit":
-          return token.value;
+          return { [propertyName]: token.value };
       }
     }
 
     break;
   }
 
-  const parsed = Properties[propertyName].parse(tokens);
+  if (propertyName in Longhands) {
+    const property = Longhands[propertyName as keyof typeof Longhands];
 
-  if (parsed === null) {
-    return undefined;
+    const result = property.parse(tokens);
+
+    if (result !== null) {
+      return { [propertyName]: result };
+    }
   }
 
-  return parsed;
+  if (propertyName in Shorthands) {
+    const property = Shorthands[propertyName as keyof typeof Shorthands];
+
+    const result = property.parse(tokens);
+
+    if (result !== null) {
+      return result;
+    }
+  }
+
+  return {};
 }
 
-export function getSpecifiedPropertyValue<N extends PropertyName>(
-  propertyName: N,
+export function getSpecifiedPropertyValue(
+  propertyName: keyof typeof Longhands,
   cascadedStyle: CascadedStyle,
   specifiedStyle: SpecifiedStyle,
   parentStyle: ComputedStyle
-): SpecifiedStyle[N] {
-  if (propertyName in specifiedStyle) {
-    return specifiedStyle[propertyName];
-  }
-
+): SpecifiedStyle {
   if (propertyName in cascadedStyle) {
     const cascadedValue = cascadedStyle[propertyName];
 
     if (cascadedValue !== "initial" && cascadedValue !== "inherit") {
-      return cascadedValue as SpecifiedStyle[N];
+      return {
+        [propertyName]: cascadedValue
+      };
     }
 
     if (cascadedValue === "inherit" && propertyName in parentStyle) {
-      return parentStyle[propertyName];
+      return {
+        [propertyName]: parentStyle[propertyName]
+      };
     }
   }
 
-  const property = Properties[propertyName];
+  const property = Longhands[propertyName];
 
   if (property.inherits === true && propertyName in parentStyle) {
-    return parentStyle[propertyName];
+    return {
+      [propertyName]: parentStyle[propertyName]
+    };
   }
 
-  return property.initial();
+  return {
+    [propertyName]: property.initial()
+  };
 }
 
-export function getComputedPropertyValue<N extends PropertyName>(
-  propertyName: N,
+export function getComputedPropertyValue(
+  propertyName: keyof typeof Longhands,
   specifiedStyle: SpecifiedStyle,
   computedStyle: ComputedStyle,
   parentStyle: ComputedStyle
-): ComputedStyle[N] {
-  if (propertyName in computedStyle) {
-    return computedStyle[propertyName];
-  }
+): ComputedStyle {
+  const result: Mutable<ComputedStyle> = {};
 
-  const property = Properties[propertyName];
+  const property = Longhands[propertyName];
 
-  return property.computed(
+  const propertyValue = property.computed(
     otherPropertyName => {
       if (otherPropertyName in computedStyle) {
         return computedStyle[otherPropertyName];
       }
 
-      if (propertyName === (otherPropertyName as PropertyName)) {
+      if (propertyName === otherPropertyName) {
         return specifiedStyle[otherPropertyName];
       }
 
-      return getComputedPropertyValue(
+      const propertyValue = getComputedPropertyValue(
         otherPropertyName,
         specifiedStyle,
         computedStyle,
         parentStyle
       );
+
+      for (const propertyName of keys(propertyValue)) {
+        result[propertyName] = propertyValue[propertyName];
+      }
+
+      return result[otherPropertyName];
     },
     otherPropertyName => {
       return parentStyle[otherPropertyName];
     }
   );
+
+  if (propertyValue !== undefined) {
+    result[propertyName] = propertyValue;
+  }
+
+  return result;
 }

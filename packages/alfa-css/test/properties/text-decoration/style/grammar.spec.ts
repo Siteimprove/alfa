@@ -7,13 +7,12 @@ import { TextDecorationStyle } from "../../../../src/properties/text-decoration/
 function textDecorationStyle(
   t: Assertions,
   input: string,
-  expected: TextDecorationStyle | null
+  expected: TextDecorationStyle
 ) {
-  t.deepEqual(
-    parse(lex(input, Alphabet), TextDecorationStyleGrammar),
-    expected,
-    input
-  );
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, TextDecorationStyleGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a none text-decoration-style", t => {
