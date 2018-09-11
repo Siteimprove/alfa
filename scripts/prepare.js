@@ -1,6 +1,7 @@
 const { findFiles } = require("./helpers/file-system");
 const { endsWith, not } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
+const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
@@ -11,8 +12,14 @@ const { clean } = require("./tasks/clean");
  */
 const handle = files => {
   for (const file of files) {
+    const start = now();
+
     if (build(file)) {
-      notify.success(file);
+      const duration = now(start);
+
+      notify.success(
+        `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
+      );
     } else {
       process.exit(1);
     }
