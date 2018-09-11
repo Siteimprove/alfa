@@ -2,7 +2,10 @@ const { findFiles } = require("./helpers/file-system");
 const { endsWith, not } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
+const { default: chalk } = require("chalk");
 const notify = require("./helpers/notify");
+const fs = require("fs");
+const path = require("path");
 
 const { build } = require("./tasks/build");
 const { clean } = require("./tasks/clean");
@@ -35,11 +38,24 @@ for (const pkg of packages) {
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
-  handle(
-    findFiles(root, endsWith(".ts", ".tsx")).filter(
-      not(endsWith(".spec.ts", ".spec.tsx"))
-    )
+  const files = findFiles(root, endsWith(".ts", ".tsx")).filter(
+    not(endsWith(".spec.ts", ".spec.tsx"))
   );
+
+  for (const file of files) {
+    const dir = path
+      .dirname(file)
+      .split(path.sep)
+      .map(part => (part === "src" ? "test" : part))
+      .join(path.sep);
+    const testFile = path.join(dir, `${path.basename(file, ".ts")}.spec.ts`);
+
+    if (!fs.existsSync(testFile)) {
+      notify.warn(`${chalk.dim(file)}: Missing spec file`); // This could be an error in the future and actually fail the build.
+    }
+  }
+
+  handle(files);
 }
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
