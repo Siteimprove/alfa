@@ -113,9 +113,11 @@ process.on("beforeExit", code => {
         process.stdout.write(chalk.underline(`${filePath}\n`));
 
         const widths = {
-          // Make the gutter width as wide as the line number of the last line
-          gutter: uncovered[uncovered.length - 1].range.end.line.toString()
-            .length
+          // Make the gutter width as wide as the line number of the last line.
+          // Since line counts are 1-indexed and an additional line may be added
+          // to the output, we bump the line count twice to make sure the gutter
+          // is wide enough.
+          gutter: `${uncovered[uncovered.length - 1].range.end.line + 2}`.length
         };
 
         for (let i = 0, n = uncovered.length; i < n; i++) {
@@ -516,7 +518,7 @@ function printCoverageStatistics(script, total) {
   );
 
   if (total < 90) {
-    notify.warn(`${chalk.dim(filePath)} Low coverage (${total.toFixed(2)}%)`);
+    notify.warn(`${chalk.gray(filePath)} Low coverage (${total.toFixed(2)}%)`);
   }
 }
 
