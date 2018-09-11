@@ -1,4 +1,3 @@
-import { clamp } from "@siteimprove/alfa-util";
 import { Grammar } from "./grammar";
 import { Stream } from "./stream";
 import { Command, Token } from "./types";
@@ -12,13 +11,11 @@ export interface ParseResult<R> {
 export function parse<T extends Token, R, S = null>(
   input: ArrayLike<T>,
   grammar: Grammar<T, R, S>,
-  offset = 0
+  offset?: number
 ): ParseResult<R> {
-  offset = clamp(offset, 0, input.length - 1);
+  const readToken: (i: number) => T = i => input[i];
 
-  const readToken: (i: number) => T = i => input[i + offset];
-
-  const stream = new Stream(input.length - offset, readToken);
+  const stream = new Stream(input.length, readToken, offset);
 
   const state = grammar.state();
 

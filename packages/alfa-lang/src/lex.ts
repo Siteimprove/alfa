@@ -1,4 +1,3 @@
-import { clamp } from "@siteimprove/alfa-util";
 import { Alphabet } from "./alphabet";
 import { Stream } from "./stream";
 import { Command, Pattern, Token } from "./types";
@@ -12,18 +11,15 @@ export interface LexResult<T extends Token> {
 export function lex<T extends Token, S = null>(
   input: string,
   alphabet: Alphabet<T, S>,
-  offset = 0
+  offset?: number
 ): LexResult<T> {
-  offset = clamp(offset, 0, input.length - 1);
-
   const tokens: Array<T> = [];
 
   const emit: (token: T) => void = token => tokens.push(token);
 
-  const readCharacter: (i: number) => number = i =>
-    input.charCodeAt(i + offset);
+  const readCharacter: (i: number) => number = i => input.charCodeAt(i);
 
-  const stream = new Stream(input.length - offset, readCharacter);
+  const stream = new Stream(input.length, readCharacter, offset);
 
   const state = alphabet.state();
 
