@@ -31,7 +31,7 @@ for (const pkg of packages) {
       const testFile = path.join(dir, `${path.basename(file, ".ts")}.spec.js`);
 
       if (!fs.existsSync(testFile)) {
-        notify.warn(`${chalk.dim(file)} Low coverage (0.00%)`);
+        notify.warn(`${chalk.dim(file)}: Missing spec file`); // This could be an error in the future and actually fail the build.
       }
     }
   }
