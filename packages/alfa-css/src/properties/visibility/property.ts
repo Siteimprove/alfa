@@ -1,15 +1,21 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Property } from "../../types";
+import { Longhand } from "../../types";
 import { VisibilityGrammar } from "./grammar";
 import { Visibility } from "./types";
 
 /**
  * @see https://drafts.csswg.org/css-box/#propdef-visibility
  */
-export const visibility: Property<Visibility> = {
+export const visibility: Longhand<Visibility> = {
   inherits: true,
   parse(input) {
-    return parse(input, VisibilityGrammar);
+    const parser = parse(input, VisibilityGrammar);
+
+    if (!parser.done) {
+      return null;
+    }
+
+    return parser.result;
   },
   initial() {
     return "visible";

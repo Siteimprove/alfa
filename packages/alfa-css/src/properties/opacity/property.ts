@@ -1,15 +1,21 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { clamp } from "@siteimprove/alfa-util";
-import { Property } from "../../types";
+import { Longhand } from "../../types";
 import { OpacityGrammar } from "./grammar";
 import { Opacity } from "./types";
 
 /**
  * @see https://www.w3.org/TR/css-color/#propdef-opacity
  */
-export const opacity: Property<Opacity> = {
+export const opacity: Longhand<Opacity> = {
   parse(input) {
-    return parse(input, OpacityGrammar);
+    const parser = parse(input, OpacityGrammar);
+
+    if (!parser.done) {
+      return null;
+    }
+
+    return parser.result;
   },
   initial() {
     return 1;

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const prettier = require("prettier");
 
-const { fetch } = require("../../../build/helpers/http");
+const { fetch } = require("../../../scripts/helpers/http");
 
 const { isArray } = Array;
 
@@ -50,7 +50,7 @@ fetch(database).then(body => {
           if (part === "Last") {
             const last = characters[characters.length - 1];
 
-            last.code = [last.code, character.code];
+            last.code = [/** @type {number} */ (last.code), character.code];
 
             return characters;
           } else {
@@ -68,7 +68,7 @@ fetch(database).then(body => {
   let code = `
 // This file has been automatically generated based on the Unicode Character
 // Database. Do therefore not modify it directly! If you wish to make changes,
-// do so in \`build/characters.js\` and run \`yarn prepare\` to rebuild this file.
+// do so in \`scripts/characters.js\` and run \`yarn prepare\` to rebuild this file.
 
 import { Category, Character } from "./types";
 

@@ -5,7 +5,10 @@ import { FontSizeGrammar } from "../../../../src/properties/font/size/grammar";
 import { FontSize } from "../../../../src/properties/font/types";
 
 function fontSize(t: Assertions, input: string, expected: FontSize) {
-  t.deepEqual(parse(lex(input, Alphabet), FontSizeGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, FontSizeGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a px font size", t => {

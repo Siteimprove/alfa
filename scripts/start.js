@@ -13,7 +13,8 @@ watchFiles(
   [
     "packages/**/*.ts",
     "packages/**/*.tsx",
-    "build/**/*.js",
+    "packages/**/scripts/**/*.js",
+    "scripts/**/*.js",
     "docs/**/*.ts",
     "docs/**/*.tsx"
   ],

@@ -28,7 +28,7 @@
     "src/**/*.d.ts"
   ],
   "scripts": {
-    "prepare": "node build/features.js && node build/browsers.js"
+    "prepare": "node scripts/features.js && node scripts/browsers.js"
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0",

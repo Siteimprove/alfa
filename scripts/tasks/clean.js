@@ -5,11 +5,9 @@ const { endsWith } = require("../helpers/predicates");
  * @param {string} directory
  */
 function clean(directory) {
-  const shouldClean = endsWith(".js", ".d.ts", ".map");
-
   const files = findFiles(
     [`${directory}/src`, `${directory}/test`],
-    shouldClean,
+    endsWith(".js", ".d.ts", ".map"),
     {
       gitIgnore: false
     }

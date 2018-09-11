@@ -1,15 +1,21 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Property } from "../../../types";
+import { Longhand } from "../../../types";
 import { FontWeight } from "../types";
 import { FontWeightGrammar } from "./grammar";
 
 /**
  * @see https://www.w3.org/TR/css-fonts/#propdef-font-weight
  */
-export const fontWeight: Property<FontWeight> = {
+export const fontWeight: Longhand<FontWeight> = {
   inherits: true,
   parse(input) {
-    return parse(input, FontWeightGrammar);
+    const parser = parse(input, FontWeightGrammar);
+
+    if (!parser.done) {
+      return null;
+    }
+
+    return parser.result;
   },
   initial() {
     return 400;

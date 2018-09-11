@@ -5,7 +5,10 @@ import { DisplayGrammar } from "../../../src/properties/display/grammar";
 import { Display } from "../../../src/properties/display/types";
 
 function display(t: Assertions, input: string, expected: Display) {
-  t.deepEqual(parse(lex(input, Alphabet), DisplayGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, DisplayGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse block display", t => {

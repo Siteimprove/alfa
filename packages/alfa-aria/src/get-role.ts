@@ -1,6 +1,7 @@
 import {
   BrowserSpecific,
-  isBrowserSupported
+  isBrowserSupported,
+  map
 } from "@siteimprove/alfa-compatibility";
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Option, values } from "@siteimprove/alfa-util";
@@ -30,7 +31,7 @@ export function getRole(
 ): Option<Role> | BrowserSpecific<Option<Role>> {
   const value = getAttribute(element, "role", { trim: true });
 
-  let role: BrowserSpecific<string | null>;
+  let role: Option<string> | BrowserSpecific<Option<string>>;
 
   // Firefox currently treats the `role` attribute as case-sensitive so if it's
   // set and it's not lowercased, we branch off.
@@ -48,44 +49,35 @@ export function getRole(
       "safari"
     ]);
   } else {
-    role = BrowserSpecific.of(value === null ? value : value.toLowerCase(), [
-      "chrome",
-      "edge",
-      "firefox",
-      "ie",
-      "opera",
-      "safari"
-    ]);
+    role = value === null ? value : value.toLowerCase();
   }
 
-  return role
-    .map(role => {
-      if (role !== null) {
-        for (const name of role.split(whitespace)) {
-          const role = roles.find(role => role.name === name);
+  return map(role, role => {
+    if (role !== null) {
+      for (const name of role.split(whitespace)) {
+        const role = roles.find(role => role.name === name);
 
-          if (role !== undefined && role.category !== Category.Abstract) {
-            return role;
-          }
-        }
-      }
-
-      const feature = features.find(
-        feature => feature.element === element.localName
-      );
-
-      if (feature !== undefined) {
-        const role =
-          typeof feature.role === "function"
-            ? feature.role(element, context)
-            : feature.role;
-
-        if (role !== undefined) {
+        if (role !== undefined && role.category !== Category.Abstract) {
           return role;
         }
       }
+    }
 
-      return null;
-    })
-    .get();
+    const feature = features.find(
+      feature => feature.element === element.localName
+    );
+
+    if (feature !== undefined) {
+      const role =
+        typeof feature.role === "function"
+          ? feature.role(element, context)
+          : feature.role;
+
+      if (role !== undefined) {
+        return role;
+      }
+    }
+
+    return null;
+  });
 }

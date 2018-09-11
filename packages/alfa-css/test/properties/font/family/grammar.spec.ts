@@ -5,7 +5,10 @@ import { FontFamilyGrammar } from "../../../../src/properties/font/family/gramma
 import { FontFamily } from "../../../../src/properties/font/types";
 
 function fontFamily(t: Assertions, input: string, expected: FontFamily) {
-  t.deepEqual(parse(lex(input, Alphabet), FontFamilyGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, FontFamilyGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a generic font family", t => {

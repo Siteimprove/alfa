@@ -28,7 +28,7 @@
     "src/**/*.d.ts"
   ],
   "scripts": {
-    "prepare": "node build/subtags.js"
+    "prepare": "node scripts/subtags.js"
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0"

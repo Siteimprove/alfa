@@ -367,22 +367,16 @@ export const enum Stage {
   Computed
 }
 
-type Longhands = typeof Longhands;
-
-type Properties = Longhands;
-
-export type PropertyName = keyof Properties;
-
 /**
  * @internal
  */
 export type PropertyGetter<S extends SpecifiedStyle | ComputedStyle> = <
-  N extends PropertyName
+  N extends keyof typeof Longhands
 >(
   propertyName: N
 ) => S[N];
 
-export interface Property<T, U = T> {
+export interface Longhand<T, U = T> {
   /**
    * @internal
    */
@@ -407,29 +401,47 @@ export interface Property<T, U = T> {
   ): U | undefined;
 }
 
+export interface Shorthand<T extends keyof typeof Longhands> {
+  /**
+   * @internal
+   */
+  parse(
+    input: Array<Token>
+  ):
+    | {
+        readonly [N in T]?: typeof Longhands[N] extends Longhand<
+          infer T,
+          infer U
+        >
+          ? T
+          : never
+      }
+    | null;
+}
+
 export type CascadedStyle = {
-  readonly [N in PropertyName]?: Properties[N] extends Property<
+  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
     infer T,
     infer U
   >
     ? T | Initial | Inherit
-    : undefined
+    : never
 };
 
 export type SpecifiedStyle = {
-  readonly [N in PropertyName]?: Properties[N] extends Property<
+  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
     infer T,
     infer U
   >
     ? T | U
-    : undefined
+    : never
 };
 
 export type ComputedStyle = {
-  readonly [N in PropertyName]?: Properties[N] extends Property<
+  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
     infer T,
     infer U
   >
     ? U
-    : undefined
+    : never
 };

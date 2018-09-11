@@ -9,7 +9,10 @@ function declaration(
   input: string,
   expected: Declaration | Array<Declaration>
 ) {
-  t.deepEqual(parse(lex(input, Alphabet), DeclarationGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, DeclarationGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a single declaration", t => {
