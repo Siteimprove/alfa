@@ -1,7 +1,4 @@
-const { default: chalk } = require("chalk");
-const path = require("path");
-
-const { findFiles, isFile } = require("./helpers/file-system");
+const { findFiles } = require("./helpers/file-system");
 const { endsWith, not } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
@@ -38,29 +35,11 @@ for (const pkg of packages) {
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
-  const files = findFiles(root, endsWith(".ts", ".tsx")).filter(
-    not(endsWith(".spec.ts", ".spec.tsx"))
+  handle(
+    findFiles(root, endsWith(".ts", ".tsx")).filter(
+      not(endsWith(".spec.ts", ".spec.tsx"))
+    )
   );
-
-  for (const file of files) {
-    const dir = path
-      .dirname(file)
-      .split(path.sep)
-      .map(part => (part === "src" ? "test" : part))
-      .join(path.sep);
-
-    const tsTestFile = path.join(dir, `${path.basename(file, ".ts")}.spec.ts`);
-    const tsxTestFile = path.join(
-      dir,
-      `${path.basename(file, ".tsx")}.spec.tsx`
-    );
-
-    if (!isFile(tsTestFile) && !isFile(tsxTestFile)) {
-      notify.warn(`${chalk.gray(file)} Missing spec file`); // This could be an error in the future and actually fail the build.
-    }
-  }
-
-  handle(files);
 }
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));

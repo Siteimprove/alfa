@@ -518,7 +518,7 @@ function printCoverageStatistics(script, total) {
   );
 
   if (total < 90) {
-    notify.warn(`${chalk.gray(filePath)} Low coverage (${total.toFixed(2)}%)`);
+    notify.warn(`${chalk.dim(filePath)} Low coverage (${total.toFixed(2)}%)`);
   }
 }
 
