@@ -1,11 +1,11 @@
 const { default: chalk } = require("chalk");
-const notify = require("./helpers/notify");
 const path = require("path");
 
 const { findFiles, isFile } = require("./helpers/file-system");
 const { endsWith, not } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
+const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
 const { clean } = require("./tasks/clean");
