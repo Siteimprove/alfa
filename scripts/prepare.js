@@ -22,10 +22,14 @@ const handle = files => {
 handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
-  clean(`packages/${pkg}`);
+  const root = `packages/${pkg}`;
+
+  clean(root);
+
+  handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
   handle(
-    findFiles(`packages/${pkg}`, endsWith(".ts", ".tsx")).filter(
+    findFiles(root, endsWith(".ts", ".tsx")).filter(
       not(endsWith(".spec.ts", ".spec.tsx"))
     )
   );

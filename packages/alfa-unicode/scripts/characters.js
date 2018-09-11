@@ -50,7 +50,7 @@ fetch(database).then(body => {
           if (part === "Last") {
             const last = characters[characters.length - 1];
 
-            last.code = [last.code, character.code];
+            last.code = [/** @type {number} */ (last.code), character.code];
 
             return characters;
           } else {

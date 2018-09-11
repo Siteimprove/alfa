@@ -2,6 +2,9 @@ const fs = require("fs");
 const prettier = require("prettier");
 const data = require("mdn-browser-compat-data");
 
+/**
+ * @type {Array<keyof data["browsers"]>}
+ */
 const include = ["chrome", "edge", "firefox", "ie", "opera", "safari"];
 
 const { keys } = Object;
