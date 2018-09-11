@@ -1,11 +1,11 @@
-const { findFiles } = require("./helpers/file-system");
+const notify = require("./helpers/notify");
+const path = require("path");
+
+const { findFiles, isFile } = require("./helpers/file-system");
 const { endsWith, not } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
 const { default: chalk } = require("chalk");
-const notify = require("./helpers/notify");
-const fs = require("fs");
-const path = require("path");
 
 const { build } = require("./tasks/build");
 const { clean } = require("./tasks/clean");
@@ -48,10 +48,15 @@ for (const pkg of packages) {
       .split(path.sep)
       .map(part => (part === "src" ? "test" : part))
       .join(path.sep);
-    const testFile = path.join(dir, `${path.basename(file, ".ts")}.spec.ts`);
 
-    if (!fs.existsSync(testFile)) {
-      notify.warn(`${chalk.dim(file)}: Missing spec file`); // This could be an error in the future and actually fail the build.
+    const tsTestFile = path.join(dir, `${path.basename(file, ".ts")}.spec.ts`);
+    const tsxTestFile = path.join(
+      dir,
+      `${path.basename(file, ".tsx")}.spec.tsx`
+    );
+
+    if (!isFile(tsTestFile) && !isFile(tsxTestFile)) {
+      notify.warn(`${chalk.gray(file)} Missing spec file`); // This could be an error in the future and actually fail the build.
     }
   }
 

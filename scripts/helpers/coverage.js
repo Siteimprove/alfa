@@ -516,7 +516,7 @@ function printCoverageStatistics(script, total) {
   );
 
   if (total < 90) {
-    notify.warn(`${chalk.dim(filePath)} Low coverage (${total.toFixed(2)}%)`);
+    notify.warn(`${chalk.gray(filePath)} Low coverage (${total.toFixed(2)}%)`);
   }
 }
 
@@ -573,15 +573,15 @@ function printBlockCoverage(script, coverage, widths) {
       line = line.replace(/\s/g, whitespace => {
         switch (whitespace) {
           case " ":
-            return chalk.gray.dim("\u00b7");
+            return chalk.gray("\u00b7");
           case "\t":
-            return chalk.gray.dim("\u00bb");
+            return chalk.gray("\u00bb");
         }
 
         return whitespace;
       });
 
-      const eol = chalk.gray.dim("\u00ac");
+      const eol = chalk.gray("\u00ac");
 
       return `${padding.gutter}${chalk.grey(lineNo)} ${line}${eol}`;
     })
