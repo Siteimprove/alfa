@@ -1,5 +1,6 @@
 const { watchFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
+const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
@@ -21,6 +22,8 @@ watchFiles(
   (event, file) => {
     let success;
 
+    const start = now();
+
     switch (true) {
       case isSpec(file):
         success = test(file);
@@ -30,8 +33,12 @@ watchFiles(
         success = build(file);
     }
 
+    const duration = now(start);
+
     if (success) {
-      notify.success(file);
+      notify.success(
+        `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
+      );
     }
   }
 );
