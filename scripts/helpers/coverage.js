@@ -573,15 +573,15 @@ function printBlockCoverage(script, coverage, widths) {
       line = line.replace(/\s/g, whitespace => {
         switch (whitespace) {
           case " ":
-            return chalk.gray("\u00b7");
+            return chalk.gray.dim("\u00b7");
           case "\t":
-            return chalk.gray("\u00bb");
+            return chalk.gray.dim("\u00bb");
         }
 
         return whitespace;
       });
 
-      const eol = chalk.gray("\u00ac");
+      const eol = chalk.gray.dim("\u00ac");
 
       return `${padding.gutter}${chalk.grey(lineNo)} ${line}${eol}`;
     })
