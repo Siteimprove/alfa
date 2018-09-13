@@ -38,7 +38,67 @@ import {
 } from "../types";
 
 const { isArray } = Array;
-const { fromCharCode } = String;
+
+export interface IdSelector {
+  readonly type: SelectorType.IdSelector;
+  readonly name: string;
+}
+
+export interface ClassSelector {
+  readonly type: SelectorType.ClassSelector;
+  readonly name: string;
+}
+
+export interface AttributeSelector {
+  readonly type: SelectorType.AttributeSelector;
+  readonly name: string;
+  readonly namespace: string | null;
+  readonly value: string | null;
+  readonly matcher: AttributeMatcher | null;
+  readonly modifier: number;
+}
+
+export interface TypeSelector {
+  readonly type: SelectorType.TypeSelector;
+  readonly name: string;
+  readonly namespace: string | null;
+}
+
+export interface PseudoClassSelector {
+  readonly type: SelectorType.PseudoClassSelector;
+  readonly name: PseudoClass;
+  readonly value: Selector | Array<Selector> | null;
+}
+
+export interface PseudoElementSelector {
+  readonly type: SelectorType.PseudoElementSelector;
+  readonly name: PseudoElement;
+}
+
+export type SimpleSelector =
+  | IdSelector
+  | ClassSelector
+  | TypeSelector
+  | AttributeSelector
+  | PseudoClassSelector
+  | PseudoElementSelector;
+
+export interface CompoundSelector {
+  readonly type: SelectorType.CompoundSelector;
+  readonly left: SimpleSelector;
+  readonly right: SimpleSelector | CompoundSelector;
+}
+
+export type ComplexSelector = SimpleSelector | CompoundSelector;
+
+export interface RelativeSelector {
+  readonly type: SelectorType.RelativeSelector;
+  readonly combinator: SelectorCombinator;
+  readonly left: ComplexSelector | RelativeSelector;
+  readonly right: ComplexSelector;
+}
+
+export type Selector = ComplexSelector | RelativeSelector;
 
 const simpleSelector =
   SelectorType.IdSelector |
@@ -125,43 +185,10 @@ function typeSelector(
   token: Delim | Ident | Hash,
   stream: Stream<Token>
 ): TypeSelector | null {
-  let name: string | null = null;
-  let namespace: string | null = null;
-
-  if (token.type === TokenType.Delim && token.value === Char.VerticalLine) {
-    namespace = "";
-  } else {
-    const value =
-      token.type === TokenType.Delim ? fromCharCode(token.value) : token.value;
-
-    const next = stream.peek(0);
-
-    if (
-      next !== null &&
-      next.type === TokenType.Delim &&
-      next.value === Char.VerticalLine
-    ) {
-      stream.advance(1);
-      namespace = value.toLowerCase();
-    } else {
-      name = value.toLowerCase();
-    }
-  }
+  const { name, namespace } = qualifiedName(token, stream);
 
   if (name === null) {
-    const next = stream.next();
-
-    if (next === null) {
-      return null;
-    }
-
-    if (next.type === TokenType.Delim && next.value === Char.Asterisk) {
-      name = "*";
-    } else if (next.type === TokenType.Ident) {
-      name = next.value.toLowerCase();
-    } else {
-      return null;
-    }
+    return null;
   }
 
   return {
@@ -174,11 +201,37 @@ function typeSelector(
 function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
   let next = stream.next();
 
+  if (next === null) {
+    return null;
+  }
+
+  let namespace: string | null = null;
+  let name: string;
+
+  if (next.type === TokenType.Delim) {
+    switch (next.value) {
+      case Char.Asterisk:
+        next = stream.next();
+        if (
+          next === null ||
+          next.type !== TokenType.Delim ||
+          next.value !== Char.VerticalLine
+        ) {
+          return null;
+        }
+        namespace = "*";
+        break;
+      case Char.VerticalLine:
+        namespace = "";
+    }
+    next = stream.next();
+  }
+
   if (next === null || next.type !== TokenType.Ident) {
     return null;
   }
 
-  const name = next.value;
+  name = next.value;
 
   next = stream.peek(0);
 
@@ -188,6 +241,7 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
     return {
       type: SelectorType.AttributeSelector,
       name,
+      namespace,
       value: null,
       matcher: null,
       modifier: 0
@@ -196,37 +250,33 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
 
   let matcher: AttributeMatcher | null = null;
 
-  next = stream.peek(0);
-
-  if (next !== null && next.type === TokenType.Delim) {
-    switch (next.value) {
-      case Char.Tilde:
-        matcher = AttributeMatcher.Includes;
-        break;
-      case Char.VerticalLine:
-        matcher = AttributeMatcher.DashMatch;
-        break;
-      case Char.CircumflexAccent:
-        matcher = AttributeMatcher.Prefix;
-        break;
-      case Char.DollarSign:
-        matcher = AttributeMatcher.Suffix;
-        break;
-      case Char.Asterisk:
-        matcher = AttributeMatcher.Substring;
-    }
-
-    if (matcher !== null) {
-      stream.advance(1);
-      next = stream.peek(0);
-    }
+  if (next === null) {
+    return null;
   }
 
-  if (
-    next === null ||
-    next.type !== TokenType.Delim ||
-    next.value !== Char.EqualSign
-  ) {
+  switch (next.type) {
+    case TokenType.Delim:
+      if (next.value === Char.EqualSign) {
+        matcher = AttributeMatcher.Equal;
+      }
+      break;
+    case TokenType.IncludeMatch:
+      matcher = AttributeMatcher.Includes;
+      break;
+    case TokenType.DashMatch:
+      matcher = AttributeMatcher.DashMatch;
+      break;
+    case TokenType.PrefixMatch:
+      matcher = AttributeMatcher.Prefix;
+      break;
+    case TokenType.SuffixMatch:
+      matcher = AttributeMatcher.Suffix;
+      break;
+    case TokenType.SubstringMatch:
+      matcher = AttributeMatcher.Substring;
+  }
+
+  if (matcher === null) {
     return null;
   }
 
@@ -272,6 +322,7 @@ function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
   return {
     type: SelectorType.AttributeSelector,
     name,
+    namespace,
     value,
     matcher,
     modifier
@@ -517,6 +568,72 @@ function combineSelectors(
   }
 
   return null;
+}
+
+function namespacePrefix(
+  token: Delim | Ident | Hash | null,
+  stream: Stream<Token>
+): string | null {
+  if (token === null) {
+    return null;
+  }
+
+  const next = stream.peek(0);
+  let namespace = null;
+
+  if (token.type === TokenType.Ident) {
+    namespace = token.value;
+  } else if (token.type === TokenType.Delim) {
+    switch (token.value) {
+      // In case of "| element"
+      case Char.VerticalLine:
+        return "";
+      // In case of "* | element"
+      case Char.Asterisk:
+        namespace = "*";
+    }
+  }
+
+  if (
+    next === null ||
+    next.type !== TokenType.Delim ||
+    next.value !== Char.VerticalLine
+  ) {
+    stream.backup(1);
+    return null;
+  }
+
+  stream.advance(1);
+
+  return namespace;
+}
+
+/**
+ * @see: https://www.w3.org/TR/selectors/#typedef-wq-name
+ */
+function qualifiedName(
+  token: Delim | Ident | Hash,
+  stream: Stream<Token>
+): { name: string | null; namespace: string | null } {
+  const namespace = namespacePrefix(token, stream);
+  let name = null;
+
+  const next = stream.peek(0);
+
+  if (next !== null) {
+    if (next.type === TokenType.Ident) {
+      name = next.value.toLowerCase();
+    } else if (next.type === TokenType.Delim && next.value === Char.Asterisk) {
+      name = "*";
+    }
+  }
+
+  stream.advance(1);
+
+  return {
+    name,
+    namespace
+  };
 }
 
 type Production<T extends Token> = Lang.Production<

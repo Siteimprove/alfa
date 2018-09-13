@@ -244,3 +244,24 @@ test("Matches an element against a default namespace selector", t => {
   t(matches(circle, svg, "circle", { namespaces }));
   t(!matches(div, div, "div", { namespaces }));
 });
+
+// test("Matches an attribute against a declared namespace selector", t => {
+//   const svg: JSX.Element = {
+//     nodeType: 1,
+//     prefix: "svg",
+//     localName: "svg",
+//     attributes: [
+//       {
+//         prefix: "xlink",
+//         localName: "href",
+//         value: "foo"
+//       }
+//     ],
+//     shadowRoot: null,
+//     childNodes: []
+//   };
+
+//   const namespaces = new Map([["xl", Namespace.XLink]]);
+
+//   t(matches(svg, svg, "[xl|href]", { namespaces }));
+// });

@@ -95,6 +95,7 @@ export const enum AttributeModifier {
 export interface AttributeSelector {
   readonly type: SelectorType.AttributeSelector;
   readonly name: string;
+  readonly namespace: string | null;
   readonly value: string | null;
   readonly matcher: AttributeMatcher | null;
   readonly modifier: number;

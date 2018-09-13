@@ -273,11 +273,10 @@ function matchesAttribute(
     return false;
   }
 
-  if (selector.matcher === null) {
-    return selector.value === value;
-  }
-
   switch (selector.matcher) {
+    case AttributeMatcher.Equal:
+      return selector.value === value;
+
     case AttributeMatcher.Prefix:
       return value.startsWith(selector.value);
 
