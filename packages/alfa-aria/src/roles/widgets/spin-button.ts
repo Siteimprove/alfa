@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Composite } from "../abstract/composite";
 import { Input } from "../abstract/input";
 import { Range } from "../abstract/range";
@@ -9,6 +9,7 @@ import { Range } from "../abstract/range";
  */
 export const SpinButton: Role = {
   name: "spinbutton",
+  category: Category.Widget,
   inherits: () => [Composite, Input, Range],
   required: () => [
     Attributes.ValueMaximum,

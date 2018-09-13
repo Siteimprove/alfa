@@ -3,7 +3,7 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet, Token, TokenType } from "../src/alphabet";
 
 function css(t: Assertions, input: string, expected: Array<Token>) {
-  t.deepEqual(lex(input, Alphabet), expected, input);
+  t.deepEqual(lex(input, Alphabet).result, expected, input);
 }
 
 test("Can lex whitespace", t => {

@@ -9,6 +9,7 @@ import { Context, Dictionary, List, Scalar } from "./types";
 
 /**
  * @see https://www.w3.org/TR/json-ld-api/#context-processing-algorithm
+ *
  * @internal
  */
 export function processContext(
@@ -133,6 +134,7 @@ export function processContext(
 
 /**
  * @see https://www.w3.org/TR/json-ld-api/#create-term-definition
+ *
  * @internal
  */
 export function createTermDefinition(

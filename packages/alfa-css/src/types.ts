@@ -1,5 +1,168 @@
 import { Token } from "./alphabet";
-import * as Properties from "./properties";
+import * as Longhands from "./properties/longhands";
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#declaration
+ */
+export interface Declaration {
+  readonly type: "declaration";
+  readonly name: string;
+  readonly value: Array<Token>;
+  readonly important: boolean;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#at-rule
+ */
+export interface AtRule {
+  readonly type: "at-rule";
+  readonly name: string;
+  readonly prelude: Array<Token>;
+  readonly value?: Array<Token>;
+}
+
+/**
+ * @see https://www.w3.org/TR/css-syntax/#qualified-rule
+ */
+export interface QualifiedRule {
+  readonly type: "qualified-rule";
+  readonly prelude: Array<Token>;
+  readonly value: Array<Token>;
+}
+
+export type Rule = AtRule | QualifiedRule;
+
+export const enum SelectorType {
+  IdSelector = 1,
+  ClassSelector = 2,
+  AttributeSelector = 4,
+  TypeSelector = 8,
+  PseudoClassSelector = 16,
+  PseudoElementSelector = 32,
+  CompoundSelector = 64,
+  RelativeSelector = 128
+}
+
+export interface IdSelector {
+  readonly type: SelectorType.IdSelector;
+  readonly name: string;
+}
+
+export interface ClassSelector {
+  readonly type: SelectorType.ClassSelector;
+  readonly name: string;
+}
+
+export const enum AttributeMatcher {
+  /**
+   * @example [foo=bar]
+   */
+  Equal,
+
+  /**
+   * @example [foo~=bar]
+   */
+  Includes,
+
+  /**
+   * @example [foo|=bar]
+   */
+  DashMatch,
+
+  /**
+   * @example [foo^=bar]
+   */
+  Prefix,
+
+  /**
+   * @example [foo$=bar]
+   */
+  Suffix,
+
+  /**
+   * @example [foo*=bar]
+   */
+  Substring
+}
+
+export const enum AttributeModifier {
+  /**
+   * @example [foo=bar i]
+   */
+  CaseInsensitive = 1
+}
+
+export interface AttributeSelector {
+  readonly type: SelectorType.AttributeSelector;
+  readonly name: string;
+  readonly value: string | null;
+  readonly matcher: AttributeMatcher | null;
+  readonly modifier: number;
+}
+
+export interface TypeSelector {
+  readonly type: SelectorType.TypeSelector;
+  readonly name: string;
+  readonly namespace: string | null;
+}
+
+export interface PseudoClassSelector {
+  readonly type: SelectorType.PseudoClassSelector;
+  readonly name: PseudoClass;
+  readonly value: Selector | Array<Selector> | null;
+}
+
+export interface PseudoElementSelector {
+  readonly type: SelectorType.PseudoElementSelector;
+  readonly name: PseudoElement;
+}
+
+export type SimpleSelector =
+  | IdSelector
+  | ClassSelector
+  | TypeSelector
+  | AttributeSelector
+  | PseudoClassSelector
+  | PseudoElementSelector;
+
+export interface CompoundSelector {
+  readonly type: SelectorType.CompoundSelector;
+  readonly left: SimpleSelector;
+  readonly right: SimpleSelector | CompoundSelector;
+}
+
+export type ComplexSelector = SimpleSelector | CompoundSelector;
+
+export const enum SelectorCombinator {
+  /**
+   * @example div span
+   */
+  Descendant,
+
+  /**
+   * @example div > span
+   */
+  DirectDescendant,
+
+  /**
+   * @example div ~ span
+   */
+  Sibling,
+
+  /**
+   * @example div + span
+   */
+  DirectSibling
+}
+
+export interface RelativeSelector {
+  readonly type: SelectorType.RelativeSelector;
+  readonly combinator: SelectorCombinator;
+  readonly left: ComplexSelector | RelativeSelector;
+  readonly right: ComplexSelector;
+}
+
+export type Selector = ComplexSelector | RelativeSelector;
 
 /**
  * @see https://www.w3.org/TR/css-values/#relative-lengths
@@ -38,36 +201,6 @@ export type Frequency = "hz" | "kHz";
  * @see https://www.w3.org/TR/css-values/#resolution
  */
 export type Resolution = "dpi" | "dpcm" | "dppx";
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#initial
- */
-export type Initial = "initial";
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#inherit
- */
-export type Inherit = "inherit";
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#value-stages
- */
-export const enum Stage {
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#cascaded
-   */
-  Cascaded,
-
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#specified
-   */
-  Specified,
-
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#computed
-   */
-  Computed
-}
 
 /**
  * @see https://www.w3.org/TR/selectors/#pseudo-classes
@@ -204,39 +337,111 @@ export type PseudoElement =
   // https://www.w3.org/TR/css-pseudo/#placeholder-pseudo
   | "placeholder";
 
-export type PropertyName = keyof typeof Properties;
+/**
+ * @see https://www.w3.org/TR/css-cascade/#initial
+ */
+export type Initial = "initial";
 
-export type PropertyType<P> = P extends Property<infer T> ? T : never;
+/**
+ * @see https://www.w3.org/TR/css-cascade/#inherit
+ */
+export type Inherit = "inherit";
 
-export type PropertyGetter<S extends Stage> = <P extends PropertyName>(
-  propertyName: P
-) => Style<S>[P];
+/**
+ * @see https://www.w3.org/TR/css-cascade/#value-stages
+ */
+export const enum Stage {
+  /**
+   * @see https://www.w3.org/TR/css-cascade/#cascaded
+   */
+  Cascaded,
 
-export interface Property<T> {
-  readonly inherits?: true;
+  /**
+   * @see https://www.w3.org/TR/css-cascade/#specified
+   */
+  Specified,
 
-  parse(input: Array<Token>): T | null;
-
-  initial(
-    getProperty: PropertyGetter<Stage.Specified>,
-    getParentProperty: PropertyGetter<Stage.Computed>
-  ): T;
-
-  computed(
-    getProperty: PropertyGetter<Stage.Specified>,
-    getParentProperty: PropertyGetter<Stage.Computed>
-  ): T | undefined;
+  /**
+   * @see https://www.w3.org/TR/css-cascade/#computed
+   */
+  Computed
 }
 
-export type StyleValue<S extends Stage, V> = S extends Stage.Cascaded
-  ? V | Initial | Inherit
-  : V;
+/**
+ * @internal
+ */
+export type PropertyGetter<S extends SpecifiedStyle | ComputedStyle> = <
+  N extends keyof typeof Longhands
+>(
+  propertyName: N
+) => S[N];
 
-export type Style<S extends Stage = Stage.Computed> = Readonly<
-  {
-    [Name in PropertyName]?: StyleValue<
-      S,
-      PropertyType<typeof Properties[Name]>
-    >
-  }
->;
+export interface Longhand<T, U = T> {
+  /**
+   * @internal
+   */
+  readonly inherits?: true;
+
+  /**
+   * @internal
+   */
+  parse(input: Array<Token>): T | null;
+
+  /**
+   * @internal
+   */
+  initial(): U;
+
+  /**
+   * @internal
+   */
+  computed(
+    getPropertyValue: PropertyGetter<SpecifiedStyle | ComputedStyle>,
+    getParentPropertyValue: PropertyGetter<ComputedStyle>
+  ): U | undefined;
+}
+
+export interface Shorthand<T extends keyof typeof Longhands> {
+  /**
+   * @internal
+   */
+  parse(
+    input: Array<Token>
+  ):
+    | {
+        readonly [N in T]?: typeof Longhands[N] extends Longhand<
+          infer T,
+          infer U
+        >
+          ? T
+          : never
+      }
+    | null;
+}
+
+export type CascadedStyle = {
+  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
+    infer T,
+    infer U
+  >
+    ? T | Initial | Inherit
+    : never
+};
+
+export type SpecifiedStyle = {
+  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
+    infer T,
+    infer U
+  >
+    ? T | U
+    : never
+};
+
+export type ComputedStyle = {
+  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
+    infer T,
+    infer U
+  >
+    ? U
+    : never
+};

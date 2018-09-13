@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Structure } from "../abstract/structure";
 
 /**
@@ -7,6 +7,7 @@ import { Structure } from "../abstract/structure";
  */
 export const Document: Role = {
   name: "document",
+  category: Category.Structure,
   inherits: () => [Structure],
   supported: () => [Attributes.Expanded],
   label: { from: ["author"] }

@@ -11,7 +11,7 @@ import { Element, Node } from "./types";
  */
 export function isFocusable(element: Element, context: Node): boolean {
   return (
-    getTabIndex(element) !== null &&
+    getTabIndex(element, context) !== null &&
     !isDisabled(element, context) &&
     isRendered(element, context)
   );

@@ -62,7 +62,7 @@ export function benchmark(): Benchmark {
     for (let i = 0, n = results.length; i < n; i++) {
       const char = i === results.length - 1 ? "\u2514" : "\u251c";
 
-      output += `\n${chalk.dim(char)} ${format(results[i], fastest, longest)}`;
+      output += `\n${chalk.gray(char)} ${format(results[i], fastest, longest)}`;
     }
 
     process.stdout.write(`${output}\n`);
@@ -99,7 +99,7 @@ function format(result: Result, fastest: Result, longest: Result): string {
 
   output += repeat(length(longest.title) - length(title));
 
-  output += chalk.dim(" x ");
+  output += chalk.gray(" x ");
 
   output += repeat(length(fastest.frequency) - length(frequency));
 
@@ -118,7 +118,7 @@ function format(result: Result, fastest: Result, longest: Result): string {
 
   output += " ops/sec";
 
-  output += chalk.dim(" ±");
+  output += chalk.gray(" ±");
 
   output += (margin > 5 ? chalk.red : margin > 2 ? chalk.yellow : chalk.green)(
     margin.toLocaleString("en", {
@@ -130,7 +130,7 @@ function format(result: Result, fastest: Result, longest: Result): string {
 
   output += chalk.blue("%");
 
-  output += chalk.dim(
+  output += chalk.gray(
     ` (${samples} ${samples === 1 ? "run" : "runs"} sampled)`
   );
 

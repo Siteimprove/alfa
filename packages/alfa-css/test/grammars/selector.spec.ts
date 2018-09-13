@@ -1,21 +1,24 @@
 import { lex, parse } from "@siteimprove/alfa-lang";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
+import { SelectorGrammar } from "../../src/grammars/selector";
 import {
   AttributeMatcher,
   AttributeModifier,
   Selector,
   SelectorCombinator,
-  SelectorGrammar,
   SelectorType
-} from "../../src/grammars/selector";
+} from "../../src/types";
 
 function selector(
   t: Assertions,
   input: string,
   expected: Selector | Array<Selector> | null
 ) {
-  t.deepEqual(parse(lex(input, Alphabet), SelectorGrammar), expected, input);
+  const lexer = lex(input, Alphabet);
+  const parser = parse(lexer.result, SelectorGrammar);
+
+  t.deepEqual(parser.result, expected, input);
 }
 
 test("Can parse a type selector", t => {

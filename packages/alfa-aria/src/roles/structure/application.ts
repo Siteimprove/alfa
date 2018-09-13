@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Structure } from "../abstract/structure";
 
 /**
@@ -7,6 +7,7 @@ import { Structure } from "../abstract/structure";
  */
 export const Application: Role = {
   name: "application",
+  category: Category.Structure,
   inherits: () => [Structure],
   supported: () => [Attributes.ActiveDescendant],
   label: { from: ["author"], required: true }

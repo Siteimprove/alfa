@@ -1,5 +1,4 @@
 declare class URL {
-  constructor(input: string, base?: string | URL);
   public hash: string;
   public host: string;
   public hostname: string;
@@ -12,30 +11,30 @@ declare class URL {
   public search: string;
   public readonly searchParams: URLSearchParams;
   public username: string;
-  public toString(): string;
+  public constructor(input: string, base?: string | URL);
   public toJSON(): string;
 }
 
 declare class URLSearchParams implements Iterable<[string, string]> {
-  constructor(
+  public constructor(
     init?:
-      | URLSearchParams
+      | Array<Array<string>>
+      | Record<string, string>
       | string
-      | { [key: string]: string | Array<string> | undefined }
-      | Iterable<[string, string]>
-      | Array<[string, string]>
+      | URLSearchParams
   );
   public append(name: string, value: string): void;
   public delete(name: string): void;
   public entries(): IterableIterator<[string, string]>;
-  public forEach(callback: (value: string, name: string) => void): void;
+  public forEach(
+    callback: (value: string, key: string, parent: URLSearchParams) => void
+  ): void;
   public get(name: string): string | null;
   public getAll(name: string): Array<string>;
   public has(name: string): boolean;
   public keys(): IterableIterator<string>;
   public set(name: string, value: string): void;
   public sort(): void;
-  public toString(): string;
   public values(): IterableIterator<string>;
   public [Symbol.iterator](): IterableIterator<[string, string]>;
 }

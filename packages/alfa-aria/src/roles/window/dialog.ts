@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Window } from "../abstract/window";
 
 /**
@@ -6,6 +6,7 @@ import { Window } from "../abstract/window";
  */
 export const Dialog: Role = {
   name: "dialog",
+  category: Category.Window,
   inherits: () => [Window],
   label: { from: ["author"], required: true }
 };

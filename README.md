@@ -53,7 +53,7 @@ In order to build Alfa, a recent version (>= 9) of [Node.js](https://nodejs.org/
 $ yarn install
 ```
 
-The above will also perform an initial build of Alfa. When done, you can start a file watcher which will watch source files for changes and kick of the associated build steps when they change:
+The above will also perform an initial build of Alfa. When done, you can start a file watcher which will watch source files for changes and kick off the associated build steps when they change:
 
 ```console
 $ yarn start

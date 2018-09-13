@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Group } from "../structure/group";
 import { Composite } from "./composite";
 
@@ -8,7 +8,7 @@ import { Composite } from "./composite";
  */
 export const Select: Role = {
   name: "select",
-  abstract: true,
+  category: Category.Abstract,
   inherits: () => [Composite, Group],
   supported: () => [Attributes.Orientation],
   label: { from: ["author"] }

@@ -1,6 +1,9 @@
 import { isDictionary } from "./guards";
 import { Context, Keyword } from "./types";
 
+/**
+ * @internal
+ */
 export function getMapping(
   context: Context,
   property: string | null,

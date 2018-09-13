@@ -1,6 +1,6 @@
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Dialog } from "../window/dialog";
 import { Grid } from "./grid";
@@ -13,6 +13,7 @@ import { Tree } from "./tree";
  */
 export const Combobox: Role = {
   name: "combobox",
+  category: Category.Widget,
   inherits: () => [Select],
   owned,
   required: () => [Attributes.Controls, Attributes.Expanded],

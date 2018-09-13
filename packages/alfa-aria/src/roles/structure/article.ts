@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Document } from "./document";
 
 /**
@@ -7,6 +7,7 @@ import { Document } from "./document";
  */
 export const Article: Role = {
   name: "article",
+  category: Category.Structure,
   inherits: () => [Document],
   supported: () => [Attributes.PositionInSet, Attributes.SetSize],
   label: { from: ["author"] }

@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Checkbox } from "./checkbox";
 import { Menu } from "./menu";
 import { MenuBar } from "./menu-bar";
@@ -9,6 +9,7 @@ import { MenuItem } from "./menu-item";
  */
 export const MenuItemCheckbox: Role = {
   name: "menuitemcheckbox",
+  category: Category.Widget,
   inherits: () => [Checkbox, MenuItem],
   context: () => [Menu, MenuBar],
   label: { from: ["contents", "author"], required: true }

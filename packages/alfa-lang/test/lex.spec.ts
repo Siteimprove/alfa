@@ -11,7 +11,10 @@ function expression(
   input: string,
   expected: Array<ExpressionToken>
 ) {
-  t.deepEqual(lex(input, ExpressionAlphabet), expected, input);
+  const { result, done } = lex(input, ExpressionAlphabet);
+
+  t(done);
+  t.deepEqual(result, expected);
 }
 
 test("Can lex an expression", t => {

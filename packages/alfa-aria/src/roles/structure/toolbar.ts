@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Group } from "./group";
 
 /**
@@ -7,6 +7,7 @@ import { Group } from "./group";
  */
 export const Toolbar: Role = {
   name: "toolbar",
+  category: Category.Structure,
   inherits: () => [Group],
   supported: () => [Attributes.Orientation],
   label: { from: ["author"] }

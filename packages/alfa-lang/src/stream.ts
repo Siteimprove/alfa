@@ -1,4 +1,4 @@
-import { Predicate } from "@siteimprove/alfa-util";
+import { clamp, Predicate } from "@siteimprove/alfa-util";
 
 const { max, min } = Math;
 
@@ -7,15 +7,24 @@ export type StreamReader<T> = (index: number) => T;
 export class Stream<T> {
   private readonly length: number;
   private readonly read: StreamReader<T>;
-  private position = 0;
+  private offset: number;
 
-  public constructor(length: number, reader: StreamReader<T>) {
+  public constructor(length: number, reader: StreamReader<T>, offset = 0) {
     this.length = length;
     this.read = reader;
+    this.offset = clamp(offset, 0, length - 1);
+  }
+
+  public done(): boolean {
+    return this.offset === this.length;
+  }
+
+  public position(): number {
+    return this.offset;
   }
 
   public peek(offset: number): T | null {
-    const i = this.position + offset;
+    const i = this.offset + offset;
 
     if (i < 0 || i >= this.length) {
       return null;
@@ -31,7 +40,7 @@ export class Stream<T> {
   }
 
   public restore(position: number): void {
-    const difference = position - this.position;
+    const difference = position - this.offset;
 
     if (difference > 0) {
       this.advance(difference);
@@ -43,19 +52,19 @@ export class Stream<T> {
   }
 
   public advance(times: number): boolean {
-    const position = min(this.position + times, this.length);
-    const success = position - this.position !== 0;
+    const position = min(this.offset + times, this.length);
+    const success = position - this.offset !== 0;
 
-    this.position = position;
+    this.offset = position;
 
     return success;
   }
 
   public backup(times: number): boolean {
-    const position = max(this.position - times, 0);
-    const success = position - this.position !== 0;
+    const position = max(this.offset - times, 0);
+    const success = position - this.offset !== 0;
 
-    this.position = position;
+    this.offset = position;
 
     return success;
   }
@@ -64,7 +73,7 @@ export class Stream<T> {
     predicate: Predicate<T, U>,
     result?: Array<U>
   ): boolean {
-    const start = this.position;
+    const start = this.offset;
 
     let next = this.peek(0);
 
@@ -77,6 +86,6 @@ export class Stream<T> {
       next = this.peek(0);
     }
 
-    return start !== this.position;
+    return start !== this.offset;
   }
 }

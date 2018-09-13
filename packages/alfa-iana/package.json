@@ -23,8 +23,12 @@
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
   "scripts": {
-    "prepare": "node -r esm build/subtags.js"
+    "prepare": "node scripts/subtags.js"
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0"

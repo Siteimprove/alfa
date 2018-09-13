@@ -1,4 +1,5 @@
-/// <reference path="../types/jsx.d.ts" />
+import { Attribute, Element, ShadowRoot, Text } from "./types";
+import * as Types from "./types";
 
 const { keys } = Object;
 
@@ -7,15 +8,15 @@ export function jsx(
   properties?: {
     [name: string]: string | number | boolean | object | null | undefined;
   } | null,
-  ...children: Array<JSX.Element | string>
-): JSX.Element {
+  ...children: Array<Element | string>
+): Element {
   if (properties === undefined || properties === null) {
     properties = {};
   }
 
-  const childNodes: Array<JSX.Element | JSX.Text> = [];
+  const childNodes: Array<Element | Text> = [];
 
-  let shadowRoot: JSX.ShadowRoot | null = null;
+  let shadowRoot: ShadowRoot | null = null;
 
   for (let i = 0, n = children.length; i < n; i++) {
     const child = children[i];
@@ -39,7 +40,7 @@ export function jsx(
     }
   }
 
-  const attributes: Array<JSX.Attribute> = [];
+  const attributes: Array<Attribute> = [];
 
   const propertyNames = keys(properties);
 
@@ -64,6 +65,26 @@ export function jsx(
     shadowRoot,
     childNodes
   };
+}
+
+export namespace jsx {
+  export namespace JSX {
+    export interface IntrinsicElements {
+      [tag: string]:
+        | {}
+        | Readonly<{
+            [attribute: string]:
+              | string
+              | number
+              | boolean
+              | object
+              | null
+              | undefined;
+          }>;
+    }
+
+    export import Element = Types.Element;
+  }
 }
 
 function toString(

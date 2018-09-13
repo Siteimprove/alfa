@@ -2,41 +2,69 @@ import { Grammar } from "./grammar";
 import { Stream } from "./stream";
 import { Command, Token } from "./types";
 
+export interface ParseResult<R> {
+  readonly result: R | null;
+  readonly done: boolean;
+  readonly position: number;
+}
+
 export function parse<T extends Token, R, S = null>(
   input: ArrayLike<T>,
-  grammar: Grammar<T, R, S>
-): R | null {
+  grammar: Grammar<T, R, S>,
+  offset?: number
+): ParseResult<R> {
   const readToken: (i: number) => T = i => input[i];
 
-  const stream = new Stream(input.length, readToken);
+  const stream = new Stream(input.length, readToken, offset);
 
   const state = grammar.state();
 
-  function expression(power: number): R | null {
+  function expression(power: number): ParseResult<R> {
     let token = stream.peek(0);
 
     if (token === null) {
-      return null;
+      return {
+        result: null,
+        done: stream.done(),
+        position: stream.position()
+      };
     }
 
     const entry = grammar.get(token.type);
 
     if (entry === null) {
-      return null;
+      return {
+        result: null,
+        done: stream.done(),
+        position: stream.position()
+      };
     }
 
     const { production } = entry;
 
     if (production.prefix === undefined) {
-      return null;
+      return {
+        result: null,
+        done: stream.done(),
+        position: stream.position()
+      };
     }
 
     stream.advance(1);
 
-    let left = production.prefix(token, stream, () => expression(-1), state);
+    let left = production.prefix(
+      token,
+      stream,
+      () => expression(-1).result,
+      state
+    );
 
     if (left === null) {
-      return null;
+      return {
+        result: null,
+        done: stream.done(),
+        position: stream.position()
+      };
     }
 
     if (left === Command.Continue) {
@@ -67,13 +95,19 @@ export function parse<T extends Token, R, S = null>(
       const right = production.infix(
         token,
         stream,
-        () => expression(precedence),
+        () => expression(precedence).result,
         left,
         state
       );
 
       if (right === null) {
-        return null;
+        stream.backup(1);
+
+        return {
+          result: left,
+          done: stream.done(),
+          position: stream.position()
+        };
       }
 
       token = stream.peek(0);
@@ -85,14 +119,12 @@ export function parse<T extends Token, R, S = null>(
       left = right;
     }
 
-    return left;
+    return {
+      result: left,
+      done: stream.done(),
+      position: stream.position()
+    };
   }
 
-  const result = expression(-1);
-
-  if (stream.advance(1) !== false) {
-    return null;
-  }
-
-  return result;
+  return expression(-1);
 }

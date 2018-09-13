@@ -62,6 +62,8 @@ function virtualizeDocument(
   return {
     nodeType: 9,
     childNodes: Array.from(document.childNodes).map(virtualizeNode),
+    compatMode:
+      document.compatMode === "CSS1Compat" ? "CSS1Compat" : "BackCompat",
     styleSheets: Array.from(document.styleSheets)
       .filter(hasCssRules)
       .map(virtualizeStyleSheet)

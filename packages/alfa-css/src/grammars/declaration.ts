@@ -2,18 +2,9 @@ import * as Lang from "@siteimprove/alfa-lang";
 import { Char, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Ident, Semicolon, Token, TokenType } from "../alphabet";
 import { whitespace } from "../grammar";
+import { Declaration } from "../types";
 
 const { isArray } = Array;
-
-/**
- * @see https://www.w3.org/TR/css-syntax/#declaration
- */
-export interface Declaration {
-  readonly type: "declaration";
-  readonly name: string;
-  readonly value: Array<Token>;
-  readonly important: boolean;
-}
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-declaration

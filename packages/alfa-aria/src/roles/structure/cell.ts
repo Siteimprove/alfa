@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Section } from "../abstract/section";
 import { Row } from "./row";
 
@@ -8,6 +8,7 @@ import { Row } from "./row";
  */
 export const Cell: Role = {
   name: "cell",
+  category: Category.Structure,
   inherits: () => [Section],
   context: () => [Row],
   supported: () => [

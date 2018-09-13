@@ -1,4 +1,4 @@
-import { parseRule, Style } from "@siteimprove/alfa-css";
+import { ComputedStyle, parseRule } from "@siteimprove/alfa-css";
 import { keys } from "@siteimprove/alfa-util";
 import { Rule, RuleType, StyleRule, StyleSheet } from "./types";
 
@@ -227,7 +227,7 @@ export function isUserAgentRule(rule: Rule): boolean {
 
 function cssRule(
   prelude: string,
-  style: { [P in keyof Style]: string } = {}
+  style: Readonly<{ [P in keyof ComputedStyle]?: string }> = {}
 ): Rule {
   const parsed = parseRule(prelude);
 

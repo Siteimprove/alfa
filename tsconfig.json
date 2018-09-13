@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "alwaysStrict": true,
-    "checkJs": true,
     "declaration": true,
     "declarationMap": true,
     "jsx": "react",
@@ -11,6 +9,7 @@
     "module": "commonjs",
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
+    "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,

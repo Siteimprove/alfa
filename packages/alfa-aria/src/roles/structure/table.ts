@@ -1,5 +1,5 @@
 import * as Attributes from "../../attributes";
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Section } from "../abstract/section";
 import { Row } from "./row";
 import { RowGroup } from "./row-group";
@@ -9,6 +9,7 @@ import { RowGroup } from "./row-group";
  */
 export const Table: Role = {
   name: "table",
+  category: Category.Structure,
   inherits: () => [Section],
   owned: () => [Row, [RowGroup, Row]],
   supported: () => [Attributes.ColumnCount, Attributes.RowCount],

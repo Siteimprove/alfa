@@ -1,4 +1,4 @@
-import { Role } from "../../types";
+import { Category, Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Group } from "../structure/group";
 import { MenuItem } from "./menu-item";
@@ -10,6 +10,7 @@ import { MenuItemRadio } from "./menu-item-radio";
  */
 export const Menu: Role = {
   name: "menu",
+  category: Category.Widget,
   inherits: () => [Select],
   owned: () => [
     MenuItem,

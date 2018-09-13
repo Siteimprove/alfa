@@ -23,6 +23,10 @@
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
   "dependencies": {
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-http": "^0.0.0",
