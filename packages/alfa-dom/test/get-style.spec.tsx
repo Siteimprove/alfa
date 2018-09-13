@@ -1,3 +1,4 @@
+import { Values } from "@siteimprove/alfa-css";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import {
@@ -13,12 +14,8 @@ test("Gets the cascaded style of an element", t => {
   const style = getCascadedStyle(span, div);
 
   t.deepEqual(style, {
-    color: "inherit",
-    fontSize: {
-      type: "percentage",
-      value: 1.2,
-      unit: "em"
-    }
+    color: Values.keyword("inherit"),
+    fontSize: Values.length(1.2, "em")
   });
 });
 
@@ -26,17 +23,8 @@ test("Gets the specified style of an element", t => {
   const style = getSpecifiedStyle(span, div);
 
   t.deepEqual(style, {
-    color: {
-      red: 255,
-      green: 0,
-      blue: 0,
-      alpha: 1
-    },
-    fontSize: {
-      type: "percentage",
-      value: 1.2,
-      unit: "em"
-    }
+    color: Values.color(255, 0, 0, 1),
+    fontSize: Values.length(1.2, "em")
   });
 });
 
@@ -44,17 +32,8 @@ test("Gets the computed style of an element", t => {
   const style = getComputedStyle(span, div);
 
   t.deepEqual(style, {
-    color: {
-      red: 255,
-      green: 0,
-      blue: 0,
-      alpha: 1
-    },
-    fontSize: {
-      type: "length",
-      value: 19.2,
-      unit: "px"
-    }
+    color: Values.color(255, 0, 0, 1),
+    fontSize: Values.length(19.2, "px")
   });
 });
 
@@ -65,11 +44,7 @@ test("Correctly handles default inherited properties", t => {
   const style = getComputedStyle(span, div);
 
   t.deepEqual(style, {
-    fontSize: {
-      type: "length",
-      value: 14,
-      unit: "px"
-    }
+    fontSize: Values.length(14, "px")
   });
 });
 
@@ -79,11 +54,7 @@ test("Gets the initial values of properties when specified", t => {
   const style = getComputedStyle(span, span);
 
   t.deepEqual(style, {
-    fontSize: {
-      type: "length",
-      value: 16,
-      unit: "px"
-    }
+    fontSize: Values.length(16, "px")
   });
 });
 
@@ -113,11 +84,6 @@ test("Correctly handles light DOM inheriting from shadow DOM", t => {
   const style = getComputedStyle(span, context);
 
   t.deepEqual(style, {
-    color: {
-      red: 255,
-      green: 0,
-      blue: 0,
-      alpha: 1
-    }
+    color: Values.color(255, 0, 0, 1)
   });
 });

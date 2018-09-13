@@ -3,6 +3,9 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../../../src/alphabet";
 import { TextDecorationStyleGrammar } from "../../../../src/properties/text-decoration/style/grammar";
 import { TextDecorationStyle } from "../../../../src/properties/text-decoration/types";
+import { Values } from "../../../../src/values";
+
+const { keyword } = Values;
 
 function textDecorationStyle(
   t: Assertions,
@@ -16,5 +19,5 @@ function textDecorationStyle(
 }
 
 test("Can parse a none text-decoration-style", t => {
-  textDecorationStyle(t, "none", "none");
+  textDecorationStyle(t, "none", keyword("none"));
 });

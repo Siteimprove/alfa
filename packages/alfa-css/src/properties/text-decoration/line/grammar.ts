@@ -1,7 +1,7 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar } from "@siteimprove/alfa-lang";
-import { Ident, Token, TokenType } from "../../../alphabet";
-import { whitespace } from "../../../grammar";
+import { Grammar, skip } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../../../alphabet";
+import { Values } from "../../../values";
 import { TextDecorationLine } from "../types";
 
 type Production<T extends Token> = Lang.Production<
@@ -10,7 +10,7 @@ type Production<T extends Token> = Lang.Production<
   T
 >;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
@@ -18,7 +18,7 @@ const ident: Production<Ident> = {
       case "underline":
       case "overline":
       case "line-through":
-        return token.value;
+        return Values.keyword(token.value);
     }
 
     return null;
@@ -28,4 +28,4 @@ const ident: Production<Ident> = {
 export const TextDecorationLineGrammar: Grammar<
   Token,
   TextDecorationLine
-> = new Grammar([whitespace, ident], () => null);
+> = new Grammar([skip(TokenType.Whitespace), ident], () => null);

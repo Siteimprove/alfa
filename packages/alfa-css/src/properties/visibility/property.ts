@@ -1,5 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../types";
+import { Longhand } from "../../properties";
+import { Values } from "../../values";
 import { VisibilityGrammar } from "./grammar";
 import { Visibility } from "./types";
 
@@ -18,7 +19,7 @@ export const visibility: Longhand<Visibility> = {
     return parser.result;
   },
   initial() {
-    return "visible";
+    return Values.keyword("visible");
   },
   computed(getProperty) {
     return getProperty("visibility");

@@ -3,6 +3,7 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../../src/alphabet";
 import { ContentGrammar } from "../../../src/properties/content/grammar";
 import { Content } from "../../../src/properties/content/types";
+import { Values } from "../../../src/values";
 
 function content(t: Assertions, input: string, expected: Content) {
   const lexer = lex(input, Alphabet);
@@ -12,13 +13,21 @@ function content(t: Assertions, input: string, expected: Content) {
 }
 
 test("Can parse normal content", t => {
-  content(t, "normal", "normal");
+  content(t, "normal", Values.keyword("normal"));
 });
 
 test("Can parse none content", t => {
-  content(t, "none", "none");
+  content(t, "none", Values.keyword("none"));
 });
 
 test("Can parse a list of string content", t => {
-  content(t, '"Hello" " " "world"', ["Hello", " ", "world"]);
+  content(
+    t,
+    '"Hello" " " "world"',
+    Values.list(
+      Values.string("Hello"),
+      Values.string(" "),
+      Values.string("world")
+    )
+  );
 });

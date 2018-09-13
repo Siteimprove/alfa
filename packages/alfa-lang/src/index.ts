@@ -12,5 +12,6 @@ export * from "./is-numeric";
 export * from "./is-whitespace";
 export * from "./lex";
 export * from "./parse";
+export * from "./skip";
 export * from "./stream";
 export * from "./types";

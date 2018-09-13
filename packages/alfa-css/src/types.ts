@@ -1,11 +1,9 @@
 import { Token } from "./alphabet";
-import * as Longhands from "./properties/longhands";
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#declaration
  */
 export interface Declaration {
-  readonly type: "declaration";
   readonly name: string;
   readonly value: Array<Token>;
   readonly important: boolean;
@@ -15,7 +13,6 @@ export interface Declaration {
  * @see https://www.w3.org/TR/css-syntax/#at-rule
  */
 export interface AtRule {
-  readonly type: "at-rule";
   readonly name: string;
   readonly prelude: Array<Token>;
   readonly value?: Array<Token>;
@@ -25,7 +22,6 @@ export interface AtRule {
  * @see https://www.w3.org/TR/css-syntax/#qualified-rule
  */
 export interface QualifiedRule {
-  readonly type: "qualified-rule";
   readonly prelude: Array<Token>;
   readonly value: Array<Token>;
 }
@@ -165,44 +161,6 @@ export interface RelativeSelector {
 export type Selector = ComplexSelector | RelativeSelector;
 
 /**
- * @see https://www.w3.org/TR/css-values/#relative-lengths
- */
-export type RelativeLength =
-  | "em"
-  | "ex"
-  | "ch"
-  | "rem"
-  | "vw"
-  | "vh"
-  | "vmin"
-  | "vmax";
-
-/**
- * @see https://www.w3.org/TR/css-values/#absolute-lengths
- */
-export type AbsoluteLength = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
-
-/**
- * @see https://www.w3.org/TR/css-values/#angles
- */
-export type Angle = "deg" | "grad" | "rad" | "turn";
-
-/**
- * @see https://www.w3.org/TR/css-values/#time
- */
-export type Time = "s" | "ms";
-
-/**
- * @see https://www.w3.org/TR/css-values/#frequency
- */
-export type Frequency = "hz" | "kHz";
-
-/**
- * @see https://www.w3.org/TR/css-values/#resolution
- */
-export type Resolution = "dpi" | "dpcm" | "dppx";
-
-/**
  * @see https://www.w3.org/TR/selectors/#pseudo-classes
  */
 export type PseudoClass =
@@ -336,112 +294,3 @@ export type PseudoElement =
   | "marker"
   // https://www.w3.org/TR/css-pseudo/#placeholder-pseudo
   | "placeholder";
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#initial
- */
-export type Initial = "initial";
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#inherit
- */
-export type Inherit = "inherit";
-
-/**
- * @see https://www.w3.org/TR/css-cascade/#value-stages
- */
-export const enum Stage {
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#cascaded
-   */
-  Cascaded,
-
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#specified
-   */
-  Specified,
-
-  /**
-   * @see https://www.w3.org/TR/css-cascade/#computed
-   */
-  Computed
-}
-
-/**
- * @internal
- */
-export type PropertyGetter<S extends SpecifiedStyle | ComputedStyle> = <
-  N extends keyof typeof Longhands
->(
-  propertyName: N
-) => S[N];
-
-export interface Longhand<T, U = T> {
-  /**
-   * @internal
-   */
-  readonly inherits?: true;
-
-  /**
-   * @internal
-   */
-  parse(input: Array<Token>): T | null;
-
-  /**
-   * @internal
-   */
-  initial(): U;
-
-  /**
-   * @internal
-   */
-  computed(
-    getPropertyValue: PropertyGetter<SpecifiedStyle | ComputedStyle>,
-    getParentPropertyValue: PropertyGetter<ComputedStyle>
-  ): U | undefined;
-}
-
-export interface Shorthand<T extends keyof typeof Longhands> {
-  /**
-   * @internal
-   */
-  parse(
-    input: Array<Token>
-  ):
-    | {
-        readonly [N in T]?: typeof Longhands[N] extends Longhand<
-          infer T,
-          infer U
-        >
-          ? T
-          : never
-      }
-    | null;
-}
-
-export type CascadedStyle = {
-  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
-    infer T,
-    infer U
-  >
-    ? T | Initial | Inherit
-    : never
-};
-
-export type SpecifiedStyle = {
-  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
-    infer T,
-    infer U
-  >
-    ? T | U
-    : never
-};
-
-export type ComputedStyle = {
-  readonly [N in keyof typeof Longhands]?: typeof Longhands[N] extends Longhand<
-    infer T,
-    infer U
-  >
-    ? U
-    : never
-};

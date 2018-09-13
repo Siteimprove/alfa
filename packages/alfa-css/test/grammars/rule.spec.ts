@@ -13,7 +13,6 @@ function rule(t: Assertions, input: string, expected: Rule | Array<Rule>) {
 
 test("Can parse a single qualified rule", t => {
   rule(t, "div{color:red}", {
-    type: "qualified-rule",
     prelude: [
       {
         type: TokenType.Ident,
@@ -39,7 +38,6 @@ test("Can parse a single qualified rule", t => {
 test("Can parse a list of qualified rules", t => {
   rule(t, "div{color:red}span{color:blue}", [
     {
-      type: "qualified-rule",
       prelude: [
         {
           type: TokenType.Ident,
@@ -61,7 +59,6 @@ test("Can parse a list of qualified rules", t => {
       ]
     },
     {
-      type: "qualified-rule",
       prelude: [
         {
           type: TokenType.Ident,
@@ -87,7 +84,6 @@ test("Can parse a list of qualified rules", t => {
 
 test("Can parse a single at-rule", t => {
   rule(t, "@page{color:red}", {
-    type: "at-rule",
     name: "page",
     prelude: [],
     value: [
@@ -108,7 +104,6 @@ test("Can parse a single at-rule", t => {
 
 test("Can parse an at-rule with a prelude", t => {
   rule(t, "@page foo", {
-    type: "at-rule",
     name: "page",
     prelude: [
       {
@@ -124,7 +119,6 @@ test("Can parse an at-rule with a prelude", t => {
 
 test("Can parse an at-rule terminated by a semicolon", t => {
   rule(t, "@page;", {
-    type: "at-rule",
     name: "page",
     prelude: []
   });
@@ -132,7 +126,6 @@ test("Can parse an at-rule terminated by a semicolon", t => {
 
 test("Can parse a rule with a class selector", t => {
   rule(t, ".foo{}", {
-    type: "qualified-rule",
     prelude: [
       {
         type: TokenType.Delim,
@@ -149,7 +142,6 @@ test("Can parse a rule with a class selector", t => {
 
 test("Can parse a rule with an ID selector", t => {
   rule(t, "#foo{}", {
-    type: "qualified-rule",
     prelude: [
       {
         type: TokenType.Hash,
@@ -163,7 +155,6 @@ test("Can parse a rule with an ID selector", t => {
 
 test("Can parse a rule with an attribute selector", t => {
   rule(t, "[foo]{}", {
-    type: "qualified-rule",
     prelude: [
       {
         type: TokenType.LeftSquareBracket

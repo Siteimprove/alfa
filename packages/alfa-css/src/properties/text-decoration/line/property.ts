@@ -1,5 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../../types";
+import { Longhand } from "../../../properties";
+import { Values } from "../../../values";
 import { TextDecorationLine } from "../types";
 import { TextDecorationLineGrammar } from "./grammar";
 
@@ -17,9 +18,9 @@ export const textDecorationLine: Longhand<TextDecorationLine> = {
     return parser.result;
   },
   initial() {
-    return "none";
+    return Values.keyword("none");
   },
-  computed(getProperty, getParentProperty) {
+  computed(getProperty) {
     return getProperty("textDecorationLine");
   }
 };

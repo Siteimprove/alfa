@@ -1,1 +1,3 @@
-export type Visibility = "visible" | "hidden" | "collapse";
+import { Values } from "../../values";
+
+export type Visibility = Values.Keyword<"visible" | "hidden" | "collapse">;

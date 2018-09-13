@@ -3,6 +3,9 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../../../src/alphabet";
 import { FontSizeGrammar } from "../../../../src/properties/font/size/grammar";
 import { FontSize } from "../../../../src/properties/font/types";
+import { Values } from "../../../../src/values";
+
+const { keyword, length, percentage } = Values;
 
 function fontSize(t: Assertions, input: string, expected: FontSize) {
   const lexer = lex(input, Alphabet);
@@ -12,38 +15,21 @@ function fontSize(t: Assertions, input: string, expected: FontSize) {
 }
 
 test("Can parse a px font size", t => {
-  fontSize(t, "14px", {
-    type: "length",
-    value: 14,
-    unit: "px"
-  });
+  fontSize(t, "14px", length(14, "px"));
 });
 
 test("Can parse an em font size", t => {
-  fontSize(t, "1.2em", {
-    type: "percentage",
-    value: 1.2,
-    unit: "em"
-  });
+  fontSize(t, "1.2em", length(1.2, "em"));
 });
 
 test("Can parse a % font size", t => {
-  fontSize(t, "80%", {
-    type: "percentage",
-    value: 0.8
-  });
+  fontSize(t, "80%", percentage(0.8));
 });
 
 test("Can parse an absolute font size", t => {
-  fontSize(t, "small", {
-    type: "absolute",
-    value: "small"
-  });
+  fontSize(t, "small", keyword("small"));
 });
 
 test("Can parse a relative font size", t => {
-  fontSize(t, "smaller", {
-    type: "relative",
-    value: "smaller"
-  });
+  fontSize(t, "smaller", keyword("smaller"));
 });

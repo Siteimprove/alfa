@@ -1,26 +1,27 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar } from "@siteimprove/alfa-lang";
+import { Grammar, skip } from "@siteimprove/alfa-lang";
 import { Mutable } from "@siteimprove/alfa-util";
-import { Dimension, Ident, Percentage, Token, TokenType } from "../../alphabet";
-import { whitespace } from "../../grammar";
+import { Token, Tokens, TokenType } from "../../alphabet";
+import { Units } from "../../units";
+import { Values } from "../../values";
 import { TextIndent } from "./types";
 
 type Production<T extends Token> = Lang.Production<Token, TextIndent, T>;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   infix(token, stream, expression, left) {
     if (
       token.value === "hanging" &&
-      left.hanging === undefined &&
-      left.eachLine === undefined
+      left.value.hanging === undefined &&
+      left.value.eachLine === undefined
     ) {
-      (left as Mutable<TextIndent>).hanging = true;
+      (left as Mutable<TextIndent>).value.hanging = Values.boolean(true);
       return left;
     }
 
-    if (token.value === "each-line" && left.eachLine === undefined) {
-      (left as Mutable<TextIndent>).eachLine = true;
+    if (token.value === "each-line" && left.value.eachLine === undefined) {
+      (left as Mutable<TextIndent>).value.eachLine = Values.boolean(true);
       return left;
     }
 
@@ -28,48 +29,27 @@ const ident: Production<Ident> = {
   }
 };
 
-const dimension: Production<Dimension> = {
+const dimension: Production<Tokens.Dimension> = {
   token: TokenType.Dimension,
   prefix(token) {
-    switch (token.unit) {
-      // Absolute lengths
-      case "cm":
-      case "mm":
-      case "Q":
-      case "in":
-      case "pc":
-      case "pt":
-      case "px":
-        return { type: "length", value: token.value, unit: token.unit };
-
-      // Relative lengths
-      case "em":
-      case "ex":
-      case "ch":
-      case "rem":
-      case "vw":
-      case "vh":
-      case "vmin":
-      case "vmax":
-        return {
-          type: "percentage",
-          value: token.value,
-          unit: token.unit
-        };
+    if (Units.isLength(token.unit)) {
+      return Values.dictionary({
+        indent: Values.length(token.value, token.unit)
+      });
     }
 
     return null;
   }
 };
 
-const percentage: Production<Percentage> = {
+const percentage: Production<Tokens.Percentage> = {
   token: TokenType.Percentage,
   prefix(token) {
-    return { type: "percentage", value: token.value };
+    return Values.dictionary({ indent: Values.percentage(token.value) });
   }
 };
 
 export const TextIndentGrammar: Grammar<Token, TextIndent> = new Grammar(
-  [whitespace, ident, dimension, percentage],
+  [skip(TokenType.Whitespace), ident, dimension, percentage],
   () => null
 );

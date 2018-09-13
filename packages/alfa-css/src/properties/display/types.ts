@@ -1,28 +1,26 @@
+import { Values } from "../../values";
+
 /**
  * @see https://www.w3.org/TR/css-display/#outer-role
  */
-export type DisplayOutside = "block" | "inline" | "run-in";
+export type DisplayOutside = Values.Keyword<"block" | "inline" | "run-in">;
 
 /**
  * @see https://www.w3.org/TR/css-display/#inner-model
  */
-export type DisplayInside =
-  | "flow"
-  | "flow-root"
-  | "table"
-  | "flex"
-  | "grid"
-  | "ruby";
+export type DisplayInside = Values.Keyword<
+  "flow" | "flow-root" | "table" | "flex" | "grid" | "ruby"
+>;
 
 /**
  * @see https://www.w3.org/TR/css-display/#list-items
  */
-export type DisplayListItem = "list-item";
+export type DisplayListItem = Values.Keyword<"list-item">;
 
 /**
  * @see https://www.w3.org/TR/css-display/#layout-specific-display
  */
-export type DisplayInternal =
+export type DisplayInternal = Values.Keyword<
   | "table-row-group"
   | "table-header-group"
   | "table-footer-group"
@@ -34,15 +32,16 @@ export type DisplayInternal =
   | "ruby-base"
   | "ruby-text"
   | "ruby-base-container"
-  | "ruby-text-container";
+  | "ruby-text-container"
+>;
 
 /**
  * @see https://www.w3.org/TR/css-display/#box-generation
  */
-export type DisplayBox = "contents" | "none";
+export type DisplayBox = Values.Keyword<"contents" | "none">;
 
 export type Display =
-  | [DisplayOutside, DisplayInside]
-  | [DisplayOutside, DisplayInside, DisplayListItem]
   | DisplayInternal
-  | DisplayBox;
+  | DisplayBox
+  | Values.Tuple<[DisplayOutside, DisplayInside]>
+  | Values.Tuple<[DisplayOutside, DisplayInside, DisplayListItem]>;

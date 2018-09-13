@@ -6,17 +6,7 @@ import {
   Grammar,
   Stream
 } from "@siteimprove/alfa-lang";
-import {
-  Colon,
-  Comma,
-  Delim,
-  Hash,
-  Ident,
-  SquareBracket,
-  Token,
-  TokenType,
-  Whitespace
-} from "../alphabet";
+import { Token, Tokens, TokenType } from "../alphabet";
 import {
   AttributeMatcher,
   AttributeModifier,
@@ -107,7 +97,7 @@ function isImplicitDescendant(token: Token): boolean {
   return false;
 }
 
-function idSelector(token: Hash): IdSelector | null {
+function idSelector(token: Tokens.Hash): IdSelector | null {
   return { type: SelectorType.IdSelector, name: token.value };
 }
 
@@ -122,7 +112,7 @@ function classSelector(stream: Stream<Token>): ClassSelector | null {
 }
 
 function typeSelector(
-  token: Delim | Ident | Hash,
+  token: Tokens.Delim | Tokens.Ident | Tokens.Hash,
   stream: Stream<Token>
 ): TypeSelector | null {
   let name: string | null = null;
@@ -525,7 +515,7 @@ type Production<T extends Token> = Lang.Production<
   T
 >;
 
-const whitespace: Production<Whitespace> = {
+const whitespace: Production<Tokens.Whitespace> = {
   token: TokenType.Whitespace,
 
   prefix(token, stream, expression) {
@@ -547,7 +537,7 @@ const whitespace: Production<Whitespace> = {
   }
 };
 
-const hash: Production<Hash> = {
+const hash: Production<Tokens.Hash> = {
   token: TokenType.Hash,
   prefix(token, stream) {
     if (!token.unrestricted) {
@@ -566,7 +556,7 @@ const hash: Production<Hash> = {
   }
 };
 
-const delim: Production<Delim> = {
+const delim: Production<Tokens.Delim> = {
   token: TokenType.Delim,
 
   prefix(token, stream) {
@@ -609,7 +599,7 @@ const delim: Production<Delim> = {
   }
 };
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
 
   prefix(token, stream) {
@@ -617,7 +607,7 @@ const ident: Production<Ident> = {
   }
 };
 
-const comma: Production<Comma> = {
+const comma: Production<Tokens.Comma> = {
   token: TokenType.Comma,
 
   infix(token, stream, expression, left) {
@@ -625,7 +615,7 @@ const comma: Production<Comma> = {
   }
 };
 
-const squareBracket: Production<SquareBracket> = {
+const squareBracket: Production<Tokens.SquareBracket> = {
   token: TokenType.LeftSquareBracket,
 
   prefix(token, stream) {
@@ -637,7 +627,7 @@ const squareBracket: Production<SquareBracket> = {
   }
 };
 
-const colon: Production<Colon> = {
+const colon: Production<Tokens.Colon> = {
   token: TokenType.Colon,
 
   prefix(token, stream, expression) {
