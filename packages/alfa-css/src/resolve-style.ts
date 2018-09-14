@@ -1,4 +1,4 @@
-import { keys, Mutable } from "@siteimprove/alfa-util";
+import { concat, keys, Mutable } from "@siteimprove/alfa-util";
 import { TokenType } from "./alphabet";
 import {
   CascadedPropertyValues,
@@ -209,31 +209,29 @@ export function resolveComputedStyle(
   return computedStyle;
 }
 
+const propertyNames = new Map<string, keyof Longhands | keyof Shorthands>();
+
+for (const propertyName of concat(keys(Longhands), keys(Shorthands))) {
+  propertyNames.set(
+    propertyName.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`),
+    propertyName
+  );
+}
+
 function getPropertyName(
   input: string
 ): keyof Longhands | keyof Shorthands | null {
-  const propertyName = input.replace(/-([a-z])/g, match =>
-    match[1].toUpperCase()
-  );
+  const propertyName = propertyNames.get(input);
 
-  if (
-    isLonghandPropertyName(propertyName) ||
-    isShorthandPropertyName(propertyName)
-  ) {
-    return propertyName;
+  if (propertyName === undefined) {
+    return null;
   }
 
-  return null;
+  return propertyName;
 }
 
 function isLonghandPropertyName(
-  propertyName: string | keyof Longhands | keyof Shorthands
+  propertyName: keyof Longhands | keyof Shorthands
 ): propertyName is keyof Longhands {
   return propertyName in Longhands;
-}
-
-function isShorthandPropertyName(
-  propertyName: string | keyof Longhands | keyof Shorthands
-): propertyName is keyof Shorthands {
-  return propertyName in Shorthands;
 }
