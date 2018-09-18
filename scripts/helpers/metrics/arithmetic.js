@@ -156,7 +156,9 @@ const Arithmetic = {
     }
 
     return (uncovered / total) * 100;
-  }
+  },
+
+  visit
 };
 
 exports.Arithmetic = Arithmetic;
