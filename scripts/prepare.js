@@ -12,11 +12,6 @@ const notify = require("./helpers/notify");
 const { build } = require("./tasks/build");
 const { clean } = require("./tasks/clean");
 
-const { Logical } = require("./helpers/metrics/logical");
-const { Arithmetic } = require("./helpers/metrics/arithmetic");
-
-const metrics = [Arithmetic, Logical];
-
 /**
  * @param {Array<string>} files
  */
@@ -72,12 +67,7 @@ for (const pkg of packages) {
       TypeScript.ScriptTarget.ES2015
     );
 
-    let operators = metrics.reduce(
-      (acc, metric) => acc + metric.visit(compiled),
-      0
-    );
-
-    if (operators <= 0) {
+    if (!isTestable(compiled)) {
       continue;
     }
 
@@ -88,3 +78,28 @@ for (const pkg of packages) {
 }
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
+
+/**
+ * @param {TypeScript.Node} node
+ */
+function isTestable(node, testable = false) {
+  switch (node.kind) {
+    case TypeScript.SyntaxKind.FunctionDeclaration:
+      if (
+        node.modifiers &&
+        node.modifiers.some(
+          el => el.kind === TypeScript.SyntaxKind.ExportKeyword
+        )
+      ) {
+        // Functions that are exported is testable
+        testable = true;
+      }
+      break;
+  }
+
+  TypeScript.forEachChild(node, node => {
+    testable = testable || isTestable(node, testable);
+  });
+
+  return testable;
+}

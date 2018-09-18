@@ -134,9 +134,7 @@ const Logical = {
     }
 
     return (uncovered / total) * 100;
-  },
-
-  visit
+  }
 };
 
 exports.Logical = Logical;
