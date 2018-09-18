@@ -132,9 +132,9 @@ process.on("beforeExit", code => {
             uncovered[i].range.end.line - uncovered[i].range.start.line + 5; // Buffer added for dots and spacing
           if (
             lineSum > (process.stdout.rows ? process.stdout.rows : 24) &&
-            i > 0
+            i > 0 // At least one block has to be printed
           ) {
-            break; // If the next block is going to fill
+            break; // If the next block is going to fill more than the height
           }
 
           printBlockCoverage(script, uncovered[i], widths);
