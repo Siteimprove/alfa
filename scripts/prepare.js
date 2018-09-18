@@ -1,9 +1,8 @@
 const { default: chalk } = require("chalk");
-const fs = require("fs");
 const path = require("path");
 const TypeScript = require("typescript");
 
-const { findFiles, isFile } = require("./helpers/file-system");
+const { findFiles, isFile, readFile } = require("./helpers/file-system");
 const { endsWith, not } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
@@ -62,13 +61,13 @@ for (const pkg of packages) {
       path.join(dir, `${path.basename(file, ".ts")}.spec.tsx`)
     ];
 
-    if (potentialTestFiles.some(file => isFile(file))) {
+    if (potentialTestFiles.some(isFile(file))) {
       continue; // An associated test file was found
     }
 
     const compiled = TypeScript.createSourceFile(
       "anon.ts",
-      fs.readFileSync(file).toString(),
+      readFile(file),
       TypeScript.ScriptTarget.ES2015
     );
 
