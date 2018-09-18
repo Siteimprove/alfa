@@ -51,14 +51,19 @@ for (const pkg of packages) {
       .map(part => (part === "src" ? "test" : part))
       .join(path.sep);
 
-    const tsTestFile = path.join(dir, `${path.basename(file, ".ts")}.spec.ts`);
-    const tsxTestFile = path.join(
-      dir,
-      `${path.basename(file, ".tsx")}.spec.tsx`
-    );
+    const potentialTestFiles = [
+      // TS source with TS test file
+      path.join(dir, `${path.basename(file, ".ts")}.spec.ts`),
+      // TSX source with TS test file
+      path.join(dir, `${path.basename(file, ".tsx")}.spec.ts`),
+      // TSX source with TSX test file
+      path.join(dir, `${path.basename(file, ".tsx")}.spec.tsx`),
+      // TS source with TSX test file
+      path.join(dir, `${path.basename(file, ".ts")}.spec.tsx`)
+    ];
 
-    if (isFile(tsTestFile) || isFile(tsxTestFile)) {
-      continue; // Found an associated test file
+    if (potentialTestFiles.some(file => isFile(file))) {
+      continue; // An associated test file was found
     }
 
     const compiled = TypeScript.createSourceFile(
@@ -92,7 +97,7 @@ function isTestable(node, testable = false) {
         )
       ) {
         // Functions that are exported is testable
-        testable = true;
+        return true;
       }
       break;
   }
