@@ -88,10 +88,6 @@ process.on("beforeExit", code => {
           const bp = blocks.get(b);
 
           return (bp === undefined ? 0 : bp) - (ap === undefined ? 0 : ap);
-        })
-        .slice(0, 3)
-        .sort((a, b) => {
-          return a.range.start.line - b.range.start.line;
         });
 
       if (uncovered.length > 0 && process.env.npm_lifecycle_event === "start") {
@@ -120,12 +116,30 @@ process.on("beforeExit", code => {
           gutter: `${uncovered[uncovered.length - 1].range.end.line + 2}`.length
         };
 
-        for (let i = 0, n = uncovered.length; i < n; i++) {
+        let lineSum = 5;
+        let i = 0;
+
+        while (true) {
+          if (uncovered[i] === undefined) {
+            break;
+          }
+
           if (i !== 0) {
             process.stdout.write(chalk.blue(`${"\u00b7".repeat(3)}\n`));
           }
 
+          lineSum +=
+            uncovered[i].range.end.line - uncovered[i].range.start.line + 5; // Buffer added for dots and spacing
+          if (
+            lineSum > (process.stdout.rows ? process.stdout.rows : 24) &&
+            i > 0
+          ) {
+            break; // If the next block is going to fill
+          }
+
           printBlockCoverage(script, uncovered[i], widths);
+
+          i++;
         }
       }
 
