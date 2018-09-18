@@ -1,3 +1,5 @@
-export type ContentList = Array<string>;
+import { Values } from "../../values";
 
-export type Content = "normal" | "none" | ContentList;
+export type Content =
+  | Values.Keyword<"normal" | "none">
+  | Values.List<Values.String>;

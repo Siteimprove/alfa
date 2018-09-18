@@ -1,7 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Char, Grammar, Stream } from "@siteimprove/alfa-lang";
-import { Ident, Semicolon, Token, TokenType } from "../alphabet";
-import { whitespace } from "../grammar";
+import { Char, Grammar, skip, Stream } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../alphabet";
 import { Declaration } from "../types";
 
 const { isArray } = Array;
@@ -45,7 +44,7 @@ function declaration(stream: Stream<Token>, name: string): Declaration | null {
     value = value.slice(0, -2);
   }
 
-  return { type: "declaration", name, value, important };
+  return { name, value, important };
 }
 
 type Production<T extends Token> = Lang.Production<
@@ -54,14 +53,14 @@ type Production<T extends Token> = Lang.Production<
   T
 >;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token, stream) {
     return declaration(stream, token.value);
   }
 };
 
-const semicolon: Production<Semicolon> = {
+const semicolon: Production<Tokens.Semicolon> = {
   token: TokenType.Semicolon,
   infix(token, stream, expression, left) {
     const declarations = isArray(left) ? left : [left];
@@ -83,4 +82,4 @@ const semicolon: Production<Semicolon> = {
 export const DeclarationGrammar: Grammar<
   Token,
   Declaration | Array<Declaration>
-> = new Grammar([ident, semicolon, whitespace], () => null);
+> = new Grammar([skip(TokenType.Whitespace), ident, semicolon], () => null);

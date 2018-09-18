@@ -1,61 +1,63 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar } from "@siteimprove/alfa-lang";
-import { Comma, Ident, String, Token, TokenType } from "../../../alphabet";
-import { whitespace } from "../../../grammar";
+import { Grammar, skip } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../../../alphabet";
+import { Values, ValueType } from "../../../values";
 import { FontFamily } from "../types";
-
-const { isArray } = Array;
 
 type Production<T extends Token> = Lang.Production<Token, FontFamily, T>;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token) {
-    return token.value;
-  },
-  infix(token, stream, expression, left) {
-    switch (left) {
+    switch (token.value) {
       case "serif":
       case "sans-serif":
       case "cursive":
-      case "fantatsy":
+      case "fantasy":
       case "monospace":
-        return null;
+        return Values.list(Values.keyword(token.value));
     }
 
-    return `${left} ${token.value}`;
+    return Values.list(Values.string(token.value));
+  },
+  infix(token, stream, expression, left) {
+    const last = left.value[left.value.length - 1];
+
+    if (last.type === ValueType.Keyword) {
+      return null;
+    }
+
+    left.value[left.value.length - 1] = Values.string(
+      `${last.value} ${token.value}`
+    );
+
+    return left;
   }
 };
 
-const string: Production<String> = {
+const string: Production<Tokens.String> = {
   token: TokenType.String,
   prefix(token) {
-    return token.value;
+    return Values.list(Values.string(token.value));
   }
 };
 
-const comma: Production<Comma> = {
+const comma: Production<Tokens.Comma> = {
   token: TokenType.Comma,
   infix(token, stream, expression, left) {
-    const families = isArray(left) ? left : [left];
-
     const right = expression();
 
     if (right === null) {
       return null;
     }
 
-    if (isArray(right)) {
-      families.push(...right);
-    } else {
-      families.push(right);
-    }
+    left.value.push(...right.value);
 
-    return families;
+    return left;
   }
 };
 
 export const FontFamilyGrammar: Grammar<Token, FontFamily> = new Grammar(
-  [whitespace, ident, string, comma],
+  [skip(TokenType.Whitespace), ident, string, comma],
   () => null
 );

@@ -2,17 +2,15 @@ import {
   CascadedStyle,
   ComputedStyle,
   Declaration,
-  getCascadedPropertyValue,
-  getComputedPropertyValue,
-  getPropertyName,
-  getSpecifiedPropertyValue,
   parseDeclaration,
   PseudoElement,
+  resolveCascadedStyle,
+  resolveComputedStyle,
+  resolveSpecifiedStyle,
   Selector,
   SelectorType,
   SpecifiedStyle
 } from "@siteimprove/alfa-css";
-import { keys, Mutable } from "@siteimprove/alfa-util";
 import { getAttribute } from "./get-attribute";
 import { getCascade } from "./get-cascade";
 import { getParentElement } from "./get-parent-element";
@@ -38,13 +36,9 @@ export function getCascadedStyle(
   context: Node,
   options: StyleOptions = {}
 ): CascadedStyle {
-  const cascadedStyle: Mutable<CascadedStyle> = {};
+  const declarations: Array<Declaration> = [];
 
   const style = getAttribute(element, "style");
-  const rootNode = getRootNode(element, context);
-  const cascade = isDocument(rootNode) ? getCascade(rootNode) : null;
-
-  const declarations: Array<Declaration> = [];
 
   if (style !== null && options.pseudo === undefined) {
     const declaration = parseDeclaration(style);
@@ -57,6 +51,9 @@ export function getCascadedStyle(
       }
     }
   }
+
+  const rootNode = getRootNode(element, context);
+  const cascade = isDocument(rootNode) ? getCascade(rootNode) : null;
 
   if (cascade !== null) {
     for (
@@ -92,30 +89,7 @@ export function getCascadedStyle(
     }
   }
 
-  for (const { name, value, important } of declarations) {
-    const propertyName = getPropertyName(name);
-
-    if (propertyName === null) {
-      continue;
-    }
-
-    const propertyValue = getCascadedPropertyValue(propertyName, value);
-
-    for (const propertyName of keys(propertyValue)) {
-      // If the property name is already present in the cascaded style then this
-      // means that the property was set inline and that we're now trying to set
-      // it from the cascaded styles. However, only important declarations from
-      // the cascaded styles can override those set inline so we move on if the
-      // declaration is not important.
-      if (propertyName in cascadedStyle && !important) {
-        continue;
-      }
-
-      cascadedStyle[propertyName] = propertyValue[propertyName];
-    }
-  }
-
-  return cascadedStyle;
+  return resolveCascadedStyle(declarations);
 }
 
 /**
@@ -143,26 +117,9 @@ export function getSpecifiedStyle(
   options: StyleOptions = {},
   parentStyle: ComputedStyle = getParentStyle(element, context, options)
 ): SpecifiedStyle {
-  const specifiedStyle: Mutable<SpecifiedStyle> = {};
-
   const cascadedStyle = getCascadedStyle(element, context, options);
 
-  const propertyNames = new Set([...keys(cascadedStyle), ...keys(parentStyle)]);
-
-  for (const propertyName of propertyNames) {
-    const propertyValue = getSpecifiedPropertyValue(
-      propertyName,
-      cascadedStyle,
-      specifiedStyle,
-      parentStyle
-    );
-
-    for (const propertyName of keys(propertyValue)) {
-      specifiedStyle[propertyName] = propertyValue[propertyName];
-    }
-  }
-
-  return specifiedStyle;
+  return resolveSpecifiedStyle(cascadedStyle, parentStyle);
 }
 
 /**
@@ -190,8 +147,6 @@ export function getComputedStyle(
   options: StyleOptions = {},
   parentStyle: ComputedStyle = getParentStyle(element, context, options)
 ): ComputedStyle {
-  const computedStyle: Mutable<ComputedStyle> = {};
-
   const specifiedStyle = getSpecifiedStyle(
     element,
     context,
@@ -199,22 +154,7 @@ export function getComputedStyle(
     parentStyle
   );
 
-  const propertyNames = keys(specifiedStyle);
-
-  for (const propertyName of propertyNames) {
-    const propertyValue = getComputedPropertyValue(
-      propertyName,
-      specifiedStyle,
-      computedStyle,
-      parentStyle
-    );
-
-    for (const propertyName of keys(propertyValue)) {
-      computedStyle[propertyName] = propertyValue[propertyName];
-    }
-  }
-
-  return computedStyle;
+  return resolveComputedStyle(specifiedStyle, parentStyle);
 }
 
 function getParentStyle(

@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../../types";
+import { Longhand } from "../../../properties";
 import { ColorGrammar, Transparent } from "../../color/grammar";
 import { Color } from "../../color/types";
 
@@ -16,8 +16,11 @@ export const textDecorationColor: Longhand<Color> = {
 
     return parser.result;
   },
+  /**
+   * @todo Should be currentColor when supported in colorGrammar
+   */
   initial() {
-    return Transparent; // TODO: Should be currentColor when supported in colorGrammar
+    return Transparent;
   },
   computed(getProperty) {
     return getProperty("textDecorationColor");

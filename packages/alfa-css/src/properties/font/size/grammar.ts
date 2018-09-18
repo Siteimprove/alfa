@@ -1,18 +1,13 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar } from "@siteimprove/alfa-lang";
-import {
-  Dimension,
-  Ident,
-  Percentage,
-  Token,
-  TokenType
-} from "../../../alphabet";
-import { whitespace } from "../../../grammar";
+import { Grammar, skip } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../../../alphabet";
+import { Units } from "../../../units";
+import { Values } from "../../../values";
 import { FontSize } from "../types";
 
 type Production<T extends Token> = Lang.Production<Token, FontSize, T>;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
@@ -23,54 +18,36 @@ const ident: Production<Ident> = {
       case "large":
       case "x-large":
       case "xx-large":
-        return { type: "absolute", value: token.value };
+        return Values.keyword(token.value);
+
       case "smaller":
       case "larger":
-        return { type: "relative", value: token.value };
+        return Values.keyword(token.value);
     }
 
     return null;
   }
 };
 
-const dimension: Production<Dimension> = {
+const dimension: Production<Tokens.Dimension> = {
   token: TokenType.Dimension,
   prefix(token) {
-    switch (token.unit) {
-      // Absolute lengths
-      case "cm":
-      case "mm":
-      case "Q":
-      case "in":
-      case "pc":
-      case "pt":
-      case "px":
-        return { type: "length", value: token.value, unit: token.unit };
-
-      // Relative lengths
-      case "em":
-      case "ex":
-      case "ch":
-      case "rem":
-      case "vw":
-      case "vh":
-      case "vmin":
-      case "vmax":
-        return { type: "percentage", value: token.value, unit: token.unit };
+    if (Units.isLength(token.unit)) {
+      return Values.length(token.value, token.unit);
     }
 
     return null;
   }
 };
 
-const percentage: Production<Percentage> = {
+const percentage: Production<Tokens.Percentage> = {
   token: TokenType.Percentage,
   prefix(token) {
-    return { type: "percentage", value: token.value };
+    return Values.percentage(token.value);
   }
 };
 
 export const FontSizeGrammar: Grammar<Token, FontSize> = new Grammar(
-  [whitespace, ident, dimension, percentage],
+  [skip(TokenType.Whitespace), ident, dimension, percentage],
   () => null
 );

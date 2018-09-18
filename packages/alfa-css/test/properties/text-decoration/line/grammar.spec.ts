@@ -3,6 +3,9 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../../../src/alphabet";
 import { TextDecorationLineGrammar } from "../../../../src/properties/text-decoration/line/grammar";
 import { TextDecorationLine } from "../../../../src/properties/text-decoration/types";
+import { Values } from "../../../../src/values";
+
+const { keyword } = Values;
 
 function textDecorationLine(
   t: Assertions,
@@ -16,5 +19,5 @@ function textDecorationLine(
 }
 
 test("Can parse a none text-decoration-line", t => {
-  textDecorationLine(t, "none", "none");
+  textDecorationLine(t, "none", keyword("none"));
 });

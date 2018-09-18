@@ -1,16 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar, Stream } from "@siteimprove/alfa-lang";
-import {
-  AtKeyword,
-  Colon,
-  Delim,
-  Hash,
-  Ident,
-  SquareBracket,
-  Token,
-  TokenType
-} from "../alphabet";
-import { whitespace } from "../grammar";
+import { Grammar, skip, Stream } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../alphabet";
 import { AtRule, QualifiedRule, Rule } from "../types";
 
 const { isArray } = Array;
@@ -26,7 +16,6 @@ function atRule(stream: Stream<Token>, name: string): AtRule {
   while (next !== null && next.type !== TokenType.Semicolon) {
     if (next.type === TokenType.LeftCurlyBracket) {
       return {
-        type: "at-rule",
         name,
         prelude,
         value: block(stream)
@@ -42,7 +31,6 @@ function atRule(stream: Stream<Token>, name: string): AtRule {
   stream.advance(1);
 
   return {
-    type: "at-rule",
     name,
     prelude
   };
@@ -60,7 +48,6 @@ function qualifiedRule(
   while (next !== null) {
     if (next.type === TokenType.LeftCurlyBracket) {
       return {
-        type: "qualified-rule",
         prelude,
         value: block(stream)
       };
@@ -136,7 +123,7 @@ type Production<T extends Token> = Lang.Production<
   T
 >;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token, stream) {
     return rule(token, stream);
@@ -146,7 +133,7 @@ const ident: Production<Ident> = {
   }
 };
 
-const delim: Production<Delim> = {
+const delim: Production<Tokens.Delim> = {
   token: TokenType.Delim,
   prefix(token, stream) {
     return rule(token, stream);
@@ -156,7 +143,7 @@ const delim: Production<Delim> = {
   }
 };
 
-const hash: Production<Hash> = {
+const hash: Production<Tokens.Hash> = {
   token: TokenType.Hash,
   prefix(token, stream) {
     return rule(token, stream);
@@ -166,7 +153,7 @@ const hash: Production<Hash> = {
   }
 };
 
-const colon: Production<Colon> = {
+const colon: Production<Tokens.Colon> = {
   token: TokenType.Colon,
   prefix(token, stream) {
     return rule(token, stream);
@@ -176,7 +163,7 @@ const colon: Production<Colon> = {
   }
 };
 
-const squareBracket: Production<SquareBracket> = {
+const squareBracket: Production<Tokens.SquareBracket> = {
   token: TokenType.LeftSquareBracket,
   prefix(token, stream) {
     return rule(token, stream);
@@ -186,7 +173,7 @@ const squareBracket: Production<SquareBracket> = {
   }
 };
 
-const atKeyword: Production<AtKeyword> = {
+const atKeyword: Production<Tokens.AtKeyword> = {
   token: TokenType.AtKeyword,
   prefix(token, stream) {
     return rule(token, stream);
@@ -197,6 +184,14 @@ const atKeyword: Production<AtKeyword> = {
 };
 
 export const RuleGrammar: Grammar<Token, Rule | Array<Rule>> = new Grammar(
-  [ident, hash, delim, colon, squareBracket, atKeyword, whitespace],
+  [
+    skip(TokenType.Whitespace),
+    ident,
+    hash,
+    delim,
+    colon,
+    squareBracket,
+    atKeyword
+  ],
   () => null
 );

@@ -1,5 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../../types";
+import { Longhand } from "../../../properties";
+import { Values } from "../../../values";
 import { TextDecorationStyle } from "../types";
 import { TextDecorationStyleGrammar } from "./grammar";
 
@@ -17,9 +18,9 @@ export const textDecorationStyle: Longhand<TextDecorationStyle> = {
     return parser.result;
   },
   initial() {
-    return "none";
+    return Values.keyword("none");
   },
-  computed(getProperty, getParentProperty) {
+  computed(getProperty) {
     return getProperty("textDecorationStyle");
   }
 };

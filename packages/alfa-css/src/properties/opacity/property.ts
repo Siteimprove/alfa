@@ -1,6 +1,7 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { clamp } from "@siteimprove/alfa-util";
-import { Longhand } from "../../types";
+import { Longhand } from "../../properties";
+import { Values } from "../../values";
 import { OpacityGrammar } from "./grammar";
 import { Opacity } from "./types";
 
@@ -18,10 +19,9 @@ export const opacity: Longhand<Opacity> = {
     return parser.result;
   },
   initial() {
-    return 1;
+    return Values.number(1);
   },
   computed(getProperty) {
-    const opacity = getProperty("opacity");
-    return opacity === undefined ? opacity : clamp(opacity, 0, 1);
+    return Values.number(clamp(getProperty("opacity").value, 0, 1));
   }
 };

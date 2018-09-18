@@ -17,7 +17,6 @@ function declaration(
 
 test("Can parse a single declaration", t => {
   declaration(t, "color:red", {
-    type: "declaration",
     name: "color",
     value: [
       {
@@ -32,7 +31,6 @@ test("Can parse a single declaration", t => {
 test("Can parse a list of declarations", t => {
   declaration(t, "color:red;font-size:24px", [
     {
-      type: "declaration",
       name: "color",
       value: [
         {
@@ -43,7 +41,6 @@ test("Can parse a list of declarations", t => {
       important: false
     },
     {
-      type: "declaration",
       name: "font-size",
       value: [
         {
@@ -60,7 +57,6 @@ test("Can parse a list of declarations", t => {
 
 test("Can parse an important declaration", t => {
   declaration(t, "color:red!important", {
-    type: "declaration",
     name: "color",
     value: [
       {

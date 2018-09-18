@@ -1,6 +1,3 @@
-export type Color = Readonly<{
-  red: number;
-  green: number;
-  blue: number;
-  alpha: number;
-}>;
+import { Values } from "../../values";
+
+export type Color = Values.Color;

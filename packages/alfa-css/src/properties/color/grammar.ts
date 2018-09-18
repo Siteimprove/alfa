@@ -1,27 +1,12 @@
 import { isFeatureSupported } from "@siteimprove/alfa-compatibility";
 import * as Lang from "@siteimprove/alfa-lang";
-import { getNumericValue, Grammar, Stream } from "@siteimprove/alfa-lang";
+import { getNumericValue, Grammar, skip, Stream } from "@siteimprove/alfa-lang";
 import { clamp, Mutable } from "@siteimprove/alfa-util";
-import {
-  FunctionName,
-  Hash,
-  Ident,
-  Number,
-  Percentage,
-  Token,
-  TokenType
-} from "../../alphabet";
-import { whitespace } from "../../grammar";
+import { Token, Tokens, TokenType } from "../../alphabet";
+import { Values } from "../../values";
 import { Color } from "./types";
 
 const { min, round } = Math;
-
-const enum RgbComponent {
-  Red,
-  Green,
-  Blue,
-  Alpha
-}
 
 function functionArguments(stream: Stream<Token>): Array<Token> {
   const args: Array<Token> = [];
@@ -61,7 +46,7 @@ function functionArguments(stream: Stream<Token>): Array<Token> {
   return args;
 }
 
-function getNumber(tokens: Array<Token>, index: number): Number | null {
+function getNumber(tokens: Array<Token>, index: number): Tokens.Number | null {
   if (index in tokens === false) {
     return null;
   }
@@ -75,7 +60,10 @@ function getNumber(tokens: Array<Token>, index: number): Number | null {
   return token;
 }
 
-function getPercentage(tokens: Array<Token>, index: number): Percentage | null {
+function getPercentage(
+  tokens: Array<Token>,
+  index: number
+): Tokens.Percentage | null {
   if (index in tokens === false) {
     return null;
   }
@@ -94,7 +82,7 @@ function rgbaColor(args: Array<Token>): Color {
     return Transparent;
   }
 
-  const color: Mutable<Color> = { red: 0, green: 0, blue: 0, alpha: 1 };
+  const color: Mutable<Color> = Values.color(0, 0, 0, 1);
 
   for (let i = 0, n = args.length; i < n; i++) {
     const component = args[i];
@@ -108,7 +96,7 @@ function rgbaColor(args: Array<Token>): Color {
 
     let { value } = component;
 
-    if (i === RgbComponent.Alpha) {
+    if (i === 3) {
       value = clamp(value, 0, 1);
     } else {
       if (component.type === TokenType.Percentage) {
@@ -118,19 +106,7 @@ function rgbaColor(args: Array<Token>): Color {
       value = clamp(value, 0, 255);
     }
 
-    switch (i) {
-      case RgbComponent.Red:
-        color.red = value;
-        break;
-      case RgbComponent.Green:
-        color.green = value;
-        break;
-      case RgbComponent.Blue:
-        color.blue = value;
-        break;
-      case RgbComponent.Alpha:
-        color.alpha = value;
-    }
+    color.value[i] = value;
   }
 
   return color;
@@ -165,20 +141,24 @@ function hslaColor(args: Array<Token>): Color {
     clamp(lightness.value * 100, 0, 360) / 100
   );
 
-  return {
-    red: round(red * 255),
-    green: round(green * 255),
-    blue: round(blue * 255),
-    alpha: alpha === null ? 1 : clamp(alpha.value, 0, 1)
-  };
+  return Values.color(
+    round(red * 255),
+    round(green * 255),
+    round(blue * 255),
+    alpha === null ? 1 : clamp(alpha.value, 0, 1)
+  );
 }
 
 /**
- * @copyright  Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
- *             trademark and document use rules apply.
+ * @copyright Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
+ * trademark and document use rules apply.
  * @license    https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
  */
-function hslToRgb(hue: number, sat: number, light: number) {
+function hslToRgb(
+  hue: number,
+  sat: number,
+  light: number
+): [number, number, number] {
   let t2;
   if (light <= 0.5) {
     t2 = light * (sat + 1);
@@ -193,11 +173,11 @@ function hslToRgb(hue: number, sat: number, light: number) {
 }
 
 /**
- * @copyright  Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
- *             trademark and document use rules apply.
+ * @copyright Copyright © 2016 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability,
+ * trademark and document use rules apply.
  * @license    https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
  */
-function hueToRgb(t1: number, t2: number, hue: number) {
+function hueToRgb(t1: number, t2: number, hue: number): number {
   if (hue < 0) {
     hue += 6;
   }
@@ -219,7 +199,7 @@ function hueToRgb(t1: number, t2: number, hue: number) {
 /**
  * @see https://www.w3.org/TR/css-color/#typedef-hex-color
  */
-function hexColor(token: Hash): Color {
+function hexColor(token: Tokens.Hash): Color {
   const { value } = token;
   const { length } = value;
 
@@ -271,17 +251,17 @@ function hexColor(token: Hash): Color {
     hex = hex * 0x10 + 0xf;
   }
 
-  return {
-    red: (hex >> 24) & 0xff,
-    green: (hex >> 16) & 0xff,
-    blue: (hex >> 8) & 0xff,
-    alpha: (hex & 0xff) / 0xff
-  };
+  return Values.color(
+    (hex >> 24) & 0xff,
+    (hex >> 16) & 0xff,
+    (hex >> 8) & 0xff,
+    (hex & 0xff) / 0xff
+  );
 }
 
 type Production<T extends Token> = Lang.Production<Token, Color, T>;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     const { value } = token;
@@ -297,7 +277,7 @@ const ident: Production<Ident> = {
   }
 };
 
-const functionName: Production<FunctionName> = {
+const functionName: Production<Tokens.FunctionName> = {
   token: TokenType.FunctionName,
   prefix(token, stream) {
     const args = functionArguments(stream);
@@ -318,7 +298,7 @@ const functionName: Production<FunctionName> = {
   }
 };
 
-const hash: Production<Hash> = {
+const hash: Production<Tokens.Hash> = {
   token: TokenType.Hash,
   prefix(token, stream) {
     return hexColor(token);
@@ -326,165 +306,165 @@ const hash: Production<Hash> = {
 };
 
 export const ColorGrammar: Grammar<Token, Color> = new Grammar(
-  [ident, hash, functionName, whitespace],
+  [skip(TokenType.Whitespace), ident, hash, functionName],
   () => null
 );
 
 /**
  * @see https://www.w3.org/TR/css-color/#transparent-color
  */
-export const Transparent: Color = { red: 0, green: 0, blue: 0, alpha: 0 };
+export const Transparent: Color = Values.color(0, 0, 0, 0);
 
 /**
  * @see https://www.w3.org/TR/css-color/#named-colors
  */
 const NamedColors: { [name: string]: Color } = {
-  aliceblue: { red: 240, green: 248, blue: 255, alpha: 1 },
-  antiquewhite: { red: 250, green: 235, blue: 215, alpha: 1 },
-  aqua: { red: 0, green: 255, blue: 255, alpha: 1 },
-  aquamarine: { red: 127, green: 255, blue: 212, alpha: 1 },
-  azure: { red: 240, green: 255, blue: 255, alpha: 1 },
-  beige: { red: 245, green: 245, blue: 220, alpha: 1 },
-  bisque: { red: 255, green: 228, blue: 196, alpha: 1 },
-  black: { red: 0, green: 0, blue: 0, alpha: 1 },
-  blanchedalmond: { red: 255, green: 235, blue: 205, alpha: 1 },
-  blue: { red: 0, green: 0, blue: 255, alpha: 1 },
-  blueviolet: { red: 138, green: 43, blue: 226, alpha: 1 },
-  brown: { red: 165, green: 42, blue: 42, alpha: 1 },
-  burlywood: { red: 222, green: 184, blue: 135, alpha: 1 },
-  cadetblue: { red: 95, green: 158, blue: 160, alpha: 1 },
-  chartreuse: { red: 127, green: 255, blue: 0, alpha: 1 },
-  chocolate: { red: 210, green: 105, blue: 30, alpha: 1 },
-  coral: { red: 255, green: 127, blue: 80, alpha: 1 },
-  cornflowerblue: { red: 100, green: 149, blue: 237, alpha: 1 },
-  cornsilk: { red: 255, green: 248, blue: 220, alpha: 1 },
-  crimson: { red: 220, green: 20, blue: 60, alpha: 1 },
-  cyan: { red: 0, green: 255, blue: 255, alpha: 1 },
-  darkblue: { red: 0, green: 0, blue: 139, alpha: 1 },
-  darkcyan: { red: 0, green: 139, blue: 139, alpha: 1 },
-  darkgoldenrod: { red: 184, green: 134, blue: 11, alpha: 1 },
-  darkgray: { red: 169, green: 169, blue: 169, alpha: 1 },
-  darkgreen: { red: 0, green: 100, blue: 0, alpha: 1 },
-  darkgrey: { red: 169, green: 169, blue: 169, alpha: 1 },
-  darkkhaki: { red: 189, green: 183, blue: 107, alpha: 1 },
-  darkmagenta: { red: 139, green: 0, blue: 139, alpha: 1 },
-  darkolivegreen: { red: 85, green: 107, blue: 47, alpha: 1 },
-  darkorange: { red: 255, green: 140, blue: 0, alpha: 1 },
-  darkorchid: { red: 153, green: 50, blue: 204, alpha: 1 },
-  darkred: { red: 139, green: 0, blue: 0, alpha: 1 },
-  darksalmon: { red: 233, green: 150, blue: 122, alpha: 1 },
-  darkseagreen: { red: 143, green: 188, blue: 143, alpha: 1 },
-  darkslateblue: { red: 72, green: 61, blue: 139, alpha: 1 },
-  darkslategray: { red: 47, green: 79, blue: 79, alpha: 1 },
-  darkslategrey: { red: 47, green: 79, blue: 79, alpha: 1 },
-  darkturquoise: { red: 0, green: 206, blue: 209, alpha: 1 },
-  darkviolet: { red: 148, green: 0, blue: 211, alpha: 1 },
-  deeppink: { red: 255, green: 20, blue: 147, alpha: 1 },
-  deepskyblue: { red: 0, green: 191, blue: 255, alpha: 1 },
-  dimgray: { red: 105, green: 105, blue: 105, alpha: 1 },
-  dimgrey: { red: 105, green: 105, blue: 105, alpha: 1 },
-  dodgerblue: { red: 30, green: 144, blue: 255, alpha: 1 },
-  firebrick: { red: 178, green: 34, blue: 34, alpha: 1 },
-  floralwhite: { red: 255, green: 250, blue: 240, alpha: 1 },
-  forestgreen: { red: 34, green: 139, blue: 34, alpha: 1 },
-  fuchsia: { red: 255, green: 0, blue: 255, alpha: 1 },
-  gainsboro: { red: 220, green: 220, blue: 220, alpha: 1 },
-  ghostwhite: { red: 248, green: 248, blue: 255, alpha: 1 },
-  gold: { red: 255, green: 215, blue: 0, alpha: 1 },
-  goldenrod: { red: 218, green: 165, blue: 32, alpha: 1 },
-  gray: { red: 128, green: 128, blue: 128, alpha: 1 },
-  green: { red: 0, green: 128, blue: 0, alpha: 1 },
-  greenyellow: { red: 173, green: 255, blue: 47, alpha: 1 },
-  grey: { red: 128, green: 128, blue: 128, alpha: 1 },
-  honeydew: { red: 240, green: 255, blue: 240, alpha: 1 },
-  hotpink: { red: 255, green: 105, blue: 180, alpha: 1 },
-  indianred: { red: 205, green: 92, blue: 92, alpha: 1 },
-  indigo: { red: 75, green: 0, blue: 130, alpha: 1 },
-  ivory: { red: 255, green: 255, blue: 240, alpha: 1 },
-  khaki: { red: 240, green: 230, blue: 140, alpha: 1 },
-  lavender: { red: 230, green: 230, blue: 250, alpha: 1 },
-  lavenderblush: { red: 255, green: 240, blue: 245, alpha: 1 },
-  lawngreen: { red: 124, green: 252, blue: 0, alpha: 1 },
-  lemonchiffon: { red: 255, green: 250, blue: 205, alpha: 1 },
-  lightblue: { red: 173, green: 216, blue: 230, alpha: 1 },
-  lightcoral: { red: 240, green: 128, blue: 128, alpha: 1 },
-  lightcyan: { red: 224, green: 255, blue: 255, alpha: 1 },
-  lightgoldenrodyellow: { red: 250, green: 250, blue: 210, alpha: 1 },
-  lightgray: { red: 211, green: 211, blue: 211, alpha: 1 },
-  lightgreen: { red: 144, green: 238, blue: 144, alpha: 1 },
-  lightgrey: { red: 211, green: 211, blue: 211, alpha: 1 },
-  lightpink: { red: 255, green: 182, blue: 193, alpha: 1 },
-  lightsalmon: { red: 255, green: 160, blue: 122, alpha: 1 },
-  lightseagreen: { red: 32, green: 178, blue: 170, alpha: 1 },
-  lightskyblue: { red: 135, green: 206, blue: 250, alpha: 1 },
-  lightslategray: { red: 119, green: 136, blue: 153, alpha: 1 },
-  lightslategrey: { red: 119, green: 136, blue: 153, alpha: 1 },
-  lightsteelblue: { red: 176, green: 196, blue: 222, alpha: 1 },
-  lightyellow: { red: 255, green: 255, blue: 224, alpha: 1 },
-  lime: { red: 0, green: 255, blue: 0, alpha: 1 },
-  limegreen: { red: 50, green: 205, blue: 50, alpha: 1 },
-  linen: { red: 250, green: 240, blue: 230, alpha: 1 },
-  magenta: { red: 255, green: 0, blue: 255, alpha: 1 },
-  maroon: { red: 128, green: 0, blue: 0, alpha: 1 },
-  mediumaquamarine: { red: 102, green: 205, blue: 170, alpha: 1 },
-  mediumblue: { red: 0, green: 0, blue: 205, alpha: 1 },
-  mediumorchid: { red: 186, green: 85, blue: 211, alpha: 1 },
-  mediumpurple: { red: 147, green: 112, blue: 219, alpha: 1 },
-  mediumseagreen: { red: 60, green: 179, blue: 113, alpha: 1 },
-  mediumslateblue: { red: 123, green: 104, blue: 238, alpha: 1 },
-  mediumspringgreen: { red: 0, green: 250, blue: 154, alpha: 1 },
-  mediumturquoise: { red: 72, green: 209, blue: 204, alpha: 1 },
-  mediumvioletred: { red: 199, green: 21, blue: 133, alpha: 1 },
-  midnightblue: { red: 25, green: 25, blue: 112, alpha: 1 },
-  mintcream: { red: 245, green: 255, blue: 250, alpha: 1 },
-  mistyrose: { red: 255, green: 228, blue: 225, alpha: 1 },
-  moccasin: { red: 255, green: 228, blue: 181, alpha: 1 },
-  navajowhite: { red: 255, green: 222, blue: 173, alpha: 1 },
-  navy: { red: 0, green: 0, blue: 128, alpha: 1 },
-  oldlace: { red: 253, green: 245, blue: 230, alpha: 1 },
-  olive: { red: 128, green: 128, blue: 0, alpha: 1 },
-  olivedrab: { red: 107, green: 142, blue: 35, alpha: 1 },
-  orange: { red: 255, green: 165, blue: 0, alpha: 1 },
-  orangered: { red: 255, green: 69, blue: 0, alpha: 1 },
-  orchid: { red: 218, green: 112, blue: 214, alpha: 1 },
-  palegoldenrod: { red: 238, green: 232, blue: 170, alpha: 1 },
-  palegreen: { red: 152, green: 251, blue: 152, alpha: 1 },
-  paleturquoise: { red: 175, green: 238, blue: 238, alpha: 1 },
-  palevioletred: { red: 219, green: 112, blue: 147, alpha: 1 },
-  papayawhip: { red: 255, green: 239, blue: 213, alpha: 1 },
-  peachpuff: { red: 255, green: 218, blue: 185, alpha: 1 },
-  peru: { red: 205, green: 133, blue: 63, alpha: 1 },
-  pink: { red: 255, green: 192, blue: 203, alpha: 1 },
-  plum: { red: 221, green: 160, blue: 221, alpha: 1 },
-  powderblue: { red: 176, green: 224, blue: 230, alpha: 1 },
-  purple: { red: 128, green: 0, blue: 128, alpha: 1 },
-  rebeccapurple: { red: 102, green: 51, blue: 153, alpha: 1 },
-  red: { red: 255, green: 0, blue: 0, alpha: 1 },
-  rosybrown: { red: 188, green: 143, blue: 143, alpha: 1 },
-  royalblue: { red: 65, green: 105, blue: 225, alpha: 1 },
-  saddlebrown: { red: 139, green: 69, blue: 19, alpha: 1 },
-  salmon: { red: 250, green: 128, blue: 114, alpha: 1 },
-  sandybrown: { red: 244, green: 164, blue: 96, alpha: 1 },
-  seagreen: { red: 46, green: 139, blue: 87, alpha: 1 },
-  seashell: { red: 255, green: 245, blue: 238, alpha: 1 },
-  sienna: { red: 160, green: 82, blue: 45, alpha: 1 },
-  silver: { red: 192, green: 192, blue: 192, alpha: 1 },
-  skyblue: { red: 135, green: 206, blue: 235, alpha: 1 },
-  slateblue: { red: 106, green: 90, blue: 205, alpha: 1 },
-  slategray: { red: 112, green: 128, blue: 144, alpha: 1 },
-  slategrey: { red: 112, green: 128, blue: 144, alpha: 1 },
-  snow: { red: 255, green: 250, blue: 250, alpha: 1 },
-  springgreen: { red: 0, green: 255, blue: 127, alpha: 1 },
-  steelblue: { red: 70, green: 130, blue: 180, alpha: 1 },
-  tan: { red: 210, green: 180, blue: 140, alpha: 1 },
-  teal: { red: 0, green: 128, blue: 128, alpha: 1 },
-  thistle: { red: 216, green: 191, blue: 216, alpha: 1 },
-  tomato: { red: 255, green: 99, blue: 71, alpha: 1 },
-  turquoise: { red: 64, green: 224, blue: 208, alpha: 1 },
-  violet: { red: 238, green: 130, blue: 238, alpha: 1 },
-  wheat: { red: 245, green: 222, blue: 179, alpha: 1 },
-  white: { red: 255, green: 255, blue: 255, alpha: 1 },
-  whitesmoke: { red: 245, green: 245, blue: 245, alpha: 1 },
-  yellow: { red: 255, green: 255, blue: 0, alpha: 1 },
-  yellowgreen: { red: 154, green: 205, blue: 50, alpha: 1 }
+  aliceblue: Values.color(240, 248, 255, 1),
+  antiquewhite: Values.color(250, 235, 215, 1),
+  aqua: Values.color(0, 255, 255, 1),
+  aquamarine: Values.color(127, 255, 212, 1),
+  azure: Values.color(240, 255, 255, 1),
+  beige: Values.color(245, 245, 220, 1),
+  bisque: Values.color(255, 228, 196, 1),
+  black: Values.color(0, 0, 0, 1),
+  blanchedalmond: Values.color(255, 235, 205, 1),
+  blue: Values.color(0, 0, 255, 1),
+  blueviolet: Values.color(138, 43, 226, 1),
+  brown: Values.color(165, 42, 42, 1),
+  burlywood: Values.color(222, 184, 135, 1),
+  cadetblue: Values.color(95, 158, 160, 1),
+  chartreuse: Values.color(127, 255, 0, 1),
+  chocolate: Values.color(210, 105, 30, 1),
+  coral: Values.color(255, 127, 80, 1),
+  cornflowerblue: Values.color(100, 149, 237, 1),
+  cornsilk: Values.color(255, 248, 220, 1),
+  crimson: Values.color(220, 20, 60, 1),
+  cyan: Values.color(0, 255, 255, 1),
+  darkblue: Values.color(0, 0, 139, 1),
+  darkcyan: Values.color(0, 139, 139, 1),
+  darkgoldenrod: Values.color(184, 134, 11, 1),
+  darkgray: Values.color(169, 169, 169, 1),
+  darkgreen: Values.color(0, 100, 0, 1),
+  darkgrey: Values.color(169, 169, 169, 1),
+  darkkhaki: Values.color(189, 183, 107, 1),
+  darkmagenta: Values.color(139, 0, 139, 1),
+  darkolivegreen: Values.color(85, 107, 47, 1),
+  darkorange: Values.color(255, 140, 0, 1),
+  darkorchid: Values.color(153, 50, 204, 1),
+  darkred: Values.color(139, 0, 0, 1),
+  darksalmon: Values.color(233, 150, 122, 1),
+  darkseagreen: Values.color(143, 188, 143, 1),
+  darkslateblue: Values.color(72, 61, 139, 1),
+  darkslategray: Values.color(47, 79, 79, 1),
+  darkslategrey: Values.color(47, 79, 79, 1),
+  darkturquoise: Values.color(0, 206, 209, 1),
+  darkviolet: Values.color(148, 0, 211, 1),
+  deeppink: Values.color(255, 20, 147, 1),
+  deepskyblue: Values.color(0, 191, 255, 1),
+  dimgray: Values.color(105, 105, 105, 1),
+  dimgrey: Values.color(105, 105, 105, 1),
+  dodgerblue: Values.color(30, 144, 255, 1),
+  firebrick: Values.color(178, 34, 34, 1),
+  floralwhite: Values.color(255, 250, 240, 1),
+  forestgreen: Values.color(34, 139, 34, 1),
+  fuchsia: Values.color(255, 0, 255, 1),
+  gainsboro: Values.color(220, 220, 220, 1),
+  ghostwhite: Values.color(248, 248, 255, 1),
+  gold: Values.color(255, 215, 0, 1),
+  goldenrod: Values.color(218, 165, 32, 1),
+  gray: Values.color(128, 128, 128, 1),
+  green: Values.color(0, 128, 0, 1),
+  greenyellow: Values.color(173, 255, 47, 1),
+  grey: Values.color(128, 128, 128, 1),
+  honeydew: Values.color(240, 255, 240, 1),
+  hotpink: Values.color(255, 105, 180, 1),
+  indianred: Values.color(205, 92, 92, 1),
+  indigo: Values.color(75, 0, 130, 1),
+  ivory: Values.color(255, 255, 240, 1),
+  khaki: Values.color(240, 230, 140, 1),
+  lavender: Values.color(230, 230, 250, 1),
+  lavenderblush: Values.color(255, 240, 245, 1),
+  lawngreen: Values.color(124, 252, 0, 1),
+  lemonchiffon: Values.color(255, 250, 205, 1),
+  lightblue: Values.color(173, 216, 230, 1),
+  lightcoral: Values.color(240, 128, 128, 1),
+  lightcyan: Values.color(224, 255, 255, 1),
+  lightgoldenrodyellow: Values.color(250, 250, 210, 1),
+  lightgray: Values.color(211, 211, 211, 1),
+  lightgreen: Values.color(144, 238, 144, 1),
+  lightgrey: Values.color(211, 211, 211, 1),
+  lightpink: Values.color(255, 182, 193, 1),
+  lightsalmon: Values.color(255, 160, 122, 1),
+  lightseagreen: Values.color(32, 178, 170, 1),
+  lightskyblue: Values.color(135, 206, 250, 1),
+  lightslategray: Values.color(119, 136, 153, 1),
+  lightslategrey: Values.color(119, 136, 153, 1),
+  lightsteelblue: Values.color(176, 196, 222, 1),
+  lightyellow: Values.color(255, 255, 224, 1),
+  lime: Values.color(0, 255, 0, 1),
+  limegreen: Values.color(50, 205, 50, 1),
+  linen: Values.color(250, 240, 230, 1),
+  magenta: Values.color(255, 0, 255, 1),
+  maroon: Values.color(128, 0, 0, 1),
+  mediumaquamarine: Values.color(102, 205, 170, 1),
+  mediumblue: Values.color(0, 0, 205, 1),
+  mediumorchid: Values.color(186, 85, 211, 1),
+  mediumpurple: Values.color(147, 112, 219, 1),
+  mediumseagreen: Values.color(60, 179, 113, 1),
+  mediumslateblue: Values.color(123, 104, 238, 1),
+  mediumspringgreen: Values.color(0, 250, 154, 1),
+  mediumturquoise: Values.color(72, 209, 204, 1),
+  mediumvioletred: Values.color(199, 21, 133, 1),
+  midnightblue: Values.color(25, 25, 112, 1),
+  mintcream: Values.color(245, 255, 250, 1),
+  mistyrose: Values.color(255, 228, 225, 1),
+  moccasin: Values.color(255, 228, 181, 1),
+  navajowhite: Values.color(255, 222, 173, 1),
+  navy: Values.color(0, 0, 128, 1),
+  oldlace: Values.color(253, 245, 230, 1),
+  olive: Values.color(128, 128, 0, 1),
+  olivedrab: Values.color(107, 142, 35, 1),
+  orange: Values.color(255, 165, 0, 1),
+  orangered: Values.color(255, 69, 0, 1),
+  orchid: Values.color(218, 112, 214, 1),
+  palegoldenrod: Values.color(238, 232, 170, 1),
+  palegreen: Values.color(152, 251, 152, 1),
+  paleturquoise: Values.color(175, 238, 238, 1),
+  palevioletred: Values.color(219, 112, 147, 1),
+  papayawhip: Values.color(255, 239, 213, 1),
+  peachpuff: Values.color(255, 218, 185, 1),
+  peru: Values.color(205, 133, 63, 1),
+  pink: Values.color(255, 192, 203, 1),
+  plum: Values.color(221, 160, 221, 1),
+  powderblue: Values.color(176, 224, 230, 1),
+  purple: Values.color(128, 0, 128, 1),
+  rebeccapurple: Values.color(102, 51, 153, 1),
+  red: Values.color(255, 0, 0, 1),
+  rosybrown: Values.color(188, 143, 143, 1),
+  royalblue: Values.color(65, 105, 225, 1),
+  saddlebrown: Values.color(139, 69, 19, 1),
+  salmon: Values.color(250, 128, 114, 1),
+  sandybrown: Values.color(244, 164, 96, 1),
+  seagreen: Values.color(46, 139, 87, 1),
+  seashell: Values.color(255, 245, 238, 1),
+  sienna: Values.color(160, 82, 45, 1),
+  silver: Values.color(192, 192, 192, 1),
+  skyblue: Values.color(135, 206, 235, 1),
+  slateblue: Values.color(106, 90, 205, 1),
+  slategray: Values.color(112, 128, 144, 1),
+  slategrey: Values.color(112, 128, 144, 1),
+  snow: Values.color(255, 250, 250, 1),
+  springgreen: Values.color(0, 255, 127, 1),
+  steelblue: Values.color(70, 130, 180, 1),
+  tan: Values.color(210, 180, 140, 1),
+  teal: Values.color(0, 128, 128, 1),
+  thistle: Values.color(216, 191, 216, 1),
+  tomato: Values.color(255, 99, 71, 1),
+  turquoise: Values.color(64, 224, 208, 1),
+  violet: Values.color(238, 130, 238, 1),
+  wheat: Values.color(245, 222, 179, 1),
+  white: Values.color(255, 255, 255, 1),
+  whitesmoke: Values.color(245, 245, 245, 1),
+  yellow: Values.color(255, 255, 0, 1),
+  yellowgreen: Values.color(154, 205, 50, 1)
 };

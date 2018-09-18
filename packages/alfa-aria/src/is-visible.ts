@@ -16,12 +16,14 @@ export function isVisible(node: Element | Text, context: Node): boolean {
 
     const { display, visibility } = getComputedStyle(node, context);
 
-    if (display === "none") {
+    if (display !== undefined && display.value === "none") {
       return false;
     }
 
-    if (visibility === "hidden" || visibility === "collapse") {
-      return false;
+    if (visibility !== undefined) {
+      if (visibility.value === "hidden" || visibility.value === "collapse") {
+        return false;
+      }
     }
   }
 
