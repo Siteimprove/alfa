@@ -20,3 +20,43 @@ test("getDocumentPosition returns null when element is not in context", t => {
   const div = <div>{span}</div>;
   t.equal(getDocumentPosition(strong, div), null);
 });
+
+test("getDocumentPosition returns 3 when element has position 3 with composed traversal", t => {
+  const p1 = <p>foo</p>;
+  const p2 = <p>bar</p>;
+  const slot = <slot />;
+  const shadow = (
+    <shadow>
+      {slot}
+      {p2}
+    </shadow>
+  );
+  const div = (
+    <div id="host">
+      {shadow}
+      {p1}
+    </div>
+  );
+
+  t.equal(getDocumentPosition(p2, div, { composed: true }), 3);
+});
+
+test("getDocumentPosition returns 1 when element has position 1 with flattened traversal", t => {
+  const p1 = <p>foo</p>;
+  const p2 = <p>bar</p>;
+  const slot = <slot />;
+  const shadow = (
+    <shadow>
+      {slot}
+      {p2}
+    </shadow>
+  );
+  const div = (
+    <div id="host">
+      {shadow}
+      {p1}
+    </div>
+  );
+
+  t.equal(getDocumentPosition(p1, div, { flattened: true }), 1);
+});
