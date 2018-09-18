@@ -61,7 +61,7 @@ for (const pkg of packages) {
       path.join(dir, `${path.basename(file, ".ts")}.spec.tsx`)
     ];
 
-    if (potentialTestFiles.some(isFile(file))) {
+    if (potentialTestFiles.some(isFile)) {
       continue; // An associated test file was found
     }
 
