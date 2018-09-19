@@ -1,26 +1,26 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar } from "@siteimprove/alfa-lang";
-import { Number, Percentage, Token, TokenType } from "../../alphabet";
-import { whitespace } from "../../grammar";
+import { Grammar, skip } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../../alphabet";
+import { Values } from "../../values";
 import { Opacity } from "./types";
 
 type Production<T extends Token> = Lang.Production<Token, Opacity, T>;
 
-const number: Production<Number> = {
+const number: Production<Tokens.Number> = {
   token: TokenType.Number,
   prefix(token) {
-    return token.value;
+    return Values.number(token.value);
   }
 };
 
-const percentage: Production<Percentage> = {
+const percentage: Production<Tokens.Percentage> = {
   token: TokenType.Percentage,
   prefix(token) {
-    return token.value;
+    return Values.percentage(token.value);
   }
 };
 
 export const OpacityGrammar: Grammar<Token, Opacity> = new Grammar(
-  [whitespace, number, percentage],
+  [skip(TokenType.Whitespace), number, percentage],
   () => null
 );

@@ -1,5 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../types";
+import { Longhand } from "../../properties";
+import { Values } from "../../values";
 import { ContentGrammar } from "./grammar";
 import { Content } from "./types";
 
@@ -17,7 +18,7 @@ export const content: Longhand<Content> = {
     return parser.result;
   },
   initial() {
-    return "normal";
+    return Values.keyword("normal");
   },
   computed(getProperty) {
     return getProperty("content");

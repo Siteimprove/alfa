@@ -8,6 +8,8 @@ export * from "./font/family/property";
 export * from "./font/size/property";
 export * from "./font/weight/property";
 
+export * from "./line-height/property";
+
 export * from "./opacity/property";
 
 export * from "./text-decoration/color/property";

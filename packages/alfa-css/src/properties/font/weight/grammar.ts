@@ -1,33 +1,33 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar } from "@siteimprove/alfa-lang";
-import { Ident, Number, Token, TokenType } from "../../../alphabet";
-import { whitespace } from "../../../grammar";
+import { Grammar, skip } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../../../alphabet";
+import { Values } from "../../../values";
 import { FontWeight } from "../types";
 
 type Production<T extends Token> = Lang.Production<Token, FontWeight, T>;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
       case "normal":
-        return 400;
       case "bold":
-        return 700;
+        return Values.keyword(token.value);
+
       case "bolder":
       case "lighter":
-        return token.value;
+        return Values.keyword(token.value);
     }
 
     return null;
   }
 };
 
-const number: Production<Number> = {
+const number: Production<Tokens.Number> = {
   token: TokenType.Number,
   prefix(token) {
     if (token.value >= 1 && token.value <= 1000) {
-      return token.value;
+      return Values.number(token.value);
     }
 
     return null;
@@ -35,6 +35,6 @@ const number: Production<Number> = {
 };
 
 export const FontWeightGrammar: Grammar<Token, FontWeight> = new Grammar(
-  [whitespace, ident, number],
+  [skip(TokenType.Whitespace), ident, number],
   () => null
 );

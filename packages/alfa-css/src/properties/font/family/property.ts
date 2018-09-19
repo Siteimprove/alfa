@@ -1,5 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../../types";
+import { Longhand } from "../../../properties";
+import { Values } from "../../../values";
 import { FontFamily } from "../types";
 import { FontFamilyGrammar } from "./grammar";
 
@@ -18,7 +19,7 @@ export const fontFamily: Longhand<FontFamily> = {
     return parser.result;
   },
   initial() {
-    return "serif";
+    return Values.list(Values.keyword("serif"));
   },
   computed(getProperty) {
     return getProperty("fontFamily");

@@ -1,18 +1,7 @@
-import { AbsoluteLength, RelativeLength } from "../../types";
+import { Values } from "../../values";
 
-export type TextIndent = Readonly<
-  | {
-      type: "length";
-      value: number;
-      unit: AbsoluteLength;
-      hanging?: boolean;
-      eachLine?: boolean;
-    }
-  | {
-      type: "percentage";
-      value: number;
-      unit?: RelativeLength;
-      hanging?: boolean;
-      eachLine?: boolean;
-    }
->;
+export type TextIndent = Values.Dictionary<{
+  indent: Values.Length | Values.Percentage;
+  hanging?: Values.Boolean;
+  eachLine?: Values.Boolean;
+}>;

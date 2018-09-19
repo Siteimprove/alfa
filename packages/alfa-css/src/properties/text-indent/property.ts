@@ -1,10 +1,13 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../types";
+import { Longhand } from "../../properties";
+import { Values } from "../../values";
 import { TextIndentGrammar } from "./grammar";
 import { TextIndent } from "./types";
 
+const { dictionary, length } = Values;
+
 /**
- * @see https://www.w3.org/TR/css-text-3/#propdef-text-indent
+ * @see https://www.w3.org/TR/css-text/#propdef-text-indent
  */
 export const textIndent: Longhand<TextIndent> = {
   inherits: true,
@@ -18,11 +21,7 @@ export const textIndent: Longhand<TextIndent> = {
     return parser.result;
   },
   initial() {
-    return {
-      type: "length",
-      value: 0,
-      unit: "px"
-    };
+    return dictionary({ indent: length(0, "px") });
   },
   computed(getProperty) {
     return getProperty("textIndent");

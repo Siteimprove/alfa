@@ -3,6 +3,9 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../../../src/alphabet";
 import { FontFamilyGrammar } from "../../../../src/properties/font/family/grammar";
 import { FontFamily } from "../../../../src/properties/font/types";
+import { Values } from "../../../../src/values";
+
+const { keyword, list, string } = Values;
 
 function fontFamily(t: Assertions, input: string, expected: FontFamily) {
   const lexer = lex(input, Alphabet);
@@ -12,21 +15,25 @@ function fontFamily(t: Assertions, input: string, expected: FontFamily) {
 }
 
 test("Can parse a generic font family", t => {
-  fontFamily(t, "sans-serif", "sans-serif");
+  fontFamily(t, "sans-serif", list(keyword("sans-serif")));
 });
 
 test("Can parse a quoted non-generic font family", t => {
-  fontFamily(t, '"Foo"', "Foo");
+  fontFamily(t, '"Foo"', list(string("Foo")));
 });
 
 test("Can parse an unquoted non-generic font family with a single ident", t => {
-  fontFamily(t, "Foo", "Foo");
+  fontFamily(t, "Foo", list(string("Foo")));
 });
 
 test("Can parse an unquoted non-generic font family with multiple idents", t => {
-  fontFamily(t, "Foo bar", "Foo bar");
+  fontFamily(t, "Foo bar", list(string("Foo bar")));
 });
 
 test("Can parse a list of font families", t => {
-  fontFamily(t, "Helvetica, sans-serif", ["Helvetica", "sans-serif"]);
+  fontFamily(
+    t,
+    "Helvetica, sans-serif",
+    list(string("Helvetica"), keyword("sans-serif"))
+  );
 });

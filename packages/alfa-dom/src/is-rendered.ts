@@ -22,7 +22,9 @@ export function isRendered(element: Element, context: Node): boolean {
     next !== null;
     next = getParentElement(next, context, { flattened: true })
   ) {
-    if (getComputedStyle(next, context).display === "none") {
+    const { display } = getComputedStyle(next, context);
+
+    if (display !== undefined && display.value === "none") {
       return false;
     }
   }

@@ -44,124 +44,129 @@ export const enum TokenType {
   SubstringMatch
 }
 
-export type Ident = Readonly<{ type: TokenType.Ident; value: string }>;
+export namespace Tokens {
+  export type Ident = Readonly<{ type: TokenType.Ident; value: string }>;
 
-export type FunctionName = Readonly<{
-  type: TokenType.FunctionName;
-  value: string;
-}>;
+  export type FunctionName = Readonly<{
+    type: TokenType.FunctionName;
+    value: string;
+  }>;
 
-export type AtKeyword = Readonly<{ type: TokenType.AtKeyword; value: string }>;
+  export type AtKeyword = Readonly<{
+    type: TokenType.AtKeyword;
+    value: string;
+  }>;
 
-export type Hash = Readonly<{
-  type: TokenType.Hash;
-  unrestricted: boolean;
-  value: string;
-}>;
+  export type Hash = Readonly<{
+    type: TokenType.Hash;
+    unrestricted: boolean;
+    value: string;
+  }>;
 
-export type String = Readonly<{
-  type: TokenType.String;
-  value: string;
-  mark: Char.QuotationMark | Char.Apostrophe;
-}>;
+  export type String = Readonly<{
+    type: TokenType.String;
+    value: string;
+    mark: Char.QuotationMark | Char.Apostrophe;
+  }>;
 
-export type Url = Readonly<{ type: TokenType.Url; value: string }>;
+  export type Url = Readonly<{ type: TokenType.Url; value: string }>;
 
-export type Delim = Readonly<{ type: TokenType.Delim; value: number }>;
+  export type Delim = Readonly<{ type: TokenType.Delim; value: number }>;
 
-export type Number = Readonly<{
-  type: TokenType.Number;
-  value: number;
-  integer: boolean;
-}>;
+  export type Number = Readonly<{
+    type: TokenType.Number;
+    value: number;
+    integer: boolean;
+  }>;
 
-export type Percentage = Readonly<{
-  type: TokenType.Percentage;
-  value: number;
-  integer: boolean;
-}>;
+  export type Percentage = Readonly<{
+    type: TokenType.Percentage;
+    value: number;
+    integer: boolean;
+  }>;
 
-export type Dimension = Readonly<{
-  type: TokenType.Dimension;
-  value: number;
-  integer: boolean;
-  unit: string;
-}>;
+  export type Dimension = Readonly<{
+    type: TokenType.Dimension;
+    value: number;
+    integer: boolean;
+    unit: string;
+  }>;
 
-export type Whitespace = Readonly<{ type: TokenType.Whitespace }>;
+  export type Whitespace = Readonly<{ type: TokenType.Whitespace }>;
 
-export type Colon = Readonly<{ type: TokenType.Colon }>;
+  export type Colon = Readonly<{ type: TokenType.Colon }>;
 
-export type Semicolon = Readonly<{ type: TokenType.Semicolon }>;
+  export type Semicolon = Readonly<{ type: TokenType.Semicolon }>;
 
-export type Comma = Readonly<{ type: TokenType.Comma }>;
+  export type Comma = Readonly<{ type: TokenType.Comma }>;
 
-export type Parenthesis = Readonly<{
-  type: TokenType.LeftParenthesis | TokenType.RightParenthesis;
-}>;
+  export type Parenthesis = Readonly<{
+    type: TokenType.LeftParenthesis | TokenType.RightParenthesis;
+  }>;
 
-export type SquareBracket = Readonly<{
-  type: TokenType.LeftSquareBracket | TokenType.RightSquareBracket;
-}>;
+  export type SquareBracket = Readonly<{
+    type: TokenType.LeftSquareBracket | TokenType.RightSquareBracket;
+  }>;
 
-export type CurlyBracket = Readonly<{
-  type: TokenType.LeftCurlyBracket | TokenType.RightCurlyBracket;
-}>;
+  export type CurlyBracket = Readonly<{
+    type: TokenType.LeftCurlyBracket | TokenType.RightCurlyBracket;
+  }>;
 
-export type Column = Readonly<{
-  type: TokenType.Column;
-}>;
+  export type Column = Readonly<{
+    type: TokenType.Column;
+  }>;
 
-export type IncludeMatch = Readonly<{
-  type: TokenType.IncludeMatch;
-}>;
+  export type IncludeMatch = Readonly<{
+    type: TokenType.IncludeMatch;
+  }>;
 
-export type DashMatch = Readonly<{
-  type: TokenType.DashMatch;
-}>;
+  export type DashMatch = Readonly<{
+    type: TokenType.DashMatch;
+  }>;
 
-export type PrefixMatch = Readonly<{
-  type: TokenType.PrefixMatch;
-}>;
+  export type PrefixMatch = Readonly<{
+    type: TokenType.PrefixMatch;
+  }>;
 
-export type SuffixMatch = Readonly<{
-  type: TokenType.SuffixMatch;
-}>;
+  export type SuffixMatch = Readonly<{
+    type: TokenType.SuffixMatch;
+  }>;
 
-export type SubstringMatch = Readonly<{
-  type: TokenType.SubstringMatch;
-}>;
+  export type SubstringMatch = Readonly<{
+    type: TokenType.SubstringMatch;
+  }>;
+}
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#tokenization
  */
 export type Token =
   // Value tokens
-  | Ident
-  | FunctionName
-  | AtKeyword
-  | Hash
-  | String
-  | Url
-  | Delim
-  | Number
-  | Percentage
-  | Dimension
+  | Tokens.Ident
+  | Tokens.FunctionName
+  | Tokens.AtKeyword
+  | Tokens.Hash
+  | Tokens.String
+  | Tokens.Url
+  | Tokens.Delim
+  | Tokens.Number
+  | Tokens.Percentage
+  | Tokens.Dimension
   // Character tokens
-  | Whitespace
-  | Colon
-  | Semicolon
-  | Comma
-  | Parenthesis
-  | SquareBracket
-  | CurlyBracket
-  | Column
+  | Tokens.Whitespace
+  | Tokens.Colon
+  | Tokens.Semicolon
+  | Tokens.Comma
+  | Tokens.Parenthesis
+  | Tokens.SquareBracket
+  | Tokens.CurlyBracket
+  | Tokens.Column
   // Match tokens
-  | IncludeMatch
-  | DashMatch
-  | PrefixMatch
-  | SuffixMatch
-  | SubstringMatch;
+  | Tokens.IncludeMatch
+  | Tokens.DashMatch
+  | Tokens.PrefixMatch
+  | Tokens.SuffixMatch
+  | Tokens.SubstringMatch;
 
 export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
   (stream, emit) => {
@@ -464,7 +469,7 @@ function consumeExponent(
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-number
  */
-function consumeNumber(char: number, stream: Stream<number>): Number {
+function consumeNumber(char: number, stream: Stream<number>): Tokens.Number {
   const result: Array<number> = [];
 
   let next: number | null = char;
@@ -539,7 +544,7 @@ function consumeNumber(char: number, stream: Stream<number>): Number {
 function consumeNumeric(
   char: number,
   stream: Stream<number>
-): Number | Dimension | Percentage {
+): Tokens.Number | Tokens.Dimension | Tokens.Percentage {
   const number = consumeNumber(char, stream);
 
   const next = stream.peek(0);
@@ -572,7 +577,7 @@ function consumeNumeric(
 function consumeIdentLike(
   start: number,
   stream: Stream<number>
-): Ident | FunctionName | Url {
+): Tokens.Ident | Tokens.FunctionName | Tokens.Url {
   const value = consumeName(start, stream);
 
   const char = stream.peek(0);
@@ -596,7 +601,7 @@ function consumeIdentLike(
 function consumeString(
   stream: Stream<number>,
   mark: Char.QuotationMark | Char.Apostrophe
-): String {
+): Tokens.String {
   let value = "";
   let char = stream.next();
 
@@ -611,7 +616,7 @@ function consumeString(
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-url-token
  */
-function consumeUrl(stream: Stream<number>): Url {
+function consumeUrl(stream: Stream<number>): Tokens.Url {
   let char = stream.next();
 
   while (char !== null && isWhitespace(char)) {
@@ -663,14 +668,14 @@ const tokens: { [char: number]: Token } = {
   [Char.RightCurlyBracket]: { type: TokenType.RightCurlyBracket }
 };
 
-const whitespace: Whitespace = { type: TokenType.Whitespace };
+const whitespace: Tokens.Whitespace = { type: TokenType.Whitespace };
 
 // CSS uses a fairly limited set of delimiters so there's quite a bit to be
 // gained from caching them as they are encoutered. Even in the case that every
 // single character in the UTF-16 range is somehow treated as a delimiter, the
 // cache won't contain more than 2^16 = 65536 entries, amounting to no more than
 // at most a couple of megabytes.
-const delims: Map<number, Delim> = new Map();
+const delims: Map<number, Tokens.Delim> = new Map();
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#consume-a-token

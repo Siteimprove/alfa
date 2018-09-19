@@ -1,44 +1,46 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Grammar } from "@siteimprove/alfa-lang";
-import { Ident, Token, TokenType } from "../../alphabet";
-import { whitespace } from "../../grammar";
+import { Grammar, skip } from "@siteimprove/alfa-lang";
+import { Token, Tokens, TokenType } from "../../alphabet";
+import { Values } from "../../values";
 import { Display } from "./types";
+
+const { tuple, keyword } = Values;
 
 type Production<T extends Token> = Lang.Production<Token, Display, T>;
 
-const ident: Production<Ident> = {
+const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
   prefix(token) {
     switch (token.value) {
       case "block":
       case "inline":
       case "run-in":
-        return [token.value, "flow"];
+        return tuple(keyword(token.value), keyword("flow"));
 
       case "flow":
       case "flow-root":
       case "table":
       case "flex":
       case "grid":
-        return ["block", token.value];
+        return tuple(keyword("block"), keyword(token.value));
       case "ruby":
-        return ["inline", token.value];
+        return tuple(keyword("inline"), keyword(token.value));
 
       case "list-item":
-        return ["block", "flow", token.value];
+        return tuple(keyword("block"), keyword("flow"), keyword(token.value));
 
       case "contents":
       case "none":
-        return token.value;
+        return keyword(token.value);
 
       case "inline-block":
-        return ["inline", "flow-root"];
+        return tuple(keyword("inline"), keyword("flow-root"));
       case "inline-table":
-        return ["inline", "table"];
+        return tuple(keyword("inline"), keyword("table"));
       case "inline-flex":
-        return ["inline", "flex"];
+        return tuple(keyword("inline"), keyword("flex"));
       case "inline-grid":
-        return ["inline", "grid"];
+        return tuple(keyword("inline"), keyword("grid"));
     }
 
     return null;
@@ -46,6 +48,6 @@ const ident: Production<Ident> = {
 };
 
 export const DisplayGrammar: Grammar<Token, Display> = new Grammar(
-  [whitespace, ident],
+  [skip(TokenType.Whitespace), ident],
   () => null
 );

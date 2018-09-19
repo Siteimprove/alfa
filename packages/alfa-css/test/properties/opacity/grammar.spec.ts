@@ -3,6 +3,9 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../../src/alphabet";
 import { OpacityGrammar } from "../../../src/properties/opacity/grammar";
 import { Opacity } from "../../../src/properties/opacity/types";
+import { Values } from "../../../src/values";
+
+const { number, percentage } = Values;
 
 function opacity(t: Assertions, input: string, expected: Opacity) {
   const lexer = lex(input, Alphabet);
@@ -12,9 +15,9 @@ function opacity(t: Assertions, input: string, expected: Opacity) {
 }
 
 test("Can parse a number opacity", t => {
-  opacity(t, "0.75", 0.75);
+  opacity(t, "0.75", number(0.75));
 });
 
 test("Can parse a percentage opacity", t => {
-  opacity(t, "75%", 0.75);
+  opacity(t, "75%", percentage(0.75));
 });
