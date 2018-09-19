@@ -75,14 +75,14 @@ export function getAttribute(
   let attributeValue = null;
 
   if (selectorNamespace !== null && selectorNamespace !== undefined) {
-    attributeValue = getNamespaceAttributeValue(
+    attributeValue = getNSAttributeValue(
       element,
+      attributeMap,
       name,
-      selectorNamespace,
-      options
+      selectorNamespace
     );
   } else {
-    attributeValue = getAttributeValue(element, name, options);
+    attributeValue = getAttributeValue(attributeMap, name);
   }
 
   if (attributeValue === null) {
@@ -101,27 +101,12 @@ export function getAttribute(
 }
 
 function getAttributeValue(
-  element: Element,
-  name: string,
-  options: AttributeOptions = {}
+  attributeMap: Map<string, Array<Attribute>>,
+  qualifiedName: string
 ): string | null {
-  const commaPos = name.indexOf(":");
-  let attributeName = null;
-  let attributeNamespace = null;
-  if (commaPos !== -1) {
-    attributeNamespace = name.substring(0, commaPos);
-    attributeName = name.substring(commaPos + 1);
-  } else {
-    attributeName = name;
-  }
-  const attributeMap = attributeMaps.get(element);
+  const [attrName, attrNamespace] = splitQualifiedName(qualifiedName);
 
-  if (attributeMap === undefined) {
-    return null;
-  }
-
-  const attributes = attributeMap.get(attributeName);
-
+  const attributes = attributeMap.get(attrName);
   if (attributes === undefined) {
     return null;
   }
@@ -131,8 +116,8 @@ function getAttributeValue(
   for (let i = 0, n = attributes.length; i < n; i++) {
     const { prefix, value } = attributes[i];
 
-    if (attributeNamespace !== null) {
-      if (prefix === attributeNamespace) {
+    if (attrNamespace !== null) {
+      if (prefix === attrNamespace) {
         attributeValue = value;
         break;
       }
@@ -145,20 +130,13 @@ function getAttributeValue(
   return attributeValue;
 }
 
-function getNamespaceAttributeValue(
+function getNSAttributeValue(
   element: Element,
+  attributeMap: Map<string, Array<Attribute>>,
   name: string,
-  selectorNamespace?: Namespace | string | null,
-  options: AttributeOptions = {}
+  selectorNamespace: Namespace | string
 ): string | null {
-  const attributeMap = attributeMaps.get(element);
-
-  if (attributeMap === undefined) {
-    return null;
-  }
-
   const attributes = attributeMap.get(name);
-
   if (attributes === undefined) {
     return null;
   }
@@ -184,11 +162,22 @@ function getNamespaceAttributeValue(
       attributeValue = value;
       break;
     }
-
-    if (ns !== null || selectorNamespace !== null) {
-      continue;
-    }
   }
 
   return attributeValue;
+}
+
+function splitQualifiedName(qualifiedName: string): [string, string | null] {
+  let name = null;
+  let namespace = null;
+
+  const commaPos = qualifiedName.indexOf(":");
+  if (commaPos !== -1) {
+    name = qualifiedName.substring(commaPos + 1);
+    namespace = qualifiedName.substring(0, commaPos);
+  } else {
+    name = qualifiedName;
+  }
+
+  return [name, namespace];
 }

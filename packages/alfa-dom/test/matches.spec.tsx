@@ -254,7 +254,7 @@ test("Matches an attribute against a declared namespace selector", t => {
       {
         prefix: "xlink",
         localName: "href",
-        value: "google"
+        value: "foobar"
       }
     ],
     shadowRoot: null,
@@ -283,7 +283,7 @@ test("Matches an attribute against all or no namespaces", t => {
     childNodes: []
   };
 
-  const div = <div title="Description" />;
+  const div = <div title="Foobar" />;
 
   const namespaces = new Map([["xlink", Namespace.XLink]]);
 
@@ -297,7 +297,7 @@ test("Matches an attribute against all or no namespaces", t => {
 });
 
 test("Matches an attribute against a default namespace selector", t => {
-  const div = <div title="Description" />;
+  const div = <div title="Foobar" />;
 
   const namespaces = new Map([[null, Namespace.XML]]);
 
