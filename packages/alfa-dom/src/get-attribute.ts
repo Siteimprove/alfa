@@ -79,7 +79,7 @@ function getAttributeValue(
   element: Element,
   qualifiedName: string
 ): string | null {
-  const [name, namespace] = splitQualifiedName(qualifiedName);
+  const { name, namespace } = splitQualifiedName(qualifiedName);
   const attributes = getAttributeMap(element).get(name);
 
   if (attributes === undefined) {
@@ -161,15 +161,17 @@ function getAttributeMap(element: Element): Map<string, Array<Attribute>> {
   return attributeMap;
 }
 
-function splitQualifiedName(qualifiedName: string): [string, string | null] {
+function splitQualifiedName(
+  qualifiedName: string
+): { name: string; namespace: string | null } {
   const delimiter = qualifiedName.indexOf(":");
 
   if (delimiter === -1) {
-    return [qualifiedName, null];
+    return { name: qualifiedName, namespace: null };
   }
 
-  return [
-    qualifiedName.substring(delimiter + 1),
-    qualifiedName.substring(0, delimiter)
-  ];
+  return {
+    name: qualifiedName.substring(delimiter + 1),
+    namespace: qualifiedName.substring(0, delimiter)
+  };
 }
