@@ -245,23 +245,64 @@ test("Matches an element against a default namespace selector", t => {
   t(!matches(div, div, "div", { namespaces }));
 });
 
-// test("Matches an attribute against a declared namespace selector", t => {
-//   const svg: JSX.Element = {
-//     nodeType: 1,
-//     prefix: "svg",
-//     localName: "svg",
-//     attributes: [
-//       {
-//         prefix: "xlink",
-//         localName: "href",
-//         value: "foo"
-//       }
-//     ],
-//     shadowRoot: null,
-//     childNodes: []
-//   };
+test("Matches an attribute against a declared namespace selector", t => {
+  const svg: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: "svg",
+    localName: "svg",
+    attributes: [
+      {
+        prefix: "xlink",
+        localName: "href",
+        value: "google"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
 
-//   const namespaces = new Map([["xl", Namespace.XLink]]);
+  const namespaces = new Map([["xlink", Namespace.XLink]]);
 
-//   t(matches(svg, svg, "[xl|href]", { namespaces }));
-// });
+  t(matches(svg, svg, "[xlink|href]", { namespaces }));
+  t(!matches(svg, svg, "[html|href]", { namespaces }));
+});
+
+test("Matches an attribute against all or no namespaces", t => {
+  const svg: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: "svg",
+    localName: "svg",
+    attributes: [
+      {
+        prefix: "xlink",
+        localName: "href",
+        value: "foo"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
+
+  const div = <div title="Description" />;
+
+  const namespaces = new Map([["xlink", Namespace.XLink]]);
+
+  t(matches(svg, svg, "[*|href]", { namespaces }));
+
+  // As all elements in HTML5 will use the XHTML namespace, unless another
+  // namespace is explicitly specified, the only way to currently test the
+  // no-namespace selector (i.e. "|div") is to provide a disconnected context.
+  // https://www.w3.org/TR/selectors/#type-nmsp
+  t(matches(div, svg, "[|title]", { namespaces }));
+});
+
+test("Matches an attribute against a default namespace selector", t => {
+  const div = <div title="Description" />;
+
+  const namespaces = new Map([[null, Namespace.XML]]);
+
+  // Default namespaces do not apply to attributes, so the default namespace
+  // will be ignored.
+  // https://www.w3.org/TR/selectors-3/#univnmsp
+  t(matches(div, div, "[title]", { namespaces }));
+});

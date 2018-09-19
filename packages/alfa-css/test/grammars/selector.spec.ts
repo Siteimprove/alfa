@@ -483,16 +483,60 @@ test("Can parse an attribute selector with a casing modifier", t => {
   });
 });
 
-// test("Can parse an attribute selector with a namespace", t => {
-//   selector(t, "[xlink|href]", {
-//     type: SelectorType.AttributeSelector,
-//     name: "href",
-//     namespace: "xlink",
-//     value: null,
-//     matcher: null,
-//     modifier: 0
-//   });
-// });
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[foo|bar]", {
+    type: SelectorType.AttributeSelector,
+    name: "bar",
+    namespace: "foo",
+    value: null,
+    matcher: null,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[*|foo]", {
+    type: SelectorType.AttributeSelector,
+    name: "foo",
+    namespace: "*",
+    value: null,
+    matcher: null,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[|foo]", {
+    type: SelectorType.AttributeSelector,
+    name: "foo",
+    namespace: "",
+    value: null,
+    matcher: null,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[foo|bar=baz]", {
+    type: SelectorType.AttributeSelector,
+    name: "bar",
+    namespace: "foo",
+    value: "baz",
+    matcher: AttributeMatcher.Equal,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[foo|bar|=baz]", {
+    type: SelectorType.AttributeSelector,
+    name: "bar",
+    namespace: "foo",
+    value: "baz",
+    matcher: AttributeMatcher.DashMatch,
+    modifier: 0
+  });
+});
 
 test("Can parse an attribute selector when part of a compound selector", t => {
   selector(t, ".foo[foo]", {

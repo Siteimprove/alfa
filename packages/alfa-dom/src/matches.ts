@@ -17,6 +17,7 @@ import {
 import { AncestorFilter } from "./ancestor-filter";
 import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
+import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getClosest } from "./get-closest";
 import { getElementNamespace } from "./get-element-namespace";
 import { getId } from "./get-id";
@@ -141,8 +142,13 @@ export function matches(
 
   const { namespaces } = options;
 
-  // Dismiss if element with non-type-selector does not match default namespace.
-  if (selector.type !== SelectorType.TypeSelector && namespaces !== undefined) {
+  // If the selector type is not Type or Attribute, then dismiss if it does not
+  // match the default namespace.
+  if (
+    selector.type !== SelectorType.TypeSelector &&
+    selector.type !== SelectorType.AttributeSelector &&
+    namespaces !== undefined
+  ) {
     const namespaceDefault = namespaces.get(null);
     if (
       namespaceDefault !== undefined &&
@@ -167,7 +173,7 @@ export function matches(
       return matchesType(element, context, selector, options);
 
     case SelectorType.AttributeSelector:
-      return matchesAttribute(element, selector);
+      return matchesAttribute(element, context, selector, options);
 
     case SelectorType.CompoundSelector:
       return matchesCompound(element, context, selector, options, root);
@@ -211,7 +217,7 @@ function matchesType(
     return true;
   }
 
-  if (matchesNamespace(element, context, selector, options) === false) {
+  if (matchesElementNamespace(element, context, selector, options) === false) {
     return false;
   }
 
@@ -221,7 +227,7 @@ function matchesType(
 /**
  * @see https://www.w3.org/TR/selectors/#type-nmsp
  */
-function matchesNamespace(
+function matchesElementNamespace(
   element: Element,
   context: Node,
   selector: TypeSelector,
@@ -259,18 +265,41 @@ const whitespace = /\s+/;
  */
 function matchesAttribute(
   element: Element,
-  selector: AttributeSelector
+  context: Node,
+  selector: AttributeSelector,
+  options: MatchesOptions
 ): boolean {
-  const value = getAttribute(element, selector.name, {
+  if (
+    matchesAttributeNamespace(element, context, selector, options) === false
+  ) {
+    return false;
+  }
+
+  let namespaceURI = null;
+
+  if (selector.namespace !== null) {
+    if (selector.namespace === "*") {
+      namespaceURI = "*";
+    } else if (options.namespaces === undefined) {
+      return false;
+    } else if (selector.namespace !== "") {
+      namespaceURI = options.namespaces.get(selector.namespace);
+      if (namespaceURI === undefined) {
+        return false;
+      }
+    }
+  }
+
+  const value = getAttribute(element, selector.name, namespaceURI, {
     lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) > 0
   });
 
-  if (selector.value === null) {
-    return value !== null;
-  }
-
   if (value === null) {
     return false;
+  }
+
+  if (selector.value === null) {
+    return true;
   }
 
   switch (selector.matcher) {
@@ -300,6 +329,56 @@ function matchesAttribute(
   }
 
   return false;
+}
+
+/**
+ * @see https://www.w3.org/TR/selectors/#attrnmsp
+ */
+function matchesAttributeNamespace(
+  element: Element,
+  context: Node,
+  selector: AttributeSelector,
+  options: MatchesOptions
+): boolean {
+  if (selector.namespace === "*" || selector.namespace === "") {
+    return true;
+  }
+
+  if (selector.namespace === null) {
+    return true;
+  }
+
+  const { attributes } = element;
+  let attribute = null;
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    if (attributes[i].localName !== selector.name) {
+      continue;
+    }
+
+    attribute = attributes[i];
+    break;
+  }
+
+  if (attribute === null) {
+    return false;
+  }
+
+  const attributeNamespace = getAttributeNamespace(attribute, element, context);
+
+  if (selector.namespace === "" && attributeNamespace === null) {
+    return true;
+  }
+
+  if (options.namespaces === undefined) {
+    return false;
+  }
+
+  const declaredNamespace = options.namespaces.get(selector.namespace);
+
+  return (
+    declaredNamespace === undefined || attributeNamespace === declaredNamespace
+  );
 }
 
 /**

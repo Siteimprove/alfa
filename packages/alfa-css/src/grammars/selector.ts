@@ -199,39 +199,18 @@ function typeSelector(
 }
 
 function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
+  const token = stream.peek(0);
   let next = stream.next();
 
-  if (next === null) {
+  if (token === null) {
     return null;
   }
 
-  let namespace: string | null = null;
-  let name: string;
+  const { name, namespace } = qualifiedName(token, stream);
 
-  if (next.type === TokenType.Delim) {
-    switch (next.value) {
-      case Char.Asterisk:
-        next = stream.next();
-        if (
-          next === null ||
-          next.type !== TokenType.Delim ||
-          next.value !== Char.VerticalLine
-        ) {
-          return null;
-        }
-        namespace = "*";
-        break;
-      case Char.VerticalLine:
-        namespace = "";
-    }
-    next = stream.next();
-  }
-
-  if (next === null || next.type !== TokenType.Ident) {
+  if (name === null) {
     return null;
   }
-
-  name = next.value;
 
   next = stream.peek(0);
 
@@ -571,7 +550,7 @@ function combineSelectors(
 }
 
 function namespacePrefix(
-  token: Delim | Ident | Hash | null,
+  token: Token | null,
   stream: Stream<Token>
 ): string | null {
   if (token === null) {
@@ -612,7 +591,7 @@ function namespacePrefix(
  * @see: https://www.w3.org/TR/selectors/#typedef-wq-name
  */
 function qualifiedName(
-  token: Delim | Ident | Hash,
+  token: Token,
   stream: Stream<Token>
 ): { name: string | null; namespace: string | null } {
   const namespace = namespacePrefix(token, stream);
