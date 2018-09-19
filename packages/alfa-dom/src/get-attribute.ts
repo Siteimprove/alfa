@@ -117,13 +117,17 @@ function getNSAttributeValue(
 
   for (let i = 0, n = attributes.length; i < n; i++) {
     const { value } = attributes[i];
-    const ns = getAttributeNamespace(attributes[i], element, element);
+    const attributeNamespace = getAttributeNamespace(
+      attributes[i],
+      element,
+      element
+    );
 
-    if (ns === selectorNamespace) {
+    if (attributeNamespace === selectorNamespace) {
       return value;
     }
 
-    if (ns === null && selectorNamespace === Namespace.HTML) {
+    if (attributeNamespace === null && selectorNamespace === Namespace.HTML) {
       return value;
     }
   }

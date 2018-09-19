@@ -217,7 +217,7 @@ function matchesType(
     return true;
   }
 
-  if (matchesElementNamespace(element, context, selector, options) === false) {
+  if (!matchesElementNamespace(element, context, selector, options)) {
     return false;
   }
 
