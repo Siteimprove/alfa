@@ -47,44 +47,19 @@ export function getAttribute(
     selectorNamespace = null;
   }
 
-  let attributeMap = attributeMaps.get(element);
-
-  if (attributeMap === undefined) {
-    attributeMap = new Map();
-
-    const { attributes } = element;
-
-    for (let i = 0, n = attributes.length; i < n; i++) {
-      const attribute = attributes[i];
-      const { localName } = attribute;
-
-      let attributeArray = attributeMap.get(localName);
-
-      if (attributeArray === undefined) {
-        attributeArray = [];
-      }
-
-      attributeArray.push(attribute);
-
-      attributeMap.set(localName, attributeArray);
-    }
-
-    attributeMaps.set(element, attributeMap);
+  if (selectorNamespace === undefined) {
+    selectorNamespace = null;
   }
 
   let attributeValue = null;
 
-  if (selectorNamespace !== null && selectorNamespace !== undefined) {
-    attributeValue = getNSAttributeValue(
-      element,
-      attributeMap,
-      name,
-      selectorNamespace
-    );
+  if (selectorNamespace === null) {
+    attributeValue = getAttributeValue(element, name);
   } else {
-    attributeValue = getAttributeValue(attributeMap, name);
+    attributeValue = getNSAttributeValue(element, name, selectorNamespace);
   }
 
+  // If attribute is non-existing
   if (attributeValue === null) {
     return null;
   }
@@ -101,83 +76,100 @@ export function getAttribute(
 }
 
 function getAttributeValue(
-  attributeMap: Map<string, Array<Attribute>>,
+  element: Element,
   qualifiedName: string
 ): string | null {
-  const [attrName, attrNamespace] = splitQualifiedName(qualifiedName);
+  const [name, namespace] = splitQualifiedName(qualifiedName);
+  const attributes = getAttributeMap(element).get(name);
 
-  const attributes = attributeMap.get(attrName);
   if (attributes === undefined) {
     return null;
   }
 
-  let attributeValue = null;
+  if (namespace === null) {
+    return attributes[0].value;
+  }
 
   for (let i = 0, n = attributes.length; i < n; i++) {
     const { prefix, value } = attributes[i];
-
-    if (attrNamespace !== null) {
-      if (prefix === attrNamespace) {
-        attributeValue = value;
-        break;
-      }
-      continue;
+    if (prefix === namespace) {
+      return value;
     }
-
-    attributeValue = value;
   }
 
-  return attributeValue;
+  return null;
 }
 
 function getNSAttributeValue(
   element: Element,
-  attributeMap: Map<string, Array<Attribute>>,
   name: string,
   selectorNamespace: Namespace | string
 ): string | null {
-  const attributes = attributeMap.get(name);
+  const attributes = getAttributeMap(element).get(name);
+
   if (attributes === undefined) {
     return null;
   }
 
-  let attributeValue = null;
+  if (selectorNamespace === "*") {
+    return attributes[0].value;
+  }
 
   for (let i = 0, n = attributes.length; i < n; i++) {
     const { value } = attributes[i];
-
-    if (selectorNamespace === "*") {
-      attributeValue = value;
-      break;
-    }
-
     const ns = getAttributeNamespace(attributes[i], element, element);
 
-    if (ns === null && selectorNamespace === Namespace.HTML) {
-      attributeValue = value;
-      break;
+    if (ns === selectorNamespace) {
+      return value;
     }
 
-    if (ns === selectorNamespace) {
-      attributeValue = value;
-      break;
+    if (ns === null && selectorNamespace === Namespace.HTML) {
+      return value;
     }
   }
 
-  return attributeValue;
+  return null;
+}
+
+function getAttributeMap(element: Element): Map<string, Array<Attribute>> {
+  let attributeMap = attributeMaps.get(element);
+
+  if (attributeMap !== undefined) {
+    return attributeMap;
+  }
+
+  attributeMap = new Map();
+
+  const { attributes } = element;
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    const attribute = attributes[i];
+    const { localName } = attribute;
+
+    let attributeArray = attributeMap.get(localName);
+
+    if (attributeArray === undefined) {
+      attributeArray = [];
+    }
+
+    attributeArray.push(attribute);
+    attributeMap.set(localName, attributeArray);
+  }
+
+  attributeMaps.set(element, attributeMap);
+
+  return attributeMap;
 }
 
 function splitQualifiedName(qualifiedName: string): [string, string | null] {
-  let name = null;
-  let namespace = null;
+  const delimiter = qualifiedName.indexOf(":");
 
-  const commaPos = qualifiedName.indexOf(":");
-  if (commaPos !== -1) {
-    name = qualifiedName.substring(commaPos + 1);
-    namespace = qualifiedName.substring(0, commaPos);
-  } else {
-    name = qualifiedName;
+  if (delimiter === -1) {
+    return [qualifiedName, null];
   }
 
-  return [name, namespace];
+  return [
+    qualifiedName.substring(delimiter + 1),
+    qualifiedName.substring(0, delimiter)
+  ];
 }

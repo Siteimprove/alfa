@@ -142,7 +142,7 @@ export function matches(
 
   const { namespaces } = options;
 
-  // If the selector type is not Type or Attribute, then dismiss if it does not
+  // If selector is not targetting Type or Attribute, then abort if it does not
   // match the default namespace.
   if (
     selector.type !== SelectorType.TypeSelector &&
@@ -269,19 +269,20 @@ function matchesAttribute(
   selector: AttributeSelector,
   options: MatchesOptions
 ): boolean {
-  if (
-    matchesAttributeNamespace(element, context, selector, options) === false
-  ) {
+  if (!matchesAttributeNamespace(element, context, selector, options)) {
     return false;
   }
 
   let namespaceURI = null;
 
   if (selector.namespace !== null) {
+    // Match all namespaces
     if (selector.namespace === "*") {
       namespaceURI = "*";
+      // Abort when no namespace is declared
     } else if (options.namespaces === undefined) {
       return false;
+      // Selector namespace must match a declared namespace
     } else if (selector.namespace !== "") {
       namespaceURI = options.namespaces.get(selector.namespace);
       if (namespaceURI === undefined) {
@@ -340,11 +341,7 @@ function matchesAttributeNamespace(
   selector: AttributeSelector,
   options: MatchesOptions
 ): boolean {
-  if (selector.namespace === "*" || selector.namespace === "") {
-    return true;
-  }
-
-  if (selector.namespace === null) {
+  if (selector.namespace === null || selector.namespace === "*") {
     return true;
   }
 
@@ -366,19 +363,16 @@ function matchesAttributeNamespace(
 
   const attributeNamespace = getAttributeNamespace(attribute, element, context);
 
-  if (selector.namespace === "" && attributeNamespace === null) {
-    return true;
+  // Selector "[|att]" should only match attributes with no namespace
+  if (selector.namespace === "") {
+    return attributeNamespace === null;
   }
 
   if (options.namespaces === undefined) {
     return false;
   }
 
-  const declaredNamespace = options.namespaces.get(selector.namespace);
-
-  return (
-    declaredNamespace === undefined || attributeNamespace === declaredNamespace
-  );
+  return attributeNamespace === options.namespaces.get(selector.namespace);
 }
 
 /**
