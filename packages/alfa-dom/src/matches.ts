@@ -273,7 +273,7 @@ function matchesAttribute(
     return false;
   }
 
-  let namespaceURI = null;
+  let namespaceURI: Namespace | "*" | null = null;
 
   if (selector.namespace !== null) {
     // Match all namespaces
@@ -284,10 +284,11 @@ function matchesAttribute(
       return false;
       // Selector namespace must match a declared namespace
     } else if (selector.namespace !== "") {
-      namespaceURI = options.namespaces.get(selector.namespace);
-      if (namespaceURI === undefined) {
+      const declaredNamespace = options.namespaces.get(selector.namespace);
+      if (declaredNamespace === undefined) {
         return false;
       }
+      namespaceURI = declaredNamespace;
     }
   }
 
