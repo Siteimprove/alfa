@@ -44,6 +44,10 @@ for (const pkg of packages) {
   );
 
   for (const file of files) {
+    if (file.indexOf("/src/") === -1) {
+      continue; // File is not in source folder
+    }
+
     const dir = path
       .dirname(file)
       .split(path.sep)
