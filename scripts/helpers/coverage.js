@@ -108,38 +108,43 @@ process.on("beforeExit", code => {
 
         process.stdout.write(chalk.underline(`${filePath}\n`));
 
-        const widths = {
-          // Make the gutter width as wide as the line number of the last line.
-          // Since line counts are 1-indexed and an additional line may be added
-          // to the output, we bump the line count twice to make sure the gutter
-          // is wide enough.
-          gutter: `${uncovered[uncovered.length - 1].range.end.line + 2}`.length
-        };
-
+        // We can fill out the whole height of the terminal
+        // If we don't know the height, fall back to 24.
+        const space = process.stdout.rows ? process.stdout.rows : 24;
         let lineSum = 5;
-        let i = 0;
+        let blockCount = 0;
 
-        while (true) {
-          if (uncovered[i] === undefined) {
-            break;
+        for (const block of uncovered) {
+          // Buffer added for dots and spacing
+          lineSum += block.range.end.line - block.range.start.line + 5;
+
+          // At least one block has to be printed
+          if (lineSum > space && blockCount > 0) {
+            break; // If the next block is going to fill more than the height
           }
 
+          blockCount++;
+        }
+
+        const selectedBlocks = uncovered.slice(0, blockCount).sort((a, b) => {
+          return a.range.start.line - b.range.start.line;
+        });
+
+        for (let i = 0; blockCount > i; i++) {
           if (i !== 0) {
             process.stdout.write(chalk.blue(`${"\u00b7".repeat(3)}\n`));
           }
 
-          lineSum +=
-            uncovered[i].range.end.line - uncovered[i].range.start.line + 5; // Buffer added for dots and spacing
-          if (
-            lineSum > (process.stdout.rows ? process.stdout.rows : 24) &&
-            i > 0 // At least one block has to be printed
-          ) {
-            break; // If the next block is going to fill more than the height
-          }
+          const widths = {
+            // Make the gutter width as wide as the line number of the last line.
+            // Since line counts are 1-indexed and an additional line may be added
+            // to the output, we bump the line count twice to make sure the gutter
+            // is wide enough.
+            gutter: `${selectedBlocks[selectedBlocks.length - 1].range.end
+              .line + 2}`.length
+          };
 
-          printBlockCoverage(script, uncovered[i], widths);
-
-          i++;
+          printBlockCoverage(script, selectedBlocks[i], widths);
         }
       }
 
