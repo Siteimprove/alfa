@@ -21,7 +21,8 @@ export const Atomic: Attribute = {
  */
 export const Autocomplete: Attribute = {
   name: "aria-autocomplete",
-  type: "true-false"
+  type: "token",
+  values: ["inline", "list", "both", "none"]
 };
 
 /**
