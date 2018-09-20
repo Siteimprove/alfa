@@ -248,7 +248,7 @@ test("Matches an element against a default namespace selector", t => {
 test("Matches an attribute against a declared namespace selector", t => {
   const svg: jsx.JSX.Element = {
     nodeType: 1,
-    prefix: "svg",
+    prefix: null,
     localName: "svg",
     attributes: [
       {
@@ -270,7 +270,7 @@ test("Matches an attribute against a declared namespace selector", t => {
 test("Matches an attribute against all or no namespaces", t => {
   const svg: jsx.JSX.Element = {
     nodeType: 1,
-    prefix: "svg",
+    prefix: null,
     localName: "svg",
     attributes: [
       {

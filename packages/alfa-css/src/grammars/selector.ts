@@ -128,14 +128,13 @@ function typeSelector(
 }
 
 function attributeSelector(stream: Stream<Token>): AttributeSelector | null {
-  const token = stream.peek(0);
   let next = stream.next();
 
-  if (token === null) {
+  if (next === null) {
     return null;
   }
 
-  const { name, namespace } = qualifiedName(token, stream);
+  const { name, namespace } = qualifiedName(next, stream);
 
   if (name === null) {
     return null;
@@ -478,6 +477,9 @@ function combineSelectors(
   return null;
 }
 
+/**
+ * @see https://www.w3.org/TR/selectors/#typedef-ns-prefix
+ */
 function namespacePrefix(
   token: Token | null,
   stream: Stream<Token>

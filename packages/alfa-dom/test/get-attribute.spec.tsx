@@ -41,7 +41,7 @@ test("Gets an attribute with a HTML namespace", t => {
 test("Gets an attribute with an SVG namespace", t => {
   const svg: jsx.JSX.Element = {
     nodeType: 1,
-    prefix: "svg",
+    prefix: null,
     localName: "svg",
     attributes: [
       {

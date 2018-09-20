@@ -293,7 +293,7 @@ function matchesAttribute(
   }
 
   const value = getAttribute(element, selector.name, namespaceURI, {
-    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) > 0
+    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) !== 0
   });
 
   if (value === null) {
