@@ -35,7 +35,9 @@ test("Gets an attribute value when it is defined and lowercase=true", t => {
 test("Gets an attribute with a HTML namespace", t => {
   const div = <div aria-labelledby="foobar" />;
 
-  t.equal(getAttribute(div, "aria-labelledby", Namespace.HTML), "foobar");
+  // In HTML5 attributes are not assigned to namespaces, not even the HTML
+  // namespace.
+  t.equal(getAttribute(div, "aria-labelledby", Namespace.HTML), null);
 });
 
 test("Gets an attribute with an SVG namespace", t => {

@@ -126,10 +126,6 @@ function getNSAttributeValue(
     if (attributeNamespace === selectorNamespace) {
       return value;
     }
-
-    if (attributeNamespace === null && selectorNamespace === Namespace.HTML) {
-      return value;
-    }
   }
 
   return null;
