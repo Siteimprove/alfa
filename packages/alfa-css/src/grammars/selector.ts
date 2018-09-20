@@ -29,67 +29,6 @@ import {
 
 const { isArray } = Array;
 
-export interface IdSelector {
-  readonly type: SelectorType.IdSelector;
-  readonly name: string;
-}
-
-export interface ClassSelector {
-  readonly type: SelectorType.ClassSelector;
-  readonly name: string;
-}
-
-export interface AttributeSelector {
-  readonly type: SelectorType.AttributeSelector;
-  readonly name: string;
-  readonly namespace: string | null;
-  readonly value: string | null;
-  readonly matcher: AttributeMatcher | null;
-  readonly modifier: number;
-}
-
-export interface TypeSelector {
-  readonly type: SelectorType.TypeSelector;
-  readonly name: string;
-  readonly namespace: string | null;
-}
-
-export interface PseudoClassSelector {
-  readonly type: SelectorType.PseudoClassSelector;
-  readonly name: PseudoClass;
-  readonly value: Selector | Array<Selector> | null;
-}
-
-export interface PseudoElementSelector {
-  readonly type: SelectorType.PseudoElementSelector;
-  readonly name: PseudoElement;
-}
-
-export type SimpleSelector =
-  | IdSelector
-  | ClassSelector
-  | TypeSelector
-  | AttributeSelector
-  | PseudoClassSelector
-  | PseudoElementSelector;
-
-export interface CompoundSelector {
-  readonly type: SelectorType.CompoundSelector;
-  readonly left: SimpleSelector;
-  readonly right: SimpleSelector | CompoundSelector;
-}
-
-export type ComplexSelector = SimpleSelector | CompoundSelector;
-
-export interface RelativeSelector {
-  readonly type: SelectorType.RelativeSelector;
-  readonly combinator: SelectorCombinator;
-  readonly left: ComplexSelector | RelativeSelector;
-  readonly right: ComplexSelector;
-}
-
-export type Selector = ComplexSelector | RelativeSelector;
-
 const simpleSelector =
   SelectorType.IdSelector |
   SelectorType.ClassSelector |

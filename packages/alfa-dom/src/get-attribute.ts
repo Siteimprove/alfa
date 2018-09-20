@@ -20,7 +20,7 @@ export function getAttribute(
 export function getAttribute(
   element: Element,
   localName: string,
-  namespace?: Namespace | string | null,
+  namespace?: Namespace | "*" | null,
   options?: AttributeOptions
 ): string | null;
 
@@ -39,7 +39,7 @@ export function getAttribute(
 export function getAttribute(
   element: Element,
   name: string,
-  selectorNamespace?: Namespace | string | null | AttributeOptions,
+  selectorNamespace?: Namespace | "*" | null | AttributeOptions,
   options: AttributeOptions = {}
 ): string | null {
   if (selectorNamespace !== null && typeof selectorNamespace === "object") {
@@ -103,7 +103,7 @@ function getAttributeValue(
 function getNSAttributeValue(
   element: Element,
   name: string,
-  selectorNamespace: Namespace | string
+  selectorNamespace: Namespace | "*"
 ): string | null {
   const attributes = getAttributeMap(element).get(name);
 
