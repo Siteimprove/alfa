@@ -1,5 +1,6 @@
 import { groupBy } from "@siteimprove/alfa-util";
 import { isAtomic, isResult } from "./guards";
+import { sortRules } from "./sort-rules";
 import {
   Answer,
   Aspect,
@@ -42,7 +43,7 @@ export function audit<A extends Aspect, T extends Target>(
     }
   }
 
-  for (const rule of isArray(rules) ? rules : [rules]) {
+  for (const rule of isArray(rules) ? sortRules(rules) : [rules]) {
     if (isAtomic(rule)) {
       auditAtomic(aspects, rule, results, (id, target) =>
         question(rule, id, target)
