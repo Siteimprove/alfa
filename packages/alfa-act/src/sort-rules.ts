@@ -30,7 +30,9 @@ export function sortRules<A extends Aspect, T extends Target>(
   let next = leaves.pop();
 
   while (next !== undefined) {
-    result.unshift(next);
+    if (rules.indexOf(next) !== -1) {
+      result.unshift(next);
+    }
 
     if (isComposite(next)) {
       for (const neighbour of next.composes) {
