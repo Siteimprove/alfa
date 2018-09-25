@@ -19,7 +19,12 @@ const Namespaces: Context = {
   /**
    * @see https://www.w3.org/TR/Pointers-in-RDF/
    */
-  ptr: "https://www.w3.org/2009/pointers#"
+  ptr: "https://www.w3.org/2009/pointers#",
+
+  /**
+   * @see https://www.w3.org/TR/WCAG/
+   */
+  wcag: "https://www.w3.org/TR/WCAG/#"
 };
 
 export namespace Contexts {
