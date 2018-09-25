@@ -57,12 +57,12 @@ export function toJson<A extends Aspect, T extends Target>(
         { "@id": "_:document" }
       ],
       test: {
-        "@value": rule.id,
+        "@id": rule.id,
         "@type": "earl:TestCase"
       },
       result: group.map(result => ({
         "@context": Contexts.Result,
-        outcome: `earl:${result.outcome}`,
+        outcome: { "@id": `earl:${result.outcome}` },
         pointer:
           result.outcome === "inapplicable"
             ? undefined
