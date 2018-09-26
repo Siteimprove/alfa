@@ -3,23 +3,14 @@ import { Request, Response } from "@siteimprove/alfa-http";
 
 export type Target = Node;
 
-/**
- * @see https://www.w3.org/TR/act-rules-format/#input-aspects
- */
 export interface Aspects {
   readonly request: Request;
   readonly response: Response;
   readonly document: Node;
 }
 
-/**
- * @see https://www.w3.org/TR/act-rules-format/#input-aspects
- */
 export type Aspect = keyof Aspects;
 
-/**
- * @see https://www.w3.org/TR/act-rules-format/#output
- */
 export type Result<
   A extends Aspect = Aspect,
   T extends Target = Target
@@ -35,18 +26,19 @@ export type Result<
     }
 >;
 
-/**
- * @see https://www.w3.org/TR/act-rules-format/#output-outcome
- */
 export type Outcome = Result["outcome"];
 
-export interface Question<T extends Target = Target> {
-  readonly rule: string;
+export interface Question<
+  A extends Aspect = Aspect,
+  T extends Target = Target
+> {
+  readonly rule: Rule<A, T>;
   readonly question: string;
   readonly target?: T;
 }
 
-export interface Answer<T extends Target = Target> extends Question<T> {
+export interface Answer<A extends Aspect = Aspect, T extends Target = Target>
+  extends Question<A, T> {
   readonly answer: boolean;
 }
 
@@ -64,35 +56,60 @@ export interface Locale {
   }>;
 }
 
-/**
- * @see https://www.w3.org/TR/act-rules-format/#applicability
- */
-export type Applicability<
-  A extends Aspect = Aspect,
-  T extends Target = Target
-> = () => T | Array<T> | null;
+export type Rule<A extends Aspect = Aspect, T extends Target = Target> =
+  | Atomic.Rule<A, T>
+  | Composite.Rule<A, T>;
 
-/**
- * @see https://www.w3.org/TR/act-rules-format/#expectations
- */
-export type Expectations<
-  A extends Aspect = Aspect,
-  T extends Target = Target
-> = (
-  target: T,
-  expectation: (id: number, holds: boolean) => void,
-  question: (question: string) => boolean
-) => void;
+export namespace Atomic {
+  export type Applicability<
+    A extends Aspect = Aspect,
+    T extends Target = Target
+  > = () => T | Array<T> | null;
 
-/**
- * @see https://www.w3.org/TR/act-rules-format/#structure
- */
-export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
-  readonly id: string;
-  readonly locales?: Array<Locale>;
-  readonly definition: (
-    applicability: (applicability: Applicability<A, T>) => void,
-    expectations: (expectations: Expectations<A, T>) => void,
-    aspects: Pick<Aspects, A>
+  export type Expectations<
+    A extends Aspect = Aspect,
+    T extends Target = Target
+  > = (
+    target: T,
+    expectation: (id: number, holds: boolean) => void,
+    question: (question: string) => boolean
   ) => void;
+
+  export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
+    readonly id: string;
+
+    readonly requirements?: Array<string>;
+
+    readonly locales?: Array<Locale>;
+
+    readonly definition: (
+      applicability: (applicability: Applicability<A, T>) => void,
+      expectations: (expectations: Expectations<A, T>) => void,
+      aspects: Pick<Aspects, A>
+    ) => void;
+  }
+}
+
+export namespace Composite {
+  export type Expectations<
+    A extends Aspect = Aspect,
+    T extends Target = Target
+  > = (
+    results: Array<Result<A, T>>,
+    expectation: (id: number, holds: boolean) => void
+  ) => void;
+
+  export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
+    readonly id: string;
+
+    readonly requirements?: Array<string>;
+
+    readonly locales?: Array<Locale>;
+
+    readonly composes: Array<Atomic.Rule<A, T>>;
+
+    readonly definition: (
+      expectations: (expectations: Expectations<A, T>) => void
+    ) => void;
+  }
 }

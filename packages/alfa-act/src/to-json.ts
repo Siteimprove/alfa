@@ -45,6 +45,30 @@ export function toJson<A extends Aspect, T extends Target>(
   const assertions: Array<Document> = [];
 
   for (const [rule, group] of groupBy(results, result => result.rule)) {
+    const requirements =
+      rule.requirements === undefined
+        ? []
+        : rule.requirements.map(requirement => ({
+            "@id": requirement,
+            "@type": "earl:TestRequirement"
+          }));
+
+    const result = group.map(result => ({
+      "@context": Contexts.Result,
+      outcome: { "@id": `earl:${result.outcome}` },
+      pointer:
+        result.outcome === "inapplicable"
+          ? undefined
+          : {
+              "@context": Contexts.OffsetPointer,
+              "@type": "ptr:OffsetPointer",
+              reference: { "@id": "_:document" },
+              offset: getDocumentPosition(result.target, aspects.document, {
+                flattened: true
+              })
+            }
+    }));
+
     assertions.push({
       "@context": Contexts.Assertion,
       assertedBy: {
@@ -56,25 +80,14 @@ export function toJson<A extends Aspect, T extends Target>(
         { "@id": "_:response" },
         { "@id": "_:document" }
       ],
-      test: {
-        "@value": rule.id,
-        "@type": "earl:TestCase"
-      },
-      result: group.map(result => ({
-        "@context": Contexts.Result,
-        outcome: `earl:${result.outcome}`,
-        pointer:
-          result.outcome === "inapplicable"
-            ? undefined
-            : {
-                "@context": Contexts.OffsetPointer,
-                "@type": "ptr:OffsetPointer",
-                reference: { "@id": "_:document" },
-                offset: getDocumentPosition(result.target, aspects.document, {
-                  flattened: true
-                })
-              }
-      }))
+      test: [
+        {
+          "@id": rule.id,
+          "@type": "earl:TestCase"
+        },
+        ...requirements
+      ],
+      result
     });
   }
 
