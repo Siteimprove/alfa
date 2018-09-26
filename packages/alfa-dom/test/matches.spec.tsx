@@ -306,3 +306,30 @@ test("Matches an attribute against a default namespace selector", t => {
   // https://www.w3.org/TR/selectors-3/#univnmsp
   t(matches(div, div, "[title]", { namespaces }));
 });
+
+test("Matches several similar attributes in different namespaces", t => {
+  const a: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "a",
+    attributes: [
+      {
+        prefix: "xlink",
+        localName: "href",
+        value: "foo"
+      },
+      {
+        prefix: null,
+        localName: "href",
+        value: "bar"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
+
+  const svg = <svg>{a}</svg>;
+
+  t(matches(a, svg, "[*|href=foo]"));
+  t(matches(a, svg, "[*|href=bar]"));
+});

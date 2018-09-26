@@ -22,7 +22,7 @@ export function getAttribute(
   localName: string,
   namespace?: Namespace | "*" | null,
   options?: AttributeOptions
-): string | null;
+): string | Array<string> | null;
 
 /**
  * Given an element, get the value of the given attribute name of the element.
@@ -41,7 +41,7 @@ export function getAttribute(
   name: string,
   selectorNamespace?: Namespace | "*" | null | AttributeOptions,
   options: AttributeOptions = {}
-): string | null {
+): string | Array<string> | null {
   if (selectorNamespace !== null && typeof selectorNamespace === "object") {
     options = selectorNamespace;
     selectorNamespace = null;
@@ -51,43 +51,37 @@ export function getAttribute(
     selectorNamespace = null;
   }
 
-  let attributeValue = null;
+  let attributeValue: string | Array<string> | null = null;
 
   if (selectorNamespace === null) {
     attributeValue = getAttributeValue(element, name);
+  } else if (selectorNamespace === "*") {
+    attributeValue = getNSWildcardAttributeValue(element, name);
   } else {
     attributeValue = getNSAttributeValue(element, name, selectorNamespace);
   }
 
-  // If attribute is non-existing
+  // If attribute does not exist
   if (attributeValue === null) {
     return null;
   }
 
-  if (options.trim === true) {
-    attributeValue = attributeValue.trim();
+  if (attributeValue instanceof Array) {
+    return attributeValue.map(value => applyOptions(value, options));
   }
 
-  if (options.lowerCase === true) {
-    attributeValue = attributeValue.toLowerCase();
-  }
-
-  return attributeValue;
+  return applyOptions(attributeValue, options);
 }
 
 function getAttributeValue(
   element: Element,
   qualifiedName: string
-): string | null {
+): string | Array<string> | null {
   const { name, namespace } = splitQualifiedName(qualifiedName);
   const attributes = getAttributeMap(element).get(name);
 
   if (attributes === undefined) {
     return null;
-  }
-
-  if (namespace === null) {
-    return attributes[0].value;
   }
 
   for (let i = 0, n = attributes.length; i < n; i++) {
@@ -111,10 +105,6 @@ function getNSAttributeValue(
     return null;
   }
 
-  if (selectorNamespace === "*") {
-    return attributes[0].value;
-  }
-
   for (let i = 0, n = attributes.length; i < n; i++) {
     const { value } = attributes[i];
     const attributeNamespace = getAttributeNamespace(
@@ -129,6 +119,29 @@ function getNSAttributeValue(
   }
 
   return null;
+}
+
+function getNSWildcardAttributeValue(
+  element: Element,
+  name: string
+): string | Array<string> | null {
+  const attributes = getAttributeMap(element).get(name);
+
+  if (attributes === undefined) {
+    return null;
+  }
+
+  const values: Array<string> = [];
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    values.push(attributes[i].value);
+  }
+
+  if (values.length === 1) {
+    return values[0];
+  }
+
+  return values;
 }
 
 function getAttributeMap(element: Element): Map<string, Array<Attribute>> {
@@ -161,6 +174,18 @@ function getAttributeMap(element: Element): Map<string, Array<Attribute>> {
   return attributeMap;
 }
 
+function applyOptions(value: string, options: AttributeOptions): string {
+  if (options.trim === true) {
+    value = value.trim();
+  }
+
+  if (options.lowerCase === true) {
+    value = value.toLowerCase();
+  }
+
+  return value;
+}
+
 function splitQualifiedName(
   qualifiedName: string
 ): { name: string; namespace: string | null } {
@@ -170,8 +195,12 @@ function splitQualifiedName(
     return { name: qualifiedName, namespace: null };
   }
 
-  return {
-    name: qualifiedName.substring(delimiter + 1),
-    namespace: qualifiedName.substring(0, delimiter)
-  };
+  const name = qualifiedName.substring(delimiter + 1);
+  const namespace = qualifiedName.substring(0, delimiter);
+
+  if (namespace === "*") {
+    return { name: qualifiedName, namespace: null };
+  }
+
+  return { name, namespace };
 }

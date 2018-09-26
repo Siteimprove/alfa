@@ -49,22 +49,46 @@ test("Gets an attribute with an SVG namespace", t => {
       {
         prefix: "xlink",
         localName: "href",
-        value: "foobar"
+        value: "foo"
       }
     ],
     shadowRoot: null,
     childNodes: []
   };
 
-  t.equal(getAttribute(svg, "xlink:href"), "foobar");
-  t.equal(getAttribute(svg, "href", Namespace.XLink), "foobar");
+  t.equal(getAttribute(svg, "xlink:href"), "foo");
+  t.equal(getAttribute(svg, "href", Namespace.XLink), "foo");
 });
 
 test("Gets an attribute matching any namespace", t => {
-  t.equal(
-    getAttribute(<div aria-labelledby="foobar" />, "aria-labelledby", "*"),
-    "foobar"
-  );
+  const div = <div aria-labelledby="foobar" />;
+  t.equal(getAttribute(div, "aria-labelledby", "*"), "foobar");
+});
+
+test("Gets multiple attributes with different namespaces", t => {
+  const svg: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "svg",
+    attributes: [
+      {
+        prefix: "xlink",
+        localName: "href",
+        value: "foo"
+      },
+      {
+        prefix: null,
+        localName: "href",
+        value: "bar"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
+
+  t.deepEqual(getAttribute(svg, "href", "*"), ["foo", "bar"]);
+  t.equal(getAttribute(svg, "title", "*"), null);
+  t.equal(getAttribute(svg, "*:href"), null);
 });
 
 test("Gets an attribute with an incorrect namespace", t => {

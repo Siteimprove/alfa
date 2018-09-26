@@ -300,6 +300,19 @@ function matchesAttribute(
     return false;
   }
 
+  if (value instanceof Array) {
+    for (let i = 0, n = value.length; i < n; i++) {
+      if (matchesValue(value[i], selector)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  return matchesValue(value, selector);
+}
+
+function matchesValue(value: string, selector: AttributeSelector): boolean {
   if (selector.value === null) {
     return true;
   }
