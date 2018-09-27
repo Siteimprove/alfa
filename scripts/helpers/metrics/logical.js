@@ -58,6 +58,8 @@ function visit(node, depth = -1) {
         case TypeScript.SyntaxKind.LessThanEqualsToken:
         case TypeScript.SyntaxKind.EqualsEqualsToken:
         case TypeScript.SyntaxKind.EqualsEqualsEqualsToken:
+        case TypeScript.SyntaxKind.ExclamationEqualsToken:
+        case TypeScript.SyntaxKind.ExclamationEqualsEqualsToken:
           depth++;
           total += Math.pow(1.1, depth);
       }
