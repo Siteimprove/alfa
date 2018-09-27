@@ -2,7 +2,7 @@ import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getDocumentPosition } from "../src/get-document-position";
 
-test("getDocumentPosition returns 3 when element has position 3 with naive traversal", t => {
+test("Returns 3 when element has position 3 with naive traversal", t => {
   const strong = <strong />;
   const span = <span>{strong}</span>;
   const div = (
@@ -14,14 +14,14 @@ test("getDocumentPosition returns 3 when element has position 3 with naive trave
   t.equal(getDocumentPosition(strong, div), 3);
 });
 
-test("getDocumentPosition returns null when element is not in context", t => {
+test("Returns null when element is not in context", t => {
   const strong = <strong />;
   const span = <span />;
   const div = <div>{span}</div>;
   t.equal(getDocumentPosition(strong, div), null);
 });
 
-test("getDocumentPosition returns 3 when element has position 3 with composed traversal", t => {
+test("Returns 3 when element has position 3 with composed traversal", t => {
   const p1 = <p>foo</p>;
   const p2 = <p>bar</p>;
   const slot = <slot />;
@@ -41,7 +41,7 @@ test("getDocumentPosition returns 3 when element has position 3 with composed tr
   t.equal(getDocumentPosition(p2, div, { composed: true }), 3);
 });
 
-test("getDocumentPosition returns 1 when element has position 1 with flattened traversal", t => {
+test("Returns 1 when element has position 1 with flattened traversal", t => {
   const p1 = <p>foo</p>;
   const p2 = <p>bar</p>;
   const slot = <slot />;
