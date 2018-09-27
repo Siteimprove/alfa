@@ -581,11 +581,21 @@ function printBlockCoverage(script, coverage, widths) {
     output += `\n${below}`;
   }
 
-  const lines = output.split("\n");
+  let lines = output.split("\n");
+  const shownLines = 3;
+
+  const len = lines.length;
+  const isTruncating = len > shownLines * 2;
+  if (isTruncating) {
+    lines = lines.filter(
+      (line, index) => index < shownLines || index > len - (shownLines + 1)
+    );
+  }
 
   output = lines
     .map((line, i) => {
-      const lineNo = (offset + i + 1).toString();
+      const actualIndex = i < shownLines ? i : len - 8 + i;
+      const lineNo = (offset + actualIndex + 1).toString();
 
       const padding = {
         gutter: " ".repeat(widths.gutter - lineNo.length)
@@ -608,14 +618,7 @@ function printBlockCoverage(script, coverage, widths) {
     })
     .join("\n");
 
-  let tmp = output.split("\n");
-
-  const len = tmp.length;
-  if (len > 8) {
-    tmp = tmp.filter((line, index) => index < 3 || index > len - 4);
-  }
-
-  process.stdout.write(`\n${tmp.join("\n")}\n\n`);
+  process.stdout.write(`\n${output}\n\n`);
 }
 
 /**
