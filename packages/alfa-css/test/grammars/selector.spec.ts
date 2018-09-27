@@ -432,6 +432,7 @@ test("Can parse an attribute selector without a value", t => {
   selector(t, "[foo]", {
     type: SelectorType.AttributeSelector,
     name: "foo",
+    namespace: null,
     value: null,
     matcher: null,
     modifier: 0
@@ -442,8 +443,9 @@ test("Can parse an attribute selector with an ident value", t => {
   selector(t, "[foo=bar]", {
     type: SelectorType.AttributeSelector,
     name: "foo",
+    namespace: null,
     value: "bar",
-    matcher: null,
+    matcher: AttributeMatcher.Equal,
     modifier: 0
   });
 });
@@ -452,8 +454,9 @@ test("Can parse an attribute selector with a string value", t => {
   selector(t, '[foo="bar"]', {
     type: SelectorType.AttributeSelector,
     name: "foo",
+    namespace: null,
     value: "bar",
-    matcher: null,
+    matcher: AttributeMatcher.Equal,
     modifier: 0
   });
 });
@@ -462,6 +465,7 @@ test("Can parse an attribute selector with a matcher", t => {
   selector(t, "[foo*=bar]", {
     type: SelectorType.AttributeSelector,
     name: "foo",
+    namespace: null,
     value: "bar",
     matcher: AttributeMatcher.Substring,
     modifier: 0
@@ -472,9 +476,65 @@ test("Can parse an attribute selector with a casing modifier", t => {
   selector(t, "[foo=bar i]", {
     type: SelectorType.AttributeSelector,
     name: "foo",
+    namespace: null,
     value: "bar",
-    matcher: null,
+    matcher: AttributeMatcher.Equal,
     modifier: AttributeModifier.CaseInsensitive
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[foo|bar]", {
+    type: SelectorType.AttributeSelector,
+    name: "bar",
+    namespace: "foo",
+    value: null,
+    matcher: null,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[*|foo]", {
+    type: SelectorType.AttributeSelector,
+    name: "foo",
+    namespace: "*",
+    value: null,
+    matcher: null,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[|foo]", {
+    type: SelectorType.AttributeSelector,
+    name: "foo",
+    namespace: "",
+    value: null,
+    matcher: null,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[foo|bar=baz]", {
+    type: SelectorType.AttributeSelector,
+    name: "bar",
+    namespace: "foo",
+    value: "baz",
+    matcher: AttributeMatcher.Equal,
+    modifier: 0
+  });
+});
+
+test("Can parse an attribute selector with a namespace", t => {
+  selector(t, "[foo|bar|=baz]", {
+    type: SelectorType.AttributeSelector,
+    name: "bar",
+    namespace: "foo",
+    value: "baz",
+    matcher: AttributeMatcher.DashMatch,
+    modifier: 0
   });
 });
 
@@ -488,6 +548,7 @@ test("Can parse an attribute selector when part of a compound selector", t => {
     right: {
       type: SelectorType.AttributeSelector,
       name: "foo",
+      namespace: null,
       value: null,
       matcher: null,
       modifier: 0
@@ -507,6 +568,7 @@ test("Can parse an attribute selector when part of a descendant selector", t => 
     right: {
       type: SelectorType.AttributeSelector,
       name: "foo",
+      namespace: null,
       value: null,
       matcher: null,
       modifier: 0
@@ -532,6 +594,7 @@ test("Can parse an attribute selector when part of a compound selector relative 
       right: {
         type: SelectorType.AttributeSelector,
         name: "foo",
+        namespace: null,
         value: null,
         matcher: null,
         modifier: 0
