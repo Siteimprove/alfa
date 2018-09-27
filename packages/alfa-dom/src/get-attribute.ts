@@ -172,10 +172,10 @@ function getAttributeMap(element: Element): Map<string, Array<Attribute>> {
 
     if (attributeArray === undefined) {
       attributeArray = [];
+      attributeMap.set(localName, attributeArray);
     }
 
     attributeArray.push(attribute);
-    attributeMap.set(localName, attributeArray);
   }
 
   attributeMaps.set(element, attributeMap);
