@@ -564,6 +564,7 @@ function printBlockCoverage(script, coverage, widths) {
 
   const lines = output.split("\n");
 
+  const eol = chalk.gray.dim("\u00ac");
   output = lines
     .map((line, i) => {
       const lineNo = (offset + i + 1).toString();
@@ -578,12 +579,12 @@ function printBlockCoverage(script, coverage, widths) {
             return chalk.gray.dim("\u00b7");
           case "\t":
             return chalk.gray.dim("\u00bb");
+          case "\r":
+            return "";
         }
 
         return whitespace;
       });
-
-      const eol = chalk.gray.dim("\u00ac");
 
       return `${padding.gutter}${chalk.grey(lineNo)} ${line}${eol}`;
     })
