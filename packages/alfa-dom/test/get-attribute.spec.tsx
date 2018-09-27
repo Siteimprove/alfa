@@ -62,7 +62,7 @@ test("Gets an attribute with an SVG namespace", t => {
 
 test("Gets an attribute matching any namespace", t => {
   const div = <div aria-labelledby="foobar" />;
-  t.equal(getAttribute(div, "aria-labelledby", "*"), "foobar");
+  t.deepEqual(getAttribute(div, "aria-labelledby", "*"), ["foobar"]);
 });
 
 test("Gets multiple attributes with different namespaces", t => {

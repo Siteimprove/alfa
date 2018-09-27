@@ -273,34 +273,37 @@ function matchesAttribute(
     return false;
   }
 
-  let namespaceURI: Namespace | "*" | null = null;
+  let value = null;
+  const option = {
+    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) !== 0
+  };
 
-  if (selector.namespace !== null) {
-    // Match all namespaces
-    if (selector.namespace === "*") {
-      namespaceURI = "*";
+  switch (selector.namespace) {
+    case null:
+    case "":
+      value = getAttribute(element, selector.name, option);
+      break;
+    case "*":
+      value = getAttribute(element, selector.name, "*", option);
+      break;
+    default:
       // Abort when no namespace is declared
-    } else if (options.namespaces === undefined) {
-      return false;
+      if (options.namespaces === undefined) {
+        return false;
+      }
       // Selector namespace must match a declared namespace
-    } else if (selector.namespace !== "") {
       const declaredNamespace = options.namespaces.get(selector.namespace);
       if (declaredNamespace === undefined) {
         return false;
       }
-      namespaceURI = declaredNamespace;
-    }
+      value = getAttribute(element, selector.name, declaredNamespace, option);
   }
-
-  const value = getAttribute(element, selector.name, namespaceURI, {
-    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) !== 0
-  });
 
   if (value === null) {
     return false;
   }
 
-  if (value instanceof Array) {
+  if (Array.isArray(value)) {
     for (let i = 0, n = value.length; i < n; i++) {
       if (matchesValue(value[i], selector)) {
         return true;

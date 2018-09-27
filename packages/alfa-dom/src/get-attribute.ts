@@ -20,7 +20,14 @@ export function getAttribute(
 export function getAttribute(
   element: Element,
   localName: string,
-  namespace?: Namespace | "*" | null,
+  namespace: Namespace | null,
+  options?: AttributeOptions
+): string | null;
+
+export function getAttribute(
+  element: Element,
+  localName: string,
+  namespace: "*",
   options?: AttributeOptions
 ): string | Array<string> | null;
 
@@ -53,20 +60,26 @@ export function getAttribute(
 
   let attributeValue: string | Array<string> | null = null;
 
-  if (selectorNamespace === null) {
-    attributeValue = getAttributeValue(element, name);
-  } else if (selectorNamespace === "*") {
-    attributeValue = getNSWildcardAttributeValue(element, name);
-  } else {
-    attributeValue = getNSAttributeValue(element, name, selectorNamespace);
+  switch (selectorNamespace) {
+    case null:
+      attributeValue = getAttributeValue(element, name);
+      break;
+    case "*":
+      attributeValue = getWildcardAttributeValue(element, name);
+      break;
+    default:
+      attributeValue = getNamespaceAttributeValue(
+        element,
+        name,
+        selectorNamespace
+      );
   }
 
-  // If attribute does not exist
   if (attributeValue === null) {
     return null;
   }
 
-  if (attributeValue instanceof Array) {
+  if (Array.isArray(attributeValue)) {
     return attributeValue.map(value => applyOptions(value, options));
   }
 
@@ -94,10 +107,10 @@ function getAttributeValue(
   return null;
 }
 
-function getNSAttributeValue(
+function getNamespaceAttributeValue(
   element: Element,
   name: string,
-  selectorNamespace: Namespace | "*"
+  selectorNamespace: Namespace
 ): string | null {
   const attributes = getAttributeMap(element).get(name);
 
@@ -121,7 +134,7 @@ function getNSAttributeValue(
   return null;
 }
 
-function getNSWildcardAttributeValue(
+function getWildcardAttributeValue(
   element: Element,
   name: string
 ): string | Array<string> | null {
@@ -135,10 +148,6 @@ function getNSWildcardAttributeValue(
 
   for (let i = 0, n = attributes.length; i < n; i++) {
     values.push(attributes[i].value);
-  }
-
-  if (values.length === 1) {
-    return values[0];
   }
 
   return values;
