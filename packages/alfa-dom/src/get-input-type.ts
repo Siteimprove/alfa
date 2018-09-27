@@ -45,9 +45,6 @@ export function getInputType(element: Element): InputType | null {
   switch (type) {
     case "hidden":
       return InputType.Hidden;
-    case "text":
-    default:
-      return InputType.Text;
     case "search":
       return InputType.Search;
     case "tel":
@@ -88,5 +85,8 @@ export function getInputType(element: Element): InputType | null {
       return InputType.Reset;
     case "button":
       return InputType.Button;
+    case "text":
+    default:
+      return InputType.Text;
   }
 }
