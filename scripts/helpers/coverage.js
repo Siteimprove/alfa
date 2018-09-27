@@ -608,7 +608,14 @@ function printBlockCoverage(script, coverage, widths) {
     })
     .join("\n");
 
-  process.stdout.write(`\n${output}\n\n`);
+  let tmp = output.split("\n");
+
+  const len = tmp.length;
+  if (len > 8) {
+    tmp = tmp.filter((line, index) => index < 3 || index > len - 4);
+  }
+
+  process.stdout.write(`\n${tmp.join("\n")}\n\n`);
 }
 
 /**
