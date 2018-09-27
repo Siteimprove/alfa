@@ -29,7 +29,7 @@ export function getAttribute(
   localName: string,
   namespace: "*",
   options?: AttributeOptions
-): string | Array<string> | null;
+): Array<string> | null;
 
 /**
  * Given an element, get the value of the given attribute name of the element.

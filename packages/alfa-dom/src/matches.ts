@@ -274,17 +274,17 @@ function matchesAttribute(
   }
 
   let value = null;
-  const option = {
+  const attributeOptions = {
     lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) !== 0
   };
 
   switch (selector.namespace) {
     case null:
     case "":
-      value = getAttribute(element, selector.name, option);
+      value = getAttribute(element, selector.name, attributeOptions);
       break;
     case "*":
-      value = getAttribute(element, selector.name, "*", option);
+      value = getAttribute(element, selector.name, "*", attributeOptions);
       break;
     default:
       // Abort when no namespace is declared
@@ -296,7 +296,12 @@ function matchesAttribute(
       if (declaredNamespace === undefined) {
         return false;
       }
-      value = getAttribute(element, selector.name, declaredNamespace, option);
+      value = getAttribute(
+        element,
+        selector.name,
+        declaredNamespace,
+        attributeOptions
+      );
   }
 
   if (value === null) {
