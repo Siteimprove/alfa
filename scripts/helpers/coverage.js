@@ -130,19 +130,19 @@ process.on("beforeExit", code => {
           return a.range.start.line - b.range.start.line;
         });
 
+        const widths = {
+          // Make the gutter width as wide as the line number of the last line.
+          // Since line counts are 1-indexed and an additional line may be added
+          // to the output, we bump the line count twice to make sure the gutter
+          // is wide enough.
+          gutter: `${selectedBlocks[selectedBlocks.length - 1].range.end.line +
+            2}`.length
+        };
+
         for (let i = 0; blockCount > i; i++) {
           if (i !== 0) {
             process.stdout.write(chalk.blue(`${"\u00b7".repeat(3)}\n`));
           }
-
-          const widths = {
-            // Make the gutter width as wide as the line number of the last line.
-            // Since line counts are 1-indexed and an additional line may be added
-            // to the output, we bump the line count twice to make sure the gutter
-            // is wide enough.
-            gutter: `${selectedBlocks[selectedBlocks.length - 1].range.end
-              .line + 2}`.length
-          };
 
           printBlockCoverage(script, selectedBlocks[i], widths);
         }
