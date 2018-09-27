@@ -17,6 +17,7 @@ import {
 import { AncestorFilter } from "./ancestor-filter";
 import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
+import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getClosest } from "./get-closest";
 import { getElementNamespace } from "./get-element-namespace";
 import { getId } from "./get-id";
@@ -141,8 +142,13 @@ export function matches(
 
   const { namespaces } = options;
 
-  // Dismiss if element with non-type-selector does not match default namespace.
-  if (selector.type !== SelectorType.TypeSelector && namespaces !== undefined) {
+  // If selector is not targetting Type or Attribute, then abort if it does not
+  // match the default namespace.
+  if (
+    selector.type !== SelectorType.TypeSelector &&
+    selector.type !== SelectorType.AttributeSelector &&
+    namespaces !== undefined
+  ) {
     const namespaceDefault = namespaces.get(null);
     if (
       namespaceDefault !== undefined &&
@@ -167,7 +173,7 @@ export function matches(
       return matchesType(element, context, selector, options);
 
     case SelectorType.AttributeSelector:
-      return matchesAttribute(element, selector);
+      return matchesAttribute(element, context, selector, options);
 
     case SelectorType.CompoundSelector:
       return matchesCompound(element, context, selector, options, root);
@@ -211,7 +217,7 @@ function matchesType(
     return true;
   }
 
-  if (matchesNamespace(element, context, selector, options) === false) {
+  if (!matchesElementNamespace(element, context, selector, options)) {
     return false;
   }
 
@@ -221,7 +227,7 @@ function matchesType(
 /**
  * @see https://www.w3.org/TR/selectors/#type-nmsp
  */
-function matchesNamespace(
+function matchesElementNamespace(
   element: Element,
   context: Node,
   selector: TypeSelector,
@@ -259,25 +265,70 @@ const whitespace = /\s+/;
  */
 function matchesAttribute(
   element: Element,
-  selector: AttributeSelector
+  context: Node,
+  selector: AttributeSelector,
+  options: MatchesOptions
 ): boolean {
-  const value = getAttribute(element, selector.name, {
-    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) > 0
-  });
+  if (!matchesAttributeNamespace(element, context, selector, options)) {
+    return false;
+  }
 
-  if (selector.value === null) {
-    return value !== null;
+  let value = null;
+  const attributeOptions = {
+    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) !== 0
+  };
+
+  switch (selector.namespace) {
+    case null:
+    case "":
+      value = getAttribute(element, selector.name, attributeOptions);
+      break;
+    case "*":
+      value = getAttribute(element, selector.name, "*", attributeOptions);
+      break;
+    default:
+      // Abort when no namespace is declared
+      if (options.namespaces === undefined) {
+        return false;
+      }
+      // Selector namespace must match a declared namespace
+      const declaredNamespace = options.namespaces.get(selector.namespace);
+      if (declaredNamespace === undefined) {
+        return false;
+      }
+      value = getAttribute(
+        element,
+        selector.name,
+        declaredNamespace,
+        attributeOptions
+      );
   }
 
   if (value === null) {
     return false;
   }
 
-  if (selector.matcher === null) {
-    return selector.value === value;
+  if (Array.isArray(value)) {
+    for (let i = 0, n = value.length; i < n; i++) {
+      if (matchesValue(value[i], selector)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  return matchesValue(value, selector);
+}
+
+function matchesValue(value: string, selector: AttributeSelector): boolean {
+  if (selector.value === null) {
+    return true;
   }
 
   switch (selector.matcher) {
+    case AttributeMatcher.Equal:
+      return selector.value === value;
+
     case AttributeMatcher.Prefix:
       return value.startsWith(selector.value);
 
@@ -301,6 +352,49 @@ function matchesAttribute(
   }
 
   return false;
+}
+
+/**
+ * @see https://www.w3.org/TR/selectors/#attrnmsp
+ */
+function matchesAttributeNamespace(
+  element: Element,
+  context: Node,
+  selector: AttributeSelector,
+  options: MatchesOptions
+): boolean {
+  if (selector.namespace === null || selector.namespace === "*") {
+    return true;
+  }
+
+  const { attributes } = element;
+  let attribute = null;
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    if (attributes[i].localName !== selector.name) {
+      continue;
+    }
+
+    attribute = attributes[i];
+    break;
+  }
+
+  if (attribute === null) {
+    return false;
+  }
+
+  const attributeNamespace = getAttributeNamespace(attribute, element, context);
+
+  // Selector "[|att]" should only match attributes with no namespace
+  if (selector.namespace === "") {
+    return attributeNamespace === null;
+  }
+
+  if (options.namespaces === undefined) {
+    return false;
+  }
+
+  return attributeNamespace === options.namespaces.get(selector.namespace);
 }
 
 /**

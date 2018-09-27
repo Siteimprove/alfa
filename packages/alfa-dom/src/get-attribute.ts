@@ -1,6 +1,35 @@
-import { Element } from "./types";
+import { getAttributeNamespace } from "./get-attribute-namespace";
+import { Attribute, Element, Namespace } from "./types";
 
-const attributeMaps: WeakMap<Element, Map<string, string>> = new WeakMap();
+export interface AttributeOptions {
+  readonly trim?: boolean;
+  readonly lowerCase?: boolean;
+}
+
+const attributeMaps: WeakMap<
+  Element,
+  Map<string, Array<Attribute>>
+> = new WeakMap();
+
+export function getAttribute(
+  element: Element,
+  qualifiedName: string,
+  options?: AttributeOptions
+): string | null;
+
+export function getAttribute(
+  element: Element,
+  localName: string,
+  namespace: Namespace | null,
+  options?: AttributeOptions
+): string | null;
+
+export function getAttribute(
+  element: Element,
+  localName: string,
+  namespace: "*",
+  options?: AttributeOptions
+): Array<string> | null;
 
 /**
  * Given an element, get the value of the given attribute name of the element.
@@ -17,36 +46,144 @@ const attributeMaps: WeakMap<Element, Map<string, string>> = new WeakMap();
 export function getAttribute(
   element: Element,
   name: string,
-  options: Readonly<{
-    trim?: boolean;
-    lowerCase?: boolean;
-  }> = {}
-): string | null {
-  let attributeMap = attributeMaps.get(element);
-
-  if (attributeMap === undefined) {
-    attributeMap = new Map();
-
-    const { attributes } = element;
-
-    for (let i = 0, n = attributes.length; i < n; i++) {
-      const { prefix, localName, value } = attributes[i];
-
-      const qualifiedName =
-        prefix === null ? localName : `${prefix}:${localName}`;
-
-      attributeMap.set(qualifiedName, value);
-    }
-
-    attributeMaps.set(element, attributeMap);
+  selectorNamespace?: Namespace | "*" | null | AttributeOptions,
+  options: AttributeOptions = {}
+): string | Array<string> | null {
+  if (selectorNamespace !== null && typeof selectorNamespace === "object") {
+    options = selectorNamespace;
+    selectorNamespace = null;
   }
 
-  let value = attributeMap.get(name);
+  if (selectorNamespace === undefined) {
+    selectorNamespace = null;
+  }
 
-  if (value === undefined) {
+  let attributeValue: string | Array<string> | null = null;
+
+  switch (selectorNamespace) {
+    case null:
+      attributeValue = getAttributeValue(element, name);
+      break;
+    case "*":
+      attributeValue = getWildcardAttributeValue(element, name);
+      break;
+    default:
+      attributeValue = getNamespaceAttributeValue(
+        element,
+        name,
+        selectorNamespace
+      );
+  }
+
+  if (attributeValue === null) {
     return null;
   }
 
+  if (Array.isArray(attributeValue)) {
+    return attributeValue.map(value => applyOptions(value, options));
+  }
+
+  return applyOptions(attributeValue, options);
+}
+
+function getAttributeValue(
+  element: Element,
+  qualifiedName: string
+): string | Array<string> | null {
+  const { name, namespace } = splitQualifiedName(qualifiedName);
+  const attributes = getAttributeMap(element).get(name);
+
+  if (attributes === undefined) {
+    return null;
+  }
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    const { prefix, value } = attributes[i];
+    if (prefix === namespace) {
+      return value;
+    }
+  }
+
+  return null;
+}
+
+function getNamespaceAttributeValue(
+  element: Element,
+  name: string,
+  selectorNamespace: Namespace
+): string | null {
+  const attributes = getAttributeMap(element).get(name);
+
+  if (attributes === undefined) {
+    return null;
+  }
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    const { value } = attributes[i];
+    const attributeNamespace = getAttributeNamespace(
+      attributes[i],
+      element,
+      element
+    );
+
+    if (attributeNamespace === selectorNamespace) {
+      return value;
+    }
+  }
+
+  return null;
+}
+
+function getWildcardAttributeValue(
+  element: Element,
+  name: string
+): string | Array<string> | null {
+  const attributes = getAttributeMap(element).get(name);
+
+  if (attributes === undefined) {
+    return null;
+  }
+
+  const values: Array<string> = [];
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    values.push(attributes[i].value);
+  }
+
+  return values;
+}
+
+function getAttributeMap(element: Element): Map<string, Array<Attribute>> {
+  let attributeMap = attributeMaps.get(element);
+
+  if (attributeMap !== undefined) {
+    return attributeMap;
+  }
+
+  attributeMap = new Map();
+
+  const { attributes } = element;
+
+  for (let i = 0, n = attributes.length; i < n; i++) {
+    const attribute = attributes[i];
+    const { localName } = attribute;
+
+    let attributeArray = attributeMap.get(localName);
+
+    if (attributeArray === undefined) {
+      attributeArray = [];
+      attributeMap.set(localName, attributeArray);
+    }
+
+    attributeArray.push(attribute);
+  }
+
+  attributeMaps.set(element, attributeMap);
+
+  return attributeMap;
+}
+
+function applyOptions(value: string, options: AttributeOptions): string {
   if (options.trim === true) {
     value = value.trim();
   }
@@ -56,4 +193,23 @@ export function getAttribute(
   }
 
   return value;
+}
+
+function splitQualifiedName(
+  qualifiedName: string
+): { name: string; namespace: string | null } {
+  const delimiter = qualifiedName.indexOf(":");
+
+  if (delimiter === -1) {
+    return { name: qualifiedName, namespace: null };
+  }
+
+  const name = qualifiedName.substring(delimiter + 1);
+  const namespace = qualifiedName.substring(0, delimiter);
+
+  if (namespace === "*") {
+    return { name: qualifiedName, namespace: null };
+  }
+
+  return { name, namespace };
 }

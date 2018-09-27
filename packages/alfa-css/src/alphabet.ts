@@ -34,7 +34,14 @@ export const enum TokenType {
   LeftSquareBracket,
   RightSquareBracket,
   LeftCurlyBracket,
-  RightCurlyBracket
+  RightCurlyBracket,
+  VerticalLine,
+  Column,
+  IncludeMatch,
+  DashMatch,
+  PrefixMatch,
+  SuffixMatch,
+  SubstringMatch
 }
 
 export namespace Tokens {
@@ -104,6 +111,30 @@ export namespace Tokens {
   export type CurlyBracket = Readonly<{
     type: TokenType.LeftCurlyBracket | TokenType.RightCurlyBracket;
   }>;
+
+  export type Column = Readonly<{
+    type: TokenType.Column;
+  }>;
+
+  export type IncludeMatch = Readonly<{
+    type: TokenType.IncludeMatch;
+  }>;
+
+  export type DashMatch = Readonly<{
+    type: TokenType.DashMatch;
+  }>;
+
+  export type PrefixMatch = Readonly<{
+    type: TokenType.PrefixMatch;
+  }>;
+
+  export type SuffixMatch = Readonly<{
+    type: TokenType.SuffixMatch;
+  }>;
+
+  export type SubstringMatch = Readonly<{
+    type: TokenType.SubstringMatch;
+  }>;
 }
 
 /**
@@ -128,7 +159,14 @@ export type Token =
   | Tokens.Comma
   | Tokens.Parenthesis
   | Tokens.SquareBracket
-  | Tokens.CurlyBracket;
+  | Tokens.CurlyBracket
+  | Tokens.Column
+  // Match tokens
+  | Tokens.IncludeMatch
+  | Tokens.DashMatch
+  | Tokens.PrefixMatch
+  | Tokens.SuffixMatch
+  | Tokens.SubstringMatch;
 
 export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
   (stream, emit) => {
@@ -708,13 +746,65 @@ function consumeToken(stream: Stream<number>): Token | null {
     return tokens[char];
   }
 
+  const next = stream.peek(0);
+
   switch (char) {
+    case Char.Tilde:
+      if (next === Char.EqualSign) {
+        stream.advance(1);
+        return {
+          type: TokenType.IncludeMatch
+        };
+      }
+      break;
+
+    case Char.VerticalLine:
+      switch (next) {
+        case Char.EqualSign:
+          stream.advance(1);
+          return {
+            type: TokenType.DashMatch
+          };
+        case Char.VerticalLine:
+          stream.advance(1);
+          return {
+            type: TokenType.Column
+          };
+      }
+      break;
+
+    case Char.CircumflexAccent:
+      if (next === Char.EqualSign) {
+        stream.advance(1);
+        return {
+          type: TokenType.PrefixMatch
+        };
+      }
+      break;
+
+    case Char.DollarSign:
+      if (next === Char.EqualSign) {
+        stream.advance(1);
+        return {
+          type: TokenType.SuffixMatch
+        };
+      }
+      break;
+
+    case Char.Asterisk:
+      if (next === Char.EqualSign) {
+        stream.advance(1);
+        return {
+          type: TokenType.SubstringMatch
+        };
+      }
+      break;
+
     case Char.QuotationMark:
     case Char.Apostrophe:
       return consumeString(stream, char);
 
     case Char.Solidus: {
-      const next = stream.peek(0);
       if (next === Char.Asterisk) {
         stream.advance(1);
 
