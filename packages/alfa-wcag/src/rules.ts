@@ -1,5 +1,1 @@
-export { HtmlXmlLangMatch } from "./html-xml-lang-match/rule";
-export { Lang } from "./lang/rule";
-export { MetaRefresh } from "./meta-refresh/rule";
-export { Title } from "./title/rule";
-export { UniqueId } from "./unique-id/rule";
+export { SIA_R1 } from "./sia-r1/rule";

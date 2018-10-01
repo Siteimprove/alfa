@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Atomic } from "@siteimprove/alfa-act";
 import {
   Element,
   getElementNamespace,
@@ -8,8 +8,9 @@ import {
   querySelector
 } from "@siteimprove/alfa-dom";
 
-export const Title: Rule<"document", Element> = {
-  id: "alfa:wcag:title",
+export const SIA_R1: Atomic.Rule<"document", Element> = {
+  id: "sanshikan:rules/sia-r1.html",
+  requirements: ["wcag:page-titled"],
   definition: (applicability, expectations, { document }) => {
     applicability(() => querySelector(document, document, "html"));
 
