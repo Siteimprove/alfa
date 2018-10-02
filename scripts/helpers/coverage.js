@@ -592,20 +592,22 @@ function printBlockCoverage(script, coverage, widths) {
 
   let lines = output.split("\n");
 
-  const len = lines.length;
-  const isTruncating = len > maxCoverageOutputLines;
+  const totalLines = lines.length;
+  const isTruncating = totalLines > maxCoverageOutputLines;
   if (isTruncating) {
     lines = lines.filter(
       (line, index) =>
         index < maxCoverageOutputLines / 2 ||
-        index > len - (maxCoverageOutputLines / 2 + 1)
+        index > totalLines - (maxCoverageOutputLines / 2 + 1)
     );
   }
 
   output = lines
     .map((line, i) => {
       const actualIndex =
-        i < maxCoverageOutputLines / 2 ? i : len - maxCoverageOutputLines + i;
+        i < maxCoverageOutputLines / 2
+          ? i
+          : totalLines - maxCoverageOutputLines + i;
       const lineNo = (offset + actualIndex + 1).toString();
       const padding = {
         gutter: " ".repeat(widths.gutter - lineNo.length)
@@ -627,9 +629,9 @@ function printBlockCoverage(script, coverage, widths) {
       if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
         truncation += `\n${" ".repeat(widths.gutter / 2)}`;
         truncation += `${chalk.blue("\u205e")}${" ".repeat(widths.gutter / 2)}`;
-        truncation += `${len - maxCoverageOutputLines} lines truncated`.replace(
-          /[^\s]+/g,
-          word => chalk.blue(word)
+        truncation += `${totalLines -
+          maxCoverageOutputLines} lines truncated`.replace(/[^\s]+/g, word =>
+          chalk.blue(word)
         );
       }
 
