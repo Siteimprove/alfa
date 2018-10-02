@@ -116,7 +116,8 @@ process.on("beforeExit", code => {
 
         for (const block of uncovered) {
           // Buffer added for dots and spacing
-          lineSum += block.range.end.line - block.range.start.line + 5;
+          const estimate = block.range.end.line - block.range.start.line + 5;
+          lineSum += estimate > 11 ? 11 : estimate;
 
           // At least one block has to be printed
           if (lineSum > space && blockCount > 0) {
@@ -594,7 +595,12 @@ function printBlockCoverage(script, coverage, widths) {
 
   output = lines
     .map((line, i) => {
-      const actualIndex = i < shownLines ? i : len - 8 + i;
+      if (isTruncating && i == 2) {
+        line += `\n${" ".repeat(16)}( ... And ${len -
+          shownLines * 2} other lines ... )`;
+      }
+
+      const actualIndex = i < shownLines ? i : len - shownLines * 2 + i;
       const lineNo = (offset + actualIndex + 1).toString();
 
       const padding = {
