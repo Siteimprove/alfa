@@ -176,6 +176,15 @@ test("Can lex a comment", t => {
   ]);
 });
 
+test("Can lex a dashed and bang-ending comment", t => {
+  html(t, "<!-----!>", [
+    {
+      type: TokenType.Comment,
+      data: "-"
+    }
+  ]);
+});
+
 test("Can lex a hexadecimal character reference", t => {
   html(t, "&#x00bD;", [
     {
@@ -214,8 +223,17 @@ test("Cannot lex a doctype without name", t => {
   html(t, "<!doctype>", []);
 });
 
-test("Can lex a doctype with a bofus public ID", t => {
+test("Can lex a doctype with a bogus public ID", t => {
   html(t, '<!doctype html "foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+  html(t, "<!doctype html 'foo'>", [
     {
       type: TokenType.Doctype,
       name: "html",
@@ -228,6 +246,15 @@ test("Can lex a doctype with a bofus public ID", t => {
 
 test("Can lex a doctype with a bogus public ID (missing keyword)", t => {
   html(t, '<!doctype html "foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+  html(t, "<!doctype html 'foo'>", [
     {
       type: TokenType.Doctype,
       name: "html",
@@ -248,33 +275,6 @@ test("Can lex a doctype with a bogus public ID (missing space)", t => {
       forceQuirks: false
     }
   ]);
-});
-
-test("Can lex a doctype with a bogus system ID (missing space)", t => {
-  html(t, '<!doctype html SYSTEM"foo">', [
-    {
-      type: TokenType.Doctype,
-      name: "html",
-      publicId: null,
-      systemId: "foo",
-      forceQuirks: false
-    }
-  ]);
-});
-
-test("Can lex a doctype with a bogus public ID (missing keyword)", t => {
-  html(t, "<!doctype html 'foo'>", [
-    {
-      type: TokenType.Doctype,
-      name: "html",
-      publicId: null,
-      systemId: null,
-      forceQuirks: true
-    }
-  ]);
-});
-
-test("Can lex a doctype with a bogus public ID (missing space)", t => {
   html(t, "<!doctype html PUBLIC'foo'>", [
     {
       type: TokenType.Doctype,
@@ -287,6 +287,15 @@ test("Can lex a doctype with a bogus public ID (missing space)", t => {
 });
 
 test("Can lex a doctype with a bogus system ID (missing space)", t => {
+  html(t, '<!doctype html SYSTEM"foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
   html(t, "<!doctype html SYSTEM'foo'>", [
     {
       type: TokenType.Doctype,
@@ -308,6 +317,15 @@ test("Can lex a doctype with a public ID", t => {
       forceQuirks: false
     }
   ]);
+  html(t, "<!doctype html PUBLIC 'foo'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: null,
+      forceQuirks: false
+    }
+  ]);
 });
 
 test("Can lex a doctype with a system ID", t => {
@@ -320,10 +338,28 @@ test("Can lex a doctype with a system ID", t => {
       forceQuirks: false
     }
   ]);
+  html(t, "<!doctype html SYSTEM 'foo'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
 });
 
 test("Can lex a doctype with both a public ID and system ID", t => {
   html(t, '<!doctype html PUBLIC "foo" "bar">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: "bar",
+      forceQuirks: false
+    }
+  ]);
+  html(t, '<!doctype html PUBLIC "foo""bar">', [
     {
       type: TokenType.Doctype,
       name: "html",
