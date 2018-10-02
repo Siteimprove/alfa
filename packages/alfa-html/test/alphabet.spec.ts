@@ -176,6 +176,15 @@ test("Can lex a comment", t => {
   ]);
 });
 
+test("Can lex a hexadecimal character reference", t => {
+  html(t, "&#x0078;", [
+    {
+      type: TokenType.Character,
+      data: char("x")
+    }
+  ]);
+});
+
 test("Can lex a named character reference", t => {
   html(t, "&lt;&gt;", [
     {
@@ -201,6 +210,10 @@ test("Can lex a simple doctype", t => {
   ]);
 });
 
+test("Cannot lex a doctype without name", t => {
+  html(t, "<!doctype>", []);
+});
+
 test("Can lex a doctype with a public ID", t => {
   html(t, '<!doctype html PUBLIC "foo">', [
     {
@@ -220,6 +233,18 @@ test("Can lex a doctype with a system ID", t => {
       name: "html",
       publicId: null,
       systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
+});
+
+test("Can lex a doctype with both a public ID and system ID", t => {
+  html(t, '<!doctype html PUBLIC "foo" "bar">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: "bar",
       forceQuirks: false
     }
   ]);
