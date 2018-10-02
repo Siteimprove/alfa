@@ -9,26 +9,40 @@ export type QuerySelectorOptions = Readonly<{
   flattened?: boolean;
 }>;
 
-export type QuerySelectorResult<T extends Node, Q> = Q extends string
-  ? Element
-  : T;
-
 /**
  * Given a scope and a context, get the first node within the scope that matches
- * the given selector or predicate with the context. If no node is found that
- * matches the given selector or predicate, `null` is returned.
+ * the given selector within the context. If no node is found that matches the
+ * selector, `null` is returned.
  *
  * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
  */
-export function querySelector<
-  T extends Node,
-  Q extends string | Predicate<Node, T>
->(
+export function querySelector(
   scope: Node,
   context: Node,
-  query: Q,
+  selector: string,
   options?: QuerySelectorOptions
-): QuerySelectorResult<T, Q> | null {
+): Element | null;
+
+/**
+ * Given a scope and a context, get the first node within the scope that matches
+ * the given predicate within the context. If no node is found that matches the
+ * predicate, `null` is returned.
+ *
+ * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
+ */
+export function querySelector<T extends Node>(
+  scope: Node,
+  context: Node,
+  predicate: Predicate<Node, T>,
+  options?: QuerySelectorOptions
+): T | null;
+
+export function querySelector<T extends Node>(
+  scope: Node,
+  context: Node,
+  query: string | Predicate<Node, T>,
+  options: QuerySelectorOptions = {}
+): T | null {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
@@ -39,10 +53,10 @@ export function querySelector<
     predicate = node =>
       isElement(node) && matches(node, context, query, matchesOptions);
   } else {
-    predicate = query as Predicate<Node, T>;
+    predicate = query;
   }
 
-  let found: QuerySelectorResult<T, Q> | null = null;
+  let found: T | null = null;
 
   traverseNode(
     scope,
@@ -50,7 +64,7 @@ export function querySelector<
     {
       enter(node) {
         if (predicate(node)) {
-          found = node as QuerySelectorResult<T, Q>;
+          found = node;
           return false;
         }
       }
@@ -63,20 +77,38 @@ export function querySelector<
 
 /**
  * Given a scope and a context, get all nodes within the scope that match the
- * given selector or predicate with the context. If no nodes are found that
- * match the given selector or predicate, an empty array is returned.
+ * given selector within the context. If no nodes are found that match the
+ * selector, an empty array is returned.
  *
  * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
  */
-export function querySelectorAll<
-  T extends Node,
-  Q extends string | Predicate<Node, T>
->(
+export function querySelectorAll(
   scope: Node,
   context: Node,
-  query: Q,
+  selector: string,
+  options?: QuerySelectorOptions
+): ReadonlyArray<Element>;
+
+/**
+ * Given a scope and a context, get all nodes within the scope that match the
+ * given predicate within the context. If no nodes are found that match the
+ * predicate, an empty array is returned.
+ *
+ * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
+ */
+export function querySelectorAll<T extends Node>(
+  scope: Node,
+  context: Node,
+  predicate: Predicate<Node, T>,
+  options?: QuerySelectorOptions
+): ReadonlyArray<T>;
+
+export function querySelectorAll<T extends Node>(
+  scope: Node,
+  context: Node,
+  query: string | Predicate<Node, T>,
   options: QuerySelectorOptions = {}
-): ReadonlyArray<QuerySelectorResult<T, Q>> {
+): ReadonlyArray<T> {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
@@ -87,10 +119,10 @@ export function querySelectorAll<
     predicate = node =>
       isElement(node) && matches(node, context, query, matchesOptions);
   } else {
-    predicate = query as Predicate<Node, T>;
+    predicate = query;
   }
 
-  const found: Array<QuerySelectorResult<T, Q>> = [];
+  const found: Array<T> = [];
 
   traverseNode(
     scope,
@@ -98,7 +130,7 @@ export function querySelectorAll<
     {
       enter(node) {
         if (predicate(node)) {
-          found.push(node as QuerySelectorResult<T, Q>);
+          found.push(node);
         }
       }
     },
