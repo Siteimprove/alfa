@@ -32,5 +32,5 @@ test("Infix returns Continue", t => {
   const stream = new Stream<{ type: number }>(0, () => ({ type: 0 }));
   const expression: Expression<number> = () => 0;
 
-  t.equal(obj.infix(type, stream, expression, null, null), Command.Continue);
+  t.equal(obj.infix(type, stream, expression, {}, null), Command.Continue);
 });
