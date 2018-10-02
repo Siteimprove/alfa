@@ -622,18 +622,22 @@ function printBlockCoverage(script, coverage, widths) {
         return whitespace;
       });
 
-      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
-        // If we are truncating and are in the middle
-        const description = `${len - maxCoverageOutputLines} other lines`;
-        line += `\n${" ".repeat(widths.gutter / 2)}`;
-        line += `${chalk.blue("\u205e")}${" ".repeat(widths.gutter / 2)}`;
+      let truncation = "";
 
-        line += description.replace(/[^\s]+/g, word => chalk.blue(word));
+      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
+        truncation += `\n${" ".repeat(widths.gutter / 2)}`;
+        truncation += `${chalk.blue("\u205e")}${" ".repeat(widths.gutter / 2)}`;
+        truncation += `${len - maxCoverageOutputLines} lines truncated`.replace(
+          /[^\s]+/g,
+          word => chalk.blue(word)
+        );
       }
 
       const eol = chalk.gray.dim("\u00ac");
 
-      return `${padding.gutter}${chalk.grey(lineNo)} ${line}${eol}`;
+      return `${padding.gutter}${chalk.grey(
+        lineNo
+      )} ${line}${eol}${truncation}`;
     })
     .join("\n");
 
