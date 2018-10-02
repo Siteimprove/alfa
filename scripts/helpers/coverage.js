@@ -37,6 +37,9 @@ const metrics = [
   }
 ];
 
+// If a coverage suggestion exceeds 8 lines, it will be truncated to 8 lines.
+const maxCoverageOutputLines = 6;
+
 session.connect();
 
 session.post("Profiler.enable");
@@ -116,8 +119,13 @@ process.on("beforeExit", code => {
 
         for (const block of uncovered) {
           // Buffer added for dots and spacing
-          const estimate = block.range.end.line - block.range.start.line + 5;
-          lineSum += estimate > 11 ? 11 : estimate;
+          const buffer = 6;
+          const estimate =
+            block.range.end.line - block.range.start.line + buffer;
+          lineSum +=
+            estimate > maxCoverageOutputLines + buffer
+              ? maxCoverageOutputLines + buffer
+              : estimate;
 
           // At least one block has to be printed
           if (lineSum > space && blockCount > 0) {
@@ -583,29 +591,39 @@ function printBlockCoverage(script, coverage, widths) {
   }
 
   let lines = output.split("\n");
-  const shownLines = 3;
 
   const len = lines.length;
-  const isTruncating = len > shownLines * 2;
+  const isTruncating = len > maxCoverageOutputLines;
   if (isTruncating) {
     lines = lines.filter(
-      (line, index) => index < shownLines || index > len - (shownLines + 1)
+      (line, index) =>
+        index < maxCoverageOutputLines / 2 ||
+        index > len - (maxCoverageOutputLines / 2 + 1)
     );
   }
 
   output = lines
     .map((line, i) => {
-      if (isTruncating && i == 2) {
-        line += `\n${" ".repeat(16)}( ... And ${len -
-          shownLines * 2} other lines ... )`;
-      }
-
-      const actualIndex = i < shownLines ? i : len - shownLines * 2 + i;
+      const actualIndex =
+        i < maxCoverageOutputLines / 2 ? i : len - maxCoverageOutputLines + i;
       const lineNo = (offset + actualIndex + 1).toString();
-
       const padding = {
         gutter: " ".repeat(widths.gutter - lineNo.length)
       };
+
+      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
+        // If we are truncating and are in the middle
+        const previousIndent =
+          lines[i - 1].length - lines[i - 1].trimLeft().length + 6;
+        const description = `\u22ef ${len -
+          maxCoverageOutputLines} other lines \u22ef`;
+        line += `\n${" ".repeat(widths.gutter / 2)}`;
+        line += `${chalk.grey("\u007c")}${" ".repeat(
+          widths.gutter / 2 + previousIndent
+        )}`;
+
+        line += description.replace(/[^\s]+/g, word => chalk.blue(word));
+      }
 
       line = line.replace(/\s/g, whitespace => {
         switch (whitespace) {
