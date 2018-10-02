@@ -64,7 +64,7 @@ export namespace Atomic {
   export type Applicability<
     A extends Aspect = Aspect,
     T extends Target = Target
-  > = () => T | Array<T> | null;
+  > = () => ReadonlyArray<T> | null;
 
   export type Expectations<
     A extends Aspect = Aspect,
@@ -78,9 +78,9 @@ export namespace Atomic {
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
     readonly id: string;
 
-    readonly requirements?: Array<string>;
+    readonly requirements?: ReadonlyArray<string>;
 
-    readonly locales?: Array<Locale>;
+    readonly locales?: ReadonlyArray<Locale>;
 
     readonly definition: (
       applicability: (applicability: Applicability<A, T>) => void,
@@ -95,18 +95,18 @@ export namespace Composite {
     A extends Aspect = Aspect,
     T extends Target = Target
   > = (
-    results: Array<Result<A, T>>,
+    results: ReadonlyArray<Result<A, T>>,
     expectation: (id: number, holds: boolean) => void
   ) => void;
 
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
     readonly id: string;
 
-    readonly requirements?: Array<string>;
+    readonly requirements?: ReadonlyArray<string>;
 
-    readonly locales?: Array<Locale>;
+    readonly locales?: ReadonlyArray<Locale>;
 
-    readonly composes: Array<Atomic.Rule<A, T>>;
+    readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
 
     readonly definition: (
       expectations: (expectations: Expectations<A, T>) => void
