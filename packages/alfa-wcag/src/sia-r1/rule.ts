@@ -1,26 +1,23 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
+  Document,
   Element,
   getElementNamespace,
-  getParentNode,
   hasTextContent,
+  isDocument,
   isElement,
   Namespace,
   Node,
-  querySelector,
-  querySelectorAll
+  querySelector
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R1: Atomic.Rule<"document", Element> = {
+export const SIA_R1: Atomic.Rule<"document", Document> = {
   id: "sanshikan:rules/sia-r1.html",
   requirements: ["wcag:page-titled"],
   definition: (applicability, expectations, { document }) => {
-    applicability(() =>
-      querySelectorAll(
-        document,
-        document,
-        node => isElement(node) && isDocumentElement(node, document)
-      )
+    applicability(
+      () =>
+        isDocument(document) && hasDocumentElement(document) ? [document] : null
     );
 
     expectations((target, expectation) => {
@@ -39,14 +36,18 @@ export const SIA_R1: Atomic.Rule<"document", Element> = {
   }
 };
 
-function isDocumentElement(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
+function hasDocumentElement(document: Document): boolean {
+  const { childNodes } = document;
+
+  for (let i = 0, n = childNodes.length; i < n; i++) {
+    const childNode = childNodes[i];
+
+    if (isElement(childNode) && childNode.localName === "html") {
+      return true;
+    }
   }
 
-  return (
-    element.localName === "html" && getParentNode(element, context) === context
-  );
+  return false;
 }
 
 function isTitle(element: Element, context: Node): boolean {
