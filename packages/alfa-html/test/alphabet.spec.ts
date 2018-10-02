@@ -529,6 +529,21 @@ test("Can lex a self-closing script element", t => {
   ]);
 });
 
+test("Can lex a self-closing script element", t => {
+  html(t, "<script></script >", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
 test("Can lex a script element with an apparent comment", t => {
   html(t, "<script><!--<script>--</script>--></script>", [
     {
@@ -648,8 +663,83 @@ test("Can lex a script element with an apparent comment", t => {
   ]);
 });
 
+test("Can lex a script element with an apparent comment ending early", t => {
+  html(t, "<script><!--<script>--></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("!")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("s")
+    },
+    {
+      type: TokenType.Character,
+      data: char("c")
+    },
+    {
+      type: TokenType.Character,
+      data: char("r")
+    },
+    {
+      type: TokenType.Character,
+      data: char("i")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char("t")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
 test("Can lex a script element with an apparent comment", t => {
-  html(t, "<script><!--<p></p>--></script>", [
+  html(t, "<script><!--<p></p >--></script>", [
     {
       type: TokenType.StartTag,
       name: "script",
@@ -695,6 +785,10 @@ test("Can lex a script element with an apparent comment", t => {
     {
       type: TokenType.Character,
       data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char(" ")
     },
     {
       type: TokenType.Character,
