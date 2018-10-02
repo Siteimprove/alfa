@@ -1,6 +1,6 @@
 import { Command, Production, Token } from "./types";
 
-export function skip<T extends Token>(token: number): Production<T, never> {
+export function skip<T extends Token>(token: number): Production<T, unknown> {
   return {
     token,
     prefix() {
