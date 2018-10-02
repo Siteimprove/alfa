@@ -2,27 +2,33 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   Element,
   getElementNamespace,
+  getParentNode,
   hasTextContent,
   isElement,
   Namespace,
-  querySelector
+  Node,
+  querySelector,
+  querySelectorAll
 } from "@siteimprove/alfa-dom";
 
 export const SIA_R1: Atomic.Rule<"document", Element> = {
   id: "sanshikan:rules/sia-r1.html",
   requirements: ["wcag:page-titled"],
   definition: (applicability, expectations, { document }) => {
-    applicability(() => querySelector(document, document, "html"));
+    applicability(() =>
+      querySelectorAll(
+        document,
+        document,
+        node => isElement(node) && isDocumentElement(node, document)
+      )
+    );
 
     expectations((target, expectation) => {
       const title = querySelector(
         target,
         document,
-        node =>
-          isElement(node) &&
-          node.localName === "title" &&
-          getElementNamespace(node, document) === Namespace.HTML
-      ) as Element | null;
+        node => isElement(node) && isTitle(node, document)
+      );
 
       expectation(1, title !== null);
 
@@ -32,3 +38,21 @@ export const SIA_R1: Atomic.Rule<"document", Element> = {
     });
   }
 };
+
+function isDocumentElement(element: Element, context: Node): boolean {
+  if (getElementNamespace(element, context) !== Namespace.HTML) {
+    return false;
+  }
+
+  return (
+    element.localName === "html" && getParentNode(element, context) === context
+  );
+}
+
+function isTitle(element: Element, context: Node): boolean {
+  if (getElementNamespace(element, context) !== Namespace.HTML) {
+    return false;
+  }
+
+  return element.localName === "title";
+}

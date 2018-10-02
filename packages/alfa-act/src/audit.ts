@@ -69,11 +69,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
       const target = applicability();
 
       if (target !== null) {
-        if (isArray(target)) {
-          targets.push(...target);
-        } else {
-          targets.push(target);
-        }
+        targets.push(...target);
       }
 
       if (targets.length === 0) {
