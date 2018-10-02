@@ -802,22 +802,22 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        stream.advance(1);
         emit(state.tag!);
         return data;
       }
@@ -1003,11 +1003,12 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
     case Char.Solidus:
     case Char.GreaterThanSign:
       stream.advance(1);
+      emit({ type: TokenType.Character, data: char });
+
       if (state.temporaryBuffer === "script") {
         return scriptDataEscaped;
       }
 
-      emit({ type: TokenType.Character, data: char });
       return scriptDataDoubleEscaped;
 
     default:
