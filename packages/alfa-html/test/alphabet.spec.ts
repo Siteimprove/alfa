@@ -175,6 +175,14 @@ test("Can lex a comment", t => {
     }
   ]);
 });
+test("Can lex a comment", t => {
+  html(t, "<!--<-->", [
+    {
+      type: TokenType.Comment,
+      data: "<"
+    }
+  ]);
+});
 
 test("Can lex a dashed and bang-ending comment", t => {
   html(t, "<!-----!>", [
