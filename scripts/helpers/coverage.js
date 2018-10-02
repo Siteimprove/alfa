@@ -37,7 +37,7 @@ const metrics = [
   }
 ];
 
-// If a coverage suggestion exceeds 8 lines, it will be truncated to 8 lines.
+// If a coverage suggestion exceeds 6 lines, it will be truncated to 6 lines.
 const maxCoverageOutputLines = 6;
 
 session.connect();
@@ -611,20 +611,6 @@ function printBlockCoverage(script, coverage, widths) {
         gutter: " ".repeat(widths.gutter - lineNo.length)
       };
 
-      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
-        // If we are truncating and are in the middle
-        const previousIndent =
-          lines[i - 1].length - lines[i - 1].trimLeft().length + 6;
-        const description = `\u22ef ${len -
-          maxCoverageOutputLines} other lines \u22ef`;
-        line += `\n${" ".repeat(widths.gutter / 2)}`;
-        line += `${chalk.grey("\u007c")}${" ".repeat(
-          widths.gutter / 2 + previousIndent
-        )}`;
-
-        line += description.replace(/[^\s]+/g, word => chalk.blue(word));
-      }
-
       line = line.replace(/\s/g, whitespace => {
         switch (whitespace) {
           case " ":
@@ -635,6 +621,15 @@ function printBlockCoverage(script, coverage, widths) {
 
         return whitespace;
       });
+
+      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
+        // If we are truncating and are in the middle
+        const description = `${len - maxCoverageOutputLines} other lines`;
+        line += `\n${" ".repeat(widths.gutter / 2)}`;
+        line += `${chalk.blue("\u205e")}${" ".repeat(widths.gutter / 2)}`;
+
+        line += description.replace(/[^\s]+/g, word => chalk.blue(word));
+      }
 
       const eol = chalk.gray.dim("\u00ac");
 
