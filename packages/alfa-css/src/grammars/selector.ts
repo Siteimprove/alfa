@@ -26,6 +26,7 @@ import {
   SimpleSelector,
   TypeSelector
 } from "../types";
+import { AnBMicrosyntax } from "./anb-microsyntax";
 
 const { isArray } = Array;
 
@@ -326,16 +327,16 @@ function pseudoSelector(
       case "root":
       case "empty":
       case "blank":
-      case "nth-child":
-      case "nth-last-child":
       case "first-child":
       case "last-child":
       case "only-child":
-      case "nth-of-type":
-      case "nth-last-of-type":
       case "first-of-type":
       case "last-of-type":
       case "only-of-type":
+      case "nth-child":
+      case "nth-last-child":
+      case "nth-of-type":
+      case "nth-last-of-type":
       case "nth-col":
       case "nth-last-col":
         name = next.value;
@@ -347,7 +348,23 @@ function pseudoSelector(
     if (next.type === TokenType.Ident) {
       selector = { type: SelectorType.PseudoClassSelector, name, value: null };
     } else {
-      const value = expression();
+      let value = null;
+
+      switch (name) {
+        case "nth-child":
+        case "nth-last-child":
+        case "nth-of-type":
+        case "nth-last-of-type":
+        case "nth-col":
+        case "nth-last-col":
+          value = AnBMicrosyntax(stream);
+          if (value === null) {
+            return null;
+          }
+          break;
+        default:
+          value = expression();
+      }
 
       next = stream.next();
 

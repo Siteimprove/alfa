@@ -36,7 +36,8 @@ export const enum SelectorType {
   PseudoClassSelector = 16,
   PseudoElementSelector = 32,
   CompoundSelector = 64,
-  RelativeSelector = 128
+  RelativeSelector = 128,
+  AnBSelector = 256
 }
 
 export interface IdSelector {
@@ -106,7 +107,7 @@ export interface TypeSelector {
 export interface PseudoClassSelector {
   readonly type: SelectorType.PseudoClassSelector;
   readonly name: PseudoClass;
-  readonly value: Selector | Array<Selector> | null;
+  readonly value: Selector | Array<Selector> | AnBSelector | null;
 }
 
 export interface PseudoElementSelector {
@@ -295,3 +296,9 @@ export type PseudoElement =
   | "marker"
   // https://www.w3.org/TR/css-pseudo/#placeholder-pseudo
   | "placeholder";
+
+export interface AnBSelector {
+  readonly type: SelectorType.AnBSelector;
+  readonly a: number;
+  readonly b: number;
+}

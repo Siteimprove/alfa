@@ -811,3 +811,33 @@ test("Can parse a relative selector relative to a compound selector", t => {
     }
   });
 });
+
+test("Can parse selector with a An+B odd microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      type: SelectorType.AnBSelector,
+      a: 2,
+      b: 1
+    }
+  };
+  selector(t, ":nth-child(2n+1)", expected);
+  selector(t, ":nth-child(odd)", expected);
+  // selector(t, ":nth-child(  odd  )", expected); // Solve with split()
+});
+
+test("Can parse selector with a An+B even microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      type: SelectorType.AnBSelector,
+      a: 2,
+      b: 0
+    }
+  };
+  selector(t, ":nth-child(2n+0)", expected);
+  selector(t, ":nth-child(even)", expected);
+  // selector(t, ":nth-child(  even  )", expected); // Solve with split()
+});
