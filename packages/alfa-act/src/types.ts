@@ -1,7 +1,7 @@
-import { Document, Node } from "@siteimprove/alfa-dom";
+import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
-export type Target = Node;
+export type Target = Attribute | Document | Element;
 
 export interface Aspects {
   readonly request: Request;
