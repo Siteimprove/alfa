@@ -6,6 +6,7 @@ import {
   Roles
 } from "@siteimprove/alfa-aria";
 import {
+  Document,
   Element,
   getElementNamespace,
   isElement,
@@ -14,7 +15,7 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R2: Atomic.Rule<"document", Element> = {
+export const SIA_R2: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: ["wcag:non-text-content"],
   definition: (applicability, expectations, { document }) => {

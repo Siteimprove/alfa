@@ -1,4 +1,4 @@
-import { Node } from "@siteimprove/alfa-dom";
+import { Document, Node } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
 export type Target = Node;
@@ -6,10 +6,16 @@ export type Target = Node;
 export interface Aspects {
   readonly request: Request;
   readonly response: Response;
-  readonly document: Node;
+  readonly document: Document;
 }
 
-export type Aspect = keyof Aspects;
+export type Aspect = Aspects[keyof Aspects];
+
+export type AspectsFor<A extends Aspect> = {
+  readonly [P in keyof Aspects]: Aspects[P] extends A
+    ? Aspects[P]
+    : Aspects[P] | undefined
+};
 
 export type Result<
   A extends Aspect = Aspect,
@@ -85,7 +91,7 @@ export namespace Atomic {
     readonly definition: (
       applicability: (applicability: Applicability<A, T>) => void,
       expectations: (expectations: Expectations<A, T>) => void,
-      aspects: Pick<Aspects, A>
+      aspects: AspectsFor<A>
     ) => void;
   }
 }

@@ -4,21 +4,17 @@ import {
   Element,
   getElementNamespace,
   hasTextContent,
-  isDocument,
   isElement,
   Namespace,
   Node,
   querySelector
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R1: Atomic.Rule<"document", Document> = {
+export const SIA_R1: Atomic.Rule<Document, Document> = {
   id: "sanshikan:rules/sia-r1.html",
   requirements: ["wcag:page-titled"],
   definition: (applicability, expectations, { document }) => {
-    applicability(
-      () =>
-        isDocument(document) && hasDocumentElement(document) ? [document] : null
-    );
+    applicability(() => (hasDocumentElement(document) ? [document] : null));
 
     expectations((target, expectation) => {
       const title = querySelector(
