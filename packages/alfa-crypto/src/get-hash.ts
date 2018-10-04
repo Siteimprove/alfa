@@ -34,8 +34,8 @@ export class Hash {
     let codec: sjcl.SjclCodec<string>;
 
     switch (encoding) {
-      default:
       case "hex":
+      default:
         codec = sjcl.codec.hex;
         break;
       case "base64":
