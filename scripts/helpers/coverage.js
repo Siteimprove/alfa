@@ -602,7 +602,6 @@ function printBlockCoverage(script, coverage, widths) {
     );
   }
 
-  const eol = chalk.gray.dim("\u00ac");
   output = lines
     .map((line, i) => {
       const actualIndex =
