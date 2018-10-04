@@ -12,7 +12,7 @@ test("Can hash a SHA-256 bit array", t => {
   );
 });
 
-test("Can hash a SHA-256 bit array", t => {
+test("Can hash a SHA-256 string", t => {
   // Hex
   t.equal(
     getHash("sha256")
