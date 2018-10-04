@@ -619,6 +619,8 @@ function printBlockCoverage(script, coverage, widths) {
             return chalk.gray.dim("\u00b7");
           case "\t":
             return chalk.gray.dim("\u00bb");
+          case "\r":
+            return "";
         }
 
         return whitespace;
