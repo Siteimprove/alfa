@@ -24,7 +24,12 @@ const Namespaces: Context = {
   /**
    * @see https://www.w3.org/TR/WCAG/
    */
-  wcag: "https://www.w3.org/TR/WCAG/#"
+  wcag: "https://www.w3.org/TR/WCAG/#",
+
+  /**
+   * @see https://siteimprove.github.io/sanshikan/
+   */
+  sanshikan: "https://siteimprove.github.io/sanshikan/"
 };
 
 export namespace Contexts {

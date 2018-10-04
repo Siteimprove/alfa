@@ -374,3 +374,133 @@ test("Can lex an @-keyword", t => {
     }
   ]);
 });
+
+test("Can lex an attribute selector with an includes matcher", t => {
+  css(t, "[href~=com]", [
+    {
+      type: TokenType.LeftSquareBracket
+    },
+    {
+      type: TokenType.Ident,
+      value: "href"
+    },
+    {
+      type: TokenType.IncludeMatch
+    },
+    {
+      type: TokenType.Ident,
+      value: "com"
+    },
+    {
+      type: TokenType.RightSquareBracket
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a dash matcher", t => {
+  css(t, "[href|=https]", [
+    {
+      type: TokenType.LeftSquareBracket
+    },
+    {
+      type: TokenType.Ident,
+      value: "href"
+    },
+    {
+      type: TokenType.DashMatch
+    },
+    {
+      type: TokenType.Ident,
+      value: "https"
+    },
+    {
+      type: TokenType.RightSquareBracket
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a prefix matcher", t => {
+  css(t, "[href^=https]", [
+    {
+      type: TokenType.LeftSquareBracket
+    },
+    {
+      type: TokenType.Ident,
+      value: "href"
+    },
+    {
+      type: TokenType.PrefixMatch
+    },
+    {
+      type: TokenType.Ident,
+      value: "https"
+    },
+    {
+      type: TokenType.RightSquareBracket
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a suffix matcher", t => {
+  css(t, "[href$=com]", [
+    {
+      type: TokenType.LeftSquareBracket
+    },
+    {
+      type: TokenType.Ident,
+      value: "href"
+    },
+    {
+      type: TokenType.SuffixMatch
+    },
+    {
+      type: TokenType.Ident,
+      value: "com"
+    },
+    {
+      type: TokenType.RightSquareBracket
+    }
+  ]);
+});
+
+test("Can lex an attribute selector with a substring matcher", t => {
+  css(t, "[href*=com]", [
+    {
+      type: TokenType.LeftSquareBracket
+    },
+    {
+      type: TokenType.Ident,
+      value: "href"
+    },
+    {
+      type: TokenType.SubstringMatch
+    },
+    {
+      type: TokenType.Ident,
+      value: "com"
+    },
+    {
+      type: TokenType.RightSquareBracket
+    }
+  ]);
+});
+
+test("Can lex a column selector", t => {
+  css(t, "td||.column", [
+    {
+      type: TokenType.Ident,
+      value: "td"
+    },
+    {
+      type: TokenType.Column
+    },
+    {
+      type: TokenType.Delim,
+      value: Char.FullStop
+    },
+    {
+      type: TokenType.Ident,
+      value: "column"
+    }
+  ]);
+});

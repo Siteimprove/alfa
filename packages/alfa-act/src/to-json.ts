@@ -1,4 +1,4 @@
-import { getDocumentPosition, serialize } from "@siteimprove/alfa-dom";
+import { serialize } from "@siteimprove/alfa-dom";
 import { Document, expand, List } from "@siteimprove/alfa-json-ld";
 import { groupBy } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
@@ -55,18 +55,7 @@ export function toJson<A extends Aspect, T extends Target>(
 
     const result = group.map(result => ({
       "@context": Contexts.Result,
-      outcome: { "@id": `earl:${result.outcome}` },
-      pointer:
-        result.outcome === "inapplicable"
-          ? undefined
-          : {
-              "@context": Contexts.OffsetPointer,
-              "@type": "ptr:OffsetPointer",
-              reference: { "@id": "_:document" },
-              offset: getDocumentPosition(result.target, aspects.document, {
-                flattened: true
-              })
-            }
+      outcome: { "@id": `earl:${result.outcome}` }
     }));
 
     assertions.push({

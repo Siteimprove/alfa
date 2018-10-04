@@ -1,41 +1,57 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Atomic } from "@siteimprove/alfa-act";
 import {
+  Document,
   Element,
   getAttribute,
+  getElementNamespace,
   isElement,
+  Namespace,
+  Node,
   querySelector
 } from "@siteimprove/alfa-dom";
 import { Stream } from "@siteimprove/alfa-lang";
 
-export const MetaRefresh: Rule<"document", Element> = {
-  id: "alfa:wcag:meta-refresh",
+export const SIA_R9: Atomic.Rule<Document, Element> = {
+  id: "sanshikan:rules/sia-r9.html",
+  requirements: [
+    "wcag:timing-adjustable",
+    "wcag:interruptions",
+    "wcag:change-on-request"
+  ],
   definition: (applicability, expectations, { document }) => {
-    applicability(
-      () =>
-        querySelector(document, document, node => {
-          if (
-            !isElement(node) ||
-            node.localName !== "meta" ||
-            getAttribute(node, "http-equiv", { lowerCase: true }) !== "refresh"
-          ) {
-            return false;
-          }
+    applicability(() => {
+      const metaRefresh = querySelector<Element>(
+        document,
+        document,
+        node => isElement(node) && isValidMetaRefresh(node, document)
+      );
 
-          const content = getAttribute(node, "content");
-
-          if (content === null) {
-            return false;
-          }
-
-          return getRefreshTime(content) !== null;
-        }) as Element | null
-    );
+      return metaRefresh === null ? [] : [metaRefresh];
+    });
 
     expectations((target, expectation) => {
       expectation(1, getRefreshTime(getAttribute(target, "content")!) === 0);
     });
   }
 };
+
+function isValidMetaRefresh(element: Element, context: Node): boolean {
+  if (
+    getElementNamespace(element, context) !== Namespace.HTML ||
+    element.localName !== "meta" ||
+    getAttribute(element, "http-equiv", { lowerCase: true }) !== "refresh"
+  ) {
+    return false;
+  }
+
+  const content = getAttribute(element, "content");
+
+  if (content === null) {
+    return false;
+  }
+
+  return getRefreshTime(content) !== null;
+}
 
 /**
  * @see https://www.w3.org/TR/html/document-metadata.html#statedef-http-equiv-refresh

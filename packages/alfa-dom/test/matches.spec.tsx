@@ -244,3 +244,92 @@ test("Matches an element against a default namespace selector", t => {
   t(matches(circle, svg, "circle", { namespaces }));
   t(!matches(div, div, "div", { namespaces }));
 });
+
+test("Matches an attribute against a declared namespace selector", t => {
+  const svg: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "svg",
+    attributes: [
+      {
+        prefix: "xlink",
+        localName: "href",
+        value: "foobar"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
+
+  const namespaces = new Map([["xlink", Namespace.XLink]]);
+
+  t(matches(svg, svg, "[xlink|href]", { namespaces }));
+  t(!matches(svg, svg, "[html|href]", { namespaces }));
+});
+
+test("Matches an attribute against all or no namespaces", t => {
+  const svg: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "svg",
+    attributes: [
+      {
+        prefix: "xlink",
+        localName: "href",
+        value: "foo"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
+
+  const div = <div title="Foobar" />;
+
+  const namespaces = new Map([["xlink", Namespace.XLink]]);
+
+  t(matches(svg, svg, "[*|href]", { namespaces }));
+
+  // As all elements in HTML5 will use the XHTML namespace, unless another
+  // namespace is explicitly specified, the only way to currently test the
+  // no-namespace selector (i.e. "|div") is to provide a disconnected context.
+  // https://www.w3.org/TR/selectors/#type-nmsp
+  t(matches(div, svg, "[|title]", { namespaces }));
+});
+
+test("Matches an attribute against a default namespace selector", t => {
+  const div = <div title="Foobar" />;
+
+  const namespaces = new Map([[null, Namespace.XML]]);
+
+  // Default namespaces do not apply to attributes, so the default namespace
+  // will be ignored.
+  // https://www.w3.org/TR/selectors-3/#univnmsp
+  t(matches(div, div, "[title]", { namespaces }));
+});
+
+test("Matches several similar attributes in different namespaces", t => {
+  const a: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "a",
+    attributes: [
+      {
+        prefix: "xlink",
+        localName: "href",
+        value: "foo"
+      },
+      {
+        prefix: null,
+        localName: "href",
+        value: "bar"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
+
+  const svg = <svg>{a}</svg>;
+
+  t(matches(a, svg, "[*|href=foo]"));
+  t(matches(a, svg, "[*|href=bar]"));
+});
