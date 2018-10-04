@@ -529,7 +529,7 @@ test("Can lex a self-closing script element", t => {
   ]);
 });
 
-test("Can lex a self-closing script element", t => {
+test("Can lex a script element with a space in the end", t => {
   html(t, "<script></script >", [
     {
       type: TokenType.StartTag,
