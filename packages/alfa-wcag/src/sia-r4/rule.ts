@@ -1,16 +1,14 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
+  Document,
   Element,
-  getAttribute,
-  getElementNamespace,
-  getParentNode,
   isElement,
-  Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { hasLanguageAttribute } from "../helpers/has-language-attribute";
+import { isDocumentElement } from "../helpers/is-document-element";
 
-export const SIA_R4: Atomic.Rule<"document", Element> = {
+export const SIA_R4: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r4.html",
   requirements: ["wcag:language-of-page"],
   definition: (applicability, expectations, { document }) => {
@@ -24,23 +22,7 @@ export const SIA_R4: Atomic.Rule<"document", Element> = {
     );
 
     expectations((target, expectation) => {
-      const lang = getAttribute(target, "lang", { trim: true });
-      const xmlLang = getAttribute(target, "xml:lang", { trim: true });
-
-      const hasLang = lang !== null && lang !== "";
-      const hasXmlLang = xmlLang !== null && lang !== "";
-
-      expectation(1, hasLang || hasXmlLang);
+      expectation(1, hasLanguageAttribute(target));
     });
   }
 };
-
-function isDocumentElement(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return (
-    element.localName === "html" && getParentNode(element, context) === context
-  );
-}
