@@ -231,27 +231,6 @@ test("Cannot lex a doctype without name", t => {
   html(t, "<!doctype>", []);
 });
 
-test("Can lex a doctype with a bogus public ID", t => {
-  html(t, '<!doctype html "foo">', [
-    {
-      type: TokenType.Doctype,
-      name: "html",
-      publicId: null,
-      systemId: null,
-      forceQuirks: true
-    }
-  ]);
-  html(t, "<!doctype html 'foo'>", [
-    {
-      type: TokenType.Doctype,
-      name: "html",
-      publicId: null,
-      systemId: null,
-      forceQuirks: true
-    }
-  ]);
-});
-
 test("Can lex a doctype with a bogus public ID (missing keyword)", t => {
   html(t, '<!doctype html "foo">', [
     {
