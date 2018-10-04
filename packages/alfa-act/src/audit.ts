@@ -4,7 +4,7 @@ import { sortRules } from "./sort-rules";
 import {
   Answer,
   Aspect,
-  Aspects,
+  AspectsFor,
   Atomic,
   Composite,
   Question,
@@ -13,11 +13,9 @@ import {
   Target
 } from "./types";
 
-const { isArray } = Array;
-
 export function audit<A extends Aspect, T extends Target>(
-  aspects: Pick<Aspects, A>,
-  rules: Rule<A, T> | Array<Rule<A, T>>,
+  aspects: AspectsFor<A>,
+  rules: Array<Rule<A, T>>,
   answers: Array<Answer<A, T>> = []
 ): Array<Result<A, T> | Question<A, T>> {
   const results: Array<Result<A, T> | Question<A, T>> = [];
@@ -43,7 +41,7 @@ export function audit<A extends Aspect, T extends Target>(
     }
   }
 
-  for (const rule of isArray(rules) ? sortRules(rules) : [rules]) {
+  for (const rule of sortRules(rules)) {
     if (isAtomic(rule)) {
       auditAtomic(aspects, rule, results, (id, target) =>
         question(rule, id, target)
@@ -57,7 +55,7 @@ export function audit<A extends Aspect, T extends Target>(
 }
 
 function auditAtomic<A extends Aspect, T extends Target>(
-  aspects: Pick<Aspects, A>,
+  aspects: AspectsFor<A>,
   rule: Atomic.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>,
   question: (question: string, target?: T) => boolean
@@ -108,7 +106,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
 }
 
 function auditComposite<A extends Aspect, T extends Target>(
-  aspects: Pick<Aspects, A>,
+  aspects: AspectsFor<A>,
   rule: Composite.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>
 ): void {

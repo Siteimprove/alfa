@@ -15,9 +15,9 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R2: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r2.html",
-  requirements: ["wcag:non-text-content"],
+export const SIA_R8: Atomic.Rule<Document, Element> = {
+  id: "sanshikan:rules/sia-r8.html",
+  requirements: ["wcag:labels-or-instructions"],
   definition: (applicability, expectations, { document }) => {
     applicability(() =>
       querySelectorAll(
@@ -25,34 +25,35 @@ export const SIA_R2: Atomic.Rule<Document, Element> = {
         document,
         node =>
           isElement(node) &&
-          isImage(node, document) &&
+          isFormField(node, document) &&
           isVisible(node, document),
         { composed: true }
       )
     );
 
     expectations((target, expectation) => {
-      expectation(
-        1,
-        hasTextAlternative(target, document) || isDecorative(target, document)
-      );
+      expectation(1, hasTextAlternative(target, document));
     });
   }
 };
 
-function isImage(element: Element, context: Node): boolean {
+function isFormField(element: Element, context: Node): boolean {
   if (getElementNamespace(element, context) !== Namespace.HTML) {
     return false;
   }
 
-  return element.localName === "img" || getRole(element, context) === Roles.Img;
-}
-
-function isDecorative(element: Element, context: Node): boolean {
   switch (getRole(element, context)) {
-    case Roles.None:
-    case Roles.Presentation:
-    case null:
+    case Roles.Checkbox:
+    case Roles.Combobox:
+    case Roles.ListBox:
+    case Roles.MenuItemCheckbox:
+    case Roles.MenuItemRadio:
+    case Roles.Radio:
+    case Roles.SearchBox:
+    case Roles.Slider:
+    case Roles.SpinButton:
+    case Roles.Switch:
+    case Roles.TextBox:
       return true;
   }
 

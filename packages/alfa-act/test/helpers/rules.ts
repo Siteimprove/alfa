@@ -1,7 +1,12 @@
-import { Element, getAttribute, isElement } from "@siteimprove/alfa-dom";
+import {
+  Document,
+  Element,
+  getAttribute,
+  isElement
+} from "@siteimprove/alfa-dom";
 import { Atomic, Composite } from "../../src/types";
 
-export const Manual: Atomic.Rule<"document", Element> = {
+export const Manual: Atomic.Rule<Document, Element> = {
   id: "_:manual-rule",
   requirements: ["https://www.w3.org/TR/WCAG/#page-titled"],
   definition: (applicability, expectations, { document }) => {
@@ -16,7 +21,7 @@ export const Manual: Atomic.Rule<"document", Element> = {
   }
 };
 
-export const Automated: Atomic.Rule<"document", Element> = {
+export const Automated: Atomic.Rule<Document, Element> = {
   id: "_:automated-rule",
   definition: (applicability, expectations, { document }) => {
     applicability(() => (isElement(document) ? [document] : null));
@@ -33,7 +38,7 @@ export const Automated: Atomic.Rule<"document", Element> = {
   }
 };
 
-export const Semi: Composite.Rule<"document", Element> = {
+export const Semi: Composite.Rule<Document, Element> = {
   id: "_:composite-rule",
   composes: [Manual, Automated],
   requirements: ["https://www.w3.org/TR/WCAG/#section-headings"],

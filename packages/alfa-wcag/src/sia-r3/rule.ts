@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
+  Document,
   Element,
   getElementNamespace,
   getId,
@@ -11,7 +12,7 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R3: Atomic.Rule<"document", Element> = {
+export const SIA_R3: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r3.html",
   requirements: ["wcag:parsing"],
   definition: (applicability, expectations, { document }) => {
