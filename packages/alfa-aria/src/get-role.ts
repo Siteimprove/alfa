@@ -11,9 +11,6 @@ import { Category, Role } from "./types";
 
 const whitespace = /\s+/;
 
-const features = values(Features);
-const roles = values(Roles);
-
 /**
  * Given an element and a context, get the semantic role of the element within
  * the context. If the element does not have a role then `null` is returned.
@@ -54,6 +51,8 @@ export function getRole(
 
   return map(role, role => {
     if (role !== null) {
+      const roles = values(Roles);
+
       for (const name of role.split(whitespace)) {
         const role = roles.find(role => role.name === name);
 
@@ -63,7 +62,7 @@ export function getRole(
       }
     }
 
-    const feature = features.find(
+    const feature = values(Features).find(
       feature => feature.element === element.localName
     );
 
