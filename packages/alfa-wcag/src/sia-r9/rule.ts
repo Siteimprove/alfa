@@ -53,17 +53,20 @@ function isValidMetaRefresh(element: Element, context: Node): boolean {
   return getRefreshTime(content) !== null;
 }
 
+const whitespace = /\s/;
+const digit = /\d/;
+
 /**
  * @see https://www.w3.org/TR/html/document-metadata.html#statedef-http-equiv-refresh
  */
 function getRefreshTime(content: string): number | null {
   const stream = new Stream(content.length, i => content[i]);
 
-  stream.accept(char => /\s/.test(char));
+  stream.accept(char => whitespace.test(char));
 
   const time: Array<string> = [];
 
-  if (!stream.accept(char => /\d/.test(char), time)) {
+  if (!stream.accept(char => digit.test(char), time)) {
     return null;
   }
 
@@ -72,7 +75,7 @@ function getRefreshTime(content: string): number | null {
   // As long as the time of the refresh is ended correctly, the URL won't matter
   // in terms of the validity of the refresh. If the URL is therefore invalid,
   // the refresh will simply redirect to the current page.
-  if (next !== null && next !== ";" && next !== "," && /\s/.test(next)) {
+  if (next !== null && next !== ";" && next !== ",") {
     return null;
   }
 
