@@ -1,5 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { Category, getRole } from "@siteimprove/alfa-aria";
+import { Category, getRole, isVisible } from "@siteimprove/alfa-aria";
 import { BrowserSpecific, map, some } from "@siteimprove/alfa-compatibility";
 import {
   Attribute,
@@ -30,6 +30,7 @@ export const SIA_R10: Atomic.Rule<Document, Attribute> = {
         document,
         node =>
           isElement(node) &&
+          isVisible(node, document) &&
           some(isAutocompletable(node, document)) &&
           hasAutocomplete(node)
       ).map(element => getAttributeNode(element, "autocomplete")!)
@@ -107,6 +108,7 @@ function isValidAutocomplete(autocomplete: Attribute, context: Node): boolean {
     .toLowerCase()
     .trim()
     .split(/\s+/);
+
   const stream = new Stream(tokens.length, i => tokens[i]);
 
   let next = stream.next();
@@ -127,7 +129,7 @@ function isValidAutocomplete(autocomplete: Attribute, context: Node): boolean {
     next = stream.next();
   }
 
-  let field: string;
+  let field: string | null = null;
 
   switch (next) {
     case "name":
@@ -177,12 +179,15 @@ function isValidAutocomplete(autocomplete: Attribute, context: Node): boolean {
       next = stream.next();
       break;
 
-    case "home":
-    case "work":
-    case "mobile":
-    case "fax":
-    case "pager":
-      next = stream.next();
+    default:
+      switch (next) {
+        case "home":
+        case "work":
+        case "mobile":
+        case "fax":
+        case "pager":
+          next = stream.next();
+      }
 
       switch (next) {
         case "tel":
@@ -197,14 +202,11 @@ function isValidAutocomplete(autocomplete: Attribute, context: Node): boolean {
         case "impp":
           field = next;
           next = stream.next();
-          break;
-        default:
-          return false;
       }
-      break;
+  }
 
-    default:
-      return false;
+  if (field === null) {
+    return false;
   }
 
   const ownerElement = getOwnerElement(autocomplete, context);
