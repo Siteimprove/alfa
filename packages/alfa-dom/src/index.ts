@@ -4,6 +4,7 @@ export * from "./contains";
 export * from "./get-assigned-nodes";
 export * from "./get-assigned-slot";
 export * from "./get-attribute-namespace";
+export * from "./get-attribute-node";
 export * from "./get-attribute";
 export * from "./get-button-type";
 export * from "./get-cascade";
