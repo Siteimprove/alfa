@@ -32,6 +32,7 @@ export function isDisabled(element: Element, context: Node): boolean {
       const legend = querySelector(fieldset, context, "legend");
 
       return legend !== null && !contains(legend, context, element);
+
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-option-disabled
     case "option":
       if (hasAttribute(element, "disabled")) {
@@ -41,6 +42,7 @@ export function isDisabled(element: Element, context: Node): boolean {
       const optgroup = getClosest(element, context, "optgroup");
 
       return optgroup !== null && isDisabled(optgroup, context);
+
     // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-optgroup-disabled
     case "optgroup":
       return hasAttribute(element, "disabled");

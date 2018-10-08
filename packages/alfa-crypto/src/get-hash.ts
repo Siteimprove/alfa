@@ -18,12 +18,13 @@ export class Hash {
     }
   }
 
-  public update(data: string | Bits): Hash {
+  public update(data: string | Bits): this {
     if (typeof data === "string") {
       this.hash.update(data);
     } else {
       this.hash.update(data);
     }
+
     return this;
   }
 

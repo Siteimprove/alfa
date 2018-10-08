@@ -5,7 +5,7 @@ export interface Headers {
   /**
    * @see https://fetch.spec.whatwg.org/#dom-headers-get
    */
-  [name: string]: string;
+  [name: string]: string | undefined;
 }
 
 /**

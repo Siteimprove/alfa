@@ -19,7 +19,7 @@ import { Element, Node } from "./types";
  *     {input}
  *   </form>
  * );
- * getLabel(element, form);
+ * getLabel(input, form);
  * // => <label for="foo">...</label>
  *
  * @see https://www.w3.org/TR/html/forms.html#labeled-control

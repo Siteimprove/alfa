@@ -42,7 +42,7 @@ export const enum Origin {
  */
 export interface SelectorEntry {
   readonly selector: Selector;
-  readonly declarations: Array<Declaration>;
+  readonly declarations: ReadonlyArray<Declaration>;
   readonly origin: Origin;
   readonly order: number;
   readonly specificity: number;
@@ -79,7 +79,7 @@ export class SelectorMap {
   private readonly types: SelectorBucket = new Map();
   private readonly other: Array<SelectorEntry> = [];
 
-  public constructor(styleSheets: Array<StyleSheet>) {
+  public constructor(styleSheets: ReadonlyArray<StyleSheet>) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
