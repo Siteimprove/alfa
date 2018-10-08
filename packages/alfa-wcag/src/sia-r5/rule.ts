@@ -3,6 +3,7 @@ import {
   Attribute,
   Document,
   Element,
+  getAttributeNode,
   isElement,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
@@ -27,18 +28,16 @@ export const SIA_R5: Atomic.Rule<Document, Attribute> = {
         .map(element => {
           const languages: Array<Attribute> = [];
 
-          for (let i = 0, n = element.attributes.length; i < n; i++) {
-            const attribute = element.attributes[i];
+          const lang = getAttributeNode(element, "lang");
 
-            if (attribute.localName === "lang") {
-              if (attribute.value.trim() === "") {
-                continue;
-              }
+          if (lang !== null && lang.value.trim() !== "") {
+            languages.push(lang);
+          }
 
-              if (attribute.prefix === null || attribute.prefix === "xml") {
-                languages.push(attribute);
-              }
-            }
+          const xmlLang = getAttributeNode(element, "xml:lang");
+
+          if (xmlLang !== null && xmlLang.value.trim() !== "") {
+            languages.push(xmlLang);
           }
 
           return languages;

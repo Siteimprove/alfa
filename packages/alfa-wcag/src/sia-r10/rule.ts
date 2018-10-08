@@ -6,6 +6,7 @@ import {
   Document,
   Element,
   getAttribute,
+  getAttributeNode,
   getElementNamespace,
   getInputType,
   getOwnerElement,
@@ -31,20 +32,7 @@ export const SIA_R10: Atomic.Rule<Document, Attribute> = {
           isElement(node) &&
           some(isAutocompletable(node, document)) &&
           hasAutocomplete(node)
-      ).map(element => {
-        let autocomplete: Attribute | null = null;
-
-        for (let i = 0, n = element.attributes.length; i < n; i++) {
-          const attribute = element.attributes[i];
-
-          if (attribute.localName === "autocomplete") {
-            autocomplete = attribute;
-            break;
-          }
-        }
-
-        return autocomplete!;
-      })
+      ).map(element => getAttributeNode(element, "autocomplete")!)
     );
 
     expectations((target, expectation) => {
