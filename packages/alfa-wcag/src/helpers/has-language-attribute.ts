@@ -9,5 +9,5 @@ export function hasLanguageAttribute(element: Element): boolean {
 
   const xmlLang = getAttribute(element, "xml:lang", { trim: true });
 
-  return xmlLang !== null && lang !== "";
+  return xmlLang !== null && xmlLang !== "";
 }
