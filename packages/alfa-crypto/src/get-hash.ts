@@ -6,15 +6,9 @@ export class Hash {
 
   public constructor(algorithm: Algorithm) {
     switch (algorithm) {
-      case "sha1":
-        this.hash = new sjcl.hash.sha1();
-        break;
       case "sha256":
       default:
         this.hash = new sjcl.hash.sha256();
-        break;
-      case "sha512":
-        this.hash = new sjcl.hash.sha512();
     }
   }
 
@@ -41,11 +35,8 @@ export class Hash {
     let codec: sjcl.SjclCodec<string>;
 
     switch (encoding) {
-      case "utf8":
-      default:
-        codec = sjcl.codec.utf8String;
-        break;
       case "hex":
+      default:
         codec = sjcl.codec.hex;
         break;
       case "base64":
