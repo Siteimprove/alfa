@@ -7,6 +7,7 @@ import {
   AspectsFor,
   Atomic,
   Composite,
+  Outcome,
   Question,
   Result,
   Rule,
@@ -73,7 +74,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
       if (targets.length === 0) {
         results.push({
           rule,
-          outcome: "inapplicable"
+          outcome: Outcome.Inapplicable
         });
       }
     },
@@ -96,7 +97,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
 
         results.push({
           rule,
-          outcome: holds ? "passed" : "failed",
+          outcome: holds ? Outcome.Passed : Outcome.Failed,
           target
         });
       }
@@ -126,7 +127,7 @@ function auditComposite<A extends Aspect, T extends Target>(
 
   const targets = groupBy(
     applicability,
-    result => (result.outcome === "inapplicable" ? null : result.target)
+    result => (result.outcome === Outcome.Inapplicable ? null : result.target)
   );
 
   rule.definition(expectations => {
@@ -150,7 +151,7 @@ function auditComposite<A extends Aspect, T extends Target>(
 
       results.push({
         rule,
-        outcome: holds ? "passed" : "failed",
+        outcome: holds ? Outcome.Passed : Outcome.Failed,
         target
       });
     }

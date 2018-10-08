@@ -17,22 +17,26 @@ export type AspectsFor<A extends Aspect> = {
     : Aspects[P] | undefined
 };
 
+export const enum Outcome {
+  Passed = "passed",
+  Failed = "failed",
+  Inapplicable = "inapplicable"
+}
+
 export type Result<
   A extends Aspect = Aspect,
   T extends Target = Target
 > = Readonly<
   | {
       rule: Rule<A, T>;
-      outcome: "passed" | "failed";
+      outcome: Outcome.Passed | Outcome.Failed;
       target: T;
     }
   | {
       rule: Rule<A, T>;
-      outcome: "inapplicable";
+      outcome: Outcome.Inapplicable;
     }
 >;
-
-export type Outcome = Result["outcome"];
 
 export interface Question<
   A extends Aspect = Aspect,
