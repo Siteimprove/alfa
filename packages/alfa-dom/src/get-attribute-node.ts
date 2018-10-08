@@ -48,20 +48,29 @@ export function getAttributeNode(
     const { localName } = split;
     let { prefix } = split;
 
-    // We first look up the attribute based on the local name split from the
-    // qualified name.
-    let attribute = attributeMap.get(localName);
+    // We first look up the attribute based on the qualified name treated as a
+    // local name. Local names take presedence over qualifed names to ensure
+    // that the following case works:
+    //
+    //   <div foo:bar="baz" bar="baz">
+    //
+    // In the above, if we asked for the "foo:bar" attribute, we would expect
+    // the first attribute to be returned. If we first did a lookup of a local
+    // name of "bar", we would however get the second attribute and determine
+    // that it did not match the prefix of "foo" and therefore return `null`
+    // rather than the "foo:bar" attribute.
+    let attribute = attributeMap.get(qualifiedName);
 
-    // If no attribute with the given local name was found, we look up the
-    // attribute based on the qualified name.
+    // If no attribute with the given qualified name was found, we look up the
+    // attribute based on the local name.
     if (attribute === undefined) {
-      attribute = attributeMap.get(qualifiedName);
+      attribute = attributeMap.get(localName);
 
       // If that also didn't provide a result, no attribute exists.
       if (attribute === undefined) {
         return null;
       }
-
+    } else {
       // In case the qualified name did provide a result, forget the prefix.
       prefix = null;
     }
