@@ -2,7 +2,6 @@
   "rules": {
     "array-type": [true, "generic"],
     "arrow-return-shorthand": true,
-    "await-promise": true,
     "ban-comma-operator": true,
     "callable-types": true,
     "class-name": true,
@@ -63,7 +62,6 @@
     "promise-function-async": true,
     "restrict-plus-operands": true,
     "strict-boolean-expressions": true,
-    "strict-type-predicates": true,
     "switch-final-break": true,
     "triple-equals": true,
     "variable-name": [
