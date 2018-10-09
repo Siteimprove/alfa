@@ -5,9 +5,9 @@ import { Declaration, Selector } from "@siteimprove/alfa-css";
  */
 export interface RuleEntry {
   readonly selector: Selector;
-  readonly declarations: Array<Declaration>;
+  readonly declarations: ReadonlyArray<Declaration>;
   readonly parent: RuleEntry | null;
-  readonly children: Array<RuleEntry>;
+  readonly children: ReadonlyArray<RuleEntry>;
 }
 
 /**
@@ -71,7 +71,7 @@ export class RuleTree {
       // build up a path of rule entries and then return the final entry to the
       // caller.
       parent = add(parent, children, selector, declarations);
-      children = parent.children;
+      children = parent.children as Array<RuleEntry>;
     }
 
     return parent;
@@ -82,7 +82,7 @@ function add(
   parent: RuleEntry | null,
   children: Array<RuleEntry>,
   selector: Selector,
-  declarations: Array<Declaration>
+  declarations: ReadonlyArray<Declaration>
 ): RuleEntry {
   if (parent !== null && parent.selector === selector) {
     return parent;
@@ -92,7 +92,12 @@ function add(
     const child = children[i];
 
     if (child.selector === selector) {
-      return add(child, child.children, selector, declarations);
+      return add(
+        child,
+        child.children as Array<RuleEntry>,
+        selector,
+        declarations
+      );
     }
   }
 

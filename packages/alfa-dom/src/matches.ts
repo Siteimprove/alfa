@@ -284,7 +284,13 @@ function matchesAttribute(
       value = getAttribute(element, selector.name, attributeOptions);
       break;
     case "*":
-      value = getAttribute(element, selector.name, "*", attributeOptions);
+      value = getAttribute(
+        element,
+        context,
+        selector.name,
+        "*",
+        attributeOptions
+      );
       break;
     default:
       // Abort when no namespace is declared
@@ -293,11 +299,14 @@ function matchesAttribute(
       }
       // Selector namespace must match a declared namespace
       const declaredNamespace = options.namespaces.get(selector.namespace);
+
       if (declaredNamespace === undefined) {
         return false;
       }
+
       value = getAttribute(
         element,
+        context,
         selector.name,
         declaredNamespace,
         attributeOptions
@@ -314,6 +323,7 @@ function matchesAttribute(
         return true;
       }
     }
+
     return false;
   }
 
@@ -383,7 +393,7 @@ function matchesAttributeNamespace(
     return false;
   }
 
-  const attributeNamespace = getAttributeNamespace(attribute, element, context);
+  const attributeNamespace = getAttributeNamespace(attribute, context);
 
   // Selector "[|att]" should only match attributes with no namespace
   if (selector.namespace === "") {

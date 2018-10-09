@@ -96,7 +96,7 @@ export function getDigest(
         continue;
       }
 
-      const namespace = getAttributeNamespace(attribute, node, context);
+      const namespace = getAttributeNamespace(attribute, context);
 
       const value = `${attribute.localName}\u{0000}${attribute.value}`;
 

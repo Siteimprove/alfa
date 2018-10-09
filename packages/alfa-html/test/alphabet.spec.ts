@@ -175,6 +175,32 @@ test("Can lex a comment", t => {
     }
   ]);
 });
+test("Can lex a comment", t => {
+  html(t, "<!--<-->", [
+    {
+      type: TokenType.Comment,
+      data: "<"
+    }
+  ]);
+});
+
+test("Can lex a dashed and bang-ending comment", t => {
+  html(t, "<!-----!>", [
+    {
+      type: TokenType.Comment,
+      data: "-"
+    }
+  ]);
+});
+
+test("Can lex a hexadecimal character reference", t => {
+  html(t, "&#x00bD;", [
+    {
+      type: TokenType.Character,
+      data: char("½")
+    }
+  ]);
+});
 
 test("Can lex a named character reference", t => {
   html(t, "&lt;&gt;", [
@@ -201,8 +227,84 @@ test("Can lex a simple doctype", t => {
   ]);
 });
 
+test("Cannot lex a doctype without name", t => {
+  html(t, "<!doctype>", []);
+});
+
+test("Can lex a doctype with a bogus public ID (missing keyword)", t => {
+  html(t, '<!doctype html "foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+  html(t, "<!doctype html 'foo'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+});
+
+test("Can lex a doctype with a bogus public ID (missing space)", t => {
+  html(t, '<!doctype html PUBLIC"foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: null,
+      forceQuirks: false
+    }
+  ]);
+  html(t, "<!doctype html PUBLIC'foo'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: null,
+      forceQuirks: false
+    }
+  ]);
+});
+
+test("Can lex a doctype with a bogus system ID (missing space)", t => {
+  html(t, '<!doctype html SYSTEM"foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
+  html(t, "<!doctype html SYSTEM'foo'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
+});
+
 test("Can lex a doctype with a public ID", t => {
   html(t, '<!doctype html PUBLIC "foo">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: null,
+      forceQuirks: false
+    }
+  ]);
+  html(t, "<!doctype html PUBLIC 'foo'>", [
     {
       type: TokenType.Doctype,
       name: "html",
@@ -220,6 +322,36 @@ test("Can lex a doctype with a system ID", t => {
       name: "html",
       publicId: null,
       systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
+  html(t, "<!doctype html SYSTEM 'foo'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "foo",
+      forceQuirks: false
+    }
+  ]);
+});
+
+test("Can lex a doctype with both a public ID and system ID", t => {
+  html(t, '<!doctype html PUBLIC "foo" "bar">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: "bar",
+      forceQuirks: false
+    }
+  ]);
+  html(t, '<!doctype html PUBLIC "foo""bar">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "foo",
+      systemId: "bar",
       forceQuirks: false
     }
   ]);
@@ -376,8 +508,23 @@ test("Can lex a self-closing script element", t => {
   ]);
 });
 
+test("Can lex a script element with a space in the end", t => {
+  html(t, "<script></script >", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
 test("Can lex a script element with an apparent comment", t => {
-  html(t, "<script><!-- -></script>", [
+  html(t, "<script><!--<script>--</script>--></script>", [
     {
       type: TokenType.StartTag,
       name: "script",
@@ -402,7 +549,233 @@ test("Can lex a script element with an apparent comment", t => {
     },
     {
       type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("s")
+    },
+    {
+      type: TokenType.Character,
+      data: char("c")
+    },
+    {
+      type: TokenType.Character,
+      data: char("r")
+    },
+    {
+      type: TokenType.Character,
+      data: char("i")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char("t")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("/")
+    },
+    {
+      type: TokenType.Character,
+      data: char("s")
+    },
+    {
+      type: TokenType.Character,
+      data: char("c")
+    },
+    {
+      type: TokenType.Character,
+      data: char("r")
+    },
+    {
+      type: TokenType.Character,
+      data: char("i")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char("t")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
+test("Can lex a script element with an apparent comment ending early", t => {
+  html(t, "<script><!--<script>--></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("!")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("s")
+    },
+    {
+      type: TokenType.Character,
+      data: char("c")
+    },
+    {
+      type: TokenType.Character,
+      data: char("r")
+    },
+    {
+      type: TokenType.Character,
+      data: char("i")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char("t")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
+test("Can lex a script element with an apparent comment", t => {
+  html(t, "<script><!--<p></p >--></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("!")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("/")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
       data: char(" ")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
     },
     {
       type: TokenType.Character,

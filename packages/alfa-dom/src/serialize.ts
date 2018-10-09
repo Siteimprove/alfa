@@ -43,7 +43,7 @@ export function serialize(
 
           for (let i = 0, n = attributes.length; i < n; i++) {
             const attribute = attributes[i];
-            const namespace = getAttributeNamespace(attribute, node, context);
+            const namespace = getAttributeNamespace(attribute, context);
 
             let name = attribute.localName;
 

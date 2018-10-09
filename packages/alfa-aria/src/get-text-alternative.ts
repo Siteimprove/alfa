@@ -404,6 +404,7 @@ function getSvgTextAlternative(
   }
 
   const title = querySelector(element, context, ":scope > title");
+
   if (title !== null) {
     return getTextAlternative(title, context, visited, {
       recursing: true,

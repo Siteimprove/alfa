@@ -24,9 +24,9 @@ export function getParentRule(rule: Rule, context: Node): Rule | null {
 
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
-        enter(rule, parent) {
-          if (parent !== null && parentMap !== undefined) {
-            parentMap.set(rule, parent);
+        enter(rule, parentRule) {
+          if (parentRule !== null) {
+            parentMap!.set(rule, parentRule);
           }
         }
       });

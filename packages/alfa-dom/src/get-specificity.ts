@@ -2,6 +2,9 @@ import { Selector, SelectorType } from "@siteimprove/alfa-css";
 
 const { min } = Math;
 
+/**
+ * @internal
+ */
 export type Specificity = number;
 
 // The number of bits to use for every component of the specificity computation.

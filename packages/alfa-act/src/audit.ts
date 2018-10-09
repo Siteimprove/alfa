@@ -4,20 +4,19 @@ import { sortRules } from "./sort-rules";
 import {
   Answer,
   Aspect,
-  Aspects,
+  AspectsFor,
   Atomic,
   Composite,
+  Outcome,
   Question,
   Result,
   Rule,
   Target
 } from "./types";
 
-const { isArray } = Array;
-
 export function audit<A extends Aspect, T extends Target>(
-  aspects: Pick<Aspects, A>,
-  rules: Rule<A, T> | Array<Rule<A, T>>,
+  aspects: AspectsFor<A>,
+  rules: Array<Rule<A, T>>,
   answers: Array<Answer<A, T>> = []
 ): Array<Result<A, T> | Question<A, T>> {
   const results: Array<Result<A, T> | Question<A, T>> = [];
@@ -43,7 +42,7 @@ export function audit<A extends Aspect, T extends Target>(
     }
   }
 
-  for (const rule of isArray(rules) ? sortRules(rules) : [rules]) {
+  for (const rule of sortRules(rules)) {
     if (isAtomic(rule)) {
       auditAtomic(aspects, rule, results, (id, target) =>
         question(rule, id, target)
@@ -57,7 +56,7 @@ export function audit<A extends Aspect, T extends Target>(
 }
 
 function auditAtomic<A extends Aspect, T extends Target>(
-  aspects: Pick<Aspects, A>,
+  aspects: AspectsFor<A>,
   rule: Atomic.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>,
   question: (question: string, target?: T) => boolean
@@ -69,17 +68,13 @@ function auditAtomic<A extends Aspect, T extends Target>(
       const target = applicability();
 
       if (target !== null) {
-        if (isArray(target)) {
-          targets.push(...target);
-        } else {
-          targets.push(target);
-        }
+        targets.push(...target);
       }
 
       if (targets.length === 0) {
         results.push({
           rule,
-          outcome: "inapplicable"
+          outcome: Outcome.Inapplicable
         });
       }
     },
@@ -102,7 +97,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
 
         results.push({
           rule,
-          outcome: holds ? "passed" : "failed",
+          outcome: holds ? Outcome.Passed : Outcome.Failed,
           target
         });
       }
@@ -112,7 +107,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
 }
 
 function auditComposite<A extends Aspect, T extends Target>(
-  aspects: Pick<Aspects, A>,
+  aspects: AspectsFor<A>,
   rule: Composite.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>
 ): void {
@@ -132,7 +127,7 @@ function auditComposite<A extends Aspect, T extends Target>(
 
   const targets = groupBy(
     applicability,
-    result => (result.outcome === "inapplicable" ? null : result.target)
+    result => (result.outcome === Outcome.Inapplicable ? null : result.target)
   );
 
   rule.definition(expectations => {
@@ -156,7 +151,7 @@ function auditComposite<A extends Aspect, T extends Target>(
 
       results.push({
         rule,
-        outcome: holds ? "passed" : "failed",
+        outcome: holds ? Outcome.Passed : Outcome.Failed,
         target
       });
     }

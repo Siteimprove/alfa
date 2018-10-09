@@ -1,15 +1,27 @@
-import { Node } from "@siteimprove/alfa-dom";
+import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
-export type Target = Node;
+export type Target = Attribute | Document | Element;
 
 export interface Aspects {
   readonly request: Request;
   readonly response: Response;
-  readonly document: Node;
+  readonly document: Document;
 }
 
-export type Aspect = keyof Aspects;
+export type Aspect = Aspects[keyof Aspects];
+
+export type AspectsFor<A extends Aspect> = {
+  readonly [P in keyof Aspects]: Aspects[P] extends A
+    ? Aspects[P]
+    : Aspects[P] | undefined
+};
+
+export const enum Outcome {
+  Passed = "passed",
+  Failed = "failed",
+  Inapplicable = "inapplicable"
+}
 
 export type Result<
   A extends Aspect = Aspect,
@@ -17,16 +29,14 @@ export type Result<
 > = Readonly<
   | {
       rule: Rule<A, T>;
-      outcome: "passed" | "failed";
+      outcome: Outcome.Passed | Outcome.Failed;
       target: T;
     }
   | {
       rule: Rule<A, T>;
-      outcome: "inapplicable";
+      outcome: Outcome.Inapplicable;
     }
 >;
-
-export type Outcome = Result["outcome"];
 
 export interface Question<
   A extends Aspect = Aspect,
@@ -64,7 +74,7 @@ export namespace Atomic {
   export type Applicability<
     A extends Aspect = Aspect,
     T extends Target = Target
-  > = () => T | Array<T> | null;
+  > = () => ReadonlyArray<T> | null;
 
   export type Expectations<
     A extends Aspect = Aspect,
@@ -78,14 +88,14 @@ export namespace Atomic {
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
     readonly id: string;
 
-    readonly requirements?: Array<string>;
+    readonly requirements?: ReadonlyArray<string>;
 
-    readonly locales?: Array<Locale>;
+    readonly locales?: ReadonlyArray<Locale>;
 
     readonly definition: (
       applicability: (applicability: Applicability<A, T>) => void,
       expectations: (expectations: Expectations<A, T>) => void,
-      aspects: Pick<Aspects, A>
+      aspects: AspectsFor<A>
     ) => void;
   }
 }
@@ -95,18 +105,18 @@ export namespace Composite {
     A extends Aspect = Aspect,
     T extends Target = Target
   > = (
-    results: Array<Result<A, T>>,
+    results: ReadonlyArray<Result<A, T>>,
     expectation: (id: number, holds: boolean) => void
   ) => void;
 
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
     readonly id: string;
 
-    readonly requirements?: Array<string>;
+    readonly requirements?: ReadonlyArray<string>;
 
-    readonly locales?: Array<Locale>;
+    readonly locales?: ReadonlyArray<Locale>;
 
-    readonly composes: Array<Atomic.Rule<A, T>>;
+    readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
 
     readonly definition: (
       expectations: (expectations: Expectations<A, T>) => void

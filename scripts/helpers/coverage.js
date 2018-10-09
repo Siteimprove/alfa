@@ -37,6 +37,9 @@ const metrics = [
   }
 ];
 
+// If a coverage suggestion exceeds 6 lines, it will be truncated to 6 lines.
+const maxCoverageOutputLines = 6;
+
 session.connect();
 
 session.post("Profiler.enable");
@@ -116,7 +119,13 @@ process.on("beforeExit", code => {
 
         for (const block of uncovered) {
           // Buffer added for dots and spacing
-          lineSum += block.range.end.line - block.range.start.line + 5;
+          const buffer = 6;
+          const estimate =
+            block.range.end.line - block.range.start.line + buffer;
+          lineSum +=
+            estimate > maxCoverageOutputLines + buffer
+              ? maxCoverageOutputLines + buffer
+              : estimate;
 
           // At least one block has to be printed
           if (lineSum > space && blockCount > 0) {
@@ -581,12 +590,25 @@ function printBlockCoverage(script, coverage, widths) {
     output += `\n${below}`;
   }
 
-  const lines = output.split("\n");
+  let lines = output.split("\n");
+
+  const totalLines = lines.length;
+  const isTruncating = totalLines > maxCoverageOutputLines;
+  if (isTruncating) {
+    lines = lines.filter(
+      (line, index) =>
+        index < maxCoverageOutputLines / 2 ||
+        index > totalLines - (maxCoverageOutputLines / 2 + 1)
+    );
+  }
 
   output = lines
     .map((line, i) => {
-      const lineNo = (offset + i + 1).toString();
-
+      const actualIndex =
+        i < maxCoverageOutputLines / 2
+          ? i
+          : totalLines - maxCoverageOutputLines + i;
+      const lineNo = (offset + actualIndex + 1).toString();
       const padding = {
         gutter: " ".repeat(widths.gutter - lineNo.length)
       };
@@ -597,14 +619,29 @@ function printBlockCoverage(script, coverage, widths) {
             return chalk.gray.dim("\u00b7");
           case "\t":
             return chalk.gray.dim("\u00bb");
+          case "\r":
+            return "";
         }
 
         return whitespace;
       });
 
+      let truncation = "";
+
+      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
+        truncation += `\n${" ".repeat(widths.gutter / 2)}`;
+        truncation += `${chalk.blue("\u205e")}${" ".repeat(widths.gutter / 2)}`;
+        truncation += `${totalLines -
+          maxCoverageOutputLines} lines truncated`.replace(/[^\s]+/g, word =>
+          chalk.blue(word)
+        );
+      }
+
       const eol = chalk.gray.dim("\u00ac");
 
-      return `${padding.gutter}${chalk.grey(lineNo)} ${line}${eol}`;
+      return `${padding.gutter}${chalk.grey(
+        lineNo
+      )} ${line}${eol}${truncation}`;
     })
     .join("\n");
 

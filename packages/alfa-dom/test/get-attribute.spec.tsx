@@ -3,18 +3,18 @@ import { test } from "@siteimprove/alfa-test";
 import { getAttribute } from "../src/get-attribute";
 import { Namespace } from "../src/types";
 
-test("Gets an attribute value when it is defined", t => {
+test("Gets the value of an attribute", t => {
   t.equal(
     getAttribute(<div aria-labelledby="foobar">Bar</div>, "aria-labelledby"),
     "foobar"
   );
 });
 
-test("Gets an attribute value when it is not defined", t => {
+test("Returns null when an attribute does not exist", t => {
   t.equal(getAttribute(<div>Foo</div>, "aria-labelledby"), null);
 });
 
-test("Gets an attribute value when it is defined and trim=true", t => {
+test("Can trim the attribute value", t => {
   t.equal(
     getAttribute(<div aria-labelledby="  foobar">Foo</div>, "aria-labelledby", {
       trim: true
@@ -23,7 +23,7 @@ test("Gets an attribute value when it is defined and trim=true", t => {
   );
 });
 
-test("Gets an attribute value when it is defined and lowercase=true", t => {
+test("Can lowercase the attribute value", t => {
   t.equal(
     getAttribute(<div aria-labelledby="fooBar">Foo</div>, "aria-labelledby", {
       lowerCase: true
@@ -32,19 +32,19 @@ test("Gets an attribute value when it is defined and lowercase=true", t => {
   );
 });
 
-test("Gets an attribute with a HTML namespace", t => {
+test("Returns null when getting an attribute in the HTML namespace", t => {
   const div = <div aria-labelledby="foobar" />;
 
   // In HTML5 attributes are not assigned to namespaces, not even the HTML
   // namespace.
-  t.equal(getAttribute(div, "aria-labelledby", Namespace.HTML), null);
+  t.equal(getAttribute(div, div, "aria-labelledby", Namespace.HTML), null);
 });
 
-test("Gets an attribute with an SVG namespace", t => {
-  const svg: jsx.JSX.Element = {
+test("Gets the value of an attribute in the SVG namespace", t => {
+  const a: jsx.JSX.Element = {
     nodeType: 1,
     prefix: null,
-    localName: "svg",
+    localName: "a",
     attributes: [
       {
         prefix: "xlink",
@@ -56,20 +56,29 @@ test("Gets an attribute with an SVG namespace", t => {
     childNodes: []
   };
 
-  t.equal(getAttribute(svg, "xlink:href"), "foo");
-  t.equal(getAttribute(svg, "href", Namespace.XLink), "foo");
-});
-
-test("Gets an attribute matching any namespace", t => {
-  const div = <div aria-labelledby="foobar" />;
-  t.deepEqual(getAttribute(div, "aria-labelledby", "*"), ["foobar"]);
-});
-
-test("Gets multiple attributes with different namespaces", t => {
   const svg: jsx.JSX.Element = {
     nodeType: 1,
     prefix: null,
     localName: "svg",
+    attributes: [],
+    shadowRoot: null,
+    childNodes: [a]
+  };
+
+  t.equal(getAttribute(a, "xlink:href"), "foo");
+  t.equal(getAttribute(a, svg, "href", Namespace.XLink), "foo");
+});
+
+test("Gets an attribute matching any namespace", t => {
+  const div = <div aria-labelledby="foobar" />;
+  t.deepEqual(getAttribute(div, div, "aria-labelledby", "*"), ["foobar"]);
+});
+
+test("Gets multiple attributes with different namespaces", t => {
+  const a: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "a",
     attributes: [
       {
         prefix: "xlink",
@@ -86,15 +95,43 @@ test("Gets multiple attributes with different namespaces", t => {
     childNodes: []
   };
 
-  t.deepEqual(getAttribute(svg, "href", "*"), ["foo", "bar"]);
-  t.equal(getAttribute(svg, "title", "*"), null);
-  t.equal(getAttribute(svg, "*:href"), null);
+  const svg: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "svg",
+    attributes: [],
+    shadowRoot: null,
+    childNodes: [a]
+  };
+
+  t.deepEqual(getAttribute(a, svg, "href", "*"), ["foo", "bar"]);
+  t.equal(getAttribute(a, svg, "title", "*"), null);
+  t.equal(getAttribute(a, "*:href"), null);
 });
 
 test("Gets an attribute with an incorrect namespace", t => {
   const div = <div aria-labelledby="foobar" />;
 
   t.equal(getAttribute(div, "svg:aria-labelledby"), null);
-  t.equal(getAttribute(div, "aria-labelledby", Namespace.SVG), null);
-  t.equal(getAttribute(div, "aria-hidden", Namespace.SVG), null);
+  t.equal(getAttribute(div, div, "aria-labelledby", Namespace.SVG), null);
+  t.equal(getAttribute(div, div, "aria-hidden", Namespace.SVG), null);
+});
+
+test("Correctly handles attribute names containing colons", t => {
+  const html: jsx.JSX.Element = {
+    nodeType: 1,
+    prefix: null,
+    localName: "html",
+    attributes: [
+      {
+        prefix: null,
+        localName: "xml:lang",
+        value: "en"
+      }
+    ],
+    shadowRoot: null,
+    childNodes: []
+  };
+
+  t.equal(getAttribute(html, "xml:lang"), "en");
 });

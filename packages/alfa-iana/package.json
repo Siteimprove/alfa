@@ -31,6 +31,7 @@
     "prepare": "node scripts/subtags.js"
   },
   "dependencies": {
+    "@siteimprove/alfa-lang": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0"
   },
   "devDependencies": {

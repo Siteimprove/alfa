@@ -802,22 +802,22 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+        stream.advance(1);
         emit(state.tag!);
         return data;
       }
@@ -1003,11 +1003,12 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
     case Char.Solidus:
     case Char.GreaterThanSign:
       stream.advance(1);
+      emit({ type: TokenType.Character, data: char });
+
       if (state.temporaryBuffer === "script") {
         return scriptDataEscaped;
       }
 
-      emit({ type: TokenType.Character, data: char });
       return scriptDataDoubleEscaped;
 
     default:
@@ -2286,14 +2287,22 @@ const hexadecimalCharacterReference: Pattern = (stream, emit, state) => {
 
   if (char !== null) {
     if (isNumeric(char)) {
+      stream.advance(1);
       state.characterReferenceCode =
         state.characterReferenceCode * 0x10 + char - 0x30;
+      return;
     } else if (isBetween(char, Char.CapitalLetterA, Char.CapitalLetterF)) {
+      stream.advance(1);
       state.characterReferenceCode =
         state.characterReferenceCode * 0x10 + char - 0x37;
+      return;
     } else if (isBetween(char, Char.SmallLetterA, Char.SmallLetterF)) {
+      stream.advance(1);
       state.characterReferenceCode =
         state.characterReferenceCode * 0x10 + char - 0x57;
+      return;
+    } else if (char === Char.Semicolon) {
+      stream.advance(1);
     }
   }
 

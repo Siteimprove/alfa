@@ -44,7 +44,7 @@ for (const pkg of packages) {
   );
 
   for (const file of files) {
-    if (file.indexOf("/src/") === -1) {
+    if (file.indexOf(`${path.sep}src${path.sep}`) === -1) {
       continue; // File is not in source folder
     }
 

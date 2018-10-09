@@ -3,12 +3,35 @@ import { Request, Response } from "@siteimprove/alfa-http";
 import { readFileSync } from "fs";
 import * as puppeteer from "puppeteer";
 
-const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
+const virtualize = `{
+  ${readFileSync(require.resolve("./virtualize"), "utf8")};
+  virtualizeNode(window.document);
+}`;
 
 export const enum Wait {
   Ready = "domcontentloaded",
   Loaded = "load",
   Idle = "networkidle0"
+}
+
+export interface ScrapeOptions {
+  readonly timeout?: number;
+  readonly wait?: Wait;
+  readonly viewport?: {
+    readonly width: number;
+    readonly height: number;
+    readonly scale?: number;
+  };
+  readonly credentials?: {
+    readonly username: string;
+    readonly password: string;
+  };
+}
+
+export interface ScrapeResult {
+  readonly request: Request;
+  readonly response: Response;
+  readonly document: Document;
 }
 
 export class Scraper {
@@ -24,22 +47,8 @@ export class Scraper {
 
   public async scrape(
     url: string,
-    options: Readonly<{
-      timeout?: number;
-      wait?: Wait;
-      viewport?: Readonly<{
-        width: number;
-        height: number;
-        scale?: number;
-      }>;
-      credentials?: Readonly<{
-        username: string;
-        password: string;
-      }>;
-    }> = {}
-  ): Promise<{ request: Request; response: Response; document: Document }> {
-    const page = await (await this.browser).newPage();
-
+    options: ScrapeOptions = {}
+  ): Promise<ScrapeResult> {
     const {
       viewport = { width: 1280, height: 720, scale: 1 },
       credentials = null,
@@ -47,69 +56,90 @@ export class Scraper {
       timeout = 10000
     } = options;
 
+    const browser = await this.browser;
+    const page = await browser.newPage();
+
     await page.setViewport({
       width: viewport.width,
       height: viewport.width,
       deviceScaleFactor: viewport.scale
     });
 
+    await page.setRequestInterception(true);
+
     await page.authenticate(credentials);
 
-    const start = Date.now();
+    let request: Promise<Request> | Request | null = null;
+    let response: Promise<Response> | Response | null = null;
+    let document: Promise<Document> | Document | null = null;
 
-    let response: puppeteer.Response | null = null;
+    page.on("request", async req => {
+      // If requesting the URL currently being scraped, we parse and store the
+      // request as this is the one we're looking for.
+      if (req.url() === url) {
+        request = parseRequest(req);
+
+        await request;
+
+        req.continue();
+      }
+
+      // Otherwise, if this is a navigation request, we have to abort it as we
+      // would otherwise be navigating away from the page being scraped.
+      else if (req.isNavigationRequest()) {
+        // Wait for the response from the previous request to finish parsing.
+        // Since the current request is a navigation request, the response from
+        // the previous request will be disposed as soon as the current request
+        // resolves.
+        await response;
+
+        // Abort the request once the response from the previous request has
+        // been parsed.
+        req.abort();
+      }
+
+      // Otherwise, continue the request normally.
+      else {
+        req.continue();
+      }
+    });
+
+    page.on("response", async res => {
+      if (res.url() === url) {
+        response = parseResponse(res);
+
+        await response;
+
+        document = parseDocument(page);
+      }
+    });
+
+    await page.goto(url, { timeout, waitUntil: wait });
+
+    request = await request!;
+    response = await response!;
+
     try {
-      response = await page.goto(url, { timeout, waitUntil: wait });
+      document = await document!;
     } catch (err) {
+      // If the initial snapshot of the document fails, is means that the page
+      // already navigated away. Clean up and abort.
       await page.close();
       throw err;
     }
 
-    let document: Document | null = null;
-    let error: Error | null = null;
-    do {
-      const elapsed = Date.now() - start;
-
-      if (elapsed > timeout) {
-        await page.close();
-        break;
-      }
-
-      try {
-        document = (await page.evaluate(`{
-          ${virtualize};
-          virtualizeNode(window.document);
-        }`)) as Document;
-      } catch (err) {
-        error = err as Error;
-
-        // If evaluation fails, this could indicate that a client side redirect
-        // was performed. If so, we should now be on the correct domain; reload
-        // the page using whatever is left of the timeout and try again.
-        try {
-          response = await page.reload({
-            timeout: timeout - elapsed,
-            waitUntil: wait
-          });
-        } catch (err) {
-          error = err as Error;
-        }
-      }
-    } while (document === null);
-
-    if (document === null || response === null) {
-      throw error === null ? new Error("Failed to scrape document") : error;
+    try {
+      document = await parseDocument(page);
+    } catch (err) {
+      // We can therefore safely ignore the error as we have the initial
+      // snapshot of the document.
     }
 
-    const result = {
-      request: await parseRequest(response.request()),
-      response: await parseResponse(response),
+    return {
+      request,
+      response,
       document
     };
-
-    await page.close();
-
-    return result;
   }
 
   public async close(): Promise<void> {
@@ -131,4 +161,9 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
     headers: response.headers(),
     body: await response.text()
   };
+}
+
+async function parseDocument(page: puppeteer.Page): Promise<Document> {
+  const document = await page.evaluate(virtualize);
+  return document as Document;
 }
