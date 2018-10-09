@@ -97,7 +97,7 @@ interface State {
   startTag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
-  namespaceStack: Mutable<Array<string>>;
+  namespaceStack: Array<string>;
 
   /**
    * @see https://www.w3.org/TR/html/syntax.html#return-state
@@ -1383,7 +1383,12 @@ const markupDeclarationOpen: Pattern = (stream, emit, state) => {
     return doctype;
   }
 
-  if (startsWith(stream, "[CDATA[") && state.namespaceStack.length > 0) {
+  const stackSize = state.namespaceStack.length;
+  if (
+    startsWith(stream, "[CDATA[") &&
+    stackSize > 0 &&
+    state.namespaceStack[stackSize - 1] !== "foreignobject"
+  ) {
     stream.advance(7);
     return CDATASection;
   }
@@ -2493,7 +2498,7 @@ export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
     returnState: null,
     temporaryBuffer: "",
     characterReferenceCode: 0,
-    namespaceStack: <Mutable<Array<string>>>[]
+    namespaceStack: <Array<string>>[]
   })
 );
 
@@ -2550,6 +2555,7 @@ function findAppropriateState(tag: StartTag | EndTag, state: State) {
       }
       break;
 
+    case "foreignobject":
     case "math":
     case "svg":
       if (tag.type === TokenType.StartTag) {
