@@ -392,6 +392,52 @@ test("Can lex CDATA outside of the HTML namespace", t => {
   ]);
 });
 
+// Tests that the namespaceStack is working as expected
+test("Can lex CDATA outside of the HTML namespace with multiple non-html tags", t => {
+  html(t, "<svg><svg></svg><![CDATA[<p>]]]]></svg>", [
+    {
+      type: TokenType.StartTag,
+      name: "svg",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.StartTag,
+      name: "svg",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.EndTag,
+      name: "svg"
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.EndTag,
+      name: "svg"
+    }
+  ]);
+});
+
 test("Cannot lex CDATA inside of the HTML namespace (bogus comment)", t => {
   html(t, "<![CDATA[<p>]]]]>", [
     {
