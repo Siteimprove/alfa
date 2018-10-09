@@ -97,6 +97,7 @@ interface State {
   startTag: Mutable<StartTag | EndTag> | null;
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
+  namespaceStack: Mutable<Array<string>>;
 
   /**
    * @see https://www.w3.org/TR/html/syntax.html#return-state
@@ -213,6 +214,26 @@ const scriptData: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.5
+ * @see https://www.w3.org/TR/html/syntax.html#plaintext-state
+ */
+const plaintext: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.Null:
+      emit({ type: TokenType.Character, data: 0xfffd });
+      break;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: char });
+  }
+};
+
+/**
  * 8.2.4.6
  * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
  */
@@ -308,7 +329,7 @@ const tagName: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       emit(state.tag!);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!);
+      return findAppropriateState(state.tag!, state);
 
     case Char.Null:
       state.tag!.name += "\ufffd";
@@ -1255,7 +1276,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       emit(state.tag!);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!);
+      return findAppropriateState(state.tag!, state);
 
     case Char.Null:
       state.attribute!.value += "\ufffd";
@@ -1291,7 +1312,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
       stream.advance(1);
       emit(state.tag!);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!);
+      return findAppropriateState(state.tag!, state);
 
     case null:
       return Command.End;
@@ -1360,6 +1381,11 @@ const markupDeclarationOpen: Pattern = (stream, emit, state) => {
   if (startsWith(stream, "doctype", { lowerCase: true })) {
     stream.advance(7);
     return doctype;
+  }
+
+  if (startsWith(stream, "[CDATA[") && state.namespaceStack.length > 0) {
+    stream.advance(7);
+    return CDATASection;
   }
 
   if (
@@ -2168,6 +2194,67 @@ const bogusDoctype: Pattern = (stream, emit, state) => {
 };
 
 /**
+ * 8.2.4.69
+ * @see https://www.w3.org/TR/html/syntax.html#CDATA-section-state
+ */
+const CDATASection: Pattern = (stream, emit, state) => {
+  const char = stream.next();
+
+  switch (char) {
+    case Char.RightSquareBracket:
+      return CDATASectionBracket;
+
+    case null:
+      return Command.End;
+
+    default:
+      emit({ type: TokenType.Character, data: char });
+  }
+};
+
+/**
+ * 8.2.4.70
+ * @see https://www.w3.org/TR/html/syntax.html#CDATA-section-bracket-state
+ */
+const CDATASectionBracket: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.RightSquareBracket:
+      stream.advance(1);
+      return CDATASectionEnd;
+
+    default:
+      emit({ type: TokenType.Character, data: char! });
+      return CDATASection;
+  }
+};
+
+/**
+ * 8.2.4.71
+ * @see https://www.w3.org/TR/html/syntax.html#CDATA-section-end-state
+ */
+const CDATASectionEnd: Pattern = (stream, emit, state) => {
+  const char = stream.peek(0);
+
+  switch (char) {
+    case Char.RightSquareBracket:
+      stream.advance(1);
+      emit({ type: TokenType.Character, data: char });
+      break;
+
+    case Char.GreaterThanSign:
+      stream.advance(1);
+      return data;
+
+    default:
+      emit({ type: TokenType.Character, data: Char.RightSquareBracket });
+      emit({ type: TokenType.Character, data: Char.RightSquareBracket });
+      return CDATASection;
+  }
+};
+
+/**
  * 8.2.4.72
  * @see https://www.w3.org/TR/html/syntax.html#character-reference-state
  */
@@ -2405,7 +2492,8 @@ export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
     comment: null,
     returnState: null,
     temporaryBuffer: "",
-    characterReferenceCode: 0
+    characterReferenceCode: 0,
+    namespaceStack: <Mutable<Array<string>>>[]
   })
 );
 
@@ -2435,7 +2523,7 @@ function startsWith(
   return true;
 }
 
-function findAppropriateState(tag: StartTag | EndTag) {
+function findAppropriateState(tag: StartTag | EndTag, state: State) {
   switch (tag.name) {
     case "script":
       if (tag.type === TokenType.StartTag) {
@@ -2454,6 +2542,21 @@ function findAppropriateState(tag: StartTag | EndTag) {
       if (tag.type === TokenType.StartTag) {
         return RawText;
       }
+      break;
+
+    case "plaintext":
+      if (tag.type === TokenType.StartTag) {
+        return plaintext;
+      }
+      break;
+
+    case "math":
+    case "svg":
+      if (tag.type === TokenType.StartTag) {
+        state.namespaceStack.push(tag.name);
+        break;
+      }
+      state.namespaceStack.pop();
   }
 
   return data;

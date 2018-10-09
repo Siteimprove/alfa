@@ -357,6 +357,70 @@ test("Can lex a doctype with both a public ID and system ID", t => {
   ]);
 });
 
+test("Can lex CDATA outside of the HTML namespace", t => {
+  html(t, "<svg><![CDATA[<p>]]]]></svg>", [
+    {
+      type: TokenType.StartTag,
+      name: "svg",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.EndTag,
+      name: "svg"
+    }
+  ]);
+});
+
+test("Cannot lex CDATA inside of the HTML namespace (bogus comment)", t => {
+  html(t, "<![CDATA[<p>]]]]>", [
+    {
+      type: TokenType.Comment,
+      data: "[CDATA[<p"
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.Character,
+      data: char("]")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    }
+  ]);
+});
+
 test("Can lex a textarea element with an apparent tag", t => {
   html(t, "<textarea><tag></textarea>", [
     {
