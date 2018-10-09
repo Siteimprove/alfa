@@ -45,6 +45,11 @@ for (const pkg of packages) {
 
   for (const file of files) {
     if (file.indexOf(`${path.sep}src${path.sep}`) === -1) {
+      notify.error(
+        `${chalk.gray(file)} Not in source ----- Looking for ${path.sep}src${
+          path.sep
+        } in ${file}`
+      );
       continue; // File is not in source folder
     }
 
@@ -66,6 +71,7 @@ for (const pkg of packages) {
     ];
 
     if (potentialTestFiles.some(isFile)) {
+      notify.error(`${chalk.gray(file)} Found spec file`);
       continue; // An associated test file was found
     }
 
@@ -76,6 +82,7 @@ for (const pkg of packages) {
     );
 
     if (!isTestable(compiled)) {
+      notify.error(`${chalk.gray(file)} Not testable`);
       continue;
     }
 
