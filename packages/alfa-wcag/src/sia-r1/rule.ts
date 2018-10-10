@@ -12,7 +12,7 @@ import {
 
 export const SIA_R1: Atomic.Rule<Document, Document> = {
   id: "sanshikan:rules/sia-r1.html",
-  requirements: ["wcag:page-titled"],
+  requirements: [{ id: "wcag:page-titled", partial: true }],
   definition: (applicability, expectations, { document }) => {
     applicability(() => (hasDocumentElement(document) ? [document] : null));
 

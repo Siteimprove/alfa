@@ -20,7 +20,8 @@ export type AspectsFor<A extends Aspect> = {
 export const enum Outcome {
   Passed = "passed",
   Failed = "failed",
-  Inapplicable = "inapplicable"
+  Inapplicable = "inapplicable",
+  CantTell = "cantTell"
 }
 
 export type Result<
@@ -66,6 +67,11 @@ export interface Locale {
   }>;
 }
 
+export interface Requirement {
+  readonly id: string;
+  readonly partial?: true;
+}
+
 export type Rule<A extends Aspect = Aspect, T extends Target = Target> =
   | Atomic.Rule<A, T>
   | Composite.Rule<A, T>;
@@ -88,7 +94,7 @@ export namespace Atomic {
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
     readonly id: string;
 
-    readonly requirements?: ReadonlyArray<string>;
+    readonly requirements?: ReadonlyArray<Requirement>;
 
     readonly locales?: ReadonlyArray<Locale>;
 
@@ -112,7 +118,7 @@ export namespace Composite {
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
     readonly id: string;
 
-    readonly requirements?: ReadonlyArray<string>;
+    readonly requirements?: ReadonlyArray<Requirement>;
 
     readonly locales?: ReadonlyArray<Locale>;
 

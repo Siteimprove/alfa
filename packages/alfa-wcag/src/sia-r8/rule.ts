@@ -17,7 +17,7 @@ import {
 
 export const SIA_R8: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
-  requirements: ["wcag:labels-or-instructions"],
+  requirements: [{ id: "wcag:labels-or-instructions", partial: true }],
   definition: (applicability, expectations, { document }) => {
     applicability(() =>
       querySelectorAll(

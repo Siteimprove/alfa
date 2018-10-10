@@ -14,9 +14,9 @@ import { Stream } from "@siteimprove/alfa-lang";
 export const SIA_R9: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r9.html",
   requirements: [
-    "wcag:timing-adjustable",
-    "wcag:interruptions",
-    "wcag:change-on-request"
+    { id: "wcag:timing-adjustable", partial: true },
+    { id: "wcag:interruptions", partial: true },
+    { id: "wcag:change-on-request", partial: true }
   ],
   definition: (applicability, expectations, { document }) => {
     applicability(() => {
