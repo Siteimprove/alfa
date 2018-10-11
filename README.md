@@ -47,7 +47,7 @@ Alfa will run in any [ECMAScript 2015](https://www.ecma-international.org/ecma-2
 
 ## Building
 
-In order to build Alfa, a recent version (>= 9) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. For builds, [npm](https://www.npmjs.com/) is **not** supported as Alfa makes use of [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). Once Node.js and Yarn is installed, go ahead and install the Alfa development dependencies:
+In order to build Alfa, a recent version (>= 9) of [Node.js](https://nodejs.org/) is required in addition to the [Yarn](https://yarnpkg.com/) package manager. For builds, [npm](https://www.npmjs.com/) is **not** supported as Alfa makes use of [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). Once Node.js and Yarn have is installed, go ahead and install the Alfa development dependencies:
 
 ```console
 $ yarn install
@@ -59,7 +59,7 @@ The above also performs an initial build of Alfa. When done, you can start a fil
 $ yarn start
 ```
 
-As new code is pulled from origin, changes to dependencies and code may require you to rerun the installation. If only code within Alfa has changed, a full build:
+If new commits pulled from this repository modifies any dependencies, you might have to rerun the installation. If only code within Alfa has changed, only a full build is required:
 
 ```console
 $ yarn prepare
