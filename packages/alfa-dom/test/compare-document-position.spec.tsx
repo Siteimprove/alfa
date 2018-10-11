@@ -23,3 +23,9 @@ test("Returns < 0 when the first node comes before the second", t => {
 test("Returns > 0 when the first node comes after the second", t => {
   t(compareDocumentPosition(bar, foo, context) > 0);
 });
+
+test("Returns 35 or 37 if the nodes are not in the same tree", t => {
+  const div = <div />;
+  const cmp = compareDocumentPosition(bar, div, context);
+  t(cmp === 35 || cmp === 37);
+});
