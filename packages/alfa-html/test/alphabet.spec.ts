@@ -568,7 +568,7 @@ test("Can lex a simple script element", t => {
 });
 
 test("Can lex a noscript element with an apparent tag", t => {
-  html(t, "<noscript><tag></noscript>", [
+  html(t, "<noscript></tag></noscript>", [
     {
       type: TokenType.StartTag,
       name: "noscript",
@@ -578,6 +578,10 @@ test("Can lex a noscript element with an apparent tag", t => {
     {
       type: TokenType.Character,
       data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("/")
     },
     {
       type: TokenType.Character,

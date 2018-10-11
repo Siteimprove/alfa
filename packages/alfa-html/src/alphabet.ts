@@ -69,9 +69,15 @@ export interface Character {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#appropriate-end-tag-token
  */
-function isAppropriateEndTagToken(state: State, name: string): boolean {
-  const tags = state.tagStack.length;
-  return tags > 0 && state.tagStack[tags - 1] === name;
+function isAppropriateEndTagToken(state: State): boolean {
+  if (state.tag === null) {
+    return false;
+  }
+
+  return (
+    state.tag.type === TokenType.EndTag &&
+    state.tagStack[state.tagStack.length - 1] === state.tag.name
+  );
 }
 
 /**
@@ -327,8 +333,8 @@ const tagName: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
-      state.startTag = state.tag;
       updateState(state);
+      state.startTag = state.tag;
       return findNextState(state);
 
     case Char.Null:
@@ -399,24 +405,24 @@ const RCDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.FormFeed:
     case Char.Space:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         emit(state.tag!);
-
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -495,25 +501,25 @@ const RawTextEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         emit(state.tag!);
-
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -600,23 +606,24 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.FormFeed:
     case Char.Space:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         emit(state.tag!);
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -823,23 +830,24 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      if (isAppropriateEndTagToken(state, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         emit(state.tag!);
+        updateState(state);
         return data;
       }
       break;
@@ -1275,8 +1283,8 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
-      state.startTag = state.tag;
       updateState(state);
+      state.startTag = state.tag;
       return findNextState(state);
 
     case Char.Null:
@@ -1312,8 +1320,8 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       stream.advance(1);
       emit(state.tag!);
-      state.startTag = state.tag;
       updateState(state);
+      state.startTag = state.tag;
       return findNextState(state);
 
     case null:
@@ -2568,9 +2576,11 @@ function updateState(state: State) {
     return;
   }
 
-  state.tag.type === TokenType.StartTag
-    ? state.tagStack.push(state.tag.name)
-    : state.tagStack.pop();
+  if (state.tag.type === TokenType.StartTag) {
+    state.tagStack.push(state.tag.name);
+  } else if (isAppropriateEndTagToken(state)) {
+    state.tagStack.pop();
+  }
 
   switch (state.tag.name) {
     case "foreignobject":
