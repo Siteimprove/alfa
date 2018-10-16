@@ -10,7 +10,6 @@ function selector(input: string): Selector {
   if (parsed === null || isArray(parsed)) {
     throw new Error(`Invalid selector: ${input}`);
   }
-
   return parsed;
 }
 
@@ -49,5 +48,12 @@ test("A class is more specific than a pseudo-element-selector", t => {
   t(
     getSpecificity(selector(".foo")) >
       getSpecificity(selector("::first-letter"))
+  );
+});
+
+test("A compound selector is more specific than a class", t => {
+  t(
+    getSpecificity(selector(".foo.bar")) >
+      getSpecificity(selector(".foo-class"))
   );
 });
