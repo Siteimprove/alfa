@@ -8,6 +8,6 @@ test("Returns true when an element is a widget", t => {
 });
 
 test("Returns false when an element is not a widget", t => {
-  const button = <div role="landmark" />;
-  t(!isWidget(button, button));
+  const div = <div role="landmark" />;
+  t(!isWidget(div, div));
 });
