@@ -9,7 +9,6 @@ packages/alfa-test/test/helpers/failing.ts:4
 `;
 
   sub.stderr.on("data", (data: Buffer) => {
-    // do something with data
     t.equal(data.toString().startsWith(expected), true);
   });
 });
@@ -19,7 +18,6 @@ test("Can test a passing block", t => {
   const expected = ``;
 
   sub.stderr.on("data", (data: Buffer) => {
-    // do something with data
     t.equal(data.toString(), expected);
   });
 });
@@ -30,7 +28,6 @@ test("Can test a block throwing errors", t => {
     at test_1.test.t`;
 
   sub.stderr.on("data", (data: Buffer) => {
-    // do something with data
     t.equal(data.toString().startsWith(expected), true);
   });
 });
