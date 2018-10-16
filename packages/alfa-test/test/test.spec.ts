@@ -3,13 +3,15 @@ import { test } from "../src/test";
 
 test("Can test a failing block", t => {
   const sub = fork(`${__dirname}/helpers/failing.js`, [], { silent: true });
-  const expected = `
-Failing test
-packages/alfa-test/test/helpers/failing.ts:4
-`;
 
   sub.stderr.on("data", (data: Buffer) => {
-    t.equal(data.toString().startsWith(expected), true);
+    // Assert that we get the location of the failing test
+    t.equal(
+      data
+        .toString()
+        .indexOf("packages/alfa-test/test/helpers/failing.ts:4") !== -1,
+      true
+    );
   });
 });
 
@@ -18,6 +20,7 @@ test("Can test a passing block", t => {
   const expected = ``;
 
   sub.stderr.on("data", (data: Buffer) => {
+    // Assert that nothing is being written to stderr
     t.equal(data.toString(), expected);
   });
 });
