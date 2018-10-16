@@ -17,7 +17,7 @@ import {
 
 export const SIA_R2: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
-  requirements: ["wcag:non-text-content"],
+  requirements: [{ id: "wcag:non-text-content", partial: true }],
   definition: (applicability, expectations, { document }) => {
     applicability(() =>
       querySelectorAll(

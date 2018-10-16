@@ -22,7 +22,7 @@ import { Stream } from "@siteimprove/alfa-lang";
 
 export const SIA_R10: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r10.html",
-  requirements: ["wcag:identify-input-purpose"],
+  requirements: [{ id: "wcag:identify-input-purpose", partial: true }],
   definition: (applicability, expectations, { document }) => {
     applicability(() =>
       querySelectorAll<Element>(
