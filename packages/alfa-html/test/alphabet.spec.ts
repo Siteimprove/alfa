@@ -357,6 +357,27 @@ test("Can lex a doctype with both a public ID and system ID", t => {
   ]);
 });
 
+test("Can lex a doctype with a missing public ID", t => {
+  html(t, '<!doctype html PUBLIC">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "",
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+  html(t, "<!doctype html PUBLIC'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "",
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+});
+
 test("Can lex CDATA outside of the HTML namespace", t => {
   html(t, "<svg><![CDATA[<p>]]]]></svg>", [
     {
