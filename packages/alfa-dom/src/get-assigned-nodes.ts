@@ -51,7 +51,6 @@ function findSlotables(slot: Element, context: Node): Array<Node> {
   }
 
   const host = getParentNode(rootNode, context, { composed: true });
-
   if (host === null) {
     return result;
   }
@@ -87,7 +86,6 @@ function findFlattenedSlotables(slot: Element, context: Node): Array<Node> {
 
   if (slotables.length === 0) {
     const { childNodes } = slot;
-
     for (let i = 0, n = childNodes.length; i < n; i++) {
       const childNode = childNodes[i];
 
