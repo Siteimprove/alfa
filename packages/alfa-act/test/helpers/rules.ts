@@ -8,7 +8,7 @@ import { Atomic, Composite } from "../../src/types";
 
 export const Manual: Atomic.Rule<Document, Element> = {
   id: "_:manual-rule",
-  requirements: ["https://www.w3.org/TR/WCAG/#page-titled"],
+  requirements: [{ id: "wcag:page-titled", partial: true }],
   definition: (applicability, expectations, { document }) => {
     applicability(() => (isElement(document) ? [document] : null));
 
@@ -41,7 +41,7 @@ export const Automated: Atomic.Rule<Document, Element> = {
 export const Semi: Composite.Rule<Document, Element> = {
   id: "_:composite-rule",
   composes: [Manual, Automated],
-  requirements: ["https://www.w3.org/TR/WCAG/#section-headings"],
+  requirements: [{ id: "wcag:section-headings" }],
   definition: expectations => {
     expectations((results, expectation) => {
       expectation(1, results.some(result => result.outcome === "passed"));

@@ -2,7 +2,7 @@ import { serialize } from "@siteimprove/alfa-dom";
 import { Document, expand, List } from "@siteimprove/alfa-json-ld";
 import { groupBy } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
-import { Aspect, Aspects, Result, Target } from "./types";
+import { Aspect, Aspects, Outcome, Result, Target } from "./types";
 
 export function toJson<A extends Aspect, T extends Target>(
   results: Array<Result<A, T>>,
@@ -42,42 +42,66 @@ export function toJson<A extends Aspect, T extends Target>(
     chars: serialize(aspects.document, aspects.document, { flattened: true })
   };
 
+  const assertion: Document = {
+    "@context": Contexts.Assertion,
+    assertedBy: {
+      "@id": "https://github.com/siteimprove/alfa",
+      "@type": "earl:Software"
+    },
+    subject: [
+      { "@id": "_:request" },
+      { "@id": "_:response" },
+      { "@id": "_:document" }
+    ]
+  };
+
   const assertions: Array<Document> = [];
 
   for (const [rule, group] of groupBy(results, result => result.rule)) {
-    const requirements =
-      rule.requirements === undefined
-        ? []
-        : rule.requirements.map(requirement => ({
-            "@id": requirement,
-            "@type": "earl:TestRequirement"
-          }));
-
-    const result = group.map(result => ({
-      "@context": Contexts.Result,
-      outcome: { "@id": `earl:${result.outcome}` }
-    }));
-
     assertions.push({
-      "@context": Contexts.Assertion,
-      assertedBy: {
-        "@id": "https://github.com/siteimprove/alfa",
-        "@type": "earl:Software"
-      },
-      subject: [
-        { "@id": "_:request" },
-        { "@id": "_:response" },
-        { "@id": "_:document" }
-      ],
+      ...assertion,
       test: [
         {
           "@id": rule.id,
           "@type": "earl:TestCase"
-        },
-        ...requirements
+        }
       ],
-      result
+      result: group.map(result => {
+        return {
+          "@context": Contexts.Result,
+          outcome: {
+            "@id": `earl:${result.outcome}`
+          }
+        };
+      })
     });
+
+    const { requirements } = rule;
+
+    for (const requirement of requirements === undefined ? [] : requirements) {
+      assertions.push({
+        ...assertion,
+        test: [
+          {
+            "@id": requirement.id,
+            "@type": "earl:TestRequirement"
+          }
+        ],
+        result: group.map(result => {
+          const outcome =
+            result.outcome === Outcome.Passed && requirement.partial === true
+              ? Outcome.CantTell
+              : result.outcome;
+
+          return {
+            "@context": Contexts.Result,
+            outcome: {
+              "@id": `earl:${outcome}`
+            }
+          };
+        })
+      });
+    }
   }
 
   return expand([request, response, document, ...assertions]);
