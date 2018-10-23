@@ -59,7 +59,7 @@ The above also performs an initial build of Alfa. When done, you can start a fil
 $ yarn start
 ```
 
-If new commits pulled from this repository modifies any dependencies, you might have to rerun the installation. If only code within Alfa has changed, only a full build is required:
+As new code is pulled from this repository, changes to dependencies and code may require you to run the installation again or, if only code has changed, a full build:
 
 ```console
 $ yarn prepare
