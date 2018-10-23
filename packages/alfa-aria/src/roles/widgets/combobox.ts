@@ -22,6 +22,10 @@ export const Combobox: Role = {
     Attributes.ReadOnly,
     Attributes.Required
   ],
+  implicits: () => [
+    [Attributes.Expanded, "false"],
+    [Attributes.HasPopup, "listbox"]
+  ],
   label: { from: ["author"], required: true }
 };
 
