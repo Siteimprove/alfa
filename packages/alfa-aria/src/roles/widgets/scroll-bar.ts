@@ -16,5 +16,11 @@ export const ScrollBar: Role = {
     Attributes.ValueMinimum,
     Attributes.ValueNow
   ],
+  implicits: () => [
+    [Attributes.Orientation, "vertical"],
+    [Attributes.ValueMinimum, "0"],
+    [Attributes.ValueMaximum, "100"],
+    [Attributes.ValueNow, "50"]
+  ],
   label: { from: ["author"] }
 };
