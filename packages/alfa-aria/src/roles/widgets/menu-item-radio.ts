@@ -1,3 +1,4 @@
+import * as Attributes from "../../attributes";
 import { Category, Role } from "../../types";
 import { Group } from "../structure/group";
 import { Menu } from "./menu";
@@ -13,5 +14,6 @@ export const MenuItemRadio: Role = {
   category: Category.Widget,
   inherits: () => [Radio, MenuItem],
   context: () => [Group, Menu, MenuBar],
+  implicits: () => [[Attributes.Checked, "false"]],
   label: { from: ["contents", "author"], required: true }
 };

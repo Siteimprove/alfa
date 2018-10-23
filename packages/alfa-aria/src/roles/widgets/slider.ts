@@ -16,5 +16,11 @@ export const Slider: Role = {
     Attributes.ValueNow
   ],
   supported: () => [Attributes.Orientation, Attributes.ReadOnly],
+  implicits: () => [
+    [Attributes.Orientation, "horizontal"],
+    [Attributes.ValueMinimum, "0"],
+    [Attributes.ValueMaximum, "100"],
+    [Attributes.ValueNow, "50"]
+  ],
   label: { from: ["author"], required: true }
 };

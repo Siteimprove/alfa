@@ -1,3 +1,4 @@
+import * as Attributes from "../../attributes";
 import { Category, Role } from "../../types";
 import { Checkbox } from "./checkbox";
 import { Menu } from "./menu";
@@ -12,5 +13,6 @@ export const MenuItemCheckbox: Role = {
   category: Category.Widget,
   inherits: () => [Checkbox, MenuItem],
   context: () => [Menu, MenuBar],
+  implicits: () => [[Attributes.Checked, "false"]],
   label: { from: ["contents", "author"], required: true }
 };

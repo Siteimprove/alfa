@@ -10,5 +10,6 @@ export const Toolbar: Role = {
   category: Category.Structure,
   inherits: () => [Group],
   supported: () => [Attributes.Orientation],
+  implicits: () => [[Attributes.Orientation, "horizontal"]],
   label: { from: ["author"] }
 };
