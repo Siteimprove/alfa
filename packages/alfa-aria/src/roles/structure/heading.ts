@@ -9,5 +9,6 @@ export const Heading: Role = {
   category: Category.Structure,
   inherits: () => [SectionHead],
   required: () => [Attributes.Level],
+  implicits: () => [[Attributes.Level, "2"]],
   label: { from: ["contents", "author"], required: true }
 };

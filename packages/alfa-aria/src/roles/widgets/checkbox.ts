@@ -11,5 +11,6 @@ export const Checkbox: Role = {
   inherits: () => [Input],
   required: () => [Attributes.Checked],
   supported: () => [Attributes.ReadOnly],
+  implicits: () => [[Attributes.Checked, "false"]],
   label: { from: ["contents", "author"], required: true }
 };

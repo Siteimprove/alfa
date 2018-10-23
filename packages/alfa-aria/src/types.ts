@@ -145,6 +145,11 @@ export type Role = Readonly<{
    * @see https://www.w3.org/TR/wai-aria/#supportedState
    */
   supported?: Aspect<Array<Attribute>>;
+
+  /**
+   * @see https://www.w3.org/TR/wai-aria/#implictValueForRole
+   */
+  implicits?: Aspect<Array<[Attribute, string]>>;
 }>;
 
 /**
