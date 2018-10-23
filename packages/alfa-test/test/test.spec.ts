@@ -1,13 +1,13 @@
 import { Notifier, test } from "../src/test";
 
-test("Can test a failing block", t => {
+test("Can test a failing block", async t => {
   const notifier: Notifier = {
     error: message => {
       t(message.indexOf("Input A expected to strictly equal input B") !== -1);
     }
   };
 
-  test(
+  await test(
     "Failing test",
     t => {
       t.equal(true, false);
@@ -16,14 +16,14 @@ test("Can test a failing block", t => {
   );
 });
 
-test("Can test a passing block", t => {
+test("Can test a passing block", async t => {
   const notifier: Notifier = {
     error: message => {
       t("", message);
     }
   };
 
-  test(
+  await test(
     "Passing test",
     t => {
       t.equal(true, true);
@@ -32,14 +32,14 @@ test("Can test a passing block", t => {
   );
 });
 
-test("Can test a block throwing errors", t => {
+test("Can test a block throwing errors", async t => {
   const notifier: Notifier = {
     error: message => {
-      t("", message);
+      t(message.indexOf("Error: You shall not pass") !== -1);
     }
   };
 
-  test(
+  await test(
     "Erroring test",
     t => {
       throw Error("You shall not pass");
