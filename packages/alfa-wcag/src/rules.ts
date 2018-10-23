@@ -8,4 +8,8 @@ export { SIA_R7 } from "./sia-r7/rule";
 export { SIA_R8 } from "./sia-r8/rule";
 export { SIA_R9 } from "./sia-r9/rule";
 export { SIA_R10 } from "./sia-r10/rule";
+export { SIA_R11 } from "./sia-r11/rule";
+export { SIA_R12 } from "./sia-r12/rule";
 export { SIA_R13 } from "./sia-r13/rule";
+export { SIA_R16 } from "./sia-r16/rule";
+export { SIA_R17 } from "./sia-r17/rule";
