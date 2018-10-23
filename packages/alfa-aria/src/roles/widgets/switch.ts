@@ -10,5 +10,6 @@ export const Switch: Role = {
   category: Category.Widget,
   inherits: () => [Checkbox],
   required: () => [Attributes.Checked],
+  implicits: () => [[Attributes.Checked, "false"]],
   label: { from: ["contents", "author"], required: true }
 };
