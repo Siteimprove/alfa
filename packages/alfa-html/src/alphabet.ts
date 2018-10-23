@@ -2571,6 +2571,7 @@ function findNextState(state: State) {
   }
   return data;
 }
+
 function updateState(state: State) {
   if (state.tag === null) {
     return;
