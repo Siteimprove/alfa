@@ -605,22 +605,22 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
       if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         emit(state.tag!);
         updateState(state);
         return findNextState(state);
