@@ -24,7 +24,8 @@ const whitespace = /\s+/;
  */
 export function getRole(
   element: Element,
-  context: Node
+  context: Node,
+  options: Readonly<{ implicit?: boolean }> = { implicit: true }
 ): Option<Role> | BrowserSpecific<Option<Role>> {
   const value = getAttribute(element, "role", { trim: true });
 
@@ -62,18 +63,20 @@ export function getRole(
       }
     }
 
-    const feature = values(Features).find(
-      feature => feature.element === element.localName
-    );
+    if (options.implicit !== false) {
+      const feature = values(Features).find(
+        feature => feature.element === element.localName
+      );
 
-    if (feature !== undefined) {
-      const role =
-        typeof feature.role === "function"
-          ? feature.role(element, context)
-          : feature.role;
+      if (feature !== undefined) {
+        const role =
+          typeof feature.role === "function"
+            ? feature.role(element, context)
+            : feature.role;
 
-      if (role !== undefined) {
-        return role;
+        if (role !== undefined) {
+          return role;
+        }
       }
     }
 
