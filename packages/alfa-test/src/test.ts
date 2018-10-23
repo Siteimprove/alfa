@@ -2,9 +2,21 @@ import * as assert from "assert";
 import { format } from "./format";
 import { Assertions } from "./types";
 
+export interface Notifier {
+  error: (message: string) => void;
+}
+
+const defaultNotifier: Notifier = {
+  error: message => {
+    process.stderr.write(`${message}\n`);
+    process.exit(1);
+  }
+};
+
 export async function test(
   name: string,
-  assertion: (assert: Assertions) => void | Promise<void>
+  assertion: (assert: Assertions) => void | Promise<void>,
+  notifier = defaultNotifier
 ): Promise<void> {
   try {
     await assertion("strict" in assert ? assert.strict : assert);
@@ -17,7 +29,6 @@ export async function test(
       message = format(name, error);
     }
 
-    process.stderr.write(`${message}\n`);
-    process.exit(1);
+    notifier.error(`${message}\n`);
   }
 }
