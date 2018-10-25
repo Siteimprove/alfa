@@ -24,7 +24,7 @@ suite.run = (options?: Options) => {
   return suite;
 };
 
-test("Can lex whitespace", t => {
+test("Collects stats in each cycle", t => {
   const res: Array<Result> = [];
   const bench = benchmark(suite, res).add("Foo", () => {});
   bench.run();
