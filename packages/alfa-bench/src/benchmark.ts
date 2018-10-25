@@ -1,14 +1,14 @@
 import { Event, Stats, Suite } from "benchmark";
 import chalk from "chalk";
 
-interface Target {
+export interface Target {
   readonly name: string;
   readonly hz: number;
   readonly stats: Stats;
   readonly error?: Error;
 }
 
-interface Result {
+export interface Result {
   readonly title: string;
   readonly frequency: number;
   readonly margin: number;
@@ -20,11 +20,10 @@ export interface Benchmark {
   run(): void;
 }
 
-export function benchmark(): Benchmark {
-  const suite = new Suite();
-
-  const results: Array<Result> = [];
-
+export function benchmark(
+  suite: Suite = new Suite(),
+  results: Array<Result> = []
+): Benchmark {
   suite.on("cycle", ({ target }: Event) => {
     const { error, hz, name, stats } = target as Target;
 
