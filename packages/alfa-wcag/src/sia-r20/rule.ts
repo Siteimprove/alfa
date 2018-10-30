@@ -16,6 +16,10 @@ export const SIA_R20: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r20.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   definition: (applicability, expectations, { document }) => {
+    const attributeNames = new Set(
+      values(Attributes).map(attribute => attribute.name)
+    );
+
     applicability(() =>
       querySelectorAll(document, document, isElement)
         .map(element =>
@@ -27,12 +31,7 @@ export const SIA_R20: Atomic.Rule<Document, Attribute> = {
     );
 
     expectations((target, expectation) => {
-      expectation(
-        1,
-        values(Attributes).find(
-          attribute => attribute.name === target.localName
-        ) !== undefined
-      );
+      expectation(1, attributeNames.has(target.localName));
     });
   }
 };
