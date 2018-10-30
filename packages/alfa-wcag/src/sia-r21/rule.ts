@@ -1,5 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { Roles } from "@siteimprove/alfa-aria";
+import { isVisible, Roles } from "@siteimprove/alfa-aria";
 import {
   Attribute,
   Document,
@@ -7,6 +7,7 @@ import {
   getAttribute,
   getAttributeNode,
   getElementNamespace,
+  hasAttribute,
   isElement,
   Namespace,
   Node,
@@ -26,7 +27,9 @@ export const SIA_R21: Atomic.Rule<Document, Attribute> = {
         document,
         node =>
           isElement(node) &&
+          isVisible(node, document) &&
           isHtmlOrSvgElement(node, document) &&
+          hasAttribute(node, "role") &&
           getAttribute(node, "role", { trim: true }) !== ""
       ).map(element => getAttributeNode(element, "role")!)
     );
