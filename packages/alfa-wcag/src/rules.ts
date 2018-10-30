@@ -12,5 +12,6 @@ export { SIA_R11 } from "./sia-r11/rule";
 export { SIA_R12 } from "./sia-r12/rule";
 export { SIA_R13 } from "./sia-r13/rule";
 export { SIA_R14 } from "./sia-r14/rule";
+export { SIA_R15 } from "./sia-r15/rule";
 export { SIA_R16 } from "./sia-r16/rule";
 export { SIA_R17 } from "./sia-r17/rule";
