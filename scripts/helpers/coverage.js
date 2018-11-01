@@ -66,7 +66,9 @@ process.on("beforeExit", code => {
     const impl = path.join(dir, `${path.basename(spec, ".spec.js")}.js`);
 
     for (const scriptCoverage of result) {
-      scriptCoverage.url = scriptCoverage.url.replace("file://", "");
+      if (scriptCoverage.url.indexOf("file://") === 0) {
+        scriptCoverage.url = scriptCoverage.url.replace("file://", "");
+      }
       if (scriptCoverage.url !== impl) {
         continue;
       }
