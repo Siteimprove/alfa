@@ -1,5 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
-import { parseDeclaration, parseRule } from "../src/parse";
+import { parseDeclaration, parseRule, parseSelector } from "../src/parse";
 
 test("Can parse a declaration", t => {
   t.deepEqual(parseDeclaration("text-color: #000 !important;"), [
@@ -64,4 +64,11 @@ test("Can parse a rule", t => {
 
 test("Cannot parse a gibberish rule", t => {
   t.deepEqual(parseRule("{ text-decoration: none; }"), null);
+});
+
+test("Can parse a selector", t => {
+  t.deepEqual(parseSelector("#foo"), {
+    type: 1,
+    name: "foo"
+  });
 });
