@@ -1,8 +1,9 @@
-const { default: chalk } = require("chalk");
 const fs = require("fs");
 const path = require("path");
+const { URL } = require("url");
 const inspector = require("inspector");
 const { Session } = require("inspector");
+const { default: chalk } = require("chalk");
 const sourceMap = require("source-map");
 const { SourceMapConsumer } = require("source-map");
 
