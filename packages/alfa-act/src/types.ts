@@ -98,9 +98,9 @@ export namespace Atomic {
 
     readonly locales?: ReadonlyArray<Locale>;
 
-    readonly definition: <P extends A, Q extends T>(
-      applicability: (applicability: Applicability<P, Q>) => void,
-      expectations: (expectations: Expectations<P, Q>) => void,
+    readonly definition: (
+      applicability: (applicability: Applicability<A, T>) => void,
+      expectations: (expectations: Expectations<A, T>) => void,
       aspects: AspectsFor<A>
     ) => void;
   }
@@ -124,8 +124,8 @@ export namespace Composite {
 
     readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
 
-    readonly definition: <P extends A, Q extends T>(
-      expectations: (expectations: Expectations<P, Q>) => void
+    readonly definition: (
+      expectations: (expectations: Expectations<A, T>) => void
     ) => void;
   }
 }
