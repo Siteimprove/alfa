@@ -1,7 +1,6 @@
-import { audit, isResult, Rule, toJson } from "../../../packages/alfa-act";
+import { audit, isResult, toJson } from "../../../packages/alfa-act";
 import {
   Document,
-  Element,
   getAttribute,
   getNextElementSibling,
   querySelector,
@@ -21,7 +20,7 @@ const scraper = new Scraper();
 
 const site = "https://alphagov.github.io/accessibility-tool-audit";
 
-const rules = values(Rules) as Array<Rule<Document, Document | Element>>;
+const rules = values(Rules);
 
 scraper.scrape(`${site}/test-cases.html`).then(async page => {
   removeDirectory("docs/examples/scrape-and-audit/result");
