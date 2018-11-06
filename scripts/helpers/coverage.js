@@ -12,6 +12,7 @@ const notify = require("./notify");
 const { Byte } = require("./metrics/byte");
 const { Logical } = require("./metrics/logical");
 const { Arithmetic } = require("./metrics/arithmetic");
+const { Cyclomatic } = require("./metrics/cyclomatic");
 
 /**
  * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
@@ -26,15 +27,19 @@ const session = new Session();
 const metrics = [
   {
     ...Arithmetic,
-    weight: 1 / 3
+    weight: 1 / 4
   },
   {
     ...Byte,
-    weight: 1 / 3
+    weight: 1 / 4
   },
   {
     ...Logical,
-    weight: 1 / 3
+    weight: 1 / 4
+  },
+  {
+    ...Cyclomatic,
+    weight: 1 / 4
   }
 ];
 
