@@ -21,6 +21,29 @@ export interface Result {
 /**
  * @internal
  */
+export interface Notifier {
+  error: (message: string) => void;
+}
+
+/**
+ * @internal
+ */
+export interface Notifier {
+  out: (message: string) => void;
+}
+
+/**
+ * @internal
+ */
+const defaultNotifier: Notifier = {
+  out: message => {
+    process.stderr.write(`${message}\n`);
+  }
+};
+
+/**
+ * @internal
+ */
 export interface Suite extends Benchmark {
   on(title: string, handler: (event: Event) => void): void;
 }
@@ -32,7 +55,8 @@ export interface Benchmark {
 
 export function benchmark(
   suite: Suite = new BenchmarkSuite(),
-  results: Array<Result> = new Array<Result>()
+  results: Array<Result> = new Array<Result>(),
+  notifier = defaultNotifier
 ): Benchmark {
   suite.on("cycle", ({ target }: Event) => {
     const { error, hz, name, stats } = target as Target;
@@ -74,7 +98,7 @@ export function benchmark(
       output += `\n${chalk.gray(char)} ${format(results[i], fastest, longest)}`;
     }
 
-    process.stdout.write(`${output}\n`);
+    notifier.out(`${output}\n`);
   });
 
   return suite;

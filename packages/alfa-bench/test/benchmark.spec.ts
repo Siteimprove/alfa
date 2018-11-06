@@ -1,9 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 import { Event } from "benchmark";
-import { benchmark, Result, Suite } from "../src/benchmark";
+import { benchmark, Notifier, Result, Suite } from "../src/benchmark";
 
 test("Collects stats in each cycle", t => {
   const result = new Array<Result>();
+  const notifier: Notifier = {
+    out: message => {
+      // ignore
+    }
+  };
   const suite: Suite = {
     on: (title: string, emit: ({ target }: Event) => void) => {
       const event = new Event("cycle");
@@ -31,5 +36,5 @@ test("Collects stats in each cycle", t => {
     add: (title: string, callback: () => void | Promise<void>) => suite
   };
 
-  benchmark(suite, result);
+  benchmark(suite, result, notifier);
 });
