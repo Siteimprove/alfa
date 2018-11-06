@@ -1,5 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
+import { TokenType } from "../src/alphabet";
 import { parseDeclaration, parseRule, parseSelector } from "../src/parse";
+import { SelectorType } from "../src/types";
 
 test("Can parse a declaration", t => {
   t.deepEqual(parseDeclaration("text-color: #000 !important;"), [
@@ -7,15 +9,15 @@ test("Can parse a declaration", t => {
       name: "text-color",
       value: [
         {
-          type: 10
+          type: TokenType.Whitespace
         },
         {
-          type: 3,
+          type: TokenType.Hash,
           unrestricted: true,
           value: "000"
         },
         {
-          type: 10
+          type: TokenType.Whitespace
         }
       ],
       important: true
@@ -27,36 +29,36 @@ test("Can parse a rule", t => {
   t.deepEqual(parseRule("b { text-decoration: none; }"), {
     prelude: [
       {
-        type: 0,
+        type: TokenType.Ident,
         value: "b"
       },
       {
-        type: 10
+        type: TokenType.Whitespace
       }
     ],
     value: [
       {
-        type: 10
+        type: TokenType.Whitespace
       },
       {
-        type: 0,
+        type: TokenType.Ident,
         value: "text-decoration"
       },
       {
-        type: 11
+        type: TokenType.Colon
       },
       {
-        type: 10
+        type: TokenType.Whitespace
       },
       {
-        type: 0,
+        type: TokenType.Ident,
         value: "none"
       },
       {
-        type: 12
+        type: TokenType.Semicolon
       },
       {
-        type: 10
+        type: TokenType.Whitespace
       }
     ]
   });
@@ -68,7 +70,7 @@ test("Cannot parse a gibberish rule", t => {
 
 test("Can parse a selector", t => {
   t.deepEqual(parseSelector("#foo"), {
-    type: 1,
+    type: SelectorType.IdSelector,
     name: "foo"
   });
 });
