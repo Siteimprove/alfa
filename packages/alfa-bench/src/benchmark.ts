@@ -1,4 +1,4 @@
-import { Event, Stats, Suite as BenchmarkSuite } from "benchmark";
+import { Stats, Suite as BenchmarkSuite } from "benchmark";
 import chalk from "chalk";
 
 interface Target {
@@ -21,13 +21,17 @@ export interface Result {
 /**
  * @internal
  */
-export interface Notifier {
-  out: (message: string) => void;
+export interface Event {
+  readonly target: Target;
 }
 
 /**
  * @internal
  */
+export interface Notifier {
+  out: (message: string) => void;
+}
+
 const defaultNotifier: Notifier = {
   out: message => {
     process.stderr.write(`${message}\n`);
@@ -66,7 +70,7 @@ export function benchmark(
   notifier = defaultNotifier
 ): Benchmark {
   suite.on("cycle", ({ target }: Event) => {
-    const { error, hz, name, stats } = target as Target;
+    const { error, hz, name, stats } = target;
 
     if (error !== undefined) {
       return;
