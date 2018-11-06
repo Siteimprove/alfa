@@ -1,6 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { getRole } from "@siteimprove/alfa-aria";
-import { every, some } from "@siteimprove/alfa-compatibility";
+import { getRole, Role } from "@siteimprove/alfa-aria";
+import {
+  BrowserSpecific,
+  every,
+  map,
+  some
+} from "@siteimprove/alfa-compatibility";
 import {
   Document,
   Element,
@@ -9,6 +14,7 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-util";
 
 export const SIA_R16: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r16.html",
@@ -23,7 +29,7 @@ export const SIA_R16: Atomic.Rule<Document, Element> = {
     );
 
     expectations((target, expectation) => {
-      const role = getRole(target, document, { implicit: false })!;
+      const role = getExplicitRole(target, document);
 
       expectation(
         1,
@@ -32,11 +38,21 @@ export const SIA_R16: Atomic.Rule<Document, Element> = {
             return true;
           }
 
+          const implicits =
+            role.implicits === undefined
+              ? []
+              : role.implicits(target, document);
+
           for (const attribute of role.required(target, document)) {
             const value = getAttribute(target, attribute.name, { trim: true });
 
             if (value === null || value === "") {
-              return false;
+              if (
+                implicits.find(implicit => implicit[0] === attribute) ===
+                undefined
+              ) {
+                return false;
+              }
             }
           }
 
@@ -47,18 +63,28 @@ export const SIA_R16: Atomic.Rule<Document, Element> = {
   }
 };
 
-function hasExplicitRole(element: Element, context: Node): boolean {
-  const role = getRole(element, context);
-
-  if (every(role, role => role === null)) {
-    return false;
-  }
-
+function getExplicitRole(
+  element: Element,
+  context: Node
+): Option<Role> | BrowserSpecific<Option<Role>> {
+  const implicitRole = getRole(element, context, { explicit: false });
   const explicitRole = getRole(element, context, { implicit: false });
 
+  return map(explicitRole, explicitRole => {
+    if (
+      explicitRole !== null &&
+      some(implicitRole, implicitRole => explicitRole !== implicitRole)
+    ) {
+      return explicitRole;
+    }
+
+    return null;
+  });
+}
+
+function hasExplicitRole(element: Element, context: Node): boolean {
   return some(
-    explicitRole,
-    explicitRole =>
-      explicitRole !== null && some(role, role => explicitRole !== role)
+    getExplicitRole(element, context),
+    explicitRole => explicitRole !== null
   );
 }

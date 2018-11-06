@@ -36,8 +36,7 @@ function hasFocusableDescendants(element: Element, context: Node): boolean {
     querySelector(
       element,
       context,
-      node =>
-        node !== element && isElement(node) && isFocusable(element, context)
-    ) === null
+      node => node !== element && isElement(node) && isFocusable(node, context)
+    ) !== null
   );
 }
