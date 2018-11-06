@@ -25,7 +25,10 @@ const whitespace = /\s+/;
 export function getRole(
   element: Element,
   context: Node,
-  options: Readonly<{ implicit?: boolean }> = { implicit: true }
+  options: Readonly<{ explicit?: boolean; implicit?: boolean }> = {
+    explicit: true,
+    implicit: true
+  }
 ): Option<Role> | BrowserSpecific<Option<Role>> {
   const value = getAttribute(element, "role", { trim: true });
 
@@ -51,7 +54,7 @@ export function getRole(
   }
 
   return map(role, role => {
-    if (role !== null) {
+    if (options.explicit !== false && role !== null) {
       const roles = values(Roles);
 
       for (const name of role.split(whitespace)) {

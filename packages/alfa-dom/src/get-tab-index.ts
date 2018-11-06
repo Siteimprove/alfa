@@ -1,6 +1,7 @@
 import { getAttribute } from "./get-attribute";
 import { getInputType, InputType } from "./get-input-type";
 import { getParentElement } from "./get-parent-element";
+import { isElement } from "./guards";
 import { hasAttribute } from "./has-attribute";
 import { Element, Node } from "./types";
 
@@ -61,12 +62,21 @@ function isSuggestedFocusableElement(element: Element, context: Node): boolean {
     // element.
     case "summary":
       const parentElement = getParentElement(element, context);
-      if (
-        parentElement !== null &&
-        parentElement.localName === "details" &&
-        parentElement.childNodes[0] === element
-      ) {
-        return true;
+
+      if (parentElement !== null && parentElement.localName === "details") {
+        const { childNodes } = parentElement;
+
+        for (let i = 0, n = childNodes.length; i < n; i++) {
+          const childNode = childNodes[i];
+
+          if (isElement(childNode)) {
+            if (childNode === element) {
+              return true;
+            }
+
+            break;
+          }
+        }
       }
   }
 

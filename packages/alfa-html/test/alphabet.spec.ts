@@ -144,6 +144,53 @@ test("Can lex an incorrectly selfClosing end tag", t => {
   ]);
 });
 
+test("Can lex incorrectly nested tags", t => {
+  html(t, "<span></p></span>", [
+    {
+      type: TokenType.StartTag,
+      name: "span",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.EndTag,
+      name: "p"
+    },
+    {
+      type: TokenType.EndTag,
+      name: "span"
+    }
+  ]);
+  html(t, "<script></p></script>", [
+    {
+      type: TokenType.StartTag,
+      name: "script",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.Character,
+      data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("/")
+    },
+    {
+      type: TokenType.Character,
+      data: char("p")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.EndTag,
+      name: "script"
+    }
+  ]);
+});
+
 test("Can lex character data within a tag", t => {
   html(t, "<p>Hi</p>", [
     {
@@ -353,6 +400,48 @@ test("Can lex a doctype with both a public ID and system ID", t => {
       publicId: "foo",
       systemId: "bar",
       forceQuirks: false
+    }
+  ]);
+});
+
+test("Can lex a doctype with a missing public ID", t => {
+  html(t, '<!doctype html PUBLIC">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "",
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+  html(t, "<!doctype html PUBLIC'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: "",
+      systemId: null,
+      forceQuirks: true
+    }
+  ]);
+});
+
+test("Can lex a doctype with a missing system ID", t => {
+  html(t, '<!doctype html SYSTEM">', [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "",
+      forceQuirks: true
+    }
+  ]);
+  html(t, "<!doctype html SYSTEM'>", [
+    {
+      type: TokenType.Doctype,
+      name: "html",
+      publicId: null,
+      systemId: "",
+      forceQuirks: true
     }
   ]);
 });
@@ -568,7 +657,7 @@ test("Can lex a simple script element", t => {
 });
 
 test("Can lex a noscript element with an apparent tag", t => {
-  html(t, "<noscript><tag></noscript>", [
+  html(t, "<noscript></tag></noscript>", [
     {
       type: TokenType.StartTag,
       name: "noscript",
@@ -578,6 +667,10 @@ test("Can lex a noscript element with an apparent tag", t => {
     {
       type: TokenType.Character,
       data: char("<")
+    },
+    {
+      type: TokenType.Character,
+      data: char("/")
     },
     {
       type: TokenType.Character,
@@ -803,7 +896,7 @@ test("Can lex a script element with an apparent comment", t => {
 });
 
 test("Can lex a script element with an apparent comment ending early", t => {
-  html(t, "<script><!--<script>--></script>", [
+  html(t, "<script><!--<script/>->--></script>", [
     {
       type: TokenType.StartTag,
       name: "script",
@@ -853,6 +946,18 @@ test("Can lex a script element with an apparent comment ending early", t => {
     {
       type: TokenType.Character,
       data: char("t")
+    },
+    {
+      type: TokenType.Character,
+      data: char("/")
+    },
+    {
+      type: TokenType.Character,
+      data: char(">")
+    },
+    {
+      type: TokenType.Character,
+      data: char("-")
     },
     {
       type: TokenType.Character,

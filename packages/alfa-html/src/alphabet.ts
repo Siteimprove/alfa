@@ -69,11 +69,15 @@ export interface Character {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#appropriate-end-tag-token
  */
-function isAppropriateEndTagToken(
-  tag: StartTag | EndTag,
-  name: string
-): boolean {
-  return tag.type === TokenType.StartTag && tag.name === name;
+function isAppropriateEndTagToken(state: State): boolean {
+  if (state.tag === null) {
+    return false;
+  }
+
+  return (
+    state.tag.type === TokenType.EndTag &&
+    state.tagStack[state.tagStack.length - 1] === state.tag.name
+  );
 }
 
 /**
@@ -98,6 +102,7 @@ interface State {
   attribute: Mutable<Attribute> | null;
   comment: Mutable<Comment> | null;
   namespaceStack: Array<string>;
+  tagStack: Array<string>;
 
   /**
    * @see https://www.w3.org/TR/html/syntax.html#return-state
@@ -328,8 +333,9 @@ const tagName: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
+      updateState(state);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!, state);
+      return findNextState(state);
 
     case Char.Null:
       state.tag!.name += "\ufffd";
@@ -399,24 +405,24 @@ const RCDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.FormFeed:
     case Char.Space:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         emit(state.tag!);
-
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -495,25 +501,25 @@ const RawTextEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         emit(state.tag!);
-
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -599,24 +605,25 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         emit(state.tag!);
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -823,23 +830,24 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         emit(state.tag!);
+        updateState(state);
         return data;
       }
       break;
@@ -1275,8 +1283,9 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
+      updateState(state);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!, state);
+      return findNextState(state);
 
     case Char.Null:
       state.attribute!.value += "\ufffd";
@@ -1311,8 +1320,9 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       stream.advance(1);
       emit(state.tag!);
+      updateState(state);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!, state);
+      return findNextState(state);
 
     case null:
       return Command.End;
@@ -2498,7 +2508,8 @@ export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
     returnState: null,
     temporaryBuffer: "",
     characterReferenceCode: 0,
-    namespaceStack: <Array<string>>[]
+    namespaceStack: <Array<string>>[],
+    tagStack: <Array<string>>[]
   })
 );
 
@@ -2528,44 +2539,58 @@ function startsWith(
   return true;
 }
 
-function findAppropriateState(tag: StartTag | EndTag, state: State) {
-  switch (tag.name) {
+function findNextState(state: State) {
+  if (state.tag === null) {
+    return data;
+  }
+
+  switch (state.tag.name) {
     case "script":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return scriptData;
       }
       break;
 
     case "textarea":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return RCData;
       }
       break;
 
     case "noscript":
     case "noframes":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return RawText;
       }
       break;
 
     case "plaintext":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return plaintext;
       }
-      break;
+  }
+  return data;
+}
 
+function updateState(state: State) {
+  if (state.tag === null) {
+    return;
+  }
+
+  if (state.tag.type === TokenType.StartTag) {
+    state.tagStack.push(state.tag.name);
+  } else if (isAppropriateEndTagToken(state)) {
+    state.tagStack.pop();
+  }
+
+  switch (state.tag.name) {
     case "foreignobject":
     case "math":
     case "svg":
-      if (tag.type === TokenType.StartTag) {
-        state.namespaceStack.push(tag.name);
-        break;
-      }
-      state.namespaceStack.pop();
+      state.tag.type === TokenType.StartTag
+        ? state.namespaceStack.push(state.tag.name)
+        : state.namespaceStack.pop();
   }
-
-  return data;
 }
 
 function removeAttributeIfDuplicate(
