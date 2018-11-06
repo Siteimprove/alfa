@@ -46,6 +46,11 @@ export interface Benchmark {
   run(): void;
 }
 
+export function benchmark(suite: Suite): Benchmark;
+
+/**
+ * @internal
+ */
 export function benchmark(
   suite: Suite = new BenchmarkSuite(),
   results: Array<Result> = new Array<Result>(),
