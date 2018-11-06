@@ -99,10 +99,10 @@ function isTestable(node, testable = false, exporting = false) {
   }
   switch (node.kind) {
     case TypeScript.SyntaxKind.ArrowFunction:
-      const castedNode = /** @type {TypeScript.ArrowFunction} */ (node);
+      const arrowFunction = /** @type {TypeScript.ArrowFunction} */ (node);
       if (
         exporting &&
-        castedNode.parameters.pos !== castedNode.parameters.end
+        arrowFunction.parameters.pos !== arrowFunction.parameters.end
       ) {
         // Arrow functions that takes parameters and are somehow being exported are testable
         return true;
