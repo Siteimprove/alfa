@@ -90,23 +90,34 @@ handle(findFiles("docs", endsWith(".ts", ".tsx")));
 /**
  * @param {TypeScript.Node} node
  */
-function isTestable(node, testable = false) {
+function isTestable(node, testable = false, exporting = false) {
+  if (
+    node.modifiers &&
+    node.modifiers.some(el => el.kind === TypeScript.SyntaxKind.ExportKeyword)
+  ) {
+    exporting = true;
+  }
   switch (node.kind) {
-    case TypeScript.SyntaxKind.FunctionDeclaration:
+    case TypeScript.SyntaxKind.ArrowFunction:
+      const arrowFunction = /** @type {TypeScript.ArrowFunction} */ (node);
       if (
-        node.modifiers &&
-        node.modifiers.some(
-          el => el.kind === TypeScript.SyntaxKind.ExportKeyword
-        )
+        exporting &&
+        arrowFunction.parameters.pos !== arrowFunction.parameters.end
       ) {
-        // Functions that are exported is testable
+        // Arrow functions that takes parameters and are somehow being exported are testable
+        return true;
+      }
+      break;
+    case TypeScript.SyntaxKind.FunctionDeclaration:
+      if (exporting) {
+        // Functions that are somehow being exported are testable
         return true;
       }
       break;
   }
 
   TypeScript.forEachChild(node, node => {
-    testable = testable || isTestable(node, testable);
+    testable = testable || isTestable(node, testable, exporting);
   });
 
   return testable;
