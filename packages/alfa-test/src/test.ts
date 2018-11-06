@@ -2,6 +2,9 @@ import * as assert from "assert";
 import { format } from "./format";
 import { Assertions } from "./types";
 
+/**
+ * @internal
+ */
 export interface Notifier {
   error: (message: string) => void;
 }
