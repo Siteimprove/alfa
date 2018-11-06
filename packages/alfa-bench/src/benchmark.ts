@@ -52,6 +52,15 @@ export function benchmark(): Benchmark;
  * @internal
  */
 export function benchmark(
+  suite: Suite,
+  results: Array<Result>,
+  notifier: Notifier
+): Benchmark;
+
+/**
+ * @internal
+ */
+export function benchmark(
   suite: Suite = new BenchmarkSuite(),
   results: Array<Result> = new Array<Result>(),
   notifier = defaultNotifier
