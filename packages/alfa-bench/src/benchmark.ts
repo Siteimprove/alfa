@@ -32,7 +32,7 @@ export interface Printer {
   print: (message: string) => void;
 }
 
-const defaultNotifier: Printer = {
+const defaultPrinter: Printer = {
   print: message => {
     process.stdout.write(`${message}\n`);
   }
@@ -58,7 +58,7 @@ export function benchmark(): Benchmark;
 export function benchmark(
   suite: Suite,
   results: Array<Result>,
-  notifier: Printer
+  printer: Printer
 ): Benchmark;
 
 /**
@@ -67,7 +67,7 @@ export function benchmark(
 export function benchmark(
   suite: Suite = new BenchmarkSuite(),
   results: Array<Result> = new Array<Result>(),
-  notifier = defaultNotifier
+  printer = defaultPrinter
 ): Benchmark {
   suite.on("cycle", ({ target }: Event) => {
     const { error, hz, name, stats } = target;
@@ -109,7 +109,7 @@ export function benchmark(
       output += `\n${chalk.gray(char)} ${format(results[i], fastest, longest)}`;
     }
 
-    notifier.print(`${output}\n`);
+    printer.print(`${output}\n`);
   });
 
   return suite;

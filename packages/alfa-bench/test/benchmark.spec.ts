@@ -3,7 +3,7 @@ import { benchmark, Event, Printer, Result, Suite } from "../src/benchmark";
 
 test("Collects stats in each cycle", t => {
   const result = new Array<Result>();
-  const notifier: Printer = {
+  const printer: Printer = {
     print: message => {
       // ignore
     }
@@ -54,5 +54,5 @@ test("Collects stats in each cycle", t => {
     add: (title: string, callback: () => void | Promise<void>) => suite
   };
 
-  benchmark(suite, result, notifier);
+  benchmark(suite, result, printer);
 });
