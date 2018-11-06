@@ -1,8 +1,9 @@
-const { default: chalk } = require("chalk");
 const fs = require("fs");
 const path = require("path");
+const { URL } = require("url");
 const inspector = require("inspector");
 const { Session } = require("inspector");
+const { default: chalk } = require("chalk");
 const sourceMap = require("source-map");
 const { SourceMapConsumer } = require("source-map");
 
@@ -66,6 +67,20 @@ process.on("beforeExit", code => {
     const impl = path.join(dir, `${path.basename(spec, ".spec.js")}.js`);
 
     for (const scriptCoverage of result) {
+      try {
+        if (!path.isAbsolute(scriptCoverage.url)) {
+          const url = new URL(scriptCoverage.url);
+
+          if (url.protocol !== "file:") {
+            continue;
+          }
+
+          scriptCoverage.url = url.pathname;
+        }
+      } catch (err) {
+        continue;
+      }
+
       if (scriptCoverage.url !== impl) {
         continue;
       }
