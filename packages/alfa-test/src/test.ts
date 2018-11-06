@@ -27,6 +27,15 @@ export async function test(
 export async function test(
   name: string,
   assertion: (assert: Assertions) => void | Promise<void>,
+  notifier: Notifier
+): Promise<void>;
+
+/**
+ * @internal
+ */
+export async function test(
+  name: string,
+  assertion: (assert: Assertions) => void | Promise<void>,
   notifier = defaultNotifier
 ): Promise<void> {
   try {
