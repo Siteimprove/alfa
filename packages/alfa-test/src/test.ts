@@ -18,6 +18,14 @@ const defaultNotifier: Notifier = {
 
 export async function test(
   name: string,
+  assertion: (assert: Assertions) => void | Promise<void>
+): Promise<void>;
+
+/**
+ * @internal
+ */
+export async function test(
+  name: string,
   assertion: (assert: Assertions) => void | Promise<void>,
   notifier = defaultNotifier
 ): Promise<void> {
