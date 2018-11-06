@@ -46,7 +46,7 @@ export interface Benchmark {
   run(): void;
 }
 
-export function benchmark(suite: Suite): Benchmark;
+export function benchmark(): Benchmark;
 
 /**
  * @internal
