@@ -22,13 +22,6 @@ export interface Result {
  * @internal
  */
 export interface Notifier {
-  error: (message: string) => void;
-}
-
-/**
- * @internal
- */
-export interface Notifier {
   out: (message: string) => void;
 }
 
