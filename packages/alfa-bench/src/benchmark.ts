@@ -28,13 +28,13 @@ export interface Event {
 /**
  * @internal
  */
-export interface Notifier {
-  out: (message: string) => void;
+export interface Printer {
+  print: (message: string) => void;
 }
 
-const defaultNotifier: Notifier = {
-  out: message => {
-    process.stderr.write(`${message}\n`);
+const defaultNotifier: Printer = {
+  print: message => {
+    process.stdout.write(`${message}\n`);
   }
 };
 
@@ -58,7 +58,7 @@ export function benchmark(): Benchmark;
 export function benchmark(
   suite: Suite,
   results: Array<Result>,
-  notifier: Notifier
+  notifier: Printer
 ): Benchmark;
 
 /**
@@ -109,7 +109,7 @@ export function benchmark(
       output += `\n${chalk.gray(char)} ${format(results[i], fastest, longest)}`;
     }
 
-    notifier.out(`${output}\n`);
+    notifier.print(`${output}\n`);
   });
 
   return suite;
