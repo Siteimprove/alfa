@@ -61,8 +61,11 @@ test("Outputs stats in each cycle", t => {
   const notifier: Notifier = {
     out: message => {
       t.equal(
-        message,
-        "\u001b[34m2\u001b[39m tests completed\n\u001b[90m├\u001b[39m \u001b[32m\u001b[4mFoo\u001b[24m\u001b[39m\u001b[90m x \u001b[39m\u001b[32m50\u001b[39m ops/sec\u001b[90m ±\u001b[39m\u001b[33m5.00\u001b[39m\u001b[34m%\u001b[39m\u001b[90m (3 runs sampled)\u001b[39m\n\u001b[90m└\u001b[39m Foo\u001b[90m x \u001b[39m\u001b[31m25\u001b[39m ops/sec\u001b[90m ±\u001b[39m\u001b[33m5.00\u001b[39m\u001b[34m%\u001b[39m\u001b[90m (5 runs sampled)\u001b[39m\n"
+        message.replace(
+          /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+          ""
+        ),
+        "2 tests completed\n├ Foo x 50 ops/sec ±5.00% (3 runs sampled)\n└ Foo x 25 ops/sec ±5.00% (5 runs sampled)\n"
       );
     }
   };
