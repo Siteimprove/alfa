@@ -17,7 +17,7 @@ import {
 export function audit<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rules: Array<Rule<A, T>>,
-  answers: Array<Answer<T>> = [],
+  answers: Array<Answer<T>> = []
 ): Array<Result<T> | Question<T>> {
   const results: Array<Result<T> | Question<T>> = [];
 
