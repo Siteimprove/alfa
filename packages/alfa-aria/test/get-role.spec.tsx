@@ -51,3 +51,13 @@ test("Is case-sensitive when supporting Firefox", t => {
     );
   });
 });
+
+test("Can get the role of a form", t => {
+  const form = (
+    <form>
+      <input type="text" />
+    </form>
+  );
+
+  t.equal(getRole(form, form), Roles.Form);
+});

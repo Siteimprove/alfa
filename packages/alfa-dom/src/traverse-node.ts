@@ -1,4 +1,5 @@
 import { getAssignedNodes } from "./get-assigned-nodes";
+import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { Node } from "./types";
 
@@ -19,7 +20,13 @@ export function traverseNode(
   visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): boolean {
-  return visitNode(node, null, context, visitors, options);
+  let parentNode: Node | null = null;
+
+  if (node !== context) {
+    parentNode = getParentNode(node, context);
+  }
+
+  return visitNode(node, parentNode, context, visitors, options);
 }
 
 function visitNode(

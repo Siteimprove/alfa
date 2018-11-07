@@ -26,10 +26,7 @@ import * as Roles from "./roles";
 
 const { isArray } = Array;
 
-/**
- * @internal
- */
-export type TextAlternativeOptions = Readonly<{
+type TextAlternativeOptions = Readonly<{
   recursing?: boolean;
   referencing?: boolean;
   revisiting?: boolean;
@@ -124,7 +121,7 @@ export function getTextAlternative(
       // https://www.w3.org/TR/accname/#step2D
       .map(alt =>
         none(alt, () =>
-          map(getRole(node, context), role => {
+          map(getRole(node, context, { implicit: false }), role => {
             if (role !== Roles.Presentation && role !== Roles.None) {
               return getNativeTextAlternative(node, context, visited, options);
             }

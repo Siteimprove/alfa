@@ -212,4 +212,26 @@ export namespace Contexts {
      */
     offset: "ptr:offset"
   };
+
+  /**
+   * @see https://www.w3.org/TR/Pointers-in-RDF/#xPathPointerClass
+   */
+  export const XPathPointer: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    /**
+     * @see https://www.w3.org/TR/Pointers-in-RDF/#referenceProperty
+     */
+    reference: {
+      "@id": "ptr:reference",
+      "@type": "earl:TestSubject"
+    },
+
+    /**
+     * @see https://www.w3.org/TR/Pointers-in-RDF/#expressionProperty
+     */
+    expression: "ptr:expression"
+  };
 }
