@@ -12,7 +12,9 @@ export const Manual: Atomic.Rule<Document, Element> = {
   definition: (applicability, expectations, { document }) => {
     const root = document.childNodes[0];
 
-    applicability(() => root !== undefined && isElement(root) ? [root] : null);
+    applicability(
+      () => (root !== undefined && isElement(root) ? [root] : null)
+    );
 
     expectations((target, expectation, question) => {
       const hasAlt = getAttribute(target, "alt") !== "";

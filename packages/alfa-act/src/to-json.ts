@@ -1,4 +1,14 @@
-import { Attribute, Document, getOwnerElement, getParentNode, getTagName, isDocument, isElement, Node, serialize } from "@siteimprove/alfa-dom";
+import {
+  Attribute,
+  Document,
+  getOwnerElement,
+  getParentNode,
+  getTagName,
+  isDocument,
+  isElement,
+  Node,
+  serialize
+} from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import * as JSON from "@siteimprove/alfa-json-ld";
 import { expand, List } from "@siteimprove/alfa-json-ld";
@@ -144,21 +154,21 @@ export function toJson<A extends Aspect, T extends Target>(
   return expand([request, response, document, ...assertions]);
 }
 
-function getPointer<A extends Aspect, T extends Target>(aspects: AspectsFor<A>, target: T): JSON.Document | null {
+function getPointer<A extends Aspect, T extends Target>(
+  aspects: AspectsFor<A>,
+  target: T
+): JSON.Document | null {
   if ("document" in aspects) {
     const { document } = aspects as AspectsFor<Document>;
 
     return {
       pointer: {
         "@context": Contexts.XPathPointer,
-        "@type": [
-          "ptr:Pointer",
-          "ptr:XPathPointer",
-        ],
+        "@type": ["ptr:Pointer", "ptr:XPathPointer"],
         reference: { "@id": "_:document" },
         expression: getPath(target, document)
       }
-    }
+    };
   }
 
   return null;
@@ -182,7 +192,10 @@ function getPath(target: Node | Attribute, context: Node): string {
             return `${getPath(parentNode, context)}/${tagName}[${j}]`;
           }
 
-          if (isElement(childNode) && getTagName(childNode, context) === tagName) {
+          if (
+            isElement(childNode) &&
+            getTagName(childNode, context) === tagName
+          ) {
             j++;
           }
         }

@@ -12,8 +12,8 @@ export interface Aspects {
 export type Aspect = Aspects[keyof Aspects];
 
 export type AspectKeysFor<A extends Aspect> = {
-  readonly [P in keyof Aspects]: Aspects[P] extends A ? P : never;
-}[keyof Aspects]
+  readonly [P in keyof Aspects]: Aspects[P] extends A ? P : never
+}[keyof Aspects];
 
 export type AspectsFor<A extends Aspect> = {
   readonly [P in AspectKeysFor<A>]: Aspects[P]
@@ -26,9 +26,7 @@ export const enum Outcome {
   CantTell = "cantTell"
 }
 
-export type Result<
-  T extends Target = Target
-> = Readonly<
+export type Result<T extends Target = Target> = Readonly<
   | {
       rule: Rule["id"];
       outcome: Outcome.Passed | Outcome.Failed;
@@ -40,9 +38,7 @@ export type Result<
     }
 >;
 
-export interface Question<
-  T extends Target = Target
-> {
+export interface Question<T extends Target = Target> {
   readonly rule: Rule["id"];
   readonly question: string;
   readonly target: T;
@@ -76,13 +72,11 @@ export type Rule<A extends Aspect = Aspect, T extends Target = Target> =
   | Composite.Rule<A, T>;
 
 export namespace Atomic {
-  export type Applicability<
-    T extends Target = Target
-  > = () => ReadonlyArray<T> | null;
+  export type Applicability<T extends Target = Target> = () => ReadonlyArray<
+    T
+  > | null;
 
-  export type Expectations<
-    T extends Target = Target
-  > = <S extends T>(
+  export type Expectations<T extends Target = Target> = <S extends T>(
     target: S,
     expectation: (id: number, holds: boolean) => void,
     question: (question: string) => boolean
@@ -104,9 +98,7 @@ export namespace Atomic {
 }
 
 export namespace Composite {
-  export type Expectations<
-    T extends Target = Target
-  > = <S extends T>(
+  export type Expectations<T extends Target = Target> = <S extends T>(
     outcomes: ReadonlyArray<Pick<Result<S>, "outcome">>,
     expectation: (id: number, holds: boolean) => void
   ) => void;
