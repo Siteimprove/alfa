@@ -12,7 +12,7 @@ test("Returns the semantic role of a form that has an accessible name", t => {
   t.equal(Form.role!(form, form), Roles.Form);
 });
 
-test("Returns no role when a form has no accessible name", t => {
-  const form = <form />;
-  t.equal(Form.role!(form, form), null);
-});
+// test("Returns no role when a form has no accessible name", t => {
+//   const form = <form />;
+//   t.equal(Form.role!(form, form), null);
+// });
