@@ -1,5 +1,5 @@
 import { getParentElement } from "./get-parent-element";
-import { getComputedStyle } from "./get-style";
+import { getCascadedStyle } from "./get-style";
 import { Element, Node } from "./types";
 
 /**
@@ -22,7 +22,7 @@ export function isRendered(element: Element, context: Node): boolean {
     next !== null;
     next = getParentElement(next, context, { flattened: true })
   ) {
-    const { display } = getComputedStyle(next, context);
+    const { display } = getCascadedStyle(next, context);
 
     if (display !== undefined && display.value === "none") {
       return false;

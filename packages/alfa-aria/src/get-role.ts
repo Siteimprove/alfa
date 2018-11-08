@@ -1,8 +1,4 @@
-import {
-  BrowserSpecific,
-  isBrowserSupported,
-  map
-} from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Option, values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
@@ -37,11 +33,7 @@ export function getRole(
   // Firefox currently treats the `role` attribute as case-sensitive so if it's
   // set and it's not lowercased, we branch off.
   // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
-  if (
-    value !== null &&
-    value !== value.toLowerCase() &&
-    isBrowserSupported("firefox")
-  ) {
+  if (value !== null && value !== value.toLowerCase()) {
     role = BrowserSpecific.of(value, ["firefox"]).branch(value.toLowerCase(), [
       "chrome",
       "edge",
