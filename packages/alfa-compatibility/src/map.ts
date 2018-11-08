@@ -62,7 +62,7 @@ export function map<T, U>(
       }
     }
 
-    return BrowserSpecific.of(values);
+    return BrowserSpecific.of(values).get();
   }
 
   return iteratee(value);
