@@ -30,7 +30,12 @@ export const SIA_R9: Atomic.Rule<Document, Element> = {
     });
 
     expectations((target, expectation) => {
-      expectation(1, getRefreshTime(getAttribute(target, "content")!) === 0);
+      expectation(
+        1,
+        getRefreshTime(getAttribute(target, "content")!) === 0 ||
+          (getRefreshTime(getAttribute(target, "content")!) !== null &&
+            getRefreshTime(getAttribute(target, "content")!)! > 72000)
+      );
     });
   }
 };
