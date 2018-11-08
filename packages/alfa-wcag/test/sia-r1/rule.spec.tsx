@@ -34,7 +34,7 @@ test("SIA-R1 fails when only other namespace has a title", t => {
     <html>
       <head>
         <svg>
-          <title />
+          <title>Hello World</title>
         </svg>
       </head>
     </html>
