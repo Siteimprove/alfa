@@ -1,4 +1,4 @@
-import { audit } from "@siteimprove/alfa-act";
+import { audit, Outcome } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
@@ -50,5 +50,5 @@ test("SIA-R1 only works in the HTML namespace", t => {
     </svg>
   ]);
 
-  outcome(t, audit({ document }, [SIA_R1]), { inapplicable: [document] });
+  outcome(t, audit({ document }, [SIA_R1]), Outcome.Inapplicable);
 });
