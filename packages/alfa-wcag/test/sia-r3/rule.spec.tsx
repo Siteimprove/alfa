@@ -25,8 +25,7 @@ test("SIA-R3 fails when not all id attributes are unique", t => {
 
 test("SIA-R3 is inapplicable when no id attributes are present", t => {
   const span = <span class="foo" />;
-  const div = <div class="foo" />;
-  const aspects = aspectsFromNodes([span, div]);
+  const aspects = aspectsFromNodes([span]);
 
-  outcome(t, audit(aspects, [SIA_R3]), { inapplicable: [span, div] });
+  outcome(t, audit(aspects, [SIA_R3]), { inapplicable: [span] });
 });
