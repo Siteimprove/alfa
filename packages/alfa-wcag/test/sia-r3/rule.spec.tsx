@@ -2,28 +2,30 @@ import { audit, Outcome } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { SIA_R4 } from "../../src/sia-r4/rule";
+import { SIA_R3 } from "../../src/sia-r3/rule";
 
 import { aspectsFromNodes } from "../helpers/aspects-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R4 passes when document has a language attribute", t => {
-  const html = <html lang="en" />;
-  const aspects = aspectsFromNodes([html]);
+test("SIA-R3 passes when all id attributes are unique", t => {
+  const span = <span id="foo" />;
+  const div = <div id="bar" />;
+  const aspects = aspectsFromNodes([span, div]);
 
-  outcome(t, audit(aspects, [SIA_R4]), { passed: [html] });
+  outcome(t, audit(aspects, [SIA_R3]), { passed: [span, div] });
 });
 
-test("SIA-R4 failed when document has no language attribute", t => {
-  const html = <html />;
-  const aspects = aspectsFromNodes([html]);
+test("SIA-R3 fails when not all id attributes are unique", t => {
+  const span = <span id="foo" />;
+  const div = <div id="foo" />;
+  const aspects = aspectsFromNodes([span, div]);
 
-  outcome(t, audit(aspects, [SIA_R4]), { failed: [html] });
+  outcome(t, audit(aspects, [SIA_R3]), { failed: [span, div] });
 });
 
-test("SIA-R4 is inapplicable when document is not in the HTML namespace", t => {
-  const svg = <svg lang="en" />;
-  const aspects = aspectsFromNodes([svg]);
+test("SIA-R3 is inapplicable when no id attributes are present", t => {
+  const span = <span class="foo" />;
+  const aspects = aspectsFromNodes([span]);
 
-  outcome(t, audit(aspects, [SIA_R4]), Outcome.Inapplicable);
+  outcome(t, audit(aspects, [SIA_R3]), Outcome.Inapplicable);
 });

@@ -2,37 +2,28 @@ import { audit, Outcome } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { SIA_R2 } from "../../src/sia-r2/rule";
+import { SIA_R4 } from "../../src/sia-r4/rule";
 
-import { documentFromNodes } from "../helpers/document-from-nodes";
+import { aspectsFromNodes } from "../helpers/aspects-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R2 passes when an image has a textual alternative", t => {
-  const image = (
-    <img src="https://picsum.photos/200/300" alt="A placeholder image" />
-  );
-  const div = (
-    <div
-      role="img"
-      style="width: 200px; height: 300px; background-image: url(https://picsum.photos/200/300)"
-      aria-label="A placeholder image"
-    />
-  );
-  const document = documentFromNodes([image, div]);
+test("SIA-R4 passes when document has a language attribute", t => {
+  const html = <html lang="en" />;
+  const aspects = aspectsFromNodes([html]);
 
-  outcome(t, audit({ document }, [SIA_R2]), { passed: [image, div] });
+  outcome(t, audit(aspects, [SIA_R4]), { passed: [html] });
 });
 
-test("SIA-R2 fails when an image has no textual alternative", t => {
-  const image = <img src="https://picsum.photos/200/300" />;
-  const document = documentFromNodes([image]);
+test("SIA-R4 failed when document has no language attribute", t => {
+  const html = <html />;
+  const aspects = aspectsFromNodes([html]);
 
-  outcome(t, audit({ document }, [SIA_R2]), { failed: [image] });
+  outcome(t, audit(aspects, [SIA_R4]), { failed: [html] });
 });
 
-test("SIA-R2 is inapplicable when an image has no need for an alternative", t => {
-  const image = <img src="https://picsum.photos/200/300" aria-hidden="true" />;
-  const document = documentFromNodes([image]);
+test("SIA-R4 is inapplicable when document is not in the HTML namespace", t => {
+  const svg = <svg lang="en" />;
+  const aspects = aspectsFromNodes([svg]);
 
-  outcome(t, audit({ document }, [SIA_R2]), Outcome.Inapplicable);
+  outcome(t, audit(aspects, [SIA_R4]), Outcome.Inapplicable);
 });
