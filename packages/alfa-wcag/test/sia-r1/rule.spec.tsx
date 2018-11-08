@@ -4,8 +4,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { SIA_R1 } from "../../src/sia-r1/rule";
 
-import { outcome } from "../helpers/outcome";
 import { documentFromNodes } from "../helpers/document-from-nodes";
+import { outcome } from "../helpers/outcome";
 
 test("SIA-R1 passes when document has a title", t => {
   const document = documentFromNodes([
