@@ -2,18 +2,24 @@ import { test } from "@siteimprove/alfa-test";
 import { BrowserSpecific } from "../src/browser-specific";
 import { map } from "../src/map";
 
-const n = BrowserSpecific.of(1, ["chrome"]);
+const n = BrowserSpecific.of(1, ["chrome"]).branch(2, ["firefox"]);
 
 const f: (n: number) => number = n => n * 2;
 
 const g: (n: number) => number = n => n + 4;
 
 test("Satifies the law of left identity", t => {
-  t.deepEqual(map(n, f), BrowserSpecific.of(f(1), ["chrome"]));
+  t.deepEqual(
+    map(n, f),
+    BrowserSpecific.of(f(1), ["chrome"]).branch(f(2), ["firefox"])
+  );
 });
 
 test("Satifies the law of right identity", t => {
-  t.deepEqual(map(n, n => BrowserSpecific.of(n, ["chrome"])), n);
+  t.deepEqual(
+    map(n, n => BrowserSpecific.of(n, ["chrome"]).branch(n, ["firefox"])),
+    n
+  );
 });
 
 test("Satifies the law of associativity", t => {
