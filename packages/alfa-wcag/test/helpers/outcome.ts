@@ -1,5 +1,4 @@
 import {
-  Aspect,
   isResult,
   Outcome,
   Question,
@@ -8,9 +7,9 @@ import {
 } from "@siteimprove/alfa-act";
 import { Assertions } from "@siteimprove/alfa-test";
 
-export function outcome<A extends Aspect, T extends Target>(
+export function outcome<T extends Target>(
   t: Assertions,
-  results: Array<Result<A, T> | Question<A, T>>,
+  results: Array<Result<T> | Question<T>>,
   assert: { [O in Outcome]?: Array<T> }
 ) {
   const outcomes: Array<Outcome> = [
