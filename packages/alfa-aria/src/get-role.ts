@@ -34,13 +34,9 @@ export function getRole(
   // set and it's not lowercased, we branch off.
   // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
   if (value !== null && value !== value.toLowerCase()) {
-    role = BrowserSpecific.of(value, ["firefox"]).branch(value.toLowerCase(), [
-      "chrome",
-      "edge",
-      "ie",
-      "opera",
-      "safari"
-    ]);
+    role = BrowserSpecific.of(value, ["firefox"])
+      .branch(value.toLowerCase(), ["chrome", "edge", "ie", "opera", "safari"])
+      .get();
   } else {
     role = value === null ? value : value.toLowerCase();
   }
