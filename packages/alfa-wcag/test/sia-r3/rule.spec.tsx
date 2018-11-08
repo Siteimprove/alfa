@@ -1,4 +1,4 @@
-import { audit } from "@siteimprove/alfa-act";
+import { audit, Outcome } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
@@ -25,5 +25,5 @@ test("SIA-R4 is inapplicable when document is not in the HTML namespace", t => {
   const svg = <svg lang="en" />;
   const aspects = aspectsFromNodes([svg]);
 
-  outcome(t, audit(aspects, [SIA_R4]), { inapplicable: [svg] });
+  outcome(t, audit(aspects, [SIA_R4]), Outcome.Inapplicable);
 });

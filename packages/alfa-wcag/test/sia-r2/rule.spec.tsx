@@ -1,4 +1,4 @@
-import { audit } from "@siteimprove/alfa-act";
+import { audit, Outcome } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
@@ -34,5 +34,5 @@ test("SIA-R2 is inapplicable when an image has no need for an alternative", t =>
   const image = <img src="https://picsum.photos/200/300" aria-hidden="true" />;
   const document = documentFromNodes([image]);
 
-  outcome(t, audit({ document }, [SIA_R2]), { inapplicable: [image] });
+  outcome(t, audit({ document }, [SIA_R2]), Outcome.Inapplicable);
 });
