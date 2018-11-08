@@ -1,7 +1,7 @@
 import {
   Element,
   getAttribute,
-  getComputedStyle,
+  getCascadedStyle,
   getParentElement,
   isElement,
   Node,
@@ -14,7 +14,7 @@ export function isVisible(node: Element | Text, context: Node): boolean {
       return false;
     }
 
-    const { display, visibility } = getComputedStyle(node, context);
+    const { display, visibility } = getCascadedStyle(node, context);
 
     if (display !== undefined && display.value === "none") {
       return false;

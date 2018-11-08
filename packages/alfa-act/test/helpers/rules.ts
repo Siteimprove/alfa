@@ -10,7 +10,11 @@ export const Manual: Atomic.Rule<Document, Element> = {
   id: "_:manual-rule",
   requirements: [{ id: "wcag:page-titled", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(() => (isElement(document) ? [document] : null));
+    const root = document.childNodes[0];
+
+    applicability(
+      () => (root !== undefined && isElement(root) ? [root] : null)
+    );
 
     expectations((target, expectation, question) => {
       const hasAlt = getAttribute(target, "alt") !== "";

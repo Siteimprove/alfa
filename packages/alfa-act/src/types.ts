@@ -11,10 +11,12 @@ export interface Aspects {
 
 export type Aspect = Aspects[keyof Aspects];
 
+export type AspectKeysFor<A extends Aspect> = {
+  readonly [P in keyof Aspects]: Aspects[P] extends A ? P : never
+}[keyof Aspects];
+
 export type AspectsFor<A extends Aspect> = {
-  readonly [P in keyof Aspects]: Aspects[P] extends A
-    ? Aspects[P]
-    : Aspects[P] | undefined
+  readonly [P in AspectKeysFor<A>]: Aspects[P]
 };
 
 export const enum Outcome {
@@ -24,32 +26,25 @@ export const enum Outcome {
   CantTell = "cantTell"
 }
 
-export type Result<
-  A extends Aspect = Aspect,
-  T extends Target = Target
-> = Readonly<
+export type Result<T extends Target = Target> = Readonly<
   | {
-      rule: Rule<A, T>;
+      rule: Rule["id"];
       outcome: Outcome.Passed | Outcome.Failed;
       target: T;
     }
   | {
-      rule: Rule<A, T>;
+      rule: Rule["id"];
       outcome: Outcome.Inapplicable;
     }
 >;
 
-export interface Question<
-  A extends Aspect = Aspect,
-  T extends Target = Target
-> {
-  readonly rule: Rule<A, T>;
+export interface Question<T extends Target = Target> {
+  readonly rule: Rule["id"];
   readonly question: string;
-  readonly target?: T;
+  readonly target: T;
 }
 
-export interface Answer<A extends Aspect = Aspect, T extends Target = Target>
-  extends Question<A, T> {
+export interface Answer<T extends Target = Target> extends Question<T> {
   readonly answer: boolean;
 }
 
@@ -62,7 +57,7 @@ export interface Locale {
   readonly expectations: Readonly<{
     [id: string]: Readonly<{
       description: string;
-      outcome: Readonly<{ [P in Outcome]?: string }>;
+      outcome: Readonly<{ [P in Outcome.Passed | Outcome.Failed]?: string }>;
     }>;
   }>;
 }
@@ -77,16 +72,12 @@ export type Rule<A extends Aspect = Aspect, T extends Target = Target> =
   | Composite.Rule<A, T>;
 
 export namespace Atomic {
-  export type Applicability<
-    A extends Aspect = Aspect,
-    T extends Target = Target
-  > = () => ReadonlyArray<T> | null;
+  export type Applicability<T extends Target = Target> = () => ReadonlyArray<
+    T
+  > | null;
 
-  export type Expectations<
-    A extends Aspect = Aspect,
-    T extends Target = Target
-  > = (
-    target: T,
+  export type Expectations<T extends Target = Target> = <S extends T>(
+    target: S,
     expectation: (id: number, holds: boolean) => void,
     question: (question: string) => boolean
   ) => void;
@@ -99,19 +90,16 @@ export namespace Atomic {
     readonly locales?: ReadonlyArray<Locale>;
 
     readonly definition: (
-      applicability: (applicability: Applicability<A, T>) => void,
-      expectations: (expectations: Expectations<A, T>) => void,
+      applicability: (applicability: Applicability<T>) => void,
+      expectations: (expectations: Expectations<T>) => void,
       aspects: AspectsFor<A>
     ) => void;
   }
 }
 
 export namespace Composite {
-  export type Expectations<
-    A extends Aspect = Aspect,
-    T extends Target = Target
-  > = (
-    results: ReadonlyArray<Result<A, T>>,
+  export type Expectations<T extends Target = Target> = <S extends T>(
+    outcomes: ReadonlyArray<Pick<Result<S>, "outcome">>,
     expectation: (id: number, holds: boolean) => void
   ) => void;
 
@@ -125,7 +113,7 @@ export namespace Composite {
     readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
 
     readonly definition: (
-      expectations: (expectations: Expectations<A, T>) => void
+      expectations: (expectations: Expectations<T>) => void
     ) => void;
   }
 }
