@@ -1,6 +1,6 @@
 import {
   Aspect,
-  Aspects,
+  AspectsFor,
   audit,
   isResult,
   Outcome,
@@ -11,10 +11,10 @@ import {
 import { Assertions } from "@siteimprove/alfa-test";
 import { concat } from "@siteimprove/alfa-util";
 
-export function outcome<T extends Target, A extends Aspect, B extends Aspects>(
+export function outcome<T extends Target, A extends Aspect>(
   t: Assertions,
   rule: Rule<A>,
-  aspects: Aspects,
+  aspects: AspectsFor<A>,
   assert:
     | Outcome.Inapplicable
     | Readonly<
@@ -34,9 +34,9 @@ export function outcome<T extends Target, A extends Aspect, B extends Aspects>(
 
   if (assert === Outcome.Inapplicable) {
     t.equal(results.length, 1, "There must only be one result");
-    t.equal(
-      (results[0] as Result<T>).outcome,
-      Outcome.Inapplicable,
+    t(
+      isResult(results[0]) &&
+        (results[0] as Result<T>).outcome === Outcome.Inapplicable,
       "The outcome must be inapplicable"
     );
     return;
