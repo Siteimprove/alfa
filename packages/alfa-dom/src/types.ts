@@ -338,17 +338,13 @@ export interface ImportRule extends Rule {
 
 /**
  * @see https://www.w3.org/TR/cssom/#cssmediarule
+ * @see https://www.w3.org/TR/css-conditional/#cssmediarule
  */
-export interface MediaRule extends GroupingRule {
+export interface MediaRule extends ConditionRule {
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssrule-media_rule
    */
   readonly type: RuleType.Media;
-
-  /**
-   * @see https://www.w3.org/TR/cssom/#dom-cssmediarule-media
-   */
-  readonly media: ArrayLike<string>;
 }
 
 /**
