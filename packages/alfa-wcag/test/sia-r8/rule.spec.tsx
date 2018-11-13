@@ -22,8 +22,8 @@ test("SIA-R8 fails when a input has no accessible name", t => {
 });
 
 test("SIA-R8 is inapplicable when element does not have a specific role", t => {
-  const input = <input />;
-  const document = documentFromNodes([input]);
+  const div = <div />;
+  const document = documentFromNodes([div]);
 
   outcome(t, SIA_R8, { document }, Outcome.Inapplicable);
 });
