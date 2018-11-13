@@ -16,7 +16,7 @@ test("SIA-R1 passes when document has a title", t => {
     </html>
   ]);
 
-  outcome(t, audit({ document }, [SIA_R1]), { passed: [document] });
+  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), { passed: [document] });
 });
 
 test("SIA-R1 fails when document has no title", t => {
@@ -26,7 +26,7 @@ test("SIA-R1 fails when document has no title", t => {
     </html>
   ]);
 
-  outcome(t, audit({ document }, [SIA_R1]), { failed: [document] });
+  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), { failed: [document] });
 });
 
 test("SIA-R1 fails when only other namespace has a title", t => {
@@ -40,7 +40,7 @@ test("SIA-R1 fails when only other namespace has a title", t => {
     </html>
   ]);
 
-  outcome(t, audit({ document }, [SIA_R1]), { failed: [document] });
+  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), { failed: [document] });
 });
 
 test("SIA-R1 only works in the HTML namespace", t => {
@@ -50,5 +50,5 @@ test("SIA-R1 only works in the HTML namespace", t => {
     </svg>
   ]);
 
-  outcome(t, audit({ document }, [SIA_R1]), Outcome.Inapplicable);
+  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), Outcome.Inapplicable);
 });
