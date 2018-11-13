@@ -10,16 +10,16 @@ import {
 import { Assertions } from "@siteimprove/alfa-test";
 import { concat } from "@siteimprove/alfa-util";
 
-export function outcome<T extends Target, A extends Aspect>(
+export function outcome<A extends Aspect, T extends Target>(
   t: Assertions,
-  rule: Rule<A>,
+  rule: Rule<A, T>,
   aspects: AspectsFor<A>,
   assert:
     | Outcome.Inapplicable
     | Readonly<
         { [O in Outcome.Failed | Outcome.Passed | Outcome.CantTell]?: Array<T> }
       >,
-  compositeRules: Array<Rule<A>> = []
+  dependencies: Array<Rule<A>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,
@@ -27,7 +27,7 @@ export function outcome<T extends Target, A extends Aspect>(
     Outcome.CantTell
   ];
 
-  const results = audit(aspects, concat([rule], compositeRules)).filter(
+  const results = audit(aspects, concat([rule], dependencies)).filter(
     result => result.rule === rule.id
   );
 
