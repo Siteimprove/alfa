@@ -1,14 +1,14 @@
-import { audit, Outcome } from "@siteimprove/alfa-act";
+import { Outcome } from "@siteimprove/alfa-act";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { SIA_R1 } from "../../src/sia-r1/rule";
 
-import { documentFromNodes } from "../helpers/document-from-nodes";
+import { aspectsFromNodes } from "../helpers/aspects-from-nodes";
 import { outcome } from "../helpers/outcome";
 
 test("SIA-R1 passes when document has a title", t => {
-  const document = documentFromNodes([
+  const aspects = aspectsFromNodes([
     <html>
       <head>
         <title>Hello world</title>
@@ -16,21 +16,21 @@ test("SIA-R1 passes when document has a title", t => {
     </html>
   ]);
 
-  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), { passed: [document] });
+  outcome(t, SIA_R1, aspects, { passed: [aspects.document] });
 });
 
 test("SIA-R1 fails when document has no title", t => {
-  const document = documentFromNodes([
+  const aspects = aspectsFromNodes([
     <html>
       <head />
     </html>
   ]);
 
-  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), { failed: [document] });
+  outcome(t, SIA_R1, aspects, { failed: [aspects.document] });
 });
 
 test("SIA-R1 fails when only other namespace has a title", t => {
-  const document = documentFromNodes([
+  const aspects = aspectsFromNodes([
     <html>
       <head>
         <svg>
@@ -40,15 +40,15 @@ test("SIA-R1 fails when only other namespace has a title", t => {
     </html>
   ]);
 
-  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), { failed: [document] });
+  outcome(t, SIA_R1, aspects, { failed: [aspects.document] });
 });
 
 test("SIA-R1 only works in the HTML namespace", t => {
-  const document = documentFromNodes([
+  const aspects = aspectsFromNodes([
     <svg>
       <title>Hello World</title>
     </svg>
   ]);
 
-  outcome(t, SIA_R1, audit({ document }, [SIA_R1]), Outcome.Inapplicable);
+  outcome(t, SIA_R1, aspects, Outcome.Inapplicable);
 });

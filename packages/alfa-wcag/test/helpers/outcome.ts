@@ -1,18 +1,18 @@
 import {
   Aspect,
+  Aspects,
+  audit,
   isResult,
   Outcome,
-  Question,
-  Result,
   Rule,
   Target
 } from "@siteimprove/alfa-act";
 import { Assertions } from "@siteimprove/alfa-test";
 
-export function outcome<T extends Target, A extends Aspect>(
+export function outcome<T extends Target, A extends Aspect, B extends Aspects>(
   t: Assertions,
   rule: Rule<A>,
-  results: Array<Result<T> | Question<T>>,
+  aspects: Aspects,
   assert:
     | Outcome.Inapplicable
     | Readonly<
@@ -25,15 +25,17 @@ export function outcome<T extends Target, A extends Aspect>(
     Outcome.CantTell
   ];
 
-  const ruleResults = results.filter(result => result.rule === rule.id);
+  const results = audit(aspects, [rule]).filter(
+    result => result.rule === rule.id
+  );
 
   if (assert === Outcome.Inapplicable) {
-    t(ruleResults[0], Outcome.Inapplicable);
+    t(results[0], Outcome.Inapplicable);
     return;
   }
 
   for (const outcome of outcomes) {
-    const actual = ruleResults
+    const actual = results
       .filter(isResult)
       .filter(result => result.outcome === outcome);
 
