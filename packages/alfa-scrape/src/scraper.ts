@@ -159,7 +159,7 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
   return {
     status: response.status(),
     headers: response.headers(),
-    body: await response.text()
+    body: response.ok() ? await response.text() : ""
   };
 }
 
