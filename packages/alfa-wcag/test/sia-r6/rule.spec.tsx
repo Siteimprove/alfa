@@ -1,10 +1,10 @@
-import { audit, Outcome } from "@siteimprove/alfa-act";
+import { Outcome } from "@siteimprove/alfa-act";
 import { Element, NodeType } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { SIA_R6 } from "../../src/sia-r6/rule";
 
-import { aspectsFromNodes } from "../helpers/aspects-from-nodes";
+import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
 test("SIA-R6 passes when document has matching language attributes", t => {
@@ -27,9 +27,9 @@ test("SIA-R6 passes when document has matching language attributes", t => {
     shadowRoot: null,
     childNodes: []
   };
-  const aspects = aspectsFromNodes([html]);
+  const document = documentFromNodes([html]);
 
-  outcome(t, audit(aspects, [SIA_R6]), { passed: [html] });
+  outcome(t, SIA_R6, { document }, { passed: [html] });
 });
 
 test("SIA-R6 fails when document does not have matching language attributes", t => {
@@ -52,9 +52,9 @@ test("SIA-R6 fails when document does not have matching language attributes", t 
     shadowRoot: null,
     childNodes: []
   };
-  const aspects = aspectsFromNodes([html]);
+  const document = documentFromNodes([html]);
 
-  outcome(t, audit(aspects, [SIA_R6]), { failed: [html] });
+  outcome(t, SIA_R6, { document }, { failed: [html] });
 });
 
 test("SIA-R6 is inapplicable when document has only one language attribute", t => {
@@ -72,7 +72,7 @@ test("SIA-R6 is inapplicable when document has only one language attribute", t =
     shadowRoot: null,
     childNodes: []
   };
-  const aspects = aspectsFromNodes([html]);
+  const document = documentFromNodes([html]);
 
-  outcome(t, audit(aspects, [SIA_R6]), Outcome.Inapplicable);
+  outcome(t, SIA_R6, { document }, Outcome.Inapplicable);
 });
