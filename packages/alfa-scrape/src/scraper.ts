@@ -1,5 +1,6 @@
 import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
+import { URL } from "@siteimprove/alfa-util";
 import { readFileSync } from "fs";
 import * as puppeteer from "puppeteer";
 
@@ -46,9 +47,11 @@ export class Scraper {
   });
 
   public async scrape(
-    url: string,
+    url: string | URL,
     options: ScrapeOptions = {}
   ): Promise<ScrapeResult> {
+    const origin = typeof url === "string" ? new URL(url) : url;
+
     const {
       viewport = { width: 1280, height: 720, scale: 1 },
       credentials = null,
@@ -74,9 +77,11 @@ export class Scraper {
     let document: Promise<Document> | Document | null = null;
 
     page.on("request", async req => {
+      const destination = new URL(req.url());
+
       // If requesting the URL currently being scraped, we parse and store the
       // request as this is the one we're looking for.
-      if (req.url() === url) {
+      if (origin.href === destination.href) {
         request = parseRequest(req);
 
         await request;
@@ -105,7 +110,9 @@ export class Scraper {
     });
 
     page.on("response", async res => {
-      if (res.url() === url) {
+      const destination = new URL(res.url());
+
+      if (origin.href === destination.href) {
         response = parseResponse(res);
 
         await response;
@@ -114,7 +121,7 @@ export class Scraper {
       }
     });
 
-    await page.goto(url, { timeout, waitUntil: wait });
+    await page.goto(origin.href, { timeout, waitUntil: wait });
 
     request = await request!;
     response = await response!;
