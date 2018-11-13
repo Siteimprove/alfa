@@ -1,20 +1,25 @@
 import {
+  Aspect,
+  AspectsFor,
+  audit,
   isResult,
   Outcome,
-  Question,
-  Result,
+  Rule,
   Target
 } from "@siteimprove/alfa-act";
 import { Assertions } from "@siteimprove/alfa-test";
+import { concat } from "@siteimprove/alfa-util";
 
-export function outcome<T extends Target>(
+export function outcome<T extends Target, A extends Aspect>(
   t: Assertions,
-  results: Array<Result<T> | Question<T>>,
+  rule: Rule<A>,
+  aspects: AspectsFor<A>,
   assert:
     | Outcome.Inapplicable
     | Readonly<
         { [O in Outcome.Failed | Outcome.Passed | Outcome.CantTell]?: Array<T> }
-      >
+      >,
+  compositeRules: Array<Rule<A>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,
@@ -22,8 +27,17 @@ export function outcome<T extends Target>(
     Outcome.CantTell
   ];
 
+  const results = audit(aspects, concat([rule], compositeRules)).filter(
+    result => result.rule === rule.id
+  );
+
   if (assert === Outcome.Inapplicable) {
-    t(results[0], Outcome.Inapplicable);
+    t.equal(results.length, 1, "There must only be one result");
+    const result = results[0];
+    t(
+      isResult(result) && result.outcome === Outcome.Inapplicable,
+      "The outcome must be inapplicable"
+    );
     return;
   }
 
