@@ -4,7 +4,6 @@ import {
   audit,
   isResult,
   Outcome,
-  Result,
   Rule,
   Target
 } from "@siteimprove/alfa-act";
@@ -34,9 +33,9 @@ export function outcome<T extends Target, A extends Aspect>(
 
   if (assert === Outcome.Inapplicable) {
     t.equal(results.length, 1, "There must only be one result");
+    const result = results[0];
     t(
-      isResult(results[0]) &&
-        (results[0] as Result<T>).outcome === Outcome.Inapplicable,
+      isResult(result) && result.outcome === Outcome.Inapplicable,
       "The outcome must be inapplicable"
     );
     return;
