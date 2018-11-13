@@ -15,7 +15,7 @@ test("SIA-R16 passes when an element has all required ARIA states and properties
 });
 
 test("SIA-R16 fails when an element is missing required ARIA states and properties", t => {
-  const img = <img role="checkbox" />;
+  const img = <img role="combobox" />;
   const document = documentFromNodes([img]);
 
   outcome(t, SIA_R16, { document }, { failed: [img] });
