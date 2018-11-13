@@ -1,49 +1,55 @@
-import { Notifier, test } from "../src/test";
+import { test } from "../src/test";
 
 test("Can test a failing block", async t => {
-  const notifier: Notifier = {
-    error: message => {
-      t(message.indexOf("Input A expected to strictly equal input B") !== -1);
-    }
-  };
+  let failed = false;
 
   await test(
     "Failing test",
     t => {
       t.equal(true, false);
     },
-    notifier
+    {
+      error: message => {
+        failed = true;
+      }
+    }
   );
+
+  t(failed);
 });
 
 test("Can test a passing block", async t => {
-  const notifier: Notifier = {
-    error: message => {
-      t("", message);
-    }
-  };
+  let passed = true;
 
   await test(
     "Passing test",
     t => {
       t.equal(true, true);
     },
-    notifier
+    {
+      error: message => {
+        passed = false;
+      }
+    }
   );
+
+  t(passed);
 });
 
 test("Can test a block throwing errors", async t => {
-  const notifier: Notifier = {
-    error: message => {
-      t(message.indexOf("Error: You shall not pass") !== -1);
-    }
-  };
+  let failed = false;
 
   await test(
     "Erroring test",
     t => {
       throw Error("You shall not pass");
     },
-    notifier
+    {
+      error: message => {
+        failed = true;
+      }
+    }
   );
+
+  t(failed);
 });
