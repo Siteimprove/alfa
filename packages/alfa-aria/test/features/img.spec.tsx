@@ -28,7 +28,10 @@ test("Returns no role if an image does not have an alt attribute", t => {
 
 test("Returns the allowed roles of an image with an alt attribute set to the empty string", t => {
   const img = <img alt="" />;
-  t.deepEqual(Img.allowedRoles(img, img, device), [Roles.None, Roles.Presentation]);
+  t.deepEqual(Img.allowedRoles(img, img, device), [
+    Roles.None,
+    Roles.Presentation
+  ]);
 });
 
 test("Returns the allowed roles of an image with a non-empty string alt attribute", t => {
