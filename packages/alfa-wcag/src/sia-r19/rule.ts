@@ -63,11 +63,11 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
           break;
 
         case "integer":
-          valid = /\d+/.test(value);
+          valid = /^\d+$/.test(value);
           break;
 
         case "number":
-          valid = /\d+(\.\d+)?/.test(value);
+          valid = /^\d+(\.\d+)?$/.test(value);
           break;
 
         case "string":
@@ -81,10 +81,10 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
 
         case "token-list":
           valid =
-            attribute.values!.find(
+            value.split(/\s+/).find(
               found =>
-                value.split(/\s+/).find(value => value === found) !== undefined
-            ) !== undefined;
+                attribute.values!.find(value => value === found) === undefined
+            ) === undefined;
       }
 
       expectation(1, valid);
