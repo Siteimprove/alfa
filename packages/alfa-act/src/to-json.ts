@@ -16,10 +16,22 @@ import { groupBy } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
 import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 
+// The `toJson()` function is special in that it requires use of conditional
+// types in order to correctly infer the union of aspect and target types for a
+// list of rules. In order to do so, we unfortunately have to make use of the
+// `any` type, which trips up TSLint as we've made the `any` type forbidden and
+// this for good reason.
+//
+// tslint:disable:no-any
+
 const { assign } = Object;
 
-export function toJson<A extends Aspect, T extends Target>(
-  rules: Array<Rule<A, T>>,
+type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T> ? A : never;
+
+type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T> ? T : never;
+
+export function toJson<R extends Rule<any, any>, A extends AspectsOf<R> = AspectsOf<R>, T extends TargetsOf<R> = TargetsOf<R>>(
+  rules: Array<R>,
   results: Array<Result<T>>,
   aspects: AspectsFor<A>
 ): List {

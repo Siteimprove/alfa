@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import { concat } from "@siteimprove/alfa-util";
 import { AncestorFilter } from "./ancestor-filter";
 import { isElement } from "./guards";
@@ -33,7 +34,7 @@ const cascades: WeakMap<Document, Cascade> = new WeakMap();
 /**
  * @internal
  */
-export function getCascade(context: Document): Cascade {
+export function getCascade(context: Document, device: Device): Cascade {
   let cascade = cascades.get(context);
 
   if (cascade === undefined) {
@@ -43,7 +44,8 @@ export function getCascade(context: Document): Cascade {
     const ruleTree = new RuleTree();
 
     const selectorMap = new SelectorMap(
-      concat([UserAgent], context.styleSheets)
+      concat([UserAgent], context.styleSheets),
+      device
     );
 
     traverseNode(context, context, {

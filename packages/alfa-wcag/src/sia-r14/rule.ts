@@ -6,6 +6,7 @@ import {
   hasNameFrom
 } from "@siteimprove/alfa-aria";
 import { some } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -20,10 +21,10 @@ import {
   traverseNode
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R14: Atomic.Rule<Document, Element> = {
+export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r14.html",
   requirements: [{ id: "wcag:label-in-name", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     applicability(() =>
       querySelectorAll<Element>(
         document,
@@ -31,9 +32,9 @@ export const SIA_R14: Atomic.Rule<Document, Element> = {
         node =>
           isElement(node) &&
           isHtmlElement(node, document) &&
-          isWidget(node, document) &&
-          isContentLabelable(node, document) &&
-          hasVisibleTextContent(node, document) &&
+          isWidget(node, document, device) &&
+          isContentLabelable(node, document, device) &&
+          hasVisibleTextContent(node, document, device) &&
           (hasAttribute(node, "aria-label") ||
             hasAttribute(node, "aria-labelledby"))
       )
@@ -41,13 +42,13 @@ export const SIA_R14: Atomic.Rule<Document, Element> = {
 
     expectations((target, expectation) => {
       const visibleTextContent = normalize(
-        getVisibleTextContent(target, document)
+        getVisibleTextContent(target, document, device)
       );
 
       expectation(
         1,
         some(
-          getTextAlternative(target, document),
+          getTextAlternative(target, document, device),
           textAlternative =>
             textAlternative !== null &&
             normalize(textAlternative).includes(visibleTextContent)
@@ -64,7 +65,7 @@ function normalize(input: string): string {
     .replace(/\s+/, " ");
 }
 
-function getVisibleTextContent(element: Element, context: Node): string {
+function getVisibleTextContent(element: Element, context: Node, device: Device): string {
   let textContent = "";
 
   traverseNode(
@@ -72,7 +73,7 @@ function getVisibleTextContent(element: Element, context: Node): string {
     context,
     {
       enter(node) {
-        if (isElement(node) && isRendered(node, context)) {
+        if (isElement(node) && isRendered(node, context, device)) {
           const { childNodes } = node;
 
           for (let i = 0, n = childNodes.length; i < n; i++) {
@@ -91,24 +92,24 @@ function getVisibleTextContent(element: Element, context: Node): string {
   return textContent;
 }
 
-function hasVisibleTextContent(element: Element, context: Node): boolean {
-  return getVisibleTextContent(element, context).trim() !== "";
+function hasVisibleTextContent(element: Element, context: Node, device: Device): boolean {
+  return getVisibleTextContent(element, context, device).trim() !== "";
 }
 
 function isHtmlElement(element: Element, context: Node): boolean {
   return getElementNamespace(element, context) === Namespace.HTML;
 }
 
-function isWidget(element: Element, context: Node): boolean {
+function isWidget(element: Element, context: Node, device: Device): boolean {
   return some(
-    getRole(element, context),
+    getRole(element, context, device),
     role => role !== null && role.category === Category.Widget
   );
 }
 
-function isContentLabelable(element: Element, context: Node): boolean {
+function isContentLabelable(element: Element, context: Node, device: Device): boolean {
   return some(
-    getRole(element, context),
+    getRole(element, context, device),
     role => role !== null && hasNameFrom(role, "contents")
   );
 }

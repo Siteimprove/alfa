@@ -1,3 +1,5 @@
+import { Aspects } from "@siteimprove/alfa-act";
+import { Device, DeviceType, Orientation } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-util";
@@ -29,12 +31,6 @@ export interface ScrapeOptions {
   };
 }
 
-export interface ScrapeResult {
-  readonly request: Request;
-  readonly response: Response;
-  readonly document: Document;
-}
-
 export class Scraper {
   private readonly browser = puppeteer.launch({
     args: [
@@ -49,7 +45,7 @@ export class Scraper {
   public async scrape(
     url: string | URL,
     options: ScrapeOptions = {}
-  ): Promise<ScrapeResult> {
+  ): Promise<Aspects> {
     const origin = typeof url === "string" ? new URL(url) : url;
 
     const {
@@ -58,6 +54,18 @@ export class Scraper {
       wait = Wait.Loaded,
       timeout = 10000
     } = options;
+
+    const device: Device = {
+      type: DeviceType.Screen,
+      viewport: {
+        width: viewport.width,
+        height: viewport.height,
+        orientation: Orientation.Landscape
+      },
+      display: {
+        resolution: viewport.scale === undefined ? 1 : viewport.scale
+      }
+    };
 
     const browser = await this.browser;
     const page = await browser.newPage();
@@ -142,11 +150,7 @@ export class Scraper {
       // snapshot of the document.
     }
 
-    return {
-      request,
-      response,
-      document
-    };
+    return { request, response, document, device };
   }
 
   public async close(): Promise<void> {

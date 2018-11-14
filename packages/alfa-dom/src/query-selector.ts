@@ -62,10 +62,10 @@ export function querySelector<T extends Node>(
     scope,
     context,
     {
-      enter(node) {
+      enter(node, parentNode, skip, exit) {
         if (predicate(node)) {
           found = node;
-          return false;
+          return exit;
         }
       }
     },

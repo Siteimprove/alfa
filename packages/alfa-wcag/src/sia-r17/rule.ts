@@ -1,4 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import {Device} from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -10,10 +11,10 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R17: Atomic.Rule<Document, Element> = {
+export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r17.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     applicability(() =>
       querySelectorAll<Element>(
         document,
@@ -25,18 +26,18 @@ export const SIA_R17: Atomic.Rule<Document, Element> = {
     );
 
     expectations((target, expectation) => {
-      expectation(1, !isFocusable(target, document));
-      expectation(2, !hasFocusableDescendants(target, document));
+      expectation(1, !isFocusable(target, document, device));
+      expectation(2, !hasFocusableDescendants(target, document, device));
     });
   }
 };
 
-function hasFocusableDescendants(element: Element, context: Node): boolean {
+function hasFocusableDescendants(element: Element, context: Node, device: Device): boolean {
   return (
     querySelector(
       element,
       context,
-      node => node !== element && isElement(node) && isFocusable(node, context)
+      node => node !== element && isElement(node) && isFocusable(node, context, device)
     ) !== null
   );
 }

@@ -6,6 +6,7 @@ import {
   map,
   some
 } from "@siteimprove/alfa-compatibility";
+import {Device} from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -16,20 +17,20 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-util";
 
-export const SIA_R16: Atomic.Rule<Document, Element> = {
+export const SIA_R16: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r16.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     applicability(() =>
       querySelectorAll<Element>(
         document,
         document,
-        node => isElement(node) && hasExplicitRole(node, document)
+        node => isElement(node) && hasExplicitRole(node, document, device)
       )
     );
 
     expectations((target, expectation) => {
-      const role = getExplicitRole(target, document);
+      const role = getExplicitRole(target, document, device);
 
       expectation(
         1,
@@ -41,9 +42,9 @@ export const SIA_R16: Atomic.Rule<Document, Element> = {
           const implicits =
             role.implicits === undefined
               ? []
-              : role.implicits(target, document);
+              : role.implicits(target, document, device);
 
-          for (const attribute of role.required(target, document)) {
+          for (const attribute of role.required(target, document, device)) {
             const value = getAttribute(target, attribute.name, { trim: true });
 
             if (value === null || value === "") {
@@ -65,10 +66,11 @@ export const SIA_R16: Atomic.Rule<Document, Element> = {
 
 function getExplicitRole(
   element: Element,
-  context: Node
+  context: Node,
+  device: Device
 ): Option<Role> | BrowserSpecific<Option<Role>> {
-  const implicitRole = getRole(element, context, { explicit: false });
-  const explicitRole = getRole(element, context, { implicit: false });
+  const implicitRole = getRole(element, context, device, { explicit: false });
+  const explicitRole = getRole(element, context, device, { implicit: false });
 
   return map(explicitRole, explicitRole => {
     if (
@@ -82,9 +84,9 @@ function getExplicitRole(
   });
 }
 
-function hasExplicitRole(element: Element, context: Node): boolean {
+function hasExplicitRole(element: Element, context: Node, device: Device): boolean {
   return some(
-    getExplicitRole(element, context),
+    getExplicitRole(element, context, device),
     explicitRole => explicitRole !== null
   );
 }

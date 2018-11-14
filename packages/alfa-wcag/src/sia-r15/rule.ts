@@ -5,6 +5,7 @@ import {
   isVisible
 } from "@siteimprove/alfa-aria";
 import { some } from "@siteimprove/alfa-compatibility";
+import { Device  } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -18,10 +19,10 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R15: Atomic.Rule<Document, Element> = {
+export const SIA_R15: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r15.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     applicability(() =>
       querySelectorAll<Element>(
         document,
@@ -29,8 +30,8 @@ export const SIA_R15: Atomic.Rule<Document, Element> = {
         node =>
           isElement(node) &&
           isIframe(node, document) &&
-          isVisible(node, document) &&
-          hasTextAlternative(node, document)
+          isVisible(node, document, device) &&
+          hasTextAlternative(node, document, device)
       )
     );
 
@@ -40,7 +41,7 @@ export const SIA_R15: Atomic.Rule<Document, Element> = {
       expectation(
         1,
         some(
-          getTextAlternative(target, document),
+          getTextAlternative(target, document, device),
           textAlternative =>
             querySelector(
               rootNode,
@@ -50,9 +51,9 @@ export const SIA_R15: Atomic.Rule<Document, Element> = {
                 isElement(node) &&
                 isIframe(node, document) &&
                 getAttribute(node, "src") !== getAttribute(target, "src") &&
-                isVisible(node, document) &&
+                isVisible(node, document, device) &&
                 some(
-                  getTextAlternative(node, document),
+                  getTextAlternative(node, document, device),
                   otherTextAlternative =>
                     otherTextAlternative !== null &&
                     otherTextAlternative.trim().toLowerCase() ===

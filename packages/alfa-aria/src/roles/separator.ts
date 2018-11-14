@@ -9,10 +9,10 @@ import { Widget } from "./abstract/widget";
  */
 export const Separator: Role = {
   name: "separator",
-  category: (separator, context) =>
-    isFocusable(separator, context) ? Category.Widget : Category.Structure,
-  inherits: (separator, context) =>
-    isFocusable(separator, context) ? [Widget] : [Structure],
+  category: (separator, context, device) =>
+    isFocusable(separator, context, device) ? Category.Widget : Category.Structure,
+  inherits: (separator, context, device) =>
+    isFocusable(separator, context, device) ? [Widget] : [Structure],
   implicits: () => [
     [Attributes.Orientation, "horizontal"],
     [Attributes.ValueMinimum, "0"],

@@ -1,4 +1,5 @@
 import { BrowserSpecific, map, reduce } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   getAttribute,
@@ -51,7 +52,8 @@ type TextAlternativeOptions = Readonly<{
  */
 export function getTextAlternative(
   node: Element | Text,
-  context: Node
+  context: Node,
+  device: Device
 ): Option<string> | BrowserSpecific<Option<string>>;
 
 /**
@@ -60,6 +62,7 @@ export function getTextAlternative(
 export function getTextAlternative(
   node: Element | Text,
   context: Node,
+  device: Device,
   visited: Set<Element | Text>,
   options?: TextAlternativeOptions
 ): Option<string> | BrowserSpecific<Option<string>>;
@@ -67,6 +70,7 @@ export function getTextAlternative(
 export function getTextAlternative(
   node: Element | Text,
   context: Node,
+  device: Device,
   visited: Set<Element | Text> = new Set(),
   options: TextAlternativeOptions = {}
 ): Option<string> | BrowserSpecific<Option<string>> {
@@ -77,7 +81,7 @@ export function getTextAlternative(
   visited.add(node);
 
   // https://www.w3.org/TR/accname/#step2A
-  if (!isVisible(node, context) && options.referencing !== true) {
+  if (!isVisible(node, context, device) && options.referencing !== true) {
     return null;
   }
 
@@ -107,7 +111,7 @@ export function getTextAlternative(
       // https://www.w3.org/TR/accname/#step2B
       .map(alt =>
         none(alt, () =>
-          getAriaLabelledbyTextAlternative(node, context, visited, options)
+          getAriaLabelledbyTextAlternative(node, context, device, visited, options)
         )
       )
 
@@ -121,9 +125,9 @@ export function getTextAlternative(
       // https://www.w3.org/TR/accname/#step2D
       .map(alt =>
         none(alt, () =>
-          map(getRole(node, context, { implicit: false }), role => {
+          map(getRole(node, context, device, { implicit: false }), role => {
             if (role !== Roles.Presentation && role !== Roles.None) {
-              return getNativeTextAlternative(node, context, visited, options);
+              return getNativeTextAlternative(node, context, device, visited, options);
             }
 
             return null;
@@ -138,6 +142,7 @@ export function getTextAlternative(
             return getEmbeddedControlTextAlternative(
               node,
               context,
+              device,
               visited,
               options
             );
@@ -151,14 +156,14 @@ export function getTextAlternative(
       // https://www.w3.org/TR/accname/#step2G
       .map(alt =>
         none(alt, () =>
-          map(getRole(node, context), role => {
+          map(getRole(node, context, device), role => {
             if (
               (role !== null && hasNameFrom(role, "contents")) ||
               options.referencing === true ||
               options.descending === true ||
               isNativeTextAlternativeElement(node)
             ) {
-              return getSubtreeTextAlternative(node, context, visited, options);
+              return getSubtreeTextAlternative(node, context, device, visited, options);
             }
 
             return null;
@@ -197,6 +202,7 @@ function flatten(string: string, options: TextAlternativeOptions): string {
 function getAriaLabelledbyTextAlternative(
   element: Element,
   context: Node,
+  device: Device,
   visited: Set<Element | Text>,
   options: TextAlternativeOptions
 ): Option<string> | BrowserSpecific<Option<string>> {
@@ -211,7 +217,7 @@ function getAriaLabelledbyTextAlternative(
 
     const references = resolveReferences(rootNode, context, labelledBy).map(
       element =>
-        getTextAlternative(element, context, visited, {
+        getTextAlternative(element, context, device, visited, {
           recursing: true,
           referencing: true
         })
@@ -255,6 +261,7 @@ function getAriaLabelTextAlternative(
 function getNativeTextAlternative(
   element: Element,
   context: Node,
+  device: Device,
   visited: Set<Element | Text>,
   options: TextAlternativeOptions
 ): Option<string> | BrowserSpecific<Option<string>> {
@@ -263,9 +270,9 @@ function getNativeTextAlternative(
   if (namespace !== null) {
     switch (namespace) {
       case Namespace.HTML:
-        return getHtmlTextAlternative(element, context, visited, options);
+        return getHtmlTextAlternative(element, context, device, visited, options);
       case Namespace.SVG:
-        return getSvgTextAlternative(element, context, visited, options);
+        return getSvgTextAlternative(element, context, device, visited, options);
     }
   }
 
@@ -278,13 +285,14 @@ function getNativeTextAlternative(
 function getHtmlTextAlternative(
   element: Element,
   context: Node,
+  device: Device,
   visited: Set<Element | Text>,
   options: TextAlternativeOptions
 ): Option<string> | BrowserSpecific<Option<string>> {
   const label = getLabel(element, context);
 
   if (label !== null) {
-    return getTextAlternative(label, context, visited, {
+    return getTextAlternative(label, context, device, visited, {
       recursing: true,
       labelling: true
     });
@@ -337,7 +345,7 @@ function getHtmlTextAlternative(
       const legend = querySelector(element, context, "legend");
 
       if (legend !== null) {
-        return getTextAlternative(legend, context, visited, {
+        return getTextAlternative(legend, context, device, visited, {
           recursing: true,
           descending: true
         });
@@ -351,7 +359,7 @@ function getHtmlTextAlternative(
       const caption = querySelector(element, context, "figcaption");
 
       if (caption !== null) {
-        return getTextAlternative(caption, context, visited, {
+        return getTextAlternative(caption, context, device, visited, {
           recursing: true,
           descending: true
         });
@@ -393,6 +401,7 @@ function getHtmlTextAlternative(
 function getSvgTextAlternative(
   element: Element,
   context: Node,
+  device: Device,
   visited: Set<Element | Text>,
   options: TextAlternativeOptions
 ): Option<string> | BrowserSpecific<Option<string>> {
@@ -403,7 +412,7 @@ function getSvgTextAlternative(
   const title = querySelector(element, context, ":scope > title");
 
   if (title !== null) {
-    return getTextAlternative(title, context, visited, {
+    return getTextAlternative(title, context, device, visited, {
       recursing: true,
       descending: true
     });
@@ -427,10 +436,11 @@ function getSvgTextAlternative(
 function getEmbeddedControlTextAlternative(
   element: Element,
   context: Node,
+  device: Device,
   visited: Set<Element | Text>,
   options: TextAlternativeOptions
 ): Option<string> | BrowserSpecific<Option<string>> {
-  const role = getRole(element, context);
+  const role = getRole(element, context, device);
 
   switch (role) {
     case Roles.TextBox:
@@ -453,7 +463,7 @@ function getEmbeddedControlTextAlternative(
       break;
 
     case Roles.Button:
-      const label = getTextAlternative(element, context, visited, {
+      const label = getTextAlternative(element, context, device, visited, {
         recursing: true,
         revisiting: true
       });
@@ -470,6 +480,7 @@ function getEmbeddedControlTextAlternative(
 function getSubtreeTextAlternative(
   element: Element,
   context: Node,
+  device: Device,
   visited: Set<Element | Text>,
   options: TextAlternativeOptions
 ): Option<string> | BrowserSpecific<Option<string>> {
@@ -478,7 +489,7 @@ function getSubtreeTextAlternative(
   for (const child of getChildNodes(element, context, { flattened: true })) {
     if (isElement(child) || isText(child)) {
       children.push(
-        getTextAlternative(child, context, visited, {
+        getTextAlternative(child, context, device, visited, {
           recursing: true,
           descending: true,
           // Pass down the labelling flag as the current call may have
@@ -502,9 +513,9 @@ function getSubtreeTextAlternative(
     null
   );
 
-  const after = getComputedStyle(element, context, { pseudo: "after" });
+  const after = getComputedStyle(element, context, device, { pseudo: "after" });
 
-  const before = getComputedStyle(element, context, { pseudo: "before" });
+  const before = getComputedStyle(element, context, device, { pseudo: "before" });
 
   return map(alt, alt =>
     some(alt, alt => {

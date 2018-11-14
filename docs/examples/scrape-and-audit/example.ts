@@ -1,4 +1,4 @@
-import { audit, isResult, Target, toJson } from "../../../packages/alfa-act";
+import { audit, isResult, toJson } from "../../../packages/alfa-act";
 import {
   Document,
   getAttribute,
@@ -28,13 +28,13 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
   for (const { id, url } of getUrls(page.document)) {
     const page = await scraper.scrape(`${site}/${url}`);
 
-    const results = audit<Document, Target>(page, rules).filter(isResult);
+    const results = audit(page, rules).filter(isResult);
 
     notify.success(url);
 
     writeFile(
       `docs/examples/scrape-and-audit/result/${id}.json`,
-      JSON.stringify(toJson<Document, Target>(rules, results, page), null, 2)
+      JSON.stringify(toJson(rules, results, page), null, 2)
     );
   }
 
