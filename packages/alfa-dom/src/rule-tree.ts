@@ -92,12 +92,9 @@ function add(
     const child = children[i];
 
     if (child.selector === selector) {
-      return add(
-        selector,
-        declarations,
-        child,
-        child.children as Array<RuleEntry>
-      );
+      return add(selector, declarations, child, child.children as Array<
+        RuleEntry
+      >);
     }
   }
 

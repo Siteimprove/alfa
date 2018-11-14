@@ -9,7 +9,11 @@ import {
   Text
 } from "@siteimprove/alfa-dom";
 
-export function isVisible(node: Element | Text, context: Node, device: Device): boolean {
+export function isVisible(
+  node: Element | Text,
+  context: Node,
+  device: Device
+): boolean {
   if (isElement(node)) {
     if (getAttribute(node, "aria-hidden") === "true") {
       return false;

@@ -5,7 +5,7 @@ import {
   isVisible
 } from "@siteimprove/alfa-aria";
 import { some } from "@siteimprove/alfa-compatibility";
-import { Device  } from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,

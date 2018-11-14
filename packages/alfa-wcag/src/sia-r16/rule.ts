@@ -6,7 +6,7 @@ import {
   map,
   some
 } from "@siteimprove/alfa-compatibility";
-import {Device} from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -84,7 +84,11 @@ function getExplicitRole(
   });
 }
 
-function hasExplicitRole(element: Element, context: Node, device: Device): boolean {
+function hasExplicitRole(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   return some(
     getExplicitRole(element, context, device),
     explicitRole => explicitRole !== null

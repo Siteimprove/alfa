@@ -51,7 +51,13 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
         1,
         some(getRole(owner, document, device), role => {
           if (role !== null) {
-            return isAllowedAttribute(owner, document, device, target.localName, role);
+            return isAllowedAttribute(
+              owner,
+              document,
+              device,
+              target.localName,
+              role
+            );
           }
 
           return globalAttributeNames.has(target.localName);
@@ -78,7 +84,9 @@ function isAllowedAttribute(
   }
 
   const supported =
-    role.supported === undefined ? [] : role.supported(element, context, device);
+    role.supported === undefined
+      ? []
+      : role.supported(element, context, device);
 
   for (const attribute of supported) {
     if (attribute.name === attributeName) {

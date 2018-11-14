@@ -8,7 +8,11 @@ import { Element, Node } from "./types";
  * context. An element is considered tabbable if it is focusable and does not
  * have a negative tab index.
  */
-export function isTabbable(element: Element, context: Node, device: Device): boolean {
+export function isTabbable(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   if (!isFocusable(element, context, device)) {
     return false;
   }

@@ -20,11 +20,19 @@ import {
 //
 // tslint:disable:no-any
 
-type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T> ? A : never;
+type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
+  ? A
+  : never;
 
-type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T> ? T : never;
+type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
+  ? T
+  : never;
 
-export function audit<R extends Rule<any, any>, A extends AspectsOf<R> = AspectsOf<R>, T extends TargetsOf<R> = TargetsOf<R>>(
+export function audit<
+  R extends Rule<any, any>,
+  A extends AspectsOf<R> = AspectsOf<R>,
+  T extends TargetsOf<R> = TargetsOf<R>
+>(
   aspects: AspectsFor<A>,
   rules: Array<R>,
   answers: Array<Answer<T>> = []
@@ -65,7 +73,11 @@ export function audit<R extends Rule<any, any>, A extends AspectsOf<R> = Aspects
   return results;
 }
 
-function auditAtomic<R extends Atomic.Rule<any, any>, A extends AspectsOf<R> = AspectsOf<R>, T extends TargetsOf<R> = TargetsOf<R>>(
+function auditAtomic<
+  R extends Atomic.Rule<any, any>,
+  A extends AspectsOf<R> = AspectsOf<R>,
+  T extends TargetsOf<R> = TargetsOf<R>
+>(
   aspects: AspectsFor<A>,
   rule: R,
   results: Array<Result<T> | Question<T>>,
@@ -116,7 +128,11 @@ function auditAtomic<R extends Atomic.Rule<any, any>, A extends AspectsOf<R> = A
   );
 }
 
-function auditComposite<R extends Composite.Rule<any, any>, A extends AspectsOf<R> = AspectsOf<R>, T extends TargetsOf<R> = TargetsOf<R>>(
+function auditComposite<
+  R extends Composite.Rule<any, any>,
+  A extends AspectsOf<R> = AspectsOf<R>,
+  T extends TargetsOf<R> = TargetsOf<R>
+>(
   aspects: AspectsFor<A>,
   rule: R,
   results: Array<Result<T> | Question<T>>

@@ -29,9 +29,9 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
         document,
         document,
         node =>
-        isElement(node) &&
-        isLink(node, document, device) &&
-        isVisible(node, document, device)
+          isElement(node) &&
+          isLink(node, document, device) &&
+          isVisible(node, document, device)
       )
     );
 

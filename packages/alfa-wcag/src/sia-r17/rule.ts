@@ -1,5 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {Device} from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -32,12 +32,19 @@ export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
   }
 };
 
-function hasFocusableDescendants(element: Element, context: Node, device: Device): boolean {
+function hasFocusableDescendants(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   return (
     querySelector(
       element,
       context,
-      node => node !== element && isElement(node) && isFocusable(node, context, device)
+      node =>
+        node !== element &&
+        isElement(node) &&
+        isFocusable(node, context, device)
     ) !== null
   );
 }

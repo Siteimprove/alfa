@@ -10,7 +10,9 @@ import { Widget } from "./abstract/widget";
 export const Separator: Role = {
   name: "separator",
   category: (separator, context, device) =>
-    isFocusable(separator, context, device) ? Category.Widget : Category.Structure,
+    isFocusable(separator, context, device)
+      ? Category.Widget
+      : Category.Structure,
   inherits: (separator, context, device) =>
     isFocusable(separator, context, device) ? [Widget] : [Structure],
   implicits: () => [

@@ -111,7 +111,13 @@ export function getTextAlternative(
       // https://www.w3.org/TR/accname/#step2B
       .map(alt =>
         none(alt, () =>
-          getAriaLabelledbyTextAlternative(node, context, device, visited, options)
+          getAriaLabelledbyTextAlternative(
+            node,
+            context,
+            device,
+            visited,
+            options
+          )
         )
       )
 
@@ -127,7 +133,13 @@ export function getTextAlternative(
         none(alt, () =>
           map(getRole(node, context, device, { implicit: false }), role => {
             if (role !== Roles.Presentation && role !== Roles.None) {
-              return getNativeTextAlternative(node, context, device, visited, options);
+              return getNativeTextAlternative(
+                node,
+                context,
+                device,
+                visited,
+                options
+              );
             }
 
             return null;
@@ -163,7 +175,13 @@ export function getTextAlternative(
               options.descending === true ||
               isNativeTextAlternativeElement(node)
             ) {
-              return getSubtreeTextAlternative(node, context, device, visited, options);
+              return getSubtreeTextAlternative(
+                node,
+                context,
+                device,
+                visited,
+                options
+              );
             }
 
             return null;
@@ -270,9 +288,21 @@ function getNativeTextAlternative(
   if (namespace !== null) {
     switch (namespace) {
       case Namespace.HTML:
-        return getHtmlTextAlternative(element, context, device, visited, options);
+        return getHtmlTextAlternative(
+          element,
+          context,
+          device,
+          visited,
+          options
+        );
       case Namespace.SVG:
-        return getSvgTextAlternative(element, context, device, visited, options);
+        return getSvgTextAlternative(
+          element,
+          context,
+          device,
+          visited,
+          options
+        );
     }
   }
 
@@ -515,7 +545,9 @@ function getSubtreeTextAlternative(
 
   const after = getComputedStyle(element, context, device, { pseudo: "after" });
 
-  const before = getComputedStyle(element, context, device, { pseudo: "before" });
+  const before = getComputedStyle(element, context, device, {
+    pseudo: "before"
+  });
 
   return map(alt, alt =>
     some(alt, alt => {

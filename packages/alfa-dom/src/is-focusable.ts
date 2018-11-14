@@ -10,7 +10,11 @@ import { Element, Node } from "./types";
  *
  * @see https://www.w3.org/TR/html/editing.html#focusable
  */
-export function isFocusable(element: Element, context: Node, device: Device): boolean {
+export function isFocusable(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   return (
     getTabIndex(element, context) !== null &&
     !isDisabled(element, context) &&

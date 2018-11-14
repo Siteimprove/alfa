@@ -6,7 +6,12 @@ import { Node } from "./types";
 const Skip = Symbol("Skip");
 const Exit = Symbol("Exit");
 
-export type NodeVisitor = (node: Node, parentNode: Node | null, skip: symbol, exit: symbol) => symbol | void;
+export type NodeVisitor = (
+  node: Node,
+  parentNode: Node | null,
+  skip: symbol,
+  exit: symbol
+) => symbol | void;
 
 /**
  * Given a node and a context, perform a depth-first traversal of the node

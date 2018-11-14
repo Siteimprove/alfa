@@ -25,7 +25,9 @@ export function parseDeclaration(
   return parser.result;
 }
 
-export function parseMediaQuery(input: string): MediaQuery | Array<MediaQuery> | null {
+export function parseMediaQuery(
+  input: string
+): MediaQuery | Array<MediaQuery> | null {
   const lexer = lex(input, Alphabet);
 
   if (!lexer.done) {

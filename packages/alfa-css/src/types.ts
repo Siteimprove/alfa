@@ -346,4 +346,3 @@ export type MediaFeatureValue =
   | Values.Percentage
   | Values.Length
   | Values.String;
-

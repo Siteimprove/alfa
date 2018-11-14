@@ -65,7 +65,11 @@ function normalize(input: string): string {
     .replace(/\s+/, " ");
 }
 
-function getVisibleTextContent(element: Element, context: Node, device: Device): string {
+function getVisibleTextContent(
+  element: Element,
+  context: Node,
+  device: Device
+): string {
   let textContent = "";
 
   traverseNode(
@@ -92,7 +96,11 @@ function getVisibleTextContent(element: Element, context: Node, device: Device):
   return textContent;
 }
 
-function hasVisibleTextContent(element: Element, context: Node, device: Device): boolean {
+function hasVisibleTextContent(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   return getVisibleTextContent(element, context, device).trim() !== "";
 }
 
@@ -107,7 +115,11 @@ function isWidget(element: Element, context: Node, device: Device): boolean {
   );
 }
 
-function isContentLabelable(element: Element, context: Node, device: Device): boolean {
+function isContentLabelable(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   return some(
     getRole(element, context, device),
     role => role !== null && hasNameFrom(role, "contents")

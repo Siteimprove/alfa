@@ -1,7 +1,13 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, skip, Stream } from "@siteimprove/alfa-lang";
 import { Token, Tokens, TokenType } from "../alphabet";
-import { MediaCondition, MediaFeature, MediaOperator, MediaQualifier, MediaQuery } from "../types";
+import {
+  MediaCondition,
+  MediaFeature,
+  MediaOperator,
+  MediaQualifier,
+  MediaQuery
+} from "../types";
 import { Units } from "../units";
 import { Value, Values } from "../values";
 
@@ -52,7 +58,11 @@ function mediaQuery(stream: Stream<Token>): MediaQuery {
 
     next = stream.peek(0);
 
-    if (next !== null && next.type === TokenType.Ident && next.value === "and") {
+    if (
+      next !== null &&
+      next.type === TokenType.Ident &&
+      next.value === "and"
+    ) {
       stream.advance(1);
       stream.accept(token => token.type === TokenType.Whitespace);
 
@@ -72,7 +82,10 @@ function mediaQuery(stream: Stream<Token>): MediaQuery {
 /**
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-condition
  */
-function mediaCondition(stream: Stream<Token>, allowOr = true): MediaCondition | null {
+function mediaCondition(
+  stream: Stream<Token>,
+  allowOr = true
+): MediaCondition | null {
   let operator: MediaOperator | null = null;
 
   const next = stream.peek(0);
@@ -117,7 +130,9 @@ function mediaCondition(stream: Stream<Token>, allowOr = true): MediaCondition |
 /**
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-in-parens
  */
-function mediaInParens(stream: Stream<Token>): MediaFeature | MediaCondition | Array<MediaCondition> | null {
+function mediaInParens(
+  stream: Stream<Token>
+): MediaFeature | MediaCondition | Array<MediaCondition> | null {
   let next = stream.peek(0);
 
   if (next !== null && next.type === TokenType.LeftParenthesis) {
@@ -210,11 +225,7 @@ function mediaFeature(stream: Stream<Token>): MediaFeature | null {
   return null;
 }
 
-type Production<T extends Token> = Lang.Production<
-  Token,
-  MediaQuery,
-  T
->;
+type Production<T extends Token> = Lang.Production<Token, MediaQuery, T>;
 
 const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
@@ -233,10 +244,6 @@ const parenthesis: Production<Tokens.Parenthesis> = {
 };
 
 export const MediaGrammar: Grammar<Token, MediaQuery> = new Grammar(
-  [
-    skip(TokenType.Whitespace),
-    ident,
-    parenthesis
-  ],
+  [skip(TokenType.Whitespace), ident, parenthesis],
   () => null
 );

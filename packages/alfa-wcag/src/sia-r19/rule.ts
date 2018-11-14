@@ -81,10 +81,12 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
 
         case "token-list":
           valid =
-            value.split(/\s+/).find(
-              found =>
-                attribute.values!.find(value => value === found) === undefined
-            ) === undefined;
+            value
+              .split(/\s+/)
+              .find(
+                found =>
+                  attribute.values!.find(value => value === found) === undefined
+              ) === undefined;
       }
 
       expectation(1, valid);

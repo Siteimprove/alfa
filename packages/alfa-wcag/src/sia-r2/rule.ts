@@ -35,7 +35,8 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
     expectations((target, expectation) => {
       expectation(
         1,
-        hasTextAlternative(target, document, device) || isDecorative(target, document, device)
+        hasTextAlternative(target, document, device) ||
+          isDecorative(target, document, device)
       );
     });
   }
@@ -46,10 +47,17 @@ function isImage(element: Element, context: Node, device: Device): boolean {
     return false;
   }
 
-  return element.localName === "img" || getRole(element, context, device) === Roles.Img;
+  return (
+    element.localName === "img" ||
+    getRole(element, context, device) === Roles.Img
+  );
 }
 
-function isDecorative(element: Element, context: Node, device: Device): boolean {
+function isDecorative(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   switch (getRole(element, context, device)) {
     case Roles.None:
     case Roles.Presentation:

@@ -5,7 +5,12 @@ import { Rule } from "./types";
 const Skip = Symbol("Skip");
 const Exit = Symbol("Exit");
 
-export type RuleVisitor = (rule: Rule, parentRule: Rule | null, skip: symbol, exit: symbol) => symbol | void;
+export type RuleVisitor = (
+  rule: Rule,
+  parentRule: Rule | null,
+  skip: symbol,
+  exit: symbol
+) => symbol | void;
 
 /**
  * Given a rule, perform a depth-first traversal of the rule, invoking the

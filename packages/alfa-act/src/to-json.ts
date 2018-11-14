@@ -26,15 +26,19 @@ import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 
 const { assign } = Object;
 
-type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T> ? A : never;
+type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
+  ? A
+  : never;
 
-type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T> ? T : never;
+type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
+  ? T
+  : never;
 
-export function toJson<R extends Rule<any, any>, A extends AspectsOf<R> = AspectsOf<R>, T extends TargetsOf<R> = TargetsOf<R>>(
-  rules: Array<R>,
-  results: Array<Result<T>>,
-  aspects: AspectsFor<A>
-): List {
+export function toJson<
+  R extends Rule<any, any>,
+  A extends AspectsOf<R> = AspectsOf<R>,
+  T extends TargetsOf<R> = TargetsOf<R>
+>(rules: Array<R>, results: Array<Result<T>>, aspects: AspectsFor<A>): List {
   let request: JSON.Document | null = null;
 
   if ("request" in aspects) {

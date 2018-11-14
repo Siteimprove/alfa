@@ -11,5 +11,5 @@ export function getDefaultDevice(): Device {
     display: {
       resolution: 1
     }
-  }
+  };
 }

@@ -17,7 +17,11 @@ import { Element, Node } from "./types";
  * isRendered(span, <div style="display: none">{span}</div>, device);
  * // => false
  */
-export function isRendered(element: Element, context: Node, device: Device): boolean {
+export function isRendered(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   for (
     let next: Element | null = element;
     next !== null;

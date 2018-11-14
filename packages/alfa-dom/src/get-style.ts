@@ -11,7 +11,7 @@ import {
   SelectorType,
   SpecifiedStyle
 } from "@siteimprove/alfa-css";
-import {Device} from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import { getAttribute } from "./get-attribute";
 import { getCascade } from "./get-cascade";
 import { getParentElement } from "./get-parent-element";
@@ -193,7 +193,13 @@ function getParentStyle(
   // If we're getting the style of a pseudo-element, the parent style will be
   // that of the origin element.
   if (pseudo !== undefined) {
-    parentStyle = getComputedStyle(element, context, device, options, parentStyle);
+    parentStyle = getComputedStyle(
+      element,
+      context,
+      device,
+      options,
+      parentStyle
+    );
   }
 
   return parentStyle;
