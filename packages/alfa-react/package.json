@@ -24,6 +24,8 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
+    "*.js",
+    "*.d.ts",
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
@@ -35,10 +37,12 @@
   },
   "peerDependencies": {
     "@siteimprove/alfa-chai": "^0.0.0",
+    "@siteimprove/alfa-should": "^0.0.0",
     "@siteimprove/alfa-unexpected": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-chai": "^0.0.0",
+    "@siteimprove/alfa-should": "^0.0.0",
     "@siteimprove/alfa-test": "^0.0.0",
     "@siteimprove/alfa-unexpected": "^0.0.0"
   }
