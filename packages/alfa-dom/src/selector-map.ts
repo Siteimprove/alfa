@@ -11,7 +11,7 @@ import { getClassList } from "./get-class-list";
 import { getId } from "./get-id";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
-import { isMediaRule, isStyleRule } from "./guards";
+import { isConditionRule, isStyleRule } from "./guards";
 import { matches, MatchesOptions } from "./matches";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { Element, Node, StyleSheet } from "./types";
@@ -98,7 +98,7 @@ export class SelectorMap {
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
         enter: (rule, parentRule, skip) => {
-          if (isMediaRule(rule) && !fulfills(device, rule)) {
+          if (isConditionRule(rule) && !fulfills(device, rule)) {
             return skip;
           }
 
