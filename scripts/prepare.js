@@ -3,7 +3,7 @@ const path = require("path");
 const TypeScript = require("typescript");
 const { createTypeScriptSource } = require("./helpers/compile-ts-source");
 const { findFiles, isFile, writeFile } = require("./helpers/file-system");
-const { endsWith, not } = require("./helpers/predicates");
+const { endsWith } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
@@ -44,28 +44,21 @@ for (const pkg of packages) {
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
-  const commentFiles = /** @type {string[]} */ ([]);
+  const checkSpecFiles = /** @type {string[]} */ ([]);
   const sourceFiles = /** @type {string[]} */ ([]);
   const compileMap = /** @type {Map<string, TypeScript.SourceFile>} */ (new Map());
 
-  findFiles(root, file => true).forEach(file => {
-    if (
-      !(file.indexOf(`${path.sep}src${path.sep}`) === -1) &&
-      endsWith(".ts", ".tsx")
-    ) {
-      // Typescript file is in source folder
-      commentFiles.push(file);
-      if (not(endsWith(".spec.ts", ".spec.tsx"))) {
-        // File is a source file
-        sourceFiles.push(file);
-      }
-      compileMap.set(file, createTypeScriptSource(file));
+  findFiles(root, endsWith(".ts", ".tsx")).forEach(file => {
+    sourceFiles.push(file);
+    compileMap.set(file, createTypeScriptSource(file));
+    if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
+      checkSpecFiles.push(file);
     }
   });
 
-  computeComments(commentFiles, compileMap);
+  computeComments(sourceFiles, compileMap);
 
-  checkSpecFile(sourceFiles, compileMap);
+  checkSpecFile(checkSpecFiles, compileMap);
 
   handle(sourceFiles);
 }
