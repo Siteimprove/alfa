@@ -39,7 +39,6 @@ const handle = files => {
 
 handle(findFiles("scripts", endsWith(".js")));
 
-let commentFileData = "";
 const lines = /**@type {Set<String>} */ (new Set());
 
 for (const pkg of packages) {
@@ -63,9 +62,7 @@ for (const pkg of packages) {
   handle(sourceFiles);
 }
 
-AssembleTODOSData();
-
-writeFile("./TODOS.md", commentFileData);
+writeFile("./TODOS.md", AssembleTODOSData());
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
 
@@ -173,6 +170,7 @@ function checkSpecFile(file, source) {
 }
 
 function AssembleTODOSData() {
+  let commentFileData = "";
   const all = /**@type {Map<String, String[]>} */ (new Map());
 
   for (const line of lines) {
@@ -200,4 +198,5 @@ function AssembleTODOSData() {
       commentFileData += ln;
     }
   }
+  return commentFileData;
 }
