@@ -1,5 +1,5 @@
 const TypeScript = require("typescript");
-const { createTypeScriptSource } = require("../create-ts-source");
+const { createTypeScriptSource } = require("../compile-ts-source");
 
 /**
  * @typedef {import("../coverage").Script} Script

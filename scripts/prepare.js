@@ -1,7 +1,7 @@
 const { default: chalk } = require("chalk");
 const path = require("path");
 const TypeScript = require("typescript");
-const { createTypeScriptSource } = require("./helpers/create-ts-source");
+const { createTypeScriptSource } = require("./helpers/compile-ts-source");
 const { findFiles, isFile, writeFile } = require("./helpers/file-system");
 const { endsWith, not } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
