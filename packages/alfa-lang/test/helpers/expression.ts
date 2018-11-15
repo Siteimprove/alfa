@@ -2,9 +2,7 @@ export type Constant = Readonly<{
   type: "constant";
   value: number;
 }>;
-/**
- * @todo halp halp
- */
+
 export type Operator = Readonly<{
   type: "operator";
   value: string;

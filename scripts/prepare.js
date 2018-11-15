@@ -2,7 +2,12 @@ const { default: chalk } = require("chalk");
 const path = require("path");
 const TypeScript = require("typescript");
 const { createTypeScriptSource } = require("./helpers/compile-ts-source");
-const { findFiles, isFile, writeFile } = require("./helpers/file-system");
+const {
+  findFiles,
+  isFile,
+  readFile,
+  writeFile
+} = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
@@ -44,21 +49,19 @@ for (const pkg of packages) {
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
-  const checkSpecFiles = /** @type {string[]} */ ([]);
   const sourceFiles = /** @type {string[]} */ ([]);
   const compileMap = /** @type {Map<string, TypeScript.SourceFile>} */ (new Map());
 
   findFiles(root, endsWith(".ts", ".tsx")).forEach(file => {
+    const source = createTypeScriptSource(readFile(file));
     sourceFiles.push(file);
     compileMap.set(file, createTypeScriptSource(file));
     if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
-      checkSpecFiles.push(file);
+      checkSpecFile(file, source);
     }
   });
 
   computeComments(sourceFiles, compileMap);
-
-  checkSpecFile(checkSpecFiles, compileMap);
 
   handle(sourceFiles);
 }
@@ -159,39 +162,35 @@ function computeComments(commentFiles, compileMap) {
 }
 
 /**
- * @param {string[]} sourceFiles
- * @param {Map<string, TypeScript.SourceFile>} compileMap
+ * @param {string} file
+ * @param {TypeScript.SourceFile} source
  */
-function checkSpecFile(sourceFiles, compileMap) {
-  for (const file of sourceFiles) {
-    const dir = path
-      .dirname(file)
-      .split(path.sep)
-      .map(part => (part === "src" ? "test" : part))
-      .join(path.sep);
+function checkSpecFile(file, source) {
+  const dir = path
+    .dirname(file)
+    .split(path.sep)
+    .map(part => (part === "src" ? "test" : part))
+    .join(path.sep);
 
-    const potentialTestFiles = [
-      // TS source with TS test file
-      path.join(dir, `${path.basename(file, ".ts")}.spec.ts`),
-      // TSX source with TS test file
-      path.join(dir, `${path.basename(file, ".tsx")}.spec.ts`),
-      // TSX source with TSX test file
-      path.join(dir, `${path.basename(file, ".tsx")}.spec.tsx`),
-      // TS source with TSX test file
-      path.join(dir, `${path.basename(file, ".ts")}.spec.tsx`)
-    ];
-
-    const compiled = compileMap.get(file);
-    if (
-      potentialTestFiles.some(isFile) || // An associated test file was found
-      compiled === undefined || // Should never happen
-      !isTestable(compiled)
-    ) {
-      continue;
-    }
-
-    notify.warn(`${chalk.gray(file)} Missing spec file`); // This could be an error in the future and actually fail the build.
+  const potentialTestFiles = [
+    // TS source with TS test file
+    path.join(dir, `${path.basename(file, ".ts")}.spec.ts`),
+    // TSX source with TS test file
+    path.join(dir, `${path.basename(file, ".tsx")}.spec.ts`),
+    // TSX source with TSX test file
+    path.join(dir, `${path.basename(file, ".tsx")}.spec.tsx`),
+    // TS source with TSX test file
+    path.join(dir, `${path.basename(file, ".ts")}.spec.tsx`)
+  ];
+  if (
+    potentialTestFiles.some(isFile) || // An associated test file was found
+    source === undefined || // Should never happen
+    !isTestable(source)
+  ) {
+    return;
   }
+
+  notify.warn(`${chalk.gray(file)} Missing spec file`); // This could be an error in the future and actually fail the build.
 }
 
 function AssembleTODOSData() {

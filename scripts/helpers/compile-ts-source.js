@@ -1,5 +1,4 @@
 const TypeScript = require("typescript");
-const { readFile } = require("./file-system");
 
 /**
  * @param {string} file
@@ -10,7 +9,7 @@ const { readFile } = require("./file-system");
 function createTypeScriptSource(file) {
   return TypeScript.createSourceFile(
     "anon.ts",
-    readFile(file),
+    file,
     TypeScript.ScriptTarget.ES2015
   );
 }
