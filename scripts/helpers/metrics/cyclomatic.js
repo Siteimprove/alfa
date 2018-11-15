@@ -1,4 +1,5 @@
 const TypeScript = require("typescript");
+const { createTypeScriptSource } = require("../create-ts-source");
 
 /**
  * @typedef {import("../coverage").Script} Script
@@ -15,12 +16,7 @@ const TypeScript = require("typescript");
 /**
  * @param {String} source
  */
-const createSource = source =>
-  TypeScript.createSourceFile(
-    "anon.ts",
-    source,
-    TypeScript.ScriptTarget.ES2015
-  );
+const createSource = source => createTypeScriptSource(source);
 
 /**
  * @param {Script} script
