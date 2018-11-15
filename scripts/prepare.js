@@ -50,18 +50,15 @@ for (const pkg of packages) {
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
   const sourceFiles = /** @type {string[]} */ ([]);
-  const compileMap = /** @type {Map<string, TypeScript.SourceFile>} */ (new Map());
 
   findFiles(root, endsWith(".ts", ".tsx")).forEach(file => {
     const source = createTypeScriptSource(readFile(file));
     sourceFiles.push(file);
-    compileMap.set(file, createTypeScriptSource(file));
+    computeComments(file, source);
     if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
       checkSpecFile(file, source);
     }
   });
-
-  computeComments(sourceFiles, compileMap);
 
   handle(sourceFiles);
 }
@@ -109,51 +106,41 @@ function isTestable(node, testable = false, exporting = false) {
 }
 
 /**
- * @param {string[]} commentFiles
- * @param {Map<string, TypeScript.SourceFile>} compileMap
+ * @param {string} file
+ * @param {TypeScript.SourceFile} source
  */
-function computeComments(commentFiles, compileMap) {
-  for (const file of commentFiles) {
-    const compiled = compileMap.get(file);
-    if (compiled === undefined) {
-      continue;
+function computeComments(file, source) {
+  const comments = /**@type {TypeScript.TextRange[]} */ ([]);
+  /**
+   * @param {TypeScript.Node} node
+   */
+  function visit(node) {
+    const comment = TypeScript.getCommentRange(node);
+    if (comment !== undefined) {
+      comments.push(comment);
     }
+    TypeScript.forEachChild(node, visit);
+  }
+  TypeScript.forEachChild(source, visit);
 
-    // const comments = /**@type {TypeScript.CommentRange[]} */ ([]);
-    const comments = /**@type {TypeScript.TextRange[]} */ ([]);
+  if (comments !== undefined) {
+    for (const comment of comments) {
+      const start = source.getLineAndCharacterOfPosition(comment.pos).line + 1;
 
-    /**
-     * @param {TypeScript.Node} node
-     */
-    function visit(node) {
-      const comment = TypeScript.getCommentRange(node);
-      if (comment !== undefined) {
-        comments.push(comment);
-      }
-      TypeScript.forEachChild(node, visit);
-    }
-    TypeScript.forEachChild(compiled, visit);
-
-    if (comments !== undefined) {
-      for (const comment of comments) {
-        const start =
-          compiled.getLineAndCharacterOfPosition(comment.pos).line + 1;
-
-        const text = compiled.getText().substring(comment.pos, comment.end);
-        const split = text.split("\r\n");
-        for (let i = 0; i < split.length; i++) {
-          const line = split[i].trim();
-          for (const ac of annotatedComment) {
-            if (line.toLowerCase().startsWith(`* ${ac}`)) {
-              const url = `https://github.com/siteimprove/alfa/blob/master/${file.replace(
-                /\\/g,
-                "/"
-              )}#L${start + i}`;
-              lines.add(
-                `* [${file}:${start + i}](${url}): ${line.substring(2)}\r\n`
-              );
-              break;
-            }
+      const text = source.getText().substring(comment.pos, comment.end);
+      const split = text.split("\r\n");
+      for (let i = 0; i < split.length; i++) {
+        const line = split[i].trim();
+        for (const ac of annotatedComment) {
+          if (line.toLowerCase().startsWith(`* ${ac}`)) {
+            const url = `https://github.com/siteimprove/alfa/blob/master/${file.replace(
+              /\\/g,
+              "/"
+            )}#L${start + i}`;
+            lines.add(
+              `* [${file}:${start + i}](${url}): ${line.substring(2)}\r\n`
+            );
+            break;
           }
         }
       }
