@@ -110,23 +110,13 @@ function isTestable(node, testable = false, exporting = false) {
  * @param {TypeScript.SourceFile} source
  */
 function computeComments(file, source) {
-  const comments = /**@type {TypeScript.TextRange[]} */ ([]);
   /**
    * @param {TypeScript.Node} node
    */
   function visit(node) {
     const comment = TypeScript.getCommentRange(node);
     if (comment !== undefined) {
-      comments.push(comment);
-    }
-    TypeScript.forEachChild(node, visit);
-  }
-  TypeScript.forEachChild(source, visit);
-
-  if (comments !== undefined) {
-    for (const comment of comments) {
       const start = source.getLineAndCharacterOfPosition(comment.pos).line + 1;
-
       const text = source.getText().substring(comment.pos, comment.end);
       const split = text.split("\r\n");
       for (let i = 0; i < split.length; i++) {
@@ -145,7 +135,9 @@ function computeComments(file, source) {
         }
       }
     }
+    TypeScript.forEachChild(node, visit);
   }
+  TypeScript.forEachChild(source, visit);
 }
 
 /**
