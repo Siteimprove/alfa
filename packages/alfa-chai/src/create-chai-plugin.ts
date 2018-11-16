@@ -6,6 +6,12 @@ import * as chai from "chai";
 
 // tslint:disable:no-invalid-this
 
+declare module "chai" {
+  interface Assertion {
+    accessible: void;
+  }
+}
+
 export function createChaiPlugin<T>(
   identify: (input: unknown) => input is T,
   transform: (input: T) => Element

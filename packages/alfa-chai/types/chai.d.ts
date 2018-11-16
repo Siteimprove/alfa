@@ -66,7 +66,7 @@ declare module "chai" {
 
     function assert(expression: boolean, message: string): void;
 
-    function expect(): Assertion;
+    function expect(input: unknown): Assertion;
 
     function should(): void;
 
