@@ -1,4 +1,11 @@
-import { MediaQuery, parseMediaQuery } from "@siteimprove/alfa-css";
+import {
+  MediaCondition,
+  MediaFeature,
+  MediaQualifier,
+  MediaQuery,
+  MediaType,
+  parseMediaQuery
+} from "@siteimprove/alfa-css";
 import { Device, DeviceType } from "@siteimprove/alfa-device";
 import { isMediaRule } from "./guards";
 import { ConditionRule } from "./types";
@@ -24,7 +31,31 @@ export function fulfills(device: Device, rule: ConditionRule): boolean {
 }
 
 function fulfillsMediaQuery(device: Device, mediaQuery: MediaQuery): boolean {
-  switch (mediaQuery.type) {
+  const { qualifier } = mediaQuery;
+
+  if (mediaQuery.type !== undefined) {
+    if (
+      !fulfillsMediaType(device, mediaQuery.type) ||
+      qualifier === MediaQualifier.Not
+    ) {
+      return false;
+    }
+  }
+
+  if (mediaQuery.condition !== undefined) {
+    if (
+      !fulfillsMediaCondition(device, mediaQuery.condition) ||
+      qualifier === MediaQualifier.Not
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function fulfillsMediaType(device: Device, mediaType: MediaType): boolean {
+  switch (mediaType) {
     case "screen":
       if (device.type !== DeviceType.Screen) {
         return false;
@@ -51,5 +82,29 @@ function fulfillsMediaQuery(device: Device, mediaQuery: MediaQuery): boolean {
       return false;
   }
 
+  return true;
+}
+
+function fulfillsMediaCondition(
+  device: Device,
+  mediaCondition: MediaCondition
+): boolean {
+  const { feature } = mediaCondition;
+
+  if ("feature" in feature) {
+    return fulfillsMediaCondition(device, feature);
+  }
+
+  if ("name" in feature) {
+    return fulfillsMediaFeature(device, feature);
+  }
+
+  return false;
+}
+
+function fulfillsMediaFeature(
+  device: Device,
+  mediaFeature: MediaFeature
+): boolean {
   return false;
 }

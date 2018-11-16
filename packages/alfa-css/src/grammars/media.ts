@@ -16,7 +16,7 @@ const { assign } = Object;
 /**
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-query
  */
-function mediaQuery(stream: Stream<Token>): MediaQuery {
+function mediaQuery(stream: Stream<Token>): MediaQuery | null {
   const condition = mediaCondition(stream);
 
   if (condition !== null) {
@@ -43,7 +43,8 @@ function mediaQuery(stream: Stream<Token>): MediaQuery {
       next = stream.peek(0);
 
       if (next === null || next.type !== TokenType.Ident) {
-        return { type: "all" };
+        stream.accept(token => token.type !== TokenType.Comma);
+        return null;
       }
     }
 
@@ -76,7 +77,8 @@ function mediaQuery(stream: Stream<Token>): MediaQuery {
     return query;
   }
 
-  return { type: "all" };
+  stream.accept(token => token.type !== TokenType.Comma);
+  return null;
 }
 
 /**
@@ -86,6 +88,8 @@ function mediaCondition(
   stream: Stream<Token>,
   allowOr = true
 ): MediaCondition | null {
+  const start = stream.position();
+
   let operator: MediaOperator | null = null;
 
   const next = stream.peek(0);
@@ -124,6 +128,8 @@ function mediaCondition(
     return condition;
   }
 
+  stream.restore(start);
+
   return null;
 }
 
@@ -133,6 +139,8 @@ function mediaCondition(
 function mediaInParens(
   stream: Stream<Token>
 ): MediaFeature | MediaCondition | Array<MediaCondition> | null {
+  const start = stream.position();
+
   let next = stream.peek(0);
 
   if (next !== null && next.type === TokenType.LeftParenthesis) {
@@ -148,10 +156,10 @@ function mediaInParens(
 
         return condition;
       }
-    } else {
-      stream.backup(1);
     }
   }
+
+  stream.restore(start);
 
   return mediaFeature(stream);
 }
@@ -160,6 +168,8 @@ function mediaInParens(
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-feature
  */
 function mediaFeature(stream: Stream<Token>): MediaFeature | null {
+  const start = stream.position();
+
   let next = stream.peek(0);
 
   if (next !== null && next.type === TokenType.LeftParenthesis) {
@@ -205,6 +215,8 @@ function mediaFeature(stream: Stream<Token>): MediaFeature | null {
         }
 
         if (value === null) {
+          stream.restore(start);
+
           return null;
         }
 
@@ -221,6 +233,8 @@ function mediaFeature(stream: Stream<Token>): MediaFeature | null {
       }
     }
   }
+
+  stream.restore(start);
 
   return null;
 }
