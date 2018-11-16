@@ -15,12 +15,12 @@ declare module "chai" {
 export function createChaiPlugin<T>(
   identify: (input: unknown) => input is T,
   transform: (input: T) => Element
-): (chai: chai.Chai, utils: chai.Utils) => void {
-  return (chai, utils) => {
+): (chai: chai, util: chai.Util) => void {
+  return (chai, util) => {
     const { Assertion } = chai;
 
     Assertion.addProperty("accessible", function() {
-      const object = utils.flag(this, "object");
+      const object = util.flag(this, "object");
 
       if (identify(object)) {
         const error = expect(transform(object)).to.be.accessible;

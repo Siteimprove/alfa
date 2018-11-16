@@ -2,54 +2,59 @@ declare module "magicpen" {
   function magicpen(): magicpen.MagicPen;
 
   namespace magicpen {
-    type MagicPen = typeof magicpen;
+    interface MagicPen {
+      /**
+       * @see https://github.com/sunesimonsen/magicpen#textcontent-stylestring
+       */
+      text(content: string, ...style: Array<string>): this;
 
-    /**
-     * @see https://github.com/sunesimonsen/magicpen#textcontent-stylestring
-     */
-    function text(content: string, ...style: Array<string>): MagicPen;
+      /**
+       * @see https://github.com/sunesimonsen/magicpen#appendpen-appendfunction
+       */
+      append(pen: this): this;
+      append(fn: (this: this) => void): this;
 
-    /**
-     * @see https://github.com/sunesimonsen/magicpen#appendpen-appendfunction
-     */
-    function append(pen: MagicPen): MagicPen;
-    function append(fn: (this: MagicPen) => void): MagicPen;
+      /**
+       * @see https://github.com/sunesimonsen/magicpen#cloneformat
+       */
+      clone(): this;
 
-    /**
-     * @see https://github.com/sunesimonsen/magicpen#cloneformat
-     */
-    function clone(): MagicPen;
+      /**
+       * @see https://github.com/sunesimonsen/magicpen#aliases
+       */
 
-    /**
-     * @see https://github.com/sunesimonsen/magicpen#aliases
-     */
+      space(count: number): this;
+      bold(content: string): this;
+      dim(content: string): this;
+      italic(content: string): this;
+      underline(content: string): this;
+      inverse(content: string): this;
+      hidden(content: string): this;
+      strikeThrough(content: string): this;
+      black(content: string): this;
+      red(content: string): this;
+      green(content: string): this;
+      yellow(content: string): this;
+      blue(content: string): this;
+      magenta(content: string): this;
+      cyan(content: string): this;
+      white(content: string): this;
+      gray(content: string): this;
 
-    function space(count: number): MagicPen;
-    function bold(content: string): MagicPen;
-    function dim(content: string): MagicPen;
-    function italic(content: string): MagicPen;
-    function underline(content: string): MagicPen;
-    function inverse(content: string): MagicPen;
-    function hidden(content: string): MagicPen;
-    function strikeThrough(content: string): MagicPen;
-    function black(content: string): MagicPen;
-    function red(content: string): MagicPen;
-    function green(content: string): MagicPen;
-    function yellow(content: string): MagicPen;
-    function blue(content: string): MagicPen;
-    function magenta(content: string): MagicPen;
-    function cyan(content: string): MagicPen;
-    function white(content: string): MagicPen;
-    function gray(content: string): MagicPen;
+      bgBlack(content: string): this;
+      bgRed(content: string): this;
+      bgGreen(content: string): this;
+      bgYellow(content: string): this;
+      bgBlue(content: string): this;
+      bgMagenta(content: string): this;
+      bgCyan(content: string): this;
+      bgWhite(content: string): this;
+    }
 
-    function bgBlack(content: string): MagicPen;
-    function bgRed(content: string): MagicPen;
-    function bgGreen(content: string): MagicPen;
-    function bgYellow(content: string): MagicPen;
-    function bgBlue(content: string): MagicPen;
-    function bgMagenta(content: string): MagicPen;
-    function bgCyan(content: string): MagicPen;
-    function bgWhite(content: string): MagicPen;
+    interface MagicPenConstructor {
+      new (): MagicPen;
+      prototype: MagicPen;
+    }
   }
 
   export = magicpen;
