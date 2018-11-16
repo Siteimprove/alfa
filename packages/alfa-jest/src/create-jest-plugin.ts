@@ -26,5 +26,5 @@ export function createJestPlugin<T>(
 
       return { pass: false, message: () => "Expected to not be accessible" };
     }
-  })
+  });
 }
