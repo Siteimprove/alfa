@@ -1,6 +1,7 @@
 import {
   MediaCondition,
   MediaFeature,
+  MediaOperator,
   MediaQualifier,
   MediaQuery,
   MediaType,
@@ -89,17 +90,30 @@ function fulfillsMediaCondition(
   device: Device,
   mediaCondition: MediaCondition
 ): boolean {
-  const { feature } = mediaCondition;
+  const { features, operator } = mediaCondition;
 
-  if ("feature" in feature) {
-    return fulfillsMediaCondition(device, feature);
+  for (const feature of features) {
+    const fulfills =
+      "features" in feature
+        ? fulfillsMediaCondition(device, feature)
+        : fulfillsMediaFeature(device, feature);
+
+    if (operator === MediaOperator.Or) {
+      if (fulfills) {
+        return true;
+      }
+    } else {
+      if (!fulfills) {
+        return false;
+      }
+    }
   }
 
-  if ("name" in feature) {
-    return fulfillsMediaFeature(device, feature);
+  if (operator === MediaOperator.Or) {
+    return false;
+  } else {
+    return true;
   }
-
-  return false;
 }
 
 function fulfillsMediaFeature(
