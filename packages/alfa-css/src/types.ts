@@ -330,8 +330,8 @@ export interface MediaQuery {
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-condition
  */
 export interface MediaCondition {
-  readonly feature: MediaFeature | MediaCondition | Array<MediaCondition>;
   readonly operator?: MediaOperator;
+  readonly features: Array<MediaFeature | MediaCondition>;
 }
 
 /**
