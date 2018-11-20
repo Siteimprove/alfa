@@ -18,7 +18,8 @@ function computeComments(file, source) {
     if (comment !== undefined) {
       const start = source.getLineAndCharacterOfPosition(comment.pos).line + 1;
       const text = source.getText().substring(comment.pos, comment.end);
-      const split = text.split("\r\n");
+      const split = text.split("\n");
+
       for (let i = 0; i < split.length; i++) {
         const line = split[i].trim();
         for (const ac of annotatedComment) {
