@@ -1,7 +1,7 @@
 import { Outcome } from "@siteimprove/alfa-act";
+import { DeviceType, Orientation, Scan } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
-import { DeviceType, Orientation, Scan } from "@siteimprove/alfa-device";
 
 import { SIA_R10 } from "../../src/sia-r10/rule";
 
