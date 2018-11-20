@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   getAttribute,
@@ -8,13 +9,17 @@ import {
   Text
 } from "@siteimprove/alfa-dom";
 
-export function isVisible(node: Element | Text, context: Node): boolean {
+export function isVisible(
+  node: Element | Text,
+  context: Node,
+  device: Device
+): boolean {
   if (isElement(node)) {
     if (getAttribute(node, "aria-hidden") === "true") {
       return false;
     }
 
-    const { display, visibility } = getCascadedStyle(node, context);
+    const { display, visibility } = getCascadedStyle(node, context, device);
 
     if (display !== undefined && display.value === "none") {
       return false;
@@ -30,7 +35,7 @@ export function isVisible(node: Element | Text, context: Node): boolean {
   const parentElement = getParentElement(node, context, { flattened: true });
 
   if (parentElement !== null) {
-    return isVisible(parentElement, context);
+    return isVisible(parentElement, context, device);
   }
 
   return true;

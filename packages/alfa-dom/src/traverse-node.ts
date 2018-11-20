@@ -3,7 +3,15 @@ import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { Node } from "./types";
 
-export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
+const Skip = Symbol("Skip");
+const Exit = Symbol("Exit");
+
+export type NodeVisitor = (
+  node: Node,
+  parentNode: Node | null,
+  skip: symbol,
+  exit: symbol
+) => symbol | void;
 
 /**
  * Given a node and a context, perform a depth-first traversal of the node
@@ -52,8 +60,16 @@ function visitNode(
 
   const { enter, exit } = visitors;
 
-  if (enter !== undefined && enter(node, parentNode) === false) {
-    return false;
+  if (enter !== undefined) {
+    const status = enter(node, parentNode, Skip, Exit);
+
+    if (status === Exit) {
+      return false;
+    }
+
+    if (status === Skip) {
+      return true;
+    }
   }
 
   const shadowRoot = isElement(node) ? node.shadowRoot : null;
@@ -68,7 +84,7 @@ function visitNode(
         }
       }
 
-      if (exit !== undefined && exit(node, parentNode) === false) {
+      if (exit !== undefined && exit(node, parentNode, Skip, Exit) === Exit) {
         return false;
       }
 
@@ -93,7 +109,7 @@ function visitNode(
     }
   }
 
-  if (exit !== undefined && exit(node, parentNode) === false) {
+  if (exit !== undefined && exit(node, parentNode, Skip, Exit) === Exit) {
     return false;
   }
 

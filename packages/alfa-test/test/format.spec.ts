@@ -11,5 +11,5 @@ test("Can format a basic error", t => {
   );
 
   // Assert that we get the location of the error
-  t.equal(err.indexOf("internal/assert.js:268") !== -1, true);
+  t.equal(err.indexOf("internal/assert.js") !== -1, true);
 });
