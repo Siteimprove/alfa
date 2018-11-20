@@ -1,5 +1,5 @@
 const { findFiles, removeFile } = require("../helpers/file-system");
-const { endsWith } = require("../helpers/predicates");
+const { endsWith, not } = require("../helpers/predicates");
 
 /**
  * @param {string} directory
@@ -7,7 +7,19 @@ const { endsWith } = require("../helpers/predicates");
 function clean(directory) {
   const files = findFiles(
     [`${directory}/src`, `${directory}/test`],
-    endsWith(".js", ".d.ts", ".map"),
+    endsWith(".js", ".d.ts", ".map")
+      .not(
+        /** @param {string} files */ file =>
+          file !== "alfa-unicode/src/characters.js"
+      )
+      .not(
+        /** @param {string} files */ file =>
+          file !== "alfa-unicode/src/characters.d.ts"
+      )
+      .not(
+        /** @param {string} files */ file =>
+          file !== "alfa-unicode/src/characters.js.map"
+      ),
     {
       gitIgnore: false
     }
