@@ -2,7 +2,7 @@ import { lex, parse } from "@siteimprove/alfa-lang";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../src/alphabet";
 import { MediaGrammar } from "../../src/grammars/media";
-import { MediaQuery } from "../../src/types";
+import { MediaOperator, MediaQuery } from "../../src/types";
 import { Values } from "../../src/values";
 
 function media(t: Assertions, input: string, expected: MediaQuery) {
@@ -14,16 +14,18 @@ function media(t: Assertions, input: string, expected: MediaQuery) {
 }
 
 test("Can parse a media type", t => {
-  media(t, "screen", { type: "screen" });
+  media(t, "type", { type: "type" });
 });
 
 test("Can parse a media feature with a length value", t => {
   media(t, "(feature: 200px)", {
     condition: {
-      feature: {
-        name: "feature",
-        value: Values.length(200, "px")
-      }
+      features: [
+        {
+          name: "feature",
+          value: Values.length(200, "px")
+        }
+      ]
     }
   });
 });
@@ -31,10 +33,12 @@ test("Can parse a media feature with a length value", t => {
 test("Can parse a media feature with a number value", t => {
   media(t, "(feature: 200)", {
     condition: {
-      feature: {
-        name: "feature",
-        value: Values.number(200)
-      }
+      features: [
+        {
+          name: "feature",
+          value: Values.number(200)
+        }
+      ]
     }
   });
 });
@@ -42,10 +46,12 @@ test("Can parse a media feature with a number value", t => {
 test("Can parse a media feature with a string value", t => {
   media(t, "(feature: foo)", {
     condition: {
-      feature: {
-        name: "feature",
-        value: Values.string("foo")
-      }
+      features: [
+        {
+          name: "feature",
+          value: Values.string("foo")
+        }
+      ]
     }
   });
 });
@@ -53,9 +59,49 @@ test("Can parse a media feature with a string value", t => {
 test("Can parse a media feature without a value", t => {
   media(t, "(feature)", {
     condition: {
-      feature: {
-        name: "feature"
-      }
+      features: [{ name: "feature" }]
+    }
+  });
+});
+
+test("Can parse a media type and feature", t => {
+  media(t, "type and (feature)", {
+    type: "type",
+    condition: {
+      features: [{ name: "feature" }]
+    }
+  });
+});
+
+test("Can parse multiple media features separated by and", t => {
+  media(t, "(foo) and (bar)", {
+    condition: {
+      operator: MediaOperator.And,
+      features: [{ name: "foo" }, { name: "bar" }]
+    }
+  });
+});
+
+test("Can parse multiple media features separated by or", t => {
+  media(t, "(foo) or (bar)", {
+    condition: {
+      operator: MediaOperator.Or,
+      features: [{ name: "foo" }, { name: "bar" }]
+    }
+  });
+});
+
+test("Can parse multiple media features separated by both and / or", t => {
+  media(t, "(foo) and ((bar) or (baz))", {
+    condition: {
+      operator: MediaOperator.And,
+      features: [
+        { name: "foo" },
+        {
+          operator: MediaOperator.Or,
+          features: [{ name: "bar" }, { name: "baz" }]
+        }
+      ]
     }
   });
 });

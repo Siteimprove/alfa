@@ -1,6 +1,52 @@
+// tslint:disable:class-name
+
 declare module "chai" {
+  interface chai {
+    use(plugin: (chai: this, util: chai.Util) => void): this;
+
+    util: chai.Util;
+
+    Assertion: chai.AssertionConstructor;
+
+    assert: chai.Assert;
+    expect: chai.Expect;
+    should: chai.Should;
+  }
+
   namespace chai {
-    type Chai = typeof chai;
+    interface Util {
+      flag(assertion: Assertion, name: string): unknown;
+      flag(assertion: Assertion, name: string, value: unknown): void;
+    }
+
+    interface Assert {
+      (expression: boolean, message: string): void;
+      fail(
+        actual?: unknown,
+        expected?: unknown,
+        message?: string,
+        operator?: string
+      ): void;
+    }
+
+    interface Expect {
+      (value: unknown, message?: string): Assertion;
+      fail(
+        actual?: unknown,
+        expected?: unknown,
+        message?: string,
+        operator?: string
+      ): void;
+    }
+
+    interface Should extends Assertion {
+      fail(
+        actual?: unknown,
+        expected?: unknown,
+        message?: string,
+        operator?: string
+      ): void;
+    }
 
     interface Assertion {
       assert(
@@ -52,30 +98,22 @@ declare module "chai" {
       above(number: number, message?: string): this;
     }
 
-    namespace Assertion {
-      function addProperty(
+    interface AssertionConstructor {
+      new (): Assertion;
+      prototype: Assertion;
+
+      addProperty(
         name: string,
         property: (this: Assertion, target: unknown) => void
       ): void;
     }
-
-    interface Utils {
-      flag(assertion: Assertion, name: string): unknown;
-      flag(assertion: Assertion, name: string, value: unknown): void;
-    }
-
-    function assert(expression: boolean, message: string): void;
-
-    function expect(): Assertion;
-
-    function should(): void;
-
-    function use(plugin: (chai: Chai, utils: Utils) => void): Chai;
   }
+
+  const chai: chai;
 
   export = chai;
 }
 
 interface Object {
-  should: import("chai").Assertion;
+  should: import("chai").Should;
 }

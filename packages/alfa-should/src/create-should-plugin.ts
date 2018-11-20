@@ -7,7 +7,7 @@ import * as should from "should";
 // tslint:disable:no-invalid-this
 
 declare module "should" {
-  interface Should {
+  interface Assertion {
     accessible: this;
   }
 }
