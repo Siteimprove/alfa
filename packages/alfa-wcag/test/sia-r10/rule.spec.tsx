@@ -46,5 +46,5 @@ test("SIA-R10 is inapplicable when element is not a widget", t => {
   const input = <input autocomplete="username" tabindex="-1" role="none" />;
   const document = documentFromNodes([input]);
 
-  outcome(t, SIA_R10, { document }, Outcome.Inapplicable);
+  outcome(t, SIA_R10, { document, device }, Outcome.Inapplicable);
 });
