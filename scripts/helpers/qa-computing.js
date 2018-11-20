@@ -1,8 +1,37 @@
 const TypeScript = require("typescript");
 const path = require("path");
-const { isFile } = require("./file-system");
+const { isFile, writeFile } = require("./file-system");
 const notify = require("./notify");
 const { default: chalk } = require("chalk");
+
+const lines = /**@type {Set<String>} */ (new Set());
+
+/**
+ * @param {string} file
+ * @param {TypeScript.SourceFile} source
+ */
+function computeQA(file, source) {
+  if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
+    if (checkSpecFile(file, source) === -1) {
+      lines.add(file);
+    }
+  }
+}
+
+exports.computeQA = computeQA;
+
+function createQAFile() {
+  if (lines.size !== 0) {
+    let qaFileData = "";
+    qaFileData += "# Missing Spec Files:\r\n";
+    for (const line of lines) {
+      qaFileData += `* ${line}\r\n`;
+    }
+    writeFile("./QA.md", qaFileData);
+  }
+}
+
+exports.createQAFile = createQAFile;
 
 /**
  * @param {TypeScript.Node} node
@@ -66,10 +95,11 @@ function checkSpecFile(file, source) {
     source === undefined || // Should never happen
     !isTestable(source)
   ) {
-    return;
+    return 0; // spec file exists or cannot determine its existance
   }
 
   notify.warn(`${chalk.gray(file)} Missing spec file`); // This could be an error in the future and actually fail the build.
+  return -1; // spec file missing
 }
 
 exports.checkSpecFile = checkSpecFile;

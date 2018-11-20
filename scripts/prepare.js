@@ -1,18 +1,16 @@
-const path = require("path");
 const { createTypeScriptSource } = require("./helpers/compile-ts-source");
 const { findFiles, readFile } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
-
 const { build } = require("./tasks/build");
 const { clean } = require("./tasks/clean");
 const {
   computeComments,
   createTODOSFile
 } = require("./helpers/comment-computing");
-const { checkSpecFile } = require("./helpers/specfile-identifier");
+const { computeQA, createQAFile } = require("./helpers/qa-computing");
 
 /**
  * @param {Array<string>} files
@@ -46,12 +44,12 @@ for (const pkg of packages) {
     const source = createTypeScriptSource(readFile(file));
     computeComments(file, source);
     handle([file]);
-    if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
-      checkSpecFile(file, source);
-    }
+    computeQA(file, source);
   });
 }
 
 createTODOSFile();
+
+createQAFile();
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
