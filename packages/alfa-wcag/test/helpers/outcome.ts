@@ -19,7 +19,7 @@ export function outcome<A extends Aspect, T extends Target>(
     | Readonly<
         { [O in Outcome.Failed | Outcome.Passed | Outcome.CantTell]?: Array<T> }
       >,
-  dependencies: Array<Rule<A>> = []
+  dependencies: Array<Rule<A, T>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,
