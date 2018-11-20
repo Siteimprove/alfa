@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
@@ -7,6 +8,7 @@ export interface Aspects {
   readonly request: Request;
   readonly response: Response;
   readonly document: Document;
+  readonly device: Device;
 }
 
 export type Aspect = Aspects[keyof Aspects];
@@ -76,8 +78,8 @@ export namespace Atomic {
     T
   > | null;
 
-  export type Expectations<T extends Target = Target> = <S extends T>(
-    target: S,
+  export type Expectations<T extends Target = Target> = (
+    target: T,
     expectation: (id: number, holds: boolean) => void,
     question: (question: string) => boolean
   ) => void;
@@ -98,8 +100,8 @@ export namespace Atomic {
 }
 
 export namespace Composite {
-  export type Expectations<T extends Target = Target> = <S extends T>(
-    outcomes: ReadonlyArray<Pick<Result<S>, "outcome">>,
+  export type Expectations<T extends Target = Target> = (
+    outcomes: ReadonlyArray<Pick<Result<T>, "outcome">>,
     expectation: (id: number, holds: boolean) => void
   ) => void;
 

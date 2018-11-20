@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { values } from "@siteimprove/alfa-util";
 import * as Attributes from "./attributes";
@@ -69,7 +70,7 @@ export type Attribute = Readonly<{
   deprecated?: true;
 }>;
 
-export type Aspect<T> = (element: Element, context: Node) => T;
+export type Aspect<T> = (element: Element, context: Node, device: Device) => T;
 
 /**
  * @see https://www.w3.org/TR/wai-aria/#roles_categorization

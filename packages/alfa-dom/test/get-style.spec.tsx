@@ -1,4 +1,5 @@
 import { Values } from "@siteimprove/alfa-css";
+import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import {
@@ -7,11 +8,13 @@ import {
   getSpecifiedStyle
 } from "../src/get-style";
 
+const device = getDefaultDevice();
+
 const span = <span style="font-size: 1.2em; color: inherit" />;
 const div = <div style="font-size: 16px; color: red">{span}</div>;
 
 test("Gets the cascaded style of an element", t => {
-  const style = getCascadedStyle(span, div);
+  const style = getCascadedStyle(span, div, device);
 
   t.deepEqual(style, {
     color: Values.keyword("inherit"),
@@ -20,7 +23,7 @@ test("Gets the cascaded style of an element", t => {
 });
 
 test("Gets the specified style of an element", t => {
-  const style = getSpecifiedStyle(span, div);
+  const style = getSpecifiedStyle(span, div, device);
 
   t.deepEqual(style, {
     color: Values.color(255, 0, 0, 1),
@@ -29,7 +32,7 @@ test("Gets the specified style of an element", t => {
 });
 
 test("Gets the computed style of an element", t => {
-  const style = getComputedStyle(span, div);
+  const style = getComputedStyle(span, div, device);
 
   t.deepEqual(style, {
     color: Values.color(255, 0, 0, 1),
@@ -41,7 +44,7 @@ test("Correctly handles default inherited properties", t => {
   const span = <span />;
   const div = <div style="font-size: 14px">{span}</div>;
 
-  const style = getComputedStyle(span, div);
+  const style = getComputedStyle(span, div, device);
 
   t.deepEqual(style, {
     fontSize: Values.length(14, "px")
@@ -51,7 +54,7 @@ test("Correctly handles default inherited properties", t => {
 test("Gets the initial values of properties when specified", t => {
   const span = <span style="font-size: initial" />;
 
-  const style = getComputedStyle(span, span);
+  const style = getComputedStyle(span, span, device);
 
   t.deepEqual(style, {
     fontSize: Values.length(16, "px")
@@ -62,7 +65,7 @@ test("Gets no properties when none are specified nor inherited", t => {
   const span = <span />;
   const div = <div>{span}</div>;
 
-  const style = getComputedStyle(span, div);
+  const style = getComputedStyle(span, div, device);
 
   t.deepEqual(style, {});
 });
@@ -81,7 +84,7 @@ test("Correctly handles light DOM inheriting from shadow DOM", t => {
     </div>
   );
 
-  const style = getComputedStyle(span, context);
+  const style = getComputedStyle(span, context, device);
 
   t.deepEqual(style, {
     color: Values.color(255, 0, 0, 1)

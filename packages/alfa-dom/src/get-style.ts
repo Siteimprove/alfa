@@ -11,6 +11,7 @@ import {
   SelectorType,
   SpecifiedStyle
 } from "@siteimprove/alfa-css";
+import { Device } from "@siteimprove/alfa-device";
 import { getAttribute } from "./get-attribute";
 import { getCascade } from "./get-cascade";
 import { getParentElement } from "./get-parent-element";
@@ -34,6 +35,7 @@ export type StyleOptions = Readonly<{
 export function getCascadedStyle(
   element: Element,
   context: Node,
+  device: Device,
   options: StyleOptions = {}
 ): CascadedStyle {
   const declarations: Array<Declaration> = [];
@@ -53,7 +55,7 @@ export function getCascadedStyle(
   }
 
   const rootNode = getRootNode(element, context);
-  const cascade = isDocument(rootNode) ? getCascade(rootNode) : null;
+  const cascade = isDocument(rootNode) ? getCascade(rootNode, device) : null;
 
   if (cascade !== null) {
     for (
@@ -98,6 +100,7 @@ export function getCascadedStyle(
 export function getSpecifiedStyle(
   element: Element,
   context: Node,
+  device: Device,
   options?: StyleOptions
 ): SpecifiedStyle;
 
@@ -107,6 +110,7 @@ export function getSpecifiedStyle(
 export function getSpecifiedStyle(
   element: Element,
   context: Node,
+  device: Device,
   options?: StyleOptions,
   parentStyle?: ComputedStyle
 ): SpecifiedStyle;
@@ -114,10 +118,11 @@ export function getSpecifiedStyle(
 export function getSpecifiedStyle(
   element: Element,
   context: Node,
+  device: Device,
   options: StyleOptions = {},
-  parentStyle: ComputedStyle = getParentStyle(element, context, options)
+  parentStyle: ComputedStyle = getParentStyle(element, context, device, options)
 ): SpecifiedStyle {
-  const cascadedStyle = getCascadedStyle(element, context, options);
+  const cascadedStyle = getCascadedStyle(element, context, device, options);
 
   return resolveSpecifiedStyle(cascadedStyle, parentStyle);
 }
@@ -128,6 +133,7 @@ export function getSpecifiedStyle(
 export function getComputedStyle(
   element: Element,
   context: Node,
+  device: Device,
   options?: StyleOptions
 ): ComputedStyle;
 
@@ -137,6 +143,7 @@ export function getComputedStyle(
 export function getComputedStyle(
   element: Element,
   context: Node,
+  device: Device,
   options?: StyleOptions,
   parentStyle?: ComputedStyle
 ): ComputedStyle;
@@ -144,12 +151,14 @@ export function getComputedStyle(
 export function getComputedStyle(
   element: Element,
   context: Node,
+  device: Device,
   options: StyleOptions = {},
-  parentStyle: ComputedStyle = getParentStyle(element, context, options)
+  parentStyle: ComputedStyle = getParentStyle(element, context, device, options)
 ): ComputedStyle {
   const specifiedStyle = getSpecifiedStyle(
     element,
     context,
+    device,
     options,
     parentStyle
   );
@@ -160,6 +169,7 @@ export function getComputedStyle(
 function getParentStyle(
   element: Element,
   context: Node,
+  device: Device,
   options: StyleOptions
 ): ComputedStyle {
   const parentElement = getParentElement(element, context, { flattened: true });
@@ -175,14 +185,21 @@ function getParentStyle(
   let parentStyle = getComputedStyle(
     parentElement,
     context,
+    device,
     options,
-    getParentStyle(parentElement, context, options)
+    getParentStyle(parentElement, context, device, options)
   );
 
   // If we're getting the style of a pseudo-element, the parent style will be
   // that of the origin element.
   if (pseudo !== undefined) {
-    parentStyle = getComputedStyle(element, context, options, parentStyle);
+    parentStyle = getComputedStyle(
+      element,
+      context,
+      device,
+      options,
+      parentStyle
+    );
   }
 
   return parentStyle;

@@ -5,6 +5,7 @@ import {
   isVisible,
   Roles
 } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -15,34 +16,34 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R8: Atomic.Rule<Document, Element> = {
+export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
   requirements: [{ id: "wcag:labels-or-instructions", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     applicability(() =>
       querySelectorAll(
         document,
         document,
         node =>
           isElement(node) &&
-          isFormField(node, document) &&
-          isVisible(node, document),
+          isFormField(node, document, device) &&
+          isVisible(node, document, device),
         { composed: true }
       )
     );
 
     expectations((target, expectation) => {
-      expectation(1, hasTextAlternative(target, document));
+      expectation(1, hasTextAlternative(target, document, device));
     });
   }
 };
 
-function isFormField(element: Element, context: Node): boolean {
+function isFormField(element: Element, context: Node, device: Device): boolean {
   if (getElementNamespace(element, context) !== Namespace.HTML) {
     return false;
   }
 
-  switch (getRole(element, context)) {
+  switch (getRole(element, context, device)) {
     case Roles.Checkbox:
     case Roles.Combobox:
     case Roles.ListBox:

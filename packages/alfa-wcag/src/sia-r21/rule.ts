@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { isVisible, Roles } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
@@ -15,10 +16,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { values } from "@siteimprove/alfa-util";
 
-export const SIA_R21: Atomic.Rule<Document, Attribute> = {
+export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r21.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     const roleNames = new Set(values(Roles).map(role => role.name));
 
     applicability(() =>
@@ -27,7 +28,7 @@ export const SIA_R21: Atomic.Rule<Document, Attribute> = {
         document,
         node =>
           isElement(node) &&
-          isVisible(node, document) &&
+          isVisible(node, document, device) &&
           isHtmlOrSvgElement(node, document) &&
           hasAttribute(node, "role") &&
           getAttribute(node, "role", { trim: true }) !== ""

@@ -1,4 +1,5 @@
 import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Option, values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
@@ -21,6 +22,7 @@ const whitespace = /\s+/;
 export function getRole(
   element: Element,
   context: Node,
+  device: Device,
   options: Readonly<{ explicit?: boolean; implicit?: boolean }> = {
     explicit: true,
     implicit: true
@@ -62,7 +64,7 @@ export function getRole(
       if (feature !== undefined) {
         const role =
           typeof feature.role === "function"
-            ? feature.role(element, context)
+            ? feature.role(element, context, device)
             : feature.role;
 
         if (role !== undefined) {
