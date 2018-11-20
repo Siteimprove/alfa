@@ -1,6 +1,7 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { Category, getRole, isVisible } from "@siteimprove/alfa-aria";
 import { BrowserSpecific, map, some } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
@@ -20,18 +21,18 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Stream } from "@siteimprove/alfa-lang";
 
-export const SIA_R10: Atomic.Rule<Document, Attribute> = {
+export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r10.html",
   requirements: [{ id: "wcag:identify-input-purpose", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     applicability(() =>
       querySelectorAll<Element>(
         document,
         document,
         node =>
           isElement(node) &&
-          isVisible(node, document) &&
-          some(isAutocompletable(node, document)) &&
+          isVisible(node, document, device) &&
+          some(isAutocompletable(node, document, device)) &&
           hasAutocomplete(node)
       ).map(element => getAttributeNode(element, "autocomplete")!)
     );
@@ -44,7 +45,8 @@ export const SIA_R10: Atomic.Rule<Document, Attribute> = {
 
 function isAutocompletable(
   element: Element,
-  context: Node
+  context: Node,
+  device: Device
 ): boolean | BrowserSpecific<boolean> {
   if (getElementNamespace(element, context) !== Namespace.HTML) {
     return false;
@@ -84,7 +86,7 @@ function isAutocompletable(
     return true;
   }
 
-  return map(getRole(element, context), role => {
+  return map(getRole(element, context, device), role => {
     if (role === null) {
       return false;
     }
@@ -92,7 +94,7 @@ function isAutocompletable(
     const { category } = role;
 
     return typeof category === "function"
-      ? category(element, context) === Category.Widget
+      ? category(element, context, device) === Category.Widget
       : category === Category.Widget;
   });
 }

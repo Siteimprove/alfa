@@ -1,4 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -10,17 +11,17 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R22: Atomic.Rule<Document, Element> = {
+export const SIA_R22: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r22.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  definition: (applicability, expectations, { device, document }) => {
     applicability(() =>
       querySelectorAll(
         document,
         document,
         node =>
           isElement(node) &&
-          isRendered(node, document) &&
+          isRendered(node, document, device) &&
           isVideo(node, document)
       )
     );

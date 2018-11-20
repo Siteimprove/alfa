@@ -21,10 +21,10 @@ export function hasTextContent(
     node,
     context,
     {
-      enter(node) {
+      enter(node, parentNode, skip, exit) {
         if (isText(node) && node.data.trim() !== "") {
           text = true;
-          return false;
+          return exit;
         }
       }
     },
