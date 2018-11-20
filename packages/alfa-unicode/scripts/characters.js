@@ -2,6 +2,7 @@ const fs = require("fs");
 const prettier = require("prettier");
 
 const { fetch } = require("../../../scripts/helpers/http");
+const { build } = require("../../../scripts/tasks/build");
 
 const { isArray } = Array;
 
@@ -90,5 +91,8 @@ export const Characters: Array<Character> = [
     parser: "typescript"
   });
 
-  fs.writeFileSync("src/characters.ts", code);
+  const file = `${__dirname}/../src/characters.ts`;
+  fs.writeFileSync(file, code);
+  build(file);
+  fs.unlinkSync(file);
 });

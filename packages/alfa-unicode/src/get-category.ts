@@ -1,4 +1,4 @@
-import { Characters } from "./characters";
+import { Characters } from "./characters.js";
 import { Category } from "./types";
 
 const { isArray } = Array;

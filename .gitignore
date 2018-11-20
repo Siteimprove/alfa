@@ -7,6 +7,9 @@ package-lock.json
 **/*.d.ts
 **/*.map
 
+!packages/alfa-unicode/src/characters.js
+!packages/alfa-unicode/src/characters.d.ts
+
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
 
