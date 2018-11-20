@@ -1,5 +1,6 @@
 const TypeScript = require("typescript");
 const { writeFile } = require("./file-system");
+const { branch } = require("./git");
 
 const annotatedComment = ["@todo", "@hack", "@bug", "@fixme"];
 
@@ -24,7 +25,7 @@ function computeComments(file, source) {
         const line = split[i].trim();
         for (const ac of annotatedComment) {
           if (line.toLowerCase().startsWith(`* ${ac}`)) {
-            const url = `https://github.com/siteimprove/alfa/blob/master/${file.replace(
+            const url = `https://github.com/siteimprove/alfa/blob/${branch()}/${file.replace(
               /\\/g,
               "/"
             )}#L${start + i}`;
