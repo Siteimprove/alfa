@@ -37,3 +37,10 @@ function format(time, options = {}) {
 }
 
 exports.format = format;
+
+function formattedDateTime() {
+  const date = new Date();
+  return `${date.toDateString()} - ${date.toLocaleTimeString()}`;
+}
+
+exports.formattedDateTime = formattedDateTime;
