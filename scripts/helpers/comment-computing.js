@@ -1,6 +1,7 @@
 const TypeScript = require("typescript");
 const { writeFile } = require("./file-system");
 const { branch } = require("./git");
+const { formattedDateTime } = require("./time");
 
 const annotatedComment = ["@todo", "@hack", "@bug", "@fixme"];
 
@@ -60,8 +61,9 @@ function createTODOSFile() {
       }
     }
   }
+  if (all.keys() === undefined) return;
+  commentFileData += `Last updated: ${formattedDateTime()}\r\n`;
   for (const key of all.keys()) {
-    commentFileData += "\r\n";
     commentFileData += `# ${key.substring(1, key.length).toUpperCase()}:\r\n`;
     const val = all.get(key);
     if (val === undefined) {
@@ -70,6 +72,7 @@ function createTODOSFile() {
     for (const ln of val) {
       commentFileData += ln;
     }
+    commentFileData += "\r\n";
   }
   writeFile("./TODOS.md", commentFileData);
 }

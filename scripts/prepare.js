@@ -23,7 +23,6 @@ const handle = files => {
 
     if (build(file)) {
       const duration = now(start);
-
       notify.success(
         `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
       );
