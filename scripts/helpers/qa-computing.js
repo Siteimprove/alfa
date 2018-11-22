@@ -5,7 +5,11 @@ const notify = require("./notify");
 const { default: chalk } = require("chalk");
 const { formattedDateTime } = require("./time");
 
-const lines = /**@type {Set<String>} */ (new Set());
+const ms = "MISSINGSPEC.md";
+const coverage = "COVERAGE.md";
+
+const msLines = /**@type {Set<String>} */ (new Set());
+const covLines = /**@type {Set<String>} */ (new Set());
 
 /**
  * @param {string} file
@@ -14,7 +18,7 @@ const lines = /**@type {Set<String>} */ (new Set());
 function computeSpecCheck(file, source) {
   if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
     if (checkSpecFile(file, source) === -1) {
-      lines.add(file);
+      msLines.add(file);
     }
   }
 }
@@ -22,18 +26,18 @@ function computeSpecCheck(file, source) {
 exports.computeSpecCheck = computeSpecCheck;
 
 function createMissingSpecFile() {
-  if (lines.size === 0) {
-    if (isFile("MissingSpecFiles.md")) removeFile("MissingSpecFiles.md");
+  if (msLines.size === 0) {
+    if (isFile(ms)) removeFile(ms);
     return;
   }
   let msFileData = "";
 
-  msFileData += `### Last updated: ${formattedDateTime()}\r\n`;
+  msFileData += `Last updated: ${formattedDateTime()}\r\n`;
   msFileData += "# Missing Spec Files:\r\n";
-  for (const line of lines) {
+  for (const line of msLines) {
     msFileData += `* ${line}\r\n`;
   }
-  writeFile("./MissingSpecFiles.md", msFileData);
+  writeFile(`./${ms}`, msFileData);
 }
 
 exports.createMissingSpecFile = createMissingSpecFile;
@@ -106,3 +110,30 @@ function checkSpecFile(file, source) {
   notify.warn(`${chalk.gray(file)} Missing spec file`); // This could be an error in the future and actually fail the build.
   return -1; // spec file missing
 }
+
+/**
+ *@param {string} details
+ */
+function addCoverage(details) {
+  covLines.add(`* ${details}`);
+}
+
+exports.addCoverage = addCoverage;
+
+function createCoverageFile() {
+  if (covLines.size === 0) {
+    console.log("i am here");
+    if (isFile(coverage)) removeFile(coverage);
+    return;
+  }
+  let coverageFileData = "";
+  coverageFileData += `Last updated: ${formattedDateTime()}\r\n`;
+  coverageFileData += `# Low Coverage:\r\n`;
+  for (const line of covLines) {
+    coverageFileData += `* ${line}\r\n`;
+  }
+  coverageFileData += "\r\n";
+  writeFile(`./${coverage}`, coverageFileData);
+}
+
+exports.createCoverageFile = createCoverageFile;
