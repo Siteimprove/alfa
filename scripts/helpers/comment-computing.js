@@ -1,7 +1,9 @@
 const TypeScript = require("typescript");
-const { writeFile } = require("./file-system");
+const { isFile, removeFile, writeFile } = require("./file-system");
 const { branch } = require("./git");
 const { formattedDateTime } = require("./time");
+
+const name = "TODOS.md";
 
 const annotatedComment = ["@todo", "@hack", "@bug", "@fixme"];
 
@@ -44,6 +46,10 @@ function computeComments(file, source) {
 }
 
 function createTODOSFile() {
+  if (lines.size === 0) {
+    if (isFile(name)) removeFile(name);
+    return;
+  }
   let commentFileData = "";
   const all = /**@type {Map<String, String[]>} */ (new Map());
 
@@ -74,7 +80,7 @@ function createTODOSFile() {
     }
     commentFileData += "\r\n";
   }
-  writeFile("./TODOS.md", commentFileData);
+  writeFile(`./${name}`, commentFileData);
 }
 
 exports.computeComments = computeComments;
