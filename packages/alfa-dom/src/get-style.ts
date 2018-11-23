@@ -113,6 +113,11 @@ function getStyle(
   return styleTree.get(element);
 }
 
+const styleTreeMaps = new WeakMap<
+  Node,
+  WeakMap<Node, StyleTree<Node | object>>
+>();
+
 function getStyleTree(
   node: Node,
   context: Node,
@@ -120,10 +125,24 @@ function getStyleTree(
   options: StyleOptions = {}
 ): StyleTree<Node | object> {
   const cascade = isDocument(node) ? getCascade(node, device) : null;
-  const styleTree = new StyleTree(
-    getStyleEntry(node, context, cascade, device, options),
-    device
-  );
+
+  let styleTreeMap = styleTreeMaps.get(context);
+
+  if (styleTreeMap === undefined) {
+    styleTreeMap = new WeakMap();
+    styleTreeMaps.set(context, styleTreeMap);
+  }
+
+  let styleTree = styleTreeMap.get(node);
+
+  if (styleTree === undefined) {
+    styleTree = new StyleTree(
+      getStyleEntry(node, context, cascade, device, options),
+      device
+    );
+    styleTreeMap.set(node, styleTree);
+  }
+
   return styleTree;
 }
 
