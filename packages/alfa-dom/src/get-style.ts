@@ -4,30 +4,30 @@ import {
   Declaration,
   parseDeclaration,
   PseudoElement,
-  resolveCascadedStyle,
-  resolveComputedStyle,
-  resolveSpecifiedStyle,
   Selector,
   SelectorType,
-  SpecifiedStyle
+  SpecifiedStyle,
+  Style,
+  StyleEntry,
+  StyleTree
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { getAttribute } from "./get-attribute";
-import { getCascade } from "./get-cascade";
-import { getParentElement } from "./get-parent-element";
+import { Cascade, getCascade } from "./get-cascade";
+import { getChildNodes } from "./get-child-nodes";
 import { getRootNode } from "./get-root-node";
-import { isDocument } from "./guards";
+import { isDocument, isElement } from "./guards";
 import { matches } from "./matches";
 import { Element, Node } from "./types";
 
 const { isArray } = Array;
 
-export type StyleOptions = Readonly<{
-  hover?: Element;
-  active?: Element;
-  focus?: Element;
-  pseudo?: PseudoElement;
-}>;
+export interface StyleOptions {
+  readonly hover?: Element;
+  readonly active?: Element;
+  readonly focus?: Element;
+  readonly pseudo?: PseudoElement;
+}
 
 /**
  * @see https://www.w3.org/TR/css-cascade/#cascaded
@@ -38,60 +38,13 @@ export function getCascadedStyle(
   device: Device,
   options: StyleOptions = {}
 ): CascadedStyle {
-  const declarations: Array<Declaration> = [];
+  const style = getStyle(element, context, device, options);
 
-  const style = getAttribute(element, "style");
-
-  if (style !== null && options.pseudo === undefined) {
-    const declaration = parseDeclaration(style);
-
-    if (declaration !== null) {
-      if (isArray(declaration)) {
-        declarations.push(...declaration);
-      } else {
-        declarations.push(declaration);
-      }
-    }
+  if (style === null) {
+    return {};
   }
 
-  const rootNode = getRootNode(element, context);
-  const cascade = isDocument(rootNode) ? getCascade(rootNode, device) : null;
-
-  if (cascade !== null) {
-    for (
-      let entry = cascade.get(element);
-      entry !== null;
-      entry = entry.parent
-    ) {
-      const { selector } = entry;
-      const pseudo = getPseudoElement(selector);
-
-      if (pseudo === null) {
-        if (options.pseudo !== undefined) {
-          continue;
-        }
-      } else {
-        if (options.pseudo !== pseudo) {
-          continue;
-        }
-      }
-
-      const { hover, active, focus } = options;
-
-      if (
-        matches(element, context, selector, {
-          hover,
-          active,
-          focus,
-          pseudo: true
-        })
-      ) {
-        declarations.push(...entry.declarations);
-      }
-    }
-  }
-
-  return resolveCascadedStyle(declarations);
+  return style.cascaded;
 }
 
 /**
@@ -101,30 +54,15 @@ export function getSpecifiedStyle(
   element: Element,
   context: Node,
   device: Device,
-  options?: StyleOptions
-): SpecifiedStyle;
-
-/**
- * @internal
- */
-export function getSpecifiedStyle(
-  element: Element,
-  context: Node,
-  device: Device,
-  options?: StyleOptions,
-  parentStyle?: ComputedStyle
-): SpecifiedStyle;
-
-export function getSpecifiedStyle(
-  element: Element,
-  context: Node,
-  device: Device,
-  options: StyleOptions = {},
-  parentStyle: ComputedStyle = getParentStyle(element, context, device, options)
+  options: StyleOptions = {}
 ): SpecifiedStyle {
-  const cascadedStyle = getCascadedStyle(element, context, device, options);
+  const style = getStyle(element, context, device, options);
 
-  return resolveSpecifiedStyle(cascadedStyle, parentStyle);
+  if (style === null) {
+    return {};
+  }
+
+  return style.specified;
 }
 
 /**
@@ -134,85 +72,177 @@ export function getComputedStyle(
   element: Element,
   context: Node,
   device: Device,
-  options?: StyleOptions
-): ComputedStyle;
-
-/**
- * @internal
- */
-export function getComputedStyle(
-  element: Element,
-  context: Node,
-  device: Device,
-  options?: StyleOptions,
-  parentStyle?: ComputedStyle
-): ComputedStyle;
-
-export function getComputedStyle(
-  element: Element,
-  context: Node,
-  device: Device,
-  options: StyleOptions = {},
-  parentStyle: ComputedStyle = getParentStyle(element, context, device, options)
+  options: StyleOptions = {}
 ): ComputedStyle {
-  const specifiedStyle = getSpecifiedStyle(
-    element,
-    context,
-    device,
-    options,
-    parentStyle
-  );
+  const style = getStyle(element, context, device, options);
 
-  return resolveComputedStyle(specifiedStyle, parentStyle);
-}
-
-function getParentStyle(
-  element: Element,
-  context: Node,
-  device: Device,
-  options: StyleOptions
-): ComputedStyle {
-  const parentElement = getParentElement(element, context, { flattened: true });
-
-  if (parentElement === null) {
+  if (style === null) {
     return {};
   }
 
-  const { pseudo } = options;
-
-  options = { ...options, pseudo: undefined };
-
-  let parentStyle = getComputedStyle(
-    parentElement,
-    context,
-    device,
-    options,
-    getParentStyle(parentElement, context, device, options)
-  );
-
-  // If we're getting the style of a pseudo-element, the parent style will be
-  // that of the origin element.
-  if (pseudo !== undefined) {
-    parentStyle = getComputedStyle(
-      element,
-      context,
-      device,
-      options,
-      parentStyle
-    );
-  }
-
-  return parentStyle;
+  return style.computed;
 }
 
-function getPseudoElement(selector: Selector): PseudoElement | null {
+function getStyle(
+  element: Element,
+  context: Node,
+  device: Device,
+  options: StyleOptions = {}
+): Style | null {
+  const styleTree = getStyleTree(
+    getRootNode(element, context),
+    context,
+    device,
+    options
+  );
+
+  if (options.pseudo !== undefined) {
+    const pseudoElementMap = pseudoElementMaps.get(element);
+
+    if (pseudoElementMap !== undefined) {
+      const pseudoElement = pseudoElementMap.get(options.pseudo);
+
+      if (pseudoElement !== undefined) {
+        return styleTree.get(pseudoElement);
+      }
+    }
+
+    return null;
+  }
+
+  return styleTree.get(element);
+}
+
+const styleTreeMaps = new WeakMap<
+  Node,
+  WeakMap<Node, StyleTree<Node | object>>
+>();
+
+function getStyleTree(
+  node: Node,
+  context: Node,
+  device: Device,
+  options: StyleOptions = {}
+): StyleTree<Node | object> {
+  const cascade = isDocument(node) ? getCascade(node, device) : null;
+
+  let styleTreeMap = styleTreeMaps.get(context);
+
+  if (styleTreeMap === undefined) {
+    styleTreeMap = new WeakMap();
+    styleTreeMaps.set(context, styleTreeMap);
+  }
+
+  let styleTree = styleTreeMap.get(node);
+
+  if (styleTree === undefined) {
+    styleTree = new StyleTree(
+      getStyleEntry(node, context, cascade, device, options),
+      device
+    );
+    styleTreeMap.set(node, styleTree);
+  }
+
+  return styleTree;
+}
+
+function getStyleEntry(
+  node: Node,
+  context: Node,
+  cascade: Cascade | null,
+  device: Device,
+  options: StyleOptions = {}
+): StyleEntry<Node | object> {
+  const declarations: Array<Declaration> = [];
+  const children: Array<StyleEntry<Node | object>> = [];
+
+  if (isElement(node)) {
+    if (cascade !== null) {
+      for (let rule = cascade.get(node); rule !== null; rule = rule.parent) {
+        const { selector } = rule;
+        const { hover, active, focus } = options;
+
+        if (
+          matches(node, context, selector, {
+            hover,
+            active,
+            focus,
+            pseudo: true
+          })
+        ) {
+          const pseudoElement = getPseudoElement(node, selector);
+
+          if (pseudoElement === null) {
+            declarations.push(...rule.declarations);
+          } else {
+            children.push({
+              target: pseudoElement,
+              declarations: rule.declarations,
+              children: []
+            });
+          }
+        }
+      }
+    }
+
+    const style = getAttribute(node, "style");
+
+    if (style !== null) {
+      let declaration = parseDeclaration(style);
+
+      if (declaration !== null) {
+        declaration = isArray(declaration) ? declaration : [declaration];
+
+        declarations.push(
+          ...declaration.map(declaration => ({
+            ...declaration,
+            important: true
+          }))
+        );
+      }
+    }
+  }
+
+  const childNodes = getChildNodes(node, context, { flattened: true });
+
+  for (let i = 0, n = childNodes.length; i < n; i++) {
+    const childNode = childNodes[i];
+
+    if (isElement(childNode)) {
+      children.push(
+        getStyleEntry(childNode, context, cascade, device, options)
+      );
+    }
+  }
+
+  return { target: node, declarations, children };
+}
+
+const pseudoElementMaps = new WeakMap<Element, Map<PseudoElement, object>>();
+
+function getPseudoElement(element: Element, selector: Selector): object | null {
   switch (selector.type) {
-    case SelectorType.PseudoElementSelector:
-      return selector.name;
+    case SelectorType.PseudoElementSelector: {
+      let pseudoElementMap = pseudoElementMaps.get(element);
+
+      if (pseudoElementMap === undefined) {
+        pseudoElementMap = new Map();
+        pseudoElementMaps.set(element, pseudoElementMap);
+      }
+
+      let pseudoElement = pseudoElementMap.get(selector.name);
+
+      if (pseudoElement === undefined) {
+        pseudoElement = {};
+        pseudoElementMap.set(selector.name, pseudoElement);
+      }
+
+      return pseudoElement;
+    }
 
     case SelectorType.CompoundSelector:
     case SelectorType.RelativeSelector:
-      return getPseudoElement(selector.right);
+      return getPseudoElement(element, selector.right);
   }
 
   return null;
