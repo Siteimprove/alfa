@@ -339,7 +339,7 @@ export interface MediaCondition {
  */
 export interface MediaFeature {
   readonly name: string;
-  readonly value?: MediaFeatureValue | [MediaFeatureValue, MediaFeatureValue];
+  readonly value?: MediaFeatureValue;
   readonly comparator?: MediaComparator;
 }
 

@@ -5,7 +5,9 @@ import {
   MediaQualifier,
   MediaQuery,
   MediaType,
-  parseMediaQuery
+  parseMediaQuery,
+  Resolvers,
+  ValueType
 } from "@siteimprove/alfa-css";
 import { Device, DeviceType } from "@siteimprove/alfa-device";
 import { isMediaRule } from "./guards";
@@ -120,5 +122,56 @@ function fulfillsMediaFeature(
   device: Device,
   mediaFeature: MediaFeature
 ): boolean {
+  const { value } = mediaFeature;
+
+  if (value !== undefined && value.type === ValueType.Length) {
+    const resolved = Resolvers.length(value, device);
+
+    switch (mediaFeature.name) {
+      case "width":
+        return fulfillsWidth(device, resolved.value);
+
+      case "max-width":
+        return fulfillsWidth(device, [0, resolved.value]);
+
+      case "min-width":
+        return fulfillsWidth(device, [resolved.value, Infinity]);
+
+      case "height":
+        return fulfillsHeight(device, resolved.value);
+
+      case "max-height":
+        return fulfillsHeight(device, [0, resolved.value]);
+
+      case "min-height":
+        return fulfillsHeight(device, [resolved.value, Infinity]);
+    }
+  }
+
   return false;
+}
+
+function fulfillsRange(
+  value: number,
+  range: number | [number, number]
+): boolean {
+  range = typeof range === "number" ? [range, range] : range;
+
+  const [lower, upper] = range;
+
+  return value >= lower && value <= upper;
+}
+
+function fulfillsWidth(
+  device: Device,
+  range: number | [number, number]
+): boolean {
+  return fulfillsRange(device.viewport.width, range);
+}
+
+function fulfillsHeight(
+  device: Device,
+  range: number | [number, number]
+): boolean {
+  return fulfillsRange(device.viewport.height, range);
 }

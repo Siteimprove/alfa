@@ -1,10 +1,14 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../../properties";
 import { Values, ValueType } from "../../../values";
+import {
+  getComputedProperty,
+  getSpecifiedProperty
+} from "../../helpers/get-property";
 import { FontWeight, RelativeFontWeight } from "../types";
 import { FontWeightGrammar } from "./grammar";
 
-const { keyword, number } = Values;
+const { number } = Values;
 
 /**
  * @see https://www.w3.org/TR/css-fonts/#propdef-font-weight
@@ -21,10 +25,10 @@ export const fontWeight: Longhand<FontWeight, Values.Number> = {
     return parser.result;
   },
   initial() {
-    return keyword("normal");
+    return number(400);
   },
-  computed(getProperty, getParentProperty) {
-    const value = getProperty("fontWeight");
+  computed(style, device) {
+    const value = getSpecifiedProperty(style, "fontWeight");
 
     if (value.type === ValueType.Number) {
       return value;
@@ -39,7 +43,7 @@ export const fontWeight: Longhand<FontWeight, Values.Number> = {
       case "bolder":
         return resolveRelativeFontWeight(
           value,
-          getParentProperty("fontWeight")
+          getComputedProperty(style.parent, "fontWeight")
         );
     }
   }
