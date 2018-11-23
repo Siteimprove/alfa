@@ -85,7 +85,12 @@ export class Scraper {
     let document: Promise<Document> | Document | null = null;
 
     page.on("request", async req => {
-      const destination = new URL(req.url());
+      let destination: URL;
+      try {
+        destination = new URL(req.url());
+      } catch (err) {
+        return req.abort();
+      }
 
       // If requesting the URL currently being scraped, we parse and store the
       // request as this is the one we're looking for.
