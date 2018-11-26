@@ -1,14 +1,14 @@
-export type Constant = Readonly<{
-  type: "constant";
-  value: number;
-}>;
+export interface Constant {
+  readonly type: "constant";
+  readonly value: number;
+}
 
-export type Operator = Readonly<{
-  type: "operator";
-  value: string;
-  left: Expression;
-  right: Expression;
-}>;
+export interface Operator {
+  readonly type: "operator";
+  readonly value: string;
+  readonly left: Expression;
+  readonly right: Expression;
+}
 
 export type Expression = Constant | Operator;
 

@@ -15,6 +15,9 @@ import { ConditionRule } from "./types";
 
 const { isArray } = Array;
 
+/**
+ * Given a device and a condition rule, check if the device fulfills the rule.
+ */
 export function fulfills(device: Device, rule: ConditionRule): boolean {
   if (isMediaRule(rule)) {
     let mediaQueries = parseMediaQuery(rule.conditionText);
@@ -33,6 +36,10 @@ export function fulfills(device: Device, rule: ConditionRule): boolean {
   return false;
 }
 
+/**
+ * Given a device and a media query, check if the device fulfills the media
+ * query.
+ */
 function fulfillsMediaQuery(device: Device, mediaQuery: MediaQuery): boolean {
   const { qualifier } = mediaQuery;
 

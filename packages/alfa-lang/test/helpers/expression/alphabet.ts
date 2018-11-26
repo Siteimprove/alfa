@@ -2,7 +2,7 @@ import { Alphabet } from "../../../src/alphabet";
 import { Char } from "../../../src/char";
 import { isNumeric } from "../../../src/is-numeric";
 import { isWhitespace } from "../../../src/is-whitespace";
-import { Command, Pattern } from "../../../src/types";
+import { Pattern } from "../../../src/types";
 
 export const enum TokenType {
   Number,
@@ -34,13 +34,13 @@ export function isNumber(token: ExpressionToken): token is Number {
   return token.type === TokenType.Number;
 }
 
-const initial: ExpressionPattern = (stream, emit) => {
+const initial: ExpressionPattern = (stream, emit, state, { exit }) => {
   stream.accept(isWhitespace);
 
   const char = stream.peek(0);
 
   if (char === null) {
-    return Command.End;
+    return exit;
   }
 
   if (isNumeric(char)) {
