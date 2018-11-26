@@ -1,17 +1,9 @@
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { lex } from "../src/lex";
-import {
-  ExpressionAlphabet,
-  ExpressionToken,
-  TokenType
-} from "./helpers/expression";
+import { Alphabet, Token, TokenType } from "./helpers/expression";
 
-function expression(
-  t: Assertions,
-  input: string,
-  expected: Array<ExpressionToken>
-) {
-  const { result, done } = lex(input, ExpressionAlphabet);
+function expression(t: Assertions, input: string, expected: Array<Token>) {
+  const { result, done } = lex(input, Alphabet);
 
   t(done);
   t.deepEqual(result, expected);
