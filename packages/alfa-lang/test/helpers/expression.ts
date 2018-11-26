@@ -5,7 +5,7 @@ export interface Constant {
 
 export interface Operator {
   readonly type: "operator";
-  readonly value: string;
+  readonly value: "+" | "-" | "*" | "/" | "^";
   readonly left: Expression;
   readonly right: Expression;
 }

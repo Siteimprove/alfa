@@ -1,24 +1,15 @@
-import { Grammar } from "../../../src/grammar";
-import { Production } from "../../../src/types";
+import * as Lang from "../../../src";
 import { Constant, Expression, Operator } from "../expression";
-import {
-  Add,
-  Divide,
-  Exponentiate,
-  ExpressionToken,
-  isNumber,
-  Multiply,
-  Number,
-  Subtract,
-  TokenType
-} from "./alphabet";
+import { isNumber, Token, Tokens, TokenType } from "./alphabet";
 
-export type ExpressionProduction<
-  T extends ExpressionToken,
-  U extends Expression
-> = Production<ExpressionToken, Expression, T, U>;
+export type Production<T extends Token, U extends Expression> = Lang.Production<
+  Token,
+  Expression,
+  T,
+  U
+>;
 
-const number: ExpressionProduction<Number, Constant> = {
+const number: Production<Tokens.Number, Constant> = {
   token: TokenType.Number,
 
   prefix(token) {
@@ -26,7 +17,7 @@ const number: ExpressionProduction<Number, Constant> = {
   }
 };
 
-const addition: ExpressionProduction<Add, Constant | Operator> = {
+const addition: Production<Tokens.Add, Constant | Operator> = {
   token: TokenType.Add,
 
   prefix(token, stream) {
@@ -53,7 +44,7 @@ const addition: ExpressionProduction<Add, Constant | Operator> = {
   }
 };
 
-const subtraction: ExpressionProduction<Subtract, Constant | Operator> = {
+const subtraction: Production<Tokens.Subtract, Constant | Operator> = {
   token: TokenType.Subtract,
 
   prefix(token, stream) {
@@ -80,7 +71,7 @@ const subtraction: ExpressionProduction<Subtract, Constant | Operator> = {
   }
 };
 
-const multiplication: ExpressionProduction<Multiply, Operator> = {
+const multiplication: Production<Tokens.Multiply, Operator> = {
   token: TokenType.Multiply,
 
   infix(token, stream, expression, left) {
@@ -94,7 +85,7 @@ const multiplication: ExpressionProduction<Multiply, Operator> = {
   }
 };
 
-const division: ExpressionProduction<Divide, Operator> = {
+const division: Production<Tokens.Divide, Operator> = {
   token: TokenType.Divide,
 
   infix(token, stream, expression, left) {
@@ -108,7 +99,7 @@ const division: ExpressionProduction<Divide, Operator> = {
   }
 };
 
-const exponentiation: ExpressionProduction<Exponentiate, Operator> = {
+const exponentiation: Production<Tokens.Exponentiate, Operator> = {
   token: TokenType.Exponentiate,
   associate: "right",
 
@@ -123,10 +114,7 @@ const exponentiation: ExpressionProduction<Exponentiate, Operator> = {
   }
 };
 
-export const ExpressionGrammar: Grammar<
-  ExpressionToken,
-  Expression
-> = new Grammar(
+export const Grammar: Lang.Grammar<Token, Expression> = new Lang.Grammar(
   [number, exponentiation, [multiplication, division], [addition, subtraction]],
   () => null
 );
