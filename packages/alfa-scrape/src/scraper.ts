@@ -46,8 +46,6 @@ export class Scraper {
     url: string | URL,
     options: ScrapeOptions = {}
   ): Promise<Aspects> {
-    const origin = typeof url === "string" ? new URL(url) : url;
-
     const {
       viewport = { width: 1280, height: 720, scale: 1 },
       credentials = null,
@@ -76,83 +74,78 @@ export class Scraper {
       deviceScaleFactor: viewport.scale
     });
 
-    await page.setRequestInterception(true);
-
     await page.authenticate(credentials);
 
-    let request: Promise<Request> | Request | null = null;
-    let response: Promise<Response> | Response | null = null;
-    let document: Promise<Document> | Document | null = null;
+    let request: Request | null = null;
+    let response: Response | null = null;
+    let document: Document | null = null;
 
-    page.on("request", async req => {
-      let destination: URL;
-      try {
-        destination = new URL(req.url());
-      } catch (err) {
-        return req.abort();
-      }
-
-      // If requesting the URL currently being scraped, we parse and store the
-      // request as this is the one we're looking for.
-      if (origin.href === destination.href) {
-        request = parseRequest(req);
-
-        await request;
-
-        req.continue();
-      }
-
-      // Otherwise, if this is a navigation request, we have to abort it as we
-      // would otherwise be navigating away from the page being scraped.
-      else if (req.isNavigationRequest()) {
-        // Wait for the response from the previous request to finish parsing.
-        // Since the current request is a navigation request, the response from
-        // the previous request will be disposed as soon as the current request
-        // resolves.
-        await response;
-
-        // Abort the request once the response from the previous request has
-        // been parsed.
-        req.abort();
-      }
-
-      // Otherwise, continue the request normally.
-      else {
-        req.continue();
-      }
-    });
+    // Origin is used to refer to the resource being scraped. While origin is
+    // initially the resource at the URL passed to this method, origin may
+    // change if the resource in question performs certain redirects.
+    let origin = typeof url === "string" ? new URL(url) : url;
 
     page.on("response", async res => {
       const destination = new URL(res.url());
 
-      if (origin.href === destination.href) {
-        response = parseResponse(res);
+      // If the response is the result of a navigation request and performs a
+      // redirect using 3xx status codes, parse the location HTTP header and use
+      // that as the new origin.
+      if (
+        res.request().isNavigationRequest() &&
+        res.status() >= 300 &&
+        res.status() <= 399
+      ) {
+        try {
+          origin = new URL(res.headers().location);
+        } catch (err) {}
+      }
 
-        await response;
-
-        document = parseDocument(page);
+      // Otherwise, if the response is the origin, parse the response and its
+      // request. Also parse the document for use as a prelimary snapshot of the
+      // page.
+      else if (origin.href === destination.href) {
+        try {
+          response = await parseResponse(res);
+          request = await parseRequest(res.request());
+          document = await parseDocument(page);
+        } catch (err) {}
       }
     });
 
-    await page.goto(origin.href, { timeout, waitUntil: wait });
-
-    request = await request!;
-    response = await response!;
+    const start = Date.now();
 
     try {
-      document = await document!;
+      await page.goto(origin.href, { timeout, waitUntil: wait });
+
+      // If either the request, response, or preliminary document snapshot is
+      // missing, this could indicate that the page context was released before
+      // the response or document could be parsed. Reload the page using
+      // whatever is left of the timeout and try again.
+      while (request === null || response === null || document === null) {
+        await page.reload({
+          timeout: timeout - (Date.now() - start),
+          waitUntil: wait
+        });
+      }
     } catch (err) {
-      // If the initial snapshot of the document fails, is means that the page
-      // already navigated away. Clean up and abort.
-      await page.close();
+      if (err instanceof Error) {
+        switch (err.name) {
+          case "TimeoutError":
+            throw new Error(`Navigation timeout of ${timeout}ms exceeded`);
+        }
+      }
+
       throw err;
     }
 
-    try {
-      document = await parseDocument(page);
-    } catch (err) {
-      // We can therefore safely ignore the error as we have the initial
-      // snapshot of the document.
+    // Now that the page has successfully loaded and a preliminary snapshot
+    // constructed, attempt to take an additional snapshot of the page unless
+    // the page has navigated away from the origin.
+    if (page.url() === origin.href) {
+      try {
+        document = await parseDocument(page);
+      } catch (err) {}
     }
 
     return { request, response, document, device };
@@ -180,6 +173,5 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
 }
 
 async function parseDocument(page: puppeteer.Page): Promise<Document> {
-  const document = await page.evaluate(virtualize);
-  return document as Document;
+  return (await page.evaluate(virtualize)) as Document;
 }
