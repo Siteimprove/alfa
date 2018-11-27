@@ -1,15 +1,23 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../properties";
-import { Units } from "../../units";
+import { Resolvers } from "../../resolvers";
 import { Values, ValueType } from "../../values";
+import {
+  getComputedProperty,
+  getSpecifiedProperty
+} from "../helpers/get-property";
 import { LineHeightGrammar } from "./grammar";
 import { LineHeight } from "./types";
 
 /**
  * @see https://www.w3.org/TR/CSS22/visudet.html#propdef-line-height
  */
-export const lineHeight: Longhand<LineHeight> = {
+export const lineHeight: Longhand<
+  LineHeight,
+  Values.Keyword<"normal"> | Values.Number | Values.Length<"px">
+> = {
   inherits: true,
+  depends: ["fontSize"],
   parse(input) {
     const parser = parse(input, LineHeightGrammar);
 
@@ -22,8 +30,9 @@ export const lineHeight: Longhand<LineHeight> = {
   initial() {
     return Values.keyword("normal");
   },
-  computed(getProperty) {
-    const value = getProperty("lineHeight");
+  computed(style, device) {
+    const value = getSpecifiedProperty(style, "lineHeight");
+    const fontSize = getComputedProperty(style, "fontSize");
 
     switch (value.type) {
       case ValueType.Number:
@@ -31,14 +40,10 @@ export const lineHeight: Longhand<LineHeight> = {
         return value;
 
       case ValueType.Length:
-        if (Units.isRelativeLength(value.unit)) {
-          throw new Error(`Cannot resolve unit "${value.unit}"`);
-        }
-
-        return value;
+        return Resolvers.length(value, device, style);
 
       case ValueType.Percentage:
-        return value;
+        return Resolvers.percentage(value, fontSize, device, style);
     }
   }
 };

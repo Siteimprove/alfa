@@ -50,11 +50,11 @@ export function isShadowRoot(node: Node): node is ShadowRoot {
 }
 
 export function isGroupingRule(rule: Rule): rule is GroupingRule {
-  return isMediaRule(rule) || isConditionRule(rule);
+  return isConditionRule(rule);
 }
 
 export function isConditionRule(rule: Rule): rule is ConditionRule {
-  return isSupportsRule(rule);
+  return isMediaRule(rule) || isSupportsRule(rule);
 }
 
 export function isStyleRule(rule: Rule): rule is StyleRule {

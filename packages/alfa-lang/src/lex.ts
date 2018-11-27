@@ -1,6 +1,8 @@
 import { Alphabet } from "./alphabet";
 import { Stream } from "./stream";
-import { Command, Pattern, Token } from "./types";
+import { Exit, Pattern, Token } from "./types";
+
+const commands: Readonly<{ exit: Exit }> = { exit: Exit };
 
 export interface LexResult<T extends Token> {
   readonly result: Array<T>;
@@ -26,19 +28,17 @@ export function lex<T extends Token, S = null>(
   let pattern: Pattern<T, S> = alphabet.pattern;
 
   while (true) {
-    const next = pattern(stream, emit, state);
+    const next = pattern(stream, emit, state, commands);
 
     if (next === undefined) {
       continue;
     }
 
-    if (typeof next === "function") {
-      pattern = next;
-    } else {
-      if (next === Command.End) {
-        break;
-      }
+    if (next === Exit) {
+      break;
     }
+
+    pattern = next;
   }
 
   return {
