@@ -19,7 +19,7 @@ export function outcome<A extends Aspect, T extends Target>(
     | Readonly<
         { [O in Outcome.Failed | Outcome.Passed | Outcome.CantTell]?: Array<T> }
       >,
-  dependencies: Array<Rule<A, T>> = []
+  dependencies: ReadonlyArray<Rule<A, T>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,
@@ -55,16 +55,12 @@ export function outcome<A extends Aspect, T extends Target>(
     );
 
     for (const target of expected) {
-      if (target === null) {
-        // Black magic will happen here
-      } else {
-        const holds = actual.some(
-          result =>
-            result.outcome === Outcome.Inapplicable || result.target === target
-        );
+      const holds = actual.some(
+        result =>
+          result.outcome === Outcome.Inapplicable || result.target === target
+      );
 
-        t(holds);
-      }
+      t(holds);
     }
   }
 }
