@@ -30,11 +30,11 @@ export const SIA_R9: Atomic.Rule<Document, Element> = {
     });
 
     expectations((target, expectation) => {
+      const refreshTime = getRefreshTime(getAttribute(target, "content")!);
+
       expectation(
         1,
-        getRefreshTime(getAttribute(target, "content")!) === 0 ||
-          (getRefreshTime(getAttribute(target, "content")!) !== null &&
-            getRefreshTime(getAttribute(target, "content")!)! > 72000)
+        refreshTime === 0 || (refreshTime !== null && refreshTime > 72000)
       );
     });
   }
