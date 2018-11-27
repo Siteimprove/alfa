@@ -4,6 +4,7 @@ import {
   audit,
   isResult,
   Outcome,
+  Result,
   Rule,
   Target
 } from "@siteimprove/alfa-act";
@@ -16,15 +17,12 @@ export function outcome<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   assert:
     | Outcome.Inapplicable
-    | Readonly<
-        { [O in Outcome.Failed | Outcome.Passed | Outcome.CantTell]?: Array<T> }
-      >,
+    | { readonly [P in Outcome.Passed | Outcome.Failed]?: ReadonlyArray<T> },
   dependencies: ReadonlyArray<Rule<A, T>> = []
 ) {
-  const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
+  const outcomes: Array<Outcome.Passed | Outcome.Failed> = [
     Outcome.Passed,
-    Outcome.Failed,
-    Outcome.CantTell
+    Outcome.Failed
   ];
 
   const results = audit(aspects, concat([rule], dependencies)).filter(
@@ -33,34 +31,34 @@ export function outcome<A extends Aspect, T extends Target>(
 
   if (assert === Outcome.Inapplicable) {
     t.equal(results.length, 1, "There must only be one result");
-    const result = results[0];
+
+    const [result] = results;
+
     t(
       isResult(result) && result.outcome === Outcome.Inapplicable,
       "The outcome must be inapplicable"
     );
-    return;
-  }
+  } else {
+    for (const outcome of outcomes) {
+      function hasMatchingOutcome(
+        result: Result
+      ): result is Result<T, typeof outcome> {
+        return result.outcome === outcome;
+      }
 
-  for (const outcome of outcomes) {
-    const actual = results
-      .filter(isResult)
-      .filter(result => result.outcome === outcome);
+      const actual = results.filter(isResult).filter(hasMatchingOutcome);
 
-    const expected = outcome in assert ? assert[outcome]! : [];
+      const expected = outcome in assert ? assert[outcome]! : [];
 
-    t.equal(
-      actual.length,
-      expected.length,
-      `There must be ${expected.length} ${outcome} results`
-    );
-
-    for (const target of expected) {
-      const holds = actual.some(
-        result =>
-          result.outcome === Outcome.Inapplicable || result.target === target
+      t.equal(
+        actual.length,
+        expected.length,
+        `There must be ${expected.length} ${outcome} results`
       );
 
-      t(holds);
+      for (const target of expected) {
+        t(actual.some(result => result.target === target));
+      }
     }
   }
 }
