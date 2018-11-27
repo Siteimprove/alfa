@@ -6,10 +6,7 @@ import { URL } from "@siteimprove/alfa-util";
 import { readFileSync } from "fs";
 import * as puppeteer from "puppeteer";
 
-const virtualize = `{
-  ${readFileSync(require.resolve("./virtualize"), "utf8")};
-  virtualizeNode(window.document);
-}`;
+const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
 export const enum Wait {
   Ready = "domcontentloaded",
@@ -77,17 +74,14 @@ export class Scraper {
     await page.authenticate(credentials);
 
     let request: Request | null = null;
-    let response: Response | null = null;
-    let document: Document | null = null;
+    let response: Response | null | Promise<Response | null> = null;
 
     // Origin is used to refer to the resource being scraped. While origin is
     // initially the resource at the URL passed to this method, origin may
     // change if the resource in question performs certain redirects.
     let origin = typeof url === "string" ? new URL(url) : url;
 
-    let settle: Promise<void> | null = null;
-
-    page.on("response", async res => {
+    page.on("response", res => {
       const destination = new URL(res.url());
 
       // If the response is the result of a navigation request and performs a
@@ -104,41 +98,31 @@ export class Scraper {
       }
 
       // Otherwise, if the response is the origin, parse the response and its
-      // request. Also parse the document for use as a prelimary snapshot of the
-      // page.
+      // associated request.
       else if (origin.href === destination.href) {
-        let done = () => {};
+        request = parseRequest(res.request());
 
-        settle = new Promise(resolve => (done = resolve));
-
-        try {
-          response = await parseResponse(res);
-          request = await parseRequest(res.request());
-          document = await parseDocument(page);
-        } catch (err) {}
-
-        done();
+        // As response handlers are not async, we have to assign the parsed
+        // response as a promise and immediately register an error handler to
+        // avoid an uncaugt exception if parsing the response fails.
+        response = parseResponse(res).catch(err => null);
       }
     });
 
     const start = Date.now();
 
     try {
-      await page.goto(origin.href, { timeout, waitUntil: wait });
-
-      // If either the request, response, or preliminary document snapshot is
-      // missing, this could indicate that the page context was released before
-      // the response or document could be parsed. Reload the page using
-      // whatever is left of the timeout and try again.
-      while (request === null || response === null || document === null) {
-        if (settle !== null) {
-          await settle;
-        }
-
-        await page.reload({
+      // Attempt navigating to the origin until we either have a parsed request
+      // and response or the timeout is reached.
+      while (request === null || response === null) {
+        await page.goto(origin.href, {
           timeout: timeout - (Date.now() - start),
           waitUntil: wait
         });
+
+        // Await parsing of the response, which may fail and result in a null
+        // response. If this happens, we retry per the above.
+        response = await response;
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -151,13 +135,28 @@ export class Scraper {
       throw err;
     }
 
-    // Now that the page has successfully loaded and a preliminary snapshot
-    // constructed, attempt to take an additional snapshot of the page unless
-    // the page has navigated away from the origin.
+    let document: Document | null = null;
+
+    // Now that the page has successfully loaded, take a snapshot of the page
+    // unless the page has navigated away from the origin.
     if (page.url() === origin.href) {
       try {
         document = await parseDocument(page);
-      } catch (err) {}
+      } catch (err) {
+        // Due to a race condition between Puppeteer and Chromium, the page may
+        // be released due to navigation while script evaluation is in progress.
+        // If this happens, we simply ignore it as it's beyond our control.
+      }
+    }
+
+    // If the snapshot failed we instead take a snapshot directly of the
+    // response body.
+    if (document === null) {
+      // Navigate to a blank page to ensure that we're not affected by the race
+      // condition between Puppeteer and Chromium.
+      await page.goto("about:blank");
+
+      document = await parseDocument(page, (response as Response).body);
     }
 
     return { request, response, document, device };
@@ -168,7 +167,7 @@ export class Scraper {
   }
 }
 
-async function parseRequest(request: puppeteer.Request): Promise<Request> {
+function parseRequest(request: puppeteer.Request): Request {
   return {
     method: request.method(),
     url: request.url(),
@@ -184,6 +183,21 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
   };
 }
 
-async function parseDocument(page: puppeteer.Page): Promise<Document> {
-  return (await page.evaluate(virtualize)) as Document;
+async function parseDocument(
+  page: puppeteer.Page,
+  html?: string
+): Promise<Document> {
+  html = JSON.stringify(html);
+
+  const snapshot = `{
+    ${virtualize};
+    const document = ${
+      html === undefined
+        ? "window.document"
+        : `new DOMParser().parseFromString(${html}, "text/html");`
+    }
+    virtualizeNode(document);
+  }`;
+
+  return (await page.evaluate(snapshot)) as Document;
 }
