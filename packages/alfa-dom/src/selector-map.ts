@@ -97,7 +97,7 @@ export class SelectorMap {
 
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
-        enter: (rule, parentRule, skip) => {
+        enter: (rule, parentRule, { skip }) => {
           if (isConditionRule(rule) && !fulfills(device, rule)) {
             return skip;
           }

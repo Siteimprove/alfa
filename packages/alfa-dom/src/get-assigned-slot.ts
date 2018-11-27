@@ -41,7 +41,7 @@ function findSlot(slotable: Element | Text, context: Node): Element | null {
   let assignedSlot: Element | null = null;
 
   traverseNode(shadowRoot, context, {
-    enter(node, parentNode, skip, exit) {
+    enter(node, parentNode, { exit }) {
       if (
         isElement(node) &&
         node.localName === "slot" &&
