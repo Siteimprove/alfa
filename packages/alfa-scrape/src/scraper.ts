@@ -84,28 +84,23 @@ export class Scraper {
     page.on("response", res => {
       const destination = new URL(res.url());
 
-      // If the response is the result of a navigation request and performs a
-      // redirect using 3xx status codes, parse the location HTTP header and use
-      // that as the new origin.
-      if (
-        res.request().isNavigationRequest() &&
-        res.status() >= 300 &&
-        res.status() <= 399
-      ) {
-        try {
-          origin = new URL(res.headers().location);
-        } catch (err) {}
-      }
+      if (origin.href === destination.href) {
+        const status = res.status();
 
-      // Otherwise, if the response is the origin, parse the response and its
-      // associated request.
-      else if (origin.href === destination.href) {
-        request = parseRequest(res.request());
+        // If the response is performs a redirect using 3xx status codes, parse
+        // the location HTTP header and use that as the new origin.
+        if (status >= 300 && status <= 399) {
+          try {
+            origin = new URL(res.headers().location);
+          } catch (err) {}
+        } else {
+          request = parseRequest(res.request());
 
-        // As response handlers are not async, we have to assign the parsed
-        // response as a promise and immediately register an error handler to
-        // avoid an uncaugt exception if parsing the response fails.
-        response = parseResponse(res).catch(err => null);
+          // As response handlers are not async, we have to assign the parsed
+          // response as a promise and immediately register an error handler to
+          // avoid an uncaugt exception if parsing the response fails.
+          response = parseResponse(res).catch(err => null);
+        }
       }
     });
 
