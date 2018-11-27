@@ -28,17 +28,19 @@ export const enum Outcome {
   CantTell = "cantTell"
 }
 
-export type Result<T extends Target = Target> = Readonly<
-  | {
-      rule: Rule["id"];
-      outcome: Outcome.Passed | Outcome.Failed;
-      target: T;
+export type Result<
+  T extends Target = Target,
+  O extends Outcome = Outcome
+> = O extends Outcome.Inapplicable
+  ? {
+      readonly rule: Rule["id"];
+      readonly outcome: O;
     }
-  | {
-      rule: Rule["id"];
-      outcome: Outcome.Inapplicable;
-    }
->;
+  : {
+      readonly rule: Rule["id"];
+      readonly outcome: O;
+      readonly target: T;
+    };
 
 export interface Question<T extends Target = Target> {
   readonly rule: Rule["id"];
