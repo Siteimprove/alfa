@@ -8,7 +8,6 @@ package-lock.json
 **/*.map
 
 !packages/alfa-unicode/src/characters.js
-!packages/alfa-unicode/src/characters.js.map
 !packages/alfa-unicode/src/characters.d.ts
 
 !**/scripts/**/*.js
