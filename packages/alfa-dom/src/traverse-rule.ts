@@ -3,14 +3,21 @@ import { traverseStyleSheet } from "./traverse-style-sheet";
 import { Rule } from "./types";
 
 const Skip = Symbol("Skip");
+type Skip = typeof Skip;
+
 const Exit = Symbol("Exit");
+type Exit = typeof Exit;
 
 export type RuleVisitor = (
   rule: Rule,
   parentRule: Rule | null,
-  skip: symbol,
-  exit: symbol
-) => symbol | void;
+  commands: Readonly<{ skip: Skip; exit: Exit }>
+) => Skip | Exit | void;
+
+const commands: Readonly<{ skip: Skip; exit: Exit }> = {
+  skip: Skip,
+  exit: Exit
+};
 
 /**
  * Given a rule, perform a depth-first traversal of the rule, invoking the
@@ -33,7 +40,7 @@ function visitRule(
   const { enter, exit } = visitors;
 
   if (enter !== undefined) {
-    const status = enter(rule, parentRule, Skip, Exit);
+    const status = enter(rule, parentRule, commands);
 
     if (status === Exit) {
       return false;
@@ -58,7 +65,7 @@ function visitRule(
     }
   }
 
-  if (exit !== undefined && exit(rule, parentRule, Skip, Exit) === Exit) {
+  if (exit !== undefined && exit(rule, parentRule, commands) === Exit) {
     return false;
   }
 

@@ -1,4 +1,4 @@
-import { Event, Stats, Suite } from "benchmark";
+import { Stats, Suite as BenchmarkSuite } from "benchmark";
 import chalk from "chalk";
 
 interface Target {
@@ -8,11 +8,41 @@ interface Target {
   readonly error?: Error;
 }
 
-interface Result {
+/**
+ * @internal
+ */
+export interface Result {
   readonly title: string;
   readonly frequency: number;
   readonly margin: number;
   readonly samples: number;
+}
+
+/**
+ * @internal
+ */
+export interface Event {
+  readonly target: Target;
+}
+
+/**
+ * @internal
+ */
+export interface Printer {
+  print: (message: string) => void;
+}
+
+const defaultPrinter: Printer = {
+  print: message => {
+    process.stdout.write(`${message}\n`);
+  }
+};
+
+/**
+ * @internal
+ */
+export interface Suite extends Benchmark {
+  on(title: string, handler: (event: Event) => void): void;
 }
 
 export interface Benchmark {
@@ -20,13 +50,27 @@ export interface Benchmark {
   run(): void;
 }
 
-export function benchmark(): Benchmark {
-  const suite = new Suite();
+export function benchmark(): Benchmark;
 
-  const results: Array<Result> = [];
+/**
+ * @internal
+ */
+export function benchmark(
+  suite: Suite,
+  results: Array<Result>,
+  printer: Printer
+): Benchmark;
 
+/**
+ * @internal
+ */
+export function benchmark(
+  suite: Suite = new BenchmarkSuite(),
+  results: Array<Result> = new Array<Result>(),
+  printer = defaultPrinter
+): Benchmark {
   suite.on("cycle", ({ target }: Event) => {
-    const { error, hz, name, stats } = target as Target;
+    const { error, hz, name, stats } = target;
 
     if (error !== undefined) {
       return;
@@ -65,7 +109,7 @@ export function benchmark(): Benchmark {
       output += `\n${chalk.gray(char)} ${format(results[i], fastest, longest)}`;
     }
 
-    process.stdout.write(`${output}\n`);
+    printer.print(`${output}\n`);
   });
 
   return suite;

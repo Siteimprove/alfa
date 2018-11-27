@@ -4,14 +4,21 @@ import { isElement } from "./guards";
 import { Node } from "./types";
 
 const Skip = Symbol("Skip");
+type Skip = typeof Skip;
+
 const Exit = Symbol("Exit");
+type Exit = typeof Exit;
 
 export type NodeVisitor = (
   node: Node,
   parentNode: Node | null,
-  skip: symbol,
-  exit: symbol
-) => symbol | void;
+  commands: Readonly<{ skip: Skip; exit: Exit }>
+) => Skip | Exit | void;
+
+const commands: Readonly<{ skip: Skip; exit: Exit }> = {
+  skip: Skip,
+  exit: Exit
+};
 
 /**
  * Given a node and a context, perform a depth-first traversal of the node
@@ -61,7 +68,7 @@ function visitNode(
   const { enter, exit } = visitors;
 
   if (enter !== undefined) {
-    const status = enter(node, parentNode, Skip, Exit);
+    const status = enter(node, parentNode, commands);
 
     if (status === Exit) {
       return false;
@@ -84,7 +91,7 @@ function visitNode(
         }
       }
 
-      if (exit !== undefined && exit(node, parentNode, Skip, Exit) === Exit) {
+      if (exit !== undefined && exit(node, parentNode, commands) === Exit) {
         return false;
       }
 
@@ -109,7 +116,7 @@ function visitNode(
     }
   }
 
-  if (exit !== undefined && exit(node, parentNode, Skip, Exit) === Exit) {
+  if (exit !== undefined && exit(node, parentNode, commands) === Exit) {
     return false;
   }
 

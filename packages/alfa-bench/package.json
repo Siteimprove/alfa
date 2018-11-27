@@ -31,5 +31,8 @@
     "@types/benchmark": "^1.0.31",
     "benchmark": "^2.1.4",
     "chalk": "^2.4.1"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }
