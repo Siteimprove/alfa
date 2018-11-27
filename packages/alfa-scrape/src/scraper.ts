@@ -85,6 +85,8 @@ export class Scraper {
     // change if the resource in question performs certain redirects.
     let origin = typeof url === "string" ? new URL(url) : url;
 
+    let settle: Promise<void> | null = null;
+
     page.on("response", async res => {
       const destination = new URL(res.url());
 
@@ -105,11 +107,17 @@ export class Scraper {
       // request. Also parse the document for use as a prelimary snapshot of the
       // page.
       else if (origin.href === destination.href) {
+        let done = () => {};
+
+        settle = new Promise(resolve => (done = resolve));
+
         try {
           response = await parseResponse(res);
           request = await parseRequest(res.request());
           document = await parseDocument(page);
         } catch (err) {}
+
+        done();
       }
     });
 
@@ -123,6 +131,10 @@ export class Scraper {
       // the response or document could be parsed. Reload the page using
       // whatever is left of the timeout and try again.
       while (request === null || response === null || document === null) {
+        if (settle !== null) {
+          await settle;
+        }
+
         await page.reload({
           timeout: timeout - (Date.now() - start),
           waitUntil: wait
