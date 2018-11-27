@@ -117,11 +117,19 @@ function auditAtomic<
           holds = false;
         }
 
-        results.push({
-          rule: rule.id,
-          outcome: holds ? Outcome.Passed : Outcome.Failed,
-          target
-        });
+        if (holds) {
+          results.push({
+            rule: rule.id,
+            outcome: Outcome.Passed,
+            target
+          });
+        } else {
+          results.push({
+            rule: rule.id,
+            outcome: Outcome.Failed,
+            target
+          });
+        }
       }
     },
     aspects as any
@@ -175,11 +183,19 @@ function auditComposite<
         holds = false;
       }
 
-      results.push({
-        rule: rule.id,
-        outcome: holds ? Outcome.Passed : Outcome.Failed,
-        target
-      });
+      if (holds) {
+        results.push({
+          rule: rule.id,
+          outcome: Outcome.Passed,
+          target
+        });
+      } else {
+        results.push({
+          rule: rule.id,
+          outcome: Outcome.Failed,
+          target
+        });
+      }
     }
   });
 }
