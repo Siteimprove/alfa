@@ -17,5 +17,6 @@ export const Option: Role = {
     Attributes.PositionInSet,
     Attributes.SetSize
   ],
+  implicits: () => [[Attributes.Selected, "false"]],
   label: { from: ["contents", "author"], required: true }
 };

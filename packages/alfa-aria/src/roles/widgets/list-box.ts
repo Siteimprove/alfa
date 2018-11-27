@@ -17,5 +17,6 @@ export const ListBox: Role = {
     Attributes.ReadOnly,
     Attributes.Required
   ],
+  implicits: () => [[Attributes.Orientation, "vertical"]],
   label: { from: ["author"], required: true }
 };

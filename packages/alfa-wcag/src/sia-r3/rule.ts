@@ -14,7 +14,7 @@ import {
 
 export const SIA_R3: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r3.html",
-  requirements: ["wcag:parsing"],
+  requirements: [{ id: "wcag:parsing", partial: true }],
   definition: (applicability, expectations, { document }) => {
     applicability(() =>
       querySelectorAll(

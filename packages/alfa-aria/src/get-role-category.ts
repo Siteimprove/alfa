@@ -1,4 +1,5 @@
 import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-util";
 import { getRole } from "./get-role";
@@ -13,15 +14,16 @@ import { Category } from "./types";
  */
 export function getRoleCategory(
   element: Element,
-  context: Node
+  context: Node,
+  device: Device
 ): Option<Category> | BrowserSpecific<Option<Category>> {
-  return map(getRole(element, context), role => {
+  return map(getRole(element, context, device), role => {
     if (role === null) {
       return null;
     }
 
     return typeof role.category === "function"
-      ? role.category(element, context)
+      ? role.category(element, context, device)
       : role.category;
   });
 }

@@ -1,11 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import {
-  Char,
-  Command,
-  Expression,
-  Grammar,
-  Stream
-} from "@siteimprove/alfa-lang";
+import { Char, Expression, Grammar, Stream } from "@siteimprove/alfa-lang";
 import { Token, Tokens, TokenType } from "../alphabet";
 import {
   AttributeMatcher,
@@ -572,11 +566,11 @@ type Production<T extends Token> = Lang.Production<
 const whitespace: Production<Tokens.Whitespace> = {
   token: TokenType.Whitespace,
 
-  prefix(token, stream, expression) {
-    return Command.Continue;
+  prefix(token, stream, expression, state, { skip }) {
+    return skip;
   },
 
-  infix(token, stream, expression, left) {
+  infix(token, stream, expression, left, state, { skip }) {
     const next = stream.peek(0);
 
     if (next !== null && isImplicitDescendant(next)) {
@@ -587,7 +581,7 @@ const whitespace: Production<Tokens.Whitespace> = {
       );
     }
 
-    return Command.Continue;
+    return skip;
   }
 };
 

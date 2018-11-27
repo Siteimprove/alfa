@@ -17,5 +17,6 @@ export const Tab: Role = {
     Attributes.Selected,
     Attributes.SetSize
   ],
+  implicits: () => [[Attributes.Selected, "false"]],
   label: { from: ["contents", "author"] }
 };

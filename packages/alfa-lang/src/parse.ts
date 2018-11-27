@@ -1,6 +1,8 @@
 import { Grammar } from "./grammar";
 import { Stream } from "./stream";
-import { Command, Token } from "./types";
+import { Skip, Token } from "./types";
+
+const commands: Readonly<{ skip: Skip }> = { skip: Skip };
 
 export interface ParseResult<R> {
   readonly result: R | null;
@@ -56,7 +58,8 @@ export function parse<T extends Token, R, S = null>(
       token,
       stream,
       () => expression(-1).result,
-      state
+      state,
+      commands
     );
 
     if (left === null) {
@@ -67,7 +70,7 @@ export function parse<T extends Token, R, S = null>(
       };
     }
 
-    if (left === Command.Continue) {
+    if (left === Skip) {
       return expression(power);
     }
 
@@ -97,7 +100,8 @@ export function parse<T extends Token, R, S = null>(
         stream,
         () => expression(precedence).result,
         left,
-        state
+        state,
+        commands
       );
 
       if (right === null) {
@@ -112,7 +116,7 @@ export function parse<T extends Token, R, S = null>(
 
       token = stream.peek(0);
 
-      if (right === Command.Continue) {
+      if (right === Skip) {
         continue;
       }
 

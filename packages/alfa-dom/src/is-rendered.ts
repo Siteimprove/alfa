@@ -1,5 +1,6 @@
+import { Device } from "@siteimprove/alfa-device";
 import { getParentElement } from "./get-parent-element";
-import { getComputedStyle } from "./get-style";
+import { getCascadedStyle } from "./get-style";
 import { Element, Node } from "./types";
 
 /**
@@ -13,16 +14,20 @@ import { Element, Node } from "./types";
  *
  * @example
  * const span = <span />;
- * isRendered(span, <div style="display: none">{span}</div>);
+ * isRendered(span, <div style="display: none">{span}</div>, device);
  * // => false
  */
-export function isRendered(element: Element, context: Node): boolean {
+export function isRendered(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
   for (
     let next: Element | null = element;
     next !== null;
     next = getParentElement(next, context, { flattened: true })
   ) {
-    const { display } = getComputedStyle(next, context);
+    const { display } = getCascadedStyle(next, context, device);
 
     if (display !== undefined && display.value === "none") {
       return false;

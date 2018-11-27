@@ -10,8 +10,8 @@ import { getLanguage } from "@siteimprove/alfa-iana";
 import { isDocumentElement } from "../helpers/is-document-element";
 
 export const SIA_R6: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r5.html",
-  requirements: ["wcag:language-of-page"],
+  id: "sanshikan:rules/sia-r6.html",
+  requirements: [{ id: "wcag:language-of-page", partial: true }],
   definition: (applicability, expectations, { document }) => {
     applicability(() =>
       querySelectorAll(

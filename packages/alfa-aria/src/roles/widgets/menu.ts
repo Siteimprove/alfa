@@ -1,3 +1,4 @@
+import * as Attributes from "../../attributes";
 import { Category, Role } from "../../types";
 import { Select } from "../abstract/select";
 import { Group } from "../structure/group";
@@ -18,5 +19,6 @@ export const Menu: Role = {
     MenuItemRadio,
     [Group, MenuItemRadio]
   ],
+  implicits: () => [[Attributes.Orientation, "vertical"]],
   label: { from: ["author"] }
 };

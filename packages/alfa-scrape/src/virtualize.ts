@@ -166,7 +166,7 @@ function virtualizeMediaRule(
   return {
     type: 4,
     cssRules: Array.from(mediaRule.cssRules).map(virtualizeRule),
-    media: Array.from(mediaRule.media)
+    conditionText: mediaRule.conditionText
   };
 }
 
