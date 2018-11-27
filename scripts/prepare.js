@@ -40,7 +40,7 @@ for (const pkg of packages) {
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
   const files = findFiles(root, endsWith(".ts", ".tsx")).filter(
-    not(endsWith(".spec.ts", ".spec.tsx"))
+    not(endsWith(".spec.ts", ".spec.tsx", ".d.ts"))
   );
 
   for (const file of files) {
