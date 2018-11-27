@@ -9,6 +9,8 @@ package-lock.json
 
 !packages/alfa-unicode/src/characters.js
 !packages/alfa-unicode/src/characters.d.ts
+!packages/alfa-iana/src/subtags.js
+!packages/alfa-iana/src/subtags.d.ts
 
 !**/scripts/**/*.js
 !**/types/**/*.d.ts

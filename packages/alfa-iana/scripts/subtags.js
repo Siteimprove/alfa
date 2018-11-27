@@ -2,6 +2,7 @@ const fs = require("fs");
 const prettier = require("prettier");
 
 const { fetch } = require("../../../scripts/helpers/http");
+const { build } = require("../../../scripts/tasks/build");
 
 const registry = "https://www.iana.org/assignments/language-subtag-registry";
 
@@ -237,5 +238,8 @@ fetch(registry).then(body => {
     parser: "typescript"
   });
 
-  fs.writeFileSync("src/subtags.ts", code);
+  const file = `${__dirname}/../src/subtags.ts`;
+  fs.writeFileSync(file, code);
+  build(file);
+  fs.unlinkSync(file);
 });
