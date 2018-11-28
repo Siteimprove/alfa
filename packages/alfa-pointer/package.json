@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@siteimprove/alfa-test",
+  "name": "@siteimprove/alfa-pointer",
   "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
@@ -27,9 +27,8 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
-  "dependencies": {
-    "@types/node": "^10.12.10",
-    "chalk": "^2.4.1",
-    "error-stack-parser": "^2.0.2"
+  "dependencies": {},
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

@@ -32,10 +32,10 @@
   },
   "dependencies": {
     "@siteimprove/alfa-util": "^0.0.0",
-    "browserslist": "^4.1.0"
+    "browserslist": "^4.3.4"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "mdn-browser-compat-data": "0.0.48"
+    "mdn-browser-compat-data": "0.0.59"
   }
 }

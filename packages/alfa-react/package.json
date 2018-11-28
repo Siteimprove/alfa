@@ -32,8 +32,8 @@
   "dependencies": {
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
-    "@types/react": "^16.4.18",
-    "react": "^16.6.0"
+    "@types/react": "^16.7.7",
+    "react": "^16.6.3"
   },
   "peerDependencies": {
     "@siteimprove/alfa-chai": "^0.0.0",
