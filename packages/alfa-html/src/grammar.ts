@@ -28,7 +28,7 @@ interface State {
   /**
    * @see https://www.w3.org/TR/html/syntax.html#stack-of-open-elements
    */
-  openElements: Array<object>;
+  openElements: Array<Element>;
 }
 
 /**
@@ -231,15 +231,15 @@ function constructTree(
   return document;
 }
 
-function enableQuirksMode(document: Mutable<Document>) {
+function enableQuirksMode(document: Mutable<Document>): void {
   document.compatMode = "BackCompat";
 }
 
-function appendChild(parentNode: Node, childNode: Node) {
+function appendChild(parentNode: Node, childNode: Node): void {
   (parentNode.childNodes as Array<Node>).push(childNode);
 }
 
-function appendAttribute(element: Element, attribute: Attribute) {
+function appendAttribute(element: Element, attribute: Attribute): void {
   (element.attributes as Array<Attribute>).push(attribute);
 }
 

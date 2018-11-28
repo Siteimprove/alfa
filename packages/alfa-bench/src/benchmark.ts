@@ -89,14 +89,12 @@ export function benchmark(
       return;
     }
 
-    const fastest = results.reduce(
-      (fastest, result) =>
-        result.frequency > fastest.frequency ? result : fastest
+    const fastest = results.reduce((fastest, result) =>
+      result.frequency > fastest.frequency ? result : fastest
     );
 
-    const longest = results.reduce(
-      (longest, result) =>
-        result.title.length > longest.title.length ? result : longest
+    const longest = results.reduce((longest, result) =>
+      result.title.length > longest.title.length ? result : longest
     );
 
     let output = chalk.blue(results.length.toString());
@@ -152,8 +150,8 @@ function format(result: Result, fastest: Result, longest: Result): string {
   output += (percent > 0.95
     ? chalk.green
     : percent > 0.8
-      ? chalk.yellow
-      : chalk.red)(
+    ? chalk.yellow
+    : chalk.red)(
     frequency.toLocaleString("en", {
       style: "decimal",
       useGrouping: true

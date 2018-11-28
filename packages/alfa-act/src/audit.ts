@@ -159,9 +159,8 @@ function auditComposite<
     }
   }
 
-  const targets = groupBy(
-    applicability,
-    result => (result.outcome === Outcome.Inapplicable ? null : result.target)
+  const targets = groupBy(applicability, result =>
+    result.outcome === Outcome.Inapplicable ? null : result.target
   );
 
   rule.definition(expectations => {
