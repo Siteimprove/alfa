@@ -24,8 +24,12 @@
     "prepare": "node scripts/prepare.js",
     "test": "node scripts/test.js",
     "start": "node scripts/start.js",
-    "prepublish": "node scripts/prepublish.js",
-    "precommit": "node scripts/precommit.js"
+    "prepublish": "node scripts/prepublish.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "node scripts/precommit.js"
+    }
   },
   "workspaces": [
     "packages/*"
