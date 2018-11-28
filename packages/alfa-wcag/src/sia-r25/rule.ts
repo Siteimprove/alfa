@@ -14,7 +14,7 @@ import {
 export const SIA_R25: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r25.html",
   definition: (applicability, expectations, { device, document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(
         document,
         document,
@@ -25,7 +25,7 @@ export const SIA_R25: Atomic.Rule<Device | Document, Element> = {
       )
     );
 
-    expectations((target, expectation, question) => {
+    expectations((aspect, target, expectation, question) => {
       expectation(1, question("audio-is-sufficient"));
     });
   }

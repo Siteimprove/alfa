@@ -13,7 +13,7 @@ export const SIA_R6: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r6.html",
   requirements: [{ id: "wcag:language-of-page", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(
         document,
         document,
@@ -24,7 +24,7 @@ export const SIA_R6: Atomic.Rule<Document, Element> = {
       )
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       const lang = getLanguage(getAttribute(target, "lang")!)!;
       const xmlLang = getLanguage(getAttribute(target, "xml:lang")!)!;
 

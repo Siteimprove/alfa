@@ -28,7 +28,7 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(document, document, isElement)
         .map(element =>
           Array.from(element.attributes).filter(attribute =>
@@ -38,7 +38,7 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
         .reduce(concat, [])
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       const owner = getOwnerElement(target, document)!;
 
       const globalAttributeNames = new Set(

@@ -22,7 +22,7 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   definition: (applicability, expectations, { device, document }) => {
     const roleNames = new Set(values(Roles).map(role => role.name));
 
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll<Element>(
         document,
         document,
@@ -35,7 +35,7 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
       ).map(element => getAttributeNode(element, "role")!)
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       expectation(
         1,
         target.value.split(/\s+/).some(role => roleNames.has(role))

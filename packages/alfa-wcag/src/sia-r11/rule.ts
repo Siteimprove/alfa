@@ -24,7 +24,7 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
     { id: "wcag:name-role-value", partial: true }
   ],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll<Element>(
         document,
         document,
@@ -35,7 +35,7 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
       )
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       expectation(1, hasTextAlternative(target, document, device));
     });
   }

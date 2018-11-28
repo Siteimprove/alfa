@@ -15,7 +15,7 @@ export const SIA_R24: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r24.html",
   requirements: [{ id: "wcag:media-alternative-prerecorded", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(
         document,
         document,
@@ -26,7 +26,7 @@ export const SIA_R24: Atomic.Rule<Device | Document, Element> = {
       )
     );
 
-    expectations((target, expectation, question) => {
+    expectations((aspect, target, expectation, question) => {
       expectation(1, question("has-transcript"));
       expectation(2, question("transcript-is-sufficient"));
     });

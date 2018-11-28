@@ -20,7 +20,7 @@ export const SIA_R20: Atomic.Rule<Document, Attribute> = {
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(document, document, isElement)
         .map(element =>
           Array.from(element.attributes).filter(attribute =>
@@ -30,7 +30,7 @@ export const SIA_R20: Atomic.Rule<Document, Attribute> = {
         .reduce(concat, [])
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       expectation(1, attributeNames.has(target.localName));
     });
   }
