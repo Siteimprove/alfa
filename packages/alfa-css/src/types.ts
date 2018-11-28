@@ -37,8 +37,7 @@ export const enum SelectorType {
   PseudoClassSelector = 16,
   PseudoElementSelector = 32,
   CompoundSelector = 64,
-  RelativeSelector = 128,
-  AnBSelector = 256
+  RelativeSelector = 128
 }
 
 export interface IdSelector {
@@ -108,7 +107,7 @@ export interface TypeSelector {
 export interface PseudoClassSelector {
   readonly type: SelectorType.PseudoClassSelector;
   readonly name: PseudoClass;
-  readonly value: Selector | Array<Selector> | AnBSelector | null;
+  readonly value: Selector | Array<Selector> | AnBMicrosyntax | null;
 }
 
 export interface PseudoElementSelector {
@@ -252,26 +251,30 @@ export type PseudoClass =
   | "empty"
   // https://www.w3.org/TR/selectors/#blank-pseudo
   | "blank"
-  // https://www.w3.org/TR/selectors/#nth-child-pseudo
-  | "nth-child"
-  // https://www.w3.org/TR/selectors/#nth-last-child-pseudo
-  | "nth-last-child"
   // https://www.w3.org/TR/selectors/#first-child-pseudo
   | "first-child"
   // https://www.w3.org/TR/selectors/#last-child-pseudo
   | "last-child"
   // https://www.w3.org/TR/selectors/#only-child-pseudo
   | "only-child"
-  // https://www.w3.org/TR/selectors/#nth-of-type-pseudo
-  | "nth-of-type"
-  // https://www.w3.org/TR/selectors/#nth-last-of-type-pseudo
-  | "nth-last-of-type"
   // https://www.w3.org/TR/selectors/#first-of-type-pseudo
   | "first-of-type"
   // https://www.w3.org/TR/selectors/#last-of-type-pseudo
   | "last-of-type"
   // https://www.w3.org/TR/selectors/#only-of-type-pseudo
   | "only-of-type"
+  // https://www.w3.org/TR/selectors/#child-index
+  | ChildIndexedPseudoClass;
+
+type ChildIndexedPseudoClass =
+  // https://www.w3.org/TR/selectors/#nth-child-pseudo
+  | "nth-child"
+  // https://www.w3.org/TR/selectors/#nth-last-child-pseudo
+  | "nth-last-child"
+  // https://www.w3.org/TR/selectors/#nth-of-type-pseudo
+  | "nth-of-type"
+  // https://www.w3.org/TR/selectors/#nth-last-of-type-pseudo
+  | "nth-last-of-type"
   // https://www.w3.org/TR/selectors/#nth-col-pseudo
   | "nth-col"
   // https://www.w3.org/TR/selectors/#nth-last-col-pseudo
@@ -298,8 +301,7 @@ export type PseudoElement =
   // https://www.w3.org/TR/css-pseudo/#placeholder-pseudo
   | "placeholder";
 
-export interface AnBSelector {
-  readonly type: SelectorType.AnBSelector;
+export interface AnBMicrosyntax {
   readonly a: number;
   readonly b: number;
 }

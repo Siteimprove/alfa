@@ -1,8 +1,8 @@
 import { Stream } from "@siteimprove/alfa-lang";
 import { Token, TokenType } from "../alphabet";
-import { AnBSelector, SelectorType } from "../types";
+import { AnBMicrosyntax } from "../types";
 
-export function AnBMicrosyntax(stream: Stream<Token>): AnBSelector | null {
+export function AnBMicrosyntax(stream: Stream<Token>): AnBMicrosyntax | null {
   let next = stream.next();
 
   if (next === null) {
@@ -44,13 +44,12 @@ export function AnBMicrosyntax(stream: Stream<Token>): AnBSelector | null {
   b = next.value;
 
   return {
-    type: SelectorType.AnBSelector,
     a,
     b
   };
 }
 
-export function oddEvenSyntax(ident: string): AnBSelector | null {
+export function oddEvenSyntax(ident: string): AnBMicrosyntax | null {
   let a = 0;
   let b = 0;
 
@@ -68,7 +67,6 @@ export function oddEvenSyntax(ident: string): AnBSelector | null {
   }
 
   return {
-    type: SelectorType.AnBSelector,
     a,
     b
   };

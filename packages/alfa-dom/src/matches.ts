@@ -1,4 +1,5 @@
 import {
+  AnBMicrosyntax,
   AttributeMatcher,
   AttributeModifier,
   AttributeSelector,
@@ -593,6 +594,10 @@ function matchesPseudoClass(
   options: MatchesOptions,
   root: Selector
 ): boolean {
+  if (selector.value !== null && isAnBMicrosyntax(selector.value)) {
+    return false;
+  }
+
   switch (selector.name) {
     // https://www.w3.org/TR/selectors/#scope-pseudo
     case "scope":
@@ -740,4 +745,13 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
   }
 
   return false;
+}
+
+/**
+ * Check if a selector is of interface AnBMicrosyntax.
+ */
+function isAnBMicrosyntax(
+  selector: AnBMicrosyntax | Selector | Array<Selector>
+): selector is AnBMicrosyntax {
+  return (<AnBMicrosyntax>selector).a !== undefined;
 }

@@ -817,7 +817,6 @@ test("Can parse selector with a An+B odd microsyntax", t => {
     type: SelectorType.PseudoClassSelector,
     name: "nth-child",
     value: {
-      type: SelectorType.AnBSelector,
       a: 2,
       b: 1
     }
@@ -832,7 +831,6 @@ test("Can parse selector with a An+B even microsyntax", t => {
     type: SelectorType.PseudoClassSelector,
     name: "nth-child",
     value: {
-      type: SelectorType.AnBSelector,
       a: 2,
       b: 0
     }
