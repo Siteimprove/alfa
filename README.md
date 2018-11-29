@@ -31,15 +31,7 @@ At its core, Alfa is built around a tree structure that mirrors a subset of the 
 
 By implementing browser aspects, such as a style system and the accessibility tree, directly within Alfa, we gain the ability to do some things that would otherwise not be possible had we relied on only the APIs provided by the browser. The most radical difference is perhaps the computation of CSS properties, where Alfa can follow declared CSS properties up through cascade, inheritance, and absolutisation.
 
-At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. The primary packages are:
-
-- [**DOM**](packages/alfa-dom)
-- [**CSS**](packages/alfa-css)
-- [**ARIA**](packages/alfa-aria)
-- [**ACT**](packages/alfa-act)
-- [**WCAG**](packages/alfa-wcag)
-
-You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
+At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
 
 ## Requirements
 
