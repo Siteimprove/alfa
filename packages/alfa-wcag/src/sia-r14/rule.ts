@@ -25,7 +25,7 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r14.html",
   requirements: [{ id: "wcag:label-in-name", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll<Element>(
         document,
         document,
@@ -40,7 +40,7 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
       )
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       const visibleTextContent = normalize(
         getVisibleTextContent(target, document, device)
       );

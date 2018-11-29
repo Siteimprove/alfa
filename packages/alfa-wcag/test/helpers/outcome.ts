@@ -42,7 +42,7 @@ export function outcome<A extends Aspect, T extends Target>(
     for (const outcome of outcomes) {
       function hasMatchingOutcome(
         result: Result
-      ): result is Result<T, typeof outcome> {
+      ): result is Result<A, T, typeof outcome> {
         return result.outcome === outcome;
       }
 

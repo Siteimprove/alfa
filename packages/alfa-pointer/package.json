@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@siteimprove/alfa-bench",
+  "name": "@siteimprove/alfa-pointer",
   "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
@@ -27,11 +27,6 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
-  "dependencies": {
-    "@types/benchmark": "^1.0.31",
-    "benchmark": "^2.1.4",
-    "chalk": "^2.4.1"
-  },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
   }

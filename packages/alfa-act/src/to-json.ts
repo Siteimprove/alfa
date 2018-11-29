@@ -38,7 +38,7 @@ export function toJson<
   R extends Rule<any, any>,
   A extends AspectsOf<R> = AspectsOf<R>,
   T extends TargetsOf<R> = TargetsOf<R>
->(rules: Array<R>, results: Array<Result<T>>, aspects: AspectsFor<A>): List {
+>(rules: Array<R>, results: Array<Result<A, T>>, aspects: AspectsFor<A>): List {
   let request: JSON.Document | null = null;
 
   if ("request" in aspects) {

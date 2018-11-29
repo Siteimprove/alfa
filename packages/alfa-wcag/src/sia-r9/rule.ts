@@ -19,7 +19,7 @@ export const SIA_R9: Atomic.Rule<Document, Element> = {
     { id: "wcag:change-on-request", partial: true }
   ],
   definition: (applicability, expectations, { document }) => {
-    applicability(() => {
+    applicability(document, () => {
       const metaRefresh = querySelector<Element>(
         document,
         document,
@@ -29,7 +29,7 @@ export const SIA_R9: Atomic.Rule<Document, Element> = {
       return metaRefresh === null ? [] : [metaRefresh];
     });
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       const refreshTime = getRefreshTime(getAttribute(target, "content")!);
 
       expectation(1, refreshTime === 0 || refreshTime! > 72000);

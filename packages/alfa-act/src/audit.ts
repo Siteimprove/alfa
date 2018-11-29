@@ -3,13 +3,15 @@ import { isAtomic, isResult } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
   Answer,
+  Aspect,
   AspectsFor,
   Atomic,
   Composite,
   Outcome,
   Question,
   Result,
-  Rule
+  Rule,
+  Target
 } from "./types";
 
 // The `audit()` function is special in that it requires use of conditional
@@ -36,149 +38,84 @@ export function audit<
   aspects: AspectsFor<A>,
   rules: Array<R>,
   answers: Array<Answer<T>> = []
-): Array<Result<T> | Question<T>> {
-  const results: Array<Result<T> | Question<T>> = [];
+): Array<Result<A, T> | Question<A, T>> {
+  const results: Array<Result<A, T> | Question<A, T>> = [];
 
-  function question(rule: R, id: string, target: T): boolean {
+  function question(
+    rule: Atomic.Rule<A, T>,
+    id: string,
+    aspect: A,
+    target: T
+  ): boolean {
     const answer = answers.find(
       answer =>
         answer.rule === rule.id &&
         answer.question === id &&
+        answer.aspect === aspect &&
         answer.target === target
     );
 
     if (answer !== undefined) {
       return answer.answer;
-    } else {
-      results.push({
-        rule: rule.id,
-        question: id,
-        target
-      });
-
-      return false;
     }
+
+    results.push({ rule: rule.id, question: id, aspect, target });
+
+    return false;
   }
 
   for (const rule of sortRules(rules)) {
     if (isAtomic(rule)) {
-      auditAtomic(aspects, rule, results, (id, target) =>
-        question(rule as R, id, target)
+      auditAtomic<A, T>(aspects, rule, results, (id, aspect, target) =>
+        question(rule, id, aspect, target)
       );
     } else {
-      auditComposite(aspects, rule, results);
+      auditComposite<A, T>(aspects, rule, results);
     }
   }
 
   return results;
 }
 
-function auditAtomic<
-  R extends Atomic.Rule<any, any>,
-  A extends AspectsOf<R> = AspectsOf<R>,
-  T extends TargetsOf<R> = TargetsOf<R>
->(
+function auditAtomic<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
-  rule: R,
-  results: Array<Result<T> | Question<T>>,
-  question: (question: string, target: T) => boolean
+  rule: Atomic.Rule<A, T>,
+  results: Array<Result<A, T> | Question<A, T>>,
+  question: (question: string, aspect: A, target: T) => boolean
 ): void {
-  const targets: Array<T> | null = [];
+  const targets: Array<[A, T]> | null = [];
 
-  rule.definition(
-    applicability => {
-      const target = applicability();
+  const applicability: Atomic.Applicability<A, T> = (aspect, applicability) => {
+    const found = applicability();
 
-      if (target !== null) {
-        targets.push(...target);
+    if (found !== null) {
+      for (const target of found) {
+        targets.push([aspect, target]);
       }
-
-      if (targets.length === 0) {
-        results.push({
-          rule: rule.id,
-          outcome: Outcome.Inapplicable
-        });
-      }
-    },
-    expectations => {
-      for (const target of targets) {
-        let holds = true;
-        try {
-          expectations(
-            target,
-            (id, holds) => {
-              if (!holds) {
-                throw new ExpectationError(id);
-              }
-            },
-            id => question(id, target)
-          );
-        } catch (err) {
-          holds = false;
-        }
-
-        if (holds) {
-          results.push({
-            rule: rule.id,
-            outcome: Outcome.Passed,
-            target
-          });
-        } else {
-          results.push({
-            rule: rule.id,
-            outcome: Outcome.Failed,
-            target
-          });
-        }
-      }
-    },
-    aspects as any
-  );
-}
-
-function auditComposite<
-  R extends Composite.Rule<any, any>,
-  A extends AspectsOf<R> = AspectsOf<R>,
-  T extends TargetsOf<R> = TargetsOf<R>
->(
-  aspects: AspectsFor<A>,
-  rule: R,
-  results: Array<Result<T> | Question<T>>
-): void {
-  const composes = new Map<Rule["id"], Rule<A, T>>();
-
-  for (const composite of rule.composes) {
-    composes.set(composite.id, composite);
-  }
-
-  const applicability: Array<Result<T>> = [];
-
-  for (const result of results) {
-    if (isResult(result) && composes.has(result.rule)) {
-      applicability.push(result);
     }
-  }
 
-  const targets = groupBy(
-    applicability,
-    result => (result.outcome === Outcome.Inapplicable ? null : result.target)
-  );
+    if (targets.length === 0) {
+      results.push({
+        rule: rule.id,
+        outcome: Outcome.Inapplicable
+      });
+    }
+  };
 
-  rule.definition(expectations => {
-    for (const entry of targets) {
-      const target = entry[0];
-
-      if (target === null) {
-        continue;
-      }
-
+  const expectations: Atomic.Expectations<A, T> = expectations => {
+    for (const [aspect, target] of targets) {
       let holds = true;
       try {
-        expectations(entry[1], (id, holds) => {
-          if (!holds) {
-            throw new ExpectationError(id);
-          }
-        });
+        expectations(
+          aspect,
+          target,
+          (id, holds) => {
+            if (!holds) {
+              throw new ExpectationError(id);
+            }
+          },
+          id => question(id, aspect, target)
+        );
       } catch (err) {
         holds = false;
       }
@@ -187,17 +124,92 @@ function auditComposite<
         results.push({
           rule: rule.id,
           outcome: Outcome.Passed,
+          aspect,
           target
         });
       } else {
         results.push({
           rule: rule.id,
           outcome: Outcome.Failed,
+          aspect,
           target
         });
       }
     }
-  });
+  };
+
+  rule.definition(applicability, expectations, aspects);
+}
+
+function auditComposite<A extends Aspect, T extends Target>(
+  aspects: AspectsFor<A>,
+  rule: Composite.Rule<A, T>,
+  results: Array<Result<A, T> | Question<A, T>>
+): void {
+  const composes = new Map<Rule["id"], Rule<A, T>>();
+
+  for (const composite of rule.composes) {
+    composes.set(composite.id, composite);
+  }
+
+  const applicability: Array<Result<A, T>> = [];
+
+  for (const result of results) {
+    if (isResult(result) && composes.has(result.rule)) {
+      applicability.push(result);
+    }
+  }
+
+  const targets = groupBy(applicability, result =>
+    result.outcome === Outcome.Inapplicable ? null : result.target
+  );
+
+  const expectations: Composite.Expectations<A, T> = expectations => {
+    for (const [target, results] of targets) {
+      if (target === null) {
+        continue;
+      }
+
+      const aspects = groupBy(results, result =>
+        result.outcome === Outcome.Inapplicable ? null : result.aspect
+      );
+
+      for (const [aspect, results] of aspects) {
+        if (aspect === null) {
+          continue;
+        }
+
+        let holds = true;
+        try {
+          expectations(results, (id, holds) => {
+            if (!holds) {
+              throw new ExpectationError(id);
+            }
+          });
+        } catch (err) {
+          holds = false;
+        }
+
+        if (holds) {
+          results.push({
+            rule: rule.id,
+            outcome: Outcome.Passed,
+            aspect,
+            target
+          });
+        } else {
+          results.push({
+            rule: rule.id,
+            outcome: Outcome.Failed,
+            aspect,
+            target
+          });
+        }
+      }
+    }
+  };
+
+  rule.definition(expectations);
 }
 
 class ExpectationError implements Error {

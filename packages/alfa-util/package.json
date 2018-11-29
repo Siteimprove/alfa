@@ -28,7 +28,7 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@types/node": "^10.9.4"
+    "@types/node": "^10.12.10"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
