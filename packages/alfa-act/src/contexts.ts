@@ -37,6 +37,11 @@ const Namespaces: Context = {
   foaf: "http://xmlns.com/foaf/spec/#",
 
   /**
+   * @see http://www.dublincore.org/documents/dcmi-terms/
+   */
+  dct: "http://purl.org/dc/terms/",
+
+  /**
    * @see https://siteimprove.github.io/sanshikan/
    */
   sanshikan: "https://siteimprove.github.io/sanshikan/"
@@ -114,9 +119,27 @@ export namespace Contexts {
   };
 
   /**
+   * @see https://www.w3.org/TR/EARL/#TestSubject
+   */
+  export const Subject: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    parts: {
+      "@id": "dct:hasPart",
+      "@container": "@set"
+    }
+  };
+
+  /**
    * @see https://www.w3.org/TR/EARL/#TestResult
    */
   export const Result: Context = {
+    ...Namespaces,
+
+    // Properties
+
     /**
      * @see https://www.w3.org/TR/EARL/#outcome
      */

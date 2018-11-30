@@ -90,6 +90,13 @@ export function toJson<
     };
   }
 
+  const subject: JSON.Document = {
+    "@context": Contexts.Subject,
+    "@id": request === null ? "_:subject" : request.requestURI,
+    "@type": "earl:TestSubject",
+    parts: [request, response, document]
+  };
+
   const assertor: JSON.Document = {
     "@context": Contexts.Assertor,
     "@id": "https://github.com/siteimprove/alfa",
@@ -108,11 +115,9 @@ export function toJson<
     assertedBy: {
       "@id": assertor["@id"]
     },
-    subject: [
-      { "@id": "_:request" },
-      { "@id": "_:response" },
-      { "@id": "_:document" }
-    ]
+    subject: {
+      "@id": subject["@id"]
+    }
   };
 
   const assertions: Array<JSON.Document> = [];
@@ -168,7 +173,7 @@ export function toJson<
     }
   }
 
-  return expand([request, response, document, assertor, ...assertions]);
+  return expand([subject, assertor, ...assertions]);
 }
 
 function getPointer<A extends Aspect, T extends Target>(
@@ -196,7 +201,7 @@ function getPath(target: Node | Attribute, context: Node): string {
     const node = target;
 
     if (isElement(node)) {
-      const parentNode = getParentNode(node, context);
+      const parentNode = getParentNode(node, context, { flattened: true });
       const tagName = getTagName(node, context);
 
       if (parentNode !== null) {
