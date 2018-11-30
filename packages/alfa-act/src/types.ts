@@ -18,8 +18,9 @@ export type AspectKeysFor<A extends Aspect> = {
 }[keyof Aspects];
 
 export type AspectsFor<A extends Aspect> = {
-  readonly [P in AspectKeysFor<A>]: Aspects[P]
-};
+  readonly [P in AspectKeysFor<Aspect>]?: Aspects[P]
+} &
+  { readonly [P in AspectKeysFor<A>]: Aspects[P] };
 
 export const enum Outcome {
   Passed = "passed",

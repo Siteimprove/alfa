@@ -36,9 +36,9 @@ export function audit<
   T extends TargetsOf<R> = TargetsOf<R>
 >(
   aspects: AspectsFor<A>,
-  rules: Array<R>,
-  answers: Array<Answer<T>> = []
-): Array<Result<A, T> | Question<A, T>> {
+  rules: ReadonlyArray<R>,
+  answers: ReadonlyArray<Answer<T>> = []
+): ReadonlyArray<Result<A, T> | Question<A, T>> {
   const results: Array<Result<A, T> | Question<A, T>> = [];
 
   function question(
