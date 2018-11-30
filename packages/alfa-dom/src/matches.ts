@@ -188,6 +188,8 @@ export function matches(
     case SelectorType.PseudoElementSelector:
       return matchesPseudoElement(element, context, selector, options, root);
   }
+
+  return false;
 }
 
 /**
@@ -486,6 +488,8 @@ function matchesRelative(
         root
       );
   }
+
+  return false;
 }
 
 /**

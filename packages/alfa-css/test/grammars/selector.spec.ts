@@ -812,7 +812,7 @@ test("Can parse a relative selector relative to a compound selector", t => {
   });
 });
 
-test("Can parse selector with a An+B odd microsyntax", t => {
+test("Can parse selector with an An+B odd microsyntax", t => {
   const expected: Selector = {
     type: SelectorType.PseudoClassSelector,
     name: "nth-child",
@@ -823,10 +823,10 @@ test("Can parse selector with a An+B odd microsyntax", t => {
   };
   selector(t, ":nth-child(2n+1)", expected);
   selector(t, ":nth-child(odd)", expected);
-  // selector(t, ":nth-child(  odd  )", expected); // Solve with split()
+  selector(t, ":nth-child(2u+1)", null);
 });
 
-test("Can parse selector with a An+B even microsyntax", t => {
+test("Can parse selector with an An+B even microsyntax", t => {
   const expected: Selector = {
     type: SelectorType.PseudoClassSelector,
     name: "nth-child",
@@ -837,5 +837,79 @@ test("Can parse selector with a An+B even microsyntax", t => {
   };
   selector(t, ":nth-child(2n+0)", expected);
   selector(t, ":nth-child(even)", expected);
-  // selector(t, ":nth-child(  even  )", expected); // Solve with split()
 });
+
+test("Can parse selector using only 'An' from the An+B microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      a: 2,
+      b: 0
+    }
+  };
+  selector(t, ":nth-child(2n)", expected);
+});
+
+test("Can parse selector using only 'n' from the An+B microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      a: 0,
+      b: 0
+    }
+  };
+  selector(t, ":nth-child(n)", expected);
+  // selector(t, ":nth-child(-n-0)", expected);
+});
+
+test("Can parse selector omitting 'A' integer from the An+B microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      a: 0,
+      b: 2
+    }
+  };
+  selector(t, ":nth-child(n+2)", expected);
+});
+
+test("Can parse selector using only 'B' from the An+B microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      a: 0,
+      b: 2
+    }
+  };
+  selector(t, ":nth-child(2)", expected);
+});
+
+// test("Can parse selector with an An+B microsyntax with negative integers", t => {
+//   const expected: Selector = {
+//     type: SelectorType.PseudoClassSelector,
+//     name: "nth-child",
+//     value: {
+//       a: -2,
+//       b: -3
+//     }
+//   };
+//   selector(t, ":nth-child(-2n-3)", expected);
+// });
+
+// test("Can parse selector with an An+B microsyntax with whitespace", t => {
+//   const expected: Selector = {
+//     type: SelectorType.PseudoClassSelector,
+//     name: "nth-child",
+//     value: {
+//       a: 2,
+//       b: 0
+//     }
+//   };
+//   selector(t, ":nth-child(  2n  +  3  )", expected);
+//   selector(t, ":nth-child(-  n+3)", null);
+//   selector(t, ":nth-child(  even  )", expected); // Solve with split()
+// });

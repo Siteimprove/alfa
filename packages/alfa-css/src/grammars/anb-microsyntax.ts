@@ -12,36 +12,36 @@ export function AnBMicrosyntax(stream: Stream<Token>): AnBMicrosyntax | null {
   let a = 0;
   let b = 0;
 
-  if (next.type === TokenType.Ident) {
-    const oddEven = oddEvenSyntax(next.value);
+  switch (next.type) {
+    case TokenType.Ident:
+      const oddEven = oddEvenSyntax(next.value);
 
-    if (oddEven !== null) {
-      return oddEven;
-    }
+      if (oddEven !== null) {
+        return oddEven;
+      }
 
-    if (next.value !== "n") {
-      return null;
-    }
-  } else {
-    switch (next.type) {
-      case TokenType.Number:
-        // Keep "a" as 0
-        break;
-      case TokenType.Dimension:
-        a = next.value;
-        break;
-      default:
+      if (next.value !== "n") {
         return null;
-    }
+      }
+
+      next = stream.next();
+
+      break;
+    case TokenType.Dimension:
+      if (next.unit !== "n") {
+        return null;
+      }
+
+      a = next.value;
+
+      next = stream.next();
   }
 
-  next = stream.next();
-
-  if (next === null || next.type !== TokenType.Number) {
-    return null;
+  if (next !== null && next.type === TokenType.Number) {
+    b = next.value;
+  } else {
+    stream.backup(1);
   }
-
-  b = next.value;
 
   return {
     a,
@@ -50,24 +50,18 @@ export function AnBMicrosyntax(stream: Stream<Token>): AnBMicrosyntax | null {
 }
 
 export function oddEvenSyntax(ident: string): AnBMicrosyntax | null {
-  let a = 0;
-  let b = 0;
-
   switch (ident) {
     case "odd":
-      a = 2;
-      b = 1;
-      break;
+      return {
+        a: 2,
+        b: 1
+      };
     case "even":
-      a = 2;
-      b = 0;
-      break;
+      return {
+        a: 2,
+        b: 0
+      };
     default:
       return null;
   }
-
-  return {
-    a,
-    b
-  };
 }
