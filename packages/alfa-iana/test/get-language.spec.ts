@@ -8,3 +8,7 @@ test("Can parse an IANA language tag", t => {
     region: Regions.DK
   });
 });
+
+test("Returns null when given a syntactically invalid language tag", t => {
+  t.deepEqual(getLanguage("da-DK-DK"), null);
+});
