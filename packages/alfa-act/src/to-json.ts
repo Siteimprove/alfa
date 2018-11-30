@@ -90,18 +90,23 @@ export function toJson<
     };
   }
 
+  const assertor: JSON.Document = {
+    "@context": Contexts.Assertor,
+    "@id": "https://github.com/siteimprove/alfa",
+    "@type": ["earl:Assertor", "earl:Software", "doap:Project"],
+    name: "Alfa",
+    vendor: {
+      "@id": "https://siteimprove.com/",
+      "@type": "foaf:Organization",
+      "foaf:name": "Siteimprove A/S"
+    }
+  };
+
   const assertion: JSON.Document = {
     "@context": Contexts.Assertion,
     "@type": "earl:Assertion",
     assertedBy: {
-      "@id": "https://github.com/siteimprove/alfa",
-      "@type": ["earl:Assertor", "earl:Software", "doap:Project"],
-      "doap:name": "Alfa",
-      "doap:vendor": {
-        "@id": "https://siteimprove.com/",
-        "@type": "foaf:Organization",
-        "foaf:name": "Siteimprove A/S"
-      }
+      "@id": assertor["@id"]
     },
     subject: [
       { "@id": "_:request" },
@@ -113,20 +118,40 @@ export function toJson<
   const assertions: Array<JSON.Document> = [];
 
   for (const [ruleId, group] of groupBy(results, result => result.rule)) {
-    assertions.push({
-      ...assertion,
-      test: [
-        {
-          "@id": ruleId,
-          "@type": "earl:TestCase"
+    for (const result of group) {
+      const mapped = {
+        "@context": Contexts.Result,
+        "@type": "earl:TestResult",
+        outcome: {
+          "@id": `earl:${result.outcome}`
         }
-      ],
-      result: group.map(result => {
+      };
+
+      if (result.outcome !== Outcome.Inapplicable) {
+        assign(mapped, getPointer(aspects, result.target));
+      }
+
+      assertions.push({
+        ...assertion,
+        test: [{ "@id": ruleId, "@type": "earl:TestCase" }],
+        result: mapped
+      });
+    }
+
+    const { requirements } = rules.find(rule => rule.id === ruleId)!;
+
+    for (const requirement of requirements === undefined ? [] : requirements) {
+      for (const result of group) {
+        const outcome =
+          result.outcome === Outcome.Passed && requirement.partial === true
+            ? Outcome.CantTell
+            : result.outcome;
+
         const mapped = {
           "@context": Contexts.Result,
           "@type": "earl:TestResult",
           outcome: {
-            "@id": `earl:${result.outcome}`
+            "@id": `earl:${outcome}`
           }
         };
 
@@ -134,46 +159,16 @@ export function toJson<
           assign(mapped, getPointer(aspects, result.target));
         }
 
-        return mapped;
-      })
-    });
-
-    const { requirements } = rules.find(rule => rule.id === ruleId)!;
-
-    for (const requirement of requirements === undefined ? [] : requirements) {
-      assertions.push({
-        ...assertion,
-        test: [
-          {
-            "@id": requirement.id,
-            "@type": "earl:TestRequirement"
-          }
-        ],
-        result: group.map(result => {
-          const outcome =
-            result.outcome === Outcome.Passed && requirement.partial === true
-              ? Outcome.CantTell
-              : result.outcome;
-
-          const mapped = {
-            "@context": Contexts.Result,
-            "@type": "earl:TestResult",
-            outcome: {
-              "@id": `earl:${outcome}`
-            }
-          };
-
-          if (result.outcome !== Outcome.Inapplicable) {
-            assign(mapped, getPointer(aspects, result.target));
-          }
-
-          return mapped;
-        })
-      });
+        assertions.push({
+          ...assertion,
+          test: [{ "@id": requirement.id, "@type": "earl:TestRequirement" }],
+          result: mapped
+        });
+      }
     }
   }
 
-  return expand([request, response, document, ...assertions]);
+  return expand([request, response, document, assertor, ...assertions]);
 }
 
 function getPointer<A extends Aspect, T extends Target>(

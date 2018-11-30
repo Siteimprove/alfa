@@ -44,6 +44,24 @@ const Namespaces: Context = {
 
 export namespace Contexts {
   /**
+   * @see https://www.w3.org/TR/EARL/#Assertor
+   */
+  export const Assertor: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    name: {
+      "@id": "doap:name"
+    },
+
+    vendor: {
+      "@id": "doap:vendor",
+      "@type": "foaf:Organization"
+    }
+  };
+
+  /**
    * @see https://www.w3.org/TR/EARL/#Assertion
    */
   export const Assertion: Context = {
