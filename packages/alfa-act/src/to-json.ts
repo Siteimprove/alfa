@@ -95,7 +95,13 @@ export function toJson<
     "@type": "earl:Assertion",
     assertedBy: {
       "@id": "https://github.com/siteimprove/alfa",
-      "@type": "earl:Software"
+      "@type": ["earl:Assertor", "earl:Software", "doap:Project"],
+      "doap:name": "Alfa",
+      "doap:vendor": {
+        "@id": "https://siteimprove.com/",
+        "@type": "foaf:Organization",
+        "foaf:name": "Siteimprove A/S"
+      }
     },
     subject: [
       { "@id": "_:request" },

@@ -27,6 +27,16 @@ const Namespaces: Context = {
   wcag: "https://www.w3.org/TR/WCAG/#",
 
   /**
+   * @see https://github.com/ewilderj/doap
+   */
+  doap: "http://usefulinc.com/ns/doap#",
+
+  /**
+   * @see http://xmlns.com/foaf/spec/
+   */
+  foaf: "http://xmlns.com/foaf/spec/#",
+
+  /**
    * @see https://siteimprove.github.io/sanshikan/
    */
   sanshikan: "https://siteimprove.github.io/sanshikan/"
