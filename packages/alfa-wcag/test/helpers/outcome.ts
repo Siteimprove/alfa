@@ -9,7 +9,6 @@ import {
   Target
 } from "@siteimprove/alfa-act";
 import { Assertions } from "@siteimprove/alfa-test";
-import { concat } from "@siteimprove/alfa-util";
 
 export function outcome<A extends Aspect, T extends Target>(
   t: Assertions,
@@ -17,15 +16,14 @@ export function outcome<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   assert:
     | Outcome.Inapplicable
-    | { readonly [P in Outcome.Passed | Outcome.Failed]?: ReadonlyArray<T> },
-  dependencies: ReadonlyArray<Rule<A, T>> = []
+    | { readonly [P in Outcome.Passed | Outcome.Failed]?: ReadonlyArray<T> }
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed> = [
     Outcome.Passed,
     Outcome.Failed
   ];
 
-  const results = audit(aspects, concat([rule], dependencies)).filter(
+  const results = audit(aspects, [rule]).filter(
     result => result.rule === rule.id
   );
 
