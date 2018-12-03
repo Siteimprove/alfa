@@ -67,7 +67,6 @@ import { audit } from "@siteimprove/alfa-act";
 import { Rules } from "@siteimprove/alfa-wcag";
 import { Scraper } from "@siteimprove/alfa-scrape";
 
-// Instantiate a scraper. This will start up a background process.
 const scraper = new Scraper();
 
 scraper
@@ -75,11 +74,10 @@ scraper
   .then(aspects => {
     const results = audit(aspects, Rules);
 
-    // Close down the scraper, stopping the background process.
     scraper.close();
   })
   .catch(err => {
-    console.error(err); // Make sure to handle this properly!
+    console.error(err);
   });
 ```
 
