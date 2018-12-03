@@ -1,4 +1,4 @@
-import { groupBy, values } from "@siteimprove/alfa-util";
+import { groupBy, Mutable, values } from "@siteimprove/alfa-util";
 import { isAtomic, isResult } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
@@ -7,6 +7,7 @@ import {
   AspectsFor,
   Atomic,
   Composite,
+  Data,
   Outcome,
   Question,
   Result,
@@ -108,37 +109,19 @@ function auditAtomic<A extends Aspect, T extends Target>(
 
   const expectations: Atomic.Expectations<A, T> = expectations => {
     for (const [aspect, target] of targets) {
-      let holds = true;
-      try {
-        expectations(
-          aspect,
-          target,
-          (id, holds) => {
-            if (!holds) {
-              throw new ExpectationError(id);
-            }
-          },
-          id => question(id, aspect, target)
-        );
-      } catch (err) {
-        holds = false;
-      }
+      const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
+        rule: rule.id,
+        outcome: Outcome.Passed,
+        aspect,
+        target,
+        expectations: {}
+      };
 
-      if (holds) {
-        results.push({
-          rule: rule.id,
-          outcome: Outcome.Passed,
-          aspect,
-          target
-        });
-      } else {
-        results.push({
-          rule: rule.id,
-          outcome: Outcome.Failed,
-          aspect,
-          target
-        });
-      }
+      expectations(aspect, target, getExpectationEvaluater(rule, result), id =>
+        question(id, aspect, target)
+      );
+
+      results.push(result);
     }
   };
 
@@ -183,32 +166,17 @@ function auditComposite<A extends Aspect, T extends Target>(
           continue;
         }
 
-        let holds = true;
-        try {
-          expectations(results, (id, holds) => {
-            if (!holds) {
-              throw new ExpectationError(id);
-            }
-          });
-        } catch (err) {
-          holds = false;
-        }
+        const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
+          rule: rule.id,
+          outcome: Outcome.Passed,
+          aspect,
+          target,
+          expectations: {}
+        };
 
-        if (holds) {
-          results.push({
-            rule: rule.id,
-            outcome: Outcome.Passed,
-            aspect,
-            target
-          });
-        } else {
-          results.push({
-            rule: rule.id,
-            outcome: Outcome.Failed,
-            aspect,
-            target
-          });
-        }
+        expectations(results, getExpectationEvaluater(rule, result));
+
+        results.push(result);
       }
     }
   };
@@ -216,13 +184,35 @@ function auditComposite<A extends Aspect, T extends Target>(
   rule.definition(expectations);
 }
 
-class ExpectationError implements Error {
-  public readonly name = "ExpectationError";
-  public readonly message: string;
-  public readonly id: number;
+function getExpectationEvaluater<A extends Aspect, T extends Target>(
+  rule: Rule<any, any>,
+  result: Mutable<Result<any, any, Outcome.Passed | Outcome.Failed>>
+): (id: number, holds: boolean, data?: Data | null) => void {
+  const { locales = [] } = rule;
 
-  public constructor(id: number) {
-    this.id = id;
-    this.message = `Expectation ${id} does not hold`;
-  }
+  const locale = locales.find(locale => locale.id === "en");
+
+  return (id, holds, data = null) => {
+    let message: string | null = null;
+
+    if (locale !== undefined) {
+      const messages = locale.expectations[id];
+
+      if (messages !== undefined) {
+        message = messages[holds ? "passed" : "failed"](
+          data === null ? {} : data
+        );
+      }
+    }
+
+    if (message === null) {
+      message = `Expectation ${id} ${holds ? "holds" : "does not hold"}`;
+    }
+
+    result.expectations[id] = { holds, message, data };
+
+    if (!holds) {
+      result.outcome = Outcome.Failed;
+    }
+  };
 }
