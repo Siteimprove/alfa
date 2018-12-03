@@ -42,16 +42,10 @@ At a high level, Alfa consumes implementations of rules specified in the [Access
 ```ts
 import { audit, toJson } from "@siteimprove/alfa-act";
 
-// Aspects of the content we want to test; more about these later.
 const aspects = { ... };
-
-// The rules we want to run against the aspects above.
 const rules = [ ... ];
 
-// Run an audit on the aspects using the rules.
 const results = audit(aspects, rules);
-
-// Transform the result set to JSON-LD / EARL. This is optional!
 const json = toJson(rules, results, aspects);
 ```
 
