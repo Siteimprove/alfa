@@ -10,7 +10,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import * as JSON from "@siteimprove/alfa-json-ld";
 import { expand, List } from "@siteimprove/alfa-json-ld";
-import { groupBy } from "@siteimprove/alfa-util";
+import { groupBy, values } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
 import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 
@@ -22,6 +22,7 @@ import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 //
 // tslint:disable:no-any
 
+const { isArray } = Array;
 const { assign } = Object;
 
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
@@ -36,7 +37,13 @@ export function toJson<
   R extends Rule<any, any>,
   A extends AspectsOf<R> = AspectsOf<R>,
   T extends TargetsOf<R> = TargetsOf<R>
->(rules: Array<R>, results: Array<Result<A, T>>, aspects: AspectsFor<A>): List {
+>(
+  rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
+  results: ReadonlyArray<Result<A, T>>,
+  aspects: AspectsFor<A>
+): List {
+  rules = isArray(rules) ? rules : values(rules);
+
   let request: JSON.Document | null = null;
 
   if (aspects.request !== undefined) {

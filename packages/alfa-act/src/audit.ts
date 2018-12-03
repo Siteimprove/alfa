@@ -1,4 +1,4 @@
-import { groupBy } from "@siteimprove/alfa-util";
+import { groupBy, values } from "@siteimprove/alfa-util";
 import { isAtomic, isResult } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
@@ -22,6 +22,8 @@ import {
 //
 // tslint:disable:no-any
 
+const { isArray } = Array;
+
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? A
   : never;
@@ -36,9 +38,11 @@ export function audit<
   T extends TargetsOf<R> = TargetsOf<R>
 >(
   aspects: AspectsFor<A>,
-  rules: ReadonlyArray<R>,
+  rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
   answers: ReadonlyArray<Answer<T>> = []
 ): ReadonlyArray<Result<A, T> | Question<A, T>> {
+  rules = isArray(rules) ? rules : values(rules);
+
   const results: Array<Result<A, T> | Question<A, T>> = [];
 
   function question(
