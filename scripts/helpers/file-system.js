@@ -32,7 +32,6 @@ exports.readFile = readFile;
 /**
  * @param {string} file
  * @param {any} data
- * @return {void}
  */
 function writeFile(file, data) {
   makeDirectory(path.dirname(file));
