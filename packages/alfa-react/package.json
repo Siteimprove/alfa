@@ -24,22 +24,24 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
+    "*.js",
+    "*.d.ts",
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
   "dependencies": {
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
-    "@types/react": "^16.4.18",
-    "react": "^16.6.0"
+    "@types/react": "^16.7.7"
   },
   "peerDependencies": {
     "@siteimprove/alfa-chai": "^0.0.0",
-    "@siteimprove/alfa-unexpected": "^0.0.0"
+    "@siteimprove/alfa-jest": "^0.0.0",
+    "@siteimprove/alfa-should": "^0.0.0",
+    "@siteimprove/alfa-unexpected": "^0.0.0",
+    "react": "^16.6.3"
   },
   "devDependencies": {
-    "@siteimprove/alfa-chai": "^0.0.0",
-    "@siteimprove/alfa-test": "^0.0.0",
-    "@siteimprove/alfa-unexpected": "^0.0.0"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

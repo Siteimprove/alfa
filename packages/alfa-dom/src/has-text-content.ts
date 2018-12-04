@@ -21,7 +21,7 @@ export function hasTextContent(
     node,
     context,
     {
-      enter(node, parentNode, skip, exit) {
+      enter(node, parentNode, { exit }) {
         if (isText(node) && node.data.trim() !== "") {
           text = true;
           return exit;

@@ -13,7 +13,7 @@ export const SIA_R23: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r23.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(
         document,
         document,
@@ -21,7 +21,7 @@ export const SIA_R23: Atomic.Rule<Document, Element> = {
       )
     );
 
-    expectations((target, expectation, question) => {
+    expectations((aspect, target, expectation, question) => {
       expectation(1, question("has-captions"));
     });
   }

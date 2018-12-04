@@ -12,11 +12,11 @@ export const Manual: Atomic.Rule<Document, Element> = {
   definition: (applicability, expectations, { document }) => {
     const root = document.childNodes[0];
 
-    applicability(
-      () => (root !== undefined && isElement(root) ? [root] : null)
+    applicability(document, () =>
+      root !== undefined && isElement(root) ? [root] : null
     );
 
-    expectations((target, expectation, question) => {
+    expectations((aspect, target, expectation, question) => {
       const hasAlt = getAttribute(target, "alt") !== "";
       const isLargeType = question("is-large-type");
 
@@ -28,9 +28,9 @@ export const Manual: Atomic.Rule<Document, Element> = {
 export const Automated: Atomic.Rule<Document, Element> = {
   id: "_:automated-rule",
   definition: (applicability, expectations, { document }) => {
-    applicability(() => (isElement(document) ? [document] : null));
+    applicability(document, () => (isElement(document) ? [document] : null));
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       const isBody = target.localName === "body";
 
       expectation(1, isBody);

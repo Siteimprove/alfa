@@ -20,7 +20,7 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: [{ id: "wcag:non-text-content", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(
         document,
         document,
@@ -32,7 +32,7 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
       )
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       expectation(
         1,
         hasTextAlternative(target, document, device) ||

@@ -1,24 +1,48 @@
+// tslint:disable:class-name
+
 declare module "should" {
-  function should(obj: unknown): should.Should;
+  interface should {
+    (obj: unknown): should.Assertion;
+
+    Assertion: should.AssertionConstructor;
+
+    use(
+      plugin: (should: this, Assertion: typeof should.Assertion) => void
+    ): this;
+  }
 
   namespace should {
-    interface Should {
-      (obj: unknown): void;
+    interface Assertion {
+      readonly obj: unknown;
 
-      be: this;
-      null: this;
+      params: {
+        operator: string;
+        obj?: unknown;
+        message?: string;
+        expected?: unknown;
+        details?: string;
+      };
+
+      readonly be: this;
+
+      null(): this;
+
+      assert(expression: boolean): void;
     }
 
-    type AssertionHandler = (this: { obj: unknown }) => void;
+    interface AssertionConstructor {
+      new (obj: unknown): Assertion;
+      prototype: Assertion;
 
-    namespace Assertion {
-      function add(name: string, handler: AssertionHandler): void;
+      add(name: string, handler: (this: Assertion) => void): void;
     }
   }
+
+  const should: should;
 
   export = should;
 }
 
 interface Object {
-  should: import("should").Should;
+  should: import("should").Assertion;
 }

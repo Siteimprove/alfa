@@ -11,6 +11,9 @@ export type GrammarEntry<T extends Token, R, S = null> = Readonly<{
 }>;
 
 export class Grammar<T extends Token, R, S = null> {
+  /**
+   * @internal
+   */
   private readonly entries: Map<
     TokenIdentifier<T>,
     GrammarEntry<T, R, S>

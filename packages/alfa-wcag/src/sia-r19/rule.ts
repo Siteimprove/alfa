@@ -10,7 +10,7 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+import { URL, values } from "@siteimprove/alfa-util";
 
 function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
   return a.concat(b);
@@ -24,7 +24,7 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll<Element>(
         document,
         document,
@@ -40,13 +40,13 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
         .reduce(concat, [])
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       const attribute = values(Attributes).find(
         attribute => attribute.name === target.localName
       )!;
       const { value } = target;
 
-      let valid = false;
+      let valid = true;
 
       switch (attribute.type) {
         case "true-false":
@@ -70,10 +70,6 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
           valid = /^\d+(\.\d+)?$/.test(value);
           break;
 
-        case "string":
-          valid = true;
-          break;
-
         case "token":
           valid =
             attribute.values!.find(found => found === value) !== undefined;
@@ -87,6 +83,14 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
                 found =>
                   attribute.values!.find(value => value === found) === undefined
               ) === undefined;
+          break;
+
+        case "uri":
+          try {
+            new URL(value);
+          } catch (err) {
+            valid = false;
+          }
       }
 
       expectation(1, valid);

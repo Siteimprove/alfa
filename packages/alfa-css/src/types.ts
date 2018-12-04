@@ -315,12 +315,14 @@ export const enum MediaComparator {
   LessTahnEqual
 }
 
+export type MediaType = string;
+
 /**
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-query
  */
 export interface MediaQuery {
   readonly qualifier?: MediaQualifier;
-  readonly type?: string;
+  readonly type?: MediaType;
   readonly condition?: MediaCondition;
 }
 
@@ -328,8 +330,8 @@ export interface MediaQuery {
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-condition
  */
 export interface MediaCondition {
-  readonly feature: MediaFeature | MediaCondition | Array<MediaCondition>;
   readonly operator?: MediaOperator;
+  readonly features: Array<MediaFeature | MediaCondition>;
 }
 
 /**
@@ -337,7 +339,7 @@ export interface MediaCondition {
  */
 export interface MediaFeature {
   readonly name: string;
-  readonly value?: MediaFeatureValue | [MediaFeatureValue, MediaFeatureValue];
+  readonly value?: MediaFeatureValue;
   readonly comparator?: MediaComparator;
 }
 

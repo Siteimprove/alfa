@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@siteimprove/alfa-bench",
+  "name": "@siteimprove/alfa-highlight",
   "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
@@ -28,8 +28,8 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@types/benchmark": "^1.0.31",
-    "benchmark": "^2.1.4",
-    "chalk": "^2.4.1"
+    "@types/chalk": "^2.2.0",
+    "chalk": "^2.4.1",
+    "emphasize": "^2.0.0"
   }
 }

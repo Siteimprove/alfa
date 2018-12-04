@@ -1,7 +1,13 @@
 import { parse } from "@siteimprove/alfa-lang";
+import { Converters } from "../../../converters";
 import { Longhand } from "../../../properties";
+import { Resolvers } from "../../../resolvers";
 import { Units } from "../../../units";
 import { Values, ValueType } from "../../../values";
+import {
+  getComputedProperty,
+  getSpecifiedProperty
+} from "../../helpers/get-property";
 import {
   AbsoluteFontSize,
   FontFamily,
@@ -13,11 +19,9 @@ import { FontSizeGrammar } from "./grammar";
 /**
  * @see https://www.w3.org/TR/css-fonts/#propdef-font-size
  */
-export const fontSize: Longhand<
-  FontSize,
-  Values.Length<Units.AbsoluteLength>
-> = {
+export const fontSize: Longhand<FontSize, Values.Length<"px">> = {
   inherits: true,
+  depends: ["fontFamily"],
   parse(input) {
     const parser = parse(input, FontSizeGrammar);
 
@@ -28,10 +32,11 @@ export const fontSize: Longhand<
     return parser.result;
   },
   initial() {
-    return Values.keyword("medium");
+    return Values.length(16, "px");
   },
-  computed(getProperty, getParentProperty) {
-    const value = getProperty("fontSize");
+  computed(style, device) {
+    const value = getSpecifiedProperty(style, "fontSize");
+    const parentValue = getComputedProperty(style.parent, "fontSize");
 
     switch (value.type) {
       case ValueType.Keyword:
@@ -43,16 +48,19 @@ export const fontSize: Longhand<
           case "large":
           case "x-large":
           case "xx-large":
-            return resolveAbsoluteFontSize(value, getProperty("fontFamily"));
+            return resolveAbsoluteFontSize(
+              value,
+              getComputedProperty(style, "fontFamily")
+            );
         }
 
-        return resolveRelativeFontSize(value, getParentProperty("fontSize"));
+        return resolveRelativeFontSize(value, parentValue);
 
       case ValueType.Length:
-        return resolveLengthFontSize(value, getParentProperty("fontSize"));
+        return Resolvers.length(value, device, style);
 
       case ValueType.Percentage:
-        return resolvePercentageFontSize(value, getParentProperty("fontSize"));
+        return Resolvers.percentage(value, parentValue, device, style);
     }
   }
 };
@@ -89,61 +97,23 @@ function resolveAbsoluteFontSize(
 
   const base = fontFamily.value[0].value === "monospace" ? 13 : 16;
 
-  return {
-    type: ValueType.Length,
-    value: Math.round(factor * base),
-    unit: "px"
-  };
+  return Values.length(Math.round(factor * base), "px");
 }
 
 function resolveRelativeFontSize(
   { value }: RelativeFontSize,
   { value: parentValue, unit }: Values.Length<Units.AbsoluteLength>
-): Values.Length<Units.AbsoluteLength> {
+): Values.Length<"px"> {
   switch (value) {
     case "smaller":
-      return {
-        type: ValueType.Length,
-        value: parentValue / 1.2,
-        unit
-      };
+      return Values.length(
+        Converters.length(parentValue / 1.2, unit, "px"),
+        "px"
+      );
     case "larger":
-      return {
-        type: ValueType.Length,
-        value: parentValue * 1.2,
-        unit
-      };
+      return Values.length(
+        Converters.length(parentValue * 1.2, unit, "px"),
+        "px"
+      );
   }
-}
-
-function resolveLengthFontSize(
-  { value, unit }: Values.Length,
-  { value: parentValue, unit: parentUnit }: Values.Length<Units.AbsoluteLength>
-): Values.Length<Units.AbsoluteLength> {
-  switch (unit) {
-    // https://www.w3.org/TR/css-values/#em
-    case "em":
-      return Values.length(parentValue * value, parentUnit);
-
-    // https://www.w3.org/TR/css-values/#ex
-    case "ex":
-      return Values.length(parentValue * value * 0.5, parentUnit);
-  }
-
-  if (Units.isRelativeLength(unit)) {
-    throw new Error(`Cannot resolve unit "${unit}"`);
-  }
-
-  return Values.length(value, unit);
-}
-
-function resolvePercentageFontSize(
-  { value }: Values.Percentage,
-  { value: parentValue, unit }: Values.Length<Units.AbsoluteLength>
-): Values.Length<Units.AbsoluteLength> {
-  return {
-    type: ValueType.Length,
-    value: parentValue * value,
-    unit
-  };
 }

@@ -1,5 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, skip, Stream } from "@siteimprove/alfa-lang";
+import { Mutable } from "@siteimprove/alfa-util";
 import { Token, Tokens, TokenType } from "../alphabet";
 import {
   MediaCondition,
@@ -16,7 +17,7 @@ const { assign } = Object;
 /**
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-query
  */
-function mediaQuery(stream: Stream<Token>): MediaQuery {
+function mediaQuery(stream: Stream<Token>): MediaQuery | null {
   const condition = mediaCondition(stream);
 
   if (condition !== null) {
@@ -43,7 +44,8 @@ function mediaQuery(stream: Stream<Token>): MediaQuery {
       next = stream.peek(0);
 
       if (next === null || next.type !== TokenType.Ident) {
-        return { type: "all" };
+        stream.accept(token => token.type !== TokenType.Comma);
+        return null;
       }
     }
 
@@ -68,15 +70,22 @@ function mediaQuery(stream: Stream<Token>): MediaQuery {
 
       const condition = mediaCondition(stream, false);
 
+      next = stream.peek(0);
+
       if (condition !== null) {
         assign(query, { condition });
       }
     }
 
+    if (next !== null && next.type !== TokenType.Comma) {
+      return null;
+    }
+
     return query;
   }
 
-  return { type: "all" };
+  stream.accept(token => token.type !== TokenType.Comma);
+  return null;
 }
 
 /**
@@ -86,39 +95,48 @@ function mediaCondition(
   stream: Stream<Token>,
   allowOr = true
 ): MediaCondition | null {
-  let operator: MediaOperator | null = null;
-
-  const next = stream.peek(0);
-
-  if (next !== null && next.type === TokenType.Ident) {
-    switch (next.value) {
-      case "not":
-        operator = MediaOperator.Not;
-        break;
-      case "and":
-        operator = MediaOperator.And;
-        break;
-      case "or":
-        if (!allowOr) {
-          return null;
-        }
-
-        operator = MediaOperator.Or;
-    }
-  }
-
-  if (operator !== null) {
-    stream.advance(1);
-    stream.accept(token => token.type === TokenType.Whitespace);
-  }
-
-  const feature = mediaInParens(stream);
+  let feature = mediaNot(stream);
 
   if (feature !== null) {
-    const condition = { feature };
+    return {
+      operator: MediaOperator.Not,
+      features: [feature]
+    };
+  }
 
-    if (operator !== null) {
-      assign(condition, { operator });
+  feature = mediaInParens(stream);
+
+  if (feature !== null) {
+    const condition: Mutable<MediaCondition> = {
+      features: [feature]
+    };
+
+    while (!stream.done()) {
+      stream.accept(token => token.type === TokenType.Whitespace);
+
+      const feature = mediaAnd(stream);
+
+      if (feature === null) {
+        break;
+      }
+
+      condition.operator = MediaOperator.And;
+      condition.features.push(feature);
+    }
+
+    if (allowOr && condition.operator !== MediaOperator.And) {
+      while (!stream.done()) {
+        stream.accept(token => token.type === TokenType.Whitespace);
+
+        const feature = mediaOr(stream);
+
+        if (feature === null) {
+          break;
+        }
+
+        condition.operator = MediaOperator.Or;
+        condition.features.push(feature);
+      }
     }
 
     return condition;
@@ -128,15 +146,87 @@ function mediaCondition(
 }
 
 /**
+ * @see https://www.w3.org/TR/mediaqueries/#typedef-media-not
+ */
+function mediaNot(stream: Stream<Token>): MediaFeature | MediaCondition | null {
+  const start = stream.position();
+  const next = stream.peek(0);
+
+  if (next !== null && next.type === TokenType.Ident && next.value === "not") {
+    stream.advance(1);
+    stream.accept(token => token.type === TokenType.Whitespace);
+
+    const feature = mediaInParens(stream);
+
+    if (feature !== null) {
+      return feature;
+    }
+  }
+
+  stream.restore(start);
+
+  return null;
+}
+
+/**
+ * @see https://www.w3.org/TR/mediaqueries/#typedef-media-and
+ */
+function mediaAnd(stream: Stream<Token>): MediaFeature | MediaCondition | null {
+  const start = stream.position();
+  const next = stream.peek(0);
+
+  if (next !== null && next.type === TokenType.Ident && next.value === "and") {
+    stream.advance(1);
+    stream.accept(token => token.type === TokenType.Whitespace);
+
+    const feature = mediaInParens(stream);
+
+    if (feature !== null) {
+      return feature;
+    }
+  }
+
+  stream.restore(start);
+
+  return null;
+}
+
+/**
+ * @see https://www.w3.org/TR/mediaqueries/#typedef-media-or
+ */
+function mediaOr(stream: Stream<Token>): MediaFeature | MediaCondition | null {
+  const start = stream.position();
+  const next = stream.peek(0);
+
+  if (next !== null && next.type === TokenType.Ident && next.value === "or") {
+    stream.advance(1);
+    stream.accept(token => token.type === TokenType.Whitespace);
+
+    const feature = mediaInParens(stream);
+
+    if (feature !== null) {
+      return feature;
+    }
+  }
+
+  stream.restore(start);
+
+  return null;
+}
+
+/**
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-in-parens
  */
 function mediaInParens(
   stream: Stream<Token>
-): MediaFeature | MediaCondition | Array<MediaCondition> | null {
+): MediaFeature | MediaCondition | null {
+  const start = stream.position();
+
   let next = stream.peek(0);
 
   if (next !== null && next.type === TokenType.LeftParenthesis) {
     stream.advance(1);
+    stream.accept(token => token.type === TokenType.Whitespace);
 
     const condition = mediaCondition(stream);
 
@@ -145,13 +235,14 @@ function mediaInParens(
 
       if (next !== null && next.type === TokenType.RightParenthesis) {
         stream.advance(1);
+        stream.accept(token => token.type === TokenType.Whitespace);
 
         return condition;
       }
-    } else {
-      stream.backup(1);
     }
   }
+
+  stream.restore(start);
 
   return mediaFeature(stream);
 }
@@ -160,6 +251,8 @@ function mediaInParens(
  * @see https://www.w3.org/TR/mediaqueries/#typedef-media-feature
  */
 function mediaFeature(stream: Stream<Token>): MediaFeature | null {
+  const start = stream.position();
+
   let next = stream.peek(0);
 
   if (next !== null && next.type === TokenType.LeftParenthesis) {
@@ -188,23 +281,31 @@ function mediaFeature(stream: Stream<Token>): MediaFeature | null {
           switch (next.type) {
             case TokenType.Number:
               stream.advance(1);
+              stream.accept(token => token.type === TokenType.Whitespace);
+
               value = Values.number(next.value);
               break;
 
             case TokenType.Dimension:
               if (Units.isLength(next.unit)) {
                 stream.advance(1);
+                stream.accept(token => token.type === TokenType.Whitespace);
+
                 value = Values.length(next.value, next.unit);
               }
               break;
 
             case TokenType.Ident:
               stream.advance(1);
+              stream.accept(token => token.type === TokenType.Whitespace);
+
               value = Values.string(next.value);
           }
         }
 
         if (value === null) {
+          stream.restore(start);
+
           return null;
         }
 
@@ -217,10 +318,14 @@ function mediaFeature(stream: Stream<Token>): MediaFeature | null {
 
       if (next !== null && next.type === TokenType.RightParenthesis) {
         stream.advance(1);
+        stream.accept(token => token.type === TokenType.Whitespace);
+
         return feature;
       }
     }
   }
+
+  stream.restore(start);
 
   return null;
 }

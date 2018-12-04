@@ -28,8 +28,8 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@types/node": "^10.9.2",
-    "chalk": "^2.4.1",
+    "@siteimprove/alfa-highlight": "^0.0.0",
+    "@types/node": "^10.12.10",
     "error-stack-parser": "^2.0.2"
   }
 }
