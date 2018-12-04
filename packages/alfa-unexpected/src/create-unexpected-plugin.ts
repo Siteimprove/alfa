@@ -1,29 +1,41 @@
 /// <reference path="../types/unexpected.d.ts" />
 
-import { expect as assert } from "@siteimprove/alfa-assert";
-import { Element } from "@siteimprove/alfa-dom";
-import * as expect from "unexpected";
+import { AssertionError, expect as assert } from "@siteimprove/alfa-assert";
+import { Element, serialize } from "@siteimprove/alfa-dom";
+import { highlight } from "@siteimprove/alfa-highlight";
+import * as unexpected from "unexpected";
 
 export function createUnexpectedPlugin<T>(
   identify: (input: unknown) => input is T,
   transform: (input: T) => Element
-): expect.PluginDefinition {
+): unexpected.PluginDefinition {
   return {
     name: "@siteimprove/alfa-unexpected",
-    installInto(expect) {
-      expect.addType({
+    installInto(unexpected) {
+      unexpected.addType({
         name: "Element",
         base: "object",
         identify,
         inspect: (value, depth, output) => {
-          output.text(transform(value).localName);
+          const element = transform(value);
+
+          output.text(highlight("html", serialize(element, element)));
         }
       });
 
-      expect.addAssertion<T>(
+      unexpected.addAssertion<T>(
         `<Element> [not] to be accessible`,
         (expect, subject) => {
-          const error = assert(transform(subject)).to.be.accessible;
+          let error: AssertionError | null = null;
+          try {
+            assert(transform(subject)).to.be.accessible;
+          } catch (err) {
+            if (err instanceof AssertionError) {
+              error = err;
+            } else {
+              throw err;
+            }
+          }
 
           expect(error, "[not] to be", null);
         }
