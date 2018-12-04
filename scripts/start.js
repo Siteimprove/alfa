@@ -2,6 +2,9 @@ const { watchFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
+const { specFileCheck } = require("./helpers/qa-computing");
+const { createTypeScriptSource } = require("./helpers/compile-ts-source");
+const { readFile } = require("./helpers/file-system");
 
 const { build } = require("./tasks/build");
 const { test } = require("./tasks/test");
@@ -30,6 +33,7 @@ watchFiles(
         break;
       case isSrc(file):
       case isBuild(file):
+        specFileCheck(file, createTypeScriptSource(readFile(file)));
         success = build(file);
     }
 

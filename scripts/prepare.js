@@ -10,10 +10,7 @@ const {
   computeComments,
   createTODOSFile
 } = require("./helpers/comment-computing");
-const {
-  computeSpecCheck,
-  createMissingSpecFile
-} = require("./helpers/qa-computing");
+const { specFileCheck } = require("./helpers/qa-computing");
 
 /**
  * @param {Array<string>} files
@@ -46,12 +43,10 @@ for (const pkg of packages) {
     const source = createTypeScriptSource(readFile(file));
     computeComments(file, source);
     handle([file]);
-    computeSpecCheck(file, source);
+    specFileCheck(file, source);
   });
 }
 
 createTODOSFile();
-
-createMissingSpecFile();
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
