@@ -7,7 +7,6 @@ import {
   querySelectorAll
 } from "../../../packages/alfa-dom";
 import { Scraper } from "../../../packages/alfa-scrape";
-import { values } from "../../../packages/alfa-util";
 import { Rules } from "../../../packages/alfa-wcag";
 
 import {
@@ -20,21 +19,19 @@ const scraper = new Scraper();
 
 const site = "https://alphagov.github.io/accessibility-tool-audit";
 
-const rules = values(Rules);
-
 scraper.scrape(`${site}/test-cases.html`).then(async page => {
   removeDirectory("docs/examples/scrape-and-audit/result");
 
   for (const { id, url } of getUrls(page.document)) {
     const page = await scraper.scrape(`${site}/${url}`);
 
-    const results = audit(page, rules).filter(isResult);
+    const results = audit(page, Rules).filter(isResult);
 
     notify.success(url);
 
     writeFile(
       `docs/examples/scrape-and-audit/result/${id}.json`,
-      JSON.stringify(toJson(rules, results, page), null, 2)
+      JSON.stringify(toJson(Rules, results, page), null, 2)
     );
   }
 

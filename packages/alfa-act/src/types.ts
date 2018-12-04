@@ -18,8 +18,9 @@ export type AspectKeysFor<A extends Aspect> = {
 }[keyof Aspects];
 
 export type AspectsFor<A extends Aspect> = {
-  readonly [P in AspectKeysFor<A>]: Aspects[P]
-};
+  readonly [P in AspectKeysFor<Aspect>]?: Aspects[P]
+} &
+  { readonly [P in AspectKeysFor<A>]: Aspects[P] };
 
 export const enum Outcome {
   Passed = "passed",
@@ -27,6 +28,18 @@ export const enum Outcome {
   Inapplicable = "inapplicable",
   CantTell = "cantTell"
 }
+
+type Primitive = string | number | boolean | null | undefined;
+
+type Value = Primitive | List | Dictionary;
+
+interface List extends Array<Value> {}
+
+interface Dictionary {
+  readonly [key: string]: Value;
+}
+
+export type Data = Dictionary;
 
 export type Result<
   A extends Aspect = Aspect,
@@ -42,6 +55,13 @@ export type Result<
       readonly outcome: O;
       readonly aspect: A;
       readonly target: T;
+      readonly expectations: {
+        readonly [id: number]: {
+          readonly holds: boolean;
+          readonly message: string;
+          readonly data: Data | null;
+        };
+      };
     };
 
 export interface Question<
@@ -59,18 +79,16 @@ export interface Answer<A extends Aspect = Aspect, T extends Target = Target>
   readonly answer: boolean;
 }
 
+export type Message = (data: Data) => string;
+
 export interface Locale {
   readonly id: "en";
   readonly title: string;
-  readonly description: string;
-  readonly assumptions?: string;
-  readonly applicability: string;
-  readonly expectations: Readonly<{
-    [id: string]: Readonly<{
-      description: string;
-      outcome: Readonly<{ [P in Outcome.Passed | Outcome.Failed]?: string }>;
-    }>;
-  }>;
+  readonly expectations: {
+    readonly [id: number]: {
+      readonly [P in Outcome.Passed | Outcome.Failed]: Message
+    };
+  };
 }
 
 export interface Requirement {
@@ -95,7 +113,7 @@ export namespace Atomic {
     expectations: (
       aspect: A,
       target: T,
-      expectation: (id: number, holds: boolean) => void,
+      expectation: (id: number, holds: boolean, data?: Data) => void,
       question: (question: string) => boolean
     ) => void
   ) => void;
