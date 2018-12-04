@@ -22,7 +22,7 @@ test("Returns parent rule", t => {
   const parentRule: MediaRule = {
     type: 4,
     cssRules: [childRule],
-    media: ["fooscreen", "barscreen"]
+    conditionText: "@media foo"
   };
 
   const styleSheet: StyleSheet = { cssRules: [parentRule] };
