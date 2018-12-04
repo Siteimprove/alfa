@@ -2,8 +2,6 @@ import { Primitive } from "./primitive";
 
 type MutableObject<T> = { -readonly [P in keyof T]: Mutable<T[P]> };
 
-interface MutableArray<T> extends Array<Mutable<T>> {}
-
 interface MutableMap<T, U> extends Map<Mutable<T>, Mutable<U>> {}
 
 interface MutableSet<T> extends Set<Mutable<T>> {}
@@ -16,10 +14,8 @@ interface MutableSet<T> extends Set<Mutable<T>> {}
  */
 export type Mutable<T> = T extends Primitive | Function
   ? T
-  : T extends Readonly<infer U>
-  ? U
   : T extends ReadonlyArray<infer U>
-  ? MutableArray<U>
+  ? T
   : T extends ReadonlyMap<infer U, infer V>
   ? MutableMap<U, V>
   : T extends ReadonlySet<infer U>

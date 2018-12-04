@@ -1,6 +1,5 @@
 import {
   Attribute,
-  Document,
   getOwnerElement,
   getParentNode,
   getTagName,
@@ -9,10 +8,9 @@ import {
   Node,
   serialize
 } from "@siteimprove/alfa-dom";
-import { Request, Response } from "@siteimprove/alfa-http";
 import * as JSON from "@siteimprove/alfa-json-ld";
 import { expand, List } from "@siteimprove/alfa-json-ld";
-import { groupBy } from "@siteimprove/alfa-util";
+import { groupBy, values } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
 import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 
@@ -24,6 +22,7 @@ import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 //
 // tslint:disable:no-any
 
+const { isArray } = Array;
 const { assign } = Object;
 
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
@@ -38,15 +37,21 @@ export function toJson<
   R extends Rule<any, any>,
   A extends AspectsOf<R> = AspectsOf<R>,
   T extends TargetsOf<R> = TargetsOf<R>
->(rules: Array<R>, results: Array<Result<A, T>>, aspects: AspectsFor<A>): List {
+>(
+  rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
+  results: ReadonlyArray<Result<A, T>>,
+  aspects: AspectsFor<A>
+): List {
+  rules = isArray(rules) ? rules : values(rules);
+
   let request: JSON.Document | null = null;
 
-  if ("request" in aspects) {
-    const { request: aspect } = aspects as AspectsFor<Request>;
+  if (aspects.request !== undefined) {
+    const { request: aspect } = aspects;
 
     request = {
       "@context": Contexts.Request,
-      "@id": "_:request",
+      "@id": getNodeId(),
       "@type": ["earl:TestSubject", "http:Request"],
 
       methodName: aspect.method,
@@ -56,12 +61,12 @@ export function toJson<
 
   let response: JSON.Document | null = null;
 
-  if ("response" in aspects) {
-    const { response: aspect } = aspects as AspectsFor<Response>;
+  if (aspects.response !== undefined) {
+    const { response: aspect } = aspects;
 
     response = {
       "@context": Contexts.Response,
-      "@id": "_:response",
+      "@id": getNodeId(),
       "@type": ["earl:TestSubject", "http:Response"],
 
       body: {
@@ -77,12 +82,12 @@ export function toJson<
 
   let document: JSON.Document | null = null;
 
-  if ("document" in aspects) {
-    const { document: aspect } = aspects as AspectsFor<Document>;
+  if (aspects.document !== undefined) {
+    const { document: aspect } = aspects;
 
     document = {
       "@context": Contexts.Content,
-      "@id": "_:document",
+      "@id": getNodeId(),
       "@type": ["earl:TestSubject", "cnt:ContentAsText"],
 
       characterEncoding: "UTF-8",
@@ -90,101 +95,115 @@ export function toJson<
     };
   }
 
+  const subject: JSON.Document = {
+    "@context": Contexts.Subject,
+    "@id": request === null ? getNodeId() : request.requestURI,
+    "@type": "earl:TestSubject",
+    parts: [request, response, document]
+  };
+
+  const assertor: JSON.Document = {
+    "@context": Contexts.Assertor,
+    "@id": "https://github.com/siteimprove/alfa",
+    "@type": ["earl:Assertor", "earl:Software", "doap:Project"],
+    name: "Alfa",
+    vendor: {
+      "@id": "https://siteimprove.com/",
+      "@type": "foaf:Organization",
+      "foaf:name": "Siteimprove A/S"
+    }
+  };
+
   const assertion: JSON.Document = {
     "@context": Contexts.Assertion,
     "@type": "earl:Assertion",
     assertedBy: {
-      "@id": "https://github.com/siteimprove/alfa",
-      "@type": "earl:Software"
+      "@id": assertor["@id"]
     },
-    subject: [
-      { "@id": "_:request" },
-      { "@id": "_:response" },
-      { "@id": "_:document" }
-    ]
+    subject: {
+      "@id": subject["@id"]
+    }
   };
 
   const assertions: Array<JSON.Document> = [];
 
   for (const [ruleId, group] of groupBy(results, result => result.rule)) {
-    assertions.push({
-      ...assertion,
-      test: [
-        {
-          "@id": ruleId,
-          "@type": "earl:TestCase"
-        }
-      ],
-      result: group.map(result => {
-        const mapped = {
-          "@context": Contexts.Result,
-          "@type": "earl:TestResult",
-          outcome: {
-            "@id": `earl:${result.outcome}`
+    const { requirements = [] } = rules.find(rule => rule.id === ruleId)!;
+
+    for (const result of group) {
+      const testCaseResult = {
+        "@context": Contexts.Result,
+        "@type": "earl:TestResult",
+        outcome: {
+          "@id": `earl:${result.outcome}`
+        },
+        pointer: null
+      };
+
+      if (result.outcome !== Outcome.Inapplicable) {
+        const pointer = getPointer(aspects, result.aspect, result.target);
+
+        if (pointer !== null) {
+          switch (result.aspect) {
+            case aspects.document:
+              assign(pointer.pointer, {
+                reference: { "@id": document!["@id"] }
+              });
           }
-        };
 
-        if (result.outcome !== Outcome.Inapplicable) {
-          assign(mapped, getPointer(aspects, result.target));
+          assign(testCaseResult, pointer);
         }
+      }
 
-        return mapped;
-      })
-    });
-
-    const { requirements } = rules.find(rule => rule.id === ruleId)!;
-
-    for (const requirement of requirements === undefined ? [] : requirements) {
       assertions.push({
         ...assertion,
-        test: [
-          {
-            "@id": requirement.id,
-            "@type": "earl:TestRequirement"
-          }
-        ],
-        result: group.map(result => {
-          const outcome =
-            result.outcome === Outcome.Passed && requirement.partial === true
-              ? Outcome.CantTell
-              : result.outcome;
+        test: [{ "@id": ruleId, "@type": "earl:TestCase" }],
+        result: testCaseResult
+      });
 
-          const mapped = {
-            "@context": Contexts.Result,
-            "@type": "earl:TestResult",
+      for (const requirement of requirements) {
+        const outcome =
+          result.outcome === Outcome.Passed && requirement.partial === true
+            ? Outcome.CantTell
+            : result.outcome;
+
+        assertions.push({
+          ...assertion,
+          test: [{ "@id": requirement.id, "@type": "earl:TestRequirement" }],
+          result: {
+            ...testCaseResult,
             outcome: {
               "@id": `earl:${outcome}`
             }
-          };
-
-          if (result.outcome !== Outcome.Inapplicable) {
-            assign(mapped, getPointer(aspects, result.target));
           }
-
-          return mapped;
-        })
-      });
+        });
+      }
     }
   }
 
-  return expand([request, response, document, ...assertions]);
+  return expand([subject, assertor, ...assertions]);
+}
+
+function getNodeId(): string {
+  return `_:${Math.random()
+    .toString(36)
+    .substr(2, 5)}`;
 }
 
 function getPointer<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
+  aspect: A,
   target: T
 ): JSON.Document | null {
-  if ("document" in aspects) {
-    const { document } = aspects as AspectsFor<Document>;
-
-    return {
-      pointer: {
-        "@context": Contexts.XPathPointer,
-        "@type": ["ptr:Pointer", "ptr:XPathPointer"],
-        reference: { "@id": "_:document" },
-        expression: getPath(target, document)
-      }
-    };
+  switch (aspect) {
+    case aspects.document:
+      return {
+        pointer: {
+          "@context": Contexts.XPathPointer,
+          "@type": ["ptr:Pointer", "ptr:XPathPointer"],
+          expression: getPath(target, aspects.document!)
+        }
+      };
   }
 
   return null;
@@ -195,7 +214,7 @@ function getPath(target: Node | Attribute, context: Node): string {
     const node = target;
 
     if (isElement(node)) {
-      const parentNode = getParentNode(node, context);
+      const parentNode = getParentNode(node, context, { flattened: true });
       const tagName = getTagName(node, context);
 
       if (parentNode !== null) {
