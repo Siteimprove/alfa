@@ -15,7 +15,7 @@ const TSLint = require("tslint");
 class Project {
   /**
    * @param {string} configFile
-   * @param {TypeScript.DocumentRegistry} registry
+   * @param {TypeScript.DocumentRegistry} [registry]
    */
   constructor(configFile, registry) {
     /**
