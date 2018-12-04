@@ -10,9 +10,7 @@ const { default: chalk } = require("chalk");
  */
 function specFileCheck(file, source) {
   if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
-    if (checkSpecFile(file, source) === -1) {
-      console.log("missing spec file");
-    }
+    checkSpecFile(file, source);
   }
 }
 
