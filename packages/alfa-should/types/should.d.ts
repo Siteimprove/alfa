@@ -5,13 +5,29 @@ declare module "should" {
     (obj: unknown): should.Assertion;
 
     Assertion: should.AssertionConstructor;
+
+    use(
+      plugin: (should: this, Assertion: typeof should.Assertion) => void
+    ): this;
   }
 
   namespace should {
     interface Assertion {
-      obj: unknown;
-      be: this;
-      null: this;
+      readonly obj: unknown;
+
+      params: {
+        operator: string;
+        obj?: unknown;
+        message?: string;
+        expected?: unknown;
+        details?: string;
+      };
+
+      readonly be: this;
+
+      null(): this;
+
+      assert(expression: boolean): void;
     }
 
     interface AssertionConstructor {
