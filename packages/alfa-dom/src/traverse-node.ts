@@ -1,8 +1,24 @@
 import { getAssignedNodes } from "./get-assigned-nodes";
+import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { Node } from "./types";
 
-export type NodeVisitor = (node: Node, parentNode: Node | null) => false | void;
+const Skip = Symbol("Skip");
+type Skip = typeof Skip;
+
+const Exit = Symbol("Exit");
+type Exit = typeof Exit;
+
+export type NodeVisitor = (
+  node: Node,
+  parentNode: Node | null,
+  commands: Readonly<{ skip: Skip; exit: Exit }>
+) => Skip | Exit | void;
+
+const commands: Readonly<{ skip: Skip; exit: Exit }> = {
+  skip: Skip,
+  exit: Exit
+};
 
 /**
  * Given a node and a context, perform a depth-first traversal of the node
@@ -19,7 +35,13 @@ export function traverseNode(
   visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
   options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): boolean {
-  return visitNode(node, null, context, visitors, options);
+  let parentNode: Node | null = null;
+
+  if (node !== context) {
+    parentNode = getParentNode(node, context);
+  }
+
+  return visitNode(node, parentNode, context, visitors, options);
 }
 
 function visitNode(
@@ -45,8 +67,16 @@ function visitNode(
 
   const { enter, exit } = visitors;
 
-  if (enter !== undefined && enter(node, parentNode) === false) {
-    return false;
+  if (enter !== undefined) {
+    const status = enter(node, parentNode, commands);
+
+    if (status === Exit) {
+      return false;
+    }
+
+    if (status === Skip) {
+      return true;
+    }
   }
 
   const shadowRoot = isElement(node) ? node.shadowRoot : null;
@@ -61,7 +91,7 @@ function visitNode(
         }
       }
 
-      if (exit !== undefined && exit(node, parentNode) === false) {
+      if (exit !== undefined && exit(node, parentNode, commands) === Exit) {
         return false;
       }
 
@@ -86,7 +116,7 @@ function visitNode(
     }
   }
 
-  if (exit !== undefined && exit(node, parentNode) === false) {
+  if (exit !== undefined && exit(node, parentNode, commands) === Exit) {
     return false;
   }
 

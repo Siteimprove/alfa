@@ -5,11 +5,13 @@ import {
   Selector,
   SelectorType
 } from "@siteimprove/alfa-css";
+import { Device } from "@siteimprove/alfa-device";
+import { fulfills } from "./fulfills";
 import { getClassList } from "./get-class-list";
 import { getId } from "./get-id";
 import { getKeySelector } from "./get-key-selector";
 import { getSpecificity } from "./get-specificity";
-import { isStyleRule } from "./guards";
+import { isConditionRule, isStyleRule } from "./guards";
 import { matches, MatchesOptions } from "./matches";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { Element, Node, StyleSheet } from "./types";
@@ -79,7 +81,7 @@ export class SelectorMap {
   private readonly types: SelectorBucket = new Map();
   private readonly other: Array<SelectorEntry> = [];
 
-  public constructor(styleSheets: ReadonlyArray<StyleSheet>) {
+  public constructor(styleSheets: ReadonlyArray<StyleSheet>, device: Device) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -95,7 +97,11 @@ export class SelectorMap {
 
     for (let i = 0, n = styleSheets.length; i < n; i++) {
       traverseStyleSheet(styleSheets[i], {
-        enter: rule => {
+        enter: (rule, parentRule, { skip }) => {
+          if (isConditionRule(rule) && !fulfills(device, rule)) {
+            return skip;
+          }
+
           if (isStyleRule(rule)) {
             const selectors = parseSelectors(rule.selectorText);
 

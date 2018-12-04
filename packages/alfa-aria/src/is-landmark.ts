@@ -1,4 +1,5 @@
 import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { getRoleCategory } from "./get-role-category";
 import { Category } from "./types";
@@ -11,9 +12,10 @@ import { Category } from "./types";
  */
 export function isLandmark(
   element: Element,
-  context: Node
+  context: Node,
+  device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return map(getRoleCategory(element, context), category => {
+  return map(getRoleCategory(element, context, device), category => {
     return category === Category.Landmark;
   });
 }

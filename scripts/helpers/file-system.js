@@ -104,7 +104,7 @@ exports.findFiles = findFiles;
 
 /**
  * @param {string | Array<string>} pattern
- * @param {function("changed" | "added", string)} listener
+ * @param {function("changed" | "added", string): void} listener
  * @param {{ gitIgnore?: boolean }} [options]
  */
 function watchFiles(pattern, listener, options = {}) {

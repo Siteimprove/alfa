@@ -16,7 +16,7 @@ export const SIA_R3: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r3.html",
   requirements: [{ id: "wcag:parsing", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(() =>
+    applicability(document, () =>
       querySelectorAll(
         document,
         document,
@@ -25,7 +25,7 @@ export const SIA_R3: Atomic.Rule<Document, Element> = {
       )
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       expectation(1, hasUniqueId(target, document));
     });
   }

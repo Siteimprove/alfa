@@ -16,5 +16,6 @@ export const TabList: Role = {
     Attributes.Multiselectable,
     Attributes.Orientation
   ],
+  implicits: () => [[Attributes.Orientation, "horizontal"]],
   label: { from: ["author"] }
 };

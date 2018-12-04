@@ -10,9 +10,13 @@ export const Manual: Atomic.Rule<Document, Element> = {
   id: "_:manual-rule",
   requirements: [{ id: "wcag:page-titled", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(() => (isElement(document) ? [document] : null));
+    const root = document.childNodes[0];
 
-    expectations((target, expectation, question) => {
+    applicability(document, () =>
+      root !== undefined && isElement(root) ? [root] : null
+    );
+
+    expectations((aspect, target, expectation, question) => {
       const hasAlt = getAttribute(target, "alt") !== "";
       const isLargeType = question("is-large-type");
 
@@ -24,9 +28,9 @@ export const Manual: Atomic.Rule<Document, Element> = {
 export const Automated: Atomic.Rule<Document, Element> = {
   id: "_:automated-rule",
   definition: (applicability, expectations, { document }) => {
-    applicability(() => (isElement(document) ? [document] : null));
+    applicability(document, () => (isElement(document) ? [document] : null));
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       const isBody = target.localName === "body";
 
       expectation(1, isBody);

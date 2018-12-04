@@ -41,14 +41,14 @@ function findSlot(slotable: Element | Text, context: Node): Element | null {
   let assignedSlot: Element | null = null;
 
   traverseNode(shadowRoot, context, {
-    enter(node) {
+    enter(node, parentNode, { exit }) {
       if (
         isElement(node) &&
         node.localName === "slot" &&
         name === getAttribute(node, "name")
       ) {
         assignedSlot = node;
-        return false;
+        return exit;
       }
     }
   });

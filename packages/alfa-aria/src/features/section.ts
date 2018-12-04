@@ -1,4 +1,3 @@
-import { hasTextAlternative } from "../";
 import * as Roles from "../roles";
 import { Feature } from "../types";
 
@@ -7,8 +6,10 @@ import { Feature } from "../types";
  */
 export const Section: Feature = {
   element: "section",
-  role: (section, context) =>
-    hasTextAlternative(section, context) ? Roles.Region : null,
+  // The role of a form element CANNOT depend on whether or not it has an
+  // accessible name; to determine the accessible name of an element, it's role
+  // must be considered, therefore causing a recursive definition.
+  role: (section, context) => Roles.Region,
   allowedRoles: () => [
     Roles.Alert,
     Roles.AlertDialog,

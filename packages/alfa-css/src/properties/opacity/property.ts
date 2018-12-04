@@ -2,8 +2,11 @@ import { parse } from "@siteimprove/alfa-lang";
 import { clamp } from "@siteimprove/alfa-util";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
+import { getSpecifiedProperty } from "../helpers/get-property";
 import { OpacityGrammar } from "./grammar";
 import { Opacity } from "./types";
+
+const { number } = Values;
 
 /**
  * @see https://www.w3.org/TR/css-color/#propdef-opacity
@@ -19,9 +22,9 @@ export const opacity: Longhand<Opacity> = {
     return parser.result;
   },
   initial() {
-    return Values.number(1);
+    return number(1);
   },
-  computed(getProperty) {
-    return Values.number(clamp(getProperty("opacity").value, 0, 1));
+  computed(style) {
+    return number(clamp(getSpecifiedProperty(style, "opacity").value, 0, 1));
   }
 };

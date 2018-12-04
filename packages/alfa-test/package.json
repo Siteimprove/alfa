@@ -28,7 +28,7 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@types/node": "^10.9.2",
+    "@types/node": "^10.12.10",
     "chalk": "^2.4.1",
     "error-stack-parser": "^2.0.2"
   }

@@ -2,6 +2,7 @@ import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../../properties";
 import { ColorGrammar, Transparent } from "../../color/grammar";
 import { Color } from "../../color/types";
+import { getSpecifiedProperty } from "../../helpers/get-property";
 
 /**
  * @see https://www.w3.org/TR/css-text-decor-3/#text-decoration-color-property
@@ -22,7 +23,7 @@ export const textDecorationColor: Longhand<Color> = {
   initial() {
     return Transparent;
   },
-  computed(getProperty) {
-    return getProperty("textDecorationColor");
+  computed(style) {
+    return getSpecifiedProperty(style, "textDecorationColor");
   }
 };

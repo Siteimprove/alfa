@@ -75,9 +75,8 @@ export function getDigest(
 
     hash.update("\u{0000}");
 
-    const attributes = Array.from(node.attributes).sort(
-      (a, b) =>
-        a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0
+    const attributes = Array.from(node.attributes).sort((a, b) =>
+      a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0
     );
 
     const attributeDigests: Array<string> = [];

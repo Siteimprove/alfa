@@ -1,6 +1,7 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
+import { getSpecifiedProperty } from "../helpers/get-property";
 import { DisplayGrammar } from "./grammar";
 import { Display } from "./types";
 
@@ -22,7 +23,7 @@ export const display: Longhand<Display> = {
   initial() {
     return tuple(keyword("inline"), keyword("flow"));
   },
-  computed(getProperty) {
-    return getProperty("display");
+  computed(style) {
+    return getSpecifiedProperty(style, "display");
   }
 };

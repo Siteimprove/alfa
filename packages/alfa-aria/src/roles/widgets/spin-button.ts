@@ -17,5 +17,10 @@ export const SpinButton: Role = {
     Attributes.ValueNow
   ],
   supported: () => [Attributes.ReadOnly, Attributes.Required],
+  implicits: () => [
+    [Attributes.ValueMinimum, ""],
+    [Attributes.ValueMaximum, ""],
+    [Attributes.ValueNow, "0"]
+  ],
   label: { from: ["author"], required: true }
 };
