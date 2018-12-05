@@ -1,8 +1,8 @@
 const path = require("path");
 const fs = require("fs");
-const crypto = require("crypto");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
+const { getDigest } = require("./crypto");
 
 /**
  * @typedef {Object} ScriptInfo
@@ -344,14 +344,3 @@ class InMemoryLanguageServiceHost {
 }
 
 exports.Project = Project;
-
-/**
- * @param {string} file
- * @return {string}
- */
-function getDigest(file) {
-  return crypto
-    .createHash("md5")
-    .update(file)
-    .digest("hex");
-}
