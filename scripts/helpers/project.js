@@ -273,6 +273,14 @@ class InMemoryLanguageServiceHost {
   }
 
   /**
+   * @param {string} file
+   * @return {boolean}
+   */
+  directoryExists(file) {
+    return fs.existsSync(file);
+  }
+
+  /**
    * @param {string} directory
    * @return {Array<string>}
    */
