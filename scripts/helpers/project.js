@@ -1,8 +1,14 @@
 const path = require("path");
-const fs = require("fs");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
 const { getDigest } = require("./crypto");
+const {
+  isDirectory,
+  isFile,
+  readDirectory,
+  readFile,
+  realPath
+} = require("./file-system");
 
 /**
  * @typedef {Object} ScriptInfo
@@ -158,7 +164,7 @@ class InMemoryLanguageServiceHost {
   getOptions(configFile) {
     const { config } = TypeScript.parseConfigFileTextToJson(
       configFile,
-      fs.readFileSync(configFile, "utf8")
+      readFile(configFile)
     );
 
     const { options } = TypeScript.parseJsonConfigFileContent(
@@ -253,7 +259,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   readFile(file, encoding = "utf8") {
-    return fs.readFileSync(file, encoding);
+    return readFile(file, encoding);
   }
 
   /**
@@ -261,7 +267,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   realpath(file) {
-    return fs.realpathSync(file);
+    return realPath(file);
   }
 
   /**
@@ -269,15 +275,15 @@ class InMemoryLanguageServiceHost {
    * @return {boolean}
    */
   fileExists(file) {
-    return fs.existsSync(file);
+    return isFile(file);
   }
 
   /**
-   * @param {string} file
+   * @param {string} directory
    * @return {boolean}
    */
-  directoryExists(file) {
-    return fs.existsSync(file);
+  directoryExists(directory) {
+    return isDirectory(directory);
   }
 
   /**
@@ -285,13 +291,9 @@ class InMemoryLanguageServiceHost {
    * @return {Array<string>}
    */
   getDirectories(directory) {
-    if (!fs.existsSync(directory)) {
-      return [];
-    }
-
-    return fs
-      .readdirSync(directory)
-      .filter(entry => fs.statSync(path.join(directory, entry)).isDirectory());
+    return [...readDirectory(directory)].filter(found =>
+      isDirectory(path.join(directory, found))
+    );
   }
 
   /**
@@ -299,7 +301,7 @@ class InMemoryLanguageServiceHost {
    * @return {ScriptInfo}
    */
   addFile(file) {
-    const text = fs.readFileSync(file, "utf8");
+    const text = readFile(file);
     const version = getDigest(text);
 
     let current = this.files.get(file);

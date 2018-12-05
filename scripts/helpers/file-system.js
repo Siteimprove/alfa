@@ -20,28 +20,40 @@ function isFile(path) {
 exports.isFile = isFile;
 
 /**
- * @param {string} file
+ * @param {string} path
  * @return {string}
  */
-function readFile(file) {
-  return fs.readFileSync(file, "utf8");
+function realPath(path) {
+  return fs.realpathSync(path);
+}
+
+exports.realPath = realPath;
+
+/**
+ * @param {string} file
+ * @param {string} [encoding]
+ * @return {string}
+ */
+function readFile(file, encoding = "utf8") {
+  return fs.readFileSync(file, encoding);
 }
 
 exports.readFile = readFile;
 
 /**
  * @param {string} file
- * @param {any} data
+ * @param {unknown} data
+ * @param {string} [encoding]
  * @return {void}
  */
-function writeFile(file, data) {
+function writeFile(file, data, encoding = "utf8") {
   makeDirectory(path.dirname(file));
 
   if (typeof data !== "string") {
     data = JSON.stringify(data, null, 2) + "\n";
   }
 
-  fs.writeFileSync(file, data);
+  fs.writeFileSync(file, data, encoding);
 }
 
 exports.writeFile = writeFile;
