@@ -42,7 +42,7 @@ for (const pkg of packages) {
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
   for (const file of findFiles(`${root}/src`, endsWith(".ts"))) {
-    if (isTestable(file) && !hasSpecification(file)) {
+    if (isTestable(file, project) && !hasSpecification(file)) {
       notify.warn(`${chalk.gray(file)} Missing spec file`);
     }
   }

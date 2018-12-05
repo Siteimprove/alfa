@@ -2,8 +2,10 @@ const path = require("path");
 const TypeScript = require("typescript");
 
 const { readFile, isFile } = require("./file-system");
+const { Project } = require("./project");
+const { Workspace, workspace } = require("./workspace");
 
-const { createSourceFile, forEachChild, ScriptTarget, SyntaxKind } = TypeScript;
+const { createSourceFile, ScriptTarget, SyntaxKind } = TypeScript;
 
 /**
  * @param {string} source
@@ -28,45 +30,43 @@ exports.parseFile = parseFile;
 
 /**
  * @param {string} file
+ * @param {Workspace | Project} [project]
  * @return {boolean}
  */
-function isTestable(file) {
-  return visit(parseFile(file));
+function isTestable(file, project = workspace) {
+  let isExported = false;
 
-  /**
-   * @param {TypeScript.Node} node
-   * @return {boolean}
-   */
-  function visit(node, isExported = false) {
-    const { modifiers } = node;
+  return (
+    true ===
+    project.walk(file, node => {
+      const { modifiers } = node;
 
-    if (
-      modifiers !== undefined &&
-      modifiers.some(modifier => modifier.kind === SyntaxKind.ExportKeyword)
-    ) {
-      isExported = true;
-    }
+      if (
+        modifiers !== undefined &&
+        modifiers.some(modifier => modifier.kind === SyntaxKind.ExportKeyword)
+      ) {
+        isExported = true;
+      }
 
-    switch (node.kind) {
-      case SyntaxKind.ArrowFunction:
-        const { parameters } = /** @type {TypeScript.ArrowFunction} */ (node);
+      switch (node.kind) {
+        case SyntaxKind.ArrowFunction:
+          const { parameters } = /** @type {TypeScript.ArrowFunction} */ (node);
 
-        if (isExported && parameters.pos !== parameters.end) {
-          // Exported arrow functions that take parameters exported are testable.
-          return true;
-        }
-        break;
+          if (isExported && parameters.pos !== parameters.end) {
+            // Exported arrow functions that take parameters exported are testable.
+            return true;
+          }
+          break;
 
-      case SyntaxKind.FunctionDeclaration:
-        if (isExported) {
-          // Exported functions are testable.
-          return true;
-        }
-        break;
-    }
-
-    return forEachChild(node, node => visit(node, isExported)) === true;
-  }
+        case SyntaxKind.FunctionDeclaration:
+          if (isExported) {
+            // Exported functions are testable.
+            return true;
+          }
+          break;
+      }
+    })
+  );
 }
 
 exports.isTestable = isTestable;

@@ -10,6 +10,8 @@ const {
   realPath
 } = require("./file-system");
 
+const { forEachChild } = TypeScript;
+
 /**
  * @typedef {Object} ScriptInfo
  * @property {string} version
@@ -115,10 +117,14 @@ class Project {
   }
 
   /**
+   * @template T
    * @param {string} file
-   * @param {function(TypeScript.Node): void} visitor
+   * @param {function(TypeScript.Node): T | void} visitor
+   * @return {T | void}
    */
   walk(file, visitor) {
+    this.host.addFile(file);
+
     const program = this.service.getProgram();
 
     if (program === undefined) {
@@ -128,15 +134,21 @@ class Project {
     const source = program.getSourceFile(file);
 
     if (source !== undefined) {
-      visit(source);
+      return visit(source);
     }
 
     /**
      * @param {TypeScript.Node} node
+     * @return {T | void}
      */
     function visit(node) {
-      visitor(node);
-      TypeScript.forEachChild(node, visit);
+      const result = visitor(node);
+
+      if (result !== undefined) {
+        return result;
+      }
+
+      return forEachChild(node, visit);
     }
   }
 }
