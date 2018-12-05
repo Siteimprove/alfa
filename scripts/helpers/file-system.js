@@ -79,7 +79,7 @@ function findFiles(directories, predicate, options = {}, visited = new Set()) {
     visited.add(directory);
 
     if (!fs.existsSync(directory)) {
-      return files;
+      continue;
     }
 
     for (let file of readDirectory(directory)) {
