@@ -1,6 +1,7 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
+import { getSpecifiedProperty } from "../helpers/get-property";
 import { ColorGrammar } from "./grammar";
 import { Color } from "./types";
 
@@ -21,7 +22,7 @@ export const color: Longhand<Color> = {
   initial() {
     return Values.color(0, 0, 0, 1);
   },
-  computed(getProperty) {
-    return getProperty("color");
+  computed(style) {
+    return getSpecifiedProperty(style, "color");
   }
 };

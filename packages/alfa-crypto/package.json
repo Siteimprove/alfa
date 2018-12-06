@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "@types/sjcl": "^1.0.28",
-    "sjcl": "^1.0.7"
+    "sjcl": "^1.0.8"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"

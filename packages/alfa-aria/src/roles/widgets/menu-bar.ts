@@ -1,3 +1,4 @@
+import * as Attributes from "../../attributes";
 import { Category, Role } from "../../types";
 import { Group } from "../structure/group";
 import { Menu } from "./menu";
@@ -18,5 +19,6 @@ export const MenuBar: Role = {
     MenuItemRadio,
     [Group, MenuItemRadio]
   ],
+  implicits: () => [[Attributes.Orientation, "horizontal"]],
   label: { from: ["author"] }
 };

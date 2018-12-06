@@ -21,9 +21,3 @@ test("Returns false when a node does not contain the specifed node - using strin
 
   t.equal(contains(div, <body>{div}</body>, "strong"), false);
 });
-
-test("", t => {
-  const div = <div />;
-
-  t.equal(contains(div, <body>{div}</body>, null), false);
-});

@@ -1,7 +1,10 @@
+import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { Link } from "../../src/features/link";
 import * as Roles from "../../src/roles";
+
+const device = getDefaultDevice();
 
 /**
  * @see https://www.w3.org/TR/html-aria/#link
@@ -9,10 +12,10 @@ import * as Roles from "../../src/roles";
 
 test("Returns the semantic role of a link with a href attribute", t => {
   const link = <link href="Foobar" />;
-  t.equal(Link.role!(link, link), Roles.Link);
+  t.equal(Link.role!(link, link, device), Roles.Link);
 });
 
 test("Returns no role if a link has no href attribute", t => {
   const link = <link />;
-  t.equal(Link.role!(link, link), null);
+  t.equal(Link.role!(link, link, device), null);
 });

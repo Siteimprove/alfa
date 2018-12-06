@@ -1,4 +1,5 @@
 import { Token } from "./alphabet";
+import { Values } from "./values";
 
 /**
  * @see https://www.w3.org/TR/css-syntax/#declaration
@@ -295,3 +296,55 @@ export type PseudoElement =
   | "marker"
   // https://www.w3.org/TR/css-pseudo/#placeholder-pseudo
   | "placeholder";
+
+export const enum MediaQualifier {
+  Only,
+  Not
+}
+
+export const enum MediaOperator {
+  Not,
+  And,
+  Or
+}
+
+export const enum MediaComparator {
+  GreaterThan,
+  GreaterThanEqual,
+  LessThan,
+  LessTahnEqual
+}
+
+export type MediaType = string;
+
+/**
+ * @see https://www.w3.org/TR/mediaqueries/#typedef-media-query
+ */
+export interface MediaQuery {
+  readonly qualifier?: MediaQualifier;
+  readonly type?: MediaType;
+  readonly condition?: MediaCondition;
+}
+
+/**
+ * @see https://www.w3.org/TR/mediaqueries/#typedef-media-condition
+ */
+export interface MediaCondition {
+  readonly operator?: MediaOperator;
+  readonly features: Array<MediaFeature | MediaCondition>;
+}
+
+/**
+ * @see https://www.w3.org/TR/mediaqueries/#typedef-media-feature
+ */
+export interface MediaFeature {
+  readonly name: string;
+  readonly value?: MediaFeatureValue;
+  readonly comparator?: MediaComparator;
+}
+
+export type MediaFeatureValue =
+  | Values.Number
+  | Values.Percentage
+  | Values.Length
+  | Values.String;

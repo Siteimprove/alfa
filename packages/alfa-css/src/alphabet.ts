@@ -1,7 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import {
   Char,
-  Command,
   isAlpha,
   isAscii,
   isBetween,
@@ -45,96 +44,82 @@ export const enum TokenType {
 }
 
 export namespace Tokens {
-  export type Ident = Readonly<{ type: TokenType.Ident; value: string }>;
+  interface Token<T extends TokenType> extends Lang.Token<T> {}
 
-  export type FunctionName = Readonly<{
-    type: TokenType.FunctionName;
-    value: string;
-  }>;
+  export interface Ident extends Token<TokenType.Ident> {
+    readonly value: string;
+  }
 
-  export type AtKeyword = Readonly<{
-    type: TokenType.AtKeyword;
-    value: string;
-  }>;
+  export interface FunctionName extends Token<TokenType.FunctionName> {
+    readonly value: string;
+  }
 
-  export type Hash = Readonly<{
-    type: TokenType.Hash;
-    unrestricted: boolean;
-    value: string;
-  }>;
+  export interface AtKeyword extends Token<TokenType.AtKeyword> {
+    readonly value: string;
+  }
 
-  export type String = Readonly<{
-    type: TokenType.String;
-    value: string;
-    mark: Char.QuotationMark | Char.Apostrophe;
-  }>;
+  export interface Hash extends Token<TokenType.Hash> {
+    readonly unrestricted: boolean;
+    readonly value: string;
+  }
 
-  export type Url = Readonly<{ type: TokenType.Url; value: string }>;
+  export interface String extends Token<TokenType.String> {
+    readonly value: string;
+    readonly mark: Char.QuotationMark | Char.Apostrophe;
+  }
 
-  export type Delim = Readonly<{ type: TokenType.Delim; value: number }>;
+  export interface Url extends Token<TokenType.Url> {
+    readonly value: string;
+  }
 
-  export type Number = Readonly<{
-    type: TokenType.Number;
-    value: number;
-    integer: boolean;
-  }>;
+  export interface Delim extends Token<TokenType.Delim> {
+    readonly value: number;
+  }
 
-  export type Percentage = Readonly<{
-    type: TokenType.Percentage;
-    value: number;
-    integer: boolean;
-  }>;
+  export interface Number extends Token<TokenType.Number> {
+    readonly value: number;
+    readonly integer: boolean;
+  }
 
-  export type Dimension = Readonly<{
-    type: TokenType.Dimension;
-    value: number;
-    integer: boolean;
-    unit: string;
-  }>;
+  export interface Percentage extends Token<TokenType.Percentage> {
+    readonly value: number;
+    readonly integer: boolean;
+  }
 
-  export type Whitespace = Readonly<{ type: TokenType.Whitespace }>;
+  export interface Dimension extends Token<TokenType.Dimension> {
+    readonly value: number;
+    readonly integer: boolean;
+    readonly unit: string;
+  }
 
-  export type Colon = Readonly<{ type: TokenType.Colon }>;
+  export interface Whitespace extends Token<TokenType.Whitespace> {}
 
-  export type Semicolon = Readonly<{ type: TokenType.Semicolon }>;
+  export interface Colon extends Token<TokenType.Colon> {}
 
-  export type Comma = Readonly<{ type: TokenType.Comma }>;
+  export interface Semicolon extends Token<TokenType.Semicolon> {}
 
-  export type Parenthesis = Readonly<{
-    type: TokenType.LeftParenthesis | TokenType.RightParenthesis;
-  }>;
+  export interface Comma extends Token<TokenType.Comma> {}
 
-  export type SquareBracket = Readonly<{
-    type: TokenType.LeftSquareBracket | TokenType.RightSquareBracket;
-  }>;
+  export interface Parenthesis
+    extends Token<TokenType.LeftParenthesis | TokenType.RightParenthesis> {}
 
-  export type CurlyBracket = Readonly<{
-    type: TokenType.LeftCurlyBracket | TokenType.RightCurlyBracket;
-  }>;
+  export interface SquareBracket
+    extends Token<TokenType.LeftSquareBracket | TokenType.RightSquareBracket> {}
 
-  export type Column = Readonly<{
-    type: TokenType.Column;
-  }>;
+  export interface CurlyBracket
+    extends Token<TokenType.LeftCurlyBracket | TokenType.RightCurlyBracket> {}
 
-  export type IncludeMatch = Readonly<{
-    type: TokenType.IncludeMatch;
-  }>;
+  export interface Column extends Token<TokenType.Column> {}
 
-  export type DashMatch = Readonly<{
-    type: TokenType.DashMatch;
-  }>;
+  export interface IncludeMatch extends Token<TokenType.IncludeMatch> {}
 
-  export type PrefixMatch = Readonly<{
-    type: TokenType.PrefixMatch;
-  }>;
+  export interface DashMatch extends Token<TokenType.DashMatch> {}
 
-  export type SuffixMatch = Readonly<{
-    type: TokenType.SuffixMatch;
-  }>;
+  export interface PrefixMatch extends Token<TokenType.PrefixMatch> {}
 
-  export type SubstringMatch = Readonly<{
-    type: TokenType.SubstringMatch;
-  }>;
+  export interface SuffixMatch extends Token<TokenType.SuffixMatch> {}
+
+  export interface SubstringMatch extends Token<TokenType.SubstringMatch> {}
 }
 
 /**
@@ -152,6 +137,7 @@ export type Token =
   | Tokens.Number
   | Tokens.Percentage
   | Tokens.Dimension
+
   // Character tokens
   | Tokens.Whitespace
   | Tokens.Colon
@@ -161,6 +147,7 @@ export type Token =
   | Tokens.SquareBracket
   | Tokens.CurlyBracket
   | Tokens.Column
+
   // Match tokens
   | Tokens.IncludeMatch
   | Tokens.DashMatch
@@ -169,7 +156,7 @@ export type Token =
   | Tokens.SubstringMatch;
 
 export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
-  (stream, emit) => {
+  (stream, emit, state, { exit }) => {
     while (true) {
       const token = consumeToken(stream);
 
@@ -180,7 +167,7 @@ export const Alphabet: Lang.Alphabet<Token> = new Lang.Alphabet(
       emit(token);
     }
 
-    return Command.End;
+    return exit;
   },
   () => null
 );

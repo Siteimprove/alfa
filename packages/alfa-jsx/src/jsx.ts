@@ -94,8 +94,8 @@ function toString(
   return typeof value === "number"
     ? value.toString(10)
     : typeof value === "boolean"
-      ? name
-      : typeof value === "string"
-        ? value
-        : value.toString();
+    ? name
+    : typeof value === "string"
+    ? value
+    : value.toString();
 }

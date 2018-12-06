@@ -5,6 +5,7 @@ import {
   isVisible,
   Roles
 } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -15,41 +16,49 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R2: Atomic.Rule<Document, Element> = {
+export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: [{ id: "wcag:non-text-content", partial: true }],
-  definition: (applicability, expectations, { document }) => {
-    applicability(() =>
+  definition: (applicability, expectations, { device, document }) => {
+    applicability(document, () =>
       querySelectorAll(
         document,
         document,
         node =>
           isElement(node) &&
-          isImage(node, document) &&
-          isVisible(node, document),
+          isImage(node, document, device) &&
+          isVisible(node, document, device),
         { composed: true }
       )
     );
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       expectation(
         1,
-        hasTextAlternative(target, document) || isDecorative(target, document)
+        hasTextAlternative(target, document, device) ||
+          isDecorative(target, document, device)
       );
     });
   }
 };
 
-function isImage(element: Element, context: Node): boolean {
+function isImage(element: Element, context: Node, device: Device): boolean {
   if (getElementNamespace(element, context) !== Namespace.HTML) {
     return false;
   }
 
-  return element.localName === "img" || getRole(element, context) === Roles.Img;
+  return (
+    element.localName === "img" ||
+    getRole(element, context, device) === Roles.Img
+  );
 }
 
-function isDecorative(element: Element, context: Node): boolean {
-  switch (getRole(element, context)) {
+function isDecorative(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean {
+  switch (getRole(element, context, device)) {
     case Roles.None:
     case Roles.Presentation:
     case null:

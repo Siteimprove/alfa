@@ -19,7 +19,7 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r7.html",
   requirements: [{ id: "wcag:language-of-parts", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(() => {
+    applicability(document, () => {
       const body = querySelector(
         document,
         document,
@@ -55,7 +55,7 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
         .reduce(concat, []);
     });
 
-    expectations((target, expectation) => {
+    expectations((aspect, target, expectation) => {
       expectation(1, getLanguage(target.value) !== null);
     });
   }

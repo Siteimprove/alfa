@@ -1,7 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import {
   Char,
-  Command,
   isAlpha,
   isAlphanumeric,
   isBetween,
@@ -31,49 +30,52 @@ export const enum TokenType {
   Character
 }
 
-export interface Doctype {
-  readonly type: TokenType.Doctype;
-  readonly name: string | null;
-  readonly publicId: string | null;
-  readonly systemId: string | null;
-  readonly forceQuirks: boolean;
-}
+export namespace Tokens {
+  interface Token<T extends TokenType> extends Lang.Token<T> {}
 
-export interface Attribute {
-  readonly name: string;
-  readonly value: string;
-}
+  export interface Doctype extends Token<TokenType.Doctype> {
+    readonly name: string | null;
+    readonly publicId: string | null;
+    readonly systemId: string | null;
+    readonly forceQuirks: boolean;
+  }
 
-export interface StartTag {
-  readonly type: TokenType.StartTag;
-  readonly name: string;
-  readonly selfClosing: boolean;
-  readonly attributes: Array<Attribute>;
-}
+  export interface Attribute {
+    readonly name: string;
+    readonly value: string;
+  }
 
-export interface EndTag {
-  readonly type: TokenType.EndTag;
-  readonly name: string;
-}
+  export interface StartTag extends Token<TokenType.StartTag> {
+    readonly name: string;
+    readonly selfClosing: boolean;
+    readonly attributes: Array<Attribute>;
+  }
 
-export interface Comment {
-  readonly type: TokenType.Comment;
-  readonly data: string;
-}
+  export interface EndTag extends Token<TokenType.EndTag> {
+    readonly name: string;
+  }
 
-export interface Character {
-  readonly type: TokenType.Character;
-  readonly data: number;
+  export interface Comment extends Token<TokenType.Comment> {
+    readonly data: string;
+  }
+
+  export interface Character extends Token<TokenType.Character> {
+    readonly data: number;
+  }
 }
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#appropriate-end-tag-token
  */
-function isAppropriateEndTagToken(
-  tag: StartTag | EndTag,
-  name: string
-): boolean {
-  return tag.type === TokenType.StartTag && tag.name === name;
+function isAppropriateEndTagToken(state: State): boolean {
+  if (state.tag === null) {
+    return false;
+  }
+
+  return (
+    state.tag.type === TokenType.EndTag &&
+    state.tagStack[state.tagStack.length - 1] === state.tag.name
+  );
 }
 
 /**
@@ -81,23 +83,24 @@ function isAppropriateEndTagToken(
  * @see https://www.w3.org/TR/html/syntax.html#tokenization
  */
 export type Token =
-  | Doctype
+  | Tokens.Doctype
 
   // Tag tokens
-  | StartTag
-  | EndTag
+  | Tokens.StartTag
+  | Tokens.EndTag
 
   // Data tokens
-  | Character
-  | Comment;
+  | Tokens.Character
+  | Tokens.Comment;
 
 interface State {
-  doctype: Mutable<Doctype> | null;
-  tag: Mutable<StartTag | EndTag> | null;
-  startTag: Mutable<StartTag | EndTag> | null;
-  attribute: Mutable<Attribute> | null;
-  comment: Mutable<Comment> | null;
+  doctype: Mutable<Tokens.Doctype> | null;
+  tag: Mutable<Tokens.StartTag | Tokens.EndTag> | null;
+  startTag: Mutable<Tokens.StartTag | Tokens.EndTag> | null;
+  attribute: Mutable<Tokens.Attribute> | null;
+  comment: Mutable<Tokens.Comment> | null;
   namespaceStack: Array<string>;
+  tagStack: Array<string>;
 
   /**
    * @see https://www.w3.org/TR/html/syntax.html#return-state
@@ -121,7 +124,7 @@ type Pattern = Lang.Pattern<Token, State>;
  * 8.2.4.1
  * @see https://www.w3.org/TR/html/syntax.html#data-state
  */
-const data: Pattern = (stream, emit, state) => {
+const data: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -133,7 +136,7 @@ const data: Pattern = (stream, emit, state) => {
       return tagOpen;
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   emit({ type: TokenType.Character, data: char });
@@ -144,7 +147,7 @@ const data: Pattern = (stream, emit, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#RCDATA-state
  */
 
-const RCData: Pattern = (stream, emit, state) => {
+const RCData: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -160,7 +163,7 @@ const RCData: Pattern = (stream, emit, state) => {
       break;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -171,7 +174,7 @@ const RCData: Pattern = (stream, emit, state) => {
  * 8.2.4.3
  * @see https://www.w3.org/TR/html/syntax.html#rawtext-state
  */
-const RawText: Pattern = (stream, emit, state) => {
+const RawText: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -183,7 +186,7 @@ const RawText: Pattern = (stream, emit, state) => {
       break;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -194,7 +197,7 @@ const RawText: Pattern = (stream, emit, state) => {
  * 8.2.4.4
  * @see https://www.w3.org/TR/html/syntax.html#script-data-state
  */
-const scriptData: Pattern = (stream, emit, state) => {
+const scriptData: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -206,7 +209,7 @@ const scriptData: Pattern = (stream, emit, state) => {
       break;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -217,7 +220,7 @@ const scriptData: Pattern = (stream, emit, state) => {
  * 8.2.4.5
  * @see https://www.w3.org/TR/html/syntax.html#plaintext-state
  */
-const plaintext: Pattern = (stream, emit, state) => {
+const plaintext: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -226,7 +229,7 @@ const plaintext: Pattern = (stream, emit, state) => {
       break;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -278,13 +281,13 @@ const tagOpen: Pattern = (stream, emit, state) => {
  * 8.2.4.7
  * @see https://www.w3.org/TR/html/syntax.html#end-tag-open-state
  */
-const endTagOpen: Pattern = (stream, emit, state) => {
+const endTagOpen: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
 
   if (char === null) {
     emit({ type: TokenType.Character, data: 0x003c });
     emit({ type: TokenType.Character, data: 0x002f });
-    return Command.End;
+    return exit;
   }
 
   if (isAlpha(char)) {
@@ -313,7 +316,7 @@ const endTagOpen: Pattern = (stream, emit, state) => {
  * 8.2.4.8
  * @see https://www.w3.org/TR/html/syntax.html#tag-name-state
  */
-const tagName: Pattern = (stream, emit, state) => {
+const tagName: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -328,15 +331,16 @@ const tagName: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
+      updateState(state);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!, state);
+      return findNextState(state);
 
     case Char.Null:
       state.tag!.name += "\ufffd";
       break;
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   if (isAlpha(char)) {
@@ -399,24 +403,24 @@ const RCDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.FormFeed:
     case Char.Space:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
       stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         emit(state.tag!);
-
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -495,25 +499,25 @@ const RawTextEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         emit(state.tag!);
-
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -599,24 +603,25 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      stream.advance(1);
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
+        stream.advance(1);
         emit(state.tag!);
-        return data;
+        updateState(state);
+        return findNextState(state);
       }
       break;
 
@@ -685,7 +690,7 @@ const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
  * 8.2.4.20
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-state
  */
-const scriptDataEscaped: Pattern = (stream, emit, state) => {
+const scriptDataEscaped: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -701,7 +706,7 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
       break;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -712,7 +717,7 @@ const scriptDataEscaped: Pattern = (stream, emit, state) => {
  * 8.2.4.21
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-state
  */
-const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
+const scriptDataEscapedDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -728,7 +733,7 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
       return scriptDataEscaped;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -740,7 +745,7 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state) => {
  * 8.2.4.22
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-dash-state
  */
-const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
+const scriptDataEscapedDashDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -760,7 +765,7 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state) => {
       return scriptDataEscaped;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -823,23 +828,24 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
     case Char.LineFeed:
     case Char.FormFeed:
     case Char.Space:
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         return beforeAttributeName;
       }
       break;
 
     case Char.Solidus:
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         return selfClosingStartTag;
       }
       break;
 
     case Char.GreaterThanSign:
-      if (isAppropriateEndTagToken(state.startTag!, state.tag!.name)) {
+      if (isAppropriateEndTagToken(state)) {
         stream.advance(1);
         emit(state.tag!);
+        updateState(state);
         return data;
       }
       break;
@@ -906,7 +912,7 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
  * 8.2.4.27
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-state
  */
-const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
+const scriptDataDoubleEscaped: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -923,7 +929,7 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
       break;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -934,7 +940,12 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state) => {
  * 8.2.4.28
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-state
  */
-const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
+const scriptDataDoubleEscapedDash: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -951,7 +962,7 @@ const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
       return scriptDataDoubleEscaped;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -963,7 +974,12 @@ const scriptDataDoubleEscapedDash: Pattern = (stream, emit, state) => {
  * 8.2.4.29
  * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-dash-state
  */
-const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
+const scriptDataDoubleEscapedDashDash: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -984,7 +1000,7 @@ const scriptDataDoubleEscapedDashDash: Pattern = (stream, emit, state) => {
       return scriptDataDoubleEscaped;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -1138,7 +1154,7 @@ const attributeName: Pattern = (stream, emit, state) => {
  * 8.2.4.34
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-name-state
  */
-const afterAttributeName: Pattern = (stream, emit, state) => {
+const afterAttributeName: Pattern = (stream, emit, state, { exit }) => {
   const tag = state.tag!;
   const char = stream.peek(0);
 
@@ -1164,7 +1180,7 @@ const afterAttributeName: Pattern = (stream, emit, state) => {
       return data;
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   state.attribute = { name: "", value: "" };
@@ -1207,7 +1223,7 @@ const beforeAttributeValue: Pattern = (stream, emit, state) => {
  * 8.2.4.36
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
  */
-const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
+const attributeValueDoubleQuoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1223,7 +1239,7 @@ const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
       return;
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   state.attribute!.value += fromCharCode(char);
@@ -1233,7 +1249,7 @@ const attributeValueDoubleQuoted: Pattern = (stream, emit, state) => {
  * 8.2.4.37
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
  */
-const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
+const attributeValueSingleQuoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1249,7 +1265,7 @@ const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
       return;
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   state.attribute!.value += fromCharCode(char);
@@ -1259,7 +1275,7 @@ const attributeValueSingleQuoted: Pattern = (stream, emit, state) => {
  * 8.2.4.38
  * @see https://www.w3.org/TR/html/syntax.html#attribute-value-unquoted-state
  */
-const attributeValueUnquoted: Pattern = (stream, emit, state) => {
+const attributeValueUnquoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1275,15 +1291,16 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
 
     case Char.GreaterThanSign:
       emit(state.tag!);
+      updateState(state);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!, state);
+      return findNextState(state);
 
     case Char.Null:
       state.attribute!.value += "\ufffd";
       return;
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   state.attribute!.value += fromCharCode(char);
@@ -1293,7 +1310,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state) => {
  * 8.2.4.39
  * @see https://www.w3.org/TR/html/syntax.html#after-attribute-value-quoted-state
  */
-const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
+const afterAttributeValueQuoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
 
   switch (char) {
@@ -1311,11 +1328,12 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
     case Char.GreaterThanSign:
       stream.advance(1);
       emit(state.tag!);
+      updateState(state);
       state.startTag = state.tag;
-      return findAppropriateState(state.tag!, state);
+      return findNextState(state);
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   return beforeAttributeName;
@@ -1325,7 +1343,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state) => {
  * 8.2.4.40
  * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
  */
-const selfClosingStartTag: Pattern = (stream, emit, state) => {
+const selfClosingStartTag: Pattern = (stream, emit, state, { exit }) => {
   const tag = state.tag!;
   const char = stream.peek(0);
 
@@ -1342,7 +1360,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state) => {
       return data;
 
     case null:
-      return Command.End;
+      return exit;
   }
 
   return beforeAttributeName;
@@ -1352,7 +1370,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state) => {
  * 8.2.4.41
  * @see https://www.w3.org/TR/html/syntax.html#bogus-comment-state
  */
-const bogusComment: Pattern = (stream, emit, state) => {
+const bogusComment: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1362,7 +1380,7 @@ const bogusComment: Pattern = (stream, emit, state) => {
 
     case null:
       emit(state.comment!);
-      return Command.End;
+      return exit;
 
     case Char.Null:
       state.comment!.data += "\ufffd";
@@ -1438,7 +1456,7 @@ const commentStart: Pattern = (stream, emit, state) => {
  * 8.2.4.44
  * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
  */
-const commentStartDash: Pattern = (stream, emit, state) => {
+const commentStartDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
 
   switch (char) {
@@ -1458,7 +1476,7 @@ const commentStartDash: Pattern = (stream, emit, state) => {
         emit(state.comment);
       }
 
-      return Command.End;
+      return exit;
   }
 
   state.comment!.data += "-";
@@ -1470,7 +1488,7 @@ const commentStartDash: Pattern = (stream, emit, state) => {
  * 8.2.4.45
  * @see https://www.w3.org/TR/html/syntax.html#comment-state
  */
-const comment: Pattern = (stream, emit, state) => {
+const comment: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1487,7 +1505,7 @@ const comment: Pattern = (stream, emit, state) => {
 
     case null:
       emit(state.comment!);
-      return Command.End;
+      return exit;
 
     default:
       state.comment!.data += fromCharCode(char);
@@ -1556,7 +1574,7 @@ const commentLessThanSignBangDashDash: Pattern = stream => {
  * 8.2.4.50
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
  */
-const commentEndDash: Pattern = (stream, emit, state) => {
+const commentEndDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
 
   switch (char) {
@@ -1566,7 +1584,7 @@ const commentEndDash: Pattern = (stream, emit, state) => {
 
     case null:
       emit(state.comment!);
-      return Command.End;
+      return exit;
   }
 
   state.comment!.data += "-";
@@ -1578,7 +1596,7 @@ const commentEndDash: Pattern = (stream, emit, state) => {
  * 8.2.4.51
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
  */
-const commentEnd: Pattern = (stream, emit, state) => {
+const commentEnd: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
 
   switch (char) {
@@ -1598,7 +1616,7 @@ const commentEnd: Pattern = (stream, emit, state) => {
 
     case null:
       emit(state.comment!);
-      return Command.End;
+      return exit;
   }
 
   state.comment!.data += "--";
@@ -1610,7 +1628,7 @@ const commentEnd: Pattern = (stream, emit, state) => {
  * 8.2.4.52
  * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
  */
-const commentEndBang: Pattern = (stream, emit, state) => {
+const commentEndBang: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
 
   switch (char) {
@@ -1626,7 +1644,7 @@ const commentEndBang: Pattern = (stream, emit, state) => {
 
     case null:
       emit(state.comment!);
-      return Command.End;
+      return exit;
   }
 
   state.comment!.data += "-!";
@@ -1638,7 +1656,7 @@ const commentEndBang: Pattern = (stream, emit, state) => {
  * 8.2.4.53
  * @see https://www.w3.org/TR/html/syntax.html#doctype-state
  */
-const doctype: Pattern = (stream, emit, state) => {
+const doctype: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
 
   switch (char) {
@@ -1660,7 +1678,7 @@ const doctype: Pattern = (stream, emit, state) => {
 
       emit(state.doctype);
 
-      return Command.End;
+      return exit;
   }
 
   return beforeDoctypeName;
@@ -1670,7 +1688,7 @@ const doctype: Pattern = (stream, emit, state) => {
  * 8.2.4.54
  * @see https://www.w3.org/TR/html/syntax.html#before-doctype-name-state
  */
-const beforeDoctypeName: Pattern = (stream, emit, state) => {
+const beforeDoctypeName: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1713,7 +1731,7 @@ const beforeDoctypeName: Pattern = (stream, emit, state) => {
 
       emit(state.doctype);
 
-      return Command.End;
+      return exit;
   }
 
   let name = fromCharCode(char);
@@ -1737,7 +1755,7 @@ const beforeDoctypeName: Pattern = (stream, emit, state) => {
  * 8.2.4.55
  * @see https://www.w3.org/TR/html/syntax.html#doctype-name-state
  */
-const doctypeName: Pattern = (stream, emit, state) => {
+const doctypeName: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1758,7 +1776,7 @@ const doctypeName: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   if (isAlpha(char)) {
@@ -1772,7 +1790,7 @@ const doctypeName: Pattern = (stream, emit, state) => {
  * 8.2.4.56
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-name-state
  */
-const afterDoctypeName: Pattern = (stream, emit, state) => {
+const afterDoctypeName: Pattern = (stream, emit, state, { exit }) => {
   if (startsWith(stream, "public", { lowerCase: true })) {
     stream.advance(6);
     return afterDoctypePublicKeyword;
@@ -1799,7 +1817,7 @@ const afterDoctypeName: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.forceQuirks = true;
@@ -1811,7 +1829,7 @@ const afterDoctypeName: Pattern = (stream, emit, state) => {
  * 8.2.4.57
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-keyword-state
  */
-const afterDoctypePublicKeyword: Pattern = (stream, emit, state) => {
+const afterDoctypePublicKeyword: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -1837,7 +1855,7 @@ const afterDoctypePublicKeyword: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.forceQuirks = true;
@@ -1849,7 +1867,12 @@ const afterDoctypePublicKeyword: Pattern = (stream, emit, state) => {
  * 8.2.4.58
  * @see https://www.w3.org/TR/html/syntax.html#before-doctype-public-identifier-state
  */
-const beforeDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
+const beforeDoctypePublicIdentifier: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -1875,7 +1898,7 @@ const beforeDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.forceQuirks = true;
@@ -1887,7 +1910,12 @@ const beforeDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
  * 8.2.4.59
  * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-double-quoted-state
  */
-const doctypePublicIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
+const doctypePublicIdentifierDoubleQuoted: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -1906,7 +1934,7 @@ const doctypePublicIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.publicId += fromCharCode(char);
@@ -1916,7 +1944,12 @@ const doctypePublicIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
  * 8.2.4.60
  * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-single-quoted-state
  */
-const doctypePublicIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
+const doctypePublicIdentifierSingleQuoted: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -1935,7 +1968,7 @@ const doctypePublicIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.publicId += fromCharCode(char);
@@ -1945,7 +1978,12 @@ const doctypePublicIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
  * 8.2.4.61
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-identifier-state
  */
-const afterDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
+const afterDoctypePublicIdentifier: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -1970,7 +2008,7 @@ const afterDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.forceQuirks = true;
@@ -1985,7 +2023,8 @@ const afterDoctypePublicIdentifier: Pattern = (stream, emit, state) => {
 const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
   stream,
   emit,
-  state
+  state,
+  { exit }
 ) => {
   const char = stream.next();
 
@@ -2011,7 +2050,7 @@ const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.forceQuirks = true;
@@ -2023,7 +2062,7 @@ const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
  * 8.2.4.63
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-keyword-state
  */
-const afterDoctypeSystemKeyword: Pattern = (stream, emit, state) => {
+const afterDoctypeSystemKeyword: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -2049,7 +2088,7 @@ const afterDoctypeSystemKeyword: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.forceQuirks = true;
@@ -2061,7 +2100,12 @@ const afterDoctypeSystemKeyword: Pattern = (stream, emit, state) => {
  * 8.2.4.64
  * @see https://www.w3.org/TR/html/syntax.html#before-doctype-system-identifier-state
  */
-const beforeDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
+const beforeDoctypeSystemIdentifier: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -2087,7 +2131,7 @@ const beforeDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.forceQuirks = true;
@@ -2099,7 +2143,12 @@ const beforeDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
  * 8.2.4.65
  * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-double-quoted-state
  */
-const doctypeSystemIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
+const doctypeSystemIdentifierDoubleQuoted: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -2118,7 +2167,7 @@ const doctypeSystemIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.systemId += fromCharCode(char);
@@ -2128,7 +2177,12 @@ const doctypeSystemIdentifierDoubleQuoted: Pattern = (stream, emit, state) => {
  * 8.2.4.66
  * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-single-quoted-state
  */
-const doctypeSystemIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
+const doctypeSystemIdentifierSingleQuoted: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -2147,7 +2201,7 @@ const doctypeSystemIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   state.doctype!.systemId += fromCharCode(char);
@@ -2157,7 +2211,12 @@ const doctypeSystemIdentifierSingleQuoted: Pattern = (stream, emit, state) => {
  * 8.2.4.67
  * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-identifier-state
  */
-const afterDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
+const afterDoctypeSystemIdentifier: Pattern = (
+  stream,
+  emit,
+  state,
+  { exit }
+) => {
   const char = stream.next();
 
   switch (char) {
@@ -2174,7 +2233,7 @@ const afterDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
     case null:
       state.doctype!.forceQuirks = true;
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 
   return bogusDoctype;
@@ -2184,7 +2243,7 @@ const afterDoctypeSystemIdentifier: Pattern = (stream, emit, state) => {
  * 8.2.4.68
  * @see https://www.w3.org/TR/html/syntax.html#bogus-doctype-state
  */
-const bogusDoctype: Pattern = (stream, emit, state) => {
+const bogusDoctype: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -2194,7 +2253,7 @@ const bogusDoctype: Pattern = (stream, emit, state) => {
 
     case null:
       emit(state.doctype!);
-      return Command.End;
+      return exit;
   }
 };
 
@@ -2202,7 +2261,7 @@ const bogusDoctype: Pattern = (stream, emit, state) => {
  * 8.2.4.69
  * @see https://www.w3.org/TR/html/syntax.html#CDATA-section-state
  */
-const CDATASection: Pattern = (stream, emit, state) => {
+const CDATASection: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
 
   switch (char) {
@@ -2210,7 +2269,7 @@ const CDATASection: Pattern = (stream, emit, state) => {
       return CDATASectionBracket;
 
     case null:
-      return Command.End;
+      return exit;
 
     default:
       emit({ type: TokenType.Character, data: char });
@@ -2498,7 +2557,8 @@ export const Alphabet: Lang.Alphabet<Token, State> = new Lang.Alphabet(
     returnState: null,
     temporaryBuffer: "",
     characterReferenceCode: 0,
-    namespaceStack: <Array<string>>[]
+    namespaceStack: <Array<string>>[],
+    tagStack: <Array<string>>[]
   })
 );
 
@@ -2528,49 +2588,63 @@ function startsWith(
   return true;
 }
 
-function findAppropriateState(tag: StartTag | EndTag, state: State) {
-  switch (tag.name) {
+function findNextState(state: State) {
+  if (state.tag === null) {
+    return data;
+  }
+
+  switch (state.tag.name) {
     case "script":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return scriptData;
       }
       break;
 
     case "textarea":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return RCData;
       }
       break;
 
     case "noscript":
     case "noframes":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return RawText;
       }
       break;
 
     case "plaintext":
-      if (tag.type === TokenType.StartTag) {
+      if (state.tag.type === TokenType.StartTag) {
         return plaintext;
       }
-      break;
-
-    case "foreignobject":
-    case "math":
-    case "svg":
-      if (tag.type === TokenType.StartTag) {
-        state.namespaceStack.push(tag.name);
-        break;
-      }
-      state.namespaceStack.pop();
   }
-
   return data;
 }
 
+function updateState(state: State) {
+  if (state.tag === null) {
+    return;
+  }
+
+  if (state.tag.type === TokenType.StartTag) {
+    state.tagStack.push(state.tag.name);
+  } else if (isAppropriateEndTagToken(state)) {
+    state.tagStack.pop();
+  }
+
+  switch (state.tag.name) {
+    case "foreignobject":
+    case "math":
+    case "svg":
+      state.tag.type === TokenType.StartTag
+        ? state.namespaceStack.push(state.tag.name)
+        : state.namespaceStack.pop();
+  }
+}
+
 function removeAttributeIfDuplicate(
-  attributes: Array<Attribute>,
-  attribute: Attribute
+  attributes: Array<Tokens.Attribute>,
+  attribute: Tokens.Attribute
 ) {
   const name = attribute.name.toLowerCase();
 

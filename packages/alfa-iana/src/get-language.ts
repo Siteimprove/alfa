@@ -45,6 +45,10 @@ export function getLanguage(tag: string): Language | null {
     }
   }
 
+  if (!stream.done()) {
+    return null;
+  }
+
   return language;
 }
 

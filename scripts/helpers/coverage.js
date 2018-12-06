@@ -1,8 +1,9 @@
-const { default: chalk } = require("chalk");
 const fs = require("fs");
 const path = require("path");
+const { URL } = require("url");
 const inspector = require("inspector");
 const { Session } = require("inspector");
+const { default: chalk } = require("chalk");
 const sourceMap = require("source-map");
 const { SourceMapConsumer } = require("source-map");
 
@@ -11,6 +12,7 @@ const notify = require("./notify");
 const { Byte } = require("./metrics/byte");
 const { Logical } = require("./metrics/logical");
 const { Arithmetic } = require("./metrics/arithmetic");
+const { Cyclomatic } = require("./metrics/cyclomatic");
 
 /**
  * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
@@ -25,15 +27,19 @@ const session = new Session();
 const metrics = [
   {
     ...Arithmetic,
-    weight: 1 / 3
+    weight: 1 / 4
   },
   {
     ...Byte,
-    weight: 1 / 3
+    weight: 1 / 4
   },
   {
     ...Logical,
-    weight: 1 / 3
+    weight: 1 / 4
+  },
+  {
+    ...Cyclomatic,
+    weight: 1 / 4
   }
 ];
 
@@ -66,6 +72,20 @@ process.on("beforeExit", code => {
     const impl = path.join(dir, `${path.basename(spec, ".spec.js")}.js`);
 
     for (const scriptCoverage of result) {
+      try {
+        if (!path.isAbsolute(scriptCoverage.url)) {
+          const url = new URL(scriptCoverage.url);
+
+          if (url.protocol !== "file:") {
+            continue;
+          }
+
+          scriptCoverage.url = url.pathname;
+        }
+      } catch (err) {
+        continue;
+      }
+
       if (scriptCoverage.url !== impl) {
         continue;
       }

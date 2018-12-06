@@ -1,6 +1,7 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
+import { getSpecifiedProperty } from "../helpers/get-property";
 import { TextIndentGrammar } from "./grammar";
 import { TextIndent } from "./types";
 
@@ -23,7 +24,7 @@ export const textIndent: Longhand<TextIndent> = {
   initial() {
     return dictionary({ indent: length(0, "px") });
   },
-  computed(getProperty) {
-    return getProperty("textIndent");
+  computed(style) {
+    return getSpecifiedProperty(style, "textIndent");
   }
 };
