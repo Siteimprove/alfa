@@ -20,28 +20,40 @@ function isFile(path) {
 exports.isFile = isFile;
 
 /**
- * @param {string} file
+ * @param {string} path
  * @return {string}
  */
-function readFile(file) {
-  return fs.readFileSync(file, "utf8");
+function realPath(path) {
+  return fs.realpathSync(path);
+}
+
+exports.realPath = realPath;
+
+/**
+ * @param {string} file
+ * @param {string} [encoding]
+ * @return {string}
+ */
+function readFile(file, encoding = "utf8") {
+  return fs.readFileSync(file, encoding);
 }
 
 exports.readFile = readFile;
 
 /**
  * @param {string} file
- * @param {any} data
+ * @param {unknown} data
+ * @param {string} [encoding]
  * @return {void}
  */
-function writeFile(file, data) {
+function writeFile(file, data, encoding = "utf8") {
   makeDirectory(path.dirname(file));
 
   if (typeof data !== "string") {
     data = JSON.stringify(data, null, 2) + "\n";
   }
 
-  fs.writeFileSync(file, data);
+  fs.writeFileSync(file, data, encoding);
 }
 
 exports.writeFile = writeFile;
@@ -57,16 +69,13 @@ function removeFile(file) {
 exports.removeFile = removeFile;
 
 /**
- * @param {string | Array<string>} directories
+ * @param {string | Iterable<string>} directories
  * @param {function(string): boolean} predicate
  * @param {{ gitIgnore?: boolean }} [options]
  * @param {Set<string>} [visited]
- * @return {Array<string>}
+ * @return {Iterable<string>}
  */
-function findFiles(directories, predicate, options = {}, visited = new Set()) {
-  /** @type {Array<string>} */
-  const files = [];
-
+function* findFiles(directories, predicate, options = {}, visited = new Set()) {
   if (typeof directories === "string") {
     directories = [directories];
   }
@@ -79,7 +88,7 @@ function findFiles(directories, predicate, options = {}, visited = new Set()) {
     visited.add(directory);
 
     if (!fs.existsSync(directory)) {
-      return files;
+      continue;
     }
 
     for (let file of readDirectory(directory)) {
@@ -90,20 +99,18 @@ function findFiles(directories, predicate, options = {}, visited = new Set()) {
       }
 
       if (isDirectory(file)) {
-        files.push(...findFiles(file, predicate, options, visited));
+        yield* findFiles(file, predicate, options, visited);
       } else if (predicate(file)) {
-        files.push(file);
+        yield file;
       }
     }
   }
-
-  return files;
 }
 
 exports.findFiles = findFiles;
 
 /**
- * @param {string | Array<string>} pattern
+ * @param {string | Iterable<string>} pattern
  * @param {function("changed" | "added", string): void} listener
  * @param {{ gitIgnore?: boolean }} [options]
  */
@@ -128,18 +135,13 @@ function watchFiles(pattern, listener, options = {}) {
     }
   };
 
-  gaze(pattern, (err, watcher) => {
+  gaze(typeof pattern === "string" ? pattern : [...pattern], (err, watcher) => {
     if (err !== null) {
       throw err;
     }
 
-    watcher.on("changed", file => {
-      handler("changed", file);
-    });
-
-    watcher.on("added", file => {
-      handler("added", file);
-    });
+    watcher.on("changed", file => handler("changed", file));
+    watcher.on("added", file => handler("added", file));
   });
 }
 
@@ -161,7 +163,7 @@ exports.isDirectory = isDirectory;
 
 /**
  * @param {string} directory
- * @return {object}
+ * @return {Iterable<string>}
  */
 function readDirectory(directory) {
   return fs.readdirSync(directory);
@@ -183,7 +185,7 @@ function makeDirectory(directory) {
       makeDirectory(path.dirname(directory));
       makeDirectory(directory);
     } else {
-      if (!fs.statSync(directory).isDirectory()) {
+      if (!isDirectory(directory)) {
         throw new Error("Path is not a directory");
       }
     }
@@ -197,7 +199,7 @@ exports.makeDirectory = makeDirectory;
  * @return {void}
  */
 function removeDirectory(directory) {
-  if (!fs.existsSync(directory)) {
+  if (!isDirectory(directory)) {
     return;
   }
 

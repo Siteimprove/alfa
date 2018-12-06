@@ -1,8 +1,16 @@
 const path = require("path");
-const fs = require("fs");
-const crypto = require("crypto");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
+const { getDigest } = require("./crypto");
+const {
+  isDirectory,
+  isFile,
+  readDirectory,
+  readFile,
+  realPath
+} = require("./file-system");
+
+const { forEachChild } = TypeScript;
 
 /**
  * @typedef {Object} ScriptInfo
@@ -15,7 +23,7 @@ const TSLint = require("tslint");
 class Project {
   /**
    * @param {string} configFile
-   * @param {TypeScript.DocumentRegistry} registry
+   * @param {TypeScript.DocumentRegistry} [registry]
    */
   constructor(configFile, registry) {
     /**
@@ -109,10 +117,14 @@ class Project {
   }
 
   /**
+   * @template T
    * @param {string} file
-   * @param {function(TypeScript.Node): void} visitor
+   * @param {function(TypeScript.Node): T | void} visitor
+   * @return {T | void}
    */
   walk(file, visitor) {
+    this.host.addFile(file);
+
     const program = this.service.getProgram();
 
     if (program === undefined) {
@@ -122,15 +134,21 @@ class Project {
     const source = program.getSourceFile(file);
 
     if (source !== undefined) {
-      visit(source);
+      return visit(source);
     }
 
     /**
      * @param {TypeScript.Node} node
+     * @return {T | void}
      */
     function visit(node) {
-      visitor(node);
-      TypeScript.forEachChild(node, visit);
+      const result = visitor(node);
+
+      if (result !== undefined) {
+        return result;
+      }
+
+      return forEachChild(node, visit);
     }
   }
 }
@@ -158,7 +176,7 @@ class InMemoryLanguageServiceHost {
   getOptions(configFile) {
     const { config } = TypeScript.parseConfigFileTextToJson(
       configFile,
-      fs.readFileSync(configFile, "utf8")
+      readFile(configFile)
     );
 
     const { options } = TypeScript.parseJsonConfigFileContent(
@@ -253,7 +271,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   readFile(file, encoding = "utf8") {
-    return fs.readFileSync(file, encoding);
+    return readFile(file, encoding);
   }
 
   /**
@@ -261,7 +279,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   realpath(file) {
-    return fs.realpathSync(file);
+    return realPath(file);
   }
 
   /**
@@ -269,7 +287,15 @@ class InMemoryLanguageServiceHost {
    * @return {boolean}
    */
   fileExists(file) {
-    return fs.existsSync(file);
+    return isFile(file);
+  }
+
+  /**
+   * @param {string} directory
+   * @return {boolean}
+   */
+  directoryExists(directory) {
+    return isDirectory(directory);
   }
 
   /**
@@ -277,13 +303,9 @@ class InMemoryLanguageServiceHost {
    * @return {Array<string>}
    */
   getDirectories(directory) {
-    if (!fs.existsSync(directory)) {
-      return [];
-    }
-
-    return fs
-      .readdirSync(directory)
-      .filter(entry => fs.statSync(path.join(directory, entry)).isDirectory());
+    return [...readDirectory(directory)].filter(found =>
+      isDirectory(path.join(directory, found))
+    );
   }
 
   /**
@@ -291,7 +313,7 @@ class InMemoryLanguageServiceHost {
    * @return {ScriptInfo}
    */
   addFile(file) {
-    const text = fs.readFileSync(file, "utf8");
+    const text = readFile(file);
     const version = getDigest(text);
 
     let current = this.files.get(file);
@@ -336,14 +358,3 @@ class InMemoryLanguageServiceHost {
 }
 
 exports.Project = Project;
-
-/**
- * @param {string} file
- * @return {string}
- */
-function getDigest(file) {
-  return crypto
-    .createHash("md5")
-    .update(file)
-    .digest("hex");
-}
