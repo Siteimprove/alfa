@@ -2,11 +2,9 @@ const path = require("path");
 const { createTypeScriptSource } = require("./helpers/compile-ts-source");
 const { findFiles, readFile } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
-const { default: chalk } = require("chalk");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
-const { isTestable, hasSpecification } = require("./helpers/typescript");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
@@ -46,14 +44,14 @@ for (const pkg of packages) {
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
-  findFiles(root, endsWith(".ts", ".tsx")).forEach(file => {
+  for (const file of findFiles(root, endsWith(".ts", ".tsx"))) {
     const source = createTypeScriptSource(readFile(file));
     computeComments(file, source);
     handle([file], project);
     if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
       checkSpecFile(file, source);
     }
-  });
+  }
 }
 
 createTODOSFile();
