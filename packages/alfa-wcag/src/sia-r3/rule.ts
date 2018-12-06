@@ -2,11 +2,9 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   Document,
   Element,
-  getElementNamespace,
   getId,
   getRootNode,
   isElement,
-  Namespace,
   Node,
   querySelector,
   querySelectorAll
@@ -32,14 +30,6 @@ export const SIA_R3: Atomic.Rule<Document, Element> = {
 };
 
 function hasId(element: Element, context: Node): boolean {
-  switch (getElementNamespace(element, context)) {
-    case Namespace.HTML:
-    case Namespace.SVG:
-      break;
-    default:
-      return false;
-  }
-
   return getId(element) !== null;
 }
 

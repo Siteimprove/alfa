@@ -1,5 +1,8 @@
 const util = require("util");
+const readline = require("readline");
 const { default: chalk } = require("chalk");
+
+const stream = process.stdout;
 
 /**
  * @param {string} format
@@ -52,6 +55,27 @@ function watch(format, ...args) {
 exports.watch = watch;
 
 /**
+ * @param {string} format
+ * @param {...any} args
+ */
+function pending(format, ...args) {
+  log(chalk.magenta, "\u2026", "pending", format, ...args);
+}
+
+exports.pending = pending;
+
+/**
+ * @return {void}
+ */
+function replace() {
+  readline.moveCursor(stream, 0, -1);
+  readline.clearLine(stream, 0);
+  readline.cursorTo(stream, 0);
+}
+
+exports.replace = replace;
+
+/**
  * @param {typeof chalk} color
  * @param {string} symbol
  * @param {string} title
@@ -64,7 +88,7 @@ function log(color, symbol, title, format, ...args) {
   output += color(`${symbol}  ${chalk.underline(pad(title, 8))} `);
   output += util.format(format, ...args);
 
-  process.stdout.write(`${output}\n`);
+  stream.write(`${output}\n`);
 }
 
 /**
