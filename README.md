@@ -73,11 +73,12 @@ scraper
   .scrape("https://example.com")
   .then(aspects => {
     const results = audit(aspects, Rules);
-
-    scraper.close();
   })
   .catch(err => {
     console.error(err);
+  })
+  .finally(() => {
+    scraper.close();
   });
 ```
 
