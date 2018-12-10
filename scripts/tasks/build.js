@@ -16,7 +16,7 @@ const { format } = require("./format");
  */
 function build(file, project = workspace) {
   if (process.env.CI === "true" && format(file)) {
-    notify.error(`${chalk.gray(file)}: File has not been formatted`);
+    notify.error(`${chalk.gray(file)} File has not been formatted`);
     return false;
   }
 
