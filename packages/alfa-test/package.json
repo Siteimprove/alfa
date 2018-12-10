@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-highlight": "^0.0.0",
-    "@types/node": "^10.12.10",
+    "@types/node": "^10.12.12",
     "error-stack-parser": "^2.0.2"
   }
 }
