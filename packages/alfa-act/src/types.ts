@@ -57,7 +57,7 @@ export type Result<
       readonly target: T;
       readonly expectations: {
         readonly [id: number]: {
-          readonly holds: boolean;
+          readonly holds: boolean | null;
           readonly message: string;
           readonly data: Data | null;
         };
@@ -86,7 +86,10 @@ export interface Locale {
   readonly title: string;
   readonly expectations: {
     readonly [id: number]: {
-      readonly [P in Outcome.Passed | Outcome.Failed]: Message
+      readonly [P in
+        | Outcome.Passed
+        | Outcome.Failed
+        | Outcome.CantTell]: Message
     };
   };
 }
@@ -113,8 +116,8 @@ export namespace Atomic {
     expectations: (
       aspect: A,
       target: T,
-      expectation: (id: number, holds: boolean, data?: Data) => void,
-      question: (question: string) => boolean
+      expectation: (id: number, holds: boolean | null, data?: Data) => void,
+      question: (question: string) => boolean | null
     ) => void
   ) => void;
 

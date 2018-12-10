@@ -51,7 +51,7 @@ export function audit<
     id: string,
     aspect: A,
     target: T
-  ): boolean {
+  ): boolean | null {
     const answer = answers.find(
       answer =>
         answer.rule.id === rule.id &&
@@ -66,7 +66,7 @@ export function audit<
 
     results.push({ rule, question: id, aspect, target });
 
-    return false;
+    return null;
   }
 
   for (const rule of sortRules(rules)) {
@@ -86,7 +86,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rule: Atomic.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>,
-  question: (question: string, aspect: A, target: T) => boolean
+  question: (question: string, aspect: A, target: T) => boolean | null
 ): void {
   const targets: Array<[A, T]> | null = [];
 
@@ -186,33 +186,43 @@ function auditComposite<A extends Aspect, T extends Target>(
 
 function getExpectationEvaluater<A extends Aspect, T extends Target>(
   rule: Rule<any, any>,
-  result: Mutable<Result<any, any, Outcome.Passed | Outcome.Failed>>
-): (id: number, holds: boolean, data?: Data | null) => void {
+  result: Mutable<
+    Result<any, any, Outcome.Passed | Outcome.Failed | Outcome.CantTell>
+  >
+): (id: number, holds: boolean | null, data?: Data | null) => void {
   const { locales = [] } = rule;
 
   const locale = locales.find(locale => locale.id === "en");
 
   return (id, holds, data = null) => {
+    result.outcome =
+      holds === null
+        ? Outcome.CantTell
+        : holds
+        ? Outcome.Passed
+        : Outcome.Failed;
+
     let message: string | null = null;
 
     if (locale !== undefined) {
       const messages = locale.expectations[id];
 
       if (messages !== undefined) {
-        message = messages[holds ? "passed" : "failed"](
-          data === null ? {} : data
-        );
+        message = messages[result.outcome](data === null ? {} : data);
       }
     }
 
     if (message === null) {
-      message = `Expectation ${id} ${holds ? "holds" : "does not hold"}`;
+      const status =
+        holds === null
+          ? "was not evaluated"
+          : holds
+          ? "holds"
+          : "does not hold";
+
+      message = `Expectation ${id} ${status}`;
     }
 
     result.expectations[id] = { holds, message, data };
-
-    if (!holds) {
-      result.outcome = Outcome.Failed;
-    }
   };
 }
