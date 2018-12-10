@@ -48,14 +48,14 @@ export function audit<
 
   function question(
     rule: Atomic.Rule<A, T>,
-    id: string,
+    expectation: number,
     aspect: A,
     target: T
   ): boolean | null {
     const answer = answers.find(
       answer =>
         answer.rule.id === rule.id &&
-        answer.question === id &&
+        answer.expectation === expectation &&
         answer.aspect === aspect &&
         answer.target === target
     );
@@ -64,15 +64,15 @@ export function audit<
       return answer.answer;
     }
 
-    results.push({ rule, question: id, aspect, target });
+    results.push({ rule, expectation, aspect, target });
 
     return null;
   }
 
   for (const rule of sortRules(rules)) {
     if (isAtomic(rule)) {
-      auditAtomic<A, T>(aspects, rule, results, (id, aspect, target) =>
-        question(rule, id, aspect, target)
+      auditAtomic<A, T>(aspects, rule, results, (expectation, aspect, target) =>
+        question(rule, expectation, aspect, target)
       );
     } else {
       auditComposite<A, T>(aspects, rule, results);
@@ -86,7 +86,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rule: Atomic.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>,
-  question: (question: string, aspect: A, target: T) => boolean | null
+  question: (expectation: number, aspect: A, target: T) => boolean | null
 ): void {
   const targets: Array<[A, T]> | null = [];
 
@@ -208,7 +208,11 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
       const messages = locale.expectations[id];
 
       if (messages !== undefined) {
-        message = messages[result.outcome](data === null ? {} : data);
+        const callback = messages[result.outcome];
+
+        if (callback !== undefined) {
+          message = callback(data === null ? {} : data);
+        }
       }
     }
 

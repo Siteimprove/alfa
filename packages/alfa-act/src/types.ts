@@ -69,7 +69,7 @@ export interface Question<
   T extends Target = Target
 > {
   readonly rule: Rule<A, T>;
-  readonly question: string;
+  readonly expectation: number;
   readonly aspect: A;
   readonly target: T;
 }
@@ -89,7 +89,7 @@ export interface Locale {
       readonly [P in
         | Outcome.Passed
         | Outcome.Failed
-        | Outcome.CantTell]: Message
+        | Outcome.CantTell]?: Message
     };
   };
 }
@@ -117,7 +117,7 @@ export namespace Atomic {
       aspect: A,
       target: T,
       expectation: (id: number, holds: boolean | null, data?: Data) => void,
-      question: (question: string) => boolean | null
+      question: (expectation: number) => boolean | null
     ) => void
   ) => void;
 
@@ -143,7 +143,7 @@ export namespace Composite {
   > = (
     expectations: (
       outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>,
-      expectation: (id: number, holds: boolean) => void
+      expectation: (id: number, holds: boolean | null) => void
     ) => void
   ) => void;
 
