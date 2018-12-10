@@ -73,7 +73,7 @@ export class Assertion {
         const { expectations, aspect, target } = result;
 
         const { message } = values(expectations).find(
-          expectation => !expectation.holds
+          expectation => expectation.holds === false
         )!;
 
         throw new AssertionError(message, aspect, target);
