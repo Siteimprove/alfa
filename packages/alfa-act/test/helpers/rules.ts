@@ -20,7 +20,7 @@ export const Manual: Atomic.Rule<Document, Element> = {
       const hasAlt = getAttribute(target, "alt") !== "";
       const isLargeType = question("is-large-type");
 
-      expectation(1, !hasAlt || isLargeType);
+      expectation(1, !hasAlt || isLargeType === true);
     });
   }
 };
