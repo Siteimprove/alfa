@@ -54,7 +54,7 @@ export function audit<
   ): boolean {
     const answer = answers.find(
       answer =>
-        answer.rule === rule.id &&
+        answer.rule.id === rule.id &&
         answer.question === id &&
         answer.aspect === aspect &&
         answer.target === target
@@ -64,7 +64,7 @@ export function audit<
       return answer.answer;
     }
 
-    results.push({ rule: rule.id, question: id, aspect, target });
+    results.push({ rule, question: id, aspect, target });
 
     return false;
   }
@@ -101,7 +101,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
 
     if (targets.length === 0) {
       results.push({
-        rule: rule.id,
+        rule,
         outcome: Outcome.Inapplicable
       });
     }
@@ -110,7 +110,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
   const expectations: Atomic.Expectations<A, T> = expectations => {
     for (const [aspect, target] of targets) {
       const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
-        rule: rule.id,
+        rule,
         outcome: Outcome.Passed,
         aspect,
         target,
@@ -133,10 +133,10 @@ function auditComposite<A extends Aspect, T extends Target>(
   rule: Composite.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>
 ): void {
-  const composes = new Map<Rule["id"], Rule<A, T>>();
+  const composes = new WeakMap<Rule<A, T>, Rule<A, T>>();
 
   for (const composite of rule.composes) {
-    composes.set(composite.id, composite);
+    composes.set(composite, composite);
   }
 
   const applicability: Array<Result<A, T>> = [];
@@ -167,7 +167,7 @@ function auditComposite<A extends Aspect, T extends Target>(
         }
 
         const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
-          rule: rule.id,
+          rule,
           outcome: Outcome.Passed,
           aspect,
           target,

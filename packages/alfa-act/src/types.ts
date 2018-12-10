@@ -47,11 +47,11 @@ export type Result<
   O extends Outcome = Outcome
 > = O extends Outcome.Inapplicable
   ? {
-      readonly rule: Rule["id"];
+      readonly rule: Rule<A, T>;
       readonly outcome: O;
     }
   : {
-      readonly rule: Rule["id"];
+      readonly rule: Rule<A, T>;
       readonly outcome: O;
       readonly aspect: A;
       readonly target: T;
@@ -68,7 +68,7 @@ export interface Question<
   A extends Aspect = Aspect,
   T extends Target = Target
 > {
-  readonly rule: Rule["id"];
+  readonly rule: Rule<A, T>;
   readonly question: string;
   readonly aspect: A;
   readonly target: T;

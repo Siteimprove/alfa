@@ -10,7 +10,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import * as JSON from "@siteimprove/alfa-json-ld";
 import { expand, List } from "@siteimprove/alfa-json-ld";
-import { groupBy, values } from "@siteimprove/alfa-util";
+import { groupBy } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
 import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 
@@ -22,7 +22,6 @@ import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 //
 // tslint:disable:no-any
 
-const { isArray } = Array;
 const { assign } = Object;
 
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
@@ -37,13 +36,7 @@ export function toJson<
   R extends Rule<any, any>,
   A extends AspectsOf<R> = AspectsOf<R>,
   T extends TargetsOf<R> = TargetsOf<R>
->(
-  rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
-  results: ReadonlyArray<Result<A, T>>,
-  aspects: AspectsFor<A>
-): List {
-  rules = isArray(rules) ? rules : values(rules);
-
+>(results: ReadonlyArray<Result<A, T>>, aspects: AspectsFor<A>): List {
   let request: JSON.Document | null = null;
 
   if (aspects.request !== undefined) {
@@ -127,8 +120,8 @@ export function toJson<
 
   const assertions: Array<JSON.Document> = [];
 
-  for (const [ruleId, group] of groupBy(results, result => result.rule)) {
-    const { requirements = [] } = rules.find(rule => rule.id === ruleId)!;
+  for (const [rule, group] of groupBy(results, result => result.rule)) {
+    const { requirements = [] } = rule;
 
     for (const result of group) {
       const testCaseResult = {
@@ -157,7 +150,7 @@ export function toJson<
 
       assertions.push({
         ...assertion,
-        test: [{ "@id": ruleId, "@type": "earl:TestCase" }],
+        test: [{ "@id": rule.id, "@type": "earl:TestCase" }],
         result: testCaseResult
       });
 
