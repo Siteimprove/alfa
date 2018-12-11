@@ -10,6 +10,7 @@ function selector(input: string): Selector {
   if (parsed === null || isArray(parsed)) {
     throw new Error(`Invalid selector: ${input}`);
   }
+  
   return parsed;
 }
 
