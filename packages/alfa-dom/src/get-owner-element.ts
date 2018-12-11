@@ -7,7 +7,7 @@ const ownerElementMaps = new WeakMap<Node, WeakMap<Attribute, Element>>();
 /**
  * Given an attribute and a context, get the owner element of that attribute
  * within the given context. If no element owns the attribute within
- * the context at the then `null` is returned.
+ * the context then `null` is returned.
  */
 export function getOwnerElement(
   attribute: Attribute,
