@@ -1,6 +1,6 @@
 const path = require("path");
-const { createTypeScriptSource } = require("./helpers/compile-ts-source");
-const { findFiles, readFile } = require("./helpers/file-system");
+const { parseFile } = require("./helpers/typescript");
+const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
@@ -45,7 +45,7 @@ for (const pkg of packages) {
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
   for (const file of findFiles(root, endsWith(".ts", ".tsx"))) {
-    const source = createTypeScriptSource(readFile(file));
+    const source = parseFile(file);
     computeComments(file, source);
     handle([file], project);
     if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
