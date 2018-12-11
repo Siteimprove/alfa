@@ -1,29 +1,17 @@
 import {
   Answer,
   AspectsFor,
+  AspectsOf,
   audit,
   isResult,
   Outcome,
   Result,
-  Rule
+  Rule,
+  TargetsOf
 } from "@siteimprove/alfa-act";
 import { Assertions } from "@siteimprove/alfa-test";
 
 // tslint:disable:no-any
-
-export type AspectsOf<R extends Rule<any, any>> = R extends Rule<
-  infer A,
-  infer T
->
-  ? A
-  : never;
-
-export type TargetsOf<R extends Rule<any, any>> = R extends Rule<
-  infer A,
-  infer T
->
-  ? T
-  : never;
 
 export function outcome<
   R extends Rule<any, any>,
@@ -36,14 +24,16 @@ export function outcome<
   assert:
     | Outcome.Inapplicable
     | { readonly [P in Outcome.Passed | Outcome.Failed]?: ReadonlyArray<T> },
-  answers: ReadonlyArray<Answer<A, T>> = []
+  answers: ReadonlyArray<Answer<T>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed> = [
     Outcome.Passed,
     Outcome.Failed
   ];
 
-  const results = audit(aspects, [rule]).filter(result => result.rule === rule);
+  const results = audit(aspects, [rule], answers).filter(
+    result => result.rule === rule
+  );
 
   if (assert === Outcome.Inapplicable) {
     t.equal(results.length, 1, "There must only be one result");
