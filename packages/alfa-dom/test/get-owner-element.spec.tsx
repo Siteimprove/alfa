@@ -20,7 +20,7 @@ test("Returns owner element of attribute", t => {
   t.equal(getOwnerElement(att, body), div2);
 });
 
-test("Returns null when owner element is undefined", t => {
+test("Returns null when owner element is not present in the passed context", t => {
   const div1 = <div aria-label="foo" />;
   const strong = <strong />;
   const div2 = <div aria-label="bar" />;
