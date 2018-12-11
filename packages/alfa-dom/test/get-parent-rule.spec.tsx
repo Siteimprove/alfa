@@ -11,13 +11,12 @@ import {
 } from "../src/types";
 
 test("Returns parent rule", t => {
-  const childStyleDec: StyleDeclaration = {
-    cssText: "background-color:black;"
-  };
   const childRule: StyleRule = {
     type: 1,
     selectorText: "button",
-    style: childStyleDec
+    style: {
+      cssText: "background-color:black;"
+    }
   };
   const parentRule: MediaRule = {
     type: 4,
@@ -41,7 +40,7 @@ test("Returns null when context is not document type", t => {
   t.equal(getParentRule(rule, div), null);
 });
 
-test("Returns null when parent rule is undefined", t => {
+test("Returns null when parent rule does not exist", t => {
   const childStyleDec: StyleDeclaration = {
     cssText: "background-color:black;"
   };
