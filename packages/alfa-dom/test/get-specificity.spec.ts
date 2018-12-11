@@ -50,9 +50,9 @@ test("A class is more specific than a pseudo-element-selector", t => {
     getSpecificity(selector(".foo")) >
       getSpecificity(selector("::first-letter"))
   );
-}); 
+});
 
-test("A compound selector is more specific than a class", t => {
+test("A compound selector with two classes is more specific one class", t => {
   t(
     getSpecificity(selector(".foo.bar")) >
       getSpecificity(selector(".foo-class"))
