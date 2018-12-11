@@ -63,8 +63,8 @@ function isIgnored(file) {
 
 exports.isIgnored = isIgnored;
 
-function branch() {
+function getBranch() {
   return git("rev-parse", ["--abbrev-ref", "HEAD"]);
 }
 
-exports.branch = branch;
+exports.getBranch = getBranch;

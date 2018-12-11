@@ -1,6 +1,6 @@
 const TypeScript = require("typescript");
 const { isFile, removeFile, writeFile } = require("./file-system");
-const { branch } = require("./git");
+const { getBranch } = require("./git");
 const { formattedDateTime } = require("./time");
 
 const name = "TODOS.md";
@@ -28,7 +28,7 @@ function computeComments(file, source) {
         const line = split[i].trim();
         for (const ac of annotatedComment) {
           if (line.toLowerCase().startsWith(`* ${ac}`)) {
-            const url = `https://github.com/siteimprove/alfa/blob/${branch()}/${file.replace(
+            const url = `https://github.com/siteimprove/alfa/blob/${getBranch()}/${file.replace(
               /\\/g,
               "/"
             )}#L${start + i}`;
