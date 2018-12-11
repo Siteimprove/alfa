@@ -51,6 +51,7 @@ function findSlotables(slot: Element, context: Node): Array<Node> {
   }
 
   const host = getParentNode(rootNode, context, { composed: true });
+  
   if (host === null) {
     return result;
   }
