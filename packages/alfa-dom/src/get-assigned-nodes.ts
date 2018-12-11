@@ -87,6 +87,7 @@ function findFlattenedSlotables(slot: Element, context: Node): Array<Node> {
 
   if (slotables.length === 0) {
     const { childNodes } = slot;
+    
     for (let i = 0, n = childNodes.length; i < n; i++) {
       const childNode = childNodes[i];
 
