@@ -30,7 +30,7 @@ exports.parseFile = parseFile;
 
 /**
  * @param {string} file
- * @param {Workspace | Project} [project]
+ * @param {Project | Workspace} [project]
  * @return {boolean}
  */
 function isTestable(file, project = workspace) {
