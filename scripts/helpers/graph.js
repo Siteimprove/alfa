@@ -1,9 +1,15 @@
 class Graph {
   constructor() {
-    /** @type {Set<string>} */
+    /**
+     * @private
+     * @type {Set<string>}
+     */
     this.nodes = new Set();
 
-    /** @type {Map<string, { incoming: Set<string>, outgoing: Set<string> }>} */
+    /**
+     * @private
+     * @type {Map<string, { incoming: Set<string>, outgoing: Set<string> }>}
+     */
     this.edges = new Map();
   }
 
@@ -130,6 +136,20 @@ class Graph {
     }
 
     return edges.outgoing.has(to);
+  }
+
+  /**
+   * @param {string} node
+   * @return {{ incoming: Iterable<string>, outgoing: Iterable<string> } | null}
+   */
+  getEdges(node) {
+    const edges = this.edges.get(node);
+
+    if (edges === undefined) {
+      return null;
+    }
+
+    return edges;
   }
 
   /**
