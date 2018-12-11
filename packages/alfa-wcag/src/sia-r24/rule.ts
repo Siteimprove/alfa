@@ -28,7 +28,7 @@ export const SIA_R24: Atomic.Rule<Device | Document, Element> = {
 
     expectations((aspect, target, expectation, question) => {
       const hasTranscript = question(1);
-      const transcriptIsSufficient = question(1);
+      const transcriptIsSufficient = question(2);
 
       expectation(1, hasTranscript);
       expectation(2, transcriptIsSufficient);
