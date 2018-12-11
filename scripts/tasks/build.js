@@ -4,21 +4,23 @@ const TSLint = require("tslint");
 const { default: chalk } = require("chalk");
 
 const { writeFile } = require("../helpers/file-system");
-const { workspace } = require("../helpers/workspace");
+const { Workspace, workspace } = require("../helpers/workspace");
+const { Project } = require("../helpers/project");
 const notify = require("../helpers/notify");
 const { format } = require("./format");
 
 /**
  * @param {string} file
+ * @param {Workspace | Project} [project]
  * @return {boolean}
  */
-function build(file) {
+function build(file, project = workspace) {
   if (process.env.CI === "true" && format(file)) {
-    notify.error(`${chalk.gray(file)}: File has not been formatted`);
+    notify.error(`${chalk.gray(file)} File has not been formatted`);
     return false;
   }
 
-  const diagnostics = workspace.diagnose(file);
+  const diagnostics = project.diagnose(file);
 
   if (diagnostics.length > 0) {
     for (const diagnostic of diagnostics) {
@@ -28,7 +30,7 @@ function build(file) {
     return false;
   }
 
-  const failures = workspace.lint(file);
+  const failures = project.lint(file);
 
   if (failures.length > 0) {
     let error = false;
@@ -49,7 +51,7 @@ function build(file) {
     }
   }
 
-  const compiled = workspace.compile(file);
+  const compiled = project.compile(file);
 
   for (const { name, text } of compiled) {
     writeFile(name, text);

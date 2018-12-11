@@ -20,6 +20,7 @@ class Workspace {
   }
 
   /**
+   * @private
    * @param {string} file
    * @return {Project}
    */
@@ -65,11 +66,13 @@ class Workspace {
   }
 
   /**
+   * @template T
    * @param {string} file
-   * @param {function(TypeScript.Node): void} visitor
+   * @param {function(TypeScript.Node): T | void} visitor
+   * @return {T | void}
    */
   walk(file, visitor) {
-    this.projectFor(file).walk(file, visitor);
+    return this.projectFor(file).walk(file, visitor);
   }
 }
 

@@ -1,5 +1,7 @@
 const root = require("../../package.json");
 
+const { assign } = Object;
+
 /**
  * @typedef {typeof root} Manifest
  */
@@ -26,7 +28,7 @@ const fields = [
  * @return {Manifest}
  */
 function sync(manifest) {
-  const synced = Object.assign({}, manifest);
+  const synced = assign({}, manifest);
 
   for (const field of fields) {
     synced[field] = root[field];

@@ -3,6 +3,7 @@ const { endsWith } = require("../helpers/predicates");
 
 /**
  * @param {string} directory
+ * @return {void}
  */
 function clean(directory) {
   const files = findFiles(

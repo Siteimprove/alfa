@@ -4,7 +4,7 @@ import {
   getAttribute,
   isElement
 } from "@siteimprove/alfa-dom";
-import { Atomic, Composite } from "../../src/types";
+import { Atomic, Composite, Outcome } from "../../src/types";
 
 export const Manual: Atomic.Rule<Document, Element> = {
   id: "_:manual-rule",
@@ -18,9 +18,9 @@ export const Manual: Atomic.Rule<Document, Element> = {
 
     expectations((aspect, target, expectation, question) => {
       const hasAlt = getAttribute(target, "alt") !== "";
-      const isLargeType = question("is-large-type");
+      const isLargeType = question(1);
 
-      expectation(1, !hasAlt || isLargeType);
+      expectation(1, !hasAlt || isLargeType === true);
     });
   }
 };
@@ -48,7 +48,7 @@ export const Semi: Composite.Rule<Document, Element> = {
   requirements: [{ id: "wcag:section-headings" }],
   definition: expectations => {
     expectations((results, expectation) => {
-      expectation(1, results.some(result => result.outcome === "passed"));
+      expectation(1, results.some(result => result.outcome === Outcome.Passed));
     });
   }
 };

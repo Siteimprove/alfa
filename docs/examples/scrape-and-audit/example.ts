@@ -31,7 +31,7 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
 
     writeFile(
       `docs/examples/scrape-and-audit/result/${id}.json`,
-      JSON.stringify(toJson(Rules, results, page), null, 2)
+      JSON.stringify(toJson(results, page), null, 2)
     );
   }
 

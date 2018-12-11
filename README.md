@@ -1,3 +1,5 @@
+[open an issue]: https://github.com/siteimprove/alfa/issues/new "Open a new issue"
+
 # <img alt="Alfa" src="media/logo.svg" height="40">
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
@@ -73,11 +75,12 @@ scraper
   .scrape("https://example.com")
   .then(aspects => {
     const results = audit(aspects, Rules);
-
-    scraper.close();
   })
   .catch(err => {
     console.error(err);
+  })
+  .finally(() => {
+    scraper.close();
   });
 ```
 
@@ -94,7 +97,7 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | [**@siteimprove/alfa-should**](packages/alfa-should)         | [Should.js](https://github.com/shouldjs/should.js) | Should.js accessibility assertions for plain DOM nodes       |
 | [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)            | Unexpected accessibility assertions for plain DOM nodes      |
 
-If you have suggestions for additional integerations, feel free to [open an issue](https://github.com/siteimprove/alfa/issues/new)! We are always looking for new places where Alfa can be put to good use.
+If you have suggestions for additional integerations, feel free to [open an issue][]! We are always looking for new places where Alfa can be put to good use.
 
 ## Requirements
 
@@ -119,6 +122,8 @@ As new code is pulled from the repository, changes to dependencies and code may 
 ```console
 $ yarn prepare
 ```
+
+If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](CONTRIBUTING.md). If you have any questions, you are also welcome to [open an issue][].
 
 ## Architecture
 

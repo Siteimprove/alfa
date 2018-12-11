@@ -10,6 +10,8 @@ import {
 } from "@siteimprove/alfa-act";
 import { Assertions } from "@siteimprove/alfa-test";
 
+// tslint:disable:no-any
+
 export function outcome<A extends Aspect, T extends Target>(
   t: Assertions,
   rule: Rule<A, T>,
@@ -23,9 +25,7 @@ export function outcome<A extends Aspect, T extends Target>(
     Outcome.Failed
   ];
 
-  const results = audit(aspects, [rule]).filter(
-    result => result.rule === rule.id
-  );
+  const results = audit(aspects, [rule]).filter(result => result.rule === rule);
 
   if (assert === Outcome.Inapplicable) {
     t.equal(results.length, 1, "There must only be one result");
@@ -39,7 +39,7 @@ export function outcome<A extends Aspect, T extends Target>(
   } else {
     for (const outcome of outcomes) {
       function hasMatchingOutcome(
-        result: Result
+        result: Result<any, any>
       ): result is Result<A, T, typeof outcome> {
         return result.outcome === outcome;
       }

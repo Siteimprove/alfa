@@ -1,6 +1,5 @@
-import { expect as assert } from "@siteimprove/alfa-assert";
+import { AssertionError, expect as assert } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
-import "jest"; // tslint:disable-line
 
 declare global {
   namespace jest {
@@ -17,14 +16,31 @@ export function createJestPlugin<T>(
   expect.extend({
     toBeAccessible: (target: unknown) => {
       if (identify(target)) {
-        const error = assert(transform(target)).to.be.accessible;
+        let error: AssertionError | null = null;
+        try {
+          assert(transform(target)).to.be.accessible;
+        } catch (err) {
+          if (err instanceof AssertionError) {
+            error = err;
+          } else {
+            throw err;
+          }
+        }
 
-        if (error === null) {
-          return { pass: true, message: () => "Expected to be accessible" };
+        if (error !== null) {
+          const message = error.toString();
+
+          return {
+            pass: false,
+            message: () => message
+          };
         }
       }
 
-      return { pass: false, message: () => "Expected to not be accessible" };
+      return {
+        pass: true,
+        message: () => "Expected to not be accessible"
+      };
     }
   });
 }

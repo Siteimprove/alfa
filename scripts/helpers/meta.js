@@ -14,6 +14,7 @@ for (const pkg of readDirectory("packages")) {
 
   const dependencies = [
     ...Object.keys(info.dependencies || {}),
+    ...Object.keys(info.peerDependencies || {}),
     ...Object.keys(info.devDependencies || {})
   ];
 

@@ -33,9 +33,9 @@
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-http": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
-    "@types/node": "^10.12.10",
-    "@types/puppeteer": "^1.10.0",
-    "puppeteer": "^1.10.0"
+    "@types/node": "^10.12.12",
+    "@types/puppeteer": "^1.10.1",
+    "puppeteer": "^1.11.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
