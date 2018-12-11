@@ -26,7 +26,9 @@ export const SIA_R25: Atomic.Rule<Device | Document, Element> = {
     );
 
     expectations((aspect, target, expectation, question) => {
-      expectation(1, question("audio-is-sufficient"));
+      const audioIsSufficient = question(1);
+
+      expectation(1, audioIsSufficient);
     });
   }
 };

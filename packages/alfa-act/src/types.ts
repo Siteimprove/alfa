@@ -47,17 +47,17 @@ export type Result<
   O extends Outcome = Outcome
 > = O extends Outcome.Inapplicable
   ? {
-      readonly rule: Rule["id"];
+      readonly rule: Rule<A, T>;
       readonly outcome: O;
     }
   : {
-      readonly rule: Rule["id"];
+      readonly rule: Rule<A, T>;
       readonly outcome: O;
       readonly aspect: A;
       readonly target: T;
       readonly expectations: {
         readonly [id: number]: {
-          readonly holds: boolean;
+          readonly holds: boolean | null;
           readonly message: string;
           readonly data: Data | null;
         };
@@ -68,8 +68,8 @@ export interface Question<
   A extends Aspect = Aspect,
   T extends Target = Target
 > {
-  readonly rule: Rule["id"];
-  readonly question: string;
+  readonly rule: Rule<A, T>;
+  readonly expectation: number;
   readonly aspect: A;
   readonly target: T;
 }
@@ -86,7 +86,10 @@ export interface Locale {
   readonly title: string;
   readonly expectations: {
     readonly [id: number]: {
-      readonly [P in Outcome.Passed | Outcome.Failed]: Message
+      readonly [P in
+        | Outcome.Passed
+        | Outcome.Failed
+        | Outcome.CantTell]?: Message
     };
   };
 }
@@ -113,8 +116,8 @@ export namespace Atomic {
     expectations: (
       aspect: A,
       target: T,
-      expectation: (id: number, holds: boolean, data?: Data) => void,
-      question: (question: string) => boolean
+      expectation: (id: number, holds: boolean | null, data?: Data) => void,
+      question: (expectation: number) => boolean | null
     ) => void
   ) => void;
 
@@ -140,7 +143,7 @@ export namespace Composite {
   > = (
     expectations: (
       outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>,
-      expectation: (id: number, holds: boolean) => void
+      expectation: (id: number, holds: boolean | null) => void
     ) => void
   ) => void;
 
