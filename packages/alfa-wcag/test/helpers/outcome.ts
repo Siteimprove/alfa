@@ -1,24 +1,42 @@
 import {
-  Aspect,
+  Answer,
   AspectsFor,
   audit,
   isResult,
   Outcome,
   Result,
-  Rule,
-  Target
+  Rule
 } from "@siteimprove/alfa-act";
 import { Assertions } from "@siteimprove/alfa-test";
 
 // tslint:disable:no-any
 
-export function outcome<A extends Aspect, T extends Target>(
+export type AspectsOf<R extends Rule<any, any>> = R extends Rule<
+  infer A,
+  infer T
+>
+  ? A
+  : never;
+
+export type TargetsOf<R extends Rule<any, any>> = R extends Rule<
+  infer A,
+  infer T
+>
+  ? T
+  : never;
+
+export function outcome<
+  R extends Rule<any, any>,
+  A extends AspectsOf<R> = AspectsOf<R>,
+  T extends TargetsOf<R> = TargetsOf<R>
+>(
   t: Assertions,
   rule: Rule<A, T>,
   aspects: AspectsFor<A>,
   assert:
     | Outcome.Inapplicable
-    | { readonly [P in Outcome.Passed | Outcome.Failed]?: ReadonlyArray<T> }
+    | { readonly [P in Outcome.Passed | Outcome.Failed]?: ReadonlyArray<T> },
+  answers: ReadonlyArray<Answer<A, T>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed> = [
     Outcome.Passed,
