@@ -3,6 +3,8 @@ const path = require("path");
 const { isFile, readFile, writeFile } = require("./file-system");
 const { getDigest } = require("./crypto");
 
+const cacheRoot = process.env.CACHE_DIR || ".cache";
+
 /**
  * @template T
  * @typedef {object} Entry
@@ -22,7 +24,7 @@ class Cache {
      * @private
      * @type {string}
      */
-    this.root = path.join(".cache", name);
+    this.root = path.join(cacheRoot, name);
   }
 
   /**
