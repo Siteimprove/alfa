@@ -39,14 +39,14 @@ test("SIA-R19 passes when element has a valid value that corresponds to a non-ab
   );
 });
 
-test("SIA-R19 fails when an element does not have any aria states or properties", t => {
+test("SIA-R19 fails when element has invalid aria attributes", t => {
   const div = <div role="main" aria-live="nope" />;
   const document = documentFromNodes([div]);
 
   outcome(t, SIA_R19, { document }, { failed: [div.attributes[1]] });
 });
 
-test("SIA-R19 is inapplicable when element has invalid aria value", t => {
+test("SIA-R19 is inapplicable when an element does not have any aria states or properties", t => {
   const div = <div>Some Content</div>;
   const document = documentFromNodes([div]);
 
