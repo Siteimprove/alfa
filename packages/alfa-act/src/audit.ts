@@ -25,17 +25,11 @@ import {
 
 const { isArray } = Array;
 
-export type AspectsOf<R extends Rule<any, any>> = R extends Rule<
-  infer A,
-  infer T
->
+type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? A
   : never;
 
-export type TargetsOf<R extends Rule<any, any>> = R extends Rule<
-  infer A,
-  infer T
->
+type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? T
   : never;
 

@@ -1,6 +1,5 @@
-import { Answer, AspectsOf, Atomic, TargetsOf } from "@siteimprove/alfa-act";
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Device, getDefaultDevice } from "@siteimprove/alfa-device";
+// import { Outcome} from "@siteimprove/alfa-act";
+import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
@@ -18,9 +17,7 @@ test("SIA-R22 passes when role attributes have valid values", t => {
   );
   const document = documentFromNodes([video]);
 
-  const answers: ReadonlyArray<
-    Answer<AspectsOf<SIA_R22>, TargetsOf<SIA_R22>>
-  > = [
+  const answers = [
     {
       rule: SIA_R22,
       expectation: 1,
@@ -30,5 +27,11 @@ test("SIA-R22 passes when role attributes have valid values", t => {
     }
   ];
 
-  outcome(t, SIA_R22, { document, device: getDefaultDevice() }, {}, answers);
+  outcome(
+    t,
+    SIA_R22,
+    { document, device: getDefaultDevice() },
+    { passed: [video] },
+    answers
+  );
 });
