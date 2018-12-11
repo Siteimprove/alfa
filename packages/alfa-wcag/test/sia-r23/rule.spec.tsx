@@ -8,7 +8,7 @@ import { SIA_R23 } from "../../src/sia-r23/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R23 passes when mon-streaming audio elements has a text alternative or captions for all included auditory information", t => {
+test("SIA-R23 passes when non-streaming audio elements has a text alternative or captions for all included auditory information", t => {
   const audio = (
     <audio src="../test-assets/moon-audio/moon-speech.mp3" controls />
   );
@@ -40,7 +40,7 @@ test("SIA-R23 passes when mon-streaming audio elements has a text alternative or
   );
 });
 
-test("SIA-R23 fails when no captions are available for audio information in non-streaming video elements", t => {
+test("SIA-R23 fails when non-streaming audio elements has no text alternative or captions for all included auditory information", t => {
   const audio = (
     <audio
       src="../test-assets/perspective-video/perspective-video-with-captions.mp4"
