@@ -40,7 +40,7 @@ export function audit<
 >(
   aspects: AspectsFor<A>,
   rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
-  answers: ReadonlyArray<Answer<T>> = []
+  answers: ReadonlyArray<Answer<A, T>> = []
 ): ReadonlyArray<Result<A, T> | Question<A, T>> {
   rules = isArray(rules) ? rules : values(rules);
 
