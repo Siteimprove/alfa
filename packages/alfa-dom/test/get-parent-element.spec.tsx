@@ -9,7 +9,7 @@ test("Returns parent element", t => {
   t.equal(getParentElement(body, html), html);
 });
 
-test("Returns null when parent is undefined", t => {
+test("Returns null when parent does not exist", t => {
   const div = <div />;
   t.equal(getParentElement(div, div), null);
 });
