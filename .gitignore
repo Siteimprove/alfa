@@ -10,4 +10,5 @@ package-lock.json
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
 
+.cache
 .vscode
