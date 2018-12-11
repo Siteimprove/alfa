@@ -19,12 +19,18 @@ export function outcome<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   assert:
     | Outcome.Inapplicable
-    | { readonly [P in Outcome.Passed | Outcome.Failed]?: ReadonlyArray<T> },
+    | {
+        readonly [P in
+          | Outcome.Passed
+          | Outcome.Failed
+          | Outcome.CantTell]?: ReadonlyArray<T>
+      },
   answers: ReadonlyArray<Answer<A, T>> = []
 ) {
-  const outcomes: Array<Outcome.Passed | Outcome.Failed> = [
+  const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,
-    Outcome.Failed
+    Outcome.Failed,
+    Outcome.CantTell
   ];
 
   const results = audit(aspects, [rule], answers);
