@@ -1,6 +1,7 @@
 const path = require("path");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
+
 const { getDigest } = require("./crypto");
 const {
   isDirectory,
