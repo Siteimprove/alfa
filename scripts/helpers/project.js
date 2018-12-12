@@ -10,13 +10,20 @@ const {
   readFile,
   realPath
 } = require("./file-system");
+const { Cache } = require("./cache");
 
 /**
- * @typedef {Object} ScriptInfo
+ * @typedef {object} ScriptInfo
  * @property {string} version
  * @property {string} text
  * @property {TypeScript.IScriptSnapshot} snapshot
  * @property {TypeScript.ScriptKind} kind
+ */
+
+/**
+ * @typedef {object} ScriptOutput
+ * @property {string} version
+ * @property {Array<TypeScript.OutputFile>} files
  */
 
 class Project {
@@ -47,6 +54,12 @@ class Project {
         return this.resolvePath(file);
       }
     );
+
+    /**
+     * @private
+     * @type {Cache<ScriptOutput>}
+     */
+    this.output = new Cache("compile");
 
     /**
      * @private
@@ -158,9 +171,20 @@ class Project {
   compile(file) {
     file = this.resolvePath(file);
 
-    this.host.addFile(file);
+    const { version } = this.host.addFile(file);
 
-    return this.service.getEmitOutput(file).outputFiles;
+    let output = this.output.get(file);
+
+    if (output === null || output.version !== version) {
+      output = {
+        version,
+        files: this.service.getEmitOutput(file).outputFiles
+      };
+
+      this.output.set(file, output);
+    }
+
+    return output.files;
   }
 
   /**

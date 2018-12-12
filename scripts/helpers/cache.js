@@ -39,10 +39,9 @@ class Cache {
 
   /**
    * @param {string} key
-   * @param {string} revision
    * @return {T | null}
    */
-  get(key, revision) {
+  get(key) {
     const file = this.pathTo(key);
 
     if (!isFile(file)) {

@@ -1,14 +1,12 @@
-const { default: chalk } = require("chalk");
-
 const { findFiles } = require("./helpers/file-system");
-const { and, endsWith, not } = require("./helpers/predicates");
+const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
-const { isTestable, hasSpecification } = require("./helpers/typescript");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
+const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
 
 /**
@@ -19,7 +17,7 @@ const handle = (files, project) => {
   for (const file of files) {
     const start = now();
 
-    if (build(file, project)) {
+    if (diagnose(file, project) && build(file, project)) {
       const duration = now(start);
 
       notify.success(
@@ -41,19 +39,7 @@ for (const pkg of packages) {
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
-  for (const file of findFiles(`${root}/src`, endsWith(".ts"))) {
-    if (isTestable(file, project) && !hasSpecification(file)) {
-      notify.warn(`${chalk.gray(file)} Missing spec file`);
-    }
-  }
-
-  handle(
-    findFiles(
-      root,
-      and(endsWith(".ts", ".tsx"), not(endsWith(".spec.ts", ".spec.tsx")))
-    ),
-    project
-  );
+  handle(findFiles(root, endsWith(".ts", ".tsx")), project);
 }
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
