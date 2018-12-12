@@ -7,13 +7,6 @@ const cacheRoot = process.env.CACHE_DIR || ".cache";
 
 /**
  * @template T
- * @typedef {object} Entry
- * @property {string} revision
- * @property {T} value
- */
-
-/**
- * @template T
  */
 class Cache {
   /**
@@ -30,6 +23,7 @@ class Cache {
   /**
    * @private
    * @param {string} key
+   * @return {string}
    */
   pathTo(key) {
     return path.join(this.root, getDigest(key) + ".json");
@@ -37,20 +31,10 @@ class Cache {
 
   /**
    * @param {string} key
-   * @param {string} revision
    * @return {boolean}
    */
-  has(key, revision) {
-    const file = this.pathTo(key);
-
-    if (!isFile(file)) {
-      return false;
-    }
-
-    /** @type {Entry<T>} */
-    const entry = JSON.parse(readFile(file));
-
-    return entry.revision === revision;
+  has(key) {
+    return isFile(this.pathTo(key));
   }
 
   /**
@@ -65,25 +49,20 @@ class Cache {
       return null;
     }
 
-    /** @type {Entry<T>} */
-    const entry = JSON.parse(readFile(file));
+    /** @type {T} */
+    const value = JSON.parse(readFile(file));
 
-    if (entry.revision !== revision) {
-      return null;
-    }
-
-    return entry.value;
+    return value;
   }
 
   /**
    * @param {string} key
-   * @param {string} revision
    * @param {T} value
    */
-  set(key, revision, value) {
+  set(key, value) {
     const file = this.pathTo(key);
 
-    writeFile(file, JSON.stringify({ revision, value }));
+    writeFile(file, JSON.stringify(value));
   }
 }
 
