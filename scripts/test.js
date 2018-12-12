@@ -3,6 +3,7 @@ const { endsWith } = require("./helpers/predicates");
 const { packages } = require("./helpers/meta");
 const notify = require("./helpers/notify");
 
+const { build } = require("./tasks/build");
 const { test } = require("./tasks/test");
 
 for (const pkg of packages) {
@@ -10,7 +11,7 @@ for (const pkg of packages) {
   const files = findFiles(root, endsWith(".spec.ts", ".spec.tsx"));
 
   for (const file of files) {
-    if (test(file)) {
+    if (build(file) && test(file)) {
       notify.success(file);
     } else {
       process.exit(1);

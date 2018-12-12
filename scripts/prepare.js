@@ -33,13 +33,19 @@ handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
-  const project = new Project(`${root}/tsconfig.json`);
 
   clean(root);
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
 
-  handle(findFiles(root, endsWith(".ts", ".tsx")), project);
+  handle(
+    findFiles(root, endsWith(".ts", ".tsx")),
+
+    // Construct a project for use solely within the current scope, ensuring
+    // that allocated resources can be freed as soon as the package has been
+    // handled.
+    new Project(`${root}/tsconfig.json`)
+  );
 }
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
