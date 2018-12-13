@@ -1,11 +1,12 @@
-const path = require("path");
 const { parseFile } = require("./helpers/typescript");
 const { findFiles } = require("./helpers/file-system");
-const { endsWith } = require("./helpers/predicates");
+const { and, endsWith, not } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
+const { default: chalk } = require("chalk");
+const { hasSpecification, isTestable } = require("./helpers/typescript");
 
 const { build } = require("./tasks/build");
 const { clean } = require("./tasks/clean");
@@ -13,7 +14,6 @@ const {
   computeComments,
   createTODOSFile
 } = require("./helpers/comment-computing");
-const { checkSpecFile } = require("./helpers/specfile-identifier");
 
 /**
  * @param {Iterable<string>} files
@@ -43,17 +43,29 @@ for (const pkg of packages) {
   clean(root);
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
-
-  for (const file of findFiles(root, endsWith(".ts", ".tsx"))) {
-    const source = parseFile(file);
-    computeComments(file, source);
-    handle([file], project);
-    if (!(file.indexOf(`${path.sep}src${path.sep}`) === -1)) {
-      checkSpecFile(file, source);
+  for (const file of findFiles(
+    `${root}/src`,
+    endsWith(".spec.ts", ".spec.tsx", ".ts")
+  )) {
+    if (
+      not(endsWith(".spec.ts", ".spec.tsx")) &&
+      isTestable(file, project) &&
+      !hasSpecification(file)
+    ) {
+      notify.warn(`${chalk.gray(file)} Missing spec file`);
     }
-  }
-}
 
+    computeComments(file, parseFile(file));
+  }
+
+  handle(
+    findFiles(
+      root,
+      and(endsWith(".ts", ".tsx"), not(endsWith(".spec.ts", ".spec.tsx")))
+    ),
+    project
+  );
+}
 createTODOSFile();
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
