@@ -2,12 +2,17 @@ const path = require("path");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
 const { default: chalk } = require("chalk");
+const { codec, hash } = require("sjcl");
 
 const { Workspace, workspace } = require("../helpers/workspace");
+const { Cache } = require("../helpers/cache");
 const { Project } = require("../helpers/project");
+const { readFile } = require("../helpers/file-system");
 const { isTestable, hasSpecification } = require("../helpers/typescript");
 const notify = require("../helpers/notify");
 const { format } = require("./format");
+
+const cache = new Cache("versioning");
 
 /**
  * @param {string} file
@@ -15,6 +20,12 @@ const { format } = require("./format");
  * @return {boolean}
  */
 function diagnose(file, project = workspace) {
+  const fileHash = codec.hex.fromBits(hash.sha256.hash(readFile(file)));
+
+  if (fileHash === cache.get(file)) {
+    return true;
+  }
+
   if (process.env.CI === "true" && format(file)) {
     notify.error(`${chalk.gray(file)} File has not been formatted`);
     return false;
@@ -59,6 +70,8 @@ function diagnose(file, project = workspace) {
       return false;
     }
   }
+
+  cache.set(file, fileHash);
 
   return true;
 }
