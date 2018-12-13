@@ -1,5 +1,6 @@
 import { getAttribute } from "./get-attribute";
 import { getClosest } from "./get-closest";
+import { getId } from "./get-id";
 import { getRootNode } from "./get-root-node";
 import { isElement } from "./guards";
 import { isLabelable } from "./is-labelable";
@@ -29,7 +30,7 @@ export function getLabel(element: Element, context: Node): Element | null {
     return null;
   }
 
-  const id = getAttribute(element, "id");
+  const id = getId(element);
 
   if (id !== null && id !== "") {
     const rootNode = getRootNode(element, context);
@@ -44,7 +45,13 @@ export function getLabel(element: Element, context: Node): Element | null {
           getAttribute(node, "for") === id
       );
 
-      if (label !== null) {
+      const target = querySelector(
+        rootNode,
+        context,
+        node => isElement(node) && getId(node) === id
+      );
+
+      if (label !== null && target === element) {
         return label as Element;
       }
     }
