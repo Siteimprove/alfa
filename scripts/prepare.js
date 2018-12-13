@@ -1,4 +1,3 @@
-const { parseFile } = require("./helpers/typescript");
 const { findFiles } = require("./helpers/file-system");
 const { and, endsWith, not } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
@@ -6,7 +5,11 @@ const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
 const { default: chalk } = require("chalk");
-const { hasSpecification, isTestable } = require("./helpers/typescript");
+const {
+  hasSpecification,
+  isTestable,
+  parseFile
+} = require("./helpers/typescript");
 
 const { build } = require("./tasks/build");
 const { clean } = require("./tasks/clean");

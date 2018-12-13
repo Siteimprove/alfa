@@ -9,6 +9,8 @@ const { SourceMapConsumer } = require("source-map");
 
 const notify = require("./notify");
 
+const { getLineAtOffset } = require("./get-line-at-offset");
+
 const { Byte } = require("./metrics/byte");
 const { Logical } = require("./metrics/logical");
 const { Arithmetic } = require("./metrics/arithmetic");
@@ -499,31 +501,6 @@ function getOriginalLocation(script, map, offset, line) {
     line: index,
     column: position.column
   };
-}
-
-/**
- * @param {Array<Line>} lines
- * @param {number} offset
- * @return {Line}
- */
-function getLineAtOffset(lines, offset) {
-  let lower = 0;
-  let upper = lines.length - 2;
-
-  while (lower < upper) {
-    const middle = (lower + (upper - lower) / 2) | 0;
-
-    if (offset < lines[middle].start) {
-      upper = middle - 1;
-    } else if (offset >= lines[middle + 1].start) {
-      lower = middle + 1;
-    } else {
-      lower = middle;
-      break;
-    }
-  }
-
-  return lines[lower];
 }
 
 /**
