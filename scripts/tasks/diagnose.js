@@ -2,17 +2,14 @@ const path = require("path");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
 const { default: chalk } = require("chalk");
-const { codec, hash } = require("sjcl");
 
 const { Workspace, workspace } = require("../helpers/workspace");
-const { Cache } = require("../helpers/cache");
 const { Project } = require("../helpers/project");
-const { readFile } = require("../helpers/file-system");
 const { isTestable, hasSpecification } = require("../helpers/typescript");
 const notify = require("../helpers/notify");
 const { format } = require("./format");
 
-const cache = new Cache("versioning");
+// const { getDigest } = require('../helpers/crypto');
 
 /**
  * @param {string} file
@@ -20,10 +17,37 @@ const cache = new Cache("versioning");
  * @return {boolean}
  */
 function diagnose(file, project = workspace) {
-  const fileHash = codec.hex.fromBits(hash.sha256.hash(readFile(file)));
+  let cached = true;
 
-  if (fileHash === cache.get(file)) {
-    return true;
+  if (project instanceof Project) {
+    const files = [
+      project.host.getCurrentDirectory() + "/" + file,
+      ...project.resolveImports(file)
+    ];
+
+    console.log(files);
+
+    for (const dependency of files) {
+      const current = project.host.getScriptVersion(dependency);
+      const cache = project.output.get(dependency);
+
+      if (!cache) {
+        console.log("No cache of ", dependency);
+        cached = false;
+        break;
+      }
+
+      if (cache.version !== current) {
+        cached = false;
+        break;
+      }
+    }
+
+    if (cached === true) {
+      return true;
+    }
+
+    process.exit();
   }
 
   if (process.env.CI === "true" && format(file)) {
@@ -70,8 +94,6 @@ function diagnose(file, project = workspace) {
       return false;
     }
   }
-
-  cache.set(file, fileHash);
 
   return true;
 }
