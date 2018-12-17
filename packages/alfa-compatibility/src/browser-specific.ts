@@ -1,5 +1,6 @@
 import { expandBrowsers } from "./expand-browsers";
 import { map } from "./map";
+import { reduce } from "./reduce";
 import { BrowserName, BrowserQuery, VersionSet } from "./types";
 
 /**
@@ -10,6 +11,9 @@ export type ValueList<T> = ReadonlyArray<
 >;
 
 export class BrowserSpecific<T> {
+  public static map = map;
+  public static reduce = reduce;
+
   public static of<T>(
     value: T,
     browsers: ReadonlyArray<BrowserQuery>
