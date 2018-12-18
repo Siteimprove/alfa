@@ -45,18 +45,25 @@ const handle = (files, project) => {
  * @param {string} file
  * @param {Set<string>} diagnosed
  * @param {Project} [project]
+ * @param {boolean} isDependency
  */
-const handleDiagnosation = function(file, diagnosed, project) {
+const handleDiagnosation = function(
+  file,
+  diagnosed,
+  project,
+  isDependency = false
+) {
   if (diagnosed.has(file)) {
     return;
   }
 
   project = project || workspace.projectFor(file);
 
-  if (project.isChanged(file)) {
+  if (isDependency || project.isChanged(file)) {
     const start = now();
 
     if (diagnose(file, project)) {
+      diagnosed.add(file);
       const duration = now(start);
 
       notify.success(
@@ -69,14 +76,12 @@ const handleDiagnosation = function(file, diagnosed, project) {
         const { incoming } = edges;
 
         for (const dependency of incoming) {
-          handleDiagnosation(dependency, diagnosed, project);
+          handleDiagnosation(dependency, diagnosed, project, true);
         }
       }
     } else {
       process.exit(1);
     }
-
-    diagnosed.add(file);
   }
 
   build(file, project);
