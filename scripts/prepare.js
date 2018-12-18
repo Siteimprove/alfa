@@ -46,20 +46,14 @@ const handle = (files, project) => {
  * @param {Set<string>} diagnosed
  * @param {Project} [project]
  */
-const handleDiagnosation = function(
-  file,
-  diagnosed,
-  project,
-  dependency = false
-) {
+const handleDiagnosation = function(file, diagnosed, project) {
   if (diagnosed.has(file)) {
     return;
   }
 
   project = project || workspace.projectFor(file);
 
-  if (dependency || project.isChanged(file)) {
-    console.log(file);
+  if (project.isChanged(file)) {
     const start = now();
 
     if (diagnose(file, project)) {
@@ -75,7 +69,7 @@ const handleDiagnosation = function(
         const { incoming } = edges;
 
         for (const dependency of incoming) {
-          handleDiagnosation(dependency, diagnosed, project, true);
+          handleDiagnosation(dependency, diagnosed, project);
         }
       }
     } else {
