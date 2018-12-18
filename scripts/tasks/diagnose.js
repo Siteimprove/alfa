@@ -9,47 +9,12 @@ const { isTestable, hasSpecification } = require("../helpers/typescript");
 const notify = require("../helpers/notify");
 const { format } = require("./format");
 
-// const { getDigest } = require('../helpers/crypto');
-
 /**
  * @param {string} file
  * @param {Project | Workspace} [project]
  * @return {boolean}
  */
 function diagnose(file, project = workspace) {
-  let cached = true;
-
-  if (project instanceof Project) {
-    const files = [
-      project.host.getCurrentDirectory() + "/" + file,
-      ...project.resolveImports(file)
-    ];
-
-    console.log(files);
-
-    for (const dependency of files) {
-      const current = project.host.getScriptVersion(dependency);
-      const cache = project.output.get(dependency);
-
-      if (!cache) {
-        console.log("No cache of ", dependency);
-        cached = false;
-        break;
-      }
-
-      if (cache.version !== current) {
-        cached = false;
-        break;
-      }
-    }
-
-    if (cached === true) {
-      return true;
-    }
-
-    process.exit();
-  }
-
   if (process.env.CI === "true" && format(file)) {
     notify.error(`${chalk.gray(file)} File has not been formatted`);
     return false;

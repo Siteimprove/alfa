@@ -73,6 +73,20 @@ class Project {
 
   /**
    * @param {string} file
+   * @return {boolean}
+   */
+  isChanged(file) {
+    file = this.resolvePath(file);
+
+    const { version } = this.host.addFile(file);
+
+    let output = this.output.get(file);
+
+    return output === null || output.version !== version;
+  }
+
+  /**
+   * @param {string} file
    * @return {TypeScript.SourceFile | null}
    */
   getSource(file) {
