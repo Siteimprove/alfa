@@ -59,6 +59,7 @@ const handleDiagnosation = function(
   project = project || workspace.projectFor(file);
 
   if (dependency || project.isChanged(file)) {
+    console.log(file);
     const start = now();
 
     if (diagnose(file, project)) {
