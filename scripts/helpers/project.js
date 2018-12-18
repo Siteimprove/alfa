@@ -1,6 +1,7 @@
 const path = require("path");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
+
 const { getDigest } = require("./crypto");
 const {
   isDirectory,
@@ -9,15 +10,20 @@ const {
   readFile,
   realPath
 } = require("./file-system");
-
-const { forEachChild } = TypeScript;
+const { Cache } = require("./cache");
 
 /**
- * @typedef {Object} ScriptInfo
+ * @typedef {object} ScriptInfo
  * @property {string} version
  * @property {string} text
  * @property {TypeScript.IScriptSnapshot} snapshot
  * @property {TypeScript.ScriptKind} kind
+ */
+
+/**
+ * @typedef {object} ScriptOutput
+ * @property {string} version
+ * @property {Array<TypeScript.OutputFile>} files
  */
 
 class Project {
@@ -40,6 +46,23 @@ class Project {
 
     /**
      * @private
+     * @type {TypeScript.ModuleResolutionCache}
+     */
+    this.modules = TypeScript.createModuleResolutionCache(
+      this.host.getCurrentDirectory(),
+      file => {
+        return this.resolvePath(file);
+      }
+    );
+
+    /**
+     * @private
+     * @type {Cache<ScriptOutput>}
+     */
+    this.output = new Cache("compile");
+
+    /**
+     * @private
      * @type {TSLint.Configuration.IConfigurationFile | undefined}
      */
     this.tslint = TSLint.Configuration.findConfiguration(
@@ -49,12 +72,73 @@ class Project {
   }
 
   /**
-   * @private
+   * @param {string} file
+   * @return {TypeScript.SourceFile | null}
+   */
+  getSource(file) {
+    file = this.resolvePath(file);
+
+    this.host.addFile(file);
+
+    const program = this.service.getProgram();
+
+    if (program === undefined) {
+      return null;
+    }
+
+    const source = program.getSourceFile(file);
+
+    if (source === undefined) {
+      return null;
+    }
+
+    return source;
+  }
+
+  /**
    * @param {string} file
    * @return {string}
    */
-  resolve(file) {
+  resolvePath(file) {
     return path.resolve(process.cwd(), file);
+  }
+
+  /**
+   * @param {string} file
+   * @return {Iterable<string>}
+   */
+  resolveImports(file) {
+    file = this.resolvePath(file);
+
+    /** @type {Array<string>} */
+    const imports = [];
+
+    const { text } = this.host.addFile(file);
+    const { importedFiles } = TypeScript.preProcessFile(text);
+
+    for (let { fileName: importedFile } of importedFiles) {
+      const { resolvedModule } = TypeScript.resolveModuleName(
+        importedFile,
+        file,
+        this.host.getCompilationSettings(),
+        this.host,
+        this.modules
+      );
+
+      if (resolvedModule === undefined) {
+        continue;
+      }
+
+      const resolvedFile = resolvedModule.resolvedFileName;
+
+      if (resolvedFile.includes("node_modules")) {
+        continue;
+      }
+
+      imports.push(resolvedFile);
+    }
+
+    return imports;
   }
 
   /**
@@ -62,11 +146,11 @@ class Project {
    * @return {Array<TypeScript.Diagnostic>}
    */
   diagnose(file) {
-    file = this.resolve(file);
-
-    const { service } = this;
+    file = this.resolvePath(file);
 
     this.host.addFile(file);
+
+    const { service } = this;
 
     const diagnostics = [
       ...service.getSyntacticDiagnostics(file),
@@ -85,11 +169,22 @@ class Project {
    * @return {Array<TypeScript.OutputFile>}
    */
   compile(file) {
-    file = this.resolve(file);
+    file = this.resolvePath(file);
 
-    this.host.addFile(file);
+    const { version } = this.host.addFile(file);
 
-    return this.service.getEmitOutput(file).outputFiles;
+    let output = this.output.get(file);
+
+    if (output === null || output.version !== version) {
+      output = {
+        version,
+        files: this.service.getEmitOutput(file).outputFiles
+      };
+
+      this.output.set(file, output);
+    }
+
+    return output.files;
   }
 
   /**
@@ -97,7 +192,7 @@ class Project {
    * @return {Array<TSLint.RuleFailure>}
    */
   lint(file) {
-    file = this.resolve(file);
+    file = this.resolvePath(file);
 
     const { text } = this.host.addFile(file);
 
@@ -123,17 +218,9 @@ class Project {
    * @return {T | void}
    */
   walk(file, visitor) {
-    this.host.addFile(file);
+    const source = this.getSource(file);
 
-    const program = this.service.getProgram();
-
-    if (program === undefined) {
-      return;
-    }
-
-    const source = program.getSourceFile(file);
-
-    if (source !== undefined) {
+    if (source !== null) {
       return visit(source);
     }
 
@@ -148,7 +235,7 @@ class Project {
         return result;
       }
 
-      return forEachChild(node, visit);
+      return TypeScript.forEachChild(node, visit);
     }
   }
 }

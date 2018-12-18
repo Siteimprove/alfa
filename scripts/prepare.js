@@ -1,5 +1,5 @@
 const { findFiles } = require("./helpers/file-system");
-const { and, endsWith, not } = require("./helpers/predicates");
+const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
@@ -12,6 +12,7 @@ const {
 } = require("./helpers/typescript");
 
 const { build } = require("./tasks/build");
+const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
 const {
   computeComments,
@@ -26,7 +27,7 @@ const handle = (files, project) => {
   for (const file of files) {
     const start = now();
 
-    if (build(file, project)) {
+    if (diagnose(file, project) && build(file, project)) {
       const duration = now(start);
       notify.success(
         `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
@@ -41,32 +42,18 @@ handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
-  const project = new Project(`${root}/tsconfig.json`);
 
   clean(root);
 
   handle(findFiles(`${root}/scripts`, endsWith(".js")));
-  for (const file of findFiles(
-    `${root}/src`,
-    endsWith(".spec.ts", ".spec.tsx", ".ts")
-  )) {
-    if (
-      not(endsWith(".spec.ts", ".spec.tsx")) &&
-      isTestable(file, project) &&
-      !hasSpecification(file)
-    ) {
-      notify.warn(`${chalk.gray(file)} Missing spec file`);
-    }
-
-    computeComments(file, parseFile(file));
-  }
 
   handle(
-    findFiles(
-      root,
-      and(endsWith(".ts", ".tsx"), not(endsWith(".spec.ts", ".spec.tsx")))
-    ),
-    project
+    findFiles(root, endsWith(".ts", ".tsx")),
+
+    // Construct a project for use solely within the current scope, ensuring
+    // that allocated resources can be freed as soon as the package has been
+    // handled.
+    new Project(`${root}/tsconfig.json`)
   );
 }
 createTODOSFile();

@@ -11,7 +11,6 @@ export const ListBox: Role = {
   category: Category.Widget,
   inherits: () => [Select],
   owned: () => [Option],
-  required: () => [Attributes.Selected],
   supported: () => [
     Attributes.Multiselectable,
     Attributes.ReadOnly,
