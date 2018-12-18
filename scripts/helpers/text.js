@@ -32,3 +32,37 @@ function getLineAtOffset(lines, offset) {
 }
 
 exports.getLineAtOffset = getLineAtOffset;
+
+/**
+ * @param {string} input
+ * @return {Array<Line>}
+ */
+function parseLines(input) {
+  let offset = 0;
+
+  return input.split("\n").map((value, index) => {
+    const line = {
+      value,
+      index,
+      start: offset,
+      end: offset + value.length
+    };
+
+    offset = line.end + 1;
+
+    return line;
+  });
+}
+
+exports.parseLines = parseLines;
+
+/**
+ * @param {String} text
+ * @param {number} offset
+ * @return {number}
+ */
+function getLineNumber(text, offset) {
+  return getLineAtOffset(parseLines(text), offset).index;
+}
+
+exports.getLineNumber = getLineNumber;

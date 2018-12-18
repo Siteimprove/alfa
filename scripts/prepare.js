@@ -1,23 +1,26 @@
 const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
+const { workspace } = require("./helpers/workspace");
 const { packages } = require("./helpers/meta");
 const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
-const { default: chalk } = require("chalk");
-const {
-  hasSpecification,
-  isTestable,
-  parseFile
-} = require("./helpers/typescript");
-
 const { build } = require("./tasks/build");
 const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
-const {
-  computeComments,
-  createTODOSFile
-} = require("./helpers/comment-computing");
+const TypeScript = require("typescript");
+const { computeComments, createTODOSFile } = require("./helpers/TODOS");
+
+/**
+ * @typedef {Object} AnnotadedComment
+ * @property {string} file
+ * @property {TypeScript.TodoComment} comment
+ */
+
+/**
+ * @type {Array<AnnotadedComment>}
+ */
+const todos = [];
 
 /**
  * @param {Iterable<string>} files
@@ -25,6 +28,7 @@ const {
  */
 const handle = (files, project) => {
   for (const file of files) {
+    project = project || workspace.projectFor(file);
     const start = now();
 
     if (diagnose(file, project) && build(file, project)) {
@@ -35,6 +39,8 @@ const handle = (files, project) => {
     } else {
       process.exit(1);
     }
+
+    todos.push(...computeComments(file, project));
   }
 };
 
@@ -56,6 +62,6 @@ for (const pkg of packages) {
     new Project(`${root}/tsconfig.json`)
   );
 }
-createTODOSFile();
+createTODOSFile(todos);
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));

@@ -9,7 +9,7 @@ const { SourceMapConsumer } = require("source-map");
 
 const notify = require("./notify");
 
-const { getLineAtOffset } = require("./get-line-at-offset");
+const { getLineAtOffset, parseLines } = require("./text");
 
 const { Byte } = require("./metrics/byte");
 const { Logical } = require("./metrics/logical");
@@ -317,27 +317,6 @@ async function parseScript({ url, functions }) {
   }
 
   return script;
-}
-
-/**
- * @param {string} input
- * @return {Array<Line>}
- */
-function parseLines(input) {
-  let offset = 0;
-
-  return input.split("\n").map((value, index) => {
-    const line = {
-      value,
-      index,
-      start: offset,
-      end: offset + value.length
-    };
-
-    offset = line.end + 1;
-
-    return line;
-  });
 }
 
 /**
