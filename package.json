@@ -44,7 +44,6 @@
     "ignore": "^5.0.4",
     "prettier": "1.15.3",
     "pretty-ms": "^4.0.0",
-    "sjcl": "^1.0.8",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.9",
     "tslint": "^5.11.0",
