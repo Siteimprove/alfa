@@ -141,4 +141,4 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 ## License
 
-Copyright &copy; 2017-2018 [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
+Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
