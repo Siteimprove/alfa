@@ -73,7 +73,13 @@ function virtualizeDocument(
 function virtualizeDocumentType(
   documentType: DocumentType
 ): import("@siteimprove/alfa-dom").DocumentType {
-  return { nodeType: 10, name: documentType.name, childNodes: [] };
+  return {
+    nodeType: 10,
+    name: documentType.name,
+    publicId: documentType.publicId,
+    systemId: documentType.systemId,
+    childNodes: []
+  };
 }
 
 function virtualizeDocumentFragment(
@@ -102,6 +108,7 @@ function virtualizeStyleSheet(
   styleSheet: CSSStyleSheet
 ): import("@siteimprove/alfa-dom").StyleSheet {
   return {
+    disabled: styleSheet.disabled,
     cssRules: Array.from(styleSheet.cssRules).map(virtualizeRule)
   };
 }

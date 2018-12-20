@@ -172,6 +172,16 @@ export interface DocumentType extends Node {
    * @see https://www.w3.org/TR/dom/#dom-documenttype-name
    */
   readonly name: string;
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-documenttype-publicid
+   */
+  readonly publicId: string;
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-documenttype-systemid
+   */
+  readonly systemId: string;
 }
 
 /**
@@ -198,6 +208,11 @@ export interface ShadowRoot extends DocumentFragment {
  * @see https://www.w3.org/TR/cssom/#cssstylesheet
  */
 export interface StyleSheet {
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-stylesheet-disabled
+   */
+  readonly disabled: boolean;
+
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssstylesheet-cssrules
    */

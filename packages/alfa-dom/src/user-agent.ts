@@ -8,6 +8,7 @@ import { Rule, RuleType, StyleRule, StyleSheet } from "./types";
  * @internal
  */
 export const UserAgent: StyleSheet = {
+  disabled: false,
   cssRules: [
     // cssRule("@namespace url(http://www.w3.org/1999/xhtml)"),
 
