@@ -116,7 +116,7 @@ class Project {
     const { text } = this.host.addFile(file);
     const { importedFiles } = TypeScript.preProcessFile(text);
 
-    for (let { fileName: importedFile } of importedFiles) {
+    for (const { fileName: importedFile } of importedFiles) {
       const { resolvedModule } = TypeScript.resolveModuleName(
         importedFile,
         file,
@@ -150,11 +150,9 @@ class Project {
 
     this.host.addFile(file);
 
-    const { service } = this;
-
     const diagnostics = [
-      ...service.getSyntacticDiagnostics(file),
-      ...service.getSemanticDiagnostics(file)
+      ...this.service.getSyntacticDiagnostics(file),
+      ...this.service.getSemanticDiagnostics(file)
     ];
 
     diagnostics.sort((a, b) => {
