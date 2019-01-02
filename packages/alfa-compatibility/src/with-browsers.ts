@@ -7,6 +7,9 @@ export function withBrowsers<T>(
   callback: () => T
 ): T;
 
+/**
+ * @internal
+ */
 export function withBrowsers<T>(
   browsers: Map<BrowserName, VersionSet>,
   callback: () => T

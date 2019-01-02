@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 function virtualizeNode(node: Node): import("@siteimprove/alfa-dom").Node {
   switch (node.nodeType) {
     case node.ELEMENT_NODE:

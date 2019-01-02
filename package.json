@@ -35,7 +35,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/node": "^10.12.12",
+    "@types/node": "^10.12.18",
     "@types/prettier": "^1.15.2",
     "axios": "^0.18.0",
     "chalk": "^2.4.1",

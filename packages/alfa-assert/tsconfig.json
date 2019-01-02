@@ -1,3 +1,29 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/assertion.ts",
+    "src/expect.ts",
+    "src/index.ts",
+    "src/is-element.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-highlight"
+    },
+    {
+      "path": "../alfa-util"
+    },
+    {
+      "path": "../alfa-wcag"
+    }
+  ]
 }
