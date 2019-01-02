@@ -80,7 +80,7 @@ class Project {
 
     const { version } = this.host.addFile(file);
 
-    let output = this.output.get(file);
+    const output = this.output.get(file);
 
     return output === null || output.version !== version;
   }

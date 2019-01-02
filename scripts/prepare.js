@@ -13,7 +13,6 @@ const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
 
 const dependencies = new Graph();
-// const diagnosedProjects = new Set();
 
 /**
  * @param {Iterable<string>} files
@@ -21,6 +20,7 @@ const dependencies = new Graph();
  */
 const handle = (files, project) => {
   files = [...files];
+
   for (const file of files) {
     project = project || workspace.projectFor(file);
 
@@ -31,39 +31,31 @@ const handle = (files, project) => {
     }
   }
 
-  /**
-   * @type {Set<string>}
-   */
-  const diagnosed = new Set();
-
   for (const file of files) {
-    handleDiagnosation(file, diagnosed, project);
-  }
-};
-
-/**
- * @param {string} file
- * @param {Set<string>} diagnosed
- * @param {Project} [project]
- * @param {boolean} isDependency
- */
-const handleDiagnosation = function(
-  file,
-  diagnosed,
-  project,
-  isDependency = false
-) {
-  if (diagnosed.has(file)) {
-    return;
+    visit(file);
   }
 
-  project = project || workspace.projectFor(file);
+  /**
+   * @param {string} file
+   * @param {Set<string>} [diagnosed]
+   * @param {boolean} [isDependency]
+   */
+  function visit(file, diagnosed = new Set(), isDependency = false) {
+    if (diagnosed.has(file)) {
+      return;
+    }
 
-  if (isDependency || project.isChanged(file)) {
+    project = project || workspace.projectFor(file);
+
+    if (!isDependency && !project.isChanged(file)) {
+      return;
+    }
+
     const start = now();
 
     if (diagnose(file, project)) {
       diagnosed.add(file);
+
       const duration = now(start);
 
       notify.success(
@@ -76,15 +68,15 @@ const handleDiagnosation = function(
         const { incoming } = edges;
 
         for (const dependency of incoming) {
-          handleDiagnosation(dependency, diagnosed, project, true);
+          visit(dependency, diagnosed, true);
         }
       }
     } else {
       process.exit(1);
     }
-  }
 
-  build(file, project);
+    build(file, project);
+  }
 };
 
 handle(findFiles("scripts", endsWith(".js")));
