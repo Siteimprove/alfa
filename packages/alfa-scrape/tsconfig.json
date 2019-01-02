@@ -1,6 +1,24 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "lib": ["es2015", "dom"]
-  }
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/scraper.ts", "src/virtualize.ts"],
+  "references": [
+    {
+      "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

@@ -63,7 +63,6 @@ function isTestable(file, project = workspace) {
             // Exported functions are testable.
             return true;
           }
-          break;
       }
     })
   );

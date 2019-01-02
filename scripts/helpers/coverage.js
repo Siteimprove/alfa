@@ -409,17 +409,11 @@ function parseRange(script, map, range, options = {}) {
   }
 
   if (options.trim === true) {
-    while (
-      isBlockBorder(content[startOffset]) ||
-      isWhitespace(content[startOffset])
-    ) {
+    while (isWhitespace(content[startOffset])) {
       startOffset++;
     }
 
-    while (
-      isBlockBorder(content[endOffset - 1]) ||
-      isWhitespace(content[endOffset - 1])
-    ) {
+    while (isWhitespace(content[endOffset - 1])) {
       endOffset--;
     }
   }
@@ -584,7 +578,7 @@ function printBlockCoverage(script, coverage, widths) {
     return;
   }
 
-  let uncovered = source.content
+  const uncovered = source.content
     .substring(start.offset, end.offset)
     .replace(/[^\s]+/g, word => chalk.red(word));
 
@@ -648,7 +642,7 @@ function printBlockCoverage(script, coverage, widths) {
 
       let truncation = "";
 
-      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
+      if (isTruncating && i === maxCoverageOutputLines / 2 - 1) {
         truncation += `\n${" ".repeat(widths.gutter / 2)}`;
         truncation += `${chalk.blue("\u205e")}${" ".repeat(widths.gutter / 2)}`;
         truncation += `${totalLines -

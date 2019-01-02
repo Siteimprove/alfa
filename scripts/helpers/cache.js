@@ -26,7 +26,7 @@ class Cache {
    * @return {string}
    */
   pathTo(key) {
-    return path.join(this.root, getDigest(key) + ".json");
+    return path.join(this.root, `${getDigest(key)}.json`);
   }
 
   /**

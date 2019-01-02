@@ -50,7 +50,7 @@ function writeFile(file, data, encoding = "utf8") {
   makeDirectory(path.dirname(file));
 
   if (typeof data !== "string") {
-    data = JSON.stringify(data, null, 2) + "\n";
+    data = `${JSON.stringify(data, null, 2)}\n`;
   }
 
   fs.writeFileSync(file, data, encoding);
@@ -63,7 +63,7 @@ exports.writeFile = writeFile;
  * @return {void}
  */
 function removeFile(file) {
-  return fs.unlinkSync(file);
+  fs.unlinkSync(file);
 }
 
 exports.removeFile = removeFile;
@@ -141,8 +141,13 @@ function watchFiles(pattern, listener, options = {}) {
       throw err;
     }
 
-    watcher.on("changed", file => handler("changed", file));
-    watcher.on("added", file => handler("added", file));
+    watcher.on("changed", file => {
+      handler("changed", file);
+    });
+
+    watcher.on("added", file => {
+      handler("added", file);
+    });
   });
 }
 
