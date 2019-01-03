@@ -8,7 +8,8 @@ const {
   isFile,
   readDirectory,
   readFile,
-  realPath
+  realPath,
+  writeFile
 } = require("./file-system");
 const { Cache } = require("./cache");
 
@@ -34,9 +35,9 @@ class Project {
   constructor(configFile, registry) {
     /**
      * @private
-     * @type {InMemoryLanguageServiceHost}
+     * @type {LanguageHost}
      */
-    this.host = new InMemoryLanguageServiceHost(configFile);
+    this.host = new LanguageHost(configFile);
 
     /**
      * @private
@@ -252,7 +253,7 @@ class Project {
   }
 }
 
-class InMemoryLanguageServiceHost {
+class LanguageHost {
   /**
    * @param {string} configFile
    */
@@ -360,7 +361,7 @@ class InMemoryLanguageServiceHost {
   /**
    * @return {boolean}
    */
-  useCaseSensitivefiles() {
+  useCaseSensitiveFileNames() {
     return false;
   }
 
@@ -371,6 +372,15 @@ class InMemoryLanguageServiceHost {
    */
   readFile(file, encoding = "utf8") {
     return readFile(file, encoding);
+  }
+
+  /**
+   * @param {string} file
+   * @param {string} content
+   * @return {void}
+   */
+  writeFile(file, content) {
+    writeFile(file, content);
   }
 
   /**
