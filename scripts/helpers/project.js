@@ -101,7 +101,7 @@ class Project {
    * @return {string}
    */
   resolvePath(file) {
-    return path.resolve(process.cwd(), file);
+    return path.resolve(this.host.getCurrentDirectory(), file);
   }
 
   /**
@@ -244,14 +244,28 @@ class LanguageHost {
    * @param {string} configFile
    */
   constructor(configFile) {
-    /** @type {Map<string, ScriptInfo>} */
+    /**
+     * @private
+     * @type {Map<string, ScriptInfo>}
+     */
     this.files = new Map();
 
-    /** @type {string} */
+    /**
+     * @private
+     * @type {string}
+     */
     this.version = "";
 
-    /** @type {object} */
+    /**
+     * @private
+     * @type {object}
+     */
     this.options = this.getOptions(configFile);
+
+    /**
+     * @type {string}
+     */
+    this.cwd = process.cwd();
   }
 
   /**
@@ -333,7 +347,7 @@ class LanguageHost {
    * @return {string}
    */
   getCurrentDirectory() {
-    return process.cwd();
+    return this.cwd;
   }
 
   /**
