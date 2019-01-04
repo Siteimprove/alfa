@@ -1,14 +1,35 @@
 const path = require("path");
 
-const { isFile, readFile, writeFile } = require("./file-system");
+const {
+  isFile,
+  isDirectory,
+  readFile,
+  readDirectory,
+  writeFile,
+  removeFile
+} = require("./file-system");
 const { getDigest } = require("./crypto");
 
 const cacheRoot = process.env.CACHE_DIR || ".cache";
 
 /**
  * @template T
+ * @typedef {object} Entry
+ * @property {string} key
+ * @property {T} value
+ */
+
+/**
+ * @template T
  */
 class Cache {
+  /**
+   * @type {number}
+   */
+  static get version() {
+    return 1;
+  }
+
   /**
    * @param {string} name
    */
@@ -17,7 +38,11 @@ class Cache {
      * @private
      * @type {string}
      */
-    this.root = path.join(cacheRoot, name);
+    this.root = path.join(
+      cacheRoot,
+      name,
+      getDigest(Cache.version.toString()).substring(0, 5)
+    );
   }
 
   /**
@@ -30,6 +55,20 @@ class Cache {
   }
 
   /**
+   * @return {Iterable<string>}
+   */
+  keys() {
+    if (!isDirectory(this.root)) {
+      return [];
+    }
+
+    return [...readDirectory(this.root)]
+      .map(file => path.join(this.root, file))
+      .filter(isFile)
+      .map(file => JSON.parse(readFile(file)).key);
+  }
+
+  /**
    * @param {string} key
    * @return {boolean}
    */
@@ -39,17 +78,17 @@ class Cache {
 
   /**
    * @param {string} key
-   * @return {T | null}
+   * @return {T | undefined}
    */
   get(key) {
     const file = this.pathTo(key);
 
     if (!isFile(file)) {
-      return null;
+      return undefined;
     }
 
-    /** @type {T} */
-    const value = JSON.parse(readFile(file));
+    /** @type {Entry<T>} */
+    const { value } = JSON.parse(readFile(file));
 
     return value;
   }
@@ -61,7 +100,23 @@ class Cache {
   set(key, value) {
     const file = this.pathTo(key);
 
-    writeFile(file, JSON.stringify(value));
+    writeFile(file, JSON.stringify({ key, value }));
+  }
+
+  /**
+   * @param {string} key
+   * @return {boolean}
+   */
+  delete(key) {
+    const file = this.pathTo(key);
+
+    if (!isFile(file)) {
+      return false;
+    }
+
+    removeFile(file);
+
+    return true;
   }
 }
 

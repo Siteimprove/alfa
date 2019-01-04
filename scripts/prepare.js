@@ -11,10 +11,14 @@ const { clean } = require("./tasks/clean");
 
 /**
  * @param {Iterable<string>} files
- * @param {Project} [project]
+ * @param {Project} project
  */
 const handle = (files, project) => {
   for (const file of files) {
+    project.addFile(file);
+  }
+
+  for (const file of project.buildProgram()) {
     const start = now();
 
     if (diagnose(file, project) && build(file, project)) {
@@ -29,14 +33,14 @@ const handle = (files, project) => {
   }
 };
 
-handle(findFiles("scripts", endsWith(".js")));
+// handle(findFiles("scripts", endsWith(".js")), new Project("scripts/tsconfig.json"));
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
 
   clean(root);
 
-  handle(findFiles(`${root}/scripts`, endsWith(".js")));
+  // handle(findFiles(`${root}/scripts`, endsWith(".js")), new Project(`${root}/scripts/tsconfig.json`));
 
   handle(
     findFiles(root, endsWith(".ts", ".tsx")),
@@ -48,4 +52,4 @@ for (const pkg of packages) {
   );
 }
 
-handle(findFiles("docs", endsWith(".ts", ".tsx")));
+// handle(findFiles("docs", endsWith(".ts", ".tsx")));

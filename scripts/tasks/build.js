@@ -1,16 +1,16 @@
 const { writeFile } = require("../helpers/file-system");
-const { Workspace, workspace } = require("../helpers/workspace");
+const { workspace } = require("../helpers/workspace");
 const { Project } = require("../helpers/project");
 
 /**
  * @param {string} file
- * @param {Project | Workspace} [project]
+ * @param {Project} [project]
  * @return {boolean}
  */
-function build(file, project = workspace) {
-  const compiled = project.compile(file);
+function build(file, project = workspace.projectFor(file)) {
+  const files = project.getOutputFiles(file);
 
-  for (const { name, text } of compiled) {
+  for (const { name, text } of files) {
     writeFile(name, text);
   }
 

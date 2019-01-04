@@ -3,211 +3,243 @@ const TypeScript = require("typescript");
 const TSLint = require("tslint");
 
 const { getDigest } = require("./crypto");
-const {
-  isDirectory,
-  isFile,
-  readDirectory,
-  readFile,
-  realPath,
-  writeFile
-} = require("./file-system");
+const { readFile } = require("./file-system");
 const { Cache } = require("./cache");
-
-/**
- * @typedef {object} ScriptInfo
- * @property {string} version
- * @property {string} text
- * @property {TypeScript.IScriptSnapshot} snapshot
- * @property {TypeScript.ScriptKind} kind
- */
 
 /**
  * @typedef {object} ScriptOutput
  * @property {string} version
- * @property {Array<TypeScript.OutputFile>} files
  */
 
 class Project {
   /**
    * @param {string} configFile
-   * @param {TypeScript.DocumentRegistry} [registry]
    */
-  constructor(configFile, registry) {
+  constructor(configFile) {
     /**
      * @private
-     * @type {LanguageHost}
+     * @type {Map<string, ScriptOutput>}
      */
-    this.host = new LanguageHost(configFile);
+    this.files = new Map();
 
     /**
      * @private
-     * @type {TypeScript.LanguageService}
+     * @type {TypeScript.CompilerOptions}
      */
-    this.service = TypeScript.createLanguageService(this.host, registry);
+    this.options = getCompilerOptions(configFile);
 
     /**
      * @private
-     * @type {TypeScript.ModuleResolutionCache}
+     * @type {Array<TypeScript.ProjectReference>}
      */
-    this.modules = TypeScript.createModuleResolutionCache(
-      this.host.getCurrentDirectory(),
-      file => {
-        return this.resolvePath(file);
-      }
+    this.references = getProjectReferences(configFile);
+
+    /**
+     * @private
+     * @type {TypeScript.CompilerHost}
+     */
+    this.host = TypeScript.createCompilerHost(this.options);
+
+    /**
+     * @private
+     * @type {TypeScript.EmitAndSemanticDiagnosticsBuilderProgram}
+     */
+    this.program = TypeScript.createEmitAndSemanticDiagnosticsBuilderProgram(
+      [...this.files.keys()],
+      this.options,
+      this.host,
+      this.program,
+      undefined,
+      this.references
     );
-
-    /**
-     * @private
-     * @type {Cache<ScriptOutput>}
-     */
-    this.output = new Cache("compile");
 
     /**
      * @private
      * @type {TSLint.Configuration.IConfigurationFile | undefined}
      */
-    this.tslint = TSLint.Configuration.findConfiguration(
-      "tslint.json",
-      configFile
-    ).results;
+    this.linter = getLinterOptions(configFile);
+  }
+
+  /**
+   * @return {Iterable<string>}
+   */
+  *buildProgram() {
+    console.time("Program");
+    this.program = TypeScript.createEmitAndSemanticDiagnosticsBuilderProgram(
+      [...this.files.keys()],
+      this.options,
+      this.host,
+      this.program,
+      undefined,
+      this.references
+    );
+    console.timeEnd("Program");
+
+    // while (true) {
+    //   const next = this.program.emitNextAffectedFile();
+
+    //   if (next === undefined) {
+    //     break;
+    //   }
+
+    //   yield next.affected.fileName;
+    // }
+
+    /**
+     * @return {{ file: string, emitted: boolean } | undefined}
+     */
+    const getNext = () => {
+      let emitted = false;
+
+      const next = this.program.emitNextAffectedFile(file => {
+        emitted = true;
+      });
+
+      if (next !== undefined && "fileName" in next.affected) {
+        const file = path.relative(
+          this.host.getCurrentDirectory(),
+          next.affected.fileName
+        );
+
+        return { file, emitted };
+      }
+
+      return undefined;
+    };
+
+    let next = getNext();
+
+    while (next !== undefined) {
+      const { file, emitted } = next;
+
+      next = getNext();
+
+      if (emitted && !file.startsWith("node_modules")) {
+        yield file;
+      }
+    }
   }
 
   /**
    * @param {string} file
-   * @return {TypeScript.SourceFile | null}
+   * @return {boolean}
    */
-  getSource(file) {
-    file = this.resolvePath(file);
+  addFile(file) {
+    file = path.resolve(file);
 
-    this.host.addFile(file);
+    const version = getDigest(readFile(file));
 
-    const program = this.service.getProgram();
+    const existing = this.files.get(file);
 
-    if (program === undefined) {
-      return null;
+    if (existing !== undefined && existing.version === version) {
+      return false;
     }
 
-    const source = program.getSourceFile(file);
+    this.files.set(file, { version });
 
-    if (source === undefined) {
-      return null;
-    }
-
-    return source;
+    return true;
   }
 
   /**
    * @param {string} file
-   * @return {string}
+   * @return {boolean}
    */
-  resolvePath(file) {
-    return path.resolve(this.host.getCurrentDirectory(), file);
+  deleteFile(file) {
+    file = path.resolve(file);
+
+    return this.files.delete(file);
   }
 
   /**
    * @param {string} file
    * @return {Iterable<string>}
    */
-  resolveImports(file) {
-    file = this.resolvePath(file);
+  getDependencies(file) {
+    const source = this.program.getSourceFile(file);
 
-    /** @type {Array<string>} */
-    const imports = [];
-
-    const { text } = this.host.addFile(file);
-    const { importedFiles } = TypeScript.preProcessFile(text);
-
-    for (const { fileName: importedFile } of importedFiles) {
-      const { resolvedModule } = TypeScript.resolveModuleName(
-        importedFile,
-        file,
-        this.host.getCompilationSettings(),
-        this.host,
-        this.modules
-      );
-
-      if (resolvedModule === undefined) {
-        continue;
-      }
-
-      const resolvedFile = resolvedModule.resolvedFileName;
-
-      if (resolvedFile.includes("node_modules")) {
-        continue;
-      }
-
-      imports.push(resolvedFile);
+    if (source === undefined) {
+      return [];
     }
 
-    return imports;
+    return this.program.getAllDependencies(source);
   }
 
   /**
    * @param {string} file
-   * @return {Array<TypeScript.Diagnostic>}
+   * @return {Iterable<TypeScript.Diagnostic>}
    */
-  diagnose(file) {
-    file = this.resolvePath(file);
+  getDiagnostics(file) {
+    /** @type {Array<TypeScript.Diagnostic>} */
+    const diagnostics = [];
 
-    this.host.addFile(file);
+    const source = this.program.getSourceFile(file);
 
-    const diagnostics = [
-      ...this.service.getSyntacticDiagnostics(file),
-      ...this.service.getSemanticDiagnostics(file)
-    ];
+    if (source !== undefined) {
+      diagnostics.push(
+        ...this.program.getSemanticDiagnostics(source),
+        ...this.program.getSyntacticDiagnostics(source)
+      );
 
-    diagnostics.sort((a, b) => {
-      return (a.start || 0) - (b.start || 0);
-    });
+      diagnostics.sort((a, b) => {
+        return (a.start || 0) - (b.start || 0);
+      });
+    }
 
     return diagnostics;
   }
 
   /**
    * @param {string} file
-   * @return {Array<TypeScript.OutputFile>}
+   * @return {Iterable<TypeScript.OutputFile>}
    */
-  compile(file) {
-    file = this.resolvePath(file);
+  getOutputFiles(file) {
+    /** @type {Array<TypeScript.OutputFile>} */
+    const files = [];
 
-    const { version } = this.host.addFile(file);
+    const source = this.program.getSourceFile(file);
 
-    let output = this.output.get(file);
-
-    if (output === null || output.version !== version) {
-      output = {
-        version,
-        files: this.service.getEmitOutput(file).outputFiles
-      };
-
-      this.output.set(file, output);
+    if (source !== undefined) {
+      this.program.emit(source, (name, text, writeByteOrderMark) => {
+        files.push({ name, text, writeByteOrderMark });
+      });
     }
 
-    return output.files;
+    return files;
   }
 
   /**
    * @param {string} file
-   * @return {Array<TSLint.RuleFailure>}
+   * @return {Iterable<TSLint.RuleFailure>}
    */
-  lint(file) {
-    file = this.resolvePath(file);
+  getLintResults(file) {
+    /** @type {Array<TSLint.RuleFailure>} */
+    const results = [];
 
-    const { text } = this.host.addFile(file);
+    const source = this.program.getSourceFile(file);
 
-    const linter = new TSLint.Linter({ fix: false }, this.service.getProgram());
+    if (source !== undefined) {
+      const { fileName, text } = source;
 
-    linter.lint(file, text, this.tslint);
-
-    const { failures } = linter.getResult();
-
-    failures.sort((a, b) => {
-      return (
-        a.getStartPosition().getPosition() - b.getStartPosition().getPosition()
+      const linter = new TSLint.Linter(
+        { fix: false },
+        this.program.getProgram()
       );
-    });
 
-    return failures;
+      linter.lint(fileName, text, this.linter);
+
+      const { failures } = linter.getResult();
+
+      failures.sort((a, b) => {
+        return (
+          a.getStartPosition().getPosition() -
+          b.getStartPosition().getPosition()
+        );
+      });
+
+      results.push(...failures);
+    }
+
+    return results;
   }
 
   /**
@@ -216,10 +248,10 @@ class Project {
    * @param {function(TypeScript.Node): T | void} visitor
    * @return {T | void}
    */
-  walk(file, visitor) {
-    const source = this.getSource(file);
+  forEachChild(file, visitor) {
+    const source = this.program.getSourceFile(file);
 
-    if (source !== null) {
+    if (source !== undefined) {
       return visit(source);
     }
 
@@ -239,233 +271,50 @@ class Project {
   }
 }
 
-class LanguageHost {
-  /**
-   * @param {string} configFile
-   */
-  constructor(configFile) {
-    /**
-     * @private
-     * @type {Map<string, ScriptInfo>}
-     */
-    this.files = new Map();
+exports.Project = Project;
 
-    /**
-     * @private
-     * @type {number}
-     */
-    this.version = 0;
+/**
+ * @param {string} configFile
+ * @return {TypeScript.ParsedCommandLine}
+ */
+function getParsedConfiguration(configFile) {
+  const { config } = TypeScript.parseConfigFileTextToJson(
+    configFile,
+    readFile(configFile)
+  );
 
-    /**
-     * @private
-     * @type {object}
-     */
-    this.options = this.getOptions(configFile);
-
-    /**
-     * @type {string}
-     */
-    this.cwd = process.cwd();
-  }
-
-  /**
-   * @private
-   * @param {string} configFile
-   * @return {TypeScript.CompilerOptions}
-   */
-  getOptions(configFile) {
-    const { config } = TypeScript.parseConfigFileTextToJson(
-      configFile,
-      readFile(configFile)
-    );
-
-    const { options } = TypeScript.parseJsonConfigFileContent(
-      config,
-      TypeScript.sys,
-      path.dirname(configFile)
-    );
-
-    return options;
-  }
-
-  /**
-   * @return {TypeScript.CompilerOptions}
-   */
-  getCompilationSettings() {
-    return this.options;
-  }
-
-  /**
-   * @return {string}
-   */
-  getNewLine() {
-    return "\n";
-  }
-
-  /**
-   * @return {string}
-   */
-  getProjectVersion() {
-    return this.version.toString();
-  }
-
-  /**
-   * @return {Array<string>}
-   */
-  getScriptFileNames() {
-    return [...this.files.keys()];
-  }
-
-  /**
-   * @param {string} file
-   * @return {TypeScript.ScriptKind}
-   */
-  getScriptKind(file) {
-    const { kind } = this.files.get(file) || this.addFile(file);
-    return kind;
-  }
-
-  /**
-   * @param {string} file
-   * @return {string}
-   */
-  getScriptVersion(file) {
-    const { version } = this.files.get(file) || this.addFile(file);
-    return version;
-  }
-
-  /**
-   * @param {string} file
-   * @return {TypeScript.IScriptSnapshot}
-   */
-  getScriptSnapshot(file) {
-    const { snapshot } = this.files.get(file) || this.addFile(file);
-    return snapshot;
-  }
-
-  /**
-   * @return {string}
-   */
-  getCurrentDirectory() {
-    return this.cwd;
-  }
-
-  /**
-   * @param {TypeScript.CompilerOptions} options
-   * @return {string}
-   */
-  getDefaultLibFileName(options) {
-    return TypeScript.getDefaultLibFilePath(options);
-  }
-
-  /**
-   * @return {boolean}
-   */
-  useCaseSensitiveFileNames() {
-    return false;
-  }
-
-  /**
-   * @param {string} file
-   * @param {string} [encoding]
-   * @return {string}
-   */
-  readFile(file, encoding = "utf8") {
-    return readFile(file, encoding);
-  }
-
-  /**
-   * @param {string} file
-   * @param {string} content
-   * @return {void}
-   */
-  writeFile(file, content) {
-    writeFile(file, content);
-  }
-
-  /**
-   * @param {string} file
-   * @return {string}
-   */
-  realpath(file) {
-    return realPath(file);
-  }
-
-  /**
-   * @param {string} file
-   * @return {boolean}
-   */
-  fileExists(file) {
-    return isFile(file);
-  }
-
-  /**
-   * @param {string} directory
-   * @return {boolean}
-   */
-  directoryExists(directory) {
-    return isDirectory(directory);
-  }
-
-  /**
-   * @param {string} directory
-   * @return {Array<string>}
-   */
-  getDirectories(directory) {
-    return [...readDirectory(directory)].filter(found =>
-      isDirectory(path.join(directory, found))
-    );
-  }
-
-  /**
-   * @param {string} file
-   * @return {ScriptInfo}
-   */
-  addFile(file) {
-    const text = readFile(file);
-    const version = getDigest(text);
-
-    let current = this.files.get(file);
-
-    if (current !== undefined && current.version === version) {
-      return current;
-    }
-
-    this.version++;
-
-    const snapshot = TypeScript.ScriptSnapshot.fromString(text);
-
-    let kind = TypeScript.ScriptKind.Unknown;
-
-    switch (path.extname(file)) {
-      case ".js":
-        kind = TypeScript.ScriptKind.JS;
-        break;
-      case ".jsx":
-        kind = TypeScript.ScriptKind.JSX;
-        break;
-      case ".ts":
-        kind = TypeScript.ScriptKind.TS;
-        break;
-      case ".tsx":
-        kind = TypeScript.ScriptKind.TSX;
-    }
-
-    current = { version, text, kind, snapshot };
-
-    this.files.set(file, current);
-
-    return current;
-  }
-
-  /**
-   * @param {string} file
-   */
-  removeFile(file) {
-    if (this.files.delete(file)) {
-      this.version++;
-    }
-  }
+  return TypeScript.parseJsonConfigFileContent(
+    config,
+    TypeScript.sys,
+    path.dirname(configFile)
+  );
 }
 
-exports.Project = Project;
+/**
+ * @param {string} configFile
+ * @return {TypeScript.CompilerOptions}
+ */
+function getCompilerOptions(configFile) {
+  return getParsedConfiguration(configFile).options;
+}
+
+/**
+ * @param {string} configFile
+ * @return {Array<TypeScript.ProjectReference>}
+ */
+function getProjectReferences(configFile) {
+  return [...(getParsedConfiguration(configFile).projectReferences || [])];
+}
+
+/**
+ * @param {string} configFile
+ * @return {TSLint.Configuration.IConfigurationFile | undefined}
+ */
+function getLinterOptions(configFile) {
+  const { results } = TSLint.Configuration.findConfiguration(
+    "tslint.json",
+    configFile
+  );
+
+  return results;
+}

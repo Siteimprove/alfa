@@ -1,6 +1,7 @@
 const { watchFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { format, now } = require("./helpers/time");
+const { workspace } = require("./helpers/workspace");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
@@ -19,20 +20,28 @@ watchFiles(
     "docs/**/*.tsx"
   ],
   (event, file) => {
-    const start = now();
+    const project = workspace.projectFor(file);
 
-    let success = diagnose(file) && build(file);
+    if (project.addFile(file)) {
+      const start = now();
 
-    if (isSpec(file)) {
-      success = success && test(file);
-    }
+      for (const file of project.buildProgram()) {
+        let success = diagnose(file, project) && build(file, project);
 
-    const duration = now(start);
+        if (isSpec(file)) {
+          success = success && test(file);
+        }
 
-    if (success) {
-      notify.success(
-        `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
-      );
+        const duration = now(start);
+
+        if (success) {
+          notify.success(
+            `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
+          );
+        }
+      }
+    } else {
+      notify.skip(file);
     }
   }
 );
