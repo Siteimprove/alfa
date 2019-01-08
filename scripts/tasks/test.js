@@ -4,31 +4,26 @@ const { withExtension } = require("../helpers/path");
 const { fork } = require("../helpers/child-process");
 const notify = require("../helpers/notify");
 
-const { build } = require("./build");
+const flags = [
+  ...["--require", require.resolve("source-map-support/register")],
+  ...["--require", require.resolve("../helpers/coverage")]
+];
 
 /**
  * @param {string} file
  * @return {boolean}
  */
 function test(file) {
-  if (build(file)) {
-    const child = fork(withExtension(file, ".js"), [], {
-      stdio: "inherit",
-      execArgv: [
-        ...process.execArgv,
-        "--require",
-        require.resolve("source-map-support/register"),
-        "--require",
-        require.resolve("../helpers/coverage")
-      ]
-    });
+  const child = fork(withExtension(file, ".js"), [], {
+    stdio: "inherit",
+    execArgv: [...process.execArgv, ...flags]
+  });
 
-    if (child.status === 0) {
-      return true;
-    }
-
-    notify.error(chalk.gray(file));
+  if (child.status === 0) {
+    return true;
   }
+
+  notify.error(chalk.gray(file));
 
   return false;
 }

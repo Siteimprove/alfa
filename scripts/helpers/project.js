@@ -1,23 +1,30 @@
 const path = require("path");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
+
 const { getDigest } = require("./crypto");
 const {
   isDirectory,
   isFile,
   readDirectory,
   readFile,
-  realPath
+  realPath,
+  writeFile
 } = require("./file-system");
-
-const { forEachChild } = TypeScript;
+const { Cache } = require("./cache");
 
 /**
- * @typedef {Object} ScriptInfo
+ * @typedef {object} ScriptInfo
  * @property {string} version
  * @property {string} text
  * @property {TypeScript.IScriptSnapshot} snapshot
  * @property {TypeScript.ScriptKind} kind
+ */
+
+/**
+ * @typedef {object} ScriptOutput
+ * @property {string} version
+ * @property {Array<TypeScript.OutputFile>} files
  */
 
 class Project {
@@ -28,15 +35,32 @@ class Project {
   constructor(configFile, registry) {
     /**
      * @private
-     * @type {InMemoryLanguageServiceHost}
+     * @type {LanguageHost}
      */
-    this.host = new InMemoryLanguageServiceHost(configFile);
+    this.host = new LanguageHost(configFile);
 
     /**
      * @private
      * @type {TypeScript.LanguageService}
      */
     this.service = TypeScript.createLanguageService(this.host, registry);
+
+    /**
+     * @private
+     * @type {TypeScript.ModuleResolutionCache}
+     */
+    this.modules = TypeScript.createModuleResolutionCache(
+      this.host.getCurrentDirectory(),
+      file => {
+        return this.resolvePath(file);
+      }
+    );
+
+    /**
+     * @private
+     * @type {Cache<ScriptOutput>}
+     */
+    this.output = new Cache("compile");
 
     /**
      * @private
@@ -49,12 +73,73 @@ class Project {
   }
 
   /**
-   * @private
+   * @param {string} file
+   * @return {TypeScript.SourceFile | null}
+   */
+  getSource(file) {
+    file = this.resolvePath(file);
+
+    this.host.addFile(file);
+
+    const program = this.service.getProgram();
+
+    if (program === undefined) {
+      return null;
+    }
+
+    const source = program.getSourceFile(file);
+
+    if (source === undefined) {
+      return null;
+    }
+
+    return source;
+  }
+
+  /**
    * @param {string} file
    * @return {string}
    */
-  resolve(file) {
-    return path.resolve(process.cwd(), file);
+  resolvePath(file) {
+    return path.resolve(this.host.getCurrentDirectory(), file);
+  }
+
+  /**
+   * @param {string} file
+   * @return {Iterable<string>}
+   */
+  resolveImports(file) {
+    file = this.resolvePath(file);
+
+    /** @type {Array<string>} */
+    const imports = [];
+
+    const { text } = this.host.addFile(file);
+    const { importedFiles } = TypeScript.preProcessFile(text);
+
+    for (const { fileName: importedFile } of importedFiles) {
+      const { resolvedModule } = TypeScript.resolveModuleName(
+        importedFile,
+        file,
+        this.host.getCompilationSettings(),
+        this.host,
+        this.modules
+      );
+
+      if (resolvedModule === undefined) {
+        continue;
+      }
+
+      const resolvedFile = resolvedModule.resolvedFileName;
+
+      if (resolvedFile.includes("node_modules")) {
+        continue;
+      }
+
+      imports.push(resolvedFile);
+    }
+
+    return imports;
   }
 
   /**
@@ -62,15 +147,13 @@ class Project {
    * @return {Array<TypeScript.Diagnostic>}
    */
   diagnose(file) {
-    file = this.resolve(file);
-
-    const { service } = this;
+    file = this.resolvePath(file);
 
     this.host.addFile(file);
 
     const diagnostics = [
-      ...service.getSyntacticDiagnostics(file),
-      ...service.getSemanticDiagnostics(file)
+      ...this.service.getSyntacticDiagnostics(file),
+      ...this.service.getSemanticDiagnostics(file)
     ];
 
     diagnostics.sort((a, b) => {
@@ -85,11 +168,22 @@ class Project {
    * @return {Array<TypeScript.OutputFile>}
    */
   compile(file) {
-    file = this.resolve(file);
+    file = this.resolvePath(file);
 
-    this.host.addFile(file);
+    const { version } = this.host.addFile(file);
 
-    return this.service.getEmitOutput(file).outputFiles;
+    let output = this.output.get(file);
+
+    if (output === null || output.version !== version) {
+      output = {
+        version,
+        files: this.service.getEmitOutput(file).outputFiles
+      };
+
+      this.output.set(file, output);
+    }
+
+    return output.files;
   }
 
   /**
@@ -97,7 +191,7 @@ class Project {
    * @return {Array<TSLint.RuleFailure>}
    */
   lint(file) {
-    file = this.resolve(file);
+    file = this.resolvePath(file);
 
     const { text } = this.host.addFile(file);
 
@@ -123,17 +217,9 @@ class Project {
    * @return {T | void}
    */
   walk(file, visitor) {
-    this.host.addFile(file);
+    const source = this.getSource(file);
 
-    const program = this.service.getProgram();
-
-    if (program === undefined) {
-      return;
-    }
-
-    const source = program.getSourceFile(file);
-
-    if (source !== undefined) {
+    if (source !== null) {
       return visit(source);
     }
 
@@ -148,24 +234,38 @@ class Project {
         return result;
       }
 
-      return forEachChild(node, visit);
+      return TypeScript.forEachChild(node, visit);
     }
   }
 }
 
-class InMemoryLanguageServiceHost {
+class LanguageHost {
   /**
    * @param {string} configFile
    */
   constructor(configFile) {
-    /** @type {Map<string, ScriptInfo>} */
+    /**
+     * @private
+     * @type {Map<string, ScriptInfo>}
+     */
     this.files = new Map();
 
-    /** @type {string} */
-    this.version = "";
+    /**
+     * @private
+     * @type {number}
+     */
+    this.version = 0;
 
-    /** @type {object} */
+    /**
+     * @private
+     * @type {object}
+     */
     this.options = this.getOptions(configFile);
+
+    /**
+     * @type {string}
+     */
+    this.cwd = process.cwd();
   }
 
   /**
@@ -206,7 +306,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   getProjectVersion() {
-    return this.version;
+    return this.version.toString();
   }
 
   /**
@@ -247,7 +347,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   getCurrentDirectory() {
-    return process.cwd();
+    return this.cwd;
   }
 
   /**
@@ -261,7 +361,7 @@ class InMemoryLanguageServiceHost {
   /**
    * @return {boolean}
    */
-  useCaseSensitivefiles() {
+  useCaseSensitiveFileNames() {
     return false;
   }
 
@@ -272,6 +372,15 @@ class InMemoryLanguageServiceHost {
    */
   readFile(file, encoding = "utf8") {
     return readFile(file, encoding);
+  }
+
+  /**
+   * @param {string} file
+   * @param {string} content
+   * @return {void}
+   */
+  writeFile(file, content) {
+    writeFile(file, content);
   }
 
   /**
@@ -322,9 +431,9 @@ class InMemoryLanguageServiceHost {
       return current;
     }
 
-    const snapshot = TypeScript.ScriptSnapshot.fromString(text);
+    this.version++;
 
-    this.version = getDigest(this.version + version);
+    const snapshot = TypeScript.ScriptSnapshot.fromString(text);
 
     let kind = TypeScript.ScriptKind.Unknown;
 
@@ -353,7 +462,9 @@ class InMemoryLanguageServiceHost {
    * @param {string} file
    */
   removeFile(file) {
-    this.files.delete(file);
+    if (this.files.delete(file)) {
+      this.version++;
+    }
   }
 }
 

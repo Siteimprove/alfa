@@ -30,7 +30,7 @@
   "dependencies": {
     "@siteimprove/alfa-assert": "^0.0.0",
     "@siteimprove/alfa-dom": "^0.0.0",
-    "@types/jest": "^23.3.9"
+    "@types/jest": "^23.3.10"
   },
   "peerDependencies": {
     "jest": "^23.6.0"

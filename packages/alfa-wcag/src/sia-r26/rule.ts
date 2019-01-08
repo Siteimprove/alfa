@@ -26,9 +26,13 @@ export const SIA_R26: Atomic.Rule<Device | Document, Element> = {
     );
 
     expectations((aspect, target, expectation, question) => {
-      expectation(1, question("has-text-alternative"));
-      expectation(2, question("has-label"));
-      expectation(3, question("label-is-visible"));
+      const hasTextAlternative = question(1);
+      const hasLabel = question(2);
+      const labelIsVisible = question(3);
+
+      expectation(1, hasTextAlternative);
+      expectation(2, hasLabel);
+      expectation(3, labelIsVisible);
     });
   }
 };

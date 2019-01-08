@@ -40,7 +40,7 @@ export function audit<
 >(
   aspects: AspectsFor<A>,
   rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
-  answers: ReadonlyArray<Answer<T>> = []
+  answers: ReadonlyArray<Answer<A, T>> = []
 ): ReadonlyArray<Result<A, T> | Question<A, T>> {
   rules = isArray(rules) ? rules : values(rules);
 
@@ -48,14 +48,14 @@ export function audit<
 
   function question(
     rule: Atomic.Rule<A, T>,
-    id: string,
+    expectation: number,
     aspect: A,
     target: T
-  ): boolean {
+  ): boolean | null {
     const answer = answers.find(
       answer =>
-        answer.rule === rule.id &&
-        answer.question === id &&
+        answer.rule.id === rule.id &&
+        answer.expectation === expectation &&
         answer.aspect === aspect &&
         answer.target === target
     );
@@ -64,15 +64,15 @@ export function audit<
       return answer.answer;
     }
 
-    results.push({ rule: rule.id, question: id, aspect, target });
+    results.push({ rule, expectation, aspect, target });
 
-    return false;
+    return null;
   }
 
   for (const rule of sortRules(rules)) {
     if (isAtomic(rule)) {
-      auditAtomic<A, T>(aspects, rule, results, (id, aspect, target) =>
-        question(rule, id, aspect, target)
+      auditAtomic<A, T>(aspects, rule, results, (expectation, aspect, target) =>
+        question(rule, expectation, aspect, target)
       );
     } else {
       auditComposite<A, T>(aspects, rule, results);
@@ -86,7 +86,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rule: Atomic.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>,
-  question: (question: string, aspect: A, target: T) => boolean
+  question: (expectation: number, aspect: A, target: T) => boolean | null
 ): void {
   const targets: Array<[A, T]> | null = [];
 
@@ -101,7 +101,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
 
     if (targets.length === 0) {
       results.push({
-        rule: rule.id,
+        rule,
         outcome: Outcome.Inapplicable
       });
     }
@@ -110,7 +110,7 @@ function auditAtomic<A extends Aspect, T extends Target>(
   const expectations: Atomic.Expectations<A, T> = expectations => {
     for (const [aspect, target] of targets) {
       const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
-        rule: rule.id,
+        rule,
         outcome: Outcome.Passed,
         aspect,
         target,
@@ -133,10 +133,10 @@ function auditComposite<A extends Aspect, T extends Target>(
   rule: Composite.Rule<A, T>,
   results: Array<Result<A, T> | Question<A, T>>
 ): void {
-  const composes = new Map<Rule["id"], Rule<A, T>>();
+  const composes = new WeakMap<Rule<A, T>, Rule<A, T>>();
 
   for (const composite of rule.composes) {
-    composes.set(composite.id, composite);
+    composes.set(composite, composite);
   }
 
   const applicability: Array<Result<A, T>> = [];
@@ -167,7 +167,7 @@ function auditComposite<A extends Aspect, T extends Target>(
         }
 
         const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
-          rule: rule.id,
+          rule,
           outcome: Outcome.Passed,
           aspect,
           target,
@@ -186,33 +186,47 @@ function auditComposite<A extends Aspect, T extends Target>(
 
 function getExpectationEvaluater<A extends Aspect, T extends Target>(
   rule: Rule<any, any>,
-  result: Mutable<Result<any, any, Outcome.Passed | Outcome.Failed>>
-): (id: number, holds: boolean, data?: Data | null) => void {
+  result: Mutable<
+    Result<any, any, Outcome.Passed | Outcome.Failed | Outcome.CantTell>
+  >
+): (id: number, holds: boolean | null, data?: Data | null) => void {
   const { locales = [] } = rule;
 
   const locale = locales.find(locale => locale.id === "en");
 
   return (id, holds, data = null) => {
+    result.outcome =
+      holds === null
+        ? Outcome.CantTell
+        : holds
+        ? Outcome.Passed
+        : Outcome.Failed;
+
     let message: string | null = null;
 
     if (locale !== undefined) {
       const messages = locale.expectations[id];
 
       if (messages !== undefined) {
-        message = messages[holds ? "passed" : "failed"](
-          data === null ? {} : data
-        );
+        const callback = messages[result.outcome];
+
+        if (callback !== undefined) {
+          message = callback(data === null ? {} : data);
+        }
       }
     }
 
     if (message === null) {
-      message = `Expectation ${id} ${holds ? "holds" : "does not hold"}`;
+      const status =
+        holds === null
+          ? "was not evaluated"
+          : holds
+          ? "holds"
+          : "does not hold";
+
+      message = `Expectation ${id} ${status}`;
     }
 
     result.expectations[id] = { holds, message, data };
-
-    if (!holds) {
-      result.outcome = Outcome.Failed;
-    }
   };
 }

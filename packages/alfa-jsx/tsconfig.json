@@ -1,3 +1,12 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/jsx.ts", "src/types.ts", "test/jsx.spec.tsx"],
+  "references": [
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

@@ -25,6 +25,53 @@ test("Transforms JSX into DOM nodes", t => {
   });
 });
 
+test("Transforms JSX into DOM nodes with multiple children and tags", t => {
+  const hello = {
+    nodeType: 3,
+    data: "Hello ",
+    childNodes: []
+  };
+  const world = {
+    attributes: [],
+    nodeType: 1,
+    localName: "b",
+    shadowRoot: null,
+    prefix: null,
+    childNodes: [
+      {
+        nodeType: 3,
+        data: "world",
+        childNodes: []
+      }
+    ]
+  };
+  const mark = {
+    nodeType: 3,
+    data: "!",
+    childNodes: []
+  };
+
+  t.deepEqual(
+    <div class="foo">
+      Hello <b>world</b>!
+    </div>,
+    {
+      nodeType: 1,
+      prefix: null,
+      localName: "div",
+      attributes: [
+        {
+          prefix: null,
+          localName: "class",
+          value: "foo"
+        }
+      ],
+      shadowRoot: null,
+      childNodes: [hello, world, mark]
+    }
+  );
+});
+
 test("Handles boolean attributes when truthy", t => {
   const element = <div hidden />;
 

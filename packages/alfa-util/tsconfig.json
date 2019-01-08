@@ -1,3 +1,44 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/array/concat.ts",
+    "src/array/find.ts",
+    "src/array/group-by.ts",
+    "src/array/index-of.ts",
+    "src/array/map.ts",
+    "src/guard/has-key.ts",
+    "src/guard/is-number.ts",
+    "src/guard/is-object.ts",
+    "src/guard/is-string.ts",
+    "src/index.ts",
+    "src/number/clamp.ts",
+    "src/object/keys.ts",
+    "src/object/values.ts",
+    "src/option.ts",
+    "src/set/intersect.ts",
+    "src/type/immutable.ts",
+    "src/type/mutable.ts",
+    "src/type/predicate.ts",
+    "src/type/primitive.ts",
+    "src/url.ts",
+    "test/array/concat.spec.ts",
+    "test/array/find.spec.ts",
+    "test/array/group-by.spec.ts",
+    "test/array/index-of.spec.ts",
+    "test/array/map.spec.ts",
+    "test/guard/has-key.spec.ts",
+    "test/guard/is-number.spec.ts",
+    "test/guard/is-object.spec.ts",
+    "test/guard/is-string.spec.ts",
+    "test/number/clamp.spec.ts",
+    "test/object/keys.spec.ts",
+    "test/object/values.spec.ts",
+    "test/option.spec.ts",
+    "test/set/intersect.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
 }

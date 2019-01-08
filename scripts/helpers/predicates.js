@@ -3,11 +3,21 @@
  */
 
 /**
- * @param {Array<string>} endings
+ * @param {Array<string>} prefixes
  * @return {Predicate}
  */
-function endsWith(...endings) {
-  return input => endings.some(ending => input.endsWith(ending));
+function startsWith(...prefixes) {
+  return input => prefixes.some(prefix => input.startsWith(prefix));
+}
+
+exports.startsWith = startsWith;
+
+/**
+ * @param {Array<string>} postfixes
+ * @return {Predicate}
+ */
+function endsWith(...postfixes) {
+  return input => postfixes.some(postfix => input.endsWith(postfix));
 }
 
 exports.endsWith = endsWith;

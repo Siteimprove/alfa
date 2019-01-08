@@ -17,7 +17,7 @@ export function isResult<A extends Aspect, T extends Target>(
 export function isQuestion<A extends Aspect, T extends Target>(
   input: Result<A, T> | Question<A, T>
 ): input is Question<A, T> {
-  return "question" in input;
+  return !isResult(input);
 }
 
 export function isAtomic<A extends Aspect, T extends Target>(

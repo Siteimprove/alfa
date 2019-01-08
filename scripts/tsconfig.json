@@ -3,7 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "declaration": false,
     "noEmit": true
-  }
+  },
+  "files": []
 }
