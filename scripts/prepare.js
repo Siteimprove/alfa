@@ -47,32 +47,30 @@ const handle = (files, project) => {
 
     project = project || workspace.projectFor(file);
 
-    if (!isDependency && !project.isChanged(file)) {
-      return;
-    }
+    if (isDependency || project.isChanged(file)) {
+      const start = now();
 
-    const start = now();
+      if (diagnose(file, project)) {
+        diagnosed.add(file);
 
-    if (diagnose(file, project)) {
-      diagnosed.add(file);
+        const duration = now(start);
 
-      const duration = now(start);
+        notify.success(
+          `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
+        );
 
-      notify.success(
-        `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
-      );
+        const edges = dependencies.getEdges(file);
 
-      const edges = dependencies.getEdges(file);
+        if (edges !== null) {
+          const { incoming } = edges;
 
-      if (edges !== null) {
-        const { incoming } = edges;
-
-        for (const dependency of incoming) {
-          visit(dependency, diagnosed, true);
+          for (const dependency of incoming) {
+            visit(dependency, diagnosed, true);
+          }
         }
+      } else {
+        process.exit(1);
       }
-    } else {
-      process.exit(1);
     }
 
     build(file, project);
