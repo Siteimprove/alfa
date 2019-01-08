@@ -266,9 +266,9 @@ class LanguageHost {
 
     /**
      * @private
-     * @type {string}
+     * @type {number}
      */
-    this.version = "";
+    this.version = 0;
 
     /**
      * @private
@@ -320,7 +320,7 @@ class LanguageHost {
    * @return {string}
    */
   getProjectVersion() {
-    return this.version;
+    return this.version.toString();
   }
 
   /**
@@ -445,9 +445,9 @@ class LanguageHost {
       return current;
     }
 
-    const snapshot = TypeScript.ScriptSnapshot.fromString(text);
+    this.version++;
 
-    this.version = getDigest(this.version + version);
+    const snapshot = TypeScript.ScriptSnapshot.fromString(text);
 
     let kind = TypeScript.ScriptKind.Unknown;
 
@@ -476,7 +476,9 @@ class LanguageHost {
    * @param {string} file
    */
   removeFile(file) {
-    this.files.delete(file);
+    if (this.files.delete(file)) {
+      this.version++;
+    }
   }
 }
 
