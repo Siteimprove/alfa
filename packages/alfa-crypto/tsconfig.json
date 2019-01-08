@@ -1,3 +1,14 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/get-hash.ts",
+    "src/index.ts",
+    "src/types.ts",
+    "test/get-hash.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
 }

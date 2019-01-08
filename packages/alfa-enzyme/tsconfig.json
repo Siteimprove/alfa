@@ -1,3 +1,35 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "chai.ts",
+    "jest.ts",
+    "should.ts",
+    "src/from-enzyme-wrapper.ts",
+    "src/index.ts",
+    "src/is-enzyme-wrapper.ts",
+    "unexpected.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-chai"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jest"
+    },
+    {
+      "path": "../alfa-react"
+    },
+    {
+      "path": "../alfa-should"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-unexpected"
+    }
+  ]
 }

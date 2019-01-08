@@ -279,10 +279,16 @@ function createDocument(): Document {
   };
 }
 
-function createDocumentType(name: string): DocumentType {
+function createDocumentType(
+  name: string,
+  publicId = "",
+  systemId = ""
+): DocumentType {
   return {
     nodeType: NodeType.DocumentType,
     name,
+    publicId,
+    systemId,
     childNodes: []
   };
 }

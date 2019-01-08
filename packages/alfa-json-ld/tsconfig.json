@@ -1,3 +1,24 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/expand.ts",
+    "src/get-mapping.ts",
+    "src/guards.ts",
+    "src/index.ts",
+    "src/is-absolute-iri.ts",
+    "src/is-relative-iri.ts",
+    "src/process-context.ts",
+    "src/resolve-url.ts",
+    "src/types.ts",
+    "test/expand.spec.ts",
+    "test/helpers/person.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }
