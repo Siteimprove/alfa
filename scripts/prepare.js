@@ -2,10 +2,12 @@ const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
-const { format, now } = require("./helpers/time");
+const { format: formatTime, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
+const { default: chalk } = require("chalk");
 
 const { build } = require("./tasks/build");
+const { format } = require("./tasks/format");
 const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
 
@@ -21,7 +23,7 @@ const handle = (files, project) => {
       const duration = now(start);
 
       notify.success(
-        `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
+        `${file} ${formatTime(duration, { color: "yellow", threshold: 400 })}`
       );
     } else {
       process.exit(1);
@@ -33,6 +35,13 @@ handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
+
+  for (const file of findFiles(`${root}/`)) {
+    if (process.env.CI === "true" && format(file)) {
+      notify.error(`${chalk.gray(file)} File has not been formatted`);
+      process.exit(1);
+    }
+  }
 
   clean(root);
 

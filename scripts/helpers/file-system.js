@@ -70,12 +70,17 @@ exports.removeFile = removeFile;
 
 /**
  * @param {string | Iterable<string>} directories
- * @param {function(string): boolean} predicate
+ * @param {(function(string): boolean) | null} predicate
  * @param {{ gitIgnore?: boolean }} [options]
  * @param {Set<string>} [visited]
  * @return {Iterable<string>}
  */
-function* findFiles(directories, predicate, options = {}, visited = new Set()) {
+function* findFiles(
+  directories,
+  predicate = null,
+  options = {},
+  visited = new Set()
+) {
   if (typeof directories === "string") {
     directories = [directories];
   }
@@ -100,7 +105,7 @@ function* findFiles(directories, predicate, options = {}, visited = new Set()) {
 
       if (isDirectory(file)) {
         yield* findFiles(file, predicate, options, visited);
-      } else if (predicate(file)) {
+      } else if (predicate === null || predicate(file)) {
         yield file;
       }
     }
