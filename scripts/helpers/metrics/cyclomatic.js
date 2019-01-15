@@ -14,11 +14,6 @@ const { parseSource } = require("../typescript");
  */
 
 /**
- * @param {String} source
- */
-const createSource = source => parseSource(source);
-
-/**
  * @param {Script} script
  */
 function totalOperations(script) {
@@ -26,11 +21,11 @@ function totalOperations(script) {
   if (script.sources.length > 1) {
     // typescript
     for (let i = 1, n = script.sources.length; i < n; i++) {
-      total += visit(createSource(script.sources[i].content));
+      total += visit(parseSource(script.sources[i].content));
     }
   } else {
     // javascript
-    total += visit(createSource(script.sources[0].content));
+    total += visit(parseSource(script.sources[0].content));
   }
 
   return total;
@@ -84,7 +79,7 @@ const Cyclomatic = {
         }
 
         uncovered += visit(
-          createSource(
+          parseSource(
             file.content.substring(
               block.range.start.offset,
               block.range.end.offset
@@ -117,7 +112,7 @@ const Cyclomatic = {
     }
 
     const uncovered = visit(
-      createSource(
+      parseSource(
         file.content.substring(block.range.start.offset, block.range.end.offset)
       )
     );
