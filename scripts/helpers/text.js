@@ -55,14 +55,3 @@ function parseLines(input) {
 }
 
 exports.parseLines = parseLines;
-
-/**
- * @param {String} text
- * @param {number} offset
- * @return {number}
- */
-function getLineNumber(text, offset) {
-  return getLineAtOffset(parseLines(text), offset).index;
-}
-
-exports.getLineNumber = getLineNumber;

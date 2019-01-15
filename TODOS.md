@@ -1,8 +1,4 @@
-Last updated: Tue Dec 18 2018 - 4:03:55 PM
-
-# BUG:
-
-- [scripts/prepare.js:28](https://github.com/siteimprove/alfa/blob/todo-list-fix/scripts/prepare.js#L28): hello world!
+Last updated: Tue Jan 15 2019 - 10:38:28 AM
 
 # TODO:
 

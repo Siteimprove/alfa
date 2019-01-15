@@ -1,12 +1,20 @@
 const TypeScript = require("typescript");
 const { isFile, readFile, removeFile, writeFile } = require("./file-system");
 const { getBranch } = require("./git");
-const { getLineNumber } = require("./text");
+const { getLineAtOffset, parseLines } = require("./text");
 
 const { formattedDateTime } = require("./time");
 const { Project } = require("../helpers/project");
 
 const name = "TODOS.md";
+
+/**
+ * @typedef {Object} Line
+ * @property {string} value
+ * @property {number} index
+ * @property {number} start
+ * @property {number} end
+ */
 
 /**
  * @typedef {Object} AnnotadedComment
@@ -57,8 +65,19 @@ function createTODOSFile(todos) {
    * @type {Map<String, Array<String>>}
    */
   const grouping = new Map();
+  /**
+   * @type {Map<String, Array<Line>>}
+   */
+  const cache = new Map();
   for (const todo of todos) {
-    const line = getLineNumber(readFile(todo.file), todo.comment.position);
+    if (cache.get(todo.file) === undefined) {
+      cache.set(todo.file, parseLines(readFile(todo.file)));
+    }
+    const lines = cache.get(todo.file);
+    if (lines === undefined) {
+      continue;
+    }
+    const line = getLineAtOffset(lines, todo.comment.position).index;
     const message = todo.comment.message.substring(
       todo.comment.descriptor.text.length + 1
     );
