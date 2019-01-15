@@ -9,7 +9,7 @@ const { build } = require("./tasks/build");
 const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
 const TypeScript = require("typescript");
-const { computeComments, createTODOSFile } = require("./helpers/TODOS");
+const { computeComments, createTODOSFile } = require("./helpers/todos");
 
 /**
  * @typedef {Object} AnnotadedComment

@@ -56,7 +56,9 @@ function computeComments(file, project) {
  */
 function createTODOSFile(todos) {
   if (todos.length === 0) {
-    if (isFile(name)) removeFile(name);
+    if (isFile(name)) {
+      removeFile(name);
+    }
     return;
   }
 
@@ -100,7 +102,9 @@ function createTODOSFile(todos) {
     }
   }
 
-  if (grouping.keys() === undefined) return;
+  if (grouping.keys() === undefined) {
+    return;
+  }
   for (const key of grouping.keys()) {
     commentFileData += `# ${key}:\r\n`;
     const val = grouping.get(key);
