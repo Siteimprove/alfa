@@ -1,3 +1,15 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/format.ts",
+    "src/index.ts",
+    "src/test.ts",
+    "src/types.ts",
+    "test/test.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-highlight"
+    }
+  ]
 }

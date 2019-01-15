@@ -1,3 +1,18 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/characters.ts",
+    "src/get-category.ts",
+    "src/index.ts",
+    "src/types.ts",
+    "test/get-category.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

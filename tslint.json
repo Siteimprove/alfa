@@ -8,6 +8,7 @@
     "comment-format": [true, "check-space"],
     "curly": true,
     "deprecation": true,
+    "file-name-casing": [true, "kebab-case"],
     "import-spacing": true,
     "interface-over-type-literal": true,
     "jsdoc-format": true,
@@ -70,5 +71,6 @@
       "allow-pascal-case",
       "allow-leading-underscore"
     ]
-  }
+  },
+  "jsRules": true
 }

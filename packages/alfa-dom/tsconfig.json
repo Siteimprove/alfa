@@ -1,3 +1,115 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/ancestor-filter.ts",
+    "src/compare-document-position.ts",
+    "src/contains.ts",
+    "src/fulfills.ts",
+    "src/get-assigned-nodes.ts",
+    "src/get-assigned-slot.ts",
+    "src/get-attribute-namespace.ts",
+    "src/get-attribute-node.ts",
+    "src/get-attribute.ts",
+    "src/get-button-type.ts",
+    "src/get-cascade.ts",
+    "src/get-child-nodes.ts",
+    "src/get-class-list.ts",
+    "src/get-closest.ts",
+    "src/get-digest.ts",
+    "src/get-document-position.ts",
+    "src/get-element-namespace.ts",
+    "src/get-id.ts",
+    "src/get-input-type.ts",
+    "src/get-key-selector.ts",
+    "src/get-label.ts",
+    "src/get-next-element-sibling.ts",
+    "src/get-next-sibling.ts",
+    "src/get-node.ts",
+    "src/get-owner-element.ts",
+    "src/get-parent-element.ts",
+    "src/get-parent-node.ts",
+    "src/get-parent-rule.ts",
+    "src/get-previous-element-sibling.ts",
+    "src/get-previous-sibling.ts",
+    "src/get-root-node.ts",
+    "src/get-specificity.ts",
+    "src/get-style.ts",
+    "src/get-tab-index.ts",
+    "src/get-tab-sequence.ts",
+    "src/get-tag-name.ts",
+    "src/get-text-content.ts",
+    "src/guards.ts",
+    "src/has-attribute.ts",
+    "src/has-class.ts",
+    "src/has-text-content.ts",
+    "src/index.ts",
+    "src/is-disabled.ts",
+    "src/is-focusable.ts",
+    "src/is-labelable.ts",
+    "src/is-rendered.ts",
+    "src/is-tabbable.ts",
+    "src/matches.ts",
+    "src/query-selector.ts",
+    "src/rule-tree.ts",
+    "src/selector-map.ts",
+    "src/serialize.ts",
+    "src/traverse-node.ts",
+    "src/traverse-rule.ts",
+    "src/traverse-style-sheet.ts",
+    "src/types.ts",
+    "src/user-agent.ts",
+    "test/compare-document-position.spec.tsx",
+    "test/contains.spec.tsx",
+    "test/get-assigned-nodes.spec.tsx",
+    "test/get-assigned-slot.spec.tsx",
+    "test/get-attribute.spec.tsx",
+    "test/get-button-type.spec.tsx",
+    "test/get-child-nodes.spec.tsx",
+    "test/get-class-list.spec.tsx",
+    "test/get-closest.spec.tsx",
+    "test/get-digest.spec.tsx",
+    "test/get-document-position.spec.tsx",
+    "test/get-id.spec.tsx",
+    "test/get-input-type.spec.tsx",
+    "test/get-key-selector.spec.ts",
+    "test/get-label.spec.tsx",
+    "test/get-next-sibling.spec.tsx",
+    "test/get-node.spec.tsx",
+    "test/get-parent-node.spec.tsx",
+    "test/get-specificity.spec.ts",
+    "test/get-style.spec.tsx",
+    "test/get-tab-index.spec.tsx",
+    "test/get-tab-sequence.spec.tsx",
+    "test/get-text-content.spec.tsx",
+    "test/has-attribute.spec.tsx",
+    "test/has-class.spec.tsx",
+    "test/is-tabbable.spec.tsx",
+    "test/matches.spec.tsx",
+    "test/query-selector.spec.tsx",
+    "test/serialize.spec.tsx",
+    "test/user-agent.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-crypto"
+    },
+    {
+      "path": "../alfa-css"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-jsx"
+    },
+    {
+      "path": "../alfa-lang"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

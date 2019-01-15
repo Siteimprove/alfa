@@ -56,7 +56,6 @@ function visit(node) {
     case TypeScript.SyntaxKind.IfStatement:
     case TypeScript.SyntaxKind.WhileStatement:
       total++;
-      break;
   }
 
   TypeScript.forEachChild(node, node => {
@@ -74,7 +73,7 @@ const Cyclomatic = {
     const total = totalOperations(script);
     let uncovered = 0;
 
-    for (let block of script.coverage) {
+    for (const block of script.coverage) {
       if (block.count < 1) {
         const file = script.sources.find(source => {
           return source.path === block.range.start.path;
@@ -117,7 +116,7 @@ const Cyclomatic = {
       return 0;
     }
 
-    let uncovered = visit(
+    const uncovered = visit(
       createSource(
         file.content.substring(block.range.start.offset, block.range.end.offset)
       )

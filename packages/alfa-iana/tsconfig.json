@@ -1,3 +1,21 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/get-language.ts",
+    "src/index.ts",
+    "src/subtags.ts",
+    "src/types.ts",
+    "test/get-language.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-lang"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

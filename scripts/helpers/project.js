@@ -8,7 +8,8 @@ const {
   isFile,
   readDirectory,
   readFile,
-  realPath
+  realPath,
+  writeFile
 } = require("./file-system");
 const { Cache } = require("./cache");
 
@@ -34,9 +35,9 @@ class Project {
   constructor(configFile, registry) {
     /**
      * @private
-     * @type {InMemoryLanguageServiceHost}
+     * @type {LanguageHost}
      */
-    this.host = new InMemoryLanguageServiceHost(configFile);
+    this.host = new LanguageHost(configFile);
 
     /**
      * @private
@@ -100,7 +101,7 @@ class Project {
    * @return {string}
    */
   resolvePath(file) {
-    return path.resolve(process.cwd(), file);
+    return path.resolve(this.host.getCurrentDirectory(), file);
   }
 
   /**
@@ -116,7 +117,7 @@ class Project {
     const { text } = this.host.addFile(file);
     const { importedFiles } = TypeScript.preProcessFile(text);
 
-    for (let { fileName: importedFile } of importedFiles) {
+    for (const { fileName: importedFile } of importedFiles) {
       const { resolvedModule } = TypeScript.resolveModuleName(
         importedFile,
         file,
@@ -150,11 +151,9 @@ class Project {
 
     this.host.addFile(file);
 
-    const { service } = this;
-
     const diagnostics = [
-      ...service.getSyntacticDiagnostics(file),
-      ...service.getSemanticDiagnostics(file)
+      ...this.service.getSyntacticDiagnostics(file),
+      ...this.service.getSemanticDiagnostics(file)
     ];
 
     diagnostics.sort((a, b) => {
@@ -248,19 +247,33 @@ class Project {
   }
 }
 
-class InMemoryLanguageServiceHost {
+class LanguageHost {
   /**
    * @param {string} configFile
    */
   constructor(configFile) {
-    /** @type {Map<string, ScriptInfo>} */
+    /**
+     * @private
+     * @type {Map<string, ScriptInfo>}
+     */
     this.files = new Map();
 
-    /** @type {string} */
-    this.version = "";
+    /**
+     * @private
+     * @type {number}
+     */
+    this.version = 0;
 
-    /** @type {object} */
+    /**
+     * @private
+     * @type {object}
+     */
     this.options = this.getOptions(configFile);
+
+    /**
+     * @type {string}
+     */
+    this.cwd = process.cwd();
   }
 
   /**
@@ -301,7 +314,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   getProjectVersion() {
-    return this.version;
+    return this.version.toString();
   }
 
   /**
@@ -342,7 +355,7 @@ class InMemoryLanguageServiceHost {
    * @return {string}
    */
   getCurrentDirectory() {
-    return process.cwd();
+    return this.cwd;
   }
 
   /**
@@ -356,7 +369,7 @@ class InMemoryLanguageServiceHost {
   /**
    * @return {boolean}
    */
-  useCaseSensitivefiles() {
+  useCaseSensitiveFileNames() {
     return false;
   }
 
@@ -367,6 +380,15 @@ class InMemoryLanguageServiceHost {
    */
   readFile(file, encoding = "utf8") {
     return readFile(file, encoding);
+  }
+
+  /**
+   * @param {string} file
+   * @param {string} content
+   * @return {void}
+   */
+  writeFile(file, content) {
+    writeFile(file, content);
   }
 
   /**
@@ -417,9 +439,9 @@ class InMemoryLanguageServiceHost {
       return current;
     }
 
-    const snapshot = TypeScript.ScriptSnapshot.fromString(text);
+    this.version++;
 
-    this.version = getDigest(this.version + version);
+    const snapshot = TypeScript.ScriptSnapshot.fromString(text);
 
     let kind = TypeScript.ScriptKind.Unknown;
 
@@ -448,7 +470,9 @@ class InMemoryLanguageServiceHost {
    * @param {string} file
    */
   removeFile(file) {
-    this.files.delete(file);
+    if (this.files.delete(file)) {
+      this.version++;
+    }
   }
 }
 

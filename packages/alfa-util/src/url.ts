@@ -1,5 +1,5 @@
+/// <reference lib="dom" />
 /// <reference types="node" />
-/// <reference path="../types/url.d.ts" />
 
 const url =
   typeof (URL as typeof URL | undefined) === "undefined"

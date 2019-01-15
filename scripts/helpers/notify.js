@@ -83,9 +83,14 @@ exports.replace = replace;
  * @param {...string} args
  */
 function log(color, symbol, title, format, ...args) {
-  let output = chalk.gray(`[${timestamp()}] \u203a `);
+  let output = chalk.gray(`[${timestamp()}] \u203a`);
 
-  output += color(`${symbol}  ${chalk.underline(pad(title, 8))} `);
+  output += " ";
+
+  output += color(`${symbol}  ${chalk.underline(title)}`);
+
+  output += repeat(" ", 10 - title.length);
+
   output += util.format(format, ...args);
 
   stream.write(`${output}\n`);
@@ -100,14 +105,15 @@ function timestamp() {
 
 /**
  * @param {string} input
- * @param {number} length
- * @param {string} [character]
+ * @param {number} times
  * @return {string}
  */
-function pad(input, length, character = " ") {
-  while (input.length < length) {
-    input += character;
+function repeat(input, times) {
+  let output = "";
+
+  while (times-- > 0) {
+    output += input;
   }
 
-  return input;
+  return output;
 }

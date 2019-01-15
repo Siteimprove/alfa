@@ -18,6 +18,8 @@ const rules = values(Rules);
 
 const documentType: DocumentType = {
   nodeType: NodeType.DocumentType,
+  publicId: "",
+  systemId: "",
   name: "html",
   childNodes: []
 };
