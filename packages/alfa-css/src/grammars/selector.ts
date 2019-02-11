@@ -355,6 +355,8 @@ function pseudoSelector(
           if (value === null) {
             return null;
           }
+          stream.next();
+          stream.accept(token => token.type === TokenType.Whitespace);
           break;
         default:
           value = expression();

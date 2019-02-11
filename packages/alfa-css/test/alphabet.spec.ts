@@ -346,6 +346,34 @@ test("Can lex an+b values", t => {
       integer: true
     }
   ]);
+  css(t, "n-4", [
+    {
+      type: TokenType.Ident,
+      value: "n-4"
+    }
+  ]);
+  css(t, "1n-4", [
+    {
+      type: TokenType.Dimension,
+      value: 1,
+      integer: true,
+      unit: "n-4"
+    }
+  ]);
+  "n-5";
+  css(t, "-1n+5", [
+    {
+      type: TokenType.Dimension,
+      value: -1,
+      integer: true,
+      unit: "n"
+    },
+    {
+      type: TokenType.Number,
+      value: 5,
+      integer: true
+    }
+  ]);
 });
 
 test("Can lex an escaped character", t => {

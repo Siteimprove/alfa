@@ -3,54 +3,38 @@ import { Token, TokenType } from "../alphabet";
 import { AnBMicrosyntax } from "../types";
 
 export function AnBMicrosyntax(stream: Stream<Token>): AnBMicrosyntax | null {
-  let next = stream.next();
+  const next = stream.peek(0);
 
   if (next === null) {
     return null;
   }
 
-  let a = 0;
-  let b = 0;
+  console.log(`---`);
+  console.log(`First: ${JSON.stringify(stream.peek(0))}`);
+  stream.accept(token => token.type === TokenType.Whitespace);
+  console.log(`Second: ${JSON.stringify(stream.peek(0))}`);
 
-  switch (next.type) {
-    case TokenType.Ident:
-      const oddEven = oddEvenSyntax(next.value);
+  const oddEven = getAnBFromOddEven(stream);
 
-      if (oddEven !== null) {
-        return oddEven;
-      }
-
-      if (next.value !== "n") {
-        return null;
-      }
-
-      next = stream.next();
-
-      break;
-    case TokenType.Dimension:
-      if (next.unit !== "n") {
-        return null;
-      }
-
-      a = next.value;
-
-      next = stream.next();
+  if (oddEven !== null) {
+    return oddEven;
   }
 
-  if (next !== null && next.type === TokenType.Number) {
-    b = next.value;
-  } else {
-    stream.backup(1);
+  if (next.type === TokenType.Ident) {
+    return getAnBFromString(stream);
   }
 
-  return {
-    a,
-    b
-  };
+  return getAnB(stream);
 }
 
-export function oddEvenSyntax(ident: string): AnBMicrosyntax | null {
-  switch (ident) {
+function getAnBFromOddEven(stream: Stream<Token>): AnBMicrosyntax | null {
+  const next = stream.peek(0);
+
+  if (next === null || next.type !== TokenType.Ident) {
+    return null;
+  }
+
+  switch (next.value) {
     case "odd":
       return {
         a: 2,
@@ -64,4 +48,63 @@ export function oddEvenSyntax(ident: string): AnBMicrosyntax | null {
     default:
       return null;
   }
+}
+
+function getAnB(stream: Stream<Token>): AnBMicrosyntax | null {
+  let next = stream.peek(0);
+
+  if (next === null) {
+    return null;
+  }
+
+  let a = 0;
+  let b = 0;
+
+  console.log(JSON.stringify(next));
+
+  switch (next.type) {
+    case TokenType.Dimension:
+      if (next.unit !== "n") {
+        return null;
+      }
+
+      a = next.value;
+
+      next = stream.next();
+      stream.accept(token => token.type === TokenType.Whitespace);
+  }
+
+  next = stream.peek(0);
+  console.log(JSON.stringify(next));
+
+  if (next !== null && next.type === TokenType.Number) {
+    b = next.value;
+  } else {
+    stream.backup(1);
+  }
+
+  return {
+    a,
+    b
+  };
+}
+
+function getAnBFromString(stream: Stream<Token>): AnBMicrosyntax | null {
+  const next = stream.peek(0);
+
+  if (next === null || next.type !== TokenType.Ident) {
+    return null;
+  }
+
+  let a = 0;
+  const b = 0;
+
+  if (next.value === "n") {
+    a = 1;
+  }
+
+  return {
+    a,
+    b
+  };
 }
