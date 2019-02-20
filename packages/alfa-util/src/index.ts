@@ -17,6 +17,8 @@ export * from "./object/keys";
 export * from "./object/values";
 
 export * from "./set/intersect";
+export * from "./set/subtract";
+export * from "./set/union";
 
 export * from "./type/immutable";
 export * from "./type/mutable";
