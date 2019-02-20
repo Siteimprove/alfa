@@ -60,6 +60,7 @@
     "src/user-agent.ts",
     "test/compare-document-position.spec.tsx",
     "test/contains.spec.tsx",
+    "test/fulfills.spec.ts",
     "test/get-assigned-nodes.spec.tsx",
     "test/get-assigned-slot.spec.tsx",
     "test/get-attribute.spec.tsx",
