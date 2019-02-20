@@ -1,23 +1,29 @@
-export type Option<T> = T | null;
+export type Some<T> = Exclude<T, null>;
 
-export function some<T, U>(
-  option: Option<T>,
-  some: (value: T) => U | null
-): Option<U> {
-  return option !== null ? some(option) : null;
-}
+export type None = null;
 
-export function none<T, U>(
-  option: Option<T>,
-  none: () => U | null
-): Option<T | U> {
-  return option === null ? none() : option;
-}
+export type Option<T> = Some<T> | None;
 
-export function option<T, U>(
-  option: Option<T>,
-  some: (value: T) => U | null,
-  none: () => U | null
-): Option<T | U> {
-  return option === null ? none() : some(option);
+export namespace Option {
+  export function map<T, U>(
+    option: Option<T>,
+    ifSome: (value: Some<T>) => Option<U>,
+    ifNone: () => Option<U> = () => null
+  ): Option<T | U> {
+    return option === null ? ifNone() : ifSome(option);
+  }
+
+  export function ifSome<T, U>(
+    option: Option<T>,
+    ifSome: (value: Some<T>) => Option<U>
+  ): Option<U> {
+    return option !== null ? ifSome(option) : null;
+  }
+
+  export function ifNone<T, U>(
+    option: Option<T>,
+    ifNone: () => Option<U>
+  ): Option<T | U> {
+    return option === null ? ifNone() : option;
+  }
 }

@@ -1,20 +1,17 @@
 import { test } from "@siteimprove/alfa-test";
-import { none, Option, option, some } from "../src/option";
+import { Option } from "../src/option";
 
-const something: Option<number> = 4;
-const nothing: Option<number> = null;
-
-test("Some only runs callback if parameter is something", t => {
-  t.equal(some(4, num => num), something);
-  t.equal(some(null, num => num), nothing);
+test("Option.ifSome only runs callback if parameter is something", t => {
+  t.equal(Option.ifSome(4, n => n * 2), 8);
+  t.equal(Option.ifSome(null, n => 2), null);
 });
 
-test("None only runs callback if parameter is not something", t => {
-  t.equal(none(4, () => null), something);
-  t.equal(none(null, () => null), nothing);
+test("Option.ifNone only runs callback if parameter is not something", t => {
+  t.equal(Option.ifNone(4, () => 2), 4);
+  t.equal(Option.ifNone(null, () => 8), 8);
 });
 
-test("Options runs some if parameter is something, else none", t => {
-  t.equal(option(4, num => num, () => null), something);
-  t.equal(option(null, num => num, () => null), nothing);
+test("Option.map runs some if parameter is something, else none", t => {
+  t.equal(Option.map(4, n => n * 2, () => 2), 8);
+  t.equal(Option.map(null, n => n * 2, () => 8), 8);
 });
