@@ -17,7 +17,7 @@ export const enum ValueType {
 /**
  * @see https://www.w3.org/TR/css-values/
  */
-export interface Value<T = T> {
+export interface Value<T = unknown> {
   readonly type: ValueType;
   readonly value: T;
 }
