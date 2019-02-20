@@ -32,14 +32,14 @@
   "dependencies": {
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
-    "@types/react": "^16.7.18"
+    "@types/react": "^16.8.4"
   },
   "peerDependencies": {
     "@siteimprove/alfa-chai": "^0.0.0",
     "@siteimprove/alfa-jest": "^0.0.0",
     "@siteimprove/alfa-should": "^0.0.0",
     "@siteimprove/alfa-unexpected": "^0.0.0",
-    "react": "^16.6.3"
+    "react": "^16.8.2"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
