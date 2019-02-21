@@ -70,7 +70,7 @@ exports.removeFile = removeFile;
 
 /**
  * @param {string | Iterable<string>} directories
- * @param {(function(string): boolean)} [predicate]
+ * @param {(function(string): boolean) | null} predicate
  * @param {{ gitIgnore?: boolean }} [options]
  * @param {Set<string>} [visited]
  * @return {Iterable<string>}
