@@ -99,8 +99,14 @@ function* findFiles(
     for (let file of readDirectory(directory)) {
       file = path.join(directory, file);
 
-      if (options.gitIgnore !== false && git.isIgnored(file)) {
-        continue;
+      if (options.gitIgnore !== false) {
+        if (git.isIgnored(file)) {
+          continue;
+        }
+
+        if (isDirectory(file) && file === ".git") {
+          continue;
+        }
       }
 
       if (isDirectory(file)) {

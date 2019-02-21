@@ -11,4 +11,5 @@ package-lock.json
 !**/types/**/*.d.ts
 
 .cache
+.semaphore-cache
 .vscode
