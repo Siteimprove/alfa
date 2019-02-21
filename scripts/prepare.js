@@ -4,10 +4,8 @@ const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
 const time = require("./helpers/time");
 const notify = require("./helpers/notify");
-const { default: chalk } = require("chalk");
 
 const { build } = require("./tasks/build");
-const { format } = require("./tasks/format");
 const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
 
