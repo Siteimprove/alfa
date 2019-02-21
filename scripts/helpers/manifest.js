@@ -1,4 +1,5 @@
 const { readFile, writeFile } = require("./file-system");
+const prettier = require("prettier");
 
 const { deleteProperty } = Reflect;
 
@@ -40,7 +41,11 @@ class Manifest {
     if (this.writer === null) {
       this.writer = new Promise(resolve =>
         setTimeout(() => {
-          writeFile(this.file, this.manifest);
+          const formatted = prettier.format(
+            JSON.stringify(this.manifest, null, 2),
+            { filepath: this.file }
+          );
+          writeFile(this.file, formatted);
           this.writer = null;
           resolve();
         }, 100)

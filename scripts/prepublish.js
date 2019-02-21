@@ -42,6 +42,9 @@ for (const directory of packages) {
 }
 
 /**
+ * Update tsconfig.json in directory with
+ * - Add all .ts?(x) files to files
+ * - Add @siteimprove/ dependencies from package.json as relative path references
  * @param {string} directory
  * @param {Manifest} pkg
  * @param {{ normal?: boolean, dev?: boolean, peer?: boolean }} [options]
@@ -62,7 +65,7 @@ function references(directory, pkg, options = {}, additional = []) {
       and(endsWith(".ts", ".tsx"), not(endsWith(".d.ts")))
     )
   ]
-    .map(file => path.relative(directory, file))
+    .map(file => path.relative(directory, file).replace(/\\/g, "/"))
     .sort();
 
   config.set("files", files);
