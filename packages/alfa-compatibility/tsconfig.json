@@ -20,8 +20,13 @@
     "src/types.ts",
     "src/with-browsers.ts",
     "test/browser-specific.spec.ts",
+    "test/every.spec.ts",
+    "test/guards.spec.ts",
     "test/is-browser-supported.spec.ts",
-    "test/is-feature-supported.spec.ts"
+    "test/is-feature-supported.spec.ts",
+    "test/map.spec.ts",
+    "test/reduce.spec.ts",
+    "test/some.spec.ts"
   ],
   "references": [
     {

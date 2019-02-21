@@ -36,6 +36,6 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "prettier": "1.15.3"
+    "prettier": "1.16.4"
   }
 }
