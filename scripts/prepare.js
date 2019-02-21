@@ -2,7 +2,7 @@ const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
-const { format: formatTime, now } = require("./helpers/time");
+const time = require("./helpers/time");
 const notify = require("./helpers/notify");
 const { default: chalk } = require("chalk");
 
@@ -23,7 +23,7 @@ const handle = (files, project) => {
       const duration = now(start);
 
       notify.success(
-        `${file} ${formatTime(duration, { color: "yellow", threshold: 400 })}`
+        `${file} ${time(duration, { color: "yellow", threshold: 400 })}`
       );
     } else {
       process.exit(1);
