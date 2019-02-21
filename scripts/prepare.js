@@ -33,15 +33,15 @@ const handle = (files, project) => {
 
 handle(findFiles("scripts", endsWith(".js")));
 
+for (const file of findFiles(`.`)) {
+  if (process.env.CI === "true" && format(file)) {
+    notify.error(`${chalk.gray(file)} File has not been formatted`);
+    process.exit(1);
+  }
+}
+
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
-
-  for (const file of findFiles(`${root}/`)) {
-    if (process.env.CI === "true" && format(file)) {
-      notify.error(`${chalk.gray(file)} File has not been formatted`);
-      process.exit(1);
-    }
-  }
 
   clean(root);
 
