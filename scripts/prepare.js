@@ -31,28 +31,20 @@ const handle = (files, project) => {
   }
 };
 
-/**
- * @param {string} file
- */
-const checkFormat = file => {
-  if (process.env.CI === "true" && format(file)) {
-    notify.error(`${chalk.gray(file)} File has not been formatted`);
-    process.exit(1);
+if (process.env.CI === "true") {
+  notify.pending("Checking if all files are correctly formatted");
+  for (const file of findFiles(".")) {
+    if (format(file)) {
+      notify.error(`${chalk.gray(file)} File has not been formatted`);
+      process.exit(1);
+    }
   }
-};
-
-for (const file of findFiles(`.`, file => !file.startsWith("packages"))) {
-  checkFormat(file);
 }
 
 handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
-
-  for (const file of findFiles(root)) {
-    checkFormat(file);
-  }
 
   clean(root);
 
