@@ -41,9 +41,7 @@ const checkFormat = file => {
   }
 };
 
-for (const file of findFiles(`.`, file => !file.startsWith("packages"), {
-  excludeDots: true
-})) {
+for (const file of findFiles(`.`, file => !file.startsWith("packages"))) {
   checkFormat(file);
 }
 
@@ -52,7 +50,7 @@ handle(findFiles("scripts", endsWith(".js")));
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
 
-  for (const file of findFiles(root, null, { excludeDots: true })) {
+  for (const file of findFiles(root)) {
     checkFormat(file);
   }
 

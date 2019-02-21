@@ -71,7 +71,7 @@ exports.removeFile = removeFile;
 /**
  * @param {string | Iterable<string>} directories
  * @param {(function(string): boolean) | null} predicate
- * @param {{ gitIgnore?: boolean, excludeDots?: boolean }} [options]
+ * @param {{ gitIgnore?: boolean }} [options]
  * @param {Set<string>} [visited]
  * @return {Iterable<string>}
  */
@@ -101,12 +101,6 @@ function* findFiles(
 
       if (options.gitIgnore !== false && git.isIgnored(file)) {
         continue;
-      }
-
-      if (options.excludeDots !== false) {
-        if (isDot(file)) {
-          continue;
-        }
       }
 
       if (isDirectory(file)) {
@@ -163,20 +157,6 @@ function watchFiles(pattern, listener, options = {}) {
 }
 
 exports.watchFiles = watchFiles;
-
-/**
- * @param {string} file
- * @return {boolean}
- */
-function isDot(file) {
-  for (const pathElement of file.split(path.sep)) {
-    if (pathElement.startsWith(".")) {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 /**
  * @param {string} path
