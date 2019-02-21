@@ -31,17 +31,30 @@ const handle = (files, project) => {
   }
 };
 
-handle(findFiles("scripts", endsWith(".js")));
-
-for (const file of findFiles(`*`)) {
+/**
+ * @param {string} file
+ */
+const checkFormat = file => {
   if (process.env.CI === "true" && format(file)) {
     notify.error(`${chalk.gray(file)} File has not been formatted`);
     process.exit(1);
   }
+};
+
+for (const file of findFiles(`.`, file => !file.startsWith("packages"), {
+  excludeDots: true
+})) {
+  checkFormat(file);
 }
+
+handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
+
+  for (const file of findFiles(root, null, { excludeDots: true })) {
+    checkFormat(file);
+  }
 
   clean(root);
 
