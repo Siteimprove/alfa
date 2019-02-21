@@ -2,8 +2,12 @@ import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
-export type Target = Attribute | Document | Element;
-
+/**
+ * Aspects are the different resources that make up a test subject, which is the
+ * entity under test by a rule. Aspects are the only input supplied to a rule;
+ * everything a rule needs to make a decision must therefore be present within
+ * the aspects passed to it.
+ */
 export interface Aspects {
   readonly request: Request;
   readonly response: Response;
@@ -11,16 +15,30 @@ export interface Aspects {
   readonly device: Device;
 }
 
+/**
+ * Aspect represents the type of any individual aspect.
+ */
 export type Aspect = Aspects[keyof Aspects];
 
+/**
+ * Given one or more aspects, get the keys of the aspects within the Aspects
+ * type.
+ */
 export type AspectKeysFor<A extends Aspect> = {
   readonly [P in keyof Aspects]: Aspects[P] extends A ? P : never
 }[keyof Aspects];
 
-export type AspectsFor<A extends Aspect> = {
-  readonly [P in AspectKeysFor<Aspect>]?: Aspects[P]
-} &
+/**
+ * Given one or more aspects, get a subset of the Aspects type that includes
+ * only the given aspects.
+ */
+export type AspectsFor<A extends Aspect> = Partial<Aspects> &
   { readonly [P in AspectKeysFor<A>]: Aspects[P] };
+
+/**
+ * A target is an entity that a rule can apply to and make expectations about.
+ */
+export type Target = Attribute | Document | Element;
 
 export const enum Outcome {
   Passed = "passed",
