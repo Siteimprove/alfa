@@ -21,6 +21,7 @@
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
+    "format": "node scripts/format.js",
     "prepare": "node scripts/prepare.js",
     "test": "node scripts/test.js",
     "start": "node scripts/start.js",
