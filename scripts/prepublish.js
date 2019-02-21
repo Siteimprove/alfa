@@ -65,7 +65,12 @@ function references(directory, pkg, options = {}, additional = []) {
       and(endsWith(".ts", ".tsx"), not(endsWith(".d.ts")))
     )
   ]
-    .map(file => path.relative(directory, file).replace(/\\/g, "/"))
+    .map(file =>
+      path
+        .relative(directory, file)
+        .split(path.sep)
+        .join("/")
+    )
     .sort();
 
   config.set("files", files);
