@@ -17,13 +17,13 @@ const { clean } = require("./tasks/clean");
  */
 const handle = (files, project) => {
   for (const file of files) {
-    const start = now();
+    const start = time.now();
 
     if (diagnose(file, project) && build(file, project)) {
-      const duration = now(start);
+      const duration = time.now(start);
 
       notify.success(
-        `${file} ${time(duration, { color: "yellow", threshold: 400 })}`
+        `${file} ${time.format(duration, { color: "yellow", threshold: 400 })}`
       );
     } else {
       process.exit(1);
