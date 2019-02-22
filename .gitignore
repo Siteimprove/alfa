@@ -8,6 +8,7 @@ package-lock.json
 **/*.map
 
 !**/scripts/**/*.js
+**/scripts/test/**/*.js
 !**/types/**/*.d.ts
 
 .cache
