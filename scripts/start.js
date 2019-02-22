@@ -17,6 +17,7 @@ const isSpec = endsWith(".spec.ts", ".spec.tsx");
  * @type {Array<string>}
  */
 let failed = [];
+let rerunFailed = process.argv.some(v => v.toLowerCase() === "--rerun-failed");
 
 watchFiles(
   [
@@ -55,7 +56,7 @@ watchFiles(
         notify.success(
           `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
         );
-      } else {
+      } else if (rerunFailed) {
         failed.push(file);
       }
     });
