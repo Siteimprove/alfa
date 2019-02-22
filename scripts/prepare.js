@@ -2,7 +2,7 @@ const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
-const { format, now } = require("./helpers/time");
+const time = require("./helpers/time");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
@@ -15,13 +15,13 @@ const { clean } = require("./tasks/clean");
  */
 const handle = (files, project) => {
   for (const file of files) {
-    const start = now();
+    const start = time.now();
 
     if (diagnose(file, project) && build(file, project)) {
-      const duration = now(start);
+      const duration = time.now(start);
 
       notify.success(
-        `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
+        `${file} ${time.format(duration, { color: "yellow", threshold: 400 })}`
       );
     } else {
       process.exit(1);

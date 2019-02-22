@@ -1,3 +1,18 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": ["src/create-jest-plugin.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-assert"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jsx"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
 }

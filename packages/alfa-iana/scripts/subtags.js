@@ -183,7 +183,7 @@ fetch(registry).then(body => {
 
   /** @type {Map<string, Array<Subtag>>} */
   const groups = subtags.reduce((groups, subtag) => {
-    const group = getType(subtag) + "s";
+    const group = `${getType(subtag)}s`;
 
     let subtags = groups.get(group);
 

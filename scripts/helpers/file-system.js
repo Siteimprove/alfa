@@ -50,7 +50,7 @@ function writeFile(file, data, encoding = "utf8") {
   makeDirectory(path.dirname(file));
 
   if (typeof data !== "string") {
-    data = JSON.stringify(data, null, 2) + "\n";
+    data = `${JSON.stringify(data, null, 2)}\n`;
   }
 
   fs.writeFileSync(file, data, encoding);
@@ -63,14 +63,14 @@ exports.writeFile = writeFile;
  * @return {void}
  */
 function removeFile(file) {
-  return fs.unlinkSync(file);
+  fs.unlinkSync(file);
 }
 
 exports.removeFile = removeFile;
 
 /**
  * @param {string | Iterable<string>} directories
- * @param {function(string): boolean} predicate
+ * @param {(function(string): boolean)} [predicate]
  * @param {{ gitIgnore?: boolean }} [options]
  * @param {Set<string>} [visited]
  * @return {Iterable<string>}
@@ -94,13 +94,19 @@ function* findFiles(directories, predicate, options = {}, visited = new Set()) {
     for (let file of readDirectory(directory)) {
       file = path.join(directory, file);
 
-      if (options.gitIgnore !== false && git.isIgnored(file)) {
-        continue;
+      if (options.gitIgnore !== false) {
+        if (git.isIgnored(file)) {
+          continue;
+        }
+
+        if (isDirectory(file) && file === ".git") {
+          continue;
+        }
       }
 
       if (isDirectory(file)) {
         yield* findFiles(file, predicate, options, visited);
-      } else if (predicate(file)) {
+      } else if (predicate === undefined || predicate(file)) {
         yield file;
       }
     }
@@ -141,8 +147,13 @@ function watchFiles(pattern, listener, options = {}) {
       throw err;
     }
 
-    watcher.on("changed", file => handler("changed", file));
-    watcher.on("added", file => handler("added", file));
+    watcher.on("changed", file => {
+      handler("changed", file);
+    });
+
+    watcher.on("added", file => {
+      handler("added", file);
+    });
   });
 }
 
