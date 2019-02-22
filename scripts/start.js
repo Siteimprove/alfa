@@ -3,6 +3,7 @@ const { endsWith } = require("./helpers/predicates");
 const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
 const { getSpecification } = require("./helpers/typescript");
+const { default: chalk } = require("chalk");
 
 const { build } = require("./tasks/build");
 const { diagnose } = require("./tasks/diagnose");
@@ -31,11 +32,12 @@ watchFiles(
     "docs/**/*.tsx"
   ],
   (event, file) => {
-    const fileList = failed;
-    failed = [];
-    if (!fileList.some(v => v === file)) {
-      fileList.unshift(file);
+    failed = failed.filter(v => v !== file);
+    const fileList = [file, ...(rerunFailed ? failed : [])];
+    if (rerunFailed) {
+      failed = [];
     }
+
     fileList.forEach(file => {
       const start = now();
 
@@ -56,7 +58,12 @@ watchFiles(
         notify.success(
           `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
         );
-      } else if (rerunFailed) {
+        if (!rerunFailed && failed.length > 0) {
+          failed.forEach(file => {
+            notify.warn(`${chalk.gray(file)} failed previously`);
+          });
+        }
+      } else {
         failed.push(file);
       }
     });

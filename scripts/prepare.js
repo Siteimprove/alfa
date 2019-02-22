@@ -1,10 +1,9 @@
 const { findFiles } = require("./helpers/file-system");
-const { and, endsWith, not, startsWith } = require("./helpers/predicates");
+const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { packages } = require("./helpers/meta");
 const time = require("./helpers/time");
 const notify = require("./helpers/notify");
-const path = require("path");
 
 const { build } = require("./tasks/build");
 const { diagnose } = require("./tasks/diagnose");
@@ -30,12 +29,7 @@ const handle = (files, project) => {
   }
 };
 
-handle(
-  findFiles(
-    "scripts",
-    and(endsWith(".js"), not(startsWith(`scripts${path.sep}test`)))
-  )
-);
+handle(findFiles("scripts", endsWith(".js")));
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
@@ -53,6 +47,5 @@ for (const pkg of packages) {
     new Project(`${root}/tsconfig.json`)
   );
 }
-handle(findFiles("scripts/test", endsWith(".ts", ".tsx")));
 
 handle(findFiles("docs", endsWith(".ts", ".tsx")));
