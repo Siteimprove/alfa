@@ -9,6 +9,11 @@ class Workspace {
      * @type {Map<string, Project>}
      */
     this.projects = new Map();
+
+    /**
+     * @private
+     */
+    this.registry = TypeScript.createDocumentRegistry(false, process.cwd());
   }
 
   /**
@@ -25,7 +30,7 @@ class Workspace {
     let project = this.projects.get(configFile);
 
     if (project === undefined) {
-      project = new Project(configFile);
+      project = new Project(configFile, this.registry);
       this.projects.set(configFile, project);
     }
 

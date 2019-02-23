@@ -1,6 +1,5 @@
 const path = require("path");
 const TypeScript = require("typescript");
-const TSLint = require("tslint");
 
 const { getDigest } = require("./crypto");
 const {
@@ -11,7 +10,6 @@ const {
   realPath,
   writeFile
 } = require("./file-system");
-const { Cache } = require("./cache");
 
 /**
  * @typedef {object} ScriptInfo
@@ -39,40 +37,27 @@ class LanguageHost {
 
     /**
      * @private
-     * @type {number}
+     * @type {string}
      */
-    this.version = 0;
+    this.version = this.computeVersion();
 
     /**
      * @private
-     * @type {object}
+     * @type {TypeScript.CompilerOptions}
      */
-    this.options = this.getOptions(configFile);
+    this.options = getCompilerOptions(configFile);
 
     /**
+     * @private
+     * @type {Array<TypeScript.ProjectReference>}
+     */
+    this.references = getProjectReferences(configFile);
+
+    /**
+     * @private
      * @type {string}
      */
     this.currentDirectory = process.cwd();
-  }
-
-  /**
-   * @private
-   * @param {string} configFile
-   * @return {TypeScript.CompilerOptions}
-   */
-  getOptions(configFile) {
-    const { config } = TypeScript.parseConfigFileTextToJson(
-      configFile,
-      readFile(configFile)
-    );
-
-    const { options } = TypeScript.parseJsonConfigFileContent(
-      config,
-      TypeScript.sys,
-      path.dirname(configFile)
-    );
-
-    return options;
   }
 
   /**
@@ -93,7 +78,7 @@ class LanguageHost {
    * @return {string}
    */
   getProjectVersion() {
-    return this.version.toString();
+    return this.version;
   }
 
   /**
@@ -108,8 +93,7 @@ class LanguageHost {
    * @return {TypeScript.ScriptKind}
    */
   getScriptKind(file) {
-    const { kind } = this.files.get(file) || this.addFile(file);
-    return kind;
+    return this.getFile(file).kind;
   }
 
   /**
@@ -117,8 +101,7 @@ class LanguageHost {
    * @return {string}
    */
   getScriptVersion(file) {
-    const { version } = this.files.get(file) || this.addFile(file);
-    return version;
+    return this.getFile(file).version;
   }
 
   /**
@@ -126,15 +109,21 @@ class LanguageHost {
    * @return {TypeScript.IScriptSnapshot}
    */
   getScriptSnapshot(file) {
-    const { snapshot } = this.files.get(file) || this.addFile(file);
-    return snapshot;
+    return this.getFile(file).snapshot;
+  }
+
+  /**
+   * @return {Array<TypeScript.ProjectReference>}
+   */
+  getProjectReferences() {
+    return this.references;
   }
 
   /**
    * @return {string}
    */
   getCurrentDirectory() {
-    return this.cwd;
+    return this.currentDirectory;
   }
 
   /**
@@ -159,15 +148,6 @@ class LanguageHost {
    */
   readFile(file, encoding = "utf8") {
     return readFile(file, encoding);
-  }
-
-  /**
-   * @param {string} file
-   * @param {string} content
-   * @return {void}
-   */
-  writeFile(file, content) {
-    writeFile(file, content);
   }
 
   /**
@@ -206,19 +186,60 @@ class LanguageHost {
 
   /**
    * @param {string} file
+   * @param {string} content
+   * @return {void}
+   */
+  writeFile(file, content) {
+    writeFile(file, content);
+  }
+
+  /**
+   * @param {string} data
+   * @return {string}
+   */
+  createHash(data) {
+    return getDigest(data);
+  }
+
+  /**
+   * @private
+   * @param {string} file
+   * @return {string}
+   */
+  resolvePath(file) {
+    return path.resolve(this.currentDirectory, file);
+  }
+
+  /**
+   * @private
+   * @param {string} file
    * @return {ScriptInfo}
    */
-  addFile(file) {
-    const text = readFile(file);
-    const version = getDigest(text);
+  getFile(file) {
+    file = this.resolvePath(file);
 
-    let current = this.files.get(file);
-
-    if (current !== undefined && current.version === version) {
-      return current;
+    if (!this.files.has(file)) {
+      this.addFile(file);
     }
 
-    this.version++;
+    return /** @type {ScriptInfo} */ (this.files.get(file));
+  }
+
+  /**
+   * @param {string} file
+   * @return {boolean}
+   */
+  addFile(file) {
+    file = this.resolvePath(file);
+
+    const text = this.readFile(file);
+    const version = this.createHash(text);
+
+    const current = this.files.get(file);
+
+    if (current !== undefined && current.version === version) {
+      return false;
+    }
 
     const snapshot = TypeScript.ScriptSnapshot.fromString(text);
 
@@ -238,21 +259,72 @@ class LanguageHost {
         kind = TypeScript.ScriptKind.TSX;
     }
 
-    current = { version, text, kind, snapshot };
+    this.files.set(file, { version, kind, snapshot });
 
-    this.files.set(file, current);
+    this.version = this.computeVersion();
 
-    return current;
+    return true;
   }
 
   /**
    * @param {string} file
+   * @return {boolean}
    */
-  removeFile(file) {
+  deleteFile(file) {
+    file = this.resolvePath(file);
+
     if (this.files.delete(file)) {
-      this.version++;
+      this.version = this.computeVersion();
+      return true;
     }
+
+    return false;
+  }
+
+  /**
+   * @private
+   * @return {string}
+   */
+  computeVersion() {
+    const files = [...this.files.values()];
+
+    const versions = files.map(file => file.version);
+
+    return getDigest(versions.sort().join("\0"));
   }
 }
 
 exports.LanguageHost = LanguageHost;
+
+/**
+ * @param {string} configFile
+ * @return {TypeScript.ParsedCommandLine}
+ */
+function getParsedConfiguration(configFile) {
+  const { config } = TypeScript.parseConfigFileTextToJson(
+    configFile,
+    readFile(configFile)
+  );
+
+  return TypeScript.parseJsonConfigFileContent(
+    config,
+    TypeScript.sys,
+    path.dirname(configFile)
+  );
+}
+
+/**
+ * @param {string} configFile
+ * @return {TypeScript.CompilerOptions}
+ */
+function getCompilerOptions(configFile) {
+  return getParsedConfiguration(configFile).options;
+}
+
+/**
+ * @param {string} configFile
+ * @return {Array<TypeScript.ProjectReference>}
+ */
+function getProjectReferences(configFile) {
+  return [...(getParsedConfiguration(configFile).projectReferences || [])];
+}

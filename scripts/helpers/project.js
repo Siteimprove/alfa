@@ -2,9 +2,8 @@ const path = require("path");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
 
-const { getDigest } = require("./crypto");
-const { readFile } = require("./file-system");
-const { Cache } = require("./cache");
+// const { Cache } = require("./cache");
+const { LanguageHost } = require("./language-host");
 
 /**
  * @typedef {object} ScriptOutput
@@ -14,48 +13,37 @@ const { Cache } = require("./cache");
 class Project {
   /**
    * @param {string} configFile
+   * @param {TypeScript.DocumentRegistry} [registry]
    */
-  constructor(configFile) {
+  constructor(configFile, registry) {
     /**
      * @private
-     * @type {Map<string, ScriptOutput>}
      */
-    this.files = new Map();
+    this.host = new LanguageHost(configFile);
 
     /**
      * @private
-     * @type {TypeScript.CompilerOptions}
      */
-    this.options = getCompilerOptions(configFile);
+    this.service = TypeScript.createLanguageService(this.host, registry);
 
     /**
      * @private
-     * @type {Array<TypeScript.ProjectReference>}
      */
-    this.references = getProjectReferences(configFile);
+    const factory = (this.factory =
+      TypeScript.createEmitAndSemanticDiagnosticsBuilderProgram);
 
     /**
      * @private
-     * @type {TypeScript.CompilerHost}
+     * @type {ReturnType<typeof factory>}
      */
-    this.host = TypeScript.createCompilerHost(this.options);
-
-    /**
-     * @private
-     * @type {TypeScript.EmitAndSemanticDiagnosticsBuilderProgram}
-     */
-    this.program = TypeScript.createEmitAndSemanticDiagnosticsBuilderProgram(
-      [...this.files.keys()],
-      this.options,
+    this.program = this.factory(
+      /** @type {TypeScript.Program} */ (this.service.getProgram()),
       this.host,
-      this.program,
-      undefined,
-      this.references
+      this.program
     );
 
     /**
      * @private
-     * @type {TSLint.Configuration.IConfigurationFile | undefined}
      */
     this.linter = getLinterOptions(configFile);
   }
@@ -64,60 +52,39 @@ class Project {
    * @return {Iterable<string>}
    */
   *buildProgram() {
-    console.time("Program");
-    this.program = TypeScript.createEmitAndSemanticDiagnosticsBuilderProgram(
-      [...this.files.keys()],
-      this.options,
+    this.program = this.factory(
+      /** @type {TypeScript.Program} */ (this.service.getProgram()),
       this.host,
-      this.program,
-      undefined,
-      this.references
+      this.program
     );
-    console.timeEnd("Program");
 
-    // while (true) {
-    //   const next = this.program.emitNextAffectedFile();
-
-    //   if (next === undefined) {
-    //     break;
-    //   }
-
-    //   yield next.affected.fileName;
-    // }
-
-    /**
-     * @return {{ file: string, emitted: boolean } | undefined}
-     */
-    const getNext = () => {
-      let emitted = false;
-
-      const next = this.program.emitNextAffectedFile(file => {
-        emitted = true;
-      });
-
-      if (next !== undefined && "fileName" in next.affected) {
-        const file = path.relative(
-          this.host.getCurrentDirectory(),
-          next.affected.fileName
-        );
-
-        return { file, emitted };
-      }
-
-      return undefined;
-    };
-
-    let next = getNext();
+    let next = this.getNextAffectedFile();
 
     while (next !== undefined) {
-      const { file, emitted } = next;
+      const file = next;
 
-      next = getNext();
+      next = this.getNextAffectedFile();
 
-      if (emitted && !file.startsWith("node_modules")) {
+      if (!file.startsWith("node_modules")) {
         yield file;
       }
     }
+  }
+
+  /**
+   * @private
+   * @return {string | undefined}
+   */
+  getNextAffectedFile() {
+    const next = this.program.emitNextAffectedFile(() => {});
+
+    if (next === undefined) {
+      return undefined;
+    }
+
+    const file = /** @type {TypeScript.SourceFile} */ (next.affected);
+
+    return path.relative(this.host.getCurrentDirectory(), file.fileName);
   }
 
   /**
@@ -125,19 +92,7 @@ class Project {
    * @return {boolean}
    */
   addFile(file) {
-    file = path.resolve(file);
-
-    const version = getDigest(readFile(file));
-
-    const existing = this.files.get(file);
-
-    if (existing !== undefined && existing.version === version) {
-      return false;
-    }
-
-    this.files.set(file, { version });
-
-    return true;
+    return this.host.addFile(file);
   }
 
   /**
@@ -145,9 +100,7 @@ class Project {
    * @return {boolean}
    */
   deleteFile(file) {
-    file = path.resolve(file);
-
-    return this.files.delete(file);
+    return this.host.deleteFile(file);
   }
 
   /**
@@ -161,7 +114,12 @@ class Project {
       return [];
     }
 
-    return this.program.getAllDependencies(source);
+    return (
+      this.program
+        .getAllDependencies(source)
+        // The first dependency is always the file itself
+        .slice(1)
+    );
   }
 
   /**
@@ -169,15 +127,18 @@ class Project {
    * @return {Iterable<TypeScript.Diagnostic>}
    */
   getDiagnostics(file) {
+    // const program = /** @type {TypeScript.Program} */ (this.service.getProgram());
+    const program = this.program;
+
     /** @type {Array<TypeScript.Diagnostic>} */
     const diagnostics = [];
 
-    const source = this.program.getSourceFile(file);
+    const source = program.getSourceFile(file);
 
     if (source !== undefined) {
       diagnostics.push(
-        ...this.program.getSemanticDiagnostics(source),
-        ...this.program.getSyntacticDiagnostics(source)
+        ...program.getSemanticDiagnostics(source),
+        ...program.getSyntacticDiagnostics(source)
       );
 
       diagnostics.sort((a, b) => {
@@ -193,13 +154,16 @@ class Project {
    * @return {Iterable<TypeScript.OutputFile>}
    */
   getOutputFiles(file) {
+    // const program = /** @type {TypeScript.Program} */ (this.service.getProgram());
+    const program = this.program;
+
     /** @type {Array<TypeScript.OutputFile>} */
     const files = [];
 
-    const source = this.program.getSourceFile(file);
+    const source = program.getSourceFile(file);
 
     if (source !== undefined) {
-      this.program.emit(source, (name, text, writeByteOrderMark) => {
+      program.emit(source, (name, text, writeByteOrderMark) => {
         files.push({ name, text, writeByteOrderMark });
       });
     }
@@ -212,18 +176,18 @@ class Project {
    * @return {Iterable<TSLint.RuleFailure>}
    */
   getLintResults(file) {
+    // const program = /** @type {TypeScript.Program} */ (this.service.getProgram());
+    const program = this.program;
+
     /** @type {Array<TSLint.RuleFailure>} */
     const results = [];
 
-    const source = this.program.getSourceFile(file);
+    const source = program.getSourceFile(file);
 
     if (source !== undefined) {
       const { fileName, text } = source;
 
-      const linter = new TSLint.Linter(
-        { fix: false },
-        this.program.getProgram()
-      );
+      const linter = new TSLint.Linter({ fix: false }, program.getProgram());
 
       linter.lint(fileName, text, this.linter);
 
@@ -272,39 +236,6 @@ class Project {
 }
 
 exports.Project = Project;
-
-/**
- * @param {string} configFile
- * @return {TypeScript.ParsedCommandLine}
- */
-function getParsedConfiguration(configFile) {
-  const { config } = TypeScript.parseConfigFileTextToJson(
-    configFile,
-    readFile(configFile)
-  );
-
-  return TypeScript.parseJsonConfigFileContent(
-    config,
-    TypeScript.sys,
-    path.dirname(configFile)
-  );
-}
-
-/**
- * @param {string} configFile
- * @return {TypeScript.CompilerOptions}
- */
-function getCompilerOptions(configFile) {
-  return getParsedConfiguration(configFile).options;
-}
-
-/**
- * @param {string} configFile
- * @return {Array<TypeScript.ProjectReference>}
- */
-function getProjectReferences(configFile) {
-  return [...(getParsedConfiguration(configFile).projectReferences || [])];
-}
 
 /**
  * @param {string} configFile
