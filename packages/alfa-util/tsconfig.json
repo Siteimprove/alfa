@@ -16,6 +16,8 @@
     "src/object/values.ts",
     "src/option.ts",
     "src/set/intersect.ts",
+    "src/set/subtract.ts",
+    "src/set/union.ts",
     "src/type/immutable.ts",
     "src/type/mutable.ts",
     "src/type/predicate.ts",

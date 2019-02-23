@@ -8,7 +8,6 @@ const { Project } = require("../helpers/project");
 const { isIgnored } = require("../helpers/git");
 const { isTestable, hasSpecification } = require("../helpers/typescript");
 const notify = require("../helpers/notify");
-const { format } = require("./format");
 
 /**
  * @param {string} file
@@ -16,11 +15,6 @@ const { format } = require("./format");
  * @return {boolean}
  */
 function diagnose(file, project = workspace.projectFor(file)) {
-  if (process.env.CI === "true" && format(file)) {
-    notify.error(`${chalk.gray(file)} File has not been formatted`);
-    return false;
-  }
-
   if (
     file.includes("src") &&
     file.endsWith(".ts") &&

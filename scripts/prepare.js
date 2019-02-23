@@ -3,8 +3,8 @@ const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
 const { workspace } = require("./helpers/workspace");
 const { packages } = require("./helpers/meta");
-const { format, now } = require("./helpers/time");
 const { forEach } = require("./helpers/iterable");
+const time = require("./helpers/time");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
@@ -22,10 +22,10 @@ function handle(project) {
     project.addFile(file);
 
     for (const file of project.buildProgram()) {
-      const start = now();
+      const start = time.now();
 
       if (diagnose(file, project) && build(file, project)) {
-        const duration = now(start);
+        const duration = time.now(start);
 
         notify.success(
           `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
