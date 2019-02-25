@@ -38,11 +38,7 @@ class Cache {
      * @private
      * @type {string}
      */
-    this.root = path.join(
-      cacheRoot,
-      name,
-      getDigest(Cache.version.toString()).substring(0, 5)
-    );
+    this.root = path.join(cacheRoot, name);
   }
 
   /**
@@ -51,7 +47,9 @@ class Cache {
    * @return {string}
    */
   pathTo(key) {
-    return path.join(this.root, `${getDigest(key)}.json`);
+    const digest = getDigest(Cache.version + "\u{0000}" + key);
+
+    return path.join(this.root, digest.substring(0, 2), `${digest}.json`);
   }
 
   /**
