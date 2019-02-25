@@ -59,9 +59,7 @@ class Project {
 
       next = this.getNextAffectedFile();
 
-      if (!file.startsWith("node_modules")) {
-        yield file;
-      }
+      yield file;
     }
   }
 
