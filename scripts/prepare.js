@@ -17,22 +17,24 @@ const { clean } = require("./tasks/clean");
  */
 function handle(project) {
   return file => {
+    const start = time.now();
+
     project = project || workspace.projectFor(file);
 
     project.addFile(file);
 
-    for (const file of project.buildProgram()) {
-      const start = time.now();
+    [...project.buildProgram()];
 
-      if (diagnose(file, project) && build(file, project)) {
-        const duration = time.now(start);
+    const success = diagnose(file, project) && build(file, project);
 
-        notify.success(
-          `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
-        );
-      } else {
-        process.exit(1);
-      }
+    if (success) {
+      const duration = time.now(start);
+
+      notify.success(
+        `${file} ${time.format(duration, { color: "yellow", threshold: 400 })}`
+      );
+    } else {
+      process.exit(1);
     }
   };
 }

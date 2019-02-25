@@ -2,7 +2,6 @@ const path = require("path");
 const TypeScript = require("typescript");
 const TSLint = require("tslint");
 
-// const { Cache } = require("./cache");
 const { LanguageHost } = require("./language-host");
 
 /**
@@ -127,7 +126,6 @@ class Project {
    * @return {Iterable<TypeScript.Diagnostic>}
    */
   getDiagnostics(file) {
-    // const program = /** @type {TypeScript.Program} */ (this.service.getProgram());
     const program = this.program;
 
     /** @type {Array<TypeScript.Diagnostic>} */
@@ -154,7 +152,6 @@ class Project {
    * @return {Iterable<TypeScript.OutputFile>}
    */
   getOutputFiles(file) {
-    // const program = /** @type {TypeScript.Program} */ (this.service.getProgram());
     const program = this.program;
 
     /** @type {Array<TypeScript.OutputFile>} */
@@ -176,7 +173,6 @@ class Project {
    * @return {Iterable<TSLint.RuleFailure>}
    */
   getLintResults(file) {
-    // const program = /** @type {TypeScript.Program} */ (this.service.getProgram());
     const program = this.program;
 
     /** @type {Array<TSLint.RuleFailure>} */
