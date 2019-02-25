@@ -4,11 +4,6 @@ const TSLint = require("tslint");
 
 const { LanguageHost } = require("./language-host");
 
-/**
- * @typedef {object} ScriptOutput
- * @property {string} version
- */
-
 class Project {
   /**
    * @param {string} configFile
