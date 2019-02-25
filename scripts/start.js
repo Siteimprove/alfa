@@ -34,7 +34,7 @@ watchFiles(
       }
 
       if (success) {
-        const duration = now(start);
+        const duration = time.now(start);
 
         notify.success(
           `${file} ${time.format(duration, {

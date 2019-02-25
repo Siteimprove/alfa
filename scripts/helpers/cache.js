@@ -47,7 +47,7 @@ class Cache {
    * @return {string}
    */
   pathTo(key) {
-    const digest = getDigest(Cache.version + "\u{0000}" + key);
+    const digest = getDigest(`${Cache.version}\u{0000}${key}`);
 
     return path.join(this.root, digest.substring(0, 2), `${digest}.json`);
   }
