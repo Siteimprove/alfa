@@ -65,22 +65,3 @@ test("Gets the assigned nodes of a slot with child when there are no slotables w
     [button]
   );
 });
-
-/**
- *
- * @TODO fix
- */
-test("Gets assigned node when ", t => {
-  const element = <slot slot="foo" />;
-
-  const context = (
-    <div>
-      {element}
-      {shadow}
-      {div}
-    </div>
-  );
-  t.deepEqual(getAssignedNodes(slotInShadow, context, { flattened: true }), [
-    element
-  ]);
-});
