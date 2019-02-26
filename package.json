@@ -16,11 +16,13 @@
     "Búgvi Benjamin Magnussen <bbm@siteimprove.com>",
     "Kasper Kronborg Isager <kki@siteimprove.com>",
     "Niclas Hedam <nhe@siteimprove.com>",
+    "Per Jakobsen <pja@siteimprove.com>",
     "Tobias Christian Jensen <tcj@siteimprove.com>"
   ],
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
+    "format": "node scripts/format.js",
     "prepare": "node scripts/prepare.js",
     "test": "node scripts/test.js",
     "start": "node scripts/start.js",

@@ -2,7 +2,7 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
   hasTextAlternative,
-  isVisible,
+  isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
 import { some } from "@siteimprove/alfa-compatibility";
@@ -30,7 +30,7 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
         node =>
           isElement(node) &&
           isButton(node, document, device) &&
-          isVisible(node, document, device) &&
+          some(isExposed(node, document, device)) &&
           getInputType(node) !== InputType.Image
       )
     );

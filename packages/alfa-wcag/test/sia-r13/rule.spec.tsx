@@ -32,8 +32,32 @@ test("SIA-R13 fails when an iframe has no accessible name", t => {
   );
 });
 
-test("SIA-R13 is inapplicable when element is not in the accessibility tree", t => {
+test("SIA-R13 is inapplicable when an iframe has aria-hidden=true", t => {
   const iframe = <iframe aria-hidden="true" />;
+  const document = documentFromNodes([iframe]);
+
+  outcome(
+    t,
+    SIA_R13,
+    { document, device: getDefaultDevice() },
+    Outcome.Inapplicable
+  );
+});
+
+test("SIA-R13 is inapplicable when an iframe has role=presentation", t => {
+  const iframe = <iframe role="presentation" />;
+  const document = documentFromNodes([iframe]);
+
+  outcome(
+    t,
+    SIA_R13,
+    { document, device: getDefaultDevice() },
+    Outcome.Inapplicable
+  );
+});
+
+test("SIA-R13 is inapplicable when an iframe has role=none", t => {
+  const iframe = <iframe role="none" />;
   const document = documentFromNodes([iframe]);
 
   outcome(

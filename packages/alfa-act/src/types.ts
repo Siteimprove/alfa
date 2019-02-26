@@ -172,7 +172,7 @@ export namespace Composite {
 
     readonly locales?: ReadonlyArray<Locale>;
 
-    readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
+    readonly composes: ReadonlyArray<Atomic.Rule<A, T> | Composite.Rule<A, T>>;
 
     readonly definition: (expectations: Expectations<A, T>) => void;
   }
