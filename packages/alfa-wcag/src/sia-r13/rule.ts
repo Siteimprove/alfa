@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { hasTextAlternative, isVisible } from "@siteimprove/alfa-aria";
+import { hasTextAlternative, isExposed } from "@siteimprove/alfa-aria";
+import { some } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -25,7 +26,7 @@ export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
         node =>
           isElement(node) &&
           isIframe(node, document) &&
-          isVisible(node, document, device)
+          some(isExposed(node, document, device))
       )
     );
 

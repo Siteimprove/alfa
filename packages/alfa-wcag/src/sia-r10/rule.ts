@@ -1,5 +1,10 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { Category, getRole, isVisible } from "@siteimprove/alfa-aria";
+import {
+  Category,
+  getRole,
+  isExposed,
+  isVisible
+} from "@siteimprove/alfa-aria";
 import { BrowserSpecific, map, some } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -31,7 +36,8 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
         document,
         node =>
           isElement(node) &&
-          isVisible(node, document, device) &&
+          (isVisible(node, document, device) ||
+            some(isExposed(node, document, device))) &&
           some(isAutocompletable(node, document, device)) &&
           hasAutocomplete(node)
       ).map(element => getAttributeNode(element, "autocomplete")!)

@@ -2,9 +2,10 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
   hasTextAlternative,
-  isVisible,
+  isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
+import { some } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -27,7 +28,7 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
         node =>
           isElement(node) &&
           isFormField(node, document, device) &&
-          isVisible(node, document, device),
+          some(isExposed(node, document, device)),
         { composed: true }
       )
     );
