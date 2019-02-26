@@ -24,7 +24,7 @@ test("Returns parent rule", t => {
     conditionText: "@media foo"
   };
 
-  const styleSheet: StyleSheet = { cssRules: [parentRule] };
+  const styleSheet: StyleSheet = { cssRules: [parentRule], disabled: false };
   const document: Document = {
     nodeType: 9,
     childNodes: [<div />],
@@ -49,7 +49,7 @@ test("Returns null when parent rule does not exist", t => {
     selectorText: "button",
     style: childStyleDec
   };
-  const styleSheet: StyleSheet = { cssRules: [] };
+  const styleSheet: StyleSheet = { cssRules: [], disabled: false };
   const document: Document = {
     nodeType: 9,
     childNodes: [<div />],
