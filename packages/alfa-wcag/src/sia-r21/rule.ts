@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { isVisible, Roles } from "@siteimprove/alfa-aria";
+import { isExposed, Roles } from "@siteimprove/alfa-aria";
+import { some } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -28,7 +29,7 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
         document,
         node =>
           isElement(node) &&
-          isVisible(node, document, device) &&
+          some(isExposed(node, document, device)) &&
           isHtmlOrSvgElement(node, document) &&
           hasAttribute(node, "role") &&
           getAttribute(node, "role", { trim: true }) !== ""
