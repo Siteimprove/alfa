@@ -2,8 +2,12 @@ import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
-export type Target = Attribute | Document | Element;
-
+/**
+ * Aspects are the different resources that make up a test subject, which is the
+ * entity under test by a rule. Aspects are the only input supplied to a rule;
+ * everything a rule needs to make a decision must therefore be present within
+ * the aspects passed to it.
+ */
 export interface Aspects {
   readonly request: Request;
   readonly response: Response;
@@ -11,16 +15,30 @@ export interface Aspects {
   readonly device: Device;
 }
 
+/**
+ * Aspect represents the type of any individual aspect.
+ */
 export type Aspect = Aspects[keyof Aspects];
 
+/**
+ * Given one or more aspects, get the keys of the aspects within the Aspects
+ * type.
+ */
 export type AspectKeysFor<A extends Aspect> = {
   readonly [P in keyof Aspects]: Aspects[P] extends A ? P : never
 }[keyof Aspects];
 
-export type AspectsFor<A extends Aspect> = {
-  readonly [P in AspectKeysFor<Aspect>]?: Aspects[P]
-} &
+/**
+ * Given one or more aspects, get a subset of the Aspects type that includes
+ * only the given aspects.
+ */
+export type AspectsFor<A extends Aspect> = Partial<Aspects> &
   { readonly [P in AspectKeysFor<A>]: Aspects[P] };
+
+/**
+ * A target is an entity that a rule can apply to and make expectations about.
+ */
+export type Target = Attribute | Document | Element;
 
 export const enum Outcome {
   Passed = "passed",
@@ -47,17 +65,17 @@ export type Result<
   O extends Outcome = Outcome
 > = O extends Outcome.Inapplicable
   ? {
-      readonly rule: Rule["id"];
+      readonly rule: Rule<A, T>;
       readonly outcome: O;
     }
   : {
-      readonly rule: Rule["id"];
+      readonly rule: Rule<A, T>;
       readonly outcome: O;
       readonly aspect: A;
       readonly target: T;
       readonly expectations: {
         readonly [id: number]: {
-          readonly holds: boolean;
+          readonly holds: boolean | null;
           readonly message: string;
           readonly data: Data | null;
         };
@@ -68,8 +86,8 @@ export interface Question<
   A extends Aspect = Aspect,
   T extends Target = Target
 > {
-  readonly rule: Rule["id"];
-  readonly question: string;
+  readonly rule: Rule<A, T>;
+  readonly expectation: number;
   readonly aspect: A;
   readonly target: T;
 }
@@ -86,7 +104,10 @@ export interface Locale {
   readonly title: string;
   readonly expectations: {
     readonly [id: number]: {
-      readonly [P in Outcome.Passed | Outcome.Failed]: Message
+      readonly [P in
+        | Outcome.Passed
+        | Outcome.Failed
+        | Outcome.CantTell]?: Message
     };
   };
 }
@@ -113,8 +134,8 @@ export namespace Atomic {
     expectations: (
       aspect: A,
       target: T,
-      expectation: (id: number, holds: boolean, data?: Data) => void,
-      question: (question: string) => boolean
+      expectation: (id: number, holds: boolean | null, data?: Data) => void,
+      question: (expectation: number) => boolean | null
     ) => void
   ) => void;
 
@@ -140,7 +161,7 @@ export namespace Composite {
   > = (
     expectations: (
       outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>,
-      expectation: (id: number, holds: boolean) => void
+      expectation: (id: number, holds: boolean | null) => void
     ) => void
   ) => void;
 
@@ -151,7 +172,7 @@ export namespace Composite {
 
     readonly locales?: ReadonlyArray<Locale>;
 
-    readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
+    readonly composes: ReadonlyArray<Atomic.Rule<A, T> | Composite.Rule<A, T>>;
 
     readonly definition: (expectations: Expectations<A, T>) => void;
   }

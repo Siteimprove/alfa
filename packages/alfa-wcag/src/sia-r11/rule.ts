@@ -2,7 +2,7 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
   hasTextAlternative,
-  isVisible,
+  isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
 import { some } from "@siteimprove/alfa-compatibility";
@@ -31,7 +31,7 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
         node =>
           isElement(node) &&
           isLink(node, document, device) &&
-          isVisible(node, document, device)
+          some(isExposed(node, document, device))
       )
     );
 

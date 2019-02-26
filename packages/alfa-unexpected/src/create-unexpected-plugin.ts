@@ -5,6 +5,17 @@ import { Element, serialize } from "@siteimprove/alfa-dom";
 import { highlight } from "@siteimprove/alfa-highlight";
 import * as unexpected from "unexpected";
 
+// tslint:disable:callable-types
+
+declare module "unexpected" {
+  interface Expect {
+    (
+      subject: Element,
+      assertionName: "to be accessible" | "not to be accessible"
+    ): Promise<void>;
+  }
+}
+
 export function createUnexpectedPlugin<T>(
   identify: (input: unknown) => input is T,
   transform: (input: T) => Element

@@ -2,7 +2,7 @@ import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getLabel } from "../src/get-label";
 
-test("Returns label when element is labelable and label is defined", t => {
+test("Returns the label of a labelable element", t => {
   const input = <input id="foo" />;
   const label = <label for="foo">Bar</label>;
   const form = (
@@ -11,17 +11,39 @@ test("Returns label when element is labelable and label is defined", t => {
       {input}
     </form>
   );
+
   t.equal(getLabel(input, form), label);
 });
 
-test("Returns null when no label is defined", t => {
+test("Returns null when no label exists", t => {
   const input = <input id="foo" />;
   const form = <form>{input}</form>;
+
   t.equal(getLabel(input, form), null);
 });
 
-test("Returns null when element is not labelable", t => {
+test("Returns null when an element is not labelable", t => {
   const div = <div id="foo" />;
-  const form = <form>{div}</form>;
+  const form = (
+    <form>
+      <label for="foo">Bar</label>;{div}
+    </form>
+  );
+
   t.equal(getLabel(div, form), null);
+});
+
+test("Returns null when an element is not the target of its label", t => {
+  const input = <input id="foo" />;
+  const button = <input id="foo" />;
+  const label = <label for="foo">Foo</label>;
+  const form = (
+    <form>
+      {label}
+      {button}
+      {input}
+    </form>
+  );
+
+  t.equal(getLabel(input, form), null);
 });

@@ -115,5 +115,6 @@ declare module "chai" {
 }
 
 interface Object {
+  // @ts-ignore This will clash with other packages that define `Object.should`
   should: import("chai").Should;
 }

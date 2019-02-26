@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
     "jsx": "react",
@@ -15,5 +16,7 @@
     "strict": true,
     "stripInternal": true,
     "target": "es2015"
-  }
+  },
+  "files": [],
+  "references": [{ "path": "scripts" }, { "path": "packages" }]
 }

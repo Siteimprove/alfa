@@ -22,7 +22,9 @@ export const SIA_R23: Atomic.Rule<Document, Element> = {
     );
 
     expectations((aspect, target, expectation, question) => {
-      expectation(1, question("has-captions"));
+      const hasCaptions = question(1);
+
+      expectation(1, hasCaptions);
     });
   }
 };

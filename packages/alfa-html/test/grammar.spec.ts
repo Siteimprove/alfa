@@ -28,6 +28,8 @@ test("Can parse a document with a doctype", t => {
   const doctype: DocumentType = {
     nodeType: NodeType.DocumentType,
     name: "html",
+    publicId: "",
+    systemId: "",
     childNodes: []
   };
 

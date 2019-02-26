@@ -30,7 +30,7 @@ exports.parseFile = parseFile;
 
 /**
  * @param {string} file
- * @param {Workspace | Project} [project]
+ * @param {Project | Workspace} [project]
  * @return {boolean}
  */
 function isTestable(file, project = workspace) {
@@ -63,7 +63,6 @@ function isTestable(file, project = workspace) {
             // Exported functions are testable.
             return true;
           }
-          break;
       }
     })
   );

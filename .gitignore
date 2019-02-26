@@ -10,4 +10,6 @@ package-lock.json
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
 
+.cache
+.semaphore-cache
 .vscode

@@ -4,11 +4,10 @@ const { format, now } = require("./helpers/time");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
+const { diagnose } = require("./tasks/diagnose");
 const { test } = require("./tasks/test");
 
 const isSpec = endsWith(".spec.ts", ".spec.tsx");
-const isSrc = endsWith(".ts", ".tsx");
-const isBuild = endsWith(".js");
 
 watchFiles(
   [
@@ -20,17 +19,12 @@ watchFiles(
     "docs/**/*.tsx"
   ],
   (event, file) => {
-    let success;
-
     const start = now();
 
-    switch (true) {
-      case isSpec(file):
-        success = test(file);
-        break;
-      case isSrc(file):
-      case isBuild(file):
-        success = build(file);
+    let success = diagnose(file) && build(file);
+
+    if (isSpec(file)) {
+      success = success && test(file);
     }
 
     const duration = now(start);
