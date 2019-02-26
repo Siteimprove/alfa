@@ -4,6 +4,11 @@ import { Attribute, Element, Node } from "./types";
 
 const ownerElementMaps = new WeakMap<Node, WeakMap<Attribute, Element>>();
 
+/**
+ * Given an attribute and a context, get the owner element of that attribute
+ * within the given context. If no element owns the attribute within
+ * the context then `null` is returned.
+ */
 export function getOwnerElement(
   attribute: Attribute,
   context: Node
