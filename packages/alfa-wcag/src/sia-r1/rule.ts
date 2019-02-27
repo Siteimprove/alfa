@@ -26,10 +26,7 @@ export const SIA_R1: Atomic.Rule<Document, Document> = {
       );
 
       expectation(1, title !== null);
-
-      if (title !== null) {
-        expectation(2, hasTextContent(title, document));
-      }
+      expectation(2, title !== null && hasTextContent(title, document));
     });
   }
 };
