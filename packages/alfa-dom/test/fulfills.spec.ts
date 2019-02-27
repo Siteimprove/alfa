@@ -40,3 +40,7 @@ test("Checks fulfillment of a min-width media feature", t => {
   t(fulfills(device, mediaRule("(min-width: 720px)")));
   t(fulfills(device, mediaRule("(min-width: 719px)")));
 });
+
+test("Checks fulfillment of a media query list", t => {
+  t(fulfills(device, mediaRule("print, screen and (min-width: 721px)")));
+});
