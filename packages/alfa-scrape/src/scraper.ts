@@ -21,6 +21,7 @@ export interface ScrapeOptions {
     readonly width: number;
     readonly height: number;
     readonly scale?: number;
+    readonly landscape?: boolean;
   };
   readonly credentials?: {
     readonly username: string;
@@ -44,7 +45,7 @@ export class Scraper {
     options: ScrapeOptions = {}
   ): Promise<Aspects> {
     const {
-      viewport = { width: 1280, height: 720, scale: 1 },
+      viewport = { width: 1280, height: 720, scale: 1, landscape: false },
       credentials = null,
       wait = Wait.Loaded,
       timeout = 10000
@@ -55,7 +56,8 @@ export class Scraper {
       viewport: {
         width: viewport.width,
         height: viewport.height,
-        orientation: Orientation.Landscape
+        orientation: Orientation.Landscape,
+        isLandscape: landscape
       },
       display: {
         resolution: viewport.scale === undefined ? 1 : viewport.scale
