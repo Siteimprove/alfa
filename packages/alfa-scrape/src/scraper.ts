@@ -45,7 +45,7 @@ export class Scraper {
     options: ScrapeOptions = {}
   ): Promise<Aspects> {
     const {
-      viewport = { width: 1280, height: 720, scale: 1, landscape: false },
+      viewport = { width: 1280, height: 720, scale: 1, landscape: true },
       credentials = null,
       wait = Wait.Loaded,
       timeout = 10000
@@ -56,8 +56,9 @@ export class Scraper {
       viewport: {
         width: viewport.width,
         height: viewport.height,
-        orientation: Orientation.Landscape,
-        isLandscape: landscape
+        orientation: viewport.landscape
+          ? Orientation.Landscape
+          : Orientation.Portrait
       },
       display: {
         resolution: viewport.scale === undefined ? 1 : viewport.scale
@@ -70,7 +71,8 @@ export class Scraper {
     await page.setViewport({
       width: viewport.width,
       height: viewport.width,
-      deviceScaleFactor: viewport.scale
+      deviceScaleFactor: viewport.scale,
+      isLandscape: viewport.landscape
     });
 
     await page.authenticate(credentials);
