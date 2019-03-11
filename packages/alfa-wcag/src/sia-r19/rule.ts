@@ -12,6 +12,8 @@ import {
 } from "@siteimprove/alfa-dom";
 import { URL, values } from "@siteimprove/alfa-util";
 
+import { EN } from "./locales/en";
+
 function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
   return a.concat(b);
 }
@@ -19,6 +21,7 @@ function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
 export const SIA_R19: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
+  locales: [EN],
   definition: (applicability, expectations, { document }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)

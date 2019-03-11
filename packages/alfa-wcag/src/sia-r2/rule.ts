@@ -17,9 +17,12 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+import { EN } from "./locales/en";
+
 export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: [{ id: "wcag:non-text-content", partial: true }],
+  locales: [EN],
   definition: (applicability, expectations, { device, document }) => {
     applicability(document, () =>
       querySelectorAll(
