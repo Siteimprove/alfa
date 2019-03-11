@@ -56,9 +56,10 @@ export class Scraper {
       viewport: {
         width: viewport.width,
         height: viewport.height,
-        orientation: viewport.landscape
-          ? Orientation.Landscape
-          : Orientation.Portrait
+        orientation:
+          viewport.landscape !== false
+            ? Orientation.Landscape
+            : Orientation.Portrait
       },
       display: {
         resolution: viewport.scale === undefined ? 1 : viewport.scale
