@@ -1,11 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
-  hasTextAlternative,
+  getTextAlternative,
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -21,20 +21,27 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
   requirements: [{ id: "wcag:labels-or-instructions", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isFormField(node, document, device) &&
-          some(isExposed(node, document, device)),
-        { composed: true }
-      )
-    );
+    applicability(document, () => {
+      return BrowserSpecific.filter(
+        querySelectorAll<Element>(
+          document,
+          document,
+          node => isElement(node) && isFormField(node, document, device),
+          { composed: true }
+        ),
+        node => isExposed(node, document, device)
+      );
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasTextAlternative(target, document, device));
+    expectations((aspect, target) => {
+      return BrowserSpecific.map(
+        getTextAlternative(target, document, device),
+        textAlternative => {
+          return {
+            1: { holds: textAlternative !== null && textAlternative !== "" }
+          };
+        }
+      );
     });
   }
 };

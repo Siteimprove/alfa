@@ -1,7 +1,9 @@
 import { expandBrowsers } from "./expand-browsers";
+import { filter } from "./filter";
 import { map } from "./map";
 import { reduce } from "./reduce";
 import { BrowserName, BrowserQuery, VersionSet } from "./types";
+import { unwrap } from "./unwrap";
 
 /**
  * @internal
@@ -19,8 +21,10 @@ export type ValueList<T> = ReadonlyArray<
  * treat it as just a single value.
  */
 export class BrowserSpecific<T> {
+  public static filter = filter;
   public static map = map;
   public static reduce = reduce;
+  public static unwrap = unwrap;
 
   public static of<T>(
     value: T,

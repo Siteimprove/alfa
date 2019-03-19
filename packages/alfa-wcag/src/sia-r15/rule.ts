@@ -31,28 +31,31 @@ export const SIA_R15: Atomic.Rule<Device | Document, Element> = {
         hasTextAlternative(node, document, device)
     );
 
-    applicability(document, () => [...iframes]);
+    applicability(document, () => {
+      return [...iframes];
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(
-        1,
-        some(
-          getTextAlternative(target, document, device),
-          textAlternative =>
-            iframes.find(
-              found =>
-                found !== target &&
-                getAttribute(found, "src") !== getAttribute(target, "src") &&
-                some(
-                  getTextAlternative(found, document, device),
-                  otherTextAlternative =>
-                    otherTextAlternative !== null &&
-                    otherTextAlternative.trim().toLowerCase() ===
-                      textAlternative!.trim().toLowerCase()
-                )
-            ) === undefined
-        )
-      );
+    expectations((aspect, target) => {
+      return {
+        1: {
+          holds: some(
+            getTextAlternative(target, document, device),
+            textAlternative =>
+              iframes.find(
+                found =>
+                  found !== target &&
+                  getAttribute(found, "src") !== getAttribute(target, "src") &&
+                  some(
+                    getTextAlternative(found, document, device),
+                    otherTextAlternative =>
+                      otherTextAlternative !== null &&
+                      otherTextAlternative.trim().toLowerCase() ===
+                        textAlternative!.trim().toLowerCase()
+                  )
+              ) === undefined
+          )
+        }
+      };
     });
   }
 };

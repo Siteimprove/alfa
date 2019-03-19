@@ -12,6 +12,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-compatibility"
+    },
+    {
       "path": "../alfa-device"
     },
     {

@@ -12,15 +12,17 @@ export const Manual: Atomic.Rule<Document, Element> = {
   definition: (applicability, expectations, { document }) => {
     const root = document.childNodes[0];
 
-    applicability(document, () =>
-      root !== undefined && isElement(root) ? [root] : null
-    );
+    applicability(document, () => {
+      return root !== undefined && isElement(root) ? [root] : null;
+    });
 
-    expectations((aspect, target, expectation, question) => {
+    expectations((aspect, target, question) => {
       const hasAlt = getAttribute(target, "alt") !== "";
       const isLargeType = question(1);
 
-      expectation(1, !hasAlt || isLargeType === true);
+      return {
+        1: { holds: !hasAlt || isLargeType === true }
+      };
     });
   }
 };
@@ -28,16 +30,17 @@ export const Manual: Atomic.Rule<Document, Element> = {
 export const Automated: Atomic.Rule<Document, Element> = {
   id: "_:automated-rule",
   definition: (applicability, expectations, { document }) => {
-    applicability(document, () => (isElement(document) ? [document] : null));
+    applicability(document, () => {
+      return isElement(document) ? [document] : null;
+    });
 
-    expectations((aspect, target, expectation) => {
+    expectations((aspect, target) => {
       const isBody = target.localName === "body";
 
-      expectation(1, isBody);
-
-      if (isBody) {
-        expectation(2, target.prefix === null);
-      }
+      return {
+        1: { holds: isBody },
+        2: { holds: isBody && target.prefix === null }
+      };
     });
   }
 };
@@ -47,8 +50,10 @@ export const Semi: Composite.Rule<Document, Element> = {
   composes: [Manual, Automated],
   requirements: [{ id: "wcag:section-headings" }],
   definition: expectations => {
-    expectations((results, expectation) => {
-      expectation(1, results.some(result => result.outcome === Outcome.Passed));
+    expectations(results => {
+      return {
+        1: { holds: results.some(result => result.outcome === Outcome.Passed) }
+      };
     });
   }
 };

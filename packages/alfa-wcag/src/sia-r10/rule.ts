@@ -30,8 +30,8 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r10.html",
   requirements: [{ id: "wcag:identify-input-purpose", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
+    applicability(document, () => {
+      return querySelectorAll<Element>(
         document,
         document,
         node =>
@@ -40,11 +40,13 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
             some(isExposed(node, document, device))) &&
           some(isAutocompletable(node, document, device)) &&
           hasAutocomplete(node)
-      ).map(element => getAttributeNode(element, "autocomplete")!)
-    );
+      ).map(element => getAttributeNode(element, "autocomplete")!);
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, isValidAutocomplete(target, document));
+    expectations((aspect, target) => {
+      return {
+        1: { holds: isValidAutocomplete(target, document) }
+      };
     });
   }
 };

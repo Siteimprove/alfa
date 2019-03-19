@@ -14,8 +14,12 @@ export function expandBrowsers(
 
   for (const browser of browsers) {
     if (typeof browser === "string") {
-      if (options.unsupported === true || supported.has(browser)) {
+      if (options.unsupported === true) {
         result.set(browser, true);
+      }
+
+      if (supported.has(browser)) {
+        result.set(browser, supported.get(browser)!);
       }
     } else {
       const name = browser[0];

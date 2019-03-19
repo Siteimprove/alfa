@@ -7,7 +7,7 @@ import { SIA_R2 } from "../../src/sia-r2/rule";
 
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
-getDefaultDevice;
+
 test("SIA-R2 passes when an image has a textual alternative", t => {
   const image = (
     <img src="https://picsum.photos/200/300" alt="A placeholder image" />

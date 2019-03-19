@@ -21,45 +21,48 @@ export const SIA_R16: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r16.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
+    applicability(document, () => {
+      return querySelectorAll<Element>(
         document,
         document,
         node => isElement(node) && hasExplicitRole(node, document, device)
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation) => {
+    expectations((aspect, target) => {
       const role = getExplicitRole(target, document, device);
 
-      expectation(
-        1,
-        every(role, role => {
-          if (role === null || role.required === undefined) {
-            return true;
-          }
+      return {
+        1: {
+          holds: every(role, role => {
+            if (role === null || role.required === undefined) {
+              return true;
+            }
 
-          const implicits =
-            role.implicits === undefined
-              ? []
-              : role.implicits(target, document, device);
+            const implicits =
+              role.implicits === undefined
+                ? []
+                : role.implicits(target, document, device);
 
-          for (const attribute of role.required(target, document, device)) {
-            const value = getAttribute(target, attribute.name, { trim: true });
+            for (const attribute of role.required(target, document, device)) {
+              const value = getAttribute(target, attribute.name, {
+                trim: true
+              });
 
-            if (value === null || value === "") {
-              if (
-                implicits.find(implicit => implicit[0] === attribute) ===
-                undefined
-              ) {
-                return false;
+              if (value === null || value === "") {
+                if (
+                  implicits.find(implicit => implicit[0] === attribute) ===
+                  undefined
+                ) {
+                  return false;
+                }
               }
             }
-          }
 
-          return true;
-        })
-      );
+            return true;
+          })
+        }
+      };
     });
   }
 };

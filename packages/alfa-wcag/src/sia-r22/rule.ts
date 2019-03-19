@@ -15,21 +15,23 @@ export const SIA_R22: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r22.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll(
+    applicability(document, () => {
+      return querySelectorAll(
         document,
         document,
         node =>
           isElement(node) &&
           isRendered(node, document, device) &&
           isVideo(node, document)
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation, question) => {
+    expectations((aspect, target, question) => {
       const hasCaptions = question(1);
 
-      expectation(1, hasCaptions);
+      return {
+        1: { holds: hasCaptions }
+      };
     });
   }
 };

@@ -16,8 +16,8 @@ export const SIA_R5: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r5.html",
   requirements: [{ id: "wcag:language-of-page", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
+    applicability(document, () => {
+      return querySelectorAll<Element>(
         document,
         document,
         node =>
@@ -42,11 +42,13 @@ export const SIA_R5: Atomic.Rule<Document, Attribute> = {
 
           return languages;
         })
-        .reduce(concat, [])
-    );
+        .reduce(concat, []);
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, getLanguage(target.value) !== null);
+    expectations((aspect, target) => {
+      return {
+        1: { holds: getLanguage(target.value) !== null }
+      };
     });
   }
 };

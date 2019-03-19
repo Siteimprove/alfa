@@ -1,11 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
-  hasTextAlternative,
+  getTextAlternative,
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -24,26 +24,41 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
     { id: "wcag:name-role-value", partial: true }
   ],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
-        document,
-        document,
+    applicability(document, () => {
+      return BrowserSpecific.filter(
+        querySelectorAll(document, document, isElement),
         node =>
-          isElement(node) &&
-          isLink(node, document, device) &&
-          some(isExposed(node, document, device))
-      )
-    );
+          BrowserSpecific.map(
+            isLink(node, document, device),
+            isLink => isLink && isExposed(node, document, device)
+          )
+      );
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasTextAlternative(target, document, device));
+    expectations((aspect, target) => {
+      return BrowserSpecific.map(
+        getTextAlternative(target, document, device),
+        textAlternative => {
+          return {
+            1: { holds: textAlternative !== null && textAlternative !== "" }
+          };
+        }
+      );
     });
   }
 };
 
-function isLink(element: Element, context: Node, device: Device): boolean {
-  return (
-    getElementNamespace(element, context) === Namespace.HTML &&
-    some(getRole(element, context, device), role => role === Roles.Link)
+function isLink(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean | BrowserSpecific<boolean> {
+  if (getElementNamespace(element, context) !== Namespace.HTML) {
+    return false;
+  }
+
+  return BrowserSpecific.map(
+    getRole(element, context, device),
+    role => role === Roles.Link
   );
 }

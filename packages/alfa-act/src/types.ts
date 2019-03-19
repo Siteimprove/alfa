@@ -1,3 +1,4 @@
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
@@ -67,10 +68,12 @@ export type Result<
   ? {
       readonly rule: Rule<A, T>;
       readonly outcome: O;
+      readonly browsers?: { [key: string]: true | Array<string> };
     }
   : {
       readonly rule: Rule<A, T>;
       readonly outcome: O;
+      readonly browsers?: { [key: string]: true | Array<string> };
       readonly aspect: A;
       readonly target: T;
       readonly expectations: {
@@ -117,6 +120,13 @@ export interface Requirement {
   readonly partial?: true;
 }
 
+export interface Evaluations {
+  readonly [id: number]: {
+    holds: boolean | null;
+    data?: Data;
+  };
+}
+
 export type Rule<A extends Aspect = Aspect, T extends Target = Target> =
   | Atomic.Rule<A, T>
   | Composite.Rule<A, T>;
@@ -125,7 +135,13 @@ export namespace Atomic {
   export type Applicability<
     A extends Aspect = Aspect,
     T extends Target = Target
-  > = (aspect: A, applicability: () => ReadonlyArray<T> | null) => void;
+  > = (
+    aspect: A,
+    applicability: () =>
+      | ReadonlyArray<T>
+      | BrowserSpecific<ReadonlyArray<T>>
+      | null
+  ) => void;
 
   export type Expectations<
     A extends Aspect = Aspect,
@@ -134,9 +150,8 @@ export namespace Atomic {
     expectations: (
       aspect: A,
       target: T,
-      expectation: (id: number, holds: boolean | null, data?: Data) => void,
       question: (expectation: number) => boolean | null
-    ) => void
+    ) => Evaluations | BrowserSpecific<Evaluations>
   ) => void;
 
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {
@@ -160,9 +175,8 @@ export namespace Composite {
     T extends Target = Target
   > = (
     expectations: (
-      outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>,
-      expectation: (id: number, holds: boolean | null) => void
-    ) => void
+      outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>
+    ) => Evaluations | BrowserSpecific<Evaluations>
   ) => void;
 
   export interface Rule<A extends Aspect = Aspect, T extends Target = Target> {

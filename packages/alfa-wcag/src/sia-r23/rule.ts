@@ -13,18 +13,20 @@ export const SIA_R23: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r23.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(document, () =>
-      querySelectorAll(
+    applicability(document, () => {
+      return querySelectorAll(
         document,
         document,
         node => isElement(node) && isAudio(node, document)
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation, question) => {
+    expectations((aspect, target, question) => {
       const hasTranscript = question(1);
 
-      expectation(1, hasTranscript);
+      return {
+        1: { holds: hasTranscript }
+      };
     });
   }
 };

@@ -14,17 +14,19 @@ export const SIA_R3: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r3.html",
   requirements: [{ id: "wcag:parsing", partial: true }],
   definition: (applicability, expectations, { document }) => {
-    applicability(document, () =>
-      querySelectorAll(
+    applicability(document, () => {
+      return querySelectorAll(
         document,
         document,
         node => isElement(node) && hasId(node, document),
         { composed: true }
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasUniqueId(target, document));
+    expectations((aspect, target) => {
+      return {
+        1: { holds: hasUniqueId(target, document) }
+      };
     });
   }
 };

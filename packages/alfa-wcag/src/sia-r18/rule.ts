@@ -28,17 +28,17 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(document, () =>
-      querySelectorAll(document, document, isElement)
+    applicability(document, () => {
+      return querySelectorAll(document, document, isElement)
         .map(element =>
           Array.from(element.attributes).filter(attribute =>
             attributeNames.has(attribute.localName)
           )
         )
-        .reduce(concat, [])
-    );
+        .reduce(concat, []);
+    });
 
-    expectations((aspect, target, expectation) => {
+    expectations((aspect, target) => {
       const owner = getOwnerElement(target, document)!;
 
       const globalAttributeNames = new Set(
@@ -47,22 +47,23 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
         )
       );
 
-      expectation(
-        1,
-        some(getRole(owner, document, device), role => {
-          if (role !== null) {
-            return isAllowedAttribute(
-              owner,
-              document,
-              device,
-              target.localName,
-              role
-            );
-          }
+      return {
+        1: {
+          holds: some(getRole(owner, document, device), role => {
+            if (role !== null) {
+              return isAllowedAttribute(
+                owner,
+                document,
+                device,
+                target.localName,
+                role
+              );
+            }
 
-          return globalAttributeNames.has(target.localName);
-        })
-      );
+            return globalAttributeNames.has(target.localName);
+          })
+        }
+      };
     });
   }
 };

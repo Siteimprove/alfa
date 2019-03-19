@@ -19,19 +19,21 @@ export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
     { id: "wcag:name-role-value", partial: true }
   ],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
+    applicability(document, () => {
+      return querySelectorAll<Element>(
         document,
         document,
         node =>
           isElement(node) &&
           isIframe(node, document) &&
           some(isExposed(node, document, device))
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasTextAlternative(target, document, device));
+    expectations((aspect, target) => {
+      return {
+        1: { holds: hasTextAlternative(target, document, device) }
+      };
     });
   }
 };

@@ -15,23 +15,25 @@ export const SIA_R24: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r24.html",
   requirements: [{ id: "wcag:media-alternative-prerecorded", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll(
+    applicability(document, () => {
+      return querySelectorAll(
         document,
         document,
         node =>
           isElement(node) &&
           isRendered(node, document, device) &&
           isVideo(node, document)
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation, question) => {
+    expectations((aspect, target, question) => {
       const hasTranscript = question(1);
       const transcriptIsSufficient = question(1);
 
-      expectation(1, hasTranscript);
-      expectation(2, transcriptIsSufficient);
+      return {
+        1: { holds: hasTranscript },
+        2: { holds: transcriptIsSufficient }
+      };
     });
   }
 };
