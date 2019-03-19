@@ -8,7 +8,7 @@ import { SIA_R2 } from "../../src/sia-r2/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R2 passes when an image has a textual alternative", t => {
+test("Passes when an image has a text alternative", t => {
   const image = (
     <img src="https://picsum.photos/200/300" alt="A placeholder image" />
   );
@@ -29,7 +29,7 @@ test("SIA-R2 passes when an image has a textual alternative", t => {
   );
 });
 
-test("SIA-R2 fails when an image has no textual alternative", t => {
+test("Fails when an image has no text alternative", t => {
   const image = <img src="https://picsum.photos/200/300" />;
   const document = documentFromNodes([image]);
 
@@ -41,9 +41,20 @@ test("SIA-R2 fails when an image has no textual alternative", t => {
   );
 });
 
-test("SIA-R2 is inapplicable when an image has no need for an alternative", t => {
-  const image = <img src="https://picsum.photos/200/300" aria-hidden="true" />;
+test("Passes when an image is marked as decorative", t => {
+  const image = <img src="https://picsum.photos/200/300" role="presentation" />;
   const document = documentFromNodes([image]);
+
+  outcome(
+    t,
+    SIA_R2,
+    { document, device: getDefaultDevice() },
+    { passed: [image] }
+  );
+});
+
+test("Is inapplicable when no images are present", t => {
+  const document = documentFromNodes([<div />]);
 
   outcome(
     t,
