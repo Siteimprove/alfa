@@ -1,4 +1,4 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -26,7 +26,10 @@ export const SIA_R25: Atomic.Rule<Device | Document, Element> = {
     });
 
     expectations((aspect, target, question) => {
-      const audioIsSufficient = question(1);
+      const audioIsSufficient = question(
+        QuestionType.Boolean,
+        "audio-if-sufficient"
+      );
 
       return {
         1: { holds: audioIsSufficient }

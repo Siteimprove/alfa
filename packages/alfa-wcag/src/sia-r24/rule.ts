@@ -1,4 +1,4 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -27,8 +27,11 @@ export const SIA_R24: Atomic.Rule<Device | Document, Element> = {
     });
 
     expectations((aspect, target, question) => {
-      const hasTranscript = question(1);
-      const transcriptIsSufficient = question(1);
+      const hasTranscript = question(QuestionType.Boolean, "has-transcripts");
+      const transcriptIsSufficient = question(
+        QuestionType.Boolean,
+        "transcript-is-sufficient"
+      );
 
       return {
         1: { holds: hasTranscript },

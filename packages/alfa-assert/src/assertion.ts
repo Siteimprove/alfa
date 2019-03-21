@@ -1,4 +1,4 @@
-import { audit, isResult, Outcome, Rule } from "@siteimprove/alfa-act";
+import { audit, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Device, getDefaultDevice } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -62,11 +62,11 @@ export class Assertion {
           childNodes: [documentType, this.target]
         };
 
-    const results = audit({ device, document }, [
+    const { results } = audit({ device, document }, [
       (rule as unknown) as Rule<Aspect, Target>
     ]);
 
-    for (const result of results.filter(isResult)) {
+    for (const result of results) {
       if (result.outcome === Outcome.Inapplicable) {
         continue;
       }

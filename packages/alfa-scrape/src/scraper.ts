@@ -92,8 +92,8 @@ export class Scraper {
       if (origin.href === destination.href) {
         const status = res.status();
 
-        // If the response is performs a redirect using 3xx status codes, parse
-        // the location HTTP header and use that as the new origin.
+        // If the response performs a redirect using 3xx status codes, parse the
+        // location HTTP header and use that as the new origin.
         if (status >= 300 && status <= 399) {
           try {
             origin = new URL(res.headers().location);
@@ -128,7 +128,7 @@ export class Scraper {
       if (err instanceof Error) {
         switch (err.name) {
           case "TimeoutError":
-            throw new Error(`Navigation timeout of ${timeout}ms exceeded`);
+            err.message = `Navigation Timeout Exceeded: ${timeout}ms exceeded`;
         }
       }
 

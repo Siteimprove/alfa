@@ -1,4 +1,5 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Atomic, QuestionType } from "@siteimprove/alfa-act";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -9,7 +10,7 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-export const SIA_R23: Atomic.Rule<Document, Element> = {
+export const SIA_R23: Atomic.Rule<Document | Device, Element> = {
   id: "sanshikan:rules/sia-r23.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
   definition: (applicability, expectations, { document }) => {
@@ -22,7 +23,7 @@ export const SIA_R23: Atomic.Rule<Document, Element> = {
     });
 
     expectations((aspect, target, question) => {
-      const hasTranscript = question(1);
+      const hasTranscript = question(QuestionType.Boolean, "has-transcript");
 
       return {
         1: { holds: hasTranscript }

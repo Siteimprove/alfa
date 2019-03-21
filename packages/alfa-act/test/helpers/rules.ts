@@ -4,7 +4,7 @@ import {
   getAttribute,
   isElement
 } from "@siteimprove/alfa-dom";
-import { Atomic, Composite, Outcome } from "../../src/types";
+import { Atomic, Composite, Outcome, QuestionType } from "../../src/types";
 
 export const Manual: Atomic.Rule<Document, Element> = {
   id: "_:manual-rule",
@@ -18,7 +18,7 @@ export const Manual: Atomic.Rule<Document, Element> = {
 
     expectations((aspect, target, question) => {
       const hasAlt = getAttribute(target, "alt") !== "";
-      const isLargeType = question(1);
+      const isLargeType = question(QuestionType.Boolean, "is-large-type");
 
       return {
         1: { holds: !hasAlt || isLargeType === true }

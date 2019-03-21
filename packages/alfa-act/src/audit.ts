@@ -4,6 +4,7 @@ import { isAtomic } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
   Answer,
+  AnswerType,
   Aspect,
   AspectsFor,
   Atomic,
@@ -11,6 +12,7 @@ import {
   Evaluations,
   Outcome,
   Question,
+  QuestionType,
   Result,
   Rule,
   Target
@@ -53,22 +55,27 @@ export function audit<
 >(
   aspects: AspectsFor<A>,
   rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
-  answers: ReadonlyArray<Answer<A, T>> = []
-): ReadonlyArray<Result<A, T> | Question<A, T>> {
+  answers: ReadonlyArray<Answer<QuestionType, A, T>> = []
+): {
+  results: Array<Result<A, T>>;
+  questions: Array<Question<QuestionType, A, T>>;
+} {
   rules = isArray(rules) ? rules : values(rules);
 
-  const questions: Array<Question<A, T>> = [];
+  const questions: Array<Question<QuestionType, A, T>> = [];
 
-  function question(
+  function question<Q extends QuestionType>(
+    type: Q,
+    id: string,
     rule: Atomic.Rule<A, T>,
-    expectation: number,
-    aspect: A,
+    aspect: A[keyof A],
     target: T
-  ): boolean | null {
+  ): AnswerType[Q] | null {
     const answer = answers.find(
       answer =>
+        answer.type === type &&
+        answer.id === id &&
         answer.rule.id === rule.id &&
-        answer.expectation === expectation &&
         answer.aspect === aspect &&
         answer.target === target
     );
@@ -77,7 +84,7 @@ export function audit<
       return answer.answer;
     }
 
-    questions.push({ rule, expectation, aspect, target });
+    questions.push({ type, id, rule, aspect, target });
 
     return null;
   }
@@ -86,8 +93,8 @@ export function audit<
 
   for (const rule of sortRules(rules)) {
     const evaluation = isAtomic(rule)
-      ? auditAtomic<A, T>(aspects, rule, (expectation, aspect, target) =>
-          question(rule, expectation, aspect, target)
+      ? auditAtomic<A, T>(aspects, rule, (type, id, aspect, target) =>
+          question(type, id, rule, aspect, target)
         )
       : auditComposite<A, T>(aspects, rule, evaluations);
 
@@ -124,13 +131,18 @@ export function audit<
     }
   }
 
-  return results;
+  return { results, questions };
 }
 
 function auditAtomic<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rule: Atomic.Rule<A, T>,
-  question: (expectation: number, aspect: A, target: T) => boolean | null
+  question: <Q extends QuestionType>(
+    type: Q,
+    id: string,
+    aspect: A,
+    target: T
+  ) => AnswerType[Q] | null
 ): BrowserSpecific<ResultSet<A, T>> | null {
   let aspect: A;
   let targets: ReadonlyArray<T> | BrowserSpecific<ReadonlyArray<T>> = [];
@@ -139,7 +151,9 @@ function auditAtomic<A extends Aspect, T extends Target>(
     _aspect,
     applicability
   ) => {
-    const _targets = applicability();
+    const _targets = applicability((type, id, target) =>
+      question(type, id, _aspect, target)
+    );
 
     if (_targets !== null) {
       aspect = _aspect;
@@ -155,7 +169,9 @@ function auditAtomic<A extends Aspect, T extends Target>(
         const evaluator = getExpectationEvaluater(aspect, target, rule);
 
         return map(
-          expectations(aspect, target, id => question(id, aspect, target)),
+          expectations(aspect, target, (type, id) =>
+            question(type, id, aspect, target)
+          ),
           evaluations => {
             return evaluator(evaluations);
           }

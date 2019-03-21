@@ -1,4 +1,4 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -27,7 +27,7 @@ export const SIA_R22: Atomic.Rule<Device | Document, Element> = {
     });
 
     expectations((aspect, target, question) => {
-      const hasCaptions = question(1);
+      const hasCaptions = question(QuestionType.Boolean, "has-captions");
 
       return {
         1: { holds: hasCaptions }
