@@ -24,38 +24,45 @@ import {
 export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r14.html",
   requirements: [{ id: "wcag:label-in-name", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () => {
-      return querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isHtmlElement(node, document) &&
-          isWidget(node, document, device) &&
-          isContentLabelable(node, document, device) &&
-          hasVisibleTextContent(node, document, device) &&
-          (hasAttribute(node, "aria-label") ||
-            hasAttribute(node, "aria-labelledby"))
-      );
-    });
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return (
+            isElement(node) &&
+            isHtmlElement(node, document) &&
+            isWidget(node, document, device) &&
+            isContentLabelable(node, document, device) &&
+            hasVisibleTextContent(node, document, device) &&
+            (hasAttribute(node, "aria-label") ||
+              hasAttribute(node, "aria-labelledby"))
+          );
+        }).map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: element
+          };
+        });
+      },
 
-    expectations((aspect, target) => {
-      const visibleTextContent = normalize(
-        getVisibleTextContent(target, document, device)
-      );
+      expectations: (aspect, target) => {
+        const visibleTextContent = normalize(
+          getVisibleTextContent(target, document, device)
+        );
 
-      return {
-        1: {
-          holds: some(
-            getTextAlternative(target, document, device),
-            textAlternative =>
-              textAlternative !== null &&
-              normalize(textAlternative).includes(visibleTextContent)
-          )
-        }
-      };
-    });
+        return {
+          1: {
+            holds: some(
+              getTextAlternative(target, document, device),
+              textAlternative =>
+                textAlternative !== null &&
+                normalize(textAlternative).includes(visibleTextContent)
+            )
+          }
+        };
+      }
+    };
   }
 };
 

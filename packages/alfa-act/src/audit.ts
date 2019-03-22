@@ -1,5 +1,5 @@
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
-import { keys, Mutable, values } from "@siteimprove/alfa-util";
+import { filter, keys, map, Mutable, values } from "@siteimprove/alfa-util";
 import { isAtomic } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
@@ -29,8 +29,6 @@ import {
 const { isArray } = Array;
 const { assign } = Object;
 
-const { map, unwrap, reduce } = BrowserSpecific;
-
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? A
   : never;
@@ -40,12 +38,12 @@ type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   : never;
 
 type ResultSet<A extends Aspect, T extends Target> = Array<
-  BrowserSpecific<Result<A, T>>
+  Result<A, T> | BrowserSpecific<Result<A, T>>
 >;
 
 type ResultMap<A extends Aspect, T extends Target> = Map<
   Rule<A, T>,
-  BrowserSpecific<ResultSet<A, T>>
+  ResultSet<A, T> | BrowserSpecific<ResultSet<A, T>>
 >;
 
 export function audit<
@@ -57,58 +55,57 @@ export function audit<
   rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
   answers: ReadonlyArray<Answer<QuestionType, A, T>> = []
 ): {
-  results: Array<Result<A, T>>;
-  questions: Array<Question<QuestionType, A, T>>;
+  results: ReadonlyArray<Result<A, T>>;
+  questions: ReadonlyArray<Question<QuestionType, A, T>>;
 } {
   rules = isArray(rules) ? rules : values(rules);
 
   const questions: Array<Question<QuestionType, A, T>> = [];
 
-  function question<Q extends QuestionType>(
-    type: Q,
-    id: string,
-    rule: Atomic.Rule<A, T>,
-    aspect: A[keyof A],
-    target: T
-  ): AnswerType[Q] | null {
-    const answer = answers.find(
-      answer =>
-        answer.type === type &&
-        answer.id === id &&
-        answer.rule.id === rule.id &&
-        answer.aspect === aspect &&
-        answer.target === target
-    );
-
-    if (answer !== undefined) {
-      return answer.answer;
-    }
-
-    questions.push({ type, id, rule, aspect, target });
-
-    return null;
-  }
-
   const evaluations: ResultMap<A, T> = new Map();
 
-  for (const rule of sortRules(rules)) {
-    const evaluation = isAtomic(rule)
-      ? auditAtomic<A, T>(aspects, rule, (type, id, aspect, target) =>
-          question(type, id, rule, aspect, target)
-        )
-      : auditComposite<A, T>(aspects, rule, evaluations);
+  for (const _rule of sortRules(rules)) {
+    const rule = (_rule as unknown) as Rule<A, T>;
 
-    if (evaluation === null) {
-      continue;
+    function question<Q extends QuestionType>(
+      type: Q,
+      id: string,
+      aspect: A,
+      target: T
+    ): AnswerType[Q] | null {
+      const answer = answers.find(
+        answer =>
+          answer.type === type &&
+          answer.id === id &&
+          answer.rule.id === rule.id &&
+          answer.aspect === aspect &&
+          answer.target === target
+      );
+
+      if (answer !== undefined) {
+        return answer.answer;
+      }
+
+      questions.push({ type, id, rule, aspect, target });
+
+      return null;
     }
 
-    evaluations.set(rule, evaluation);
+    if (isAtomic(rule)) {
+      evaluations.set(rule, auditAtomic(aspects, rule, question));
+    } else {
+      evaluations.set(rule, auditComposite(aspects, rule, evaluations));
+    }
   }
 
   const results: Array<Result<A, T>> = [];
 
   for (const [rule, wrapped] of evaluations) {
-    const unwrapped = unwrap(map(wrapped, wrapped => wrapped.map(unwrap)));
+    const unwrapped = BrowserSpecific.unwrap(
+      BrowserSpecific.map(wrapped, wrapped =>
+        wrapped.map(BrowserSpecific.unwrap)
+      )
+    );
 
     for (const { value: evaluations, browsers } of unwrapped) {
       if (evaluations.length === 0) {
@@ -143,50 +140,48 @@ function auditAtomic<A extends Aspect, T extends Target>(
     aspect: A,
     target: T
   ) => AnswerType[Q] | null
-): BrowserSpecific<ResultSet<A, T>> | null {
-  let aspect: A;
-  let targets: ReadonlyArray<T> | BrowserSpecific<ReadonlyArray<T>> = [];
-  let results: BrowserSpecific<ResultSet<A, T>> | null = null;
+): ResultSet<A, T> | BrowserSpecific<ResultSet<A, T>> {
+  const evaluate = rule.evaluate(aspects);
 
-  rule.definition(
-    (_aspect, applicability) => {
-      const _targets = applicability((type, id, target) =>
-        question(type, id, _aspect, target)
-      );
+  const targets = evaluate.applicability(question);
 
-      if (_targets !== null) {
-        aspect = _aspect;
-        targets = _targets;
+  return BrowserSpecific.map(targets, targets => {
+    targets = filter(targets, target => target.applicable !== false);
+
+    return map(targets, ({ applicable, aspect, target }) => {
+      if (applicable === null) {
+        const result: Result<A, T, Outcome.CantTell> = {
+          rule,
+          outcome: Outcome.CantTell,
+          aspect,
+          target
+        };
+
+        return result;
       }
-    },
-    expectations => {
-      results = map(targets, targets => {
-        return targets.map(target => {
-          const evaluator = getExpectationEvaluater(aspect, target, rule);
 
-          return map(
-            expectations(aspect, target, (type, id) =>
-              question(type, id, aspect, target)
-            ),
-            evaluations => {
-              return evaluator(evaluations);
-            }
-          );
-        });
-      });
-    },
-    aspects
-  );
+      const evaluator = getExpectationEvaluater(rule, aspect, target);
 
-  return results;
+      return BrowserSpecific.map(
+        evaluate.expectations(aspect, target, (type, id) =>
+          question(type, id, aspect, target)
+        ),
+        evaluations => {
+          return evaluator(evaluations);
+        }
+      );
+    });
+  });
 }
 
 function auditComposite<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rule: Composite.Rule<A, T>,
   evaluations: ResultMap<A, T>
-): BrowserSpecific<ResultSet<A, T>> | null {
-  const applicability: Array<BrowserSpecific<ResultSet<A, T>>> = [];
+): ResultSet<A, T> | BrowserSpecific<ResultSet<A, T>> {
+  const applicability: Array<
+    ResultSet<A, T> | BrowserSpecific<ResultSet<A, T>>
+  > = [];
 
   for (const composite of rule.composes) {
     const evaluation = evaluations.get(composite);
@@ -196,22 +191,27 @@ function auditComposite<A extends Aspect, T extends Target>(
     }
   }
 
-  const groups = map(
-    reduce(
+  const groups = BrowserSpecific.map(
+    BrowserSpecific.reduce(
       applicability,
       (results, evaluations) =>
-        map(evaluations, evaluations => [...results, ...evaluations]),
+        BrowserSpecific.map(evaluations, evaluations => [
+          ...results,
+          ...evaluations
+        ]),
       [] as ResultSet<A, T>
     ),
     targets =>
-      reduce(
+      BrowserSpecific.reduce(
         targets,
         (groups, result) => {
           if (result.outcome === Outcome.Inapplicable) {
             return groups;
           }
 
-          let group = groups.find(group => group[1] === result.target);
+          let group = groups.find(
+            group => group[0] === result.aspect && group[1] === result.target
+          );
 
           if (group === undefined) {
             group = [result.aspect, result.target, []];
@@ -226,31 +226,34 @@ function auditComposite<A extends Aspect, T extends Target>(
       )
   );
 
-  let results: BrowserSpecific<ResultSet<A, T>> | null = null;
+  const evaluate = rule.evaluate();
 
-  rule.definition(expectations => {
-    results = map(groups, groups => {
-      return groups.map(group => {
-        const [aspect, target, results] = group;
+  return BrowserSpecific.map(groups, groups => {
+    return groups.map(group => {
+      const [aspect, target, results] = group;
 
-        const evaluator = getExpectationEvaluater(aspect, target, rule);
+      const evaluator = getExpectationEvaluater(
+        rule as Rule<A, T>,
+        aspect,
+        target
+      );
 
-        return map(expectations(results), evaluations => {
+      return BrowserSpecific.map(
+        evaluate.expectations(results),
+        evaluations => {
           return evaluator(evaluations);
-        });
-      });
+        }
+      );
     });
   });
-
-  return results;
 }
 
 type Applicable = Outcome.Passed | Outcome.Failed | Outcome.CantTell;
 
 function getExpectationEvaluater<A extends Aspect, T extends Target>(
+  rule: Rule<A, T>,
   aspect: A,
-  target: T,
-  rule: Rule<A, T>
+  target: T
 ): (evaluations: Evaluations) => Result<A, T, Applicable> {
   const { locales = [] } = rule;
 

@@ -9,15 +9,17 @@ export const SIA_R27: Composite.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r27.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
   composes: [SIA_R22, SIA_R31],
-  definition: expectations => {
-    expectations(results => {
-      return {
-        1: {
-          holds:
-            results.find(result => result.outcome === Outcome.Passed) !==
-            undefined
-        }
-      };
-    });
+  evaluate: () => {
+    return {
+      expectations: results => {
+        return {
+          1: {
+            holds:
+              results.find(result => result.outcome === Outcome.Passed) !==
+              undefined
+          }
+        };
+      }
+    };
   }
 };

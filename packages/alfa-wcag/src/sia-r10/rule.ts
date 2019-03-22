@@ -29,25 +29,33 @@ import { Stream } from "@siteimprove/alfa-lang";
 export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r10.html",
   requirements: [{ id: "wcag:identify-input-purpose", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () => {
-      return querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          (isVisible(node, document, device) ||
-            some(isExposed(node, document, device))) &&
-          some(isAutocompletable(node, document, device)) &&
-          hasAutocomplete(node)
-      ).map(element => getAttributeNode(element, "autocomplete")!);
-    });
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(
+          document,
+          document,
+          node =>
+            isElement(node) &&
+            (isVisible(node, document, device) ||
+              some(isExposed(node, document, device))) &&
+            some(isAutocompletable(node, document, device)) &&
+            hasAutocomplete(node)
+        ).map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: getAttributeNode(element, "autocomplete")!
+          };
+        });
+      },
 
-    expectations((aspect, target) => {
-      return {
-        1: { holds: isValidAutocomplete(target, document) }
-      };
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: isValidAutocomplete(target, document) }
+        };
+      }
+    };
   }
 };
 

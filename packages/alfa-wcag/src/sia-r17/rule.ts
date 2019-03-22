@@ -14,23 +14,30 @@ import {
 export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r17.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () => {
-      return querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          getAttribute(node, "aria-hidden", { lowerCase: true }) === "true"
-      );
-    });
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return (
+            isElement(node) &&
+            getAttribute(node, "aria-hidden", { lowerCase: true }) === "true"
+          );
+        }).map(attribute => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: attribute
+          };
+        });
+      },
 
-    expectations((aspect, target) => {
-      return {
-        1: { holds: !isFocusable(target, document, device) },
-        2: { holds: !hasFocusableDescendants(target, document, device) }
-      };
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: !isFocusable(target, document, device) },
+          2: { holds: !hasFocusableDescendants(target, document, device) }
+        };
+      }
+    };
   }
 };
 

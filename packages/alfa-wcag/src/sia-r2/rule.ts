@@ -23,45 +23,59 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: [{ id: "wcag:non-text-content", partial: true }],
   locales: [EN],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () => {
-      return BrowserSpecific.filter(
-        querySelectorAll<Element>(document, document, isElement, {
-          composed: true
-        }),
-        node =>
-          BrowserSpecific.map(
-            isImage(node, document, device),
-            isImage =>
-              isImage &&
-              (node.localName === "img" || isExposed(node, document, device))
-          )
-      );
-    });
-
-    expectations((aspect, target) => {
-      return BrowserSpecific.map(
-        getTextAlternative(target, document, device),
-        textAlternative => {
-          return BrowserSpecific.map(
-            isDecorative(target, document, device),
-            isDecorative => {
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return BrowserSpecific.map(
+          BrowserSpecific.filter(
+            querySelectorAll<Element>(document, document, isElement, {
+              composed: true
+            }),
+            node =>
+              BrowserSpecific.map(
+                isImage(node, document, device),
+                isImage =>
+                  isImage &&
+                  (node.localName === "img" ||
+                    isExposed(node, document, device))
+              )
+          ),
+          elements => {
+            return elements.map(element => {
               return {
-                1: {
-                  holds:
-                    isDecorative ||
-                    (textAlternative !== null && textAlternative !== ""),
-                  data: {
-                    alt: textAlternative,
-                    decorative: isDecorative
-                  }
-                }
+                applicable: true,
+                aspect: document,
+                target: element
               };
-            }
-          );
-        }
-      );
-    });
+            });
+          }
+        );
+      },
+
+      expectations: (aspect, target) => {
+        return BrowserSpecific.map(
+          getTextAlternative(target, document, device),
+          textAlternative => {
+            return BrowserSpecific.map(
+              isDecorative(target, document, device),
+              isDecorative => {
+                return {
+                  1: {
+                    holds:
+                      isDecorative ||
+                      (textAlternative !== null && textAlternative !== ""),
+                    data: {
+                      alt: textAlternative,
+                      decorative: isDecorative
+                    }
+                  }
+                };
+              }
+            );
+          }
+        );
+      }
+    };
   }
 };
 

@@ -7,13 +7,15 @@ import { Audio } from "../helpers/applicabilities/audio";
 export const SIA_R23: Atomic.Rule<Document | Device, Element> = {
   id: "sanshikan:rules/sia-r23.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
-  definition: (applicability, expectations, { document, device }) => {
-    applicability(document, Audio(document, device));
+  evaluate: ({ document, device }) => {
+    return {
+      applicability: Audio(document, device),
 
-    expectations((aspect, target, question) => {
-      return {
-        1: { holds: question(QuestionType.Boolean, "has-transcript") }
-      };
-    });
+      expectations: (aspect, target, question) => {
+        return {
+          1: { holds: question(QuestionType.Boolean, "has-transcript") }
+        };
+      }
+    };
   }
 };

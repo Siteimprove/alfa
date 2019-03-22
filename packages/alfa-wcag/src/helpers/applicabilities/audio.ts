@@ -18,30 +18,50 @@ export const Audio: (
   document,
   device
 ) => question => {
-  return querySelectorAll(document, document, node => {
-    if (!isElement(node) || !isAudio(node, document)) {
-      return false;
+  return querySelectorAll<Element>(
+    document,
+    document,
+    node => isElement(node) && isAudio(node, document)
+  ).map(element => {
+    const isStreaming = question(
+      QuestionType.Boolean,
+      "is-streaming",
+      document,
+      element
+    );
+
+    if (isStreaming === null || isStreaming === true) {
+      return { applicable: isStreaming, aspect: document, target: element };
     }
 
-    const isStreaming = question(QuestionType.Boolean, "is-streaming", node);
-
-    if (isStreaming !== false) {
-      return false;
-    }
-
-    const isPlaying = question(QuestionType.Boolean, "is-playing", node);
+    const isPlaying = question(
+      QuestionType.Boolean,
+      "is-playing",
+      document,
+      element
+    );
 
     if (isPlaying === true) {
-      return true;
+      return { applicable: isPlaying, aspect: document, target: element };
     }
 
-    const playButton = question(QuestionType.Node, "play-button", node);
+    const playButton = question(
+      QuestionType.Node,
+      "play-button",
+      document,
+      element
+    );
 
-    if (playButton === null || !isElement(playButton)) {
-      return false;
+    if (playButton === null) {
+      return { applicable: null, aspect: document, target: element };
     }
 
-    return isRendered(playButton, document, device);
+    return {
+      applicable:
+        isElement(playButton) && isRendered(playButton, document, device),
+      aspect: document,
+      target: element
+    };
   });
 };
 

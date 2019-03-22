@@ -6,13 +6,15 @@ import { Video } from "../helpers/applicabilities/video";
 
 export const SIA_R25: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r25.html",
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, Video(document, device, { audio: true }));
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: Video(document, device, { audio: true }),
 
-    expectations((aspect, target, question) => {
-      return {
-        1: { holds: question(QuestionType.Boolean, "audio-describes-video") }
-      };
-    });
+      expectations: (aspect, target, question) => {
+        return {
+          1: { holds: question(QuestionType.Boolean, "audio-describes-video") }
+        };
+      }
+    };
   }
 };

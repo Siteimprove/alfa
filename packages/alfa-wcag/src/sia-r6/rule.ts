@@ -12,26 +12,33 @@ import { isDocumentElement } from "../helpers/is-document-element";
 export const SIA_R6: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r6.html",
   requirements: [{ id: "wcag:language-of-page", partial: true }],
-  definition: (applicability, expectations, { document }) => {
-    applicability(document, () => {
-      return querySelectorAll(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isDocumentElement(node, document) &&
-          hasValidLanguageAttributes(node)
-      );
-    });
+  evaluate: ({ document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return (
+            isElement(node) &&
+            isDocumentElement(node, document) &&
+            hasValidLanguageAttributes(node)
+          );
+        }).map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: element
+          };
+        });
+      },
 
-    expectations((aspect, target) => {
-      const lang = getLanguage(getAttribute(target, "lang")!)!;
-      const xmlLang = getLanguage(getAttribute(target, "xml:lang")!)!;
+      expectations: (aspect, target) => {
+        const lang = getLanguage(getAttribute(target, "lang")!)!;
+        const xmlLang = getLanguage(getAttribute(target, "xml:lang")!)!;
 
-      return {
-        1: { holds: lang.primary === xmlLang.primary }
-      };
-    });
+        return {
+          1: { holds: lang.primary === xmlLang.primary }
+        };
+      }
+    };
   }
 };
 

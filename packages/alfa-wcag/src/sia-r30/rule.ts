@@ -11,15 +11,17 @@ export const SIA_R30: Composite.Rule<Device | Document, Element> = {
     { id: "wcag:audio-only-and-video-only-prerecorded", partial: true }
   ],
   composes: [SIA_R23, SIA_R29],
-  definition: expectations => {
-    expectations(results => {
-      return {
-        1: {
-          holds:
-            results.find(result => result.outcome === Outcome.Passed) !==
-            undefined
-        }
-      };
-    });
+  evaluate: () => {
+    return {
+      expectations: results => {
+        return {
+          1: {
+            holds:
+              results.find(result => result.outcome === Outcome.Passed) !==
+              undefined
+          }
+        };
+      }
+    };
   }
 };

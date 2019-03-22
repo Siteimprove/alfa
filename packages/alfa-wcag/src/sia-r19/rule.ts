@@ -22,83 +22,91 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   locales: [EN],
-  definition: (applicability, expectations, { document }) => {
+  evaluate: ({ document }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(document, () => {
-      return querySelectorAll<Element>(
-        document,
-        document,
-        node => isElement(node) && isHtmlOrSvgElement(node, document)
-      )
-        .map(element =>
-          Array.from(element.attributes).filter(
-            attribute =>
-              attributeNames.has(attribute.localName) &&
-              attribute.value.trim() !== ""
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return isElement(node) && isHtmlOrSvgElement(node, document);
+        })
+          .map(element =>
+            Array.from(element.attributes).filter(
+              attribute =>
+                attributeNames.has(attribute.localName) &&
+                attribute.value.trim() !== ""
+            )
           )
-        )
-        .reduce(concat, []);
-    });
+          .reduce(concat, [])
+          .map(attribute => {
+            return {
+              applicable: true,
+              aspect: document,
+              target: attribute
+            };
+          });
+      },
 
-    expectations((aspect, target) => {
-      const attribute = values(Attributes).find(
-        attribute => attribute.name === target.localName
-      )!;
+      expectations: (aspect, target) => {
+        const attribute = values(Attributes).find(
+          attribute => attribute.name === target.localName
+        )!;
 
-      const { value } = target;
+        const { value } = target;
 
-      let valid = true;
+        let valid = true;
 
-      switch (attribute.type) {
-        case "true-false":
-          valid = value === "true" || value === "false";
-          break;
+        switch (attribute.type) {
+          case "true-false":
+            valid = value === "true" || value === "false";
+            break;
 
-        case "true-false-undefined":
-          valid =
-            value === "true" || value === "false" || value === "undefined";
-          break;
+          case "true-false-undefined":
+            valid =
+              value === "true" || value === "false" || value === "undefined";
+            break;
 
-        case "tristate":
-          valid = value === "true" || value === "false" || value === "mixed";
-          break;
+          case "tristate":
+            valid = value === "true" || value === "false" || value === "mixed";
+            break;
 
-        case "integer":
-          valid = /^\d+$/.test(value);
-          break;
+          case "integer":
+            valid = /^\d+$/.test(value);
+            break;
 
-        case "number":
-          valid = /^\d+(\.\d+)?$/.test(value);
-          break;
+          case "number":
+            valid = /^\d+(\.\d+)?$/.test(value);
+            break;
 
-        case "token":
-          valid =
-            attribute.values!.find(found => found === value) !== undefined;
-          break;
+          case "token":
+            valid =
+              attribute.values!.find(found => found === value) !== undefined;
+            break;
 
-        case "token-list":
-          valid =
-            value
-              .split(/\s+/)
-              .find(
-                found =>
-                  attribute.values!.find(value => value === found) === undefined
-              ) === undefined;
-          break;
+          case "token-list":
+            valid =
+              value
+                .split(/\s+/)
+                .find(
+                  found =>
+                    attribute.values!.find(value => value === found) ===
+                    undefined
+                ) === undefined;
+            break;
 
-        case "uri":
-          try {
-            new URL(value);
-          } catch (err) {
-            valid = false;
-          }
+          case "uri":
+            try {
+              new URL(value);
+            } catch (err) {
+              valid = false;
+            }
+        }
+
+        return { 1: { holds: valid } };
       }
-
-      return { 1: { holds: valid } };
-    });
+    };
   }
 };
 

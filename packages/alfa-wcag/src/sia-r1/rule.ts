@@ -13,23 +13,27 @@ import {
 export const SIA_R1: Atomic.Rule<Document, Document> = {
   id: "sanshikan:rules/sia-r1.html",
   requirements: [{ id: "wcag:page-titled", partial: true }],
-  definition: (applicability, expectations, { document }) => {
-    applicability(document, () =>
-      hasDocumentElement(document) ? [document] : null
-    );
+  evaluate: ({ document }) => {
+    return {
+      applicability: () => {
+        return hasDocumentElement(document)
+          ? [{ applicable: true, aspect: document, target: document }]
+          : [];
+      },
 
-    expectations((aspect, target) => {
-      const title = querySelector(
-        target,
-        document,
-        node => isElement(node) && isTitle(node, document)
-      );
+      expectations: (aspect, target) => {
+        const title = querySelector(
+          target,
+          document,
+          node => isElement(node) && isTitle(node, document)
+        );
 
-      return {
-        1: { holds: title !== null },
-        2: { holds: title !== null && hasTextContent(title, document) }
-      };
-    });
+        return {
+          1: { holds: title !== null },
+          2: { holds: title !== null && hasTextContent(title, document) }
+        };
+      }
+    };
   }
 };
 

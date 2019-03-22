@@ -20,29 +20,42 @@ import {
 export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
   requirements: [{ id: "wcag:labels-or-instructions", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () => {
-      return BrowserSpecific.filter(
-        querySelectorAll<Element>(
-          document,
-          document,
-          node => isElement(node) && isFormField(node, document, device),
-          { composed: true }
-        ),
-        node => isExposed(node, document, device)
-      );
-    });
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return BrowserSpecific.map(
+          BrowserSpecific.filter(
+            querySelectorAll<Element>(
+              document,
+              document,
+              node => isElement(node) && isFormField(node, document, device),
+              { composed: true }
+            ),
+            node => isExposed(node, document, device)
+          ),
+          elements => {
+            return elements.map(element => {
+              return {
+                applicable: true,
+                aspect: document,
+                target: element
+              };
+            });
+          }
+        );
+      },
 
-    expectations((aspect, target) => {
-      return BrowserSpecific.map(
-        getTextAlternative(target, document, device),
-        textAlternative => {
-          return {
-            1: { holds: textAlternative !== null && textAlternative !== "" }
-          };
-        }
-      );
-    });
+      expectations: (aspect, target) => {
+        return BrowserSpecific.map(
+          getTextAlternative(target, document, device),
+          textAlternative => {
+            return {
+              1: { holds: textAlternative !== null && textAlternative !== "" }
+            };
+          }
+        );
+      }
+    };
   }
 };
 
