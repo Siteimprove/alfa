@@ -10,11 +10,14 @@ export const SIA_R27: Composite.Rule<Device | Document, Element> = {
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
   composes: [SIA_R22, SIA_R26],
   definition: expectations => {
-    expectations((results, expectation) => {
-      expectation(
-        1,
-        results.find(result => result.outcome === Outcome.Passed) !== undefined
-      );
+    expectations(results => {
+      return {
+        1: {
+          holds:
+            results.find(result => result.outcome === Outcome.Passed) !==
+            undefined
+        }
+      };
     });
   }
 };

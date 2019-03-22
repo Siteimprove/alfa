@@ -21,6 +21,7 @@ export interface ScrapeOptions {
     readonly width: number;
     readonly height: number;
     readonly scale?: number;
+    readonly landscape?: boolean;
   };
   readonly credentials?: {
     readonly username: string;
@@ -44,7 +45,7 @@ export class Scraper {
     options: ScrapeOptions = {}
   ): Promise<Aspects> {
     const {
-      viewport = { width: 1280, height: 720, scale: 1 },
+      viewport = { width: 1280, height: 720, scale: 1, landscape: true },
       credentials = null,
       wait = Wait.Loaded,
       timeout = 10000
@@ -55,7 +56,10 @@ export class Scraper {
       viewport: {
         width: viewport.width,
         height: viewport.height,
-        orientation: Orientation.Landscape
+        orientation:
+          viewport.landscape !== false
+            ? Orientation.Landscape
+            : Orientation.Portrait
       },
       display: {
         resolution: viewport.scale === undefined ? 1 : viewport.scale
@@ -68,7 +72,8 @@ export class Scraper {
     await page.setViewport({
       width: viewport.width,
       height: viewport.width,
-      deviceScaleFactor: viewport.scale
+      deviceScaleFactor: viewport.scale,
+      isLandscape: viewport.landscape
     });
 
     await page.authenticate(credentials);
@@ -87,8 +92,8 @@ export class Scraper {
       if (origin.href === destination.href) {
         const status = res.status();
 
-        // If the response is performs a redirect using 3xx status codes, parse
-        // the location HTTP header and use that as the new origin.
+        // If the response performs a redirect using 3xx status codes, parse the
+        // location HTTP header and use that as the new origin.
         if (status >= 300 && status <= 399) {
           try {
             origin = new URL(res.headers().location);
@@ -123,7 +128,7 @@ export class Scraper {
       if (err instanceof Error) {
         switch (err.name) {
           case "TimeoutError":
-            throw new Error(`Navigation timeout of ${timeout}ms exceeded`);
+            err.message = `Navigation Timeout Exceeded: ${timeout}ms exceeded`;
         }
       }
 

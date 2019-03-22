@@ -1,11 +1,11 @@
 export const enum PointerType {
-  Range,
+  Range = "range",
 
   // DOM pointers
-  Document,
-  Text,
-  Element,
-  Attribute
+  Document = "document",
+  Text = "text",
+  Element = "element",
+  Attribute = "attribute"
 }
 
 export interface Pointer<R> {

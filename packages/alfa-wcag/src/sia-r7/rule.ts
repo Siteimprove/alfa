@@ -55,8 +55,10 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
         .reduce(concat, []);
     });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, getLanguage(target.value) !== null);
+    expectations((aspect, target) => {
+      return {
+        1: { holds: getLanguage(target.value) !== null }
+      };
     });
   }
 };

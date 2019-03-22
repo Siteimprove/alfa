@@ -1,4 +1,4 @@
-import { audit, isResult, toJson } from "../../../packages/alfa-act";
+import { audit, toJson } from "../../../packages/alfa-act";
 import {
   Document,
   getAttribute,
@@ -25,7 +25,7 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
   for (const { id, url } of getUrls(page.document)) {
     const page = await scraper.scrape(`${site}/${url}`);
 
-    const results = audit(page, Rules).filter(isResult);
+    const { results } = audit(page, Rules);
 
     notify.success(url);
 

@@ -20,18 +20,20 @@ export const SIA_R20: Atomic.Rule<Document, Attribute> = {
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(document, () =>
-      querySelectorAll(document, document, isElement)
+    applicability(document, () => {
+      return querySelectorAll(document, document, isElement)
         .map(element =>
           Array.from(element.attributes).filter(attribute =>
             attribute.localName.startsWith("aria-")
           )
         )
-        .reduce(concat, [])
-    );
+        .reduce(concat, []);
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, attributeNames.has(target.localName));
+    expectations((aspect, target) => {
+      return {
+        1: { holds: attributeNames.has(target.localName) }
+      };
     });
   }
 };

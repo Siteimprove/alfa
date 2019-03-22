@@ -12,6 +12,8 @@ import {
 } from "@siteimprove/alfa-dom";
 import { URL, values } from "@siteimprove/alfa-util";
 
+import { EN } from "./locales/en";
+
 function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
   return a.concat(b);
 }
@@ -19,13 +21,14 @@ function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
 export const SIA_R19: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
+  locales: [EN],
   definition: (applicability, expectations, { document }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(document, () =>
-      querySelectorAll<Element>(
+    applicability(document, () => {
+      return querySelectorAll<Element>(
         document,
         document,
         node => isElement(node) && isHtmlOrSvgElement(node, document)
@@ -37,13 +40,14 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
               attribute.value.trim() !== ""
           )
         )
-        .reduce(concat, [])
-    );
+        .reduce(concat, []);
+    });
 
-    expectations((aspect, target, expectation) => {
+    expectations((aspect, target) => {
       const attribute = values(Attributes).find(
         attribute => attribute.name === target.localName
       )!;
+
       const { value } = target;
 
       let valid = true;
@@ -93,7 +97,7 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
           }
       }
 
-      expectation(1, valid);
+      return { 1: { holds: valid } };
     });
   }
 };

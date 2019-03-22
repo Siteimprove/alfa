@@ -1,11 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
-  hasTextAlternative,
+  getTextAlternative,
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -17,40 +17,70 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+import { EN } from "./locales/en";
+
 export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: [{ id: "wcag:non-text-content", partial: true }],
+  locales: [EN],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll(
-        document,
-        document,
+    applicability(document, () => {
+      return BrowserSpecific.filter(
+        querySelectorAll<Element>(document, document, isElement, {
+          composed: true
+        }),
         node =>
-          isElement(node) &&
-          isImage(node, document, device) &&
-          some(isExposed(node, document, device)),
-        { composed: true }
-      )
-    );
+          BrowserSpecific.map(
+            isImage(node, document, device),
+            isImage =>
+              isImage &&
+              (node.localName === "img" || isExposed(node, document, device))
+          )
+      );
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(
-        1,
-        hasTextAlternative(target, document, device) ||
-          isDecorative(target, document, device)
+    expectations((aspect, target) => {
+      return BrowserSpecific.map(
+        getTextAlternative(target, document, device),
+        textAlternative => {
+          return BrowserSpecific.map(
+            isDecorative(target, document, device),
+            isDecorative => {
+              return {
+                1: {
+                  holds:
+                    isDecorative ||
+                    (textAlternative !== null && textAlternative !== ""),
+                  data: {
+                    alt: textAlternative,
+                    decorative: isDecorative
+                  }
+                }
+              };
+            }
+          );
+        }
       );
     });
   }
 };
 
-function isImage(element: Element, context: Node, device: Device): boolean {
+function isImage(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean | BrowserSpecific<boolean> {
   if (getElementNamespace(element, context) !== Namespace.HTML) {
     return false;
   }
 
-  return (
-    element.localName === "img" ||
-    getRole(element, context, device) === Roles.Img
+  if (element.localName === "img") {
+    return true;
+  }
+
+  return BrowserSpecific.map(
+    getRole(element, context, device),
+    role => role === Roles.Img
   );
 }
 
@@ -58,13 +88,15 @@ function isDecorative(
   element: Element,
   context: Node,
   device: Device
-): boolean {
-  switch (getRole(element, context, device)) {
-    case Roles.None:
-    case Roles.Presentation:
-    case null:
-      return true;
-  }
+): boolean | BrowserSpecific<boolean> {
+  return BrowserSpecific.map(getRole(element, context, device), role => {
+    switch (role) {
+      case Roles.None:
+      case Roles.Presentation:
+      case null:
+        return true;
+    }
 
-  return false;
+    return false;
+  });
 }

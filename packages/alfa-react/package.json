@@ -31,15 +31,13 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-dom": "^0.0.0",
-    "@siteimprove/alfa-util": "^0.0.0",
-    "@types/react": "^16.8.4"
-  },
-  "peerDependencies": {
     "@siteimprove/alfa-chai": "^0.0.0",
+    "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-jest": "^0.0.0",
     "@siteimprove/alfa-should": "^0.0.0",
     "@siteimprove/alfa-unexpected": "^0.0.0",
+    "@siteimprove/alfa-util": "^0.0.0",
+    "@types/react": "^16.8.4",
     "react": "^16.8.2"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -14,25 +14,30 @@ import {
 export const SIA_R26: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r26.html",
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll(
+    applicability(document, () => {
+      return querySelectorAll(
         document,
         document,
         node =>
           isElement(node) &&
           isRendered(node, document, device) &&
           isVideo(node, document)
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation, question) => {
-      const hasTextAlternative = question(1);
-      const hasLabel = question(2);
-      const labelIsVisible = question(3);
+    expectations((aspect, target, question) => {
+      const hasTextAlternative = question(
+        QuestionType.Boolean,
+        "has-text-alternative"
+      );
+      const hasLabel = question(QuestionType.Boolean, "has-label");
+      const labelIsVisible = question(QuestionType.Boolean, "label-is-visible");
 
-      expectation(1, hasTextAlternative);
-      expectation(2, hasLabel);
-      expectation(3, labelIsVisible);
+      return {
+        1: { holds: hasTextAlternative },
+        2: { holds: hasLabel },
+        3: { holds: labelIsVisible }
+      };
     });
   }
 };

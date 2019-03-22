@@ -1,15 +1,18 @@
-import { groupBy, Mutable, values } from "@siteimprove/alfa-util";
-import { isAtomic, isResult } from "./guards";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { keys, Mutable, values } from "@siteimprove/alfa-util";
+import { isAtomic } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
   Answer,
+  AnswerType,
   Aspect,
   AspectsFor,
   Atomic,
   Composite,
-  Data,
+  Evaluations,
   Outcome,
   Question,
+  QuestionType,
   Result,
   Rule,
   Target
@@ -24,6 +27,9 @@ import {
 // tslint:disable:no-any
 
 const { isArray } = Array;
+const { assign } = Object;
+
+const { map, unwrap, reduce } = BrowserSpecific;
 
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? A
@@ -33,6 +39,15 @@ type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? T
   : never;
 
+type ResultSet<A extends Aspect, T extends Target> = Array<
+  BrowserSpecific<Result<A, T>>
+>;
+
+type ResultMap<A extends Aspect, T extends Target> = Map<
+  Rule<A, T>,
+  BrowserSpecific<ResultSet<A, T>>
+>;
+
 export function audit<
   R extends Rule<any, any>,
   A extends AspectsOf<R> = AspectsOf<R>,
@@ -40,22 +55,27 @@ export function audit<
 >(
   aspects: AspectsFor<A>,
   rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
-  answers: ReadonlyArray<Answer<A, T>> = []
-): ReadonlyArray<Result<A, T> | Question<A, T>> {
+  answers: ReadonlyArray<Answer<QuestionType, A, T>> = []
+): {
+  results: Array<Result<A, T>>;
+  questions: Array<Question<QuestionType, A, T>>;
+} {
   rules = isArray(rules) ? rules : values(rules);
 
-  const results: Array<Result<A, T> | Question<A, T>> = [];
+  const questions: Array<Question<QuestionType, A, T>> = [];
 
-  function question(
+  function question<Q extends QuestionType>(
+    type: Q,
+    id: string,
     rule: Atomic.Rule<A, T>,
-    expectation: number,
-    aspect: A,
+    aspect: A[keyof A],
     target: T
-  ): boolean | null {
+  ): AnswerType[Q] | null {
     const answer = answers.find(
       answer =>
+        answer.type === type &&
+        answer.id === id &&
         answer.rule.id === rule.id &&
-        answer.expectation === expectation &&
         answer.aspect === aspect &&
         answer.target === target
     );
@@ -64,169 +84,246 @@ export function audit<
       return answer.answer;
     }
 
-    results.push({ rule, expectation, aspect, target });
+    questions.push({ type, id, rule, aspect, target });
 
     return null;
   }
 
+  const evaluations: ResultMap<A, T> = new Map();
+
   for (const rule of sortRules(rules)) {
-    if (isAtomic(rule)) {
-      auditAtomic<A, T>(aspects, rule, results, (expectation, aspect, target) =>
-        question(rule, expectation, aspect, target)
-      );
-    } else {
-      auditComposite<A, T>(aspects, rule, results);
+    const evaluation = isAtomic(rule)
+      ? auditAtomic<A, T>(aspects, rule, (type, id, aspect, target) =>
+          question(type, id, rule, aspect, target)
+        )
+      : auditComposite<A, T>(aspects, rule, evaluations);
+
+    if (evaluation === null) {
+      continue;
+    }
+
+    evaluations.set(rule, evaluation);
+  }
+
+  const results: Array<Result<A, T>> = [];
+
+  for (const [rule, wrapped] of evaluations) {
+    const unwrapped = unwrap(map(wrapped, wrapped => wrapped.map(unwrap)));
+
+    for (const { value: evaluations, browsers } of unwrapped) {
+      if (evaluations.length === 0) {
+        results.push(<Result<A, T>>assign(
+          {
+            rule,
+            outcome: Outcome.Inapplicable
+          },
+          {
+            browsers
+          }
+        ));
+      } else {
+        for (const unwrapped of evaluations) {
+          for (const { value: evaluation, browsers } of unwrapped) {
+            results.push(assign(evaluation, { browsers }));
+          }
+        }
+      }
     }
   }
 
-  return results;
+  return { results, questions };
 }
 
 function auditAtomic<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rule: Atomic.Rule<A, T>,
-  results: Array<Result<A, T> | Question<A, T>>,
-  question: (expectation: number, aspect: A, target: T) => boolean | null
-): void {
-  const targets: Array<[A, T]> | null = [];
+  question: <Q extends QuestionType>(
+    type: Q,
+    id: string,
+    aspect: A,
+    target: T
+  ) => AnswerType[Q] | null
+): BrowserSpecific<ResultSet<A, T>> | null {
+  let aspect: A;
+  let targets: ReadonlyArray<T> | BrowserSpecific<ReadonlyArray<T>> = [];
 
-  const applicability: Atomic.Applicability<A, T> = (aspect, applicability) => {
-    const found = applicability();
+  const applicability: Atomic.Applicability<A, T> = (
+    _aspect,
+    applicability
+  ) => {
+    const _targets = applicability((type, id, target) =>
+      question(type, id, _aspect, target)
+    );
 
-    if (found !== null) {
-      for (const target of found) {
-        targets.push([aspect, target]);
-      }
-    }
-
-    if (targets.length === 0) {
-      results.push({
-        rule,
-        outcome: Outcome.Inapplicable
-      });
+    if (_targets !== null) {
+      aspect = _aspect;
+      targets = _targets;
     }
   };
 
+  let results: BrowserSpecific<ResultSet<A, T>> | null = null;
+
   const expectations: Atomic.Expectations<A, T> = expectations => {
-    for (const [aspect, target] of targets) {
-      const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
-        rule,
-        outcome: Outcome.Passed,
-        aspect,
-        target,
-        expectations: {}
-      };
+    results = map(targets, targets => {
+      return targets.map(target => {
+        const evaluator = getExpectationEvaluater(aspect, target, rule);
 
-      expectations(aspect, target, getExpectationEvaluater(rule, result), id =>
-        question(id, aspect, target)
-      );
-
-      results.push(result);
-    }
+        return map(
+          expectations(aspect, target, (type, id) =>
+            question(type, id, aspect, target)
+          ),
+          evaluations => {
+            return evaluator(evaluations);
+          }
+        );
+      });
+    });
   };
 
   rule.definition(applicability, expectations, aspects);
+
+  return results;
 }
 
 function auditComposite<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
   rule: Composite.Rule<A, T>,
-  results: Array<Result<A, T> | Question<A, T>>
-): void {
-  const composes = new WeakMap<Rule<A, T>, Rule<A, T>>();
+  evaluations: ResultMap<A, T>
+): BrowserSpecific<ResultSet<A, T>> | null {
+  const applicability: Array<BrowserSpecific<ResultSet<A, T>>> = [];
 
   for (const composite of rule.composes) {
-    composes.set(composite, composite);
-  }
+    const evaluation = evaluations.get(composite);
 
-  const applicability: Array<Result<A, T>> = [];
-
-  for (const result of results) {
-    if (isResult(result) && composes.has(result.rule)) {
-      applicability.push(result);
+    if (evaluation !== undefined) {
+      applicability.push(evaluation);
     }
   }
 
-  const targets = groupBy(applicability, result =>
-    result.outcome === Outcome.Inapplicable ? null : result.target
+  const groups = map(
+    reduce(
+      applicability,
+      (results, evaluations) =>
+        map(evaluations, evaluations => [...results, ...evaluations]),
+      [] as ResultSet<A, T>
+    ),
+    targets =>
+      reduce(
+        targets,
+        (groups, result) => {
+          if (result.outcome === Outcome.Inapplicable) {
+            return groups;
+          }
+
+          let group = groups.find(group => group[1] === result.target);
+
+          if (group === undefined) {
+            group = [result.aspect, result.target, []];
+            groups = [...groups, group];
+          }
+
+          group[2].push(result);
+
+          return groups;
+        },
+        [] as Array<[A, T, Array<Result<A, T>>]>
+      )
   );
 
+  let results: BrowserSpecific<ResultSet<A, T>> | null = null;
+
   const expectations: Composite.Expectations<A, T> = expectations => {
-    for (const [target, results] of targets) {
-      if (target === null) {
-        continue;
-      }
+    results = map(groups, groups => {
+      return groups.map(group => {
+        const [aspect, target, results] = group;
 
-      const aspects = groupBy(results, result =>
-        result.outcome === Outcome.Inapplicable ? null : result.aspect
-      );
+        const evaluator = getExpectationEvaluater(aspect, target, rule);
 
-      for (const [aspect, results] of aspects) {
-        if (aspect === null) {
-          continue;
-        }
-
-        const result: Result<A, T, Outcome.Passed | Outcome.Failed> = {
-          rule,
-          outcome: Outcome.Passed,
-          aspect,
-          target,
-          expectations: {}
-        };
-
-        expectations(results, getExpectationEvaluater(rule, result));
-
-        results.push(result);
-      }
-    }
+        return map(expectations(results), evaluations => {
+          return evaluator(evaluations);
+        });
+      });
+    });
   };
 
   rule.definition(expectations);
+
+  return results;
 }
 
+type Applicable = Outcome.Passed | Outcome.Failed | Outcome.CantTell;
+
 function getExpectationEvaluater<A extends Aspect, T extends Target>(
-  rule: Rule<any, any>,
-  result: Mutable<
-    Result<any, any, Outcome.Passed | Outcome.Failed | Outcome.CantTell>
-  >
-): (id: number, holds: boolean | null, data?: Data | null) => void {
+  aspect: A,
+  target: T,
+  rule: Rule<A, T>
+): (evaluations: Evaluations) => Result<A, T, Applicable> {
   const { locales = [] } = rule;
 
   const locale = locales.find(locale => locale.id === "en");
 
-  return (id, holds, data = null) => {
-    result.outcome =
-      holds === null
+  return evaluations => {
+    const outcome = keys(evaluations).reduce<Applicable>((outcome, id) => {
+      const { holds } = evaluations[id];
+      return holds === null
         ? Outcome.CantTell
         : holds
-        ? Outcome.Passed
+        ? outcome
         : Outcome.Failed;
+    }, Outcome.Passed);
 
-    let message: string | null = null;
+    const expectations: Mutable<Result<A, T, Applicable>["expectations"]> = {};
 
-    if (locale !== undefined) {
-      const messages = locale.expectations[id];
+    for (const id of keys(evaluations)) {
+      const { holds, data } = evaluations[id];
 
-      if (messages !== undefined) {
-        const callback = messages[result.outcome];
+      let message: string | null = null;
 
-        if (callback !== undefined) {
-          message = callback(data === null ? {} : data);
+      if (locale !== undefined) {
+        const messages = locale.expectations[id];
+
+        if (messages !== undefined) {
+          const outcome =
+            holds === null
+              ? Outcome.CantTell
+              : holds
+              ? Outcome.Passed
+              : Outcome.Failed;
+
+          const callback = messages[outcome];
+
+          if (callback !== undefined) {
+            message = callback(data === undefined ? {} : data);
+          }
         }
       }
+
+      if (message === null) {
+        const status =
+          holds === null
+            ? "was not evaluated"
+            : holds
+            ? "holds"
+            : "does not hold";
+
+        message = `Expectation ${id} ${status}`;
+      }
+
+      expectations[id] = {
+        holds,
+        message,
+        data: data === undefined ? null : data
+      };
     }
 
-    if (message === null) {
-      const status =
-        holds === null
-          ? "was not evaluated"
-          : holds
-          ? "holds"
-          : "does not hold";
+    const result: Result<A, T, any> = {
+      rule,
+      outcome,
+      aspect,
+      target,
+      expectations
+    };
 
-      message = `Expectation ${id} ${status}`;
-    }
-
-    result.expectations[id] = { holds, message, data };
+    return result;
   };
 }

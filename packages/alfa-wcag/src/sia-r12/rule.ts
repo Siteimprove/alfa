@@ -23,8 +23,8 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r12.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
+    applicability(document, () => {
+      return querySelectorAll<Element>(
         document,
         document,
         node =>
@@ -32,11 +32,13 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
           isButton(node, document, device) &&
           some(isExposed(node, document, device)) &&
           getInputType(node) !== InputType.Image
-      )
-    );
+      );
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasTextAlternative(target, document, device));
+    expectations((aspect, target) => {
+      return {
+        1: { holds: hasTextAlternative(target, document, device) }
+      };
     });
   }
 };

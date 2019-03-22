@@ -29,10 +29,12 @@ export const SIA_R9: Atomic.Rule<Document, Element> = {
       return metaRefresh === null ? [] : [metaRefresh];
     });
 
-    expectations((aspect, target, expectation) => {
+    expectations((aspect, target) => {
       const refreshTime = getRefreshTime(getAttribute(target, "content")!);
 
-      expectation(1, refreshTime === 0 || refreshTime! > 72000);
+      return {
+        1: { holds: refreshTime === 0 || refreshTime! > 72000 }
+      };
     });
   }
 };

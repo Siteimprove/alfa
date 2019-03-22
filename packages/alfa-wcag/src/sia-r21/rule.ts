@@ -23,8 +23,8 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   definition: (applicability, expectations, { device, document }) => {
     const roleNames = new Set(values(Roles).map(role => role.name));
 
-    applicability(document, () =>
-      querySelectorAll<Element>(
+    applicability(document, () => {
+      return querySelectorAll<Element>(
         document,
         document,
         node =>
@@ -33,14 +33,15 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
           isHtmlOrSvgElement(node, document) &&
           hasAttribute(node, "role") &&
           getAttribute(node, "role", { trim: true }) !== ""
-      ).map(element => getAttributeNode(element, "role")!)
-    );
+      ).map(element => getAttributeNode(element, "role")!);
+    });
 
-    expectations((aspect, target, expectation) => {
-      expectation(
-        1,
-        target.value.split(/\s+/).some(role => roleNames.has(role))
-      );
+    expectations((aspect, target) => {
+      return {
+        1: {
+          holds: target.value.split(/\s+/).some(role => roleNames.has(role))
+        }
+      };
     });
   }
 };

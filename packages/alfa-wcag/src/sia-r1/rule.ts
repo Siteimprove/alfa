@@ -18,18 +18,17 @@ export const SIA_R1: Atomic.Rule<Document, Document> = {
       hasDocumentElement(document) ? [document] : null
     );
 
-    expectations((aspect, target, expectation) => {
+    expectations((aspect, target) => {
       const title = querySelector(
         target,
         document,
         node => isElement(node) && isTitle(node, document)
       );
 
-      expectation(1, title !== null);
-
-      if (title !== null) {
-        expectation(2, hasTextContent(title, document));
-      }
+      return {
+        1: { holds: title !== null },
+        2: { holds: title !== null && hasTextContent(title, document) }
+      };
     });
   }
 };
