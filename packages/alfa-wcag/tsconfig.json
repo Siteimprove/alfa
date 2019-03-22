@@ -1,6 +1,8 @@
 {
   "extends": "../tsconfig.json",
   "files": [
+    "src/helpers/applicabilities/audio.ts",
+    "src/helpers/applicabilities/video.ts",
     "src/helpers/has-language-attribute.ts",
     "src/helpers/is-document-element.ts",
     "src/index.ts",
@@ -28,7 +30,10 @@
     "src/sia-r25/rule.ts",
     "src/sia-r26/rule.ts",
     "src/sia-r27/rule.ts",
+    "src/sia-r29/rule.ts",
     "src/sia-r3/rule.ts",
+    "src/sia-r30/rule.ts",
+    "src/sia-r31/rule.ts",
     "src/sia-r4/rule.ts",
     "src/sia-r5/rule.ts",
     "src/sia-r6/rule.ts",

@@ -150,26 +150,21 @@ export type Rule<A extends Aspect, T extends Target> =
 
 export namespace Atomic {
   export type Applicability<A extends Aspect, T extends Target> = (
-    aspect: A,
-    applicability: (
-      question: <Q extends QuestionType>(
-        type: Q,
-        id: string,
-        target: T
-      ) => AnswerType[Q] | null
-    ) => ReadonlyArray<T> | BrowserSpecific<ReadonlyArray<T>> | null
-  ) => void;
+    question: <Q extends QuestionType>(
+      type: Q,
+      id: string,
+      target: T
+    ) => AnswerType[Q] | null
+  ) => ReadonlyArray<T> | BrowserSpecific<ReadonlyArray<T>> | null;
 
   export type Expectations<A extends Aspect, T extends Target> = (
-    expectations: (
-      aspect: A,
-      target: T,
-      question: <Q extends QuestionType>(
-        type: Q,
-        id: string
-      ) => AnswerType[Q] | null
-    ) => Evaluations | BrowserSpecific<Evaluations>
-  ) => void;
+    aspect: A,
+    target: T,
+    question: <Q extends QuestionType>(
+      type: Q,
+      id: string
+    ) => AnswerType[Q] | null
+  ) => Evaluations | BrowserSpecific<Evaluations>;
 
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
@@ -179,8 +174,8 @@ export namespace Atomic {
     readonly locales?: ReadonlyArray<Locale>;
 
     readonly definition: (
-      applicability: Applicability<A, T>,
-      expectations: Expectations<A, T>,
+      applicability: (aspect: A, applicability: Applicability<A, T>) => void,
+      expectations: (expectations: Expectations<A, T>) => void,
       aspects: AspectsFor<A>
     ) => void;
   }
@@ -188,10 +183,8 @@ export namespace Atomic {
 
 export namespace Composite {
   export type Expectations<A extends Aspect, T extends Target> = (
-    expectations: (
-      outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>
-    ) => Evaluations | BrowserSpecific<Evaluations>
-  ) => void;
+    outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>
+  ) => Evaluations | BrowserSpecific<Evaluations>;
 
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
@@ -202,6 +195,8 @@ export namespace Composite {
 
     readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
 
-    readonly definition: (expectations: Expectations<A, T>) => void;
+    readonly definition: (
+      expectations: (expectations: Expectations<A, T>) => void
+    ) => void;
   }
 }

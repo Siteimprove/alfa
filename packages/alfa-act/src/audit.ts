@@ -146,41 +146,37 @@ function auditAtomic<A extends Aspect, T extends Target>(
 ): BrowserSpecific<ResultSet<A, T>> | null {
   let aspect: A;
   let targets: ReadonlyArray<T> | BrowserSpecific<ReadonlyArray<T>> = [];
-
-  const applicability: Atomic.Applicability<A, T> = (
-    _aspect,
-    applicability
-  ) => {
-    const _targets = applicability((type, id, target) =>
-      question(type, id, _aspect, target)
-    );
-
-    if (_targets !== null) {
-      aspect = _aspect;
-      targets = _targets;
-    }
-  };
-
   let results: BrowserSpecific<ResultSet<A, T>> | null = null;
 
-  const expectations: Atomic.Expectations<A, T> = expectations => {
-    results = map(targets, targets => {
-      return targets.map(target => {
-        const evaluator = getExpectationEvaluater(aspect, target, rule);
+  rule.definition(
+    (_aspect, applicability) => {
+      const _targets = applicability((type, id, target) =>
+        question(type, id, _aspect, target)
+      );
 
-        return map(
-          expectations(aspect, target, (type, id) =>
-            question(type, id, aspect, target)
-          ),
-          evaluations => {
-            return evaluator(evaluations);
-          }
-        );
+      if (_targets !== null) {
+        aspect = _aspect;
+        targets = _targets;
+      }
+    },
+    expectations => {
+      results = map(targets, targets => {
+        return targets.map(target => {
+          const evaluator = getExpectationEvaluater(aspect, target, rule);
+
+          return map(
+            expectations(aspect, target, (type, id) =>
+              question(type, id, aspect, target)
+            ),
+            evaluations => {
+              return evaluator(evaluations);
+            }
+          );
+        });
       });
-    });
-  };
-
-  rule.definition(applicability, expectations, aspects);
+    },
+    aspects
+  );
 
   return results;
 }
@@ -232,7 +228,7 @@ function auditComposite<A extends Aspect, T extends Target>(
 
   let results: BrowserSpecific<ResultSet<A, T>> | null = null;
 
-  const expectations: Composite.Expectations<A, T> = expectations => {
+  rule.definition(expectations => {
     results = map(groups, groups => {
       return groups.map(group => {
         const [aspect, target, results] = group;
@@ -244,9 +240,7 @@ function auditComposite<A extends Aspect, T extends Target>(
         });
       });
     });
-  };
-
-  rule.definition(expectations);
+  });
 
   return results;
 }

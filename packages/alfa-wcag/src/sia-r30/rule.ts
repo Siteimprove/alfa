@@ -2,13 +2,15 @@ import { Composite, Outcome } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
 
-import { SIA_R22 } from "../sia-r22/rule";
-import { SIA_R31 } from "../sia-r31/rule";
+import { SIA_R23 } from "../sia-r23/rule";
+import { SIA_R29 } from "../sia-r29/rule";
 
-export const SIA_R27: Composite.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r27.html",
-  requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
-  composes: [SIA_R22, SIA_R31],
+export const SIA_R30: Composite.Rule<Device | Document, Element> = {
+  id: "sanshikan:rules/sia-r30.html",
+  requirements: [
+    { id: "wcag:audio-only-and-video-only-prerecorded", partial: true }
+  ],
+  composes: [SIA_R23, SIA_R29],
   definition: expectations => {
     expectations(results => {
       return {
