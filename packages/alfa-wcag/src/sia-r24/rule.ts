@@ -26,7 +26,6 @@ export const SIA_R24: Atomic.Rule<Device | Document, Element> = {
       );
     });
 
-
     expectations((aspect, target, question) => {
       const hasTranscript = question(QuestionType.Boolean, "has-transcripts");
       const transcriptIsSufficient = question(
