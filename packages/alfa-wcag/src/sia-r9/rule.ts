@@ -18,24 +18,28 @@ export const SIA_R9: Atomic.Rule<Document, Element> = {
     { id: "wcag:interruptions", partial: true },
     { id: "wcag:change-on-request", partial: true }
   ],
-  definition: (applicability, expectations, { document }) => {
-    applicability(document, () => {
-      const metaRefresh = querySelector<Element>(
-        document,
-        document,
-        node => isElement(node) && isValidMetaRefresh(node, document)
-      );
+  evaluate: ({ document }) => {
+    return {
+      applicability: () => {
+        const metaRefresh = querySelector<Element>(
+          document,
+          document,
+          node => isElement(node) && isValidMetaRefresh(node, document)
+        );
 
-      return metaRefresh === null ? [] : [metaRefresh];
-    });
+        return metaRefresh === null
+          ? []
+          : [{ applicable: true, aspect: document, target: metaRefresh }];
+      },
 
-    expectations((aspect, target) => {
-      const refreshTime = getRefreshTime(getAttribute(target, "content")!);
+      expectations: (aspect, target) => {
+        const refreshTime = getRefreshTime(getAttribute(target, "content")!);
 
-      return {
-        1: { holds: refreshTime === 0 || refreshTime! > 72000 }
-      };
-    });
+        return {
+          1: { holds: refreshTime === 0 || refreshTime! > 72000 }
+        };
+      }
+    };
   }
 };
 

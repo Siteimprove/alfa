@@ -20,29 +20,36 @@ import { values } from "@siteimprove/alfa-util";
 export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r21.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
+  evaluate: ({ device, document }) => {
     const roleNames = new Set(values(Roles).map(role => role.name));
 
-    applicability(document, () => {
-      return querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          some(isExposed(node, document, device)) &&
-          isHtmlOrSvgElement(node, document) &&
-          hasAttribute(node, "role") &&
-          getAttribute(node, "role", { trim: true }) !== ""
-      ).map(element => getAttributeNode(element, "role")!);
-    });
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return (
+            isElement(node) &&
+            some(isExposed(node, document, device)) &&
+            isHtmlOrSvgElement(node, document) &&
+            hasAttribute(node, "role") &&
+            getAttribute(node, "role", { trim: true }) !== ""
+          );
+        }).map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: getAttributeNode(element, "role")!
+          };
+        });
+      },
 
-    expectations((aspect, target) => {
-      return {
-        1: {
-          holds: target.value.split(/\s+/).some(role => roleNames.has(role))
-        }
-      };
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: {
+            holds: target.value.split(/\s+/).some(role => roleNames.has(role))
+          }
+        };
+      }
+    };
   }
 };
 

@@ -13,21 +13,31 @@ import {
 export const SIA_R3: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r3.html",
   requirements: [{ id: "wcag:parsing", partial: true }],
-  definition: (applicability, expectations, { document }) => {
-    applicability(document, () => {
-      return querySelectorAll(
-        document,
-        document,
-        node => isElement(node) && hasId(node, document),
-        { composed: true }
-      );
-    });
+  evaluate: ({ document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(
+          document,
+          document,
+          node => {
+            return isElement(node) && hasId(node, document);
+          },
+          { composed: true }
+        ).map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: element
+          };
+        });
+      },
 
-    expectations((aspect, target) => {
-      return {
-        1: { holds: hasUniqueId(target, document) }
-      };
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: hasUniqueId(target, document) }
+        };
+      }
+    };
   }
 };
 

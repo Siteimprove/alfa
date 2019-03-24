@@ -1,40 +1,21 @@
 import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  getElementNamespace,
-  isElement,
-  Namespace,
-  Node,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
+
+import { Audio } from "../helpers/applicabilities/audio";
 
 export const SIA_R23: Atomic.Rule<Document | Device, Element> = {
   id: "sanshikan:rules/sia-r23.html",
   requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
-  definition: (applicability, expectations, { document }) => {
-    applicability(document, () => {
-      return querySelectorAll(
-        document,
-        document,
-        node => isElement(node) && isAudio(node, document)
-      );
-    });
+  evaluate: ({ document, device }) => {
+    return {
+      applicability: Audio(document, device),
 
-    expectations((aspect, target, question) => {
-      const hasTranscript = question(QuestionType.Boolean, "has-transcript");
-
-      return {
-        1: { holds: hasTranscript }
-      };
-    });
+      expectations: (aspect, target, question) => {
+        return {
+          1: { holds: question(QuestionType.Boolean, "has-transcript") }
+        };
+      }
+    };
   }
 };
-
-function isAudio(element: Element, context: Node): boolean {
-  return (
-    getElementNamespace(element, context) === Namespace.HTML &&
-    element.localName === "audio"
-  );
-}

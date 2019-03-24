@@ -25,3 +25,6 @@ export { SIA_R24 } from "./sia-r24/rule";
 export { SIA_R25 } from "./sia-r25/rule";
 export { SIA_R26 } from "./sia-r26/rule";
 export { SIA_R27 } from "./sia-r27/rule";
+export { SIA_R29 } from "./sia-r29/rule";
+export { SIA_R30 } from "./sia-r30/rule";
+export { SIA_R31 } from "./sia-r31/rule";

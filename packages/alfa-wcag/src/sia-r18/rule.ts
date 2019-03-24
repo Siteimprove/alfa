@@ -23,48 +23,57 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
     { id: "wcag:parsing", partial: true },
     { id: "wcag:name-role-value", partial: true }
   ],
-  definition: (applicability, expectations, { device, document }) => {
+  evaluate: ({ device, document }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(document, () => {
-      return querySelectorAll(document, document, isElement)
-        .map(element =>
-          Array.from(element.attributes).filter(attribute =>
-            attributeNames.has(attribute.localName)
+    return {
+      applicability: () => {
+        return querySelectorAll(document, document, isElement)
+          .map(element =>
+            Array.from(element.attributes).filter(attribute =>
+              attributeNames.has(attribute.localName)
+            )
           )
-        )
-        .reduce(concat, []);
-    });
+          .reduce(concat, [])
+          .map(attribute => {
+            return {
+              applicable: true,
+              aspect: document,
+              target: attribute
+            };
+          });
+      },
 
-    expectations((aspect, target) => {
-      const owner = getOwnerElement(target, document)!;
+      expectations: (aspect, target) => {
+        const owner = getOwnerElement(target, document)!;
 
-      const globalAttributeNames = new Set(
-        Roles.Roletype.supported!(owner, document, device).map(
-          attribute => attribute.name
-        )
-      );
+        const globalAttributeNames = new Set(
+          Roles.Roletype.supported!(owner, document, device).map(
+            attribute => attribute.name
+          )
+        );
 
-      return {
-        1: {
-          holds: some(getRole(owner, document, device), role => {
-            if (role !== null) {
-              return isAllowedAttribute(
-                owner,
-                document,
-                device,
-                target.localName,
-                role
-              );
-            }
+        return {
+          1: {
+            holds: some(getRole(owner, document, device), role => {
+              if (role !== null) {
+                return isAllowedAttribute(
+                  owner,
+                  document,
+                  device,
+                  target.localName,
+                  role
+                );
+              }
 
-            return globalAttributeNames.has(target.localName);
-          })
-        }
-      };
-    });
+              return globalAttributeNames.has(target.localName);
+            })
+          }
+        };
+      }
+    };
   }
 };
 

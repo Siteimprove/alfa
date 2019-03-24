@@ -23,28 +23,41 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
     { id: "wcag:link-purpose-in-context", partial: true },
     { id: "wcag:name-role-value", partial: true }
   ],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () => {
-      return BrowserSpecific.filter(
-        querySelectorAll(document, document, isElement),
-        node =>
-          BrowserSpecific.map(
-            isLink(node, document, device),
-            isLink => isLink && isExposed(node, document, device)
-          )
-      );
-    });
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return BrowserSpecific.map(
+          BrowserSpecific.filter(
+            querySelectorAll(document, document, isElement),
+            node =>
+              BrowserSpecific.map(
+                isLink(node, document, device),
+                isLink => isLink && isExposed(node, document, device)
+              )
+          ),
+          elements => {
+            return elements.map(element => {
+              return {
+                applicable: true,
+                aspect: document,
+                target: element
+              };
+            });
+          }
+        );
+      },
 
-    expectations((aspect, target) => {
-      return BrowserSpecific.map(
-        getTextAlternative(target, document, device),
-        textAlternative => {
-          return {
-            1: { holds: textAlternative !== null && textAlternative !== "" }
-          };
-        }
-      );
-    });
+      expectations: (aspect, target) => {
+        return BrowserSpecific.map(
+          getTextAlternative(target, document, device),
+          textAlternative => {
+            return {
+              1: { holds: textAlternative !== null && textAlternative !== "" }
+            };
+          }
+        );
+      }
+    };
   }
 };
 

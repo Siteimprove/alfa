@@ -4,11 +4,11 @@ import { Document, Element, isRendered } from "@siteimprove/alfa-dom";
 
 import { Video } from "../helpers/applicabilities/video";
 
-export const SIA_R26: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r26.html",
+export const SIA_R31: Atomic.Rule<Device | Document, Element> = {
+  id: "sanshikan:rules/sia-r31.html",
   evaluate: ({ device, document }) => {
     return {
-      applicability: Video(document, device, { audio: false }),
+      applicability: Video(document, device, { audio: true }),
 
       expectations: (aspect, target, question) => {
         const alt = question(QuestionType.Node, "text-alternative");

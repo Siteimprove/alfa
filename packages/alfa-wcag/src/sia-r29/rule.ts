@@ -2,13 +2,13 @@ import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, isRendered } from "@siteimprove/alfa-dom";
 
-import { Video } from "../helpers/applicabilities/video";
+import { Audio } from "../helpers/applicabilities/audio";
 
-export const SIA_R26: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r26.html",
-  evaluate: ({ device, document }) => {
+export const SIA_R29: Atomic.Rule<Document | Device, Element> = {
+  id: "sanshikan:rules/sia-r29.html",
+  evaluate: ({ document, device }) => {
     return {
-      applicability: Video(document, device, { audio: false }),
+      applicability: Audio(document, device),
 
       expectations: (aspect, target, question) => {
         const alt = question(QuestionType.Node, "text-alternative");
