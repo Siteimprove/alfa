@@ -218,10 +218,24 @@ export namespace Composite {
 
     readonly locales?: ReadonlyArray<Locale>;
 
-    readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
+    readonly compose: (composition: Composition<A, T>) => void;
 
     readonly evaluate: () => {
       readonly expectations: Expectations<A, T>;
     };
+  }
+}
+
+export class Composition<A extends Aspect, T extends Target>
+  implements Iterable<Atomic.Rule<A, T>> {
+  private readonly rules: Array<Atomic.Rule<A, T>> = [];
+
+  public add<B extends A, U extends T>(rule: Atomic.Rule<B, U>): this {
+    this.rules.push((rule as unknown) as Atomic.Rule<A, T>);
+    return this;
+  }
+
+  public [Symbol.iterator](): Iterator<Atomic.Rule<A, T>> {
+    return this.rules[Symbol.iterator]();
   }
 }

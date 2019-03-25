@@ -9,6 +9,7 @@ import {
   AspectsFor,
   Atomic,
   Composite,
+  Composition,
   Evaluand,
   Evaluation,
   Outcome,
@@ -185,7 +186,11 @@ function auditComposite<A extends Aspect, T extends Target>(
     ResultSet<A, T> | BrowserSpecific<ResultSet<A, T>>
   > = [];
 
-  for (const composite of rule.composes) {
+  const composition = new Composition<A, T>();
+
+  rule.compose(composition);
+
+  for (const composite of composition) {
     const evaluation = evaluations.get(composite);
 
     if (evaluation !== undefined) {

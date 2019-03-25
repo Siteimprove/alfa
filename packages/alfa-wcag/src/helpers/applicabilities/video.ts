@@ -8,20 +8,38 @@ import {
   isRendered,
   Namespace,
   Node,
+  querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
 export const Video: (
   document: Document,
   device: Device,
-  options: { audio?: boolean }
+  options: {
+    audio?: { has: boolean };
+    track?: { kind: "descriptions"; has: boolean };
+  }
 ) => Atomic.Applicability<Document, Element> = (
   document,
   device,
   options
 ) => question => {
   return querySelectorAll<Element>(document, document, node => {
-    return isElement(node) && isVideo(node, document);
+    if (!isElement(node) || !isVideo(node, document)) {
+      return false;
+    }
+
+    if (options.track !== undefined) {
+      const hasTrack =
+        querySelector(node, document, `track[kind="${options.track.kind}"]`) !==
+        null;
+
+      if (hasTrack !== options.track.has) {
+        return false;
+      }
+    }
+
+    return true;
   }).map(element => {
     const isStreaming = question(
       QuestionType.Boolean,
@@ -46,7 +64,7 @@ export const Video: (
         return { applicable: null, aspect: document, target: element };
       }
 
-      if (hasAudio !== options.audio) {
+      if (hasAudio !== options.audio.has) {
         return { applicable: false, aspect: document, target: element };
       }
     }
