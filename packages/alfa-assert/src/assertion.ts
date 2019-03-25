@@ -76,7 +76,7 @@ export class Assertion {
 
         const failure = keys(expectations).findIndex(
           key => expectations[key].holds === false
-        )!;
+        );
 
         let { message } = expectations[failure];
 
