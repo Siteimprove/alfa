@@ -70,6 +70,10 @@ export function audit<
   for (const _rule of sortRules(rules)) {
     const rule = (_rule as unknown) as Rule<A, T>;
 
+    const { locales = [] } = rule;
+
+    const locale = locales.find(locale => locale.id === "en");
+
     function question<Q extends QuestionType>(
       type: Q,
       id: string,
@@ -89,7 +93,17 @@ export function audit<
         return answer.answer;
       }
 
-      questions.push({ type, id, rule, aspect, target });
+      let message: string | undefined;
+
+      if (locale !== undefined) {
+        const messages = locale.questions;
+
+        if (messages !== undefined) {
+          message = messages[id];
+        }
+      }
+
+      questions.push({ type, id, rule, aspect, target, message });
 
       return null;
     }
@@ -291,7 +305,7 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
     for (const id of keys(evaluations)) {
       const { holds, data } = evaluations[id];
 
-      let message: string | null = null;
+      let message: string | undefined;
 
       if (locale !== undefined) {
         const messages = locale.expectations[id];
@@ -312,22 +326,7 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
         }
       }
 
-      if (message === null) {
-        const status =
-          holds === null
-            ? "was not evaluated"
-            : holds
-            ? "holds"
-            : "does not hold";
-
-        message = `Expectation ${id} ${status}`;
-      }
-
-      expectations[id] = {
-        holds,
-        message,
-        data: data === undefined ? null : data
-      };
+      expectations[id] = { holds, message, data };
     }
 
     const result: Result<A, T, any> = {

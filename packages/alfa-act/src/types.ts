@@ -68,8 +68,8 @@ export namespace Result {
   export interface Expectations {
     readonly [i: number]: {
       readonly holds: boolean | null;
-      readonly message: string;
-      readonly data?: Data | null;
+      readonly message?: string;
+      readonly data?: Data;
     };
   }
 }
@@ -118,6 +118,7 @@ export interface Question<
   readonly rule: Rule<A, T>;
   readonly aspect: A;
   readonly target: T;
+  readonly message?: string;
 }
 
 export interface AnswerType {
@@ -131,6 +132,11 @@ export interface Answer<
   A extends Aspect,
   T extends Target
 > extends Question<Q, A, T> {
+  readonly type: Q;
+  readonly id: string;
+  readonly rule: Rule<A, T>;
+  readonly aspect: A;
+  readonly target: T;
   readonly answer: AnswerType[Q] | null;
 }
 
@@ -146,6 +152,9 @@ export interface Locale {
         | Outcome.Failed
         | Outcome.CantTell]?: Message
     };
+  };
+  readonly questions?: {
+    readonly [id: string]: string;
   };
 }
 

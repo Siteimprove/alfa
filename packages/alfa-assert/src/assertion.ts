@@ -11,7 +11,7 @@ import {
   serialize
 } from "@siteimprove/alfa-dom";
 import { highlight, mark } from "@siteimprove/alfa-highlight";
-import { values } from "@siteimprove/alfa-util";
+import { keys, values } from "@siteimprove/alfa-util";
 import { Rules } from "@siteimprove/alfa-wcag";
 
 const rules = values(Rules);
@@ -74,9 +74,15 @@ export class Assertion {
       if (result.outcome === Outcome.Failed) {
         const { expectations, aspect, target } = result;
 
-        const { message } = values(expectations).find(
-          expectation => expectation.holds === false
+        const failure = keys(expectations).findIndex(
+          key => expectations[key].holds === false
         )!;
+
+        let { message } = expectations[failure];
+
+        if (message === undefined) {
+          message = `Expectation ${failure} does not hold`;
+        }
 
         throw new AssertionError(message, aspect, target);
       }
