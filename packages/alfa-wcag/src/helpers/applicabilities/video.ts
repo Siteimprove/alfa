@@ -48,8 +48,12 @@ export const Video: (
       element
     );
 
-    if (isStreaming === null || isStreaming === true) {
-      return { applicable: isStreaming, aspect: document, target: element };
+    if (isStreaming === null) {
+      return { applicable: null, aspect: document, target: element };
+    }
+
+    if (isStreaming) {
+      return { applicable: false, aspect: document, target: element };
     }
 
     if (options.audio !== undefined) {
