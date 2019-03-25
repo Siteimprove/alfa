@@ -19,6 +19,8 @@ import {
 
 import { EN } from "./locales/en";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: [{ id: "wcag:non-text-content", partial: true }],
@@ -26,52 +28,54 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return BrowserSpecific.map(
-          BrowserSpecific.filter(
-            querySelectorAll<Element>(document, document, isElement, {
-              composed: true
-            }),
-            node =>
-              BrowserSpecific.map(
-                isImage(node, document, device),
-                isImage =>
-                  isImage &&
-                  (node.localName === "img" ||
-                    isExposed(node, document, device))
-              )
-          ),
-          elements => {
-            return elements.map(element => {
+        return querySelectorAll(document, document, isElement, {
+          composed: true
+        }).map(element => {
+          return map(isImage(element, document, device), isImage => {
+            if (!isImage) {
+              return {
+                applicable: false,
+                aspect: document,
+                target: element
+              };
+            }
+
+            if (element.localName === "img") {
               return {
                 applicable: true,
                 aspect: document,
                 target: element
               };
+            }
+
+            return map(isExposed(element, document, device), isExposed => {
+              return {
+                applicable: isImage && isExposed,
+                aspect: document,
+                target: element
+              };
             });
-          }
-        );
+          });
+        });
       },
 
       expectations: (aspect, target) => {
-        return BrowserSpecific.map(
+        return map(
           getTextAlternative(target, document, device),
           textAlternative => {
-            return BrowserSpecific.map(
-              isDecorative(target, document, device),
-              isDecorative => {
-                return {
-                  1: {
-                    holds:
-                      isDecorative ||
-                      (textAlternative !== null && textAlternative !== ""),
-                    data: {
-                      alt: textAlternative,
-                      decorative: isDecorative
-                    }
+            return map(isDecorative(target, document, device), isDecorative => {
+              return {
+                1: {
+                  holds:
+                    isDecorative ||
+                    (textAlternative !== null && textAlternative !== ""),
+                  data: {
+                    alt: textAlternative,
+                    decorative: isDecorative
                   }
-                };
-              }
-            );
+                }
+              };
+            });
           }
         );
       }

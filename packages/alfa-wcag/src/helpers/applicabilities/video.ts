@@ -20,11 +20,9 @@ export const Video: (
   device,
   options
 ) => question => {
-  return querySelectorAll<Element>(
-    document,
-    document,
-    node => isElement(node) && isVideo(node, document)
-  ).map(element => {
+  return querySelectorAll<Element>(document, document, node => {
+    return isElement(node) && isVideo(node, document);
+  }).map(element => {
     const isStreaming = question(
       QuestionType.Boolean,
       "is-streaming",

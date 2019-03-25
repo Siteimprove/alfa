@@ -100,7 +100,7 @@ export function getTextAlternative(
   }
 
   return (
-    BrowserSpecific.of(null, [
+    BrowserSpecific.of<Option<string>>(null, [
       "chrome",
       "edge",
       "firefox",

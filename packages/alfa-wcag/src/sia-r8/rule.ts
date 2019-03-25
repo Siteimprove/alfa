@@ -17,36 +17,34 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
   requirements: [{ id: "wcag:labels-or-instructions", partial: true }],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return BrowserSpecific.map(
-          BrowserSpecific.filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              node => isElement(node) && isFormField(node, document, device),
-              { composed: true }
-            ),
-            node => isExposed(node, document, device)
-          ),
-          elements => {
-            return elements.map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
-          }
-        );
+        return querySelectorAll<Element>(
+          document,
+          document,
+          node => {
+            return isElement(node) && isFormField(node, document, device);
+          },
+          { composed: true }
+        ).map(element => {
+          return map(isExposed(element, document, device), isExposed => {
+            return {
+              applicable: isExposed,
+              aspect: document,
+              target: element
+            };
+          });
+        });
       },
 
       expectations: (aspect, target) => {
-        return BrowserSpecific.map(
+        return map(
           getTextAlternative(target, document, device),
           textAlternative => {
             return {

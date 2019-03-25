@@ -22,11 +22,9 @@ export const SIA_R1: Atomic.Rule<Document, Document> = {
       },
 
       expectations: (aspect, target) => {
-        const title = querySelector(
-          target,
-          document,
-          node => isElement(node) && isTitle(node, document)
-        );
+        const title = querySelector(target, document, node => {
+          return isElement(node) && isTitle(node, document);
+        });
 
         return {
           1: { holds: title !== null },

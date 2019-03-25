@@ -154,16 +154,13 @@ export interface Requirement {
   readonly partial?: true;
 }
 
-export interface Targets<A extends Aspect, T extends Target> {
-  readonly length: number;
-  readonly [i: number]: {
-    applicable: boolean | null;
-    aspect: A;
-    target: T;
-  };
+export interface Evaluand<A extends Aspect, T extends Target> {
+  applicable: boolean | null;
+  aspect: A;
+  target: T;
 }
 
-export interface Evaluations {
+export interface Evaluation {
   readonly [i: number]: {
     holds: boolean | null;
     data?: Data;
@@ -182,7 +179,7 @@ export namespace Atomic {
       aspect: A,
       target: T
     ) => AnswerType[Q] | null
-  ) => Targets<A, T> | BrowserSpecific<Targets<A, T>>;
+  ) => ReadonlyArray<Evaluand<A, T> | BrowserSpecific<Evaluand<A, T>>>;
 
   export type Expectations<A extends Aspect, T extends Target> = (
     aspect: A,
@@ -191,7 +188,7 @@ export namespace Atomic {
       type: Q,
       id: string
     ) => AnswerType[Q] | null
-  ) => Evaluations | BrowserSpecific<Evaluations>;
+  ) => Evaluation | BrowserSpecific<Evaluation>;
 
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
@@ -212,7 +209,7 @@ export namespace Atomic {
 export namespace Composite {
   export type Expectations<A extends Aspect, T extends Target> = (
     outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>
-  ) => Evaluations | BrowserSpecific<Evaluations>;
+  ) => Evaluation | BrowserSpecific<Evaluation>;
 
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
