@@ -1,10 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  getTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { getTextAlternative, isExposed } from "@siteimprove/alfa-aria";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
