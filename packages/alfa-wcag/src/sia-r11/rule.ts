@@ -17,6 +17,8 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r11.html",
   requirements: [
@@ -26,29 +28,29 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return BrowserSpecific.map(
-          BrowserSpecific.filter(
-            querySelectorAll(document, document, isElement),
-            node =>
-              BrowserSpecific.map(
-                isLink(node, document, device),
-                isLink => isLink && isExposed(node, document, device)
-              )
-          ),
-          elements => {
-            return elements.map(element => {
+        return querySelectorAll(document, document, isElement).map(element => {
+          return map(isLink(element, document, device), isLink => {
+            if (!isLink) {
               return {
-                applicable: true,
+                applicable: false,
+                aspect: document,
+                target: element
+              };
+            }
+
+            return map(isExposed(element, document, device), isExposed => {
+              return {
+                applicable: isExposed,
                 aspect: document,
                 target: element
               };
             });
-          }
-        );
+          });
+        });
       },
 
       expectations: (aspect, target) => {
-        return BrowserSpecific.map(
+        return map(
           getTextAlternative(target, document, device),
           textAlternative => {
             return {

@@ -1,4 +1,6 @@
 import { Atomic, QuestionType } from "@siteimprove/alfa-act";
+import { isExposed } from "@siteimprove/alfa-aria";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -18,11 +20,9 @@ export const Audio: (
   document,
   device
 ) => question => {
-  return querySelectorAll<Element>(
-    document,
-    document,
-    node => isElement(node) && isAudio(node, document)
-  ).map(element => {
+  return querySelectorAll<Element>(document, document, node => {
+    return isElement(node) && isAudio(node, document);
+  }).map(element => {
     const isStreaming = question(
       QuestionType.Boolean,
       "is-streaming",
@@ -30,8 +30,12 @@ export const Audio: (
       element
     );
 
-    if (isStreaming === null || isStreaming === true) {
-      return { applicable: isStreaming, aspect: document, target: element };
+    if (isStreaming === null) {
+      return { applicable: null, aspect: document, target: element };
+    }
+
+    if (isStreaming) {
+      return { applicable: false, aspect: document, target: element };
     }
 
     const isPlaying = question(
@@ -56,12 +60,20 @@ export const Audio: (
       return { applicable: null, aspect: document, target: element };
     }
 
-    return {
-      applicable:
-        isElement(playButton) && isRendered(playButton, document, device),
-      aspect: document,
-      target: element
-    };
+    if (!isElement(playButton) || !isRendered(playButton, document, device)) {
+      return { applicable: false, aspect: document, target: element };
+    }
+
+    return BrowserSpecific.map(
+      isExposed(element, document, device),
+      isExposed => {
+        return {
+          applicable: isExposed,
+          aspect: document,
+          target: element
+        };
+      }
+    );
   });
 };
 

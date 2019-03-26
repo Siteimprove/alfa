@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -6,7 +7,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Atomic, Composite, Outcome, QuestionType } from "../../src/types";
 
-export const Manual: Atomic.Rule<Document, Element> = {
+export const Manual: Atomic.Rule<Document | Device, Element> = {
   id: "_:manual-rule",
   requirements: [{ id: "wcag:page-titled", partial: true }],
   evaluate: ({ document }) => {
@@ -53,10 +54,12 @@ export const Automated: Atomic.Rule<Document, Element> = {
   }
 };
 
-export const Semi: Composite.Rule<Document, Element> = {
+export const Semi: Composite.Rule<Document | Device, Element> = {
   id: "_:composite-rule",
-  composes: [Manual, Automated],
   requirements: [{ id: "wcag:section-headings" }],
+  compose: composition => {
+    composition.add(Manual).add(Automated);
+  },
   evaluate: () => {
     return {
       expectations: results => {

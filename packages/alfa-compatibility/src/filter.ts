@@ -3,9 +3,14 @@ import { map } from "./map";
 import { reduce } from "./reduce";
 
 export function filter<T>(
-  values: ArrayLike<T | BrowserSpecific<T>>,
+  values: ArrayLike<BrowserSpecific<T>>,
   predicate: (value: T) => boolean | BrowserSpecific<boolean>
 ): BrowserSpecific<Array<T>>;
+
+export function filter<T>(
+  values: ArrayLike<T | BrowserSpecific<T>>,
+  predicate: (value: T) => boolean | BrowserSpecific<boolean>
+): Array<T> | BrowserSpecific<Array<T>>;
 
 export function filter<T>(
   values: ArrayLike<T>,
@@ -22,6 +27,6 @@ export function filter<T>(
       map(predicate(value), include =>
         include ? [...filtered, value] : filtered
       ),
-    [] as Array<T> | BrowserSpecific<Array<T>>
+    [] as Array<T>
   );
 }

@@ -2,15 +2,26 @@ import { BrowserSpecific } from "./browser-specific";
 import { map } from "./map";
 
 export function reduce<T>(
-  values: ArrayLike<T | BrowserSpecific<T>>,
+  values: ArrayLike<BrowserSpecific<T>>,
   iteratee: (accumulator: T, value: T) => T | BrowserSpecific<T>
 ): BrowserSpecific<T>;
+
+export function reduce<T, U>(
+  values: ArrayLike<BrowserSpecific<T>>,
+  iteratee: (accumulator: U, value: T) => U | BrowserSpecific<U>,
+  initial: U | BrowserSpecific<U>
+): BrowserSpecific<U>;
+
+export function reduce<T>(
+  values: ArrayLike<T | BrowserSpecific<T>>,
+  iteratee: (accumulator: T, value: T) => T | BrowserSpecific<T>
+): T | BrowserSpecific<T>;
 
 export function reduce<T, U>(
   values: ArrayLike<T | BrowserSpecific<T>>,
   iteratee: (accumulator: U, value: T) => U | BrowserSpecific<U>,
   initial: U | BrowserSpecific<U>
-): BrowserSpecific<U>;
+): U | BrowserSpecific<U>;
 
 export function reduce<T>(
   values: ArrayLike<T>,

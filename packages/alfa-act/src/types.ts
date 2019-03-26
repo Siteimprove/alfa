@@ -68,8 +68,8 @@ export namespace Result {
   export interface Expectations {
     readonly [i: number]: {
       readonly holds: boolean | null;
-      readonly message: string;
-      readonly data?: Data | null;
+      readonly message?: string;
+      readonly data?: Data;
     };
   }
 }
@@ -118,6 +118,7 @@ export interface Question<
   readonly rule: Rule<A, T>;
   readonly aspect: A;
   readonly target: T;
+  readonly message?: string;
 }
 
 export interface AnswerType {
@@ -131,6 +132,11 @@ export interface Answer<
   A extends Aspect,
   T extends Target
 > extends Question<Q, A, T> {
+  readonly type: Q;
+  readonly id: string;
+  readonly rule: Rule<A, T>;
+  readonly aspect: A;
+  readonly target: T;
   readonly answer: AnswerType[Q] | null;
 }
 
@@ -147,6 +153,9 @@ export interface Locale {
         | Outcome.CantTell]?: Message
     };
   };
+  readonly questions?: {
+    readonly [id: string]: string;
+  };
 }
 
 export interface Requirement {
@@ -154,16 +163,13 @@ export interface Requirement {
   readonly partial?: true;
 }
 
-export interface Targets<A extends Aspect, T extends Target> {
-  readonly length: number;
-  readonly [i: number]: {
-    applicable: boolean | null;
-    aspect: A;
-    target: T;
-  };
+export interface Evaluand<A extends Aspect, T extends Target> {
+  applicable: boolean | null;
+  aspect: A;
+  target: T;
 }
 
-export interface Evaluations {
+export interface Evaluation {
   readonly [i: number]: {
     holds: boolean | null;
     data?: Data;
@@ -182,7 +188,7 @@ export namespace Atomic {
       aspect: A,
       target: T
     ) => AnswerType[Q] | null
-  ) => Targets<A, T> | BrowserSpecific<Targets<A, T>>;
+  ) => ReadonlyArray<Evaluand<A, T> | BrowserSpecific<Evaluand<A, T>>>;
 
   export type Expectations<A extends Aspect, T extends Target> = (
     aspect: A,
@@ -191,7 +197,7 @@ export namespace Atomic {
       type: Q,
       id: string
     ) => AnswerType[Q] | null
-  ) => Evaluations | BrowserSpecific<Evaluations>;
+  ) => Evaluation | BrowserSpecific<Evaluation>;
 
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
@@ -212,7 +218,7 @@ export namespace Atomic {
 export namespace Composite {
   export type Expectations<A extends Aspect, T extends Target> = (
     outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>
-  ) => Evaluations | BrowserSpecific<Evaluations>;
+  ) => Evaluation | BrowserSpecific<Evaluation>;
 
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
@@ -221,10 +227,24 @@ export namespace Composite {
 
     readonly locales?: ReadonlyArray<Locale>;
 
-    readonly composes: ReadonlyArray<Atomic.Rule<A, T>>;
+    readonly compose: (composition: Composition<A, T>) => void;
 
     readonly evaluate: () => {
       readonly expectations: Expectations<A, T>;
     };
+  }
+}
+
+export class Composition<A extends Aspect, T extends Target>
+  implements Iterable<Atomic.Rule<A, T>> {
+  private readonly rules: Array<Atomic.Rule<A, T>> = [];
+
+  public add<B extends A, U extends T>(rule: Atomic.Rule<B, U>): this {
+    this.rules.push((rule as unknown) as Atomic.Rule<A, T>);
+    return this;
+  }
+
+  public [Symbol.iterator](): Iterator<Atomic.Rule<A, T>> {
+    return this.rules[Symbol.iterator]();
   }
 }

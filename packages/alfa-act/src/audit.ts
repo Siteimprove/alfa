@@ -1,5 +1,5 @@
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
-import { filter, keys, map, Mutable, values } from "@siteimprove/alfa-util";
+import { keys, Mutable, values } from "@siteimprove/alfa-util";
 import { isAtomic } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
@@ -9,7 +9,9 @@ import {
   AspectsFor,
   Atomic,
   Composite,
-  Evaluations,
+  Composition,
+  Evaluand,
+  Evaluation,
   Outcome,
   Question,
   QuestionType,
@@ -28,6 +30,7 @@ import {
 
 const { isArray } = Array;
 const { assign } = Object;
+const { map, reduce, unwrap } = BrowserSpecific;
 
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? A
@@ -67,6 +70,10 @@ export function audit<
   for (const _rule of sortRules(rules)) {
     const rule = (_rule as unknown) as Rule<A, T>;
 
+    const { locales = [] } = rule;
+
+    const locale = locales.find(locale => locale.id === "en");
+
     function question<Q extends QuestionType>(
       type: Q,
       id: string,
@@ -86,7 +93,17 @@ export function audit<
         return answer.answer;
       }
 
-      questions.push({ type, id, rule, aspect, target });
+      let message: string | undefined;
+
+      if (locale !== undefined) {
+        const messages = locale.questions;
+
+        if (messages !== undefined) {
+          message = messages[id];
+        }
+      }
+
+      questions.push({ type, id, rule, aspect, target, message });
 
       return null;
     }
@@ -101,11 +118,7 @@ export function audit<
   const results: Array<Result<A, T>> = [];
 
   for (const [rule, wrapped] of evaluations) {
-    const unwrapped = BrowserSpecific.unwrap(
-      BrowserSpecific.map(wrapped, wrapped =>
-        wrapped.map(BrowserSpecific.unwrap)
-      )
-    );
+    const unwrapped = unwrap(map(wrapped, wrapped => wrapped.map(unwrap)));
 
     for (const { value: evaluations, browsers } of unwrapped) {
       if (evaluations.length === 0) {
@@ -143,12 +156,13 @@ function auditAtomic<A extends Aspect, T extends Target>(
 ): ResultSet<A, T> | BrowserSpecific<ResultSet<A, T>> {
   const evaluate = rule.evaluate(aspects);
 
-  const targets = evaluate.applicability(question);
+  return reduce<Evaluand<A, T>, ResultSet<A, T>>(
+    evaluate.applicability(question),
+    (results, { applicable, aspect, target }) => {
+      if (applicable === false) {
+        return results;
+      }
 
-  return BrowserSpecific.map(targets, targets => {
-    targets = filter(targets, target => target.applicable !== false);
-
-    return map(targets, ({ applicable, aspect, target }) => {
       if (applicable === null) {
         const result: Result<A, T, Outcome.CantTell> = {
           rule,
@@ -157,12 +171,12 @@ function auditAtomic<A extends Aspect, T extends Target>(
           target
         };
 
-        return result;
+        return [...results, result];
       }
 
       const evaluator = getExpectationEvaluater(rule, aspect, target);
 
-      return BrowserSpecific.map(
+      const result = map(
         evaluate.expectations(aspect, target, (type, id) =>
           question(type, id, aspect, target)
         ),
@@ -170,8 +184,11 @@ function auditAtomic<A extends Aspect, T extends Target>(
           return evaluator(evaluations);
         }
       );
-    });
-  });
+
+      return [...results, result];
+    },
+    []
+  );
 }
 
 function auditComposite<A extends Aspect, T extends Target>(
@@ -183,7 +200,11 @@ function auditComposite<A extends Aspect, T extends Target>(
     ResultSet<A, T> | BrowserSpecific<ResultSet<A, T>>
   > = [];
 
-  for (const composite of rule.composes) {
+  const composition = new Composition<A, T>();
+
+  rule.compose(composition);
+
+  for (const composite of composition) {
     const evaluation = evaluations.get(composite);
 
     if (evaluation !== undefined) {
@@ -191,46 +212,59 @@ function auditComposite<A extends Aspect, T extends Target>(
     }
   }
 
-  const groups = BrowserSpecific.map(
-    BrowserSpecific.reduce(
+  const groups = map(
+    reduce<ResultSet<A, T>, ResultSet<A, T>>(
       applicability,
-      (results, evaluations) =>
-        BrowserSpecific.map(evaluations, evaluations => [
-          ...results,
-          ...evaluations
-        ]),
-      [] as ResultSet<A, T>
+      (results, evaluations) => {
+        return map(evaluations, evaluations => {
+          return [...results, ...evaluations];
+        });
+      },
+      []
     ),
-    targets =>
-      BrowserSpecific.reduce(
+    targets => {
+      interface Group {
+        aspect: A;
+        target: T;
+        results: Array<Result<A, T>>;
+      }
+
+      return reduce<Result<A, T>, Array<Group>>(
         targets,
         (groups, result) => {
           if (result.outcome === Outcome.Inapplicable) {
             return groups;
           }
 
-          let group = groups.find(
-            group => group[0] === result.aspect && group[1] === result.target
-          );
+          let group = groups.find(group => {
+            return (
+              group.aspect === result.aspect && group.target === result.target
+            );
+          });
 
           if (group === undefined) {
-            group = [result.aspect, result.target, []];
+            group = {
+              aspect: result.aspect,
+              target: result.target,
+              results: []
+            };
             groups = [...groups, group];
           }
 
-          group[2].push(result);
+          group.results.push(result);
 
           return groups;
         },
-        [] as Array<[A, T, Array<Result<A, T>>]>
-      )
+        []
+      );
+    }
   );
 
   const evaluate = rule.evaluate();
 
-  return BrowserSpecific.map(groups, groups => {
+  return map(groups, groups => {
     return groups.map(group => {
-      const [aspect, target, results] = group;
+      const { aspect, target, results } = group;
 
       const evaluator = getExpectationEvaluater(
         rule as Rule<A, T>,
@@ -238,12 +272,9 @@ function auditComposite<A extends Aspect, T extends Target>(
         target
       );
 
-      return BrowserSpecific.map(
-        evaluate.expectations(results),
-        evaluations => {
-          return evaluator(evaluations);
-        }
-      );
+      return map(evaluate.expectations(results), evaluations => {
+        return evaluator(evaluations);
+      });
     });
   });
 }
@@ -254,7 +285,7 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
   rule: Rule<A, T>,
   aspect: A,
   target: T
-): (evaluations: Evaluations) => Result<A, T, Applicable> {
+): (evaluation: Evaluation) => Result<A, T, Applicable> {
   const { locales = [] } = rule;
 
   const locale = locales.find(locale => locale.id === "en");
@@ -274,7 +305,7 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
     for (const id of keys(evaluations)) {
       const { holds, data } = evaluations[id];
 
-      let message: string | null = null;
+      let message: string | undefined;
 
       if (locale !== undefined) {
         const messages = locale.expectations[id];
@@ -295,22 +326,7 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
         }
       }
 
-      if (message === null) {
-        const status =
-          holds === null
-            ? "was not evaluated"
-            : holds
-            ? "holds"
-            : "does not hold";
-
-        message = `Expectation ${id} ${status}`;
-      }
-
-      expectations[id] = {
-        holds,
-        message,
-        data: data === undefined ? null : data
-      };
+      expectations[id] = { holds, message, data };
     }
 
     const result: Result<A, T, any> = {

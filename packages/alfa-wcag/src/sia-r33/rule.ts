@@ -4,12 +4,11 @@ import { Document, Element } from "@siteimprove/alfa-dom";
 
 import { Video } from "../helpers/applicabilities/video";
 
-export const SIA_R24: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r24.html",
-  requirements: [{ id: "wcag:media-alternative-prerecorded", partial: true }],
+export const SIA_R33: Atomic.Rule<Device | Document, Element> = {
+  id: "sanshikan:rules/sia-r33.html",
   evaluate: ({ device, document }) => {
     return {
-      applicability: Video(document, device, { audio: { has: true } }),
+      applicability: Video(document, device, { audio: { has: false } }),
 
       expectations: (aspect, target, question) => {
         return {

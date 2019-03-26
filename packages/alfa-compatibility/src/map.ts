@@ -5,9 +5,14 @@ import { BrowserName, VersionSet } from "./types";
 import { withBrowsers } from "./with-browsers";
 
 export function map<T, U>(
-  value: T | BrowserSpecific<T>,
+  value: BrowserSpecific<T>,
   iteratee: (value: T) => U | BrowserSpecific<U>
 ): BrowserSpecific<U>;
+
+export function map<T, U>(
+  value: T | BrowserSpecific<T>,
+  iteratee: (value: T) => U | BrowserSpecific<U>
+): U | BrowserSpecific<U>;
 
 export function map<T, U>(value: T, iteratee: (value: T) => U): U;
 
