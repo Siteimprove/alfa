@@ -33,6 +33,7 @@
     "src/sia-r25/rule.ts",
     "src/sia-r26/rule.ts",
     "src/sia-r27/rule.ts",
+    "src/sia-r28/rule.ts",
     "src/sia-r29/rule.ts",
     "src/sia-r3/rule.ts",
     "src/sia-r30/rule.ts",
