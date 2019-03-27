@@ -50,7 +50,7 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
 
             return map(isExposed(element, document, device), isExposed => {
               return {
-                applicable: isImage && isExposed,
+                applicable: isExposed,
                 aspect: document,
                 target: element
               };
@@ -96,10 +96,7 @@ function isImage(
     return true;
   }
 
-  return BrowserSpecific.map(
-    getRole(element, context, device),
-    role => role === Roles.Img
-  );
+  return map(getRole(element, context, device), role => role === Roles.Img);
 }
 
 function isDecorative(
@@ -107,7 +104,7 @@ function isDecorative(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return BrowserSpecific.map(getRole(element, context, device), role => {
+  return map(getRole(element, context, device), role => {
     switch (role) {
       case Roles.None:
       case Roles.Presentation:
