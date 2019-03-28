@@ -1,5 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { getRole, Role } from "@siteimprove/alfa-aria";
+import { getRole, isExposed, Role } from "@siteimprove/alfa-aria";
 import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -21,16 +21,26 @@ export const SIA_R16: Atomic.Rule<Device | Document, Element> = {
         return querySelectorAll(document, document, isElement, {
           composed: true
         }).map(element => {
-          return map(
-            hasExplicitRole(element, document, device),
-            hasExplicitRole => {
+          return map(isExposed(element, document, device), isExposed => {
+            if (!isExposed) {
               return {
-                applicable: hasExplicitRole,
+                applicable: false,
                 aspect: document,
                 target: element
               };
             }
-          );
+
+            return map(
+              hasExplicitRole(element, document, device),
+              hasExplicitRole => {
+                return {
+                  applicable: hasExplicitRole,
+                  aspect: document,
+                  target: element
+                };
+              }
+            );
+          });
         });
       },
 
