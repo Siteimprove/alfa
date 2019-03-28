@@ -89,7 +89,7 @@ function hasRequiredValues(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return map(getExplicitRole(element, document, device), role => {
+  return map(getExplicitRole(element, context, device), role => {
     if (role === null || role.required === undefined) {
       return true;
     }
@@ -97,9 +97,9 @@ function hasRequiredValues(
     const implicits =
       role.implicits === undefined
         ? []
-        : role.implicits(element, document, device);
+        : role.implicits(element, context, device);
 
-    for (const attribute of role.required(element, document, device)) {
+    for (const attribute of role.required(element, context, device)) {
       const value = getAttribute(element, attribute.name, {
         trim: true
       });
