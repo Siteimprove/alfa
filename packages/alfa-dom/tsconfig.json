@@ -48,6 +48,7 @@
     "src/is-labelable.ts",
     "src/is-rendered.ts",
     "src/is-tabbable.ts",
+    "src/is-visible.ts",
     "src/matches.ts",
     "src/query-selector.ts",
     "src/rule-tree.ts",
