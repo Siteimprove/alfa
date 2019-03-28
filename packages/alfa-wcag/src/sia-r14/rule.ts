@@ -5,7 +5,7 @@ import {
   getTextAlternative,
   hasNameFrom
 } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -21,6 +21,8 @@ import {
   traverseNode
 } from "@siteimprove/alfa-dom";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r14.html",
   requirements: [{ id: "wcag:label-in-name", partial: true }],
@@ -31,18 +33,31 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
           return (
             isElement(node) &&
             isHtmlElement(node, document) &&
-            isWidget(node, document, device) &&
-            isContentLabelable(node, document, device) &&
             hasVisibleTextContent(node, document, device) &&
             (hasAttribute(node, "aria-label") ||
               hasAttribute(node, "aria-labelledby"))
           );
         }).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: element
-          };
+          return map(isWidget(element, document, device), isWidget => {
+            if (!isWidget) {
+              return {
+                applicable: false,
+                aspect: document,
+                target: element
+              };
+            }
+
+            return map(
+              isContentLabelable(element, document, device),
+              isContentLabelable => {
+                return {
+                  applicable: isContentLabelable,
+                  aspect: document,
+                  target: element
+                };
+              }
+            );
+          });
         });
       },
 
@@ -51,16 +66,20 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
           getVisibleTextContent(target, document, device)
         );
 
-        return {
-          1: {
-            holds: some(
-              getTextAlternative(target, document, device),
-              textAlternative =>
-                textAlternative !== null &&
-                normalize(textAlternative).includes(visibleTextContent)
-            )
+        return map(
+          getTextAlternative(target, document, device),
+          textAlternative => {
+            console.log(visibleTextContent, "---", textAlternative);
+
+            return {
+              1: {
+                holds:
+                  textAlternative !== null &&
+                  normalize(textAlternative).includes(visibleTextContent)
+              }
+            };
           }
-        };
+        );
       }
     };
   }
@@ -70,7 +89,7 @@ function normalize(input: string): string {
   return input
     .trim()
     .toLowerCase()
-    .replace(/\s+/, " ");
+    .replace(/\s+/g, " ");
 }
 
 function getVisibleTextContent(
@@ -95,7 +114,7 @@ function getVisibleTextContent(
     }
   );
 
-  return textContent;
+  return normalize(textContent);
 }
 
 function hasVisibleTextContent(
@@ -103,15 +122,19 @@ function hasVisibleTextContent(
   context: Node,
   device: Device
 ): boolean {
-  return getVisibleTextContent(element, context, device).trim() !== "";
+  return getVisibleTextContent(element, context, device) !== "";
 }
 
 function isHtmlElement(element: Element, context: Node): boolean {
   return getElementNamespace(element, context) === Namespace.HTML;
 }
 
-function isWidget(element: Element, context: Node, device: Device): boolean {
-  return some(
+function isWidget(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean | BrowserSpecific<boolean> {
+  return map(
     getRole(element, context, device),
     role => role !== null && role.category === Category.Widget
   );
@@ -121,8 +144,8 @@ function isContentLabelable(
   element: Element,
   context: Node,
   device: Device
-): boolean {
-  return some(
+): boolean | BrowserSpecific<boolean> {
+  return map(
     getRole(element, context, device),
     role => role !== null && hasNameFrom(role, "contents")
   );
