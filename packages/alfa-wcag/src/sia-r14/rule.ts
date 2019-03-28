@@ -62,8 +62,10 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
       },
 
       expectations: (aspect, target) => {
-        const visibleTextContent = normalize(
-          getVisibleTextContent(target, document, device)
+        const visibleTextContent = getVisibleTextContent(
+          target,
+          document,
+          device
         );
 
         return map(
