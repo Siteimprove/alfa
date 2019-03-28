@@ -13,8 +13,8 @@ import {
   getElementNamespace,
   hasAttribute,
   isElement,
-  isRendered,
   isText,
+  isVisible,
   Namespace,
   Node,
   querySelectorAll,
@@ -85,20 +85,14 @@ function getVisibleTextContent(
     context,
     {
       enter(node) {
-        if (isElement(node) && isRendered(node, context, device)) {
-          const { childNodes } = node;
-
-          for (let i = 0, n = childNodes.length; i < n; i++) {
-            const childNode = childNodes[i];
-
-            if (isText(childNode)) {
-              textContent += childNode.data;
-            }
-          }
+        if (isText(node) && isVisible(node, context, device)) {
+          textContent += node.data;
         }
       }
     },
-    { flattened: true }
+    {
+      flattened: true
+    }
   );
 
   return textContent;
