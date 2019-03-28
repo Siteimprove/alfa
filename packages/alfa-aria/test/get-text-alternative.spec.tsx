@@ -274,3 +274,14 @@ test("Correctly handles browser specific case sensitivity of roles", t => {
     );
   });
 });
+
+test("Correctly handles aria-labelledby that points to aria-hidden=true", t => {
+  const button = (
+    <button aria-labelledby="foo">
+      <span id="foo" aria-hidden="true">
+        Hello world
+      </span>
+    </button>
+  );
+  t.equal(getTextAlternative(button, button, device), "Hello world");
+});
