@@ -13,7 +13,7 @@ import {
 
 export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r17.html",
-  requirements: [{ id: "wcag:name-role-value", partial: true }],
+  requirements: [{ id: "wcag:info-and-relationships", partial: true }],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
