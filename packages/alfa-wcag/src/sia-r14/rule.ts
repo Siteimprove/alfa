@@ -69,8 +69,6 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
         return map(
           getTextAlternative(target, document, device),
           textAlternative => {
-            console.log(visibleTextContent, "---", textAlternative);
-
             return {
               1: {
                 holds:
