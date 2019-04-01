@@ -74,9 +74,11 @@ class Project {
       return undefined;
     }
 
-    const file = /** @type {TypeScript.SourceFile} */ (next.affected);
+    const { affected } = next;
 
-    return path.relative(this.host.getCurrentDirectory(), file.fileName);
+    if ("fileName" in affected) {
+      return path.relative(this.host.getCurrentDirectory(), affected.fileName);
+    }
   }
 
   /**
