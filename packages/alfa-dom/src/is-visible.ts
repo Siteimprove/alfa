@@ -10,6 +10,10 @@ export function isVisible(
   context: Node,
   device: Device
 ): boolean {
+  if (!isRendered(node, context, device)) {
+    return false;
+  }
+
   if (isElement(node)) {
     for (
       let next: Element | null = node;
@@ -36,5 +40,5 @@ export function isVisible(
     }
   }
 
-  return isRendered(node, context, device);
+  return true;
 }
