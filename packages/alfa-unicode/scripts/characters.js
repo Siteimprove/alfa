@@ -70,13 +70,15 @@ fetch(database).then(body => {
 // Database. Do therefore not modify it directly! If you wish to make changes,
 // do so in \`scripts/characters.js\` and run \`yarn prepare\` to rebuild this file.
 
+// tslint:disable:no-object-literal-type-assertion
+
 import { Category, Character } from "./types";
 
 export const Characters: Array<Character> = [
   ${characters
     .map(character => {
       const { name, code, category } = character;
-      return `{
+      return `<Character>{
         name: "${name}",
         code: ${isArray(code) ? `[${code.join(", ")}]` : code},
         category: Category.${category}
