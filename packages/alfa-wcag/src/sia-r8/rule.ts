@@ -1,10 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
-  hasTextAlternative,
-  isVisible,
+  getTextAlternative,
+  isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -16,25 +17,43 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
   requirements: [{ id: "wcag:labels-or-instructions", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isFormField(node, document, device) &&
-          isVisible(node, document, device),
-        { composed: true }
-      )
-    );
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(
+          document,
+          document,
+          node => {
+            return isElement(node) && isFormField(node, document, device);
+          },
+          { composed: true }
+        ).map(element => {
+          return map(isExposed(element, document, device), isExposed => {
+            return {
+              applicable: isExposed,
+              aspect: document,
+              target: element
+            };
+          });
+        });
+      },
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasTextAlternative(target, document, device));
-    });
+      expectations: (aspect, target) => {
+        return map(
+          getTextAlternative(target, document, device),
+          textAlternative => {
+            return {
+              1: { holds: textAlternative !== null && textAlternative !== "" }
+            };
+          }
+        );
+      }
+    };
   }
 };
 

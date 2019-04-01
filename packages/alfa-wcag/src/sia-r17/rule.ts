@@ -5,7 +5,7 @@ import {
   Element,
   getAttribute,
   isElement,
-  isFocusable,
+  isTabbable,
   Node,
   querySelector,
   querySelectorAll
@@ -13,26 +13,35 @@ import {
 
 export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r17.html",
-  requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          getAttribute(node, "aria-hidden", { lowerCase: true }) === "true"
-      )
-    );
+  requirements: [{ id: "wcag:info-and-relationships", partial: true }],
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return (
+            isElement(node) &&
+            getAttribute(node, "aria-hidden", { lowerCase: true }) === "true"
+          );
+        }).map(attribute => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: attribute
+          };
+        });
+      },
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, !isFocusable(target, document, device));
-      expectation(2, !hasFocusableDescendants(target, document, device));
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: !isTabbable(target, document, device) },
+          2: { holds: !hasTabbableDescendants(target, document, device) }
+        };
+      }
+    };
   }
 };
 
-function hasFocusableDescendants(
+function hasTabbableDescendants(
   element: Element,
   context: Node,
   device: Device
@@ -41,10 +50,16 @@ function hasFocusableDescendants(
     querySelector(
       element,
       context,
-      node =>
-        node !== element &&
-        isElement(node) &&
-        isFocusable(node, context, device)
+      node => {
+        return (
+          node !== element &&
+          isElement(node) &&
+          isTabbable(node, context, device)
+        );
+      },
+      {
+        flattened: true
+      }
     ) !== null
   );
 }

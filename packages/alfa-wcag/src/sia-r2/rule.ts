@@ -1,10 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
-  hasTextAlternative,
-  isVisible,
+  getTextAlternative,
+  isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -16,54 +17,101 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+import { EN } from "./locales/en";
+
+const { map } = BrowserSpecific;
+
 export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
   requirements: [{ id: "wcag:non-text-content", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isImage(node, document, device) &&
-          isVisible(node, document, device),
-        { composed: true }
-      )
-    );
+  locales: [EN],
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll(document, document, isElement, {
+          composed: true
+        }).map(element => {
+          return map(isImage(element, document, device), isImage => {
+            if (!isImage) {
+              return {
+                applicable: false,
+                aspect: document,
+                target: element
+              };
+            }
 
-    expectations((aspect, target, expectation) => {
-      expectation(
-        1,
-        hasTextAlternative(target, document, device) ||
-          isDecorative(target, document, device)
-      );
-    });
+            if (element.localName === "img") {
+              return {
+                applicable: true,
+                aspect: document,
+                target: element
+              };
+            }
+
+            return map(isExposed(element, document, device), isExposed => {
+              return {
+                applicable: isExposed,
+                aspect: document,
+                target: element
+              };
+            });
+          });
+        });
+      },
+
+      expectations: (aspect, target) => {
+        return map(
+          getTextAlternative(target, document, device),
+          textAlternative => {
+            return map(isDecorative(target, document, device), isDecorative => {
+              return {
+                1: {
+                  holds:
+                    isDecorative ||
+                    (textAlternative !== null && textAlternative !== ""),
+                  data: {
+                    alt: textAlternative,
+                    decorative: isDecorative
+                  }
+                }
+              };
+            });
+          }
+        );
+      }
+    };
   }
 };
 
-function isImage(element: Element, context: Node, device: Device): boolean {
+function isImage(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean | BrowserSpecific<boolean> {
   if (getElementNamespace(element, context) !== Namespace.HTML) {
     return false;
   }
 
-  return (
-    element.localName === "img" ||
-    getRole(element, context, device) === Roles.Img
-  );
+  if (element.localName === "img") {
+    return true;
+  }
+
+  return map(getRole(element, context, device), role => role === Roles.Img);
 }
 
 function isDecorative(
   element: Element,
   context: Node,
   device: Device
-): boolean {
-  switch (getRole(element, context, device)) {
-    case Roles.None:
-    case Roles.Presentation:
-    case null:
-      return true;
-  }
+): boolean | BrowserSpecific<boolean> {
+  return map(getRole(element, context, device), role => {
+    switch (role) {
+      case Roles.None:
+      case Roles.Presentation:
+      case null:
+        return true;
+    }
 
-  return false;
+    return false;
+  });
 }

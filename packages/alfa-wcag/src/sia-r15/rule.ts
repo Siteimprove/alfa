@@ -2,7 +2,7 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   getTextAlternative,
   hasTextAlternative,
-  isVisible
+  isExposed
 } from "@siteimprove/alfa-aria";
 import { some } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
@@ -11,58 +11,61 @@ import {
   Element,
   getAttribute,
   getElementNamespace,
-  getRootNode,
   isElement,
   Namespace,
   Node,
-  querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
 export const SIA_R15: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r15.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isIframe(node, document) &&
-          isVisible(node, document, device) &&
-          hasTextAlternative(node, document, device)
-      )
+  evaluate: ({ device, document }) => {
+    const iframes = querySelectorAll<Element>(
+      document,
+      document,
+      node =>
+        isElement(node) &&
+        isIframe(node, document) &&
+        some(isExposed(node, document, device)) &&
+        hasTextAlternative(node, document, device)
     );
 
-    expectations((aspect, target, expectation) => {
-      const rootNode = getRootNode(target, document);
+    return {
+      applicability: () => {
+        return [...iframes].map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: element
+          };
+        });
+      },
 
-      expectation(
-        1,
-        some(
-          getTextAlternative(target, document, device),
-          textAlternative =>
-            querySelector(
-              rootNode,
-              document,
-              node =>
-                node !== target &&
-                isElement(node) &&
-                isIframe(node, document) &&
-                getAttribute(node, "src") !== getAttribute(target, "src") &&
-                isVisible(node, document, device) &&
-                some(
-                  getTextAlternative(node, document, device),
-                  otherTextAlternative =>
-                    otherTextAlternative !== null &&
-                    otherTextAlternative.trim().toLowerCase() ===
-                      textAlternative!.trim().toLowerCase()
-                )
-            ) === null
-        )
-      );
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: {
+            holds: some(
+              getTextAlternative(target, document, device),
+              textAlternative =>
+                iframes.find(
+                  found =>
+                    found !== target &&
+                    getAttribute(found, "src") !==
+                      getAttribute(target, "src") &&
+                    some(
+                      getTextAlternative(found, document, device),
+                      otherTextAlternative =>
+                        otherTextAlternative !== null &&
+                        otherTextAlternative.trim().toLowerCase() ===
+                          textAlternative!.trim().toLowerCase()
+                    )
+                ) === undefined
+            )
+          }
+        };
+      }
+    };
   }
 };
 

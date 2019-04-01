@@ -18,9 +18,6 @@ export type BrowserName =
   | "opera"
   | "safari";
 
-/**
- * @internal
- */
 export const Browsers: { [P in BrowserName]: Browser } = {
   chrome: {
     name: "Chrome",

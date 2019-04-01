@@ -27,7 +27,11 @@ export const rules: { [rule: string]: Rule.RuleModule } = {};
 for (const key of keys) {
   const rule = Rules[key];
 
-  rules[key.toLowerCase().replace("_", "-")] = {
+  rules[
+    String(key)
+      .toLowerCase()
+      .replace("_", "-")
+  ] = {
     create: context => {
       return {
         JSXElement(node: unknown) {

@@ -15,23 +15,34 @@ function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
 export const SIA_R20: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r20.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { document }) => {
+  evaluate: ({ document }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(document, () =>
-      querySelectorAll(document, document, isElement)
-        .map(element =>
-          Array.from(element.attributes).filter(attribute =>
-            attribute.localName.startsWith("aria-")
+    return {
+      applicability: () => {
+        return querySelectorAll(document, document, isElement)
+          .map(element =>
+            Array.from(element.attributes).filter(attribute =>
+              attribute.localName.startsWith("aria-")
+            )
           )
-        )
-        .reduce(concat, [])
-    );
+          .reduce(concat, [])
+          .map(attribute => {
+            return {
+              applicable: true,
+              aspect: document,
+              target: attribute
+            };
+          });
+      },
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, attributeNames.has(target.localName));
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: attributeNames.has(target.localName) }
+        };
+      }
+    };
   }
 };

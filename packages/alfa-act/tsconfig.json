@@ -7,10 +7,12 @@
     "src/index.ts",
     "src/sort-rules.ts",
     "src/to-json.ts",
-    "src/types.ts",
-    "test/helpers/rules.ts"
+    "src/types.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-compatibility"
+    },
     {
       "path": "../alfa-device"
     },

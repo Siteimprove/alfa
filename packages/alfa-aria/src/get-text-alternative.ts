@@ -100,7 +100,7 @@ export function getTextAlternative(
   }
 
   return (
-    BrowserSpecific.of(null, [
+    BrowserSpecific.of<Option<string>>(null, [
       "chrome",
       "edge",
       "firefox",
@@ -328,7 +328,9 @@ function getHtmlTextAlternative(
   if (label !== null) {
     return getTextAlternative(label, context, device, visited, {
       recursing: true,
-      labelling: true
+      labelling: true,
+      // https://github.com/w3c/accname/issues/48
+      referencing: options.referencing
     });
   }
 
@@ -528,6 +530,8 @@ function getSubtreeTextAlternative(
         getTextAlternative(child, context, device, visited, {
           recursing: true,
           descending: true,
+          // https://github.com/w3c/accname/issues/48
+          referencing: options.referencing,
           // Pass down the labelling flag as the current call may have
           // been initiated from a labelling element; the subtree will
           // therefore also have to be considered part of the labelling

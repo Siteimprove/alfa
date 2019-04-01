@@ -1,6 +1,12 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { Attributes, getRole, Role, Roles } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import {
+  Attributes,
+  getRole,
+  isExposed,
+  Role,
+  Roles
+} from "@siteimprove/alfa-aria";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -11,11 +17,9 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+import { concat, values } from "@siteimprove/alfa-util";
 
-function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
-  return a.concat(b);
-}
+const { map } = BrowserSpecific;
 
 export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r18.html",
@@ -23,47 +27,65 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
     { id: "wcag:parsing", partial: true },
     { id: "wcag:name-role-value", partial: true }
   ],
-  definition: (applicability, expectations, { device, document }) => {
+  evaluate: ({ device, document }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)
     );
 
-    applicability(document, () =>
-      querySelectorAll(document, document, isElement)
-        .map(element =>
-          Array.from(element.attributes).filter(attribute =>
-            attributeNames.has(attribute.localName)
+    return {
+      applicability: () => {
+        return querySelectorAll(document, document, isElement, {
+          composed: true
+        })
+          .map(element =>
+            Array.from(element.attributes).filter(attribute =>
+              attributeNames.has(attribute.localName)
+            )
           )
-        )
-        .reduce(concat, [])
-    );
+          .reduce(concat, [])
+          .map(attribute => {
+            const owner = getOwnerElement(attribute, document)!;
 
-    expectations((aspect, target, expectation) => {
-      const owner = getOwnerElement(target, document)!;
+            return map(isExposed(owner, document, device), isExposed => {
+              return {
+                applicable: isExposed,
+                aspect: document,
+                target: attribute
+              };
+            });
+          });
+      },
 
-      const globalAttributeNames = new Set(
-        Roles.Roletype.supported!(owner, document, device).map(
-          attribute => attribute.name
-        )
-      );
+      expectations: (aspect, target) => {
+        const owner = getOwnerElement(target, document)!;
 
-      expectation(
-        1,
-        some(getRole(owner, document, device), role => {
+        const globalAttributeNames = new Set(
+          Roles.Roletype.supported!(owner, document, device).map(
+            attribute => attribute.name
+          )
+        );
+
+        return map(getRole(owner, document, device), role => {
+          let isAllowed: boolean;
+
           if (role !== null) {
-            return isAllowedAttribute(
+            isAllowed = isAllowedAttribute(
               owner,
               document,
               device,
               target.localName,
               role
             );
+          } else {
+            isAllowed = globalAttributeNames.has(target.localName);
           }
 
-          return globalAttributeNames.has(target.localName);
-        })
-      );
-    });
+          return {
+            1: { holds: isAllowed }
+          };
+        });
+      }
+    };
   }
 };
 

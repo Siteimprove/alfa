@@ -1,7 +1,9 @@
 import { expandBrowsers } from "./expand-browsers";
+import { filter } from "./filter";
 import { map } from "./map";
 import { reduce } from "./reduce";
 import { BrowserName, BrowserQuery, VersionSet } from "./types";
+import { unwrap } from "./unwrap";
 
 /**
  * @internal
@@ -10,9 +12,19 @@ export type ValueList<T> = ReadonlyArray<
   Readonly<{ value: T; browsers: Map<BrowserName, VersionSet> }>
 >;
 
+/**
+ * This class is used for representing browser specific values upon which
+ * computations can be performed. A browser specific value is not a single value
+ * but rather a set of values that each apply to a different set of browsers.
+ * Consumers of browser specific values need however not worry about whether a
+ * browser specific value takes on two or a hundred concrete values; they simply
+ * treat it as just a single value.
+ */
 export class BrowserSpecific<T> {
+  public static filter = filter;
   public static map = map;
   public static reduce = reduce;
+  public static unwrap = unwrap;
 
   public static of<T>(
     value: T,

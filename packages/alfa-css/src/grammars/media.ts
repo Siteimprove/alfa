@@ -12,6 +12,7 @@ import {
 import { Units } from "../units";
 import { Value, Values } from "../values";
 
+const { isArray } = Array;
 const { assign } = Object;
 
 /**
@@ -85,6 +86,7 @@ function mediaQuery(stream: Stream<Token>): MediaQuery | null {
   }
 
   stream.accept(token => token.type !== TokenType.Comma);
+
   return null;
 }
 
@@ -330,7 +332,11 @@ function mediaFeature(stream: Stream<Token>): MediaFeature | null {
   return null;
 }
 
-type Production<T extends Token> = Lang.Production<Token, MediaQuery, T>;
+type Production<T extends Token> = Lang.Production<
+  Token,
+  MediaQuery | Array<MediaQuery>,
+  T
+>;
 
 const ident: Production<Tokens.Ident> = {
   token: TokenType.Ident,
@@ -348,7 +354,29 @@ const parenthesis: Production<Tokens.Parenthesis> = {
   }
 };
 
-export const MediaGrammar: Grammar<Token, MediaQuery> = new Grammar(
-  [skip(TokenType.Whitespace), ident, parenthesis],
+const comma: Production<Tokens.Comma> = {
+  token: TokenType.Comma,
+  infix: (token, stream, expression, left) => {
+    const right = expression();
+
+    if (!isArray(left)) {
+      left = [left];
+    }
+
+    if (isArray(right)) {
+      left.push(...right);
+    } else if (right !== null) {
+      left.push(right);
+    }
+
+    return left;
+  }
+};
+
+export const MediaGrammar: Grammar<
+  Token,
+  MediaQuery | Array<MediaQuery>
+> = new Grammar(
+  [skip(TokenType.Whitespace), ident, parenthesis, comma],
   () => null
 );

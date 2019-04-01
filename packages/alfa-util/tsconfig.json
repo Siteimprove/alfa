@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/array/concat.ts",
+    "src/array/filter.ts",
     "src/array/find.ts",
     "src/array/group-by.ts",
     "src/array/index-of.ts",

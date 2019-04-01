@@ -2,7 +2,7 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
   hasTextAlternative,
-  isVisible,
+  isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
 import { some } from "@siteimprove/alfa-compatibility";
@@ -22,22 +22,31 @@ import {
 export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r12.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isButton(node, document, device) &&
-          isVisible(node, document, device) &&
-          getInputType(node) !== InputType.Image
-      )
-    );
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return (
+            isElement(node) &&
+            isButton(node, document, device) &&
+            some(isExposed(node, document, device)) &&
+            getInputType(node) !== InputType.Image
+          );
+        }).map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: element
+          };
+        });
+      },
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasTextAlternative(target, document, device));
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: hasTextAlternative(target, document, device) }
+        };
+      }
+    };
   }
 };
 

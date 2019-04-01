@@ -1,4 +1,4 @@
-import { audit, isResult, Outcome, Rule } from "@siteimprove/alfa-act";
+import { audit, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Device, getDefaultDevice } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -11,7 +11,7 @@ import {
   serialize
 } from "@siteimprove/alfa-dom";
 import { highlight, mark } from "@siteimprove/alfa-highlight";
-import { values } from "@siteimprove/alfa-util";
+import { keys, values } from "@siteimprove/alfa-util";
 import { Rules } from "@siteimprove/alfa-wcag";
 
 const rules = values(Rules);
@@ -62,11 +62,11 @@ export class Assertion {
           childNodes: [documentType, this.target]
         };
 
-    const results = audit({ device, document }, [
+    const { results } = audit({ device, document }, [
       (rule as unknown) as Rule<Aspect, Target>
     ]);
 
-    for (const result of results.filter(isResult)) {
+    for (const result of results) {
       if (result.outcome === Outcome.Inapplicable) {
         continue;
       }
@@ -74,9 +74,15 @@ export class Assertion {
       if (result.outcome === Outcome.Failed) {
         const { expectations, aspect, target } = result;
 
-        const { message } = values(expectations).find(
-          expectation => expectation.holds === false
-        )!;
+        const failure = keys(expectations).findIndex(
+          key => expectations[key].holds === false
+        );
+
+        let { message } = expectations[failure];
+
+        if (message === undefined) {
+          message = `Expectation ${failure} does not hold`;
+        }
 
         throw new AssertionError(message, aspect, target);
       }

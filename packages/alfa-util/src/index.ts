@@ -2,6 +2,7 @@ export * from "./option";
 export * from "./url";
 
 export * from "./array/concat";
+export * from "./array/filter";
 export * from "./array/find";
 export * from "./array/group-by";
 export * from "./array/index-of";

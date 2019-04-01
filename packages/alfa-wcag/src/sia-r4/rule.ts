@@ -11,18 +11,30 @@ import { isDocumentElement } from "../helpers/is-document-element";
 export const SIA_R4: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r4.html",
   requirements: [{ id: "wcag:language-of-page", partial: true }],
-  definition: (applicability, expectations, { document }) => {
-    applicability(document, () =>
-      querySelectorAll(
-        document,
-        document,
-        node => isElement(node) && isDocumentElement(node, document),
-        { composed: true }
-      )
-    );
+  evaluate: ({ document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(
+          document,
+          document,
+          node => {
+            return isElement(node) && isDocumentElement(node, document);
+          },
+          { composed: true }
+        ).map(element => {
+          return {
+            applicable: true,
+            aspect: document,
+            target: element
+          };
+        });
+      },
 
-    expectations((aspect, target, expectation) => {
-      expectation(1, hasLanguageAttribute(target));
-    });
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: hasLanguageAttribute(target) }
+        };
+      }
+    };
   }
 };

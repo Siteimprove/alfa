@@ -1,24 +1,4 @@
-import {
-  Aspect,
-  Atomic,
-  Composite,
-  Question,
-  Result,
-  Rule,
-  Target
-} from "./types";
-
-export function isResult<A extends Aspect, T extends Target>(
-  input: Result<A, T> | Question<A, T>
-): input is Result<A, T> {
-  return "outcome" in input;
-}
-
-export function isQuestion<A extends Aspect, T extends Target>(
-  input: Result<A, T> | Question<A, T>
-): input is Question<A, T> {
-  return !isResult(input);
-}
+import { Aspect, Atomic, Composite, Rule, Target } from "./types";
 
 export function isAtomic<A extends Aspect, T extends Target>(
   rule: Rule<A, T>

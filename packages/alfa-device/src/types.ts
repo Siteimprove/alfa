@@ -1,11 +1,11 @@
 export const enum Orientation {
-  Portrait,
-  Landscape
+  Portrait = "portrait",
+  Landscape = "landscape"
 }
 
 export const enum Scan {
-  Interlace,
-  Progressive
+  Interlace = "interlace",
+  Progressive = "progressive"
 }
 
 export interface Viewport {
@@ -38,9 +38,9 @@ export interface Display {
 }
 
 export const enum DeviceType {
-  Print,
-  Screen,
-  Speech
+  Print = "print",
+  Screen = "screen",
+  Speech = "speech"
 }
 
 export interface Device {

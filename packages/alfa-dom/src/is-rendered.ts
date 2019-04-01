@@ -1,7 +1,8 @@
 import { Device } from "@siteimprove/alfa-device";
 import { getParentElement } from "./get-parent-element";
 import { getCascadedStyle } from "./get-style";
-import { Element, Node } from "./types";
+import { isElement } from "./guards";
+import { Element, Node, Text } from "./types";
 
 /**
  * Given an element and a context, check if the element is being rendered
@@ -18,19 +19,27 @@ import { Element, Node } from "./types";
  * // => false
  */
 export function isRendered(
-  element: Element,
+  node: Element | Text,
   context: Node,
   device: Device
 ): boolean {
-  for (
-    let next: Element | null = element;
-    next !== null;
-    next = getParentElement(next, context, { flattened: true })
-  ) {
-    const { display } = getCascadedStyle(next, context, device);
+  if (isElement(node)) {
+    for (
+      let next: Element | null = node;
+      next !== null;
+      next = getParentElement(next, context, { flattened: true })
+    ) {
+      const { display } = getCascadedStyle(next, context, device);
 
-    if (display !== undefined && display.value === "none") {
-      return false;
+      if (display !== undefined && display.value === "none") {
+        return false;
+      }
+    }
+  } else {
+    const parentElement = getParentElement(node, context, { flattened: true });
+
+    if (parentElement !== null) {
+      return isRendered(parentElement, context, device);
     }
   }
 

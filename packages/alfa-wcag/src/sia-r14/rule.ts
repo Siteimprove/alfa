@@ -5,7 +5,7 @@ import {
   getTextAlternative,
   hasNameFrom
 } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -13,48 +13,75 @@ import {
   getElementNamespace,
   hasAttribute,
   isElement,
-  isRendered,
   isText,
+  isVisible,
   Namespace,
   Node,
   querySelectorAll,
   traverseNode
 } from "@siteimprove/alfa-dom";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r14.html",
   requirements: [{ id: "wcag:label-in-name", partial: true }],
-  definition: (applicability, expectations, { device, document }) => {
-    applicability(document, () =>
-      querySelectorAll<Element>(
-        document,
-        document,
-        node =>
-          isElement(node) &&
-          isHtmlElement(node, document) &&
-          isWidget(node, document, device) &&
-          isContentLabelable(node, document, device) &&
-          hasVisibleTextContent(node, document, device) &&
-          (hasAttribute(node, "aria-label") ||
-            hasAttribute(node, "aria-labelledby"))
-      )
-    );
+  evaluate: ({ device, document }) => {
+    return {
+      applicability: () => {
+        return querySelectorAll<Element>(document, document, node => {
+          return (
+            isElement(node) &&
+            isHtmlElement(node, document) &&
+            hasVisibleTextContent(node, document, device) &&
+            (hasAttribute(node, "aria-label") ||
+              hasAttribute(node, "aria-labelledby"))
+          );
+        }).map(element => {
+          return map(isWidget(element, document, device), isWidget => {
+            if (!isWidget) {
+              return {
+                applicable: false,
+                aspect: document,
+                target: element
+              };
+            }
 
-    expectations((aspect, target, expectation) => {
-      const visibleTextContent = normalize(
-        getVisibleTextContent(target, document, device)
-      );
+            return map(
+              isContentLabelable(element, document, device),
+              isContentLabelable => {
+                return {
+                  applicable: isContentLabelable,
+                  aspect: document,
+                  target: element
+                };
+              }
+            );
+          });
+        });
+      },
 
-      expectation(
-        1,
-        some(
+      expectations: (aspect, target) => {
+        const visibleTextContent = getVisibleTextContent(
+          target,
+          document,
+          device
+        );
+
+        return map(
           getTextAlternative(target, document, device),
-          textAlternative =>
-            textAlternative !== null &&
-            normalize(textAlternative).includes(visibleTextContent)
-        )
-      );
-    });
+          textAlternative => {
+            return {
+              1: {
+                holds:
+                  textAlternative !== null &&
+                  normalize(textAlternative).includes(visibleTextContent)
+              }
+            };
+          }
+        );
+      }
+    };
   }
 };
 
@@ -62,7 +89,7 @@ function normalize(input: string): string {
   return input
     .trim()
     .toLowerCase()
-    .replace(/\s+/, " ");
+    .replace(/\s+/g, " ");
 }
 
 function getVisibleTextContent(
@@ -77,23 +104,17 @@ function getVisibleTextContent(
     context,
     {
       enter(node) {
-        if (isElement(node) && isRendered(node, context, device)) {
-          const { childNodes } = node;
-
-          for (let i = 0, n = childNodes.length; i < n; i++) {
-            const childNode = childNodes[i];
-
-            if (isText(childNode)) {
-              textContent += childNode.data;
-            }
-          }
+        if (isText(node) && isVisible(node, context, device)) {
+          textContent += node.data;
         }
       }
     },
-    { flattened: true }
+    {
+      flattened: true
+    }
   );
 
-  return textContent;
+  return normalize(textContent);
 }
 
 function hasVisibleTextContent(
@@ -101,15 +122,19 @@ function hasVisibleTextContent(
   context: Node,
   device: Device
 ): boolean {
-  return getVisibleTextContent(element, context, device).trim() !== "";
+  return getVisibleTextContent(element, context, device) !== "";
 }
 
 function isHtmlElement(element: Element, context: Node): boolean {
   return getElementNamespace(element, context) === Namespace.HTML;
 }
 
-function isWidget(element: Element, context: Node, device: Device): boolean {
-  return some(
+function isWidget(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean | BrowserSpecific<boolean> {
+  return map(
     getRole(element, context, device),
     role => role !== null && role.category === Category.Widget
   );
@@ -119,8 +144,8 @@ function isContentLabelable(
   element: Element,
   context: Node,
   device: Device
-): boolean {
-  return some(
+): boolean | BrowserSpecific<boolean> {
+  return map(
     getRole(element, context, device),
     role => role !== null && hasNameFrom(role, "contents")
   );

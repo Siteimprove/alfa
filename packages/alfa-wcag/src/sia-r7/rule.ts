@@ -18,46 +18,57 @@ import { hasLanguageAttribute } from "../helpers/has-language-attribute";
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r7.html",
   requirements: [{ id: "wcag:language-of-parts", partial: true }],
-  definition: (applicability, expectations, { document }) => {
-    applicability(document, () => {
-      const body = querySelector(
-        document,
-        document,
-        node => isElement(node) && isBody(node, document)
-      );
+  evaluate: ({ document }) => {
+    return {
+      applicability: () => {
+        const body = querySelector(
+          document,
+          document,
+          node => isElement(node) && isBody(node, document)
+        );
 
-      if (body === null) {
-        return [];
+        if (body === null) {
+          return [];
+        }
+
+        return querySelectorAll<Element>(
+          body,
+          document,
+          node => isElement(node) && hasLanguageAttribute(node)
+        )
+          .map(element => {
+            const languages: Array<Attribute> = [];
+
+            const lang = getAttributeNode(element, "lang");
+
+            if (lang !== null && lang.value.trim() !== "") {
+              languages.push(lang);
+            }
+
+            const xmlLang = getAttributeNode(element, "xml:lang");
+
+            if (xmlLang !== null && xmlLang.value.trim() !== "") {
+              languages.push(xmlLang);
+            }
+
+            return languages;
+          })
+          .reduce(concat, [])
+          .map(attribute => {
+            return {
+              applicable: true,
+              aspect: document,
+              target: attribute
+            };
+          });
+      },
+
+      expectations: (aspect, target) => {
+        return {
+          1: { holds: getLanguage(target.value) !== null }
+        };
       }
-
-      return querySelectorAll<Element>(
-        body,
-        document,
-        node => isElement(node) && hasLanguageAttribute(node)
-      )
-        .map(element => {
-          const languages: Array<Attribute> = [];
-
-          const lang = getAttributeNode(element, "lang");
-
-          if (lang !== null && lang.value.trim() !== "") {
-            languages.push(lang);
-          }
-
-          const xmlLang = getAttributeNode(element, "xml:lang");
-
-          if (xmlLang !== null && xmlLang.value.trim() !== "") {
-            languages.push(xmlLang);
-          }
-
-          return languages;
-        })
-        .reduce(concat, []);
-    });
-
-    expectations((aspect, target, expectation) => {
-      expectation(1, getLanguage(target.value) !== null);
-    });
+    };
   }
 };
 

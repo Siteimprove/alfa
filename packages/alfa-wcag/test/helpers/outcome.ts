@@ -2,7 +2,6 @@ import {
   Aspect,
   AspectsFor,
   audit,
-  isResult,
   Outcome,
   Result,
   Rule,
@@ -25,7 +24,9 @@ export function outcome<A extends Aspect, T extends Target>(
     Outcome.Failed
   ];
 
-  const results = audit(aspects, [rule]).filter(result => result.rule === rule);
+  const results = audit(aspects, [rule]).results.filter(
+    result => result.rule === rule
+  );
 
   if (assert === Outcome.Inapplicable) {
     t.equal(results.length, 1, "There must only be one result");
@@ -33,7 +34,7 @@ export function outcome<A extends Aspect, T extends Target>(
     const [result] = results;
 
     t(
-      isResult(result) && result.outcome === Outcome.Inapplicable,
+      result.outcome === Outcome.Inapplicable,
       "The outcome must be inapplicable"
     );
   } else {
@@ -44,7 +45,7 @@ export function outcome<A extends Aspect, T extends Target>(
         return result.outcome === outcome;
       }
 
-      const actual = results.filter(isResult).filter(hasMatchingOutcome);
+      const actual = results.filter(hasMatchingOutcome);
 
       const expected = outcome in assert ? assert[outcome]! : [];
 
