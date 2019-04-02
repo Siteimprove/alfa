@@ -1,43 +1,79 @@
 import { Device } from "@siteimprove/alfa-device";
 import { getParentElement } from "./get-parent-element";
-import { getCascadedStyle } from "./get-style";
+import { getCascadedStyle, getComputedStyle } from "./get-style";
 import { isElement } from "./guards";
 import { isRendered } from "./is-rendered";
+import { traverseNode } from "./traverse-node";
 import { Element, Node, Text } from "./types";
+
+type VisibilityMap = WeakMap<Element, boolean>;
+
+const visibilityMaps = new WeakMap<Node, VisibilityMap>();
 
 export function isVisible(
   node: Element | Text,
   context: Node,
   device: Device
 ): boolean {
-  if (!isRendered(node, context, device)) {
-    return false;
+  let visibilityMap = visibilityMaps.get(context);
+
+  if (visibilityMap === undefined) {
+    visibilityMap = new WeakMap();
+
+    traverseNode(
+      context,
+      context,
+      {
+        enter(node, parentNode) {
+          if (isElement(node)) {
+            if (!isRendered(node, context, device)) {
+              visibilityMap!.set(node, false);
+            } else {
+              const { opacity } = getCascadedStyle(node, context, device);
+
+              if (opacity !== undefined && opacity.value === 0) {
+                visibilityMap!.set(node, false);
+              } else if (parentNode !== null && isElement(parentNode)) {
+                const isParentVisible = visibilityMap!.get(parentNode);
+
+                if (isParentVisible === false) {
+                  visibilityMap!.set(node, false);
+                }
+              }
+            }
+          }
+        },
+        exit(node) {
+          if (isElement(node)) {
+            const { visibility } = getComputedStyle(node, context, device);
+
+            if (visibility !== undefined) {
+              if (
+                visibility.value === "hidden" ||
+                visibility.value === "collapse"
+              ) {
+                visibilityMap!.set(node, false);
+              }
+            }
+          }
+        }
+      },
+      {
+        flattened: true
+      }
+    );
+
+    visibilityMaps.set(context, visibilityMap);
   }
 
   if (isElement(node)) {
-    for (
-      let next: Element | null = node;
-      next !== null;
-      next = getParentElement(next, context, { flattened: true })
-    ) {
-      const { opacity, visibility } = getCascadedStyle(next, context, device);
+    return visibilityMap.get(node) !== false;
+  }
 
-      if (opacity !== undefined && opacity.value === 0) {
-        return false;
-      }
+  const parentElement = getParentElement(node, context, { flattened: true });
 
-      if (visibility !== undefined) {
-        if (visibility.value === "hidden" || visibility.value === "collapse") {
-          return false;
-        }
-      }
-    }
-  } else {
-    const parentElement = getParentElement(node, context, { flattened: true });
-
-    if (parentElement !== null) {
-      return isVisible(parentElement, context, device);
-    }
+  if (parentElement !== null) {
+    return visibilityMap.get(parentElement) !== false;
   }
 
   return true;
