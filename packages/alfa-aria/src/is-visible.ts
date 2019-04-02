@@ -2,40 +2,83 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   getAttribute,
-  getCascadedStyle,
+  getComputedStyle,
   getParentElement,
   isElement,
+  isRendered,
   Node,
-  Text
+  Text,
+  traverseNode
 } from "@siteimprove/alfa-dom";
+
+type VisibilityMap = WeakMap<Element, boolean>;
+
+const visibilityMaps = new WeakMap<Node, VisibilityMap>();
 
 export function isVisible(
   node: Element | Text,
   context: Node,
   device: Device
 ): boolean {
-  if (isElement(node)) {
-    if (getAttribute(node, "aria-hidden") === "true") {
-      return false;
-    }
+  let visibilityMap = visibilityMaps.get(context);
 
-    const { display, visibility } = getCascadedStyle(node, context, device);
+  if (visibilityMap === undefined) {
+    visibilityMap = new WeakMap();
 
-    if (display !== undefined && display.value === "none") {
-      return false;
-    }
+    traverseNode(
+      context,
+      context,
+      {
+        enter(node, parentNode) {
+          if (isElement(node)) {
+            if (!isRendered(node, context, device)) {
+              visibilityMap!.set(node, false);
+            } else {
+              const hidden = getAttribute(node, "aria-hidden");
 
-    if (visibility !== undefined) {
-      if (visibility.value === "hidden" || visibility.value === "collapse") {
-        return false;
+              if (hidden === "true") {
+                visibilityMap!.set(node, false);
+              } else if (parentNode !== null && isElement(parentNode)) {
+                const isParentVisible = visibilityMap!.get(parentNode);
+
+                if (isParentVisible === false) {
+                  visibilityMap!.set(node, false);
+                }
+              }
+            }
+          }
+        },
+        exit(node) {
+          if (isElement(node)) {
+            const { visibility } = getComputedStyle(node, context, device);
+
+            if (visibility !== undefined) {
+              if (
+                visibility.value === "hidden" ||
+                visibility.value === "collapse"
+              ) {
+                visibilityMap!.set(node, false);
+              }
+            }
+          }
+        }
+      },
+      {
+        flattened: true
       }
-    }
+    );
+
+    visibilityMaps.set(context, visibilityMap);
+  }
+
+  if (isElement(node)) {
+    return visibilityMap.get(node) !== false;
   }
 
   const parentElement = getParentElement(node, context, { flattened: true });
 
   if (parentElement !== null) {
-    return isVisible(parentElement, context, device);
+    return visibilityMap.get(parentElement) !== false;
   }
 
   return true;
