@@ -45,15 +45,9 @@ export interface StyleEntry<T> {
 }
 
 export class StyleTree<T extends object> {
-  // private readonly root: StyleTreeEntry;
-  // private readonly device: Device;
-
   private readonly styles = new WeakMap<T, Style>();
 
   public constructor(root: StyleEntry<T>, device: Device) {
-    // this.root = root;
-    // this.device = device;
-
     visit(root, null, (entry, parentEntry) => {
       const { declarations } = entry;
 
