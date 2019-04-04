@@ -43,6 +43,7 @@ export * from "./is-focusable";
 export * from "./is-labelable";
 export * from "./is-rendered";
 export * from "./is-tabbable";
+export * from "./is-visible";
 export * from "./matches";
 export * from "./query-selector";
 export * from "./rule-tree";

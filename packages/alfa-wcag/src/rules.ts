@@ -36,3 +36,4 @@ export { SIA_R35 } from "./sia-r35/rule";
 export { SIA_R36 } from "./sia-r36/rule";
 export { SIA_R37 } from "./sia-r37/rule";
 export { SIA_R38 } from "./sia-r38/rule";
+export { SIA_R39 } from "./sia-r39/rule";

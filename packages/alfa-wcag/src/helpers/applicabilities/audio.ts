@@ -7,7 +7,7 @@ import {
   Element,
   getElementNamespace,
   isElement,
-  isRendered,
+  isVisible,
   Namespace,
   Node,
   querySelectorAll
@@ -60,7 +60,7 @@ export const Audio: (
       return { applicable: null, aspect: document, target: element };
     }
 
-    if (!isElement(playButton) || !isRendered(playButton, document, device)) {
+    if (!isElement(playButton) || !isVisible(playButton, document, device)) {
       return { applicable: false, aspect: document, target: element };
     }
 

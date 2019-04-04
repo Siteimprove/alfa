@@ -129,33 +129,11 @@ export function matches(
   }
 
   if (isArray(selector)) {
-    for (let i = 0, n = selector.length; i < n; i++) {
-      const root = selector[i];
-
-      if (matches(element, context, root, options, root)) {
-        return true;
-      }
-    }
-
-    return false;
+    return matchesList(element, context, selector, options);
   }
 
-  const { namespaces } = options;
-
-  // If selector is not targetting Type or Attribute, then abort if it does not
-  // match the default namespace.
-  if (
-    selector.type !== SelectorType.TypeSelector &&
-    selector.type !== SelectorType.AttributeSelector &&
-    namespaces !== undefined
-  ) {
-    const namespaceDefault = namespaces.get(null);
-    if (
-      namespaceDefault !== undefined &&
-      getElementNamespace(element, context) !== namespaceDefault
-    ) {
-      return false;
-    }
+  if (!matchesDefaultNamespace(element, context, selector, options)) {
+    return false;
   }
 
   if (root === null) {
@@ -187,6 +165,59 @@ export function matches(
     case SelectorType.PseudoElementSelector:
       return matchesPseudoElement(element, context, selector, options, root);
   }
+}
+
+/**
+ * @see https://www.w3.org/TR/selectors/#selector-list
+ */
+function matchesList(
+  element: Element,
+  context: Node,
+  selectors: Array<Selector>,
+  options: MatchesOptions
+): boolean {
+  for (let i = 0, n = selectors.length; i < n; i++) {
+    const root = selectors[i];
+
+    if (matches(element, context, root, options, root)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function matchesDefaultNamespace(
+  element: Element,
+  context: Node,
+  selector: Selector,
+  options: MatchesOptions
+): boolean {
+  switch (selector.type) {
+    // Type and attribute selector matching handles namespace checking on its
+    // own as these selectors can have non-default namespaces assigned.
+    case SelectorType.TypeSelector:
+    case SelectorType.AttributeSelector:
+      break;
+
+    // For the remaning selectors, check that the element being matched exist
+    // in the default namespace if specified.
+    default:
+      const { namespaces } = options;
+
+      if (namespaces !== undefined) {
+        const namespace = namespaces.get(null);
+
+        if (
+          namespace !== undefined &&
+          namespace !== getElementNamespace(element, context)
+        ) {
+          return false;
+        }
+      }
+  }
+
+  return true;
 }
 
 /**
@@ -624,6 +655,7 @@ function matchesPseudoClass(
       );
     }
 
+    // https://drafts.csswg.org/css-scoping/#host-selector
     case "host-context": {
       // Do not allow prefix (e.g. "div:host")
       if (root !== selector) {
@@ -713,7 +745,9 @@ function matchesPseudoElement(
 }
 
 /**
- * Check if a selector can be rejected based on an ancestor filter.
+ * Check if a selector can be rejected based on an ancestor filter. As this is
+ * the critical path of selector matching, make sure to observe proper care when
+ * modifying!
  */
 function canReject(selector: Selector, filter: AncestorFilter): boolean {
   switch (selector.type) {
@@ -723,6 +757,8 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
       return !filter.matches(selector);
 
     case SelectorType.CompoundSelector:
+      // Compound selectors are right-leaning, so recurse to the left first as
+      // it is likely the shortest branch.
       return (
         canReject(selector.left, filter) || canReject(selector.right, filter)
       );
@@ -733,6 +769,8 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
         combinator === SelectorCombinator.Descendant ||
         combinator === SelectorCombinator.DirectDescendant
       ) {
+        // Relative selectors are left-leaning, so recurse to the right first as
+        // it is likely the shortest branch.
         return (
           canReject(selector.right, filter) || canReject(selector.left, filter)
         );

@@ -1,15 +1,10 @@
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Element,
-  getAttribute,
-  getComputedStyle,
-  getParentElement,
-  isElement,
-  isRendered,
-  Node,
-  Text,
-  traverseNode
-} from "@siteimprove/alfa-dom";
+import { getParentElement } from "./get-parent-element";
+import { getCascadedStyle, getComputedStyle } from "./get-style";
+import { isElement } from "./guards";
+import { isRendered } from "./is-rendered";
+import { traverseNode } from "./traverse-node";
+import { Element, Node, Text } from "./types";
 
 type VisibilityMap = WeakMap<Element, boolean>;
 
@@ -34,9 +29,9 @@ export function isVisible(
             if (!isRendered(node, context, device)) {
               visibilityMap!.set(node, false);
             } else {
-              const hidden = getAttribute(node, "aria-hidden");
+              const { opacity } = getCascadedStyle(node, context, device);
 
-              if (hidden === "true") {
+              if (opacity !== undefined && opacity.value === 0) {
                 visibilityMap!.set(node, false);
               } else if (parentNode !== null && isElement(parentNode)) {
                 const isParentVisible = visibilityMap!.get(parentNode);

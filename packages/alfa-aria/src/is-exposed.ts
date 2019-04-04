@@ -24,13 +24,13 @@ export function isExposed(
 
       return isVisible(node, context, device);
     });
-  } else {
-    const parentElement = getParentElement(node, context, { flattened: true });
-
-    if (parentElement !== null) {
-      return isExposed(parentElement, context, device);
-    }
   }
 
-  return isVisible(node, context, device);
+  const parentElement = getParentElement(node, context, { flattened: true });
+
+  if (parentElement !== null) {
+    return isExposed(parentElement, context, device);
+  }
+
+  return true;
 }

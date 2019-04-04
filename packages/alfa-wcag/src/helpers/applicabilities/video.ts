@@ -5,7 +5,7 @@ import {
   Element,
   getElementNamespace,
   isElement,
-  isRendered,
+  isVisible,
   Namespace,
   Node,
   querySelector,
@@ -74,7 +74,7 @@ export const Video: (
     }
 
     return {
-      applicable: isRendered(element, document, device),
+      applicable: isVisible(element, document, device),
       aspect: document,
       target: element
     };

@@ -5,7 +5,7 @@ import {
   Element,
   getAttribute,
   isElement,
-  isFocusable,
+  isTabbable,
   Node,
   querySelector,
   querySelectorAll
@@ -13,7 +13,10 @@ import {
 
 export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r17.html",
-  requirements: [{ id: "wcag:name-role-value", partial: true }],
+  requirements: [
+    { id: "wcag:info-and-relationships", partial: true },
+    { id: "wcag:name-role-value", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
@@ -33,15 +36,15 @@ export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
 
       expectations: (aspect, target) => {
         return {
-          1: { holds: !isFocusable(target, document, device) },
-          2: { holds: !hasFocusableDescendants(target, document, device) }
+          1: { holds: !isTabbable(target, document, device) },
+          2: { holds: !hasTabbableDescendants(target, document, device) }
         };
       }
     };
   }
 };
 
-function hasFocusableDescendants(
+function hasTabbableDescendants(
   element: Element,
   context: Node,
   device: Device
@@ -50,10 +53,16 @@ function hasFocusableDescendants(
     querySelector(
       element,
       context,
-      node =>
-        node !== element &&
-        isElement(node) &&
-        isFocusable(node, context, device)
+      node => {
+        return (
+          node !== element &&
+          isElement(node) &&
+          isTabbable(node, context, device)
+        );
+      },
+      {
+        flattened: true
+      }
     ) !== null
   );
 }
