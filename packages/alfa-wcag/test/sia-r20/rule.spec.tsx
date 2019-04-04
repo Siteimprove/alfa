@@ -7,7 +7,7 @@ import { SIA_R20 } from "../../src/sia-r20/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R20 passes when aria attributes specified is defined in ARIA 1.1", t => {
+test("Passes when aria attributes specified is defined in ARIA 1.1", t => {
   const div = (
     <div role="alert" aria-live="assertive">
       Your session will expire in 60 seconds.
@@ -26,7 +26,7 @@ test("SIA-R20 passes when aria attributes specified is defined in ARIA 1.1", t =
   );
 });
 
-test("SIA-R20 fails when aria attributes specified is not defined in ARIA 1.1", t => {
+test("Fails when aria attributes specified is not defined in ARIA 1.1", t => {
   const div = (
     <div
       contenteditable
@@ -51,7 +51,7 @@ test("SIA-R20 fails when aria attributes specified is not defined in ARIA 1.1", 
   );
 });
 
-test("SIA-R19 is inapplicable when an element does not have any aria attributes", t => {
+test("Is inapplicable when an element does not have any aria attributes", t => {
   const div = <div>Some Content</div>;
   const document = documentFromNodes([div]);
 

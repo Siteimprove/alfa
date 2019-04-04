@@ -8,9 +8,8 @@ import { SIA_R21 } from "../../src/sia-r21/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R21 passes when role attributes have valid values", t => {
+test("Passes when role attributes have valid values", t => {
   const img = <img role="presentation xyz" src="" />;
-
   const document = documentFromNodes([img]);
 
   outcome(
@@ -23,9 +22,8 @@ test("SIA-R21 passes when role attributes have valid values", t => {
   );
 });
 
-test("SIA-R21 fails when role attributes have invalid values", t => {
+test("Fails when role attributes have invalid values", t => {
   const input = <input type="text" role="invalid role" />;
-
   const document = documentFromNodes([input]);
 
   outcome(
@@ -38,9 +36,8 @@ test("SIA-R21 fails when role attributes have invalid values", t => {
   );
 });
 
-test("SIA-R21 is inapplicable when element does not have role attribute.", t => {
+test("Is inapplicable when element does not have role attribute.", t => {
   const div = <div>Some Content</div>;
-
   const document = documentFromNodes([div]);
 
   outcome(

@@ -8,7 +8,7 @@ import { SIA_R26 } from "../../src/sia-r26/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R26 passes when non-streaming silent video has a media alternative for text on the page", t => {
+test("Passes when non-streaming silent video has a media alternative for text on the page", t => {
   const video = (
     <video
       src="../test-assets/perspective-video/perspective-video-with-captions-silent.mp4"
@@ -29,40 +29,38 @@ test("SIA-R26 passes when non-streaming silent video has a media alternative for
     </div>
   ]);
 
-  const answers = [
-    {
-      rule: SIA_R26,
-      expectation: 1,
-      aspect: document,
-      target: video,
-      answer: true
-    },
-    {
-      rule: SIA_R26,
-      expectation: 2,
-      aspect: document,
-      target: video,
-      answer: true
-    },
-    {
-      rule: SIA_R26,
-      expectation: 3,
-      aspect: document,
-      target: video,
-      answer: true
-    }
-  ];
-
   outcome(
     t,
     SIA_R26,
     { document, device: getDefaultDevice() },
     { passed: [video] },
-    answers
+    [
+      {
+        rule: SIA_R26,
+        expectation: 1,
+        aspect: document,
+        target: video,
+        answer: true
+      },
+      {
+        rule: SIA_R26,
+        expectation: 2,
+        aspect: document,
+        target: video,
+        answer: true
+      },
+      {
+        rule: SIA_R26,
+        expectation: 3,
+        aspect: document,
+        target: video,
+        answer: true
+      }
+    ]
   );
 });
 
-test("SIA-R26 fails when non-streaming silent video has no media alternative for text on the page", t => {
+test("Fails when non-streaming silent video has no media alternative for text on the page", t => {
   const video = (
     <video controls>
       <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
@@ -71,80 +69,77 @@ test("SIA-R26 fails when non-streaming silent video has no media alternative for
   );
 
   const document = documentFromNodes([video]);
-
-  const answers = [
-    {
-      rule: SIA_R26,
-      expectation: 1,
-      aspect: document,
-      target: video,
-      answer: false
-    },
-    {
-      rule: SIA_R26,
-      expectation: 2,
-      aspect: document,
-      target: video,
-      answer: false
-    },
-    {
-      rule: SIA_R26,
-      expectation: 3,
-      aspect: document,
-      target: video,
-      answer: false
-    }
-  ];
 
   outcome(
     t,
     SIA_R26,
     { document, device: getDefaultDevice() },
     { failed: [video] },
-    answers
+    [
+      {
+        rule: SIA_R26,
+        expectation: 1,
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R26,
+        expectation: 2,
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R26,
+        expectation: 3,
+        aspect: document,
+        target: video,
+        answer: false
+      }
+    ]
   );
 });
 
-test("SIA-R26 is inapplicable when element is not a video element", t => {
+test("Is inapplicable when element is not a video element", t => {
   const img = (
     <img src="../test-assets/perspective-video/perspective-video-with-captions.mp4" />
   );
-  const document = documentFromNodes([img]);
 
-  const answers = [
-    {
-      rule: SIA_R26,
-      expectation: 1,
-      aspect: document,
-      target: img,
-      answer: false
-    },
-    {
-      rule: SIA_R26,
-      expectation: 1,
-      aspect: document,
-      target: img,
-      answer: false
-    },
-    {
-      rule: SIA_R26,
-      expectation: 1,
-      aspect: document,
-      target: img,
-      answer: false
-    }
-  ];
+  const document = documentFromNodes([img]);
 
   outcome(
     t,
     SIA_R26,
     { document, device: getDefaultDevice() },
     Outcome.Inapplicable,
-    answers
+    [
+      {
+        rule: SIA_R26,
+        expectation: 1,
+        aspect: document,
+        target: img,
+        answer: false
+      },
+      {
+        rule: SIA_R26,
+        expectation: 1,
+        aspect: document,
+        target: img,
+        answer: false
+      },
+      {
+        rule: SIA_R26,
+        expectation: 1,
+        aspect: document,
+        target: img,
+        answer: false
+      }
+    ]
   );
 });
 
-test("SIA-R26 can't tell when no answers are passed", t => {
+test("Cannot tell when no answers are passed", t => {
   const video = (
     <video controls>
       <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
@@ -158,7 +153,6 @@ test("SIA-R26 can't tell when no answers are passed", t => {
     t,
     SIA_R26,
     { document, device: getDefaultDevice() },
-    { cantTell: [video] },
-    []
+    { cantTell: [video] }
   );
 });

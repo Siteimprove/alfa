@@ -33,7 +33,7 @@ export function outcome<A extends Aspect, T extends Target>(
     Outcome.CantTell
   ];
 
-  const results = audit(aspects, [rule]).results.filter(
+  const results = audit(aspects, [rule], answers).results.filter(
     result => result.rule === rule
   );
 

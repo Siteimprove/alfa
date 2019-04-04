@@ -8,7 +8,7 @@ import { SIA_R8 } from "../../src/sia-r8/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R8 passes when a input has an accessible name", t => {
+test("Passes when a input has an accessible name", t => {
   const input = <input type="radio" aria-label="foo" />;
   const document = documentFromNodes([input]);
 
@@ -20,7 +20,7 @@ test("SIA-R8 passes when a input has an accessible name", t => {
   );
 });
 
-test("SIA-R8 fails when a input has no accessible name", t => {
+test("Fails when a input has no accessible name", t => {
   const input = <input type="radio" />;
   const document = documentFromNodes([input]);
 
@@ -32,7 +32,7 @@ test("SIA-R8 fails when a input has no accessible name", t => {
   );
 });
 
-test("SIA-R8 is inapplicable when element does not have a specific role", t => {
+test("Is inapplicable when element does not have a specific role", t => {
   const div = <div />;
   const document = documentFromNodes([div]);
 

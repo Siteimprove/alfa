@@ -8,7 +8,7 @@ import { SIA_R25 } from "../../src/sia-r25/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R25 passes when non-streaming video elements have all visual information also contained in the audio", t => {
+test("Passes when non-streaming video elements have all visual information also contained in the audio", t => {
   const video = (
     <video controls>
       <source
@@ -24,26 +24,24 @@ test("SIA-R25 passes when non-streaming video elements have all visual informati
 
   const document = documentFromNodes([video]);
 
-  const answers = [
-    {
-      rule: SIA_R25,
-      expectation: 1,
-      aspect: document,
-      target: video,
-      answer: true
-    }
-  ];
-
   outcome(
     t,
     SIA_R25,
     { document, device: getDefaultDevice() },
     { passed: [video] },
-    answers
+    [
+      {
+        rule: SIA_R25,
+        expectation: 1,
+        aspect: document,
+        target: video,
+        answer: true
+      }
+    ]
   );
 });
 
-test("SIA-R25 fails when non-streaming video elements have no visual information also contained in the audio", t => {
+test("Fails when non-streaming video elements have no visual information also contained in the audio", t => {
   const video = (
     <video controls>
       <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
@@ -52,52 +50,49 @@ test("SIA-R25 fails when non-streaming video elements have no visual information
   );
 
   const document = documentFromNodes([video]);
-
-  const answers = [
-    {
-      rule: SIA_R25,
-      expectation: 1,
-      aspect: document,
-      target: video,
-      answer: false
-    }
-  ];
 
   outcome(
     t,
     SIA_R25,
     { document, device: getDefaultDevice() },
     { failed: [video] },
-    answers
+    [
+      {
+        rule: SIA_R25,
+        expectation: 1,
+        aspect: document,
+        target: video,
+        answer: false
+      }
+    ]
   );
 });
 
-test("SIA-R25 is inapplicable when element is not a video element", t => {
+test("Is inapplicable when element is not a video element", t => {
   const img = (
     <img src="../test-assets/perspective-video/perspective-video-with-captions.mp4" />
   );
-  const document = documentFromNodes([img]);
 
-  const answers = [
-    {
-      rule: SIA_R25,
-      expectation: 1,
-      aspect: document,
-      target: img,
-      answer: false
-    }
-  ];
+  const document = documentFromNodes([img]);
 
   outcome(
     t,
     SIA_R25,
     { document, device: getDefaultDevice() },
     Outcome.Inapplicable,
-    answers
+    [
+      {
+        rule: SIA_R25,
+        expectation: 1,
+        aspect: document,
+        target: img,
+        answer: false
+      }
+    ]
   );
 });
 
-test("SIA-R25 can't tell when no answers are passed", t => {
+test("Cannot tell when no answers are passed", t => {
   const video = (
     <video controls>
       <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
@@ -111,7 +106,6 @@ test("SIA-R25 can't tell when no answers are passed", t => {
     t,
     SIA_R25,
     { document, device: getDefaultDevice() },
-    { cantTell: [video] },
-    []
+    { cantTell: [video] }
   );
 });
