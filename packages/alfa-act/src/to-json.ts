@@ -12,6 +12,7 @@ import * as JSON from "@siteimprove/alfa-json-ld";
 import { expand, List } from "@siteimprove/alfa-json-ld";
 import { groupBy } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
+import { isTargetGroup, isTargetUnit } from "./guards";
 import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
 
 // The `toJson()` function is special in that it requires use of conditional
@@ -190,13 +191,35 @@ function getPointer<A extends Aspect, T extends Target>(
 ): JSON.Document | null {
   switch (aspect) {
     case aspects.document:
-      return {
-        pointer: {
-          "@context": Contexts.XPathPointer,
-          "@type": ["ptr:Pointer", "ptr:XPathPointer"],
-          expression: getPath(target, aspects.document!)
+      if (isTargetUnit(target)) {
+        return {
+          pointer: {
+            "@context": Contexts.XPathPointer,
+            "@type": ["ptr:Pointer", "ptr:XPathPointer"],
+            expression: getPath(target, aspects.document!)
+          }
+        };
+      }
+
+      if (isTargetGroup(target)) {
+        const pointers: Array<JSON.Document> = [];
+
+        for (const subtarget of target) {
+          const pointer = getPointer(aspects, aspect, subtarget);
+
+          if (pointer !== null) {
+            pointers.push(pointer);
+          }
         }
-      };
+
+        return {
+          pointer: {
+            "@context": Contexts.RelatedPointers,
+            "@type": ["ptr:Pointer", "ptr:RelatedPointers"],
+            pointers
+          }
+        };
+      }
   }
 
   return null;

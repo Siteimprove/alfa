@@ -285,4 +285,19 @@ export namespace Contexts {
      */
     expression: "ptr:expression"
   };
+
+  /**
+   * @see https://www.w3.org/TR/Pointers-in-RDF/#relatedPointersClass
+   */
+  export const RelatedPointers: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    pointers: {
+      "@id": "ptr:groupPointer",
+      "@type": "ptr:Pointer",
+      "@container": "@set"
+    }
+  };
 }

@@ -36,10 +36,17 @@ export type AspectKeysFor<A extends Aspect> = {
 export type AspectsFor<A extends Aspect> = Partial<Aspects> &
   { readonly [P in AspectKeysFor<A>]: Aspects[P] };
 
+export type Group<T> = ReadonlySet<T>;
+
 /**
  * A target is an entity that a rule can apply to and make expectations about.
  */
-export type Target = Attribute | Document | Element;
+export type Target =
+  | Attribute
+  | Group<Attribute>
+  | Document
+  | Element
+  | Group<Element>;
 
 export const enum Outcome {
   Passed = "passed",
