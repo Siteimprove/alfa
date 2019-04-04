@@ -4,6 +4,7 @@ import {
   AspectsFor,
   audit,
   Outcome,
+  QuestionType,
   Result,
   Rule,
   Target
@@ -24,7 +25,7 @@ export function outcome<A extends Aspect, T extends Target>(
           | Outcome.Failed
           | Outcome.CantTell]?: ReadonlyArray<T>
       },
-  answers: ReadonlyArray<Answer<A, T>> = []
+  answers: ReadonlyArray<Answer<QuestionType, A, T>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,
