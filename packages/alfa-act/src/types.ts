@@ -224,7 +224,7 @@ export namespace Atomic {
 
 export namespace Composite {
   export type Expectations<A extends Aspect, T extends Target> = (
-    outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>
+    outcomes: ReadonlyArray<{ outcome: Outcome }>
   ) => Evaluation | BrowserSpecific<Evaluation>;
 
   export interface Rule<A extends Aspect, T extends Target> {
@@ -236,22 +236,31 @@ export namespace Composite {
 
     readonly compose: (composition: Composition<A, T>) => void;
 
-    readonly evaluate: () => {
+    readonly evaluate: (
+      aspects: AspectsFor<A>
+    ) => {
       readonly expectations: Expectations<A, T>;
     };
   }
 }
 
-export class Composition<A extends Aspect, T extends Target>
-  implements Iterable<Atomic.Rule<A, T>> {
-  private readonly rules: Array<Atomic.Rule<A, T>> = [];
+// tslint:disable:no-any
 
-  public add<B extends A, U extends T>(rule: Atomic.Rule<B, U>): this {
-    this.rules.push((rule as unknown) as Atomic.Rule<A, T>);
-    return this;
-  }
+export class Composition<A extends Aspect, T extends Target> {
+  /**
+   * @internal
+   */
+  private readonly rules: Array<Atomic.Rule<any, any>> = [];
 
+  /**
+   * @internal
+   */
   public [Symbol.iterator](): Iterator<Atomic.Rule<A, T>> {
     return this.rules[Symbol.iterator]();
+  }
+
+  public add<B extends A, U extends T>(rule: Atomic.Rule<B, U>): this {
+    this.rules.push(rule);
+    return this;
   }
 }
