@@ -260,7 +260,7 @@ function auditComposite<A extends Aspect, T extends Target>(
     }
   );
 
-  const evaluate = rule.evaluate();
+  const evaluate = rule.evaluate(aspects);
 
   return map(groups, groups => {
     return groups.map(group => {
