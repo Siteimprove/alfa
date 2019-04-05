@@ -4,6 +4,7 @@
     "src/characters.ts",
     "src/get-category.ts",
     "src/index.ts",
+    "src/is-whitespace.ts",
     "src/types.ts",
     "test/get-category.spec.ts"
   ],
