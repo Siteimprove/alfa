@@ -14066,6 +14066,11 @@ export const Characters: Array<Character> = [
     category: Category.Nd
   },
   <Character>{
+    name: "TELUGU SIGN SIDDHAM",
+    code: 3191,
+    category: Category.Po
+  },
+  <Character>{
     name: "TELUGU FRACTION DIGIT ZERO FOR ODD POWERS OF FOUR",
     code: 3192,
     category: Category.No
@@ -16036,6 +16041,11 @@ export const Characters: Array<Character> = [
     category: Category.Lo
   },
   <Character>{
+    name: "LAO LETTER PALI GHA",
+    code: 3718,
+    category: Category.Lo
+  },
+  <Character>{
     name: "LAO LETTER NGO",
     code: 3719,
     category: Category.Lo
@@ -16046,13 +16056,53 @@ export const Characters: Array<Character> = [
     category: Category.Lo
   },
   <Character>{
+    name: "LAO LETTER PALI CHA",
+    code: 3721,
+    category: Category.Lo
+  },
+  <Character>{
     name: "LAO LETTER SO TAM",
     code: 3722,
     category: Category.Lo
   },
   <Character>{
+    name: "LAO LETTER PALI JHA",
+    code: 3724,
+    category: Category.Lo
+  },
+  <Character>{
     name: "LAO LETTER NYO",
     code: 3725,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI NYA",
+    code: 3726,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI TTA",
+    code: 3727,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI TTHA",
+    code: 3728,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI DDA",
+    code: 3729,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI DDHA",
+    code: 3730,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI NNA",
+    code: 3731,
     category: Category.Lo
   },
   <Character>{
@@ -16073,6 +16123,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "LAO LETTER THO TAM",
     code: 3735,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI DHA",
+    code: 3736,
     category: Category.Lo
   },
   <Character>{
@@ -16111,6 +16166,11 @@ export const Characters: Array<Character> = [
     category: Category.Lo
   },
   <Character>{
+    name: "LAO LETTER PALI BHA",
+    code: 3744,
+    category: Category.Lo
+  },
+  <Character>{
     name: "LAO LETTER MO",
     code: 3745,
     category: Category.Lo
@@ -16136,6 +16196,16 @@ export const Characters: Array<Character> = [
     category: Category.Lo
   },
   <Character>{
+    name: "LAO LETTER SANSKRIT SHA",
+    code: 3752,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER SANSKRIT SSA",
+    code: 3753,
+    category: Category.Lo
+  },
+  <Character>{
     name: "LAO LETTER SO SUNG",
     code: 3754,
     category: Category.Lo
@@ -16143,6 +16213,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "LAO LETTER HO SUNG",
     code: 3755,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "LAO LETTER PALI LLA",
+    code: 3756,
     category: Category.Lo
   },
   <Character>{
@@ -16208,6 +16283,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "LAO VOWEL SIGN UU",
     code: 3769,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "LAO SIGN PALI VIRAMA",
+    code: 3770,
     category: Category.Mn
   },
   <Character>{
@@ -25418,7 +25498,7 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "CANADIAN SYLLABICS CHI SIGN",
     code: 5741,
-    category: Category.Po
+    category: Category.So
   },
   <Character>{
     name: "CANADIAN SYLLABICS FULL STOP",
@@ -32463,12 +32543,12 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "VEDIC SIGN ARDHAVISARGA",
     code: 7410,
-    category: Category.Mc
+    category: Category.Lo
   },
   <Character>{
     name: "VEDIC SIGN ROTATED ARDHAVISARGA",
     code: 7411,
-    category: Category.Mc
+    category: Category.Lo
   },
   <Character>{
     name: "VEDIC TONE CANDRA ABOVE",
@@ -32499,6 +32579,11 @@ export const Characters: Array<Character> = [
     name: "VEDIC TONE DOUBLE RING ABOVE",
     code: 7417,
     category: Category.Mn
+  },
+  <Character>{
+    name: "VEDIC SIGN DOUBLE ANUSVARA ANTARGOMUKHA",
+    code: 7418,
+    category: Category.Lo
   },
   <Character>{
     name: "LATIN LETTER SMALL CAPITAL A",
@@ -50875,6 +50960,11 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "NEPTUNE FORM TWO",
+    code: 11209,
+    category: Category.So
+  },
+  <Character>{
     name: "TOP HALF BLACK CIRCLE",
     code: 11210,
     category: Category.So
@@ -51137,6 +51227,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "REVERSED RIGHT ANGLE",
     code: 11262,
+    category: Category.So
+  },
+  <Character>{
+    name: "HELLSCHREIBER PAUSE SYMBOL",
+    code: 11263,
     category: Category.So
   },
   <Character>{
@@ -53827,6 +53922,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "PUNCTUS ELEVATUS MARK",
     code: 11854,
+    category: Category.Po
+  },
+  <Character>{
+    name: "CORNISH VERSE DIVIDER",
+    code: 11855,
     category: Category.Po
   },
   <Character>{
@@ -70530,6 +70630,61 @@ export const Characters: Array<Character> = [
     category: Category.Ll
   },
   <Character>{
+    name: "LATIN CAPITAL LETTER GLOTTAL A",
+    code: 42938,
+    category: Category.Lu
+  },
+  <Character>{
+    name: "LATIN SMALL LETTER GLOTTAL A",
+    code: 42939,
+    category: Category.Ll
+  },
+  <Character>{
+    name: "LATIN CAPITAL LETTER GLOTTAL I",
+    code: 42940,
+    category: Category.Lu
+  },
+  <Character>{
+    name: "LATIN SMALL LETTER GLOTTAL I",
+    code: 42941,
+    category: Category.Ll
+  },
+  <Character>{
+    name: "LATIN CAPITAL LETTER GLOTTAL U",
+    code: 42942,
+    category: Category.Lu
+  },
+  <Character>{
+    name: "LATIN SMALL LETTER GLOTTAL U",
+    code: 42943,
+    category: Category.Ll
+  },
+  <Character>{
+    name: "LATIN CAPITAL LETTER ANGLICANA W",
+    code: 42946,
+    category: Category.Lu
+  },
+  <Character>{
+    name: "LATIN SMALL LETTER ANGLICANA W",
+    code: 42947,
+    category: Category.Ll
+  },
+  <Character>{
+    name: "LATIN CAPITAL LETTER C WITH PALATAL HOOK",
+    code: 42948,
+    category: Category.Lu
+  },
+  <Character>{
+    name: "LATIN CAPITAL LETTER S WITH HOOK",
+    code: 42949,
+    category: Category.Lu
+  },
+  <Character>{
+    name: "LATIN CAPITAL LETTER Z WITH PALATAL HOOK",
+    code: 42950,
+    category: Category.Lu
+  },
+  <Character>{
     name: "LATIN EPIGRAPHIC LETTER SIDEWAYS I",
     code: 42999,
     category: Category.Lo
@@ -72572,7 +72727,7 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "JAVANESE CONSONANT SIGN KERET",
     code: 43453,
-    category: Category.Mc
+    category: Category.Mn
   },
   <Character>{
     name: "JAVANESE CONSONANT SIGN PENGKAL",
@@ -74352,6 +74507,16 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "GREEK LETTER SMALL CAPITAL OMEGA",
     code: 43877,
+    category: Category.Ll
+  },
+  <Character>{
+    name: "LATIN SMALL LETTER DZ DIGRAPH WITH RETROFLEX HOOK",
+    code: 43878,
+    category: Category.Ll
+  },
+  <Character>{
+    name: "LATIN SMALL LETTER TS DIGRAPH WITH RETROFLEX HOOK",
+    code: 43879,
     category: Category.Ll
   },
   <Character>{
@@ -95544,6 +95709,121 @@ export const Characters: Array<Character> = [
     category: Category.Po
   },
   <Character>{
+    name: "ELYMAIC LETTER ALEPH",
+    code: 69600,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER BETH",
+    code: 69601,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER GIMEL",
+    code: 69602,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER DALETH",
+    code: 69603,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER HE",
+    code: 69604,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER WAW",
+    code: 69605,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER ZAYIN",
+    code: 69606,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER HETH",
+    code: 69607,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER TETH",
+    code: 69608,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER YODH",
+    code: 69609,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER KAPH",
+    code: 69610,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER LAMEDH",
+    code: 69611,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER MEM",
+    code: 69612,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER NUN",
+    code: 69613,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER SAMEKH",
+    code: 69614,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER AYIN",
+    code: 69615,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER PE",
+    code: 69616,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER SADHE",
+    code: 69617,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER QOPH",
+    code: 69618,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER RESH",
+    code: 69619,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER SHIN",
+    code: 69620,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LETTER TAW",
+    code: 69621,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "ELYMAIC LIGATURE ZAYIN-YODH",
+    code: 69622,
+    category: Category.Lo
+  },
+  <Character>{
     name: "BRAHMI SIGN CANDRABINDU",
     code: 69632,
     category: Category.Mc
@@ -99454,6 +99734,11 @@ export const Characters: Array<Character> = [
     category: Category.Mn
   },
   <Character>{
+    name: "NEWA LETTER VEDIC ANUSVARA",
+    code: 70751,
+    category: Category.Lo
+  },
+  <Character>{
     name: "TIRHUTA ANJI",
     code: 70784,
     category: Category.Lo
@@ -101064,6 +101349,11 @@ export const Characters: Array<Character> = [
     category: Category.Mn
   },
   <Character>{
+    name: "TAKRI LETTER ARCHAIC KHA",
+    code: 71352,
+    category: Category.Lo
+  },
+  <Character>{
     name: "TAKRI DIGIT ZERO",
     code: 71360,
     category: Category.Nd
@@ -102124,6 +102414,331 @@ export const Characters: Array<Character> = [
     category: Category.Lo
   },
   <Character>{
+    name: "NANDINAGARI LETTER A",
+    code: 72096,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER AA",
+    code: 72097,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER I",
+    code: 72098,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER II",
+    code: 72099,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER U",
+    code: 72100,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER UU",
+    code: 72101,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER VOCALIC R",
+    code: 72102,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER VOCALIC RR",
+    code: 72103,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER E",
+    code: 72106,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER AI",
+    code: 72107,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER O",
+    code: 72108,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER AU",
+    code: 72109,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER KA",
+    code: 72110,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER KHA",
+    code: 72111,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER GA",
+    code: 72112,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER GHA",
+    code: 72113,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER NGA",
+    code: 72114,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER CA",
+    code: 72115,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER CHA",
+    code: 72116,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER JA",
+    code: 72117,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER JHA",
+    code: 72118,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER NYA",
+    code: 72119,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER TTA",
+    code: 72120,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER TTHA",
+    code: 72121,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER DDA",
+    code: 72122,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER DDHA",
+    code: 72123,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER NNA",
+    code: 72124,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER TA",
+    code: 72125,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER THA",
+    code: 72126,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER DA",
+    code: 72127,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER DHA",
+    code: 72128,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER NA",
+    code: 72129,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER PA",
+    code: 72130,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER PHA",
+    code: 72131,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER BA",
+    code: 72132,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER BHA",
+    code: 72133,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER MA",
+    code: 72134,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER YA",
+    code: 72135,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER RA",
+    code: 72136,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER LA",
+    code: 72137,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER VA",
+    code: 72138,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER SHA",
+    code: 72139,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER SSA",
+    code: 72140,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER SA",
+    code: 72141,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER HA",
+    code: 72142,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER LLA",
+    code: 72143,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI LETTER RRA",
+    code: 72144,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN AA",
+    code: 72145,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN I",
+    code: 72146,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN II",
+    code: 72147,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN U",
+    code: 72148,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN UU",
+    code: 72149,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN VOCALIC R",
+    code: 72150,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN VOCALIC RR",
+    code: 72151,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN E",
+    code: 72154,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN AI",
+    code: 72155,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN O",
+    code: 72156,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN AU",
+    code: 72157,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "NANDINAGARI SIGN ANUSVARA",
+    code: 72158,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "NANDINAGARI SIGN VISARGA",
+    code: 72159,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "NANDINAGARI SIGN VIRAMA",
+    code: 72160,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NANDINAGARI SIGN AVAGRAHA",
+    code: 72161,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI SIGN SIDDHAM",
+    code: 72162,
+    category: Category.Po
+  },
+  <Character>{
+    name: "NANDINAGARI HEADSTROKE",
+    code: 72163,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NANDINAGARI VOWEL SIGN PRISHTHAMATRA E",
+    code: 72164,
+    category: Category.Mc
+  },
+  <Character>{
     name: "ZANABAZAR SQUARE LETTER A",
     code: 72192,
     category: Category.Lo
@@ -102741,6 +103356,16 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "SOYOMBO LETTER KSSA",
     code: 72323,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "SOYOMBO SIGN JIHVAMULIYA",
+    code: 72324,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "SOYOMBO SIGN UPADHMANIYA",
+    code: 72325,
     category: Category.Lo
   },
   <Character>{
@@ -104811,6 +105436,261 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "MAKASAR END OF SECTION",
     code: 73464,
+    category: Category.Po
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE THREE-HUNDRED-AND-TWENTIETH",
+    code: 73664,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE ONE-HUNDRED-AND-SIXTIETH",
+    code: 73665,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE EIGHTIETH",
+    code: 73666,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE SIXTY-FOURTH",
+    code: 73667,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE FORTIETH",
+    code: 73668,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE THIRTY-SECOND",
+    code: 73669,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION THREE EIGHTIETHS",
+    code: 73670,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION THREE SIXTY-FOURTHS",
+    code: 73671,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE TWENTIETH",
+    code: 73672,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE SIXTEENTH-1",
+    code: 73673,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE SIXTEENTH-2",
+    code: 73674,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE TENTH",
+    code: 73675,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE EIGHTH",
+    code: 73676,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION THREE TWENTIETHS",
+    code: 73677,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION THREE SIXTEENTHS",
+    code: 73678,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE FIFTH",
+    code: 73679,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE QUARTER",
+    code: 73680,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE HALF-1",
+    code: 73681,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION ONE HALF-2",
+    code: 73682,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION THREE QUARTERS",
+    code: 73683,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL FRACTION DOWNSCALING FACTOR KIIZH",
+    code: 73684,
+    category: Category.No
+  },
+  <Character>{
+    name: "TAMIL SIGN NEL",
+    code: 73685,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN CEVITU",
+    code: 73686,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN AAZHAAKKU",
+    code: 73687,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN UZHAKKU",
+    code: 73688,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN MUUVUZHAKKU",
+    code: 73689,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN KURUNI",
+    code: 73690,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN PATHAKKU",
+    code: 73691,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN MUKKURUNI",
+    code: 73692,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN KAACU",
+    code: 73693,
+    category: Category.Sc
+  },
+  <Character>{
+    name: "TAMIL SIGN PANAM",
+    code: 73694,
+    category: Category.Sc
+  },
+  <Character>{
+    name: "TAMIL SIGN PON",
+    code: 73695,
+    category: Category.Sc
+  },
+  <Character>{
+    name: "TAMIL SIGN VARAAKAN",
+    code: 73696,
+    category: Category.Sc
+  },
+  <Character>{
+    name: "TAMIL SIGN PAARAM",
+    code: 73697,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN KUZHI",
+    code: 73698,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN VELI",
+    code: 73699,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL WET CULTIVATION SIGN",
+    code: 73700,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL DRY CULTIVATION SIGN",
+    code: 73701,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL LAND SIGN",
+    code: 73702,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SALT PAN SIGN",
+    code: 73703,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL TRADITIONAL CREDIT SIGN",
+    code: 73704,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL TRADITIONAL NUMBER SIGN",
+    code: 73705,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL CURRENT SIGN",
+    code: 73706,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL AND ODD SIGN",
+    code: 73707,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SPENT SIGN",
+    code: 73708,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL TOTAL SIGN",
+    code: 73709,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL IN POSSESSION SIGN",
+    code: 73710,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL STARTING FROM SIGN",
+    code: 73711,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN MUTHALIYA",
+    code: 73712,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL SIGN VAKAIYARAA",
+    code: 73713,
+    category: Category.So
+  },
+  <Character>{
+    name: "TAMIL PUNCTUATION END OF TEXT",
+    code: 73727,
     category: Category.Po
   },
   <Character>{
@@ -116339,6 +117219,51 @@ export const Characters: Array<Character> = [
     category: Category.Lo
   },
   <Character>{
+    name: "EGYPTIAN HIEROGLYPH VERTICAL JOINER",
+    code: 78896,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH HORIZONTAL JOINER",
+    code: 78897,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH INSERT AT TOP START",
+    code: 78898,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH INSERT AT BOTTOM START",
+    code: 78899,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH INSERT AT TOP END",
+    code: 78900,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH INSERT AT BOTTOM END",
+    code: 78901,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH OVERLAY MIDDLE",
+    code: 78902,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH BEGIN SEGMENT",
+    code: 78903,
+    category: Category.Cf
+  },
+  <Character>{
+    name: "EGYPTIAN HIEROGLYPH END SEGMENT",
+    code: 78904,
+    category: Category.Cf
+  },
+  <Character>{
     name: "ANATOLIAN HIEROGLYPH A001",
     code: 82944,
     category: Category.Lo
@@ -123929,6 +124854,41 @@ export const Characters: Array<Character> = [
     category: Category.Lo
   },
   <Character>{
+    name: "MIAO LETTER BRI",
+    code: 94021,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "MIAO LETTER SYI",
+    code: 94022,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "MIAO LETTER DZYI",
+    code: 94023,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "MIAO LETTER TE",
+    code: 94024,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "MIAO LETTER TSE",
+    code: 94025,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "MIAO LETTER RTE",
+    code: 94026,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "MIAO SIGN CONSONANT MODIFIER BAR",
+    code: 94031,
+    category: Category.Mn
+  },
+  <Character>{
     name: "MIAO LETTER NASALIZATION",
     code: 94032,
     category: Category.Lo
@@ -124164,6 +125124,51 @@ export const Characters: Array<Character> = [
     category: Category.Mc
   },
   <Character>{
+    name: "MIAO VOWEL SIGN UOG",
+    code: 94079,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN YUI",
+    code: 94080,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN OG",
+    code: 94081,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN OER",
+    code: 94082,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN VW",
+    code: 94083,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN IG",
+    code: 94084,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN EA",
+    code: 94085,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN IONG",
+    code: 94086,
+    category: Category.Mc
+  },
+  <Character>{
+    name: "MIAO VOWEL SIGN UI",
+    code: 94087,
+    category: Category.Mc
+  },
+  <Character>{
     name: "MIAO TONE RIGHT",
     code: 94095,
     category: Category.Mn
@@ -124259,8 +125264,18 @@ export const Characters: Array<Character> = [
     category: Category.Lm
   },
   <Character>{
+    name: "OLD CHINESE HOOK MARK",
+    code: 94178,
+    category: Category.Po
+  },
+  <Character>{
+    name: "OLD CHINESE ITERATION MARK",
+    code: 94179,
+    category: Category.Lm
+  },
+  <Character>{
     name: "Tangut Ideograph",
-    code: [94208, 100337],
+    code: [94208, 100343],
     category: Category.Lo
   },
   <Character>{
@@ -129471,6 +130486,41 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "HENTAIGANA LETTER N-MU-MO-2",
     code: 110878,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "HIRAGANA LETTER SMALL WI",
+    code: 110928,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "HIRAGANA LETTER SMALL WE",
+    code: 110929,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "HIRAGANA LETTER SMALL WO",
+    code: 110930,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "KATAKANA LETTER SMALL WI",
+    code: 110948,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "KATAKANA LETTER SMALL WE",
+    code: 110949,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "KATAKANA LETTER SMALL WO",
+    code: 110950,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "KATAKANA LETTER SMALL N",
+    code: 110951,
     category: Category.Lo
   },
   <Character>{
@@ -144126,6 +145176,656 @@ export const Characters: Array<Character> = [
     category: Category.Mn
   },
   <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER MA",
+    code: 123136,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER TSA",
+    code: 123137,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NTA",
+    code: 123138,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER TA",
+    code: 123139,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER HA",
+    code: 123140,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NA",
+    code: 123141,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER XA",
+    code: 123142,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NKA",
+    code: 123143,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER CA",
+    code: 123144,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER LA",
+    code: 123145,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER SA",
+    code: 123146,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER ZA",
+    code: 123147,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NCA",
+    code: 123148,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NTSA",
+    code: 123149,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER KA",
+    code: 123150,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER DA",
+    code: 123151,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NYA",
+    code: 123152,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NRA",
+    code: 123153,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER VA",
+    code: 123154,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NTXA",
+    code: 123155,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER TXA",
+    code: 123156,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER FA",
+    code: 123157,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER RA",
+    code: 123158,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER QA",
+    code: 123159,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER YA",
+    code: 123160,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NQA",
+    code: 123161,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER PA",
+    code: 123162,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER XYA",
+    code: 123163,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NPA",
+    code: 123164,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER DLA",
+    code: 123165,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER NPLA",
+    code: 123166,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER HAH",
+    code: 123167,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER MLA",
+    code: 123168,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER PLA",
+    code: 123169,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER GA",
+    code: 123170,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER RRA",
+    code: 123171,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER A",
+    code: 123172,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER AA",
+    code: 123173,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER I",
+    code: 123174,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER U",
+    code: 123175,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER O",
+    code: 123176,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER OO",
+    code: 123177,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER E",
+    code: 123178,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER EE",
+    code: 123179,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LETTER W",
+    code: 123180,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG TONE-B",
+    code: 123184,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG TONE-M",
+    code: 123185,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG TONE-J",
+    code: 123186,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG TONE-V",
+    code: 123187,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG TONE-S",
+    code: 123188,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG TONE-G",
+    code: 123189,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG TONE-D",
+    code: 123190,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG SIGN FOR PERSON",
+    code: 123191,
+    category: Category.Lm
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG SIGN FOR THING",
+    code: 123192,
+    category: Category.Lm
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG SIGN FOR LOCATION",
+    code: 123193,
+    category: Category.Lm
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG SIGN FOR ANIMAL",
+    code: 123194,
+    category: Category.Lm
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG SIGN FOR INVERTEBRATE",
+    code: 123195,
+    category: Category.Lm
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG SIGN XW XW",
+    code: 123196,
+    category: Category.Lm
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG SYLLABLE LENGTHENER",
+    code: 123197,
+    category: Category.Lm
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT ZERO",
+    code: 123200,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT ONE",
+    code: 123201,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT TWO",
+    code: 123202,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT THREE",
+    code: 123203,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT FOUR",
+    code: 123204,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT FIVE",
+    code: 123205,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT SIX",
+    code: 123206,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT SEVEN",
+    code: 123207,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT EIGHT",
+    code: 123208,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG DIGIT NINE",
+    code: 123209,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG LOGOGRAM NYAJ",
+    code: 123214,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "NYIAKENG PUACHUE HMONG CIRCLED CA",
+    code: 123215,
+    category: Category.So
+  },
+  <Character>{
+    name: "WANCHO LETTER AA",
+    code: 123584,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER A",
+    code: 123585,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER BA",
+    code: 123586,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER CA",
+    code: 123587,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER DA",
+    code: 123588,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER GA",
+    code: 123589,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER YA",
+    code: 123590,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER PHA",
+    code: 123591,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER LA",
+    code: 123592,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER NA",
+    code: 123593,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER PA",
+    code: 123594,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER TA",
+    code: 123595,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER THA",
+    code: 123596,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER FA",
+    code: 123597,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER SA",
+    code: 123598,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER SHA",
+    code: 123599,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER JA",
+    code: 123600,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER ZA",
+    code: 123601,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER WA",
+    code: 123602,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER VA",
+    code: 123603,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER KA",
+    code: 123604,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER O",
+    code: 123605,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER AU",
+    code: 123606,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER RA",
+    code: 123607,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER MA",
+    code: 123608,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER KHA",
+    code: 123609,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER HA",
+    code: 123610,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER E",
+    code: 123611,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER I",
+    code: 123612,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER NGA",
+    code: 123613,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER U",
+    code: 123614,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER LLHA",
+    code: 123615,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER TSA",
+    code: 123616,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER TRA",
+    code: 123617,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER ONG",
+    code: 123618,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER AANG",
+    code: 123619,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER ANG",
+    code: 123620,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER ING",
+    code: 123621,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER ON",
+    code: 123622,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER EN",
+    code: 123623,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER AAN",
+    code: 123624,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER NYA",
+    code: 123625,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER UEN",
+    code: 123626,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO LETTER YIH",
+    code: 123627,
+    category: Category.Lo
+  },
+  <Character>{
+    name: "WANCHO TONE TUP",
+    code: 123628,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "WANCHO TONE TUPNI",
+    code: 123629,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "WANCHO TONE KOI",
+    code: 123630,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "WANCHO TONE KOINI",
+    code: 123631,
+    category: Category.Mn
+  },
+  <Character>{
+    name: "WANCHO DIGIT ZERO",
+    code: 123632,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT ONE",
+    code: 123633,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT TWO",
+    code: 123634,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT THREE",
+    code: 123635,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT FOUR",
+    code: 123636,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT FIVE",
+    code: 123637,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT SIX",
+    code: 123638,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT SEVEN",
+    code: 123639,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT EIGHT",
+    code: 123640,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO DIGIT NINE",
+    code: 123641,
+    category: Category.Nd
+  },
+  <Character>{
+    name: "WANCHO NGUN SIGN",
+    code: 123647,
+    category: Category.Sc
+  },
+  <Character>{
     name: "MENDE KIKAKUI SYLLABLE M001 KI",
     code: 124928,
     category: Category.Lo
@@ -145566,6 +147266,11 @@ export const Characters: Array<Character> = [
     category: Category.Mn
   },
   <Character>{
+    name: "ADLAM NASALIZATION MARK",
+    code: 125259,
+    category: Category.Lm
+  },
+  <Character>{
     name: "ADLAM DIGIT ZERO",
     code: 125264,
     category: Category.Nd
@@ -145963,6 +147668,311 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "INDIC SIYAQ ALTERNATE LAKH MARK",
     code: 126132,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER ONE",
+    code: 126209,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER TWO",
+    code: 126210,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER THREE",
+    code: 126211,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FOUR",
+    code: 126212,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FIVE",
+    code: 126213,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SIX",
+    code: 126214,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SEVEN",
+    code: 126215,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER EIGHT",
+    code: 126216,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER NINE",
+    code: 126217,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER TEN",
+    code: 126218,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER TWENTY",
+    code: 126219,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER THIRTY",
+    code: 126220,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FORTY",
+    code: 126221,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FIFTY",
+    code: 126222,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SIXTY",
+    code: 126223,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SEVENTY",
+    code: 126224,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER EIGHTY",
+    code: 126225,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER NINETY",
+    code: 126226,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER ONE HUNDRED",
+    code: 126227,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER TWO HUNDRED",
+    code: 126228,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER THREE HUNDRED",
+    code: 126229,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FOUR HUNDRED",
+    code: 126230,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FIVE HUNDRED",
+    code: 126231,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SIX HUNDRED",
+    code: 126232,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SEVEN HUNDRED",
+    code: 126233,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER EIGHT HUNDRED",
+    code: 126234,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER NINE HUNDRED",
+    code: 126235,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER ONE THOUSAND",
+    code: 126236,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER TWO THOUSAND",
+    code: 126237,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER THREE THOUSAND",
+    code: 126238,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FOUR THOUSAND",
+    code: 126239,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FIVE THOUSAND",
+    code: 126240,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SIX THOUSAND",
+    code: 126241,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SEVEN THOUSAND",
+    code: 126242,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER EIGHT THOUSAND",
+    code: 126243,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER NINE THOUSAND",
+    code: 126244,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER TEN THOUSAND",
+    code: 126245,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER TWENTY THOUSAND",
+    code: 126246,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER THIRTY THOUSAND",
+    code: 126247,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FORTY THOUSAND",
+    code: 126248,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER FIFTY THOUSAND",
+    code: 126249,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SIXTY THOUSAND",
+    code: 126250,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER SEVENTY THOUSAND",
+    code: 126251,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER EIGHTY THOUSAND",
+    code: 126252,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ NUMBER NINETY THOUSAND",
+    code: 126253,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ MARRATAN",
+    code: 126254,
+    category: Category.So
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER TWO",
+    code: 126255,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER THREE",
+    code: 126256,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER FOUR",
+    code: 126257,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER FIVE",
+    code: 126258,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER SIX",
+    code: 126259,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER SEVEN",
+    code: 126260,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER EIGHT",
+    code: 126261,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER NINE",
+    code: 126262,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER TEN",
+    code: 126263,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER FOUR HUNDRED",
+    code: 126264,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER SIX HUNDRED",
+    code: 126265,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER TWO THOUSAND",
+    code: 126266,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ ALTERNATE NUMBER TEN THOUSAND",
+    code: 126267,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ FRACTION ONE HALF",
+    code: 126268,
+    category: Category.No
+  },
+  <Character>{
+    name: "OTTOMAN SIYAQ FRACTION ONE SIXTH",
+    code: 126269,
     category: Category.No
   },
   <Character>{
@@ -148333,6 +150343,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "RAISED MD SIGN",
     code: 127339,
+    category: Category.So
+  },
+  <Character>{
+    name: "RAISED MR SIGN",
+    code: 127340,
     category: Category.So
   },
   <Character>{
@@ -153997,6 +156012,11 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "HINDU TEMPLE",
+    code: 128725,
+    category: Category.So
+  },
+  <Character>{
     name: "HAMMER AND WRENCH",
     code: 128736,
     category: Category.So
@@ -154109,6 +156129,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "SKATEBOARD",
     code: 128761,
+    category: Category.So
+  },
+  <Character>{
+    name: "AUTO RICKSHAW",
+    code: 128762,
     category: Category.So
   },
   <Character>{
@@ -155137,6 +157162,66 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "LARGE ORANGE CIRCLE",
+    code: 128992,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE YELLOW CIRCLE",
+    code: 128993,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE GREEN CIRCLE",
+    code: 128994,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE PURPLE CIRCLE",
+    code: 128995,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE BROWN CIRCLE",
+    code: 128996,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE RED SQUARE",
+    code: 128997,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE BLUE SQUARE",
+    code: 128998,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE ORANGE SQUARE",
+    code: 128999,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE YELLOW SQUARE",
+    code: 129000,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE GREEN SQUARE",
+    code: 129001,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE PURPLE SQUARE",
+    code: 129002,
+    category: Category.So
+  },
+  <Character>{
+    name: "LARGE BROWN SQUARE",
+    code: 129003,
+    category: Category.So
+  },
+  <Character>{
     name: "LEFTWARDS ARROW WITH SMALL TRIANGLE ARROWHEAD",
     code: 129024,
     category: Category.So
@@ -155937,6 +158022,21 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "WHITE HEART",
+    code: 129293,
+    category: Category.So
+  },
+  <Character>{
+    name: "BROWN HEART",
+    code: 129294,
+    category: Category.So
+  },
+  <Character>{
+    name: "PINCHING HAND",
+    code: 129295,
+    category: Category.So
+  },
+  <Character>{
     name: "ZIPPER-MOUTH FACE",
     code: 129296,
     category: Category.So
@@ -156169,6 +158269,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "HANDBALL",
     code: 129342,
+    category: Category.So
+  },
+  <Character>{
+    name: "DIVING MASK",
+    code: 129343,
     category: Category.So
   },
   <Character>{
@@ -156417,6 +158522,11 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "YAWNING FACE",
+    code: 129393,
+    category: Category.So
+  },
+  <Character>{
     name: "FACE WITH PARTY HORN AND PARTY HAT",
     code: 129395,
     category: Category.So
@@ -156439,6 +158549,11 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "FACE WITH PLEADING EYES",
     code: 129402,
+    category: Category.So
+  },
+  <Character>{
+    name: "SARI",
+    code: 129403,
     category: Category.So
   },
   <Character>{
@@ -156637,6 +158752,46 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "SLOTH",
+    code: 129445,
+    category: Category.So
+  },
+  <Character>{
+    name: "OTTER",
+    code: 129446,
+    category: Category.So
+  },
+  <Character>{
+    name: "ORANGUTAN",
+    code: 129447,
+    category: Category.So
+  },
+  <Character>{
+    name: "SKUNK",
+    code: 129448,
+    category: Category.So
+  },
+  <Character>{
+    name: "FLAMINGO",
+    code: 129449,
+    category: Category.So
+  },
+  <Character>{
+    name: "OYSTER",
+    code: 129450,
+    category: Category.So
+  },
+  <Character>{
+    name: "GUIDE DOG",
+    code: 129454,
+    category: Category.So
+  },
+  <Character>{
+    name: "PROBING CANE",
+    code: 129455,
+    category: Category.So
+  },
+  <Character>{
     name: "EMOJI COMPONENT RED HAIR",
     code: 129456,
     category: Category.So
@@ -156687,6 +158842,36 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "SAFETY VEST",
+    code: 129466,
+    category: Category.So
+  },
+  <Character>{
+    name: "EAR WITH HEARING AID",
+    code: 129467,
+    category: Category.So
+  },
+  <Character>{
+    name: "MOTORIZED WHEELCHAIR",
+    code: 129468,
+    category: Category.So
+  },
+  <Character>{
+    name: "MANUAL WHEELCHAIR",
+    code: 129469,
+    category: Category.So
+  },
+  <Character>{
+    name: "MECHANICAL ARM",
+    code: 129470,
+    category: Category.So
+  },
+  <Character>{
+    name: "MECHANICAL LEG",
+    code: 129471,
+    category: Category.So
+  },
+  <Character>{
     name: "CHEESE WEDGE",
     code: 129472,
     category: Category.So
@@ -156699,6 +158884,61 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "SALT SHAKER",
     code: 129474,
+    category: Category.So
+  },
+  <Character>{
+    name: "BEVERAGE BOX",
+    code: 129475,
+    category: Category.So
+  },
+  <Character>{
+    name: "GARLIC",
+    code: 129476,
+    category: Category.So
+  },
+  <Character>{
+    name: "ONION",
+    code: 129477,
+    category: Category.So
+  },
+  <Character>{
+    name: "FALAFEL",
+    code: 129478,
+    category: Category.So
+  },
+  <Character>{
+    name: "WAFFLE",
+    code: 129479,
+    category: Category.So
+  },
+  <Character>{
+    name: "BUTTER",
+    code: 129480,
+    category: Category.So
+  },
+  <Character>{
+    name: "MATE DRINK",
+    code: 129481,
+    category: Category.So
+  },
+  <Character>{
+    name: "ICE CUBE",
+    code: 129482,
+    category: Category.So
+  },
+  <Character>{
+    name: "STANDING PERSON",
+    code: 129485,
+    category: Category.So
+  },
+  <Character>{
+    name: "KNEELING PERSON",
+    code: 129486,
+    category: Category.So
+  },
+  <Character>{
+    name: "DEAF PERSON",
+    code: 129487,
     category: Category.So
   },
   <Character>{
@@ -156942,6 +159182,426 @@ export const Characters: Array<Character> = [
     category: Category.So
   },
   <Character>{
+    name: "NEUTRAL CHESS KING",
+    code: 129536,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS QUEEN",
+    code: 129537,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS ROOK",
+    code: 129538,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS BISHOP",
+    code: 129539,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KNIGHT",
+    code: 129540,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS PAWN",
+    code: 129541,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT ROTATED FORTY-FIVE DEGREES",
+    code: 129542,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT ROTATED FORTY-FIVE DEGREES",
+    code: 129543,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KNIGHT ROTATED FORTY-FIVE DEGREES",
+    code: 129544,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KING ROTATED NINETY DEGREES",
+    code: 129545,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS QUEEN ROTATED NINETY DEGREES",
+    code: 129546,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS ROOK ROTATED NINETY DEGREES",
+    code: 129547,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS BISHOP ROTATED NINETY DEGREES",
+    code: 129548,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT ROTATED NINETY DEGREES",
+    code: 129549,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS PAWN ROTATED NINETY DEGREES",
+    code: 129550,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KING ROTATED NINETY DEGREES",
+    code: 129551,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS QUEEN ROTATED NINETY DEGREES",
+    code: 129552,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS ROOK ROTATED NINETY DEGREES",
+    code: 129553,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS BISHOP ROTATED NINETY DEGREES",
+    code: 129554,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT ROTATED NINETY DEGREES",
+    code: 129555,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS PAWN ROTATED NINETY DEGREES",
+    code: 129556,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KING ROTATED NINETY DEGREES",
+    code: 129557,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS QUEEN ROTATED NINETY DEGREES",
+    code: 129558,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS ROOK ROTATED NINETY DEGREES",
+    code: 129559,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS BISHOP ROTATED NINETY DEGREES",
+    code: 129560,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KNIGHT ROTATED NINETY DEGREES",
+    code: 129561,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS PAWN ROTATED NINETY DEGREES",
+    code: 129562,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT ROTATED ONE HUNDRED THIRTY-FIVE DEGREES",
+    code: 129563,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT ROTATED ONE HUNDRED THIRTY-FIVE DEGREES",
+    code: 129564,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KNIGHT ROTATED ONE HUNDRED THIRTY-FIVE DEGREES",
+    code: 129565,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS TURNED KING",
+    code: 129566,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS TURNED QUEEN",
+    code: 129567,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS TURNED ROOK",
+    code: 129568,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS TURNED BISHOP",
+    code: 129569,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS TURNED KNIGHT",
+    code: 129570,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS TURNED PAWN",
+    code: 129571,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS TURNED KING",
+    code: 129572,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS TURNED QUEEN",
+    code: 129573,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS TURNED ROOK",
+    code: 129574,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS TURNED BISHOP",
+    code: 129575,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS TURNED KNIGHT",
+    code: 129576,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS TURNED PAWN",
+    code: 129577,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS TURNED KING",
+    code: 129578,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS TURNED QUEEN",
+    code: 129579,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS TURNED ROOK",
+    code: 129580,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS TURNED BISHOP",
+    code: 129581,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS TURNED KNIGHT",
+    code: 129582,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS TURNED PAWN",
+    code: 129583,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT ROTATED TWO HUNDRED TWENTY-FIVE DEGREES",
+    code: 129584,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT ROTATED TWO HUNDRED TWENTY-FIVE DEGREES",
+    code: 129585,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KNIGHT ROTATED TWO HUNDRED TWENTY-FIVE DEGREES",
+    code: 129586,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KING ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129587,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS QUEEN ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129588,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS ROOK ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129589,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS BISHOP ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129590,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129591,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS PAWN ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129592,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KING ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129593,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS QUEEN ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129594,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS ROOK ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129595,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS BISHOP ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129596,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129597,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS PAWN ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129598,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KING ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129599,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS QUEEN ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129600,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS ROOK ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129601,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS BISHOP ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129602,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KNIGHT ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129603,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS PAWN ROTATED TWO HUNDRED SEVENTY DEGREES",
+    code: 129604,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT ROTATED THREE HUNDRED FIFTEEN DEGREES",
+    code: 129605,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT ROTATED THREE HUNDRED FIFTEEN DEGREES",
+    code: 129606,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS KNIGHT ROTATED THREE HUNDRED FIFTEEN DEGREES",
+    code: 129607,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS EQUIHOPPER",
+    code: 129608,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS EQUIHOPPER",
+    code: 129609,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS EQUIHOPPER",
+    code: 129610,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS EQUIHOPPER ROTATED NINETY DEGREES",
+    code: 129611,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS EQUIHOPPER ROTATED NINETY DEGREES",
+    code: 129612,
+    category: Category.So
+  },
+  <Character>{
+    name: "NEUTRAL CHESS EQUIHOPPER ROTATED NINETY DEGREES",
+    code: 129613,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT-QUEEN",
+    code: 129614,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT-ROOK",
+    code: 129615,
+    category: Category.So
+  },
+  <Character>{
+    name: "WHITE CHESS KNIGHT-BISHOP",
+    code: 129616,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT-QUEEN",
+    code: 129617,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT-ROOK",
+    code: 129618,
+    category: Category.So
+  },
+  <Character>{
+    name: "BLACK CHESS KNIGHT-BISHOP",
+    code: 129619,
+    category: Category.So
+  },
+  <Character>{
     name: "XIANGQI RED GENERAL",
     code: 129632,
     category: Category.So
@@ -157009,6 +159669,86 @@ export const Characters: Array<Character> = [
   <Character>{
     name: "XIANGQI BLACK SOLDIER",
     code: 129645,
+    category: Category.So
+  },
+  <Character>{
+    name: "BALLET SHOES",
+    code: 129648,
+    category: Category.So
+  },
+  <Character>{
+    name: "ONE-PIECE SWIMSUIT",
+    code: 129649,
+    category: Category.So
+  },
+  <Character>{
+    name: "BRIEFS",
+    code: 129650,
+    category: Category.So
+  },
+  <Character>{
+    name: "SHORTS",
+    code: 129651,
+    category: Category.So
+  },
+  <Character>{
+    name: "DROP OF BLOOD",
+    code: 129656,
+    category: Category.So
+  },
+  <Character>{
+    name: "ADHESIVE BANDAGE",
+    code: 129657,
+    category: Category.So
+  },
+  <Character>{
+    name: "STETHOSCOPE",
+    code: 129658,
+    category: Category.So
+  },
+  <Character>{
+    name: "YO-YO",
+    code: 129664,
+    category: Category.So
+  },
+  <Character>{
+    name: "KITE",
+    code: 129665,
+    category: Category.So
+  },
+  <Character>{
+    name: "PARACHUTE",
+    code: 129666,
+    category: Category.So
+  },
+  <Character>{
+    name: "RINGED PLANET",
+    code: 129680,
+    category: Category.So
+  },
+  <Character>{
+    name: "CHAIR",
+    code: 129681,
+    category: Category.So
+  },
+  <Character>{
+    name: "RAZOR",
+    code: 129682,
+    category: Category.So
+  },
+  <Character>{
+    name: "AXE",
+    code: 129683,
+    category: Category.So
+  },
+  <Character>{
+    name: "DIYA LAMP",
+    code: 129684,
+    category: Category.So
+  },
+  <Character>{
+    name: "BANJO",
+    code: 129685,
     category: Category.So
   },
   <Character>{

@@ -12,7 +12,7 @@ const { isArray } = Array;
 /**
  * @see http://www.unicode.org/reports/tr44/#UnicodeData.txt
  */
-const database = "https://www.unicode.org/Public/11.0.0/ucd/UnicodeData.txt";
+const database = "https://www.unicode.org/Public/12.0.0/ucd/UnicodeData.txt";
 
 /**
  * @see http://www.unicode.org/reports/tr44/#Code_Point_Ranges
