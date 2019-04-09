@@ -1,53 +1,54 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { isExposed, Roles } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { getRole, isExposed } from "@siteimprove/alfa-aria";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
   Element,
-  getAttribute,
   getAttributeNode,
   getElementNamespace,
+  getOwnerElement,
   hasAttribute,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+
+const { map } = BrowserSpecific;
 
 export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r21.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   evaluate: ({ device, document }) => {
-    const roleNames = new Set(values(Roles).map(role => role.name));
-
     return {
       applicability: () => {
         return querySelectorAll<Element>(document, document, node => {
           return (
             isElement(node) &&
-            some(isExposed(node, document, device)) &&
             isHtmlOrSvgElement(node, document) &&
-            hasAttribute(node, "role") &&
-            getAttribute(node, "role", { trim: true }) !== ""
+            hasAttribute(node, "role")
           );
         }).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: getAttributeNode(element, "role")!
-          };
+          return map(isExposed(element, document, device), isExposed => {
+            return {
+              applicable: isExposed,
+              aspect: document,
+              target: getAttributeNode(element, "role")!
+            };
+          });
         });
       },
 
       expectations: (aspect, target) => {
-        return {
-          1: {
-            holds: target.value.split(/\s+/).some(role => roleNames.has(role))
-          }
-        };
+        const owner = getOwnerElement(target, document)!;
+
+        return map(getRole(owner, document, device), role => {
+          return {
+            1: { holds: role !== null }
+          };
+        });
       }
     };
   }
