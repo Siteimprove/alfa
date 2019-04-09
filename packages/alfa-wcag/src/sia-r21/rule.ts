@@ -6,6 +6,7 @@ import {
   Attribute,
   Document,
   Element,
+  getAttribute,
   getAttributeNode,
   getElementNamespace,
   getOwnerElement,
@@ -28,7 +29,8 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
           return (
             isElement(node) &&
             isHtmlOrSvgElement(node, document) &&
-            hasAttribute(node, "role")
+            hasAttribute(node, "role") &&
+            getAttribute(node, "role") !== ""
           );
         }).map(element => {
           return map(isExposed(element, document, device), isExposed => {
