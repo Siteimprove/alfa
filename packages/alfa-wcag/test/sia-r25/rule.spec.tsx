@@ -1,4 +1,4 @@
-import { Outcome } from "@siteimprove/alfa-act";
+import { Outcome, QuestionType } from "@siteimprove/alfa-act";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
@@ -32,7 +32,24 @@ test("Passes when non-streaming video elements have all visual information also 
     [
       {
         rule: SIA_R25,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R25,
+        type: QuestionType.Boolean,
+        id: "has-audio",
+        aspect: document,
+        target: video,
+        answer: true
+      },
+      {
+        rule: SIA_R25,
+        type: QuestionType.Boolean,
+        id: "has-description",
         aspect: document,
         target: video,
         answer: true
@@ -59,7 +76,24 @@ test("Fails when non-streaming video elements have no visual information also co
     [
       {
         rule: SIA_R25,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R25,
+        type: QuestionType.Boolean,
+        id: "has-audio",
+        aspect: document,
+        target: video,
+        answer: true
+      },
+      {
+        rule: SIA_R25,
+        type: QuestionType.Boolean,
+        id: "has-description",
         aspect: document,
         target: video,
         answer: false
@@ -83,10 +117,27 @@ test("Is inapplicable when element is not a video element", t => {
     [
       {
         rule: SIA_R25,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
         aspect: document,
         target: img,
         answer: false
+      },
+      {
+        rule: SIA_R25,
+        type: QuestionType.Boolean,
+        id: "has-audio",
+        aspect: document,
+        target: img,
+        answer: true
+      },
+      {
+        rule: SIA_R25,
+        type: QuestionType.Boolean,
+        id: "has-description",
+        aspect: document,
+        target: img,
+        answer: true
       }
     ]
   );
