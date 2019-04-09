@@ -113,7 +113,7 @@ test("Fails when non-streaming silent video has no media alternative for text on
         id: "text-alternative",
         aspect: document,
         target: video,
-        answer: null
+        answer: false
       },
       {
         rule: SIA_R26,
@@ -121,7 +121,7 @@ test("Fails when non-streaming silent video has no media alternative for text on
         id: "label",
         aspect: document,
         target: video,
-        answer: null
+        answer: false
       }
     ]
   );

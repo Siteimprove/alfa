@@ -130,7 +130,7 @@ export interface Question<
 
 export interface AnswerType {
   [QuestionType.Boolean]: boolean;
-  [QuestionType.Node]: Element | Text;
+  [QuestionType.Node]: Element | Text | false;
   [QuestionType.NodeList]: ReadonlyArray<Element | Text>;
 }
 
