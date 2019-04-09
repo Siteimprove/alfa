@@ -1,28 +1,39 @@
+import { QuestionType } from "@siteimprove/alfa-act";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { SIA_R22 } from "../../src/sia-r22/rule";
-import { SIA_R26 } from "../../src/sia-r26/rule";
 import { SIA_R27 } from "../../src/sia-r27/rule";
+import { SIA_R31 } from "../../src/sia-r31/rule";
 
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("Passes when video elements have an alternative for information conveyed through audio", t => {
+test("Passes when composite rules are passing", t => {
   const video = (
     <video
-      src="../test-assets/perspective-video/perspective-video.mp4"
+      src="../test-assets/perspective-video/perspective-video-with-captions-silent.mp4"
       controls
-    >
-      <track
-        src="/test-assets/perspective-video/perspective-caption.vtt"
-        kind="captions"
-      />
-    </video>
+    />
   );
 
-  const document = documentFromNodes([video]);
+  const textAlternative = (
+    <p>
+      Not being able to use your computer because your mouse doesn't work, is
+      frustrating. Many people use only the keyboard to navigate websites.
+      Either through preference or circumstance. This is solved by keyboard
+      compatibility. Keyboard compatibility is described in WCAG. See the video
+      below to watch the same information again in video form.
+    </p>
+  );
+
+  const document = documentFromNodes([
+    <div>
+      {video}
+      {textAlternative}
+    </div>
+  ]);
 
   outcome(
     t,
@@ -32,31 +43,43 @@ test("Passes when video elements have an alternative for information conveyed th
     [
       {
         rule: SIA_R22,
-        expectation: 1,
+        id: "has-captions",
+        type: QuestionType.Boolean,
         aspect: document,
         target: video,
         answer: true
       },
       {
-        rule: SIA_R26,
-        expectation: 1,
+        rule: SIA_R31,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
         aspect: document,
         target: video,
         answer: false
       },
       {
-        rule: SIA_R26,
-        expectation: 2,
+        rule: SIA_R31,
+        type: QuestionType.Boolean,
+        id: "has-audio",
         aspect: document,
         target: video,
-        answer: false
+        answer: true
       },
       {
-        rule: SIA_R26,
-        expectation: 3,
+        rule: SIA_R31,
+        type: QuestionType.Node,
+        id: "text-alternative",
         aspect: document,
         target: video,
-        answer: false
+        answer: textAlternative
+      },
+      {
+        rule: SIA_R31,
+        type: QuestionType.Node,
+        id: "label",
+        aspect: document,
+        target: video,
+        answer: textAlternative
       }
     ]
   );
