@@ -7,21 +7,21 @@ import { SIA_R4 } from "../../src/sia-r4/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R4 passes when document has a language attribute", t => {
+test("Passes when document has a language attribute", t => {
   const html = <html lang="en" />;
   const document = documentFromNodes([html]);
 
   outcome(t, SIA_R4, { document }, { passed: [html] });
 });
 
-test("SIA-R4 failed when document has no language attribute", t => {
+test("Failes when document has no language attribute", t => {
   const html = <html />;
   const document = documentFromNodes([html]);
 
   outcome(t, SIA_R4, { document }, { failed: [html] });
 });
 
-test("SIA-R4 is inapplicable when document is not in the HTML namespace", t => {
+test("Is inapplicable when document is not in the HTML namespace", t => {
   const svg = <svg lang="en" />;
   const document = documentFromNodes([svg]);
 

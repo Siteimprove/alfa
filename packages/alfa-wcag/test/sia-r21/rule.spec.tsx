@@ -3,42 +3,46 @@ import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { SIA_R16 } from "../../src/sia-r16/rule";
+import { SIA_R21 } from "../../src/sia-r21/rule";
 
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("Passes when an element has all required ARIA states and properties", t => {
-  const div = <div role="option" aria-selected />;
+test("Passes when role attributes have valid values", t => {
+  const span = <span role="button link" />;
+  const document = documentFromNodes([span]);
+
+  outcome(
+    t,
+    SIA_R21,
+    { document, device: getDefaultDevice() },
+    {
+      passed: [span.attributes[0]]
+    }
+  );
+});
+
+test("Fails when role attributes have invalid values", t => {
+  const div = <div role=" ">Some Content</div>;
   const document = documentFromNodes([div]);
 
   outcome(
     t,
-    SIA_R16,
+    SIA_R21,
     { document, device: getDefaultDevice() },
-    { passed: [div] }
+    {
+      failed: [div.attributes[0]]
+    }
   );
 });
 
-test("Fails when an element is missing required ARIA states and properties", t => {
-  const img = <img role="combobox" />;
-  const document = documentFromNodes([img]);
-
-  outcome(
-    t,
-    SIA_R16,
-    { document, device: getDefaultDevice() },
-    { failed: [img] }
-  );
-});
-
-test("Is inapplicable for elements without different explicit and implicit roles", t => {
-  const div = <div />;
+test("Is inapplicable when element does not have role attribute.", t => {
+  const div = <div>Some Content</div>;
   const document = documentFromNodes([div]);
 
   outcome(
     t,
-    SIA_R16,
+    SIA_R21,
     { document, device: getDefaultDevice() },
     Outcome.Inapplicable
   );

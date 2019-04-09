@@ -60,7 +60,11 @@ export const Audio: (
       return { applicable: null, aspect: document, target: element };
     }
 
-    if (!isElement(playButton) || !isVisible(playButton, document, device)) {
+    if (
+      playButton === false ||
+      !isElement(playButton) ||
+      !isVisible(playButton, document, device)
+    ) {
       return { applicable: false, aspect: document, target: element };
     }
 

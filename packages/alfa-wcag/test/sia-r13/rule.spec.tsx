@@ -8,7 +8,7 @@ import { SIA_R13 } from "../../src/sia-r13/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R13 passes when an iframe has an accessible name", t => {
+test("Passes when an iframe has an accessible name", t => {
   const iframe = <iframe aria-label="foo" />;
   const document = documentFromNodes([iframe]);
 
@@ -20,7 +20,7 @@ test("SIA-R13 passes when an iframe has an accessible name", t => {
   );
 });
 
-test("SIA-R13 fails when an iframe has no accessible name", t => {
+test("Fails when an iframe has no accessible name", t => {
   const iframe = <iframe />;
   const document = documentFromNodes([iframe]);
 
@@ -32,7 +32,7 @@ test("SIA-R13 fails when an iframe has no accessible name", t => {
   );
 });
 
-test("SIA-R13 is inapplicable when an iframe has aria-hidden=true", t => {
+test("Is inapplicable when an iframe has aria-hidden=true", t => {
   const iframe = <iframe aria-hidden="true" />;
   const document = documentFromNodes([iframe]);
 
@@ -44,7 +44,7 @@ test("SIA-R13 is inapplicable when an iframe has aria-hidden=true", t => {
   );
 });
 
-test("SIA-R13 is inapplicable when an iframe has role=presentation", t => {
+test("Is inapplicable when an iframe has role=presentation", t => {
   const iframe = <iframe role="presentation" />;
   const document = documentFromNodes([iframe]);
 
@@ -56,7 +56,7 @@ test("SIA-R13 is inapplicable when an iframe has role=presentation", t => {
   );
 });
 
-test("SIA-R13 is inapplicable when an iframe has role=none", t => {
+test("Is inapplicable when an iframe has role=none", t => {
   const iframe = <iframe role="none" />;
   const document = documentFromNodes([iframe]);
 

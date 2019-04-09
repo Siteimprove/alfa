@@ -8,7 +8,7 @@ import { SIA_R18 } from "../../src/sia-r18/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R18 passes when only element has only allowed ARIA-properties", t => {
+test("Passes when only element has only allowed ARIA-properties", t => {
   const div = <div role="button" aria-pressed="false" />;
   const document = documentFromNodes([div]);
 
@@ -20,7 +20,7 @@ test("SIA-R18 passes when only element has only allowed ARIA-properties", t => {
   );
 });
 
-test("SIA-R18 fails when element has only illegal ARIA-properties", t => {
+test("Fails when element has only illegal ARIA-properties", t => {
   const button = <button aria-sort="" />;
   const document = documentFromNodes([button]);
 
@@ -32,7 +32,7 @@ test("SIA-R18 fails when element has only illegal ARIA-properties", t => {
   );
 });
 
-test("SIA-R18 is inapplicable when element has no ARIA-properties", t => {
+test("Is inapplicable when element has no ARIA-properties", t => {
   const div = <div role="region" />;
   const document = documentFromNodes([div]);
 
