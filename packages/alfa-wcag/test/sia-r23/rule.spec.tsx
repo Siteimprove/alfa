@@ -1,4 +1,4 @@
-import { Outcome } from "@siteimprove/alfa-act";
+import { Outcome, QuestionType } from "@siteimprove/alfa-act";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
@@ -30,7 +30,24 @@ test("Passes when non-streaming audio elements has a text alternative or caption
     [
       {
         rule: SIA_R23,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: audio,
+        answer: false
+      },
+      {
+        rule: SIA_R23,
+        type: QuestionType.Boolean,
+        id: "is-playing",
+        aspect: document,
+        target: audio,
+        answer: true
+      },
+      {
+        rule: SIA_R23,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
         aspect: document,
         target: audio,
         answer: true
@@ -57,7 +74,24 @@ test("Fails when non-streaming audio elements has no text alternative or caption
     [
       {
         rule: SIA_R23,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: audio,
+        answer: false
+      },
+      {
+        rule: SIA_R23,
+        type: QuestionType.Boolean,
+        id: "is-playing",
+        aspect: document,
+        target: audio,
+        answer: true
+      },
+      {
+        rule: SIA_R23,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
         aspect: document,
         target: audio,
         answer: false
@@ -81,7 +115,8 @@ test("Is inapplicable when element is not a audio element", t => {
     [
       {
         rule: SIA_R23,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
         aspect: document,
         target: img,
         answer: false
