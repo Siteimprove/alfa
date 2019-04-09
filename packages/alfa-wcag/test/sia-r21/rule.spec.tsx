@@ -23,15 +23,15 @@ test("Passes when role attributes have valid values", t => {
 });
 
 test("Fails when role attributes have invalid values", t => {
-  const input = <input type="text" role="invalid role" />;
-  const document = documentFromNodes([input]);
+  const div = <div role=" ">Some Content</div>;
+  const document = documentFromNodes([div]);
 
   outcome(
     t,
     SIA_R21,
     { document, device: getDefaultDevice() },
     {
-      failed: [input.attributes[1]]
+      failed: [div.attributes[0]]
     }
   );
 });
