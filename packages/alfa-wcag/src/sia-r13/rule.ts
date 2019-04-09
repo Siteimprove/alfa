@@ -1,6 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { hasTextAlternative, isExposed } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -12,6 +12,8 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r13.html",
   requirements: [
@@ -22,24 +24,27 @@ export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
     return {
       applicability: () => {
         return querySelectorAll<Element>(document, document, node => {
-          return (
-            isElement(node) &&
-            isIframe(node, document) &&
-            some(isExposed(node, document, device))
-          );
+          return isElement(node) && isIframe(node, document);
         }).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: element
-          };
+          return map(isExposed(element, document, device), isExposed => {
+            return {
+              applicable: isExposed,
+              aspect: document,
+              target: element
+            };
+          });
         });
       },
 
       expectations: (aspect, target) => {
-        return {
-          1: { holds: hasTextAlternative(target, document, device) }
-        };
+        return map(
+          hasTextAlternative(target, document, device),
+          hasTextAlternative => {
+            return {
+              1: { holds: hasTextAlternative }
+            };
+          }
+        );
       }
     };
   }

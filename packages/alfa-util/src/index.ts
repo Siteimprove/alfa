@@ -21,6 +21,10 @@ export * from "./set/intersect";
 export * from "./set/subtract";
 export * from "./set/union";
 
+export * from "./string/trim-left";
+export * from "./string/trim-right";
+export * from "./string/trim";
+
 export * from "./type/immutable";
 export * from "./type/mutable";
 export * from "./type/predicate";

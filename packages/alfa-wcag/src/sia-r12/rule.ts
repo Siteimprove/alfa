@@ -5,7 +5,7 @@ import {
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
-import { some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -19,6 +19,8 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r12.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
@@ -26,33 +28,50 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
     return {
       applicability: () => {
         return querySelectorAll<Element>(document, document, node => {
-          return (
-            isElement(node) &&
-            isButton(node, document, device) &&
-            some(isExposed(node, document, device)) &&
-            getInputType(node) !== InputType.Image
-          );
+          return isElement(node) && getInputType(node) !== InputType.Image;
         }).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: element
-          };
+          return map(isButton(element, document, device), isButton => {
+            if (!isButton) {
+              return {
+                applicable: false,
+                aspect: document,
+                target: element
+              };
+            }
+
+            return map(isExposed(element, document, device), isExposed => {
+              return {
+                applicable: isExposed,
+                aspect: document,
+                target: element
+              };
+            });
+          });
         });
       },
 
       expectations: (aspect, target) => {
-        return {
-          1: { holds: hasTextAlternative(target, document, device) }
-        };
+        return map(
+          hasTextAlternative(target, document, device),
+          hasTextAlternative => {
+            return {
+              1: { holds: hasTextAlternative }
+            };
+          }
+        );
       }
     };
   }
 };
 
-function isButton(element: Element, context: Node, device: Device): boolean {
-  return (
-    getElementNamespace(element, context) === Namespace.HTML &&
-    some(getRole(element, context, device), role => role === Roles.Button)
-  );
+function isButton(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean | BrowserSpecific<boolean> {
+  if (getElementNamespace(element, context) !== Namespace.HTML) {
+    return false;
+  }
+
+  return map(getRole(element, context, device), role => role === Roles.Button);
 }
