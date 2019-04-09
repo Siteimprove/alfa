@@ -1,4 +1,4 @@
-import { Outcome } from "@siteimprove/alfa-act";
+import { Outcome, QuestionType } from "@siteimprove/alfa-act";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
@@ -33,14 +33,24 @@ test("Passes when non-streaming video elements have all audio and visual informa
     [
       {
         rule: SIA_R24,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R24,
+        type: QuestionType.Boolean,
+        id: "has-audio",
         aspect: document,
         target: video,
         answer: true
       },
       {
         rule: SIA_R24,
-        expectation: 2,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
         aspect: document,
         target: video,
         answer: true
@@ -67,48 +77,24 @@ test("Fails when non-streaming video elements have no audio and visual informati
     [
       {
         rule: SIA_R24,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
         aspect: document,
         target: video,
         answer: false
       },
       {
         rule: SIA_R24,
-        expectation: 2,
-        aspect: document,
-        target: video,
-        answer: false
-      }
-    ]
-  );
-});
-
-test("Fails when non-streaming video elements have audio and visual information available in a transcript, but is insufficient", t => {
-  const video = (
-    <video controls>
-      <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
-      <source src="../test-assets/rabbit-video/video.webm" type="video/webm" />
-    </video>
-  );
-
-  const document = documentFromNodes([video]);
-
-  outcome(
-    t,
-    SIA_R24,
-    { document, device: getDefaultDevice() },
-    { failed: [video] },
-    [
-      {
-        rule: SIA_R24,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "has-audio",
         aspect: document,
         target: video,
         answer: true
       },
       {
         rule: SIA_R24,
-        expectation: 2,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
         aspect: document,
         target: video,
         answer: false
@@ -132,14 +118,8 @@ test("Is inapplicable when element is not a video element", t => {
     [
       {
         rule: SIA_R24,
-        expectation: 1,
-        aspect: document,
-        target: img,
-        answer: false
-      },
-      {
-        rule: SIA_R24,
-        expectation: 2,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
         aspect: document,
         target: img,
         answer: false
