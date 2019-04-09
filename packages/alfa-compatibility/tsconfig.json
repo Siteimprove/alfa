@@ -8,6 +8,7 @@
     "src/expand-versions.ts",
     "src/features.ts",
     "src/filter.ts",
+    "src/find.ts",
     "src/get-default-browsers.ts",
     "src/get-feature-support.ts",
     "src/guards.ts",

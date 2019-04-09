@@ -21,12 +21,13 @@ export function filter<T>(
   values: ArrayLike<T | BrowserSpecific<T>>,
   predicate: (value: T) => boolean | BrowserSpecific<boolean>
 ): Array<T> | BrowserSpecific<Array<T>> {
-  return reduce(
+  return reduce<T, Array<T>>(
     values,
-    (filtered, value) =>
-      map(predicate(value), include =>
-        include ? [...filtered, value] : filtered
-      ),
-    [] as Array<T>
+    (filtered, value) => {
+      return map(predicate(value), include => {
+        return include ? [...filtered, value] : filtered;
+      });
+    },
+    []
   );
 }
