@@ -56,7 +56,8 @@ export function audit<
 >(
   aspects: AspectsFor<A>,
   rules: ReadonlyArray<R> | { readonly [P in R["id"]]: R },
-  answers: ReadonlyArray<Answer<QuestionType, A, T>> = []
+  answers: ReadonlyArray<Answer<QuestionType, A, T>> = [],
+  options: { readonly obsolete?: boolean } = {}
 ): {
   results: ReadonlyArray<Result<A, T>>;
   questions: ReadonlyArray<Question<QuestionType, A, T>>;
