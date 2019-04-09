@@ -11,22 +11,9 @@ import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
 test("Passes when composite rules are passing", t => {
-  const video = (
-    <video
-      src="../test-assets/perspective-video/perspective-video-with-captions-silent.mp4"
-      controls
-    />
-  );
+  const video = <video src="foo.mp4" controls />;
 
-  const textAlternative = (
-    <p>
-      Not being able to use your computer because your mouse doesn't work, is
-      frustrating. Many people use only the keyboard to navigate websites.
-      Either through preference or circumstance. This is solved by keyboard
-      compatibility. Keyboard compatibility is described in WCAG. See the video
-      below to watch the same information again in video form.
-    </p>
-  );
+  const textAlternative = <p>Foo bar?</p>;
 
   const document = documentFromNodes([
     <div>

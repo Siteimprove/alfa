@@ -11,14 +11,8 @@ import { outcome } from "../helpers/outcome";
 test("Passes when non-streaming video elements have all visual information also contained in the audio", t => {
   const video = (
     <video controls>
-      <source
-        src="../test-assets/rabbit-video/video-with-voiceover.mp4"
-        type="video/mp4"
-      />
-      <source
-        src="../test-assets/rabbit-video/video-with-voiceover.webm"
-        type="video/webm"
-      />
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
     </video>
   );
 
@@ -61,8 +55,8 @@ test("Passes when non-streaming video elements have all visual information also 
 test("Fails when non-streaming video elements have no visual information also contained in the audio", t => {
   const video = (
     <video controls>
-      <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
-      <source src="../test-assets/rabbit-video/video.webm" type="video/webm" />
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
     </video>
   );
 
@@ -103,9 +97,7 @@ test("Fails when non-streaming video elements have no visual information also co
 });
 
 test("Is inapplicable when element is not a video element", t => {
-  const img = (
-    <img src="../test-assets/perspective-video/perspective-video-with-captions.mp4" />
-  );
+  const img = <img src="foo.mp4" />;
 
   const document = documentFromNodes([img]);
 
@@ -146,8 +138,8 @@ test("Is inapplicable when element is not a video element", t => {
 test("Cannot tell when no answers are passed", t => {
   const video = (
     <video controls>
-      <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
-      <source src="../test-assets/rabbit-video/video.webm" type="video/webm" />
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
     </video>
   );
 

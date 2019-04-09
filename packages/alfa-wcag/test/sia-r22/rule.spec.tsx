@@ -9,12 +9,7 @@ import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
 test("Passes when captions are available for audio information in non-streaming video elements", t => {
-  const video = (
-    <video
-      src="../test-assets/perspective-video/perspective-video-with-captions.mp4"
-      controls
-    />
-  );
+  const video = <video src="foo.mp4" controls />;
 
   const document = documentFromNodes([video]);
 
@@ -53,12 +48,7 @@ test("Passes when captions are available for audio information in non-streaming 
 });
 
 test("Fails when no captions are available for audio information in non-streaming video elements", t => {
-  const video = (
-    <video
-      src="../test-assets/perspective-video/perspective-video-with-captions.mp4"
-      controls
-    />
-  );
+  const video = <video src="foo.mp4" controls />;
 
   const document = documentFromNodes([video]);
 
@@ -97,9 +87,7 @@ test("Fails when no captions are available for audio information in non-streamin
 });
 
 test("Is inapplicable when element is not a video element", t => {
-  const img = (
-    <img src="../test-assets/perspective-video/perspective-video-with-captions.mp4" />
-  );
+  const img = <img src="foo.mp4" />;
 
   const document = documentFromNodes([img]);
 
@@ -112,12 +100,7 @@ test("Is inapplicable when element is not a video element", t => {
 });
 
 test("Cannot tell when no answers are passed", t => {
-  const video = (
-    <video
-      src="../test-assets/perspective-video/perspective-video-with-captions.mp4"
-      controls
-    />
-  );
+  const video = <video src="foo.mp4" controls />;
 
   const document = documentFromNodes([video]);
 

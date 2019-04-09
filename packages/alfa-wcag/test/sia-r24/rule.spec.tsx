@@ -11,17 +11,15 @@ import { outcome } from "../helpers/outcome";
 test("Passes when non-streaming video elements have all audio and visual information available in a transcript", t => {
   const video = (
     <video controls>
-      <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
-      <source src="../test-assets/rabbit-video/video.webm" type="video/webm" />
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
     </video>
   );
 
   const document = documentFromNodes([
     <div>
       {video}
-      <a href="/test-assets/moon-audio/moon-speech-transcript.html">
-        Transcript
-      </a>
+      <a href="page.html">Transcript</a>
     </div>
   ]);
 
@@ -62,8 +60,8 @@ test("Passes when non-streaming video elements have all audio and visual informa
 test("Fails when non-streaming video elements have no audio and visual information available in a transcript", t => {
   const video = (
     <video controls>
-      <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
-      <source src="../test-assets/rabbit-video/video.webm" type="video/webm" />
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
     </video>
   );
 
@@ -104,9 +102,7 @@ test("Fails when non-streaming video elements have no audio and visual informati
 });
 
 test("Is inapplicable when element is not a video element", t => {
-  const img = (
-    <img src="../test-assets/perspective-video/perspective-video-with-captions.mp4" />
-  );
+  const img = <img src="foo.mp4" />;
 
   const document = documentFromNodes([img]);
 
@@ -131,8 +127,8 @@ test("Is inapplicable when element is not a video element", t => {
 test("Cannot tell when no answers are passed", t => {
   const video = (
     <video controls>
-      <source src="../test-assets/rabbit-video/video.mp4" type="video/mp4" />
-      <source src="../test-assets/rabbit-video/video.webm" type="video/webm" />
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
     </video>
   );
 

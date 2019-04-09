@@ -16,9 +16,7 @@ test("Passes when non-streaming audio elements has a text alternative or caption
   const document = documentFromNodes([
     <div>
       {audio}
-      <a href="/test-assets/moon-audio/moon-speech-transcript.html">
-        Transcript
-      </a>
+      <a href="page.html">Transcript</a>
     </div>
   ]);
 
@@ -57,12 +55,7 @@ test("Passes when non-streaming audio elements has a text alternative or caption
 });
 
 test("Fails when non-streaming audio elements has no text alternative or captions for all included auditory information", t => {
-  const audio = (
-    <audio
-      src="../test-assets/perspective-video/perspective-video-with-captions.mp4"
-      controls
-    />
-  );
+  const audio = <audio src="foo.mp4" controls />;
 
   const document = documentFromNodes([audio]);
 
@@ -101,9 +94,7 @@ test("Fails when non-streaming audio elements has no text alternative or caption
 });
 
 test("Is inapplicable when element is not a audio element", t => {
-  const img = (
-    <img src="../test-assets/perspective-video/perspective-video-with-captions.mp4" />
-  );
+  const img = <img src="foo.mp4" />;
 
   const document = documentFromNodes([img]);
 
@@ -126,12 +117,7 @@ test("Is inapplicable when element is not a audio element", t => {
 });
 
 test("Cannot tell when no answers are passed", t => {
-  const audio = (
-    <audio
-      src="../test-assets/perspective-video/perspective-video-with-captions.mp4"
-      controls
-    />
-  );
+  const audio = <audio src="foo.mp4" controls />;
 
   const document = documentFromNodes([audio]);
 
