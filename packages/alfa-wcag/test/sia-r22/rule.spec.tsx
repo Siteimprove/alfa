@@ -26,6 +26,22 @@ test("Passes when captions are available for audio information in non-streaming 
     [
       {
         rule: SIA_R22,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R22,
+        type: QuestionType.Boolean,
+        id: "has-audio",
+        aspect: document,
+        target: video,
+        answer: true
+      },
+      {
+        rule: SIA_R22,
         id: "has-captions",
         type: QuestionType.Boolean,
         aspect: document,
@@ -52,6 +68,22 @@ test("Fails when no captions are available for audio information in non-streamin
     { document, device: getDefaultDevice() },
     { failed: [video] },
     [
+      {
+        rule: SIA_R22,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R22,
+        type: QuestionType.Boolean,
+        id: "has-audio",
+        aspect: document,
+        target: video,
+        answer: true
+      },
       {
         rule: SIA_R22,
         id: "has-captions",
