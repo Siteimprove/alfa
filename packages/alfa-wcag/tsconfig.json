@@ -114,6 +114,9 @@
       "path": "../alfa-test"
     },
     {
+      "path": "../alfa-unicode"
+    },
+    {
       "path": "../alfa-util"
     }
   ]
