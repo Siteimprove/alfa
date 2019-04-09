@@ -9,15 +9,15 @@ import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
 test("Passes when role attributes have valid values", t => {
-  const img = <img role="presentation xyz" src="" />;
-  const document = documentFromNodes([img]);
+  const span = <span role="button link" />;
+  const document = documentFromNodes([span]);
 
   outcome(
     t,
     SIA_R21,
     { document, device: getDefaultDevice() },
     {
-      passed: [img.attributes[0]]
+      passed: [span.attributes[0]]
     }
   );
 });
