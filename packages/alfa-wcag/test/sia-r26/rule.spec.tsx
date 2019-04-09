@@ -1,4 +1,4 @@
-import { Outcome } from "@siteimprove/alfa-act";
+import { Outcome, QuestionType } from "@siteimprove/alfa-act";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
@@ -16,16 +16,20 @@ test("Passes when non-streaming silent video has a media alternative for text on
     />
   );
 
+  const textAlternative = (
+    <p>
+      Not being able to use your computer because your mouse doesn't work, is
+      frustrating. Many people use only the keyboard to navigate websites.
+      Either through preference or circumstance. This is solved by keyboard
+      compatibility. Keyboard compatibility is described in WCAG. See the video
+      below to watch the same information again in video form.
+    </p>
+  );
+
   const document = documentFromNodes([
     <div>
       {video}
-      <p>
-        Not being able to use your computer because your mouse doesn't work, is
-        frustrating. Many people use only the keyboard to navigate websites.
-        Either through preference or circumstance. This is solved by keyboard
-        compatibility. Keyboard compatibility is described in WCAG. See the
-        video below to watch the same information again in video form.
-      </p>
+      {textAlternative}
     </div>
   ]);
 
@@ -37,24 +41,35 @@ test("Passes when non-streaming silent video has a media alternative for text on
     [
       {
         rule: SIA_R26,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
         aspect: document,
         target: video,
-        answer: true
+        answer: false
       },
       {
         rule: SIA_R26,
-        expectation: 2,
+        type: QuestionType.Boolean,
+        id: "has-audio",
         aspect: document,
         target: video,
-        answer: true
+        answer: false
       },
       {
         rule: SIA_R26,
-        expectation: 3,
+        type: QuestionType.Node,
+        id: "text-alternative",
         aspect: document,
         target: video,
-        answer: true
+        answer: textAlternative
+      },
+      {
+        rule: SIA_R26,
+        type: QuestionType.Node,
+        id: "label",
+        aspect: document,
+        target: video,
+        answer: textAlternative
       }
     ]
   );
@@ -78,24 +93,35 @@ test("Fails when non-streaming silent video has no media alternative for text on
     [
       {
         rule: SIA_R26,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
         aspect: document,
         target: video,
         answer: false
       },
       {
         rule: SIA_R26,
-        expectation: 2,
+        type: QuestionType.Boolean,
+        id: "has-audio",
         aspect: document,
         target: video,
         answer: false
       },
       {
         rule: SIA_R26,
-        expectation: 3,
+        type: QuestionType.Node,
+        id: "text-alternative",
         aspect: document,
         target: video,
-        answer: false
+        answer: null
+      },
+      {
+        rule: SIA_R26,
+        type: QuestionType.Node,
+        id: "label",
+        aspect: document,
+        target: video,
+        answer: null
       }
     ]
   );
@@ -116,24 +142,35 @@ test("Is inapplicable when element is not a video element", t => {
     [
       {
         rule: SIA_R26,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "is-streaming",
         aspect: document,
         target: img,
         answer: false
       },
       {
         rule: SIA_R26,
-        expectation: 1,
+        type: QuestionType.Boolean,
+        id: "has-audio",
         aspect: document,
         target: img,
         answer: false
       },
       {
         rule: SIA_R26,
-        expectation: 1,
+        type: QuestionType.Node,
+        id: "text-alternative",
         aspect: document,
         target: img,
-        answer: false
+        answer: null
+      },
+      {
+        rule: SIA_R26,
+        type: QuestionType.Node,
+        id: "label",
+        aspect: document,
+        target: img,
+        answer: null
       }
     ]
   );
