@@ -17,7 +17,6 @@ test("Passes when element has a valid value that corresponds to a non-abstract a
       aria-orientation="vertical"
       aria-posinset="40"
       aria-valuemax="100"
-      aria-describedat="https://example.com"
     />
   );
 
@@ -35,8 +34,7 @@ test("Passes when element has a valid value that corresponds to a non-abstract a
         div.attributes[3],
         div.attributes[4],
         div.attributes[5],
-        div.attributes[6],
-        div.attributes[7]
+        div.attributes[6]
       ]
     }
   );
@@ -44,13 +42,6 @@ test("Passes when element has a valid value that corresponds to a non-abstract a
 
 test("Fails when element has invalid aria attributes", t => {
   const div = <div role="main" aria-live="nope" />;
-  const document = documentFromNodes([div]);
-
-  outcome(t, SIA_R19, { document }, { failed: [div.attributes[1]] });
-});
-
-test("Fails when element has invalid aria uri attributes", t => {
-  const div = <div role="main" aria-describedat="nope" />;
   const document = documentFromNodes([div]);
 
   outcome(t, SIA_R19, { document }, { failed: [div.attributes[1]] });

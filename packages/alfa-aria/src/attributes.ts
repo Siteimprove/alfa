@@ -91,14 +91,6 @@ export const DescribedBy: Attribute = {
 };
 
 /**
- * @see https://www.w3.org/TR/wai-aria/#aria-describedat
- */
-export const DescribedAt: Attribute = {
-  name: "aria-describedat",
-  type: "uri"
-};
-
-/**
  * @see https://www.w3.org/TR/wai-aria/#aria-details
  */
 export const Details: Attribute = {
