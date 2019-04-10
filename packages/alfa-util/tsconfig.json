@@ -16,6 +16,7 @@
     "src/object/keys.ts",
     "src/object/values.ts",
     "src/option.ts",
+    "src/result.ts",
     "src/set/intersect.ts",
     "src/set/subtract.ts",
     "src/set/union.ts",
