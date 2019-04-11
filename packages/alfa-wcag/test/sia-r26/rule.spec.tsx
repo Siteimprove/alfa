@@ -8,73 +8,72 @@ import { SIA_R26 } from "../../src/sia-r26/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("Passes when non-streaming silent video has a media alternative for text on the page", t => {
-  const video = <video src="foo.mp4" controls />;
+test("Passes when non-streaming audio has a media alternative for text on the page", t => {
+  const audio = <audio src="foo.mp4" controls />;
 
   const textAlternative = <p>Foo bar?</p>;
 
   const document = documentFromNodes([
     <div>
-      {video}
+      {audio}
       {textAlternative}
     </div>
   ]);
 
   outcome(
     t,
-    SIA_R26,
+    SIA_R29,
     { document, device: getDefaultDevice() },
-    { passed: [video] },
+    { passed: [audio] },
     [
       {
-        rule: SIA_R26,
+        rule: SIA_R29,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
-        target: video,
+        target: audio,
         answer: false
       },
       {
-        rule: SIA_R26,
+        rule: SIA_R29,
         type: QuestionType.Boolean,
-        id: "has-audio",
+        id: "is-playing",
         aspect: document,
-        target: video,
-        answer: false
+        target: audio,
+        answer: true
       },
       {
-        rule: SIA_R26,
+        rule: SIA_R29,
         type: QuestionType.Node,
         id: "text-alternative",
         aspect: document,
-        target: video,
+        target: audio,
         answer: textAlternative
       },
       {
-        rule: SIA_R26,
+        rule: SIA_R29,
         type: QuestionType.Node,
         id: "label",
         aspect: document,
-        target: video,
+        target: audio,
         answer: textAlternative
       }
     ]
   );
 });
 
-test("Fails when non-streaming silent video has no media alternative for text on the page", t => {
-  const video = (
+test("Fails when non-streaming audio has no media alternative for text on the page", t => {
+  const audio = (
     <video controls>
-      <source src="foo.mp4" type="video/mp4" />
-      <source src="foo.webm" type="video/webm" />
+      <source src="foo.mp4" type="audio/mp4" />
     </video>
   );
 
-  const document = documentFromNodes([video]);
+  const document = documentFromNodes([audio]);
 
   outcome(
     t,
-    SIA_R26,
+    SIA_R29,
     { document, device: getDefaultDevice() },
     { failed: [video] },
     [
