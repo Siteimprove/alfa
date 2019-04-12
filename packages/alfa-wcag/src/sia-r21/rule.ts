@@ -46,11 +46,14 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
       expectations: (aspect, target) => {
         const owner = getOwnerElement(target, document)!;
 
-        return map(getRole(owner, document, device, { implicit: false }), role => {
-          return {
-            1: { holds: role !== null }
-          };
-        });
+        return map(
+          getRole(owner, document, device, { implicit: false }),
+          role => {
+            return {
+              1: { holds: role !== null }
+            };
+          }
+        );
       }
     };
   }
