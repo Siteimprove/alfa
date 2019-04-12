@@ -14,6 +14,8 @@ import { concat, URL, values } from "@siteimprove/alfa-util";
 
 import { EN } from "./locales/en";
 
+const whitespace = /\s+/;
+
 export const SIA_R19: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
@@ -69,9 +71,11 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
             break;
 
           case "id-reference":
+            valid = whitespace.test(value) === false;
             break;
 
           case "id-reference-list":
+            valid = true;
             break;
 
           case "integer":
