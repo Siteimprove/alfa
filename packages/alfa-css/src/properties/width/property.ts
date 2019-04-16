@@ -42,7 +42,7 @@ export const width: Longhand<
 
       case ValueType.Percentage:
         if (parentValue.type !== ValueType.Length) {
-          return Values.keyword("auto");
+          return value;
         }
         return Resolvers.percentage(value, parentValue, device, style);
     }
