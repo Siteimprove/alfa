@@ -1,6 +1,6 @@
 import {
   Element,
-  getAttribute,
+  getId,
   isElement,
   Node,
   querySelector
@@ -19,14 +19,14 @@ export function resolveReferences(
   const elements: Array<Element> = [];
 
   for (const id of references.trim().split(whitespace)) {
-    const element = querySelector(
+    const element = querySelector<Element>(
       node,
       context,
-      node => isElement(node) && getAttribute(node, "id") === id
+      node => isElement(node) && getId(node) === id
     );
 
     if (element !== null) {
-      elements.push(element as Element);
+      elements.push(element);
     }
   }
 
