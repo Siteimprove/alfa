@@ -3,9 +3,11 @@ import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { SIA_R22 } from "../../src/sia-r22/rule";
-import { SIA_R27 } from "../../src/sia-r27/rule";
-import { SIA_R31 } from "../../src/sia-r31/rule";
+import { SIA_R26 } from "../../src/sia-r26/rule";
+import { SIA_R32 } from "../../src/sia-r32/rule";
+import { SIA_R33 } from "../../src/sia-r33/rule";
+import { SIA_R34 } from "../../src/sia-r34/rule";
+import { SIA_R35 } from "../../src/sia-r35/rule";
 
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
@@ -24,20 +26,12 @@ test("Passes when composite rules are passing", t => {
 
   outcome(
     t,
-    SIA_R27,
+    SIA_R35,
     { document, device: getDefaultDevice() },
     { passed: [video] },
     [
       {
-        rule: SIA_R22,
-        id: "has-captions",
-        type: QuestionType.Boolean,
-        aspect: document,
-        target: video,
-        answer: true
-      },
-      {
-        rule: [SIA_R22, SIA_R31],
+        rule: [SIA_R26, SIA_R32, SIA_R33, SIA_R34],
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -45,15 +39,15 @@ test("Passes when composite rules are passing", t => {
         answer: false
       },
       {
-        rule: [SIA_R22, SIA_R31],
+        rule: [SIA_R26, SIA_R32, SIA_R33, SIA_R34],
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
         target: video,
-        answer: true
+        answer: false
       },
       {
-        rule: SIA_R31,
+        rule: SIA_R26,
         type: QuestionType.Node,
         id: "text-alternative",
         aspect: document,
@@ -61,12 +55,36 @@ test("Passes when composite rules are passing", t => {
         answer: textAlternative
       },
       {
-        rule: SIA_R31,
+        rule: SIA_R26,
         type: QuestionType.Node,
         id: "label",
         aspect: document,
         target: video,
         answer: textAlternative
+      },
+      {
+        rule: SIA_R32,
+        type: QuestionType.Boolean,
+        id: "has-audio-track",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R33,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R34,
+        type: QuestionType.Boolean,
+        id: "track-describes-video",
+        aspect: document,
+        target: video,
+        answer: false
       }
     ]
   );

@@ -3,41 +3,34 @@ import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { SIA_R22 } from "../../src/sia-r22/rule";
-import { SIA_R27 } from "../../src/sia-r27/rule";
+import { SIA_R24 } from "../../src/sia-r24/rule";
+import { SIA_R25 } from "../../src/sia-r25/rule";
 import { SIA_R31 } from "../../src/sia-r31/rule";
+import { SIA_R36 } from "../../src/sia-r36/rule";
+import { SIA_R38 } from "../../src/sia-r38/rule";
 
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
 test("Passes when composite rules are passing", t => {
-  const video = <video src="foo.mp4" controls />;
+  const video = (
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+      <track kind="descriptions" src="foo.vtt" />
+    </video>
+  );
 
-  const textAlternative = <p>Foo bar?</p>;
-
-  const document = documentFromNodes([
-    <div>
-      {video}
-      {textAlternative}
-    </div>
-  ]);
+  const document = documentFromNodes([<div>{video}</div>]);
 
   outcome(
     t,
-    SIA_R27,
+    SIA_R38,
     { document, device: getDefaultDevice() },
     { passed: [video] },
     [
       {
-        rule: SIA_R22,
-        id: "has-captions",
-        type: QuestionType.Boolean,
-        aspect: document,
-        target: video,
-        answer: true
-      },
-      {
-        rule: [SIA_R22, SIA_R31],
+        rule: [SIA_R24, SIA_R25, SIA_R31, SIA_R36],
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -45,9 +38,25 @@ test("Passes when composite rules are passing", t => {
         answer: false
       },
       {
-        rule: [SIA_R22, SIA_R31],
+        rule: [SIA_R24, SIA_R25, SIA_R31, SIA_R36],
         type: QuestionType.Boolean,
         id: "has-audio",
+        aspect: document,
+        target: video,
+        answer: true
+      },
+      {
+        rule: SIA_R24,
+        type: QuestionType.Boolean,
+        id: "has-transcript",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        rule: SIA_R25,
+        type: QuestionType.Boolean,
+        id: "has-description",
         aspect: document,
         target: video,
         answer: true
@@ -58,7 +67,7 @@ test("Passes when composite rules are passing", t => {
         id: "text-alternative",
         aspect: document,
         target: video,
-        answer: textAlternative
+        answer: false
       },
       {
         rule: SIA_R31,
@@ -66,7 +75,15 @@ test("Passes when composite rules are passing", t => {
         id: "label",
         aspect: document,
         target: video,
-        answer: textAlternative
+        answer: false
+      },
+      {
+        rule: SIA_R36,
+        type: QuestionType.Boolean,
+        id: "track-describes-video",
+        aspect: document,
+        target: video,
+        answer: true
       }
     ]
   );

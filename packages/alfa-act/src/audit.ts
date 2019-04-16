@@ -81,14 +81,22 @@ export function audit<
       aspect: A,
       target: T
     ): AnswerType[Q] | null {
-      const answer = answers.find(
-        answer =>
-          answer.type === type &&
-          answer.id === id &&
-          answer.rule.id === rule.id &&
-          answer.aspect === aspect &&
-          answer.target === target
-      );
+      const answer = answers.find(answer => {
+        if (
+          answer.type !== type ||
+          answer.id !== id ||
+          answer.aspect !== aspect ||
+          answer.target !== target
+        ) {
+          return false;
+        }
+
+        if ("length" in answer.rule) {
+          return answer.rule.find(found => found.id === rule.id) !== undefined;
+        }
+
+        return answer.rule.id === rule.id;
+      });
 
       if (answer !== undefined) {
         return answer.answer;
