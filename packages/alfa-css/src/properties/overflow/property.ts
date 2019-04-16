@@ -1,16 +1,12 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { Longhand } from "../../properties";
-import { Values } from "../../values";
-import { getSpecifiedProperty } from "../helpers/get-property";
+import { Shorthand } from "../../properties";
 import { OverflowGrammar } from "./grammar";
-import { Overflow } from "./types";
-
-const { keyword } = Values;
 
 /**
  * @see https://drafts.csswg.org/css-overflow-3/#propdef-overflow
  */
-export const overflow: Longhand<Overflow> = {
+export const overflow: Shorthand<"overflowX" | "overflowY"> = {
+  longhands: ["overflowX", "overflowY"],
   parse(input) {
     const parser = parse(input, OverflowGrammar);
 
@@ -19,11 +15,5 @@ export const overflow: Longhand<Overflow> = {
     }
 
     return parser.result;
-  },
-  initial() {
-    return keyword("visible");
-  },
-  computed(style) {
-    return getSpecifiedProperty(style, "overflow");
   }
 };

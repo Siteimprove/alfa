@@ -1,7 +1,10 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
-import { getSpecifiedProperty } from "../helpers/get-property";
+import {
+  getComputedProperty,
+  getSpecifiedProperty
+} from "../helpers/get-property";
 import { OverflowGrammar } from "./grammar";
 import { Overflow } from "./types";
 
@@ -24,6 +27,15 @@ export const overflowY: Longhand<Overflow> = {
     return keyword("visible");
   },
   computed(style) {
+    const value = getSpecifiedProperty(style, "overflowY");
+
+    switch (value) {
+      case keyword("visible"):
+        return keyword("auto");
+      case keyword("clip"):
+        return keyword("hidden");
+    }
+
     return getSpecifiedProperty(style, "overflowY");
   }
 };
