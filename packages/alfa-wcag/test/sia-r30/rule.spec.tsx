@@ -13,12 +13,12 @@ import { outcome } from "../helpers/outcome";
 test("Passes when composite rules are passing", t => {
   const audio = <audio src="foo.mp4" controls />;
 
-  const textAlternative = <p>Foo bar?</p>;
+  const transcript = <p>Foo bar?</p>;
 
   const document = documentFromNodes([
     <div>
       {audio}
-      {textAlternative}
+      {transcript}
     </div>
   ]);
 
@@ -58,7 +58,7 @@ test("Passes when composite rules are passing", t => {
         id: "text-alternative",
         aspect: document,
         target: audio,
-        answer: textAlternative
+        answer: false
       },
       {
         rule: SIA_R29,
@@ -66,7 +66,7 @@ test("Passes when composite rules are passing", t => {
         id: "label",
         aspect: document,
         target: audio,
-        answer: textAlternative
+        answer: false
       }
     ]
   );
