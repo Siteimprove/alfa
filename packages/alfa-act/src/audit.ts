@@ -1,5 +1,5 @@
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
-import { find, keys, Mutable, values } from "@siteimprove/alfa-util";
+import { keys, Mutable, values } from "@siteimprove/alfa-util";
 import { isAtomic } from "./guards";
 import { sortRules } from "./sort-rules";
 import {
@@ -81,14 +81,22 @@ export function audit<
       aspect: A,
       target: T
     ): AnswerType[Q] | null {
-      const answer = answers.find(answer =>
-        answer.type === type && answer.id === id && isArray(answer.rule)
-          ? find(answer.rule, r => (r as Rule<A, T>).id === rule.id) !==
-            undefined
-          : (answer.rule as Rule<A, T>).id === rule.id &&
-            answer.aspect === aspect &&
-            answer.target === target
-      );
+      const answer = answers.find(answer => {
+        if (
+          answer.type !== type ||
+          answer.id !== id ||
+          answer.aspect !== aspect ||
+          answer.target !== target
+        ) {
+          return false;
+        }
+
+        if ("length" in answer.rule) {
+          return answer.rule.find(found => found.id === rule.id) !== undefined;
+        }
+
+        return answer.rule.id === rule.id;
+      });
 
       if (answer !== undefined) {
         return answer.answer;
