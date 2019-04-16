@@ -14,6 +14,8 @@ export * from "./line-height/property";
 
 export * from "./opacity/property";
 
+export * from "./overflow/property";
+
 export * from "./text-decoration/color/property";
 export * from "./text-decoration/line/property";
 export * from "./text-decoration/style/property";
