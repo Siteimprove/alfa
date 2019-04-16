@@ -31,7 +31,7 @@ test("Passes when composite rules are passing", t => {
     { passed: [video] },
     [
       {
-        rule: SIA_R26,
+        rule: [SIA_R26, SIA_R32, SIA_R33, SIA_R34],
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -39,7 +39,7 @@ test("Passes when composite rules are passing", t => {
         answer: false
       },
       {
-        rule: SIA_R26,
+        rule: [SIA_R26, SIA_R32, SIA_R33, SIA_R34],
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
