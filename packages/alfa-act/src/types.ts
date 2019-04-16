@@ -138,10 +138,10 @@ export interface Answer<
   Q extends QuestionType,
   A extends Aspect,
   T extends Target
-> extends Question<Q, A, T> {
+> {
   readonly type: Q;
   readonly id: string;
-  readonly rule: Rule<A, T>;
+  readonly rule: Rule<A, T> | ReadonlyArray<Rule<A, T>>;
   readonly aspect: A;
   readonly target: T;
   readonly answer: AnswerType[Q] | null;
