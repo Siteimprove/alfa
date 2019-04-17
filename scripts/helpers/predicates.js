@@ -1,6 +1,6 @@
 /**
  * @template T
- * @typedef {function(T): boolean} Predicate<T>
+ * @typedef {function(T): boolean} Predicate
  */
 
 /**
