@@ -54,7 +54,7 @@ class Project {
 
     let next = this.getNextAffectedFile();
 
-    while (next !== undefined) {
+    while (next !== null) {
       const file = next;
 
       next = this.getNextAffectedFile();
@@ -65,20 +65,23 @@ class Project {
 
   /**
    * @private
-   * @return {string | undefined}
+   * @return {string | null}
    */
   getNextAffectedFile() {
     const next = this.program.emitNextAffectedFile(() => {});
 
-    if (next === undefined) {
-      return undefined;
+    if (next !== undefined) {
+      const { affected } = next;
+
+      if ("fileName" in affected) {
+        return path.relative(
+          this.host.getCurrentDirectory(),
+          affected.fileName
+        );
+      }
     }
 
-    const { affected } = next;
-
-    if ("fileName" in affected) {
-      return path.relative(this.host.getCurrentDirectory(), affected.fileName);
-    }
+    return null;
   }
 
   /**
