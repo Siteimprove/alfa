@@ -10,13 +10,11 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { URL, values } from "@siteimprove/alfa-util";
+import { concat, URL, values } from "@siteimprove/alfa-util";
 
 import { EN } from "./locales/en";
 
-function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
-  return a.concat(b);
-}
+const whitespace = /\s+/;
 
 export const SIA_R19: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
@@ -70,6 +68,14 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
 
           case "tristate":
             valid = value === "true" || value === "false" || value === "mixed";
+            break;
+
+          case "id-reference":
+            valid = whitespace.test(value) === false;
+            break;
+
+          case "id-reference-list":
+            valid = true;
             break;
 
           case "integer":

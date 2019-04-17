@@ -27,6 +27,11 @@ const Namespaces: Context = {
   wcag: "https://www.w3.org/TR/WCAG/#",
 
   /**
+   * @see https://www.w3.org/TR/wai-aria/
+   */
+  aria: "https://www.w3.org/TR/wai-aria/",
+
+  /**
    * @see https://github.com/ewilderj/doap
    */
   doap: "http://usefulinc.com/ns/doap#",
@@ -284,5 +289,20 @@ export namespace Contexts {
      * @see https://www.w3.org/TR/Pointers-in-RDF/#expressionProperty
      */
     expression: "ptr:expression"
+  };
+
+  /**
+   * @see https://www.w3.org/TR/Pointers-in-RDF/#relatedPointersClass
+   */
+  export const RelatedPointers: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    pointers: {
+      "@id": "ptr:groupPointer",
+      "@type": "ptr:Pointer",
+      "@container": "@set"
+    }
   };
 }

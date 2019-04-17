@@ -5,7 +5,7 @@ import {
   isExposed,
   isVisible
 } from "@siteimprove/alfa-aria";
-import { BrowserSpecific, map, some } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -26,6 +26,8 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Stream } from "@siteimprove/alfa-lang";
 
+const { map } = BrowserSpecific;
+
 export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r10.html",
   requirements: [{ id: "wcag:identify-input-purpose", partial: true }],
@@ -35,18 +37,35 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
         return querySelectorAll<Element>(
           document,
           document,
-          node =>
-            isElement(node) &&
-            (isVisible(node, document, device) ||
-              some(isExposed(node, document, device))) &&
-            some(isAutocompletable(node, document, device)) &&
-            hasAutocomplete(node)
+          node => {
+            return isElement(node) && hasAutocomplete(node);
+          },
+          {
+            flattened: true
+          }
         ).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: getAttributeNode(element, "autocomplete")!
-          };
+          const attribute = getAttributeNode(element, "autocomplete")!;
+
+          return map(isExposed(element, document, device), isExposed => {
+            if (!isExposed && !isVisible(element, document, device)) {
+              return {
+                applicable: false,
+                aspect: document,
+                target: attribute
+              };
+            }
+
+            return map(
+              isAutocompletable(element, document, device),
+              isAutocompletable => {
+                return {
+                  applicable: isAutocompletable,
+                  aspect: document,
+                  target: attribute
+                };
+              }
+            );
+          });
         });
       },
 
@@ -116,9 +135,10 @@ function isAutocompletable(
 }
 
 function hasAutocomplete(element: Element): boolean {
-  const autocomplete = getAttribute(element, "autocomplete", { trim: true });
-
-  return autocomplete !== null && autocomplete !== "";
+  return (
+    hasAttribute(element, "autocomplete") &&
+    getAttribute(element, "autocomplete") !== ""
+  );
 }
 
 function isValidAutocomplete(autocomplete: Attribute, context: Node): boolean {

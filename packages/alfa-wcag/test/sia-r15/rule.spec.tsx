@@ -8,7 +8,7 @@ import { SIA_R15 } from "../../src/sia-r15/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R15 passes when an iframe has a unique accessible name", t => {
+test("Passes when an iframe has a unique accessible name", t => {
   const foo = <iframe src="https://foo.bar/baz.html" aria-label="foo" />;
   const bar = <iframe src="https://foo.bar/" aria-label="bar" />;
   const html = (
@@ -28,7 +28,7 @@ test("SIA-R15 passes when an iframe has a unique accessible name", t => {
   );
 });
 
-test("SIA-R15 fails when an iframe has no unique accessible name", t => {
+test("Fails when an iframe has no unique accessible name", t => {
   const foo = <iframe src="https://foo.bar/baz.html" aria-label="foo" />;
   const bar = <iframe src="https://foo.bar/" aria-label="foo" />;
   const html = (
@@ -48,7 +48,7 @@ test("SIA-R15 fails when an iframe has no unique accessible name", t => {
   );
 });
 
-test("SIA-R15 is inapplicable when element is not in the accessibility tree", t => {
+test("Is inapplicable when element is not in the accessibility tree", t => {
   const foo = <iframe src="https://foo.bar/baz.html" />;
   const bar = <iframe src="https://foo.bar/" />;
   const html = (

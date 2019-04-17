@@ -1,5 +1,6 @@
 export const enum PointerType {
   Range = "range",
+  Group = "group",
 
   // DOM pointers
   Document = "document",
@@ -32,6 +33,15 @@ export interface RangePointer<R, P extends Pointer<R>> extends Pointer<R> {
    * The inclusive end of the pointer range.
    */
   readonly end: P;
+}
+
+export interface GroupPointer<R, P extends Pointer<R>> extends Pointer<R> {
+  readonly type: PointerType.Group;
+
+  /**
+   * The pointers belonging to the group.
+   */
+  readonly pointers: ReadonlyArray<P>;
 }
 
 export interface NodePointer<R> extends Pointer<R> {

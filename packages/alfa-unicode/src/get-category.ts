@@ -6,7 +6,7 @@ const { isArray } = Array;
 // Allocate a byte array with enough slots for the entire valid Unicode range.
 // Each slot represents a Unicode code point and its value the category of the
 // code point.
-const categories = new Uint8Array(0x110000);
+const categories = new Uint32Array(0x110000);
 
 for (let i = 0, n = Characters.length; i < n; i++) {
   const { code, category } = Characters[i];

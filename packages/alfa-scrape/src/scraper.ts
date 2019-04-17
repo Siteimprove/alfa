@@ -87,6 +87,10 @@ export class Scraper {
     let origin = typeof url === "string" ? new URL(url) : url;
 
     page.on("response", res => {
+      if (res.request().resourceType() !== "document") {
+        return;
+      }
+
       const destination = new URL(res.url());
 
       if (origin.href === destination.href) {

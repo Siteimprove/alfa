@@ -7,7 +7,7 @@ import { SIA_R1 } from "../../src/sia-r1/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R1 passes when document has a title", t => {
+test("Passes when document has a title", t => {
   const document = documentFromNodes([
     <html>
       <head>
@@ -19,7 +19,7 @@ test("SIA-R1 passes when document has a title", t => {
   outcome(t, SIA_R1, { document }, { passed: [document] });
 });
 
-test("SIA-R1 fails when document has no title", t => {
+test("Fails when document has no title", t => {
   const document = documentFromNodes([
     <html>
       <head />
@@ -29,7 +29,7 @@ test("SIA-R1 fails when document has no title", t => {
   outcome(t, SIA_R1, { document }, { failed: [document] });
 });
 
-test("SIA-R1 fails when only other namespace has a title", t => {
+test("Fails when only other namespace has a title", t => {
   const document = documentFromNodes([
     <html>
       <head>
@@ -43,7 +43,7 @@ test("SIA-R1 fails when only other namespace has a title", t => {
   outcome(t, SIA_R1, { document }, { failed: [document] });
 });
 
-test("SIA-R1 only works in the HTML namespace", t => {
+test("Only applies to the HTML namespace", t => {
   const document = documentFromNodes([
     <svg>
       <title>Hello World</title>

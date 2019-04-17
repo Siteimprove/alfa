@@ -36,10 +36,17 @@ export type AspectKeysFor<A extends Aspect> = {
 export type AspectsFor<A extends Aspect> = Partial<Aspects> &
   { readonly [P in AspectKeysFor<A>]: Aspects[P] };
 
+export type Group<T> = ReadonlySet<T>;
+
 /**
  * A target is an entity that a rule can apply to and make expectations about.
  */
-export type Target = Attribute | Document | Element;
+export type Target =
+  | Attribute
+  | Group<Attribute>
+  | Document
+  | Element
+  | Group<Element>;
 
 export const enum Outcome {
   Passed = "passed",
@@ -123,7 +130,7 @@ export interface Question<
 
 export interface AnswerType {
   [QuestionType.Boolean]: boolean;
-  [QuestionType.Node]: Element | Text;
+  [QuestionType.Node]: Element | Text | false;
   [QuestionType.NodeList]: ReadonlyArray<Element | Text>;
 }
 
@@ -131,10 +138,10 @@ export interface Answer<
   Q extends QuestionType,
   A extends Aspect,
   T extends Target
-> extends Question<Q, A, T> {
+> {
   readonly type: Q;
   readonly id: string;
-  readonly rule: Rule<A, T>;
+  readonly rule: Rule<A, T> | ReadonlyArray<Rule<A, T>>;
   readonly aspect: A;
   readonly target: T;
   readonly answer: AnswerType[Q] | null;
@@ -217,7 +224,7 @@ export namespace Atomic {
 
 export namespace Composite {
   export type Expectations<A extends Aspect, T extends Target> = (
-    outcomes: ReadonlyArray<Pick<Result<A, T>, "outcome">>
+    outcomes: ReadonlyArray<{ outcome: Outcome }>
   ) => Evaluation | BrowserSpecific<Evaluation>;
 
   export interface Rule<A extends Aspect, T extends Target> {
@@ -229,22 +236,31 @@ export namespace Composite {
 
     readonly compose: (composition: Composition<A, T>) => void;
 
-    readonly evaluate: () => {
+    readonly evaluate: (
+      aspects: AspectsFor<A>
+    ) => {
       readonly expectations: Expectations<A, T>;
     };
   }
 }
 
-export class Composition<A extends Aspect, T extends Target>
-  implements Iterable<Atomic.Rule<A, T>> {
-  private readonly rules: Array<Atomic.Rule<A, T>> = [];
+// tslint:disable:no-any
 
-  public add<B extends A, U extends T>(rule: Atomic.Rule<B, U>): this {
-    this.rules.push((rule as unknown) as Atomic.Rule<A, T>);
-    return this;
-  }
+export class Composition<A extends Aspect, T extends Target> {
+  /**
+   * @internal
+   */
+  private readonly rules: Array<Atomic.Rule<any, any>> = [];
 
+  /**
+   * @internal
+   */
   public [Symbol.iterator](): Iterator<Atomic.Rule<A, T>> {
     return this.rules[Symbol.iterator]();
+  }
+
+  public add<B extends A, U extends T>(rule: Atomic.Rule<B, U>): this {
+    this.rules.push(rule);
+    return this;
   }
 }

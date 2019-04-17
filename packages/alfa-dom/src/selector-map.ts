@@ -216,14 +216,13 @@ function addEntry(
   key: string,
   entry: SelectorEntry
 ): void {
-  let entries = bucket.get(key);
+  const entries = bucket.get(key);
 
   if (entries === undefined) {
-    entries = [];
-    bucket.set(key, entries);
+    bucket.set(key, [entry]);
+  } else {
+    entries.push(entry);
   }
-
-  entries.push(entry);
 }
 
 function getEntries(bucket: SelectorBucket, key: string): Array<SelectorEntry> {

@@ -12,6 +12,7 @@ test("Passes when an image has a text alternative", t => {
   const image = (
     <img src="https://picsum.photos/200/300" alt="A placeholder image" />
   );
+
   const div = (
     <div
       role="img"
@@ -19,6 +20,7 @@ test("Passes when an image has a text alternative", t => {
       aria-label="A placeholder image"
     />
   );
+
   const document = documentFromNodes([image, div]);
 
   outcome(

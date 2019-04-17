@@ -8,7 +8,7 @@ import { SIA_R12 } from "../../src/sia-r12/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R12 passes when a button has an accessible name", t => {
+test("Passes when a button has an accessible name", t => {
   const input = <input type="button" aria-label="foo" />;
   const document = documentFromNodes([input]);
 
@@ -20,7 +20,7 @@ test("SIA-R12 passes when a button has an accessible name", t => {
   );
 });
 
-test("SIA-R12 fails when a button has no accessible name", t => {
+test("Fails when a button has no accessible name", t => {
   const input = <input type="button" />;
   const document = documentFromNodes([input]);
 
@@ -32,7 +32,7 @@ test("SIA-R12 fails when a button has no accessible name", t => {
   );
 });
 
-test("SIA-R12 is inapplicable when element is not in the accessibility tree", t => {
+test("Is inapplicable when element is not in the accessibility tree", t => {
   const input = <input type="button" aria-hidden="true" />;
   const document = documentFromNodes([input]);
 

@@ -1,5 +1,6 @@
 import { expandBrowsers } from "./expand-browsers";
 import { filter } from "./filter";
+import { find } from "./find";
 import { map } from "./map";
 import { reduce } from "./reduce";
 import { BrowserName, BrowserQuery, VersionSet } from "./types";
@@ -22,6 +23,7 @@ export type ValueList<T> = ReadonlyArray<
  */
 export class BrowserSpecific<T> {
   public static filter = filter;
+  public static find = find;
   public static map = map;
   public static reduce = reduce;
   public static unwrap = unwrap;

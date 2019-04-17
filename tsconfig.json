@@ -20,5 +20,9 @@
     "target": "es2015"
   },
   "files": [],
-  "references": [{ "path": "scripts" }, { "path": "packages" }]
+  "references": [
+    { "path": "docs/examples" },
+    { "path": "scripts" },
+    { "path": "packages" }
+  ]
 }

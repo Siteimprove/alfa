@@ -8,7 +8,7 @@ import { SIA_R16 } from "../../src/sia-r16/rule";
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
 
-test("SIA-R16 passes when an element has all required ARIA states and properties", t => {
+test("Passes when an element has all required ARIA states and properties", t => {
   const div = <div role="option" aria-selected />;
   const document = documentFromNodes([div]);
 
@@ -20,7 +20,7 @@ test("SIA-R16 passes when an element has all required ARIA states and properties
   );
 });
 
-test("SIA-R16 fails when an element is missing required ARIA states and properties", t => {
+test("Fails when an element is missing required ARIA states and properties", t => {
   const img = <img role="combobox" />;
   const document = documentFromNodes([img]);
 
@@ -32,7 +32,7 @@ test("SIA-R16 fails when an element is missing required ARIA states and properti
   );
 });
 
-test("SIA-R16 is inapplicable for elements without different explicit and implicit roles", t => {
+test("Is inapplicable for elements without different explicit and implicit roles", t => {
   const div = <div />;
   const document = documentFromNodes([div]);
 

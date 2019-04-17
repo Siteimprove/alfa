@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import * as path from "path";
+
 import { audit, toJson } from "../../../packages/alfa-act";
 import {
   Document,
@@ -9,28 +12,20 @@ import {
 import { Scraper } from "../../../packages/alfa-scrape";
 import { Rules } from "../../../packages/alfa-wcag";
 
-import {
-  removeDirectory,
-  writeFile
-} from "../../../scripts/helpers/file-system";
-import * as notify from "../../../scripts/helpers/notify";
-
 const scraper = new Scraper();
 
 const site = "https://alphagov.github.io/accessibility-tool-audit";
 
 scraper.scrape(`${site}/test-cases.html`).then(async page => {
-  removeDirectory("docs/examples/scrape-and-audit/result");
-
   for (const { id, url } of getUrls(page.document)) {
     const page = await scraper.scrape(`${site}/${url}`);
 
     const { results } = audit(page, Rules);
 
-    notify.success(url);
+    process.stdout.write(`${url}\n`);
 
-    writeFile(
-      `docs/examples/scrape-and-audit/result/${id}.json`,
+    fs.writeFileSync(
+      path.join(__dirname, "result", `${id}.json`),
       JSON.stringify(toJson(results, page), null, 2)
     );
   }

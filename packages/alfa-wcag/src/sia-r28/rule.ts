@@ -69,5 +69,5 @@ function isImageButton(element: Element, context: Node): boolean {
     return false;
   }
 
-  return getInputType(element) === InputType.Button;
+  return getInputType(element) === InputType.Image;
 }
