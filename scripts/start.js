@@ -1,6 +1,7 @@
 const { watchFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
-const { format, now } = require("./helpers/time");
+const time = require("./helpers/time");
+const { workspace } = require("./helpers/workspace");
 const notify = require("./helpers/notify");
 const { getSpecification } = require("./helpers/typescript");
 const { default: chalk } = require("chalk");
@@ -33,38 +34,52 @@ watchFiles(
   ],
   (event, file) => {
     failed = failed.filter(v => v !== file);
+
     const fileList = [file, ...(rerunFailed ? failed : [])];
+
     if (rerunFailed) {
       failed = [];
     }
 
     fileList.forEach(file => {
-      const start = now();
+      const start = time.now();
 
-      let success = diagnose(file) && build(file);
+      const project = workspace.projectFor(file);
 
-      if (isSpec(file)) {
-        success = success && test(file);
-      } else {
-        const spec = getSpecification(file);
-        if (spec !== null) {
-          success = success && test(spec);
+      if (project.addFile(file)) {
+        [...project.buildProgram()];
+
+        let success = diagnose(file, project) && build(file, project);
+
+        if (isSpec(file)) {
+          success = success && test(file);
+        } else {
+          const spec = getSpecification(file);
+
+          if (spec !== null) {
+            success = success && test(spec);
+          }
         }
-      }
 
-      const duration = now(start);
+        if (success) {
+          const duration = time.now(start);
 
-      if (success) {
-        notify.success(
-          `${file} ${format(duration, { color: "yellow", threshold: 400 })}`
-        );
-        if (!rerunFailed && failed.length > 0) {
-          failed.forEach(file => {
-            notify.warn(`${chalk.gray(file)} failed previously`);
-          });
+          notify.success(
+            `${file} ${time.format(duration, {
+              color: "yellow",
+              threshold: 400
+            })}`
+          );
+
+          if (!rerunFailed && failed.length > 0) {
+            failed.forEach(file => {
+              notify.warn(`${chalk.gray(file)} Failed previously`);
+            });
+          }
         }
       } else {
         failed.push(file);
+        notify.skip(file);
       }
     });
   }

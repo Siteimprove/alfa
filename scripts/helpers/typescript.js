@@ -3,7 +3,7 @@ const TypeScript = require("typescript");
 
 const { readFile, isFile } = require("./file-system");
 const { Project } = require("./project");
-const { Workspace, workspace } = require("./workspace");
+const { workspace } = require("./workspace");
 
 const { createSourceFile, ScriptTarget, SyntaxKind } = TypeScript;
 
@@ -30,15 +30,15 @@ exports.parseFile = parseFile;
 
 /**
  * @param {string} file
- * @param {Project | Workspace} [project]
+ * @param {Project} [project]
  * @return {boolean}
  */
-function isTestable(file, project = workspace) {
+function isTestable(file, project = workspace.projectFor(file)) {
   let isExported = false;
 
   return (
     true ===
-    project.walk(file, node => {
+    project.forEachChild(file, node => {
       const { modifiers } = node;
 
       if (

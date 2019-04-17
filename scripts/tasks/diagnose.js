@@ -3,17 +3,18 @@ const TypeScript = require("typescript");
 const TSLint = require("tslint");
 const { default: chalk } = require("chalk");
 
-const { Workspace, workspace } = require("../helpers/workspace");
+const { workspace } = require("../helpers/workspace");
 const { Project } = require("../helpers/project");
+const { isIgnored } = require("../helpers/git");
 const { isTestable, hasSpecification } = require("../helpers/typescript");
 const notify = require("../helpers/notify");
 
 /**
  * @param {string} file
- * @param {Project | Workspace} [project]
+ * @param {Project} [project]
  * @return {boolean}
  */
-function diagnose(file, project = workspace) {
+function diagnose(file, project = workspace.projectFor(file)) {
   if (
     file.includes("src") &&
     file.endsWith(".ts") &&
@@ -23,7 +24,7 @@ function diagnose(file, project = workspace) {
     notify.warn(`${chalk.gray(file)} Missing spec file`);
   }
 
-  const diagnostics = project.diagnose(file);
+  const diagnostics = [...project.getDiagnostics(file)];
 
   if (diagnostics.length > 0) {
     for (const diagnostic of diagnostics) {
@@ -33,9 +34,9 @@ function diagnose(file, project = workspace) {
     return false;
   }
 
-  const failures = project.lint(file);
+  const failures = [...project.getLintResults(file)];
 
-  if (failures.length > 0) {
+  if (failures.length > 0 && !isIgnored(file)) {
     let error = false;
 
     for (const failure of failures) {

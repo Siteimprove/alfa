@@ -1,7 +1,9 @@
 const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { Project } = require("./helpers/project");
+const { workspace } = require("./helpers/workspace");
 const { packages } = require("./helpers/meta");
+const { forEach } = require("./helpers/iterable");
 const time = require("./helpers/time");
 const notify = require("./helpers/notify");
 
@@ -10,14 +12,22 @@ const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
 
 /**
- * @param {Iterable<string>} files
  * @param {Project} [project]
+ * @return {(file: string) => void}
  */
-const handle = (files, project) => {
-  for (const file of files) {
+function handle(project) {
+  return file => {
     const start = time.now();
 
-    if (diagnose(file, project) && build(file, project)) {
+    project = project || workspace.projectFor(file);
+
+    project.addFile(file);
+
+    [...project.buildProgram()];
+
+    const success = diagnose(file, project) && build(file, project);
+
+    if (success) {
       const duration = time.now(start);
 
       notify.success(
@@ -26,26 +36,27 @@ const handle = (files, project) => {
     } else {
       process.exit(1);
     }
-  }
-};
+  };
+}
 
-handle(findFiles("scripts", endsWith(".js")));
+forEach(findFiles("scripts", endsWith(".js")), handle());
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
 
   clean(root);
 
-  handle(findFiles(`${root}/scripts`, endsWith(".js")));
+  forEach(findFiles(`${root}/scripts`, endsWith(".js")), handle());
 
-  handle(
+  forEach(
     findFiles(root, endsWith(".ts", ".tsx")),
-
-    // Construct a project for use solely within the current scope, ensuring
-    // that allocated resources can be freed as soon as the package has been
-    // handled.
-    new Project(`${root}/tsconfig.json`)
+    handle(
+      // Construct a project for use solely within the current scope, ensuring
+      // that allocated resources can be freed as soon as the package has been
+      // handled.
+      new Project(`${root}/tsconfig.json`)
+    )
   );
 }
 
-handle(findFiles("docs", endsWith(".ts", ".tsx")));
+forEach(findFiles("docs", endsWith(".ts", ".tsx")), handle());
