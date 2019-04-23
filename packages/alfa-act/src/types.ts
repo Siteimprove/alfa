@@ -2,6 +2,7 @@ import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Document, Element, Text } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
+import { Primitive } from "@siteimprove/alfa-util";
 
 /**
  * Aspects are the different resources that make up a test subject, which is the
@@ -54,8 +55,6 @@ export const enum Outcome {
   Inapplicable = "inapplicable",
   CantTell = "cantTell"
 }
-
-type Primitive = string | number | boolean | null | undefined;
 
 type Value = Primitive | List | Dictionary;
 
