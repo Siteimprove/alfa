@@ -31,7 +31,9 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
           node => {
             return isElement(node) && isFormField(node, document, device);
           },
-          { composed: true }
+          {
+            flattened: true
+          }
         ).map(element => {
           return map(isExposed(element, document, device), isExposed => {
             return {

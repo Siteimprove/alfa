@@ -22,7 +22,9 @@ export const SIA_R3: Atomic.Rule<Document, Element> = {
           node => {
             return isElement(node) && hasId(node, document);
           },
-          { composed: true }
+          {
+            composed: true
+          }
         ).map(element => {
           return {
             applicable: true,

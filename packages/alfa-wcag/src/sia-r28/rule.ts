@@ -32,7 +32,7 @@ export const SIA_R28: Atomic.Rule<Device | Document, Element> = {
             return isElement(node) && isImageButton(node, document);
           },
           {
-            composed: true
+            flattened: true
           }
         ).map(element => {
           return map(isExposed(element, document, device), isExposed => {

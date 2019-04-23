@@ -29,7 +29,7 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
     return {
       applicability: () => {
         return querySelectorAll(document, document, isElement, {
-          composed: true
+          flattened: true
         }).map(element => {
           const src = getAttribute(element, "src", {
             trim: true,

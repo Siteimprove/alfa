@@ -14,14 +14,9 @@ export const SIA_R4: Atomic.Rule<Document, Element> = {
   evaluate: ({ document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(
-          document,
-          document,
-          node => {
-            return isElement(node) && isDocumentElement(node, document);
-          },
-          { composed: true }
-        ).map(element => {
+        return querySelectorAll<Element>(document, document, node => {
+          return isElement(node) && isDocumentElement(node, document);
+        }).map(element => {
           return {
             applicable: true,
             aspect: document,
