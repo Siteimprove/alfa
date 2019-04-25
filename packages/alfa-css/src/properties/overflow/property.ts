@@ -14,11 +14,20 @@ export const overflow: Shorthand<"overflowX" | "overflowY"> = {
     let overflowX: Overflow = Longhands.overflowX.initial();
     let overflowY: Overflow = Longhands.overflowX.initial();
     {
-      const { result, position } = parse(tokens, OverflowGrammar, offset);
+      const { result, position, done } = parse(tokens, OverflowGrammar, offset);
 
       if (result !== null) {
         overflowX = result;
         offset = position;
+
+        if (done) {
+          return {
+            overflowX,
+            overflowY: overflowX
+          };
+        }
+      } else {
+        return null;
       }
     }
 
@@ -28,6 +37,8 @@ export const overflow: Shorthand<"overflowX" | "overflowY"> = {
       if (result !== null) {
         overflowY = result;
         offset = position;
+      } else {
+        return null;
       }
     }
 
