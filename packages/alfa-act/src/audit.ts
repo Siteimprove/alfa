@@ -288,19 +288,21 @@ function auditComposite<A extends Aspect, T extends Target>(
   });
 }
 
-type Applicable = Outcome.Passed | Outcome.Failed | Outcome.CantTell;
-
 function getExpectationEvaluater<A extends Aspect, T extends Target>(
   rule: Rule<A, T>,
   aspect: A,
   target: T
-): (evaluation: Evaluation) => Result<A, T, Applicable> {
+): (
+  evaluation: Evaluation
+) => Result<A, T, Outcome.Passed | Outcome.Failed | Outcome.CantTell> {
   const { locales = [] } = rule;
 
   const locale = locales.find(locale => locale.id === "en");
 
   return evaluations => {
-    const outcome = keys(evaluations).reduce<Applicable>((outcome, id) => {
+    const outcome = keys(evaluations).reduce<
+      Outcome.Passed | Outcome.Failed | Outcome.CantTell
+    >((outcome, id) => {
       const { holds } = evaluations[id];
       return holds === null
         ? Outcome.CantTell
@@ -309,7 +311,7 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
         : Outcome.Failed;
     }, Outcome.Passed);
 
-    const expectations: Mutable<Result<A, T, Applicable>["expectations"]> = {};
+    const expectations: Mutable<Result.Expectations> = {};
 
     for (const id of keys(evaluations)) {
       const { holds, data } = evaluations[id];
@@ -338,14 +340,19 @@ function getExpectationEvaluater<A extends Aspect, T extends Target>(
       expectations[id] = { holds, message, data };
     }
 
-    const result: Result<A, T, any> = {
-      rule,
-      outcome,
-      aspect,
-      target,
-      expectations
-    };
+    // This seemingly redundant switch clause appeases the type checker by
+    // separating return types for the different result outcomes. For now, the
+    // type checker chokes on assignability of result outcomes if no separation
+    // is made.
+    switch (outcome) {
+      case Outcome.Passed:
+        return { rule, outcome, aspect, target, expectations };
 
-    return result;
+      case Outcome.Failed:
+        return { rule, outcome, aspect, target, expectations };
+
+      case Outcome.CantTell:
+        return { rule, outcome, aspect, target, expectations };
+    }
   };
 }

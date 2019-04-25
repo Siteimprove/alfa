@@ -1,10 +1,11 @@
 /**
- * @typedef {function(string): boolean} Predicate
+ * @template T
+ * @typedef {function(T): boolean} Predicate
  */
 
 /**
  * @param {Array<string>} prefixes
- * @return {Predicate}
+ * @return {Predicate<string>}
  */
 function startsWith(...prefixes) {
   return input => prefixes.some(prefix => input.startsWith(prefix));
@@ -14,7 +15,7 @@ exports.startsWith = startsWith;
 
 /**
  * @param {Array<string>} postfixes
- * @return {Predicate}
+ * @return {Predicate<string>}
  */
 function endsWith(...postfixes) {
   return input => postfixes.some(postfix => input.endsWith(postfix));
@@ -23,8 +24,9 @@ function endsWith(...postfixes) {
 exports.endsWith = endsWith;
 
 /**
- * @param {Predicate} predicate
- * @return {Predicate}
+ * @template T
+ * @param {Predicate<T>} predicate
+ * @return {Predicate<T>}
  */
 function not(predicate) {
   return input => !predicate(input);
@@ -33,9 +35,10 @@ function not(predicate) {
 exports.not = not;
 
 /**
- * @param {Predicate} left
- * @param {Predicate} right
- * @return {Predicate}
+ * @template T
+ * @param {Predicate<T>} left
+ * @param {Predicate<T>} right
+ * @return {Predicate<T>}
  */
 function and(left, right) {
   return input => left(input) && right(input);
@@ -44,9 +47,10 @@ function and(left, right) {
 exports.and = and;
 
 /**
- * @param {Predicate} left
- * @param {Predicate} right
- * @return {Predicate}
+ * @template T
+ * @param {Predicate<T>} left
+ * @param {Predicate<T>} right
+ * @return {Predicate<T>}
  */
 function or(left, right) {
   return input => left(input) || right(input);

@@ -13,13 +13,13 @@ const { isArray } = Array;
 const { keys } = Object;
 
 /**
- * @typedef {Object} Feature
+ * @typedef {object} Feature
  * @prop {string} key
  * @prop {Array<Support>} support
  */
 
 /**
- * @typedef {Object} Support
+ * @typedef {object} Support
  * @prop {string} browser
  * @prop {string | boolean} added
  * @prop {string | boolean} removed
@@ -27,7 +27,7 @@ const { keys } = Object;
 
 /**
  * @param {string} key
- * @return {data["css"]}
+ * @return {import("mdn-browser-compat-data/types").Identifier}
  */
 const get = key => {
   const [entry, ...keys] = key.split(".");

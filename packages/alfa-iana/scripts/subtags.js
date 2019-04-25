@@ -14,7 +14,7 @@ const registry = "https://www.iana.org/assignments/language-subtag-registry";
  */
 
 /**
- * @typedef {Object} Subtag
+ * @typedef {object} Subtag
  * @property {string} name
  * @property {string} type
  * @property {string | Array<string>} [prefix]

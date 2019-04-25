@@ -11,6 +11,7 @@
     "src/find.ts",
     "src/get-default-browsers.ts",
     "src/get-feature-support.ts",
+    "src/group-by.ts",
     "src/guards.ts",
     "src/index.ts",
     "src/is-browser-supported.ts",
@@ -32,6 +33,9 @@
     "test/some.spec.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-collection"
+    },
     {
       "path": "../alfa-test"
     },

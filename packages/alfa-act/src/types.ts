@@ -2,6 +2,7 @@ import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Document, Element, Text } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
+import { Primitive } from "@siteimprove/alfa-util";
 
 /**
  * Aspects are the different resources that make up a test subject, which is the
@@ -55,8 +56,6 @@ export const enum Outcome {
   CantTell = "cantTell"
 }
 
-type Primitive = string | number | boolean | null | undefined;
-
 type Value = Primitive | List | Dictionary;
 
 interface List extends Array<Value> {}
@@ -79,6 +78,39 @@ export namespace Result {
       readonly data?: Data;
     };
   }
+
+  interface Base<A extends Aspect, T extends Target, O extends Outcome> {
+    readonly rule: Rule<A, T>;
+    readonly outcome: O;
+    readonly browsers?: Result.Browsers;
+  }
+
+  interface WithTarget<A extends Aspect, T extends Target> {
+    readonly aspect: A;
+    readonly target: T;
+  }
+
+  interface WithExpectations {
+    readonly expectations: Result.Expectations;
+  }
+
+  export interface Inapplicable<A extends Aspect, T extends Target>
+    extends Base<A, T, Outcome.Inapplicable> {}
+
+  export interface CantTell<A extends Aspect, T extends Target>
+    extends Base<A, T, Outcome.CantTell>,
+      WithTarget<A, T>,
+      Partial<WithExpectations> {}
+
+  export interface Failed<A extends Aspect, T extends Target>
+    extends Base<A, T, Outcome.Failed>,
+      WithTarget<A, T>,
+      WithExpectations {}
+
+  export interface Passed<A extends Aspect, T extends Target>
+    extends Base<A, T, Outcome.Passed>,
+      WithTarget<A, T>,
+      WithExpectations {}
 }
 
 export type Result<
@@ -86,28 +118,12 @@ export type Result<
   T extends Target,
   O extends Outcome = Outcome
 > = O extends Outcome.Inapplicable
-  ? {
-      readonly rule: Rule<A, T>;
-      readonly outcome: O;
-      readonly browsers?: Result.Browsers;
-    }
+  ? Result.Inapplicable<A, T>
   : O extends Outcome.CantTell
-  ? {
-      readonly rule: Rule<A, T>;
-      readonly outcome: O;
-      readonly browsers?: Result.Browsers;
-      readonly aspect: A;
-      readonly target: T;
-      readonly expectations?: Result.Expectations;
-    }
-  : {
-      readonly rule: Rule<A, T>;
-      readonly outcome: O;
-      readonly browsers?: Result.Browsers;
-      readonly aspect: A;
-      readonly target: T;
-      readonly expectations: Result.Expectations;
-    };
+  ? Result.CantTell<A, T>
+  : O extends Outcome.Failed
+  ? Result.Failed<A, T>
+  : Result.Passed<A, T>;
 
 export const enum QuestionType {
   Boolean = "boolean",

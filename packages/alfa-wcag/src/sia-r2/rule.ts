@@ -29,7 +29,7 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
     return {
       applicability: () => {
         return querySelectorAll(document, document, isElement, {
-          composed: true
+          flattened: true
         }).map(element => {
           return map(isImage(element, document, device), isImage => {
             if (!isImage) {

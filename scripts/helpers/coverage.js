@@ -183,7 +183,7 @@ process.on("beforeExit", code => {
 });
 
 /**
- * @typedef {Object} Line
+ * @typedef {object} Line
  * @property {string} value
  * @property {number} index
  * @property {number} start
@@ -191,7 +191,7 @@ process.on("beforeExit", code => {
  */
 
 /**
- * @typedef {Object} Location
+ * @typedef {object} Location
  * @property {string} path
  * @property {number} offset
  * @property {number} line
@@ -199,33 +199,33 @@ process.on("beforeExit", code => {
  */
 
 /**
- * @typedef {Object} Range
+ * @typedef {object} Range
  * @property {Location} start
  * @property {Location} end
  */
 
 /**
- * @typedef {Object} FunctionCoverage
+ * @typedef {object} FunctionCoverage
  * @property {Range} range
  * @property {number} count
  * @property {string} name
  */
 
 /**
- * @typedef {Object} BlockCoverage
+ * @typedef {object} BlockCoverage
  * @property {Range} range
  * @property {number} count
  */
 
 /**
- * @typedef {Object} Source
+ * @typedef {object} Source
  * @property {string} path
  * @property {string} content
  * @property {Array<Line>} lines
  */
 
 /**
- * @typedef {Object} Script
+ * @typedef {object} Script
  * @property {string} base
  * @property {Array<Source>} sources
  * @property {Array<FunctionCoverage | BlockCoverage>} coverage

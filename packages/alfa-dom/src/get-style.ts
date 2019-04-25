@@ -12,6 +12,7 @@ import {
   StyleTree
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
+import { Mutable } from "@siteimprove/alfa-util";
 import { getAttribute } from "./get-attribute";
 import { Cascade, getCascade } from "./get-cascade";
 import { getChildNodes } from "./get-child-nodes";
@@ -173,7 +174,9 @@ function getStyleEntry(
           const pseudoElement = getPseudoElement(node, selector);
 
           if (pseudoElement === null) {
-            declarations.push(...rule.declarations);
+            for (let i = 0, n = rule.declarations.length; i < n; i++) {
+              declarations.push(rule.declarations[i]);
+            }
           } else {
             children.push({
               target: pseudoElement,
@@ -188,17 +191,16 @@ function getStyleEntry(
     const style = getAttribute(node, "style");
 
     if (style !== null) {
-      let declaration = parseDeclaration(style);
+      const declaration = parseDeclaration(style);
 
       if (declaration !== null) {
-        declaration = isArray(declaration) ? declaration : [declaration];
-
-        declarations.push(
-          ...declaration.map(declaration => ({
-            ...declaration,
-            important: true
-          }))
-        );
+        if (isArray(declaration)) {
+          for (let i = 0, n = declaration.length; i < n; i++) {
+            declarations.push(important(declaration[i]));
+          }
+        } else {
+          declarations.push(important(declaration));
+        }
       }
     }
   }
@@ -246,4 +248,9 @@ function getPseudoElement(element: Element, selector: Selector): object | null {
   }
 
   return null;
+}
+
+function important(declaration: Mutable<Declaration>): Declaration {
+  declaration.important = true;
+  return declaration;
 }
