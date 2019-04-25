@@ -24,13 +24,11 @@ export const overflowY: Longhand<Overflow> = {
     return keyword("visible");
   },
   computed(style) {
-    const value = getSpecifiedProperty(style, "overflowY");
+    const valueX = getSpecifiedProperty(style, "overflowX");
+    const valueY = getSpecifiedProperty(style, "overflowY");
 
-    if (
-      getSpecifiedProperty(style, "overflowX").value !== "visible" &&
-      getSpecifiedProperty(style, "overflowX").value !== "clip"
-    ) {
-      switch (value.value) {
+    if (valueX.value !== "visible" && valueX.value !== "clip") {
+      switch (valueY.value) {
         case "visible":
           return keyword("auto");
         case "clip":
@@ -38,6 +36,6 @@ export const overflowY: Longhand<Overflow> = {
       }
     }
 
-    return value;
+    return valueY;
   }
 };
