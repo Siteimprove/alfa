@@ -1,4 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import { Seq } from "@siteimprove/alfa-collection";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -20,12 +21,14 @@ export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(document, document, node => {
-          return (
-            isElement(node) &&
-            getAttribute(node, "aria-hidden", { lowerCase: true }) === "true"
-          );
-        }).map(attribute => {
+        return Seq(
+          querySelectorAll<Element>(document, document, node => {
+            return (
+              isElement(node) &&
+              getAttribute(node, "aria-hidden", { lowerCase: true }) === "true"
+            );
+          })
+        ).map(attribute => {
           return {
             applicable: true,
             aspect: document,

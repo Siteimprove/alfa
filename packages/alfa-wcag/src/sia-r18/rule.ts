@@ -6,6 +6,7 @@ import {
   Role,
   Roles
 } from "@siteimprove/alfa-aria";
+import { List, Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -17,9 +18,12 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { concat, values } from "@siteimprove/alfa-util";
+import { values } from "@siteimprove/alfa-util";
 
-const { map } = BrowserSpecific;
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
 
 export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r18.html",
@@ -34,26 +38,33 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
 
     return {
       applicability: () => {
-        return querySelectorAll(document, document, isElement, {
-          composed: true
-        })
-          .map(element =>
-            Array.from(element.attributes).filter(attribute =>
-              attributeNames.has(attribute.localName)
-            )
-          )
-          .reduce(concat, [])
-          .map(attribute => {
-            const owner = getOwnerElement(attribute, document)!;
-
-            return map(isExposed(owner, document, device), isExposed => {
-              return {
-                applicable: isExposed,
-                aspect: document,
-                target: attribute
-              };
-            });
-          });
+        return map(
+          filter(
+            querySelectorAll(document, document, isElement, {
+              composed: true
+            }),
+            element => {
+              return isExposed(element, document, device);
+            }
+          ),
+          elements => {
+            return Seq(elements)
+              .reduce<List<Attribute>>((attributes, element) => {
+                return attributes.concat(
+                  Array.from(element.attributes).filter(attribute => {
+                    return attributeNames.has(attribute.localName);
+                  })
+                );
+              }, List())
+              .map(attribute => {
+                return {
+                  applicable: true,
+                  aspect: document,
+                  target: attribute
+                };
+              });
+          }
+        );
       },
 
       expectations: (aspect, target) => {

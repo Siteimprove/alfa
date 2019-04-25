@@ -1,27 +1,28 @@
 import { List, Map } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "./browser-specific";
-import { map } from "./map";
+import { BrowserSpecific } from "../browser-specific";
 import { reduce } from "./reduce";
 
-export function groupBy<T, K>(
-  values: ArrayLike<BrowserSpecific<T>>,
-  iteratee: (value: T) => K | BrowserSpecific<K>
-): BrowserSpecific<Map<K, List<T>>>;
+const { map } = BrowserSpecific;
 
 export function groupBy<T, K>(
-  values: ArrayLike<T | BrowserSpecific<T>>,
+  values: BrowserSpecific<Iterable<T>>,
   iteratee: (value: T) => K | BrowserSpecific<K>
-): Map<K, List<T>> | BrowserSpecific<Map<K, List<T>>>;
+): BrowserSpecific<Iterable<[K, Iterable<T>]>>;
 
 export function groupBy<T, K>(
-  values: ArrayLike<T>,
+  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
+  iteratee: (value: T) => K | BrowserSpecific<K>
+): Iterable<[K, Iterable<T>]> | BrowserSpecific<Iterable<[K, Iterable<T>]>>;
+
+export function groupBy<T, K>(
+  values: Iterable<T>,
   iteratee: (value: T) => K
-): Map<K, List<T>>;
+): Iterable<[K, Iterable<T>]>;
 
 export function groupBy<T, K>(
-  values: ArrayLike<T | BrowserSpecific<T>>,
+  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
   iteratee: (value: T) => K | BrowserSpecific<K>
-): Map<K, List<T>> | BrowserSpecific<Map<K, List<T>>> {
+): Iterable<[K, Iterable<T>]> | BrowserSpecific<Iterable<[K, Iterable<T>]>> {
   return reduce<T, Map<K, List<T>>>(
     values,
     (groups, value) => {

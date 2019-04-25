@@ -238,6 +238,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-collection"
+    },
+    {
       "path": "../alfa-compatibility"
     },
     {

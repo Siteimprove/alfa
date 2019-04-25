@@ -1,9 +1,10 @@
+import { Map, Set } from "@siteimprove/alfa-collection";
 import { expandBrowsers } from "./expand-browsers";
 import { setSupportedBrowsers } from "./supported-browsers";
-import { BrowserName, BrowserQuery, VersionSet } from "./types";
+import { BrowserName, BrowserQuery, Version } from "./types";
 
 export function withBrowsers<T>(
-  browsers: ReadonlyArray<BrowserQuery>,
+  browsers: Iterable<BrowserQuery>,
   callback: () => T
 ): T;
 
@@ -11,16 +12,16 @@ export function withBrowsers<T>(
  * @internal
  */
 export function withBrowsers<T>(
-  browsers: Map<BrowserName, VersionSet>,
+  browsers: Map<BrowserName, Set<Version> | true>,
   callback: () => T
 ): T;
 
 export function withBrowsers<T>(
-  browsers: ReadonlyArray<BrowserQuery> | Map<BrowserName, VersionSet>,
+  browsers: Iterable<BrowserQuery> | Map<BrowserName, Set<Version> | true>,
   callback: () => T
 ): T {
   const previousBrowsers = setSupportedBrowsers(
-    browsers instanceof Map
+    Map.isMap(browsers)
       ? browsers
       : expandBrowsers(browsers, { unsupported: true })
   );

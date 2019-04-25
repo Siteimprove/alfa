@@ -1,6 +1,7 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { getRole, isExposed, Role } from "@siteimprove/alfa-aria";
-import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { Seq } from "@siteimprove/alfa-collection";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -12,36 +13,42 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-util";
 
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
+
 export const SIA_R16: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r16.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll(document, document, isElement, {
-          composed: true
-        }).map(element => {
-          return map(isExposed(element, document, device), isExposed => {
-            if (!isExposed) {
+        return map(
+          filter(
+            querySelectorAll(document, document, isElement, {
+              composed: true
+            }),
+            element => {
+              return map(isExposed(element, document, device), isExposed => {
+                if (!isExposed) {
+                  return false;
+                }
+
+                return hasExplicitRole(element, document, device);
+              });
+            }
+          ),
+          elements => {
+            return Seq(elements).map(element => {
               return {
-                applicable: false,
+                applicable: true,
                 aspect: document,
                 target: element
               };
-            }
-
-            return map(
-              hasExplicitRole(element, document, device),
-              hasExplicitRole => {
-                return {
-                  applicable: hasExplicitRole,
-                  aspect: document,
-                  target: element
-                };
-              }
-            );
-          });
-        });
+            });
+          }
+        );
       },
 
       expectations: (aspect, target) => {

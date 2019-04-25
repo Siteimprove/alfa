@@ -5,6 +5,7 @@ import {
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
+import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -17,7 +18,10 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-const { map } = BrowserSpecific;
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
 
 export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
@@ -25,24 +29,32 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(
-          document,
-          document,
-          node => {
-            return isElement(node) && isFormField(node, document, device);
-          },
-          {
-            flattened: true
+        return map(
+          filter(
+            querySelectorAll<Element>(
+              document,
+              document,
+              node => {
+                return isElement(node) && isFormField(node, document, device);
+              },
+              {
+                flattened: true
+              }
+            ),
+            element => {
+              return isExposed(element, document, device);
+            }
+          ),
+          elements => {
+            return Seq(elements).map(element => {
+              return {
+                applicable: true,
+                aspect: document,
+                target: element
+              };
+            });
           }
-        ).map(element => {
-          return map(isExposed(element, document, device), isExposed => {
-            return {
-              applicable: isExposed,
-              aspect: document,
-              target: element
-            };
-          });
-        });
+        );
       },
 
       expectations: (aspect, target) => {

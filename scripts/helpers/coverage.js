@@ -310,7 +310,7 @@ async function parseScript({ url, functions }) {
     }
   }
 
-  if (map !== null) {
+  if (map !== null && "destroy" in map) {
     map.destroy();
   }
 

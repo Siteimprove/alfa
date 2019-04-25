@@ -1,4 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import { List, Seq } from "@siteimprove/alfa-collection";
 import {
   Attribute,
   Document,
@@ -12,7 +13,6 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
-import { concat } from "@siteimprove/alfa-util";
 import { hasLanguageAttribute } from "../helpers/has-language-attribute";
 
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
@@ -31,12 +31,14 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
           return [];
         }
 
-        return querySelectorAll<Element>(
-          body,
-          document,
-          node => isElement(node) && hasLanguageAttribute(node)
+        return Seq(
+          querySelectorAll<Element>(
+            body,
+            document,
+            node => isElement(node) && hasLanguageAttribute(node)
+          )
         )
-          .map(element => {
+          .reduce<List<Attribute>>((attributes, element) => {
             const languages: Array<Attribute> = [];
 
             const lang = getAttributeNode(element, "lang");
@@ -51,9 +53,8 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
               languages.push(xmlLang);
             }
 
-            return languages;
-          })
-          .reduce(concat, [])
+            return attributes.concat(languages);
+          }, List())
           .map(attribute => {
             return {
               applicable: true,

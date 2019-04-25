@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { getRole, isExposed } from "@siteimprove/alfa-aria";
+import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -17,7 +18,10 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-const { map } = BrowserSpecific;
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
 
 export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r21.html",
@@ -25,22 +29,30 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(document, document, node => {
-          return (
-            isElement(node) &&
-            isHtmlOrSvgElement(node, document) &&
-            hasAttribute(node, "role") &&
-            getAttribute(node, "role") !== ""
-          );
-        }).map(element => {
-          return map(isExposed(element, document, device), isExposed => {
-            return {
-              applicable: isExposed,
-              aspect: document,
-              target: getAttributeNode(element, "role")!
-            };
-          });
-        });
+        return map(
+          filter(
+            querySelectorAll<Element>(document, document, node => {
+              return (
+                isElement(node) &&
+                isHtmlOrSvgElement(node, document) &&
+                hasAttribute(node, "role") &&
+                getAttribute(node, "role") !== ""
+              );
+            }),
+            element => {
+              return isExposed(element, document, device);
+            }
+          ),
+          elements => {
+            return Seq(elements).map(element => {
+              return {
+                applicable: true,
+                aspect: document,
+                target: getAttributeNode(element, "role")!
+              };
+            });
+          }
+        );
       },
 
       expectations: (aspect, target) => {

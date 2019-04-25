@@ -1,15 +1,17 @@
 import { Primitive } from "./primitive";
 
-type ImmutableObject<T> = { readonly [P in keyof T]: Immutable<T[P]> };
+type ImmutableObject<T> = { readonly [P in keyof T]: T[P] };
 
-interface ImmutableMap<T, U> extends ReadonlyMap<Immutable<T>, Immutable<U>> {}
+interface ImmutableArray<T> extends ReadonlyArray<T> {}
 
-interface ImmutableSet<T> extends ReadonlySet<Immutable<T>> {}
+interface ImmutableMap<T, U> extends ReadonlyMap<T, U> {}
+
+interface ImmutableSet<T> extends ReadonlySet<T> {}
 
 export type Immutable<T> = T extends Primitive | Function
   ? T
   : T extends Array<infer U>
-  ? T
+  ? ImmutableArray<U>
   : T extends Map<infer U, infer V>
   ? ImmutableMap<U, V>
   : T extends Set<infer U>

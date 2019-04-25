@@ -9,8 +9,10 @@ export * from "./array/index-of";
 export * from "./array/map";
 
 export * from "./guard/has-key";
+export * from "./guard/is-iterable";
 export * from "./guard/is-number";
 export * from "./guard/is-object";
+export * from "./guard/is-string";
 
 export * from "./number/clamp";
 

@@ -4,6 +4,7 @@ import {
   hasTextAlternative,
   isExposed
 } from "@siteimprove/alfa-aria";
+import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -20,7 +21,10 @@ import {
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
 
-const { find, map } = BrowserSpecific;
+const {
+  map,
+  Iterable: { find, filter }
+} = BrowserSpecific;
 
 export const SIA_R15: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r15.html",
@@ -28,37 +32,38 @@ export const SIA_R15: Atomic.Rule<Device | Document, Element> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(
-          document,
-          document,
-          node => {
-            return isElement(node) && isIframe(node, document);
-          },
-          {
-            flattened: true
-          }
-        ).map(element => {
-          return map(isExposed(element, document, device), isExposed => {
-            if (!isExposed) {
+        return map(
+          filter(
+            querySelectorAll<Element>(
+              document,
+              document,
+              node => {
+                return isElement(node) && isIframe(node, document);
+              },
+              {
+                flattened: true
+              }
+            ),
+            element => {
+              return map(isExposed(element, document, device), isExposed => {
+                if (!isExposed) {
+                  return false;
+                }
+
+                return hasTextAlternative(element, document, device);
+              });
+            }
+          ),
+          elements => {
+            return Seq(elements).map(element => {
               return {
-                applicable: false,
+                applicable: true,
                 aspect: document,
                 target: element
               };
-            }
-
-            return map(
-              hasTextAlternative(element, document, device),
-              hasTextAlternative => {
-                return {
-                  applicable: hasTextAlternative,
-                  aspect: document,
-                  target: element
-                };
-              }
-            );
-          });
-        });
+            });
+          }
+        );
       },
 
       expectations: (aspect, target) => {

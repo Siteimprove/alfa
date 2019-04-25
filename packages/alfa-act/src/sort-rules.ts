@@ -5,8 +5,8 @@ import { Aspect, Composition, Rule, Target } from "./types";
  * @internal
  */
 export function sortRules<A extends Aspect, T extends Target>(
-  rules: ReadonlyArray<Rule<A, T>>
-): ReadonlyArray<Rule<A, T>> {
+  rules: Iterable<Rule<A, T>>
+): Iterable<Rule<A, T>> {
   const result: Array<Rule<A, T>> = [];
 
   const indegrees = new WeakMap<Rule<A, T>, number>();
@@ -29,7 +29,7 @@ export function sortRules<A extends Aspect, T extends Target>(
     }
   }
 
-  const leaves = rules.filter(rule => !indegrees.has(rule));
+  const leaves = Array.from(rules).filter(rule => !indegrees.has(rule));
 
   let next = leaves.pop();
 

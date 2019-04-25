@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { Attributes } from "@siteimprove/alfa-aria";
+import { List, Seq } from "@siteimprove/alfa-collection";
 import {
   Attribute,
   Document,
@@ -10,7 +11,7 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { concat, URL, values } from "@siteimprove/alfa-util";
+import { URL, values } from "@siteimprove/alfa-util";
 
 import { EN } from "./locales/en";
 
@@ -27,17 +28,21 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
 
     return {
       applicability: () => {
-        return querySelectorAll<Element>(document, document, node => {
-          return isElement(node) && isHtmlOrSvgElement(node, document);
-        })
-          .map(element =>
-            Array.from(element.attributes).filter(
-              attribute =>
-                attributeNames.has(attribute.localName) &&
-                attribute.value.trim() !== ""
-            )
-          )
-          .reduce(concat, [])
+        return Seq(
+          querySelectorAll<Element>(document, document, node => {
+            return isElement(node) && isHtmlOrSvgElement(node, document);
+          })
+        )
+          .reduce<List<Attribute>>((attributes, element) => {
+            return attributes.concat(
+              Array.from(element.attributes).filter(attribute => {
+                return (
+                  attributeNames.has(attribute.localName) &&
+                  attribute.value.trim() !== ""
+                );
+              })
+            );
+          }, List())
           .map(attribute => {
             return {
               applicable: true,

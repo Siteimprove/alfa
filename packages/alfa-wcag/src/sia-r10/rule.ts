@@ -5,6 +5,7 @@ import {
   isExposed,
   isVisible
 } from "@siteimprove/alfa-aria";
+import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -26,7 +27,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Stream } from "@siteimprove/alfa-lang";
 
-const { map } = BrowserSpecific;
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
 
 export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r10.html",
@@ -34,39 +38,42 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(
-          document,
-          document,
-          node => {
-            return isElement(node) && hasAutocomplete(node);
-          },
-          {
-            flattened: true
-          }
-        ).map(element => {
-          const attribute = getAttributeNode(element, "autocomplete")!;
-
-          return map(isExposed(element, document, device), isExposed => {
-            if (!isExposed && !isVisible(element, document, device)) {
-              return {
-                applicable: false,
-                aspect: document,
-                target: attribute
-              };
-            }
-
-            return map(
-              isAutocompletable(element, document, device),
-              isAutocompletable => {
-                return {
-                  applicable: isAutocompletable,
-                  aspect: document,
-                  target: attribute
-                };
+        return map(
+          filter(
+            querySelectorAll<Element>(
+              document,
+              document,
+              node => {
+                return (
+                  isElement(node) &&
+                  hasAutocomplete(node) &&
+                  isVisible(node, document, device)
+                );
+              },
+              {
+                flattened: true
               }
-            );
-          });
-        });
+            ),
+            element => {
+              return map(isExposed(element, document, device), isExposed => {
+                if (!isExposed) {
+                  return false;
+                }
+
+                return isAutocompletable(element, document, device);
+              });
+            }
+          ),
+          elements => {
+            return Seq(elements).map(element => {
+              return {
+                applicable: true,
+                aspect: document,
+                target: getAttributeNode(element, "autocomplete")!
+              };
+            });
+          }
+        );
       },
 
       expectations: (aspect, target) => {

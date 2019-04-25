@@ -1,2 +1,1 @@
-export * from "./list";
-export * from "./map";
+export { Collection, List, Map, Seq, Set } from "immutable";

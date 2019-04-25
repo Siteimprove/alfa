@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { Attributes } from "@siteimprove/alfa-aria";
+import { List, Seq } from "@siteimprove/alfa-collection";
 import {
   Attribute,
   Document,
@@ -7,10 +8,6 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { values } from "@siteimprove/alfa-util";
-
-function concat<T>(a: Array<T>, b: Array<T>): Array<T> {
-  return a.concat(b);
-}
 
 export const SIA_R20: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r20.html",
@@ -22,13 +19,14 @@ export const SIA_R20: Atomic.Rule<Document, Attribute> = {
 
     return {
       applicability: () => {
-        return querySelectorAll(document, document, isElement)
-          .map(element =>
-            Array.from(element.attributes).filter(attribute =>
-              attribute.localName.startsWith("aria-")
-            )
-          )
-          .reduce(concat, [])
+        return Seq(querySelectorAll(document, document, isElement))
+          .reduce<List<Attribute>>((attributes, element) => {
+            return attributes.concat(
+              Array.from(element.attributes).filter(attribute => {
+                return attribute.localName.startsWith("aria-");
+              })
+            );
+          }, List())
           .map(attribute => {
             return {
               applicable: true,

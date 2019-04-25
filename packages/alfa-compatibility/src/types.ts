@@ -31,11 +31,6 @@ export type BrowserQuery<T extends BrowserName = BrowserName> =
 /**
  * @internal
  */
-export type VersionSet = true | Set<Version>;
-
-/**
- * @internal
- */
 export interface Browser {
   readonly name: string;
   readonly releases: {

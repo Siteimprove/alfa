@@ -1,4 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import { Seq } from "@siteimprove/alfa-collection";
 import {
   Document,
   Element,
@@ -15,13 +16,15 @@ export const SIA_R6: Atomic.Rule<Document, Element> = {
   evaluate: ({ document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(document, document, node => {
-          return (
-            isElement(node) &&
-            isDocumentElement(node, document) &&
-            hasValidLanguageAttributes(node)
-          );
-        }).map(element => {
+        return Seq(
+          querySelectorAll<Element>(document, document, node => {
+            return (
+              isElement(node) &&
+              isDocumentElement(node, document) &&
+              hasValidLanguageAttributes(node)
+            );
+          })
+        ).map(element => {
           return {
             applicable: true,
             aspect: document,

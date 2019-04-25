@@ -1,3 +1,4 @@
+import { Seq } from "@siteimprove/alfa-collection";
 import {
   Attribute,
   getOwnerElement,
@@ -10,34 +11,33 @@ import {
 } from "@siteimprove/alfa-dom";
 import * as JSON from "@siteimprove/alfa-json-ld";
 import { expand, List } from "@siteimprove/alfa-json-ld";
-import { groupBy } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
 import { isTargetGroup, isTargetUnit } from "./guards";
 import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
+
+const { assign } = Object;
 
 // The `toJson()` function is special in that it requires use of conditional
 // types in order to correctly infer the union of aspect and target types for a
 // list of rules. In order to do so, we unfortunately have to make use of the
 // `any` type, which trips up TSLint as we've made the `any` type forbidden and
 // this for good reason.
-//
-// tslint:disable:no-any
 
-const { assign } = Object;
-
+// tslint:disable-next-line:no-any
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? A
   : never;
 
+// tslint:disable-next-line:no-any
 type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? T
   : never;
 
 export function toJson<
-  R extends Rule<any, any>,
+  R extends Rule<any, any>, // tslint:disable-line:no-any
   A extends AspectsOf<R> = AspectsOf<R>,
   T extends TargetsOf<R> = TargetsOf<R>
->(results: ReadonlyArray<Result<A, T>>, aspects: AspectsFor<A>): List {
+>(results: Iterable<Result<A, T>>, aspects: AspectsFor<A>): List {
   let request: JSON.Document | null = null;
 
   if (aspects.request !== undefined) {
@@ -121,10 +121,10 @@ export function toJson<
 
   const assertions: Array<JSON.Document> = [];
 
-  for (const [rule, group] of groupBy(results, result => result.rule)) {
+  for (const [rule, group] of Seq(results).groupBy(result => result.rule)) {
     const { requirements = [] } = rule;
 
-    for (const result of group) {
+    for (const result of group.toList()) {
       const testCaseResult = {
         "@context": Contexts.Result,
         "@type": "earl:TestResult",

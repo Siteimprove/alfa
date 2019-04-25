@@ -1,10 +1,12 @@
-import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Option, values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
 import * as Roles from "./roles";
 import { Category, Feature, Role } from "./types";
+
+const { map } = BrowserSpecific;
 
 const whitespace = /\s+/;
 

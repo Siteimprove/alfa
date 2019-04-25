@@ -8,6 +8,7 @@
     "src/array/index-of.ts",
     "src/array/map.ts",
     "src/guard/has-key.ts",
+    "src/guard/is-iterable.ts",
     "src/guard/is-number.ts",
     "src/guard/is-object.ts",
     "src/guard/is-string.ts",

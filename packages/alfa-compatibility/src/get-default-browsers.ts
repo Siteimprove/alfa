@@ -1,47 +1,45 @@
 /// <reference path="../types/browserslist.d.ts" />
 
+import { Map, Set } from "@siteimprove/alfa-collection";
 import browserslist = require("browserslist");
 import { Browsers } from "./browsers";
 import { isBrowserName } from "./guards";
-import { BrowserName, VersionSet } from "./types";
+import { BrowserName, Version } from "./types";
 
 const whitespace = /\s+/;
 
-/**
- * NB: Since browserslist forces separate versions of browsers, we map browsers
- * to actual sets of version numbers rather than `VersionSet`.
- */
-let defaultBrowsers: Map<BrowserName, Exclude<VersionSet, true>> | undefined;
+let defaultBrowsers: Map<BrowserName, Set<Version>> | undefined;
 
 /**
  * @internal
  */
-export function getDefaultBrowsers(): Map<BrowserName, VersionSet> {
+export function getDefaultBrowsers(): Map<BrowserName, Set<Version>> {
   if (defaultBrowsers === undefined) {
-    defaultBrowsers = new Map();
+    defaultBrowsers = Map<BrowserName, Set<Version>>().withMutations(
+      defaultBrowsers => {
+        for (const entry of browserslist()) {
+          const [name, version] = entry.split(whitespace);
 
-    for (const entry of browserslist()) {
-      const [name, version] = entry.split(whitespace);
+          if (!isBrowserName(name)) {
+            continue;
+          }
 
-      if (!isBrowserName(name)) {
-        continue;
+          const { releases } = Browsers[name];
+
+          if (version in releases === false) {
+            continue;
+          }
+
+          let versions = defaultBrowsers.get(name);
+
+          if (versions === undefined) {
+            versions = Set();
+          }
+
+          defaultBrowsers.set(name, versions.add(version));
+        }
       }
-
-      const { releases } = Browsers[name];
-
-      if (version in releases === false) {
-        continue;
-      }
-
-      let versions = defaultBrowsers.get(name);
-
-      if (versions === undefined) {
-        versions = new Set();
-        defaultBrowsers.set(name, versions);
-      }
-
-      versions.add(version);
-    }
+    );
   }
 
   return defaultBrowsers;

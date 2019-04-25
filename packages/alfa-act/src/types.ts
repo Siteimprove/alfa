@@ -37,23 +37,25 @@ export type AspectKeysFor<A extends Aspect> = {
 export type AspectsFor<A extends Aspect> = Partial<Aspects> &
   { readonly [P in AspectKeysFor<A>]: Aspects[P] };
 
-export type Group<T> = ReadonlySet<T>;
-
 /**
  * A target is an entity that a rule can apply to and make expectations about.
  */
 export type Target =
   | Attribute
-  | Group<Attribute>
+  | Iterable<Attribute>
   | Document
   | Element
-  | Group<Element>;
+  | Iterable<Element>;
 
 export const enum Outcome {
   Passed = "passed",
   Failed = "failed",
   Inapplicable = "inapplicable",
   CantTell = "cantTell"
+}
+
+export namespace Outcome {
+  export type Applicable = Exclude<Outcome, Outcome.Inapplicable>;
 }
 
 type Value = Primitive | List | Dictionary;
@@ -147,7 +149,7 @@ export interface Question<
 export interface AnswerType {
   [QuestionType.Boolean]: boolean;
   [QuestionType.Node]: Element | Text | false;
-  [QuestionType.NodeList]: ReadonlyArray<Element | Text>;
+  [QuestionType.NodeList]: Iterable<Element | Text>;
 }
 
 export interface Answer<
@@ -157,7 +159,7 @@ export interface Answer<
 > {
   readonly type: Q;
   readonly id: string;
-  readonly rule: Rule<A, T> | ReadonlyArray<Rule<A, T>>;
+  readonly rule: Rule<A, T> | Iterable<Rule<A, T>>;
   readonly aspect: A;
   readonly target: T;
   readonly answer: AnswerType[Q] | null;
@@ -211,7 +213,7 @@ export namespace Atomic {
       aspect: A,
       target: T
     ) => AnswerType[Q] | null
-  ) => ReadonlyArray<Evaluand<A, T> | BrowserSpecific<Evaluand<A, T>>>;
+  ) => Iterable<Evaluand<A, T>> | BrowserSpecific<Iterable<Evaluand<A, T>>>;
 
   export type Expectations<A extends Aspect, T extends Target> = (
     aspect: A,
@@ -225,9 +227,9 @@ export namespace Atomic {
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
 
-    readonly requirements?: ReadonlyArray<Requirement>;
+    readonly requirements?: Iterable<Requirement>;
 
-    readonly locales?: ReadonlyArray<Locale>;
+    readonly locales?: Iterable<Locale>;
 
     readonly evaluate: (
       aspects: AspectsFor<A>
@@ -240,15 +242,15 @@ export namespace Atomic {
 
 export namespace Composite {
   export type Expectations<A extends Aspect, T extends Target> = (
-    outcomes: ReadonlyArray<{ outcome: Outcome }>
+    outcomes: Iterable<{ outcome: Outcome }>
   ) => Evaluation | BrowserSpecific<Evaluation>;
 
   export interface Rule<A extends Aspect, T extends Target> {
     readonly id: string;
 
-    readonly requirements?: ReadonlyArray<Requirement>;
+    readonly requirements?: Iterable<Requirement>;
 
-    readonly locales?: ReadonlyArray<Locale>;
+    readonly locales?: Iterable<Locale>;
 
     readonly compose: (composition: Composition<A, T>) => void;
 
@@ -260,17 +262,17 @@ export namespace Composite {
   }
 }
 
-// tslint:disable:no-any
-
-export class Composition<A extends Aspect, T extends Target> {
+export class Composition<A extends Aspect, T extends Target>
+  implements Iterable<Atomic.Rule<A, T>> {
   /**
-   * @internal
+   * Compositions of rules are contravariant in the aspect and target type of
+   * the rules. However, due to lack of variance annotations we have no way of
+   * modelling this in TypeScript yet. As such, we're unfortunately forced to
+   * use the `any` type for aspect and target types when storing rules for the
+   * composition.
    */
-  private readonly rules: Array<Atomic.Rule<any, any>> = [];
+  private readonly rules: Array<Atomic.Rule<any, any>> = []; // tslint:disable-line:no-any
 
-  /**
-   * @internal
-   */
   public [Symbol.iterator](): Iterator<Atomic.Rule<A, T>> {
     return this.rules[Symbol.iterator]();
   }

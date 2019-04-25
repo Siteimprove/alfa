@@ -1,27 +1,28 @@
 import { List } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "./browser-specific";
-import { map } from "./map";
+import { BrowserSpecific } from "../browser-specific";
 import { reduce } from "./reduce";
 
-export function filter<T>(
-  values: ArrayLike<BrowserSpecific<T>>,
-  predicate: (value: T) => boolean | BrowserSpecific<boolean>
-): BrowserSpecific<List<T>>;
+const { map } = BrowserSpecific;
 
 export function filter<T>(
-  values: ArrayLike<T | BrowserSpecific<T>>,
+  values: BrowserSpecific<Iterable<T>>,
   predicate: (value: T) => boolean | BrowserSpecific<boolean>
-): List<T> | BrowserSpecific<List<T>>;
+): BrowserSpecific<Iterable<T>>;
 
 export function filter<T>(
-  values: ArrayLike<T>,
+  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
+  predicate: (value: T) => boolean | BrowserSpecific<boolean>
+): Iterable<T> | BrowserSpecific<Iterable<T>>;
+
+export function filter<T>(
+  values: Iterable<T>,
   predicate: (value: T) => boolean
-): List<T>;
+): Iterable<T>;
 
 export function filter<T>(
-  values: ArrayLike<T | BrowserSpecific<T>>,
+  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
   predicate: (value: T) => boolean | BrowserSpecific<boolean>
-): List<T> | BrowserSpecific<List<T>> {
+): Iterable<T> | BrowserSpecific<Iterable<T>> {
   return reduce<T, List<T>>(
     values,
     (filtered, value) => {

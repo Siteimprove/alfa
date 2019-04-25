@@ -5,6 +5,7 @@ import {
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
+import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -19,7 +20,10 @@ import {
 
 import { EN } from "./locales/en";
 
-const { map } = BrowserSpecific;
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
 
 export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
@@ -28,35 +32,35 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll(document, document, isElement, {
-          flattened: true
-        }).map(element => {
-          return map(isImage(element, document, device), isImage => {
-            if (!isImage) {
-              return {
-                applicable: false,
-                aspect: document,
-                target: element
-              };
-            }
+        return map(
+          filter(
+            querySelectorAll(document, document, isElement, {
+              flattened: true
+            }),
+            element => {
+              return map(isImage(element, document, device), isImage => {
+                if (!isImage) {
+                  return false;
+                }
 
-            if (element.localName === "img") {
+                if (element.localName === "img") {
+                  return true;
+                }
+
+                return isExposed(element, document, device);
+              });
+            }
+          ),
+          elements => {
+            return Seq(elements).map(element => {
               return {
                 applicable: true,
                 aspect: document,
                 target: element
               };
-            }
-
-            return map(isExposed(element, document, device), isExposed => {
-              return {
-                applicable: isExposed,
-                aspect: document,
-                target: element
-              };
             });
-          });
-        });
+          }
+        );
       },
 
       expectations: (aspect, target) => {

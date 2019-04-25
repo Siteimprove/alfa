@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { audit, toJson } from "../../../packages/alfa-act";
+import { Seq } from "../../../packages/alfa-collection";
 import {
   Document,
   getAttribute,
@@ -10,6 +11,7 @@ import {
   querySelectorAll
 } from "../../../packages/alfa-dom";
 import { Scraper } from "../../../packages/alfa-scrape";
+import { values } from "../../../packages/alfa-util";
 import { Rules } from "../../../packages/alfa-wcag";
 
 const scraper = new Scraper();
@@ -20,7 +22,7 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
   for (const { id, url } of getUrls(page.document)) {
     const page = await scraper.scrape(`${site}/${url}`);
 
-    const { results } = audit(page, Rules);
+    const { results } = audit(page, values(Rules));
 
     process.stdout.write(`${url}\n`);
 
@@ -35,8 +37,8 @@ scraper.scrape(`${site}/test-cases.html`).then(async page => {
 
 function getUrls(
   document: Document
-): Array<Readonly<{ id: string; url: string }>> {
-  return querySelectorAll(document, document, "h3[id]").map(header => {
+): Iterable<{ readonly id: string; readonly url: string }> {
+  return Seq(querySelectorAll(document, document, "h3[id]")).map(header => {
     const example = getNextElementSibling(header, document);
     const id = getAttribute(header, "id")!;
 

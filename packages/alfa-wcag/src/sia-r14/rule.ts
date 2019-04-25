@@ -5,6 +5,7 @@ import {
   getTextAlternative,
   hasNameFrom
 } from "@siteimprove/alfa-aria";
+import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -21,7 +22,10 @@ import {
   traverseNode
 } from "@siteimprove/alfa-dom";
 
-const { map } = BrowserSpecific;
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
 
 export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r14.html",
@@ -29,36 +33,37 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
-        return querySelectorAll<Element>(document, document, node => {
-          return (
-            isElement(node) &&
-            isHtmlElement(node, document) &&
-            hasVisibleTextContent(node, document, device) &&
-            (hasAttribute(node, "aria-label") ||
-              hasAttribute(node, "aria-labelledby"))
-          );
-        }).map(element => {
-          return map(isWidget(element, document, device), isWidget => {
-            if (!isWidget) {
+        return map(
+          filter(
+            querySelectorAll<Element>(document, document, node => {
+              return (
+                isElement(node) &&
+                isHtmlElement(node, document) &&
+                hasVisibleTextContent(node, document, device) &&
+                (hasAttribute(node, "aria-label") ||
+                  hasAttribute(node, "aria-labelledby"))
+              );
+            }),
+            element => {
+              return map(isWidget(element, document, device), isWidget => {
+                if (!isWidget) {
+                  return false;
+                }
+
+                return isContentLabelable(element, document, device);
+              });
+            }
+          ),
+          elements => {
+            return Seq(elements).map(element => {
               return {
-                applicable: false,
+                applicable: true,
                 aspect: document,
                 target: element
               };
-            }
-
-            return map(
-              isContentLabelable(element, document, device),
-              isContentLabelable => {
-                return {
-                  applicable: isContentLabelable,
-                  aspect: document,
-                  target: element
-                };
-              }
-            );
-          });
-        });
+            });
+          }
+        );
       },
 
       expectations: (aspect, target) => {

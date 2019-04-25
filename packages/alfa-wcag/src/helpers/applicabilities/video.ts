@@ -1,4 +1,5 @@
 import { Atomic, QuestionType } from "@siteimprove/alfa-act";
+import { Seq } from "@siteimprove/alfa-collection";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -24,23 +25,28 @@ export const Video: (
   device,
   options
 ) => question => {
-  return querySelectorAll<Element>(document, document, node => {
-    if (!isElement(node) || !isVideo(node, document)) {
-      return false;
-    }
-
-    if (options.track !== undefined) {
-      const hasTrack =
-        querySelector(node, document, `track[kind="${options.track.kind}"]`) !==
-        null;
-
-      if (hasTrack !== options.track.has) {
+  return Seq(
+    querySelectorAll<Element>(document, document, node => {
+      if (!isElement(node) || !isVideo(node, document)) {
         return false;
       }
-    }
 
-    return true;
-  }).map(element => {
+      if (options.track !== undefined) {
+        const hasTrack =
+          querySelector(
+            node,
+            document,
+            `track[kind="${options.track.kind}"]`
+          ) !== null;
+
+        if (hasTrack !== options.track.has) {
+          return false;
+        }
+      }
+
+      return isVisible(node, document, device);
+    })
+  ).map(element => {
     const isStreaming = question(
       QuestionType.Boolean,
       "is-streaming",
@@ -74,7 +80,7 @@ export const Video: (
     }
 
     return {
-      applicable: isVisible(element, document, device),
+      applicable: true,
       aspect: document,
       target: element
     };

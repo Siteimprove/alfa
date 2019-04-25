@@ -1,9 +1,11 @@
-import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-util";
 import { getRole } from "./get-role";
 import { Category } from "./types";
+
+const { map } = BrowserSpecific;
 
 /**
  * Given an element and a context, get the category of the semantic role of the
