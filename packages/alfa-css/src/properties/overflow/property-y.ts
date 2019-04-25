@@ -1,10 +1,7 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
-import {
-  getComputedProperty,
-  getSpecifiedProperty
-} from "../helpers/get-property";
+import { getSpecifiedProperty } from "../helpers/get-property";
 import { OverflowGrammar } from "./grammar";
 import { Overflow } from "./types";
 
