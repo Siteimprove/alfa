@@ -1,8 +1,6 @@
 import { parse } from "@siteimprove/alfa-lang";
 import { Shorthand } from "../../properties";
-import * as Longhands from "../../properties/longhands";
 import { OverflowGrammar } from "./grammar";
-import { Overflow } from "./types";
 
 /**
  * @see https://drafts.csswg.org/css-overflow-3/#propdef-overflow
@@ -11,8 +9,8 @@ export const overflow: Shorthand<"overflowX" | "overflowY"> = {
   longhands: ["overflowX", "overflowY"],
   parse(tokens) {
     let offset = 0;
-    let overflowX: Overflow = Longhands.overflowX.initial();
-    let overflowY: Overflow = Longhands.overflowX.initial();
+    let overflowX;
+    let overflowY;
     {
       const { result, position, done } = parse(tokens, OverflowGrammar, offset);
 
