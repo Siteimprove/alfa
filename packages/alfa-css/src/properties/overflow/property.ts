@@ -7,13 +7,33 @@ import { OverflowGrammar } from "./grammar";
  */
 export const overflow: Shorthand<"overflowX" | "overflowY"> = {
   longhands: ["overflowX", "overflowY"],
-  parse(input) {
-    const parser = parse(input, OverflowGrammar);
+  parse(tokens) {
+    let offset = 0;
+    let overflowX: Overflow;
+    let overflowY: Overflow;
+    {
+      const { result, position } = parse(tokens, OverflowGrammar, offset);
 
-    if (!parser.done) {
-      return null;
+      if (result !== null) {
+        overflowX = result;
+        offset = position;
+      }
     }
 
-    return parser.result;
+    {
+      const { result, position } = parse(tokens, OverflowGrammar, offset);
+
+      if (result === null) {
+        overflowY = overflowX;
+      }
+
+      overflowY = result;
+      offset = position;
+    }
+
+    return {
+      overflowX,
+      overflowY
+    };
   }
 };
