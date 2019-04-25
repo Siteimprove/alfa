@@ -22,8 +22,11 @@ import {
 } from "./types";
 
 const { assign } = Object;
-const { map, unwrap } = BrowserSpecific;
-const { reduce, groupBy } = BrowserSpecific.Iterable;
+const {
+  map,
+  unwrap,
+  Iterable: { reduce, groupBy }
+} = BrowserSpecific;
 
 // The `audit()` function is special in that it requires use of conditional
 // types in order to correctly infer the union of aspect and target types for a

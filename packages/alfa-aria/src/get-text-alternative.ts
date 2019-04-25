@@ -28,8 +28,10 @@ import * as Roles from "./roles";
 
 const { isArray } = Array;
 const { ifNone, ifSome } = Option;
-const { map } = BrowserSpecific;
-const { reduce } = BrowserSpecific.Iterable;
+const {
+  map,
+  Iterable: { reduce }
+} = BrowserSpecific;
 
 type TextAlternativeOptions = Readonly<{
   recursing?: boolean;

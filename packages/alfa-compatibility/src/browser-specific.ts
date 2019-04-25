@@ -1,7 +1,6 @@
 import { List, Map, Set } from "@siteimprove/alfa-collection";
 import { expandBrowsers } from "./expand-browsers";
 import { isBrowserSpecific } from "./guards";
-import * as iterable from "./iterable";
 import { getSupportedBrowsers } from "./supported-browsers";
 import { BrowserName, BrowserQuery, Version } from "./types";
 import { withBrowsers } from "./with-browsers";
@@ -133,6 +132,10 @@ export class BrowserSpecific<T> {
     );
   }
 }
+
+// Import of iterable helpers must happen after the `BrowserSpecific` class has
+// been declared as all of the iterable helpers rely on this class.
+import * as iterable from "./iterable";
 
 export namespace BrowserSpecific {
   export const Iterable = iterable;

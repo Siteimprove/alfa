@@ -14,8 +14,10 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-const { map } = BrowserSpecific;
-const { filter } = BrowserSpecific.Iterable;
+const {
+  map,
+  Iterable: { filter }
+} = BrowserSpecific;
 
 export const Audio: (
   document: Document,
