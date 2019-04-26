@@ -21,7 +21,7 @@ export function expandVersions(
     return Set();
   }
 
-  const result = Set<Version>().withMutations(result => {
+  return Set<Version>().withMutations(result => {
     const { releases } = Browsers[name];
 
     if (browser.length === 2) {
@@ -105,6 +105,4 @@ export function expandVersions(
       }
     }
   });
-
-  return result;
 }

@@ -55,48 +55,53 @@ export class BrowserSpecific<T> {
 
         if (isBrowserSpecific(value)) {
           for (const target of value.values) {
-            const browsers = Map<BrowserName, Set<Version> | true>();
+            const browsers = Map<
+              BrowserName,
+              Set<Version> | true
+            >().withMutations(browsers => {
+              for (const [browser, sourceVersions] of source.browsers) {
+                const targetVersions = target.browsers.get(browser);
 
-            for (const [browser, sourceVersions] of source.browsers) {
-              const targetVersions = target.browsers.get(browser);
+                // Case 0: The target value is undefined for all versions of the
+                // current range of browser versions; move on.
+                if (targetVersions === undefined) {
+                  continue;
+                }
 
-              // Case 0: The target value is undefined for all versions of the
-              // current range of browser versions; move on.
-              if (targetVersions === undefined) {
-                continue;
-              }
+                // Case 1: Both the target value and the source value are
+                // defined for any version of the current range of browser
+                // versions.
+                if (targetVersions === true && sourceVersions === true) {
+                  browsers.set(browser, true);
+                }
 
-              // Case 1: Both the target value and the source value are defined
-              // for any version of the current range of browser versions.
-              if (targetVersions === true && sourceVersions === true) {
-                browsers.set(browser, true);
-              }
+                // Case 2: Only the source value is defined for any version of
+                // the current range of browser versions; use the browser
+                // versions for which the target value is defined.
+                else if (sourceVersions === true) {
+                  browsers.set(browser, targetVersions);
+                }
 
-              // Case 2: Only the source value is defined for any version of the
-              // current range of browser versions; use the browser versions for
-              // which the target value is defined.
-              else if (sourceVersions === true) {
-                browsers.set(browser, targetVersions);
-              }
+                // Case 3: Only the target value is defined for any version of
+                // the current range of browser versions; use the browser
+                // versions for which the source value is defined.
+                else if (targetVersions === true) {
+                  browsers.set(browser, sourceVersions);
+                }
 
-              // Case 3: Only the target value is defined for any version of the
-              // current range of browser versions; use the browser versions for
-              // which the source value is defined.
-              else if (targetVersions === true) {
-                browsers.set(browser, sourceVersions);
-              }
+                // Case 4: Both the target value and the source value are
+                // defined for specific versions of the current range of browser
+                // versions; use the intersection between these two sets of
+                // versions.
+                else {
+                  const common = targetVersions.intersect(sourceVersions);
 
-              // Case 4: Both the target value and the source value are defined
-              // for specific versions of the current range of browser versions;
-              // use the intersection between these two sets of versions.
-              else {
-                const common = targetVersions.intersect(sourceVersions);
-
-                if (common.size > 0) {
-                  browsers.set(browser, common);
+                  if (common.size > 0) {
+                    browsers.set(browser, common);
+                  }
                 }
               }
-            }
+            });
 
             if (browsers.size > 0) {
               values.push({ value: target.value, browsers });
@@ -133,13 +138,7 @@ export class BrowserSpecific<T> {
   }
 }
 
-// Import of iterable helpers must happen after the `BrowserSpecific` class has
-// been declared as all of the iterable helpers rely on this class.
-import * as iterable from "./iterable";
-
 export namespace BrowserSpecific {
-  export const Iterable = iterable;
-
   export function map<T, U>(
     value: BrowserSpecific<T>,
     iteratee: (value: T) => U | BrowserSpecific<U>
@@ -169,4 +168,12 @@ export namespace BrowserSpecific {
           }
         ];
   }
+}
+
+// Import of iterable helpers must happen after the `BrowserSpecific` class has
+// been declared as all of the iterable helpers rely on this class.
+import * as iterable from "./iterable";
+
+export namespace BrowserSpecific {
+  export const Iterable = iterable;
 }

@@ -15,12 +15,10 @@ export function expandBrowsers(
   return Map<BrowserName, Set<Version> | true>().withMutations(result => {
     for (const browser of browsers) {
       if (typeof browser === "string") {
-        if (options.unsupported === true) {
-          result.set(browser, true);
-        }
-
         if (supported.has(browser)) {
           result.set(browser, supported.get(browser)!);
+        } else if (options.unsupported === true) {
+          result.set(browser, true);
         }
       } else {
         const name = browser[0];
