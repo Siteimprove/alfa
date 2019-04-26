@@ -1,4 +1,3 @@
-import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "../browser-specific";
 
 const { map } = BrowserSpecific;
@@ -42,18 +41,29 @@ export function reduce<T, U = T>(
   initial?: T | U | BrowserSpecific<T | U>
 ): T | U | BrowserSpecific<T | U> {
   return map(values, values => {
+    const iterator = values[Symbol.iterator]();
+
+    let next = iterator.next();
+
     if (initial === undefined) {
-      return Seq(values).reduce((accumulator, value) => {
-        return map(accumulator, accumulator => {
-          return iteratee(accumulator, value);
-        });
-      });
+      if (next.done) {
+        throw new TypeError("reduce of empty iterable with no initial value");
+      }
+
+      initial = next.value;
+      next = iterator.next();
     }
 
-    return Seq(values).reduce((accumulator, value) => {
-      return map(accumulator, accumulator => {
-        return iteratee(accumulator, value);
+    let accumulator = initial;
+
+    while (!next.done) {
+      accumulator = map(accumulator, accumulator => {
+        return iteratee(accumulator, next.value);
       });
-    }, initial);
+
+      next = iterator.next();
+    }
+
+    return accumulator;
   });
 }
