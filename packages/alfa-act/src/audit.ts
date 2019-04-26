@@ -116,7 +116,22 @@ function auditAtomic<A extends Aspect, T extends Target>(
 
   return reduce<Evaluand<A, T>, List<Result<A, T>>>(
     evaluands,
-    (results, { aspect, target }) => {
+    (results, { applicable, aspect, target }) => {
+      if (applicable === false) {
+        return results;
+      }
+
+      if (applicable === null) {
+        const result: Result<A, T, Outcome.CantTell> = {
+          rule,
+          outcome: Outcome.CantTell,
+          aspect,
+          target
+        };
+
+        return results.push(result);
+      }
+
       const evaluator = getExpectationEvaluater(rule, aspect, target);
 
       const evaluation = expectations(aspect, target, (type, id) => {

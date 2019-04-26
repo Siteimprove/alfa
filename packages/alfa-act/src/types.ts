@@ -189,7 +189,7 @@ export interface Requirement {
 }
 
 export interface Evaluand<A extends Aspect, T extends Target> {
-  applicable: boolean | null;
+  applicable?: boolean | null;
   aspect: A;
   target: T;
 }
