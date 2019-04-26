@@ -48,38 +48,37 @@ watchFiles(
 
       if (project.addFile(file)) {
         [...project.buildProgram()];
+      }
 
-        let success = diagnose(file, project) && build(file, project);
+      let success = diagnose(file, project) && build(file, project);
 
-        if (isSpec(file)) {
-          success = success && test(file);
-        } else {
-          const spec = getSpecification(file);
+      if (isSpec(file)) {
+        success = success && test(file);
+      } else {
+        const spec = getSpecification(file);
 
-          if (spec !== null) {
-            success = success && test(spec);
-          }
+        if (spec !== null) {
+          success = success && test(spec);
         }
+      }
 
-        if (success) {
-          const duration = time.now(start);
+      if (success) {
+        const duration = time.now(start);
 
-          notify.success(
-            `${file} ${time.format(duration, {
-              color: "yellow",
-              threshold: 400
-            })}`
-          );
+        notify.success(
+          `${file} ${time.format(duration, {
+            color: "yellow",
+            threshold: 400
+          })}`
+        );
 
-          if (!rerunFailed && failed.length > 0) {
-            failed.forEach(file => {
-              notify.warn(`${chalk.gray(file)} Failed previously`);
-            });
-          }
+        if (!rerunFailed && failed.length > 0) {
+          failed.forEach(file => {
+            notify.warn(`${chalk.gray(file)} Failed previously`);
+          });
         }
       } else {
         failed.push(file);
-        notify.skip(file);
       }
     });
   }
