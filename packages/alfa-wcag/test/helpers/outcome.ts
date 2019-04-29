@@ -54,19 +54,13 @@ export function outcome<A extends Aspect, T extends Target>(
         return result.outcome === outcome;
       }
 
-      const actual = results.filter(hasMatchingOutcome);
-
-      const expected = outcome in assert ? assert[outcome]! : [];
-
-      t.equal(
-        actual.length,
-        expected.length,
-        `There must be ${expected.length} ${outcome} results`
+      const actual = new Set(
+        results.filter(hasMatchingOutcome).map(result => result.target)
       );
 
-      for (const target of expected) {
-        t(actual.some(result => result.target === target));
-      }
+      const expected = new Set(outcome in assert ? assert[outcome]! : []);
+
+      t.deepEqual(actual, expected);
     }
   }
 }
