@@ -30,7 +30,6 @@ test("Passes when non-streaming video elements have all audio and visual informa
     { passed: [video] },
     [
       {
-        rule: SIA_R24,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -38,7 +37,6 @@ test("Passes when non-streaming video elements have all audio and visual informa
         answer: false
       },
       {
-        rule: SIA_R24,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
@@ -74,7 +72,6 @@ test("Fails when non-streaming video elements have no audio and visual informati
     { failed: [video] },
     [
       {
-        rule: SIA_R24,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -82,7 +79,6 @@ test("Fails when non-streaming video elements have no audio and visual informati
         answer: false
       },
       {
-        rule: SIA_R24,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,

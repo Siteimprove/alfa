@@ -27,7 +27,6 @@ test("Passes when non-streaming audio elements has a text alternative or caption
     { passed: [audio] },
     [
       {
-        rule: SIA_R23,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -35,7 +34,6 @@ test("Passes when non-streaming audio elements has a text alternative or caption
         answer: false
       },
       {
-        rule: SIA_R23,
         type: QuestionType.Boolean,
         id: "is-playing",
         aspect: document,
@@ -66,7 +64,6 @@ test("Fails when non-streaming audio elements has no text alternative or caption
     { failed: [audio] },
     [
       {
-        rule: SIA_R23,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -74,7 +71,6 @@ test("Fails when non-streaming audio elements has no text alternative or caption
         answer: false
       },
       {
-        rule: SIA_R23,
         type: QuestionType.Boolean,
         id: "is-playing",
         aspect: document,

@@ -27,7 +27,6 @@ test("Passes when non-streaming silent video has a media alternative for text on
     { passed: [video] },
     [
       {
-        rule: SIA_R26,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -35,7 +34,6 @@ test("Passes when non-streaming silent video has a media alternative for text on
         answer: false
       },
       {
-        rule: SIA_R26,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
@@ -79,7 +77,6 @@ test("Fails when non-streaming silent video has no media alternative for text on
     { failed: [video] },
     [
       {
-        rule: SIA_R26,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -87,7 +84,6 @@ test("Fails when non-streaming silent video has no media alternative for text on
         answer: false
       },
       {
-        rule: SIA_R26,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
@@ -126,7 +122,6 @@ test("Is inapplicable when element is not a video element", t => {
     Outcome.Inapplicable,
     [
       {
-        rule: SIA_R26,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -134,7 +129,6 @@ test("Is inapplicable when element is not a video element", t => {
         answer: false
       },
       {
-        rule: SIA_R26,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,

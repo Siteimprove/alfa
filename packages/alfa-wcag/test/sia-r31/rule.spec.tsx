@@ -27,7 +27,6 @@ test("Passes when video has a media alternative for text on the page", t => {
     { passed: [video] },
     [
       {
-        rule: SIA_R31,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -35,7 +34,6 @@ test("Passes when video has a media alternative for text on the page", t => {
         answer: false
       },
       {
-        rule: SIA_R31,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
@@ -74,7 +72,6 @@ test("Fails when video has no media alternative for text on the page", t => {
     { failed: [video] },
     [
       {
-        rule: SIA_R31,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -82,7 +79,6 @@ test("Fails when video has no media alternative for text on the page", t => {
         answer: false
       },
       {
-        rule: SIA_R31,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,

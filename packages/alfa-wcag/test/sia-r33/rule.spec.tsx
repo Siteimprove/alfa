@@ -27,7 +27,6 @@ test("Passes when non-streaming video has a transcript on the page", t => {
     { passed: [video] },
     [
       {
-        rule: SIA_R33,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -35,7 +34,6 @@ test("Passes when non-streaming video has a transcript on the page", t => {
         answer: false
       },
       {
-        rule: SIA_R33,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
@@ -70,7 +68,6 @@ test("Fails when non-streaming video has no transcript on the page", t => {
     { failed: [video] },
     [
       {
-        rule: SIA_R33,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -78,7 +75,6 @@ test("Fails when non-streaming video has no transcript on the page", t => {
         answer: false
       },
       {
-        rule: SIA_R33,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,
@@ -109,7 +105,6 @@ test("Is inapplicable when element is not a video element", t => {
     Outcome.Inapplicable,
     [
       {
-        rule: SIA_R33,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -117,7 +112,6 @@ test("Is inapplicable when element is not a video element", t => {
         answer: false
       },
       {
-        rule: SIA_R33,
         type: QuestionType.Boolean,
         id: "has-audio",
         aspect: document,

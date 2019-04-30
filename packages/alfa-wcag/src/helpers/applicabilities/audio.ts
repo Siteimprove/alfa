@@ -41,7 +41,8 @@ export const Audio: (
           QuestionType.Boolean,
           "is-streaming",
           document,
-          element
+          element,
+          { global: true }
         );
 
         if (isStreaming === null) {
@@ -56,7 +57,8 @@ export const Audio: (
           QuestionType.Boolean,
           "is-playing",
           document,
-          element
+          element,
+          { global: true }
         );
 
         if (isPlaying === true) {
@@ -67,7 +69,8 @@ export const Audio: (
           QuestionType.Node,
           "play-button",
           document,
-          element
+          element,
+          { global: true }
         );
 
         if (playButton === null) {

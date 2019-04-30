@@ -140,7 +140,7 @@ export interface Question<
 > {
   readonly type: Q;
   readonly id: string;
-  readonly rule: Rule<A, T>;
+  readonly rule?: Rule<A, T>;
   readonly aspect: A;
   readonly target: T;
   readonly message?: string;
@@ -159,7 +159,7 @@ export interface Answer<
 > {
   readonly type: Q;
   readonly id: string;
-  readonly rule: Rule<A, T> | Iterable<Rule<A, T>>;
+  readonly rule?: Rule<A, T> | Iterable<Rule<A, T>>;
   readonly aspect: A;
   readonly target: T;
   readonly answer: AnswerType[Q] | null;
@@ -211,7 +211,8 @@ export namespace Atomic {
       type: Q,
       id: string,
       aspect: A,
-      target: T
+      target: T,
+      options?: { global?: boolean }
     ) => AnswerType[Q] | null
   ) => Iterable<Evaluand<A, T>> | BrowserSpecific<Iterable<Evaluand<A, T>>>;
 
@@ -220,7 +221,8 @@ export namespace Atomic {
     target: T,
     question: <Q extends QuestionType>(
       type: Q,
-      id: string
+      id: string,
+      options?: { global?: boolean }
     ) => AnswerType[Q] | null
   ) => Evaluation | BrowserSpecific<Evaluation>;
 

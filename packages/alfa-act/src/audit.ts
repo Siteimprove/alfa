@@ -209,7 +209,8 @@ type QuestionEvaluator<A extends Aspect, T extends Target> = <
   type: Q,
   id: string,
   aspect: A,
-  target: T
+  target: T,
+  options?: { global?: boolean }
 ) => AnswerType[Q] | null;
 
 function getQuestionEvaluator<A extends Aspect, T extends Target>(
@@ -221,7 +222,7 @@ function getQuestionEvaluator<A extends Aspect, T extends Target>(
 
   const locale = Array.from(locales).find(locale => locale.id === "en");
 
-  return (type, id, aspect, target) => {
+  return (type, id, aspect, target, options = {}) => {
     const answer = Array.from(answers).find(answer => {
       if (
         answer.type !== type ||
@@ -230,6 +231,10 @@ function getQuestionEvaluator<A extends Aspect, T extends Target>(
         answer.target !== target
       ) {
         return false;
+      }
+
+      if (answer.rule === undefined) {
+        return options.global === true;
       }
 
       if (isIterable(answer.rule)) {
@@ -256,7 +261,11 @@ function getQuestionEvaluator<A extends Aspect, T extends Target>(
       }
     }
 
-    questions.push({ type, id, rule, aspect, target, message });
+    if (options.global === true) {
+      questions.push({ type, id, aspect, target, message });
+    } else {
+      questions.push({ type, id, rule, aspect, target, message });
+    }
 
     return null;
   };

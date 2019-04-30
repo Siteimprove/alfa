@@ -51,7 +51,8 @@ export const Video: (
       QuestionType.Boolean,
       "is-streaming",
       document,
-      element
+      element,
+      { global: true }
     );
 
     if (isStreaming === null) {
@@ -67,7 +68,8 @@ export const Video: (
         QuestionType.Boolean,
         "has-audio",
         document,
-        element
+        element,
+        { global: true }
       );
 
       if (hasAudio === null) {

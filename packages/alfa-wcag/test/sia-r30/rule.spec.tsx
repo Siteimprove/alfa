@@ -29,7 +29,6 @@ test("Passes when composite rules are passing", t => {
     { passed: [audio] },
     [
       {
-        rule: [SIA_R23, SIA_R29],
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -37,7 +36,6 @@ test("Passes when composite rules are passing", t => {
         answer: false
       },
       {
-        rule: [SIA_R23, SIA_R29],
         type: QuestionType.Boolean,
         id: "is-playing",
         aspect: document,

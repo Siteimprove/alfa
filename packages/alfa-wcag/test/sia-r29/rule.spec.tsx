@@ -27,7 +27,6 @@ test("Passes when non-streaming audio has a media alternative for text on the pa
     { passed: [audio] },
     [
       {
-        rule: SIA_R29,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -35,7 +34,6 @@ test("Passes when non-streaming audio has a media alternative for text on the pa
         answer: false
       },
       {
-        rule: SIA_R29,
         type: QuestionType.Boolean,
         id: "is-playing",
         aspect: document,
@@ -78,7 +76,6 @@ test("Fails when non-streaming audio has no media alternative for text on the pa
     { failed: [audio] },
     [
       {
-        rule: SIA_R29,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -86,7 +83,6 @@ test("Fails when non-streaming audio has no media alternative for text on the pa
         answer: false
       },
       {
-        rule: SIA_R29,
         type: QuestionType.Boolean,
         id: "is-playing",
         aspect: document,
@@ -125,7 +121,6 @@ test("Is inapplicable when element is not a audio element", t => {
     Outcome.Inapplicable,
     [
       {
-        rule: SIA_R29,
         type: QuestionType.Boolean,
         id: "is-streaming",
         aspect: document,
@@ -133,7 +128,6 @@ test("Is inapplicable when element is not a audio element", t => {
         answer: false
       },
       {
-        rule: SIA_R29,
         type: QuestionType.Boolean,
         id: "is-playing",
         aspect: document,
