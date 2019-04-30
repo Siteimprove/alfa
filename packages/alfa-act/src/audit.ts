@@ -15,6 +15,7 @@ import {
   Evaluation,
   Outcome,
   Question,
+  QuestionScope,
   QuestionType,
   Result,
   Rule,
@@ -261,11 +262,18 @@ function getQuestionEvaluator<A extends Aspect, T extends Target>(
       }
     }
 
-    if (options.global === true) {
-      questions.push({ type, id, aspect, target, message });
-    } else {
-      questions.push({ type, id, rule, aspect, target, message });
-    }
+    const scope =
+      options.global === true ? QuestionScope.Global : QuestionScope.Local;
+
+    questions.push({
+      type,
+      id,
+      rule,
+      scope,
+      aspect,
+      target,
+      message
+    });
 
     return null;
   };

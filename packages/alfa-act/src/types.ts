@@ -133,6 +133,11 @@ export const enum QuestionType {
   NodeList = "nodeList"
 }
 
+export const enum QuestionScope {
+  Local = "local",
+  Global = "global"
+}
+
 export interface Question<
   Q extends QuestionType,
   A extends Aspect,
@@ -140,7 +145,8 @@ export interface Question<
 > {
   readonly type: Q;
   readonly id: string;
-  readonly rule?: Rule<A, T>;
+  readonly rule: Rule<A, T>;
+  readonly scope: QuestionScope;
   readonly aspect: A;
   readonly target: T;
   readonly message?: string;
