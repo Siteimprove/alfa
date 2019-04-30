@@ -1,7 +1,8 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import {
   Category,
   getRole,
+  getRoleCategory,
   getTextAlternative,
   hasNameFrom
 } from "@siteimprove/alfa-aria";
@@ -12,7 +13,6 @@ import {
   Document,
   Element,
   getElementNamespace,
-  hasAttribute,
   isElement,
   isText,
   isVisible,
@@ -38,10 +38,8 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll<Element>(document, document, node => {
               return (
                 isElement(node) &&
-                isHtmlElement(node, document) &&
-                hasVisibleTextContent(node, document, device) &&
-                (hasAttribute(node, "aria-label") ||
-                  hasAttribute(node, "aria-labelledby"))
+                isHtmlOrSvgElement(node, document) &&
+                hasVisibleTextContent(node, document, device)
               );
             }),
             element => {
@@ -50,14 +48,27 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
                   return false;
                 }
 
-                return isContentLabelable(element, document, device);
+                return map(
+                  isContentLabelable(element, document, device),
+                  isContentLabelable => {
+                    if (!isContentLabelable) {
+                      return false;
+                    }
+
+                    return map(
+                      getTextAlternative(element, document, device),
+                      textAlternative => {
+                        return textAlternative !== null;
+                      }
+                    );
+                  }
+                );
               });
             }
           ),
           elements => {
             return Seq(elements).map(element => {
               return {
-                applicable: true,
                 aspect: document,
                 target: element
               };
@@ -66,7 +77,7 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
         );
       },
 
-      expectations: (aspect, target) => {
+      expectations: (aspect, target, question) => {
         const visibleTextContent = getVisibleTextContent(
           target,
           document,
@@ -76,12 +87,21 @@ export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
         return map(
           getTextAlternative(target, document, device),
           textAlternative => {
+            let holds: boolean | null = normalize(textAlternative!).includes(
+              visibleTextContent
+            );
+
+            if (!holds) {
+              const isHumanLanguage = question(
+                QuestionType.Boolean,
+                "is-human-language"
+              );
+
+              holds = isHumanLanguage === null ? null : !isHumanLanguage;
+            }
+
             return {
-              1: {
-                holds:
-                  textAlternative !== null &&
-                  normalize(textAlternative).includes(visibleTextContent)
-              }
+              1: { holds }
             };
           }
         );
@@ -130,8 +150,14 @@ function hasVisibleTextContent(
   return getVisibleTextContent(element, context, device) !== "";
 }
 
-function isHtmlElement(element: Element, context: Node): boolean {
-  return getElementNamespace(element, context) === Namespace.HTML;
+function isHtmlOrSvgElement(element: Element, context: Node): boolean {
+  switch (getElementNamespace(element, context)) {
+    case Namespace.HTML:
+    case Namespace.SVG:
+      return true;
+  }
+
+  return false;
 }
 
 function isWidget(
@@ -139,10 +165,9 @@ function isWidget(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return map(
-    getRole(element, context, device),
-    role => role !== null && role.category === Category.Widget
-  );
+  return map(getRoleCategory(element, context, device), category => {
+    return category === Category.Widget;
+  });
 }
 
 function isContentLabelable(
@@ -150,8 +175,7 @@ function isContentLabelable(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return map(
-    getRole(element, context, device),
-    role => role !== null && hasNameFrom(role, "contents")
-  );
+  return map(getRole(element, context, device), role => {
+    return role !== null && hasNameFrom(role, "contents");
+  });
 }
