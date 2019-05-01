@@ -59,11 +59,17 @@ export function getOwnerElement(
 
   const ownerElement = ownerElementMap.get(element);
 
-  if (ownerElement !== undefined) {
-    return ownerElement;
-  }
+  return map(isExposed(element, context, device), isExposed => {
+    if (!isExposed) {
+      return null;
+    }
 
-  return getExposedAncestor(element, context, device);
+    if (ownerElement !== undefined) {
+      return ownerElement;
+    }
+
+    return getExposedAncestor(element, context, device);
+  });
 }
 
 function getExposedAncestor(

@@ -35,3 +35,10 @@ test("Ignores ancestors not in the accessibility tree", t => {
 
   t.deepEqual(getOwnerElement(listitem, list, device), list);
 });
+
+test("Elements not in the accessibility tree have no owners", t => {
+  const listitem = <div role="listitem" aria-hidden="true" />;
+  const list = <div role="list">{listitem}</div>;
+
+  t.deepEqual(getOwnerElement(listitem, list, device), null);
+});
