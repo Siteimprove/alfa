@@ -145,7 +145,7 @@ export interface Question<
 > {
   readonly type: Q;
   readonly id: string;
-  readonly rule: Rule<A, T>;
+  readonly rule: Rule<A, T> | Iterable<Rule<A, T>>;
   readonly scope: QuestionScope;
   readonly aspect: A;
   readonly target: T;
