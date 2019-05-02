@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/types.ts"],
+  "files": ["src/guards.ts", "src/index.ts", "src/types.ts"],
   "references": [
     {
       "path": "../alfa-test"

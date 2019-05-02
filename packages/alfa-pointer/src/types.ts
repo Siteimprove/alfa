@@ -70,8 +70,13 @@ export interface ElementPointer<R> extends NodePointer<R> {
   readonly type: PointerType.Element;
 }
 
-export interface AttributePointer<R> extends Pointer<ElementPointer<R>> {
+export interface AttributePointer<R> extends Pointer<R> {
   readonly type: PointerType.Attribute;
+
+  /**
+   * The owner of the attribute.
+   */
+  readonly owner: ElementPointer<R>;
 
   /**
    * An optional prefix for identifying the attribute if it is part of a
@@ -81,7 +86,7 @@ export interface AttributePointer<R> extends Pointer<ElementPointer<R>> {
 
   /**
    * The local name of the attribute within the list of attributes of its
-   * associated element pointer reference.
+   * associated owner.
    */
   readonly localName: string;
 }
