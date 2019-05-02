@@ -1,5 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { getRole, isExposed, Role } from "@siteimprove/alfa-aria";
+import { isExposed } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
@@ -11,7 +11,9 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-util";
+
+import { getExplicitRole } from "../helpers/get-explicit-role";
+import { hasExplicitRole } from "../helpers/has-explicit-role";
 
 const {
   map,
@@ -64,42 +66,6 @@ export const SIA_R16: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function getExplicitRole(
-  element: Element,
-  context: Node,
-  device: Device
-): Option<Role> | BrowserSpecific<Option<Role>> {
-  return map(
-    getRole(element, context, device, { implicit: false }),
-    explicitRole => {
-      if (explicitRole === null) {
-        return null;
-      }
-
-      return map(
-        getRole(element, context, device, { explicit: false }),
-        implicitRole => {
-          if (explicitRole !== implicitRole) {
-            return explicitRole;
-          }
-
-          return null;
-        }
-      );
-    }
-  );
-}
-
-function hasExplicitRole(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return map(getExplicitRole(element, context, device), explicitRole => {
-    return explicitRole !== null;
-  });
-}
 
 function hasRequiredValues(
   element: Element,
