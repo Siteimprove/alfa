@@ -39,8 +39,11 @@ export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
 
       expectations: (aspect, target) => {
         return {
-          1: { holds: !isTabbable(target, document, device) },
-          2: { holds: !hasTabbableDescendants(target, document, device) }
+          1: {
+            holds:
+              !isTabbable(target, document, device) &&
+              !hasTabbableDescendants(target, document, device)
+          }
         };
       }
     };
