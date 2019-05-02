@@ -4,6 +4,7 @@ import * as Roles from "./roles";
 
 export { Attributes, Roles, Features };
 
+export * from "./get-owner-element";
 export * from "./get-role-category";
 export * from "./get-role";
 export * from "./get-text-alternative";
