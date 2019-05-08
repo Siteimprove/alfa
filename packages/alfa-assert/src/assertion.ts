@@ -6,6 +6,7 @@ import {
   DocumentType,
   Element,
   getOwnerElement,
+  isAttribute,
   isDocument,
   NodeType,
   serialize
@@ -109,11 +110,11 @@ export class AssertionError extends Error {
     let target = this.target;
     let prelude: string;
 
-    if ("nodeType" in target) {
-      prelude = "The";
-    } else {
+    if (isAttribute(target)) {
       prelude = `The attribute ${mark.yellow(target.localName)} on the`;
       target = getOwnerElement(target, document)!;
+    } else {
+      prelude = "The";
     }
 
     return `

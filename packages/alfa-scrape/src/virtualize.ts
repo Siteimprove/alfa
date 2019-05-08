@@ -26,11 +26,7 @@ function virtualizeElement(
     nodeType: 1,
     prefix: element.prefix,
     localName: element.localName === null ? "" : element.localName,
-    attributes: Array.from(element.attributes).map(attribute => ({
-      prefix: attribute.prefix,
-      localName: attribute.localName === null ? "" : attribute.localName,
-      value: attribute.value
-    })),
+    attributes: Array.from(element.attributes).map(virtualizeAttribute),
     shadowRoot: null,
     childNodes: Array.from(element.childNodes).map(virtualizeNode)
   };
@@ -42,6 +38,18 @@ function virtualizeElement(
   }
 
   return virtual;
+}
+
+function virtualizeAttribute(
+  attribute: Attr
+): import("@siteimprove/alfa-dom").Attribute {
+  return {
+    nodeType: 2,
+    prefix: attribute.prefix,
+    localName: attribute.localName === null ? "" : attribute.localName,
+    value: attribute.value,
+    childNodes: []
+  };
 }
 
 function virtualizeText(text: Text): import("@siteimprove/alfa-dom").Text {

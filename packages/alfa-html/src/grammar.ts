@@ -256,9 +256,11 @@ function createElement(name: string): Element {
 
 function createAttribute(name: string, value: string): Attribute {
   return {
+    nodeType: 2,
     prefix: null,
     localName: name,
-    value
+    value,
+    childNodes: []
   };
 }
 

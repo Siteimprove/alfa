@@ -50,9 +50,11 @@ export function jsx(
 
     if (value !== false && value !== null && value !== undefined) {
       attributes.push({
+        nodeType: 2,
         prefix: null,
         localName: name,
-        value: toString(name, value)
+        value: toString(name, value),
+        childNodes: []
       });
     }
   }

@@ -15,9 +15,11 @@ test("Transforms JSX into DOM nodes", t => {
     localName: "div",
     attributes: [
       {
+        nodeType: 2,
         prefix: null,
         localName: "class",
-        value: "foo"
+        value: "foo",
+        childNodes: []
       }
     ],
     shadowRoot: null,
@@ -61,9 +63,11 @@ test("Transforms JSX into DOM nodes with multiple children and tags", t => {
       localName: "div",
       attributes: [
         {
+          nodeType: 2,
           prefix: null,
           localName: "class",
-          value: "foo"
+          value: "foo",
+          childNodes: []
         }
       ],
       shadowRoot: null,
@@ -81,9 +85,11 @@ test("Handles boolean attributes when truthy", t => {
   );
 
   t.deepEqual(hidden, {
+    nodeType: 2,
     prefix: null,
     localName: "hidden",
-    value: "hidden"
+    value: "hidden",
+    childNodes: []
   });
 });
 
@@ -107,9 +113,11 @@ test("Converts numbers in attributes to strings", t => {
   );
 
   t.deepEqual(number, {
+    nodeType: 2,
     prefix: null,
     localName: "number",
-    value: "20"
+    value: "20",
+    childNodes: []
   });
 });
 
@@ -144,9 +152,11 @@ test("Handles attributes with NaN values", t => {
   );
 
   t.deepEqual(foo, {
+    nodeType: 2,
     prefix: null,
     localName: "foo",
-    value: "NaN"
+    value: "NaN",
+    childNodes: []
   });
 });
 
@@ -159,9 +169,11 @@ test("Handles attributes with array values", t => {
   );
 
   t.deepEqual(foo, {
+    nodeType: 2,
     prefix: null,
     localName: "foo",
-    value: "1,2,3"
+    value: "1,2,3",
+    childNodes: []
   });
 });
 
@@ -174,9 +186,11 @@ test("Handles attributes with object values", t => {
   );
 
   t.deepEqual(foo, {
+    nodeType: 2,
     prefix: null,
     localName: "foo",
-    value: "[object Object]"
+    value: "[object Object]",
+    childNodes: []
   });
 });
 

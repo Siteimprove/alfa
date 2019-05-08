@@ -30,9 +30,11 @@ export function fromReactElement<T>(reactElement: ReactElement<T>): Element {
     attributes: keys(props)
       .filter(name => name !== "children")
       .map(name => ({
+        nodeType: 2,
         prefix: null,
         localName: name.toString(),
-        value: props[name].toString()
+        value: props[name].toString(),
+        childNodes: []
       })),
     shadowRoot: null,
     childNodes: childNodes.map(child => {

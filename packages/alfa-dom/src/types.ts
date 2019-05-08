@@ -5,6 +5,11 @@ export const enum NodeType {
   Element = 1,
 
   /**
+   * @see https://www.w3.org/TR/dom41/#dom-node-attribute_node
+   */
+  Attribute = 2,
+
+  /**
    * @see https://www.w3.org/TR/dom/#dom-node-text_node
    */
   Text = 3,
@@ -70,9 +75,14 @@ export interface CharacterData extends Node {
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-attr
+ * @see https://www.w3.org/TR/dom41/#interface-attr
  */
-export interface Attribute {
+export interface Attribute extends Node {
+  /**
+   * @see https://www.w3.org/TR/dom41/#dom-node-attribute_node
+   */
+  readonly nodeType: NodeType.Attribute;
+
   /**
    * @see https://www.w3.org/TR/dom/#dom-attr-prefix
    */

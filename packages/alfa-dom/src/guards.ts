@@ -1,4 +1,5 @@
 import {
+  Attribute,
   Comment,
   ConditionRule,
   Document,
@@ -23,6 +24,10 @@ import {
 
 export function isElement(node: Node): node is Element {
   return node.nodeType === 1;
+}
+
+export function isAttribute(node: Node): node is Attribute {
+  return node.nodeType === 2;
 }
 
 export function isText(node: Node): node is Text {

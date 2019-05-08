@@ -12,14 +12,18 @@ test("Passes when document has matching language attributes", t => {
     nodeType: NodeType.Element,
     attributes: [
       {
-        localName: "lang",
+        nodeType: 2,
         prefix: null,
-        value: "en"
+        localName: "lang",
+        value: "en",
+        childNodes: []
       },
       {
-        localName: "lang",
+        nodeType: 2,
         prefix: "xml",
-        value: "en"
+        localName: "lang",
+        value: "en",
+        childNodes: []
       }
     ],
     prefix: null,
@@ -38,14 +42,18 @@ test("Fails when document does not have matching language attributes", t => {
     nodeType: NodeType.Element,
     attributes: [
       {
-        localName: "lang",
+        nodeType: 2,
         prefix: null,
-        value: "en"
+        localName: "lang",
+        value: "en",
+        childNodes: []
       },
       {
-        localName: "lang",
+        nodeType: 2,
         prefix: "xml",
-        value: "da"
+        localName: "lang",
+        value: "da",
+        childNodes: []
       }
     ],
     prefix: null,
@@ -64,9 +72,11 @@ test("Is inapplicable when document has only one language attribute", t => {
     nodeType: NodeType.Element,
     attributes: [
       {
-        localName: "lang",
+        nodeType: 2,
         prefix: null,
-        value: "en"
+        localName: "lang",
+        value: "en",
+        childNodes: []
       }
     ],
     prefix: null,

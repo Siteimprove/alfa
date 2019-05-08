@@ -1,4 +1,4 @@
-import { Attribute, Element, NodeType } from "@siteimprove/alfa-dom";
+import { Attribute, Element, isElement, NodeType } from "@siteimprove/alfa-dom";
 import { Expression } from "estree"; // tslint:disable-line
 import { JSXAttribute, JSXElement } from "./types";
 
@@ -74,7 +74,13 @@ export function fromJsxElement(jsxElement: JSXElement): Element | null {
         }
 
         if (value !== null) {
-          const attribute: Attribute = { prefix, localName, value };
+          const attribute: Attribute = {
+            nodeType: 2,
+            prefix,
+            localName,
+            value,
+            childNodes: []
+          };
 
           attributeMap.set(attribute, jsxAttribute);
 
@@ -113,7 +119,7 @@ export function getNode(
 ): JSXElement | JSXAttribute | null {
   let result: JSXElement | JSXAttribute | undefined;
 
-  if ("nodeType" in node) {
+  if (isElement(node)) {
     result = elementMap.get(node);
   } else {
     result = attributeMap.get(node);

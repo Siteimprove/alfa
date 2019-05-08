@@ -1,9 +1,9 @@
 import { Seq } from "@siteimprove/alfa-collection";
 import {
-  Attribute,
   getOwnerElement,
   getParentNode,
   getTagName,
+  isAttribute,
   isDocument,
   isElement,
   Node,
@@ -225,10 +225,22 @@ function getPointer<A extends Aspect, T extends Target>(
   return null;
 }
 
-function getPath(target: Node | Attribute, context: Node): string {
-  if ("nodeType" in target) {
-    const node = target;
+function getPath(node: Node, context: Node): string {
+  if (isAttribute(node)) {
+    const owner = getOwnerElement(node, context);
 
+    if (owner !== null) {
+      let qualifiedName: string;
+
+      if (node.prefix === null) {
+        qualifiedName = node.localName;
+      } else {
+        qualifiedName = `${node.prefix}:${node.localName}`;
+      }
+
+      return `${getPath(owner, context)}/@${qualifiedName}`;
+    }
+  } else {
     if (isElement(node)) {
       const parentNode = getParentNode(node, context, { flattened: true });
       const tagName = getTagName(node, context);
@@ -255,21 +267,6 @@ function getPath(target: Node | Attribute, context: Node): string {
 
     if (isDocument(node)) {
       return "/";
-    }
-  } else {
-    const attribute = target;
-    const owner = getOwnerElement(attribute, context);
-
-    if (owner !== null) {
-      let qualifiedName: string;
-
-      if (attribute.prefix === null) {
-        qualifiedName = attribute.localName;
-      } else {
-        qualifiedName = `${attribute.prefix}:${attribute.localName}`;
-      }
-
-      return `${getPath(owner, context)}/@${qualifiedName}`;
     }
   }
 
