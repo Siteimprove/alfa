@@ -1,5 +1,4 @@
 import { Device } from "@siteimprove/alfa-device";
-import { concat } from "@siteimprove/alfa-util";
 import { AncestorFilter } from "./ancestor-filter";
 import { isElement } from "./guards";
 import { RuleEntry, RuleTree } from "./rule-tree";
@@ -47,7 +46,7 @@ export function getCascade(context: Document, device: Device): Cascade {
     const ruleTree = new RuleTree();
 
     const selectorMap = new SelectorMap(
-      concat([UserAgent], context.styleSheets),
+      [UserAgent].concat(Array.from(context.styleSheets)),
       device
     );
 

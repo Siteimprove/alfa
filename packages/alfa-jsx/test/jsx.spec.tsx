@@ -1,5 +1,4 @@
 import { test } from "@siteimprove/alfa-test";
-import { find } from "@siteimprove/alfa-util";
 import { jsx } from "../src/jsx";
 
 test("Transforms JSX into DOM nodes", t => {
@@ -79,8 +78,7 @@ test("Transforms JSX into DOM nodes with multiple children and tags", t => {
 test("Handles boolean attributes when truthy", t => {
   const element = <div hidden />;
 
-  const hidden = find(
-    element.attributes,
+  const hidden = Array.from(element.attributes).find(
     attribute => attribute.localName === "hidden"
   );
 
@@ -96,8 +94,7 @@ test("Handles boolean attributes when truthy", t => {
 test("Handles boolean attributes when falsey", t => {
   const element = <div hidden={false} />;
 
-  const hidden = find(
-    element.attributes,
+  const hidden = Array.from(element.attributes).find(
     attribute => attribute.localName === "hidden"
   );
 
@@ -107,8 +104,7 @@ test("Handles boolean attributes when falsey", t => {
 test("Converts numbers in attributes to strings", t => {
   const element = <div number={20} />;
 
-  const number = find(
-    element.attributes,
+  const number = Array.from(element.attributes).find(
     attribute => attribute.localName === "number"
   );
 
@@ -124,8 +120,7 @@ test("Converts numbers in attributes to strings", t => {
 test("Handles attributes with null values", t => {
   const element = <div foo={null} />;
 
-  const foo = find(
-    element.attributes,
+  const foo = Array.from(element.attributes).find(
     attribute => attribute.localName === "foo"
   );
 
@@ -135,8 +130,7 @@ test("Handles attributes with null values", t => {
 test("Handles attributes with undefined values", t => {
   const element = <div foo={undefined} />;
 
-  const foo = find(
-    element.attributes,
+  const foo = Array.from(element.attributes).find(
     attribute => attribute.localName === "foo"
   );
 
@@ -146,8 +140,7 @@ test("Handles attributes with undefined values", t => {
 test("Handles attributes with NaN values", t => {
   const element = <div foo={NaN} />;
 
-  const foo = find(
-    element.attributes,
+  const foo = Array.from(element.attributes).find(
     attribute => attribute.localName === "foo"
   );
 
@@ -163,8 +156,7 @@ test("Handles attributes with NaN values", t => {
 test("Handles attributes with array values", t => {
   const element = <div foo={[1, 2, 3]} />;
 
-  const foo = find(
-    element.attributes,
+  const foo = Array.from(element.attributes).find(
     attribute => attribute.localName === "foo"
   );
 
@@ -180,8 +172,7 @@ test("Handles attributes with array values", t => {
 test("Handles attributes with object values", t => {
   const element = <div foo={{ foo: "foo" }} />;
 
-  const foo = find(
-    element.attributes,
+  const foo = Array.from(element.attributes).find(
     attribute => attribute.localName === "foo"
   );
 

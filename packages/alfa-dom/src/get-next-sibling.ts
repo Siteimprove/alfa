@@ -1,4 +1,3 @@
-import { indexOf } from "@siteimprove/alfa-util";
 import { getParentNode } from "./get-parent-node";
 import { Node } from "./types";
 
@@ -20,9 +19,9 @@ export function getNextSibling<T extends Node>(
     return null;
   }
 
-  const { childNodes } = parentNode;
+  const childNodes = Array.from(parentNode.childNodes);
 
-  const nextIndex = indexOf(childNodes, node) + 1;
+  const nextIndex = childNodes.indexOf(node) + 1;
 
   if (nextIndex in childNodes) {
     return childNodes[nextIndex];

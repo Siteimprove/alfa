@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { concat, keys, Mutable } from "@siteimprove/alfa-util";
+import { keys, Mutable } from "@siteimprove/alfa-util";
 
 import {
   CascadedPropertyValue,
@@ -172,18 +172,26 @@ function resolveCascadedStyle(
   return cascadedStyle;
 }
 
-const propertyNames = new Map<string, keyof Longhands | keyof Shorthands>();
+type PropertyName = keyof Longhands | keyof Shorthands;
 
-for (const propertyName of concat(keys(Longhands), keys(Shorthands))) {
+const propertyNames = new Map<string, PropertyName>();
+
+const addPropertyName = (propertyName: PropertyName) => {
   propertyNames.set(
     propertyName.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`),
     propertyName
   );
+};
+
+for (const propertyName of keys(Longhands)) {
+  addPropertyName(propertyName);
 }
 
-function getPropertyName(
-  input: string
-): keyof Longhands | keyof Shorthands | null {
+for (const propertyName of keys(Shorthands)) {
+  addPropertyName(propertyName);
+}
+
+function getPropertyName(input: string): PropertyName | null {
   const propertyName = propertyNames.get(input);
 
   if (propertyName === undefined) {
@@ -194,7 +202,7 @@ function getPropertyName(
 }
 
 function isLonghandPropertyName(
-  propertyName: keyof Longhands | keyof Shorthands
+  propertyName: PropertyName
 ): propertyName is keyof Longhands {
   return propertyName in Longhands;
 }

@@ -1,12 +1,6 @@
 {
   "extends": "../tsconfig.json",
   "files": [
-    "src/array/concat.ts",
-    "src/array/filter.ts",
-    "src/array/find.ts",
-    "src/array/group-by.ts",
-    "src/array/index-of.ts",
-    "src/array/map.ts",
     "src/guard/has-key.ts",
     "src/guard/is-iterable.ts",
     "src/guard/is-number.ts",
@@ -18,9 +12,6 @@
     "src/object/values.ts",
     "src/option.ts",
     "src/result.ts",
-    "src/set/intersect.ts",
-    "src/set/subtract.ts",
-    "src/set/union.ts",
     "src/string/trim-left.ts",
     "src/string/trim-right.ts",
     "src/string/trim.ts",
@@ -29,11 +20,6 @@
     "src/type/predicate.ts",
     "src/type/primitive.ts",
     "src/url.ts",
-    "test/array/concat.spec.ts",
-    "test/array/find.spec.ts",
-    "test/array/group-by.spec.ts",
-    "test/array/index-of.spec.ts",
-    "test/array/map.spec.ts",
     "test/guard/has-key.spec.ts",
     "test/guard/is-number.spec.ts",
     "test/guard/is-object.spec.ts",
@@ -41,8 +27,7 @@
     "test/number/clamp.spec.ts",
     "test/object/keys.spec.ts",
     "test/object/values.spec.ts",
-    "test/option.spec.ts",
-    "test/set/intersect.spec.ts"
+    "test/option.spec.ts"
   ],
   "references": [
     {
