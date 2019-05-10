@@ -83,7 +83,7 @@ export function coerceValue<T extends Sequence.Value>(
   switch (type) {
     case "node()":
       for (const item of items) {
-        if (item.type === type) {
+        if (Item.matches(item, type)) {
           return item.value as T;
         } else {
           return null;
@@ -94,7 +94,7 @@ export function coerceValue<T extends Sequence.Value>(
 
     case "node()?":
       for (const item of value) {
-        if (item.type === type) {
+        if (Item.matches(item, Sequence.itemType(type))) {
           return item.value as T;
         } else {
           return null;
@@ -105,7 +105,9 @@ export function coerceValue<T extends Sequence.Value>(
 
     case "node()*":
       for (const item of items) {
-        if (item.type !== type) {
+        if (Item.matches(item, Sequence.itemType(type))) {
+          continue;
+        } else {
           return null;
         }
       }

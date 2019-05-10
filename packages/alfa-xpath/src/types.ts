@@ -84,6 +84,13 @@ export namespace Item {
   export namespace Type {
     export type Name<T> = Property<Type, T>;
   }
+
+  export function matches<T extends keyof Type>(
+    item: Item,
+    type: T
+  ): item is Item<Type[T]> {
+    return true;
+  }
 }
 
 export interface Sequence<T extends Sequence.Value = Sequence.Value> {
