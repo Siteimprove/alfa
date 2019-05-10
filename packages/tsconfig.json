@@ -30,6 +30,7 @@
     { "path": "alfa-unicode" },
     { "path": "alfa-util" },
     { "path": "alfa-wcag" },
+    { "path": "alfa-xpath" },
     { "path": "eslint-plugin-alfa" }
   ]
 }
