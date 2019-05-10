@@ -98,7 +98,7 @@ test("Handles boolean attributes when falsey", t => {
     attribute => attribute.localName === "hidden"
   );
 
-  t.equal(hidden, null);
+  t.equal(hidden, undefined);
 });
 
 test("Converts numbers in attributes to strings", t => {
@@ -124,7 +124,7 @@ test("Handles attributes with null values", t => {
     attribute => attribute.localName === "foo"
   );
 
-  t.equal(foo, null);
+  t.equal(foo, undefined);
 });
 
 test("Handles attributes with undefined values", t => {
@@ -134,7 +134,7 @@ test("Handles attributes with undefined values", t => {
     attribute => attribute.localName === "foo"
   );
 
-  t.equal(foo, null);
+  t.equal(foo, undefined);
 });
 
 test("Handles attributes with NaN values", t => {
