@@ -1,17 +1,21 @@
 import { FunctionMap } from "./function";
-import { Value } from "./types";
+import { Item } from "./types";
 
-export interface Environment {
-  readonly focus: Focus;
+export interface Environment<T extends Item.Value = Item.Value> {
+  readonly focus: Focus<T>;
   readonly functions: FunctionMap;
 }
 
-export interface Focus {
-  readonly item: Value;
+export interface Focus<T extends Item.Value = Item.Value> {
+  readonly type: Item.Type.Name<T>;
+  readonly value: T;
   readonly position: number;
   readonly size: number;
 }
 
-export function withFocus(environment: Environment, focus: Focus): Environment {
+export function withFocus<T extends Item.Value, U extends Item.Value>(
+  environment: Environment<T>,
+  focus: Focus<U>
+): Environment<U> {
   return { ...environment, focus };
 }

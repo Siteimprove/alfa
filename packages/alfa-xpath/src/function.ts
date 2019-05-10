@@ -1,30 +1,15 @@
 import { Map } from "@siteimprove/alfa-collection";
-import { Element } from "@siteimprove/alfa-dom";
 import { Environment } from "./environment";
-import { Tree } from "./tree";
-import { Value } from "./types";
-
-export interface TypeMap {
-  "node()": Tree<Node>;
-  "element()": Tree<Element>;
-}
-
-export type TypeName<T> = {
-  [P in keyof TypeMap]: TypeMap[P] extends T ? P : never
-}[keyof TypeMap];
-
-export type FunctionParameters = [...Array<Value | Iterable<Value>>];
-
-export type FunctionResult = Value | Iterable<Value>;
+import { Item, Sequence } from "./types";
 
 export interface Function<
-  P extends FunctionParameters = FunctionParameters,
-  R extends FunctionResult = FunctionResult
+  P extends [...Array<Sequence.Value>] = [...Array<Sequence.Value>],
+  R extends Sequence.Value = Sequence.Value
 > {
   readonly prefix: string;
   readonly name: string;
-  readonly parameters: { readonly [Q in keyof P]: TypeName<P[Q]> };
-  readonly result: TypeName<R>;
+  readonly parameters: { readonly [Q in keyof P]: Sequence.Type.Name<P[Q]> };
+  readonly result: Sequence.Type.Name<R>;
 
   apply(environment: Environment, ...parameters: P): R;
 }
@@ -69,10 +54,10 @@ export function registerFunction(
 }
 
 export function coerceParameters<
-  P extends FunctionParameters,
-  R extends FunctionResult
->(definition: Function<P, R>, parameters: Iterable<Iterable<Value>>): P | null {
-  const result: FunctionParameters = [];
+  P extends [...Array<Sequence.Value>],
+  R extends Sequence.Value
+>(definition: Function<P, R>, parameters: Iterable<Iterable<Item>>): P | null {
+  const result: P = ([] as unknown) as P;
 
   let index = 0;
 
@@ -86,18 +71,46 @@ export function coerceParameters<
     result.push(value);
   }
 
-  return (result as unknown) as P;
+  return result;
 }
 
-export function coerceValue<T extends Value | Iterable<Value>>(
-  value: Iterable<Value>,
-  type: TypeName<T>
+export function coerceValue<T extends Sequence.Value>(
+  value: Iterable<Item>,
+  type: Sequence.Type.Name<T>
 ): T | null {
+  const items = [...value];
+
   switch (type) {
     case "node()":
-      for (const item of value) {
-        return item as T;
+      for (const item of items) {
+        if (item.type === type) {
+          return item.value as T;
+        } else {
+          return null;
+        }
       }
+
+      return null;
+
+    case "node()?":
+      for (const item of value) {
+        if (item.type === type) {
+          return item.value as T;
+        } else {
+          return null;
+        }
+      }
+
+      return undefined as T;
+
+    case "node()*":
+      for (const item of items) {
+        if (item.type !== type) {
+          return null;
+        }
+      }
+
+      return (items.map(item => item.value) as unknown) as T;
   }
 
   return null;

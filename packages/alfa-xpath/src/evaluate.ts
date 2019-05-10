@@ -5,9 +5,9 @@ import { coerceParameters, lookupFunction } from "./function";
 import { functions } from "./functions";
 import * as g from "./guards";
 import { parse } from "./parse";
-import { getTree, walkTree } from "./tree";
+import { getTree, Tree, walkTree } from "./tree";
 import * as t from "./types";
-import { Expression, Value } from "./types";
+import { Expression, Item, Sequence } from "./types";
 
 export interface EvaluateOptions {
   composed?: boolean;
@@ -36,9 +36,10 @@ export function* evaluate(
     return null;
   }
 
-  const environment: Environment = {
+  const environment: Environment<Tree<Node>> = {
     focus: {
-      item: tree,
+      type: "node()",
+      value: tree,
       position: 1,
       size: 1
     },
@@ -48,7 +49,7 @@ export function* evaluate(
   const branches = evaluateExpression(expression, environment, options);
 
   for (const branch of branches) {
-    yield branch.node;
+    yield branch.value.node;
   }
 }
 
@@ -56,7 +57,7 @@ function* evaluateExpression(
   expression: Expression,
   environment: Environment,
   options: EvaluateOptions
-): Iterable<Value> {
+): Iterable<Item> {
   if (g.isPathExpression(expression)) {
     yield* evaluatePathExpression(expression, environment, options);
   }
@@ -74,34 +75,35 @@ function* evaluatePathExpression(
   expression: t.PathExpression,
   environment: Environment,
   options: EvaluateOptions
-): Iterable<Value> {
-  const branches = [
-    ...evaluateExpression(expression.left, environment, options)
-  ];
+): Iterable<Item> {
+  const outer = [...evaluateExpression(expression.left, environment, options)];
 
-  const seen = new Set<Value>();
+  const seen = new Set<Item.Value>();
 
-  for (let i = 0, n = branches.length; i < n; i++) {
+  for (let i = 0, n = outer.length; i < n; i++) {
+    const { type, value } = outer[i];
+
     const focus: Focus = {
-      item: branches[i],
+      type,
+      value,
       position: i + 1,
       size: n
     };
 
-    const subbranches = evaluateExpression(
+    const inner = evaluateExpression(
       expression.right,
       withFocus(environment, focus),
       options
     );
 
-    for (const branch of subbranches) {
-      if (seen.has(branch)) {
+    for (const item of inner) {
+      if (seen.has(item.value)) {
         continue;
       }
 
-      seen.add(branch);
+      seen.add(item.value);
 
-      yield branch;
+      yield item;
     }
   }
 }
@@ -110,20 +112,25 @@ function* evaluateAxisExpression(
   expression: t.AxisExpression,
   environment: Environment,
   options: EvaluateOptions
-): Iterable<Value> {
-  let branches = walkTree(environment.focus.item, expression.axis);
+): Iterable<Item> {
+  let branches = walkTree(environment.focus.value, expression.axis);
 
   if (expression.test !== undefined) {
     branches = evaluateNodeTest(expression.test, branches);
   }
 
-  yield* branches;
+  for (const branch of branches) {
+    yield {
+      type: "node()",
+      value: branch
+    };
+  }
 }
 
 function* evaluateNodeTest(
   test: t.NodeTest,
-  branches: Iterable<Value>
-): Iterable<Value> {
+  branches: Iterable<Tree>
+): Iterable<Tree> {
   for (const branch of branches) {
     const { node } = branch;
 
@@ -147,13 +154,13 @@ function* evaluateFunctionCallExpression(
   expression: t.FunctionCallExpression,
   environment: Environment,
   options: EvaluateOptions
-): Iterable<Value> {
+): Iterable<Item> {
   const { prefix, name, arity } = expression;
 
   const fn = lookupFunction(environment.functions, prefix, name, arity);
 
   if (fn !== null) {
-    const parameters: Array<Iterable<Value>> = [];
+    const parameters: Array<Iterable<Item>> = [];
 
     for (const parameter of expression.parameters) {
       parameters.push(evaluateExpression(parameter, environment, options));
@@ -162,12 +169,16 @@ function* evaluateFunctionCallExpression(
     const args = coerceParameters(fn, parameters);
 
     if (args !== null) {
+      const type = Sequence.itemType(fn.result);
+
       const result = fn.apply(environment, ...args);
 
       if (isIterable(result)) {
-        yield* result;
-      } else {
-        yield result;
+        for (const value of result) {
+          yield { type, value };
+        }
+      } else if (result !== undefined) {
+        yield { type, value: result };
       }
     }
   }

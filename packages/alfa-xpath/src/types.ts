@@ -1,6 +1,5 @@
+import { Node } from "@siteimprove/alfa-dom";
 import { Tree } from "./tree";
-
-export type Value = Tree;
 
 export const enum ExpressionType {
   FunctionCall,
@@ -66,4 +65,51 @@ export interface KindTest {
 export interface NameTest {
   readonly prefix?: string;
   readonly name: string;
+}
+
+type Property<T, V> = { [P in keyof T]: T[P] extends V ? P : never }[keyof T];
+
+export interface Item<T extends Item.Value = Item.Value> {
+  readonly type: Item.Type.Name<T>;
+  readonly value: T;
+}
+
+export namespace Item {
+  export type Value = Type[keyof Type];
+
+  export interface Type {
+    "node()": Tree<Node>;
+  }
+
+  export namespace Type {
+    export type Name<T> = Property<Type, T>;
+  }
+}
+
+export interface Sequence<T extends Sequence.Value = Sequence.Value> {
+  readonly type: Sequence.Type.Name<T>;
+  readonly value: T;
+}
+
+export namespace Sequence {
+  export type Value = Type[keyof Type];
+
+  export interface Type extends Item.Type {
+    "node()*": Iterable<Tree<Node>>;
+    "node()?": Tree<Node> | undefined;
+  }
+
+  export namespace Type {
+    export type Name<T> = Property<Type, T>;
+  }
+
+  export function itemType(type: keyof Type): keyof Item.Type {
+    switch (type) {
+      case "node()*":
+      case "node()?":
+        return "node()";
+    }
+
+    return type;
+  }
 }
