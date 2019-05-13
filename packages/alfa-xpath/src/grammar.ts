@@ -45,6 +45,33 @@ const character: Production<Tokens.Character> = {
 
   infix(token, stream, expression, left) {
     if (token.value === Char.Solidus) {
+      if (!g.isStepExpression(left) && !g.isPathExpression(left)) {
+        return null;
+      }
+
+      const next = stream.peek(0);
+
+      if (
+        next !== null &&
+        next.type === TokenType.Character &&
+        next.value === Char.Solidus
+      ) {
+        stream.advance(1);
+
+        const self: t.AxisExpression = {
+          type: ExpressionType.Axis,
+          axis: "descendant-or-self"
+        };
+
+        const path: t.PathExpression = {
+          type: ExpressionType.Path,
+          left,
+          right: self
+        };
+
+        left = path;
+      }
+
       const right = expression();
 
       if (right === null || !g.isStepExpression(right)) {

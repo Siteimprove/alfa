@@ -270,4 +270,51 @@ test("Can parse an absolute path expression", t => {
       }
     }
   });
+
+  xpath<t.PathExpression>(t, `//foo//bar`, {
+    type: ExpressionType.Path,
+    left: {
+      type: ExpressionType.Path,
+      left: {
+        type: ExpressionType.Path,
+        left: {
+          type: ExpressionType.Path,
+          left: {
+            type: ExpressionType.FunctionCall,
+            prefix: "fn",
+            name: "root",
+            arity: 1,
+            parameters: [
+              expr<t.AxisExpression>({
+                type: ExpressionType.Axis,
+                axis: "self"
+              })
+            ]
+          },
+          right: {
+            type: ExpressionType.Axis,
+            axis: "descendant-or-self"
+          }
+        },
+        right: {
+          type: ExpressionType.Axis,
+          axis: "child",
+          test: {
+            name: "foo"
+          }
+        }
+      },
+      right: {
+        type: ExpressionType.Axis,
+        axis: "descendant-or-self"
+      }
+    },
+    right: {
+      type: ExpressionType.Axis,
+      axis: "child",
+      test: {
+        name: "bar"
+      }
+    }
+  });
 });
