@@ -81,6 +81,11 @@ test("Can parse an axis expression", t => {
       name: "foo"
     }
   });
+
+  xpath<t.AxisExpression>(t, `..`, {
+    type: ExpressionType.Axis,
+    axis: "parent"
+  });
 });
 
 test("Can parse a path expression", t => {

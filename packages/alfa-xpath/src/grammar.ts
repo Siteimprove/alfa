@@ -220,6 +220,25 @@ function path(
 
       return axis;
     }
+
+    case Char.FullStop: {
+      const next = stream.peek(0);
+
+      if (
+        next !== null &&
+        next.type === TokenType.Character &&
+        next.value === Char.FullStop
+      ) {
+        stream.advance(1);
+
+        const axis: t.AxisExpression = {
+          type: ExpressionType.Axis,
+          axis: "parent"
+        };
+
+        return axis;
+      }
+    }
   }
 
   return null;

@@ -74,7 +74,7 @@ const initial: Pattern = (stream, emit, state, { exit }) => {
     return exit;
   }
 
-  if (isNumeric(next) || next === Char.FullStop) {
+  if (isNumeric(next)) {
     return numeric;
   }
 
@@ -92,6 +92,15 @@ const initial: Pattern = (stream, emit, state, { exit }) => {
         stream.advance(2);
         return comment;
       }
+      break;
+
+    case Char.FullStop: {
+      const next = stream.peek(1);
+
+      if (next !== null && isNumeric(next)) {
+        return numeric;
+      }
+    }
   }
 
   if (isCharacter(next)) {

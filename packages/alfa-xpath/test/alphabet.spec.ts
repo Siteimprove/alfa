@@ -212,4 +212,15 @@ test("Can lex an axis expression", t => {
       value: "foo"
     }
   ]);
+
+  xpath(t, `..`, [
+    {
+      type: TokenType.Character,
+      value: char(".")
+    },
+    {
+      type: TokenType.Character,
+      value: char(".")
+    }
+  ]);
 });
