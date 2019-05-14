@@ -1,3 +1,4 @@
+import { node } from "../descriptors";
 import { Function } from "../function";
 import { Tree } from "../tree";
 
@@ -7,8 +8,8 @@ export namespace fn {
   export const root: Function<[Tree], Tree> = {
     prefix,
     name: "root",
-    parameters: ["node()"],
-    result: "node()",
+    parameters: [node()],
+    result: node(),
     apply(environment, tree) {
       let root = tree;
 

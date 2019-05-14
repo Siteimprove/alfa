@@ -1,5 +1,4 @@
-import { Node } from "@siteimprove/alfa-dom";
-import { Tree } from "./tree";
+import { Descriptor, Descriptors } from "./descriptors";
 
 export const enum ExpressionType {
   FunctionCall,
@@ -67,56 +66,42 @@ export interface NameTest {
   readonly name: string;
 }
 
-type Property<T, V> = { [P in keyof T]: T[P] extends V ? P : never }[keyof T];
-
-export interface Item<T extends Item.Value = Item.Value> {
-  readonly type: Item.Type.Name<T>;
-  readonly value: T;
+export interface Item<V extends Item.Value = Item.Value> {
+  readonly type: Descriptor.For<V, Item.Type>;
+  readonly value: V;
 }
 
 export namespace Item {
-  export type Value = Type[keyof Type];
+  export type Type = Descriptors.Node | Descriptors.Element;
 
-  export interface Type {
-    "node()": Tree<Node>;
-  }
+  export type Value<T extends Type = Type> = Descriptor.Value<Type>;
 
-  export namespace Type {
-    export type Name<T> = Property<Type, T>;
-  }
-
-  export function matches<T extends keyof Type>(
-    item: Item,
-    type: T
-  ): item is Item<Type[T]> {
-    return true;
-  }
+  export type TypeFor<V extends Value = Value> = Descriptor.For<V, Type>;
 }
 
-export interface Sequence<T extends Sequence.Value = Sequence.Value> {
-  readonly type: Sequence.Type.Name<T>;
-  readonly value: T;
+export interface Sequence<V extends Sequence.Value = Sequence.Value> {
+  readonly type: Descriptor.For<V, Sequence.Type>;
+  readonly value: V;
 }
 
 export namespace Sequence {
-  export type Value = Type[keyof Type];
+  export type Type =
+    | Descriptors.Sequence<Item.Type>
+    | Descriptors.Optional<Item.Type>;
 
-  export interface Type extends Item.Type {
-    "node()*": Iterable<Tree<Node>>;
-    "node()?": Tree<Node> | undefined;
-  }
+  export type Value<T extends Type = Type> = Descriptor.Value<T>;
 
-  export namespace Type {
-    export type Name<T> = Property<Type, T>;
-  }
-
-  export function itemType(type: keyof Type): keyof Item.Type {
-    switch (type) {
-      case "node()*":
-      case "node()?":
-        return "node()";
-    }
-
-    return type;
-  }
+  export type TypeFor<V extends Value = Value> = Descriptor.For<V, Type>;
 }
+
+export type Type = Item.Type | Sequence.Type;
+
+export type Value<T extends Type = Type> = T extends Item.Type
+  ? Item.Value<T>
+  : T extends Sequence.Type
+  ? Sequence.Value<T>
+  : never;
+
+export type TypeFor<V extends Value> = V extends Item.Value
+  ? Item.TypeFor<V>
+  : Sequence.TypeFor<V>;

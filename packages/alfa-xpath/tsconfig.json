@@ -2,6 +2,8 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/alphabet.ts",
+    "src/coerce.ts",
+    "src/descriptors.ts",
     "src/environment.ts",
     "src/evaluate.ts",
     "src/function.ts",
@@ -10,6 +12,7 @@
     "src/grammar.ts",
     "src/guards.ts",
     "src/index.ts",
+    "src/matches.ts",
     "src/parse.ts",
     "src/tree.ts",
     "src/types.ts",

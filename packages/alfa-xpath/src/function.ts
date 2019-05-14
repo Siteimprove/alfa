@@ -1,17 +1,25 @@
 import { Map } from "@siteimprove/alfa-collection";
 import { Environment } from "./environment";
-import { Item, Sequence } from "./types";
+import { TypeFor, Value } from "./types";
 
 export interface Function<
-  P extends [...Array<Sequence.Value>] = [...Array<Sequence.Value>],
-  R extends Sequence.Value = Sequence.Value
+  P extends [...Array<Value>] = [...Array<Value>],
+  R extends Value = Value
 > {
   readonly prefix: string;
   readonly name: string;
-  readonly parameters: { readonly [Q in keyof P]: Sequence.Type.Name<P[Q]> };
-  readonly result: Sequence.Type.Name<R>;
+  readonly parameters: Function.Parameters<P>;
+  readonly result: Function.Result<R>;
 
   apply(environment: Environment, ...parameters: P): R;
+}
+
+export namespace Function {
+  export type Parameters<V extends [...Array<Value>]> = {
+    readonly [P in keyof V]: V[P] extends Value ? TypeFor<V[P]> : never
+  };
+
+  export type Result<V extends Value> = TypeFor<V>;
 }
 
 export type FunctionMap = Map<string, Map<number, Function>>;
@@ -51,69 +59,4 @@ export function registerFunction(
   }
 
   return functions.set(`${prefix}:${name}`, definitions.set(arity, definition));
-}
-
-export function coerceParameters<
-  P extends [...Array<Sequence.Value>],
-  R extends Sequence.Value
->(definition: Function<P, R>, parameters: Iterable<Iterable<Item>>): P | null {
-  const result: P = ([] as unknown) as P;
-
-  let index = 0;
-
-  for (const parameter of parameters) {
-    const value = coerceValue(parameter, definition.parameters[index++]);
-
-    if (value === null) {
-      return null;
-    }
-
-    result.push(value);
-  }
-
-  return result;
-}
-
-export function coerceValue<T extends Sequence.Value>(
-  value: Iterable<Item>,
-  type: Sequence.Type.Name<T>
-): T | null {
-  const items = [...value];
-
-  switch (type) {
-    case "node()":
-      for (const item of items) {
-        if (Item.matches(item, type)) {
-          return item.value as T;
-        } else {
-          return null;
-        }
-      }
-
-      return null;
-
-    case "node()?":
-      for (const item of value) {
-        if (Item.matches(item, Sequence.itemType(type))) {
-          return item.value as T;
-        } else {
-          return null;
-        }
-      }
-
-      return undefined as T;
-
-    case "node()*":
-      for (const item of items) {
-        if (Item.matches(item, Sequence.itemType(type))) {
-          continue;
-        } else {
-          return null;
-        }
-      }
-
-      return (items.map(item => item.value) as unknown) as T;
-  }
-
-  return null;
 }

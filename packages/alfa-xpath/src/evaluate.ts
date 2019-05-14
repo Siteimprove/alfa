@@ -1,13 +1,14 @@
 import { isElement, Node } from "@siteimprove/alfa-dom";
-import { isIterable } from "@siteimprove/alfa-util";
+import { coerceItems, coerceValue } from "./coerce";
+import { node } from "./descriptors";
 import { Environment, Focus, withFocus } from "./environment";
-import { coerceParameters, lookupFunction } from "./function";
+import { lookupFunction } from "./function";
 import { functions } from "./functions";
 import * as g from "./guards";
 import { parse } from "./parse";
 import { getTree, Tree, walkTree } from "./tree";
 import * as t from "./types";
-import { Expression, Item, Sequence } from "./types";
+import { Expression, Item, Value } from "./types";
 
 export interface EvaluateOptions {
   composed?: boolean;
@@ -38,7 +39,7 @@ export function* evaluate(
 
   const environment: Environment<Tree<Node>> = {
     focus: {
-      type: "node()",
+      type: node(),
       value: tree,
       position: 1,
       size: 1
@@ -120,10 +121,7 @@ function* evaluateAxisExpression(
   }
 
   for (const branch of branches) {
-    yield {
-      type: "node()",
-      value: branch
-    };
+    yield { type: node(), value: branch };
   }
 }
 
@@ -160,25 +158,67 @@ function* evaluateFunctionCallExpression(
   const fn = lookupFunction(environment.functions, prefix, name, arity);
 
   if (fn !== null) {
-    const parameters: Array<Iterable<Item>> = [];
+    const parameters = [...expression.parameters].reduce<Array<Value> | null>(
+      (parameters, expression, i) => {
+        if (parameters !== null) {
+          const parameter = coerceItems(
+            evaluateExpression(expression, environment, options),
+            fn.parameters[i]
+          );
 
-    for (const parameter of expression.parameters) {
-      parameters.push(evaluateExpression(parameter, environment, options));
-    }
+          if (parameter === null) {
+            return null;
+          }
 
-    const args = coerceParameters(fn, parameters);
-
-    if (args !== null) {
-      const type = Sequence.itemType(fn.result);
-
-      const result = fn.apply(environment, ...args);
-
-      if (isIterable(result)) {
-        for (const value of result) {
-          yield { type, value };
+          parameters.push(parameter);
         }
-      } else if (result !== undefined) {
-        yield { type, value: result };
+
+        return parameters;
+      },
+      []
+    );
+
+    if (parameters !== null) {
+      switch (fn.result.type) {
+        case "*":
+        case "+": {
+          const values = coerceValue(
+            fn.apply(environment, ...parameters),
+            fn.result
+          );
+
+          if (values !== null) {
+            for (const value of values) {
+              yield { type: fn.result.properties.descriptor, value };
+            }
+          }
+
+          break;
+        }
+
+        case "?": {
+          const value = coerceValue(
+            fn.apply(environment, ...parameters),
+            fn.result
+          );
+
+          if (value !== null && value !== undefined) {
+            yield { type: fn.result.properties.descriptor, value };
+          }
+
+          break;
+        }
+
+        default: {
+          const value = coerceValue(
+            fn.apply(environment, ...parameters),
+            fn.result
+          );
+
+          if (value !== null) {
+            yield { type: fn.result, value };
+          }
+        }
       }
     }
   }

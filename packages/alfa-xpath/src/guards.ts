@@ -1,5 +1,5 @@
 import * as t from "./types";
-import { Expression, ExpressionType } from "./types";
+import { Expression, ExpressionType, Item, Sequence } from "./types";
 
 export function isPrimaryExpression(
   expression: Expression
@@ -49,4 +49,21 @@ export function isKindTest(test: t.NodeTest): test is t.KindTest {
 
 export function isNameTest(test: t.NodeTest): test is t.NameTest {
   return "name" in test;
+}
+
+export function isItemType(type: Item.Type | Sequence.Type): type is Item.Type {
+  return !isSequenceType(type);
+}
+
+export function isSequenceType(
+  type: Item.Type | Sequence.Type
+): type is Sequence.Type {
+  switch (type.type) {
+    case "*":
+    case "+":
+    case "?":
+      return true;
+  }
+
+  return false;
 }

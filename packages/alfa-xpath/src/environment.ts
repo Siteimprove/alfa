@@ -7,7 +7,7 @@ export interface Environment<T extends Item.Value = Item.Value> {
 }
 
 export interface Focus<T extends Item.Value = Item.Value> {
-  readonly type: Item.Type.Name<T>;
+  readonly type: Item.TypeFor<T>;
   readonly value: T;
   readonly position: number;
   readonly size: number;
