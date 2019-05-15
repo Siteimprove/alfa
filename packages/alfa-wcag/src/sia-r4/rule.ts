@@ -3,8 +3,8 @@ import { Seq } from "@siteimprove/alfa-collection";
 import {
   Document,
   Element,
-  isElement,
   getAttribute,
+  isElement,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { isDocumentElement } from "../helpers/is-document-element";
