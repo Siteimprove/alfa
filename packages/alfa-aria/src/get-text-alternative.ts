@@ -409,7 +409,9 @@ function getHtmlTextAlternative(
     }
 
     // https://www.w3.org/TR/html-aam/#img-element
-    case "img": {
+    case "img":
+    // https://github.com/w3c/html-aam/issues/176
+    case "area": {
       const alt = getAttribute(element, "alt");
 
       if (alt !== null && alt !== "") {

@@ -17,6 +17,11 @@ test("Computes the tab index of an anchor with an href attribute and a tab index
   t.equal(getTabIndex(a, a), 2);
 });
 
+test("Returns null when the tab index is not an integer", t => {
+  const a = <a tabindex="2.5">Anchor</a>;
+  t.equal(getTabIndex(a, a), null);
+});
+
 test("Computes the tab index of a video with a controls attribute", t => {
   const video = <video controls />;
   t.equal(getTabIndex(video, video), 0);

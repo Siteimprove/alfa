@@ -1,7 +1,7 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
-  getTextAlternative,
+  hasTextAlternative,
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
@@ -59,10 +59,10 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
 
       expectations: (aspect, target) => {
         return map(
-          getTextAlternative(target, document, device),
-          textAlternative => {
+          hasTextAlternative(target, document, device),
+          hasTextAlternative => {
             return {
-              1: { holds: textAlternative !== null && textAlternative !== "" }
+              1: { holds: hasTextAlternative }
             };
           }
         );

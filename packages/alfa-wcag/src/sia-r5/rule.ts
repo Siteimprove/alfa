@@ -33,13 +33,13 @@ export const SIA_R5: Atomic.Rule<Document, Attribute> = {
 
             const lang = getAttributeNode(element, "lang");
 
-            if (lang !== null && lang.value.trim() !== "") {
+            if (lang !== null && lang.value !== "") {
               languages.push(lang);
             }
 
             const xmlLang = getAttributeNode(element, "xml:lang");
 
-            if (xmlLang !== null && xmlLang.value.trim() !== "") {
+            if (xmlLang !== null && xmlLang.value !== "") {
               languages.push(xmlLang);
             }
 

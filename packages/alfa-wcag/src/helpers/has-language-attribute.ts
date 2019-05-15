@@ -1,13 +1,5 @@
-import { Element, getAttribute } from "@siteimprove/alfa-dom";
+import { Element, hasAttribute } from "@siteimprove/alfa-dom";
 
 export function hasLanguageAttribute(element: Element): boolean {
-  const lang = getAttribute(element, "lang", { trim: true });
-
-  if (lang !== null && lang !== "") {
-    return true;
-  }
-
-  const xmlLang = getAttribute(element, "xml:lang", { trim: true });
-
-  return xmlLang !== null && xmlLang !== "";
+  return hasAttribute(element, "lang") || hasAttribute(element, "xml:lang");
 }

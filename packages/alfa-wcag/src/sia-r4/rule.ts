@@ -4,9 +4,9 @@ import {
   Document,
   Element,
   isElement,
+  getAttribute,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { hasLanguageAttribute } from "../helpers/has-language-attribute";
 import { isDocumentElement } from "../helpers/is-document-element";
 
 export const SIA_R4: Atomic.Rule<Document, Element> = {
@@ -29,8 +29,15 @@ export const SIA_R4: Atomic.Rule<Document, Element> = {
       },
 
       expectations: (aspect, target) => {
+        const lang = getAttribute(target, "lang");
+        const xmlLang = getAttribute(target, "xml:lang");
+
         return {
-          1: { holds: hasLanguageAttribute(target) }
+          1: {
+            holds:
+              (lang !== null && lang !== "") ||
+              (xmlLang !== null && xmlLang !== "")
+          }
         };
       }
     };

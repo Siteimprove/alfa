@@ -46,8 +46,7 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
               node => {
                 return (
                   isElement(node) &&
-                  hasAutocomplete(node) &&
-                  isVisible(node, document, device)
+                  hasAutocomplete(node)
                 );
               },
               {
@@ -56,7 +55,7 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
             ),
             element => {
               return map(isExposed(element, document, device), isExposed => {
-                if (!isExposed) {
+                if (!isVisible(element, document, device) && !isExposed) {
                   return false;
                 }
 
