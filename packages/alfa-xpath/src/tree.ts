@@ -1,4 +1,9 @@
-import { Attribute, Node, traverseNode } from "@siteimprove/alfa-dom";
+import {
+  Attribute,
+  isElement,
+  Node,
+  traverseNode
+} from "@siteimprove/alfa-dom";
 import { Mutable } from "@siteimprove/alfa-util";
 import { Axis } from "./types";
 
@@ -119,6 +124,19 @@ export function getTree<T extends Node>(
           }
 
           parent.children.push(tree);
+        }
+
+        if (isElement(node)) {
+          tree.attributes = Array.from(node.attributes).map(attribute => {
+            return {
+              node: attribute,
+              parent: tree,
+              prev: null,
+              next: null,
+              children: [],
+              attributes: []
+            };
+          });
         }
       },
 
