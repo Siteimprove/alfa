@@ -44,6 +44,13 @@ test("Evaluates an axis expression", t => {
   nodes(t, div, div, "child::span", [span]);
 });
 
+test("Evaluates an axis expression with a predicate", t => {
+  nodes(t, div, div, "descendant::b[i]", [b2]);
+
+  nodes(t, div, div, "child::*[1]", [p]);
+  nodes(t, div, div, "child::*[2]", [span]);
+});
+
 test("Evaluates a path expression", t => {
   nodes(t, div, div, "span/b", [b2]);
   nodes(t, div, div, "span/b/i", [i]);
@@ -60,4 +67,8 @@ test("Evaluates an absolute path expression", t => {
   nodes(t, div, div, "//b", [b1, b2]);
   nodes(t, div, div, "//span//i", [i]);
   nodes(t, div, div, "//p//i", []);
+});
+
+test("Evaluates a path expression with a predicate", t => {
+  nodes(t, div, div, "//b[i]", [b2]);
 });

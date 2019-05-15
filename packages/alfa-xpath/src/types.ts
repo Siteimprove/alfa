@@ -103,7 +103,12 @@ export interface Item<V extends Item.Value = Item.Value> {
 
 export namespace Item {
   export type Type =
+    | Descriptors.String
+    | Descriptors.Numeric
     | Descriptors.Integer
+    | Descriptors.Decimal
+    | Descriptors.Double
+    | Descriptors.Boolean
     | Descriptors.Node
     | Descriptors.Element;
 

@@ -1,4 +1,4 @@
-import { element } from "./descriptors";
+import { decimal, double, element, integer } from "./descriptors";
 import { Item } from "./types";
 
 export function matches<T extends Item.Type>(
@@ -19,6 +19,13 @@ function derivesFrom<T extends Item.Type>(
   switch (expected.type) {
     case "node":
       return derivesFrom(actual, element());
+
+    case "numeric":
+      return (
+        derivesFrom(actual, integer()) ||
+        derivesFrom(actual, decimal()) ||
+        derivesFrom(actual, double())
+      );
   }
 
   return false;

@@ -8,7 +8,6 @@ export interface Environment<T extends Item.Value = Item.Value> {
 
 export interface Focus<T extends Item.Value = Item.Value> extends Item<T> {
   readonly position: number;
-  readonly size: number;
 }
 
 export function withFocus<T extends Item.Value, U extends Item.Value>(

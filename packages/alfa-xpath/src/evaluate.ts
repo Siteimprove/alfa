@@ -1,6 +1,6 @@
 import { isAttribute, isElement, Node } from "@siteimprove/alfa-dom";
 import { coerceItems, coerceValue } from "./coerce";
-import { integer, node } from "./descriptors";
+import { boolean, integer, node, numeric, string } from "./descriptors";
 import { Environment, Focus, withFocus } from "./environment";
 import { lookupFunction } from "./function";
 import { functions } from "./functions";
@@ -42,8 +42,7 @@ export function* evaluate(
     focus: {
       type: node(),
       value: tree,
-      position: 1,
-      size: 1
+      position: 1
     },
     functions
   };
@@ -86,18 +85,17 @@ function* evaluatePathExpression(
 ): Iterable<Item> {
   const result: Array<Item> = [];
 
-  const context = [
-    ...evaluateExpression(expression.left, environment, options)
-  ];
+  const context = evaluateExpression(expression.left, environment, options);
 
-  for (let i = 0, n = context.length; i < n; i++) {
-    const { type, value } = context[i];
+  let position = 1;
+
+  for (const item of context) {
+    const { type, value } = item;
 
     const focus: Focus = {
       type,
       value,
-      position: i + 1,
-      size: n
+      position: position++
     };
 
     result.push(
@@ -146,8 +144,28 @@ function* evaluateAxisExpression(
       branches = evaluateNodeTest(expression.test, branches);
     }
 
-    for (const branch of branches) {
-      yield { type: node(), value: branch };
+    let position = 1;
+
+    loop: for (const branch of branches) {
+      const item = {
+        type: node(),
+        value: branch
+      };
+
+      const focus = {
+        ...item,
+        position: position++
+      };
+
+      for (const predicate of expression.predicates) {
+        if (
+          !evaluatePredicate(predicate, withFocus(environment, focus), options)
+        ) {
+          continue loop;
+        }
+      }
+
+      yield item;
     }
   }
 }
@@ -255,4 +273,34 @@ function* evaluateLiteralExpression(
   if (g.isIntegerLiteralExpression(expression)) {
     yield { type: integer(), value: expression.value };
   }
+}
+
+function evaluatePredicate(
+  expression: t.Expression,
+  environment: Environment,
+  options: EvaluateOptions
+): boolean {
+  const result = [...evaluateExpression(expression, environment, options)];
+
+  switch (result.length) {
+    case 0:
+      return false;
+
+    case 1:
+      const [item] = result;
+
+      if (matches(item, boolean())) {
+        return item.value;
+      }
+
+      if (matches(item, string())) {
+        return item.value.length !== 0;
+      }
+
+      if (matches(item, numeric())) {
+        return item.value === environment.focus.position;
+      }
+  }
+
+  return matches(result[0], node());
 }

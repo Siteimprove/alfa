@@ -36,9 +36,11 @@ export namespace Descriptor {
 
 export namespace Descriptors {
   export type String = Descriptor<"string", string>;
+  export type Numeric = Descriptor<"numeric", number>;
   export type Integer = Descriptor<"integer", number>;
   export type Decimal = Descriptor<"decimal", number>;
   export type Double = Descriptor<"double", number>;
+  export type Boolean = Descriptor<"boolean", boolean>;
 
   export type Node = Descriptor<"node", Tree<dom.Node>>;
   export type Element = Descriptor<"element", Tree<dom.Element>>;
@@ -64,6 +66,10 @@ export function string(): Descriptors.String {
   return { type: "string", properties: {} };
 }
 
+export function numeric(): Descriptors.Numeric {
+  return { type: "numeric", properties: {} };
+}
+
 export function integer(): Descriptors.Integer {
   return { type: "integer", properties: {} };
 }
@@ -74,6 +80,10 @@ export function decimal(): Descriptors.Decimal {
 
 export function double(): Descriptors.Double {
   return { type: "double", properties: {} };
+}
+
+export function boolean(): Descriptors.Boolean {
+  return { type: "boolean", properties: {} };
 }
 
 export function node(): Descriptors.Node {
