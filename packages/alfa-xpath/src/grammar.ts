@@ -44,59 +44,114 @@ const character: Production<Tokens.Character> = {
   },
 
   infix(token, stream, expression, left) {
-    if (token.value === Char.Solidus) {
-      if (!g.isStepExpression(left) && !g.isPathExpression(left)) {
-        return null;
-      }
+    switch (token.value) {
+      case Char.Solidus: {
+        if (!g.isStepExpression(left) && !g.isPathExpression(left)) {
+          return null;
+        }
 
-      const next = stream.peek(0);
+        const next = stream.peek(0);
 
-      if (
-        next !== null &&
-        next.type === TokenType.Character &&
-        next.value === Char.Solidus
-      ) {
-        stream.advance(1);
+        if (
+          next !== null &&
+          next.type === TokenType.Character &&
+          next.value === Char.Solidus
+        ) {
+          stream.advance(1);
 
-        const self: t.AxisExpression = {
-          type: ExpressionType.Axis,
-          axis: "descendant-or-self"
-        };
+          const self: t.AxisExpression = {
+            type: ExpressionType.Axis,
+            axis: "descendant-or-self",
+            test: null,
+            predicates: []
+          };
+
+          const path: t.PathExpression = {
+            type: ExpressionType.Path,
+            left,
+            right: self
+          };
+
+          left = path;
+        }
+
+        const right = expression();
+
+        if (right === null || !g.isStepExpression(right)) {
+          return null;
+        }
+
+        if (!g.isStepExpression(left) && !g.isPathExpression(left)) {
+          return null;
+        }
 
         const path: t.PathExpression = {
           type: ExpressionType.Path,
           left,
-          right: self
+          right
         };
 
-        left = path;
+        return path;
       }
 
-      const right = expression();
+      case Char.LeftSquareBracket: {
+        const right = expression();
 
-      if (right === null || !g.isStepExpression(right)) {
-        return null;
+        if (right === null) {
+          return null;
+        }
+
+        const next = stream.next();
+
+        if (
+          next === null ||
+          next.type !== TokenType.Character ||
+          next.value !== Char.RightSquareBracket
+        ) {
+          return null;
+        }
+
+        if (g.isPrimaryExpression(left)) {
+          const filter: t.FilterExpression = {
+            type: ExpressionType.Filter,
+            expression: left,
+            predicate: right
+          };
+
+          return filter;
+        }
+
+        if (g.isAxisExpression(left)) {
+          (left.predicates as Array<Expression>).push(right);
+          return left;
+        }
+
+        if (g.isPathExpression(left) && g.isAxisExpression(left.right)) {
+          (left.right.predicates as Array<Expression>).push(right);
+          return left;
+        }
       }
-
-      if (!g.isStepExpression(left) && !g.isPathExpression(left)) {
-        return null;
-      }
-
-      const path: t.PathExpression = {
-        type: ExpressionType.Path,
-        left,
-        right
-      };
-
-      return path;
     }
 
     return null;
   }
 };
 
+const integer: Production<Tokens.Integer> = {
+  token: TokenType.Integer,
+
+  prefix(token) {
+    const literal: t.IntegerLiteralExpression = {
+      type: ExpressionType.IntegerLiteral,
+      value: token.value
+    };
+
+    return literal;
+  }
+};
+
 export const Grammar: Lang.Grammar<Token, Expression> = new Lang.Grammar(
-  [name, character],
+  [name, character, integer],
   () => null
 );
 
@@ -106,7 +161,9 @@ function axis(
 ): t.AxisExpression | null {
   const axis: Mutable<t.AxisExpression> = {
     type: ExpressionType.Axis,
-    axis: "child"
+    axis: "child",
+    test: null,
+    predicates: []
   };
 
   if (name.prefix === undefined) {
@@ -158,7 +215,9 @@ function path(
     case Char.Solidus: {
       const self: t.AxisExpression = {
         type: ExpressionType.Axis,
-        axis: "self"
+        axis: "self",
+        test: null,
+        predicates: []
       };
 
       const root: t.FunctionCallExpression = {
@@ -178,7 +237,9 @@ function path(
       ) {
         const self: t.AxisExpression = {
           type: ExpressionType.Axis,
-          axis: "descendant-or-self"
+          axis: "descendant-or-self",
+          test: null,
+          predicates: []
         };
 
         const path: t.PathExpression = {
@@ -196,7 +257,9 @@ function path(
     case Char.Asterisk: {
       const axis: t.AxisExpression = {
         type: ExpressionType.Axis,
-        axis: "child"
+        axis: "child",
+        test: null,
+        predicates: []
       };
 
       return axis;
@@ -205,7 +268,9 @@ function path(
     case Char.AtSign: {
       const axis: Mutable<t.AxisExpression> = {
         type: ExpressionType.Axis,
-        axis: "attribute"
+        axis: "attribute",
+        test: null,
+        predicates: []
       };
 
       const test = nodeTest(stream);
@@ -233,7 +298,9 @@ function path(
 
         const axis: t.AxisExpression = {
           type: ExpressionType.Axis,
-          axis: "parent"
+          axis: "parent",
+          test: null,
+          predicates: []
         };
 
         return axis;

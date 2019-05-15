@@ -25,13 +25,21 @@ function expr<E extends Expression>(expression: E): E {
   return expression;
 }
 
+test("Can parse an integer literal", t => {
+  xpath<t.IntegerLiteralExpression>(t, `123`, {
+    type: ExpressionType.IntegerLiteral,
+    value: 123
+  });
+});
+
 test("Can parse an axis expression", t => {
   xpath<t.AxisExpression>(t, `foo`, {
     type: ExpressionType.Axis,
     axis: "child",
     test: {
       name: "foo"
-    }
+    },
+    predicates: []
   });
 
   xpath<t.AxisExpression>(t, `foo:bar`, {
@@ -40,7 +48,8 @@ test("Can parse an axis expression", t => {
     test: {
       prefix: "foo",
       name: "bar"
-    }
+    },
+    predicates: []
   });
 
   xpath<t.AxisExpression>(t, `child::foo`, {
@@ -48,7 +57,8 @@ test("Can parse an axis expression", t => {
     axis: "child",
     test: {
       name: "foo"
-    }
+    },
+    predicates: []
   });
 
   xpath<t.AxisExpression>(t, `self::foo`, {
@@ -56,22 +66,33 @@ test("Can parse an axis expression", t => {
     axis: "self",
     test: {
       name: "foo"
-    }
+    },
+    predicates: []
   });
+});
 
+test("Can parse a wildcard axis expression", t => {
   xpath<t.AxisExpression>(t, `self::*`, {
     type: ExpressionType.Axis,
-    axis: "self"
+    axis: "self",
+    test: null,
+    predicates: []
   });
 
   xpath<t.AxisExpression>(t, `*`, {
     type: ExpressionType.Axis,
-    axis: "child"
+    axis: "child",
+    test: null,
+    predicates: []
   });
+});
 
+test("Can parse an abbreviated axis expression", t => {
   xpath<t.AxisExpression>(t, `@*`, {
     type: ExpressionType.Axis,
-    axis: "attribute"
+    axis: "attribute",
+    test: null,
+    predicates: []
   });
 
   xpath<t.AxisExpression>(t, `@foo`, {
@@ -79,12 +100,49 @@ test("Can parse an axis expression", t => {
     axis: "attribute",
     test: {
       name: "foo"
-    }
+    },
+    predicates: []
   });
 
   xpath<t.AxisExpression>(t, `..`, {
     type: ExpressionType.Axis,
-    axis: "parent"
+    axis: "parent",
+    test: null,
+    predicates: []
+  });
+});
+
+test("Can parse an axis expression with a predicate", t => {
+  xpath<t.AxisExpression>(t, `foo[bar]`, {
+    type: ExpressionType.Axis,
+    axis: "child",
+    test: {
+      name: "foo"
+    },
+    predicates: [
+      expr<t.AxisExpression>({
+        type: ExpressionType.Axis,
+        axis: "child",
+        test: {
+          name: "bar"
+        },
+        predicates: []
+      })
+    ]
+  });
+
+  xpath<t.AxisExpression>(t, `foo[123]`, {
+    type: ExpressionType.Axis,
+    axis: "child",
+    test: {
+      name: "foo"
+    },
+    predicates: [
+      expr<t.IntegerLiteralExpression>({
+        type: ExpressionType.IntegerLiteral,
+        value: 123
+      })
+    ]
   });
 });
 
@@ -96,14 +154,16 @@ test("Can parse a path expression", t => {
       axis: "child",
       test: {
         name: "foo"
-      }
+      },
+      predicates: []
     },
     right: {
       type: ExpressionType.Axis,
       axis: "child",
       test: {
         name: "bar"
-      }
+      },
+      predicates: []
     }
   });
 
@@ -116,14 +176,16 @@ test("Can parse a path expression", t => {
         axis: "child",
         test: {
           name: "foo"
-        }
+        },
+        predicates: []
       },
       right: {
         type: ExpressionType.Axis,
         axis: "child",
         test: {
           name: "bar"
-        }
+        },
+        predicates: []
       }
     },
     right: {
@@ -131,7 +193,8 @@ test("Can parse a path expression", t => {
       axis: "child",
       test: {
         name: "baz"
-      }
+      },
+      predicates: []
     }
   });
 });
@@ -145,7 +208,9 @@ test("Can parse an absolute path expression", t => {
     parameters: [
       expr<t.AxisExpression>({
         type: ExpressionType.Axis,
-        axis: "self"
+        axis: "self",
+        test: null,
+        predicates: []
       })
     ]
   });
@@ -160,7 +225,9 @@ test("Can parse an absolute path expression", t => {
       parameters: [
         expr<t.AxisExpression>({
           type: ExpressionType.Axis,
-          axis: "self"
+          axis: "self",
+          test: null,
+          predicates: []
         })
       ]
     },
@@ -169,7 +236,8 @@ test("Can parse an absolute path expression", t => {
       axis: "child",
       test: {
         name: "foo"
-      }
+      },
+      predicates: []
     }
   });
 
@@ -185,7 +253,9 @@ test("Can parse an absolute path expression", t => {
         parameters: [
           expr<t.AxisExpression>({
             type: ExpressionType.Axis,
-            axis: "self"
+            axis: "self",
+            test: null,
+            predicates: []
           })
         ]
       },
@@ -194,7 +264,8 @@ test("Can parse an absolute path expression", t => {
         axis: "child",
         test: {
           name: "foo"
-        }
+        },
+        predicates: []
       }
     },
     right: {
@@ -202,7 +273,8 @@ test("Can parse an absolute path expression", t => {
       axis: "child",
       test: {
         name: "bar"
-      }
+      },
+      predicates: []
     }
   });
 
@@ -218,13 +290,17 @@ test("Can parse an absolute path expression", t => {
         parameters: [
           expr<t.AxisExpression>({
             type: ExpressionType.Axis,
-            axis: "self"
+            axis: "self",
+            test: null,
+            predicates: []
           })
         ]
       },
       right: {
         type: ExpressionType.Axis,
-        axis: "descendant-or-self"
+        axis: "descendant-or-self",
+        test: null,
+        predicates: []
       }
     },
     right: {
@@ -232,7 +308,8 @@ test("Can parse an absolute path expression", t => {
       axis: "child",
       test: {
         name: "foo"
-      }
+      },
+      predicates: []
     }
   });
 
@@ -250,13 +327,17 @@ test("Can parse an absolute path expression", t => {
           parameters: [
             expr<t.AxisExpression>({
               type: ExpressionType.Axis,
-              axis: "self"
+              axis: "self",
+              test: null,
+              predicates: []
             })
           ]
         },
         right: {
           type: ExpressionType.Axis,
-          axis: "descendant-or-self"
+          axis: "descendant-or-self",
+          test: null,
+          predicates: []
         }
       },
       right: {
@@ -264,7 +345,8 @@ test("Can parse an absolute path expression", t => {
         axis: "child",
         test: {
           name: "foo"
-        }
+        },
+        predicates: []
       }
     },
     right: {
@@ -272,7 +354,8 @@ test("Can parse an absolute path expression", t => {
       axis: "child",
       test: {
         name: "bar"
-      }
+      },
+      predicates: []
     }
   });
 
@@ -292,13 +375,17 @@ test("Can parse an absolute path expression", t => {
             parameters: [
               expr<t.AxisExpression>({
                 type: ExpressionType.Axis,
-                axis: "self"
+                axis: "self",
+                test: null,
+                predicates: []
               })
             ]
           },
           right: {
             type: ExpressionType.Axis,
-            axis: "descendant-or-self"
+            axis: "descendant-or-self",
+            test: null,
+            predicates: []
           }
         },
         right: {
@@ -306,12 +393,15 @@ test("Can parse an absolute path expression", t => {
           axis: "child",
           test: {
             name: "foo"
-          }
+          },
+          predicates: []
         }
       },
       right: {
         type: ExpressionType.Axis,
-        axis: "descendant-or-self"
+        axis: "descendant-or-self",
+        test: null,
+        predicates: []
       }
     },
     right: {
@@ -319,7 +409,64 @@ test("Can parse an absolute path expression", t => {
       axis: "child",
       test: {
         name: "bar"
-      }
+      },
+      predicates: []
+    }
+  });
+});
+
+test("Can parse a path expression with a predicate", t => {
+  xpath<t.PathExpression>(t, `foo/bar[baz]`, {
+    type: ExpressionType.Path,
+    left: {
+      type: ExpressionType.Axis,
+      axis: "child",
+      test: {
+        name: "foo"
+      },
+      predicates: []
+    },
+    right: {
+      type: ExpressionType.Axis,
+      axis: "child",
+      test: {
+        name: "bar"
+      },
+      predicates: [
+        expr<t.AxisExpression>({
+          type: ExpressionType.Axis,
+          axis: "child",
+          test: {
+            name: "baz"
+          },
+          predicates: []
+        })
+      ]
+    }
+  });
+
+  xpath<t.PathExpression>(t, `foo/bar[123]`, {
+    type: ExpressionType.Path,
+    left: {
+      type: ExpressionType.Axis,
+      axis: "child",
+      test: {
+        name: "foo"
+      },
+      predicates: []
+    },
+    right: {
+      type: ExpressionType.Axis,
+      axis: "child",
+      test: {
+        name: "bar"
+      },
+      predicates: [
+        expr<t.IntegerLiteralExpression>({
+          type: ExpressionType.IntegerLiteral,
+          value: 123
+        })
+      ]
     }
   });
 });

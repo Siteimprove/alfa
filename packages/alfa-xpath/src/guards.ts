@@ -4,7 +4,21 @@ import { Expression, ExpressionType, Item, Sequence } from "./types";
 export function isPrimaryExpression(
   expression: Expression
 ): expression is t.PrimaryExpression {
-  return isFunctionCallExpression(expression);
+  return (
+    isLiteralExpression(expression) || isFunctionCallExpression(expression)
+  );
+}
+
+export function isLiteralExpression(
+  expression: Expression
+): expression is t.LiteralExpression {
+  return isIntegerLiteralExpression(expression);
+}
+
+export function isIntegerLiteralExpression(
+  expression: Expression
+): expression is t.IntegerLiteralExpression {
+  return expression.type === ExpressionType.IntegerLiteral;
 }
 
 export function isFunctionCallExpression(

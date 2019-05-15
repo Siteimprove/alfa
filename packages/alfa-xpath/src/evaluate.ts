@@ -1,10 +1,11 @@
-import { isElement, Node } from "@siteimprove/alfa-dom";
+import { isAttribute, isElement, Node } from "@siteimprove/alfa-dom";
 import { coerceItems, coerceValue } from "./coerce";
-import { node } from "./descriptors";
+import { integer, node } from "./descriptors";
 import { Environment, Focus, withFocus } from "./environment";
 import { lookupFunction } from "./function";
 import { functions } from "./functions";
 import * as g from "./guards";
+import { matches } from "./matches";
 import { parse } from "./parse";
 import { getTree, Tree, walkTree } from "./tree";
 import * as t from "./types";
@@ -20,12 +21,12 @@ export function* evaluate(
   context: Node,
   expression: string | Expression,
   options: EvaluateOptions = {}
-): Iterable<Node> | null {
+): Iterable<Node> {
   if (typeof expression === "string") {
     const parsed = parse(expression);
 
     if (parsed === null) {
-      return null;
+      return;
     }
 
     expression = parsed;
@@ -34,7 +35,7 @@ export function* evaluate(
   const tree = getTree(scope, context);
 
   if (tree === null) {
-    return null;
+    return;
   }
 
   const environment: Environment<Tree<Node>> = {
@@ -50,7 +51,9 @@ export function* evaluate(
   const branches = evaluateExpression(expression, environment, options);
 
   for (const branch of branches) {
-    yield branch.value.node;
+    if (matches(branch, node())) {
+      yield branch.value.node;
+    }
   }
 }
 
@@ -70,6 +73,10 @@ function* evaluateExpression(
   if (g.isFunctionCallExpression(expression)) {
     yield* evaluateFunctionCallExpression(expression, environment, options);
   }
+
+  if (g.isLiteralExpression(expression)) {
+    yield* evaluateLiteralExpression(expression);
+  }
 }
 
 function* evaluatePathExpression(
@@ -77,12 +84,14 @@ function* evaluatePathExpression(
   environment: Environment,
   options: EvaluateOptions
 ): Iterable<Item> {
-  const outer = [...evaluateExpression(expression.left, environment, options)];
+  const result: Array<Item> = [];
 
-  const seen = new Set<Item.Value>();
+  const context = [
+    ...evaluateExpression(expression.left, environment, options)
+  ];
 
-  for (let i = 0, n = outer.length; i < n; i++) {
-    const { type, value } = outer[i];
+  for (let i = 0, n = context.length; i < n; i++) {
+    const { type, value } = context[i];
 
     const focus: Focus = {
       type,
@@ -91,21 +100,35 @@ function* evaluatePathExpression(
       size: n
     };
 
-    const inner = evaluateExpression(
-      expression.right,
-      withFocus(environment, focus),
-      options
+    result.push(
+      ...evaluateExpression(
+        expression.right,
+        withFocus(environment, focus),
+        options
+      )
     );
+  }
 
-    for (const item of inner) {
-      if (seen.has(item.value)) {
-        continue;
+  const hasNode = result.some(item => matches(item, node()));
+
+  if (hasNode) {
+    const seen = new Set<Node>();
+    const nodes: Array<Item<Tree>> = [];
+
+    for (const item of result) {
+      if (matches(item, node())) {
+        if (!seen.has(item.value.node)) {
+          seen.add(item.value.node);
+          nodes.push(item);
+        }
+      } else {
+        return;
       }
-
-      seen.add(item.value);
-
-      yield item;
     }
+
+    yield* nodes;
+  } else {
+    yield* result;
   }
 }
 
@@ -114,14 +137,18 @@ function* evaluateAxisExpression(
   environment: Environment,
   options: EvaluateOptions
 ): Iterable<Item> {
-  let branches = walkTree(environment.focus.value, expression.axis);
+  const focus: Item = environment.focus;
 
-  if (expression.test !== undefined) {
-    branches = evaluateNodeTest(expression.test, branches);
-  }
+  if (matches(focus, node())) {
+    let branches = walkTree(focus.value, expression.axis);
 
-  for (const branch of branches) {
-    yield { type: node(), value: branch };
+    if (expression.test !== null) {
+      branches = evaluateNodeTest(expression.test, branches);
+    }
+
+    for (const branch of branches) {
+      yield { type: node(), value: branch };
+    }
   }
 }
 
@@ -137,12 +164,10 @@ function* evaluateNodeTest(
         yield branch;
       }
     } else {
-      if (
-        isElement(node) &&
-        node.localName === test.name &&
-        test.prefix === undefined
-      ) {
-        yield branch;
+      if (isElement(node) || isAttribute(node)) {
+        if (node.localName === test.name && test.prefix === undefined) {
+          yield branch;
+        }
       }
     }
   }
@@ -221,5 +246,13 @@ function* evaluateFunctionCallExpression(
         }
       }
     }
+  }
+}
+
+function* evaluateLiteralExpression(
+  expression: t.LiteralExpression
+): Iterable<Item> {
+  if (g.isIntegerLiteralExpression(expression)) {
+    yield { type: integer(), value: expression.value };
   }
 }

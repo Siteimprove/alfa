@@ -1,6 +1,10 @@
 import { Descriptor, Descriptors } from "./descriptors";
 
 export const enum ExpressionType {
+  StringLiteral,
+  IntegerLiteral,
+  DecimalLiteral,
+  DoubleLiteral,
   FunctionCall,
   Path,
   Filter,
@@ -12,6 +16,32 @@ export interface Expression<T extends ExpressionType = ExpressionType> {
 }
 
 export type PrimaryExpression = FunctionCallExpression;
+
+export type LiteralExpression =
+  | StringLiteralExpression
+  | IntegerLiteralExpression
+  | DecimalLiteralExpression
+  | DoubleLiteralExpression;
+
+export interface StringLiteralExpression
+  extends Expression<ExpressionType.StringLiteral> {
+  readonly value: string;
+}
+
+export interface IntegerLiteralExpression
+  extends Expression<ExpressionType.IntegerLiteral> {
+  readonly value: number;
+}
+
+export interface DecimalLiteralExpression
+  extends Expression<ExpressionType.DecimalLiteral> {
+  readonly value: number;
+}
+
+export interface DoubleLiteralExpression
+  extends Expression<ExpressionType.DoubleLiteral> {
+  readonly value: number;
+}
 
 export interface FunctionCallExpression
   extends Expression<ExpressionType.FunctionCall> {
@@ -51,8 +81,8 @@ export type Axis =
 
 export interface AxisExpression extends Expression<ExpressionType.Axis> {
   readonly axis: Axis;
-  readonly test?: NodeTest;
-  readonly predicates?: Iterable<Expression>;
+  readonly test: NodeTest | null;
+  readonly predicates: Iterable<Expression>;
 }
 
 export type NodeTest = KindTest | NameTest;
@@ -72,9 +102,12 @@ export interface Item<V extends Item.Value = Item.Value> {
 }
 
 export namespace Item {
-  export type Type = Descriptors.Node | Descriptors.Element;
+  export type Type =
+    | Descriptors.Integer
+    | Descriptors.Node
+    | Descriptors.Element;
 
-  export type Value<T extends Type = Type> = Descriptor.Value<Type>;
+  export type Value<T extends Type = Type> = Descriptor.Value<T>;
 
   export type TypeFor<V extends Value = Value> = Descriptor.For<V, Type>;
 }

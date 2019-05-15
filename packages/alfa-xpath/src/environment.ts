@@ -6,9 +6,7 @@ export interface Environment<T extends Item.Value = Item.Value> {
   readonly functions: FunctionMap;
 }
 
-export interface Focus<T extends Item.Value = Item.Value> {
-  readonly type: Item.TypeFor<T>;
-  readonly value: T;
+export interface Focus<T extends Item.Value = Item.Value> extends Item<T> {
   readonly position: number;
   readonly size: number;
 }
