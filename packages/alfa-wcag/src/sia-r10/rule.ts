@@ -44,10 +44,7 @@ export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
               document,
               document,
               node => {
-                return (
-                  isElement(node) &&
-                  hasAutocomplete(node)
-                );
+                return isElement(node) && hasAutocomplete(node);
               },
               {
                 flattened: true
