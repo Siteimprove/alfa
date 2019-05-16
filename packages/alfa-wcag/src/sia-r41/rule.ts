@@ -96,7 +96,7 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
             switch (target.localName) {
               case "a":
               case "area":
-                return sources.add(getAttribute(target, "src"));
+                return sources.add(getAttribute(target, "href"));
 
               default:
                 return sources.add(null);
