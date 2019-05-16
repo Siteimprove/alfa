@@ -13,10 +13,8 @@ import {
   Document,
   Element,
   getAttribute,
-  getElementNamespace,
   getRootNode,
   isElement,
-  Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
@@ -91,7 +89,7 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
       },
 
       expectations: (aspect, target, question) => {
-        const sources = [
+        const references = [
           ...Seq(target).reduce<Set<string | null>>((sources, target) => {
             switch (target.localName) {
               case "a":
@@ -107,7 +105,7 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
         return {
           1: {
             holds:
-              sources.length === 1 && sources[0] !== null
+              references.length === 1 && references[0] !== null
                 ? true
                 : question(QuestionType.Boolean, "embed-equivalent-resources")
           }
@@ -122,10 +120,6 @@ function isLink(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
   return BrowserSpecific.map(
     getRole(element, context, device),
     role => role === Roles.Link
