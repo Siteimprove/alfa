@@ -43,7 +43,7 @@ function findAnswer<A extends Aspect, T extends Target, Q extends QuestionType>(
   question: Question<A, T, Q>
 ): Answer<A, T, Q> | null {
   for (const answer of answers) {
-    if (isAnswerTo(question, answer)) {
+    if (isAnswerTo(answer, question)) {
       return answer;
     }
   }
@@ -52,8 +52,8 @@ function findAnswer<A extends Aspect, T extends Target, Q extends QuestionType>(
 }
 
 function isAnswerTo<A extends Aspect, T extends Target, Q extends QuestionType>(
-  question: Question<A, T, Q>,
-  answer: Answer<A, T>
+  answer: Answer<A, T>,
+  question: Question<A, T, Q>
 ): answer is Answer<A, T, Q> {
   if (
     answer.type !== question.type ||
