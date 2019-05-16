@@ -5,7 +5,9 @@ export function isPrimaryExpression(
   expression: Expression
 ): expression is t.PrimaryExpression {
   return (
-    isLiteralExpression(expression) || isFunctionCallExpression(expression)
+    isLiteralExpression(expression) ||
+    isContextItemExpression(expression) ||
+    isFunctionCallExpression(expression)
   );
 }
 
@@ -21,9 +23,15 @@ export function isIntegerLiteralExpression(
   return expression.type === ExpressionType.IntegerLiteral;
 }
 
+export function isContextItemExpression(
+  expression: Expression
+): expression is t.ContextItemExpression {
+  return expression.type === ExpressionType.ContextItem;
+}
+
 export function isFunctionCallExpression(
   expression: Expression
-): expression is t.PrimaryExpression {
+): expression is t.FunctionCallExpression {
   return expression.type === ExpressionType.FunctionCall;
 }
 

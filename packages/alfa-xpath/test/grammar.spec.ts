@@ -470,3 +470,9 @@ test("Can parse a path expression with a predicate", t => {
     }
   });
 });
+
+test("Can parse a context item expression", t => {
+  xpath<t.ContextItemExpression>(t, `.`, {
+    type: ExpressionType.ContextItem
+  });
+});

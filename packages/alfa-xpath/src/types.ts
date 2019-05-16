@@ -5,6 +5,7 @@ export const enum ExpressionType {
   IntegerLiteral,
   DecimalLiteral,
   DoubleLiteral,
+  ContextItem,
   FunctionCall,
   Path,
   Filter,
@@ -15,7 +16,10 @@ export interface Expression<T extends ExpressionType = ExpressionType> {
   readonly type: T;
 }
 
-export type PrimaryExpression = FunctionCallExpression;
+export type PrimaryExpression =
+  | LiteralExpression
+  | ContextItemExpression
+  | FunctionCallExpression;
 
 export type LiteralExpression =
   | StringLiteralExpression
@@ -42,6 +46,9 @@ export interface DoubleLiteralExpression
   extends Expression<ExpressionType.DoubleLiteral> {
   readonly value: number;
 }
+
+export interface ContextItemExpression
+  extends Expression<ExpressionType.ContextItem> {}
 
 export interface FunctionCallExpression
   extends Expression<ExpressionType.FunctionCall> {

@@ -74,7 +74,11 @@ function* evaluateExpression(
   }
 
   if (g.isLiteralExpression(expression)) {
-    yield* evaluateLiteralExpression(expression);
+    yield* evaluateLiteralExpression(expression, environment, options);
+  }
+
+  if (g.isContextItemExpression(expression)) {
+    yield* evaluateContextItemExpression(expression, environment, options);
   }
 }
 
@@ -271,7 +275,9 @@ function* evaluateFunctionCallExpression(
 }
 
 function* evaluateLiteralExpression(
-  expression: t.LiteralExpression
+  expression: t.LiteralExpression,
+  environment: Environment,
+  options: EvaluateOptions
 ): Iterable<Item> {
   if (g.isIntegerLiteralExpression(expression)) {
     yield { type: integer(), value: expression.value };
@@ -306,4 +312,13 @@ function evaluatePredicate(
   }
 
   return matches(result[0], node());
+}
+
+function* evaluateContextItemExpression(
+  expression: t.ContextItemExpression,
+  environment: Environment,
+  options: EvaluateOptions
+): Iterable<Item> {
+  const { type, value } = environment.focus;
+  yield { type, value };
 }

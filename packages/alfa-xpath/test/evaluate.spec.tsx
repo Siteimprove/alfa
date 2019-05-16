@@ -64,6 +64,9 @@ test("Evaluates an absolute path expression", t => {
   nodes(t, span, div, "/", [div]);
   nodes(t, span, div, "/span", [span]);
 
+  nodes(t, span, div, "./span", []);
+  nodes(t, span, div, "./b", [b2]);
+
   nodes(t, div, div, "//b", [b1, b2]);
   nodes(t, div, div, "//span//i", [i]);
   nodes(t, div, div, "//p//i", []);

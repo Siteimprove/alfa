@@ -305,6 +305,12 @@ function path(
 
         return axis;
       }
+
+      const contextItem: t.ContextItemExpression = {
+        type: ExpressionType.ContextItem
+      };
+
+      return contextItem;
     }
   }
 
