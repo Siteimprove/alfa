@@ -8,9 +8,9 @@ test("Returns false if tag has no language attribute", t => {
   t(!hasLanguageAttribute(tag));
 });
 
-test("Returns false if tag has an empty language attribute", t => {
+test("Returns true if tag has an empty language attribute", t => {
   const tag = <html lang="" />;
-  t(!hasLanguageAttribute(tag));
+  t(hasLanguageAttribute(tag));
 });
 
 test("Returns true if tag has a language attribute", t => {
