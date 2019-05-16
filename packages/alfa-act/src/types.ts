@@ -139,9 +139,9 @@ export const enum QuestionScope {
 }
 
 export interface Question<
-  Q extends QuestionType,
   A extends Aspect,
-  T extends Target
+  T extends Target,
+  Q extends QuestionType = QuestionType
 > {
   readonly type: Q;
   readonly id: string;
@@ -159,9 +159,9 @@ export interface AnswerType {
 }
 
 export interface Answer<
-  Q extends QuestionType,
   A extends Aspect,
-  T extends Target
+  T extends Target,
+  Q extends QuestionType = QuestionType
 > {
   readonly type: Q;
   readonly id: string;

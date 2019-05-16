@@ -1,7 +1,8 @@
 import { List, Map } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { isIterable, keys, Mutable } from "@siteimprove/alfa-util";
-import { isAtomic } from "./guards";
+import { isAtomic, isTargetGroup } from "./guards";
+import { Oracle } from "./oracle";
 import { sortRules } from "./sort-rules";
 import {
   Answer,
@@ -52,12 +53,14 @@ export function audit<
 >(
   aspects: AspectsFor<A>,
   rules: Iterable<R>,
-  answers: Iterable<Answer<QuestionType, A, T>> = [],
+  answers: Iterable<Answer<A, T>> | Oracle<A, T> = [],
   options: { readonly obsolete?: boolean } = {}
 ): {
   results: Iterable<Result<A, T>>;
-  questions: Iterable<Question<QuestionType, A, T>>;
+  questions: Iterable<Question<A, T>>;
 } {
+  const oracle = isIterable(answers) ? Oracle.forAnswers(answers) : answers;
+
   const questions: QuestionStore<A, T> = {
     local: List(),
     global: Map()
@@ -66,7 +69,7 @@ export function audit<
   const evaluations = reduce<Rule<A, T>, Map<Rule<A, T>, List<Result<A, T>>>>(
     sortRules(rules as Iterable<Rule<A, T>>),
     (evaluations, rule) => {
-      const evaluator = getQuestionEvaluator(rule, questions, answers);
+      const evaluator = getQuestionEvaluator(rule, questions, oracle);
 
       const results = isAtomic(rule)
         ? auditAtomic(aspects, rule, evaluator)
@@ -130,6 +133,10 @@ function auditAtomic<A extends Aspect, T extends Target>(
     (results, { applicable, aspect, target }) => {
       if (applicable === false) {
         return results;
+      }
+
+      if (isTargetGroup(target)) {
+        target = ([...target] as unknown) as T;
       }
 
       if (applicable === null) {
@@ -215,11 +222,8 @@ function auditComposite<A extends Aspect, T extends Target>(
 }
 
 interface QuestionStore<A extends Aspect, T extends Target> {
-  [QuestionScope.Local]: List<Question<QuestionType, A, T>>;
-  [QuestionScope.Global]: Map<
-    string,
-    Map<T, Mutable<Question<QuestionType, A, T>>>
-  >;
+  [QuestionScope.Local]: List<Question<A, T>>;
+  [QuestionScope.Global]: Map<string, Map<T, Mutable<Question<A, T>>>>;
 }
 
 type QuestionEvaluator<A extends Aspect, T extends Target> = <
@@ -235,41 +239,13 @@ type QuestionEvaluator<A extends Aspect, T extends Target> = <
 function getQuestionEvaluator<A extends Aspect, T extends Target>(
   rule: Rule<A, T>,
   questions: QuestionStore<A, T>,
-  answers: Iterable<Answer<QuestionType, A, T>>
+  oracle: Oracle<A, T>
 ): QuestionEvaluator<A, T> {
   const { locales = [] } = rule;
 
   const locale = Array.from(locales).find(locale => locale.id === "en");
 
   return (type, id, aspect, target, options = {}) => {
-    const answer = Array.from(answers).find(answer => {
-      if (
-        answer.type !== type ||
-        answer.id !== id ||
-        answer.aspect !== aspect ||
-        answer.target !== target
-      ) {
-        return false;
-      }
-
-      if (answer.rule === undefined) {
-        return options.global === true;
-      }
-
-      if (isIterable(answer.rule)) {
-        return (
-          Array.from(answer.rule).find(found => found.id === rule.id) !==
-          undefined
-        );
-      }
-
-      return answer.rule.id === rule.id;
-    });
-
-    if (answer !== undefined) {
-      return answer.answer;
-    }
-
     let message: string | undefined;
 
     if (locale !== undefined) {
@@ -283,6 +259,22 @@ function getQuestionEvaluator<A extends Aspect, T extends Target>(
     const scope =
       options.global === true ? QuestionScope.Global : QuestionScope.Local;
 
+    const question = {
+      type,
+      id,
+      rule,
+      scope,
+      aspect,
+      target,
+      message
+    };
+
+    const answer = oracle.answer(question);
+
+    if (answer !== undefined) {
+      return answer;
+    }
+
     if (scope === QuestionScope.Global) {
       let targets = questions.global.get(id);
 
@@ -290,40 +282,24 @@ function getQuestionEvaluator<A extends Aspect, T extends Target>(
         targets = Map();
       }
 
-      let question = targets.get(target);
+      let existing = targets.get(target);
 
-      if (question === undefined) {
-        question = {
-          type,
-          id,
-          rule,
-          scope,
-          aspect,
-          target,
-          message
-        };
+      if (existing === undefined) {
+        existing = question;
       } else {
-        if (isIterable(question.rule)) {
-          question.rule = List(question.rule).push(rule);
+        if (isIterable(existing.rule)) {
+          existing.rule = List(existing.rule).push(rule);
         } else {
-          question.rule = List.of(question.rule, rule);
+          existing.rule = List.of(existing.rule, rule);
         }
       }
 
       questions.global = questions.global.set(
         id,
-        targets.set(target, question)
+        targets.set(target, existing)
       );
     } else {
-      questions.local = questions.local.push({
-        type,
-        id,
-        rule,
-        scope,
-        aspect,
-        target,
-        message
-      });
+      questions.local = questions.local.push(question);
     }
 
     return null;

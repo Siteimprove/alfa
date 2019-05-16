@@ -4,7 +4,6 @@ import {
   AspectsFor,
   audit,
   Outcome,
-  QuestionType,
   Result,
   Rule,
   Target
@@ -25,7 +24,7 @@ export function outcome<A extends Aspect, T extends Target>(
           | Outcome.Failed
           | Outcome.CantTell]?: ReadonlyArray<T>
       },
-  answers: ReadonlyArray<Answer<QuestionType, A, T>> = []
+  answers: ReadonlyArray<Answer<A, T>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,
@@ -54,11 +53,13 @@ export function outcome<A extends Aspect, T extends Target>(
         return result.outcome === outcome;
       }
 
-      const actual = new Set(
-        results.filter(hasMatchingOutcome).map(result => result.target)
-      );
+      const actual: Array<T> = results
+        .filter(hasMatchingOutcome)
+        .map(result => {
+          return result.target;
+        });
 
-      const expected = new Set(outcome in assert ? assert[outcome]! : []);
+      const expected = outcome in assert ? [...assert[outcome]!] : [];
 
       t.deepEqual(actual, expected);
     }

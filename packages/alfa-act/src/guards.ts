@@ -1,17 +1,15 @@
 import { isIterable } from "@siteimprove/alfa-util";
 import { Aspect, Atomic, Composite, Rule, Target } from "./types";
 
-export function isTargetUnit<
-  T extends Target,
-  U extends T extends Iterable<infer G> ? never : T
->(target: T): target is U {
+type Iterables<T> = T extends Iterable<infer U> ? T : never;
+
+export function isTargetUnit(
+  target: Target
+): target is Exclude<Target, Iterable<Target>> {
   return !isIterable(target);
 }
 
-export function isTargetGroup<
-  T extends Target,
-  G extends T extends Iterable<infer G> ? T : never
->(target: T): target is G {
+export function isTargetGroup(target: Target): target is Iterables<Target> {
   return isIterable(target);
 }
 

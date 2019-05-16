@@ -5,6 +5,7 @@
     "src/contexts.ts",
     "src/guards.ts",
     "src/index.ts",
+    "src/oracle.ts",
     "src/sort-rules.ts",
     "src/to-json.ts",
     "src/types.ts"
