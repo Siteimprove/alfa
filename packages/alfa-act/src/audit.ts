@@ -271,7 +271,7 @@ function getQuestionEvaluator<A extends Aspect, T extends Target>(
 
     const answer = oracle.answer(question);
 
-    if (answer !== undefined) {
+    if (answer !== null) {
       return answer;
     }
 
