@@ -1,10 +1,10 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import {
   getTextAlternative,
   hasTextAlternative,
   isExposed
 } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
+import { Map, Seq, Set } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -23,110 +23,85 @@ import { trim } from "@siteimprove/alfa-util";
 
 const {
   map,
-  Iterable: { find, filter }
+  Iterable: { filter, groupBy }
 } = BrowserSpecific;
 
-export const SIA_R15: Atomic.Rule<Device | Document, Element> = {
+export const SIA_R15: Atomic.Rule<Device | Document, Iterable<Element>> = {
   id: "sanshikan:rules/sia-r15.html",
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {
         return map(
-          filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              node => {
-                return isElement(node) && isIframe(node, document);
-              },
-              {
-                flattened: true
+          groupBy(
+            filter(
+              querySelectorAll<Element>(
+                document,
+                document,
+                node => {
+                  return isElement(node) && isIframe(node, document);
+                },
+                {
+                  flattened: true
+                }
+              ),
+              element => {
+                return map(isExposed(element, document, device), isExposed => {
+                  if (!isExposed) {
+                    return false;
+                  }
+
+                  return hasTextAlternative(element, document, device);
+                });
               }
             ),
             element => {
-              return map(isExposed(element, document, device), isExposed => {
-                if (!isExposed) {
-                  return false;
+              return map(
+                getTextAlternative(element, document, device),
+                textAlternative => {
+                  return trim(textAlternative!, isWhitespace).toLowerCase();
                 }
-
-                return hasTextAlternative(element, document, device);
-              });
+              );
             }
           ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
+          groups => {
+            return Map(groups)
+              .toList()
+              .flatMap(elements => {
+                return Seq(elements)
+                  .groupBy(element => {
+                    return getRootNode(element, document);
+                  })
+                  .toList()
+                  .map(elements => elements.toList())
+                  .filter(elements => elements.size >= 2)
+                  .map(elements => {
+                    return {
+                      aspect: document,
+                      target: elements
+                    };
+                  });
+              });
           }
         );
       },
 
-      expectations: (aspect, target) => {
-        const src = getAttribute(target, "src");
-        const root = getRootNode(target, document);
-
-        return map(
-          getTextAlternative(target, document, device),
-          textAlternative => {
-            textAlternative = trim(
-              textAlternative!,
-              isWhitespace
-            ).toLowerCase();
-
-            return map(
-              find(
-                querySelectorAll<Element>(root, document, node => {
-                  return isElement(node) && isIframe(node, document);
-                }),
-                candidate => {
-                  if (target === candidate) {
-                    return false;
-                  }
-
-                  if (src === getAttribute(candidate, "src")) {
-                    return false;
-                  }
-
-                  return map(
-                    isExposed(candidate, document, device),
-                    isExposed => {
-                      if (!isExposed) {
-                        return false;
-                      }
-
-                      return map(
-                        getTextAlternative(candidate, document, device),
-                        otherTextAlternative => {
-                          if (otherTextAlternative === null) {
-                            return false;
-                          }
-
-                          return (
-                            textAlternative ===
-                            trim(
-                              otherTextAlternative,
-                              isWhitespace
-                            ).toLowerCase()
-                          );
-                        }
-                      );
-                    }
-                  );
-                }
-              ),
-              duplicate => {
-                return {
-                  1: { holds: duplicate === null }
-                };
-              }
-            );
-          }
+      expectations: (aspect, target, question) => {
+        const sources = Seq(target).reduce<Set<string | null>>(
+          (sources, target) => {
+            return sources.add(getAttribute(target, "src"));
+          },
+          Set()
         );
+
+        return {
+          1: {
+            holds:
+              sources.size === 1
+                ? true
+                : question(QuestionType.Boolean, "embed-equivalent-resources")
+          }
+        };
       }
     };
   }
