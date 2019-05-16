@@ -183,7 +183,10 @@ function* evaluateNodeTest(
       }
     } else {
       if (isElement(node) || isAttribute(node)) {
-        if (node.localName === test.name && test.prefix === undefined) {
+        if (
+          node.localName === test.name.toLowerCase() &&
+          test.prefix === undefined
+        ) {
           yield branch;
         }
       }
