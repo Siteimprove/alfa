@@ -19,6 +19,7 @@ import { Axis } from "./types";
  */
 export interface Tree<T extends Node = Node> {
   readonly node: T;
+  readonly context: Node;
   readonly parent: Tree | null;
   readonly prev: Tree | null;
   readonly next: Tree | null;
@@ -102,6 +103,7 @@ export function getTree<T extends Node>(
 
         const tree: Mutable<Tree> = {
           node,
+          context,
           parent,
           prev: null,
           next: null,
@@ -130,6 +132,7 @@ export function getTree<T extends Node>(
           tree.attributes = Array.from(node.attributes).map(attribute => {
             return {
               node: attribute,
+              context,
               parent: tree,
               prev: null,
               next: null,
