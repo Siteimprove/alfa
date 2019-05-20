@@ -14,7 +14,7 @@ import { Namespace, Node } from "./types";
 export function serialize(
   node: Node,
   context: Node,
-  options: Readonly<{ flattened?: boolean }> = {}
+  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
 ): string {
   let result = "";
 

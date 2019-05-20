@@ -1,5 +1,6 @@
 import { Seq } from "@siteimprove/alfa-collection";
 import {
+  getChildNodes,
   getOwnerElement,
   getParentNode,
   getTagName,
@@ -85,7 +86,7 @@ export function toJson<
       "@type": ["earl:TestSubject", "cnt:ContentAsText"],
 
       characterEncoding: "UTF-8",
-      chars: serialize(aspect, aspect, { flattened: true })
+      chars: serialize(aspect, aspect, { composed: true })
     };
   }
 
@@ -242,11 +243,13 @@ function getPath(node: Node, context: Node): string {
     }
   } else {
     if (isElement(node)) {
-      const parentNode = getParentNode(node, context, { flattened: true });
+      const parentNode = getParentNode(node, context, { composed: true });
       const tagName = getTagName(node, context);
 
       if (parentNode !== null) {
-        const { childNodes } = parentNode;
+        const childNodes = getChildNodes(parentNode, context, {
+          composed: true
+        });
 
         for (let i = 0, j = 1, n = childNodes.length; i < n; i++) {
           const childNode = childNodes[i];
