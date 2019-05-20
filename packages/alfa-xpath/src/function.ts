@@ -2,6 +2,9 @@ import { Map } from "@siteimprove/alfa-collection";
 import { Environment } from "./environment";
 import { TypeFor, Value } from "./types";
 
+/**
+ * @internal
+ */
 export interface Function<
   P extends [...Array<Value>] = [...Array<Value>],
   R extends Value = Value
@@ -14,6 +17,9 @@ export interface Function<
   apply(environment: Environment, ...parameters: P): R;
 }
 
+/**
+ * @internal
+ */
 export namespace Function {
   export type Parameters<V extends [...Array<Value>]> = {
     readonly [P in keyof V]: V[P] extends Value ? TypeFor<V[P]> : never
@@ -22,8 +28,14 @@ export namespace Function {
   export type Result<V extends Value> = TypeFor<V>;
 }
 
+/**
+ * @internal
+ */
 export type FunctionMap = Map<string, Map<number, Function>>;
 
+/**
+ * @internal
+ */
 export function lookupFunction(
   functions: FunctionMap,
   prefix: string | null,
@@ -45,6 +57,9 @@ export function lookupFunction(
   return definition;
 }
 
+/**
+ * @internal
+ */
 export function registerFunction(
   functions: FunctionMap,
   definition: Function

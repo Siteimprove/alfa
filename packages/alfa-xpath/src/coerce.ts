@@ -1,6 +1,9 @@
 import { matches } from "./matches";
 import { Item, Type, Value } from "./types";
 
+/**
+ * @internal
+ */
 export function coerceItems(items: Iterable<Item>, type: Type): Value | null {
   switch (type.type) {
     case "?":

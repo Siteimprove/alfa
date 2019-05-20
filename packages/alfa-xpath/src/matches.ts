@@ -1,6 +1,9 @@
 import { decimal, double, element, integer } from "./descriptors";
 import { Item } from "./types";
 
+/**
+ * @internal
+ */
 export function matches<T extends Item.Type>(
   item: Item,
   type: T

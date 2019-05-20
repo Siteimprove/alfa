@@ -1,11 +1,17 @@
 import * as dom from "@siteimprove/alfa-dom";
 import { Tree } from "./tree";
 
+/**
+ * @internal
+ */
 export interface Descriptor<T = unknown, V = unknown, P = {}> {
   readonly type: T;
   readonly properties: P;
 }
 
+/**
+ * @internal
+ */
 export namespace Descriptor {
   export type Type<D> = D extends Descriptor<infer T, infer V, infer P>
     ? T
@@ -34,6 +40,9 @@ export namespace Descriptor {
     : never;
 }
 
+/**
+ * @internal
+ */
 export namespace Descriptors {
   export type String = Descriptor<"string", string>;
   export type Numeric = Descriptor<"numeric", number>;
@@ -62,38 +71,65 @@ export namespace Descriptors {
   >;
 }
 
+/**
+ * @internal
+ */
 export function string(): Descriptors.String {
   return { type: "string", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function numeric(): Descriptors.Numeric {
   return { type: "numeric", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function integer(): Descriptors.Integer {
   return { type: "integer", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function decimal(): Descriptors.Decimal {
   return { type: "decimal", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function double(): Descriptors.Double {
   return { type: "double", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function boolean(): Descriptors.Boolean {
   return { type: "boolean", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function node(): Descriptors.Node {
   return { type: "node", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function element(): Descriptors.Element {
   return { type: "element", properties: {} };
 }
 
+/**
+ * @internal
+ */
 export function sequence<D extends Descriptor>(
   descriptor: D,
   options: { required?: boolean } = {}
@@ -106,6 +142,9 @@ export function sequence<D extends Descriptor>(
   };
 }
 
+/**
+ * @internal
+ */
 export function optional<D extends Descriptor>(
   descriptor: D
 ): Descriptors.Optional<D> {
