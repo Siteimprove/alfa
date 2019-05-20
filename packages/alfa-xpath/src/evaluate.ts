@@ -6,6 +6,7 @@ import {
   isText,
   Node
 } from "@siteimprove/alfa-dom";
+import { ExpressionBuilder } from "./builder";
 import { coerceItems } from "./coerce";
 import { boolean, integer, node, numeric, string } from "./descriptors";
 import { Environment, Focus, withFocus } from "./environment";
@@ -26,7 +27,7 @@ export interface EvaluateOptions {
 export function* evaluate(
   scope: Node,
   context: Node,
-  expression: string | Expression,
+  expression: string | Expression | ExpressionBuilder,
   options: EvaluateOptions = {}
 ): Iterable<Node> {
   if (typeof expression === "string") {
@@ -37,6 +38,10 @@ export function* evaluate(
     }
 
     expression = parsed;
+  }
+
+  if (expression instanceof ExpressionBuilder) {
+    expression = expression.expression;
   }
 
   const tree = getTree(scope, context);
