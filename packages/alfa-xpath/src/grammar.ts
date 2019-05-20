@@ -137,6 +137,19 @@ const character: Production<Tokens.Character> = {
   }
 };
 
+const string: Production<Tokens.String> = {
+  token: TokenType.String,
+
+  prefix(token) {
+    const literal: t.StringLiteralExpression = {
+      type: ExpressionType.StringLiteral,
+      value: token.value
+    };
+
+    return literal;
+  }
+};
+
 const integer: Production<Tokens.Integer> = {
   token: TokenType.Integer,
 
@@ -150,8 +163,34 @@ const integer: Production<Tokens.Integer> = {
   }
 };
 
+const decimal: Production<Tokens.Decimal> = {
+  token: TokenType.Decimal,
+
+  prefix(token) {
+    const literal: t.DecimalLiteralExpression = {
+      type: ExpressionType.DecimalLiteral,
+      value: token.value
+    };
+
+    return literal;
+  }
+};
+
+const double: Production<Tokens.Double> = {
+  token: TokenType.Double,
+
+  prefix(token) {
+    const literal: t.DoubleLiteralExpression = {
+      type: ExpressionType.DoubleLiteral,
+      value: token.value
+    };
+
+    return literal;
+  }
+};
+
 export const Grammar: Lang.Grammar<Token, Expression> = new Lang.Grammar(
-  [name, character, integer],
+  [name, character, string, integer, decimal, double],
   () => null
 );
 

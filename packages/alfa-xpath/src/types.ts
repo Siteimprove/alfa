@@ -121,32 +121,18 @@ export namespace Item {
 
   export type Value<T extends Type = Type> = Descriptor.Value<T>;
 
-  export type TypeFor<V extends Value = Value> = Descriptor.For<V, Type>;
+  export type TypeFor<V extends Value> = Descriptor.For<V, Type>;
+
+  export type Sequence<T extends Type = Type> = Descriptors.Sequence<T>;
+
+  export type Optional<T extends Type = Type> = Descriptors.Optional<T>;
 }
 
-export interface Sequence<V extends Sequence.Value = Sequence.Value> {
-  readonly type: Descriptor.For<V, Sequence.Type>;
-  readonly value: V;
-}
+export type Type =
+  | Item.Type
+  | Item.Sequence<Item.Type>
+  | Item.Optional<Item.Type>;
 
-export namespace Sequence {
-  export type Type =
-    | Descriptors.Sequence<Item.Type>
-    | Descriptors.Optional<Item.Type>;
+export type Value<T extends Type = Type> = Descriptor.Value<T>;
 
-  export type Value<T extends Type = Type> = Descriptor.Value<T>;
-
-  export type TypeFor<V extends Value = Value> = Descriptor.For<V, Type>;
-}
-
-export type Type = Item.Type | Sequence.Type;
-
-export type Value<T extends Type = Type> = T extends Item.Type
-  ? Item.Value<T>
-  : T extends Sequence.Type
-  ? Sequence.Value<T>
-  : never;
-
-export type TypeFor<V extends Value> = V extends Item.Value
-  ? Item.TypeFor<V>
-  : Sequence.TypeFor<V>;
+export type TypeFor<V extends Value> = Descriptor.For<V, Type>;

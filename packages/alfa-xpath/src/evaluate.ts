@@ -1,5 +1,5 @@
 import { isAttribute, isElement, Node } from "@siteimprove/alfa-dom";
-import { coerceItems, coerceValue } from "./coerce";
+import { coerceItems } from "./coerce";
 import { boolean, integer, node, numeric, string } from "./descriptors";
 import { Environment, Focus, withFocus } from "./environment";
 import { lookupFunction } from "./function";
@@ -9,11 +9,11 @@ import { matches } from "./matches";
 import { parse } from "./parse";
 import { getTree, Tree, walkTree } from "./tree";
 import * as t from "./types";
-import { Expression, Item, Value } from "./types";
+import { Expression, Item, Type, Value } from "./types";
 
 export interface EvaluateOptions {
-  composed?: boolean;
-  flattened?: boolean;
+  readonly composed?: boolean;
+  readonly flattened?: boolean;
 }
 
 export function* evaluate(
@@ -63,21 +63,13 @@ function* evaluateExpression(
 ): Iterable<Item> {
   if (g.isPathExpression(expression)) {
     yield* evaluatePathExpression(expression, environment, options);
-  }
-
-  if (g.isAxisExpression(expression)) {
+  } else if (g.isAxisExpression(expression)) {
     yield* evaluateAxisExpression(expression, environment, options);
-  }
-
-  if (g.isFunctionCallExpression(expression)) {
+  } else if (g.isFunctionCallExpression(expression)) {
     yield* evaluateFunctionCallExpression(expression, environment, options);
-  }
-
-  if (g.isLiteralExpression(expression)) {
+  } else if (g.isLiteralExpression(expression)) {
     yield* evaluateLiteralExpression(expression, environment, options);
-  }
-
-  if (g.isContextItemExpression(expression)) {
+  } else if (g.isContextItemExpression(expression)) {
     yield* evaluateContextItemExpression(expression, environment, options);
   }
 }
@@ -141,60 +133,44 @@ function* evaluateAxisExpression(
 ): Iterable<Item> {
   const focus: Item = environment.focus;
 
-  if (matches(focus, node())) {
-    let branches = walkTree(focus.value, expression.axis);
+  if (!matches(focus, node())) {
+    return;
+  }
 
+  let position = 1;
+
+  loop: for (const branch of walkTree(focus.value, expression.axis)) {
     if (expression.test !== null) {
-      branches = evaluateNodeTest(expression.test, branches);
-    }
+      const { test } = expression;
 
-    let position = 1;
-
-    loop: for (const branch of branches) {
-      const item = {
-        type: node(),
-        value: branch
-      };
-
-      const focus = {
-        ...item,
-        position: position++
-      };
-
-      for (const predicate of expression.predicates) {
-        if (
-          !evaluatePredicate(predicate, withFocus(environment, focus), options)
-        ) {
+      if (g.isKindTest(test)) {
+        if (branch.node.nodeType !== test.kind) {
           continue loop;
         }
-      }
-
-      yield item;
-    }
-  }
-}
-
-function* evaluateNodeTest(
-  test: t.NodeTest,
-  branches: Iterable<Tree>
-): Iterable<Tree> {
-  for (const branch of branches) {
-    const { node } = branch;
-
-    if (g.isKindTest(test)) {
-      if (node.nodeType === test.kind) {
-        yield branch;
-      }
-    } else {
-      if (isElement(node) || isAttribute(node)) {
-        if (
-          node.localName === test.name.toLowerCase() &&
-          test.prefix === undefined
-        ) {
-          yield branch;
+      } else {
+        if (isElement(branch.node) || isAttribute(branch.node)) {
+          if (
+            branch.node.localName !== test.name.toLowerCase() ||
+            test.prefix !== undefined
+          ) {
+            continue loop;
+          }
         }
       }
     }
+
+    const item = { type: node(), value: branch };
+    const focus = { ...item, position: position++ };
+
+    for (const predicate of expression.predicates) {
+      if (
+        !evaluatePredicate(predicate, withFocus(environment, focus), options)
+      ) {
+        continue loop;
+      }
+    }
+
+    yield item;
   }
 }
 
@@ -207,70 +183,64 @@ function* evaluateFunctionCallExpression(
 
   const fn = lookupFunction(environment.functions, prefix, name, arity);
 
-  if (fn !== null) {
-    const parameters = [...expression.parameters].reduce<Array<Value> | null>(
-      (parameters, expression, i) => {
-        if (parameters !== null) {
-          const parameter = coerceItems(
-            evaluateExpression(expression, environment, options),
-            fn.parameters[i]
-          );
+  if (fn === null) {
+    return;
+  }
 
-          if (parameter === null) {
-            return null;
-          }
+  const parameters = [...expression.parameters].reduce<Array<Value> | null>(
+    (parameters, expression, i) => {
+      if (parameters !== null) {
+        const parameter = coerceItems(
+          evaluateExpression(expression, environment, options),
+          fn.parameters[i]
+        );
 
-          parameters.push(parameter);
+        if (parameter === null) {
+          return null;
         }
 
-        return parameters;
-      },
-      []
-    );
-
-    if (parameters !== null) {
-      switch (fn.result.type) {
-        case "*":
-        case "+": {
-          const values = coerceValue(
-            fn.apply(environment, ...parameters),
-            fn.result
-          );
-
-          if (values !== null) {
-            for (const value of values) {
-              yield { type: fn.result.properties.descriptor, value };
-            }
-          }
-
-          break;
-        }
-
-        case "?": {
-          const value = coerceValue(
-            fn.apply(environment, ...parameters),
-            fn.result
-          );
-
-          if (value !== null && value !== undefined) {
-            yield { type: fn.result.properties.descriptor, value };
-          }
-
-          break;
-        }
-
-        default: {
-          const value = coerceValue(
-            fn.apply(environment, ...parameters),
-            fn.result
-          );
-
-          if (value !== null) {
-            yield { type: fn.result, value };
-          }
-        }
+        parameters.push(parameter);
       }
+
+      return parameters;
+    },
+    []
+  );
+
+  if (parameters === null) {
+    return;
+  }
+
+  const as = <T extends Type>(value: Value, type: T): Value<T> => {
+    return value as Value<T>;
+  };
+
+  switch (fn.result.type) {
+    case "*":
+    case "+": {
+      const result = as(fn.apply(environment, ...parameters), fn.result);
+
+      for (const value of result) {
+        yield { type: fn.result.properties.descriptor, value };
+      }
+
+      break;
     }
+
+    case "?": {
+      const result = as(fn.apply(environment, ...parameters), fn.result);
+
+      if (result !== undefined) {
+        yield { type: fn.result.properties.descriptor, value: result };
+      }
+
+      break;
+    }
+
+    default:
+      const result = as(fn.apply(environment, ...parameters), fn.result);
+
+      yield { type: fn.result, value: result };
   }
 }
 
