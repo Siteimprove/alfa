@@ -23,8 +23,16 @@ function PathOperand<T extends t.StepExpression | t.PathExpression>(
       return step(this, axis.child(name));
     }
 
+    public parent(name?: string): PathExpressionBuilder {
+      return step(this, axis.parent(name));
+    }
+
     public descendant(name?: string): PathExpressionBuilder {
       return step(this, axis.descendant(name));
+    }
+
+    public ancestor(name?: string): PathExpressionBuilder {
+      return step(this, axis.ancestor(name));
     }
 
     public attribute(name?: string): PathExpressionBuilder {
@@ -122,8 +130,16 @@ export namespace axis {
     return axis("child", name);
   }
 
+  export function parent(name?: string): AxisExpressionBuilder {
+    return axis("parent", name);
+  }
+
   export function descendant(name?: string): AxisExpressionBuilder {
     return axis("descendant", name);
+  }
+
+  export function ancestor(name?: string): AxisExpressionBuilder {
+    return axis("ancestor", name);
   }
 
   export function attribute(name?: string): AxisExpressionBuilder {
