@@ -70,5 +70,5 @@ export function isKindTest(test: t.NodeTest): test is t.KindTest {
 }
 
 export function isNameTest(test: t.NodeTest): test is t.NameTest {
-  return "name" in test;
+  return "kind" in test === false;
 }

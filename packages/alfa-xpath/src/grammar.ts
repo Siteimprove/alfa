@@ -362,15 +362,100 @@ function path(
 }
 
 function nodeTest(stream: Stream<Token>): t.NodeTest | true | null {
-  const next = stream.peek(0);
+  let next = stream.peek(0);
 
   if (next === null) {
     return null;
   }
 
   if (next.type === TokenType.Name) {
+    const kind = next.value;
+
     stream.advance(1);
-    return { name: next.value };
+    next = stream.peek(0);
+
+    if (
+      next !== null &&
+      next.type === TokenType.Character &&
+      next.value === Char.LeftParenthesis
+    ) {
+      stream.advance(1);
+
+      switch (kind) {
+        case "node":
+          next = stream.next();
+
+          if (
+            next === null ||
+            next.type !== TokenType.Character ||
+            next.value !== Char.RightParenthesis
+          ) {
+            return null;
+          }
+
+          return true;
+
+        case "document-node":
+        case "comment":
+        case "text":
+          next = stream.next();
+
+          if (
+            next === null ||
+            next.type !== TokenType.Character ||
+            next.value !== Char.RightParenthesis
+          ) {
+            return null;
+          }
+
+          switch (kind) {
+            case "document-node":
+              return { kind };
+            case "comment":
+              return { kind };
+            default:
+              return { kind };
+          }
+
+        case "element":
+        case "attribute":
+          next = stream.next();
+
+          if (next === null) {
+            return null;
+          }
+
+          let name: string | null = null;
+
+          switch (next.type) {
+            case TokenType.Name:
+              name = next.value;
+              next = stream.next();
+              break;
+
+            case TokenType.Character:
+              if (next.value === Char.Asterisk) {
+                next = stream.next();
+              }
+          }
+
+          if (next === null || next.type !== TokenType.Character) {
+            return null;
+          }
+
+          switch (kind) {
+            case "element":
+              return { kind, name };
+            default:
+              return { kind, name };
+          }
+
+        default:
+          return null;
+      }
+    }
+
+    return { name: kind };
   }
 
   if (next.type === TokenType.Character && next.value === Char.Asterisk) {

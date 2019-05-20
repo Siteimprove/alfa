@@ -69,6 +69,43 @@ test("Can parse an axis expression", t => {
     },
     predicates: []
   });
+
+  xpath<t.AxisExpression>(t, `self::node()`, {
+    type: ExpressionType.Axis,
+    axis: "self",
+    test: null,
+    predicates: []
+  });
+
+  xpath<t.AxisExpression>(t, `self::element()`, {
+    type: ExpressionType.Axis,
+    axis: "self",
+    test: {
+      kind: "element",
+      name: null
+    },
+    predicates: []
+  });
+
+  xpath<t.AxisExpression>(t, `self::element(foo)`, {
+    type: ExpressionType.Axis,
+    axis: "self",
+    test: {
+      kind: "element",
+      name: "foo"
+    },
+    predicates: []
+  });
+
+  xpath<t.AxisExpression>(t, `self::attribute(foo)`, {
+    type: ExpressionType.Axis,
+    axis: "self",
+    test: {
+      kind: "attribute",
+      name: "foo"
+    },
+    predicates: []
+  });
 });
 
 test("Can parse a wildcard axis expression", t => {

@@ -1,4 +1,11 @@
-import { isAttribute, isElement, Node } from "@siteimprove/alfa-dom";
+import {
+  isAttribute,
+  isComment,
+  isDocument,
+  isElement,
+  isText,
+  Node
+} from "@siteimprove/alfa-dom";
 import { coerceItems } from "./coerce";
 import { boolean, integer, node, numeric, string } from "./descriptors";
 import { Environment, Focus, withFocus } from "./environment";
@@ -144,8 +151,49 @@ function* evaluateAxisExpression(
       const { test } = expression;
 
       if (g.isKindTest(test)) {
-        if (branch.node.nodeType !== test.kind) {
-          continue loop;
+        switch (test.kind) {
+          case "document-node":
+            if (!isDocument(branch.node)) {
+              continue loop;
+            }
+            break;
+
+          case "element":
+            if (!isElement(branch.node)) {
+              continue loop;
+            }
+
+            if (
+              test.name !== null &&
+              branch.node.localName !== test.name.toLowerCase()
+            ) {
+              continue loop;
+            }
+            break;
+
+          case "attribute":
+            if (!isAttribute(branch.node)) {
+              continue loop;
+            }
+
+            if (
+              test.name !== null &&
+              branch.node.localName !== test.name.toLowerCase()
+            ) {
+              continue loop;
+            }
+            break;
+
+          case "comment":
+            if (!isComment(branch.node)) {
+              continue loop;
+            }
+            break;
+
+          case "text":
+            if (!isText(branch.node)) {
+              continue loop;
+            }
         }
       } else {
         if (isElement(branch.node) || isAttribute(branch.node)) {

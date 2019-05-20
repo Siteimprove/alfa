@@ -94,8 +94,33 @@ export interface AxisExpression extends Expression<ExpressionType.Axis> {
 
 export type NodeTest = KindTest | NameTest;
 
-export interface KindTest {
-  readonly kind: number;
+export type KindTest =
+  | DocumentTest
+  | ElementTest
+  | AttributeTest
+  | CommentTest
+  | TextTest;
+
+export interface DocumentTest {
+  readonly kind: "document-node";
+}
+
+export interface ElementTest {
+  readonly kind: "element";
+  readonly name: string | null;
+}
+
+export interface AttributeTest {
+  readonly kind: "attribute";
+  readonly name: string | null;
+}
+
+export interface CommentTest {
+  readonly kind: "comment";
+}
+
+export interface TextTest {
+  readonly kind: "text";
 }
 
 export interface NameTest {
