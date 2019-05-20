@@ -14,8 +14,7 @@ export function serialize(expression: Expression): string {
     const { axis, test, predicates } = expression;
 
     const parts = [
-      axis,
-      "::",
+      axis === "child" ? "" : axis === "attribute" ? "@" : `${axis}::`,
       test === null ? "*" : g.isKindTest(test) ? test.kind : test.name,
       serializePredicates(predicates)
     ];
