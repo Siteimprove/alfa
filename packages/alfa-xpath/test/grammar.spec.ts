@@ -476,3 +476,47 @@ test("Can parse a context item expression", t => {
     type: ExpressionType.ContextItem
   });
 });
+
+test("Can parse a filter expression", t => {
+  xpath<t.FilterExpression>(t, `.[foo]`, {
+    type: ExpressionType.Filter,
+    base: {
+      type: ExpressionType.ContextItem
+    },
+    predicates: [
+      expr<t.AxisExpression>({
+        type: ExpressionType.Axis,
+        axis: "child",
+        test: {
+          name: "foo"
+        },
+        predicates: []
+      })
+    ]
+  });
+
+  xpath<t.FilterExpression>(t, `.[foo][bar]`, {
+    type: ExpressionType.Filter,
+    base: {
+      type: ExpressionType.ContextItem
+    },
+    predicates: [
+      expr<t.AxisExpression>({
+        type: ExpressionType.Axis,
+        axis: "child",
+        test: {
+          name: "foo"
+        },
+        predicates: []
+      }),
+      expr<t.AxisExpression>({
+        type: ExpressionType.Axis,
+        axis: "child",
+        test: {
+          name: "bar"
+        },
+        predicates: []
+      })
+    ]
+  });
+});

@@ -114,21 +114,26 @@ const character: Production<Tokens.Character> = {
         if (g.isPrimaryExpression(left)) {
           const filter: t.FilterExpression = {
             type: ExpressionType.Filter,
-            expression: left,
-            predicate: right
+            base: left,
+            predicates: [right]
           };
 
           return filter;
         }
 
-        if (g.isAxisExpression(left)) {
+        if (g.isFilterExpression(left) || g.isAxisExpression(left)) {
           (left.predicates as Array<Expression>).push(right);
           return left;
         }
 
-        if (g.isPathExpression(left) && g.isAxisExpression(left.right)) {
-          (left.right.predicates as Array<Expression>).push(right);
-          return left;
+        if (g.isPathExpression(left)) {
+          if (
+            g.isFilterExpression(left.right) ||
+            g.isAxisExpression(left.right)
+          ) {
+            (left.right.predicates as Array<Expression>).push(right);
+            return left;
+          }
         }
       }
     }

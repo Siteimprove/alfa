@@ -68,8 +68,8 @@ export type StepExpression = PostfixExpression | AxisExpression;
 export type PostfixExpression = PrimaryExpression | FilterExpression;
 
 export interface FilterExpression extends Expression<ExpressionType.Filter> {
-  readonly expression: PrimaryExpression;
-  readonly predicate: Expression;
+  readonly base: PrimaryExpression;
+  readonly predicates: Iterable<Expression>;
 }
 
 export type Axis =

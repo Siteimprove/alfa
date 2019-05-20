@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/alphabet.ts",
+    "src/builder.ts",
     "src/coerce.ts",
     "src/descriptors.ts",
     "src/environment.ts",
@@ -14,6 +15,7 @@
     "src/index.ts",
     "src/matches.ts",
     "src/parse.ts",
+    "src/serialize.ts",
     "src/tree.ts",
     "src/types.ts",
     "test/alphabet.spec.ts",
