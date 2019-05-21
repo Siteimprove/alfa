@@ -60,10 +60,7 @@ import { Browser } from "./types";
  */
 export type BrowserName = ${include.map(name => `"${name}"`).join("|")};
 
-/**
- * @internal
- */
-export const Browsers: { [P in BrowserName]: Browser } = {
+export const Browsers: { readonly [P in BrowserName]: Browser } = {
   ${browsers
     .map(
       browser => `

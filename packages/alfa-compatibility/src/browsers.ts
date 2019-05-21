@@ -18,7 +18,7 @@ export type BrowserName =
   | "opera"
   | "safari";
 
-export const Browsers: { [P in BrowserName]: Browser } = {
+export const Browsers: { readonly [P in BrowserName]: Browser } = {
   chrome: {
     name: "Chrome",
     releases: {
@@ -93,7 +93,9 @@ export const Browsers: { [P in BrowserName]: Browser } = {
       "69": { date: 1536019200000 },
       "70": { date: 1539648000000 },
       "71": { date: 1543881600000 },
-      "72": { date: 1548720000000 }
+      "72": { date: 1548720000000 },
+      "73": { date: 1552348800000 },
+      "74": { date: 1555977600000 }
     }
   },
   edge: {
@@ -165,7 +167,6 @@ export const Browsers: { [P in BrowserName]: Browser } = {
       "48": { date: 1470096000000 },
       "49": { date: 1474329600000 },
       "50": { date: 1479168000000 },
-      "50.0.1": { date: 1480291200000 },
       "51": { date: 1485216000000 },
       "52": { date: 1488844800000 },
       "53": { date: 1492560000000 },
@@ -180,7 +181,8 @@ export const Browsers: { [P in BrowserName]: Browser } = {
       "62": { date: 1536105600000 },
       "63": { date: 1540252800000 },
       "64": { date: 1544486400000 },
-      "65": { date: 1548720000000 }
+      "65": { date: 1548720000000 },
+      "66": { date: 1552953600000 }
     }
   },
   ie: {
@@ -274,7 +276,9 @@ export const Browsers: { [P in BrowserName]: Browser } = {
       "54": { date: 1530144000000 },
       "55": { date: 1534377600000 },
       "56": { date: 1537833600000 },
-      "57": { date: 1543363200000 }
+      "57": { date: 1543363200000 },
+      "58": { date: 1548201600000 },
+      "60": { date: 1554768000000 }
     }
   },
   safari: {
@@ -302,7 +306,8 @@ export const Browsers: { [P in BrowserName]: Browser } = {
       "10.1": { date: 1490572800000 },
       "11": { date: 1505779200000 },
       "11.1": { date: 1523491200000 },
-      "12": { date: 1537747200000 }
+      "12": { date: 1537747200000 },
+      "12.1": { date: 1553472000000 }
     }
   }
 };

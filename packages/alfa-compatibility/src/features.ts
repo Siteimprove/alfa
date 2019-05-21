@@ -32,10 +32,7 @@ export type FeatureName =
   | "css.properties.font-weight"
   | "css.properties.font-weight.number";
 
-/**
- * @internal
- */
-export const Features: { [P in FeatureName]: Feature } = {
+export const Features: { readonly [P in FeatureName]: Feature } = {
   "css.properties.border-radius": {
     support: {
       chrome: {
@@ -70,7 +67,7 @@ export const Features: { [P in FeatureName]: Feature } = {
         added: "3.5"
       },
       ie: {
-        added: true
+        added: "9"
       },
       opera: {
         added: true
@@ -92,7 +89,7 @@ export const Features: { [P in FeatureName]: Feature } = {
         added: true
       },
       ie: {
-        added: true
+        added: "9"
       },
       opera: {
         added: true
@@ -105,7 +102,7 @@ export const Features: { [P in FeatureName]: Feature } = {
   "css.properties.border-radius.percentages": {
     support: {
       chrome: {
-        added: true
+        added: "8"
       },
       edge: {
         added: "12"
@@ -114,7 +111,7 @@ export const Features: { [P in FeatureName]: Feature } = {
         added: "4"
       },
       ie: {
-        added: true
+        added: "9"
       },
       opera: {
         added: "11.5"
@@ -136,7 +133,7 @@ export const Features: { [P in FeatureName]: Feature } = {
         added: "1"
       },
       ie: {
-        added: true
+        added: "3"
       },
       opera: {
         added: true
@@ -261,6 +258,9 @@ export const Features: { [P in FeatureName]: Feature } = {
       chrome: {
         added: "1"
       },
+      edge: {
+        added: "12"
+      },
       firefox: {
         added: "1.5"
       },
@@ -280,6 +280,9 @@ export const Features: { [P in FeatureName]: Feature } = {
       chrome: {
         added: "1"
       },
+      edge: {
+        added: "12"
+      },
       firefox: {
         added: "3"
       },
@@ -298,6 +301,9 @@ export const Features: { [P in FeatureName]: Feature } = {
     support: {
       chrome: {
         added: "38"
+      },
+      edge: {
+        added: "12"
       },
       firefox: {
         added: "33"
@@ -336,6 +342,9 @@ export const Features: { [P in FeatureName]: Feature } = {
       },
       opera: {
         added: "52"
+      },
+      safari: {
+        added: "12.1"
       }
     }
   },
@@ -349,6 +358,9 @@ export const Features: { [P in FeatureName]: Feature } = {
       },
       opera: {
         added: "53"
+      },
+      safari: {
+        added: "12.1"
       }
     }
   },
@@ -370,7 +382,7 @@ export const Features: { [P in FeatureName]: Feature } = {
         added: "3.5"
       },
       safari: {
-        added: "1.3"
+        added: "1"
       }
     }
   },
@@ -379,8 +391,14 @@ export const Features: { [P in FeatureName]: Feature } = {
       chrome: {
         added: "62"
       },
+      edge: {
+        added: true
+      },
       firefox: {
         added: "61"
+      },
+      opera: {
+        added: "49"
       }
     }
   }

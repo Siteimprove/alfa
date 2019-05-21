@@ -163,10 +163,7 @@ export type FeatureName = ${features
   .map(feature => `"${feature.key}"`)
   .join("|")};
 
-/**
- * @internal
- */
-export const Features: { [P in FeatureName]: Feature } = {
+export const Features: { readonly [P in FeatureName]: Feature } = {
   ${features
     .map(
       feature => `
