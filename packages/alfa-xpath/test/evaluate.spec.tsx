@@ -20,10 +20,10 @@ function nodes(
   }
 }
 
-const b1 = <b />;
+const b1 = <b>Foo</b>;
 const p = <p>{b1}</p>;
 
-const i = <i />;
+const i = <i>Foo</i>;
 const b2 = <b>{i}</b>;
 const span = <span>{b2}</span>;
 
