@@ -68,9 +68,21 @@ interface Dictionary {
 
 export type Data = Dictionary;
 
+export type Result<
+  A extends Aspect,
+  T extends Target,
+  O extends Outcome = Outcome
+> = O extends Outcome.Inapplicable
+  ? Result.Inapplicable<A, T>
+  : O extends Outcome.CantTell
+  ? Result.CantTell<A, T>
+  : O extends Outcome.Failed
+  ? Result.Failed<A, T>
+  : Result.Passed<A, T>;
+
 export namespace Result {
   export interface Browsers {
-    readonly [key: string]: true | ReadonlyArray<string>;
+    readonly [key: string]: true | Iterable<string>;
   }
 
   export interface Expectations {
@@ -114,18 +126,6 @@ export namespace Result {
       WithTarget<A, T>,
       WithExpectations {}
 }
-
-export type Result<
-  A extends Aspect,
-  T extends Target,
-  O extends Outcome = Outcome
-> = O extends Outcome.Inapplicable
-  ? Result.Inapplicable<A, T>
-  : O extends Outcome.CantTell
-  ? Result.CantTell<A, T>
-  : O extends Outcome.Failed
-  ? Result.Failed<A, T>
-  : Result.Passed<A, T>;
 
 export const enum QuestionType {
   Boolean = "boolean",

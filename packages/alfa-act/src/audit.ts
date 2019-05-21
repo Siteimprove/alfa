@@ -23,7 +23,6 @@ import {
   Target
 } from "./types";
 
-const { assign } = Object;
 const {
   map,
   unwrap,
@@ -84,21 +83,21 @@ export function audit<
 
   const results: Array<Result<A, T>> = [];
 
-  for (const { value, browsers } of unwrap(evaluations)) {
-    for (const [rule, evaluations] of value) {
+  for (const unwrapped of unwrap(evaluations)) {
+    const browsers = unwrapped.browsers
+      .map(versions => (versions === true ? true : [...versions]))
+      .toObject();
+
+    for (const [rule, evaluations] of unwrapped.value) {
       if (evaluations.size === 0) {
-        results.push(<Result<A, T>>assign(
-          {
-            rule,
-            outcome: Outcome.Inapplicable
-          },
-          {
-            browsers
-          }
-        ));
+        results.push({
+          rule,
+          outcome: Outcome.Inapplicable,
+          browsers
+        });
       } else {
         for (const evaluation of evaluations) {
-          results.push(assign(evaluation, { browsers }));
+          results.push({ ...evaluation, browsers });
         }
       }
     }
@@ -106,11 +105,13 @@ export function audit<
 
   return {
     results,
-    questions: questions.local.concat(
-      questions.global.toList().flatMap(targets => {
-        return targets.toList();
-      })
-    )
+    questions: [
+      ...questions.local.concat(
+        questions.global.toList().flatMap(targets => {
+          return targets.toList();
+        })
+      )
+    ]
   };
 }
 
