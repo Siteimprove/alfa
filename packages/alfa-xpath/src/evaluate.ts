@@ -201,24 +201,37 @@ function* evaluateAxisExpression(
             }
         }
       } else {
-        if (isElement(branch.node) || isAttribute(branch.node)) {
-          if (
-            branch.node.localName !== test.name.toLowerCase() ||
-            test.prefix !== undefined
-          ) {
-            continue loop;
-          }
+        if (!isElement(branch.node) && !isAttribute(branch.node)) {
+          continue loop;
+        }
+
+        if (
+          branch.node.localName !== test.name.toLowerCase() ||
+          test.prefix !== undefined
+        ) {
+          continue loop;
         }
       }
     }
 
-    const item = { type: node(), value: branch };
-    const focus = { ...item, position: position++ };
+    const item = {
+      type: node(),
+      value: branch
+    };
+
+    const focus = {
+      ...item,
+      position: position++
+    };
 
     for (const predicate of expression.predicates) {
-      if (
-        !evaluatePredicate(predicate, withFocus(environment, focus), options)
-      ) {
+      const keep = evaluatePredicate(
+        predicate,
+        withFocus(environment, focus),
+        options
+      );
+
+      if (!keep) {
         continue loop;
       }
     }
