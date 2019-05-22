@@ -75,17 +75,19 @@ export class Assertion {
       if (result.outcome === Outcome.Failed) {
         const { expectations, aspect, target } = result;
 
-        const failure = keys(expectations).findIndex(
+        const failure = keys(expectations).find(
           key => expectations[key].holds === false
         );
 
-        let { message } = expectations[failure];
+        if (failure !== undefined) {
+          let { message } = expectations[failure];
 
-        if (message === undefined) {
-          message = `Expectation ${failure} does not hold`;
+          if (message === undefined) {
+            message = `Expectation ${failure} does not hold`;
+          }
+
+          throw new AssertionError(message, aspect, target);
         }
-
-        throw new AssertionError(message, aspect, target);
       }
     }
   }
