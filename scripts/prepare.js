@@ -46,5 +46,3 @@ for (const pkg of packages) {
 
   forEach(findFiles(root, endsWith(".ts", ".tsx")), handle);
 }
-
-forEach(findFiles("docs", endsWith(".ts", ".tsx")), handle);

@@ -26,11 +26,7 @@ watchFiles(
     "packages/**/*.ts",
     "packages/**/*.tsx",
     "packages/**/scripts/**/*.js",
-    "scripts/**/*.js",
-    "scripts/test/**/*.ts",
-    "!scripts/test/**/*.js",
-    "docs/**/*.ts",
-    "docs/**/*.tsx"
+    "scripts/**/*.js"
   ],
   (event, file) => {
     failed = failed.filter(v => v !== file);
