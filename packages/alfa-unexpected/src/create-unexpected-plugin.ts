@@ -1,6 +1,6 @@
 /// <reference path="../types/unexpected.d.ts" />
 
-import { AssertionError, expect as assert } from "@siteimprove/alfa-assert";
+import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element, serialize } from "@siteimprove/alfa-dom";
 import { highlight } from "@siteimprove/alfa-highlight";
 import * as unexpected from "unexpected";
@@ -37,9 +37,11 @@ export function createUnexpectedPlugin<T>(
       unexpected.addAssertion<T>(
         `<Element> [not] to be accessible`,
         (expect, subject) => {
+          const element = transform(subject);
+
           let error: AssertionError | null = null;
           try {
-            assert(transform(subject)).to.be.accessible;
+            new Assertion(element).should.be.accessible;
           } catch (err) {
             if (err instanceof AssertionError) {
               error = err;

@@ -39,7 +39,9 @@
     "@siteimprove/alfa-unexpected": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
     "@types/react": "^16.8.4",
-    "react": "^16.8.2"
+    "@types/react-test-renderer": "^16.8.1",
+    "react": "^16.8.2",
+    "react-test-renderer": "^16.8.6"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"

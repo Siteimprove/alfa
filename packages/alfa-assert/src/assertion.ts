@@ -12,10 +12,12 @@ import {
   serialize
 } from "@siteimprove/alfa-dom";
 import { highlight, mark } from "@siteimprove/alfa-highlight";
-import { keys, values } from "@siteimprove/alfa-util";
-import { Rules } from "@siteimprove/alfa-wcag";
+import { keys } from "@siteimprove/alfa-util";
 
-const rules = values(Rules);
+import { rules } from "./rules";
+
+type Aspect = Document | Device;
+type Target = Attribute | Document | Element;
 
 const documentType: DocumentType = {
   nodeType: NodeType.DocumentType,
@@ -25,9 +27,6 @@ const documentType: DocumentType = {
   childNodes: []
 };
 
-type Aspect = Document | Device;
-type Target = Attribute | Document | Element;
-
 export class Assertion {
   private readonly target: Document | Element;
 
@@ -36,6 +35,10 @@ export class Assertion {
   }
 
   public get be(): this {
+    return this;
+  }
+
+  public get should(): this {
     return this;
   }
 
@@ -51,7 +54,7 @@ export class Assertion {
     return;
   }
 
-  public pass<A extends Aspect, T extends Target>(rule: Rule<A, T>): void {
+  public pass(rule: Rule<Aspect, Target>): void {
     const device = getDefaultDevice();
 
     const document: Document = isDocument(this.target)
@@ -63,9 +66,7 @@ export class Assertion {
           childNodes: [documentType, this.target]
         };
 
-    const { results } = audit({ device, document }, [
-      (rule as unknown) as Rule<Aspect, Target>
-    ]);
+    const { results } = audit({ device, document }, [rule]);
 
     for (const result of results) {
       if (result.outcome === Outcome.Inapplicable) {

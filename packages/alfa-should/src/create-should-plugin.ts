@@ -1,6 +1,6 @@
 /// <reference path="../types/should.d.ts" />
 
-import { AssertionError, expect } from "@siteimprove/alfa-assert";
+import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
 import * as should from "should";
 
@@ -15,15 +15,17 @@ declare module "should" {
 export function createShouldPlugin<T>(
   identify: (input: unknown) => input is T,
   transform: (input: T) => Element
-): (should: should, Assertion: typeof should.Assertion) => void {
-  return (should, Assertion) => {
-    Assertion.add("accessible", function() {
+): (should: should, assertions: typeof should.Assertion) => void {
+  return (should, assertions) => {
+    assertions.add("accessible", function() {
       const object = this.obj;
 
       if (identify(object)) {
+        const element = transform(object);
+
         let error: AssertionError | null = null;
         try {
-          expect(transform(object)).to.be.accessible;
+          new Assertion(element).should.be.accessible;
         } catch (err) {
           if (err instanceof AssertionError) {
             error = err;

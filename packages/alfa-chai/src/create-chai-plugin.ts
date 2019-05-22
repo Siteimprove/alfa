@@ -1,6 +1,6 @@
 /// <reference path="../types/chai.d.ts" />
 
-import { AssertionError, expect } from "@siteimprove/alfa-assert";
+import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
 import * as chai from "chai";
 
@@ -17,15 +17,17 @@ export function createChaiPlugin<T>(
   transform: (input: T) => Element
 ): (chai: chai, util: chai.Util) => void {
   return (chai, util) => {
-    const { Assertion } = chai;
+    const { Assertion: assertions } = chai;
 
-    Assertion.addProperty("accessible", function() {
+    assertions.addProperty("accessible", function() {
       const object = util.flag(this, "object");
 
       if (identify(object)) {
+        const element = transform(object);
+
         let error: AssertionError | null = null;
         try {
-          expect(transform(object)).to.be.accessible;
+          new Assertion(element).should.be.accessible;
         } catch (err) {
           if (err instanceof AssertionError) {
             error = err;

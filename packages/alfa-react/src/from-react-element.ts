@@ -1,54 +1,52 @@
-import { Element, NodeType, Text } from "@siteimprove/alfa-dom";
+import { Attribute, Element, NodeType, Text } from "@siteimprove/alfa-dom";
 import { keys } from "@siteimprove/alfa-util";
 import { ReactElement } from "react";
-
-const { isArray } = Array;
+import * as TestRenderer from "react-test-renderer";
 
 export function fromReactElement<T>(reactElement: ReactElement<T>): Element {
-  const { type, props } = reactElement;
+  const tree = TestRenderer.create(reactElement).toJSON();
 
-  if (typeof type !== "string") {
-    throw new Error();
+  if (tree === null) {
+    throw new Error("Could not render React element");
   }
 
-  let childNodes: Array<ReactElement<unknown> | string> = [];
+  return convertTree(tree);
+}
 
-  if ("children" in props) {
-    let { children } = props as T & { children: unknown };
+function convertTree(tree: TestRenderer.ReactTestRendererJSON): Element {
+  const { type: localName, props, children } = tree;
 
-    if (!isArray(children)) {
-      children = [children];
-    }
+  const attributes: Array<Attribute> = keys(props).map(localName => {
+    return {
+      nodeType: NodeType.Attribute,
+      prefix: null,
+      localName: String(localName),
+      value: props[localName],
+      childNodes: []
+    };
+  });
 
-    childNodes = children as Array<ReactElement<unknown> | string>;
-  }
+  const childNodes: Array<Element | Text> =
+    children === null
+      ? []
+      : children.map(child => {
+          if (typeof child === "string") {
+            return {
+              nodeType: NodeType.Text,
+              data: child,
+              childNodes: []
+            };
+          }
+
+          return convertTree(child);
+        });
 
   return {
     nodeType: NodeType.Element,
-    localName: type,
     prefix: null,
-    attributes: keys(props)
-      .filter(name => name !== "children")
-      .map(name => ({
-        nodeType: 2,
-        prefix: null,
-        localName: name.toString(),
-        value: props[name].toString(),
-        childNodes: []
-      })),
+    localName,
+    attributes,
     shadowRoot: null,
-    childNodes: childNodes.map(child => {
-      if (typeof child === "string") {
-        const text: Text = {
-          nodeType: NodeType.Text,
-          data: child,
-          childNodes: []
-        };
-
-        return text;
-      }
-
-      return fromReactElement(child);
-    })
+    childNodes
   };
 }

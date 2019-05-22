@@ -211,7 +211,7 @@ export interface ShadowRoot extends DocumentFragment {
   /**
    * @see https://www.w3.org/TR/dom41/#dom-shadowroot-mode
    */
-  readonly mode: "open";
+  readonly mode: "open" | "closed";
 }
 
 /**

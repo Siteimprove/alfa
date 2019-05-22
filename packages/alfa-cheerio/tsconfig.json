@@ -1,25 +1,14 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["enzyme", "react"]
-  },
   "files": [
-    "chai.ts",
-    "jasmine.ts",
-    "jest.ts",
-    "should.ts",
-    "src/from-enzyme-wrapper.ts",
+    "src/from-cheerio-element.ts",
     "src/index.ts",
-    "src/is-enzyme-wrapper.ts",
-    "src/types.ts",
-    "unexpected.ts"
+    "src/is-cheerio-element.ts",
+    "src/types.ts"
   ],
   "references": [
     {
       "path": "../alfa-chai"
-    },
-    {
-      "path": "../alfa-cheerio"
     },
     {
       "path": "../alfa-dom"
@@ -31,9 +20,6 @@
       "path": "../alfa-jest"
     },
     {
-      "path": "../alfa-react"
-    },
-    {
       "path": "../alfa-should"
     },
     {
@@ -41,6 +27,9 @@
     },
     {
       "path": "../alfa-unexpected"
+    },
+    {
+      "path": "../alfa-util"
     }
   ]
 }

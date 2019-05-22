@@ -1,10 +1,15 @@
+import {
+  fromCheerioElement,
+  isCheerioElement
+} from "@siteimprove/alfa-cheerio";
 import { Element } from "@siteimprove/alfa-dom";
 import { fromReactElement } from "@siteimprove/alfa-react";
-import { ReactWrapper, ShallowWrapper } from "enzyme";
-import { ReactElement } from "react";
+import { EnzymeWrapper } from "./types";
 
-export function fromEnzymeWrapper(
-  enzymeWrapper: ShallowWrapper | ReactWrapper
-): Element {
-  return fromReactElement(enzymeWrapper.getElement() as ReactElement<unknown>);
+export function fromEnzymeWrapper(enzymeWrapper: EnzymeWrapper): Element {
+  if (isCheerioElement(enzymeWrapper)) {
+    return fromCheerioElement(enzymeWrapper);
+  }
+
+  return fromReactElement(enzymeWrapper.getElement());
 }

@@ -1,4 +1,4 @@
-import { AssertionError, expect as assert } from "@siteimprove/alfa-assert";
+import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
 
 declare global {
@@ -16,9 +16,11 @@ export function createJestPlugin<T>(
   expect.extend({
     toBeAccessible: (target: unknown) => {
       if (identify(target)) {
+        const element = transform(target);
+
         let error: AssertionError | null = null;
         try {
-          assert(transform(target)).to.be.accessible;
+          new Assertion(element).should.be.accessible;
         } catch (err) {
           if (err instanceof AssertionError) {
             error = err;
