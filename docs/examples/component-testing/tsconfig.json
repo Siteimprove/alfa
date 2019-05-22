@@ -1,5 +1,5 @@
 {
   "extends": "../tsconfig.json",
   "files": [],
-  "references": [{ "path": "angular" }]
+  "references": [{ "path": "angular" }, { "path": "react" }]
 }
