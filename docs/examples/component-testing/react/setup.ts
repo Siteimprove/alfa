@@ -1,8 +1,4 @@
-// tslint:disable:no-import-side-effect
-
-import "@siteimprove/alfa-jest";
-
-import "@siteimprove/alfa-enzyme/jest";
+import "@siteimprove/alfa-enzyme/jest"; // tslint:disable-line:no-import-side-effect
 
 import * as Enzyme from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";

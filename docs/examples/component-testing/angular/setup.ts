@@ -1,5 +1,1 @@
-// tslint:disable:no-import-side-effect
-
-import "@siteimprove/alfa-jest";
-
-import "@siteimprove/alfa-angular/jest";
+import "@siteimprove/alfa-angular/jest"; // tslint:disable-line:no-import-side-effect
