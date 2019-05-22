@@ -6,4 +6,4 @@ import { Component } from "@angular/core";
     <button class="btn"></button>
   `
 })
-export class ButtonComponent {}
+export class ButtonComponent {} // tslint:disable-line:no-unnecessary-class

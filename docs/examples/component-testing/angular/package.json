@@ -29,6 +29,7 @@
     "@angular/core": "^7.2.15",
     "@angular/platform-browser": "^7.2.15",
     "@angular/platform-browser-dynamic": "^7.2.15",
+    "@siteimprove/alfa-angular": "^0.0.0",
     "core-js": "^3.1.1",
     "rxjs": "^6.5.2",
     "zone.js": "^0.8.26"
