@@ -20,6 +20,8 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+import { EN } from "./locales/en";
+
 const {
   map,
   Iterable: { filter }
@@ -27,6 +29,7 @@ const {
 
 export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r12.html",
+  locales: [EN],
   requirements: [{ id: "wcag:name-role-value", partial: true }],
   evaluate: ({ device, document }) => {
     return {

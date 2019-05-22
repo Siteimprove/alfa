@@ -15,6 +15,7 @@
     "src/sia-r1/rule.ts",
     "src/sia-r10/rule.ts",
     "src/sia-r11/rule.ts",
+    "src/sia-r12/locales/en.ts",
     "src/sia-r12/rule.ts",
     "src/sia-r13/rule.ts",
     "src/sia-r14/rule.ts",
