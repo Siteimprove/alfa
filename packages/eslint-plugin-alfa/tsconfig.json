@@ -1,5 +1,8 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["eslint", "estree"]
+  },
   "files": ["src/from-jsx-element.ts", "src/index.ts", "src/types.ts"],
   "references": [
     {

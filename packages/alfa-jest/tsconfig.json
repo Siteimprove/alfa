@@ -1,5 +1,8 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest"]
+  },
   "files": ["src/create-jest-plugin.ts", "src/index.ts"],
   "references": [
     {

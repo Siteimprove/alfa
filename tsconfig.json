@@ -17,7 +17,8 @@
     "skipLibCheck": true,
     "strict": true,
     "stripInternal": true,
-    "target": "es2015"
+    "target": "es2015",
+    "types": []
   },
   "files": [],
   "references": [

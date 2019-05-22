@@ -1,5 +1,8 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
   "files": [
     "src/guard/has-key.ts",
     "src/guard/is-iterable.ts",
