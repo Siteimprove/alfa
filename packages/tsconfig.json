@@ -3,6 +3,7 @@
   "files": [],
   "references": [
     { "path": "alfa-act" },
+    { "path": "alfa-angular" },
     { "path": "alfa-aria" },
     { "path": "alfa-assert" },
     { "path": "alfa-chai" },
@@ -17,6 +18,7 @@
     { "path": "alfa-html" },
     { "path": "alfa-http" },
     { "path": "alfa-iana" },
+    { "path": "alfa-jasmine" },
     { "path": "alfa-jest" },
     { "path": "alfa-json-ld" },
     { "path": "alfa-jsx" },

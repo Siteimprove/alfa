@@ -5,6 +5,7 @@
   },
   "files": [
     "chai.ts",
+    "jasmine.ts",
     "jest.ts",
     "should.ts",
     "src/from-react-element.ts",
@@ -18,6 +19,9 @@
     },
     {
       "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jasmine"
     },
     {
       "path": "../alfa-jest"

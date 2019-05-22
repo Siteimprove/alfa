@@ -1,16 +1,13 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["enzyme", "react"]
-  },
   "files": [
     "chai.ts",
     "jasmine.ts",
     "jest.ts",
     "should.ts",
-    "src/from-enzyme-wrapper.ts",
+    "src/from-angular-element.ts",
     "src/index.ts",
-    "src/is-enzyme-wrapper.ts",
+    "src/is-angular-element.ts",
     "unexpected.ts"
   ],
   "references": [
@@ -27,9 +24,6 @@
       "path": "../alfa-jest"
     },
     {
-      "path": "../alfa-react"
-    },
-    {
       "path": "../alfa-should"
     },
     {
@@ -37,6 +31,9 @@
     },
     {
       "path": "../alfa-unexpected"
+    },
+    {
+      "path": "../alfa-util"
     }
   ]
 }

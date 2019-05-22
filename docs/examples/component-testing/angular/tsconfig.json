@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "lib": ["es2015", "dom"],
+    "types": ["jest"]
+  },
+  "files": ["components/button.spec.ts", "components/button.ts", "setup.ts"],
+  "references": [{ "path": "../../../../packages" }]
+}
