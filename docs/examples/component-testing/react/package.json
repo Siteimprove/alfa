@@ -9,6 +9,9 @@
     "setupFilesAfterEnv": [
       "./setup.js"
     ],
+    "transformIgnorePatterns": [
+      "^.+\\.js$"
+    ],
     "moduleFileExtensions": [
       "js"
     ]

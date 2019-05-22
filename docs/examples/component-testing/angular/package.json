@@ -17,7 +17,7 @@
       }
     },
     "transformIgnorePatterns": [
-      "^.+\\.(js|ts)$"
+      "^.+\\.js$"
     ],
     "moduleFileExtensions": [
       "js"
