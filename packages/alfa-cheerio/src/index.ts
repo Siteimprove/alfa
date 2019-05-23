@@ -1,3 +1,3 @@
-export * from "./from-cheerio-element";
-export * from "./is-cheerio-element";
+export * from "./from-cheerio-wrapper";
+export * from "./is-cheerio-wrapper";
 export * from "./types";

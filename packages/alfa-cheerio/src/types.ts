@@ -1,4 +1,6 @@
 import * as Cheerio from "cheerio";
 
-export const CheerioElement = Cheerio;
-export type CheerioElement = Cheerio;
+export const CheerioWrapper = Cheerio;
+export type CheerioWrapper = Cheerio;
+
+export type CheerioElement = CheerioWrapper[0];
