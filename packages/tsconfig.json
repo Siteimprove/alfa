@@ -26,6 +26,7 @@
     { "path": "alfa-lang" },
     { "path": "alfa-pointer" },
     { "path": "alfa-react" },
+    { "path": "alfa-rules" },
     { "path": "alfa-scrape" },
     { "path": "alfa-should" },
     { "path": "alfa-test" },
@@ -33,7 +34,6 @@
     { "path": "alfa-unicode" },
     { "path": "alfa-util" },
     { "path": "alfa-vue" },
-    { "path": "alfa-wcag" },
     { "path": "alfa-xpath" },
     { "path": "eslint-plugin-alfa" }
   ]

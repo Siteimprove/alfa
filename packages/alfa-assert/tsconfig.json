@@ -21,10 +21,10 @@
       "path": "../alfa-highlight"
     },
     {
-      "path": "../alfa-util"
+      "path": "../alfa-rules"
     },
     {
-      "path": "../alfa-wcag"
+      "path": "../alfa-util"
     }
   ]
 }

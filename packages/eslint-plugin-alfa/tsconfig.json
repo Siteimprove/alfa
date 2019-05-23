@@ -12,10 +12,10 @@
       "path": "../alfa-dom"
     },
     {
-      "path": "../alfa-test"
+      "path": "../alfa-rules"
     },
     {
-      "path": "../alfa-wcag"
+      "path": "../alfa-test"
     }
   ]
 }

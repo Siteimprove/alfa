@@ -1,6 +1,6 @@
 import { AssertionError, expect } from "@siteimprove/alfa-assert";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
-import { Rules } from "@siteimprove/alfa-wcag";
+import { Rules } from "@siteimprove/alfa-rules";
 import { Rule } from "eslint";
 import * as estree from "estree"; // tslint:disable-line
 import { fromJsxElement, getNode } from "./from-jsx-element";

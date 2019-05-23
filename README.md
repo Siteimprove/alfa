@@ -55,7 +55,7 @@ Alfa is completely pluggable with regards to rules and only prescribes the imple
 
 ```ts
 import { audit } from "@siteimprove/alfa-act";
-import { Rules } from "@siteimprove/alfa-wcag";
+import { Rules } from "@siteimprove/alfa-rules";
 
 const aspects = { ... };
 
@@ -66,7 +66,7 @@ The last piece we are missing is aspects. Aspects are the individual parts that 
 
 ```ts
 import { audit } from "@siteimprove/alfa-act";
-import { Rules } from "@siteimprove/alfa-wcag";
+import { Rules } from "@siteimprove/alfa-rules";
 import { Scraper } from "@siteimprove/alfa-scrape";
 
 const scraper = new Scraper();
