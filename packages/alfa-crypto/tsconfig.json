@@ -1,8 +1,5 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["sjcl"]
-  },
   "files": [
     "src/get-hash.ts",
     "src/index.ts",

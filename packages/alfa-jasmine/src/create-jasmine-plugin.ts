@@ -1,3 +1,5 @@
+/// <reference types="jasmine" />
+
 import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
 

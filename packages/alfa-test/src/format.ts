@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { mark } from "@siteimprove/alfa-highlight";
 import { AssertionError } from "assert";
 import * as stack from "error-stack-parser";

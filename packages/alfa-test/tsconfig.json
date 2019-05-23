@@ -1,8 +1,5 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["node"]
-  },
   "files": [
     "src/format.ts",
     "src/index.ts",

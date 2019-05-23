@@ -1,8 +1,5 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["jasmine"]
-  },
   "files": ["src/create-jasmine-plugin.ts", "src/index.ts"],
   "references": [
     {

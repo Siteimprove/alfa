@@ -1,8 +1,5 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["react"]
-  },
   "files": [
     "chai.ts",
     "jasmine.ts",

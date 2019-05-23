@@ -1,8 +1,5 @@
 {
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "types": ["node", "puppeteer"]
-  },
   "files": ["src/index.ts", "src/scraper.ts", "src/virtualize.ts"],
   "references": [
     {
