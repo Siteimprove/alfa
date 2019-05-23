@@ -30,7 +30,7 @@ To ensure that you have the rights to submit your contribution under the license
 
 #### Signing off on commits
 
-A sign-off is made by including a message in the following format in the comment of each commit that is part of your constribution:
+A sign-off is made by including a message in the following format in the comment of each commit that is part of your contribution:
 
 ```
 Signed-off-by: John Doe <john.doe@example.com>
