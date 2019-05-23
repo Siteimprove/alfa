@@ -1,3 +1,5 @@
+/// <reference types="jest" />
+
 import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
 
