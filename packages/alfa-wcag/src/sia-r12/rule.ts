@@ -36,9 +36,18 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(document, document, node => {
-              return isElement(node) && getInputType(node) !== InputType.Image;
-            }),
+            querySelectorAll<Element>(
+              document,
+              document,
+              node => {
+                return (
+                  isElement(node) && getInputType(node) !== InputType.Image
+                );
+              },
+              {
+                flattened: true
+              }
+            ),
             element => {
               return map(isButton(element, document, device), isButton => {
                 if (!isButton) {
@@ -52,7 +61,6 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
           elements => {
             return Seq(elements).map(element => {
               return {
-                applicable: true,
                 aspect: document,
                 target: element
               };
