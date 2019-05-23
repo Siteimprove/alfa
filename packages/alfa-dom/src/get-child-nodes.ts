@@ -23,7 +23,7 @@ export function getChildNodes(
 
   const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
-  if (shadowRoot !== null) {
+  if (shadowRoot !== null && shadowRoot !== undefined) {
     if (options.flattened === true) {
       return getChildNodes(shadowRoot, context, options);
     }

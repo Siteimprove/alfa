@@ -66,7 +66,7 @@ function collectRootNodes(
           // If a shadow root is encountered and we're looking for neither a
           // composed nor flattened root, recurse into the shadow root and mark
           // it as the root of itself and all its descendants.
-          if (shadowRoot !== null) {
+          if (shadowRoot !== null && shadowRoot !== undefined) {
             collectRootNodes(shadowRoot, context, rootMap, options);
           }
         }

@@ -30,7 +30,7 @@ function findSlot(slotable: Element | Text, context: Node): Element | null {
 
   const { shadowRoot } = parentElement;
 
-  if (shadowRoot === null) {
+  if (shadowRoot === null || shadowRoot === undefined) {
     return null;
   }
 

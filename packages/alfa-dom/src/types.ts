@@ -124,9 +124,12 @@ export interface Element extends Node {
   readonly attributes: ArrayLike<Attribute>;
 
   /**
+   * NB: In environments where Shadow DOM is not supported, the `shadowRoot`
+   * property will not be defined.
+   *
    * @see https://www.w3.org/TR/dom41/#dom-element-shadowroot
    */
-  readonly shadowRoot: ShadowRoot | null;
+  readonly shadowRoot?: ShadowRoot | null;
 }
 
 /**
