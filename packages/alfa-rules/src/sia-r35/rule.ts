@@ -12,7 +12,11 @@ import { SIA_R34 } from "../sia-r34/rule";
 export const SIA_R35: Composite.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r35.html",
   requirements: [
-    { id: "wcag:audio-only-and-video-only-prerecorded", partial: true }
+    {
+      requirement: "wcag",
+      criterion: "audio-only-and-video-only-prerecorded",
+      partial: true
+    }
   ],
   compose: composition => {
     composition

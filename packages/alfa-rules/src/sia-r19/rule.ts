@@ -19,7 +19,9 @@ const whitespace = /\s+/;
 
 export const SIA_R19: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
-  requirements: [{ id: "wcag:name-role-value", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "name-role-value", partial: true }
+  ],
   locales: [EN],
   evaluate: ({ document }) => {
     const attributeNames = new Set(

@@ -29,7 +29,9 @@ const {
 
 export const SIA_R14: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r14.html",
-  requirements: [{ id: "wcag:label-in-name", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "label-in-name", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {

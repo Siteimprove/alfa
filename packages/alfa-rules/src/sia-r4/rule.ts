@@ -11,7 +11,9 @@ import { isDocumentElement } from "../helpers/is-document-element";
 
 export const SIA_R4: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r4.html",
-  requirements: [{ id: "wcag:language-of-page", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "language-of-page", partial: true }
+  ],
   evaluate: ({ document }) => {
     return {
       applicability: () => {

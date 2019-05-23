@@ -13,7 +13,8 @@ export const SIA_R38: Composite.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r38.html",
   requirements: [
     {
-      id: "wcag:audio-description-or-media-alternative-prerecorded",
+      requirement: "wcag",
+      criterion: "audio-description-or-media-alternative-prerecorded",
       partial: true
     }
   ],

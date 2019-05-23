@@ -13,7 +13,7 @@ import {
 
 export const SIA_R3: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r3.html",
-  requirements: [{ id: "wcag:parsing", partial: true }],
+  requirements: [{ requirement: "wcag", criterion: "parsing", partial: true }],
   evaluate: ({ document }) => {
     return {
       applicability: () => {

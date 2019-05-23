@@ -11,7 +11,9 @@ import { values } from "@siteimprove/alfa-util";
 
 export const SIA_R20: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r20.html",
-  requirements: [{ id: "wcag:name-role-value", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "name-role-value", partial: true }
+  ],
   evaluate: ({ document }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)

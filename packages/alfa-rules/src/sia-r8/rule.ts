@@ -25,7 +25,9 @@ const {
 
 export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r8.html",
-  requirements: [{ id: "wcag:name-role-value", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "name-role-value", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {

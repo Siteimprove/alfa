@@ -22,7 +22,9 @@ const {
 
 export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r42.html",
-  requirements: [{ id: "wcag:info-and-relationships", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "info-and-relationships", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {

@@ -162,9 +162,16 @@ export function toJson<
             ? Outcome.CantTell
             : result.outcome;
 
+        let id: string = requirement.requirement;
+
+        switch (requirement.requirement) {
+          case "wcag":
+            id = `${id}:${requirement.criterion}`;
+        }
+
         assertions.push({
           ...assertion,
-          test: [{ "@id": requirement.id, "@type": "earl:TestRequirement" }],
+          test: [{ "@id": id, "@type": "earl:TestRequirement" }],
           result: {
             ...testCaseResult,
             outcome: {

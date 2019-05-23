@@ -26,8 +26,16 @@ const {
 export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r11.html",
   requirements: [
-    { id: "wcag:link-purpose-in-context", partial: true },
-    { id: "wcag:name-role-value", partial: true }
+    {
+      requirement: "wcag",
+      criterion: "link-purpose-in-context",
+      partial: true
+    },
+    {
+      requirement: "wcag",
+      criterion: "name-role-value",
+      partial: true
+    }
   ],
   evaluate: ({ device, document }) => {
     return {

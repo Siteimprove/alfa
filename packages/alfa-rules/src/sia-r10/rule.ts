@@ -34,7 +34,9 @@ const {
 
 export const SIA_R10: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r10.html",
-  requirements: [{ id: "wcag:identify-input-purpose", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "identify-input-purpose", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {

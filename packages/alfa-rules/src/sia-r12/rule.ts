@@ -30,7 +30,9 @@ const {
 export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r12.html",
   locales: [EN],
-  requirements: [{ id: "wcag:name-role-value", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "name-role-value", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {

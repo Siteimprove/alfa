@@ -28,8 +28,8 @@ const {
 export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
   id: "sanshikan:rules/sia-r18.html",
   requirements: [
-    { id: "wcag:parsing", partial: true },
-    { id: "wcag:name-role-value", partial: true }
+    { requirement: "wcag", criterion: "parsing", partial: true },
+    { requirement: "wcag", criterion: "name-role-value", partial: true }
   ],
   evaluate: ({ device, document }) => {
     const attributeNames = new Set(

@@ -9,7 +9,9 @@ import { SIA_R31 } from "../sia-r31/rule";
 
 export const SIA_R27: Composite.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r27.html",
-  requirements: [{ id: "wcag:captions-prerecorded", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "captions-prerecorded", partial: true }
+  ],
   compose: composition => {
     composition.add(SIA_R22).add(SIA_R31);
   },

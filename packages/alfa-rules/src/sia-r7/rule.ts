@@ -17,7 +17,9 @@ import { hasLanguageAttribute } from "../helpers/has-language-attribute";
 
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r7.html",
-  requirements: [{ id: "wcag:language-of-parts", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "language-of-parts", partial: true }
+  ],
   evaluate: ({ document }) => {
     return {
       applicability: () => {

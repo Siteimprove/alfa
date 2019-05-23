@@ -28,7 +28,9 @@ const {
 
 export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r39.html",
-  requirements: [{ id: "wcag:non-text-content", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "non-text-content", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {

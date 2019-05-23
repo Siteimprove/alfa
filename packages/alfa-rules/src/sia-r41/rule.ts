@@ -28,7 +28,9 @@ const {
 
 export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
   id: "sanshikan:rules/sia-r41.html",
-  requirements: [{ id: "wcag:link-purpose-link-only", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "link-purpose-link-only", partial: true }
+  ],
   evaluate: ({ device, document }) => {
     return {
       applicability: () => {

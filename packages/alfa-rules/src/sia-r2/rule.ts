@@ -27,7 +27,9 @@ const {
 
 export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r2.html",
-  requirements: [{ id: "wcag:non-text-content", partial: true }],
+  requirements: [
+    { requirement: "wcag", criterion: "non-text-content", partial: true }
+  ],
   locales: [EN],
   evaluate: ({ device, document }) => {
     return {
