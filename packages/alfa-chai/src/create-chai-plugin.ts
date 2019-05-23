@@ -1,29 +1,30 @@
-/// <reference path="../types/chai.d.ts" />
+/// <reference types="chai" />
 
 import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
-import * as chai from "chai";
 
-// tslint:disable:no-invalid-this
+// tslint:disable:no-any
 
-declare module "chai" {
-  interface Assertion {
-    accessible: void;
+declare global {
+  export namespace Chai {
+    interface Assertion {
+      accessible: void;
+    }
   }
 }
 
 export function createChaiPlugin<T>(
   identify: (input: unknown) => input is T,
   transform: (input: T) => Element
-): (chai: chai, util: chai.Util) => void {
+): (chai: any, util: any) => void {
   return (chai, util) => {
-    const { Assertion: assertions } = chai;
-
-    assertions.addProperty("accessible", function() {
+    chai.Assertion.addProperty("accessible", function(this: typeof chai) {
       const object = util.flag(this, "object");
 
       if (identify(object)) {
         const element = transform(object);
+
+        console.log(element);
 
         let error: AssertionError | null = null;
         try {
