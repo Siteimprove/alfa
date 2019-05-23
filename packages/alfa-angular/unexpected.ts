@@ -1,8 +1,8 @@
 import { createUnexpectedPlugin } from "@siteimprove/alfa-unexpected";
-import { fromAngularElement } from "./src/from-angular-element";
-import { isAngularElement } from "./src/is-angular-element";
+import { fromAngularFixture } from "./src/from-angular-fixture";
+import { isAngularFixture } from "./src/is-angular-fixture";
 
 export const Plugin = createUnexpectedPlugin(
-  isAngularElement,
-  fromAngularElement
+  isAngularFixture,
+  fromAngularFixture
 );

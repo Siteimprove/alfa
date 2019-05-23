@@ -1,5 +1,5 @@
 import { createChaiPlugin } from "@siteimprove/alfa-chai";
-import { fromAngularElement } from "./src/from-angular-element";
-import { isAngularElement } from "./src/is-angular-element";
+import { fromAngularFixture } from "./src/from-angular-fixture";
+import { isAngularFixture } from "./src/is-angular-fixture";
 
-export const Plugin = createChaiPlugin(isAngularElement, fromAngularElement);
+export const Plugin = createChaiPlugin(isAngularFixture, fromAngularFixture);

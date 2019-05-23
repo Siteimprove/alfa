@@ -5,9 +5,9 @@
     "jasmine.ts",
     "jest.ts",
     "should.ts",
-    "src/from-angular-element.ts",
+    "src/from-angular-fixture.ts",
     "src/index.ts",
-    "src/is-angular-element.ts",
+    "src/is-angular-fixture.ts",
     "unexpected.ts"
   ],
   "references": [
@@ -31,9 +31,6 @@
     },
     {
       "path": "../alfa-unexpected"
-    },
-    {
-      "path": "../alfa-util"
     }
   ]
 }

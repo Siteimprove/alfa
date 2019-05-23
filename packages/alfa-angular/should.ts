@@ -1,5 +1,5 @@
 import { createShouldPlugin } from "@siteimprove/alfa-should";
-import { fromAngularElement } from "./src/from-angular-element";
-import { isAngularElement } from "./src/is-angular-element";
+import { fromAngularFixture } from "./src/from-angular-fixture";
+import { isAngularFixture } from "./src/is-angular-fixture";
 
-export const Plugin = createShouldPlugin(isAngularElement, fromAngularElement);
+export const Plugin = createShouldPlugin(isAngularFixture, fromAngularFixture);
