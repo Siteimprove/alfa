@@ -1,0 +1,43 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "chai.ts",
+    "jasmine.ts",
+    "jest.ts",
+    "should.ts",
+    "src/from-vue-wrapper.ts",
+    "src/index.ts",
+    "src/is-vue-wrapper.ts",
+    "src/types.ts",
+    "unexpected.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-chai"
+    },
+    {
+      "path": "../alfa-cheerio"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jasmine"
+    },
+    {
+      "path": "../alfa-jest"
+    },
+    {
+      "path": "../alfa-should"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-unexpected"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
+}

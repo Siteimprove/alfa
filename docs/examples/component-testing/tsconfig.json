@@ -1,5 +1,5 @@
 {
   "extends": "../tsconfig.json",
   "files": [],
-  "references": [{ "path": "angular" }, { "path": "react" }]
+  "references": [{ "path": "angular" }, { "path": "react" }, { "path": "vue" }]
 }

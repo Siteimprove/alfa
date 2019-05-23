@@ -98,6 +98,7 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)                      | React integration for supported assertion libraries   |
 | [**@siteimprove/alfa-should**](packages/alfa-should)         | [Should.js](https://github.com/shouldjs/should.js) | Should.js accessibility assertions                    |
 | [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)            | Unexpected accessibility assertions                   |
+| [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                          | Vue integration for supported assertion libraries     |
 
 ## Requirements
 
