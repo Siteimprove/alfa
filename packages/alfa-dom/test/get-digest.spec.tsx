@@ -23,14 +23,14 @@ test("Computes the digest value of a DOM node", t => {
 test("Computes the composed digest value of a DOM node", t => {
   t.equal(
     getDigest(foo, <div>{foo}</div>, { composed: true }),
-    "1PauRFEfPMfAfTjJtPLaBuXox9rjdtXUDu0Ef9HcDUA="
+    "P+dmcj1gzI4tbc1QwQQr2L+TIU+x89YtejkkIvHiPoU="
   );
 });
 
 test("Computes the flattened digest value of a DOM node", t => {
   t.equal(
     getDigest(foo, <div>{foo}</div>, { flattened: true }),
-    "eqCTo3DpLBAjrmWW3ARcgUzi8GDLwnsCF2r8uSNdjjk="
+    "u1KUVzWsE4MXbT5/bXx+ZaFrg29nI7IrcBEvDoABKns="
   );
 });
 
