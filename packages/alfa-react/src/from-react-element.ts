@@ -25,7 +25,7 @@ type TestNode = TestElement | string;
 
 type TestElement = TestRenderer.ReactTestRendererJSON;
 
-function asNode(node: TestNode): Element | Text {
+function asNode(node: TestNode): Node {
   return typeof node === "string" ? asText(node) : asElement(node);
 }
 
