@@ -34,6 +34,7 @@
   "dependencies": {
     "@siteimprove/alfa-collection": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
+    "@types/browserslist": "^4.4.0",
     "browserslist": "^4.4.1"
   },
   "devDependencies": {

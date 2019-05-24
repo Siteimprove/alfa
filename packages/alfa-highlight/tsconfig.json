@@ -1,5 +1,10 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/highlight.ts", "src/index.ts", "src/markers.ts"],
+  "files": [
+    "src/highlight.ts",
+    "src/index.ts",
+    "src/markers.ts",
+    "types/emphasize.d.ts"
+  ],
   "references": []
 }

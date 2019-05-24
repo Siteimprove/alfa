@@ -28,7 +28,6 @@
     { "path": "alfa-react" },
     { "path": "alfa-rules" },
     { "path": "alfa-scrape" },
-    { "path": "alfa-should" },
     { "path": "alfa-test" },
     { "path": "alfa-unexpected" },
     { "path": "alfa-unicode" },

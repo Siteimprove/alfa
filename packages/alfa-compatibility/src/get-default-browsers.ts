@@ -1,5 +1,3 @@
-/// <reference path="../types/browserslist.d.ts" />
-
 import { Map, Set } from "@siteimprove/alfa-collection";
 import browserslist = require("browserslist");
 import { Browsers } from "./browsers";

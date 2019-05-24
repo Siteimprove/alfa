@@ -4,7 +4,6 @@
     "chai.ts",
     "jasmine.ts",
     "jest.ts",
-    "should.ts",
     "src/from-enzyme-wrapper.ts",
     "src/index.ts",
     "src/is-enzyme-wrapper.ts",
@@ -29,9 +28,6 @@
     },
     {
       "path": "../alfa-react"
-    },
-    {
-      "path": "../alfa-should"
     },
     {
       "path": "../alfa-test"

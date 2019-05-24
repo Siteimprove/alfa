@@ -88,17 +88,16 @@ scraper
 
 Alfa ships with several ready-made integrations to various tools, making it easy and simple to integrate accessibility conformance testing as part of your development workflow. If you have suggestions for additional integerations, feel free to [open an issue][]! We are always looking for new places where Alfa can be put to good use.
 
-| Package                                                      | Integrates with                                    | Description                                           |
-| :----------------------------------------------------------- | :------------------------------------------------- | :---------------------------------------------------- |
-| [**@siteimprove/alfa-angular**](packages/alfa-angular)       | [Angular](https://angular.io/)                     | Angular integration for supported assertion libraries |
-| [**@siteimprove/alfa-chai**](packages/alfa-chai)             | [Chai](https://www.chaijs.com/)                    | Chai accessibility assertions                         |
-| [**@siteimprove/alfa-enzyme**](packages/alfa-enzyme)         | [Enzyme](https://github.com/airbnb/enzyme)         | Enzyme integration for supported assertion libraries  |
-| [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)              | Jasmine accessibility assertions                      |
-| [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                         | Jest accessibility assertions                         |
-| [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)                      | React integration for supported assertion libraries   |
-| [**@siteimprove/alfa-should**](packages/alfa-should)         | [Should.js](https://github.com/shouldjs/should.js) | Should.js accessibility assertions                    |
-| [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)            | Unexpected accessibility assertions                   |
-| [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                          | Vue integration for supported assertion libraries     |
+| Package                                                      | Integrates with                            | Description                                           |
+| :----------------------------------------------------------- | :----------------------------------------- | :---------------------------------------------------- |
+| [**@siteimprove/alfa-angular**](packages/alfa-angular)       | [Angular](https://angular.io/)             | Angular integration for supported assertion libraries |
+| [**@siteimprove/alfa-chai**](packages/alfa-chai)             | [Chai](https://www.chaijs.com/)            | Chai accessibility assertions                         |
+| [**@siteimprove/alfa-enzyme**](packages/alfa-enzyme)         | [Enzyme](https://github.com/airbnb/enzyme) | Enzyme integration for supported assertion libraries  |
+| [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)      | Jasmine accessibility assertions                      |
+| [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                 | Jest accessibility assertions                         |
+| [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)              | React integration for supported assertion libraries   |
+| [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)    | Unexpected accessibility assertions                   |
+| [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                  | Vue integration for supported assertion libraries     |
 
 ## Requirements
 

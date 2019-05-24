@@ -4,7 +4,6 @@
     "chai.ts",
     "jasmine.ts",
     "jest.ts",
-    "should.ts",
     "src/from-react-element.ts",
     "src/index.ts",
     "src/is-react-element.ts",
@@ -22,9 +21,6 @@
     },
     {
       "path": "../alfa-jest"
-    },
-    {
-      "path": "../alfa-should"
     },
     {
       "path": "../alfa-test"

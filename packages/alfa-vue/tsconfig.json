@@ -4,7 +4,6 @@
     "chai.ts",
     "jasmine.ts",
     "jest.ts",
-    "should.ts",
     "src/from-vue-wrapper.ts",
     "src/index.ts",
     "src/is-vue-wrapper.ts",
@@ -26,9 +25,6 @@
     },
     {
       "path": "../alfa-jest"
-    },
-    {
-      "path": "../alfa-should"
     },
     {
       "path": "../alfa-test"
