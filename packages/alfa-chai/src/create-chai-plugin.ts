@@ -5,6 +5,7 @@ import {
   Assertion,
   AssertionError
 } from "@siteimprove/alfa-assert";
+import { serialize } from "@siteimprove/alfa-dom";
 
 // tslint:disable:no-any
 // tslint:disable:no-unsafe-any
@@ -44,9 +45,9 @@ export function createChaiPlugin<T>(
           `expected #{this} to be accessible${
             error === null
               ? ""
-              : `, but ${util.inspect(error.target, false, 2, true)} is not: ${
-                  error.message
-                }`
+              : `, but ${util.inspect(
+                  serialize(error.target, element)
+                )} is not: ${error.message}`
           }`,
           "expected #{this} to not be accessible",
           null,
