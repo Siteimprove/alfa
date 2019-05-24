@@ -1,7 +1,10 @@
 /// <reference types="chai" />
 
-import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
-import { Element } from "@siteimprove/alfa-dom";
+import {
+  Assertable,
+  Assertion,
+  AssertionError
+} from "@siteimprove/alfa-assert";
 
 // tslint:disable:no-any
 // tslint:disable:no-unsafe-any
@@ -16,7 +19,7 @@ declare global {
 
 export function createChaiPlugin<T>(
   identify: (input: unknown) => input is T,
-  transform: (input: T) => Element
+  transform: (input: T) => Assertable
 ): (chai: any, util: any) => void {
   return (chai, util) => {
     chai.Assertion.addProperty("accessible", function(this: typeof chai) {

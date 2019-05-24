@@ -3,9 +3,10 @@
   "files": [
     "src/assertion.ts",
     "src/expect.ts",
+    "src/guards.ts",
     "src/index.ts",
-    "src/is-element.ts",
-    "src/rules.ts"
+    "src/rules.ts",
+    "src/types.ts"
   ],
   "references": [
     {

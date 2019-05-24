@@ -1,10 +1,9 @@
 import { audit, Outcome, Rule } from "@siteimprove/alfa-act";
-import { Device, getDefaultDevice } from "@siteimprove/alfa-device";
+import { getDefaultDevice } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
   DocumentType,
-  Element,
   getOwnerElement,
   isAttribute,
   isDocument,
@@ -15,9 +14,7 @@ import { highlight, mark } from "@siteimprove/alfa-highlight";
 import { keys } from "@siteimprove/alfa-util";
 
 import { rules } from "./rules";
-
-type Aspect = Document | Device;
-type Target = Attribute | Document | Element;
+import { Aspect, Target } from "./types";
 
 const documentType: DocumentType = {
   nodeType: NodeType.DocumentType,
@@ -28,7 +25,7 @@ const documentType: DocumentType = {
 };
 
 export class Assertion {
-  private readonly target: Document | Element;
+  private readonly target: Exclude<Target, Attribute>;
 
   public get to(): this {
     return this;
@@ -42,7 +39,7 @@ export class Assertion {
     return this;
   }
 
-  public constructor(target: Document | Element) {
+  public constructor(target: Exclude<Target, Attribute>) {
     this.target = target;
   }
 

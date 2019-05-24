@@ -1,3 +1,4 @@
 export * from "./assertion";
 export * from "./expect";
-export * from "./is-element";
+export * from "./guards";
+export * from "./types";

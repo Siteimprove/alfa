@@ -25,6 +25,8 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
+    "*.js",
+    "*.d.ts",
     "src/**/*.js",
     "src/**/*.d.ts",
     "types/**/*.d.ts"

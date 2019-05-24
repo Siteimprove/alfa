@@ -1,7 +1,10 @@
 /// <reference types="jest" />
 
-import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
-import { Element } from "@siteimprove/alfa-dom";
+import {
+  Assertable,
+  Assertion,
+  AssertionError
+} from "@siteimprove/alfa-assert";
 
 declare global {
   namespace jest {
@@ -13,7 +16,7 @@ declare global {
 
 export function createJestPlugin<T>(
   identify: (input: unknown) => input is T,
-  transform: (input: T) => Element
+  transform: (input: T) => Assertable
 ): void {
   expect.extend({
     toBeAccessible: (target: unknown) => {

@@ -1,7 +1,11 @@
 /// <reference path="../types/unexpected.d.ts" />
 
-import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
-import { Element, serialize } from "@siteimprove/alfa-dom";
+import {
+  Assertable,
+  Assertion,
+  AssertionError
+} from "@siteimprove/alfa-assert";
+import { serialize } from "@siteimprove/alfa-dom";
 import { highlight } from "@siteimprove/alfa-highlight";
 import * as unexpected from "unexpected";
 
@@ -18,7 +22,7 @@ declare module "unexpected" {
 
 export function createUnexpectedPlugin<T>(
   identify: (input: unknown) => input is T,
-  transform: (input: T) => Element
+  transform: (input: T) => Assertable
 ): unexpected.PluginDefinition {
   return {
     name: "@siteimprove/alfa-unexpected",
