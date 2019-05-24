@@ -41,8 +41,16 @@ export function createChaiPlugin<T>(
 
         this.assert(
           error === null,
-          error!.toString(),
-          "Expected to not be accessible"
+          `expected #{this} to be accessible${
+            error === null
+              ? ""
+              : `, but ${util.inspect(error.target, false, 2, true)} is not: ${
+                  error.message
+                }`
+          }`,
+          "expected #{this} to not be accessible",
+          null,
+          error
         );
       }
     });

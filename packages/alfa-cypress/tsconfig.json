@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "chai.ts",
+    "src/from-cypress-element.ts",
+    "src/index.ts",
+    "src/is-cypress-element.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-assert"
+    },
+    {
+      "path": "../alfa-chai"
+    },
+    {
+      "path": "../alfa-jquery"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

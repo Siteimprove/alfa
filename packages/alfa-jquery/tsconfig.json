@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/from-jquery-wrapper.ts",
+    "src/index.ts",
+    "src/is-jquery-wrapper.ts",
+    "src/types.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
+}

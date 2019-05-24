@@ -92,6 +92,7 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | :----------------------------------------------------------- | :----------------------------------------- | :---------------------------------------------------- |
 | [**@siteimprove/alfa-angular**](packages/alfa-angular)       | [Angular](https://angular.io/)             | Angular integration for supported assertion libraries |
 | [**@siteimprove/alfa-chai**](packages/alfa-chai)             | [Chai](https://www.chaijs.com/)            | Chai accessibility assertions                         |
+| [**@siteimprove/alfa-cypress**](packages/alfa-cypress)       | [Cypress](https://www.cypress.io/)         | Cypress integration for supported assertion libraries |
 | [**@siteimprove/alfa-enzyme**](packages/alfa-enzyme)         | [Enzyme](https://github.com/airbnb/enzyme) | Enzyme integration for supported assertion libraries  |
 | [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)      | Jasmine accessibility assertions                      |
 | [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                 | Jest accessibility assertions                         |
