@@ -24,8 +24,6 @@ export function createChaiPlugin<T>(
       if (identify(object)) {
         const element = transform(object);
 
-        console.log(element);
-
         let error: AssertionError | null = null;
         try {
           new Assertion(element).should.be.accessible;
