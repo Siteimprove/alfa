@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "browser-testing-cypress",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "dependencies": {
+    "@siteimprove/alfa-chai": "^0.0.0"
+  },
+  "devDependencies": {
+    "cypress": "^3.3.1"
+  }
+}

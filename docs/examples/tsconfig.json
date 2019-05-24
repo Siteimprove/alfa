@@ -1,5 +1,5 @@
 {
   "extends": "../tsconfig.json",
   "files": [],
-  "references": [{ "path": "component-testing" }]
+  "references": [{ "path": "component-testing" }, { "path": "page-testing" }]
 }
