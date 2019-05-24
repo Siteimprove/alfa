@@ -4,6 +4,7 @@ import { Assertion, AssertionError } from "@siteimprove/alfa-assert";
 import { Element } from "@siteimprove/alfa-dom";
 
 // tslint:disable:no-any
+// tslint:disable:no-unsafe-any
 
 declare global {
   export namespace Chai {
