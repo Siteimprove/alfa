@@ -1,9 +1,6 @@
-/// <reference types="@siteimprove/alfa-chai" />
+/// <reference types="@siteimprove/alfa-cypress/chai" />
 
 it("should be accessible", () => {
   cy.visit("/fixtures/page.html");
-
-  cy.document().then(document => {
-    expect(document).to.be.accessible;
-  });
+  cy.document().should("be.accessible");
 });
