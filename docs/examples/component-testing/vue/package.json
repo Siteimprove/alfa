@@ -17,13 +17,13 @@
     ]
   },
   "dependencies": {
-    "@siteimprove/alfa-jest": "^0.0.0",
-    "@siteimprove/alfa-vue": "^0.0.0",
-    "@vue/test-utils": "^1.0.0-beta.29",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {
+    "@siteimprove/alfa-jest": "^0.0.0",
+    "@siteimprove/alfa-vue": "^0.0.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
     "jest": "^24.8.0"
   }
 }

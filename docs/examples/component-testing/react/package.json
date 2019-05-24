@@ -17,12 +17,12 @@
     ]
   },
   "dependencies": {
-    "@siteimprove/alfa-enzyme": "^0.0.0",
-    "@siteimprove/alfa-jest": "^0.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@siteimprove/alfa-enzyme": "^0.0.0",
+    "@siteimprove/alfa-jest": "^0.0.0",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.1",
