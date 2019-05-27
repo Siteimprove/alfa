@@ -49,5 +49,5 @@ const sheet: emphasize.Sheet = {
 };
 
 export function highlight(language: string, value: string): string {
-  return emphasize.highlight(language, value, sheet).value;
+  return mark.reset(emphasize.highlight(language, value, sheet).value);
 }
