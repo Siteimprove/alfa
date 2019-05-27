@@ -4,7 +4,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-util";
 import { readFileSync } from "fs";
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 
 const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
