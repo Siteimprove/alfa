@@ -7,7 +7,7 @@ export function fromAngularFixture<T>(
   const { nativeElement } = angularFixture;
 
   if (nativeElement instanceof Element) {
-    return nativeElement;
+    return nativeElement.cloneNode(true) as Element;
   }
 
   throw new Error("A native element must be available");
