@@ -10,9 +10,11 @@ import {
 import * as Lang from "@siteimprove/alfa-lang";
 import { Char } from "@siteimprove/alfa-lang";
 import { Mutable } from "@siteimprove/alfa-util";
-import { Token, Tokens, TokenType } from "./alphabet";
+import { Token, TokenType } from "./alphabet";
 
 type InsertionMode = (token: Token, document: Document, state: State) => void;
+
+type InsertionLocation = [Array<Node>, number];
 
 interface State {
   /**
@@ -129,8 +131,9 @@ const beforeHead: InsertionMode = (token, document, state) => {
           return;
       }
       break;
+
     case TokenType.Comment:
-      insertComment(token);
+      insertNode(createComment(token.data), state);
       return;
   }
 };
@@ -259,8 +262,40 @@ function appendAttribute(element: Element, attribute: Attribute): void {
   (element.attributes as Array<Attribute>).push(attribute);
 }
 
-function insertComment(token: Tokens.Comment, position = null) {
-  let comment = createComment(token.data);
+function insertNode(
+  node: Node,
+  state: State,
+  position: InsertionLocation | null = appropriateInsertionLocation(state)
+) {
+  if (position !== null) {
+    position[0].splice(position[1], 0, node);
+  }
+}
+
+/**
+ * @see https://html.spec.whatwg.org/#appropriate-place-for-inserting-a-node
+ */
+function appropriateInsertionLocation(state: State): InsertionLocation | null {
+  const target = currentNode(state);
+
+  if (target === null) {
+    return null;
+  }
+
+  return [target.childNodes as Array<Node>, target.childNodes.length];
+}
+
+/**
+ * @see https://html.spec.whatwg.org/#current-node
+ */
+function currentNode(state: State): Node | null {
+  const tail = state.openElements[state.openElements.length - 1];
+
+  if (tail === undefined) {
+    return null;
+  }
+
+  return tail;
 }
 
 function createElement(name: string): Element {
