@@ -242,7 +242,8 @@ const inHead: InsertionMode = (token, document, state) => {
     case TokenType.EndTag:
       switch (token.name) {
         case "template":
-        // todo
+          // todo
+          break;
       }
   }
 };
