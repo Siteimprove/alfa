@@ -10,7 +10,7 @@ import {
 import * as Lang from "@siteimprove/alfa-lang";
 import { Char } from "@siteimprove/alfa-lang";
 import { Mutable } from "@siteimprove/alfa-util";
-import { Token, TokenType } from "./alphabet";
+import { Token, Tokens, TokenType } from "./alphabet";
 
 type InsertionMode = (token: Token, document: Document, state: State) => void;
 
@@ -117,7 +117,23 @@ const beforeHtml: InsertionMode = (token, document, state) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-before-head-insertion-mode
  */
-const beforeHead: InsertionMode = () => {};
+const beforeHead: InsertionMode = (token, document, state) => {
+  switch (token.type) {
+    case TokenType.Character:
+      switch (token.data) {
+        case Char.CharacterTabulation:
+        case Char.LineFeed:
+        case Char.FormFeed:
+        case Char.CarriageReturn:
+        case Char.Space:
+          return;
+      }
+      break;
+    case TokenType.Comment:
+      insertComment(token);
+      return;
+  }
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-head-insertion-mode
@@ -241,6 +257,10 @@ function appendChild(parentNode: Node, childNode: Node): void {
 
 function appendAttribute(element: Element, attribute: Attribute): void {
   (element.attributes as Array<Attribute>).push(attribute);
+}
+
+function insertComment(token: Tokens.Comment, position = null) {
+  let comment = createComment(token.data);
 }
 
 function createElement(name: string): Element {
