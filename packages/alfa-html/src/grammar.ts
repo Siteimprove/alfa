@@ -135,13 +135,44 @@ const beforeHead: InsertionMode = (token, document, state) => {
     case TokenType.Comment:
       insertNode(createComment(token.data), state);
       return;
+
+    case TokenType.Doctype:
+      return; // parse error
+
+    case TokenType.StartTag:
+      switch (token.name) {
+        case "html":
+          inBody(token, document, state);
+          break;
+        case "head":
+          insertNode(createElement(token.name), state);
+          state.insertionMode = inHead;
+      }
+      break;
+
+    default:
+      if (token.type === TokenType.EndTag) {
+        switch (token.name) {
+          case "head":
+          case "body":
+          case "html":
+          case "br":
+            break;
+          default:
+            return; // parse error
+        }
+      }
+
+      insertNode(createElement("head"), state);
+      state.insertionMode = inHead;
+      inHead(token, document, state);
   }
 };
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-head-insertion-mode
  */
-// const inHead: InsertionMode = () => {};
+const inHead: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-head-noscript-insertion-mode
@@ -156,7 +187,7 @@ const beforeHead: InsertionMode = (token, document, state) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-body-insertion-mode
  */
-// const inBody: InsertionMode = () => {};
+const inBody: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#sec-the-text-insertion-mode
