@@ -4,13 +4,17 @@ import {
   Document,
   DocumentType,
   Element,
+  isText,
   Node,
-  NodeType
+  NodeType,
+  Text
 } from "@siteimprove/alfa-dom";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Char } from "@siteimprove/alfa-lang";
 import { Mutable } from "@siteimprove/alfa-util";
-import { Token, TokenType } from "./alphabet";
+import { Token, Tokens, TokenType } from "./alphabet";
+
+const { fromCharCode } = String;
 
 type InsertionMode = (token: Token, document: Document, state: State) => void;
 
@@ -30,7 +34,7 @@ interface State {
   /**
    * @see https://www.w3.org/TR/html/syntax.html#stack-of-open-elements
    */
-  openElements: Array<Element>;
+  openElements: Array<Mutable<Element>>;
 }
 
 /**
@@ -172,12 +176,81 @@ const beforeHead: InsertionMode = (token, document, state) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-head-insertion-mode
  */
-const inHead: InsertionMode = () => {};
+const inHead: InsertionMode = (token, document, state) => {
+  switch (token.type) {
+    case TokenType.Character:
+      switch (token.data) {
+        case Char.CharacterTabulation:
+        case Char.LineFeed:
+        case Char.FormFeed:
+        case Char.CarriageReturn:
+        case Char.Space:
+          insertCharacter(token, state);
+      }
+      break;
+    case TokenType.Comment:
+      insertNode(createComment(token.data), state);
+      break;
+    case TokenType.Doctype:
+      return; // parse error
+    case TokenType.StartTag:
+      switch (token.name) {
+        case "html":
+          inBody(token, document, state);
+          break;
+        case "base":
+        case "basefont":
+        case "bgsound":
+        case "link":
+        case "meta":
+          insertNode(createElement(token.name), state);
+          state.openElements.pop();
+          break;
+        case "title":
+        case "noframes":
+        case "style":
+          insertNode(createElement(token.name), state);
+          state.originalInsertionMode = state.insertionMode;
+          state.insertionMode = text;
+          break;
+        case "noscript":
+          insertNode(createElement(token.name), state);
+          state.insertionMode = inHeadNoscript;
+          break;
+        case "script":
+          const element = createElement(token.name);
+          const location = appropriateInsertionLocation(state);
+
+          if (location === null) {
+            return;
+          }
+
+          const [children, position] = location;
+          const node = children[position - 1];
+
+          appendChild(node, element);
+          insertNode(element, state);
+
+          state.originalInsertionMode = state.insertionMode;
+          state.insertionMode = text;
+          break;
+        case "template":
+          insertNode(createElement(token.name), state);
+          state.insertionMode = inTemplate;
+      }
+      break;
+    case TokenType.EndTag:
+      switch (token.name) {
+        case "template":
+        // todo
+      }
+  }
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-head-noscript-insertion-mode
  */
-// const inHeadNoscript: InsertionMode = () => {};
+const inHeadNoscript: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-after-head-insertion-mode
@@ -192,7 +265,7 @@ const inBody: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#sec-the-text-insertion-mode
  */
-// const text: InsertionMode = () => {};
+const text: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-table-insertion-mode
@@ -242,7 +315,7 @@ const inBody: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-template-insertion-mode
  */
-// const inTemplate: InsertionMode = () => {};
+const inTemplate: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-after-body-insertion-mode
@@ -303,6 +376,23 @@ function insertNode(
   }
 }
 
+function insertCharacter(token: Tokens.Character, state: State) {
+  const location = appropriateInsertionLocation(state);
+
+  if (location === null) {
+    return;
+  }
+
+  const [children, position] = location;
+  const node = children[position - 1];
+
+  if (node !== undefined && isText(node)) {
+    (node as Mutable<Text>).data += fromCharCode(token.data);
+  } else {
+    insertNode(createText(fromCharCode(token.data)), state);
+  }
+}
+
 /**
  * @see https://html.spec.whatwg.org/#appropriate-place-for-inserting-a-node
  */
@@ -319,7 +409,7 @@ function appropriateInsertionLocation(state: State): InsertionLocation | null {
 /**
  * @see https://html.spec.whatwg.org/#current-node
  */
-function currentNode(state: State): Node | null {
+function currentNode(state: State): Mutable<Node> | null {
   const tail = state.openElements[state.openElements.length - 1];
 
   if (tail === undefined) {
@@ -342,7 +432,7 @@ function createElement(name: string): Element {
 
 function createAttribute(name: string, value: string): Attribute {
   return {
-    nodeType: 2,
+    nodeType: NodeType.Attribute,
     prefix: null,
     localName: name,
     value,
@@ -353,6 +443,14 @@ function createAttribute(name: string, value: string): Attribute {
 function createComment(data: string): Comment {
   return {
     nodeType: NodeType.Comment,
+    data,
+    childNodes: []
+  };
+}
+
+function createText(data: string): Text {
+  return {
+    nodeType: NodeType.Text,
     data,
     childNodes: []
   };
