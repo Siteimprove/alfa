@@ -55,3 +55,23 @@ function parseLines(input) {
 }
 
 exports.parseLines = parseLines;
+
+/**
+ * @param {string} input
+ * @return {boolean}
+ */
+function isBlockBorder(input) {
+  return input === "{" || input === "}";
+}
+
+exports.isBlockBorder = isBlockBorder;
+
+/**
+ * @param {string} input
+ * @return {boolean}
+ */
+function isWhitespace(input) {
+  return input === " " || input === "\t" || input === "\n" || input === "\r";
+}
+
+exports.isWhitespace = isWhitespace;

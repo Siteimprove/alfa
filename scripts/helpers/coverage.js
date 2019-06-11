@@ -11,7 +11,12 @@ const { Byte } = require("./metrics/byte");
 const { Logical } = require("./metrics/logical");
 const { Arithmetic } = require("./metrics/arithmetic");
 const { Cyclomatic } = require("./metrics/cyclomatic");
-const { getLineAtOffset, parseLines } = require("./text");
+const {
+  isBlockBorder,
+  isWhitespace,
+  getLineAtOffset,
+  parseLines
+} = require("./text");
 
 /**
  * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
@@ -471,22 +476,6 @@ function getOriginalLocation(script, map, offset, line) {
     line: index,
     column: position.column
   };
-}
-
-/**
- * @param {string} input
- * @return {boolean}
- */
-function isBlockBorder(input) {
-  return input === "{" || input === "}";
-}
-
-/**
- * @param {string} input
- * @return {boolean}
- */
-function isWhitespace(input) {
-  return input === " " || input === "\t" || input === "\n" || input === "\r";
 }
 
 /**
