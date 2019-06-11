@@ -5,10 +5,22 @@ const { packages } = require("./helpers/meta");
 const { forEach } = require("./helpers/iterable");
 const time = require("./helpers/time");
 const notify = require("./helpers/notify");
-
 const { build } = require("./tasks/build");
 const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
+const TypeScript = require("typescript");
+const { computeComments, createTODOSFile } = require("./helpers/todos");
+
+/**
+ * @typedef {Object} AnnotadedComment
+ * @property {string} file
+ * @property {TypeScript.TodoComment} comment
+ */
+
+/**
+ * @type {Array<AnnotadedComment>}
+ */
+const todos = [];
 
 /**
  * @param {string} file
@@ -33,6 +45,7 @@ function handle(file) {
   } else {
     process.exit(1);
   }
+  todos.push(...computeComments(file, project));
 }
 
 forEach(findFiles("scripts", endsWith(".js")), handle);
@@ -48,3 +61,5 @@ for (const pkg of packages) {
 }
 
 forEach(findFiles("docs", endsWith(".ts", ".tsx")), handle);
+
+createTODOSFile(todos);

@@ -227,6 +227,13 @@ class Project {
       return TypeScript.forEachChild(node, visit);
     }
   }
+  /**
+   * @param {String} file
+   * @param {Array<TypeScript.TodoCommentDescriptor>} descriptors
+   */
+  getTodos(file, descriptors) {
+    return this.service.getTodoComments(file, descriptors);
+  }
 }
 
 exports.Project = Project;
