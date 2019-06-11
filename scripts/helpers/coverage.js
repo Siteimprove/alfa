@@ -6,13 +6,12 @@ const { Session } = require("inspector");
 const { default: chalk } = require("chalk");
 const sourceMap = require("source-map");
 const { SourceMapConsumer } = require("source-map");
-
 const notify = require("./notify");
-
 const { Byte } = require("./metrics/byte");
 const { Logical } = require("./metrics/logical");
 const { Arithmetic } = require("./metrics/arithmetic");
 const { Cyclomatic } = require("./metrics/cyclomatic");
+const { getLineAtOffset, parseLines } = require("./text");
 
 /**
  * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
@@ -318,27 +317,6 @@ async function parseScript({ url, functions }) {
 }
 
 /**
- * @param {string} input
- * @return {Array<Line>}
- */
-function parseLines(input) {
-  let offset = 0;
-
-  return input.split("\n").map((value, index) => {
-    const line = {
-      value,
-      index,
-      start: offset,
-      end: offset + value.length
-    };
-
-    offset = line.end + 1;
-
-    return line;
-  });
-}
-
-/**
  * @param {Script} script
  * @param {sourceMap.SourceMapConsumer | null} map
  * @param {inspector.Profiler.CoverageRange} range
@@ -493,31 +471,6 @@ function getOriginalLocation(script, map, offset, line) {
     line: index,
     column: position.column
   };
-}
-
-/**
- * @param {Array<Line>} lines
- * @param {number} offset
- * @return {Line}
- */
-function getLineAtOffset(lines, offset) {
-  let lower = 0;
-  let upper = lines.length - 2;
-
-  while (lower < upper) {
-    const middle = (lower + (upper - lower) / 2) | 0;
-
-    if (offset < lines[middle].start) {
-      upper = middle - 1;
-    } else if (offset >= lines[middle + 1].start) {
-      lower = middle + 1;
-    } else {
-      lower = middle;
-      break;
-    }
-  }
-
-  return lines[lower];
 }
 
 /**
