@@ -34,7 +34,7 @@ type CascadedPropertyValues = {
 };
 
 export type CascadedPropertyValue<
-  N extends keyof Longhands
+  N extends keyof Longhands = keyof Longhands
 > = CascadedPropertyValues[N];
 
 type SpecifiedPropertyValues = {
@@ -44,7 +44,7 @@ type SpecifiedPropertyValues = {
 };
 
 export type SpecifiedPropertyValue<
-  N extends keyof Longhands
+  N extends keyof Longhands = keyof Longhands
 > = SpecifiedPropertyValues[N];
 
 type ComputedPropertyValues = {
@@ -54,7 +54,7 @@ type ComputedPropertyValues = {
 };
 
 export type ComputedPropertyValue<
-  N extends keyof Longhands
+  N extends keyof Longhands = keyof Longhands
 > = ComputedPropertyValues[N];
 
 export interface Longhand<T extends Value, U extends T = T> {

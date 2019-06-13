@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { keys, Mutable } from "@siteimprove/alfa-util";
+import { keys, set } from "@siteimprove/alfa-util";
 
 import {
   CascadedPropertyValue,
@@ -95,17 +95,7 @@ function visit<T extends object>(
 function resolveCascadedStyle(
   declarations: ReadonlyArray<Declaration>
 ): CascadedStyle {
-  const cascadedStyle: Mutable<CascadedStyle> = {};
-
-  const setProperty: <N extends keyof Longhands>(
-    propertyName: N,
-    propertyValue: CascadedPropertyValue<N>,
-    important: boolean
-  ) => void = (propertyName, propertyValue, important) => {
-    if (propertyName in cascadedStyle === false || important) {
-      cascadedStyle[propertyName] = propertyValue;
-    }
-  };
+  const cascadedStyle: CascadedStyle = {};
 
   outer: for (const { name, value, important } of declarations) {
     const propertyName = getPropertyName(name);
@@ -170,6 +160,16 @@ function resolveCascadedStyle(
   }
 
   return cascadedStyle;
+
+  function setProperty(
+    propertyName: keyof Longhands,
+    propertyValue: CascadedPropertyValue,
+    important: boolean
+  ): void {
+    if (propertyName in cascadedStyle === false || important) {
+      set(cascadedStyle, propertyName, propertyValue);
+    }
+  }
 }
 
 type PropertyName = keyof Longhands | keyof Shorthands;
@@ -208,7 +208,7 @@ function isLonghandPropertyName(
 }
 
 function resolveSpecifiedStyle(style: Style): SpecifiedStyle {
-  const specifiedStyle: Mutable<SpecifiedStyle> = {};
+  const specifiedStyle: SpecifiedStyle = {};
 
   const cascadedStyle = style.cascaded;
 
@@ -218,30 +218,29 @@ function resolveSpecifiedStyle(style: Style): SpecifiedStyle {
 
   for (const propertyName of propertyNames) {
     const property = Longhands[propertyName];
+    const cascadedValue = cascadedStyle[propertyName];
 
-    if (cascadedStyle[propertyName] !== undefined) {
-      const cascadedValue = cascadedStyle[propertyName]!;
-
+    if (cascadedValue !== undefined) {
       if (Values.isKeyword(cascadedValue, "initial", "inherit")) {
         if (
           Values.isKeyword(cascadedValue, "inherit") &&
-          propertyName in parentStyle
+          parentStyle[propertyName] !== undefined
         ) {
-          specifiedStyle[propertyName] = parentStyle[propertyName]!;
+          set(specifiedStyle, propertyName, parentStyle[propertyName]);
         } else {
-          specifiedStyle[propertyName] = property.initial();
+          set(specifiedStyle, propertyName, property.initial());
         }
       } else {
-        specifiedStyle[propertyName] = cascadedValue;
+        set(specifiedStyle, propertyName, cascadedValue);
       }
 
       continue;
     }
 
     if (property.inherits === true && parentStyle[propertyName] !== undefined) {
-      specifiedStyle[propertyName] = parentStyle[propertyName]!;
+      set(specifiedStyle, propertyName, parentStyle[propertyName]);
     } else {
-      specifiedStyle[propertyName] = property.initial();
+      set(specifiedStyle, propertyName, property.initial());
     }
   }
 
@@ -252,7 +251,7 @@ export function resolveComputedStyle(
   style: Style,
   device: Device
 ): ComputedStyle {
-  const computedStyle: Mutable<ComputedStyle> = {};
+  const computedStyle: ComputedStyle = {};
 
   const specifiedStyle = style.specified;
 
@@ -263,7 +262,13 @@ export function resolveComputedStyle(
     ...keys(parentStyle)
   ]);
 
-  function setProperty<N extends keyof Longhands>(propertyName: N): void {
+  for (const propertyName of propertyNames) {
+    setProperty(propertyName);
+  }
+
+  return computedStyle;
+
+  function setProperty(propertyName: keyof Longhands): void {
     const property = Longhands[propertyName];
 
     if (computedStyle[propertyName] !== undefined) {
@@ -278,12 +283,6 @@ export function resolveComputedStyle(
       }
     }
 
-    computedStyle[propertyName] = property.computed(style, device);
+    set(computedStyle, propertyName, property.computed(style, device));
   }
-
-  for (const propertyName of propertyNames) {
-    setProperty(propertyName);
-  }
-
-  return computedStyle;
 }

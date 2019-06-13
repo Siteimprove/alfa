@@ -68,9 +68,9 @@ export function* evaluate(
   }
 }
 
-function* evaluateExpression(
+function* evaluateExpression<T extends Item.Value>(
   expression: Expression,
-  environment: Environment,
+  environment: Environment<T>,
   options: EvaluateOptions
 ): Iterable<Item> {
   if (g.isPathExpression(expression)) {
@@ -86,9 +86,9 @@ function* evaluateExpression(
   }
 }
 
-function* evaluatePathExpression(
+function* evaluatePathExpression<T extends Item.Value>(
   expression: t.PathExpression,
-  environment: Environment,
+  environment: Environment<T>,
   options: EvaluateOptions
 ): Iterable<Item> {
   const result: Array<Item> = [];
@@ -100,7 +100,7 @@ function* evaluatePathExpression(
   for (const item of context) {
     const { type, value } = item;
 
-    const focus: Focus = {
+    const focus: Focus<Item.Value> = {
       type,
       value,
       position: position++
@@ -132,15 +132,15 @@ function* evaluatePathExpression(
       }
     }
 
-    yield* nodes;
+    yield* nodes as Array<Item>;
   } else {
     yield* result;
   }
 }
 
-function* evaluateAxisExpression(
+function* evaluateAxisExpression<T extends Item.Value>(
   expression: t.AxisExpression,
-  environment: Environment,
+  environment: Environment<T>,
   options: EvaluateOptions
 ): Iterable<Item> {
   const focus: Item = environment.focus;
@@ -240,9 +240,9 @@ function* evaluateAxisExpression(
   }
 }
 
-function* evaluateFunctionCallExpression(
+function* evaluateFunctionCallExpression<T extends Item.Value>(
   expression: t.FunctionCallExpression,
-  environment: Environment,
+  environment: Environment<T>,
   options: EvaluateOptions
 ): Iterable<Item> {
   const { prefix, name, arity } = expression;
@@ -310,9 +310,9 @@ function* evaluateFunctionCallExpression(
   }
 }
 
-function* evaluateLiteralExpression(
+function* evaluateLiteralExpression<T extends Item.Value>(
   expression: t.LiteralExpression,
-  environment: Environment,
+  environment: Environment<T>,
   options: EvaluateOptions
 ): Iterable<Item> {
   if (g.isIntegerLiteralExpression(expression)) {
@@ -320,9 +320,9 @@ function* evaluateLiteralExpression(
   }
 }
 
-function evaluatePredicate(
+function evaluatePredicate<T extends Item.Value>(
   expression: t.Expression,
-  environment: Environment,
+  environment: Environment<T>,
   options: EvaluateOptions
 ): boolean {
   const result = [...evaluateExpression(expression, environment, options)];
@@ -350,9 +350,9 @@ function evaluatePredicate(
   return matches(result[0], node());
 }
 
-function* evaluateContextItemExpression(
+function* evaluateContextItemExpression<T extends Item.Value>(
   expression: t.ContextItemExpression,
-  environment: Environment,
+  environment: Environment<T>,
   options: EvaluateOptions
 ): Iterable<Item> {
   const { type, value } = environment.focus;

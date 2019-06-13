@@ -32,7 +32,7 @@ export function isFeatureSupported(name: FeatureName): boolean {
   for (const [browser, versions] of getSupportedBrowsers()) {
     const support = feature.get(browser);
 
-    if (support === undefined || support === false) {
+    if (support === undefined) {
       return false;
     }
 

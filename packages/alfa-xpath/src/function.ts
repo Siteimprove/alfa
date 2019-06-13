@@ -1,6 +1,6 @@
 import { Map } from "@siteimprove/alfa-collection";
 import { Environment } from "./environment";
-import { TypeFor, Value } from "./types";
+import { Item, TypeFor, Value } from "./types";
 
 /**
  * @internal
@@ -14,7 +14,7 @@ export interface Function<
   readonly parameters: Function.Parameters<P>;
   readonly result: Function.Result<R>;
 
-  apply(environment: Environment, ...parameters: P): R;
+  apply<T extends Item.Value>(environment: Environment<T>, ...parameters: P): R;
 }
 
 /**

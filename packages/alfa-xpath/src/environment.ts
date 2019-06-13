@@ -4,7 +4,7 @@ import { Item } from "./types";
 /**
  * @internal
  */
-export interface Environment<T extends Item.Value = Item.Value> {
+export interface Environment<T extends Item.Value> {
   readonly focus: Focus<T>;
   readonly functions: FunctionMap;
 }
@@ -12,7 +12,7 @@ export interface Environment<T extends Item.Value = Item.Value> {
 /**
  * @internal
  */
-export interface Focus<T extends Item.Value = Item.Value> extends Item<T> {
+export interface Focus<T extends Item.Value> extends Item<T> {
   readonly position: number;
 }
 
