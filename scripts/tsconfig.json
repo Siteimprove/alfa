@@ -26,6 +26,7 @@
     "helpers/path.js",
     "helpers/predicates.js",
     "helpers/project.js",
+    "helpers/text.js",
     "helpers/time.js",
     "helpers/typescript.js",
     "helpers/workspace.js",
