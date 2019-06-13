@@ -8,7 +8,7 @@ const { format } = require("./tasks/format");
 notify.pending("Checking if files are correctly formatted");
 
 for (const file of findFiles(".")) {
-  if (format(file)) {
+  if (file !== "TODO.md" && format(file)) {
     notify.error(`${chalk.gray(file)} File has not been formatted`);
 
     if (process.env.CI === "true") {
