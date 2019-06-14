@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/ancestor-filter.ts",
+    "src/clone.ts",
     "src/compare-document-position.ts",
     "src/contains.ts",
     "src/fulfills.ts",
