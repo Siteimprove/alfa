@@ -30,17 +30,20 @@ const checks = [
 /**
  * @param {string} file
  * @param {Project} project
- * @return {Array<Todo>}
+ * @return {Iterable<Todo>}
  */
 function getTodos(file, project) {
-  return project.getTodos(file, checks).map(comment => ({ file, comment }));
+  return [...project.getTodos(file, checks)].map(comment => ({
+    file,
+    comment
+  }));
 }
 
 exports.getTodos = getTodos;
 
 /**
  * @param {string} file
- * @param {Array<Todo>} todos
+ * @param {Iterable<Todo>} todos
  */
 function writeTodos(file, todos) {
   /**

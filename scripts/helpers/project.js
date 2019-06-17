@@ -227,12 +227,14 @@ class Project {
       return TypeScript.forEachChild(node, visit);
     }
   }
+
   /**
-   * @param {String} file
-   * @param {Array<TypeScript.TodoCommentDescriptor>} descriptors
+   * @param {string} file
+   * @param {Iterable<TypeScript.TodoCommentDescriptor>} descriptors
+   * @return {Iterable<TypeScript.TodoComment>}
    */
   getTodos(file, descriptors) {
-    return this.service.getTodoComments(file, descriptors);
+    return this.service.getTodoComments(file, [...descriptors]);
   }
 }
 

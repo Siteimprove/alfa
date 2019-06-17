@@ -43,6 +43,7 @@ function handle(file) {
   } else {
     process.exit(1);
   }
+
   todos.push(...getTodos(file, project));
 }
 
