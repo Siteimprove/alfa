@@ -8,6 +8,7 @@
     { "path": "alfa-assert" },
     { "path": "alfa-chai" },
     { "path": "alfa-cheerio" },
+    { "path": "alfa-cli" },
     { "path": "alfa-collection" },
     { "path": "alfa-compatibility" },
     { "path": "alfa-crypto" },
