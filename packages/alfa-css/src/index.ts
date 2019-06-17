@@ -4,6 +4,7 @@ export * from "./escape";
 export * from "./parse";
 export * from "./properties";
 export * from "./resolvers";
+export * from "./style-tree";
 export * from "./style";
 export * from "./types";
 export * from "./units";
