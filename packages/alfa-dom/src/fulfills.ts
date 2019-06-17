@@ -67,32 +67,20 @@ function fulfillsMediaQuery(device: Device, mediaQuery: MediaQuery): boolean {
 function fulfillsMediaType(device: Device, mediaType: MediaType): boolean {
   switch (mediaType) {
     case "screen":
-      if (device.type !== DeviceType.Screen) {
-        return false;
-      }
-      break;
+      return device.type === DeviceType.Screen;
 
     case "print":
-      if (device.type !== DeviceType.Print) {
-        return false;
-      }
-      break;
+      return device.type === DeviceType.Print;
 
     case "speech":
-      if (device.type !== DeviceType.Speech) {
-        return false;
-      }
-      break;
+      return device.type === DeviceType.Speech;
 
     case "all":
-    case undefined:
-      break;
+      return true;
 
     default:
       return false;
   }
-
-  return true;
 }
 
 function fulfillsMediaCondition(
