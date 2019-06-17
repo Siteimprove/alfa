@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import {
   Aspect,
   Aspects,
@@ -24,7 +22,7 @@ export const Audit: Command<Audit.Options> = {
   builder: argv =>
     argv
       .positional("url", { type: "string" })
-      .required("url")
+      .demandOption("url")
 
       .option("interactive", { type: "boolean", alias: "i", default: false })
 
