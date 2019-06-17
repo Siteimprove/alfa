@@ -1,20 +1,18 @@
+const path = require("path");
+const prettier = require("prettier");
 const TypeScript = require("typescript");
-const { isFile, readFile, removeFile, writeFile } = require("./file-system");
+
+const { readFile, writeFile } = require("./file-system");
 const { getLineAtOffset, parseLines } = require("./text");
+
 const { Project } = require("../helpers/project");
 
-const name = "TODO.md";
-
 /**
- * @typedef {Object} Line
- * @property {string} value
- * @property {number} index
- * @property {number} start
- * @property {number} end
+ * @typedef {import("./text").Line} Line
  */
 
 /**
- * @typedef {Object} AnnotadedComment
+ * @typedef {Object} Todo
  * @property {string} file
  * @property {TypeScript.TodoComment} comment
  */
@@ -32,75 +30,65 @@ const checks = [
 /**
  * @param {string} file
  * @param {Project} project
- * @return {Array<AnnotadedComment>}
+ * @return {Array<Todo>}
  */
-function computeComments(file, project) {
-  return project
-    .getTodos(file, checks)
-    .map(comment => ({ file: file, comment: comment }));
+function getTodos(file, project) {
+  return project.getTodos(file, checks).map(comment => ({ file, comment }));
 }
+
+exports.getTodos = getTodos;
 
 /**
- * @param {Array<AnnotadedComment>} todos
+ * @param {string} file
+ * @param {Array<Todo>} todos
  */
-function createTODOSFile(todos) {
-  if (todos.length === 0) {
-    if (isFile(name)) {
-      removeFile(name);
-    }
-    return;
-  }
-
-  let commentFileData = ``;
-
+function writeTodos(file, todos) {
   /**
-   * @type {Map<String, Array<String>>}
+   * @type {Map<string, Array<string>>}
    */
-  const grouping = new Map();
+  const groups = new Map();
 
-  for (const todo of todos) {
-    const lines = parseLines(readFile(todo.file));
-    if (lines === undefined) {
-      continue;
-    }
+  for (let { file, comment } of todos) {
+    const lines = parseLines(readFile(file));
 
-    const line = getLineAtOffset(lines, todo.comment.position).index;
-    const message = todo.comment.message.substring(
-      todo.comment.descriptor.text.length + 1
+    const line = getLineAtOffset(lines, comment.position).index + 1;
+
+    const message = comment.message.substring(
+      comment.descriptor.text.length + 1
     );
-    const annotadedType = todo.comment.descriptor.text
-      .substring(1)
-      .toUpperCase();
-    const list = grouping.get(annotadedType);
-    const url = `${todo.file.replace(/\\/g, "/")}#L${line}`;
 
-    const string = `* [${todo.file}:${line}](${url}): ${message}\r\n`;
+    const type = comment.descriptor.text.toLowerCase();
 
-    if (list !== undefined) {
-      list.push(string);
-      grouping.set(annotadedType, list);
+    file = file.split(path.sep).join("/");
+
+    const content = `* [${file}:${line}](${file}#L${line}): ${message}\n`;
+
+    const group = groups.get(type);
+
+    if (group === undefined) {
+      groups.set(type, [content]);
     } else {
-      grouping.set(annotadedType, [string]);
+      group.push(content);
     }
   }
 
-  if (grouping.keys() === undefined) {
-    return;
-  }
-  for (const key of grouping.keys()) {
-    commentFileData += `# ${key}:\r\n`;
-    const val = grouping.get(key);
-    if (val === undefined) {
-      continue;
+  let content = "";
+
+  for (const [type, todos] of groups) {
+    content += `## ${type}\n`;
+
+    for (const todo of todos) {
+      content += todo;
     }
-    for (const ln of val) {
-      commentFileData += ln;
-    }
-    commentFileData += "\r\n";
+
+    content += "\n";
   }
 
-  writeFile(`./${name}`, commentFileData);
+  content = prettier.format(content, {
+    parser: "markdown"
+  });
+
+  writeFile(file, content);
 }
 
-exports.computeComments = computeComments;
-exports.createTODOSFile = createTODOSFile;
+exports.writeTodos = writeTodos;
