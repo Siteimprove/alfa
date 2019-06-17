@@ -114,7 +114,7 @@ function formatter<A extends Aspect, T extends Target>(
 
     default:
       try {
-        return require(format);
+        return require(format) as Formatter<A, T>;
       } catch (err) {
         throw new Error(`No such formatter found: ${format}`);
       }
