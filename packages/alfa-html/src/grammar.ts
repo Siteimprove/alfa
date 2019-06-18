@@ -20,6 +20,12 @@ type InsertionMode = (token: Token, document: Document, state: State) => void;
 
 type InsertionLocation = [Array<Node>, number];
 
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#markers
+ */
+const Marker = Symbol("marker");
+type Marker = typeof Marker;
+
 interface State {
   /**
    * @see https://www.w3.org/TR/html/syntax.html#insertion-mode
@@ -35,6 +41,21 @@ interface State {
    * @see https://www.w3.org/TR/html/syntax.html#stack-of-open-elements
    */
   openElements: Array<Mutable<Element>>;
+
+  /**
+   * @see https://www.w3.org/TR/html/syntax.html#list-of-active-formatting-elements
+   */
+  activeFormattingElements: Array<Element | Marker>;
+
+  /**
+   * @see https://www.w3.org/TR/html/syntax.html#frameset-ok-flag
+   */
+  framesetOk: boolean;
+
+  /**
+   * @see https://www.w3.org/TR/html/syntax.html#stack-of-template-insertion-modes
+   */
+  templateInsertionModes: Array<InsertionMode>;
 }
 
 /**
@@ -236,7 +257,10 @@ const inHead: InsertionMode = (token, document, state) => {
           break;
         case "template":
           insertNode(createElement(token.name), state);
+          insertMarker(state);
+          state.framesetOk = false;
           state.insertionMode = inTemplate;
+          state.templateInsertionModes.push(inTemplate);
       }
       break;
     case TokenType.EndTag:
@@ -392,6 +416,10 @@ function insertCharacter(token: Tokens.Character, state: State) {
   } else {
     insertNode(createText(fromCharCode(token.data)), state);
   }
+}
+
+function insertMarker(state: State) {
+  state.activeFormattingElements.push(Marker);
 }
 
 /**
