@@ -741,8 +741,32 @@ const comment: Production = {
   }
 };
 
+const startTag: Production = {
+  token: TokenType.StartTag,
+
+  prefix(token, stream, expression, state) {
+    return constructTree(token, createDocument(), state);
+  },
+
+  infix(token, stream, expression, left, state) {
+    return constructTree(token, left, state);
+  }
+};
+
+const endTag: Production = {
+  token: TokenType.EndTag,
+
+  prefix(token, stream, expression, state) {
+    return constructTree(token, createDocument(), state);
+  },
+
+  infix(token, stream, expression, left, state) {
+    return constructTree(token, left, state);
+  }
+};
+
 export const Grammar: Lang.Grammar<Token, Document, State> = new Lang.Grammar(
-  [doctype, comment],
+  [doctype, comment, startTag, endTag],
   () => ({
     insertionMode: initial,
     originalInsertionMode: null,

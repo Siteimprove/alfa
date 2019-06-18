@@ -1,5 +1,6 @@
 import {
   Comment,
+  Element,
   Document,
   DocumentType,
   NodeType
@@ -52,6 +53,31 @@ test("Can parse a document with a comment", t => {
     nodeType: NodeType.Document,
     compatMode: "CSS1Compat",
     childNodes: [comment],
+    styleSheets: []
+  });
+});
+
+test("Can parse a document with a head", t => {
+  const head: Element = {
+    nodeType: NodeType.Element,
+    localName: "html",
+    childNodes: [],
+    prefix: null,
+    attributes: []
+  };
+
+  const html: Element = {
+    nodeType: NodeType.Element,
+    localName: "html",
+    childNodes: [head],
+    prefix: null,
+    attributes: []
+  };
+
+  html(t, "<html><head></head><html>", {
+    nodeType: NodeType.Document,
+    compatMode: "CSS1Compat",
+    childNodes: [html],
     styleSheets: []
   });
 });
