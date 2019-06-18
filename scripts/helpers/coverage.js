@@ -382,8 +382,8 @@ function parseRange(script, map, range, options = {}) {
 
   let { startOffset, endOffset } = range;
 
-  startOffset = max(first.start, startOffset - header.length);
-  endOffset = min(last.end, endOffset - header.length);
+  startOffset = max(first.start, startOffset);
+  endOffset = min(last.end, endOffset);
 
   const uncovered = content.substring(startOffset, endOffset).trim();
 
