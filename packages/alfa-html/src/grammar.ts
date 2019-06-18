@@ -4,6 +4,7 @@ import {
   Document,
   DocumentType,
   Element,
+  isElement,
   isText,
   Node,
   NodeType,
@@ -56,6 +57,11 @@ interface State {
    * @see https://www.w3.org/TR/html/syntax.html#stack-of-template-insertion-modes
    */
   templateInsertionModes: Array<InsertionMode>;
+
+  /**
+   * @see https://www.w3.org/TR/html/syntax.html#head-element-pointer
+   */
+  headElementPointer: Element | null;
 }
 
 /**
@@ -261,14 +267,65 @@ const inHead: InsertionMode = (token, document, state) => {
           state.framesetOk = false;
           state.insertionMode = inTemplate;
           state.templateInsertionModes.push(inTemplate);
+          break;
+        case "head":
+          return; // parse error
       }
       break;
     case TokenType.EndTag:
       switch (token.name) {
         case "template":
-          // todo
+          const hasTemplate =
+            state.openElements.find(tag => {
+              return tag.localName === "template";
+            }) !== undefined;
+
+          if (!hasTemplate) {
+            return; // ignore
+          }
+
+          generateImpliedTags(state);
+
+          const node = currentNode(state);
+          if (
+            node === null ||
+            !isElement(node) ||
+            node.localName !== "template"
+          ) {
+            return; // parse error
+          }
+
+          while (true) {
+            const node = currentNode(state);
+
+            if (node === null || !isElement(node)) {
+              continue;
+            }
+
+            if (node.localName !== "template") {
+              state.openElements.pop();
+              continue;
+            }
+
+            break;
+          }
+
+          clearUntilLastMarker(state);
+
+          state.templateInsertionModes.pop();
+
+          resetInsertionMode(state);
+
           break;
+        default:
+          return; // parse error
       }
+      break;
+
+    default:
+      state.openElements.pop();
+      state.insertionMode = afterHead;
+      inHead(token, document, state);
   }
 };
 
@@ -280,7 +337,7 @@ const inHeadNoscript: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-after-head-insertion-mode
  */
-// const afterHead: InsertionMode = () => {};
+const afterHead: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-body-insertion-mode
@@ -295,7 +352,7 @@ const text: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-table-insertion-mode
  */
-// const inTable: InsertionMode = () => {};
+const inTable: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-table-text-insertion-mode
@@ -305,37 +362,37 @@ const text: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-caption-insertion-mode
  */
-// const inCaption: InsertionMode = () => {};
+const inCaption: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-column-group-insertion-mode
  */
-// const inColumnGroup: InsertionMode = () => {};
+const inColumnGroup: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-table-body-insertion-mode
  */
-// const inTableBody: InsertionMode = () => {};
+const inTableBody: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-row-insertion-mode
  */
-// const inRow: InsertionMode = () => {};
+const inRow: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-cell-insertion-mode
  */
-// const inCell: InsertionMode = () => {};
+const inCell: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-select-insertion-mode
  */
-// const inSelect: InsertionMode = () => {};
+const inSelect: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-select-in-table-insertion-mode
  */
-// const inSelectInTable: InsertionMode = () => {};
+const inSelectInTable: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-template-insertion-mode
@@ -350,7 +407,7 @@ const inTemplate: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-frameset-insertion-mode
  */
-// const inFrameset: InsertionMode = () => {};
+const inFrameset: InsertionMode = () => {};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-after-frameset-insertion-mode
@@ -448,6 +505,13 @@ function currentNode(state: State): Mutable<Node> | null {
   return tail;
 }
 
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#current-template-insertion-mode
+ */
+function currentTemplateInsertionMode(state: State): InsertionMode {
+  return state.templateInsertionModes[state.templateInsertionModes.length - 1];
+}
+
 function createElement(name: string): Element {
   return {
     nodeType: NodeType.Element,
@@ -508,6 +572,149 @@ function createDocumentType(
   };
 }
 
+function generateImpliedTags(state: State) {
+  while (true) {
+    const node = currentNode(state);
+
+    if (node === null || !isElement(node)) {
+      return;
+    }
+
+    switch (node.localName) {
+      case "caption":
+      case "colgroup":
+      case "dd":
+      case "dt":
+      case "li":
+      case "optgroup":
+      case "option":
+      case "p":
+      case "rb":
+      case "rp":
+      case "rt":
+      case "rtc":
+      case "tbody":
+      case "td":
+      case "tfoot":
+      case "th":
+      case "thead":
+      case "tr":
+        state.openElements.pop();
+        break;
+      default:
+        return;
+    }
+  }
+}
+
+function resetInsertionMode(state: State) {
+  let last = false;
+  let index = state.openElements.length - 1;
+  let node = state.openElements[index];
+
+  while (true) {
+    if (index === 0) {
+      last = true;
+    }
+
+    switch (node.localName) {
+      case "select":
+        const done = (state: State) => {
+          state.insertionMode = inSelect;
+        };
+
+        if (last) {
+          done(state);
+          break;
+        }
+
+        let ancestor = node;
+
+        while (true) {
+          let localIndex = index - 1;
+
+          if (localIndex === 0) {
+            done(state);
+          }
+
+          ancestor = state.openElements[--localIndex];
+
+          if (ancestor.localName === "template") {
+            done(state);
+            break;
+          }
+
+          if (ancestor.localName === "table") {
+            state.insertionMode = inSelectInTable;
+            return; // abort
+          }
+        }
+        break;
+
+      case "td":
+      case "th":
+        if (!last) {
+          state.insertionMode = inCell;
+          return; // abort
+        }
+        break;
+      case "tr":
+        state.insertionMode = inRow;
+        return; // abort
+      case "tbody":
+      case "thead":
+      case "tfoot":
+        state.insertionMode = inTableBody;
+        return; // abort
+      case "caption":
+        state.insertionMode = inCaption;
+        return; // abort
+      case "colgroup":
+        state.insertionMode = inColumnGroup;
+        return; // abort
+      case "table":
+        state.insertionMode = inTable;
+        return; // abort
+      case "template":
+        state.insertionMode = currentTemplateInsertionMode(state);
+        return; // abort
+      case "head":
+        if (!last) {
+          state.insertionMode = inHead;
+          return;
+        }
+        break;
+      case "body":
+        state.insertionMode = inBody;
+        return; // abort
+      case "frameset":
+        state.insertionMode = inFrameset;
+        return; // abort
+      case "html":
+        state.insertionMode =
+          state.headElementPointer === null ? beforeHead : afterHead;
+        return; // abort
+    }
+
+    if (last) {
+      state.insertionMode = inBody;
+      return; // abort
+    }
+
+    node = state.openElements[--index];
+  }
+}
+
+function clearUntilLastMarker(state: State) {
+  while (true) {
+    const entry = state.activeFormattingElements.pop();
+
+    if (entry === Marker) {
+      return;
+    }
+  }
+}
+
 type Production = Lang.Production<Token, Document, Token, Document, State>;
 
 const doctype: Production = {
@@ -539,6 +746,10 @@ export const Grammar: Lang.Grammar<Token, Document, State> = new Lang.Grammar(
   () => ({
     insertionMode: initial,
     originalInsertionMode: null,
-    openElements: []
+    openElements: [],
+    activeFormattingElements: [],
+    framesetOk: true,
+    templateInsertionModes: [],
+    headElementPointer: null
   })
 );
