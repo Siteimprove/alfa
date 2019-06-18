@@ -42,13 +42,13 @@ On their own, each of these packages do very little, but when put together they 
 At a high level, Alfa consumes implementations of rules specified in the [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/) and produces audit results in the [Evaluation and Report Language (EARL) Schema](https://www.w3.org/TR/EARL10-Schema/) encoded as [JSON-LD](https://www.w3.org/TR/json-ld/). More often than not, your only interaction with Alfa will look similar to this:
 
 ```ts
-import { audit, toJson } from "@siteimprove/alfa-act";
+import { audit, toJSON } from "@siteimprove/alfa-act";
 
 const aspects = { ... };
 const rules = [ ... ];
 
 const results = audit(aspects, rules);
-const json = toJson(rules, results, aspects);
+const json = toJSON(rules, results, aspects);
 ```
 
 Alfa is completely pluggable with regards to rules and only prescribes the implementation format. As such, there is nothing to configure when it comes to rules; simply pass in the rules you wish to run and results will be provided for those rules. To get you started, Alfa ships with a solid set of rules based on the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/):

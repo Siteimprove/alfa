@@ -10,6 +10,7 @@ export * from "./guard/is-string";
 export * from "./number/clamp";
 
 export * from "./object/keys";
+export * from "./object/set";
 export * from "./object/values";
 
 export * from "./string/trim-left";

@@ -1,4 +1,5 @@
 import { Assertable } from "@siteimprove/alfa-assert";
+import { clone } from "@siteimprove/alfa-dom";
 import {
   fromJQueryWrapper,
   isJQueryWrapper,
@@ -12,5 +13,5 @@ export function fromCypressElement<T>(
     return fromJQueryWrapper(cypressElement);
   }
 
-  return cypressElement;
+  return clone(cypressElement);
 }

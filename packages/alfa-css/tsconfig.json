@@ -68,6 +68,7 @@
     "src/properties/width/property.ts",
     "src/properties/width/types.ts",
     "src/resolvers.ts",
+    "src/style-tree.ts",
     "src/style.ts",
     "src/types.ts",
     "src/units.ts",

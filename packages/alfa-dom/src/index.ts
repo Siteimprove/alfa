@@ -1,4 +1,5 @@
 export * from "./ancestor-filter";
+export * from "./clone";
 export * from "./compare-document-position";
 export * from "./contains";
 export * from "./get-assigned-nodes";

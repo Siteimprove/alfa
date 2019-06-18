@@ -9,6 +9,7 @@
     "src/index.ts",
     "src/number/clamp.ts",
     "src/object/keys.ts",
+    "src/object/set.ts",
     "src/object/values.ts",
     "src/option.ts",
     "src/result.ts",

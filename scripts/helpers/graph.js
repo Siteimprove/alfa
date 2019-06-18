@@ -46,6 +46,10 @@ class Graph {
       for (const neighbour of edges.incoming) {
         this.removeEdge(neighbour, node);
       }
+
+      for (const neighbour of edges.outgoing) {
+        this.removeEdge(node, neighbour);
+      }
     }
 
     this.nodes.delete(node);

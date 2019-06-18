@@ -1,4 +1,5 @@
 import {
+  clone,
   Document,
   DocumentType,
   Element,
@@ -18,13 +19,13 @@ export function fromJQueryWrapper<T>(
   jQueryWrapper: JQueryWrapper
 ): Document | Element {
   if (jQueryWrapper.length === 1) {
-    return jQueryWrapper.get(0);
+    return clone(jQueryWrapper.get(0));
   }
 
   return {
     nodeType: NodeType.Document,
     compatMode: "CSS1Compat",
     styleSheets: [],
-    childNodes: [documentType, ...jQueryWrapper.get()]
+    childNodes: [documentType, ...jQueryWrapper.get()].map(clone)
   };
 }

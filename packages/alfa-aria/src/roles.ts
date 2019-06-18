@@ -13,6 +13,10 @@ export * from "./roles/abstract/structure";
 export * from "./roles/abstract/widget";
 export * from "./roles/abstract/window";
 
+export * from "./roles/graphics/document";
+export * from "./roles/graphics/object";
+export * from "./roles/graphics/symbol";
+
 export * from "./roles/landmarks/banner";
 export * from "./roles/landmarks/complementary";
 export * from "./roles/landmarks/content-info";

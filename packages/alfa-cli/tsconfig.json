@@ -1,0 +1,32 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "files": [
+    "bin/alfa.ts",
+    "bin/alfa/commands.ts",
+    "bin/alfa/commands/audit.ts",
+    "src/formatters.ts",
+    "src/formatters/earl.ts",
+    "src/index.ts",
+    "src/types.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-rules"
+    },
+    {
+      "path": "../alfa-scrape"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
+}

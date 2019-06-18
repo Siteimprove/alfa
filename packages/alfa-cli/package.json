@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@siteimprove/alfa",
+  "name": "@siteimprove/alfa-cli",
   "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
@@ -22,35 +22,27 @@
   ],
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "scripts": {
-    "format": "node scripts/format.js",
-    "prepare": "node scripts/prepare.js",
-    "test": "node scripts/test.js",
-    "start": "node scripts/start.js",
-    "prepublish": "node scripts/prepublish.js"
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "bin": {
+    "alfa": "bin/alfa.js"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "node scripts/precommit.js"
-    }
-  },
-  "workspaces": [
-    "packages/*",
-    "docs/**/*"
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "bin/**/*.js",
+    "bin/**/*.d.ts"
   ],
+  "dependencies": {
+    "@siteimprove/alfa-act": "^0.0.0",
+    "@siteimprove/alfa-rules": "^0.0.0",
+    "@siteimprove/alfa-scrape": "^0.0.0",
+    "@siteimprove/alfa-util": "^0.0.0",
+    "@types/yargs": "^13.0.0",
+    "enquirer": "^2.3.0",
+    "yargs": "^13.2.4"
+  },
   "devDependencies": {
-    "@types/node": "^12.0.2",
-    "@types/prettier": "^1.16.1",
-    "axios": "^0.18.0",
-    "chalk": "^2.4.2",
-    "gaze": "^1.1.3",
-    "husky": "^2.3.0",
-    "ignore": "^5.0.5",
-    "prettier": "1.17.1",
-    "pretty-ms": "^5.0.0",
-    "source-map": "^0.7.3",
-    "source-map-support": "^0.5.10",
-    "tslint": "^5.12.1",
-    "typescript": "^3.5.1"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

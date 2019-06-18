@@ -40,15 +40,17 @@ export function createChaiPlugin<T>(
           }
         }
 
+        let reason = "";
+
+        if (error !== null) {
+          const target = util.inspect(serialize(error.target, element));
+
+          reason = `, but ${target} is not: ${error.message}`;
+        }
+
         this.assert(
           error === null,
-          `expected #{this} to be accessible${
-            error === null
-              ? ""
-              : `, but ${util.inspect(
-                  serialize(error.target, element)
-                )} is not: ${error.message}`
-          }`,
+          `expected #{this} to be accessible${reason}`,
           "expected #{this} to not be accessible",
           null,
           error

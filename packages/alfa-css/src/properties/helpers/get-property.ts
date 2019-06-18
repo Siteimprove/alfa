@@ -12,6 +12,15 @@ export function getCascadedProperty<N extends keyof Longhands>(
   style: Style | null,
   propertyName: N
 ): CascadedPropertyValue<N> | null {
+  return getCascadedPropertyValue(style, propertyName) as CascadedPropertyValue<
+    N
+  >;
+}
+
+function getCascadedPropertyValue(
+  style: Style | null,
+  propertyName: keyof Longhands
+): CascadedPropertyValue | null {
   if (style === null) {
     return null;
   }
@@ -23,13 +32,23 @@ export function getCascadedProperty<N extends keyof Longhands>(
     return null;
   }
 
-  return value as CascadedPropertyValue<N>;
+  return value;
 }
 
 export function getSpecifiedProperty<N extends keyof Longhands>(
   style: Style | null,
   propertyName: N
 ): SpecifiedPropertyValue<N> {
+  return getSpecifiedPropertyValue(
+    style,
+    propertyName
+  ) as SpecifiedPropertyValue<N>;
+}
+
+function getSpecifiedPropertyValue(
+  style: Style | null,
+  propertyName: keyof Longhands
+): SpecifiedPropertyValue {
   const property = Longhands[propertyName];
 
   if (style === null) {
@@ -47,13 +66,22 @@ export function getSpecifiedProperty<N extends keyof Longhands>(
     return property.initial();
   }
 
-  return value as SpecifiedPropertyValue<N>;
+  return value;
 }
 
 export function getComputedProperty<N extends keyof Longhands>(
   style: Style | null,
   propertyName: N
 ): ComputedPropertyValue<N> {
+  return getComputedPropertyValue(style, propertyName) as ComputedPropertyValue<
+    N
+  >;
+}
+
+function getComputedPropertyValue(
+  style: Style | null,
+  propertyName: keyof Longhands
+): ComputedPropertyValue {
   const property = Longhands[propertyName];
 
   if (style === null) {
@@ -71,5 +99,5 @@ export function getComputedProperty<N extends keyof Longhands>(
     return property.initial();
   }
 
-  return value as ComputedPropertyValue<N>;
+  return value;
 }

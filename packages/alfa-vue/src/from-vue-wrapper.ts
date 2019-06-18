@@ -3,6 +3,7 @@ import {
   isCheerioWrapper
 } from "@siteimprove/alfa-cheerio";
 import * as dom from "@siteimprove/alfa-dom";
+import { clone } from "@siteimprove/alfa-dom";
 import { VueWrapper } from "./types";
 
 export function fromVueWrapper(vueWrapper: VueWrapper): dom.Element {
@@ -10,5 +11,5 @@ export function fromVueWrapper(vueWrapper: VueWrapper): dom.Element {
     return fromCheerioWrapper(vueWrapper);
   }
 
-  return vueWrapper.element.cloneNode(true) as Element;
+  return clone(vueWrapper.element);
 }

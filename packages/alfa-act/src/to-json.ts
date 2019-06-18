@@ -34,7 +34,7 @@ type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? T
   : never;
 
-export function toJson<
+export function toJSON<
   R extends Rule<any, any>, // tslint:disable-line:no-any
   A extends AspectsOf<R> = AspectsOf<R>,
   T extends TargetsOf<R> = TargetsOf<R>

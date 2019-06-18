@@ -191,16 +191,14 @@ async function parseDocument(
   page: puppeteer.Page,
   html?: string
 ): Promise<Document> {
-  html = JSON.stringify(html);
+  const document =
+    html === undefined
+      ? "window.document"
+      : `new DOMParser().parseFromString(${JSON.stringify(html)}, "text/html")`;
 
   const snapshot = `{
     ${virtualize};
-    const document = ${
-      html === undefined
-        ? "window.document"
-        : `new DOMParser().parseFromString(${html}, "text/html");`
-    }
-    virtualizeNode(document);
+    virtualizeNode(${document});
   }`;
 
   return (await page.evaluate(snapshot)) as Document;
