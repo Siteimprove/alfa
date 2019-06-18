@@ -51,8 +51,19 @@ function writeTodos(file, todos) {
    */
   const groups = new Map();
 
+  /**
+   * @type {Map<string, Line[]>}
+   */
+  const parsedLines = new Map();
+  for (const todo of todos) {
+    parsedLines.set(todo.file, parseLines(readFile(todo.file)));
+  }
+
   for (let { file, comment } of todos) {
-    const lines = parseLines(readFile(file));
+    const lines = parsedLines.get(file);
+    if (lines === undefined) {
+      return;
+    }
 
     const line = getLineAtOffset(lines, comment.position).index + 1;
 
