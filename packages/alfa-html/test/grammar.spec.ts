@@ -1,8 +1,8 @@
 import {
   Comment,
-  Element,
   Document,
   DocumentType,
+  Element,
   NodeType
 } from "@siteimprove/alfa-dom";
 import { lex, parse } from "@siteimprove/alfa-lang";
@@ -58,26 +58,28 @@ test("Can parse a document with a comment", t => {
 });
 
 test("Can parse a document with a head", t => {
-  const head: Element = {
+  const headTag: Element = {
     nodeType: NodeType.Element,
-    localName: "html",
+    localName: "head",
     childNodes: [],
     prefix: null,
-    attributes: []
+    attributes: [],
+    shadowRoot: null
   };
 
-  const html: Element = {
+  const htmlTag: Element = {
     nodeType: NodeType.Element,
     localName: "html",
-    childNodes: [head],
+    childNodes: [headTag],
     prefix: null,
-    attributes: []
+    attributes: [],
+    shadowRoot: null
   };
 
-  html(t, "<html><head></head><html>", {
+  html(t, "<html><head></head></html>", {
     nodeType: NodeType.Document,
-    compatMode: "CSS1Compat",
-    childNodes: [html],
+    compatMode: "BackCompat",
+    childNodes: [htmlTag],
     styleSheets: []
   });
 });
