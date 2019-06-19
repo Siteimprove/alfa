@@ -18,12 +18,6 @@ const {
   parseLines
 } = require("./text");
 
-/**
- * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
- */
-// @ts-ignore: This uses an internal API.
-const [header] = require("module").wrapper;
-
 const { min, max } = Math;
 
 const session = new Session();
