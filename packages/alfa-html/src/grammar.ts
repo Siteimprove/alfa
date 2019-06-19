@@ -338,7 +338,84 @@ const inHeadNoscript: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-after-head-insertion-mode
  */
-const afterHead: InsertionMode = () => {};
+const afterHead: InsertionMode = (token, document, state) => {
+  switch (token.type) {
+    case TokenType.Character:
+      switch (token.data) {
+        case Char.CharacterTabulation:
+        case Char.LineFeed:
+        case Char.FormFeed:
+        case Char.CarriageReturn:
+        case Char.Space:
+          insertCharacter(token, state);
+      }
+      break;
+    case TokenType.Comment:
+      insertNode(createComment(token.data), state);
+      break;
+    case TokenType.Doctype:
+      return; // parse error
+    case TokenType.StartTag:
+      switch (token.name) {
+        case "html":
+          inBody(token, document, state);
+          break;
+        case "body":
+          insertElement(createElement(token.name), state);
+          state.framesetOk = false;
+          state.insertionMode = inBody;
+          break;
+        case "frameset":
+          insertElement(createElement(token.name), state);
+          state.insertionMode = inFrameset;
+          break;
+        case "base":
+        case "basefont":
+        case "bgsound":
+        case "link":
+        case "meta":
+        case "noframes":
+        case "script":
+        case "style":
+        case "template":
+        case "title":
+          if (state.headElementPointer !== null) {
+            state.openElements.push(state.headElementPointer);
+          }
+
+          inHead(token, document, state);
+
+          state.openElements = state.openElements.filter(elem => {
+            return elem !== state.headElementPointer;
+          });
+
+          break;
+        case "head":
+          return; // parse error
+      }
+      break;
+    case TokenType.EndTag:
+      switch (token.name) {
+        case "template":
+          inHead(token, document, state);
+          break;
+        case "body":
+        case "html":
+        case "br":
+          insertElement(createElement("body"), state);
+          state.insertionMode = inBody;
+          inBody(token, document, state);
+          break;
+        default:
+          return; // parse rror
+      }
+      break;
+    default:
+      insertElement(createElement("body"), state);
+      state.insertionMode = inBody;
+      inBody(token, document, state);
+  }
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-body-insertion-mode

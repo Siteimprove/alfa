@@ -112,10 +112,19 @@ test("Can parse a document with a template tag in the head tag", t => {
     shadowRoot: null
   };
 
+  const bodyTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "body",
+    childNodes: [],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
   const htmlTag: Element = {
     nodeType: NodeType.Element,
     localName: "html",
-    childNodes: [headTag],
+    childNodes: [headTag, bodyTag],
     prefix: null,
     attributes: [],
     shadowRoot: null
