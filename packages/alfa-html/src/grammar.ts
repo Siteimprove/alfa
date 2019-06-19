@@ -176,7 +176,7 @@ const beforeHead: InsertionMode = (token, document, state) => {
           inBody(token, document, state);
           break;
         case "head":
-          insertNode(createElement(token.name), state);
+          insertElement(createElement(token.name), state);
           state.insertionMode = inHead;
       }
       break;
@@ -194,7 +194,7 @@ const beforeHead: InsertionMode = (token, document, state) => {
         }
       }
 
-      insertNode(createElement("head"), state);
+      insertElement(createElement("head"), state);
       state.insertionMode = inHead;
       inHead(token, document, state);
   }
@@ -204,6 +204,8 @@ const beforeHead: InsertionMode = (token, document, state) => {
  * @see https://www.w3.org/TR/html/syntax.html#the-in-head-insertion-mode
  */
 const inHead: InsertionMode = (token, document, state) => {
+  console.log(token);
+
   switch (token.type) {
     case TokenType.Character:
       switch (token.data) {
@@ -230,39 +232,28 @@ const inHead: InsertionMode = (token, document, state) => {
         case "bgsound":
         case "link":
         case "meta":
-          insertNode(createElement(token.name), state);
+          insertElement(createElement(token.name), state);
           state.openElements.pop();
           break;
         case "title":
         case "noframes":
         case "style":
-          insertNode(createElement(token.name), state);
+          insertElement(createElement(token.name), state);
           state.originalInsertionMode = state.insertionMode;
           state.insertionMode = text;
           break;
         case "noscript":
-          insertNode(createElement(token.name), state);
+          insertElement(createElement(token.name), state);
           state.insertionMode = inHeadNoscript;
           break;
         case "script":
-          const element = createElement(token.name);
-          const location = appropriateInsertionLocation(state);
-
-          if (location === null) {
-            return;
-          }
-
-          const [children, position] = location;
-          const node = children[position - 1];
-
-          appendChild(node, element);
-          insertNode(element, state);
+          insertElement(createElement(token.name), state);
 
           state.originalInsertionMode = state.insertionMode;
           state.insertionMode = text;
           break;
         case "template":
-          insertNode(createElement(token.name), state);
+          insertElement(createElement(token.name), state);
           insertMarker(state);
           state.framesetOk = false;
           state.insertionMode = inTemplate;
@@ -302,12 +293,11 @@ const inHead: InsertionMode = (token, document, state) => {
               continue;
             }
 
-            if (node.localName !== "template") {
-              state.openElements.pop();
-              continue;
-            }
+            state.openElements.pop();
 
-            break;
+            if (node.localName === "template") {
+              break;
+            }
           }
 
           clearUntilLastMarker(state);
@@ -316,6 +306,17 @@ const inHead: InsertionMode = (token, document, state) => {
 
           resetInsertionMode(state);
 
+          break;
+        case "body":
+        case "html":
+        case "br":
+          state.openElements.pop();
+          state.insertionMode = afterHead;
+          inHead(token, document, state);
+          break;
+        case "head":
+          state.openElements.pop();
+          state.insertionMode = afterHead;
           break;
         default:
           return; // parse error
@@ -397,7 +398,72 @@ const inSelectInTable: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-template-insertion-mode
  */
-const inTemplate: InsertionMode = () => {};
+const inTemplate: InsertionMode = (token, document, state) => {
+  switch (token.type) {
+    case TokenType.Character:
+    case TokenType.Comment:
+    case TokenType.Doctype:
+      inHead(token, document, state);
+      break;
+    case TokenType.StartTag:
+      switch (token.name) {
+        case "base":
+        case "basefont":
+        case "bgsound":
+        case "link":
+        case "meta":
+        case "noframes":
+        case "script":
+        case "style":
+        case "template":
+        case "title":
+          inHead(token, document, state);
+          break;
+        case "caption":
+        case "colgroup":
+        case "tbody":
+        case "tfoot":
+          state.templateInsertionModes.pop();
+          state.templateInsertionModes.push(inTable);
+          state.insertionMode = inTable;
+          inTable(token, document, state);
+          break;
+        case "col":
+          state.templateInsertionModes.pop();
+          state.templateInsertionModes.push(inColumnGroup);
+          state.insertionMode = inColumnGroup;
+          inColumnGroup(token, document, state);
+          break;
+        case "tr":
+          state.templateInsertionModes.pop();
+          state.templateInsertionModes.push(inTableBody);
+          state.insertionMode = inTableBody;
+          inTableBody(token, document, state);
+          break;
+        case "td":
+        case "th":
+          state.templateInsertionModes.pop();
+          state.templateInsertionModes.push(inRow);
+          state.insertionMode = inRow;
+          inRow(token, document, state);
+          break;
+        default:
+          state.templateInsertionModes.pop();
+          state.templateInsertionModes.push(inBody);
+          state.insertionMode = inBody;
+          inBody(token, document, state);
+      }
+      break;
+    case TokenType.EndTag:
+      switch (token.name) {
+        case "template":
+          inHead(token, document, state);
+          break;
+        default:
+          return; // parse error
+      }
+  }
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-after-body-insertion-mode
@@ -458,6 +524,15 @@ function insertNode(
   }
 }
 
+function insertElement(
+  element: Element,
+  state: State,
+  position: InsertionLocation | null = appropriateInsertionLocation(state)
+) {
+  insertNode(element, state, position);
+  state.openElements.push(element);
+}
+
 function insertCharacter(token: Tokens.Character, state: State) {
   const location = appropriateInsertionLocation(state);
 
@@ -508,8 +583,15 @@ function currentNode(state: State): Mutable<Node> | null {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#current-template-insertion-mode
  */
-function currentTemplateInsertionMode(state: State): InsertionMode {
-  return state.templateInsertionModes[state.templateInsertionModes.length - 1];
+function currentTemplateInsertionMode(state: State): InsertionMode | null {
+  const insertionMode =
+    state.templateInsertionModes[state.templateInsertionModes.length - 1];
+
+  if (insertionMode === undefined) {
+    return null;
+  }
+
+  return insertionMode;
 }
 
 function createElement(name: string): Element {
@@ -676,7 +758,14 @@ function resetInsertionMode(state: State) {
         state.insertionMode = inTable;
         return; // abort
       case "template":
-        state.insertionMode = currentTemplateInsertionMode(state);
+        const insertionMode = currentTemplateInsertionMode(state);
+
+        if (insertionMode === null) {
+          return; // abort
+        }
+
+        state.insertionMode = insertionMode;
+
         return; // abort
       case "head":
         if (!last) {

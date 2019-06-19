@@ -57,11 +57,20 @@ test("Can parse a document with a comment", t => {
   });
 });
 
-test("Can parse a document with a head", t => {
+test("Can parse a document with a script tag in the head tag", t => {
+  const scriptTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "script",
+    childNodes: [],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
   const headTag: Element = {
     nodeType: NodeType.Element,
     localName: "head",
-    childNodes: [],
+    childNodes: [scriptTag],
     prefix: null,
     attributes: [],
     shadowRoot: null
@@ -76,7 +85,43 @@ test("Can parse a document with a head", t => {
     shadowRoot: null
   };
 
-  html(t, "<html><head></head></html>", {
+  html(t, "<html><head><script>foo</script></head></html>", {
+    nodeType: NodeType.Document,
+    compatMode: "BackCompat",
+    childNodes: [htmlTag],
+    styleSheets: []
+  });
+});
+
+test("Can parse a document with a template tag in the head tag", t => {
+  const templateTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "template",
+    childNodes: [],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  const headTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "head",
+    childNodes: [templateTag],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  const htmlTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "html",
+    childNodes: [headTag],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  html(t, "<html><head><template></template></head></html>", {
     nodeType: NodeType.Document,
     compatMode: "BackCompat",
     childNodes: [htmlTag],
