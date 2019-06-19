@@ -433,7 +433,63 @@ const afterHead: InsertionMode = (token, document, state) => {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-body-insertion-mode
  */
-const inBody: InsertionMode = () => {};
+const inBody: InsertionMode = (token, document, state) => {
+  switch (token.type) {
+    case TokenType.Character:
+      switch (token.data) {
+        case Char.Null:
+          return; // parse error
+        case Char.CharacterTabulation:
+        case Char.LineFeed:
+        case Char.FormFeed:
+        case Char.CarriageReturn:
+        case Char.Space:
+          reconstructActiveFormattingElements(state);
+          insertCharacter(token, state);
+          break;
+        default:
+          reconstructActiveFormattingElements(state);
+          insertCharacter(token, state);
+          state.framesetOk = false;
+      }
+      break;
+    case TokenType.Comment:
+      insertNode(createComment(token.data), state);
+      break;
+    case TokenType.Doctype:
+      return; // parse error
+    case TokenType.StartTag:
+      switch (token.name) {
+        case "html":
+          const hasTemplate =
+            state.openElements.find(tag => {
+              return tag.localName === "template";
+            }) !== undefined;
+
+          if (!hasTemplate) {
+            return; // ignore
+          }
+
+          const last = state.openElements[state.openElements.length - 1];
+          if (last === undefined) {
+            return;
+          }
+
+          for (let attribute in token.attributes) {
+            let present = false;
+            for (let lastAttribute in last.attributes) {
+              if (lastAttribute === attribute) {
+                present = true;
+              }
+            }
+
+            if (!present) {
+              last.attributes[last.attributes.length] = attribute;
+            }
+          }
+      }
+  }
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#sec-the-text-insertion-mode
@@ -925,6 +981,60 @@ function clearUntilLastMarker(state: State) {
     if (entry === Marker) {
       return;
     }
+  }
+}
+
+/**
+ * @see https://www.w3.org/TR/html/syntax.html#reconstruct-the-active-formatting-elements
+ */
+function reconstructActiveFormattingElements(state: State) {
+  if (state.activeFormattingElements.length === 0) {
+    return;
+  }
+
+  let index = state.activeFormattingElements.length - 1;
+  let entry = state.activeFormattingElements[index];
+
+  const create = (entry: Element) => {
+    const newElement = createElement(entry.localName);
+    insertElement(newElement, state);
+    state.activeFormattingElements[index] = newElement;
+  };
+
+  while (true) {
+    if (
+      entry === Marker ||
+      state.openElements.find(element => {
+        return element === entry;
+      }) != undefined
+    ) {
+      if (index == state.activeFormattingElements.length - 1) {
+        return; // nothing to reconstruct
+      }
+
+      break;
+    }
+
+    if (index === 0) {
+      create(entry);
+      break;
+    }
+
+    entry = state.activeFormattingElements[--index];
+  }
+
+  while (true) {
+    entry = state.activeFormattingElements[++index];
+
+    if (index == state.activeFormattingElements.length - 1) {
+      return; // done
+    }
+
+    if (entry == Marker) {
+      continue;
+    }
+
+    create(entry);
   }
 }
 
