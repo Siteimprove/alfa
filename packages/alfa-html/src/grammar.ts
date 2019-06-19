@@ -295,19 +295,7 @@ const inHead: InsertionMode = (token, document, state) => {
             return; // parse error
           }
 
-          while (true) {
-            const node = currentNode(state);
-
-            if (node === null || !isElement(node)) {
-              continue;
-            }
-
-            state.openElements.pop();
-
-            if (node.localName === "template") {
-              break;
-            }
-          }
+          popUntil(state.openElements, "template");
 
           clearUntilLastMarker(state);
 
@@ -933,6 +921,22 @@ function clearUntilLastMarker(state: State) {
 
     if (entry === Marker) {
       return;
+    }
+  }
+}
+
+function popUntil(list: Array<Element>, tag: string) {
+  while (true) {
+    const tail = list[list.length - 1];
+
+    if (tail === undefined) {
+      return;
+    }
+
+    list.pop();
+
+    if (tail.localName === tag) {
+      break;
     }
   }
 }
