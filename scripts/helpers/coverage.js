@@ -18,12 +18,6 @@ const {
   parseLines
 } = require("./text");
 
-/**
- * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
- */
-// @ts-ignore: This uses an internal API.
-const [header] = require("module").wrapper;
-
 const { min, max } = Math;
 
 const session = new Session();
@@ -382,8 +376,8 @@ function parseRange(script, map, range, options = {}) {
 
   let { startOffset, endOffset } = range;
 
-  startOffset = max(first.start, startOffset - header.length);
-  endOffset = min(last.end, endOffset - header.length);
+  startOffset = max(first.start, startOffset);
+  endOffset = min(last.end, endOffset);
 
   const uncovered = content.substring(startOffset, endOffset).trim();
 
