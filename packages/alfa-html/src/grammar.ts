@@ -177,7 +177,9 @@ const beforeHead: InsertionMode = (token, document, state) => {
           break;
 
         case "head":
-          insertElement(createElement(token.name), state);
+          const element = createElement(token.name);
+          insertElement(element, state);
+          state.headElementPointer = element;
           state.insertionMode = inHead;
       }
       break;
@@ -196,7 +198,8 @@ const beforeHead: InsertionMode = (token, document, state) => {
         }
       }
 
-      insertElement(createElement("head"), state);
+      const element = createElement("head");
+      insertElement(element, state);
       state.insertionMode = inHead;
       inHead(token, document, state);
   }
