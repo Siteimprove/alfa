@@ -62,6 +62,11 @@ interface State {
    * @see https://www.w3.org/TR/html/syntax.html#head-element-pointer
    */
   headElementPointer: Element | null;
+
+  /**
+   * @see https://tc39.github.io/ecma262/#sec-execution-context-stack
+   */
+  javaScriptExecutionContext: [];
 }
 
 /**
@@ -425,7 +430,24 @@ const inBody: InsertionMode = () => {};
 /**
  * @see https://www.w3.org/TR/html/syntax.html#sec-the-text-insertion-mode
  */
-const text: InsertionMode = () => {};
+const text: InsertionMode = (token, document, state) => {
+  switch (token.type) {
+    case TokenType.Character:
+      insertCharacter(token, state);
+      break;
+    case TokenType.EndTag:
+      if (token.name !== "script") {
+        state.openElements.pop();
+
+        if (state.originalInsertionMode === null) {
+          break;
+        }
+
+        state.insertionMode = state.originalInsertionMode;
+        break;
+      }
+  }
+};
 
 /**
  * @see https://www.w3.org/TR/html/syntax.html#the-in-table-insertion-mode
@@ -940,6 +962,7 @@ export const Grammar: Lang.Grammar<Token, Document, State> = new Lang.Grammar(
     activeFormattingElements: [],
     framesetOk: true,
     templateInsertionModes: [],
-    headElementPointer: null
+    headElementPointer: null,
+    javaScriptExecutionContext: []
   })
 );
