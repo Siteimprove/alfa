@@ -459,14 +459,14 @@ const inBody: InsertionMode = (token, document, state) => {
     case TokenType.Doctype:
       return; // parse error
     case TokenType.StartTag:
+      const body = state.openElements[1];
       switch (token.name) {
         case "html":
-          const hasTemplate =
+          if (
             state.openElements.find(tag => {
               return tag.localName === "template";
-            }) !== undefined;
-
-          if (!hasTemplate) {
+            }) !== undefined
+          ) {
             return; // ignore
           }
 
@@ -475,18 +475,74 @@ const inBody: InsertionMode = (token, document, state) => {
             return;
           }
 
-          for (let attribute in token.attributes) {
+          for (const attribute of token.attributes) {
             let present = false;
-            for (let lastAttribute in last.attributes) {
-              if (lastAttribute === attribute) {
+            for (const lastKey in last.attributes) {
+              const lastAttribute = last.attributes[lastKey];
+              if (lastAttribute.localName === attribute.name) {
                 present = true;
               }
             }
 
             if (!present) {
-              last.attributes[last.attributes.length] = attribute;
+              (last.attributes as Array<Attribute>).push(
+                createAttribute(attribute.name, attribute.value)
+              );
             }
           }
+          break;
+        case "base":
+        case "basefont":
+        case "bgsound":
+        case "link":
+        case "meta":
+        case "noframes":
+        case "script":
+        case "style":
+        case "template":
+        case "title":
+          inHead(token, document, state);
+          break;
+        case "body":
+          if (body === undefined || body.localName !== "body") {
+            return; // ignore
+          }
+
+          if (
+            state.openElements.find(tag => {
+              return tag.localName === "template";
+            }) !== undefined
+          ) {
+            return; // ignore
+          }
+
+          state.framesetOk = false;
+          for (const attribute of token.attributes) {
+            let present = false;
+            for (const lastKey in body.attributes) {
+              const lastAttribute = body.attributes[lastKey];
+              if (lastAttribute.localName === attribute.name) {
+                present = true;
+              }
+            }
+
+            if (!present) {
+              (body.attributes as Array<Attribute>).push(
+                createAttribute(attribute.name, attribute.value)
+              );
+            }
+          }
+          break;
+        case "frameset":
+          if (body === undefined || body.localName !== "body") {
+            return; // ignore
+          }
+      }
+      break;
+    case TokenType.EndTag:
+      switch (token.name) {
+        case "template":
+          inHead(token, document, state);
       }
   }
 };
@@ -1006,9 +1062,9 @@ function reconstructActiveFormattingElements(state: State) {
       entry === Marker ||
       state.openElements.find(element => {
         return element === entry;
-      }) != undefined
+      }) !== undefined
     ) {
-      if (index == state.activeFormattingElements.length - 1) {
+      if (index === state.activeFormattingElements.length - 1) {
         return; // nothing to reconstruct
       }
 
@@ -1026,11 +1082,11 @@ function reconstructActiveFormattingElements(state: State) {
   while (true) {
     entry = state.activeFormattingElements[++index];
 
-    if (index == state.activeFormattingElements.length - 1) {
+    if (index === state.activeFormattingElements.length - 1) {
       return; // done
     }
 
-    if (entry == Marker) {
+    if (entry === Marker) {
       continue;
     }
 
