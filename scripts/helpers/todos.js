@@ -4,7 +4,7 @@ const TypeScript = require("typescript");
 
 const { readFile, writeFile } = require("./file-system");
 const { getLineAtOffset, parseLines } = require("./text");
-
+const { flatMap, groupBy, map } = require("./iterable");
 const { Project } = require("../helpers/project");
 
 /**
@@ -46,53 +46,31 @@ exports.getTodos = getTodos;
  * @param {Iterable<Todo>} todos
  */
 function writeTodos(file, todos) {
-  /**
-   * @type {Map<string, Array<string>>}
-   */
-  const groups = new Map();
+  const todosByFile = groupBy(todos, todo => todo.file);
 
-  /**
-   * @type {Map<string, Line[]>}
-   */
-  const parsedLines = new Map();
-  for (const todo of todos) {
-    parsedLines.set(todo.file, parseLines(readFile(todo.file)));
-  }
-
-  for (let { file, comment } of todos) {
-    const lines = parsedLines.get(file);
-    if (lines === undefined) {
-      return;
-    }
-
-    const line = getLineAtOffset(lines, comment.position).index + 1;
-
-    const message = comment.message.substring(
-      comment.descriptor.text.length + 1
-    );
-
-    const type = comment.descriptor.text.toLowerCase();
-
+  const contentByFile = flatMap(todosByFile, ([file, todos]) => {
+    const lines = parseLines(readFile(file));
     file = file.split(path.sep).join("/");
+    return map(todos, todo => {
+      const line = getLineAtOffset(lines, todo.comment.position).index + 1;
+      const message = todo.comment.message.substring(
+        todo.comment.descriptor.text.length + 1
+      );
+      const type = todo.comment.descriptor.text.toLowerCase();
+      const content = `* [${file}:${line}](${file}#L${line}): ${message}\n`;
+      return { type, content };
+    });
+  });
 
-    const content = `* [${file}:${line}](${file}#L${line}): ${message}\n`;
-
-    const group = groups.get(type);
-
-    if (group === undefined) {
-      groups.set(type, [content]);
-    } else {
-      group.push(content);
-    }
-  }
+  const contentByFileGrouped = groupBy(contentByFile, todo => todo.type);
 
   let content = "";
 
-  for (const [type, todos] of groups) {
+  for (const [type, todos] of contentByFileGrouped) {
     content += `## ${type}\n`;
 
     for (const todo of todos) {
-      content += todo;
+      content += todo.content;
     }
 
     content += "\n";
