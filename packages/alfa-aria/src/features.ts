@@ -1,2 +1,3 @@
 export * from "./features/html";
-export * from "./features/svg";
+// @fixme
+//export * from "./features/svg";
