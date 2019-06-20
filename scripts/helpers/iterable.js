@@ -41,6 +41,7 @@ exports.groupBy = groupBy;
  * @template G
  * @param {Iterable<T>} iterable
  * @param {(item: T) => G} mapper
+ * @return {Iterable<G>}
  */
 function map(iterable, mapper) {
   const result = [];
@@ -55,9 +56,9 @@ exports.map = map;
 /**
  * @template T
  * @template G
- * @template U
- * @param {Iterable<[T, G]>} iterable
- * @param {(item: [T, G]) => Iterable<U>} mapper
+ * @param {Iterable<T>} iterable
+ * @param {(item: T) => Iterable<G>} mapper
+ * @return {Iterable<G>}
  */
 function flatMap(iterable, mapper) {
   const result = [];
