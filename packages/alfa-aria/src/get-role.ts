@@ -2,8 +2,8 @@ import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
-  getElementNamespace,
   getAttribute,
+  getElementNamespace,
   Namespace,
   Node
 } from "@siteimprove/alfa-dom";
