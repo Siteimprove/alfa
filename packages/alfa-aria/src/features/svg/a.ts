@@ -11,15 +11,15 @@ export const A: Feature = {
   allowedRoles: () => Any(Roles)
 };
 
-/**
- * @todo finish up
- */
 function role(input: Element, context: Node): Role | null {
   if (hasAttribute(input, "href")) {
     return Roles.Link;
   } else if (getClosest(input, context, "text") !== null) {
-    return null;
+    return Roles.Group;
   } else {
+    /**
+     * @todo In certain rare circumstances the role will in this case be group. Investigate.
+     */
     return null;
   }
 }

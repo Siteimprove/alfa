@@ -18,7 +18,10 @@ for (const role of values(Roles)) {
 
 const featuresByElement = new Map<string, Feature>();
 
-for (const feature of values(Features)) {
+for (const feature of values(Features.HTML)) {
+  featuresByElement.set(feature.element, feature);
+}
+for (const feature of values(Features.SVG)) {
   featuresByElement.set(feature.element, feature);
 }
 
