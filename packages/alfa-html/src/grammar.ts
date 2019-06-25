@@ -475,21 +475,7 @@ const inBody: InsertionMode = (token, document, state) => {
             return;
           }
 
-          for (const attribute of token.attributes) {
-            let present = false;
-            for (const lastKey in last.attributes) {
-              const lastAttribute = last.attributes[lastKey];
-              if (lastAttribute.localName === attribute.name) {
-                present = true;
-              }
-            }
-
-            if (!present) {
-              (last.attributes as Array<Attribute>).push(
-                createAttribute(attribute.name, attribute.value)
-              );
-            }
-          }
+          createIfNotPresent(token, last);
           break;
         case "base":
         case "basefont":
@@ -517,25 +503,15 @@ const inBody: InsertionMode = (token, document, state) => {
           }
 
           state.framesetOk = false;
-          for (const attribute of token.attributes) {
-            let present = false;
-            for (const lastKey in body.attributes) {
-              const lastAttribute = body.attributes[lastKey];
-              if (lastAttribute.localName === attribute.name) {
-                present = true;
-              }
-            }
-
-            if (!present) {
-              (body.attributes as Array<Attribute>).push(
-                createAttribute(attribute.name, attribute.value)
-              );
-            }
-          }
+          createIfNotPresent(token, body);
           break;
         case "frameset":
           if (body === undefined || body.localName !== "body") {
             return; // ignore
+          }
+
+          if (state.framesetOk === false) {
+            return;
           }
       }
       break;
@@ -1106,6 +1082,28 @@ function popUntil(list: Array<Element>, tag: string) {
 
     if (tail.localName === tag) {
       break;
+    }
+  }
+}
+
+function createIfNotPresent(token: Token, element: Element) {
+  if (token.type !== TokenType.StartTag) {
+    return;
+  }
+
+  for (const attribute of token.attributes) {
+    let present = false;
+    for (const lastKey in element.attributes) {
+      const lastAttribute = element.attributes[lastKey];
+      if (lastAttribute.localName === attribute.name) {
+        present = true;
+      }
+    }
+
+    if (!present) {
+      (element.attributes as Array<Attribute>).push(
+        createAttribute(attribute.name, attribute.value)
+      );
     }
   }
 }
