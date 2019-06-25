@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["plugin.ts", "src/create-jasmine-plugin.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-assert"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jsx"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

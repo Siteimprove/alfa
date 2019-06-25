@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest"],
+    "jsxFactory": "React.createElement"
+  },
+  "files": ["components/button.spec.tsx", "components/button.tsx", "setup.ts"],
+  "references": [{ "path": "../../../../packages" }]
+}

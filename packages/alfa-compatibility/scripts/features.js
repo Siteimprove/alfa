@@ -13,13 +13,13 @@ const { isArray } = Array;
 const { keys } = Object;
 
 /**
- * @typedef {Object} Feature
+ * @typedef {object} Feature
  * @prop {string} key
  * @prop {Array<Support>} support
  */
 
 /**
- * @typedef {Object} Support
+ * @typedef {object} Support
  * @prop {string} browser
  * @prop {string | boolean} added
  * @prop {string | boolean} removed
@@ -27,7 +27,7 @@ const { keys } = Object;
 
 /**
  * @param {string} key
- * @return {data["css"]}
+ * @return {import("mdn-browser-compat-data/types").Identifier}
  */
 const get = key => {
   const [entry, ...keys] = key.split(".");
@@ -49,11 +49,15 @@ const get = key => {
 };
 
 /**
- * @param {string | boolean} version
+ * @param {string | boolean | null | undefined} version
  * @return {string | boolean}
  */
 const version = version =>
-  typeof version === "string" ? `"${version}"` : version;
+  typeof version === "string"
+    ? `"${version}"`
+    : version === undefined || version === null
+    ? false
+    : version;
 
 /**
  * @type {Array<Feature>}
@@ -110,10 +114,10 @@ function parse(key) {
         );
       })
       .map(statement => {
-        const { version_added, version_removed } = statement;
+        const { version_added: added, version_removed: removed } = statement;
         return {
-          added: typeof version_added === "string" ? version_added : false,
-          removed: typeof version_removed === "string" ? version_removed : false
+          added: version(added),
+          removed: version(removed)
         };
       });
 
@@ -159,10 +163,7 @@ export type FeatureName = ${features
   .map(feature => `"${feature.key}"`)
   .join("|")};
 
-/**
- * @internal
- */
-export const Features: { [P in FeatureName]: Feature } = {
+export const Features: { readonly [P in FeatureName]: Feature } = {
   ${features
     .map(
       feature => `
@@ -172,12 +173,8 @@ export const Features: { [P in FeatureName]: Feature } = {
               .map(
                 support => `
                   "${support.browser}": {
-                    added: ${version(support.added)}
-                    ${
-                      support.removed
-                        ? `, removed: ${version(support.removed)}`
-                        : ""
-                    }
+                    added: ${support.added}
+                    ${support.removed ? `, removed: ${support.removed}` : ""}
                   }
                 `
               )

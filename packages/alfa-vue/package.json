@@ -1,0 +1,48 @@
+{
+  "private": true,
+  "name": "@siteimprove/alfa-vue",
+  "author": "Siteimprove A/S",
+  "homepage": "https://siteimprove.com",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
+  "keywords": [
+    "a11y",
+    "accessibility",
+    "aria",
+    "typescript",
+    "wcag"
+  ],
+  "contributors": [
+    "Búgvi Benjamin Magnussen <bbm@siteimprove.com>",
+    "Kasper Kronborg Isager <kki@siteimprove.com>",
+    "Niclas Hedam <nhe@siteimprove.com>",
+    "Per Jakobsen <pja@siteimprove.com>",
+    "Tobias Christian Jensen <tcj@siteimprove.com>"
+  ],
+  "repository": "https://github.com/siteimprove/alfa",
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-chai": "^0.0.0",
+    "@siteimprove/alfa-cheerio": "^0.0.0",
+    "@siteimprove/alfa-dom": "^0.0.0",
+    "@siteimprove/alfa-jasmine": "^0.0.0",
+    "@siteimprove/alfa-jest": "^0.0.0",
+    "@siteimprove/alfa-unexpected": "^0.0.0",
+    "@siteimprove/alfa-util": "^0.0.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.0.0"
+  }
+}

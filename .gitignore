@@ -2,6 +2,7 @@ node_modules
 package-lock.json
 
 **/*.log
+**/*.tsbuildinfo
 
 **/*.js
 **/*.d.ts
@@ -10,4 +11,6 @@ package-lock.json
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
 
+.cache
+.semaphore-cache
 .vscode

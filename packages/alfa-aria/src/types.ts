@@ -82,6 +82,11 @@ export const enum Category {
   Abstract,
 
   /**
+   * @see https://www.w3.org/TR/graphics-aria/
+   */
+  Graphics,
+
+  /**
    * @see https://www.w3.org/TR/wai-aria/#widget_roles
    */
   Widget,

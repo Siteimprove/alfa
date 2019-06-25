@@ -17,6 +17,7 @@
     "Búgvi Benjamin Magnussen <bbm@siteimprove.com>",
     "Kasper Kronborg Isager <kki@siteimprove.com>",
     "Niclas Hedam <nhe@siteimprove.com>",
+    "Per Jakobsen <pja@siteimprove.com>",
     "Tobias Christian Jensen <tcj@siteimprove.com>"
   ],
   "repository": "https://github.com/siteimprove/alfa",
@@ -31,11 +32,14 @@
     "prepare": "node scripts/features.js && node scripts/browsers.js"
   },
   "dependencies": {
+    "@siteimprove/alfa-collection": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
-    "browserslist": "^4.1.0"
+    "@types/browserslist": "^4.4.0",
+    "browserslist": "^4.4.1"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "mdn-browser-compat-data": "0.0.48"
+    "mdn-browser-compat-data": "0.0.80",
+    "prettier": "1.17.1"
   }
 }

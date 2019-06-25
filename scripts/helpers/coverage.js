@@ -6,19 +6,17 @@ const { Session } = require("inspector");
 const { default: chalk } = require("chalk");
 const sourceMap = require("source-map");
 const { SourceMapConsumer } = require("source-map");
-
 const notify = require("./notify");
-
 const { Byte } = require("./metrics/byte");
 const { Logical } = require("./metrics/logical");
 const { Arithmetic } = require("./metrics/arithmetic");
 const { Cyclomatic } = require("./metrics/cyclomatic");
-
-/**
- * @see https://nodejs.org/api/modules.html#modules_the_module_wrapper
- */
-// @ts-ignore: This uses an internal API.
-const [header] = require("module").wrapper;
+const {
+  isBlockBorder,
+  isWhitespace,
+  getLineAtOffset,
+  parseLines
+} = require("./text");
 
 const { min, max } = Math;
 
@@ -183,7 +181,7 @@ process.on("beforeExit", code => {
 });
 
 /**
- * @typedef {Object} Line
+ * @typedef {object} Line
  * @property {string} value
  * @property {number} index
  * @property {number} start
@@ -191,7 +189,7 @@ process.on("beforeExit", code => {
  */
 
 /**
- * @typedef {Object} Location
+ * @typedef {object} Location
  * @property {string} path
  * @property {number} offset
  * @property {number} line
@@ -199,33 +197,33 @@ process.on("beforeExit", code => {
  */
 
 /**
- * @typedef {Object} Range
+ * @typedef {object} Range
  * @property {Location} start
  * @property {Location} end
  */
 
 /**
- * @typedef {Object} FunctionCoverage
+ * @typedef {object} FunctionCoverage
  * @property {Range} range
  * @property {number} count
  * @property {string} name
  */
 
 /**
- * @typedef {Object} BlockCoverage
+ * @typedef {object} BlockCoverage
  * @property {Range} range
  * @property {number} count
  */
 
 /**
- * @typedef {Object} Source
+ * @typedef {object} Source
  * @property {string} path
  * @property {string} content
  * @property {Array<Line>} lines
  */
 
 /**
- * @typedef {Object} Script
+ * @typedef {object} Script
  * @property {string} base
  * @property {Array<Source>} sources
  * @property {Array<FunctionCoverage | BlockCoverage>} coverage
@@ -310,32 +308,11 @@ async function parseScript({ url, functions }) {
     }
   }
 
-  if (map !== null) {
+  if (map !== null && "destroy" in map) {
     map.destroy();
   }
 
   return script;
-}
-
-/**
- * @param {string} input
- * @return {Array<Line>}
- */
-function parseLines(input) {
-  let offset = 0;
-
-  return input.split("\n").map((value, index) => {
-    const line = {
-      value,
-      index,
-      start: offset,
-      end: offset + value.length
-    };
-
-    offset = line.end + 1;
-
-    return line;
-  });
 }
 
 /**
@@ -399,8 +376,8 @@ function parseRange(script, map, range, options = {}) {
 
   let { startOffset, endOffset } = range;
 
-  startOffset = max(first.start, startOffset - header.length);
-  endOffset = min(last.end, endOffset - header.length);
+  startOffset = max(first.start, startOffset);
+  endOffset = min(last.end, endOffset);
 
   const uncovered = content.substring(startOffset, endOffset).trim();
 
@@ -409,17 +386,11 @@ function parseRange(script, map, range, options = {}) {
   }
 
   if (options.trim === true) {
-    while (
-      isBlockBorder(content[startOffset]) ||
-      isWhitespace(content[startOffset])
-    ) {
+    while (isWhitespace(content[startOffset])) {
       startOffset++;
     }
 
-    while (
-      isBlockBorder(content[endOffset - 1]) ||
-      isWhitespace(content[endOffset - 1])
-    ) {
+    while (isWhitespace(content[endOffset - 1])) {
       endOffset--;
     }
   }
@@ -502,47 +473,6 @@ function getOriginalLocation(script, map, offset, line) {
 }
 
 /**
- * @param {Array<Line>} lines
- * @param {number} offset
- * @return {Line}
- */
-function getLineAtOffset(lines, offset) {
-  let lower = 0;
-  let upper = lines.length - 2;
-
-  while (lower < upper) {
-    const middle = (lower + (upper - lower) / 2) | 0;
-
-    if (offset < lines[middle].start) {
-      upper = middle - 1;
-    } else if (offset >= lines[middle + 1].start) {
-      lower = middle + 1;
-    } else {
-      lower = middle;
-      break;
-    }
-  }
-
-  return lines[lower];
-}
-
-/**
- * @param {string} input
- * @return {boolean}
- */
-function isBlockBorder(input) {
-  return input === "{" || input === "}";
-}
-
-/**
- * @param {string} input
- * @return {boolean}
- */
-function isWhitespace(input) {
-  return input === " " || input === "\t" || input === "\n" || input === "\r";
-}
-
-/**
  * @param {Script} script
  * @param {number} total
  */
@@ -584,7 +514,7 @@ function printBlockCoverage(script, coverage, widths) {
     return;
   }
 
-  let uncovered = source.content
+  const uncovered = source.content
     .substring(start.offset, end.offset)
     .replace(/[^\s]+/g, word => chalk.red(word));
 
@@ -648,7 +578,7 @@ function printBlockCoverage(script, coverage, widths) {
 
       let truncation = "";
 
-      if (isTruncating && i == maxCoverageOutputLines / 2 - 1) {
+      if (isTruncating && i === maxCoverageOutputLines / 2 - 1) {
         truncation += `\n${" ".repeat(widths.gutter / 2)}`;
         truncation += `${chalk.blue("\u205e")}${" ".repeat(widths.gutter / 2)}`;
         truncation += `${totalLines -

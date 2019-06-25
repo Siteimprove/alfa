@@ -1,33 +1,26 @@
-import {
-  Aspect,
-  Atomic,
-  Composite,
-  Question,
-  Result,
-  Rule,
-  Target
-} from "./types";
+import { isIterable } from "@siteimprove/alfa-util";
+import { Aspect, Atomic, Composite, Rule, Target } from "./types";
 
-export function isResult<T extends Target>(
-  input: Result<T> | Question<T>
-): input is Result<T> {
-  return "outcome" in input;
+type Iterables<T> = T extends Iterable<infer U> ? T : never;
+
+export function isTargetUnit(
+  target: Target
+): target is Exclude<Target, Iterable<Target>> {
+  return !isIterable(target);
 }
 
-export function isQuestion<T extends Target>(
-  input: Result<T> | Question<T>
-): input is Question<T> {
-  return "question" in input;
+export function isTargetGroup(target: Target): target is Iterables<Target> {
+  return isIterable(target);
 }
 
 export function isAtomic<A extends Aspect, T extends Target>(
   rule: Rule<A, T>
 ): rule is Atomic.Rule<A, T> {
-  return "composes" in rule === false;
+  return "compose" in rule === false;
 }
 
 export function isComposite<A extends Aspect, T extends Target>(
   rule: Rule<A, T>
 ): rule is Composite.Rule<A, T> {
-  return "composes" in rule;
+  return "compose" in rule;
 }

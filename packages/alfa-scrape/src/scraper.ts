@@ -4,7 +4,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-util";
 import { readFileSync } from "fs";
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 
 const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
@@ -21,6 +21,7 @@ export interface ScrapeOptions {
     readonly width: number;
     readonly height: number;
     readonly scale?: number;
+    readonly landscape?: boolean;
   };
   readonly credentials?: {
     readonly username: string;
@@ -44,7 +45,7 @@ export class Scraper {
     options: ScrapeOptions = {}
   ): Promise<Aspects> {
     const {
-      viewport = { width: 1280, height: 720, scale: 1 },
+      viewport = { width: 1280, height: 720, scale: 1, landscape: true },
       credentials = null,
       wait = Wait.Loaded,
       timeout = 10000
@@ -55,7 +56,10 @@ export class Scraper {
       viewport: {
         width: viewport.width,
         height: viewport.height,
-        orientation: Orientation.Landscape
+        orientation:
+          viewport.landscape !== false
+            ? Orientation.Landscape
+            : Orientation.Portrait
       },
       display: {
         resolution: viewport.scale === undefined ? 1 : viewport.scale
@@ -68,7 +72,8 @@ export class Scraper {
     await page.setViewport({
       width: viewport.width,
       height: viewport.width,
-      deviceScaleFactor: viewport.scale
+      deviceScaleFactor: viewport.scale,
+      isLandscape: viewport.landscape
     });
 
     await page.authenticate(credentials);
@@ -82,30 +87,29 @@ export class Scraper {
     let origin = typeof url === "string" ? new URL(url) : url;
 
     page.on("response", res => {
-      const destination = new URL(res.url());
-
-      // If the response is the result of a navigation request and performs a
-      // redirect using 3xx status codes, parse the location HTTP header and use
-      // that as the new origin.
-      if (
-        res.request().isNavigationRequest() &&
-        res.status() >= 300 &&
-        res.status() <= 399
-      ) {
-        try {
-          origin = new URL(res.headers().location);
-        } catch (err) {}
+      if (res.request().resourceType() !== "document") {
+        return;
       }
 
-      // Otherwise, if the response is the origin, parse the response and its
-      // associated request.
-      else if (origin.href === destination.href) {
-        request = parseRequest(res.request());
+      const destination = new URL(res.url());
 
-        // As response handlers are not async, we have to assign the parsed
-        // response as a promise and immediately register an error handler to
-        // avoid an uncaugt exception if parsing the response fails.
-        response = parseResponse(res).catch(err => null);
+      if (origin.href === destination.href) {
+        const status = res.status();
+
+        // If the response performs a redirect using 3xx status codes, parse the
+        // location HTTP header and use that as the new origin.
+        if (status >= 300 && status <= 399) {
+          try {
+            origin = new URL(res.headers().location);
+          } catch (err) {}
+        } else {
+          request = parseRequest(res.request());
+
+          // As response handlers are not async, we have to assign the parsed
+          // response as a promise and immediately register an error handler to
+          // avoid an uncaugt exception if parsing the response fails.
+          response = parseResponse(res).catch(err => null);
+        }
       }
     });
 
@@ -128,7 +132,7 @@ export class Scraper {
       if (err instanceof Error) {
         switch (err.name) {
           case "TimeoutError":
-            throw new Error(`Navigation timeout of ${timeout}ms exceeded`);
+            err.message = `Navigation Timeout Exceeded: ${timeout}ms exceeded`;
         }
       }
 
@@ -187,16 +191,14 @@ async function parseDocument(
   page: puppeteer.Page,
   html?: string
 ): Promise<Document> {
-  html = JSON.stringify(html);
+  const document =
+    html === undefined
+      ? "window.document"
+      : `new DOMParser().parseFromString(${JSON.stringify(html)}, "text/html")`;
 
   const snapshot = `{
     ${virtualize};
-    const document = ${
-      html === undefined
-        ? "window.document"
-        : `new DOMParser().parseFromString(${html}, "text/html");`
-    }
-    virtualizeNode(document);
+    virtualizeNode(${document});
   }`;
 
   return (await page.evaluate(snapshot)) as Document;

@@ -1,12 +1,26 @@
-import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Option, values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
 import * as Roles from "./roles";
-import { Category, Role } from "./types";
+import { Category, Feature, Role } from "./types";
+
+const { map } = BrowserSpecific;
 
 const whitespace = /\s+/;
+
+const rolesByName = new Map<string, Role>();
+
+for (const role of values(Roles)) {
+  rolesByName.set(role.name, role);
+}
+
+const featuresByElement = new Map<string, Feature>();
+
+for (const feature of values(Features)) {
+  featuresByElement.set(feature.element, feature);
+}
 
 /**
  * Given an element and a context, get the semantic role of the element within
@@ -45,10 +59,8 @@ export function getRole(
 
   return map(role, role => {
     if (options.explicit !== false && role !== null) {
-      const roles = values(Roles);
-
       for (const name of role.split(whitespace)) {
-        const role = roles.find(role => role.name === name);
+        const role = rolesByName.get(name);
 
         if (role !== undefined && role.category !== Category.Abstract) {
           return role;
@@ -57,9 +69,7 @@ export function getRole(
     }
 
     if (options.implicit !== false) {
-      const feature = values(Features).find(
-        feature => feature.element === element.localName
-      );
+      const feature = featuresByElement.get(element.localName);
 
       if (feature !== undefined) {
         const role =

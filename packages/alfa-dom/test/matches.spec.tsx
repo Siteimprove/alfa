@@ -252,9 +252,11 @@ test("Matches an attribute against a declared namespace selector", t => {
     localName: "svg",
     attributes: [
       {
+        nodeType: 2,
         prefix: "xlink",
         localName: "href",
-        value: "foobar"
+        value: "foobar",
+        childNodes: []
       }
     ],
     shadowRoot: null,
@@ -274,9 +276,11 @@ test("Matches an attribute against all or no namespaces", t => {
     localName: "svg",
     attributes: [
       {
+        nodeType: 2,
         prefix: "xlink",
         localName: "href",
-        value: "foo"
+        value: "foo",
+        childNodes: []
       }
     ],
     shadowRoot: null,
@@ -314,14 +318,18 @@ test("Matches several similar attributes in different namespaces", t => {
     localName: "a",
     attributes: [
       {
+        nodeType: 2,
         prefix: "xlink",
         localName: "href",
-        value: "foo"
+        value: "foo",
+        childNodes: []
       },
       {
+        nodeType: 2,
         prefix: null,
         localName: "href",
-        value: "bar"
+        value: "bar",
+        childNodes: []
       }
     ],
     shadowRoot: null,

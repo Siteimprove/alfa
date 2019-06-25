@@ -8,6 +8,7 @@ import { Rule, RuleType, StyleRule, StyleSheet } from "./types";
  * @internal
  */
 export const UserAgent: StyleSheet = {
+  disabled: false,
   cssRules: [
     // cssRule("@namespace url(http://www.w3.org/1999/xhtml)"),
 
@@ -16,14 +17,24 @@ export const UserAgent: StyleSheet = {
      */
 
     cssRule(
-      "[hidden], area, base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
+      "[hidden], base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
       {
         display: "none"
       }
     ),
 
-    cssRule("embed[hidden]", {
+    // <area> elements are a little special in that while they are not rendered,
+    // they are focusable for the purpose of users interacting with the image
+    // reference of the <area> element. To accommodate this, we assign them a
+    // default display property of inline rather than none.
+    cssRule("area", {
       display: "inline"
+    }),
+
+    cssRule("embed[hidden]", {
+      display: "inline",
+      height: "0",
+      width: "0"
     }),
 
     cssRule("input[type=hidden i]", {

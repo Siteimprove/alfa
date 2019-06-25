@@ -1,0 +1,43 @@
+{
+  "private": true,
+  "name": "component-testing-angular",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+      "jest-preset-angular",
+      "./setup.js"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.json"
+      }
+    },
+    "transformIgnorePatterns": [
+      "^.+\\.js$"
+    ],
+    "moduleFileExtensions": [
+      "js"
+    ]
+  },
+  "dependencies": {
+    "@angular/common": "^7.2.15",
+    "@angular/compiler": "^7.2.15",
+    "@angular/core": "^7.2.15",
+    "@angular/platform-browser": "^7.2.15",
+    "@angular/platform-browser-dynamic": "^7.2.15",
+    "core-js": "^3.1.1",
+    "rxjs": "^6.5.2",
+    "zone.js": "^0.8.26"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-angular": "^0.0.0",
+    "@siteimprove/alfa-jest": "^0.0.0",
+    "@types/jest": "^24.0.13",
+    "jest": "^24.8.0",
+    "jest-preset-angular": "^7.1.1"
+  }
+}

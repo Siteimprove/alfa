@@ -1,6 +1,8 @@
 const { readDirectory } = require("./file-system");
 const { Graph } = require("./graph");
 
+const { keys } = Object;
+
 const graph = new Graph();
 
 for (const pkg of readDirectory("packages")) {
@@ -13,8 +15,9 @@ for (const pkg of readDirectory("packages")) {
   }
 
   const dependencies = [
-    ...Object.keys(info.dependencies || {}),
-    ...Object.keys(info.devDependencies || {})
+    ...keys(info.dependencies || {}),
+    ...keys(info.peerDependencies || {}),
+    ...keys(info.devDependencies || {})
   ];
 
   graph.addNode(pkg);

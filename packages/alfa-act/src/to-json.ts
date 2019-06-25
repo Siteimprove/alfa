@@ -1,52 +1,52 @@
+import { Seq } from "@siteimprove/alfa-collection";
 import {
-  Attribute,
-  Document,
+  getChildNodes,
   getOwnerElement,
   getParentNode,
   getTagName,
+  isAttribute,
   isDocument,
   isElement,
   Node,
   serialize
 } from "@siteimprove/alfa-dom";
-import { Request, Response } from "@siteimprove/alfa-http";
 import * as JSON from "@siteimprove/alfa-json-ld";
 import { expand, List } from "@siteimprove/alfa-json-ld";
-import { groupBy } from "@siteimprove/alfa-util";
 import { Contexts } from "./contexts";
+import { isTargetGroup, isTargetUnit } from "./guards";
 import { Aspect, AspectsFor, Outcome, Result, Rule, Target } from "./types";
+
+const { assign } = Object;
 
 // The `toJson()` function is special in that it requires use of conditional
 // types in order to correctly infer the union of aspect and target types for a
 // list of rules. In order to do so, we unfortunately have to make use of the
 // `any` type, which trips up TSLint as we've made the `any` type forbidden and
 // this for good reason.
-//
-// tslint:disable:no-any
 
-const { assign } = Object;
-
+// tslint:disable-next-line:no-any
 type AspectsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? A
   : never;
 
+// tslint:disable-next-line:no-any
 type TargetsOf<R extends Rule<any, any>> = R extends Rule<infer A, infer T>
   ? T
   : never;
 
-export function toJson<
-  R extends Rule<any, any>,
+export function toJSON<
+  R extends Rule<any, any>, // tslint:disable-line:no-any
   A extends AspectsOf<R> = AspectsOf<R>,
   T extends TargetsOf<R> = TargetsOf<R>
->(rules: Array<R>, results: Array<Result<T>>, aspects: AspectsFor<A>): List {
+>(results: Iterable<Result<A, T>>, aspects: AspectsFor<A>): List {
   let request: JSON.Document | null = null;
 
-  if ("request" in aspects) {
-    const { request: aspect } = aspects as AspectsFor<Request>;
+  if (aspects.request !== undefined) {
+    const { request: aspect } = aspects;
 
     request = {
       "@context": Contexts.Request,
-      "@id": "_:request",
+      "@id": getNodeId(),
       "@type": ["earl:TestSubject", "http:Request"],
 
       methodName: aspect.method,
@@ -56,12 +56,12 @@ export function toJson<
 
   let response: JSON.Document | null = null;
 
-  if ("response" in aspects) {
-    const { response: aspect } = aspects as AspectsFor<Response>;
+  if (aspects.response !== undefined) {
+    const { response: aspect } = aspects;
 
     response = {
       "@context": Contexts.Response,
-      "@id": "_:response",
+      "@id": getNodeId(),
       "@type": ["earl:TestSubject", "http:Response"],
 
       body: {
@@ -77,129 +77,186 @@ export function toJson<
 
   let document: JSON.Document | null = null;
 
-  if ("document" in aspects) {
-    const { document: aspect } = aspects as AspectsFor<Document>;
+  if (aspects.document !== undefined) {
+    const { document: aspect } = aspects;
 
     document = {
       "@context": Contexts.Content,
-      "@id": "_:document",
+      "@id": getNodeId(),
       "@type": ["earl:TestSubject", "cnt:ContentAsText"],
 
       characterEncoding: "UTF-8",
-      chars: serialize(aspect, aspect, { flattened: true })
+      chars: serialize(aspect, aspect, { composed: true })
     };
   }
+
+  const subject: JSON.Document = {
+    "@context": Contexts.Subject,
+    "@id": request === null ? getNodeId() : request.requestURI,
+    "@type": "earl:TestSubject",
+    parts: [request, response, document]
+  };
+
+  const assertor: JSON.Document = {
+    "@context": Contexts.Assertor,
+    "@id": "https://github.com/siteimprove/alfa",
+    "@type": ["earl:Assertor", "earl:Software", "doap:Project"],
+    name: "Alfa",
+    vendor: {
+      "@id": "https://siteimprove.com/",
+      "@type": "foaf:Organization",
+      "foaf:name": "Siteimprove A/S"
+    }
+  };
 
   const assertion: JSON.Document = {
     "@context": Contexts.Assertion,
     "@type": "earl:Assertion",
     assertedBy: {
-      "@id": "https://github.com/siteimprove/alfa",
-      "@type": "earl:Software"
+      "@id": assertor["@id"]
     },
-    subject: [
-      { "@id": "_:request" },
-      { "@id": "_:response" },
-      { "@id": "_:document" }
-    ]
+    subject: {
+      "@id": subject["@id"]
+    }
   };
 
   const assertions: Array<JSON.Document> = [];
 
-  for (const [ruleId, group] of groupBy(results, result => result.rule)) {
-    assertions.push({
-      ...assertion,
-      test: [
-        {
-          "@id": ruleId,
-          "@type": "earl:TestCase"
-        }
-      ],
-      result: group.map(result => {
-        const mapped = {
-          "@context": Contexts.Result,
-          "@type": "earl:TestResult",
-          outcome: {
-            "@id": `earl:${result.outcome}`
+  for (const [rule, group] of Seq(results).groupBy(result => result.rule)) {
+    const { requirements = [] } = rule;
+
+    for (const result of group.toList()) {
+      const testCaseResult = {
+        "@context": Contexts.Result,
+        "@type": "earl:TestResult",
+        outcome: {
+          "@id": `earl:${result.outcome}`
+        },
+        pointer: null
+      };
+
+      if (result.outcome !== Outcome.Inapplicable) {
+        const pointer = getPointer(aspects, result.aspect, result.target);
+
+        if (pointer !== null) {
+          switch (result.aspect) {
+            case aspects.document:
+              assign(pointer.pointer, {
+                reference: { "@id": document!["@id"] }
+              });
           }
-        };
 
-        if (result.outcome !== Outcome.Inapplicable) {
-          assign(mapped, getPointer(aspects, result.target));
+          assign(testCaseResult, pointer);
         }
+      }
 
-        return mapped;
-      })
-    });
-
-    const { requirements } = rules.find(rule => rule.id === ruleId)!;
-
-    for (const requirement of requirements === undefined ? [] : requirements) {
       assertions.push({
         ...assertion,
-        test: [
-          {
-            "@id": requirement.id,
-            "@type": "earl:TestRequirement"
-          }
-        ],
-        result: group.map(result => {
-          const outcome =
-            result.outcome === Outcome.Passed && requirement.partial === true
-              ? Outcome.CantTell
-              : result.outcome;
+        test: [{ "@id": rule.id, "@type": "earl:TestCase" }],
+        result: testCaseResult
+      });
 
-          const mapped = {
-            "@context": Contexts.Result,
-            "@type": "earl:TestResult",
+      for (const requirement of requirements) {
+        const outcome =
+          result.outcome === Outcome.Passed && requirement.partial === true
+            ? Outcome.CantTell
+            : result.outcome;
+
+        let id: string = requirement.requirement;
+
+        switch (requirement.requirement) {
+          case "wcag":
+            id = `${id}:${requirement.criterion}`;
+        }
+
+        assertions.push({
+          ...assertion,
+          test: [{ "@id": id, "@type": "earl:TestRequirement" }],
+          result: {
+            ...testCaseResult,
             outcome: {
               "@id": `earl:${outcome}`
             }
-          };
-
-          if (result.outcome !== Outcome.Inapplicable) {
-            assign(mapped, getPointer(aspects, result.target));
           }
-
-          return mapped;
-        })
-      });
+        });
+      }
     }
   }
 
-  return expand([request, response, document, ...assertions]);
+  return expand([subject, assertor, ...assertions]);
+}
+
+function getNodeId(): string {
+  return `_:${Math.random()
+    .toString(36)
+    .substr(2, 5)}`;
 }
 
 function getPointer<A extends Aspect, T extends Target>(
   aspects: AspectsFor<A>,
+  aspect: A,
   target: T
 ): JSON.Document | null {
-  if ("document" in aspects) {
-    const { document } = aspects as AspectsFor<Document>;
-
-    return {
-      pointer: {
-        "@context": Contexts.XPathPointer,
-        "@type": ["ptr:Pointer", "ptr:XPathPointer"],
-        reference: { "@id": "_:document" },
-        expression: getPath(target, document)
+  switch (aspect) {
+    case aspects.document:
+      if (isTargetUnit(target)) {
+        return {
+          pointer: {
+            "@context": Contexts.XPathPointer,
+            "@type": ["ptr:Pointer", "ptr:XPathPointer"],
+            expression: getPath(target, aspects.document!)
+          }
+        };
       }
-    };
+
+      if (isTargetGroup(target)) {
+        const pointers: Array<JSON.Document> = [];
+
+        for (const subtarget of target) {
+          const pointer = getPointer(aspects, aspect, subtarget);
+
+          if (pointer !== null) {
+            pointers.push(pointer);
+          }
+        }
+
+        return {
+          pointer: {
+            "@context": Contexts.RelatedPointers,
+            "@type": ["ptr:Pointer", "ptr:RelatedPointers"],
+            pointers
+          }
+        };
+      }
   }
 
   return null;
 }
 
-function getPath(target: Node | Attribute, context: Node): string {
-  if ("nodeType" in target) {
-    const node = target;
+function getPath(node: Node, context: Node): string {
+  if (isAttribute(node)) {
+    const owner = getOwnerElement(node, context);
 
+    if (owner !== null) {
+      let qualifiedName: string;
+
+      if (node.prefix === null) {
+        qualifiedName = node.localName;
+      } else {
+        qualifiedName = `${node.prefix}:${node.localName}`;
+      }
+
+      return `${getPath(owner, context)}/@${qualifiedName}`;
+    }
+  } else {
     if (isElement(node)) {
-      const parentNode = getParentNode(node, context);
+      const parentNode = getParentNode(node, context, { composed: true });
       const tagName = getTagName(node, context);
 
       if (parentNode !== null) {
-        const { childNodes } = parentNode;
+        const childNodes = getChildNodes(parentNode, context, {
+          composed: true
+        });
 
         for (let i = 0, j = 1, n = childNodes.length; i < n; i++) {
           const childNode = childNodes[i];
@@ -220,21 +277,6 @@ function getPath(target: Node | Attribute, context: Node): string {
 
     if (isDocument(node)) {
       return "/";
-    }
-  } else {
-    const attribute = target;
-    const owner = getOwnerElement(attribute, context);
-
-    if (owner !== null) {
-      let qualifiedName: string;
-
-      if (attribute.prefix === null) {
-        qualifiedName = attribute.localName;
-      } else {
-        qualifiedName = `${attribute.prefix}:${attribute.localName}`;
-      }
-
-      return `${getPath(owner, context)}/@${qualifiedName}`;
     }
   }
 

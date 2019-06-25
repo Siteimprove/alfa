@@ -50,9 +50,11 @@ export function jsx(
 
     if (value !== false && value !== null && value !== undefined) {
       attributes.push({
+        nodeType: 2,
         prefix: null,
         localName: name,
-        value: toString(name, value)
+        value: toString(name, value),
+        childNodes: []
       });
     }
   }
@@ -94,8 +96,8 @@ function toString(
   return typeof value === "number"
     ? value.toString(10)
     : typeof value === "boolean"
-      ? name
-      : typeof value === "string"
-        ? value
-        : value.toString();
+    ? name
+    : typeof value === "string"
+    ? value
+    : value.toString();
 }

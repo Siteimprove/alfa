@@ -1,6 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { BrowserSpecific } from "../src/browser-specific";
-import { map } from "../src/map";
+
+const { map } = BrowserSpecific;
 
 const n = BrowserSpecific.of(1, ["chrome"]).branch(2, ["firefox"]);
 

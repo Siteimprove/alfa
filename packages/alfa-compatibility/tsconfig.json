@@ -1,3 +1,40 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/browser-specific.ts",
+    "src/browsers.ts",
+    "src/expand-browsers.ts",
+    "src/expand-versions.ts",
+    "src/features.ts",
+    "src/get-default-browsers.ts",
+    "src/get-feature-support.ts",
+    "src/guards.ts",
+    "src/index.ts",
+    "src/is-browser-supported.ts",
+    "src/is-feature-supported.ts",
+    "src/iterable.ts",
+    "src/iterable/filter.ts",
+    "src/iterable/find.ts",
+    "src/iterable/group-by.ts",
+    "src/iterable/map.ts",
+    "src/iterable/reduce.ts",
+    "src/supported-browsers.ts",
+    "src/types.ts",
+    "src/with-browsers.ts",
+    "test/browser-specific.spec.ts",
+    "test/guards.spec.ts",
+    "test/is-browser-supported.spec.ts",
+    "test/is-feature-supported.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

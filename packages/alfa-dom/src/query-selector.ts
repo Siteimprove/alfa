@@ -87,7 +87,7 @@ export function querySelectorAll(
   context: Node,
   selector: string,
   options?: QuerySelectorOptions
-): ReadonlyArray<Element>;
+): Iterable<Element>;
 
 /**
  * Given a scope and a context, get all nodes within the scope that match the
@@ -101,14 +101,14 @@ export function querySelectorAll<T extends Node>(
   context: Node,
   predicate: Predicate<Node, T>,
   options?: QuerySelectorOptions
-): ReadonlyArray<T>;
+): Iterable<T>;
 
 export function querySelectorAll<T extends Node>(
   scope: Node,
   context: Node,
   query: string | Predicate<Node, T>,
   options: QuerySelectorOptions = {}
-): ReadonlyArray<T> {
+): Iterable<T> {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {

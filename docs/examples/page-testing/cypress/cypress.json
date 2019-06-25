@@ -1,0 +1,9 @@
+{
+  "testFiles": "**/*.spec.js",
+  "integrationFolder": "integration",
+  "fixturesFolder": "fixtures",
+  "screenshotsFolder": "screenshots",
+  "videosFolder": "videos",
+  "pluginsFile": false,
+  "supportFile": "support.js"
+}

@@ -17,6 +17,7 @@
     "Búgvi Benjamin Magnussen <bbm@siteimprove.com>",
     "Kasper Kronborg Isager <kki@siteimprove.com>",
     "Niclas Hedam <nhe@siteimprove.com>",
+    "Per Jakobsen <pja@siteimprove.com>",
     "Tobias Christian Jensen <tcj@siteimprove.com>"
   ],
   "repository": "https://github.com/siteimprove/alfa",
@@ -30,22 +31,19 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-dom": "^0.0.0",
-    "@siteimprove/alfa-react": "^0.0.0",
-    "@types/enzyme": "^3.1.14",
-    "enzyme": "^3.7.0"
-  },
-  "peerDependencies": {
     "@siteimprove/alfa-chai": "^0.0.0",
+    "@siteimprove/alfa-cheerio": "^0.0.0",
+    "@siteimprove/alfa-dom": "^0.0.0",
+    "@siteimprove/alfa-jasmine": "^0.0.0",
     "@siteimprove/alfa-jest": "^0.0.0",
-    "@siteimprove/alfa-should": "^0.0.0",
-    "@siteimprove/alfa-unexpected": "^0.0.0"
+    "@siteimprove/alfa-react": "^0.0.0",
+    "@siteimprove/alfa-unexpected": "^0.0.0",
+    "@types/enzyme": "^3.1.18",
+    "@types/react": "^16.8.4",
+    "enzyme": "^3.7.0",
+    "react": "^16.8.2"
   },
   "devDependencies": {
-    "@siteimprove/alfa-chai": "^0.0.0",
-    "@siteimprove/alfa-jest": "^0.0.0",
-    "@siteimprove/alfa-should": "^0.0.0",
-    "@siteimprove/alfa-test": "^0.0.0",
-    "@siteimprove/alfa-unexpected": "^0.0.0"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

@@ -1,0 +1,46 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/alphabet.ts",
+    "src/builder.ts",
+    "src/coerce.ts",
+    "src/descriptors.ts",
+    "src/environment.ts",
+    "src/evaluate.ts",
+    "src/function.ts",
+    "src/functions/fn.ts",
+    "src/functions/index.ts",
+    "src/grammar.ts",
+    "src/guards.ts",
+    "src/index.ts",
+    "src/matches.ts",
+    "src/parse.ts",
+    "src/serialize.ts",
+    "src/tree.ts",
+    "src/types.ts",
+    "test/alphabet.spec.ts",
+    "test/evaluate.spec.tsx",
+    "test/grammar.spec.ts",
+    "test/tree.spec.tsx"
+  ],
+  "references": [
+    {
+      "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jsx"
+    },
+    {
+      "path": "../alfa-lang"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
+}

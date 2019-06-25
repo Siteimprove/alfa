@@ -1,5 +1,7 @@
+/// <reference types="node" />
+
+import { mark } from "@siteimprove/alfa-highlight";
 import { AssertionError } from "assert";
-import chalk from "chalk";
 import * as stack from "error-stack-parser";
 import * as path from "path";
 
@@ -26,8 +28,8 @@ export function format(name: string, error: Error & AssertionError): string {
   );
 
   const output = `
-${chalk.bold(name)}
-${chalk.underline(`${filePath}:${lineNumber}`)}
+${mark.bold(name)}
+${mark.underline(`${filePath}:${lineNumber}`)}
 ${message}
 ${error.message}
   `;

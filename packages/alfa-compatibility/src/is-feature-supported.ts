@@ -1,18 +1,24 @@
+import { Set } from "@siteimprove/alfa-collection";
 import { keys } from "@siteimprove/alfa-util";
 import { expandBrowsers } from "./expand-browsers";
 import { FeatureName, Features } from "./features";
 import { getFeatureSupport } from "./get-feature-support";
 import { getSupportedBrowsers } from "./supported-browsers";
-import { BrowserName, VersionSet } from "./types";
+import { BrowserName, Version } from "./types";
 
-const features: Map<FeatureName, Map<BrowserName, VersionSet>> = new Map();
+const features: Map<
+  FeatureName,
+  Map<BrowserName, Set<Version> | true>
+> = new Map();
 
 for (const name of keys(Features)) {
   features.set(
     name,
-    expandBrowsers(getFeatureSupport(name).supported, {
-      unsupported: true
-    })
+    new Map(
+      expandBrowsers(getFeatureSupport(name).supported, {
+        unsupported: true
+      })
+    )
   );
 }
 
@@ -26,7 +32,7 @@ export function isFeatureSupported(name: FeatureName): boolean {
   for (const [browser, versions] of getSupportedBrowsers()) {
     const support = feature.get(browser);
 
-    if (support === undefined || support === false) {
+    if (support === undefined) {
       return false;
     }
 

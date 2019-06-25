@@ -1,4 +1,5 @@
 export * from "./ancestor-filter";
+export * from "./clone";
 export * from "./compare-document-position";
 export * from "./contains";
 export * from "./get-assigned-nodes";
@@ -43,6 +44,7 @@ export * from "./is-focusable";
 export * from "./is-labelable";
 export * from "./is-rendered";
 export * from "./is-tabbable";
+export * from "./is-visible";
 export * from "./matches";
 export * from "./query-selector";
 export * from "./rule-tree";

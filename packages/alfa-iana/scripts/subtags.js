@@ -14,7 +14,7 @@ const registry = "https://www.iana.org/assignments/language-subtag-registry";
  */
 
 /**
- * @typedef {Object} Subtag
+ * @typedef {object} Subtag
  * @property {string} name
  * @property {string} type
  * @property {string | Array<string>} [prefix]
@@ -183,7 +183,7 @@ fetch(registry).then(body => {
 
   /** @type {Map<string, Array<Subtag>>} */
   const groups = subtags.reduce((groups, subtag) => {
-    const group = getType(subtag) + "s";
+    const group = `${getType(subtag)}s`;
 
     let subtags = groups.get(group);
 

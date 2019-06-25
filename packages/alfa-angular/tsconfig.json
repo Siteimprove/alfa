@@ -1,0 +1,32 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "chai.ts",
+    "jasmine.ts",
+    "jest.ts",
+    "src/from-angular-fixture.ts",
+    "src/index.ts",
+    "src/is-angular-fixture.ts",
+    "unexpected.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-chai"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jasmine"
+    },
+    {
+      "path": "../alfa-jest"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-unexpected"
+    }
+  ]
+}

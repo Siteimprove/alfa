@@ -1,9 +1,15 @@
 class Graph {
   constructor() {
-    /** @type {Set<string>} */
+    /**
+     * @private
+     * @type {Set<string>}
+     */
     this.nodes = new Set();
 
-    /** @type {Map<string, Set<string>>} */
+    /**
+     * @private
+     * @type {Map<string, { incoming: Set<string>, outgoing: Set<string> }>}
+     */
     this.edges = new Map();
   }
 
@@ -17,7 +23,37 @@ class Graph {
     }
 
     this.nodes.add(node);
-    this.edges.set(node, new Set());
+    this.edges.set(node, {
+      incoming: new Set(),
+      outgoing: new Set()
+    });
+
+    return true;
+  }
+
+  /**
+   * @param {string} node
+   * @return {boolean}
+   */
+  removeNode(node) {
+    if (!this.hasNode(node)) {
+      return false;
+    }
+
+    const edges = this.edges.get(node);
+
+    if (edges !== undefined) {
+      for (const neighbour of edges.incoming) {
+        this.removeEdge(neighbour, node);
+      }
+
+      for (const neighbour of edges.outgoing) {
+        this.removeEdge(node, neighbour);
+      }
+    }
+
+    this.nodes.delete(node);
+    this.edges.delete(node);
 
     return true;
   }
@@ -43,10 +79,49 @@ class Graph {
     this.addNode(from);
     this.addNode(to);
 
-    const edges = this.edges.get(from);
+    {
+      const edges = this.edges.get(from);
 
-    if (edges !== undefined) {
-      edges.add(to);
+      if (edges !== undefined) {
+        edges.outgoing.add(to);
+      }
+    }
+
+    {
+      const edges = this.edges.get(to);
+
+      if (edges !== undefined) {
+        edges.incoming.add(from);
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * @param {string} from
+   * @param {string} to
+   * @return {boolean}
+   */
+  removeEdge(from, to) {
+    if (!this.hasEdge(from, to)) {
+      return false;
+    }
+
+    {
+      const edges = this.edges.get(from);
+
+      if (edges !== undefined) {
+        edges.outgoing.delete(to);
+      }
+    }
+
+    {
+      const edges = this.edges.get(to);
+
+      if (edges !== undefined) {
+        edges.incoming.delete(from);
+      }
     }
 
     return true;
@@ -64,7 +139,21 @@ class Graph {
       return false;
     }
 
-    return edges.has(to);
+    return edges.outgoing.has(to);
+  }
+
+  /**
+   * @param {string} node
+   * @return {{ incoming: Iterable<string>, outgoing: Iterable<string> } | null}
+   */
+  getEdges(node) {
+    const edges = this.edges.get(node);
+
+    if (edges === undefined) {
+      return null;
+    }
+
+    return edges;
   }
 
   /**
@@ -77,20 +166,16 @@ class Graph {
     /** @type {Map<string, number>} */
     const indegrees = new Map();
 
-    for (const neighbours of this.edges.values()) {
-      for (const node of neighbours) {
-        const indegree = indegrees.get(node);
+    for (const node of this.nodes.values()) {
+      const edges = this.edges.get(node);
 
-        if (indegree === undefined) {
-          indegrees.set(node, 1);
-        } else {
-          indegrees.set(node, indegree + 1);
-        }
+      if (edges !== undefined) {
+        indegrees.set(node, edges.incoming.size);
       }
     }
 
     const leaves = Array.from(this.nodes).filter(
-      node => indegrees.get(node) === undefined
+      node => indegrees.get(node) === 0
     );
 
     let next = leaves.pop();
@@ -100,17 +185,19 @@ class Graph {
 
       const edges = this.edges.get(next);
 
-      for (const node of edges || []) {
-        const indegree = indegrees.get(node);
+      if (edges !== undefined) {
+        for (const node of edges.outgoing) {
+          const indegree = indegrees.get(node);
 
-        if (indegree === undefined) {
-          continue;
-        }
+          if (indegree === undefined) {
+            continue;
+          }
 
-        indegrees.set(node, indegree - 1);
+          indegrees.set(node, indegree - 1);
 
-        if (indegree === 1) {
-          leaves.push(node);
+          if (indegree === 1) {
+            leaves.push(node);
+          }
         }
       }
 

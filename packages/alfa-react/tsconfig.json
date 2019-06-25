@@ -1,3 +1,35 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "chai.ts",
+    "jasmine.ts",
+    "jest.ts",
+    "src/from-react-element.ts",
+    "src/index.ts",
+    "src/is-react-element.ts",
+    "unexpected.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-chai"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-jasmine"
+    },
+    {
+      "path": "../alfa-jest"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-unexpected"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

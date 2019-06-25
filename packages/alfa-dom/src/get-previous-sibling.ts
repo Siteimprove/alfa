@@ -1,4 +1,3 @@
-import { indexOf } from "@siteimprove/alfa-util";
 import { getParentNode } from "./get-parent-node";
 import { Node } from "./types";
 
@@ -20,9 +19,9 @@ export function getPreviousSibling<T extends Node>(
     return null;
   }
 
-  const { childNodes } = parentNode;
+  const childNodes = Array.from(parentNode.childNodes);
 
-  const previousIndex = indexOf(childNodes, node) - 1;
+  const previousIndex = childNodes.indexOf(node) - 1;
 
   if (previousIndex in childNodes) {
     return childNodes[previousIndex];

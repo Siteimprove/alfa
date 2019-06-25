@@ -1,34 +1,59 @@
-/// <reference path="../types/chai.d.ts" />
+/// <reference types="chai" />
 
-import { expect } from "@siteimprove/alfa-assert";
-import { Element } from "@siteimprove/alfa-dom";
-import * as chai from "chai";
+import {
+  Assertable,
+  Assertion,
+  AssertionError
+} from "@siteimprove/alfa-assert";
+import { serialize } from "@siteimprove/alfa-dom";
 
-// tslint:disable:no-invalid-this
+// tslint:disable:no-any
+// tslint:disable:no-unsafe-any
 
-declare module "chai" {
-  interface Assertion {
-    accessible: void;
+declare global {
+  export namespace Chai {
+    interface Assertion {
+      accessible: void;
+    }
   }
 }
 
 export function createChaiPlugin<T>(
   identify: (input: unknown) => input is T,
-  transform: (input: T) => Element
-): (chai: chai, util: chai.Util) => void {
+  transform: (input: T) => Assertable
+): (chai: any, util: any) => void {
   return (chai, util) => {
-    const { Assertion } = chai;
-
-    Assertion.addProperty("accessible", function() {
+    chai.Assertion.addProperty("accessible", function(this: typeof chai) {
       const object = util.flag(this, "object");
 
       if (identify(object)) {
-        const error = expect(transform(object)).to.be.accessible;
+        const element = transform(object);
+
+        let error: AssertionError | null = null;
+        try {
+          new Assertion(element).should.be.accessible;
+        } catch (err) {
+          if (err instanceof AssertionError) {
+            error = err;
+          } else {
+            throw err;
+          }
+        }
+
+        let reason = "";
+
+        if (error !== null) {
+          const target = util.inspect(serialize(error.target, element));
+
+          reason = `, but ${target} is not: ${error.message}`;
+        }
 
         this.assert(
           error === null,
-          "Expected to be accessible",
-          "Expected to not be accessible"
+          `expected #{this} to be accessible${reason}`,
+          "expected #{this} to not be accessible",
+          null,
+          error
         );
       }
     });

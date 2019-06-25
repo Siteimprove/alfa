@@ -1,6 +1,10 @@
-import { expect as assert } from "@siteimprove/alfa-assert";
-import { Element } from "@siteimprove/alfa-dom";
-import "jest"; // tslint:disable-line
+/// <reference types="jest" />
+
+import {
+  Assertable,
+  Assertion,
+  AssertionError
+} from "@siteimprove/alfa-assert";
 
 declare global {
   namespace jest {
@@ -12,19 +16,38 @@ declare global {
 
 export function createJestPlugin<T>(
   identify: (input: unknown) => input is T,
-  transform: (input: T) => Element
+  transform: (input: T) => Assertable
 ): void {
   expect.extend({
     toBeAccessible: (target: unknown) => {
       if (identify(target)) {
-        const error = assert(transform(target)).to.be.accessible;
+        const element = transform(target);
 
-        if (error === null) {
-          return { pass: true, message: () => "Expected to be accessible" };
+        let error: AssertionError | null = null;
+        try {
+          new Assertion(element).should.be.accessible;
+        } catch (err) {
+          if (err instanceof AssertionError) {
+            error = err;
+          } else {
+            throw err;
+          }
+        }
+
+        if (error !== null) {
+          const message = error.toString();
+
+          return {
+            pass: false,
+            message: () => message
+          };
         }
       }
 
-      return { pass: false, message: () => "Expected to not be accessible" };
+      return {
+        pass: true,
+        message: () => "Expected to not be accessible"
+      };
     }
   });
 }

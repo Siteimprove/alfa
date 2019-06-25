@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
+    "esModuleInterop": true,
+    "incremental": true,
     "jsx": "react",
     "jsxFactory": "jsx",
     "lib": ["es2015"],
@@ -12,8 +15,16 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
+    "skipLibCheck": true,
     "strict": true,
     "stripInternal": true,
-    "target": "es2015"
-  }
+    "target": "es2015",
+    "types": []
+  },
+  "files": [],
+  "references": [
+    { "path": "docs" },
+    { "path": "scripts" },
+    { "path": "packages" }
+  ]
 }

@@ -81,7 +81,7 @@ function visitNode(
 
   const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
-  if (shadowRoot !== null) {
+  if (shadowRoot !== null && shadowRoot !== undefined) {
     if (options.flattened === true) {
       const { childNodes } = shadowRoot;
 

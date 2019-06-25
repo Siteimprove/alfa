@@ -27,12 +27,50 @@ const Namespaces: Context = {
   wcag: "https://www.w3.org/TR/WCAG/#",
 
   /**
+   * @see https://www.w3.org/TR/wai-aria/
+   */
+  aria: "https://www.w3.org/TR/wai-aria/",
+
+  /**
+   * @see https://github.com/ewilderj/doap
+   */
+  doap: "http://usefulinc.com/ns/doap#",
+
+  /**
+   * @see http://xmlns.com/foaf/spec/
+   */
+  foaf: "http://xmlns.com/foaf/spec/#",
+
+  /**
+   * @see http://www.dublincore.org/documents/dcmi-terms/
+   */
+  dct: "http://purl.org/dc/terms/",
+
+  /**
    * @see https://siteimprove.github.io/sanshikan/
    */
   sanshikan: "https://siteimprove.github.io/sanshikan/"
 };
 
 export namespace Contexts {
+  /**
+   * @see https://www.w3.org/TR/EARL/#Assertor
+   */
+  export const Assertor: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    name: {
+      "@id": "doap:name"
+    },
+
+    vendor: {
+      "@id": "doap:vendor",
+      "@type": "foaf:Organization"
+    }
+  };
+
   /**
    * @see https://www.w3.org/TR/EARL/#Assertion
    */
@@ -86,9 +124,27 @@ export namespace Contexts {
   };
 
   /**
+   * @see https://www.w3.org/TR/EARL/#TestSubject
+   */
+  export const Subject: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    parts: {
+      "@id": "dct:hasPart",
+      "@container": "@set"
+    }
+  };
+
+  /**
    * @see https://www.w3.org/TR/EARL/#TestResult
    */
   export const Result: Context = {
+    ...Namespaces,
+
+    // Properties
+
     /**
      * @see https://www.w3.org/TR/EARL/#outcome
      */
@@ -233,5 +289,20 @@ export namespace Contexts {
      * @see https://www.w3.org/TR/Pointers-in-RDF/#expressionProperty
      */
     expression: "ptr:expression"
+  };
+
+  /**
+   * @see https://www.w3.org/TR/Pointers-in-RDF/#relatedPointersClass
+   */
+  export const RelatedPointers: Context = {
+    ...Namespaces,
+
+    // Properties
+
+    pointers: {
+      "@id": "ptr:groupPointer",
+      "@type": "ptr:Pointer",
+      "@container": "@set"
+    }
   };
 }

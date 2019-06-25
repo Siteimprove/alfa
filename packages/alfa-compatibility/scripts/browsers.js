@@ -3,7 +3,7 @@ const prettier = require("prettier");
 const data = require("mdn-browser-compat-data");
 
 /**
- * @type {Array<keyof data["browsers"]>}
+ * @type {Array<import("mdn-browser-compat-data/types").BrowserNames>}
  */
 const include = ["chrome", "edge", "firefox", "ie", "opera", "safari"];
 
@@ -60,10 +60,7 @@ import { Browser } from "./types";
  */
 export type BrowserName = ${include.map(name => `"${name}"`).join("|")};
 
-/**
- * @internal
- */
-export const Browsers: { [P in BrowserName]: Browser } = {
+export const Browsers: { readonly [P in BrowserName]: Browser } = {
   ${browsers
     .map(
       browser => `

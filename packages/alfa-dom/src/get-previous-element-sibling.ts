@@ -1,4 +1,3 @@
-import { indexOf } from "@siteimprove/alfa-util";
 import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { Element, Node } from "./types";
@@ -21,9 +20,9 @@ export function getPreviousElementSibling<T extends Node>(
     return null;
   }
 
-  const { childNodes } = parentNode;
+  const childNodes = Array.from(parentNode.childNodes);
 
-  for (let i = indexOf(childNodes, node) - 1; i >= 0; i--) {
+  for (let i = childNodes.indexOf(node) - 1; i >= 0; i--) {
     const sibling = childNodes[i];
 
     if (isElement(sibling)) {

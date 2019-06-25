@@ -1,3 +1,42 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/audit.ts",
+    "src/contexts.ts",
+    "src/guards.ts",
+    "src/index.ts",
+    "src/oracle.ts",
+    "src/sort-rules.ts",
+    "src/to-json.ts",
+    "src/types.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-compatibility"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-json-ld"
+    },
+    {
+      "path": "../alfa-jsx"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
 }

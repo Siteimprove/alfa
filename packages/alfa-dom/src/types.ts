@@ -5,6 +5,11 @@ export const enum NodeType {
   Element = 1,
 
   /**
+   * @see https://www.w3.org/TR/dom41/#dom-node-attribute_node
+   */
+  Attribute = 2,
+
+  /**
    * @see https://www.w3.org/TR/dom/#dom-node-text_node
    */
   Text = 3,
@@ -70,9 +75,14 @@ export interface CharacterData extends Node {
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-attr
+ * @see https://www.w3.org/TR/dom41/#interface-attr
  */
-export interface Attribute {
+export interface Attribute extends Node {
+  /**
+   * @see https://www.w3.org/TR/dom41/#dom-node-attribute_node
+   */
+  readonly nodeType: NodeType.Attribute;
+
   /**
    * @see https://www.w3.org/TR/dom/#dom-attr-prefix
    */
@@ -114,9 +124,12 @@ export interface Element extends Node {
   readonly attributes: ArrayLike<Attribute>;
 
   /**
+   * NB: In environments where Shadow DOM is not supported, the `shadowRoot`
+   * property will not be defined.
+   *
    * @see https://www.w3.org/TR/dom41/#dom-element-shadowroot
    */
-  readonly shadowRoot: ShadowRoot | null;
+  readonly shadowRoot?: ShadowRoot | null;
 }
 
 /**
@@ -172,6 +185,16 @@ export interface DocumentType extends Node {
    * @see https://www.w3.org/TR/dom/#dom-documenttype-name
    */
   readonly name: string;
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-documenttype-publicid
+   */
+  readonly publicId: string;
+
+  /**
+   * @see https://www.w3.org/TR/dom/#dom-documenttype-systemid
+   */
+  readonly systemId: string;
 }
 
 /**
@@ -191,13 +214,18 @@ export interface ShadowRoot extends DocumentFragment {
   /**
    * @see https://www.w3.org/TR/dom41/#dom-shadowroot-mode
    */
-  readonly mode: "open";
+  readonly mode: "open" | "closed";
 }
 
 /**
  * @see https://www.w3.org/TR/cssom/#cssstylesheet
  */
 export interface StyleSheet {
+  /**
+   * @see https://www.w3.org/TR/cssom/#dom-stylesheet-disabled
+   */
+  readonly disabled: boolean;
+
   /**
    * @see https://www.w3.org/TR/cssom/#dom-cssstylesheet-cssrules
    */

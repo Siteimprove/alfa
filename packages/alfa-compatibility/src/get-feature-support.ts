@@ -4,8 +4,8 @@ import { Features } from "./features";
 import { BrowserQuery, FeatureName } from "./types";
 
 export interface FeatureSupport {
-  readonly supported: ReadonlyArray<BrowserQuery>;
-  readonly unsupported: ReadonlyArray<BrowserQuery>;
+  readonly supported: Iterable<BrowserQuery>;
+  readonly unsupported: Iterable<BrowserQuery>;
 }
 
 const features: Map<FeatureName, FeatureSupport> = new Map();

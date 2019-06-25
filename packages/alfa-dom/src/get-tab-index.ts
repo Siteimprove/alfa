@@ -16,10 +16,10 @@ export function getTabIndex(element: Element, context: Node): number | null {
   const tabIndex = getAttribute(element, "tabindex");
 
   if (tabIndex !== null) {
-    const parsed = parseInt(tabIndex);
+    const number = Number(tabIndex);
 
-    if (!isNaN(parsed)) {
-      return parsed;
+    if (!isNaN(number) && number === (number | 0)) {
+      return number;
     }
   }
 

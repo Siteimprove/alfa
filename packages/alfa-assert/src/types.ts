@@ -1,15 +1,8 @@
-export interface Assertion {
-  // Language
-  to: this;
-  be: this;
+import { Device } from "@siteimprove/alfa-device";
+import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 
-  // Flags
-  not: this;
+export type Aspect = Document | Device;
 
-  // Assertions
-  accessible: AssertionError | null;
-}
+export type Target = Attribute | Document | Element;
 
-export interface AssertionError extends Error {
-  name: "AssertionError";
-}
+export type Assertable = Exclude<Target, Attribute>;

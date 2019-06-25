@@ -1,0 +1,145 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/helpers/applicabilities/audio.ts",
+    "src/helpers/applicabilities/video.ts",
+    "src/helpers/get-explicit-role.ts",
+    "src/helpers/has-explicit-role.ts",
+    "src/helpers/has-language-attribute.ts",
+    "src/helpers/has-outcome.ts",
+    "src/helpers/is-document-element.ts",
+    "src/helpers/is-perceivable.ts",
+    "src/index.ts",
+    "src/rules.ts",
+    "src/sia-r1/locales/en.ts",
+    "src/sia-r1/rule.ts",
+    "src/sia-r10/rule.ts",
+    "src/sia-r11/rule.ts",
+    "src/sia-r12/locales/en.ts",
+    "src/sia-r12/rule.ts",
+    "src/sia-r13/rule.ts",
+    "src/sia-r14/rule.ts",
+    "src/sia-r15/rule.ts",
+    "src/sia-r16/rule.ts",
+    "src/sia-r17/rule.ts",
+    "src/sia-r18/rule.ts",
+    "src/sia-r19/locales/en.ts",
+    "src/sia-r19/rule.ts",
+    "src/sia-r2/locales/en.ts",
+    "src/sia-r2/rule.ts",
+    "src/sia-r20/rule.ts",
+    "src/sia-r21/rule.ts",
+    "src/sia-r22/locales/en.ts",
+    "src/sia-r22/rule.ts",
+    "src/sia-r23/locales/en.ts",
+    "src/sia-r23/rule.ts",
+    "src/sia-r24/rule.ts",
+    "src/sia-r25/rule.ts",
+    "src/sia-r26/rule.ts",
+    "src/sia-r27/rule.ts",
+    "src/sia-r28/rule.ts",
+    "src/sia-r29/rule.ts",
+    "src/sia-r3/rule.ts",
+    "src/sia-r30/rule.ts",
+    "src/sia-r31/rule.ts",
+    "src/sia-r32/rule.ts",
+    "src/sia-r33/rule.ts",
+    "src/sia-r34/rule.ts",
+    "src/sia-r35/rule.ts",
+    "src/sia-r36/rule.ts",
+    "src/sia-r37/rule.ts",
+    "src/sia-r38/rule.ts",
+    "src/sia-r39/rule.ts",
+    "src/sia-r4/rule.ts",
+    "src/sia-r40/rule.ts",
+    "src/sia-r41/rule.ts",
+    "src/sia-r42/rule.ts",
+    "src/sia-r5/rule.ts",
+    "src/sia-r6/rule.ts",
+    "src/sia-r7/rule.ts",
+    "src/sia-r8/rule.ts",
+    "src/sia-r9/rule.ts",
+    "test/helpers/document-from-nodes.tsx",
+    "test/helpers/has-language-attribute.spec.tsx",
+    "test/helpers/is-document-element.spec.tsx",
+    "test/helpers/outcome.ts",
+    "test/sia-r1/rule.spec.tsx",
+    "test/sia-r10/rule.spec.tsx",
+    "test/sia-r11/rule.spec.tsx",
+    "test/sia-r12/rule.spec.tsx",
+    "test/sia-r13/rule.spec.tsx",
+    "test/sia-r14/rule.spec.tsx",
+    "test/sia-r15/rule.spec.tsx",
+    "test/sia-r16/rule.spec.tsx",
+    "test/sia-r17/rule.spec.tsx",
+    "test/sia-r18/rule.spec.tsx",
+    "test/sia-r19/rule.spec.tsx",
+    "test/sia-r2/rule.spec.tsx",
+    "test/sia-r20/rule.spec.tsx",
+    "test/sia-r21/rule.spec.tsx",
+    "test/sia-r22/rule.spec.tsx",
+    "test/sia-r23/rule.spec.tsx",
+    "test/sia-r24/rule.spec.tsx",
+    "test/sia-r25/rule.spec.tsx",
+    "test/sia-r26/rule.spec.tsx",
+    "test/sia-r27/rule.spec.tsx",
+    "test/sia-r28/rule.spec.tsx",
+    "test/sia-r29/rule.spec.tsx",
+    "test/sia-r3/rule.spec.tsx",
+    "test/sia-r30/rule.spec.tsx",
+    "test/sia-r31/rule.spec.tsx",
+    "test/sia-r32/rule.spec.tsx",
+    "test/sia-r33/rule.spec.tsx",
+    "test/sia-r34/rule.spec.tsx",
+    "test/sia-r35/rule.spec.tsx",
+    "test/sia-r36/rule.spec.tsx",
+    "test/sia-r37/rule.spec.tsx",
+    "test/sia-r38/rule.spec.tsx",
+    "test/sia-r39/rule.spec.tsx",
+    "test/sia-r4/rule.spec.tsx",
+    "test/sia-r40/rule.spec.tsx",
+    "test/sia-r5/rule.spec.tsx",
+    "test/sia-r6/rule.spec.tsx",
+    "test/sia-r7/rule.spec.tsx",
+    "test/sia-r8/rule.spec.tsx",
+    "test/sia-r9/rule.spec.tsx"
+  ],
+  "references": [
+    {
+      "path": "../alfa-act"
+    },
+    {
+      "path": "../alfa-aria"
+    },
+    {
+      "path": "../alfa-collection"
+    },
+    {
+      "path": "../alfa-compatibility"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-iana"
+    },
+    {
+      "path": "../alfa-jsx"
+    },
+    {
+      "path": "../alfa-lang"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-unicode"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
+}

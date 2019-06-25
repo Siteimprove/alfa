@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest"]
+  },
+  "files": ["components/button.spec.ts", "components/button.ts", "setup.ts"],
+  "references": [{ "path": "../../../../packages" }]
+}

@@ -1,8 +1,10 @@
-import { BrowserSpecific, map } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { getRoleCategory } from "./get-role-category";
 import { Category } from "./types";
+
+const { map } = BrowserSpecific;
 
 /**
  * Given an element and a context, check if the element is a widget within the

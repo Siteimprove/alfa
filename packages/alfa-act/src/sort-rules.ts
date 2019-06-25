@@ -1,19 +1,23 @@
 import { isComposite } from "./guards";
-import { Aspect, Rule, Target } from "./types";
+import { Aspect, Composition, Rule, Target } from "./types";
 
 /**
  * @internal
  */
 export function sortRules<A extends Aspect, T extends Target>(
-  rules: ReadonlyArray<Rule<A, T>>
-): ReadonlyArray<Rule<A, T>> {
+  rules: Iterable<Rule<A, T>>
+): Iterable<Rule<A, T>> {
   const result: Array<Rule<A, T>> = [];
 
   const indegrees = new WeakMap<Rule<A, T>, number>();
 
   for (const rule of rules) {
     if (isComposite(rule)) {
-      for (const neighbour of rule.composes) {
+      const composition = new Composition<A, T>();
+
+      rule.compose(composition);
+
+      for (const neighbour of composition) {
         const indegree = indegrees.get(neighbour);
 
         if (indegree === undefined) {
@@ -25,17 +29,19 @@ export function sortRules<A extends Aspect, T extends Target>(
     }
   }
 
-  const leaves = rules.filter(rule => !indegrees.has(rule));
+  const leaves = Array.from(rules).filter(rule => !indegrees.has(rule));
 
   let next = leaves.pop();
 
   while (next !== undefined) {
-    if (rules.indexOf(next) !== -1) {
-      result.unshift(next);
-    }
+    result.unshift(next);
 
     if (isComposite(next)) {
-      for (const neighbour of next.composes) {
+      const composition = new Composition<A, T>();
+
+      next.compose(composition);
+
+      for (const neighbour of composition) {
         const indegree = indegrees.get(neighbour);
 
         if (indegree === undefined) {

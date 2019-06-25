@@ -10,9 +10,7 @@ The two artefacts we concern ourselves with in the development process are work 
 
 ### Work items
 
-A work item is a unit of work to be performed by a developer and consists of either a [GitHub issue](https://help.github.com/articles/about-issues/), a [GitHub pull request](https://help.github.com/articles/about-pull-requests/), or a combination of the two in the event that a pull request relates to an issue. As part of [refinement](#refinement), work items are assigned estimates based on their scope. Estimates take the shape of [story points](https://www.atlassian.com/agile/project-management/estimation) and are to be seen as relative sizes; a work item with an estimate of 3 is therefore about half the size of a work item with an estimate of 5.
-
-The larger the estimate, the more uncertain the scope of a work item is. Work items must therefore be kept at reasonable sizes and if estimates are too large then items must be broken down if possible.
+A work item is a unit of work to be performed by a developer and consists of either a [GitHub issue](https://help.github.com/articles/about-issues/), a [GitHub pull request](https://help.github.com/articles/about-pull-requests/), or a combination of the two in the event that a pull request relates to an issue.
 
 ### Project board
 
@@ -24,7 +22,7 @@ As is customary from Kanban, a board is used for visualising and keeping track o
 
 - **Ready**
 
-  When a given work item has been sufficiently clarified and estimated as part of [refinement](#refinement), it is moved to the ready stage. Decisions pertaining to the "how" of a work item, be it design, architecture, or otherwise, must be answered before the item is moved to this stage. When in this stage, a work item is ready to be worked on by a developer.
+  When a given work item has been sufficiently clarified as part of [refinement](#refinement), it is moved to the ready stage. Decisions pertaining to the "how" of a work item, be it design, architecture, or otherwise, must be answered before the item is moved to this stage. When in this stage, a work item is ready to be worked on by a developer.
 
 - **In progress**
 
@@ -46,7 +44,7 @@ Check-ins are performed daily and, if possible, should be held at the same time 
 
 ### Refinement
 
-Refinements are performed at least once a week. The purpose of the refinement is to look through work items in the backlog and clarify, assign labels to, and estimate these. It is not a requirement that every new work item be looked at at each refinement session; it is sufficient to refine enough items needed to keep developers occupied until the next refinement session.
+Refinements are performed at least once a week. The purpose of the refinement is to look through work items in the backlog and clarify and assign labels to these. It is not a requirement that every new work item be looked at at each refinement session; it is sufficient to refine enough items needed to keep developers occupied until the next refinement session.
 
 ### Review
 

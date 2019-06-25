@@ -1,21 +1,21 @@
 const childProcess = require("child_process");
 
 /**
- * @typedef {Object} ChildProcess
+ * @typedef {object} ChildProcess
  * @property {number} pid
  * @property {string} stdout
  * @property {string} stderr
  * @property {number} status
- * @property {Error | null} error
+ * @property {Error | undefined} [error]
  */
 
 /**
- * @typedef {Object} SpawnOptions
+ * @typedef {object} SpawnOptions
  * @property {"pipe" | "ignore" | "inherit"} [stdio]
  */
 
 /**
- * @typedef {Object} ForkOptions
+ * @typedef {object} ForkOptions
  * @property {string} [execPath]
  * @property {Array<string>} [execArgv]
  */

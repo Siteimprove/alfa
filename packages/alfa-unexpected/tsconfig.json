@@ -1,3 +1,21 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "files": ["plugin.ts", "src/create-unexpected-plugin.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-assert"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-highlight"
+    },
+    {
+      "path": "../alfa-jsx"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
 }

@@ -47,9 +47,11 @@ test("Gets the value of an attribute in the SVG namespace", t => {
     localName: "a",
     attributes: [
       {
+        nodeType: 2,
         prefix: "xlink",
         localName: "href",
-        value: "foo"
+        value: "foo",
+        childNodes: []
       }
     ],
     shadowRoot: null,
@@ -81,14 +83,18 @@ test("Gets multiple attributes with different namespaces", t => {
     localName: "a",
     attributes: [
       {
+        nodeType: 2,
         prefix: "xlink",
         localName: "href",
-        value: "foo"
+        value: "foo",
+        childNodes: []
       },
       {
+        nodeType: 2,
         prefix: null,
         localName: "href",
-        value: "bar"
+        value: "bar",
+        childNodes: []
       }
     ],
     shadowRoot: null,
@@ -124,9 +130,11 @@ test("Correctly handles attribute names containing colons", t => {
     localName: "html",
     attributes: [
       {
+        nodeType: 2,
         prefix: null,
         localName: "xml:lang",
-        value: "en"
+        value: "en",
+        childNodes: []
       }
     ],
     shadowRoot: null,

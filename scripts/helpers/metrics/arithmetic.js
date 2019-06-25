@@ -1,5 +1,5 @@
 const TypeScript = require("typescript");
-
+const { parseSource } = require("../typescript");
 /**
  * @typedef {import("../coverage").Script} Script
  */
@@ -13,16 +13,6 @@ const TypeScript = require("typescript");
  */
 
 /**
- * @param {String} source
- */
-const createSource = source =>
-  TypeScript.createSourceFile(
-    "anon.ts",
-    source,
-    TypeScript.ScriptTarget.ES2015
-  );
-
-/**
  * @param {Script} script
  */
 function totalOperations(script) {
@@ -30,11 +20,11 @@ function totalOperations(script) {
   if (script.sources.length > 1) {
     // typescript
     for (let i = 1, n = script.sources.length; i < n; i++) {
-      total += visit(createSource(script.sources[i].content));
+      total += visit(parseSource(script.sources[i].content));
     }
   } else {
     // javascript
-    total += visit(createSource(script.sources[0].content));
+    total += visit(parseSource(script.sources[0].content));
   }
 
   return total;
@@ -61,29 +51,25 @@ function visit(node, depth = -1) {
         case TypeScript.SyntaxKind.SlashEqualsToken:
           depth++;
           total += Math.pow(1.1, depth);
-          break;
       }
       break;
     case TypeScript.SyntaxKind.PrefixUnaryExpression:
-      const prefixUnaryExpression = /**@type {TypeScript.PrefixUnaryExpression} */ (node);
+      const prefixUnaryExpression = /** @type {TypeScript.PrefixUnaryExpression} */ (node);
 
       switch (prefixUnaryExpression.operator) {
         case TypeScript.SyntaxKind.PlusPlusToken:
         case TypeScript.SyntaxKind.MinusMinusToken:
           total++;
-          break;
       }
       break;
     case TypeScript.SyntaxKind.PostfixUnaryExpression:
-      const postfixUnaryOperator = /**@type {TypeScript.PostfixUnaryExpression} */ (node);
+      const postfixUnaryOperator = /** @type {TypeScript.PostfixUnaryExpression} */ (node);
 
       switch (postfixUnaryOperator.operator) {
         case TypeScript.SyntaxKind.PlusPlusToken:
         case TypeScript.SyntaxKind.MinusMinusToken:
           total++;
-          break;
       }
-      break;
   }
 
   TypeScript.forEachChild(node, node => {
@@ -103,7 +89,7 @@ const Arithmetic = {
     const total = totalOperations(script);
     let uncovered = 0;
 
-    for (let block of script.coverage) {
+    for (const block of script.coverage) {
       if (block.count < 1) {
         const file = script.sources.find(source => {
           return source.path === block.range.start.path;
@@ -114,7 +100,7 @@ const Arithmetic = {
         }
 
         uncovered += visit(
-          createSource(
+          parseSource(
             file.content.substring(
               block.range.start.offset,
               block.range.end.offset
@@ -145,8 +131,8 @@ const Arithmetic = {
       return 0;
     }
 
-    let uncovered = visit(
-      createSource(
+    const uncovered = visit(
+      parseSource(
         file.content.substring(block.range.start.offset, block.range.end.offset)
       )
     );
