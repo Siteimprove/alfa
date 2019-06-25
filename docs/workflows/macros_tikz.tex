@@ -1,0 +1,111 @@
+\usetikzlibrary{positioning, calc, shapes.multipart, shapes.geometric, fit}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+% color
+% Colourblind friendly colours
+% http://jfly.iam.u-tokyo.ac.jp/color/#pallet
+\definecolor{orange}{RGB}{230,159,0}
+\definecolor{skyblue}{RGB}{86,180,230} % light blue
+\definecolor{green}{RGB}{0,158,115} % blueish green
+\definecolor{yellow}{RGB}{240,228,66}
+\definecolor{blue}{RGB}{0,114,178}
+\definecolor{red}{RGB}{213,94,0} % vermillon
+\definecolor{pink}{RGB}{204,121,167} % reddish purple
+
+\colorlet{coloryes}{green}
+\colorlet{colorno}{red}
+\colorlet{colorask}{blue}
+\colorlet{colorcomplex}{orange}
+\tikzstyle{answeryes}=[coloryes, fill=coloryes!50, text=black]
+\tikzstyle{answerno}=[draw=colorno, fill=colorno!50, text=black]
+\tikzstyle{asking}=[draw=colorask, fill=colorask!50, text=black]
+\tikzstyle{complex}=[draw=colorcomplex, fill=colorcomplex!50, text=black]
+
+% Double line style
+% https://tex.stackexchange.com/questions/102975/draw-additional-parallel-paths-in-tikz/103088#103088
+\usetikzlibrary{decorations}
+
+\def\pgfdecoratedcontourdistance{0pt}
+
+\pgfkeys{/pgf/decoration/contour distance/.code={%
+    \pgfmathparse{#1}%
+    \let\pgfdecoratedcontourdistance=\pgfmathresult}%
+}
+
+\newif\ifskiparrowtip
+\pgfkeys{/tikz/no arrow tip/.is if=skiparrowtip}
+
+\pgfdeclaredecoration{contour lineto}{start}
+{
+  \state{start}[next state=draw, width=0pt]{
+    \pgfpathmoveto{\pgfpoint{0pt}{\pgfdecoratedcontourdistance}}%
+  }
+  \state{draw}[next state=draw, width=\pgfdecoratedinputsegmentlength]{       
+    \pgfmathparse{-\pgfdecoratedcontourdistance*cot(-\pgfdecoratedangletonextinputsegment/2+90)}%
+    \let\shorten=\pgfmathresult%
+    \pgfpathlineto{\pgfpoint{\pgfdecoratedinputsegmentlength+\shorten}{\pgfdecoratedcontourdistance}}%  
+  }
+  \state{final}{
+    \pgfpathlineto{\pgfpoint{\pgfdecoratedinputsegmentlength}{\pgfdecoratedcontourdistance}}%
+    \ifskiparrowtip
+    \else
+      \pgfpathlineto{\pgfpoint{\pgfdecoratedinputsegmentlength-10pt}{5*\pgfdecoratedcontourdistance}}%
+    \fi
+  }   
+}
+
+% nodes
+%% graph
+\tikzstyle{node}=[very thick, draw, rectangle]
+\tikzstyle{ask}=[node, asking]
+\tikzstyle{auto}=[ask, rounded corners=7pt]
+\tikzstyle{question}=[ask, diamond, aspect=2, inner sep=1pt]
+\tikzstyle{dot}=[circle, minimum width=1mm, fill=black, inner sep=0]
+%% results
+\tikzstyle{resultNA}=[node]
+\tikzstyle{result}=[node, draw=black!40]
+\tikzstyle{resultOK}=[node, answeryes]
+\tikzstyle{resultKO}=[node, answerno]
+%% rule kind
+\tikzstyle{atomic}=[regular polygon, regular polygon sides=6]
+\tikzstyle{composite}=[node, rectangle split, rectangle split parts=2, rectangle split part fill={coloryes!50,colorno!50}, rounded corners, text=black, align=center]
+\tikzstyle{multiple}=[rectangle]
+
+% flow
+\tikzstyle{connect}=[very thick]
+\tikzstyle{flow}=[connect, ->, shorten >=2pt]
+\tikzstyle{hasaudio}=[dotted, line cap=round]
+\tikzstyle{noaudio}=[dashed]
+\tikzstyle{bothaudio}=[connect, 
+  postaction={decoration={contour lineto, contour distance=2pt}, draw, hasaudio, decorate},
+  postaction={decoration={contour lineto, contour distance=-2pt}, draw, noaudio, decorate}
+]
+
+% LaTeX macros
+% [extra style], source, destination, label (yes/no)
+\newcommand{\answer}[4][draw]{
+  \path[flow, color#4, #1] (#2) -- node[midway, above, sloped] {#4} (#3);
+}
+% [extra style], source, rule number
+% We need to test emptyness of optional arg manually to make sure an not send an empty string to \answer that would overwrite the default draw.
+\newcommand{\answeryes}[3][]{
+  \ifstrempty{#1}{\answer{#2}{SIA-R#3-OK}{yes}}{\answer[#1]{#2}{SIA-R#3-OK}{yes}}
+}
+\newcommand{\answerno}[3][]{
+  \ifstrempty{#1}{\answer{#2}{SIA-R#3-KO}{no}}{\answer[#1]{#2}{SIA-R#3-KO}{no}}
+}
+% [extra style], source, rule number
+\newcommand{\answers}[3][]{
+  \answeryes[#1]{#2}{#3}
+  \answerno[#1]{#2}{#3}
+}
+
+\newcommand{\qref}[2][has-]{\texttt{#1#2}?}
+
+% rule number, WCAG number
+\newcommand{\compositerule}[2]{
+  SIA R#1 \\ Pass if any input rule passes \nodepart{two} Fails if all input rules fail \\ WCAG #2 also fails
+}

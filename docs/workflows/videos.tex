@@ -1,0 +1,221 @@
+\documentclass[tikz, border=10pt]{standalone}
+
+\usepackage{hyperref}
+\hypersetup{pdfstartview=Fit}
+
+\usepackage{xcolor}
+\usepackage{etoolbox}
+\input{macros_tikz}
+
+\begin{document}
+\begin{tikzpicture}
+  % video and audio checks
+  \coordinate (entry);
+  \node[auto, right=of entry] (video) {video?};
+  \node[auto, complex, right=of video] (visible) {visible?};
+  \node[question, right=of visible] (streaming) {\qref[]{is-streaming}};
+  \node[resultNA, multiple, above=of visible] (not applicable) {Not applicable};
+
+  \node[question, below=of streaming] (audio) {\qref{audio}};
+  \coordinate[dot, below left=of audio] (noaudio);
+  \coordinate[dot, below right=of audio] (hasaudio);
+  
+  % specific checks
+  %% no audio side
+  \coordinate[dot, below=2 cm of noaudio] (q32);
+  \node[question, left=of q32] (audio track) {\qref{audio-track}};
+  \node[resultOK, atomic, left=2cm of audio track.north west] (SIA-R32-OK) {32};
+  \node[resultKO, atomic, left=2cm of audio track.south west] (SIA-R32-KO) {32};
+  \node[resultNA, multiple, align=center] (hasaudioNA) at (SIA-R32-KO |- noaudio){22, 24, 25, 31, 36 \\ Not applicable};
+  
+  %% audio side
+  \coordinate[dot, below=2cm of hasaudio] (q22);
+  \node[question, right=of q22] (caption) {\qref{caption}};
+  \node[resultOK, atomic, right=2cm of caption.north east, yshift=1mm] (SIA-R22-OK) {22};
+  \node[resultKO, atomic, right=2cm of caption.south east] (SIA-R22-KO) {22};
+  \coordinate[dot, below=2cm of q22] (q25);
+  \node[question, right=of q25] (description) {\qref{description}};
+  \node[resultOK, atomic, right=2cm of description.north east] (SIA-R25-OK) {25};
+  \node[resultKO, atomic, right=2cm of description.south east] (SIA-R25-KO) {25};
+  \node[resultNA, multiple, align=center] (noaudioNA) at (SIA-R22-OK |- hasaudio) {26, 32, 33, 34 \\ Not applicable};
+
+  %% joining again
+  \coordinate[below=of q25] (last audio);
+  \coordinate[dot] (shared) at (audio |- last audio);
+  \coordinate[below=of shared] (shared questions);
+  
+  % shared checks
+  %% transcript
+  \node[question, below=of shared questions] (transcript) {\qref{transcript}};
+  \node[resultOK, atomic, right=2cm of transcript.north east] (SIA-R24-OK) {24};
+  \node[resultKO, atomic, right=2cm of transcript.south east] (SIA-R24-KO) {24};
+  \node[resultOK, atomic, left=2cm of transcript.north west] (SIA-R33-OK) {33};
+  \node[resultKO, atomic, left=2cm of transcript.south west] (SIA-R33-KO) {33};
+  
+  %% description track
+  \node[auto, anchor=north, yshift=-5mm] (description track) at (audio track |- transcript.south) {description track?};
+  \node[question, below=2cm of description track] (accurate) {\qref[]{track-describes-video}};
+  \node[resultOK, atomic, left=of accurate] (SIA-R34-OK) {34};
+  \node[resultOK, atomic, right=of accurate] (SIA-R36-OK) {36};
+
+  \coordinate (descr acc) at (barycentric cs:description track=1,accurate=1);
+  \node[resultKO, atomic] (SIA-R34-KO) at (SIA-R34-OK |- descr acc) {34};
+  \node[resultKO, atomic] (SIA-R36-KO) at (SIA-R36-OK |- descr acc) {36};
+  
+  %% alt and label
+  \node[question, anchor=north, yshift=-10mm] (alt) at (caption |- accurate.south) {\qref[]{text-alternative}};
+  \node[auto, complex, right=15mm of alt] (alt perceivable) {perceivable?};
+  \node[question, right=15mm of alt perceivable] (label) {\qref[]{label}};
+  \node[auto, complex, right=15mm of label] (label perceivable) {perceivable?};
+  \node[resultOK, atomic, below=3cm of label perceivable.south, anchor=north] (SIA-R26-OK) {26};
+  \node[resultOK, atomic, above=3cm of label perceivable.north, anchor=south] (SIA-R31-OK) {31};
+  
+  \coordinate (perc lab) at (barycentric cs:alt perceivable=1,label=1);
+  \node[resultKO, atomic] (SIA-R26-KO) at (SIA-R26-OK -| perc lab) {26};
+  \node[resultKO, atomic] (SIA-R31-KO) at (SIA-R31-OK -| perc lab) {31};
+  
+  
+  % grouping atomic rules
+  \begin{pgfonlayer}{background}
+  \foreach \sia in {22,24,25,26,31,32,33,34,36}
+  {
+    \node[result, fit=(SIA-R\sia-OK) (SIA-R\sia-KO)] (SIA-R\sia) {};
+  }
+  \end{pgfonlayer}
+  
+  % Composite rules
+  \node[composite, below left=5cm of accurate] (SIA-R35) {\compositerule{35}{1.2.1 (A)}};
+  \node[composite, right=8cm of SIA-R22] (SIA-R27) {\compositerule{27}{1.2.2 (A)}};
+  \node[composite, above=of SIA-R31-OK] (SIA-R37) {\compositerule{37}{1.2.5 (AA)}};
+  \node[composite, right=2cm of SIA-R24] (SIA-R38) {\compositerule{38}{1.2.3 (A)}};
+    
+  % WCAG checks
+  \node[resultKO, rounded corners, below=4cm of SIA-R36.south east] (WCAG-128) {WCAG 1.2:8 (AAA)};
+    
+  % Title and legend
+  \node[above=2cm of not applicable, align=center] (title) {{\Huge \sc Checks done by Alfa on Videos} (June 2019)};
+  \draw (title.south west) -- (title.south east);
+  
+  \node[resultOK, atomic, right=5cm of title] (legendOK) {xx};
+  \node[resultKO, atomic, below=1mm of legendOK] (legendKO) {xx};
+  \node[result, fit=(legendOK) (legendKO)] (legendatomic) {};
+  \node[right=1mm of legendOK] (passing) {Passing};
+  \node[right=1mm of legendKO] (failing) {Failing};
+  \node[above=1mm of legendatomic] (atomic) {Atomic rule};
+  
+  \node[composite, below=of legendatomic] (legendcomposite) {Passing \nodepart{two} Failing};
+  \node[above=1mm of legendcomposite] (composite) {Composite rule};
+    
+  \node[question, right=5mm of passing] (questionlegend) {\qref[]{test-id}};
+  \node[auto, below=2mm of questionlegend] (autolegend) {Test};
+  \node[auto, complex, below=3mm of autolegend] (complexlegend) {Test};
+  \node[right=1mm of questionlegend] (question) {Manual test (question)};
+  \node[right=1mm of autolegend] (auto) {Automatic test};
+  \node[right=1mm of complexlegend, align=left] (complex) {Complex automatic test \\ (parsing DOM and CSS)};
+  
+  \coordinate[right=20mm of legendcomposite.north east, yshift=-5mm] (hasaudiostart);
+  \draw[flow, hasaudio] (hasaudiostart) -- +(2,0);
+  \node[right=25mm of hasaudiostart] (flowhasaudio) {For videos with audio};
+  \coordinate[below=5mm of hasaudiostart] (noaudiostart);
+  \draw[flow, noaudio] (noaudiostart) -- +(2,0);
+  \node[right=25mm of noaudiostart] (flownoaudio) {For videos without audio};
+  \coordinate[below=7mm of noaudiostart] (bothaudiostart);
+  \path[bothaudio] (bothaudiostart) -- +(2,0);
+  \node[right=25mm of bothaudiostart] (flowbothaudio) {For both};
+   
+  \node[draw, rectangle, rounded corners, fit=(atomic) (composite) (flowbothaudio) (flownoaudio)] (legend) {};
+  \node[below=3mm of legend, text width=15cm, inner sep=1pt] (text) 
+    { Alfa checks each rule individually, always starting at the entry point on the top left. 
+      Nemo stores answers so that the same question is not asked several time in PFG.
+      Each atomic rule only ask 3 or 4 questions, the first 2 always being the same, but composite rules require up to 5 individual questions on top of the initial 2.
+      PFG is mostly concerned in meeting WCAG requirements and thus mostly shows the composite rules.
+    };
+  
+  % flow
+  \draw[flow] (entry) -- (video);
+  \answer{video}{not applicable}{no}
+  \answer{visible}{not applicable}{no}
+  \answer{streaming}{not applicable}{no}
+  \answer{video}{visible}{yes}
+  \answer{visible}{streaming}{yes}
+  \answer{streaming}{audio}{yes}
+
+  %% no audio side
+  \begin{scope}[noaudio]
+    \draw[connect, answerno] (audio) -- node[midway, above, sloped] {no} (noaudio);
+    \draw[flow] (noaudio) -- (hasaudioNA);
+    \draw[connect] (noaudio) -- (q32);
+    \draw[flow] (q32) -- (audio track);
+    \answers{audio track}{32}
+    \draw[flow] (q32) |- (shared);
+    
+    \answers{transcript}{33}
+    \answerno{description track}{34}
+    \answers{accurate}{34}
+    \answerno{alt}{26}
+    \answerno{alt perceivable}{26}
+    \answerno{label}{26}
+    \answers{label perceivable}{26}
+  \end{scope}
+  
+  %% has audio side
+  \begin{scope}[hasaudio]
+    \draw[connect, answeryes] (audio) -- node[midway, above, sloped] {yes} (hasaudio);
+    \draw[flow] (hasaudio) -- (noaudioNA);
+    \draw[connect] (hasaudio) -- (q22);
+    \draw[flow] (q22) -- (caption);
+    \answers{caption}{22}
+    \draw[connect] (q22) -- (q25);
+    \draw[flow] (q25) -- (description);
+    \answers{description}{25}
+    \draw[flow] (q25) |- (shared);
+    
+    \answers{transcript}{24}
+    \answerno{description track}{36}
+    \answers{accurate}{36}
+    \answerno{alt}{31}
+    \answerno{alt perceivable}{31}
+    \answerno{label}{31}
+    \answers{label perceivable}{31}
+  \end{scope}
+  
+  %% shared part, somehow the decoration/postaction is not correctly handled by scope :-(
+  \path[bothaudio, no arrow tip, yshift=2pt] (shared) -- (shared questions);
+  \path[bothaudio, shorten <=2pt] (shared questions) -- (transcript);
+
+  \path[bothaudio, shorten <=2pt] (shared questions) -| (description track);
+  \answer[bothaudio, -]{description track}{accurate}{yes};
+    
+  \path[bothaudio, shorten <=2pt] (shared questions) -| (alt);
+  \answer[bothaudio, -]{alt}{alt perceivable}{yes}
+  \answer[bothaudio, -]{alt perceivable}{label}{yes}
+  \answer[bothaudio, -]{label}{label perceivable}{yes}
+  
+  %% composite rules
+  \begin{pgfonlayer}{background}
+    \begin{scope}[draw=black!40]
+      \draw[flow] (SIA-R32) to [bend right=30] (SIA-R35);
+      \draw[flow] (SIA-R33) to [bend right=45] (SIA-R35);
+      \draw[flow] (SIA-R34) to [bend right=30] (SIA-R35);
+      \draw[flow] (SIA-R26) to [bend left=5] (SIA-R35);
+      
+      \draw[flow] (SIA-R22) to (SIA-R27);
+      \draw[flow] (SIA-R31.east) to [bend right=50] (SIA-R27);
+      
+      \draw[flow] (SIA-R25) to [bend left=30] (SIA-R37);
+      \draw[flow] (SIA-R31) to (SIA-R37);
+      \draw[flow] (SIA-R36) to (SIA-R37);
+      
+      \draw[flow] (SIA-R24) to (SIA-R38);
+      \draw[flow] (SIA-R25) to (SIA-R38);
+      \draw[flow] (SIA-R31) to (SIA-R38);
+      \draw[flow] (SIA-R36) to (SIA-R38);
+    \end{scope}
+  \end{pgfonlayer}
+  
+  %% WCAG failing
+%  \draw[flow, answerno] (SIA-R32-KO) to (WCAG-122);
+  \draw[flow, answerno] (SIA-R24-KO) to (WCAG-128);
+  
+\end{tikzpicture}
+\end{document}
