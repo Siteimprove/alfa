@@ -2,7 +2,7 @@ import * as Roles from "../../roles";
 import { Feature } from "../../types";
 
 /**
- * @see https://html.spec.whatwg.org/multipage/canvas.html#canvas
+ * @see http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element
  */
 export const Audio: Feature = {
   element: "audio",
