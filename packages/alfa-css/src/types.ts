@@ -107,7 +107,7 @@ export interface TypeSelector {
 export interface PseudoClassSelector {
   readonly type: SelectorType.PseudoClassSelector;
   readonly name: PseudoClass;
-  readonly value: Selector | Array<Selector> | AnBMicrosyntax | null;
+  readonly value: Selector | Array<Selector> | ChildIndex | null;
 }
 
 export interface PseudoElementSelector {
@@ -301,7 +301,7 @@ export type PseudoElement =
   // https://www.w3.org/TR/css-pseudo/#placeholder-pseudo
   | "placeholder";
 
-export interface AnBMicrosyntax {
+export interface ChildIndex {
   readonly a: number;
   readonly b: number;
 }
