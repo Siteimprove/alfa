@@ -917,5 +917,5 @@ test("Can parse selector with an An+B microsyntax with whitespace", t => {
       a: 2,
       b: 0
     }
-  }); // Solve with split()
+  });
 });
