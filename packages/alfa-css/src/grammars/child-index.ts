@@ -1,5 +1,6 @@
 import * as Lang from "@siteimprove/alfa-lang";
-// import { Grammar, Stream } from "@siteimprove/alfa-lang";
+import { Grammar } from "@siteimprove/alfa-lang";
+import * as alphabet from "../alphabet";
 import { Token, Tokens, TokenType } from "../alphabet";
 import { ChildIndex } from "../types";
 
@@ -17,21 +18,15 @@ namespace ChildIndex {
       readonly unit: string;
       readonly value: number;
     }
-
-    export interface NIdent extends Token<TokenType.NIdent> {
-      readonly value: string;
-    }
-
-    export interface NNumber extends Token<TokenType.NNumber> {
-      readonly value: number;
-    }
   }
 
-  export type Token = Tokens.NDimension | Tokens.NIdent | Tokens.NNumber;
+  export type Token =
+    | alphabet.Tokens.Ident
+    | alphabet.Tokens.Number
+    | Tokens.NDimension;
 }
 
 function fromToken(token: Token): ChildIndex.Token | null {
-  console.log(token);
   switch (token.type) {
     case TokenType.Dimension:
       if (token.integer === true && token.unit.toLowerCase() === "n") {
@@ -40,13 +35,17 @@ function fromToken(token: Token): ChildIndex.Token | null {
           unit: "n",
           value: token.value
         };
-      } else if (token.unit.toLowerCase().startsWith("n")) {
+      }
+
+      if (token.unit.toLowerCase().startsWith("n")) {
         return {
           value: token.value,
           unit: token.unit.toLowerCase(),
           type: ChildIndex.TokenType.NDimension
         };
-      } else if (token.unit.toLowerCase().startsWith("-n")) {
+      }
+
+      if (token.unit.toLowerCase().startsWith("-n")) {
         return {
           value: token.value,
           unit: token.unit.toLowerCase(),
@@ -54,16 +53,10 @@ function fromToken(token: Token): ChildIndex.Token | null {
         };
       }
       break;
+
     case TokenType.Ident:
-      return {
-        value: token.value,
-        type: ChildIndex.TokenType.NIdent
-      };
     case TokenType.Number:
-      return {
-        value: token.value,
-        type: ChildIndex.TokenType.NNumber
-      };
+      return token;
   }
 
   return null;
@@ -105,10 +98,7 @@ const ident: Production<Tokens.Ident> = {
   prefix(token, stream) {
     const childToken = fromToken(token);
 
-    if (
-      childToken === null ||
-      childToken.type !== ChildIndex.TokenType.NIdent
-    ) {
+    if (childToken === null || childToken.type !== TokenType.Ident) {
       return null;
     }
 
@@ -162,10 +152,7 @@ const number: Production<Tokens.Number> = {
   infix(token, stream, expression, left) {
     const childToken = fromToken(token);
 
-    if (
-      childToken === null ||
-      childToken.type !== ChildIndex.TokenType.NNumber
-    ) {
+    if (childToken === null || childToken.type !== TokenType.Number) {
       return null;
     }
 
@@ -176,7 +163,7 @@ const number: Production<Tokens.Number> = {
   }
 };
 
-export const ChildIndexGrammar: Lang.Grammar<
-  Token,
-  ChildIndex
-> = new Lang.Grammar([[dimension, ident, number]], () => null);
+export const ChildIndexGrammar: Grammar<Token, ChildIndex> = new Lang.Grammar(
+  [[dimension, ident, number]],
+  () => null
+);
