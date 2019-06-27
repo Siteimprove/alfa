@@ -11,13 +11,17 @@ export interface ParseResult<R> {
 }
 
 export function parse<T extends Token, R, S = null>(
-  input: ArrayLike<T>,
+  input: Stream<T> | ArrayLike<T>,
   grammar: Grammar<T, R, S>,
   offset?: number
 ): ParseResult<R> {
-  const readToken: (i: number) => T = i => input[i];
+  const readToken: (i: number) => T = i =>
+    input instanceof Stream ? input.peek(i)! : input[i];
 
-  const stream = new Stream(input.length, readToken, offset);
+  const stream =
+    input instanceof Stream
+      ? input
+      : new Stream(input.length, readToken, offset);
 
   const state = grammar.state();
 

@@ -1,5 +1,11 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Char, Expression, Grammar, Stream } from "@siteimprove/alfa-lang";
+import {
+  Char,
+  Expression,
+  Grammar,
+  Stream,
+  parse
+} from "@siteimprove/alfa-lang";
 import { Token, Tokens, TokenType } from "../alphabet";
 import {
   AttributeMatcher,
@@ -20,7 +26,7 @@ import {
   SimpleSelector,
   TypeSelector
 } from "../types";
-import { AnBMicrosyntax } from "./anb-microsyntax";
+import { ChildIndexGrammar } from "./child-index";
 
 const { isArray } = Array;
 
@@ -351,7 +357,7 @@ function pseudoSelector(
         case "nth-last-of-type":
         case "nth-col":
         case "nth-last-col":
-          value = AnBMicrosyntax(stream);
+          value = parse(stream, ChildIndexGrammar).result;
           if (value === null) {
             return null;
           }
