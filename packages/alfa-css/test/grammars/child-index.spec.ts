@@ -54,6 +54,13 @@ test("Can parse a even odd child index", t => {
   });
 });
 
+test("Cannot parse a float index", t => {
+  childIndex(t, "3.14", null);
+  childIndex(t, "2n3.14", null);
+  childIndex(t, "3,14", null);
+  childIndex(t, "2n3,14", null);
+});
+
 test("Can parse a ndashdigit-dimension signed-integer child index", t => {
   childIndex(t, "-2n-3", {
     a: -2,

@@ -26,10 +26,6 @@ namespace ChildIndex {
       readonly value: string;
     }
 
-    export interface Integer extends Token<TokenType.Integer> {
-      readonly value: number;
-    }
-
     export interface NDashDigitDimension
       extends Token<TokenType.NDashDigitDimension> {
       readonly unit: string;
@@ -46,14 +42,6 @@ namespace ChildIndex {
     }
 
     export interface NDimension extends Token<TokenType.NDimension> {
-      readonly value: number;
-    }
-
-    export interface SignedInteger extends Token<TokenType.SignedInteger> {
-      readonly value: number;
-    }
-
-    export interface SignlessInteger extends Token<TokenType.SignlessInteger> {
       readonly value: number;
     }
   }
@@ -116,6 +104,9 @@ function fromToken(token: Token): ChildIndex.Token | null {
       return token;
 
     case TokenType.Number:
+      if (!token.integer) {
+        return null;
+      }
       return token;
   }
 
