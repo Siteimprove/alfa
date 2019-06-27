@@ -2,9 +2,9 @@ import * as Roles from "../../roles";
 import { Feature, None } from "../../types";
 
 /**
- * @see http://www.w3.org/TR/2012/WD-filter-effects-20121025/#femergenode
+ * @see https://www.w3.org/TR/svg-aam/#mapping_role_table
  */
 export const FeMergeNode: Feature = {
-  element: "femergenode",
+  element: "feMergeNode",
   allowedRoles: () => None(Roles)
 };

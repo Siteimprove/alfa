@@ -2,7 +2,7 @@ import * as Roles from "../../roles";
 import { Feature, None } from "../../types";
 
 /**
- * @see http://www.w3.org/TR/SVG2/pservers.html#PatternElement
+ * @see https://www.w3.org/TR/svg-aam/#mapping_role_table
  */
 export const Pattern: Feature = {
   element: "pattern",

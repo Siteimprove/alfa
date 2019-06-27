@@ -2,9 +2,9 @@ import * as Roles from "../../roles";
 import { Feature, None } from "../../types";
 
 /**
- * @see http://www.w3.org/TR/2012/WD-filter-effects-20121025/#feFuncRElement
+ * @see https://www.w3.org/TR/svg-aam/#mapping_role_table
  */
 export const FeFuncR: Feature = {
-  element: "fefuncr",
+  element: "feFuncR",
   allowedRoles: () => None(Roles)
 };

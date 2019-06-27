@@ -2,7 +2,7 @@ import * as Roles from "../../roles";
 import { Feature } from "../../types";
 
 /**
- * @see http://www.w3.org/TR/html5/embedded-content-0.html#the-iframe-element
+ * @see https://www.w3.org/TR/svg-aam/#mapping_role_table
  */
 export const Iframe: Feature = {
   element: "iframe",

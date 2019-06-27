@@ -2,7 +2,7 @@ import * as Roles from "../../roles";
 import { Feature } from "../../types";
 
 /**
- * @see http://www.w3.org/TR/html5/embedded-content-0.html#the-audio-element
+ * @see https://www.w3.org/TR/svg-aam/#mapping_role_table
  */
 export const Audio: Feature = {
   element: "audio",

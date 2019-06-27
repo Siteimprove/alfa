@@ -3,7 +3,7 @@ import * as Roles from "../../roles";
 import { Any, Feature, Role } from "../../types";
 
 /**
- * @see https://www.w3.org/TR/SVG2/linking.html#AElement
+ * @see https://www.w3.org/TR/svg-aam/#mapping_role_table
  */
 export const A: Feature = {
   element: "a",
