@@ -1,18 +1,18 @@
 # alfa-css
 
-## @todo
+### @todo
 
 - [packages/alfa-css/src/properties/text-decoration/color/property.ts:21](packages/alfa-css/src/properties/text-decoration/color/property.ts#L21): Should be currentColor when supported in colorGrammar
 
 # alfa-dom
 
-## @todo
+### @todo
 
 - [packages/alfa-dom/src/is-rendered.ts:19](packages/alfa-dom/src/is-rendered.ts#L19): Handle `display: contents` once it gains wider support.
 
 # alfa-aria
 
-## @todo
+### @todo
 
 - [packages/alfa-aria/src/features/html/th.ts:6](packages/alfa-aria/src/features/html/th.ts#L6): Need to handle the auto state
 - [packages/alfa-aria/src/features/svg/a.ts:21](packages/alfa-aria/src/features/svg/a.ts#L21): In certain rare circumstances the role will in this case be group. Investigate.
@@ -32,7 +32,7 @@
 - [packages/alfa-aria/src/features/svg/tspan.ts:10](packages/alfa-aria/src/features/svg/tspan.ts#L10): In certain rare circumstances the role will in this case be group. Investigate.
 - [packages/alfa-aria/src/features/svg/use.ts:10](packages/alfa-aria/src/features/svg/use.ts#L10): In certain rare circumstances the role will in this case be graphics-object. Investigate.
 
-## @bug
+### @bug
 
 - [packages/alfa-aria/src/features/svg/text-path.ts:11](packages/alfa-aria/src/features/svg/text-path.ts#L11): There is an open issue regarding the role mapping for textPath
 - [packages/alfa-aria/src/features/svg/tspan.ts:11](packages/alfa-aria/src/features/svg/tspan.ts#L11): There is an open issue regarding the role mapping for tspan
