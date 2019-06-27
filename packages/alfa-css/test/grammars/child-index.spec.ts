@@ -24,10 +24,17 @@ test("Can parse a n-dimension child index", t => {
     b: 0
   });
 
+  childIndex(t, "N", {
+    a: 1,
+    b: 0
+  });
+
   childIndex(t, "-n", {
     a: -1,
     b: 0
   });
+
+  childIndex(t, "--n", null);
 });
 
 test("Can parse a even odd child index", t => {
@@ -49,9 +56,42 @@ test("Can parse a ndashdigit-dimension signed-integer child index", t => {
   });
 });
 
+test("Can parse a dashndashdigit-ident signed-integer child index", t => {
+  childIndex(t, "-n-3", {
+    a: -1,
+    b: -3
+  });
+});
+
+test("Can parse a ndashdigit-ident signed-integer child index", t => {
+  childIndex(t, "n-3", {
+    a: 1,
+    b: -3
+  });
+});
+
+test("Can parse a n-dimension signed-integer child index", t => {
+  childIndex(t, "n + 3", {
+    a: 1,
+    b: 3
+  });
+});
+
 test("Can parse a ndashdigit-dimension singless-integer child index", t => {
   childIndex(t, "-2n3", {
     a: -2,
     b: 3
+  });
+});
+
+test("Can parse a number", t => {
+  childIndex(t, "7", {
+    a: 0,
+    b: 7
+  });
+
+  childIndex(t, "-7", {
+    a: 0,
+    b: -7
   });
 });
