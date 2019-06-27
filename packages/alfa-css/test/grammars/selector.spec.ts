@@ -852,16 +852,22 @@ test("Can parse selector using only 'An' from the An+B microsyntax", t => {
 });
 
 test("Can parse selector using only 'n' from the An+B microsyntax", t => {
-  const expected: Selector = {
+  selector(t, ":nth-child(n)", {
     type: SelectorType.PseudoClassSelector,
     name: "nth-child",
     value: {
       a: 1,
       b: 0
     }
-  };
-  selector(t, ":nth-child(n)", expected);
-  selector(t, ":nth-child(-n-0)", expected);
+  });
+  selector(t, ":nth-child(-n-0)", {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      a: -1,
+      b: -0
+    }
+  });
 });
 
 test("Can parse selector omitting 'A' integer from the An+B microsyntax", t => {
@@ -901,7 +907,7 @@ test("Can parse selector with an An+B microsyntax with negative integers", t => 
 });
 
 test("Can parse selector with an An+B microsyntax with whitespace", t => {
-  selector(t, ":nth-child(  2n  +  3  )", {
+  selector(t, ":nth-child(  2n  +3  )", {
     type: SelectorType.PseudoClassSelector,
     name: "nth-child",
     value: {

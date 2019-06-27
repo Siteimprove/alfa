@@ -3,8 +3,8 @@ import {
   Char,
   Expression,
   Grammar,
-  Stream,
-  parse
+  parse,
+  Stream
 } from "@siteimprove/alfa-lang";
 import { Token, Tokens, TokenType } from "../alphabet";
 import {
@@ -361,7 +361,6 @@ function pseudoSelector(
           if (value === null) {
             return null;
           }
-          stream.next();
           stream.accept(token => token.type === TokenType.Whitespace);
           break;
         default:
