@@ -22,8 +22,9 @@ const todos = [];
 
 /**
  * @param {string} file
+ * @param {string} pkg
  */
-function handle(file) {
+function handle(file, pkg) {
   const start = time.now();
 
   const project = workspace.projectFor(file);
@@ -44,21 +45,29 @@ function handle(file) {
     process.exit(1);
   }
 
-  todos.push(...getTodos(file, project));
+  todos.push(...getTodos(file, pkg, project));
 }
 
-forEach(findFiles("scripts", endsWith(".js")), handle);
+forEach(findFiles("scripts", endsWith(".js")), file => {
+  handle(file, "scripts");
+});
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
 
   clean(root);
 
-  forEach(findFiles(`${root}/scripts`, endsWith(".js")), handle);
+  forEach(findFiles(`${root}/scripts`, endsWith(".js")), file => {
+    handle(file, pkg);
+  });
 
-  forEach(findFiles(root, endsWith(".ts", ".tsx")), handle);
+  forEach(findFiles(root, endsWith(".ts", ".tsx")), file => {
+    handle(file, pkg);
+  });
 }
 
-forEach(findFiles("docs", endsWith(".ts", ".tsx")), handle);
+forEach(findFiles("docs", endsWith(".ts", ".tsx")), file => {
+  handle(file, "docs");
+});
 
 writeTodos("TODO.md", todos);
