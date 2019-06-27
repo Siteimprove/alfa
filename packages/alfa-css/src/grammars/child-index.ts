@@ -69,7 +69,6 @@ namespace ChildIndex {
 }
 
 function fromToken(token: Token): ChildIndex.Token | null {
-  console.log("Converting ", token);
   switch (token.type) {
     case TokenType.Dimension:
       if (token.integer === true && token.unit.toLowerCase() === "n") {
@@ -206,27 +205,6 @@ const ident: Production<Tokens.Ident> = {
     }
 
     return { a, b };
-  },
-  infix(token, stream, expression, left) {
-    let a = 0;
-    let b = 0;
-
-    const childToken = fromToken(token);
-
-    if (childToken === null) {
-      return null;
-    }
-
-    switch (childToken.type) {
-      case ChildIndex.TokenType.NDashDigitIdent:
-        a = 0;
-        b = Number.parseInt(childToken.value.substring(2));
-        break;
-      default:
-        return null;
-    }
-
-    return { a, b };
   }
 };
 
@@ -259,6 +237,6 @@ const number: Production<Tokens.Number> = {
 };
 
 export const ChildIndexGrammar: Grammar<Token, ChildIndex> = new Lang.Grammar(
-  [skip(TokenType.Whitespace), [dimension, ident, number]],
+  [[skip(TokenType.Whitespace), dimension, ident, number]],
   () => null
 );

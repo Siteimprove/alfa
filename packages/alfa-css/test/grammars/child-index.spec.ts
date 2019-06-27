@@ -16,6 +16,11 @@ test("Can parse a n-dimension signless-integer child index", t => {
     a: 2,
     b: 3
   });
+
+  childIndex(t, "n +3", {
+    a: 1,
+    b: 3
+  });
 });
 
 test("Can parse a n-dimension child index", t => {
@@ -67,13 +72,6 @@ test("Can parse a ndashdigit-ident signed-integer child index", t => {
   childIndex(t, "n-3", {
     a: 1,
     b: -3
-  });
-});
-
-test("Can parse a n-dimension signed-integer child index", t => {
-  childIndex(t, "n + 3", {
-    a: 1,
-    b: 3
   });
 });
 
