@@ -1,8 +1,8 @@
 import {
-  AnBMicrosyntax,
   AttributeMatcher,
   AttributeModifier,
   AttributeSelector,
+  ChildIndex,
   ClassSelector,
   CompoundSelector,
   IdSelector,
@@ -629,7 +629,7 @@ function matchesPseudoClass(
   options: MatchesOptions,
   root: Selector
 ): boolean {
-  if (selector.value !== null && isAnBMicrosyntax(selector.value)) {
+  if (selector.value !== null && isChildIndexSyntax(selector.value)) {
     return false;
   }
 
@@ -792,8 +792,11 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
 /**
  * Check if a selector is of interface AnBMicrosyntax.
  */
-function isAnBMicrosyntax(
-  selector: AnBMicrosyntax | Selector | Array<Selector>
-): selector is AnBMicrosyntax {
-  return (<AnBMicrosyntax>selector).a !== undefined;
+function isChildIndexSyntax(
+  selector: ChildIndex | Selector | Array<Selector>
+): selector is ChildIndex {
+  return (
+    (<ChildIndex>selector).a !== undefined &&
+    (<ChildIndex>selector).b !== undefined
+  );
 }
