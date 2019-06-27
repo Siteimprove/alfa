@@ -358,9 +358,11 @@ function pseudoSelector(
         case "nth-col":
         case "nth-last-col":
           value = parse(stream, ChildIndexGrammar).result;
+
           if (value === null) {
             return null;
           }
+
           stream.accept(token => token.type === TokenType.Whitespace);
           break;
         default:

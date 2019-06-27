@@ -925,3 +925,10 @@ test("Can parse selector with an An+B microsyntax with whitespace", t => {
     }
   });
 });
+
+test("Cannot parse a float child index", t => {
+  selector(t, ":nth-child(3.14)", null);
+  selector(t, ":nth-child(2n3.14)", null);
+  selector(t, ":nth-child(3,14)", null);
+  selector(t, ":nth-child(2n3,14)", null);
+});
