@@ -15,13 +15,15 @@ export function parse<T extends Token, R, S = null>(
   grammar: Grammar<T, R, S>,
   offset?: number
 ): ParseResult<R> {
-  const readToken: (i: number) => T = i =>
-    input instanceof Stream ? input.peek(i)! : input[i];
+  let stream: Stream<T>;
 
-  const stream =
-    input instanceof Stream
-      ? input
-      : new Stream(input.length, readToken, offset);
+  if (input instanceof Stream) {
+    stream = input;
+  } else {
+    const readToken: (i: number) => T = i => input[i];
+
+    stream = new Stream(input.length, readToken, offset);
+  }
 
   const state = grammar.state();
 
