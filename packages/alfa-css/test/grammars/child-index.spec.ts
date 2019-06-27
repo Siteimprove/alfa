@@ -54,6 +54,25 @@ test("Can parse a even odd child index", t => {
   });
 });
 
+test("Cannot parse a float", t => {
+  childIndex(t, "3.14", null);
+});
+
+test("Cannot parse a dimension with wrong unit", t => {
+  childIndex(t, "3px7", null);
+});
+
+test("Cannot parse a unknown ident", t => {
+  childIndex(t, "p", null);
+});
+
+test("Can parse a n-dash without digit", t => {
+  childIndex(t, "n -", {
+    a: 1,
+    b: 0
+  });
+});
+
 test("Can parse a ndashdigit-dimension signed-integer child index", t => {
   childIndex(t, "-2n-3", {
     a: -2,
