@@ -19,7 +19,7 @@ test("Returns the semantic role of an anchor that has an href attribute", t => {
 
 test("Returns no role when an anchor has no href attribute", t => {
   const a = <a>Foo</a>;
-  t.equal(A.role!(a, a, device), null, "Anchor role is not null");
+  t.equal(A.role!(a, a, device), null);
 });
 
 test("Returns the allowed roles of an anchor that has an href attribute", t => {
