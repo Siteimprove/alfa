@@ -76,7 +76,7 @@ function writeTodos(file, todos) {
     content += `# ${item.pkg}\n`;
 
     for (const [type, todos] of item.contentByTypeGrouped) {
-      content += `### ${type}\n`;
+      content += `## ${type}\n`;
 
       for (const todo of todos) {
         content += todo.content;
