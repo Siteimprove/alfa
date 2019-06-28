@@ -65,7 +65,10 @@ function writeTodos(file, todos) {
           todo.comment.descriptor.text.length + 1
         );
         const type = todo.comment.descriptor.text.toLowerCase();
-        const content = `* [${file}:${line}](${file}#L${line}): ${message}\n`;
+        const content = `* [${file.replace(
+          `packages/${todo.pkg}/`,
+          ""
+        )}:${line}](${file}#L${line}): ${message}\n`;
         return { type, content };
       });
     });
