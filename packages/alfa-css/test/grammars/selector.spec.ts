@@ -671,8 +671,7 @@ test("Only allows pseudo-element selectors as the last selector", t => {
 test("Can parse a named pseudo-class selector", t => {
   selector(t, ":hover", {
     type: SelectorType.PseudoClassSelector,
-    name: "hover",
-    value: null
+    name: "hover"
   });
 });
 
@@ -699,8 +698,7 @@ test("Can parse a pseudo-class selector when part of a compound selector", t => 
     },
     right: {
       type: SelectorType.PseudoClassSelector,
-      name: "hover",
-      value: null
+      name: "hover"
     }
   });
 });
@@ -722,8 +720,7 @@ test("Can parse a pseudo-class selector when part of a compound selector relativ
       },
       right: {
         type: SelectorType.PseudoClassSelector,
-        name: "hover",
-        value: null
+        name: "hover"
       }
     }
   });
@@ -752,8 +749,7 @@ test("Can parse a compound type, class, and pseudo-class selector relative to a 
         },
         right: {
           type: SelectorType.PseudoClassSelector,
-          name: "hover",
-          value: null
+          name: "hover"
         }
       }
     }
