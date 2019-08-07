@@ -8,100 +8,294 @@ function childIndex(t: Assertions, input: string, expected: ChildIndex | null) {
   const lexer = lex(input, Alphabet);
   const parser = parse(lexer.result, ChildIndexGrammar);
 
+  if (expected !== null) {
+    t(parser.done, input);
+  }
+
   t.deepEqual(parser.result, expected, input);
 }
 
-test("Can parse a n-dimension signless-integer child index", t => {
-  childIndex(t, "2n+3", {
-    a: 2,
-    b: 3
-  });
-
-  childIndex(t, "n +3", {
-    a: 1,
-    b: 3
-  });
-});
-
-test("Can parse a n-dimension child index", t => {
-  childIndex(t, "n", {
-    a: 1,
-    b: 0
-  });
-
-  childIndex(t, "N", {
-    a: 1,
-    b: 0
-  });
-
-  childIndex(t, "-n", {
-    a: -1,
-    b: 0
-  });
-
-  childIndex(t, "--n", null);
-});
-
-test("Can parse a even odd child index", t => {
+test("Can parse a child index", t => {
   childIndex(t, "even", {
-    a: 2,
-    b: 0
+    step: 2,
+    offset: 0
   });
 
   childIndex(t, "odd", {
-    a: 2,
-    b: 1
+    step: 2,
+    offset: 1
   });
-});
 
-test("Cannot parse a float", t => {
-  childIndex(t, "3.14", null);
-});
-
-test("Cannot parse a dimension with wrong unit", t => {
-  childIndex(t, "3px7", null);
-});
-
-test("Cannot parse a unknown ident", t => {
-  childIndex(t, "p", null);
-});
-
-test("Can parse a ndashdigit-dimension signed-integer child index", t => {
-  childIndex(t, "-2n-3", {
-    a: -2,
-    b: -3
-  });
-});
-
-test("Can parse a dashndashdigit-ident signed-integer child index", t => {
-  childIndex(t, "-n-3", {
-    a: -1,
-    b: -3
-  });
-});
-
-test("Can parse a ndashdigit-ident signed-integer child index", t => {
-  childIndex(t, "n-3", {
-    a: 1,
-    b: -3
-  });
-});
-
-test("Can parse a ndashdigit-dimension singless-integer child index", t => {
-  childIndex(t, "-2n3", {
-    a: -2,
-    b: 3
-  });
-});
-
-test("Can parse a number", t => {
   childIndex(t, "7", {
-    a: 0,
-    b: 7
+    step: 0,
+    offset: 7
   });
 
   childIndex(t, "-7", {
-    a: 0,
-    b: -7
+    step: 0,
+    offset: -7
   });
+
+  childIndex(t, "n", {
+    step: 1,
+    offset: 0
+  });
+
+  childIndex(t, "+n", {
+    step: 1,
+    offset: 0
+  });
+
+  childIndex(t, "-n", {
+    step: -1,
+    offset: 0
+  });
+
+  childIndex(t, "n+3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "n+ 3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "n +3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "n + 3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "+n+3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "+n+ 3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "+n +3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "+n + 3", {
+    step: 1,
+    offset: 3
+  });
+
+  childIndex(t, "-n+3", {
+    step: -1,
+    offset: 3
+  });
+
+  childIndex(t, "-n+ 3", {
+    step: -1,
+    offset: 3
+  });
+
+  childIndex(t, "-n +3", {
+    step: -1,
+    offset: 3
+  });
+
+  childIndex(t, "-n + 3", {
+    step: -1,
+    offset: 3
+  });
+
+  childIndex(t, "n-3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "n- 3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "n -3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "n - 3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "+n-3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "+n- 3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "+n -3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "+n - 3", {
+    step: 1,
+    offset: -3
+  });
+
+  childIndex(t, "-n-3", {
+    step: -1,
+    offset: -3
+  });
+
+  childIndex(t, "-n- 3", {
+    step: -1,
+    offset: -3
+  });
+
+  childIndex(t, "-n -3", {
+    step: -1,
+    offset: -3
+  });
+
+  childIndex(t, "-n - 3", {
+    step: -1,
+    offset: -3
+  });
+
+  childIndex(t, "2n+3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "2n+ 3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "2n +3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "2n + 3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "+2n+3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "+2n+ 3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "+2n +3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "+2n + 3", {
+    step: 2,
+    offset: 3
+  });
+
+  childIndex(t, "-2n+3", {
+    step: -2,
+    offset: 3
+  });
+
+  childIndex(t, "-2n+ 3", {
+    step: -2,
+    offset: 3
+  });
+
+  childIndex(t, "-2n +3", {
+    step: -2,
+    offset: 3
+  });
+
+  childIndex(t, "-2n + 3", {
+    step: -2,
+    offset: 3
+  });
+
+  childIndex(t, "2n-3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "2n- 3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "2n -3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "2n - 3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "+2n-3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "+2n- 3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "+2n -3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "+2n - 3", {
+    step: 2,
+    offset: -3
+  });
+
+  childIndex(t, "-2n-3", {
+    step: -2,
+    offset: -3
+  });
+
+  childIndex(t, "-2n- 3", {
+    step: -2,
+    offset: -3
+  });
+
+  childIndex(t, "-2n -3", {
+    step: -2,
+    offset: -3
+  });
+
+  childIndex(t, "-2n - 3", {
+    step: -2,
+    offset: -3
+  });
+});
+
+test("Cannot parse an invalid child index", t => {
+  const invalid = ["3.14", "3px", "3px7", "px", "-2n3+3"];
+
+  for (const input of invalid) {
+    childIndex(t, input, null);
+  }
 });

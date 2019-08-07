@@ -79,6 +79,7 @@ export namespace Tokens {
   export interface Number extends Token<TokenType.Number> {
     readonly value: number;
     readonly integer: boolean;
+    readonly signed: boolean;
   }
 
   export interface Percentage extends Token<TokenType.Percentage> {
@@ -89,6 +90,7 @@ export namespace Tokens {
   export interface Dimension extends Token<TokenType.Dimension> {
     readonly value: number;
     readonly integer: boolean;
+    readonly signed: boolean;
     readonly unit: string;
   }
 
@@ -461,10 +463,13 @@ function consumeNumber(char: number, stream: Stream<number>): Tokens.Number {
 
   let next: number | null = char;
 
+  let isSigned = false;
+
   if (next === Char.PlusSign || next === Char.HyphenMinus) {
     result.push(next);
     stream.advance(1);
     next = stream.peek(0);
+    isSigned = true;
   }
 
   while (next !== null && isNumeric(next)) {
@@ -521,7 +526,8 @@ function consumeNumber(char: number, stream: Stream<number>): Tokens.Number {
   return {
     type: TokenType.Number,
     value: consumeInteger(result),
-    integer: isInteger
+    integer: isInteger,
+    signed: isSigned
   };
 }
 
@@ -541,6 +547,7 @@ function consumeNumeric(
       type: TokenType.Dimension,
       value: number.value,
       integer: number.integer,
+      signed: number.signed,
       unit: consumeName(next, stream)
     };
   }

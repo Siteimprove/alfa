@@ -20,9 +20,13 @@ export function parse<T extends Token, R, S = null>(
   if (input instanceof Stream) {
     stream = input;
   } else {
-    const readToken: (i: number) => T = i => input[i];
-
-    stream = new Stream(input.length, readToken, offset);
+    stream = new Stream(
+      input.length,
+      function readToken(i: number): T {
+        return input[i];
+      },
+      offset
+    );
   }
 
   const state = grammar.state();

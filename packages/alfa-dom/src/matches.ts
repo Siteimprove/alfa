@@ -2,7 +2,6 @@ import {
   AttributeMatcher,
   AttributeModifier,
   AttributeSelector,
-  ChildIndex,
   ClassSelector,
   CompoundSelector,
   IdSelector,
@@ -629,10 +628,6 @@ function matchesPseudoClass(
   options: MatchesOptions,
   root: Selector
 ): boolean {
-  if (selector.value !== null && isChildIndexSyntax(selector.value)) {
-    return false;
-  }
-
   switch (selector.name) {
     // https://www.w3.org/TR/selectors/#scope-pseudo
     case "scope":
@@ -659,7 +654,7 @@ function matchesPseudoClass(
 
       // Match host with possible selector argument (e.g. ":host(.foo)")
       return (
-        selector.value === null ||
+        selector.value === undefined ||
         matches(element, context, selector.value, options, root)
       );
     }
@@ -787,16 +782,4 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
   }
 
   return false;
-}
-
-/**
- * Check if a selector is of interface AnBMicrosyntax.
- */
-function isChildIndexSyntax(
-  selector: ChildIndex | Selector | Array<Selector>
-): selector is ChildIndex {
-  return (
-    (<ChildIndex>selector).a !== undefined &&
-    (<ChildIndex>selector).b !== undefined
-  );
 }
