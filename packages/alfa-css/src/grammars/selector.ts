@@ -265,7 +265,7 @@ function pseudoSelector(
       case "placeholder":
         return {
           type: SelectorType.PseudoElementSelector,
-          name
+          name: next.value
         };
 
       default:
