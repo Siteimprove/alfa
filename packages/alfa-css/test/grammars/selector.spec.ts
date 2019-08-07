@@ -671,8 +671,7 @@ test("Only allows pseudo-element selectors as the last selector", t => {
 test("Can parse a named pseudo-class selector", t => {
   selector(t, ":hover", {
     type: SelectorType.PseudoClassSelector,
-    name: "hover",
-    value: null
+    name: "hover"
   });
 });
 
@@ -680,10 +679,12 @@ test("Can parse a functional pseudo-class selector", t => {
   selector(t, ":not(.foo)", {
     type: SelectorType.PseudoClassSelector,
     name: "not",
-    value: {
-      type: SelectorType.ClassSelector,
-      name: "foo"
-    }
+    value: [
+      {
+        type: SelectorType.ClassSelector,
+        name: "foo"
+      }
+    ]
   });
 });
 
@@ -697,8 +698,7 @@ test("Can parse a pseudo-class selector when part of a compound selector", t => 
     },
     right: {
       type: SelectorType.PseudoClassSelector,
-      name: "hover",
-      value: null
+      name: "hover"
     }
   });
 });
@@ -720,8 +720,7 @@ test("Can parse a pseudo-class selector when part of a compound selector relativ
       },
       right: {
         type: SelectorType.PseudoClassSelector,
-        name: "hover",
-        value: null
+        name: "hover"
       }
     }
   });
@@ -750,8 +749,7 @@ test("Can parse a compound type, class, and pseudo-class selector relative to a 
         },
         right: {
           type: SelectorType.PseudoClassSelector,
-          name: "hover",
-          value: null
+          name: "hover"
         }
       }
     }
@@ -810,4 +808,125 @@ test("Can parse a relative selector relative to a compound selector", t => {
       }
     }
   });
+});
+
+test("Can parse selector with an An+B odd microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 2,
+      offset: 1
+    }
+  };
+  selector(t, ":nth-child(2n+1)", expected);
+  selector(t, ":nth-child(odd)", expected);
+  selector(t, ":nth-child(2u+1)", null);
+});
+
+test("Can parse selector with an An+B even microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 2,
+      offset: 0
+    }
+  };
+  selector(t, ":nth-child(2n+0)", expected);
+  selector(t, ":nth-child(even)", expected);
+});
+
+test("Can parse selector using only 'An' from the An+B microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 2,
+      offset: 0
+    }
+  };
+  selector(t, ":nth-child(2n)", expected);
+});
+
+test("Can parse selector using only 'n' from the An+B microsyntax", t => {
+  selector(t, ":nth-child(n)", {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 1,
+      offset: 0
+    }
+  });
+  selector(t, ":nth-child(-n-0)", {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: -1,
+      offset: -0
+    }
+  });
+});
+
+test("Can parse selector omitting 'A' integer from the An+B microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 1,
+      offset: 2
+    }
+  };
+  selector(t, ":nth-child(n+2)", expected);
+});
+
+test("Can parse selector using only 'B' from the An+B microsyntax", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 0,
+      offset: 2
+    }
+  };
+  selector(t, ":nth-child(2)", expected);
+});
+
+test("Can parse selector with an An+B microsyntax with negative integers", t => {
+  const expected: Selector = {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: -2,
+      offset: -3
+    }
+  };
+  selector(t, ":nth-child(-2n-3)", expected);
+});
+
+test("Can parse selector with an An+B microsyntax with whitespace", t => {
+  selector(t, ":nth-child(  2n  +3  )", {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 2,
+      offset: 3
+    }
+  });
+  selector(t, ":nth-child(-  n+3)", null);
+  selector(t, ":nth-child(  even  )", {
+    type: SelectorType.PseudoClassSelector,
+    name: "nth-child",
+    value: {
+      step: 2,
+      offset: 0
+    }
+  });
+});
+
+test("Cannot parse a float child index", t => {
+  selector(t, ":nth-child(3.14)", null);
+  selector(t, ":nth-child(2n3.14)", null);
+  selector(t, ":nth-child(3,14)", null);
+  selector(t, ":nth-child(2n3,14)", null);
 });

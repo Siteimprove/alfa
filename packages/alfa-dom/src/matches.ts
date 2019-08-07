@@ -165,6 +165,8 @@ export function matches(
     case SelectorType.PseudoElementSelector:
       return matchesPseudoElement(element, context, selector, options, root);
   }
+
+  return false;
 }
 
 /**
@@ -516,6 +518,8 @@ function matchesRelative(
         root
       );
   }
+
+  return false;
 }
 
 /**
@@ -650,7 +654,7 @@ function matchesPseudoClass(
 
       // Match host with possible selector argument (e.g. ":host(.foo)")
       return (
-        selector.value === null ||
+        selector.value === undefined ||
         matches(element, context, selector.value, options, root)
       );
     }

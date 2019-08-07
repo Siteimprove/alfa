@@ -104,17 +104,6 @@ export interface TypeSelector {
   readonly namespace: string | null;
 }
 
-export interface PseudoClassSelector {
-  readonly type: SelectorType.PseudoClassSelector;
-  readonly name: PseudoClass;
-  readonly value: Selector | Array<Selector> | null;
-}
-
-export interface PseudoElementSelector {
-  readonly type: SelectorType.PseudoElementSelector;
-  readonly name: PseudoElement;
-}
-
 export type SimpleSelector =
   | IdSelector
   | ClassSelector
@@ -165,137 +154,317 @@ export type Selector = ComplexSelector | RelativeSelector;
 /**
  * @see https://www.w3.org/TR/selectors/#pseudo-classes
  */
-export type PseudoClass =
+export namespace PseudoClassSelector {
+  interface PseudoClassSelector<N extends string> {
+    readonly type: SelectorType.PseudoClassSelector;
+    readonly name: N;
+  }
+
+  export interface WithValue<V> {
+    readonly value: V;
+  }
+
+  export interface WithSelector extends WithValue<Array<Selector>> {}
+
+  export interface WithChildIndex extends WithValue<ChildIndex> {}
+
   // https://www.w3.org/TR/selectors/#matches-pseudo
-  | "matches"
+  export interface Is extends PseudoClassSelector<"is">, WithSelector {}
+
   // https://www.w3.org/TR/selectors/#negation-pseudo
-  | "not"
-  // https://www.w3.org/TR/selectors/#something-pseudo
-  | "something"
+  export interface Not extends PseudoClassSelector<"not">, WithSelector {}
+
   // https://www.w3.org/TR/selectors/#has-pseudo
-  | "has"
+  export interface Has extends PseudoClassSelector<"has">, WithSelector {}
+
   // https://www.w3.org/TR/selectors/#dir-pseudo
-  | "dir"
+  export interface Dir
+    extends PseudoClassSelector<"dir">,
+      WithValue<"ltr" | "rtl"> {}
+
   // https://www.w3.org/TR/selectors/#lang-pseudo
-  | "lang"
+  export interface Lang
+    extends PseudoClassSelector<"lang">,
+      WithValue<Iterable<string>> {}
+
   // https://www.w3.org/TR/selectors/#any-link-pseudo
-  | "any-link"
+  export interface AnyLink extends PseudoClassSelector<"any-link"> {}
+
   // https://www.w3.org/TR/selectors/#link-pseudo
-  | "link"
+  export interface Link extends PseudoClassSelector<"link"> {}
+
   // https://www.w3.org/TR/selectors/#visited-pseudo
-  | "visited"
+  export interface Visited extends PseudoClassSelector<"visited"> {}
+
   // https://www.w3.org/TR/selectors/#local-link-pseudo
-  | "local-link"
+  export interface LocalLink extends PseudoClassSelector<"local-link"> {}
+
   // https://www.w3.org/TR/selectors/#target-pseudo
-  | "target"
+  export interface Target extends PseudoClassSelector<"target"> {}
+
   // https://www.w3.org/TR/selectors/#target-within-pseudo
-  | "target-within"
+  export interface TargetWithin extends PseudoClassSelector<"target-within"> {}
+
   // https://www.w3.org/TR/selectors/#scope-pseudo
-  | "scope"
+  export interface Scope extends PseudoClassSelector<"scope"> {}
+
   // https://www.w3.org/TR/selectors/#hover-pseudo
-  | "hover"
+  export interface Hover extends PseudoClassSelector<"hover"> {}
+
   // https://www.w3.org/TR/selectors/#active-pseudo
-  | "active"
+  export interface Active extends PseudoClassSelector<"active"> {}
+
   // https://www.w3.org/TR/selectors/#focus-pseudo
-  | "focus"
+  export interface Focus extends PseudoClassSelector<"focus"> {}
+
   // https://www.w3.org/TR/selectors/#focus-visible-pseudo
-  | "focus-visible"
+  export interface FocusVisible extends PseudoClassSelector<"focus-visible"> {}
+
   // https://www.w3.org/TR/selectors/#focus-within-pseudo
-  | "focus-within"
-  // https://www.w3.org/TR/selectors/#drag-pseudos
-  | "drop"
+  export interface FocusWithin extends PseudoClassSelector<"focus-within"> {}
+
   // https://www.w3.org/TR/selectors/#current-pseudo
-  | "current"
+  export interface Current
+    extends PseudoClassSelector<"current">,
+      Partial<WithSelector> {}
+
   // https://www.w3.org/TR/selectors/#past-pseudo
-  | "past"
+  export interface Past extends PseudoClassSelector<"past"> {}
+
   // https://www.w3.org/TR/selectors/#future-pseudo
-  | "future"
+  export interface Future extends PseudoClassSelector<"future"> {}
+
   // https://www.w3.org/TR/selectors/#video-state
-  | "playing"
-  | "paused"
+  export interface Playing extends PseudoClassSelector<"playing"> {}
+
+  export interface Paused extends PseudoClassSelector<"paused"> {}
+
   // https://www.w3.org/TR/selectors/#enabled-pseudo
-  | "enabled"
+  export interface Enabled extends PseudoClassSelector<"enabled"> {}
+
   // https://www.w3.org/TR/selectors/#disabled-pseudo
-  | "disabled"
+  export interface Disabled extends PseudoClassSelector<"disabled"> {}
+
   // https://www.w3.org/TR/selectors/#read-only-pseudo
-  | "read-only"
+  export interface ReadOnly extends PseudoClassSelector<"read-only"> {}
+
   // https://www.w3.org/TR/selectors/#read-write-pseudo
-  | "read-write"
+  export interface ReadWrite extends PseudoClassSelector<"read-write"> {}
+
   // https://www.w3.org/TR/selectors/#placeholder-shown-pseudo
-  | "placeholder-shown"
+  export interface PlaceholderShown
+    extends PseudoClassSelector<"placeholder-shown"> {}
+
   // https://www.w3.org/TR/selectors/#default-pseudo
-  | "default"
+  export interface Default extends PseudoClassSelector<"default"> {}
+
   // https://www.w3.org/TR/selectors/#checked-pseudo
-  | "checked"
+  export interface Checked extends PseudoClassSelector<"checked"> {}
+
   // https://www.w3.org/TR/selectors/#indetermine-pseudo
-  | "indetermine"
+  export interface Indetermine extends PseudoClassSelector<"indetermine"> {}
+
   // https://www.w3.org/TR/selectors/#valid-pseudo
-  | "valid"
+  export interface Valid extends PseudoClassSelector<"valid"> {}
+
   // https://www.w3.org/TR/selectors/#invalid-pseudo
-  | "invalid"
+  export interface Invalid extends PseudoClassSelector<"invalid"> {}
+
   // https://www.w3.org/TR/selectors/#in-range-pseudo
-  | "in-range"
+  export interface InRange extends PseudoClassSelector<"in-range"> {}
+
   // https://www.w3.org/TR/selectors/#out-of-range-pseudo
-  | "out-of-range"
+  export interface OutOfRange extends PseudoClassSelector<"out-of-range"> {}
+
   // https://www.w3.org/TR/selectors/#required-pseudo
-  | "required"
+  export interface Required extends PseudoClassSelector<"required"> {}
+
   // https://www.w3.org/TR/selectors/#user-invalid-pseudo
-  | "user-invalid"
+  export interface UserInvalid extends PseudoClassSelector<"user-invalid"> {}
+
   // https://drafts.csswg.org/css-scoping/#host-selector
-  | "host"
+  export interface Host
+    extends PseudoClassSelector<"host">,
+      Partial<WithSelector> {}
+
   // https://drafts.csswg.org/css-scoping/#host-selector
-  | "host-context"
+  export interface HostContext
+    extends PseudoClassSelector<"host-context">,
+      WithSelector {}
+
   // https://www.w3.org/TR/selectors/#root-pseudo
-  | "root"
+  export interface Root extends PseudoClassSelector<"root"> {}
+
   // https://www.w3.org/TR/selectors/#empty-pseudo
-  | "empty"
+  export interface Empty extends PseudoClassSelector<"empty"> {}
+
   // https://www.w3.org/TR/selectors/#blank-pseudo
-  | "blank"
-  // https://www.w3.org/TR/selectors/#nth-child-pseudo
-  | "nth-child"
-  // https://www.w3.org/TR/selectors/#nth-last-child-pseudo
-  | "nth-last-child"
+  export interface Blank extends PseudoClassSelector<"blank"> {}
+
   // https://www.w3.org/TR/selectors/#first-child-pseudo
-  | "first-child"
+  export interface FirstChild extends PseudoClassSelector<"first-child"> {}
+
   // https://www.w3.org/TR/selectors/#last-child-pseudo
-  | "last-child"
+  export interface LastChild extends PseudoClassSelector<"last-child"> {}
+
   // https://www.w3.org/TR/selectors/#only-child-pseudo
-  | "only-child"
-  // https://www.w3.org/TR/selectors/#nth-of-type-pseudo
-  | "nth-of-type"
-  // https://www.w3.org/TR/selectors/#nth-last-of-type-pseudo
-  | "nth-last-of-type"
+  export interface OnlyChild extends PseudoClassSelector<"only-child"> {}
+
   // https://www.w3.org/TR/selectors/#first-of-type-pseudo
-  | "first-of-type"
+  export interface FirstOfType extends PseudoClassSelector<"first-of-type"> {}
+
   // https://www.w3.org/TR/selectors/#last-of-type-pseudo
-  | "last-of-type"
+  export interface LastOfType extends PseudoClassSelector<"last-of-type"> {}
+
   // https://www.w3.org/TR/selectors/#only-of-type-pseudo
-  | "only-of-type"
+  export interface OnlyOfType extends PseudoClassSelector<"only-of-type"> {}
+
+  // https://www.w3.org/TR/selectors/#nth-child-pseudo
+  export interface NthChild
+    extends PseudoClassSelector<"nth-child">,
+      WithChildIndex {}
+
+  // https://www.w3.org/TR/selectors/#nth-last-child-pseudo
+  export interface NthLastChild
+    extends PseudoClassSelector<"nth-last-child">,
+      WithChildIndex {}
+
+  // https://www.w3.org/TR/selectors/#nth-of-type-pseudo
+  export interface NthOfType
+    extends PseudoClassSelector<"nth-of-type">,
+      WithChildIndex {}
+
+  // https://www.w3.org/TR/selectors/#nth-last-of-type-pseudo
+  export interface NthLastOfType
+    extends PseudoClassSelector<"nth-last-of-type">,
+      WithChildIndex {}
+
   // https://www.w3.org/TR/selectors/#nth-col-pseudo
-  | "nth-col"
+  export interface NthCol
+    extends PseudoClassSelector<"nth-col">,
+      WithChildIndex {}
+
   // https://www.w3.org/TR/selectors/#nth-last-col-pseudo
-  | "nth-last-col";
+  export interface NthLastCol
+    extends PseudoClassSelector<"nth-last-col">,
+      WithChildIndex {}
+}
+
+export type PseudoClassSelector =
+  | PseudoClassSelector.Is
+  | PseudoClassSelector.Not
+  | PseudoClassSelector.Has
+  | PseudoClassSelector.Dir
+  | PseudoClassSelector.Lang
+  | PseudoClassSelector.AnyLink
+  | PseudoClassSelector.Link
+  | PseudoClassSelector.Visited
+  | PseudoClassSelector.LocalLink
+  | PseudoClassSelector.Target
+  | PseudoClassSelector.TargetWithin
+  | PseudoClassSelector.Scope
+  | PseudoClassSelector.Hover
+  | PseudoClassSelector.Active
+  | PseudoClassSelector.Focus
+  | PseudoClassSelector.FocusVisible
+  | PseudoClassSelector.FocusWithin
+  | PseudoClassSelector.Current
+  | PseudoClassSelector.Past
+  | PseudoClassSelector.Future
+  | PseudoClassSelector.Playing
+  | PseudoClassSelector.Paused
+  | PseudoClassSelector.Enabled
+  | PseudoClassSelector.Disabled
+  | PseudoClassSelector.ReadOnly
+  | PseudoClassSelector.ReadWrite
+  | PseudoClassSelector.PlaceholderShown
+  | PseudoClassSelector.Default
+  | PseudoClassSelector.Checked
+  | PseudoClassSelector.Valid
+  | PseudoClassSelector.Invalid
+  | PseudoClassSelector.InRange
+  | PseudoClassSelector.OutOfRange
+  | PseudoClassSelector.Required
+  | PseudoClassSelector.UserInvalid
+  | PseudoClassSelector.Host
+  | PseudoClassSelector.HostContext
+  | PseudoClassSelector.Root
+  | PseudoClassSelector.Empty
+  | PseudoClassSelector.Blank
+  | PseudoClassSelector.FirstChild
+  | PseudoClassSelector.LastChild
+  | PseudoClassSelector.OnlyChild
+  | PseudoClassSelector.FirstOfType
+  | PseudoClassSelector.LastOfType
+  | PseudoClassSelector.Indetermine
+  | PseudoClassSelector.OnlyOfType
+  | PseudoClassSelector.NthChild
+  | PseudoClassSelector.NthLastChild
+  | PseudoClassSelector.NthOfType
+  | PseudoClassSelector.NthLastChild
+  | PseudoClassSelector.NthLastOfType
+  | PseudoClassSelector.NthCol
+  | PseudoClassSelector.NthLastCol;
+
+export type PseudoClass = PseudoClassSelector["name"];
 
 /**
  * @see https://www.w3.org/TR/selectors/#pseudo-elements
  */
-export type PseudoElement =
+export namespace PseudoElementSelector {
+  interface PseudoElementSelector<T extends string> {
+    readonly type: SelectorType.PseudoElementSelector;
+    readonly name: T;
+  }
+
   // https://www.w3.org/TR/css-pseudo/#first-line-pseudo
-  | "first-line"
+  export interface FirstLine extends PseudoElementSelector<"first-line"> {}
+
   // https://www.w3.org/TR/css-pseudo/#first-letter-pseudo
-  | "first-letter"
+  export interface FirstLetter extends PseudoElementSelector<"first-letter"> {}
+
   // https://www.w3.org/TR/css-pseudo/#highlight-pseudos
-  | "selection"
-  | "inactive-selection"
-  | "spelling-error"
-  | "grammar-error"
+  export interface Selection extends PseudoElementSelector<"selection"> {}
+
+  export interface InactiveSelection
+    extends PseudoElementSelector<"inactive-selection"> {}
+
+  export interface SpellingError
+    extends PseudoElementSelector<"spelling-error"> {}
+
+  export interface GrammarError
+    extends PseudoElementSelector<"grammar-error"> {}
+
   // https://www.w3.org/TR/css-pseudo/#generated-content
-  | "before"
-  | "after"
+  export interface Before extends PseudoElementSelector<"before"> {}
+
+  export interface After extends PseudoElementSelector<"after"> {}
+
   // https://www.w3.org/TR/css-pseudo/#marker-pseudo
-  | "marker"
+  export interface Marker extends PseudoElementSelector<"marker"> {}
+
   // https://www.w3.org/TR/css-pseudo/#placeholder-pseudo
-  | "placeholder";
+  export interface Placeholder extends PseudoElementSelector<"placeholder"> {}
+}
+
+export type PseudoElementSelector =
+  | PseudoElementSelector.FirstLine
+  | PseudoElementSelector.FirstLetter
+  | PseudoElementSelector.Selection
+  | PseudoElementSelector.InactiveSelection
+  | PseudoElementSelector.SpellingError
+  | PseudoElementSelector.GrammarError
+  | PseudoElementSelector.Before
+  | PseudoElementSelector.After
+  | PseudoElementSelector.Marker
+  | PseudoElementSelector.Placeholder;
+
+export type PseudoElement = PseudoElementSelector["name"];
+
+export interface ChildIndex {
+  readonly step: number;
+  readonly offset: number;
+}
 
 export const enum MediaQualifier {
   Only,

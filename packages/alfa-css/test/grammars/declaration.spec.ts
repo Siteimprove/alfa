@@ -47,6 +47,7 @@ test("Can parse a list of declarations", t => {
           type: TokenType.Dimension,
           value: 24,
           integer: true,
+          signed: false,
           unit: "px"
         }
       ],
