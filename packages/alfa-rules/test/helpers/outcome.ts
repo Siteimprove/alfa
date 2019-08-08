@@ -22,7 +22,7 @@ export function outcome<A extends Aspect, T extends Target>(
         readonly [P in
           | Outcome.Passed
           | Outcome.Failed
-          | Outcome.CantTell]?: ReadonlyArray<T>
+          | Outcome.CantTell]?: ReadonlyArray<T>;
       },
   answers: ReadonlyArray<Answer<A, T>> = []
 ) {

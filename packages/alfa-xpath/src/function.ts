@@ -22,7 +22,7 @@ export interface Function<
  */
 export namespace Function {
   export type Parameters<V extends [...Array<Value>]> = {
-    readonly [P in keyof V]: V[P] extends Value ? TypeFor<V[P]> : never
+    readonly [P in keyof V]: V[P] extends Value ? TypeFor<V[P]> : never;
   };
 
   export type Result<V extends Value> = TypeFor<V>;

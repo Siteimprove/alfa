@@ -42,6 +42,6 @@ export interface Feature {
     readonly [P in BrowserName]?: {
       readonly added: Version | true;
       readonly removed?: Version;
-    }
+    };
   };
 }

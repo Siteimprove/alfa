@@ -27,7 +27,7 @@ export type Aspect = Aspects[keyof Aspects];
  * type.
  */
 export type AspectKeysFor<A extends Aspect> = {
-  readonly [P in keyof Aspects]: Aspects[P] extends A ? P : never
+  readonly [P in keyof Aspects]: Aspects[P] extends A ? P : never;
 }[keyof Aspects];
 
 /**
@@ -181,7 +181,7 @@ export interface Locale {
       readonly [P in
         | Outcome.Passed
         | Outcome.Failed
-        | Outcome.CantTell]?: Message
+        | Outcome.CantTell]?: Message;
     };
   };
   readonly questions?: {
