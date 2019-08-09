@@ -12,6 +12,8 @@ export function isAllowedAttribute(
   role: Role,
   device: Device
 ): boolean {
-  return isRequiredAttribute(element, context, attributeName, role, device) || isSupportedAttribute(element, context, attributeName, role, device);
+  return (
+    isRequiredAttribute(element, context, attributeName, role, device) ||
+    isSupportedAttribute(element, context, attributeName, role, device)
+  );
 }
-

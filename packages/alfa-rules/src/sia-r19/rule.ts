@@ -106,13 +106,12 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                   return false;
                 }
 
-                hasMatches = (
+                hasMatches =
                   querySelector(
                     root,
                     document,
                     node => isElement(node) && getId(node) === value
-                  ) !== null
-                );
+                  ) !== null;
               } else {
                 hasMatches = value
                   .trim()
