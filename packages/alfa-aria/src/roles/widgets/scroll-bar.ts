@@ -9,7 +9,7 @@ export const ScrollBar: Role = {
   name: "scrollbar",
   category: Category.Widget,
   inherits: () => [Range],
-  supported: () => [
+  required: () => [
     Attributes.Controls,
     Attributes.Orientation,
     Attributes.ValueMaximum,
