@@ -1,10 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {
-  Attributes,
-  getRole,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { Attributes, getRole, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { List, Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
@@ -98,4 +93,3 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
     };
   }
 };
-
