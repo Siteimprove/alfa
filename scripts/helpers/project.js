@@ -134,7 +134,8 @@ class Project {
     if (source !== undefined) {
       diagnostics.push(
         ...program.getSemanticDiagnostics(source),
-        ...program.getSyntacticDiagnostics(source)
+        ...program.getSyntacticDiagnostics(source),
+        ...program.getDeclarationDiagnostics(source)
       );
 
       diagnostics.sort((a, b) => {
