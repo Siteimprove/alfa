@@ -76,6 +76,7 @@
     "src/values.ts",
     "test/alphabet.spec.ts",
     "test/escape.spec.ts",
+    "test/grammars/child-index.spec.ts",
     "test/grammars/declaration.spec.ts",
     "test/grammars/media.spec.ts",
     "test/grammars/rule.spec.ts",
