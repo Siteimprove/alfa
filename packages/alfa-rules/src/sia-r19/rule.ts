@@ -6,9 +6,13 @@ import {
   Document,
   Element,
   getElementNamespace,
+  getId,
+  getOwnerElement,
+  getRootNode,
   isElement,
   Namespace,
   Node,
+  querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { URL, values } from "@siteimprove/alfa-util";
@@ -19,9 +23,7 @@ const whitespace = /\s+/;
 
 export const SIA_R19: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
-  requirements: [
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
+  requirements: [{ requirement: "aria", partial: true }],
   locales: [EN],
   evaluate: ({ document }) => {
     const attributeNames = new Set(
@@ -31,9 +33,14 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
     return {
       applicability: () => {
         return Seq(
-          querySelectorAll<Element>(document, document, node => {
-            return isElement(node) && isHtmlOrSvgElement(node, document);
-          })
+          querySelectorAll<Element>(
+            document,
+            document,
+            node => {
+              return isElement(node) && isHtmlOrSvgElement(node, document);
+            },
+            { composed: true }
+          )
         )
           .reduce<List<Attribute>>((attributes, element) => {
             return attributes.concat(
@@ -78,12 +85,34 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
             break;
 
           case "id-reference":
-            valid = whitespace.test(value) === false;
-            break;
+          case "id-reference-list": {
+            const root = getRootNode(
+              getOwnerElement(target, document)!,
+              document
+            );
 
-          case "id-reference-list":
-            valid = true;
+            if (attribute.type === "id-reference") {
+              valid =
+                querySelector(
+                  root,
+                  document,
+                  node => isElement(node) && getId(node) === value
+                ) !== null;
+            } else {
+              valid = value
+                .trim()
+                .split(whitespace)
+                .some(
+                  value =>
+                    querySelector(
+                      root,
+                      document,
+                      node => isElement(node) && getId(node) === value
+                    ) !== null
+                );
+            }
             break;
+          }
 
           case "integer":
             valid = /^\d+$/.test(value);
