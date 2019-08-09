@@ -1,6 +1,8 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import { Attributes } from "@siteimprove/alfa-aria";
+import { Attributes, getRole } from "@siteimprove/alfa-aria";
 import { List, Seq } from "@siteimprove/alfa-collection";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
@@ -17,15 +19,19 @@ import {
 } from "@siteimprove/alfa-dom";
 import { URL, values } from "@siteimprove/alfa-util";
 
+import { isRequiredAttribute } from "../helpers/is-required-attribute";
+
 import { EN } from "./locales/en";
+
+const { map } = BrowserSpecific;
 
 const whitespace = /\s+/;
 
-export const SIA_R19: Atomic.Rule<Document, Attribute> = {
+export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
   id: "sanshikan:rules/sia-r19.html",
   requirements: [{ requirement: "aria", partial: true }],
   locales: [EN],
-  evaluate: ({ document }) => {
+  evaluate: ({ document, device }) => {
     const attributeNames = new Set(
       values(Attributes).map(attribute => attribute.name)
     );
@@ -39,7 +45,9 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
             node => {
               return isElement(node) && isHtmlOrSvgElement(node, document);
             },
-            { composed: true }
+            {
+              composed: true
+            }
           )
         )
           .reduce<List<Attribute>>((attributes, element) => {
@@ -68,7 +76,7 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
 
         const { value } = target;
 
-        let valid = true;
+        let valid: boolean | BrowserSpecific<boolean> = true;
 
         switch (attribute.type) {
           case "true-false":
@@ -86,31 +94,54 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
 
           case "id-reference":
           case "id-reference-list": {
-            const root = getRootNode(
-              getOwnerElement(target, document)!,
-              document
-            );
+            const owner = getOwnerElement(target, document)!;
 
-            if (attribute.type === "id-reference") {
-              valid =
-                querySelector(
-                  root,
-                  document,
-                  node => isElement(node) && getId(node) === value
-                ) !== null;
-            } else {
-              valid = value
-                .trim()
-                .split(whitespace)
-                .some(
-                  value =>
-                    querySelector(
-                      root,
-                      document,
-                      node => isElement(node) && getId(node) === value
-                    ) !== null
+            valid = map(getRole(owner, document, device), role => {
+              const root = getRootNode(owner, document);
+
+              let hasMatches = false;
+
+              if (attribute.type === "id-reference") {
+                if (whitespace.test(value)) {
+                  return false;
+                }
+
+                hasMatches = (
+                  querySelector(
+                    root,
+                    document,
+                    node => isElement(node) && getId(node) === value
+                  ) !== null
                 );
-            }
+              } else {
+                hasMatches = value
+                  .trim()
+                  .split(whitespace)
+                  .some(
+                    value =>
+                      querySelector(
+                        root,
+                        document,
+                        node => isElement(node) && getId(node) === value
+                      ) !== null
+                  );
+              }
+
+              if (
+                role !== null &&
+                isRequiredAttribute(
+                  owner,
+                  document,
+                  target.localName,
+                  role,
+                  device
+                )
+              ) {
+                return hasMatches;
+              }
+
+              return true;
+            });
             break;
           }
 
@@ -146,7 +177,9 @@ export const SIA_R19: Atomic.Rule<Document, Attribute> = {
             }
         }
 
-        return { 1: { holds: valid } };
+        return map(valid, valid => {
+          return { 1: { holds: valid } };
+        });
       }
     };
   }

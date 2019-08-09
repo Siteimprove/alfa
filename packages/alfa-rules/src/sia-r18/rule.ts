@@ -3,7 +3,6 @@ import {
   Attributes,
   getRole,
   isExposed,
-  Role,
   Roles
 } from "@siteimprove/alfa-aria";
 import { List, Seq } from "@siteimprove/alfa-collection";
@@ -12,13 +11,13 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
-  Element,
   getOwnerElement,
   isElement,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { values } from "@siteimprove/alfa-util";
+
+import { isAllowedAttribute } from "../helpers/is-allowed-attribute";
 
 const {
   map,
@@ -83,9 +82,9 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
             isAllowed = isAllowedAttribute(
               owner,
               document,
-              device,
               target.localName,
-              role
+              role,
+              device
             );
           } else {
             isAllowed = globalAttributeNames.has(target.localName);
@@ -100,41 +99,3 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
   }
 };
 
-function isAllowedAttribute(
-  element: Element,
-  context: Node,
-  device: Device,
-  attributeName: string,
-  role: Role
-): boolean {
-  const required =
-    role.required === undefined ? [] : role.required(element, context, device);
-
-  for (const attribute of required) {
-    if (attribute.name === attributeName) {
-      return true;
-    }
-  }
-
-  const supported =
-    role.supported === undefined
-      ? []
-      : role.supported(element, context, device);
-
-  for (const attribute of supported) {
-    if (attribute.name === attributeName) {
-      return true;
-    }
-  }
-
-  const inherits =
-    role.inherits === undefined ? [] : role.inherits(element, context, device);
-
-  for (const role of inherits) {
-    if (isAllowedAttribute(element, context, device, attributeName, role)) {
-      return true;
-    }
-  }
-
-  return false;
-}
