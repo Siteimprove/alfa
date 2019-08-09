@@ -5,6 +5,7 @@ import {
   Assertion,
   AssertionError
 } from "@siteimprove/alfa-assert";
+import { serialize } from "@siteimprove/alfa-dom";
 
 declare global {
   namespace jasmine {
@@ -20,7 +21,7 @@ export function createJasminePlugin<T>(
 ): void {
   beforeEach(() => {
     jasmine.addMatchers({
-      toBeAccessible() {
+      toBeAccessible(util) {
         return {
           compare(target: unknown) {
             if (identify(target)) {
@@ -37,14 +38,15 @@ export function createJasminePlugin<T>(
                 }
               }
 
-              if (error !== null) {
-                const message = error.toString();
-
-                return {
-                  pass: false,
-                  message
-                };
-              }
+              return {
+                pass: error === null,
+                message:
+                  util.buildFailureMessage(
+                    "toBeAccessible",
+                    error === null,
+                    serialize(element, element)
+                  ) + (error === null ? "" : ` ${error.toString()}`)
+              };
             }
 
             return {
