@@ -18,7 +18,7 @@ export type NodeFilter = (node: Node, context: Node) => boolean;
  */
 export type AttributeFilter = (
   attribute: Attribute,
-  element: Element,
+  owner: Element,
   context: Node
 ) => boolean;
 
