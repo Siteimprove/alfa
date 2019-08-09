@@ -133,7 +133,19 @@ test("Can lex an integer", t => {
     {
       type: TokenType.Number,
       value: 123,
-      integer: true
+      integer: true,
+      signed: false
+    }
+  ]);
+});
+
+test("Can lex a positive integer", t => {
+  css(t, "+123", [
+    {
+      type: TokenType.Number,
+      value: 123,
+      integer: true,
+      signed: true
     }
   ]);
 });
@@ -143,7 +155,8 @@ test("Can lex a negative integer", t => {
     {
       type: TokenType.Number,
       value: -123,
-      integer: true
+      integer: true,
+      signed: true
     }
   ]);
 });
@@ -153,7 +166,8 @@ test("Can lex a decimal", t => {
     {
       type: TokenType.Number,
       value: 123.456,
-      integer: false
+      integer: false,
+      signed: false
     }
   ]);
 });
@@ -163,7 +177,8 @@ test("Correctly lexes odd decimals", t => {
     {
       type: TokenType.Number,
       value: 0.3,
-      integer: false
+      integer: false,
+      signed: false
     }
   ]);
 });
@@ -173,7 +188,8 @@ test("Can lex a negative decimal", t => {
     {
       type: TokenType.Number,
       value: -123.456,
-      integer: false
+      integer: false,
+      signed: true
     }
   ]);
 });
@@ -183,7 +199,8 @@ test("Can lex a decimal in E-notation", t => {
     {
       type: TokenType.Number,
       value: 123.456e2,
-      integer: false
+      integer: false,
+      signed: false
     }
   ]);
 });
@@ -193,7 +210,8 @@ test("Can lex a negative decimal in E-notation", t => {
     {
       type: TokenType.Number,
       value: -123.456e2,
-      integer: false
+      integer: false,
+      signed: true
     }
   ]);
 });
@@ -203,7 +221,8 @@ test("Correctly lexes odd E-notations", t => {
     {
       type: TokenType.Number,
       value: 3e-1,
-      integer: false
+      integer: false,
+      signed: false
     }
   ]);
 });
@@ -214,6 +233,7 @@ test("Can lex a dimension", t => {
       type: TokenType.Dimension,
       value: 123,
       integer: true,
+      signed: false,
       unit: "px"
     }
   ]);
@@ -250,7 +270,8 @@ test("Can lex a function with a single argument", t => {
     {
       type: TokenType.Number,
       value: 123,
-      integer: true
+      integer: true,
+      signed: false
     },
     {
       type: TokenType.RightParenthesis
@@ -338,12 +359,47 @@ test("Can lex an+b values", t => {
       type: TokenType.Dimension,
       value: 2,
       integer: true,
+      signed: false,
       unit: "n"
     },
     {
       type: TokenType.Number,
       value: 4,
-      integer: true
+      integer: true,
+      signed: true
+    }
+  ]);
+
+  css(t, "n-4", [
+    {
+      type: TokenType.Ident,
+      value: "n-4"
+    }
+  ]);
+
+  css(t, "1n-4", [
+    {
+      type: TokenType.Dimension,
+      value: 1,
+      integer: true,
+      signed: false,
+      unit: "n-4"
+    }
+  ]);
+
+  css(t, "-1n+5", [
+    {
+      type: TokenType.Dimension,
+      value: -1,
+      integer: true,
+      signed: true,
+      unit: "n"
+    },
+    {
+      type: TokenType.Number,
+      value: 5,
+      integer: true,
+      signed: true
     }
   ]);
 });

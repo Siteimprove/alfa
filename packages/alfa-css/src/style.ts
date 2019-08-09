@@ -8,15 +8,15 @@ import * as Longhands from "./properties/longhands";
 type Longhands = typeof Longhands;
 
 export type CascadedStyle = {
-  readonly [N in keyof Longhands]?: CascadedPropertyValue<N>
+  readonly [N in keyof Longhands]?: CascadedPropertyValue<N>;
 };
 
 export type SpecifiedStyle = {
-  readonly [N in keyof Longhands]?: SpecifiedPropertyValue<N>
+  readonly [N in keyof Longhands]?: SpecifiedPropertyValue<N>;
 };
 
 export type ComputedStyle = {
-  readonly [N in keyof Longhands]?: ComputedPropertyValue<N>
+  readonly [N in keyof Longhands]?: ComputedPropertyValue<N>;
 };
 
 export interface Style {

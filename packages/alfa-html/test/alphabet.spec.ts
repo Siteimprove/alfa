@@ -1056,3 +1056,18 @@ test("Can lex a script element with an apparent comment", t => {
     }
   ]);
 });
+
+test("Can lex a template tag", t => {
+  html(t, "<template></template>", [
+    {
+      type: TokenType.StartTag,
+      name: "template",
+      selfClosing: false,
+      attributes: []
+    },
+    {
+      type: TokenType.EndTag,
+      name: "template"
+    }
+  ]);
+});

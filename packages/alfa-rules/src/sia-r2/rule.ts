@@ -2,6 +2,7 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   getRole,
   getTextAlternative,
+  hasTextAlternative,
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
@@ -67,21 +68,27 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
 
       expectations: (aspect, target) => {
         return map(
-          getTextAlternative(target, document, device),
-          textAlternative => {
-            return map(isDecorative(target, document, device), isDecorative => {
-              return {
-                1: {
-                  holds:
-                    isDecorative ||
-                    (textAlternative !== null && textAlternative !== ""),
-                  data: {
-                    alt: textAlternative,
-                    decorative: isDecorative
+          hasTextAlternative(target, document, device),
+          hasTextAlternative => {
+            return map(
+              getTextAlternative(target, document, device),
+              textAlternative => {
+                return map(
+                  isDecorative(target, document, device),
+                  isDecorative => {
+                    return {
+                      1: {
+                        holds: isDecorative || hasTextAlternative,
+                        data: {
+                          alt: textAlternative,
+                          decorative: isDecorative
+                        }
+                      }
+                    };
                   }
-                }
-              };
-            });
+                );
+              }
+            );
           }
         );
       }

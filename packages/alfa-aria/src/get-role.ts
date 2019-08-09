@@ -1,6 +1,12 @@
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  getAttribute,
+  getElementNamespace,
+  Namespace,
+  Node
+} from "@siteimprove/alfa-dom";
 import { Option, values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
 import * as Roles from "./roles";
@@ -16,11 +22,21 @@ for (const role of values(Roles)) {
   rolesByName.set(role.name, role);
 }
 
-const featuresByElement = new Map<string, Feature>();
+const htmlFeaturesByElement = new Map<string, Feature>();
 
-for (const feature of values(Features)) {
-  featuresByElement.set(feature.element, feature);
+for (const feature of values(Features.HTML)) {
+  htmlFeaturesByElement.set(feature.element, feature);
 }
+
+const svgFeaturesByElement = new Map<string, Feature>();
+
+for (const feature of values(Features.SVG)) {
+  svgFeaturesByElement.set(feature.element, feature);
+}
+
+const featuresByNamespace = new Map<Namespace, Map<string, Feature>>();
+featuresByNamespace.set(Namespace.HTML, htmlFeaturesByElement);
+featuresByNamespace.set(Namespace.SVG, svgFeaturesByElement);
 
 /**
  * Given an element and a context, get the semantic role of the element within
@@ -69,7 +85,15 @@ export function getRole(
     }
 
     if (options.implicit !== false) {
-      const feature = featuresByElement.get(element.localName);
+      const elementNamespace = getElementNamespace(element, context);
+      if (elementNamespace === null) {
+        return null;
+      }
+      const featuresByElement = featuresByNamespace.get(elementNamespace);
+      const feature =
+        featuresByElement === undefined
+          ? undefined
+          : featuresByElement.get(element.localName);
 
       if (feature !== undefined) {
         const role =

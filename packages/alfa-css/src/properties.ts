@@ -10,7 +10,7 @@ type Longhands = typeof Longhands;
 type ParsedPropertyValues = {
   [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
     ? T
-    : never
+    : never;
 };
 
 export type ParsedPropertyValue<
@@ -20,7 +20,7 @@ export type ParsedPropertyValue<
 type InitialPropertyValues = {
   [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
     ? T | U
-    : never
+    : never;
 };
 
 export type InitialPropertyValue<
@@ -30,7 +30,7 @@ export type InitialPropertyValue<
 type CascadedPropertyValues = {
   [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
     ? T | Values.Keyword<"initial" | "inherit">
-    : never
+    : never;
 };
 
 export type CascadedPropertyValue<
@@ -40,7 +40,7 @@ export type CascadedPropertyValue<
 type SpecifiedPropertyValues = {
   [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
     ? T | U
-    : never
+    : never;
 };
 
 export type SpecifiedPropertyValue<
@@ -50,7 +50,7 @@ export type SpecifiedPropertyValue<
 type ComputedPropertyValues = {
   [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
     ? U
-    : never
+    : never;
 };
 
 export type ComputedPropertyValue<
