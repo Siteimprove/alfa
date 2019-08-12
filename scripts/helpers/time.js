@@ -1,7 +1,6 @@
-/// <reference path="../types/pretty-ms.d.ts" />
-
-const prettyMs = require("pretty-ms");
 const { default: chalk } = require("chalk");
+
+const { round } = Math;
 
 /**
  * @typedef {number} Time
@@ -27,7 +26,7 @@ function format(time, options = {}) {
     return "";
   }
 
-  const formatted = prettyMs(time);
+  const formatted = `${round(time)}ms`;
 
   if (options.color !== undefined) {
     return chalk[options.color](formatted);

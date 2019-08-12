@@ -1,8 +1,6 @@
-/// <reference path="../types/gaze.d.ts" />
-
 const path = require("path");
 const fs = require("fs");
-const gaze = require("gaze");
+const chokidar = require("chokidar");
 const git = require("./git");
 
 /**
@@ -142,18 +140,16 @@ function watchFiles(pattern, listener, options = {}) {
     }
   };
 
-  gaze(typeof pattern === "string" ? pattern : [...pattern], (err, watcher) => {
-    if (err !== null) {
-      throw err;
-    }
+  const watcher = chokidar.watch(
+    typeof pattern === "string" ? pattern : [...pattern]
+  );
 
-    watcher.on("changed", file => {
-      handler("changed", file);
-    });
+  watcher.on("changed", file => {
+    handler("changed", file);
+  });
 
-    watcher.on("added", file => {
-      handler("added", file);
-    });
+  watcher.on("added", file => {
+    handler("added", file);
   });
 }
 
