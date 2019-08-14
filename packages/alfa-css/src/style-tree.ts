@@ -232,7 +232,7 @@ function resolveSpecifiedStyle<S>(style: Style<S>): SpecifiedStyle<S> {
 
       if (!isKeyword(value, "initial", "inherit")) {
         setProperty(propertyName, value, source);
-      } else if (isKeyword(value, "inherit")) {
+      } else if (isKeyword(value, "initial")) {
         setProperty(propertyName, initial(), source);
       } else if (isKeyword(value, "inherit")) {
         const parentValue = parentStyle[propertyName];
