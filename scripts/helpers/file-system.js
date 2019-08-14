@@ -115,13 +115,13 @@ exports.findFiles = findFiles;
 
 /**
  * @param {string | Iterable<string>} pattern
- * @param {function("changed" | "added", string): void} listener
+ * @param {function("change" | "add", string): void} listener
  * @param {{ gitIgnore?: boolean }} [options]
  * @return {void}
  */
 function watchFiles(pattern, listener, options = {}) {
   /**
-   * @param {"changed" | "added"} event
+   * @param {"change" | "add"} event
    * @param {string} file
    */
   const handler = (event, file) => {
@@ -141,15 +141,18 @@ function watchFiles(pattern, listener, options = {}) {
   };
 
   const watcher = chokidar.watch(
-    typeof pattern === "string" ? pattern : [...pattern]
+    typeof pattern === "string" ? pattern : [...pattern],
+    {
+      ignoreInitial: true
+    }
   );
 
-  watcher.on("changed", file => {
-    handler("changed", file);
+  watcher.on("change", file => {
+    handler("change", file);
   });
 
-  watcher.on("added", file => {
-    handler("added", file);
+  watcher.on("add", file => {
+    handler("add", file);
   });
 }
 
