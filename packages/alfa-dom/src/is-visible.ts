@@ -1,5 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import { getParentElement } from "./get-parent-element";
+import { getPropertyValue } from "./get-property-value";
 import { getCascadedStyle, getComputedStyle } from "./get-style";
 import { isElement } from "./guards";
 import { isRendered } from "./is-rendered";
@@ -29,9 +30,12 @@ export function isVisible(
             if (!isRendered(node, context, device)) {
               visibilityMap!.set(node, false);
             } else {
-              const { opacity } = getCascadedStyle(node, context, device);
+              const opacity = getPropertyValue(
+                getCascadedStyle(node, context, device),
+                "opacity"
+              );
 
-              if (opacity !== undefined && opacity.value === 0) {
+              if (opacity !== null && opacity.value === 0) {
                 visibilityMap!.set(node, false);
               } else if (parentNode !== null && isElement(parentNode)) {
                 const isParentVisible = visibilityMap!.get(parentNode);
@@ -45,9 +49,12 @@ export function isVisible(
         },
         exit(node) {
           if (isElement(node)) {
-            const { visibility } = getComputedStyle(node, context, device);
+            const visibility = getPropertyValue(
+              getComputedStyle(node, context, device),
+              "visibility"
+            );
 
-            if (visibility !== undefined) {
+            if (visibility !== null) {
               if (
                 visibility.value === "hidden" ||
                 visibility.value === "collapse"

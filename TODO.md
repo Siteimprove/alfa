@@ -8,7 +8,7 @@
 
 ### @todo
 
-- [src/is-rendered.ts:19](packages/alfa-dom/src/is-rendered.ts#L19): Handle `display: contents` once it gains wider support.
+- [src/is-rendered.ts:20](packages/alfa-dom/src/is-rendered.ts#L20): Handle `display: contents` once it gains wider support.
 
 ## [@siteimprove/alfa-aria](packages/alfa-aria)
 

@@ -31,19 +31,26 @@ export const lineHeight: Longhand<
     return Values.keyword("normal");
   },
   computed(style, device) {
-    const value = getSpecifiedProperty(style, "lineHeight");
-    const fontSize = getComputedProperty(style, "fontSize");
+    const { value, source } = getSpecifiedProperty(style, "lineHeight");
 
     switch (value.type) {
       case ValueType.Number:
       case ValueType.Keyword:
-        return value;
+        return { value, source };
 
       case ValueType.Length:
-        return Resolvers.length(value, device, style);
+        return { value: Resolvers.length(value, device, style), source };
 
       case ValueType.Percentage:
-        return Resolvers.percentage(value, fontSize, device, style);
+        return {
+          value: Resolvers.percentage(
+            value,
+            getComputedProperty(style, "fontSize").value,
+            device,
+            style
+          ),
+          source
+        };
     }
   }
 };

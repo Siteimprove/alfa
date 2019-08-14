@@ -1,5 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import { getElementNamespace } from "./get-element-namespace";
+import { getPropertyValue } from "./get-property-value";
 import { getComputedStyle } from "./get-style";
 import { getTabIndex } from "./get-tab-index";
 import { isFocusable } from "./is-focusable";
@@ -55,9 +56,12 @@ function redirectsFocus(element: Element, context: Node): boolean {
 }
 
 function isInert(element: Element, context: Node, device: Device): boolean {
-  const { visibility } = getComputedStyle(element, context, device);
+  const visibility = getPropertyValue(
+    getComputedStyle(element, context, device),
+    "visibility"
+  );
 
-  if (visibility !== undefined) {
+  if (visibility !== null) {
     if (visibility.value === "hidden" || visibility.value === "collapse") {
       return true;
     }

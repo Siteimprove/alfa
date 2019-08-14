@@ -8,6 +8,8 @@ import {
   getSpecifiedStyle
 } from "../src/get-style";
 
+const { keyword, length, color } = Values;
+
 const device = getDefaultDevice();
 
 const span = <span style="font-size: 1.2em; color: inherit" />;
@@ -17,8 +19,14 @@ test("Gets the cascaded style of an element", t => {
   const style = getCascadedStyle(span, div, device);
 
   t.deepEqual(style, {
-    color: Values.keyword("inherit"),
-    fontSize: Values.length(1.2, "em")
+    color: {
+      value: keyword("inherit"),
+      source: null
+    },
+    fontSize: {
+      value: length(1.2, "em"),
+      source: null
+    }
   });
 });
 
@@ -26,8 +34,14 @@ test("Gets the specified style of an element", t => {
   const style = getSpecifiedStyle(span, div, device);
 
   t.deepEqual(style, {
-    color: Values.color(255, 0, 0, 1),
-    fontSize: Values.length(1.2, "em")
+    color: {
+      value: color(255, 0, 0, 1),
+      source: null
+    },
+    fontSize: {
+      value: length(1.2, "em"),
+      source: null
+    }
   });
 });
 
@@ -35,8 +49,14 @@ test("Gets the computed style of an element", t => {
   const style = getComputedStyle(span, div, device);
 
   t.deepEqual(style, {
-    color: Values.color(255, 0, 0, 1),
-    fontSize: Values.length(19.2, "px")
+    color: {
+      value: color(255, 0, 0, 1),
+      source: null
+    },
+    fontSize: {
+      value: length(19.2, "px"),
+      source: null
+    }
   });
 });
 
@@ -47,7 +67,10 @@ test("Correctly handles default inherited properties", t => {
   const style = getComputedStyle(span, div, device);
 
   t.deepEqual(style, {
-    fontSize: Values.length(14, "px")
+    fontSize: {
+      value: length(14, "px"),
+      source: null
+    }
   });
 });
 
@@ -57,7 +80,10 @@ test("Gets the initial values of properties when specified", t => {
   const style = getComputedStyle(span, span, device);
 
   t.deepEqual(style, {
-    fontSize: Values.length(16, "px")
+    fontSize: {
+      value: length(16, "px"),
+      source: null
+    }
   });
 });
 
@@ -87,6 +113,9 @@ test("Correctly handles light DOM inheriting from shadow DOM", t => {
   const style = getComputedStyle(span, context, device);
 
   t.deepEqual(style, {
-    color: Values.color(255, 0, 0, 1)
+    color: {
+      value: color(255, 0, 0, 1),
+      source: null
+    }
   });
 });

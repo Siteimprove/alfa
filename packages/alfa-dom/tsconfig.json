@@ -32,6 +32,8 @@
     "src/get-parent-rule.ts",
     "src/get-previous-element-sibling.ts",
     "src/get-previous-sibling.ts",
+    "src/get-property-source.ts",
+    "src/get-property-value.ts",
     "src/get-root-node.ts",
     "src/get-specificity.ts",
     "src/get-style.ts",

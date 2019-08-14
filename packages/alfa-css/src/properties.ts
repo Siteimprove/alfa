@@ -1,60 +1,62 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Token } from "./alphabet";
-import { Style } from "./style";
+import { Style, StyleValue } from "./style";
 import { Value, Values } from "./values";
 
 import * as Longhands from "./properties/longhands";
 
 type Longhands = typeof Longhands;
 
+export type PropertyName = keyof Longhands;
+
 type ParsedPropertyValues = {
-  [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
+  [N in PropertyName]: Longhands[N] extends Longhand<infer T, infer U>
     ? T
     : never;
 };
 
 export type ParsedPropertyValue<
-  N extends keyof Longhands
+  N extends PropertyName
 > = ParsedPropertyValues[N];
 
 type InitialPropertyValues = {
-  [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
+  [N in PropertyName]: Longhands[N] extends Longhand<infer T, infer U>
     ? T | U
     : never;
 };
 
 export type InitialPropertyValue<
-  N extends keyof Longhands
+  N extends PropertyName = PropertyName
 > = InitialPropertyValues[N];
 
 type CascadedPropertyValues = {
-  [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
+  [N in PropertyName]: Longhands[N] extends Longhand<infer T, infer U>
     ? T | Values.Keyword<"initial" | "inherit">
     : never;
 };
 
 export type CascadedPropertyValue<
-  N extends keyof Longhands = keyof Longhands
+  N extends PropertyName = PropertyName
 > = CascadedPropertyValues[N];
 
 type SpecifiedPropertyValues = {
-  [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
+  [N in PropertyName]: Longhands[N] extends Longhand<infer T, infer U>
     ? T | U
     : never;
 };
 
 export type SpecifiedPropertyValue<
-  N extends keyof Longhands = keyof Longhands
+  N extends PropertyName = PropertyName
 > = SpecifiedPropertyValues[N];
 
 type ComputedPropertyValues = {
-  [N in keyof Longhands]: Longhands[N] extends Longhand<infer T, infer U>
+  [N in PropertyName]: Longhands[N] extends Longhand<infer T, infer U>
     ? U
     : never;
 };
 
 export type ComputedPropertyValue<
-  N extends keyof Longhands = keyof Longhands
+  N extends PropertyName = PropertyName
 > = ComputedPropertyValues[N];
 
 export interface Longhand<T extends Value, U extends T = T> {
@@ -66,7 +68,7 @@ export interface Longhand<T extends Value, U extends T = T> {
   /**
    * @internal
    */
-  readonly depends?: Array<keyof Longhands>;
+  readonly depends?: Array<PropertyName>;
 
   /**
    * @internal
@@ -81,10 +83,10 @@ export interface Longhand<T extends Value, U extends T = T> {
   /**
    * @internal
    */
-  computed(style: Style, device: Device): U;
+  computed<S>(style: Style<S>, device: Device): StyleValue<U, S>;
 }
 
-export interface Shorthand<N extends keyof Longhands> {
+export interface Shorthand<N extends PropertyName> {
   /**
    * @internal
    */

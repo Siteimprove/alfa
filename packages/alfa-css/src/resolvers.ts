@@ -8,16 +8,16 @@ import { Values } from "./values";
 const { max, min } = Math;
 
 export namespace Resolvers {
-  export function length(
+  export function length<S>(
     length: Values.Length,
     device: Device,
-    style: Style | null = null
+    style: Style<S> | null = null
   ): Values.Length<"px"> {
     const { unit, value } = length;
     const { viewport } = device;
 
-    const fontSize = getComputedProperty(style, "fontSize");
-    const rootFontSize = getComputedProperty(
+    const { value: fontSize } = getComputedProperty(style, "fontSize");
+    const { value: rootFontSize } = getComputedProperty(
       style === null ? null : getRootStyle(style),
       "fontSize"
     );
@@ -77,11 +77,11 @@ export namespace Resolvers {
     return Values.length(Converters.length(value, unit, "px"), "px");
   }
 
-  export function percentage(
+  export function percentage<S>(
     percentage: Values.Percentage,
     of: Values.Length,
     device: Device,
-    style: Style | null = null
+    style: Style<S> | null = null
   ): Values.Length<"px"> {
     return length(
       Values.length(of.value * percentage.value, of.unit),
