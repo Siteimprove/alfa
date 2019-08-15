@@ -3,6 +3,7 @@
   "files": [],
   "references": [
     { "path": "alfa-act" },
+    { "path": "alfa-affine" },
     { "path": "alfa-angular" },
     { "path": "alfa-aria" },
     { "path": "alfa-assert" },
@@ -27,6 +28,7 @@
     { "path": "alfa-json-ld" },
     { "path": "alfa-jsx" },
     { "path": "alfa-lang" },
+    { "path": "alfa-math" },
     { "path": "alfa-pointer" },
     { "path": "alfa-react" },
     { "path": "alfa-rules" },
