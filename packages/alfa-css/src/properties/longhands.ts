@@ -23,6 +23,8 @@ export * from "./text-decoration/style/property";
 
 export * from "./text-indent/property";
 
+export * from "./transform/property";
+
 export * from "./visibility/property";
 
 export * from "./width/property";

@@ -12,7 +12,9 @@
     "src/index.ts",
     "src/parse.ts",
     "src/properties.ts",
+    "src/properties/color/convert.ts",
     "src/properties/color/grammar.ts",
+    "src/properties/color/named.ts",
     "src/properties/color/property.ts",
     "src/properties/color/types.ts",
     "src/properties/content/grammar.ts",
@@ -38,6 +40,7 @@
     "src/properties/height/grammar.ts",
     "src/properties/height/property.ts",
     "src/properties/height/types.ts",
+    "src/properties/helpers/function-arguments.ts",
     "src/properties/helpers/get-property.ts",
     "src/properties/helpers/get-root-style.ts",
     "src/properties/line-height/grammar.ts",
@@ -62,6 +65,9 @@
     "src/properties/text-indent/grammar.ts",
     "src/properties/text-indent/property.ts",
     "src/properties/text-indent/types.ts",
+    "src/properties/transform/grammar.ts",
+    "src/properties/transform/property.ts",
+    "src/properties/transform/types.ts",
     "src/properties/visibility/grammar.ts",
     "src/properties/visibility/property.ts",
     "src/properties/visibility/types.ts",
@@ -98,6 +104,9 @@
     "test/values.spec.ts"
   ],
   "references": [
+    {
+      "path": "../alfa-affine"
+    },
     {
       "path": "../alfa-compatibility"
     },

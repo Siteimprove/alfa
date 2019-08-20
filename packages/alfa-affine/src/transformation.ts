@@ -12,7 +12,11 @@ export namespace Transformation {
     return Matrix.multiply(a, b);
   }
 
-  export function translate(tx: number, ty: number, tz = 0): Transformation {
+  export function identity(): Transformation {
+    return Matrix.identity(4, 4);
+  }
+
+  export function translate(tx: number, ty = 0, tz = 0): Transformation {
     return [[1, 0, 0, tx], [0, 1, 0, ty], [0, 0, 1, tz], [0, 0, 0, 1]];
   }
 

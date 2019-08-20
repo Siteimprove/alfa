@@ -11,6 +11,8 @@ export const enum ValueType {
   Number,
   Percentage,
   Length,
+  Angle,
+  Function,
   Color
 }
 
@@ -33,12 +35,24 @@ export namespace Values {
     return { type: ValueType.List, value };
   }
 
-  export interface Tuple<T extends Array<Value>> extends Value<T> {
+  export function isList(value: Value): value is List<Value> {
+    return value.type === ValueType.List;
+  }
+
+  export interface Tuple<T extends [Value, ...Array<Value>]> extends Value<T> {
     readonly type: ValueType.Tuple;
   }
 
-  export function tuple<T extends Array<Value>>(...value: T): Tuple<T> {
+  export function tuple<T extends [Value, ...Array<Value>]>(
+    ...value: T
+  ): Tuple<T> {
     return { type: ValueType.Tuple, value };
+  }
+
+  export function isTuple(
+    value: Value
+  ): value is Tuple<[Value, ...Array<Value>]> {
+    return value.type === ValueType.Tuple;
   }
 
   export interface Dictionary<T extends { [key: string]: Value | undefined }>
@@ -106,6 +120,10 @@ export namespace Values {
     return { type: ValueType.String, value };
   }
 
+  export function isString(value: Value): value is String {
+    return value.type === ValueType.String;
+  }
+
   /**
    * @see https://www.w3.org/TR/css-values/#integers
    */
@@ -156,18 +174,35 @@ export namespace Values {
   }
 
   /**
-   * @see https://www.w3.org/TR/css-values/#colors
+   * @see https://www.w3.org/TR/css-values/#angles
    */
-  export interface Color extends Value<[number, number, number, number]> {
-    readonly type: ValueType.Color;
+  export interface Angle<U extends Units.Angle = Units.Angle>
+    extends Value<number> {
+    readonly type: ValueType.Angle;
+    readonly unit: U;
   }
 
-  export function color(
-    red: number,
-    green: number,
-    blue: number,
-    alpha: number
-  ): Color {
-    return { type: ValueType.Color, value: [red, green, blue, alpha] };
+  export function angle<U extends Units.Angle>(
+    value: number,
+    unit: U
+  ): Angle<U> {
+    return { type: ValueType.Angle, value, unit };
+  }
+
+  /**
+   * @see https://www.w3.org/TR/css-values/#functional-notations
+   */
+  export interface Function<
+    N extends string,
+    A extends readonly [Value | undefined, ...Array<Value | undefined>]
+  > extends Value<{ readonly name: N; readonly args: A }> {
+    readonly type: ValueType.Function;
+  }
+
+  export function func<
+    N extends string,
+    A extends readonly [Value, ...Array<Value>]
+  >(name: N, args: A): Function<N, A> {
+    return { type: ValueType.Function, value: { name, args } };
   }
 }
