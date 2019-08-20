@@ -105,9 +105,6 @@
   ],
   "references": [
     {
-      "path": "../alfa-affine"
-    },
-    {
       "path": "../alfa-compatibility"
     },
     {
