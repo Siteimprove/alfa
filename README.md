@@ -4,8 +4,6 @@
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
-[![Build Status](https://semaphoreci.com/api/v1/siteimprove/alfa/branches/master/badge.svg)](https://semaphoreci.com/siteimprove/alfa)
-
 Alfa is an open and standards-based accessibility conformance testing engine used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). It is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). In comparison to Siteimprove's proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
 > :warning: Alfa is still in the early stages of development. Nothing is final, nothing is published, and breaking API changes are swift and unforgiving. You should however not let it deter you from exploring the project and some of the new ideas we're trying to bring to the table.
