@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/transformation.ts"],
+  "references": [
+    {
+      "path": "../alfa-math"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

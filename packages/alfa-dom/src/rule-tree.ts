@@ -1,13 +1,15 @@
 import { Declaration, Selector } from "@siteimprove/alfa-css";
+import { Rule } from "./types";
 
 /**
  * @internal
  */
 export interface RuleEntry {
+  readonly rule: Rule;
   readonly selector: Selector;
-  readonly declarations: ReadonlyArray<Declaration>;
+  readonly declarations: Array<Declaration>;
   readonly parent: RuleEntry | null;
-  readonly children: ReadonlyArray<RuleEntry>;
+  readonly children: Array<RuleEntry>;
 }
 
 /**
@@ -58,20 +60,20 @@ export class RuleTree {
   private readonly children: Array<RuleEntry> = [];
 
   public add(
-    rules: Array<Pick<RuleEntry, "selector" | "declarations">>
+    rules: Array<Pick<RuleEntry, "rule" | "selector" | "declarations">>
   ): RuleEntry | null {
     let parent: RuleEntry | null = null;
     let children = this.children;
 
     for (let i = 0, n = rules.length; i < n; i++) {
-      const { selector, declarations } = rules[i];
+      const { rule, selector, declarations } = rules[i];
 
       // Insert the next rule into the current parent, using the returned rule
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the
       // caller.
-      parent = add(selector, declarations, parent, children);
-      children = parent.children as Array<RuleEntry>;
+      parent = add(rule, selector, declarations, parent, children);
+      children = parent.children;
     }
 
     return parent;
@@ -79,8 +81,9 @@ export class RuleTree {
 }
 
 function add(
+  rule: Rule,
   selector: Selector,
-  declarations: ReadonlyArray<Declaration>,
+  declarations: Array<Declaration>,
   parent: RuleEntry | null,
   children: Array<RuleEntry>
 ): RuleEntry {
@@ -92,13 +95,11 @@ function add(
     const child = children[i];
 
     if (child.selector === selector) {
-      return add(selector, declarations, child, child.children as Array<
-        RuleEntry
-      >);
+      return add(rule, selector, declarations, child, child.children);
     }
   }
 
-  const entry = { selector, declarations, parent, children: [] };
+  const entry = { rule, selector, declarations, parent, children: [] };
 
   children.push(entry);
 

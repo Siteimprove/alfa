@@ -1,7 +1,11 @@
 import { Device } from "@siteimprove/alfa-device";
-import { keys, set } from "@siteimprove/alfa-util";
+import { keys, Option, set } from "@siteimprove/alfa-util";
 
-import { CascadedPropertyValue } from "./properties";
+import {
+  CascadedPropertyValue,
+  Longhand,
+  SpecifiedPropertyValue
+} from "./properties";
 import * as Longhands from "./properties/longhands";
 import * as Shorthands from "./properties/shorthands";
 
@@ -10,13 +14,15 @@ import { CascadedStyle, ComputedStyle, SpecifiedStyle, Style } from "./style";
 import { Declaration } from "./types";
 import { Values } from "./values";
 
+const { keyword, isKeyword } = Values;
+
 type Longhands = typeof Longhands;
 type Shorthands = typeof Shorthands;
 
-export interface StyleEntry<T> {
+export interface StyleEntry<T, S> {
   readonly target: T;
-  readonly declarations: ReadonlyArray<Declaration>;
-  readonly children: ReadonlyArray<StyleEntry<T>>;
+  readonly declarations: Array<[Declaration, Option<S>]>;
+  readonly children: Array<StyleEntry<T, S>>;
 }
 
 /**
@@ -34,10 +40,10 @@ export interface StyleEntry<T> {
  * proceeds to resolve style information and builds a map from nodes to their
  * associated styles.
  */
-export class StyleTree<T extends object> {
-  private readonly styles = new WeakMap<T, Style>();
+export class StyleTree<T extends object, S> {
+  private readonly styles = new WeakMap<T, Style<S>>();
 
-  public constructor(root: StyleEntry<T>, device: Device) {
+  public constructor(root: StyleEntry<T, S>, device: Device) {
     visit(root, null, (entry, parentEntry) => {
       const { declarations } = entry;
 
@@ -52,14 +58,16 @@ export class StyleTree<T extends object> {
       };
 
       style.cascaded = resolveCascadedStyle(declarations);
+
       style.specified = resolveSpecifiedStyle(style);
+
       style.computed = resolveComputedStyle(style, device);
 
       this.styles.set(entry.target, style);
     });
   }
 
-  public get(target: T): Style | null {
+  public get(target: T): Option<Style<S>> {
     const style = this.styles.get(target);
 
     if (style === undefined) {
@@ -70,95 +78,18 @@ export class StyleTree<T extends object> {
   }
 }
 
-function visit<T extends object>(
-  entry: StyleEntry<T>,
-  parentEntry: StyleEntry<T> | null,
-  visitor: (entry: StyleEntry<T>, parentEntry: StyleEntry<T> | null) => void
+function visit<T, S>(
+  entry: StyleEntry<T, S>,
+  parentEntry: Option<StyleEntry<T, S>>,
+  visitor: (
+    entry: StyleEntry<T, S>,
+    parentEntry: Option<StyleEntry<T, S>>
+  ) => void
 ): void {
   visitor(entry, parentEntry);
 
   for (const child of entry.children) {
     visit(child, entry, visitor);
-  }
-}
-
-function resolveCascadedStyle(
-  declarations: ReadonlyArray<Declaration>
-): CascadedStyle {
-  const cascadedStyle: CascadedStyle = {};
-
-  outer: for (const { name, value, important } of declarations) {
-    const propertyName = getPropertyName(name);
-
-    if (propertyName === null) {
-      continue;
-    }
-
-    for (let i = 0, n = value.length; i < n; i++) {
-      const token = value[i];
-
-      if (token.type === TokenType.Whitespace) {
-        continue;
-      }
-
-      if (token.type === TokenType.Ident) {
-        switch (token.value) {
-          case "initial":
-          case "inherit":
-            const value = Values.keyword(token.value);
-
-            if (isLonghandPropertyName(propertyName)) {
-              setProperty(propertyName, value, important);
-            } else {
-              const { longhands } = Shorthands[propertyName];
-
-              for (const propertyName of longhands) {
-                setProperty(propertyName, value, important);
-              }
-            }
-
-            continue outer;
-        }
-      }
-
-      break;
-    }
-
-    if (isLonghandPropertyName(propertyName)) {
-      const property = Longhands[propertyName];
-
-      const result = property.parse(value);
-
-      if (result !== null) {
-        setProperty(propertyName, result, important);
-      }
-    } else {
-      const property = Shorthands[propertyName];
-
-      const result = property.parse(value);
-
-      if (result !== null) {
-        for (const propertyName of keys(result)) {
-          const value = result[propertyName];
-
-          if (value !== undefined) {
-            setProperty(propertyName, value, important);
-          }
-        }
-      }
-    }
-  }
-
-  return cascadedStyle;
-
-  function setProperty(
-    propertyName: keyof Longhands,
-    propertyValue: CascadedPropertyValue,
-    important: boolean
-  ): void {
-    if (propertyName in cascadedStyle === false || important) {
-      set(cascadedStyle, propertyName, propertyValue);
-    }
   }
 }
 
@@ -181,7 +112,7 @@ for (const propertyName of keys(Shorthands)) {
   addPropertyName(propertyName);
 }
 
-function getPropertyName(input: string): PropertyName | null {
+function getPropertyName(input: string): Option<PropertyName> {
   const propertyName = propertyNames.get(input);
 
   if (propertyName === undefined) {
@@ -197,8 +128,93 @@ function isLonghandPropertyName(
   return propertyName in Longhands;
 }
 
-function resolveSpecifiedStyle(style: Style): SpecifiedStyle {
-  const specifiedStyle: SpecifiedStyle = {};
+function resolveCascadedStyle<S>(
+  declarations: Iterable<[Declaration, Option<S>]>
+): CascadedStyle<S> {
+  const cascadedStyle: CascadedStyle<S> = {};
+
+  outer: for (const [{ name, value, important }, source] of declarations) {
+    const propertyName = getPropertyName(name);
+
+    if (propertyName === null) {
+      continue;
+    }
+
+    for (let i = 0, n = value.length; i < n; i++) {
+      const token = value[i];
+
+      if (token.type === TokenType.Whitespace) {
+        continue;
+      }
+
+      if (token.type === TokenType.Ident) {
+        switch (token.value) {
+          case "initial":
+          case "inherit":
+            const value = keyword(token.value);
+
+            if (isLonghandPropertyName(propertyName)) {
+              setProperty(propertyName, value, source, important);
+            } else {
+              const { longhands } = Shorthands[propertyName];
+
+              for (const propertyName of longhands) {
+                setProperty(propertyName, value, source, important);
+              }
+            }
+
+            continue outer;
+        }
+      }
+
+      break;
+    }
+
+    if (isLonghandPropertyName(propertyName)) {
+      const property = Longhands[propertyName];
+
+      const result = property.parse(value);
+
+      if (result !== null) {
+        setProperty(propertyName, result, source, important);
+      }
+    } else {
+      const property = Shorthands[propertyName];
+
+      const result = property.parse(value);
+
+      if (result !== null) {
+        for (const propertyName of keys(result)) {
+          const value = result[propertyName];
+
+          if (value !== undefined) {
+            setProperty(propertyName, value, source, important);
+          }
+        }
+      }
+    }
+  }
+
+  return cascadedStyle;
+
+  function setProperty<N extends keyof Longhands>(
+    propertyName: N,
+    propertyValue: CascadedPropertyValue<N>,
+    source: Option<S>,
+    important: boolean
+  ): void {
+    if (propertyName in cascadedStyle === false || important) {
+      // tslint:disable:no-any
+      set<CascadedStyle<S>, any>(cascadedStyle, propertyName, {
+        value: propertyValue,
+        source
+      });
+    }
+  }
+}
+
+function resolveSpecifiedStyle<S>(style: Style<S>): SpecifiedStyle<S> {
+  const specifiedStyle: SpecifiedStyle<S> = {};
 
   const cascadedStyle = style.cascaded;
 
@@ -207,38 +223,59 @@ function resolveSpecifiedStyle(style: Style): SpecifiedStyle {
   const propertyNames = new Set([...keys(cascadedStyle), ...keys(parentStyle)]);
 
   for (const propertyName of propertyNames) {
-    const property = Longhands[propertyName];
+    const { initial, inherits } = Longhands[propertyName];
+
     const cascadedValue = cascadedStyle[propertyName];
 
     if (cascadedValue !== undefined) {
-      if (Values.isKeyword(cascadedValue, "initial", "inherit")) {
-        if (
-          Values.isKeyword(cascadedValue, "inherit") &&
-          parentStyle[propertyName] !== undefined
-        ) {
-          set(specifiedStyle, propertyName, parentStyle[propertyName]);
+      const { value, source } = cascadedValue;
+
+      if (!isKeyword(value, "initial", "inherit")) {
+        setProperty(propertyName, value, source);
+      } else if (isKeyword(value, "initial")) {
+        setProperty(propertyName, initial(), source);
+      } else if (isKeyword(value, "inherit")) {
+        const parentValue = parentStyle[propertyName];
+
+        if (parentValue === undefined) {
+          setProperty(propertyName, initial(), source);
         } else {
-          set(specifiedStyle, propertyName, property.initial());
+          const { value, source } = parentValue;
+          setProperty(propertyName, value, source);
         }
-      } else {
-        set(specifiedStyle, propertyName, cascadedValue);
       }
-
-      continue;
-    }
-
-    if (property.inherits === true && parentStyle[propertyName] !== undefined) {
-      set(specifiedStyle, propertyName, parentStyle[propertyName]);
     } else {
-      set(specifiedStyle, propertyName, property.initial());
+      const parentValue = parentStyle[propertyName];
+
+      if (parentValue === undefined || inherits !== true) {
+        setProperty(propertyName, initial(), null);
+      } else {
+        const { value, source } = parentValue;
+        setProperty(propertyName, value, source);
+      }
     }
   }
 
   return specifiedStyle;
+
+  function setProperty(
+    propertyName: keyof Longhands,
+    propertyValue: SpecifiedPropertyValue,
+    source: Option<S>
+  ): void {
+    // tslint:disable:no-any
+    set<SpecifiedStyle<S>, any>(specifiedStyle, propertyName, {
+      value: propertyValue,
+      source
+    });
+  }
 }
 
-function resolveComputedStyle(style: Style, device: Device): ComputedStyle {
-  const computedStyle: ComputedStyle = {};
+function resolveComputedStyle<S>(
+  style: Style<S>,
+  device: Device
+): ComputedStyle<S> {
+  const computedStyle: ComputedStyle<S> = {};
 
   const specifiedStyle = style.specified;
 
@@ -256,20 +293,22 @@ function resolveComputedStyle(style: Style, device: Device): ComputedStyle {
   return computedStyle;
 
   function setProperty(propertyName: keyof Longhands): void {
-    const property = Longhands[propertyName];
-
     if (computedStyle[propertyName] !== undefined) {
       return;
     }
 
-    if (property.depends !== undefined) {
-      for (const propertyName of property.depends) {
-        if (propertyName in propertyNames) {
-          setProperty(propertyName);
-        }
+    // tslint:disable:no-any
+    const { depends = [], computed } = Longhands[propertyName] as Longhand<
+      any,
+      any
+    >;
+
+    for (const propertyName of depends) {
+      if (propertyName in propertyNames) {
+        setProperty(propertyName);
       }
     }
 
-    set(computedStyle, propertyName, property.computed(style, device));
+    set(computedStyle, propertyName, computed(style, device));
   }
 }

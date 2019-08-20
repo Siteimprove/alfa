@@ -16,6 +16,8 @@ import {
 } from "../types";
 import { FontSizeGrammar } from "./grammar";
 
+const { length } = Values;
+
 /**
  * @see https://www.w3.org/TR/css-fonts/#propdef-font-size
  */
@@ -32,11 +34,10 @@ export const fontSize: Longhand<FontSize, Values.Length<"px">> = {
     return parser.result;
   },
   initial() {
-    return Values.length(16, "px");
+    return length(16, "px");
   },
   computed(style, device) {
-    const value = getSpecifiedProperty(style, "fontSize");
-    const parentValue = getComputedProperty(style.parent, "fontSize");
+    const { value, source } = getSpecifiedProperty(style, "fontSize");
 
     switch (value.type) {
       case ValueType.Keyword:
@@ -48,19 +49,39 @@ export const fontSize: Longhand<FontSize, Values.Length<"px">> = {
           case "large":
           case "x-large":
           case "xx-large":
-            return resolveAbsoluteFontSize(
-              value,
-              getComputedProperty(style, "fontFamily")
-            );
+            return {
+              value: resolveAbsoluteFontSize(
+                value,
+                getComputedProperty(style, "fontFamily").value
+              ),
+              source
+            };
         }
 
-        return resolveRelativeFontSize(value, parentValue);
+        return {
+          value: resolveRelativeFontSize(
+            value,
+            getComputedProperty(style.parent, "fontSize").value
+          ),
+          source
+        };
 
       case ValueType.Length:
-        return Resolvers.length(value, device, style);
+        return {
+          value: Resolvers.length(value, device, style),
+          source
+        };
 
       case ValueType.Percentage:
-        return Resolvers.percentage(value, parentValue, device, style);
+        return {
+          value: Resolvers.percentage(
+            value,
+            getComputedProperty(style.parent, "fontSize").value,
+            device,
+            style
+          ),
+          source
+        };
     }
   }
 };

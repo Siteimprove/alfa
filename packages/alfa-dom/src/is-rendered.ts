@@ -1,5 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import { getParentElement } from "./get-parent-element";
+import { getPropertyValue } from "./get-property-value";
 import { getCascadedStyle } from "./get-style";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
@@ -39,9 +40,12 @@ export function isRendered(
       {
         enter(node, parentNode) {
           if (isElement(node)) {
-            const { display } = getCascadedStyle(node, context, device);
+            const display = getPropertyValue(
+              getCascadedStyle(node, context, device),
+              "display"
+            );
 
-            if (display !== undefined && display.value === "none") {
+            if (display !== null && display.value === "none") {
               renderedMap!.set(node, false);
             } else if (parentNode !== null && isElement(parentNode)) {
               const isParentRendered = renderedMap!.get(parentNode);

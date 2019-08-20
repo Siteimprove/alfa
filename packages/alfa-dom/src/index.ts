@@ -28,6 +28,8 @@ export * from "./get-parent-node";
 export * from "./get-parent-rule";
 export * from "./get-previous-element-sibling";
 export * from "./get-previous-sibling";
+export * from "./get-property-source";
+export * from "./get-property-value";
 export * from "./get-root-node";
 export * from "./get-specificity";
 export * from "./get-style";

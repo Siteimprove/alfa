@@ -1,7 +1,5 @@
-/// <reference path="../types/ignore.d.ts" />
-
 const fs = require("fs");
-const ignore = require("ignore");
+const { default: ignore } = require("ignore");
 const { spawn } = require("./child-process");
 
 /**

@@ -9,7 +9,7 @@ export function sortRules<A extends Aspect, T extends Target>(
 ): Iterable<Rule<A, T>> {
   const result: Array<Rule<A, T>> = [];
 
-  const indegrees = new WeakMap<Rule<A, T>, number>();
+  const indegrees = new Map<Rule<A, T>, number>();
 
   for (const rule of rules) {
     if (isComposite(rule)) {
@@ -29,7 +29,7 @@ export function sortRules<A extends Aspect, T extends Target>(
     }
   }
 
-  const leaves = Array.from(rules).filter(rule => !indegrees.has(rule));
+  const leaves = [...rules].filter(rule => !indegrees.has(rule));
 
   let next = leaves.pop();
 

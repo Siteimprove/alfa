@@ -1,4 +1,5 @@
 import { Outcome } from "@siteimprove/alfa-act";
+import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-jsx";
 import { test } from "@siteimprove/alfa-test";
 
@@ -6,6 +7,8 @@ import { SIA_R19 } from "../../src/sia-r19/rule";
 
 import { documentFromNodes } from "../helpers/document-from-nodes";
 import { outcome } from "../helpers/outcome";
+
+const device = getDefaultDevice();
 
 test("Passes when element has a valid value that corresponds to a non-abstract aria role", t => {
   const div = (
@@ -25,7 +28,7 @@ test("Passes when element has a valid value that corresponds to a non-abstract a
   outcome(
     t,
     SIA_R19,
-    { document },
+    { document, device },
     {
       passed: [
         div.attributes[0],
@@ -44,12 +47,12 @@ test("Fails when element has invalid aria attributes", t => {
   const div = <div role="main" aria-live="nope" />;
   const document = documentFromNodes([div]);
 
-  outcome(t, SIA_R19, { document }, { failed: [div.attributes[1]] });
+  outcome(t, SIA_R19, { document, device }, { failed: [div.attributes[1]] });
 });
 
 test("Is inapplicable when an element does not have any aria states or properties", t => {
   const div = <div>Some Content</div>;
   const document = documentFromNodes([div]);
 
-  outcome(t, SIA_R19, { document }, Outcome.Inapplicable);
+  outcome(t, SIA_R19, { document, device }, Outcome.Inapplicable);
 });

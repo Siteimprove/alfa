@@ -4,6 +4,7 @@ import {
   getAttribute,
   getComputedStyle,
   getParentElement,
+  getPropertyValue,
   isElement,
   isRendered,
   Node,
@@ -50,9 +51,12 @@ export function isVisible(
         },
         exit(node) {
           if (isElement(node)) {
-            const { visibility } = getComputedStyle(node, context, device);
+            const visibility = getPropertyValue(
+              getComputedStyle(node, context, device),
+              "visibility"
+            );
 
-            if (visibility !== undefined) {
+            if (visibility !== null) {
               if (
                 visibility.value === "hidden" ||
                 visibility.value === "collapse"

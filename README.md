@@ -4,11 +4,9 @@
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
 
-[![Build Status](https://semaphoreci.com/api/v1/siteimprove/alfa/branches/master/badge.svg)](https://semaphoreci.com/siteimprove/alfa)
-
 Alfa is an open and standards-based accessibility conformance testing engine used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). It is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). In comparison to Siteimprove's proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
-> :warning: Alfa is still in the very early stages of development. Nothing is final, nothing is published, and breaking API changes are swift and unforgiving. You should however not let it deter you from exploring the project and some of the new ideas we're trying to bring to the table.
+> :warning: Alfa is still in the early stages of development. Nothing is final, nothing is published, and breaking API changes are swift and unforgiving. You should however not let it deter you from exploring the project and some of the new ideas we're trying to bring to the table.
 
 ## Contents
 
@@ -27,7 +25,7 @@ Alfa is an open and standards-based accessibility conformance testing engine use
 
 - Alfa is committed to complete transparency on how test results came to be. Every line of code that has the potential to influence test results will therefore always reside within Alfa itself and never with a third-party. However, this does not mean that Alfa does not rely on third-party dependencies, only that there are limitations to what third-party dependencies may be used for.
 
-- Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high-quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure.
+- Alfa wants to foster a thriving ecosystem with people from many different backgrounds contributing where they can. To this end, high-quality documentation is paramount to the success of Alfa. Picking up and contributing to any one of the many subsystems within Alfa should be a straightforward experience with every subsystem clearly stating its purpose and structure. **This goal is currently far from met and will be prioritised**.
 
 ## Usage
 
@@ -36,6 +34,8 @@ Alfa is distributed as a set of separate packages that can be installed via your
 ```console
 $ npm install @siteimprove/alfa-<package-name>
 ```
+
+> :warning: As Alfa is still at a pre-alpha level of stability, no packages have been published. The above command will therefore not work _yet_.
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 

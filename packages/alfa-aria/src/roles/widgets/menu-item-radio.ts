@@ -3,7 +3,7 @@ import { Category, Role } from "../../types";
 import { Group } from "../structure/group";
 import { Menu } from "./menu";
 import { MenuBar } from "./menu-bar";
-import { MenuItem } from "./menu-item";
+import { MenuItemCheckbox } from "./menu-item-checkbox";
 import { Radio } from "./radio";
 
 /**
@@ -12,7 +12,7 @@ import { Radio } from "./radio";
 export const MenuItemRadio: Role = {
   name: "menuitemradio",
   category: Category.Widget,
-  inherits: () => [Radio, MenuItem],
+  inherits: () => [Radio, MenuItemCheckbox],
   context: () => [Group, Menu, MenuBar],
   implicits: () => [[Attributes.Checked, "false"]],
   label: { from: ["contents", "author"], required: true }

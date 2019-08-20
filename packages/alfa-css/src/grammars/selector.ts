@@ -1,5 +1,11 @@
 import * as Lang from "@siteimprove/alfa-lang";
-import { Char, Expression, Grammar, Stream } from "@siteimprove/alfa-lang";
+import {
+  Char,
+  Expression,
+  Grammar,
+  parse,
+  Stream
+} from "@siteimprove/alfa-lang";
 import { Token, Tokens, TokenType } from "../alphabet";
 import {
   AttributeMatcher,
@@ -9,9 +15,7 @@ import {
   ComplexSelector,
   CompoundSelector,
   IdSelector,
-  PseudoClass,
   PseudoClassSelector,
-  PseudoElement,
   PseudoElementSelector,
   RelativeSelector,
   Selector,
@@ -20,6 +24,7 @@ import {
   SimpleSelector,
   TypeSelector
 } from "../types";
+import { ChildIndexGrammar } from "./child-index";
 
 const { isArray } = Array;
 
@@ -234,8 +239,6 @@ function pseudoSelector(
   stream: Stream<Token>,
   expression: Expression<Selector | Array<Selector>>
 ): PseudoElementSelector | PseudoClassSelector | null {
-  let selector: PseudoElementSelector | PseudoClassSelector;
-
   let next = stream.next();
 
   if (next === null) {
@@ -249,8 +252,6 @@ function pseudoSelector(
       return null;
     }
 
-    let name: PseudoElement;
-
     switch (next.value) {
       case "first-line":
       case "first-letter":
@@ -262,27 +263,85 @@ function pseudoSelector(
       case "after":
       case "marker":
       case "placeholder":
-        name = next.value;
-        break;
+        return {
+          type: SelectorType.PseudoElementSelector,
+          name: next.value
+        };
+
       default:
         return null;
     }
+  }
 
-    selector = { type: SelectorType.PseudoElementSelector, name };
-  } else {
-    if (next.type !== TokenType.Ident && next.type !== TokenType.FunctionName) {
+  if (next.type === TokenType.Ident) {
+    return pseudoClassSelector(stream, next.value, false);
+  }
+
+  if (next.type === TokenType.FunctionName) {
+    const selector = pseudoClassSelector(stream, next.value, true);
+
+    stream.accept(token => token.type === TokenType.Whitespace);
+
+    next = stream.next();
+
+    if (next === null || next.type !== TokenType.RightParenthesis) {
       return null;
     }
 
-    let name: PseudoClass;
+    return selector;
+  }
 
-    switch (next.value) {
-      case "matches":
+  return null;
+}
+
+function pseudoClassSelector(
+  stream: Stream<Token>,
+  name: string,
+  functional: boolean
+): PseudoClassSelector | null {
+  if (functional) {
+    switch (name) {
+      case "is":
       case "not":
-      case "something":
       case "has":
-      case "dir":
-      case "lang":
+      case "current":
+      case "host":
+      case "host-context": {
+        const value = parse(stream, SelectorGrammar).result;
+
+        if (value === null) {
+          return null;
+        }
+
+        return {
+          type: SelectorType.PseudoClassSelector,
+          name,
+          value: isArray(value) ? value : [value]
+        };
+      }
+
+      case "nth-child":
+      case "nth-last-child":
+      case "nth-of-type":
+      case "nth-last-of-type":
+      case "nth-col":
+      case "nth-last-col": {
+        const value = parse(stream, ChildIndexGrammar).result;
+
+        if (value === null) {
+          return null;
+        }
+
+        return {
+          type: SelectorType.PseudoClassSelector,
+          name,
+          value
+        };
+      }
+    }
+  } else {
+    // https://github.com/microsoft/TypeScript/issues/32749
+    switch (name) {
       case "any-link":
       case "link":
       case "visited":
@@ -295,7 +354,6 @@ function pseudoSelector(
       case "focus":
       case "focus-visible":
       case "focus-within":
-      case "drop":
       case "current":
       case "past":
       case "future":
@@ -309,6 +367,11 @@ function pseudoSelector(
       case "default":
       case "checked":
       case "indetermine":
+        return {
+          type: SelectorType.PseudoClassSelector,
+          name
+        };
+
       case "valid":
       case "invalid":
       case "in-range":
@@ -316,44 +379,23 @@ function pseudoSelector(
       case "required":
       case "user-invalid":
       case "host":
-      case "host-context":
       case "root":
       case "empty":
       case "blank":
-      case "nth-child":
-      case "nth-last-child":
       case "first-child":
       case "last-child":
       case "only-child":
-      case "nth-of-type":
-      case "nth-last-of-type":
       case "first-of-type":
       case "last-of-type":
       case "only-of-type":
-      case "nth-col":
-      case "nth-last-col":
-        name = next.value;
-        break;
-      default:
-        return null;
-    }
-
-    if (next.type === TokenType.Ident) {
-      selector = { type: SelectorType.PseudoClassSelector, name, value: null };
-    } else {
-      const value = expression();
-
-      next = stream.next();
-
-      if (next === null || next.type !== TokenType.RightParenthesis) {
-        return null;
-      }
-
-      selector = { type: SelectorType.PseudoClassSelector, name, value };
+        return {
+          type: SelectorType.PseudoClassSelector,
+          name
+        };
     }
   }
 
-  return selector;
+  return null;
 }
 
 function compoundSelector(

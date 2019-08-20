@@ -12,14 +12,14 @@ import {
   StyleTree
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Mutable } from "@siteimprove/alfa-util";
+import { Mutable, Option } from "@siteimprove/alfa-util";
 import { getAttribute } from "./get-attribute";
 import { Cascade, getCascade } from "./get-cascade";
 import { getChildNodes } from "./get-child-nodes";
 import { getRootNode } from "./get-root-node";
 import { isDocument, isElement } from "./guards";
 import { matches } from "./matches";
-import { Element, Node } from "./types";
+import { Element, Node, Rule } from "./types";
 
 const { isArray } = Array;
 
@@ -38,7 +38,7 @@ export function getCascadedStyle(
   context: Node,
   device: Device,
   options: StyleOptions = {}
-): CascadedStyle {
+): CascadedStyle<Rule> {
   const style = getStyle(element, context, device, options);
 
   if (style === null) {
@@ -56,7 +56,7 @@ export function getSpecifiedStyle(
   context: Node,
   device: Device,
   options: StyleOptions = {}
-): SpecifiedStyle {
+): SpecifiedStyle<Rule> {
   const style = getStyle(element, context, device, options);
 
   if (style === null) {
@@ -74,7 +74,7 @@ export function getComputedStyle(
   context: Node,
   device: Device,
   options: StyleOptions = {}
-): ComputedStyle {
+): ComputedStyle<Rule> {
   const style = getStyle(element, context, device, options);
 
   if (style === null) {
@@ -89,7 +89,7 @@ function getStyle(
   context: Node,
   device: Device,
   options: StyleOptions = {}
-): Style | null {
+): Style<Rule> | null {
   const styleTree = getStyleTree(
     getRootNode(element, context),
     context,
@@ -116,7 +116,7 @@ function getStyle(
 
 const styleTreeMaps = new WeakMap<
   Node,
-  WeakMap<Node, StyleTree<Node | object>>
+  WeakMap<Node, StyleTree<Node | object, Rule>>
 >();
 
 function getStyleTree(
@@ -124,7 +124,7 @@ function getStyleTree(
   context: Node,
   device: Device,
   options: StyleOptions = {}
-): StyleTree<Node | object> {
+): StyleTree<Node | object, Rule> {
   const cascade = isDocument(node) ? getCascade(node, device) : null;
 
   let styleTreeMap = styleTreeMaps.get(context);
@@ -153,9 +153,10 @@ function getStyleEntry(
   cascade: Cascade | null,
   device: Device,
   options: StyleOptions = {}
-): StyleEntry<Node | object> {
-  const declarations: Array<Declaration> = [];
-  const children: Array<StyleEntry<Node | object>> = [];
+): StyleEntry<Node | object, Rule> {
+  const declarations: Array<[Declaration, Option<Rule>]> = [];
+
+  const children: Array<StyleEntry<Node | object, Rule>> = [];
 
   if (isElement(node)) {
     if (cascade !== null) {
@@ -175,12 +176,18 @@ function getStyleEntry(
 
           if (pseudoElement === null) {
             for (let i = 0, n = rule.declarations.length; i < n; i++) {
-              declarations.push(rule.declarations[i]);
+              declarations.push([rule.declarations[i], rule.rule]);
             }
           } else {
+            const declarations: Array<[Declaration, Option<Rule>]> = [];
+
+            for (const declaration of rule.declarations) {
+              declarations.push([declaration, rule.rule]);
+            }
+
             children.push({
               target: pseudoElement,
-              declarations: rule.declarations,
+              declarations,
               children: []
             });
           }
@@ -196,10 +203,10 @@ function getStyleEntry(
       if (declaration !== null) {
         if (isArray(declaration)) {
           for (let i = 0, n = declaration.length; i < n; i++) {
-            declarations.push(important(declaration[i]));
+            declarations.push([important(declaration[i]), null]);
           }
         } else {
-          declarations.push(important(declaration));
+          declarations.push([important(declaration), null]);
         }
       }
     }

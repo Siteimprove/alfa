@@ -5,7 +5,7 @@ const childProcess = require("child_process");
  * @property {number} pid
  * @property {string} stdout
  * @property {string} stderr
- * @property {number} status
+ * @property {number | null} status
  * @property {Error | undefined} [error]
  */
 

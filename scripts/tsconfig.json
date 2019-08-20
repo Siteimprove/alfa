@@ -28,6 +28,7 @@
     "helpers/project.js",
     "helpers/text.js",
     "helpers/time.js",
+    "helpers/todos.js",
     "helpers/typescript.js",
     "helpers/workspace.js",
     "precommit.js",

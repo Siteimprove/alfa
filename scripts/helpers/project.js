@@ -134,7 +134,8 @@ class Project {
     if (source !== undefined) {
       diagnostics.push(
         ...program.getSemanticDiagnostics(source),
-        ...program.getSyntacticDiagnostics(source)
+        ...program.getSyntacticDiagnostics(source),
+        ...program.getDeclarationDiagnostics(source)
       );
 
       diagnostics.sort((a, b) => {
@@ -226,6 +227,15 @@ class Project {
 
       return TypeScript.forEachChild(node, visit);
     }
+  }
+
+  /**
+   * @param {string} file
+   * @param {Iterable<TypeScript.TodoCommentDescriptor>} descriptors
+   * @return {Iterable<TypeScript.TodoComment>}
+   */
+  getTodos(file, descriptors) {
+    return this.service.getTodoComments(file, [...descriptors]);
   }
 }
 

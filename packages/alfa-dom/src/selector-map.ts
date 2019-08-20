@@ -14,7 +14,7 @@ import { getSpecificity } from "./get-specificity";
 import { isConditionRule, isStyleRule } from "./guards";
 import { matches, MatchesOptions } from "./matches";
 import { traverseStyleSheet } from "./traverse-style-sheet";
-import { Element, Node, StyleSheet } from "./types";
+import { Element, Node, Rule, StyleSheet } from "./types";
 import { isUserAgentRule } from "./user-agent";
 
 const { isArray } = Array;
@@ -31,20 +31,21 @@ export const enum Origin {
   /**
    * @see https://www.w3.org/TR/css-cascade/#cascade-origin-ua
    */
-  UserAgent,
+  UserAgent = 1,
 
   /**
    * @see https://www.w3.org/TR/css-cascade/#cascade-origin-author
    */
-  Author
+  Author = 2
 }
 
 /**
  * @internal
  */
 export interface SelectorEntry {
+  readonly rule: Rule;
   readonly selector: Selector;
-  readonly declarations: ReadonlyArray<Declaration>;
+  readonly declarations: Array<Declaration>;
   readonly origin: Origin;
   readonly order: number;
   readonly specificity: number;
@@ -81,7 +82,7 @@ export class SelectorMap {
   private readonly types: SelectorBucket = new Map();
   private readonly other: Array<SelectorEntry> = [];
 
-  public constructor(styleSheets: ReadonlyArray<StyleSheet>, device: Device) {
+  public constructor(styleSheets: Iterable<StyleSheet>, device: Device) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -95,8 +96,8 @@ export class SelectorMap {
     // reusing parsed declarations.
     const declarationsCache: Map<string, Array<Declaration>> = new Map();
 
-    for (let i = 0, n = styleSheets.length; i < n; i++) {
-      traverseStyleSheet(styleSheets[i], {
+    for (const styleSheet of styleSheets) {
+      traverseStyleSheet(styleSheet, {
         enter: (rule, parentRule, { skip }) => {
           if (isConditionRule(rule) && !fulfills(device, rule)) {
             return skip;
@@ -129,7 +130,7 @@ export class SelectorMap {
             order++;
 
             for (let i = 0, n = selectors.length; i < n; i++) {
-              this.addRule(selectors[i], declarations, origin, order);
+              this.addRule(rule, selectors[i], declarations, origin, order);
             }
           }
         }
@@ -174,6 +175,7 @@ export class SelectorMap {
   }
 
   private addRule(
+    rule: Rule,
     selector: Selector,
     declarations: Array<Declaration>,
     origin: Origin,
@@ -183,6 +185,7 @@ export class SelectorMap {
     const specificity = getSpecificity(selector);
 
     const entry: SelectorEntry = {
+      rule,
       selector,
       declarations,
       origin,

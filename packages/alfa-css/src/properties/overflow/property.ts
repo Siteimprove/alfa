@@ -12,6 +12,7 @@ export const overflow: Shorthand<"overflowX" | "overflowY"> = {
     let offset = 0;
     let overflowX: Overflow;
     let overflowY: Overflow;
+
     {
       const { result, position, done } = parse(tokens, OverflowGrammar, offset);
 

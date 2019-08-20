@@ -28,23 +28,26 @@ export const fontWeight: Longhand<FontWeight, Values.Number> = {
     return number(400);
   },
   computed(style, device) {
-    const value = getSpecifiedProperty(style, "fontWeight");
+    const { value, source } = getSpecifiedProperty(style, "fontWeight");
 
     if (value.type === ValueType.Number) {
-      return value;
+      return { value, source };
     }
 
     switch (value.value) {
       case "normal":
-        return number(400);
+        return { value: number(400), source };
       case "bold":
-        return number(700);
+        return { value: number(700), source };
       case "lighter":
       case "bolder":
-        return resolveRelativeFontWeight(
-          value,
-          getComputedProperty(style.parent, "fontWeight")
-        );
+        return {
+          value: resolveRelativeFontWeight(
+            value,
+            getComputedProperty(style.parent, "fontWeight").value
+          ),
+          source
+        };
     }
   }
 };

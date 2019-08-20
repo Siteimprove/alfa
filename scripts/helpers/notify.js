@@ -70,7 +70,7 @@ exports.pending = pending;
 function replace() {
   readline.moveCursor(stream, 0, -1);
   readline.clearLine(stream, 0);
-  readline.cursorTo(stream, 0);
+  readline.cursorTo(stream, 0, 0);
 }
 
 exports.replace = replace;

@@ -16,7 +16,6 @@ export const height: Longhand<
   Height,
   Values.Keyword<"auto"> | Values.Percentage | Values.Length
 > = {
-  depends: ["height"],
   parse(input) {
     const parser = parse(input, HeightGrammar);
 
@@ -30,21 +29,29 @@ export const height: Longhand<
     return Values.keyword("auto");
   },
   computed(style, device) {
-    const value = getSpecifiedProperty(style, "height");
-    const parentValue = getComputedProperty(style.parent, "height");
+    const { value, source } = getSpecifiedProperty(style, "height");
 
     switch (value.type) {
       case ValueType.Keyword:
-        return value;
+        return { value, source };
 
       case ValueType.Length:
-        return Resolvers.length(value, device, style);
+        return { value: Resolvers.length(value, device, style), source };
 
       case ValueType.Percentage:
+        const { value: parentValue } = getComputedProperty(
+          style.parent,
+          "height"
+        );
+
         if (parentValue.type !== ValueType.Length) {
-          return value;
+          return { value, source };
         }
-        return Resolvers.percentage(value, parentValue, device, style);
+
+        return {
+          value: Resolvers.percentage(value, parentValue, device, style),
+          source
+        };
     }
   }
 };

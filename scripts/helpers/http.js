@@ -1,6 +1,4 @@
-/// <reference path="../types/axios.d.ts" />
-
-const axios = require("axios");
+const { default: axios } = require("axios");
 
 /**
  * @param {string} url

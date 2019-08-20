@@ -16,7 +16,6 @@ export const width: Longhand<
   Width,
   Values.Keyword<"auto"> | Values.Percentage | Values.Length
 > = {
-  depends: ["width"],
   parse(input) {
     const parser = parse(input, WidthGrammar);
 
@@ -30,21 +29,29 @@ export const width: Longhand<
     return Values.keyword("auto");
   },
   computed(style, device) {
-    const value = getSpecifiedProperty(style, "width");
-    const parentValue = getComputedProperty(style.parent, "width");
+    const { value, source } = getSpecifiedProperty(style, "width");
 
     switch (value.type) {
       case ValueType.Keyword:
-        return value;
+        return { value, source };
 
       case ValueType.Length:
-        return Resolvers.length(value, device, style);
+        return { value: Resolvers.length(value, device, style), source };
 
       case ValueType.Percentage:
+        const { value: parentValue } = getComputedProperty(
+          style.parent,
+          "width"
+        );
+
         if (parentValue.type !== ValueType.Length) {
-          return value;
+          return { value, source };
         }
-        return Resolvers.percentage(value, parentValue, device, style);
+
+        return {
+          value: Resolvers.percentage(value, parentValue, device, style),
+          source
+        };
     }
   }
 };

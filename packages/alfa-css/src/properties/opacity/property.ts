@@ -25,6 +25,11 @@ export const opacity: Longhand<Opacity> = {
     return number(1);
   },
   computed(style) {
-    return number(clamp(getSpecifiedProperty(style, "opacity").value, 0, 1));
+    const { value, source } = getSpecifiedProperty(style, "opacity");
+
+    return {
+      value: number(clamp(value.value, 0, 1)),
+      source
+    };
   }
 };
