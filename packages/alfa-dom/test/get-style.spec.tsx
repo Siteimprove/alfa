@@ -8,7 +8,7 @@ import {
   getSpecifiedStyle
 } from "../src/get-style";
 
-const { keyword, length, color } = Values;
+const { keyword, length, func, number } = Values;
 
 const device = getDefaultDevice();
 
@@ -35,7 +35,7 @@ test("Gets the specified style of an element", t => {
 
   t.deepEqual(style, {
     color: {
-      value: color(255, 0, 0, 1),
+      value: func("rgb", [number(255), number(0), number(0)]),
       source: null
     },
     fontSize: {
@@ -50,7 +50,7 @@ test("Gets the computed style of an element", t => {
 
   t.deepEqual(style, {
     color: {
-      value: color(255, 0, 0, 1),
+      value: func("rgb", [number(255), number(0), number(0)]),
       source: null
     },
     fontSize: {
@@ -114,7 +114,7 @@ test("Correctly handles light DOM inheriting from shadow DOM", t => {
 
   t.deepEqual(style, {
     color: {
-      value: color(255, 0, 0, 1),
+      value: func("rgb", [number(255), number(0), number(0)]),
       source: null
     }
   });

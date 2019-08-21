@@ -5,7 +5,7 @@ import { Units } from "./units";
  * converted to another unit within the same set. With the exception of relative
  * lengths, all units defined in CSS are convertible.
  */
-type ConvertibleUnit =
+export type ConvertibleUnit =
   | Units.AbsoluteLength
   | Units.Angle
   | Units.Time
@@ -52,7 +52,7 @@ function rates<U extends ConvertibleUnit>(fn: () => Rates<U>): Rates<U> {
  * Converters are functions that convert an input value from one unit within a
  * set of units to another unit within the same set of units.
  */
-type Converter<U extends ConvertibleUnit> = (
+export type Converter<U extends ConvertibleUnit> = (
   value: number,
   from: U,
   to: U

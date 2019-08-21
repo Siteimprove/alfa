@@ -91,10 +91,3 @@ test("Can construct a length", t => {
     value: 42.7
   });
 });
-
-test("Can construct a color", t => {
-  t.deepEqual(Values.color(1, 2, 3, 4), {
-    type: ValueType.Color,
-    value: [1, 2, 3, 4]
-  });
-});
