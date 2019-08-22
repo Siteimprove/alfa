@@ -2,6 +2,7 @@ import {
   Comment,
   Document,
   DocumentType,
+  Element,
   NodeType
 } from "@siteimprove/alfa-dom";
 import { lex, parse } from "@siteimprove/alfa-lang";
@@ -52,6 +53,87 @@ test("Can parse a document with a comment", t => {
     nodeType: NodeType.Document,
     compatMode: "CSS1Compat",
     childNodes: [comment],
+    styleSheets: []
+  });
+});
+
+test("Can parse a document with a script tag in the head tag", t => {
+  const scriptTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "script",
+    childNodes: [],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  const headTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "head",
+    childNodes: [scriptTag],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  const htmlTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "html",
+    childNodes: [headTag],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  html(t, "<html><head><script>foo</script></head></html>", {
+    nodeType: NodeType.Document,
+    compatMode: "BackCompat",
+    childNodes: [htmlTag],
+    styleSheets: []
+  });
+});
+
+test("Can parse a document with a template tag in the head tag", t => {
+  const templateTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "template",
+    childNodes: [],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  const headTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "head",
+    childNodes: [templateTag],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  const bodyTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "body",
+    childNodes: [],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  const htmlTag: Element = {
+    nodeType: NodeType.Element,
+    localName: "html",
+    childNodes: [headTag, bodyTag],
+    prefix: null,
+    attributes: [],
+    shadowRoot: null
+  };
+
+  html(t, "<html><head><template></template></head></html>", {
+    nodeType: NodeType.Document,
+    compatMode: "BackCompat",
+    childNodes: [htmlTag],
     styleSheets: []
   });
 });
