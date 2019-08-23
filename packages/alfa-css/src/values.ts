@@ -135,6 +135,10 @@ export namespace Values {
     return { type: ValueType.Integer, value };
   }
 
+  export function isInteger(value: Value): value is Integer {
+    return value.type === ValueType.Integer;
+  }
+
   /**
    * @see https://www.w3.org/TR/css-values/#numbers
    */
@@ -146,6 +150,10 @@ export namespace Values {
     return { type: ValueType.Number, value };
   }
 
+  export function isNumber(value: Value): value is Number {
+    return value.type === ValueType.Number;
+  }
+
   /**
    * @see https://www.w3.org/TR/css-values/#percentages
    */
@@ -155,6 +163,10 @@ export namespace Values {
 
   export function percentage(value: number): Percentage {
     return { type: ValueType.Percentage, value };
+  }
+
+  export function isPercentage(value: Value): value is Percentage {
+    return value.type === ValueType.Percentage;
   }
 
   /**
@@ -173,6 +185,10 @@ export namespace Values {
     return { type: ValueType.Length, value, unit };
   }
 
+  export function isLength(value: Value): value is Length {
+    return value.type === ValueType.Length;
+  }
+
   /**
    * @see https://www.w3.org/TR/css-values/#angles
    */
@@ -189,20 +205,33 @@ export namespace Values {
     return { type: ValueType.Angle, value, unit };
   }
 
+  export function isAngle(value: Value): value is Angle {
+    return value.type === ValueType.Angle;
+  }
+
   /**
    * @see https://www.w3.org/TR/css-values/#functional-notations
    */
   export interface Function<
-    N extends string,
-    A extends readonly [Value | undefined, ...Array<Value | undefined>]
+    N extends Function.Name = Function.Name,
+    A extends Function.Arguments = Function.Arguments
   > extends Value<{ readonly name: N; readonly args: A }> {
     readonly type: ValueType.Function;
   }
 
-  export function func<
-    N extends string,
-    A extends readonly [Value, ...Array<Value>]
-  >(name: N, args: A): Function<N, A> {
+  export namespace Function {
+    export type Name = string;
+    export type Arguments = readonly [Value, ...Array<Value>];
+  }
+
+  export function func<N extends Function.Name, A extends Function.Arguments>(
+    name: N,
+    args: A
+  ): Function<N, A> {
     return { type: ValueType.Function, value: { name, args } };
+  }
+
+  export function isFunction(value: Value): value is Function {
+    return value.type === ValueType.Function;
   }
 }

@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/transformation.ts"],
+  "files": ["src/decompose.ts", "src/index.ts", "src/transformation.ts"],
   "references": [
     {
       "path": "../alfa-math"

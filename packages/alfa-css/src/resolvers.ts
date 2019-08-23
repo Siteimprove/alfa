@@ -25,31 +25,19 @@ export namespace Resolvers {
     switch (unit) {
       // https://www.w3.org/TR/css-values/#em
       case "em":
-        return Values.length(
-          Converters.length(fontSize.value * value, fontSize.unit, "px"),
-          "px"
-        );
+        return Values.length(fontSize.value * value, fontSize.unit);
 
       // https://www.w3.org/TR/css-values/#ex
       case "ex":
-        return Values.length(
-          Converters.length(fontSize.value * value * 0.5, fontSize.unit, "px"),
-          "px"
-        );
+        return Values.length(fontSize.value * value * 0.5, fontSize.unit);
 
       // https://www.w3.org/TR/css-values/#ch
       case "ch":
-        return Values.length(
-          Converters.length(fontSize.value * value * 0.5, fontSize.unit, "px"),
-          "px"
-        );
+        return Values.length(fontSize.value * value * 0.5, fontSize.unit);
 
       // https://www.w3.org/TR/css-values/#rem
       case "rem":
-        return Values.length(
-          Converters.length(rootFontSize.value * value, fontSize.unit, "px"),
-          "px"
-        );
+        return Values.length(rootFontSize.value * value, fontSize.unit);
 
       // https://www.w3.org/TR/css-values/#vh
       case "vh":

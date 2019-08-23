@@ -1,4 +1,4 @@
-import { Matrix } from "@siteimprove/alfa-math";
+import { Matrix, Vector } from "@siteimprove/alfa-math";
 
 const { cos, sin, tan } = Math;
 
@@ -21,30 +21,29 @@ export namespace Transformation {
   }
 
   export function scale(sx: number, sy: number, sz = 1): Transformation {
-    return [[sx, 0, 0, 0], [0, sy, 0, 0], [0, 0, sx, 0], [0, 0, 0, 1]];
+    return [[sx, 0, 0, 0], [0, sy, 0, 0], [0, 0, sz, 0], [0, 0, 0, 1]];
   }
 
-  export function rotate(a: number, x = 0, y = 0, z = 1): Transformation {
-    const sc = sin(a / 2) * cos(a / 2);
-    const sq = sin(a / 2) ** 2;
+  export function rotate(a: number, u: Vector<3> = [0, 0, 1]): Transformation {
+    const [x, y, z] = Vector.normalize(u);
 
     return [
       [
-        1 - 2 * (y ** 2 + z ** 2) * sq,
-        2 * (x * y * sq - z * sc),
-        2 * (x * z * sq + y * sc),
+        cos(a) + x ** 2 * (1 - cos(a)),
+        x * y * (1 - cos(a)) - z * sin(a),
+        x * z * (1 - cos(a)) + y * sin(a),
         0
       ],
       [
-        2 * (x * y * sq + z * sc),
-        1 - 2 * (x ** 2 + z ** 2) * sq,
-        2 * (y * z * sq - x * sc),
+        y * x * (1 - cos(a)) + z * sin(a),
+        cos(a) + y ** 2 * (1 - cos(a)),
+        y * z * (1 - cos(a)) - x * sin(a),
         0
       ],
       [
-        2 * (x * z * sq - y * sc),
-        2 * (y * z * sq + x * sc),
-        1 - 2 * (x ** 2 + y ** 2) * sq,
+        z * x * (1 - cos(a)) - y * sin(a),
+        z * y * (1 - cos(a)) + x * sin(a),
+        cos(a) + z ** 2 * (1 - cos(a)),
         0
       ],
       [0, 0, 0, 1]

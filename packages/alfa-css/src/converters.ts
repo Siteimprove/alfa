@@ -1,5 +1,7 @@
 import { Units } from "./units";
 
+const { PI } = Math;
+
 /**
  * Convertible units are sets of units where each unit within a given set can be
  * converted to another unit within the same set. With the exception of relative
@@ -94,4 +96,30 @@ export namespace Converters {
       };
     })
   );
+
+  /**
+   * @see https://www.w3.org/TR/css-values/#angles
+   */
+  export const angle: Converter<Units.Angle> = converter({
+    deg: 1,
+    grad: 360 / 400,
+    rad: 360 / (2 * PI),
+    turn: 360
+  });
+
+  /**
+   * @see https://www.w3.org/TR/css-values/#time
+   */
+  export const time: Converter<Units.Time> = converter({
+    s: 1,
+    ms: 0.001
+  });
+
+  /**
+   * @see https://www.w3.org/TR/css-values/#frequency
+   */
+  export const frequency: Converter<Units.Frequency> = converter({
+    hz: 1,
+    kHz: 1000
+  });
 }

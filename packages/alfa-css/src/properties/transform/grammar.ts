@@ -5,7 +5,7 @@ import { Values } from "../../values";
 import { FunctionArguments } from "../helpers/function-arguments";
 import { Transform } from "./types";
 
-const { isKeyword } = Values;
+const { isKeyword, number } = Values;
 
 type Production<T extends Token> = Lang.Production<Token, Transform, T>;
 
@@ -54,7 +54,26 @@ const functionName: Production<Tokens.FunctionName> = {
           return null;
         }
 
-        return Values.list(Values.func("matrix", [a, b, c, d, e, f]));
+        return Values.list(
+          Values.func("matrix", [
+            a,
+            b,
+            number(0),
+            number(0),
+            c,
+            d,
+            number(0),
+            number(0),
+            number(0),
+            number(0),
+            number(1),
+            number(0),
+            e,
+            f,
+            number(0),
+            number(1)
+          ])
+        );
       }
 
       case "rotate": {

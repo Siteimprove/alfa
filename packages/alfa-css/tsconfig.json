@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/alphabet.ts",
+    "src/canonicalize.ts",
     "src/converters.ts",
     "src/escape.ts",
     "src/grammars/child-index.ts",

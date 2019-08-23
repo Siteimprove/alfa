@@ -1,4 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
+import { Canonical, canonicalize } from "../../canonicalize";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
 import { getSpecifiedProperty } from "../helpers/get-property";
@@ -8,7 +9,7 @@ import { Transform } from "./types";
 /**
  * @see https://drafts.csswg.org/css-transforms/#propdef-transform
  */
-export const transform: Longhand<Transform> = {
+export const transform: Longhand<Transform, Canonical<Transform>> = {
   parse(input) {
     const parser = parse(input, TransformGrammar);
 
@@ -22,6 +23,7 @@ export const transform: Longhand<Transform> = {
     return Values.keyword("none");
   },
   computed(style) {
-    return getSpecifiedProperty(style, "transform");
+    const { value, source } = getSpecifiedProperty(style, "transform");
+    return { value: canonicalize(value), source };
   }
 };

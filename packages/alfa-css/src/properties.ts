@@ -59,7 +59,7 @@ export type ComputedPropertyValue<
   N extends PropertyName = PropertyName
 > = ComputedPropertyValues[N];
 
-export interface Longhand<T extends Value, U = T> {
+export interface Longhand<T extends Value, U extends Value = T> {
   /**
    * @internal
    */
