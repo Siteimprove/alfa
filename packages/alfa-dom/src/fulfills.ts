@@ -9,7 +9,7 @@ import {
   Resolvers,
   ValueType
 } from "@siteimprove/alfa-css";
-import { Device, DeviceType } from "@siteimprove/alfa-device";
+import { Device, DeviceType, Orientation } from "@siteimprove/alfa-device";
 import { isMediaRule } from "./guards";
 import { ConditionRule } from "./types";
 
@@ -119,27 +119,41 @@ function fulfillsMediaFeature(
 ): boolean {
   const { value } = mediaFeature;
 
-  if (value !== undefined && value.type === ValueType.Length) {
-    const resolved = Resolvers.length(value, device);
+  if (value === undefined) {
+  } else {
+    switch (value.type) {
+      case ValueType.String: {
+        switch (mediaFeature.name) {
+          case "orientation":
+            return fulfillsOrientation(device, value.value);
+        }
 
-    switch (mediaFeature.name) {
-      case "width":
-        return fulfillsWidth(device, resolved.value);
+        break;
+      }
 
-      case "max-width":
-        return fulfillsWidth(device, [0, resolved.value]);
+      case ValueType.Length: {
+        const resolved = Resolvers.length(value, device);
 
-      case "min-width":
-        return fulfillsWidth(device, [resolved.value, Infinity]);
+        switch (mediaFeature.name) {
+          case "width":
+            return fulfillsWidth(device, resolved.value);
 
-      case "height":
-        return fulfillsHeight(device, resolved.value);
+          case "max-width":
+            return fulfillsWidth(device, [0, resolved.value]);
 
-      case "max-height":
-        return fulfillsHeight(device, [0, resolved.value]);
+          case "min-width":
+            return fulfillsWidth(device, [resolved.value, Infinity]);
 
-      case "min-height":
-        return fulfillsHeight(device, [resolved.value, Infinity]);
+          case "height":
+            return fulfillsHeight(device, resolved.value);
+
+          case "max-height":
+            return fulfillsHeight(device, [0, resolved.value]);
+
+          case "min-height":
+            return fulfillsHeight(device, [resolved.value, Infinity]);
+        }
+      }
     }
   }
 
@@ -169,4 +183,16 @@ function fulfillsHeight(
   range: number | [number, number]
 ): boolean {
   return fulfillsRange(device.viewport.height, range);
+}
+
+function fulfillsOrientation(device: Device, orientation: string): boolean {
+  switch (device.viewport.orientation) {
+    case Orientation.Landscape:
+      return orientation === "landscape";
+
+    case Orientation.Portrait:
+      return orientation === "portrait";
+  }
+
+  return false;
 }
