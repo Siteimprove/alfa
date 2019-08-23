@@ -1,5 +1,4 @@
 node_modules
-package-lock.json
 
 **/*.log
 **/*.tsbuildinfo
@@ -12,5 +11,3 @@ package-lock.json
 !**/types/**/*.d.ts
 
 .cache
-.semaphore-cache
-.vscode
