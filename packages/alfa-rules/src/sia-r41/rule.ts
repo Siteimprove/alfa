@@ -21,6 +21,8 @@ import {
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
 
+import { EN } from "./locales/en";
+
 const {
   map,
   Iterable: { filter, groupBy }
@@ -28,6 +30,7 @@ const {
 
 export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
   id: "sanshikan:rules/sia-r41.html",
+  locales: [EN],
   requirements: [
     { requirement: "wcag", criterion: "link-purpose-link-only", partial: true }
   ],

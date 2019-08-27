@@ -55,6 +55,7 @@
     "src/sia-r39/rule.ts",
     "src/sia-r4/rule.ts",
     "src/sia-r40/rule.ts",
+    "src/sia-r41/locales/en.ts",
     "src/sia-r41/rule.ts",
     "src/sia-r42/rule.ts",
     "src/sia-r44/rule.ts",
