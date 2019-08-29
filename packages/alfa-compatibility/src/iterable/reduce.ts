@@ -46,7 +46,7 @@ export function reduce<T, U = T>(
     let next = iterator.next();
 
     if (initial === undefined) {
-      if (next.done) {
+      if (next.done === true) {
         throw new TypeError("reduce of empty iterable with no initial value");
       }
 
@@ -56,9 +56,11 @@ export function reduce<T, U = T>(
 
     let accumulator = initial;
 
-    while (!next.done) {
+    while (next.done !== true) {
+      const { value } = next;
+
       accumulator = map(accumulator, accumulator => {
-        return iteratee(accumulator, next.value);
+        return iteratee(accumulator, value);
       });
 
       next = iterator.next();

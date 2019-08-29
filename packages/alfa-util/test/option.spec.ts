@@ -13,5 +13,5 @@ test("Option.ifNone only runs callback if parameter is not something", t => {
 
 test("Option.map runs some if parameter is something, else none", t => {
   t.equal(Option.map(4, n => n * 2, () => 2), 8);
-  t.equal(Option.map(null, n => n * 2, () => 8), 8);
+  t.equal(Option.map<number>(null, n => n * 2, () => 8), 8);
 });

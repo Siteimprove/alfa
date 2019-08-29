@@ -30,7 +30,7 @@ const { isArray } = Array;
 const { ifNone, ifSome } = Option;
 const {
   map,
-  Iterable: { reduce }
+  Iterable: { reduce, map: mapIterable }
 } = BrowserSpecific;
 
 type TextAlternativeOptions = Readonly<{
@@ -239,12 +239,14 @@ function getAriaLabelledbyTextAlternative(
   ) {
     const rootNode = getRootNode(element, context);
 
-    const references = resolveReferences(rootNode, context, labelledBy).map(
-      element =>
-        getTextAlternative(element, context, device, visited, {
+    const references = mapIterable(
+      resolveReferences(rootNode, context, labelledBy),
+      element => {
+        return getTextAlternative(element, context, device, visited, {
           recursing: true,
           referencing: true
-        })
+        });
+      }
     );
 
     const label = reduce(

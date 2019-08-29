@@ -37,7 +37,7 @@ export namespace Option {
     return isNone(option) ? ifNone() : option;
   }
 
-  export function map<T, U>(
+  export function map<T, U = T>(
     option: Option<T>,
     ifSome: (value: Some<T>) => Option<U>,
     ifNone: () => Option<U> = () => None

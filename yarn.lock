@@ -3,37 +3,37 @@
 
 
 "@angular/common@^8.2.0":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-8.2.3.tgz#e7c21ac22b10ce7e6fc75a22d879a85b6f057ea6"
-  integrity sha512-Y8ttd66bAApnJgxjndVnBP0aMsID8AzttR2TKp1KpdDKy4n6td22+1DeHZJqPMOBwoTDEdjHZqFQ7XRNYe3IVw==
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-8.2.4.tgz#a300938b327a109ea1229bcbf47158902d3770d9"
+  integrity sha512-sPeTkor3uf8T3MvpekS0ZQe9K/yzlHBSoMyT0bIPOYeDTHUph3f/0XyYhH7KSGXLo7tSw1Mx9Ua05nQ+VHtLGQ==
   dependencies:
     tslib "^1.9.0"
 
 "@angular/compiler@^8.2.0":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-8.2.3.tgz#9242a28280c92770fec617e97fa31c6a1e8618f2"
-  integrity sha512-CDUiYXdy7jIwhK3aeBwz4Bik3eQUORVWDVuO8fsVot7CODE4jIkETUdeWuYuEpwPX7dkjsFvuT4btiwzZfrCUg==
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-8.2.4.tgz#741bb5042d7bd4b3af93edc0d26f6831f536627d"
+  integrity sha512-LYaYhQlW3GFiXrNywJBYQtsLOWmUFcgudacF1m7QHHhlljnkG3BqkosbT0Dkcl7ayrIDYT/ZMTkVmaiGvgAhnw==
   dependencies:
     tslib "^1.9.0"
 
 "@angular/core@^8.2.0":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-8.2.3.tgz#0567d9db96bfd5b155f011e9f6de39e8d74db954"
-  integrity sha512-wNlq6r0RI8q0BCr3I16NHfteliJLVjZN3MsLfzYi4u08LcGTemGL9YwcVjCOPEH4xREo3xX0ebvmuLwObu75lQ==
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-8.2.4.tgz#72454401dc07c8ed3c64a87d9de70507d6810b14"
+  integrity sha512-8FSdkUSb5S4+K2w49iLzrQF/jzcmoRnOogFZQ8CctiXQHSVHHF8AjpoFpFVUAI6/77UVL8CehlyBSKF5EE1Z8A==
   dependencies:
     tslib "^1.9.0"
 
 "@angular/platform-browser-dynamic@^8.2.0":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-8.2.3.tgz#aac880a3ce79ea0c5ea7711e52f475e278027130"
-  integrity sha512-rH7tpOwJ6r8+085bOmXUI9/v9MxFfsL+BYzi6bG2vCU280cSblvZR2Rx9nqx3/+Xd97ISWkUZiQhyRVJWYk6UQ==
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-8.2.4.tgz#ef0d3896533efbed7c6f301d7cb9ba3a740f3d27"
+  integrity sha512-qn84B796UZIl1KB+YcxwFCx/Ze439Zf7G8ZK+xKsUA16H0R6GswAgBndnYq8xFjww1g4dY7zNH/XZ2FKngETKA==
   dependencies:
     tslib "^1.9.0"
 
 "@angular/platform-browser@^8.2.0":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-8.2.3.tgz#18b4ab6ede5331ae4e88bf4485b9aea98430f911"
-  integrity sha512-hKC5V2n0jfrFc9DXvHW+NtHDSfC417WZz8onmUhMR2Eo3fjBm5cuZi5CNgnbZt9zUoXXOfwCy6p3N7FbPDXxLQ==
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-8.2.4.tgz#ce89c2397ce945699cbe8b9e7c1d2d932f5d04f9"
+  integrity sha512-3nd71h6S4RT9lHu9mVGD/741O+8MBSjI1A0V8H/LjT79yWnkxoR6BgZA7KL76AeTTITagUcVIuxtNAaxssgLHg==
   dependencies:
     tslib "^1.9.0"
 
@@ -552,9 +552,9 @@
     lodash "^4.17.4"
 
 abab@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
-  integrity sha512-sY5AXXVZv4Y1VACTtR11UJCPHHudgY5i26Qj5TypE6DKlIApbwb5uqhXcJ5UUGbvZNRh7EeIoW+LrJumBsKp7w==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.1.tgz#3fa17797032b71410ec372e11668f4b4ffc86a82"
+  integrity sha512-1zSbbCuoIjafKZ3mblY5ikvAb0ODUbqBnFuUb7f6uLeQhhGJ0vEV4ntmtxKLT2WgXCO94E07BjunsIw1jOMPZw==
 
 abbrev@1:
   version "1.1.1"
@@ -1664,9 +1664,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.191:
-  version "1.3.241"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.241.tgz#859dc49ab7f90773ed698767372d384190f60cb1"
-  integrity sha512-Gb9E6nWZlbgjDDNe5cAvMJixtn79krNJ70EDpq/M10lkGo7PGtBUe7Y0CYVHsBScRwi6ybCS+YetXAN9ysAHDg==
+  version "1.3.244"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.244.tgz#7ba5461fa320ab16540a31b1d0defb7ec29b16e4"
+  integrity sha512-nEfPd2EKnFeLuZ/+JsRG3KixRQwWf2SPpp09ftNt5ouGhg408N759+oXvdXy57+TcM34ykfJYj2JMkc1O3R0lQ==
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -3718,7 +3718,7 @@ lowlight@~1.9.0:
     fault "^1.0.2"
     highlight.js "~9.12.0"
 
-magicpen@^6.0.2:
+magicpen@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/magicpen/-/magicpen-6.1.0.tgz#ca7f3210a2f025e466ab8c33854446586df744df"
   integrity sha512-09P2y3BcZfU9SX57V7IbUkODvYtvWLUuc8C26fX3N1jDaXKNjWpY+hQsLQjdMT256f80wTunW9OLR6gMB8Ke7g==
@@ -3759,9 +3759,9 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 mathjs@^6.0.4:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-6.1.0.tgz#1b544743ce36c5e868f28007e69954f1751b7b3e"
-  integrity sha512-rYxlGCTyCQ8dTLT4kGZZE88cOO3mrri1ObiJwUTLBIfABqk5G/LxGCDbTgEIzRUga194HvS8eHKQUKdoEGKsJA==
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-6.2.0.tgz#9f86e12b8c4eca895f98a52ecb858ae2da9279ad"
+  integrity sha512-YKMkW/Nwr8umoh+kg5d6F9IuD0MMn8MEE7bGe5+zZv0zm+2zLPVt5yAqyapfrdkD/0ufoPJ4gUzjiy8GhW5zVQ==
   dependencies:
     complex.js "2.0.11"
     decimal.js "10.2.0"
@@ -3770,7 +3770,7 @@ mathjs@^6.0.4:
     javascript-natural-sort "0.7.1"
     seed-random "2.2.0"
     tiny-emitter "2.1.0"
-    typed-function "1.1.0"
+    typed-function "1.1.1"
 
 mdn-browser-compat-data@0.0.80:
   version "0.0.80"
@@ -3848,9 +3848,9 @@ minimist@~0.0.1:
   integrity sha1-3j+YVD2/lggr5IrRoMfNqDYwHc8=
 
 minipass@^2.2.1, minipass@^2.3.5:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.4.0.tgz#38f0af94f42fb6f34d3d7d82a90e2c99cd3ff485"
-  integrity sha512-6PmOuSP4NnZXzs2z6rbwzLJu/c5gdzYg1mRI/WIYdx45iiX7T+a4esOzavD6V/KmBzAaopFSTZPZcUx73bqKWA==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.5.0.tgz#dddb1d001976978158a05badfcbef4a771612857"
+  integrity sha512-9FwMVYhn6ERvMR8XFdOavRz4QK/VJV8elU1x50vYexf9lslDcWe/f4HBRxCPd185ekRSjU6CfYyJCECa/CQy7Q==
   dependencies:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
@@ -5554,10 +5554,10 @@ type-fest@^0.6.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.6.0.tgz#8d2a2370d3df886eb5c90ada1c5bf6188acf838b"
   integrity sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==
 
-typed-function@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-1.1.0.tgz#ea149706e0fb42aca1791c053a6d94ccd6c4fdcb"
-  integrity sha512-TuQzwiT4DDg19beHam3E66oRXhyqlyfgjHB/5fcvsRXbfmWPJfto9B4a0TBdTrQAPGlGmXh/k7iUI+WsObgORA==
+typed-function@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-1.1.1.tgz#a1316187ec3628c9e219b91ca96918660a10138e"
+  integrity sha512-RbN7MaTQBZLJYzDENHPA0nUmWT0Ex80KHItprrgbTPufYhIlTePvCXZxyQK7wgn19FW5bnuaBIKcBb5mRWjB1Q==
 
 typedarray@^0.0.6:
   version "0.0.6"
@@ -5565,9 +5565,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typescript@^3.5.1:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
-  integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.2.tgz#105b0f1934119dde543ac8eb71af3a91009efe54"
+  integrity sha512-lmQ4L+J6mnu3xweP8+rOrUwzmN+MRAj7TgtJtDaXE5PMyX2kCrklhg3rvOsOIfNeAWMQWO2F1GPc1kMD2vLAfw==
 
 uglify-js@^3.1.4:
   version "3.6.0"
@@ -5583,9 +5583,9 @@ unexpected-bluebird@2.9.34-longstack2:
   integrity sha1-SaysdTsFVt7WAlIQ7pYYIwfSssk=
 
 unexpected@^11.2.0:
-  version "11.7.0"
-  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.7.0.tgz#3dfa9b7a0d22216326074c09b5fb1e92c772e482"
-  integrity sha512-tzqwJ8l63P62Kd49OpAn7zVflTLG8oD6YRGCIXHm6N9r/3rX8VWVut4raT8Hg/bLdzQe7bKk/t8RqaecmJRt1w==
+  version "11.8.0"
+  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-11.8.0.tgz#4cbdfa26fb625304012db15d24e1f2dc33cc7f7e"
+  integrity sha512-HzITth7arGkdoNH59gHS+4jUUKWcj5olKtm2/dquBbbU4J2l3Y5x1EyzWbHRJZYHr0xY/8tCThTAcDDNkof/VQ==
   dependencies:
     array-changes "3.0.1"
     array-changes-async "3.0.1"
@@ -5593,7 +5593,7 @@ unexpected@^11.2.0:
     diff "4.0.1"
     greedy-interval-packer "1.2.0"
     leven "2.1.0"
-    magicpen "^6.0.2"
+    magicpen "^6.1.0"
     unexpected-bluebird "2.9.34-longstack2"
 
 union-value@^1.0.0:
