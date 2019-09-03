@@ -19,9 +19,7 @@ export function jsx(
   let shadowRoot: ShadowRoot | null = null;
 
   let contentDocument: Document | null | undefined =
-    type === "iframe" || type === "frame" || type === "object"
-      ? null
-      : undefined;
+    type === "iframe" || type === "object" ? null : undefined;
 
   for (let i = 0, n = children.length; i < n; i++) {
     const child = children[i];

@@ -44,13 +44,30 @@ function virtualizeElement(
 
   const childNodes = Array.from(element.childNodes).map(virtualizeNode);
 
+  let contentDocument: Document | null | undefined;
+
+  if (
+    element instanceof HTMLIFrameElement ||
+    element instanceof HTMLObjectElement
+  ) {
+    contentDocument = element.contentDocument;
+  }
+
   return {
     nodeType: 1,
     prefix,
     localName: localName === null ? "" : localName,
     attributes,
     shadowRoot: shadowRoot === null ? null : virtualizeShadowRoot(shadowRoot),
-    childNodes
+    childNodes,
+    ...(contentDocument === undefined
+      ? null
+      : {
+          contentDocument:
+            contentDocument === null
+              ? null
+              : virtualizeDocument(contentDocument)
+        })
   };
 }
 
