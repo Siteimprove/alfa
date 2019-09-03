@@ -97,6 +97,10 @@ export class SelectorMap {
     const declarationsCache: Map<string, Array<Declaration>> = new Map();
 
     for (const styleSheet of styleSheets) {
+      if (styleSheet.disabled) {
+        continue;
+      }
+
       traverseStyleSheet(styleSheet, {
         enter: (rule, parentRule, { skip }) => {
           if (isConditionRule(rule) && !fulfills(device, rule)) {
