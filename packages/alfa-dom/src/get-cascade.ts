@@ -28,18 +28,22 @@ export class Cascade {
   }
 }
 
-const cascades: WeakMap<
-  Document,
-  { device: Device; cascade: Cascade }
-> = new WeakMap();
+const cascades = new WeakMap<Document, WeakMap<Device, Cascade>>();
 
 /**
  * @internal
  */
 export function getCascade(context: Document, device: Device): Cascade {
-  let cascade = cascades.get(context);
+  let cascadesByDevice = cascades.get(context);
 
-  if (cascade === undefined || cascade.device !== device) {
+  if (cascadesByDevice === undefined) {
+    cascadesByDevice = new WeakMap();
+    cascades.set(context, cascadesByDevice);
+  }
+
+  let cascade = cascadesByDevice.get(device);
+
+  if (cascade === undefined) {
     const entries: WeakMap<Element, RuleEntry> = new WeakMap();
 
     const filter = new AncestorFilter();
@@ -77,11 +81,11 @@ export function getCascade(context: Document, device: Device): Cascade {
       }
     });
 
-    cascade = { device, cascade: new Cascade(entries) };
-    cascades.set(context, cascade);
+    cascade = new Cascade(entries);
+    cascadesByDevice.set(device, cascade);
   }
 
-  return cascade.cascade;
+  return cascade;
 }
 
 /**
