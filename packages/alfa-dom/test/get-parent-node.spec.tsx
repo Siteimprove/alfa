@@ -62,3 +62,16 @@ test("Returns the flattened parent of an element", t => {
 
   t.equal(getParentNode(child, context, { flattened: true }), parent);
 });
+
+test("Returns the parent of an element in an iframe", t => {
+  const child = <span class="child" />;
+  const parent = <div>{child}</div>;
+
+  const context = (
+    <iframe>
+      <content>{parent}</content>
+    </iframe>
+  );
+
+  t.equal(getParentNode(child, context), parent);
+});
