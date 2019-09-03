@@ -23,13 +23,6 @@ import { Element, Node, Rule } from "./types";
 
 const { isArray } = Array;
 
-export interface StyleOptions {
-  readonly hover?: Element;
-  readonly active?: Element;
-  readonly focus?: Element;
-  readonly pseudo?: PseudoElement;
-}
-
 /**
  * @see https://www.w3.org/TR/css-cascade/#cascaded
  */
@@ -37,7 +30,7 @@ export function getCascadedStyle(
   element: Element,
   context: Node,
   device: Device,
-  options: StyleOptions = {}
+  options: getCascadedStyle.Options = {}
 ): CascadedStyle<Rule> {
   const style = getStyle(element, context, device, options);
 
@@ -48,6 +41,10 @@ export function getCascadedStyle(
   return style.cascaded;
 }
 
+export namespace getCascadedStyle {
+  export type Options = getStyle.Options;
+}
+
 /**
  * @see https://www.w3.org/TR/css-cascade/#specified
  */
@@ -55,7 +52,7 @@ export function getSpecifiedStyle(
   element: Element,
   context: Node,
   device: Device,
-  options: StyleOptions = {}
+  options: getSpecifiedStyle.Options = {}
 ): SpecifiedStyle<Rule> {
   const style = getStyle(element, context, device, options);
 
@@ -66,6 +63,10 @@ export function getSpecifiedStyle(
   return style.specified;
 }
 
+export namespace getSpecifiedStyle {
+  export type Options = getStyle.Options;
+}
+
 /**
  * @see https://www.w3.org/TR/css-cascade/#computed
  */
@@ -73,7 +74,7 @@ export function getComputedStyle(
   element: Element,
   context: Node,
   device: Device,
-  options: StyleOptions = {}
+  options: getComputedStyle.Options = {}
 ): ComputedStyle<Rule> {
   const style = getStyle(element, context, device, options);
 
@@ -84,11 +85,15 @@ export function getComputedStyle(
   return style.computed;
 }
 
+export namespace getComputedStyle {
+  export type Options = getStyle.Options;
+}
+
 function getStyle(
   element: Element,
   context: Node,
   device: Device,
-  options: StyleOptions = {}
+  options: getStyle.Options = {}
 ): Style<Rule> | null {
   const styleTree = getStyleTree(
     getRootNode(element, context),
@@ -114,6 +119,15 @@ function getStyle(
   return styleTree.get(element);
 }
 
+namespace getStyle {
+  export interface Options {
+    readonly hover?: Element;
+    readonly active?: Element;
+    readonly focus?: Element;
+    readonly pseudo?: PseudoElement;
+  }
+}
+
 const styleTreeMaps = new WeakMap<
   Node,
   WeakMap<Node, StyleTree<Node | object, Rule>>
@@ -123,7 +137,7 @@ function getStyleTree(
   node: Node,
   context: Node,
   device: Device,
-  options: StyleOptions = {}
+  options: getStyle.Options = {}
 ): StyleTree<Node | object, Rule> {
   const cascade = isDocument(node) ? getCascade(node, device) : null;
 
@@ -152,7 +166,7 @@ function getStyleEntry(
   context: Node,
   cascade: Cascade | null,
   device: Device,
-  options: StyleOptions = {}
+  options: getStyle.Options = {}
 ): StyleEntry<Node | object, Rule> {
   const declarations: Array<[Declaration, Option<Rule>]> = [];
 
