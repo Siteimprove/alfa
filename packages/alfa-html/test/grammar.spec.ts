@@ -36,7 +36,6 @@ test("Can parse a document with a doctype", t => {
 
   html(t, "<!doctype html>", {
     nodeType: NodeType.Document,
-    compatMode: "CSS1Compat",
     childNodes: [doctype],
     styleSheets: []
   });
@@ -51,7 +50,6 @@ test("Can parse a document with a comment", t => {
 
   html(t, "<!--foo-->", {
     nodeType: NodeType.Document,
-    compatMode: "CSS1Compat",
     childNodes: [comment],
     styleSheets: []
   });
@@ -87,7 +85,6 @@ test("Can parse a document with a script tag in the head tag", t => {
 
   html(t, "<html><head><script>foo</script></head></html>", {
     nodeType: NodeType.Document,
-    compatMode: "BackCompat",
     childNodes: [htmlTag],
     styleSheets: []
   });
@@ -132,7 +129,6 @@ test("Can parse a document with a template tag in the head tag", t => {
 
   html(t, "<html><head><template></template></head></html>", {
     nodeType: NodeType.Document,
-    compatMode: "BackCompat",
     childNodes: [htmlTag],
     styleSheets: []
   });

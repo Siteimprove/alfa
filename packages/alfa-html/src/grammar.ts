@@ -703,9 +703,7 @@ function constructTree(
   return document;
 }
 
-function enableQuirksMode(document: Mutable<Document>): void {
-  document.compatMode = "BackCompat";
-}
+function enableQuirksMode(document: Mutable<Document>): void {}
 
 function appendChild(parentNode: Node, childNode: Node): void {
   (parentNode.childNodes as Array<Node>).push(childNode);
@@ -835,7 +833,6 @@ function createText(data: string): Text {
 function createDocument(): Document {
   return {
     nodeType: NodeType.Document,
-    compatMode: "CSS1Compat",
     childNodes: [],
     styleSheets: []
   };

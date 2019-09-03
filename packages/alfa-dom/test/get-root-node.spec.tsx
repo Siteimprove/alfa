@@ -10,7 +10,6 @@ test("Returns root node", t => {
   const document: Document = {
     nodeType: 9,
     childNodes: [html],
-    compatMode: "CSS1Compat",
     styleSheets: []
   };
   t.equal(getRootNode(button, document), document);

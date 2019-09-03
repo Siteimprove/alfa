@@ -58,7 +58,6 @@ export class Assertion {
       ? this.target
       : {
           nodeType: NodeType.Document,
-          compatMode: "CSS1Compat",
           styleSheets: [],
           childNodes: [documentType, this.target]
         };

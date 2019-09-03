@@ -24,7 +24,6 @@ export function fromJQueryWrapper<T>(
 
   return {
     nodeType: NodeType.Document,
-    compatMode: "CSS1Compat",
     styleSheets: [],
     childNodes: [documentType, ...jQueryWrapper.get()].map(clone)
   };

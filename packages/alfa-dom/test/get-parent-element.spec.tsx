@@ -18,7 +18,6 @@ test("Returns null when parent is not an element", t => {
   const document: Document = {
     nodeType: 9,
     childNodes: [<html />],
-    compatMode: "CSS1Compat",
     styleSheets: []
   };
   t.equal(getParentElement(document.childNodes[0], document), null);

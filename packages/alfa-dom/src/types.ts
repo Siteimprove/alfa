@@ -162,11 +162,6 @@ export interface Document extends Node {
   readonly nodeType: NodeType.Document;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-document-compatmode
-   */
-  readonly compatMode: "CSS1Compat" | "BackCompat";
-
-  /**
    * @see https://www.w3.org/TR/cssom/#dom-document-stylesheets
    */
   readonly styleSheets: ArrayLike<StyleSheet>;

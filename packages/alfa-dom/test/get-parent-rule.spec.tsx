@@ -28,7 +28,6 @@ test("Returns parent rule", t => {
   const document: Document = {
     nodeType: 9,
     childNodes: [<div />],
-    compatMode: "CSS1Compat",
     styleSheets: [styleSheet]
   };
   t.equal(getParentRule(childRule, document), parentRule);
@@ -53,7 +52,6 @@ test("Returns null when parent rule does not exist", t => {
   const document: Document = {
     nodeType: 9,
     childNodes: [<div />],
-    compatMode: "CSS1Compat",
     styleSheets: [styleSheet]
   };
   t.equal(getParentRule(childRule, document), null);

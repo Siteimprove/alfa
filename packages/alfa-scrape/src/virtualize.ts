@@ -99,9 +99,6 @@ function virtualizeDocument(
 ): import("@siteimprove/alfa-dom").Document {
   const childNodes = Array.from(document.childNodes).map(virtualizeNode);
 
-  const compatMode =
-    document.compatMode === "CSS1Compat" ? "CSS1Compat" : "BackCompat";
-
   const styleSheets = Array.from(document.styleSheets)
     .filter(hasCssRules)
     .map(virtualizeStyleSheet);
@@ -109,7 +106,6 @@ function virtualizeDocument(
   return {
     nodeType: 9,
     childNodes,
-    compatMode,
     styleSheets
   };
 }

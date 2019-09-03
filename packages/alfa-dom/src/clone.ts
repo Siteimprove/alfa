@@ -75,8 +75,6 @@ function cloneComment(comment: t.Comment): t.Comment {
 }
 
 function cloneDocument(document: t.Document): t.Document {
-  const { compatMode } = document;
-
   const childNodes = Array.from(document.childNodes).map(cloneNode);
 
   const styleSheets = Array.from(document.styleSheets).map(cloneStyleSheet);
@@ -84,7 +82,6 @@ function cloneDocument(document: t.Document): t.Document {
   return {
     nodeType: 9,
     childNodes,
-    compatMode,
     styleSheets
   };
 }
