@@ -15,13 +15,13 @@ const baz = (
 );
 
 test("Gets the direct child nodes of an element", t => {
-  t.deepEqual(getChildNodes(baz, <div>{baz}</div>), [foo]);
+  t.deepEqual(getChildNodes(baz, <div>{baz}</div>), baz.childNodes);
 });
 
 test("Gets the composed child nodes of an element", t => {
   t.deepEqual(getChildNodes(baz, <div>{baz}</div>, { composed: true }), [
     baz.shadowRoot!,
-    foo
+    ...Array.from(baz.childNodes)
   ]);
 });
 

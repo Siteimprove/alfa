@@ -1,5 +1,5 @@
 import { getAssignedSlot } from "./get-assigned-slot";
-import { getParentNode } from "./get-parent-node";
+import { getHost } from "./get-host";
 import { getRootNode } from "./get-root-node";
 import { isElement, isShadowRoot, isText } from "./guards";
 import { Element, Node } from "./types";
@@ -50,7 +50,7 @@ function findSlotables(slot: Element, context: Node): Array<Node> {
     return result;
   }
 
-  const host = getParentNode(rootNode, context, { composed: true });
+  const host = getHost(rootNode, context);
 
   if (host === null) {
     return result;

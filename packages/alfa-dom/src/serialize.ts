@@ -149,7 +149,6 @@ export function serialize(
 
 export namespace serialize {
   export interface Options {
-    readonly composed?: boolean;
     readonly flattened?: boolean;
   }
 }

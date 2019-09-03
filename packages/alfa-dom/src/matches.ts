@@ -20,6 +20,7 @@ import { getAttribute } from "./get-attribute";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getClosest } from "./get-closest";
 import { getElementNamespace } from "./get-element-namespace";
+import { getHost } from "./get-host";
 import { getId } from "./get-id";
 import { getParentElement } from "./get-parent-element";
 import { getPreviousElementSibling } from "./get-previous-element-sibling";
@@ -648,7 +649,7 @@ function matchesPseudoClass(
         return false;
       }
 
-      const host = getParentElement(treeContext, context, { composed: true });
+      const host = getHost(treeContext, context);
 
       if (host !== element) {
         return false;
@@ -679,7 +680,7 @@ function matchesPseudoClass(
         return false;
       }
 
-      const host = getParentElement(treeContext, context, { composed: true });
+      const host = getHost(treeContext, context);
 
       if (host !== element) {
         return false;

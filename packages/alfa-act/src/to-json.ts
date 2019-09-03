@@ -86,7 +86,7 @@ export function toJSON<
       "@type": ["earl:TestSubject", "cnt:ContentAsText"],
 
       characterEncoding: "UTF-8",
-      chars: serialize(aspect, aspect, { composed: true })
+      chars: serialize(aspect, aspect, { flattened: true })
     };
   }
 
@@ -250,12 +250,15 @@ function getPath(node: Node, context: Node): string {
     }
   } else {
     if (isElement(node)) {
-      const parentNode = getParentNode(node, context, { composed: true });
+      const parentNode = getParentNode(node, context, {
+        flattened: true
+      });
+
       const tagName = getTagName(node, context);
 
       if (parentNode !== null) {
         const childNodes = getChildNodes(parentNode, context, {
-          composed: true
+          flattened: true
         });
 
         for (let i = 0, j = 1, n = childNodes.length; i < n; i++) {

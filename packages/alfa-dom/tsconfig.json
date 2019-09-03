@@ -20,6 +20,7 @@
     "src/get-digest.ts",
     "src/get-document-position.ts",
     "src/get-element-namespace.ts",
+    "src/get-host.ts",
     "src/get-id.ts",
     "src/get-input-type.ts",
     "src/get-key-selector.ts",

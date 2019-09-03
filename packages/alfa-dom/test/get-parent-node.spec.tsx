@@ -18,6 +18,18 @@ test("Gets the correct parent depending on context", t => {
   t.equal(getParentNode(child, <div>{parent2}</div>), parent2);
 });
 
+test("Returns the parent of an element in a shadow host", t => {
+  const child = <span class="child" />;
+
+  const context = (
+    <div>
+      <shadow>{child}</shadow>
+    </div>
+  );
+
+  t.equal(getParentNode(child, context), context.shadowRoot);
+});
+
 test("Returns the composed parent of an element", t => {
   const child = <span class="child" />;
 
@@ -27,9 +39,10 @@ test("Returns the composed parent of an element", t => {
     </div>
   );
 
-  const parent = context.shadowRoot;
-
-  t.equal(getParentNode(child, context, { composed: true }), parent);
+  t.equal(
+    getParentNode(context.shadowRoot!, context, { composed: true }),
+    context
+  );
 });
 
 test("Returns the flattened parent of an element", t => {
