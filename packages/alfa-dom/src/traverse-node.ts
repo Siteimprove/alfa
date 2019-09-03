@@ -11,9 +11,10 @@ const commands: traverseNode.Commands = {
 /**
  * Given a node and a context, perform a depth-first traversal of the node
  * within the context, invoking the given visitors for the node itself and all
- * of its children. A visitor may return `false` in order to stop the
- * traversal, resulting in the function itself returning `false`. If traversal
- * finishes without interruption, `true` is returned.
+ * of its children. A visitor may return `Exit` in order to stop the traversal,
+ * resulting in the function itself returning `false`. If traversal finishes
+ * without interruption, `true` is returned. A visitor may also return `Skip`
+ * in order to skip recursive traversal of a given node.
  *
  * @see https://www.w3.org/TR/dom/#concept-tree-order
  */
