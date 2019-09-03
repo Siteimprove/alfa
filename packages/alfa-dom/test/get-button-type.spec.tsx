@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { ButtonType, getButtonType } from "../src/get-button-type";
 
 test("Returns null when type is not defined", t => {

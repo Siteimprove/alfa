@@ -12,7 +12,7 @@ import { Element, Node } from "./types";
 export function getParentElement(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getParentElement.Options = {}
 ): Element | null {
   const parentNode = getParentNode(node, context, options);
 
@@ -21,4 +21,8 @@ export function getParentElement(
   }
 
   return parentNode;
+}
+
+export namespace getParentElement {
+  export type Options = getParentNode.Options;
 }

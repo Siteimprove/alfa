@@ -130,6 +130,13 @@ export interface Element extends Node {
    * @see https://www.w3.org/TR/dom41/#dom-element-shadowroot
    */
   readonly shadowRoot?: ShadowRoot | null;
+
+  /**
+   * @see https://html.spec.whatwg.org/#dom-iframe-contentdocument
+   * @see https://html.spec.whatwg.org/#dom-frame-contentdocument
+   * @see https://html.spec.whatwg.org/#dom-object-contentdocument
+   */
+  readonly contentDocument?: Document | null;
 }
 
 /**

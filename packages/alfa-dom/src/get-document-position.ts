@@ -17,7 +17,7 @@ const composedPositionMaps: WeakMap<Node, PositionMap> = new WeakMap();
 export function getDocumentPosition(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getDocumentPosition.Options = {}
 ): number | null {
   let positionMaps = normalPositionMaps;
 
@@ -55,4 +55,11 @@ export function getDocumentPosition(
   }
 
   return position;
+}
+
+export namespace getDocumentPosition {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

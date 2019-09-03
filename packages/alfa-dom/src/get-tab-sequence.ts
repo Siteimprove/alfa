@@ -12,7 +12,7 @@ import { Element, Node } from "./types";
 export function getTabSequence(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getTabSequence.Options = {}
 ): ReadonlyArray<Element> {
   const result: Array<Element> = [];
 
@@ -34,6 +34,13 @@ export function getTabSequence(
   );
 
   return result;
+}
+
+export namespace getTabSequence {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }
 
 function indexWithin(array: Array<Element>, element: Element, context: Node) {

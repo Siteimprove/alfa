@@ -26,7 +26,7 @@ export function contains<T extends Node>(
   scope: Node,
   context: Node,
   query: string | Predicate<Node, T> | T,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: contains.Options = {}
 ): boolean {
   if (typeof query === "object") {
     return getClosest(query, context, node => node === scope, options) !== null;
@@ -37,4 +37,11 @@ export function contains<T extends Node>(
   }
 
   return querySelector(scope, context, query, options) !== null;
+}
+
+export namespace contains {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { getTabSequence } from "../src/get-tab-sequence";
 
 test("Gets the tab sequence of a node and its children", t => {

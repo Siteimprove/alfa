@@ -6,23 +6,6 @@ import { isComment, isDocumentType, isElement, isText } from "./guards";
 import { Attribute, Element, Node } from "./types";
 
 /**
- * Given a node and a context, determine whether or not the node should be part
- * of the digest being computed.
- */
-export type NodeFilter = (node: Node, context: Node) => boolean;
-
-/**
- * Given an attribute, the element that the attribute belongs to, and a context,
- * determine whether or not the attribute should be part of the digest being
- * computed.
- */
-export type AttributeFilter = (
-  attribute: Attribute,
-  owner: Element,
-  context: Node
-) => boolean;
-
-/**
  * Given a node and a context, compute the digest of the node within the
  * context. The digest algorithm is based on DOMHASH (RFC 2803) and provides a
  * means of identifying identical subtrees of a DOM structure. If no digest can
@@ -38,13 +21,7 @@ export type AttributeFilter = (
 export function getDigest(
   node: Node,
   context: Node,
-  options: Readonly<{
-    composed?: boolean;
-    flattened?: boolean;
-    algorithm?: Algorithm;
-    encoding?: Encoding;
-    filters?: Readonly<{ node?: NodeFilter; attribute?: AttributeFilter }>;
-  }> = {}
+  options: getDigest.Options = {}
 ): string | null {
   if (isComment(node) || isDocumentType(node)) {
     return null;
@@ -131,4 +108,34 @@ export function getDigest(
   }
 
   return hash.digest(encoding);
+}
+
+export namespace getDigest {
+  export interface Options extends getChildNodes.Options {
+    readonly algorithm?: Algorithm;
+    readonly encoding?: Encoding;
+    readonly filters?: Filters;
+  }
+
+  export interface Filters {
+    readonly node?: NodeFilter;
+    readonly attribute?: AttributeFilter;
+  }
+
+  /**
+   * Given a node and a context, determine whether or not the node should be
+   * part of the digest being computed.
+   */
+  export type NodeFilter = (node: Node, context: Node) => boolean;
+
+  /**
+   * Given an attribute, the element that the attribute belongs to, and a
+   * context, determine whether or not the attribute should be part of the
+   * digest being computed.
+   */
+  export type AttributeFilter = (
+    attribute: Attribute,
+    owner: Element,
+    context: Node
+  ) => boolean;
 }

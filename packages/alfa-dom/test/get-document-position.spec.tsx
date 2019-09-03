@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { getDocumentPosition } from "../src/get-document-position";
 
 test("Returns 3 when element has position 3 with naive traversal", t => {

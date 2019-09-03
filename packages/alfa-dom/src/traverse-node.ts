@@ -3,21 +3,9 @@ import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { Node } from "./types";
 
-const Skip = Symbol("Skip");
-type Skip = typeof Skip;
-
-const Exit = Symbol("Exit");
-type Exit = typeof Exit;
-
-export type NodeVisitor = (
-  node: Node,
-  parentNode: Node | null,
-  commands: Readonly<{ skip: Skip; exit: Exit }>
-) => Skip | Exit | void;
-
-const commands: Readonly<{ skip: Skip; exit: Exit }> = {
-  skip: Skip,
-  exit: Exit
+const commands: traverseNode.Commands = {
+  skip: traverseNode.Command.Skip,
+  exit: traverseNode.Command.Exit
 };
 
 /**
@@ -32,8 +20,8 @@ const commands: Readonly<{ skip: Skip; exit: Exit }> = {
 export function traverseNode(
   node: Node,
   context: Node,
-  visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  visitors: traverseNode.Visitors,
+  options: traverseNode.Options = {}
 ): boolean {
   let parentNode: Node | null = null;
 
@@ -44,12 +32,41 @@ export function traverseNode(
   return visitNode(node, parentNode, context, visitors, options);
 }
 
+export namespace traverseNode {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+    readonly nested?: boolean;
+  }
+
+  export const enum Command {
+    Skip,
+    Exit
+  }
+
+  export interface Commands {
+    readonly skip: Command.Skip;
+    readonly exit: Command.Exit;
+  }
+
+  export type Visitor = (
+    node: Node,
+    parentNode: Node | null,
+    commands: Commands
+  ) => Command | void;
+
+  export interface Visitors {
+    readonly enter?: Visitor;
+    readonly exit?: Visitor;
+  }
+}
+
 function visitNode(
   node: Node,
   parentNode: Node | null,
   context: Node,
-  visitors: Readonly<{ enter?: NodeVisitor; exit?: NodeVisitor }>,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }>
+  visitors: traverseNode.Visitors,
+  options: traverseNode.Options
 ): boolean {
   if (options.flattened === true) {
     if (isElement(node) && node.localName === "slot") {
@@ -70,11 +87,11 @@ function visitNode(
   if (enter !== undefined) {
     const status = enter(node, parentNode, commands);
 
-    if (status === Exit) {
+    if (status === traverseNode.Command.Exit) {
       return false;
     }
 
-    if (status === Skip) {
+    if (status === traverseNode.Command.Skip) {
       return true;
     }
   }
@@ -91,7 +108,10 @@ function visitNode(
         }
       }
 
-      if (exit !== undefined && exit(node, parentNode, commands) === Exit) {
+      if (
+        exit !== undefined &&
+        exit(node, parentNode, commands) === traverseNode.Command.Exit
+      ) {
         return false;
       }
 
@@ -108,6 +128,16 @@ function visitNode(
     }
   }
 
+  const contentDocument = isElement(node) ? node.contentDocument : null;
+
+  if (contentDocument !== null && contentDocument !== undefined) {
+    if (options.nested === true) {
+      if (!visitNode(contentDocument, null, context, visitors, options)) {
+        return false;
+      }
+    }
+  }
+
   const { childNodes } = node;
 
   for (let i = 0, n = childNodes.length; i < n; i++) {
@@ -116,7 +146,10 @@ function visitNode(
     }
   }
 
-  if (exit !== undefined && exit(node, parentNode, commands) === Exit) {
+  if (
+    exit !== undefined &&
+    exit(node, parentNode, commands) === traverseNode.Command.Exit
+  ) {
     return false;
   }
 

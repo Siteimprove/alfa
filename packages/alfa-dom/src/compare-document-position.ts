@@ -50,7 +50,7 @@ export function compareDocumentPosition(
   reference: Node,
   other: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: compareDocumentPosition.Options = {}
 ): number {
   if (reference === other) {
     return 0;
@@ -131,10 +131,17 @@ export function compareDocumentPosition(
   return 0;
 }
 
+export namespace compareDocumentPosition {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
+}
+
 function getPathFromRoot(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: compareDocumentPosition.Options
 ): Array<Node> {
   const pathFromRoot: Array<Node> = [];
 

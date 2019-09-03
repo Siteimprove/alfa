@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { getParentElement } from "../src/get-parent-element";
 import { Document } from "../src/types";
 

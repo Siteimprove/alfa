@@ -211,3 +211,31 @@ test("Constructs and attaches shadow roots from <shadow> elements", t => {
     childNodes: []
   });
 });
+
+test("Constructs and attaches content documents from <content> elements", t => {
+  const iframe = (
+    <iframe>
+      <content>I'm in an iframe!</content>
+    </iframe>
+  );
+
+  const text = {
+    nodeType: 3,
+    data: "I'm in an iframe!",
+    childNodes: []
+  };
+
+  t.deepEqual(iframe, {
+    nodeType: 1,
+    prefix: null,
+    localName: "iframe",
+    attributes: [],
+    shadowRoot: null,
+    childNodes: [],
+    contentDocument: {
+      nodeType: 9,
+      childNodes: [text],
+      styleSheets: []
+    }
+  });
+});

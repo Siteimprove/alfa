@@ -4,7 +4,8 @@ import {
   isDocument,
   isElement,
   isText,
-  Node
+  Node,
+  traverseNode
 } from "@siteimprove/alfa-dom";
 import { ExpressionBuilder } from "./builder";
 import { coerceItems } from "./coerce";
@@ -19,16 +20,11 @@ import { getTree, Tree, walkTree } from "./tree";
 import * as t from "./types";
 import { Expression, Item, Type, Value } from "./types";
 
-export interface EvaluateOptions {
-  readonly composed?: boolean;
-  readonly flattened?: boolean;
-}
-
 export function* evaluate(
   scope: Node,
   context: Node,
   expression: string | Expression | ExpressionBuilder,
-  options: EvaluateOptions = {}
+  options: evaluate.Options = {}
 ): Iterable<Node> {
   if (typeof expression === "string") {
     const parsed = parse(expression);
@@ -44,7 +40,7 @@ export function* evaluate(
     expression = expression.expression;
   }
 
-  const tree = getTree(scope, context);
+  const tree = getTree(scope, context, options);
 
   if (tree === null) {
     return;
@@ -68,10 +64,14 @@ export function* evaluate(
   }
 }
 
+export namespace evaluate {
+  export type Options = traverseNode.Options;
+}
+
 function* evaluateExpression<T extends Item.Value>(
   expression: Expression,
   environment: Environment<T>,
-  options: EvaluateOptions
+  options: evaluate.Options
 ): Iterable<Item> {
   if (g.isPathExpression(expression)) {
     yield* evaluatePathExpression(expression, environment, options);
@@ -89,7 +89,7 @@ function* evaluateExpression<T extends Item.Value>(
 function* evaluatePathExpression<T extends Item.Value>(
   expression: t.PathExpression,
   environment: Environment<T>,
-  options: EvaluateOptions
+  options: evaluate.Options
 ): Iterable<Item> {
   const result: Array<Item> = [];
 
@@ -141,7 +141,7 @@ function* evaluatePathExpression<T extends Item.Value>(
 function* evaluateAxisExpression<T extends Item.Value>(
   expression: t.AxisExpression,
   environment: Environment<T>,
-  options: EvaluateOptions
+  options: evaluate.Options
 ): Iterable<Item> {
   const focus: Item = environment.focus;
 
@@ -243,7 +243,7 @@ function* evaluateAxisExpression<T extends Item.Value>(
 function* evaluateFunctionCallExpression<T extends Item.Value>(
   expression: t.FunctionCallExpression,
   environment: Environment<T>,
-  options: EvaluateOptions
+  options: evaluate.Options
 ): Iterable<Item> {
   const { prefix, name, arity } = expression;
 
@@ -313,7 +313,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
 function* evaluateLiteralExpression<T extends Item.Value>(
   expression: t.LiteralExpression,
   environment: Environment<T>,
-  options: EvaluateOptions
+  options: evaluate.Options
 ): Iterable<Item> {
   if (g.isIntegerLiteralExpression(expression)) {
     yield { type: integer(), value: expression.value };
@@ -323,7 +323,7 @@ function* evaluateLiteralExpression<T extends Item.Value>(
 function evaluatePredicate<T extends Item.Value>(
   expression: t.Expression,
   environment: Environment<T>,
-  options: EvaluateOptions
+  options: evaluate.Options
 ): boolean {
   const result = [...evaluateExpression(expression, environment, options)];
 
@@ -353,7 +353,7 @@ function evaluatePredicate<T extends Item.Value>(
 function* evaluateContextItemExpression<T extends Item.Value>(
   expression: t.ContextItemExpression,
   environment: Environment<T>,
-  options: EvaluateOptions
+  options: evaluate.Options
 ): Iterable<Item> {
   const { type, value } = environment.focus;
   yield { type, value };

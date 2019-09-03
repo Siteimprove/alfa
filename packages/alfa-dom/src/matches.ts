@@ -29,64 +29,6 @@ import { Element, Namespace, Node } from "./types";
 
 const { isArray } = Array;
 
-export type MatchesOptions = Readonly<{
-  composed?: boolean;
-  flattened?: boolean;
-
-  /**
-   * @see https://www.w3.org/TR/selectors/#scope-element
-   * @internal
-   */
-  scope?: Element;
-
-  /**
-   * @see https://drafts.csswg.org/css-scoping/#tree-context
-   * @internal
-   */
-  treeContext?: Node;
-
-  /**
-   * @see https://www.w3.org/TR/selectors/#the-hover-pseudo
-   * @internal
-   */
-  hover?: Element | boolean;
-
-  /**
-   * @see https://www.w3.org/TR/selectors/#the-active-pseudo
-   * @internal
-   */
-  active?: Element | boolean;
-
-  /**
-   * @see https://www.w3.org/TR/selectors/#the-focus-pseudo
-   * @internal
-   */
-  focus?: Element | boolean;
-
-  /**
-   * Whether or not to perform selector matching against pseudo-elements.
-   *
-   * @see https://www.w3.org/TR/selectors/#pseudo-elements
-   * @internal
-   */
-  pseudo?: boolean;
-
-  /**
-   * Ancestor filter used for fast-rejecting elements during selector matching.
-   *
-   * @internal
-   */
-  filter?: AncestorFilter;
-
-  /**
-   * Declared prefixes mapped to namespace URI.
-   *
-   * @see https://www.w3.org/TR/selectors/#type-nmsp
-   * @internal
-   */
-  namespaces?: Map<string | null, Namespace>;
-}>;
-
 /**
  * Given an element and a context, check if the element matches the given
  * selector within the context.
@@ -97,7 +39,7 @@ export function matches(
   element: Element,
   context: Node,
   selector: string | Selector | Array<Selector>,
-  options?: MatchesOptions
+  options?: matches.Options
 ): boolean;
 
 /**
@@ -107,7 +49,7 @@ export function matches(
   element: Element,
   context: Node,
   selector: string | Selector | Array<Selector>,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean;
 
@@ -115,7 +57,7 @@ export function matches(
   element: Element,
   context: Node,
   selector: string | Selector | Array<Selector>,
-  options: MatchesOptions = {},
+  options: matches.Options = {},
   root: Selector | null = null
 ): boolean {
   if (typeof selector === "string") {
@@ -169,6 +111,66 @@ export function matches(
   return false;
 }
 
+export namespace matches {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+
+    /**
+     * @see https://www.w3.org/TR/selectors/#scope-element
+     * @internal
+     */
+    readonly scope?: Element;
+
+    /**
+     * @see https://drafts.csswg.org/css-scoping/#tree-context
+     * @internal
+     */
+    readonly treeContext?: Node;
+
+    /**
+     * @see https://www.w3.org/TR/selectors/#the-hover-pseudo
+     * @internal
+     */
+    readonly hover?: Element | boolean;
+
+    /**
+     * @see https://www.w3.org/TR/selectors/#the-active-pseudo
+     * @internal
+     */
+    readonly active?: Element | boolean;
+
+    /**
+     * @see https://www.w3.org/TR/selectors/#the-focus-pseudo
+     * @internal
+     */
+    readonly focus?: Element | boolean;
+
+    /**
+     * Whether or not to perform selector matching against pseudo-elements.
+     *
+     * @see https://www.w3.org/TR/selectors/#pseudo-elements
+     * @internal
+     */
+    readonly pseudo?: boolean;
+
+    /**
+     * Ancestor filter used for fast-rejecting elements during selector matching.
+     *
+     * @internal
+     */
+    readonly filter?: AncestorFilter;
+
+    /**
+     * Declared prefixes mapped to namespace URI.
+     *
+     * @see https://www.w3.org/TR/selectors/#type-nmsp
+     * @internal
+     */
+    readonly namespaces?: Map<string | null, Namespace>;
+  }
+}
+
 /**
  * @see https://www.w3.org/TR/selectors/#selector-list
  */
@@ -176,7 +178,7 @@ function matchesList(
   element: Element,
   context: Node,
   selectors: Array<Selector>,
-  options: MatchesOptions
+  options: matches.Options
 ): boolean {
   for (let i = 0, n = selectors.length; i < n; i++) {
     const root = selectors[i];
@@ -193,7 +195,7 @@ function matchesDefaultNamespace(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions
+  options: matches.Options
 ): boolean {
   switch (selector.type) {
     // Type and attribute selector matching handles namespace checking on its
@@ -243,7 +245,7 @@ function matchesType(
   element: Element,
   context: Node,
   selector: TypeSelector,
-  options: MatchesOptions
+  options: matches.Options
 ): boolean {
   // https://www.w3.org/TR/selectors/#the-universal-selector
   if (selector.name === "*") {
@@ -264,7 +266,7 @@ function matchesElementNamespace(
   element: Element,
   context: Node,
   selector: TypeSelector,
-  options: MatchesOptions
+  options: matches.Options
 ): boolean {
   if (selector.namespace === "*") {
     return true;
@@ -300,7 +302,7 @@ function matchesAttribute(
   element: Element,
   context: Node,
   selector: AttributeSelector,
-  options: MatchesOptions
+  options: matches.Options
 ): boolean {
   if (!matchesAttributeNamespace(element, context, selector, options)) {
     return false;
@@ -404,7 +406,7 @@ function matchesAttributeNamespace(
   element: Element,
   context: Node,
   selector: AttributeSelector,
-  options: MatchesOptions
+  options: matches.Options
 ): boolean {
   if (selector.namespace === null || selector.namespace === "*") {
     return true;
@@ -447,7 +449,7 @@ function matchesCompound(
   element: Element,
   context: Node,
   selector: CompoundSelector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   if (!matches(element, context, selector.left, options, root)) {
@@ -464,7 +466,7 @@ function matchesRelative(
   element: Element,
   context: Node,
   selector: RelativeSelector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   // Before any other work is done, check if the left part of the selector can
@@ -529,7 +531,7 @@ function matchesDescendant(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   let parentElement = getParentElement(element, context, options);
@@ -552,7 +554,7 @@ function matchesDirectDescendant(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   const parentElement = getParentElement(element, context, options);
@@ -571,7 +573,7 @@ function matchesSibling(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   let previousElementSibling = getPreviousElementSibling(
@@ -602,7 +604,7 @@ function matchesDirectSibling(
   element: Element,
   context: Node,
   selector: Selector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   const previousElementSibling = getPreviousElementSibling(
@@ -625,7 +627,7 @@ function matchesPseudoClass(
   element: Element,
   context: Node,
   selector: PseudoClassSelector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   switch (selector.name) {
@@ -742,7 +744,7 @@ function matchesPseudoElement(
   element: Element,
   context: Node,
   selector: PseudoElementSelector,
-  options: MatchesOptions,
+  options: matches.Options,
   root: Selector
 ): boolean {
   return options.pseudo === true;

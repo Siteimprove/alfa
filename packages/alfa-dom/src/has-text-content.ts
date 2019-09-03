@@ -13,7 +13,7 @@ import { Node } from "./types";
 export function hasTextContent(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: hasTextContent.Options = {}
 ): boolean {
   let text = false;
 
@@ -32,4 +32,11 @@ export function hasTextContent(
   );
 
   return text;
+}
+
+export namespace hasTextContent {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

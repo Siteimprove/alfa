@@ -14,7 +14,7 @@ import { Namespace, Node } from "./types";
 export function serialize(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: serialize.Options = {}
 ): string {
   let result = "";
 
@@ -145,6 +145,13 @@ export function serialize(
   );
 
   return result;
+}
+
+export namespace serialize {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }
 
 /**

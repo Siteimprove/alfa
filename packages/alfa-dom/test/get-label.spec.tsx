@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { getLabel } from "../src/get-label";
 
 test("Returns the label of a labelable element", t => {

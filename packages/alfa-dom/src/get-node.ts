@@ -18,7 +18,7 @@ const composedNodeLists: WeakMap<Node, NodeList> = new WeakMap();
 export function getNode(
   context: Node,
   documentPosition: number,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getNode.Options = {}
 ): Node | null {
   let nodeLists = normalNodeLists;
 
@@ -52,4 +52,11 @@ export function getNode(
   }
 
   return nodeList[documentPosition];
+}
+
+export namespace getNode {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

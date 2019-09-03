@@ -15,7 +15,7 @@ import { Node } from "./types";
 export function getTextContent(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getTextContent.Options = {}
 ): string {
   let text = "";
 
@@ -33,4 +33,11 @@ export function getTextContent(
   );
 
   return text;
+}
+
+export namespace getTextContent {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

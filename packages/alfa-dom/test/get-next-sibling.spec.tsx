@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { getNextSibling } from "../src/get-next-sibling";
 
 test("Returns null when no next sibling exists", t => {

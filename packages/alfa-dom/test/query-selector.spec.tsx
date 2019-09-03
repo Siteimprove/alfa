@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { querySelector, querySelectorAll } from "../src/query-selector";
 
 test("Finds all elements matching a selector", t => {

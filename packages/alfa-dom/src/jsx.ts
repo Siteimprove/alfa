@@ -1,4 +1,4 @@
-import { Attribute, Element, ShadowRoot, Text } from "./types";
+import { Attribute, Document, Element, ShadowRoot, Text } from "./types";
 import * as t from "./types";
 
 const { keys } = Object;
@@ -18,21 +18,35 @@ export function jsx(
 
   let shadowRoot: ShadowRoot | null = null;
 
+  let contentDocument: Document | null | undefined =
+    type === "iframe" || type === "frame" || type === "object"
+      ? null
+      : undefined;
+
   for (let i = 0, n = children.length; i < n; i++) {
     const child = children[i];
 
     if (typeof child === "string") {
       childNodes.push({ nodeType: 3, childNodes: [], data: child });
     } else {
-      // We use the first <shadow> element as a mount point for a shadow root.
-      // Since the <shadow> is now obsolete and therefore isn't needed for
-      // anything else we can safely make use of it for this purpose.
+      // We use the first <shadow> and <content> elements as a mount points for
+      // shadow roots and nested content documents, respectively.  Since both
+      // the <shadow> and <content> elements are now obsolete and therefore
+      // aren't needed for anything else we can safely make use of them for this
+      // purpose.
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/shadow
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/content
       if (shadowRoot === null && child.localName === "shadow") {
         shadowRoot = {
           nodeType: 11,
           mode: "open",
           childNodes: child.childNodes
+        };
+      } else if (contentDocument === null && child.localName === "content") {
+        contentDocument = {
+          nodeType: 9,
+          childNodes: child.childNodes,
+          styleSheets: []
         };
       } else {
         childNodes.push(child);
@@ -65,7 +79,8 @@ export function jsx(
     localName: type,
     attributes,
     shadowRoot,
-    childNodes
+    childNodes,
+    ...(contentDocument === undefined ? null : { contentDocument })
   };
 }
 

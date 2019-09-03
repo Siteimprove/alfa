@@ -4,14 +4,9 @@ import { isElement } from "./guards";
 import { matches } from "./matches";
 import { Element, Node } from "./types";
 
-export type GetClosestResult<T extends Node, Q> = Q extends string
-  ? Element
-  : T;
-
 /**
  * Given a node and a context, get the closest parent (or the node itself) that
- * matches the given selector or predicate. If no match is found then `null` is
- * returned.
+ * matches the given selector. If no match is found then `null` is returned.
  *
  * @see https://dom.spec.whatwg.org/#dom-element-closest
  *
@@ -23,6 +18,19 @@ export type GetClosestResult<T extends Node, Q> = Q extends string
  *   ".foo"
  * );
  * // => <div class="foo">...</div>
+ */
+export function getClosest(
+  scope: Node,
+  context: Node,
+  selector: string,
+  options?: getClosest.Options
+): Element | null;
+
+/**
+ * Given a node and a context, get the closest parent (or the node itself) that
+ * matches the given predicate. If no match is found then `null` is returned.
+ *
+ * @see https://dom.spec.whatwg.org/#dom-element-closest
  *
  * @example
  * const span = <span />;
@@ -33,15 +41,19 @@ export type GetClosestResult<T extends Node, Q> = Q extends string
  * );
  * // => <div class="bar">...</div>
  */
-export function getClosest<
-  T extends Node,
-  Q extends string | Predicate<Node, T>
->(
+export function getClosest<T extends Node>(
   scope: Node,
   context: Node,
-  query: Q,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
-): GetClosestResult<T, Q> | null {
+  predicate: Predicate<Node, T>,
+  options?: getClosest.Options
+): T | null;
+
+export function getClosest<T extends Node>(
+  scope: Node,
+  context: Node,
+  query: string | Predicate<Node, T>,
+  options: getClosest.Options = {}
+): T | null {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
@@ -52,7 +64,7 @@ export function getClosest<
     predicate = node =>
       isElement(node) && matches(node, context, query, matchesOptions);
   } else {
-    predicate = query as Predicate<Node, T>;
+    predicate = query;
   }
 
   for (
@@ -61,9 +73,16 @@ export function getClosest<
     next = getParentNode(next, context, options)
   ) {
     if (predicate(next)) {
-      return next as GetClosestResult<T, Q>;
+      return next;
     }
   }
 
   return null;
+}
+
+export namespace getClosest {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

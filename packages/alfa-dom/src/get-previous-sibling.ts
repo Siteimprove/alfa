@@ -11,7 +11,7 @@ import { Node } from "./types";
 export function getPreviousSibling<T extends Node>(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getPreviousSibling.Options = {}
 ): Node | null {
   const parentNode = getParentNode(node, context, options);
 
@@ -28,4 +28,8 @@ export function getPreviousSibling<T extends Node>(
   }
 
   return null;
+}
+
+export namespace getPreviousSibling {
+  export type Options = getParentNode.Options;
 }

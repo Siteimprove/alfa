@@ -88,7 +88,7 @@ export function* walkTree(tree: Tree, axis: Axis): Iterable<Tree> {
 export function getTree<T extends Node>(
   scope: T,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getTree.Options = {}
 ): Tree<T> | null {
   let entry: Tree | null = null;
 
@@ -151,6 +151,13 @@ export function getTree<T extends Node>(
   );
 
   return entry;
+}
+
+/**
+ * @internal
+ */
+export namespace getTree {
+  export type Options = traverseNode.Options;
 }
 
 function last<T>(array: Array<T>): T | null {

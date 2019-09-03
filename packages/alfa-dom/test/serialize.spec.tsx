@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { serialize } from "../src/serialize";
 
 test("Serializes DOM nodes to HTML", t => {

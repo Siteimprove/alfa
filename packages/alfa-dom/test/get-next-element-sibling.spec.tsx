@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { getNextElementSibling } from "../src/get-next-element-sibling";
 
 test("Return next sibling that is an element", t => {

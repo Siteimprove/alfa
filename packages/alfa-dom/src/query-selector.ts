@@ -4,11 +4,6 @@ import { matches } from "./matches";
 import { traverseNode } from "./traverse-node";
 import { Element, Node } from "./types";
 
-export type QuerySelectorOptions = Readonly<{
-  composed?: boolean;
-  flattened?: boolean;
-}>;
-
 /**
  * Given a scope and a context, get the first node within the scope that matches
  * the given selector within the context. If no node is found that matches the
@@ -20,7 +15,7 @@ export function querySelector(
   scope: Node,
   context: Node,
   selector: string,
-  options?: QuerySelectorOptions
+  options?: querySelector.Options
 ): Element | null;
 
 /**
@@ -34,14 +29,14 @@ export function querySelector<T extends Node>(
   scope: Node,
   context: Node,
   predicate: Predicate<Node, T>,
-  options?: QuerySelectorOptions
+  options?: querySelector.Options
 ): T | null;
 
 export function querySelector<T extends Node>(
   scope: Node,
   context: Node,
   query: string | Predicate<Node, T>,
-  options: QuerySelectorOptions = {}
+  options: querySelector.Options = {}
 ): T | null {
   let predicate: Predicate<Node, T>;
 
@@ -75,6 +70,10 @@ export function querySelector<T extends Node>(
   return found;
 }
 
+export namespace querySelector {
+  export type Options = traverseNode.Options;
+}
+
 /**
  * Given a scope and a context, get all nodes within the scope that match the
  * given selector within the context. If no nodes are found that match the
@@ -86,7 +85,7 @@ export function querySelectorAll(
   scope: Node,
   context: Node,
   selector: string,
-  options?: QuerySelectorOptions
+  options?: querySelectorAll.Options
 ): Iterable<Element>;
 
 /**
@@ -100,14 +99,14 @@ export function querySelectorAll<T extends Node>(
   scope: Node,
   context: Node,
   predicate: Predicate<Node, T>,
-  options?: QuerySelectorOptions
+  options?: querySelectorAll.Options
 ): Iterable<T>;
 
 export function querySelectorAll<T extends Node>(
   scope: Node,
   context: Node,
   query: string | Predicate<Node, T>,
-  options: QuerySelectorOptions = {}
+  options: querySelectorAll.Options = {}
 ): Iterable<T> {
   let predicate: Predicate<Node, T>;
 
@@ -138,4 +137,8 @@ export function querySelectorAll<T extends Node>(
   );
 
   return found;
+}
+
+export namespace querySelectorAll {
+  export type Options = traverseNode.Options;
 }

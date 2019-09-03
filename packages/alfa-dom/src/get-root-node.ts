@@ -18,7 +18,7 @@ const composedRootMaps: WeakMap<Node, RootMap> = new WeakMap();
 export function getRootNode(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getRootNode.Options = {}
 ): Node {
   let rootMaps = normalRootMaps;
 
@@ -47,11 +47,18 @@ export function getRootNode(
   return rootNode;
 }
 
+export namespace getRootNode {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
+}
+
 function collectRootNodes(
   root: Node,
   context: Node,
   rootMap: RootMap,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }>
+  options: getRootNode.Options
 ) {
   traverseNode(
     root,
@@ -72,6 +79,6 @@ function collectRootNodes(
         }
       }
     },
-    options
+    { ...options, nested: true }
   );
 }

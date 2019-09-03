@@ -23,7 +23,7 @@ const composedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
 export function getParentNode(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getParentNode.Options = {}
 ): Node | null {
   let parentMaps = composedParentMaps;
 
@@ -48,7 +48,8 @@ export function getParentNode(
       },
       {
         composed: options.flattened !== true,
-        flattened: options.flattened
+        flattened: options.flattened,
+        nested: true
       }
     );
 
@@ -70,4 +71,11 @@ export function getParentNode(
   }
 
   return parentNode;
+}
+
+export namespace getParentNode {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

@@ -11,7 +11,7 @@ import { Node } from "./types";
 export function getChildNodes(
   node: Node,
   context: Node,
-  options: Readonly<{ composed?: boolean; flattened?: boolean }> = {}
+  options: getChildNodes.Options = {}
 ): ReadonlyArray<Node> {
   const result: Array<Node> = [];
 
@@ -54,4 +54,11 @@ export function getChildNodes(
   }
 
   return result;
+}
+
+export namespace getChildNodes {
+  export interface Options {
+    readonly composed?: boolean;
+    readonly flattened?: boolean;
+  }
 }

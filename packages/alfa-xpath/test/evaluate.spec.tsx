@@ -1,7 +1,7 @@
 import { Node } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Assertions, test } from "@siteimprove/alfa-test";
-import { evaluate, EvaluateOptions } from "../src/evaluate";
+import { evaluate } from "../src/evaluate";
 
 function nodes(
   t: Assertions,
@@ -9,7 +9,7 @@ function nodes(
   context: Node,
   expression: string,
   expected: Array<Node>,
-  options?: EvaluateOptions
+  options?: evaluate.Options
 ) {
   const result = evaluate(scope, context, expression, options);
 

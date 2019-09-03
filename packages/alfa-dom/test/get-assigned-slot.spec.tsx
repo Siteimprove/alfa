@@ -1,5 +1,5 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import { getAssignedSlot } from "../src/get-assigned-slot";
 
 test("Gets the assigned slot of an element", t => {

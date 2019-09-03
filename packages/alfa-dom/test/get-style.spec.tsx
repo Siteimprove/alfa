@@ -1,7 +1,7 @@
 import { Values } from "@siteimprove/alfa-css";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+import { jsx } from "../jsx";
 import {
   getCascadedStyle,
   getComputedStyle,
