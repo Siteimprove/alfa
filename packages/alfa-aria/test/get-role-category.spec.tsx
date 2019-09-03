@@ -1,5 +1,5 @@
 import { getDefaultDevice } from "@siteimprove/alfa-device";
-import { jsx } from "@siteimprove/alfa-jsx";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getRoleCategory } from "../src/get-role-category";
 import { Category } from "../src/types";

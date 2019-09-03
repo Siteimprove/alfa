@@ -1,5 +1,5 @@
 import { getDefaultDevice } from "@siteimprove/alfa-device";
-import { jsx } from "@siteimprove/alfa-jsx";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { Section } from "../../../src/features/html/section";
 import * as Roles from "../../../src/roles";

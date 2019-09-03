@@ -1,5 +1,5 @@
 import { getDefaultDevice } from "@siteimprove/alfa-device";
-import { jsx } from "@siteimprove/alfa-jsx";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { isTabbable } from "../src/is-tabbable";
 

@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "files": [
+    "jsx.ts",
     "src/ancestor-filter.ts",
     "src/clone.ts",
     "src/compare-document-position.ts",
@@ -52,6 +53,7 @@
     "src/is-rendered.ts",
     "src/is-tabbable.ts",
     "src/is-visible.ts",
+    "src/jsx.ts",
     "src/matches.ts",
     "src/query-selector.ts",
     "src/rule-tree.ts",
@@ -98,6 +100,7 @@
     "test/is-rendered.spec.tsx",
     "test/is-tabbable.spec.tsx",
     "test/is-visible.spec.tsx",
+    "test/jsx.spec.tsx",
     "test/matches.spec.tsx",
     "test/query-selector.spec.tsx",
     "test/serialize.spec.tsx",
@@ -112,9 +115,6 @@
     },
     {
       "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-jsx"
     },
     {
       "path": "../alfa-lang"

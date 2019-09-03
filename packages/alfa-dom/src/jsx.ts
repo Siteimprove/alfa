@@ -1,5 +1,5 @@
 import { Attribute, Element, ShadowRoot, Text } from "./types";
-import * as Types from "./types";
+import * as t from "./types";
 
 const { keys } = Object;
 
@@ -25,7 +25,7 @@ export function jsx(
       childNodes.push({ nodeType: 3, childNodes: [], data: child });
     } else {
       // We use the first <shadow> element as a mount point for a shadow root.
-      // Since the <shadow> is now obsolete and therefore isn'be needed for
+      // Since the <shadow> is now obsolete and therefore isn't needed for
       // anything else we can safely make use of it for this purpose.
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/shadow
       if (shadowRoot === null && child.localName === "shadow") {
@@ -85,7 +85,7 @@ export namespace jsx {
           }>;
     }
 
-    export import Element = Types.Element;
+    export import Element = t.Element;
   }
 }
 

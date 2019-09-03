@@ -1,5 +1,5 @@
 import { Node } from "@siteimprove/alfa-dom";
-import { jsx } from "@siteimprove/alfa-jsx";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { evaluate, EvaluateOptions } from "../src/evaluate";
 

@@ -1,4 +1,4 @@
-import { jsx } from "@siteimprove/alfa-jsx";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { getAttribute } from "../src/get-attribute";
 import { Namespace } from "../src/types";

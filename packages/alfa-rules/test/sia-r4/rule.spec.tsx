@@ -1,5 +1,5 @@
 import { Outcome } from "@siteimprove/alfa-act";
-import { jsx } from "@siteimprove/alfa-jsx";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { SIA_R4 } from "../../src/sia-r4/rule";
