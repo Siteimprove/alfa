@@ -77,8 +77,14 @@ function collectRootNodes(
             collectRootNodes(shadowRoot, context, rootMap, options);
           }
         }
+
+        const contentDocument = isElement(node) ? node.contentDocument : null;
+
+        if (contentDocument !== null && contentDocument !== undefined) {
+          collectRootNodes(contentDocument, context, rootMap, options);
+        }
       }
     },
-    { ...options, nested: true }
+    { ...options, nested: false }
   );
 }
