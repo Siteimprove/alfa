@@ -85,7 +85,7 @@ async function handler(args: Arguments<Audit.Options>): Promise<void> {
   const { results } = audit(aspects, rules);
 
   if (args.interactive) {
-    // Answers questions
+    // Answer questions
   }
 
   const output = await report(results, aspects, formatter(args.format));
