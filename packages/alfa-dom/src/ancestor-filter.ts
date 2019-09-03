@@ -96,10 +96,8 @@ export class AncestorFilter {
 
     fn(this.types, element.localName);
 
-    const classList = getClassList(element);
-
-    for (let i = 0, n = classList.length; i < n; i++) {
-      fn(this.classes, classList[i]);
+    for (const className of getClassList(element)) {
+      fn(this.classes, className);
     }
   }
 }

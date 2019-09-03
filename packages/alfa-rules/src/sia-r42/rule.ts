@@ -50,7 +50,7 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
                   return (
                     role !== null &&
                     role.context !== undefined &&
-                    role.context(element, document, device).length > 0
+                    [...role.context(element, document, device)].length > 0
                   );
                 });
               });

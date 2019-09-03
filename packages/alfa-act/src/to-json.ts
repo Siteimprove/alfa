@@ -257,9 +257,11 @@ function getPath(node: Node, context: Node): string {
       const tagName = getTagName(node, context);
 
       if (parentNode !== null) {
-        const childNodes = getChildNodes(parentNode, context, {
-          flattened: true
-        });
+        const childNodes = [
+          ...getChildNodes(parentNode, context, {
+            flattened: true
+          })
+        ];
 
         for (let i = 0, j = 1, n = childNodes.length; i < n; i++) {
           const childNode = childNodes[i];

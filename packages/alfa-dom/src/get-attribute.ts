@@ -1,11 +1,6 @@
 import { getAttributeNode } from "./get-attribute-node";
 import { Element, Namespace, Node } from "./types";
 
-export interface AttributeOptions {
-  readonly trim?: boolean;
-  readonly lowerCase?: boolean;
-}
-
 /**
  * @see https://www.w3.org/TR/dom/#dom-element-getattribute
  *
@@ -17,7 +12,7 @@ export interface AttributeOptions {
 export function getAttribute(
   element: Element,
   qualifiedName: string,
-  options?: AttributeOptions
+  options?: getAttribute.Options
 ): string | null;
 
 /**
@@ -28,7 +23,7 @@ export function getAttribute(
   context: Node,
   localName: string,
   namespace: Namespace | null,
-  options?: AttributeOptions
+  options?: getAttribute.Options
 ): string | null;
 
 export function getAttribute(
@@ -36,18 +31,18 @@ export function getAttribute(
   context: Node,
   localName: string,
   namespace: "*",
-  options?: AttributeOptions
+  options?: getAttribute.Options
 ): Array<string> | null;
 
 export function getAttribute(
   element: Element,
   context: Node | string,
-  name: string | AttributeOptions = {},
+  name: string | getAttribute.Options = {},
   namespace?: Namespace | "*" | null,
-  options: AttributeOptions = {}
+  options: getAttribute.Options = {}
 ): string | Array<string> | null {
   if (namespace === undefined) {
-    options = name as AttributeOptions;
+    options = name as getAttribute.Options;
     name = context as string;
   }
 
@@ -98,7 +93,14 @@ export function getAttribute(
   }
 }
 
-function applyOptions(value: string, options: AttributeOptions): string {
+export namespace getAttribute {
+  export interface Options {
+    readonly trim?: boolean;
+    readonly lowerCase?: boolean;
+  }
+}
+
+function applyOptions(value: string, options: getAttribute.Options): string {
   if (options.trim === true) {
     value = value.trim();
   }

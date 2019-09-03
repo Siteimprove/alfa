@@ -154,7 +154,8 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
 
           case "token":
             valid =
-              attribute.values!.find(found => found === value) !== undefined;
+              [...attribute.values!].find(found => found === value) !==
+              undefined;
             break;
 
           case "token-list":
@@ -163,7 +164,7 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                 .split(/\s+/)
                 .find(
                   found =>
-                    attribute.values!.find(value => value === found) ===
+                    [...attribute.values!].find(value => value === found) ===
                     undefined
                 ) === undefined;
             break;

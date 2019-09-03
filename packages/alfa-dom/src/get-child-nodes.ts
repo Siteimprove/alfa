@@ -12,7 +12,7 @@ export function getChildNodes(
   node: Node,
   context: Node,
   options: getChildNodes.Options = {}
-): ReadonlyArray<Node> {
+): Iterable<Node> {
   const result: Array<Node> = [];
 
   if (options.flattened === true) {
@@ -43,11 +43,7 @@ export function getChildNodes(
       isElement(childNode) &&
       childNode.localName === "slot"
     ) {
-      const childNodes = getAssignedNodes(childNode, context);
-
-      for (let i = 0, n = childNodes.length; i < n; i++) {
-        result.push(childNodes[i]);
-      }
+      result.push(...getAssignedNodes(childNode, context));
     } else {
       result.push(childNode);
     }

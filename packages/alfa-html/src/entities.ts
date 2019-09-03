@@ -1,10 +1,10 @@
 /**
  * @internal
  */
-export type Entity = Readonly<{
-  codepoints: Array<number>;
-  characters: string;
-}>;
+export interface Entity {
+  readonly codepoints: Iterable<number>;
+  readonly characters: string;
+}
 
 /**
  * @see https://www.w3.org/TR/html/entities.json

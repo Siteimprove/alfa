@@ -228,9 +228,7 @@ function getStyleEntry(
 
   const childNodes = getChildNodes(node, context, { flattened: true });
 
-  for (let i = 0, n = childNodes.length; i < n; i++) {
-    const childNode = childNodes[i];
-
+  for (const childNode of childNodes) {
     if (isElement(childNode)) {
       children.push(
         getStyleEntry(childNode, context, cascade, device, options)

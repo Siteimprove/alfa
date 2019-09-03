@@ -87,15 +87,15 @@ export namespace jsx {
     export interface IntrinsicElements {
       [tag: string]:
         | {}
-        | Readonly<{
-            [attribute: string]:
+        | {
+            readonly [attribute: string]:
               | string
               | number
               | boolean
               | object
               | null
               | undefined;
-          }>;
+          };
     }
 
     export import Element = t.Element;

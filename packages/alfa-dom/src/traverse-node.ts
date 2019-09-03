@@ -73,8 +73,8 @@ function visitNode(
     if (isElement(node) && node.localName === "slot") {
       const childNodes = getAssignedNodes(node, context);
 
-      for (let i = 0, n = childNodes.length; i < n; i++) {
-        if (!visitNode(childNodes[i], parentNode, context, visitors, options)) {
+      for (const childNode of childNodes) {
+        if (!visitNode(childNode, parentNode, context, visitors, options)) {
           return false;
         }
       }

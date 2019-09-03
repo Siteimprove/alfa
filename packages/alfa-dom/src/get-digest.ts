@@ -90,11 +90,10 @@ export function getDigest(
     }
   }
 
-  const childNodes = getChildNodes(node, context, options);
   const childDigests: Array<string> = [];
 
-  for (let i = 0, n = childNodes.length; i < n; i++) {
-    const childDigest = getDigest(childNodes[i], context, options);
+  for (const childNode of getChildNodes(node, context, options)) {
+    const childDigest = getDigest(childNode, context, options);
 
     if (childDigest !== null) {
       childDigests.push(childDigest);

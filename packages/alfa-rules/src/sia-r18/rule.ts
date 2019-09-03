@@ -65,7 +65,7 @@ export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
         const owner = getOwnerElement(target, document)!;
 
         const globalAttributeNames = new Set(
-          Roles.Roletype.supported!(owner, document, device).map(
+          [...Roles.Roletype.supported!(owner, document, device)].map(
             attribute => attribute.name
           )
         );

@@ -156,10 +156,7 @@ export namespace serialize {
 /**
  * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
  */
-function escape(
-  input: string,
-  options: Readonly<{ attributeMode?: boolean }> = {}
-): string {
+function escape(input: string, options: escape.Options = {}): string {
   input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");
 
   if (options.attributeMode === true) {
@@ -169,4 +166,10 @@ function escape(
   }
 
   return input;
+}
+
+export namespace escape {
+  export interface Options {
+    readonly attributeMode?: boolean;
+  }
 }

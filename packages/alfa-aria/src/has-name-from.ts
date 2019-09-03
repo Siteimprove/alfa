@@ -10,8 +10,8 @@ export function hasNameFrom(
     return false;
   }
 
-  for (let i = 0, n = label.from.length; i < n; i++) {
-    if (label.from[i] === nameFrom) {
+  for (const found of label.from) {
+    if (found === nameFrom) {
       return true;
     }
   }

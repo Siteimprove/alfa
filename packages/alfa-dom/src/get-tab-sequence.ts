@@ -13,7 +13,7 @@ export function getTabSequence(
   node: Node,
   context: Node,
   options: getTabSequence.Options = {}
-): ReadonlyArray<Element> {
+): Iterable<Element> {
   const result: Array<Element> = [];
 
   traverseNode(

@@ -10,7 +10,7 @@ const { keys } = Object;
  */
 export function expandVersions(
   browser: Exclude<BrowserQuery, BrowserName>,
-  options: Readonly<{ unsupported?: boolean }> = {}
+  options: expandVersions.Options = {}
 ): Set<Version> {
   const supported = getSupportedBrowsers();
   const name = browser[0];
@@ -105,4 +105,13 @@ export function expandVersions(
       }
     }
   });
+}
+
+/**
+ * @internal
+ */
+export namespace expandVersions {
+  export interface Options {
+    readonly unsupported?: boolean;
+  }
 }

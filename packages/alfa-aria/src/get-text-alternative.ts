@@ -33,14 +33,6 @@ const {
   Iterable: { reduce, map: mapIterable }
 } = BrowserSpecific;
 
-type TextAlternativeOptions = Readonly<{
-  recursing?: boolean;
-  referencing?: boolean;
-  revisiting?: boolean;
-  labelling?: boolean;
-  descending?: boolean;
-}>;
-
 /**
  * Get the computed accessible text alternative of an element.
  *
@@ -70,7 +62,7 @@ export function getTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options?: TextAlternativeOptions
+  options?: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>>;
 
 export function getTextAlternative(
@@ -78,7 +70,7 @@ export function getTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text> = new Set(),
-  options: TextAlternativeOptions = {}
+  options: getTextAlternative.Options = {}
 ): Option<string> | BrowserSpecific<Option<string>> {
   if (visited.has(node) && options.revisiting !== true) {
     return null;
@@ -206,6 +198,16 @@ export function getTextAlternative(
   );
 }
 
+namespace getTextAlternative {
+  export interface Options {
+    recursing?: boolean;
+    referencing?: boolean;
+    revisiting?: boolean;
+    labelling?: boolean;
+    descending?: boolean;
+  }
+}
+
 const whitespace = /\s+/g;
 
 /**
@@ -213,7 +215,7 @@ const whitespace = /\s+/g;
  *
  * @see https://www.w3.org/TR/accname/#terminology
  */
-function flatten(string: string, options: TextAlternativeOptions): string {
+function flatten(string: string, options: getTextAlternative.Options): string {
   return options.recursing === true
     ? string
     : string.replace(whitespace, " ").trim();
@@ -228,7 +230,7 @@ function getAriaLabelledbyTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>> {
   const labelledBy = getAttribute(element, "aria-labelledby");
 
@@ -272,7 +274,7 @@ function getAriaLabelTextAlternative(
   element: Element,
   context: Node,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>> {
   const label = getAttribute(element, "aria-label", { trim: true });
 
@@ -291,7 +293,7 @@ function getNativeTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>> {
   const namespace = getElementNamespace(element, context);
 
@@ -327,7 +329,7 @@ function getHtmlTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>> {
   const label = getLabel(element, context);
 
@@ -447,7 +449,7 @@ function getSvgTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>> {
   if (element.localName === "title") {
     return flatten(getTextContent(element, context), options);
@@ -482,7 +484,7 @@ function getEmbeddedControlTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>> {
   return map(getRole(element, context, device), role => {
     switch (role) {
@@ -529,7 +531,7 @@ function getSubtreeTextAlternative(
   context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> | BrowserSpecific<Option<string>> {
   const childNodes = getChildNodes(element, context, { flattened: true });
 
@@ -607,7 +609,7 @@ function getTooltipTextAlternative(
   element: Element,
   context: Node,
   visited: Set<Element | Text>,
-  options: TextAlternativeOptions
+  options: getTextAlternative.Options
 ): Option<string> {
   const title = getAttribute(element, "title");
 

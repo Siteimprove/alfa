@@ -41,7 +41,7 @@ export interface GroupPointer<R, P extends Pointer<R>> extends Pointer<R> {
   /**
    * The pointers belonging to the group.
    */
-  readonly pointers: ReadonlyArray<P>;
+  readonly pointers: Iterable<P>;
 }
 
 export interface NodePointer<R> extends Pointer<R> {

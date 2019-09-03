@@ -238,7 +238,7 @@ export function isUserAgentRule(rule: Rule): boolean {
 
 function cssRule(
   prelude: string,
-  style: Readonly<{ [P in PropertyName]?: string }> = {}
+  style: { readonly [P in PropertyName]?: string } = {}
 ): Rule {
   const parsed = parseRule(prelude);
 

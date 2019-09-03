@@ -27,15 +27,23 @@ import { Element, Node } from "./types";
 export function getAssignedNodes(
   element: Element,
   context: Node,
-  options: Readonly<{ flattened?: boolean }> = {}
-): ReadonlyArray<Node> {
+  options: getAssignedNodes.Options = {}
+): Iterable<Node> {
   if (element.localName !== "slot") {
     return [];
   }
 
-  return options.flattened === true
-    ? findFlattenedSlotables(element, context)
-    : findSlotables(element, context);
+  if (options.flattened === true) {
+    return findFlattenedSlotables(element, context);
+  }
+
+  return findSlotables(element, context);
+}
+
+export namespace getAssignedNodes {
+  export interface Options {
+    readonly flattened?: boolean;
+  }
 }
 
 /**

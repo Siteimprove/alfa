@@ -35,6 +35,7 @@ for (const feature of values(Features.SVG)) {
 }
 
 const featuresByNamespace = new Map<Namespace, Map<string, Feature>>();
+
 featuresByNamespace.set(Namespace.HTML, htmlFeaturesByElement);
 featuresByNamespace.set(Namespace.SVG, svgFeaturesByElement);
 
@@ -53,10 +54,7 @@ export function getRole(
   element: Element,
   context: Node,
   device: Device,
-  options: Readonly<{ explicit?: boolean; implicit?: boolean }> = {
-    explicit: true,
-    implicit: true
-  }
+  options: getRole.Options = { explicit: true, implicit: true }
 ): Option<Role> | BrowserSpecific<Option<Role>> {
   const value = getAttribute(element, "role", { trim: true });
 
@@ -86,10 +84,13 @@ export function getRole(
 
     if (options.implicit !== false) {
       const elementNamespace = getElementNamespace(element, context);
+
       if (elementNamespace === null) {
         return null;
       }
+
       const featuresByElement = featuresByNamespace.get(elementNamespace);
+
       const feature =
         featuresByElement === undefined
           ? undefined
@@ -109,4 +110,11 @@ export function getRole(
 
     return null;
   });
+}
+
+export namespace getRole {
+  export interface Options {
+    readonly explicit?: boolean;
+    readonly implicit?: boolean;
+  }
 }

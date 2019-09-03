@@ -22,9 +22,9 @@ export function outcome<A extends Aspect, T extends Target>(
         readonly [P in
           | Outcome.Passed
           | Outcome.Failed
-          | Outcome.CantTell]?: ReadonlyArray<T>;
+          | Outcome.CantTell]?: Iterable<T>;
       },
-  answers: ReadonlyArray<Answer<A, T>> = []
+  answers: Iterable<Answer<A, T>> = []
 ) {
   const outcomes: Array<Outcome.Passed | Outcome.Failed | Outcome.CantTell> = [
     Outcome.Passed,

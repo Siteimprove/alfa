@@ -167,10 +167,8 @@ export class SelectorMap {
 
     collectEntries(getEntries(this.types, element.localName));
 
-    const classList = getClassList(element);
-
-    for (let i = 0, n = classList.length; i < n; i++) {
-      collectEntries(getEntries(this.classes, classList[i]));
+    for (const className of getClassList(element)) {
+      collectEntries(getEntries(this.classes, className));
     }
 
     collectEntries(this.other);

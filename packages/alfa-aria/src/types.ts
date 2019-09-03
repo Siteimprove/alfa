@@ -63,12 +63,12 @@ export type ValueType =
 /**
  * @see https://www.w3.org/TR/wai-aria/#dfn-attribute
  */
-export type Attribute = Readonly<{
-  name: string;
-  type: ValueType;
-  values?: Array<string>;
-  deprecated?: true;
-}>;
+export interface Attribute {
+  readonly name: string;
+  readonly type: ValueType;
+  readonly values?: Iterable<string>;
+  readonly deprecated?: true;
+}
 
 export type Aspect<T> = (element: Element, context: Node, device: Device) => T;
 
@@ -115,48 +115,48 @@ export const enum Category {
 /**
  * @see https://www.w3.org/TR/wai-aria/#dfn-role
  */
-export type Role = Readonly<{
-  name: string;
-  category: Category | Aspect<Category>;
+export interface Role {
+  readonly name: string;
+  readonly category: Category | Aspect<Category>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#namecalculation
    */
-  label?: Readonly<{
-    from: Array<"contents" | "author">;
-    required?: true;
-  }>;
+  readonly label?: {
+    readonly from: Iterable<"contents" | "author">;
+    readonly required?: true;
+  };
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#superclassrole
    */
-  inherits?: Aspect<Array<Role>>;
+  readonly inherits?: Aspect<Iterable<Role>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#scope
    */
-  context?: Aspect<Array<Role>>;
+  readonly context?: Aspect<Iterable<Role>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#mustContain
    */
-  owned?: Aspect<Array<Role | [Role, Role]>>;
+  readonly owned?: Aspect<Iterable<Role | [Role, Role]>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#requiredState
    */
-  required?: Aspect<Array<Attribute>>;
+  readonly required?: Aspect<Iterable<Attribute>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#supportedState
    */
-  supported?: Aspect<Array<Attribute>>;
+  readonly supported?: Aspect<Iterable<Attribute>>;
 
   /**
    * @see https://www.w3.org/TR/wai-aria/#implictValueForRole
    */
-  implicits?: Aspect<Array<[Attribute, string]>>;
-}>;
+  readonly implicits?: Aspect<Iterable<[Attribute, string]>>;
+}
 
 /**
  * @internal
@@ -186,10 +186,10 @@ export const None: <T extends typeof Roles | typeof Attributes>(
 /**
  * @see https://www.w3.org/TR/html-aria/
  */
-export type Feature = Readonly<{
-  element: string;
-  role?: Aspect<Role | null>;
-  allowedRoles: Aspect<Array<Role>>;
-  allowedAttributes?: Aspect<Array<Attribute>>;
-  obsolete?: true;
-}>;
+export interface Feature {
+  readonly element: string;
+  readonly role?: Aspect<Role | null>;
+  readonly allowedRoles: Aspect<Iterable<Role>>;
+  readonly allowedAttributes?: Aspect<Iterable<Attribute>>;
+  readonly obsolete?: true;
+}

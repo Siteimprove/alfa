@@ -5,10 +5,10 @@ const { isArray } = Array;
 /**
  * @internal
  */
-export type GrammarEntry<T extends Token, R, S = null> = Readonly<{
-  production: Production<T, R, T, R, S>;
-  precedence: number;
-}>;
+export interface GrammarEntry<T extends Token, R, S = null> {
+  readonly production: Production<T, R, T, R, S>;
+  readonly precedence: number;
+}
 
 export class Grammar<T extends Token, R, S = null> {
   /**

@@ -624,12 +624,7 @@ export function expandValue(
 export function expandIdentifier(
   activeContext: Context,
   value: string | null,
-  options: Readonly<{
-    documentRelative?: boolean;
-    vocab?: boolean;
-    localContext?: Context | null;
-    defined?: Map<string, boolean> | null;
-  }> = {}
+  options: expandIdentifier.Options = {}
 ): string | null {
   const {
     // documentRelative = false,
@@ -705,4 +700,13 @@ export function expandIdentifier(
 
   // 7
   return value;
+}
+
+export namespace expandIdentifier {
+  export interface Options {
+    readonly documentRelative?: boolean;
+    readonly vocab?: boolean;
+    readonly localContext?: Context | null;
+    readonly defined?: Map<string, boolean> | null;
+  }
 }

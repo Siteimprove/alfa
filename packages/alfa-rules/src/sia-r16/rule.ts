@@ -84,17 +84,19 @@ function hasRequiredValues(
         ? []
         : role.implicits(element, context, device);
 
-    for (const attribute of role.required(element, context, device)) {
+    outer: for (const attribute of role.required(element, context, device)) {
       const value = getAttribute(element, attribute.name, {
         trim: true
       });
 
       if (value === null || value === "") {
-        if (
-          implicits.find(implicit => implicit[0] === attribute) === undefined
-        ) {
-          return false;
+        for (const [found] of implicits) {
+          if (found === attribute) {
+            continue outer;
+          }
         }
+
+        return false;
       }
     }
 

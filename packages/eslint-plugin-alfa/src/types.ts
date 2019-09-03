@@ -9,7 +9,7 @@ export interface JSXElement extends BaseNode {
   readonly type: "JSXElement";
   readonly openingElement: JSXOpeningElement;
   readonly closingElement: JSXClosingElement | null;
-  readonly children: ReadonlyArray<
+  readonly children: Iterable<
     JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
   >;
 }
@@ -20,7 +20,7 @@ export interface JSXElement extends BaseNode {
 export interface JSXOpeningElement extends BaseNode {
   readonly type: "JSXOpeningElement";
   readonly name: JSXIdentifier | JSXMemberExpression | JSXNamespacedName;
-  readonly attributes: ReadonlyArray<JSXAttribute | JSXSpreadAttribute>;
+  readonly attributes: Iterable<JSXAttribute | JSXSpreadAttribute>;
   readonly selfClosing: boolean;
 }
 
@@ -39,7 +39,7 @@ export interface JSXFragment extends BaseNode {
   readonly type: "JSXFragment";
   readonly openingElement: JSXOpeningFragment;
   readonly closingElement: JSXClosingFragment | null;
-  readonly children: ReadonlyArray<
+  readonly children: Iterable<
     JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
   >;
 }
