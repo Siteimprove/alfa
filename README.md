@@ -128,7 +128,7 @@ If you would like to contribute to Alfa, make sure to check out the [contributio
 
 ## Architecture
 
-At its core, Alfa is built around a tree structure that mirrors a subset of the [Document Object Model (DOM)](https://www.w3.org/TR/dom) and [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom/) interfaces. This tree structure can be created statically from an HTML document and associated CSS style sheets, or it can be extracted from within a browser to also provide executing of JavaScript. Anything else that a browser would typically provide, such as querying elements or computing styles, Alfa implements according to the corresponding W3C specifications.
+At its core, Alfa is built around a tree structure that mirrors a subset of the [Document Object Model (DOM)](https://dom.spec.whatwg.org/) and [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom/) interfaces. This tree structure can be created statically from an HTML document and associated CSS style sheets, or it can be extracted from within a browser to also provide executing of JavaScript. Anything else that a browser would typically provide, such as querying elements or computing styles, Alfa implements according to the corresponding specifications.
 
 By implementing browser aspects, such as a style system and the accessibility tree, directly within Alfa, we gain the ability to do some things that would otherwise not be possible had we relied on only the APIs provided by the browser. The most radical difference is perhaps the computation of CSS properties, where Alfa can follow declared CSS properties up through cascade, inheritance, and absolutisation.
 
@@ -136,7 +136,7 @@ At the code level, Alfa is structured as a monolithic repository consisting of s
 
 ## Funding
 
-[<img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" height="96" align="right" alt="European emblem">](https://ec.europa.eu/)
+[<img src="media/europe.svg" height="96" align="right" alt="European emblem">](https://ec.europa.eu/)
 
 Alfa is part of a project that has received funding from the European Union's [Horizon 2020 research and innovation programme](https://ec.europa.eu/programmes/horizon2020/) under [grant agreement Nº780057](https://cordis.europa.eu/project/rcn/213106_en.html). We would like to give thanks to the European Commission for their grant, as well as all European citizens, who have indirectly contributed to making Alfa possible. You rock! :raised_hands:
 
