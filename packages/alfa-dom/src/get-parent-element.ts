@@ -24,5 +24,7 @@ export function getParentElement(
 }
 
 export namespace getParentElement {
-  export type Options = getParentNode.Options;
+  export interface Options {
+    readonly flattened?: boolean;
+  }
 }
