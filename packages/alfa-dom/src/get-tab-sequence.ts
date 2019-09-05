@@ -1,5 +1,7 @@
+import { Device } from "@siteimprove/alfa-device";
 import { getTabIndex } from "./get-tab-index";
 import { isElement } from "./guards";
+import { isTabbable } from "./is-tabbable";
 import { traverseNode } from "./traverse-node";
 import { Element, Node } from "./types";
 
@@ -12,9 +14,9 @@ import { Element, Node } from "./types";
 export function getTabSequence(
   node: Node,
   context: Node,
-  options: getTabSequence.Options = {}
+  device: Device
 ): Iterable<Element> {
-  const result: Array<Element> = [];
+  const tabSequence: Array<Element> = [];
 
   traverseNode(
     node,
@@ -25,22 +27,33 @@ export function getTabSequence(
           const index = getTabIndex(node, context);
 
           if (index !== null && index >= 0) {
-            result.splice(indexWithin(result, node, context), 0, node);
+            tabSequence.splice(
+              indexWithin(tabSequence, node, context),
+              0,
+              node
+            );
           }
         }
       }
     },
-    options
+    { flattened: true }
   );
 
-  return result;
-}
+  for (let i = 0, n = tabSequence.length; i < n; i++) {
+    const { contentDocument } = tabSequence[i];
 
-export namespace getTabSequence {
-  export interface Options {
-    readonly composed?: boolean;
-    readonly flattened?: boolean;
+    if (contentDocument !== null && contentDocument !== undefined) {
+      const nestedTabSequence = getTabSequence(
+        contentDocument,
+        context,
+        device
+      );
+
+      tabSequence.splice(i, 1, ...nestedTabSequence);
+    }
   }
+
+  return tabSequence.filter(element => isTabbable(element, context, device));
 }
 
 function indexWithin(array: Array<Element>, element: Element, context: Node) {

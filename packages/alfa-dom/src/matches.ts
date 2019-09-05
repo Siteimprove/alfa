@@ -114,7 +114,6 @@ export function matches(
 
 export namespace matches {
   export interface Options {
-    readonly composed?: boolean;
     readonly flattened?: boolean;
 
     /**
@@ -309,16 +308,18 @@ function matchesAttribute(
     return false;
   }
 
-  let value = null;
-  const attributeOptions = {
+  const attributeOptions: getAttribute.Options = {
     lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) !== 0
   };
+
+  let value = null;
 
   switch (selector.namespace) {
     case null:
     case "":
       value = getAttribute(element, selector.name, attributeOptions);
       break;
+
     case "*":
       value = getAttribute(
         element,
@@ -328,11 +329,13 @@ function matchesAttribute(
         attributeOptions
       );
       break;
+
     default:
       // Abort when no namespace is declared
       if (options.namespaces === undefined) {
         return false;
       }
+
       // Selector namespace must match a declared namespace
       const declaredNamespace = options.namespaces.get(selector.namespace);
 
@@ -389,11 +392,13 @@ function matchesValue(value: string, selector: AttributeSelector): boolean {
 
     case AttributeMatcher.Includes:
       const parts = value.split(whitespace);
+
       for (let i = 0, n = parts.length; i < n; i++) {
         if (parts[i] === selector.value) {
           return true;
         }
       }
+
       return false;
   }
 
@@ -414,33 +419,28 @@ function matchesAttributeNamespace(
   }
 
   const { attributes } = element;
-  let attribute = null;
 
   for (let i = 0, n = attributes.length; i < n; i++) {
-    if (attributes[i].localName !== selector.name) {
-      continue;
+    const attribute = attributes[i];
+
+    if (attribute.localName === selector.name) {
+      const attributeNamespace = getAttributeNamespace(attribute, context);
+
+      // Selector "[|att]" should only match attributes with no namespace
+      if (selector.namespace === "") {
+        if (attributeNamespace === null) {
+          return true;
+        }
+      } else if (
+        options.namespaces !== undefined &&
+        options.namespaces.get(selector.namespace) === attributeNamespace
+      ) {
+        return true;
+      }
     }
-
-    attribute = attributes[i];
-    break;
   }
 
-  if (attribute === null) {
-    return false;
-  }
-
-  const attributeNamespace = getAttributeNamespace(attribute, context);
-
-  // Selector "[|att]" should only match attributes with no namespace
-  if (selector.namespace === "") {
-    return attributeNamespace === null;
-  }
-
-  if (options.namespaces === undefined) {
-    return false;
-  }
-
-  return attributeNamespace === options.namespaces.get(selector.namespace);
+  return false;
 }
 
 /**
@@ -453,11 +453,10 @@ function matchesCompound(
   options: matches.Options,
   root: Selector
 ): boolean {
-  if (!matches(element, context, selector.left, options, root)) {
-    return false;
-  }
-
-  return matches(element, context, selector.right, options, root);
+  return (
+    matches(element, context, selector.left, options, root) &&
+    matches(element, context, selector.right, options, root)
+  );
 }
 
 /**
@@ -708,7 +707,8 @@ function matchesPseudoClass(
       }
 
       return (
-        hover === true || contains(element, context, hover, { composed: true })
+        hover === true ||
+        contains(element, context, hover, { flattened: options.flattened })
       );
 
     // https://www.w3.org/TR/selectors/#active-pseudo
@@ -721,7 +721,7 @@ function matchesPseudoClass(
 
       return (
         active === true ||
-        contains(element, context, active, { composed: true })
+        contains(element, context, active, { flattened: options.flattened })
       );
 
     // https://www.w3.org/TR/selectors/#focus-pseudo

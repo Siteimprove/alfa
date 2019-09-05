@@ -65,9 +65,7 @@ export function isVisible(
           }
         }
       },
-      {
-        flattened: true
-      }
+      { flattened: true, nested: true }
     );
 
     visibilityMaps.set(context, visibilityMap);

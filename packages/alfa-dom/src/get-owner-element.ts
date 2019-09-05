@@ -22,7 +22,7 @@ export function getOwnerElement(
       context,
       context,
       {
-        enter: node => {
+        enter(node) {
           if (isElement(node)) {
             const { attributes } = node;
 
@@ -32,7 +32,7 @@ export function getOwnerElement(
           }
         }
       },
-      { composed: true }
+      { composed: true, nested: true }
     );
 
     ownerElementMaps.set(context, ownerElementMap);

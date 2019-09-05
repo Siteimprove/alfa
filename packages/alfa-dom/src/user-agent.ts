@@ -245,13 +245,14 @@ function cssRule(
   if (parsed === null) {
     const rule: StyleRule = {
       type: RuleType.Style,
-      selectorText: prelude,
+      selectorText: prelude.trim().replace(/\s+/g, " "),
       style: {
         cssText: keys(style)
           .map(property => `${hyphenCase(property)}: ${style[property]}`)
           .join("; ")
       }
     };
+
     return rule;
   }
 

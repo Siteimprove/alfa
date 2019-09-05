@@ -57,9 +57,7 @@ export function isRendered(
           }
         }
       },
-      {
-        flattened: true
-      }
+      { flattened: true, nested: true }
     );
 
     renderedMaps.set(context, renderedMap);

@@ -32,11 +32,15 @@ export function contains<T extends Node>(
     return getClosest(query, context, node => node === scope, options) !== null;
   }
 
+  let match: Node | null;
+
   if (typeof query === "string") {
-    return querySelector(scope, context, query, options) !== null;
+    match = querySelector(scope, context, query, { ...options, nested: false });
+  } else {
+    match = querySelector(scope, context, query, { ...options, nested: false });
   }
 
-  return querySelector(scope, context, query, options) !== null;
+  return match !== null;
 }
 
 export namespace contains {

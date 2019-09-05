@@ -42,7 +42,7 @@ export function getDocumentPosition(
           positionMap!.set(node, position++);
         }
       },
-      options
+      { ...options, nested: false }
     );
 
     positionMaps.set(context, positionMap);

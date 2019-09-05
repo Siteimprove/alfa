@@ -28,7 +28,7 @@ export function hasTextContent(
         }
       }
     },
-    options
+    { ...options, nested: false }
   );
 
   return text;

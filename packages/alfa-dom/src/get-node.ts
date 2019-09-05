@@ -41,7 +41,7 @@ export function getNode(
           nodeList![getDocumentPosition(node, context, options)!] = node;
         }
       },
-      options
+      { ...options, nested: false }
     );
 
     nodeLists.set(context, nodeList);

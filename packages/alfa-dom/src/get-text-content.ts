@@ -29,7 +29,7 @@ export function getTextContent(
         }
       }
     },
-    options
+    { ...options, nested: false }
   );
 
   return text;

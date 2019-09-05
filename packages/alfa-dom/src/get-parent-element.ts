@@ -14,7 +14,10 @@ export function getParentElement(
   context: Node,
   options: getParentElement.Options = {}
 ): Element | null {
-  const parentNode = getParentNode(node, context, options);
+  const parentNode = getParentNode(node, context, {
+    ...options,
+    composed: false
+  });
 
   if (parentNode === null || !isElement(parentNode)) {
     return null;
