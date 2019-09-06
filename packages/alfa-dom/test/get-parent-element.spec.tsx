@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../jsx";
 import { getParentElement } from "../src/get-parent-element";
-import { Document } from "../src/types";
+import { Document, NodeType } from "../src/types";
 
 test("Returns parent element", t => {
   const body = <body />;
@@ -16,7 +16,7 @@ test("Returns null when parent does not exist", t => {
 
 test("Returns null when parent is not an element", t => {
   const document: Document = {
-    nodeType: 9,
+    nodeType: NodeType.Document,
     childNodes: [<html />],
     styleSheets: []
   };

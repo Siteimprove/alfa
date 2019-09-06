@@ -75,7 +75,7 @@ export function fromJsxElement(jsxElement: JSXElement): Element | null {
 
         if (value !== null) {
           const attribute: Attribute = {
-            nodeType: 2,
+            nodeType: NodeType.Attribute,
             prefix,
             localName,
             value,

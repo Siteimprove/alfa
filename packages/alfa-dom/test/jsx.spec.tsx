@@ -1,20 +1,21 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../src/jsx";
+import { NodeType } from "../src/types";
 
 test("Transforms JSX into DOM nodes", t => {
   const text = {
-    nodeType: 3,
+    nodeType: NodeType.Text,
     data: "Hello world",
     childNodes: []
   };
 
   t.deepEqual(<div class="foo">Hello world</div>, {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "div",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: null,
         localName: "class",
         value: "foo",
@@ -28,26 +29,26 @@ test("Transforms JSX into DOM nodes", t => {
 
 test("Transforms JSX into DOM nodes with multiple children and tags", t => {
   const hello = {
-    nodeType: 3,
+    nodeType: NodeType.Text,
     data: "Hello ",
     childNodes: []
   };
   const world = {
     attributes: [],
-    nodeType: 1,
+    nodeType: NodeType.Element,
     localName: "b",
     shadowRoot: null,
     prefix: null,
     childNodes: [
       {
-        nodeType: 3,
+        nodeType: NodeType.Text,
         data: "world",
         childNodes: []
       }
     ]
   };
   const mark = {
-    nodeType: 3,
+    nodeType: NodeType.Text,
     data: "!",
     childNodes: []
   };
@@ -57,12 +58,12 @@ test("Transforms JSX into DOM nodes with multiple children and tags", t => {
       Hello <b>world</b>!
     </div>,
     {
-      nodeType: 1,
+      nodeType: NodeType.Element,
       prefix: null,
       localName: "div",
       attributes: [
         {
-          nodeType: 2,
+          nodeType: NodeType.Attribute,
           prefix: null,
           localName: "class",
           value: "foo",
@@ -83,7 +84,7 @@ test("Handles boolean attributes when truthy", t => {
   );
 
   t.deepEqual(hidden, {
-    nodeType: 2,
+    nodeType: NodeType.Attribute,
     prefix: null,
     localName: "hidden",
     value: "hidden",
@@ -109,7 +110,7 @@ test("Converts numbers in attributes to strings", t => {
   );
 
   t.deepEqual(number, {
-    nodeType: 2,
+    nodeType: NodeType.Attribute,
     prefix: null,
     localName: "number",
     value: "20",
@@ -145,7 +146,7 @@ test("Handles attributes with NaN values", t => {
   );
 
   t.deepEqual(foo, {
-    nodeType: 2,
+    nodeType: NodeType.Attribute,
     prefix: null,
     localName: "foo",
     value: "NaN",
@@ -161,7 +162,7 @@ test("Handles attributes with array values", t => {
   );
 
   t.deepEqual(foo, {
-    nodeType: 2,
+    nodeType: NodeType.Attribute,
     prefix: null,
     localName: "foo",
     value: "1,2,3",
@@ -177,7 +178,7 @@ test("Handles attributes with object values", t => {
   );
 
   t.deepEqual(foo, {
-    nodeType: 2,
+    nodeType: NodeType.Attribute,
     prefix: null,
     localName: "foo",
     value: "[object Object]",
@@ -193,18 +194,18 @@ test("Constructs and attaches shadow roots from <shadow> elements", t => {
   );
 
   const text = {
-    nodeType: 3,
+    nodeType: NodeType.Text,
     data: "I'm in the shadows!",
     childNodes: []
   };
 
   t.deepEqual(element, {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "div",
     attributes: [],
     shadowRoot: {
-      nodeType: 11,
+      nodeType: NodeType.DocumentFragment,
       mode: "open",
       childNodes: [text]
     },
@@ -220,20 +221,20 @@ test("Constructs and attaches content documents from <content> elements", t => {
   );
 
   const text = {
-    nodeType: 3,
+    nodeType: NodeType.Text,
     data: "I'm in an iframe!",
     childNodes: []
   };
 
   t.deepEqual(iframe, {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "iframe",
     attributes: [],
     shadowRoot: null,
     childNodes: [],
     contentDocument: {
-      nodeType: 9,
+      nodeType: NodeType.Document,
       childNodes: [text],
       styleSheets: []
     }

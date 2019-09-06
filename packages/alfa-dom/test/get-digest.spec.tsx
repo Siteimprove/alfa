@@ -1,6 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../jsx";
 import { getDigest } from "../src/get-digest";
+import { isElement } from "../src/guards";
 
 const foo = (
   <div class="foo">
@@ -78,7 +79,7 @@ test("Can filter out unwanted nodes", t => {
   t.equal(
     getDigest(foo, foo, {
       filters: {
-        node: node => node.nodeType === 1
+        node: isElement
       }
     }),
     getDigest(bar, bar)

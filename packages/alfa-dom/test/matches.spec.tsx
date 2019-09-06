@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../jsx";
 import { matches } from "../src/matches";
-import { Namespace } from "../src/types";
+import { Namespace, NodeType } from "../src/types";
 
 test("Matches an element against a tag", t => {
   const div = <div />;
@@ -247,12 +247,12 @@ test("Matches an element against a default namespace selector", t => {
 
 test("Matches an attribute against a declared namespace selector", t => {
   const svg: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "svg",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: "xlink",
         localName: "href",
         value: "foobar",
@@ -271,12 +271,12 @@ test("Matches an attribute against a declared namespace selector", t => {
 
 test("Matches an attribute against all or no namespaces", t => {
   const svg: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "svg",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: "xlink",
         localName: "href",
         value: "foo",
@@ -313,19 +313,19 @@ test("Matches an attribute against a default namespace selector", t => {
 
 test("Matches several similar attributes in different namespaces", t => {
   const a: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "a",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: "xlink",
         localName: "href",
         value: "foo",
         childNodes: []
       },
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: null,
         localName: "href",
         value: "bar",

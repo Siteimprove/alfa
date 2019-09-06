@@ -14,8 +14,10 @@ import {
   MediaRule,
   NamespaceRule,
   Node,
+  NodeType,
   PageRule,
   Rule,
+  RuleType,
   ShadowRoot,
   StyleRule,
   SupportsRule,
@@ -23,31 +25,31 @@ import {
 } from "./types";
 
 export function isElement(node: Node): node is Element {
-  return node.nodeType === 1;
+  return node.nodeType === NodeType.Element;
 }
 
 export function isAttribute(node: Node): node is Attribute {
-  return node.nodeType === 2;
+  return node.nodeType === NodeType.Attribute;
 }
 
 export function isText(node: Node): node is Text {
-  return node.nodeType === 3;
+  return node.nodeType === NodeType.Text;
 }
 
 export function isComment(node: Node): node is Comment {
-  return node.nodeType === 8;
+  return node.nodeType === NodeType.Comment;
 }
 
 export function isDocument(node: Node): node is Document {
-  return node.nodeType === 9;
+  return node.nodeType === NodeType.Document;
 }
 
 export function isDocumentType(node: Node): node is DocumentType {
-  return node.nodeType === 10;
+  return node.nodeType === NodeType.DocumentType;
 }
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
-  return node.nodeType === 11;
+  return node.nodeType === NodeType.DocumentFragment;
 }
 
 export function isShadowRoot(node: Node): node is ShadowRoot {
@@ -63,37 +65,37 @@ export function isConditionRule(rule: Rule): rule is ConditionRule {
 }
 
 export function isStyleRule(rule: Rule): rule is StyleRule {
-  return rule.type === 1;
+  return rule.type === RuleType.Style;
 }
 
 export function isImportRule(rule: Rule): rule is ImportRule {
-  return rule.type === 3;
+  return rule.type === RuleType.Import;
 }
 
 export function isMediaRule(rule: Rule): rule is MediaRule {
-  return rule.type === 4;
+  return rule.type === RuleType.Media;
 }
 
 export function isFontFaceRule(rule: Rule): rule is FontFaceRule {
-  return rule.type === 5;
+  return rule.type === RuleType.FontFace;
 }
 
 export function isPageRule(rule: Rule): rule is PageRule {
-  return rule.type === 6;
+  return rule.type === RuleType.Page;
 }
 
 export function isKeyframesRule(rule: Rule): rule is KeyframesRule {
-  return rule.type === 7;
+  return rule.type === RuleType.Keyframes;
 }
 
 export function isKeyframeRule(rule: Rule): rule is KeyframeRule {
-  return rule.type === 8;
+  return rule.type === RuleType.Keyframe;
 }
 
 export function isNamespaceRule(rule: Rule): rule is NamespaceRule {
-  return rule.type === 10;
+  return rule.type === RuleType.Namespace;
 }
 
 export function isSupportsRule(rule: Rule): rule is SupportsRule {
-  return rule.type === 12;
+  return rule.type === RuleType.Supports;
 }

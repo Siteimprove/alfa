@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../jsx";
 import { getAttribute } from "../src/get-attribute";
-import { Namespace } from "../src/types";
+import { Namespace, NodeType } from "../src/types";
 
 test("Gets the value of an attribute", t => {
   t.equal(
@@ -42,12 +42,12 @@ test("Returns null when getting an attribute in the HTML namespace", t => {
 
 test("Gets the value of an attribute in the SVG namespace", t => {
   const a: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "a",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: "xlink",
         localName: "href",
         value: "foo",
@@ -59,7 +59,7 @@ test("Gets the value of an attribute in the SVG namespace", t => {
   };
 
   const svg: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "svg",
     attributes: [],
@@ -78,19 +78,19 @@ test("Gets an attribute matching any namespace", t => {
 
 test("Gets multiple attributes with different namespaces", t => {
   const a: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "a",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: "xlink",
         localName: "href",
         value: "foo",
         childNodes: []
       },
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: null,
         localName: "href",
         value: "bar",
@@ -102,7 +102,7 @@ test("Gets multiple attributes with different namespaces", t => {
   };
 
   const svg: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "svg",
     attributes: [],
@@ -125,12 +125,12 @@ test("Gets an attribute with an incorrect namespace", t => {
 
 test("Correctly handles attribute names containing colons", t => {
   const html: jsx.JSX.Element = {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: "html",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: null,
         localName: "xml:lang",
         value: "en",

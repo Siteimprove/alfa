@@ -25,7 +25,7 @@ test("Returns true if tag has a xml language attribute", t => {
     localName: "html",
     attributes: [
       {
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: "xml",
         localName: "lang",
         value: "en",

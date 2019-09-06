@@ -1,4 +1,11 @@
-import { Attribute, Document, Element, ShadowRoot, Text } from "./types";
+import {
+  Attribute,
+  Document,
+  Element,
+  NodeType,
+  ShadowRoot,
+  Text
+} from "./types";
 import * as t from "./types";
 
 const { keys } = Object;
@@ -25,7 +32,11 @@ export function jsx(
     const child = children[i];
 
     if (typeof child === "string") {
-      childNodes.push({ nodeType: 3, childNodes: [], data: child });
+      childNodes.push({
+        nodeType: NodeType.Text,
+        childNodes: [],
+        data: child
+      });
     } else {
       // We use the first <shadow> and <content> elements as a mount points for
       // shadow roots and nested content documents, respectively.  Since both
@@ -36,13 +47,13 @@ export function jsx(
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/content
       if (shadowRoot === null && child.localName === "shadow") {
         shadowRoot = {
-          nodeType: 11,
+          nodeType: NodeType.DocumentFragment,
           mode: "open",
           childNodes: child.childNodes
         };
       } else if (contentDocument === null && child.localName === "content") {
         contentDocument = {
-          nodeType: 9,
+          nodeType: NodeType.Document,
           childNodes: child.childNodes,
           styleSheets: []
         };
@@ -62,7 +73,7 @@ export function jsx(
 
     if (value !== false && value !== null && value !== undefined) {
       attributes.push({
-        nodeType: 2,
+        nodeType: NodeType.Attribute,
         prefix: null,
         localName: name,
         value: toString(name, value),
@@ -72,7 +83,7 @@ export function jsx(
   }
 
   return {
-    nodeType: 1,
+    nodeType: NodeType.Element,
     prefix: null,
     localName: type,
     attributes,

@@ -38,19 +38,34 @@ function cloneNode(node: t.Node): t.Node {
 }
 
 function cloneElement(element: t.Element): t.Element {
-  const { prefix, localName = null, shadowRoot = null } = element;
+  const { prefix, localName = null } = element;
 
   const attributes = Array.from(element.attributes).map(cloneAttribute);
 
   const childNodes = Array.from(element.childNodes).map(cloneNode);
 
+  let shadowRoot: t.ShadowRoot | null = null;
+
+  if (element.shadowRoot !== null && element.shadowRoot !== undefined) {
+    shadowRoot = cloneShadowRoot(element.shadowRoot);
+  }
+
+  let contentDocument: t.Document | null | undefined;
+
+  if (element.contentDocument === null) {
+    contentDocument = null;
+  } else if (element.contentDocument !== undefined) {
+    contentDocument = cloneDocument(element.contentDocument);
+  }
+
   return {
-    nodeType: 1,
+    nodeType: t.NodeType.Element,
     prefix,
     localName: localName === null ? "" : localName,
     attributes,
     childNodes,
-    shadowRoot: shadowRoot === null ? null : cloneShadowRoot(shadowRoot)
+    shadowRoot,
+    ...(contentDocument === undefined ? null : { contentDocument })
   };
 }
 
@@ -58,7 +73,7 @@ function cloneAttribute(attribute: t.Attribute): t.Attribute {
   const { prefix, localName = null, value } = attribute;
 
   return {
-    nodeType: 2,
+    nodeType: t.NodeType.Attribute,
     prefix,
     localName: localName === null ? "" : localName,
     value,
@@ -67,11 +82,11 @@ function cloneAttribute(attribute: t.Attribute): t.Attribute {
 }
 
 function cloneText(text: t.Text): t.Text {
-  return { nodeType: 3, data: text.data, childNodes: [] };
+  return { nodeType: t.NodeType.Text, data: text.data, childNodes: [] };
 }
 
 function cloneComment(comment: t.Comment): t.Comment {
-  return { nodeType: 8, data: comment.data, childNodes: [] };
+  return { nodeType: t.NodeType.Comment, data: comment.data, childNodes: [] };
 }
 
 function cloneDocument(document: t.Document): t.Document {
@@ -80,7 +95,7 @@ function cloneDocument(document: t.Document): t.Document {
   const styleSheets = Array.from(document.styleSheets).map(cloneStyleSheet);
 
   return {
-    nodeType: 9,
+    nodeType: t.NodeType.Document,
     childNodes,
     styleSheets
   };
@@ -90,7 +105,7 @@ function cloneDocumentType(documentType: t.DocumentType): t.DocumentType {
   const { name, publicId, systemId } = documentType;
 
   return {
-    nodeType: 10,
+    nodeType: t.NodeType.DocumentType,
     name,
     publicId,
     systemId,
@@ -104,7 +119,7 @@ function cloneDocumentFragment(
   const childNodes = Array.from(documentFragment.childNodes).map(cloneNode);
 
   return {
-    nodeType: 11,
+    nodeType: t.NodeType.DocumentFragment,
     childNodes
   };
 }
@@ -115,7 +130,7 @@ function cloneShadowRoot(shadowRoot: t.ShadowRoot): t.ShadowRoot {
   const childNodes = Array.from(shadowRoot.childNodes).map(cloneNode);
 
   return {
-    nodeType: 11,
+    nodeType: t.NodeType.DocumentFragment,
     childNodes,
     mode
   };
@@ -186,7 +201,7 @@ function cloneStyleRule(styleRule: t.StyleRule): t.StyleRule {
   const { selectorText, style } = styleRule;
 
   return {
-    type: 1,
+    type: t.RuleType.Style,
     selectorText,
     style: cloneStyleDeclaration(style)
   };
@@ -198,7 +213,7 @@ function cloneImportRule(importRule: t.ImportRule): t.ImportRule {
   const media = Array.from(importRule.media);
 
   return {
-    type: 3,
+    type: t.RuleType.Import,
     href,
     media,
     styleSheet: cloneStyleSheet(styleSheet)
@@ -211,7 +226,7 @@ function cloneMediaRule(mediaRule: t.MediaRule): t.MediaRule {
   const cssRules = Array.from(mediaRule.cssRules).map(cloneRule);
 
   return {
-    type: 4,
+    type: t.RuleType.Media,
     cssRules,
     conditionText
   };
@@ -221,7 +236,7 @@ function cloneFontFaceRule(fontFaceRule: t.FontFaceRule): t.FontFaceRule {
   const { style } = fontFaceRule;
 
   return {
-    type: 5,
+    type: t.RuleType.FontFace,
     style: cloneStyleDeclaration(style)
   };
 }
@@ -230,7 +245,7 @@ function clonePageRule(pageRule: t.PageRule): t.PageRule {
   const { selectorText, style } = pageRule;
 
   return {
-    type: 6,
+    type: t.RuleType.Page,
     selectorText,
     style: cloneStyleDeclaration(style)
   };
@@ -242,7 +257,7 @@ function cloneKeyframesRule(keyframesRule: t.KeyframesRule): t.KeyframesRule {
   const cssRules = Array.from(keyframesRule.cssRules).map(cloneRule);
 
   return {
-    type: 7,
+    type: t.RuleType.Keyframes,
     name,
     cssRules
   };
@@ -252,7 +267,7 @@ function cloneKeyframeRule(keyframeRule: t.KeyframeRule): t.KeyframeRule {
   const { keyText, style } = keyframeRule;
 
   return {
-    type: 8,
+    type: t.RuleType.Keyframe,
     keyText,
     style: cloneStyleDeclaration(style)
   };
@@ -262,7 +277,7 @@ function cloneNamespaceRule(namespaceRule: t.NamespaceRule): t.NamespaceRule {
   const { namespaceURI, prefix } = namespaceRule;
 
   return {
-    type: 10,
+    type: t.RuleType.Namespace,
     namespaceURI,
     prefix
   };
@@ -274,7 +289,7 @@ function cloneSupportsRule(supportsRule: t.SupportsRule): t.SupportsRule {
   const cssRules = Array.from(supportsRule.cssRules).map(cloneRule);
 
   return {
-    type: 12,
+    type: t.RuleType.Supports,
     cssRules,
     conditionText
   };

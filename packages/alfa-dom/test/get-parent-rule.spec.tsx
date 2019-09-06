@@ -4,6 +4,7 @@ import { getParentRule } from "../src/get-parent-rule";
 import {
   Document,
   MediaRule,
+  NodeType,
   Rule,
   StyleDeclaration,
   StyleRule,
@@ -18,6 +19,7 @@ test("Returns parent rule", t => {
       cssText: "background-color:black;"
     }
   };
+
   const parentRule: MediaRule = {
     type: 4,
     cssRules: [childRule],
@@ -25,11 +27,13 @@ test("Returns parent rule", t => {
   };
 
   const styleSheet: StyleSheet = { cssRules: [parentRule], disabled: false };
+
   const document: Document = {
-    nodeType: 9,
+    nodeType: NodeType.Document,
     childNodes: [<div />],
     styleSheets: [styleSheet]
   };
+
   t.equal(getParentRule(childRule, document), parentRule);
 });
 
@@ -43,16 +47,20 @@ test("Returns null when parent rule does not exist", t => {
   const childStyleDec: StyleDeclaration = {
     cssText: "background-color:black;"
   };
+
   const childRule: StyleRule = {
     type: 1,
     selectorText: "button",
     style: childStyleDec
   };
+
   const styleSheet: StyleSheet = { cssRules: [], disabled: false };
+
   const document: Document = {
-    nodeType: 9,
+    nodeType: NodeType.Document,
     childNodes: [<div />],
     styleSheets: [styleSheet]
   };
+
   t.equal(getParentRule(childRule, document), null);
 });

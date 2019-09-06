@@ -1,13 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 import { jsx } from "../jsx";
 import { getRootNode } from "../src/get-root-node";
-import { Document } from "../src/types";
+import { Document, NodeType } from "../src/types";
 
 test("Returns the root node of an element", t => {
   const button = <button />;
 
   const document: Document = {
-    nodeType: 9,
+    nodeType: NodeType.Document,
     childNodes: [
       <html>
         <body>{button}</body>
