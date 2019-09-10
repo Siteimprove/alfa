@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "files": [
+    "src/cache.ts",
     "src/guard/has-key.ts",
     "src/guard/is-iterable.ts",
     "src/guard/is-number.ts",
@@ -8,6 +9,7 @@
     "src/guard/is-string.ts",
     "src/index.ts",
     "src/number/clamp.ts",
+    "src/number/mod.ts",
     "src/object/keys.ts",
     "src/object/set.ts",
     "src/object/values.ts",
