@@ -1,4 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
+import { Cache } from "@siteimprove/alfa-util";
 import { AncestorFilter } from "./ancestor-filter";
 import { isElement } from "./guards";
 import { RuleEntry, RuleTree } from "./rule-tree";
@@ -28,22 +29,13 @@ export class Cascade {
   }
 }
 
-const cascades = new WeakMap<Document, WeakMap<Device, Cascade>>();
+const cascades = Cache.of<Document, Cache<Device, Cascade>>();
 
 /**
  * @internal
  */
 export function getCascade(context: Document, device: Device): Cascade {
-  let cascadesByDevice = cascades.get(context);
-
-  if (cascadesByDevice === undefined) {
-    cascadesByDevice = new WeakMap();
-    cascades.set(context, cascadesByDevice);
-  }
-
-  let cascade = cascadesByDevice.get(device);
-
-  if (cascade === undefined) {
+  return cascades.get(context, Cache.of).get(device, () => {
     const entries: WeakMap<Element, RuleEntry> = new WeakMap();
 
     const filter = new AncestorFilter();
@@ -81,11 +73,8 @@ export function getCascade(context: Document, device: Device): Cascade {
       }
     });
 
-    cascade = new Cascade(entries);
-    cascadesByDevice.set(device, cascade);
-  }
-
-  return cascade;
+    return new Cascade(entries);
+  });
 }
 
 /**

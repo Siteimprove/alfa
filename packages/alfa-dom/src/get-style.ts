@@ -12,7 +12,7 @@ import {
   StyleTree
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Mutable, Option } from "@siteimprove/alfa-util";
+import { Cache, Mutable, Option } from "@siteimprove/alfa-util";
 import { getAttribute } from "./get-attribute";
 import { Cascade, getCascade } from "./get-cascade";
 import { getChildNodes } from "./get-child-nodes";
@@ -128,9 +128,9 @@ namespace getStyle {
   }
 }
 
-const styleTreeMaps = new WeakMap<
+const styleTrees = Cache.of<
   Node,
-  WeakMap<Node, StyleTree<Node | object, Rule>>
+  Cache<Device, Cache<Node, StyleTree<Node | object, Rule>>>
 >();
 
 function getStyleTree(
@@ -139,26 +139,17 @@ function getStyleTree(
   device: Device,
   options: getStyle.Options = {}
 ): StyleTree<Node | object, Rule> {
-  const cascade = isDocument(node) ? getCascade(node, device) : null;
+  return styleTrees
+    .get(context, Cache.of)
+    .get(device, Cache.of)
+    .get(node, () => {
+      const cascade = isDocument(node) ? getCascade(node, device) : null;
 
-  let styleTreeMap = styleTreeMaps.get(context);
-
-  if (styleTreeMap === undefined) {
-    styleTreeMap = new WeakMap();
-    styleTreeMaps.set(context, styleTreeMap);
-  }
-
-  let styleTree = styleTreeMap.get(node);
-
-  if (styleTree === undefined) {
-    styleTree = new StyleTree(
-      getStyleEntry(node, context, cascade, device, options),
-      device
-    );
-    styleTreeMap.set(node, styleTree);
-  }
-
-  return styleTree;
+      return new StyleTree(
+        getStyleEntry(node, context, cascade, device, options),
+        device
+      );
+    });
 }
 
 function getStyleEntry(
