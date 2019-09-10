@@ -8,6 +8,7 @@ export * from "./guard/is-object";
 export * from "./guard/is-string";
 
 export * from "./number/clamp";
+export * from "./number/mod";
 
 export * from "./object/keys";
 export * from "./object/set";

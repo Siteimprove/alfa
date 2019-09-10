@@ -15,6 +15,7 @@ import {
   querySelectorAll,
   Rule
 } from "@siteimprove/alfa-dom";
+import { mod } from "@siteimprove/alfa-util";
 
 const { isArray } = Array;
 
@@ -47,7 +48,7 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
 
         return {
           1: {
-            holds: rotation === null || (rotation !== -90 && rotation !== 90)
+            holds: rotation === null || (rotation !== 90 && rotation !== 270)
           }
         };
       }
@@ -167,5 +168,5 @@ function getRotation(
     }
   }
 
-  return (parentRotation + rotation) % 360;
+  return mod(parentRotation + rotation, 360);
 }
