@@ -1,6 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { MediaCondition, parseMediaQuery, Values } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
+import { Device, Orientation } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
@@ -15,9 +15,11 @@ import {
   querySelectorAll,
   Rule
 } from "@siteimprove/alfa-dom";
-import { mod } from "@siteimprove/alfa-util";
+import { mod, values } from "@siteimprove/alfa-util";
 
 const { isArray } = Array;
+const { isString } = Values;
+const { abs } = Math;
 
 export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r44.html",
@@ -25,6 +27,32 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
     { requirement: "wcag", criterion: "orientation", partial: true }
   ],
   evaluate: ({ device, document }) => {
+    let devices: { landscape: Device; portrait: Device };
+
+    if (device.viewport.orientation === Orientation.Landscape) {
+      devices = {
+        landscape: device,
+        portrait: {
+          ...device,
+          viewport: {
+            ...device.viewport,
+            orientation: Orientation.Portrait
+          }
+        }
+      };
+    } else {
+      devices = {
+        portrait: device,
+        landscape: {
+          ...device,
+          viewport: {
+            ...device.viewport,
+            orientation: Orientation.Landscape
+          }
+        }
+      };
+    }
+
     return {
       applicability: () => {
         return [
@@ -33,7 +61,13 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
               return false;
             }
 
-            return hasConditionalRotation(node, document, device);
+            for (const device of values(devices)) {
+              if (hasConditionalRotation(node, document, device)) {
+                return true;
+              }
+            }
+
+            return false;
           })
         ].map(element => {
           return {
@@ -44,7 +78,7 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
       },
 
       expectations: (aspect, target, question) => {
-        const rotation = getRotation(target, document, device);
+        const rotation = getRelativeRotation(target, document, devices);
 
         return {
           1: {
@@ -123,8 +157,16 @@ function hasOrientationCondition(condition: MediaCondition): boolean {
         return true;
       }
     } else {
-      if (feature.name === "orientation") {
-        return true;
+      if (
+        feature.name === "orientation" &&
+        feature.value !== undefined &&
+        isString(feature.value)
+      ) {
+        const { value } = feature.value;
+
+        if (value === "landscape" || value === "portrait") {
+          return true;
+        }
       }
     }
   }
@@ -165,4 +207,21 @@ function getRotation(
   }
 
   return mod(parentRotation + rotation, 360);
+}
+
+function getRelativeRotation(
+  element: Element,
+  context: Node,
+  devices: { landscape: Device; portrait: Device }
+): number | null {
+  const rotations = {
+    landscape: getRotation(element, context, devices.landscape),
+    portrait: getRotation(element, context, devices.portrait)
+  };
+
+  if (rotations.landscape === null || rotations.portrait === null) {
+    return null;
+  }
+
+  return mod(abs(rotations.landscape - rotations.portrait), 360);
 }
