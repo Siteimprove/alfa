@@ -105,10 +105,6 @@ function isOrientationConditional(rule: Rule, context: Node): boolean {
         }
       }
     }
-
-    // Media rules are not allowed to nest, so at this point we don't need to
-    // look further up the tree.
-    return false;
   }
 
   const parentRule = getParentRule(rule, context);
