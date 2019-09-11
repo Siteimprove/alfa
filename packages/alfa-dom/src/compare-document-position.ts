@@ -179,5 +179,5 @@ function getForkingPoint<T>(first: Array<T>, second: Array<T>): number {
 const orderings = Cache.of<Node, number>();
 
 function getImplementationSpecificOrdering(node: Node): number {
-  return orderings.get(node, Math.random);
+  return orderings.get(node, () => Math.random());
 }
