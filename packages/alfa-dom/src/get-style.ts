@@ -103,14 +103,12 @@ function getStyle(
   );
 
   if (options.pseudo !== undefined) {
-    const pseudoElementMap = pseudoElementMaps.get(element);
+    const pseudoElement = pseudoElements
+      .get(element, Cache.of)
+      .get(options.pseudo);
 
-    if (pseudoElementMap !== undefined) {
-      const pseudoElement = pseudoElementMap.get(options.pseudo);
-
-      if (pseudoElement !== undefined) {
-        return styleTree.get(pseudoElement);
-      }
+    if (pseudoElement !== null) {
+      return styleTree.get(pseudoElement);
     }
 
     return null;
