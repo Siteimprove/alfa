@@ -60,7 +60,7 @@ export function getOwnerElement(
       return null;
     }
 
-    if (ownerElement !== undefined) {
+    if (ownerElement !== null) {
       return ownerElement;
     }
 
