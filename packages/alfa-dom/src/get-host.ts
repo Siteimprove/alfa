@@ -1,10 +1,9 @@
+import { Cache } from "@siteimprove/alfa-util";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Element, Node, ShadowRoot } from "./types";
 
-type HostMap = WeakMap<ShadowRoot, Element>;
-
-const hostMaps = new WeakMap<Node, HostMap>();
+const hosts = Cache.of<Node, Cache<ShadowRoot, Element>>();
 
 /**
  * Given a shadow root and a context, get the host of the shadow root within the
@@ -13,39 +12,28 @@ const hostMaps = new WeakMap<Node, HostMap>();
  * @see https://dom.spec.whatwg.org/#dom-shadowroot-host
  */
 export function getHost(shadowRoot: ShadowRoot, context: Node): Element | null {
-  let hostMap = hostMaps.get(context);
+  return hosts
+    .get(context, () => {
+      const hosts = Cache.of<ShadowRoot, Element>();
 
-  if (hostMap === undefined) {
-    hostMap = new WeakMap();
-
-    traverseNode(
-      context,
-      context,
-      {
-        enter(node) {
-          if (
-            isElement(node) &&
-            node.shadowRoot !== null &&
-            node.shadowRoot !== undefined
-          ) {
-            hostMap!.set(node.shadowRoot, node);
+      traverseNode(
+        context,
+        context,
+        {
+          enter(node) {
+            if (
+              isElement(node) &&
+              node.shadowRoot !== null &&
+              node.shadowRoot !== undefined
+            ) {
+              hosts.set(node.shadowRoot, node);
+            }
           }
-        }
-      },
-      {
-        composed: true,
-        nested: true
-      }
-    );
+        },
+        { composed: true, nested: true }
+      );
 
-    hostMaps.set(context, hostMap);
-  }
-
-  const host = hostMap.get(shadowRoot);
-
-  if (host === undefined) {
-    return null;
-  }
-
-  return host;
+      return hosts;
+    })
+    .get(shadowRoot);
 }

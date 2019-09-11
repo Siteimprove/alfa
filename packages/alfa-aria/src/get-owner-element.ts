@@ -9,55 +9,51 @@ import {
   Node,
   traverseNode
 } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-util";
+import { Cache, Option } from "@siteimprove/alfa-util";
 import { isExposed } from "./is-exposed";
 import { resolveReferences } from "./resolve-references";
 
 const { map } = BrowserSpecific;
 
-const ownerElementMaps = new WeakMap<Node, WeakMap<Element, Element>>();
+const ownerElements = Cache.of<Node, Cache<Element, Element>>();
 
 export function getOwnerElement(
   element: Element,
   context: Node,
   device: Device
 ): Option<Element> | BrowserSpecific<Option<Element>> {
-  let ownerElementMap = ownerElementMaps.get(context);
+  const ownerElement = ownerElements
+    .get(context, () => {
+      const ownerElements = Cache.of<Element, Element>();
 
-  if (ownerElementMap === undefined) {
-    ownerElementMap = new WeakMap();
+      traverseNode(
+        context,
+        context,
+        {
+          enter(node) {
+            if (isElement(node)) {
+              const owns = getAttribute(node, "aria-owns");
 
-    traverseNode(
-      context,
-      context,
-      {
-        enter(node) {
-          if (isElement(node)) {
-            const owns = getAttribute(node, "aria-owns");
+              if (owns !== null) {
+                const references = resolveReferences(
+                  getRootNode(node, context),
+                  context,
+                  owns
+                );
 
-            if (owns !== null) {
-              const references = resolveReferences(
-                getRootNode(node, context),
-                context,
-                owns
-              );
-
-              for (const reference of references) {
-                ownerElementMap!.set(reference, node);
+                for (const reference of references) {
+                  ownerElements.set(reference, node);
+                }
               }
             }
           }
-        }
-      },
-      {
-        composed: true
-      }
-    );
+        },
+        { composed: true, nested: true }
+      );
 
-    ownerElementMaps.set(context, ownerElementMap);
-  }
-
-  const ownerElement = ownerElementMap.get(element);
+      return ownerElements;
+    })
+    .get(element);
 
   return map(isExposed(element, context, device), isExposed => {
     if (!isExposed) {

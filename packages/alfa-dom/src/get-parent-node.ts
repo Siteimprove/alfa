@@ -1,12 +1,16 @@
+import { Cache } from "@siteimprove/alfa-util";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
 
-type ParentMap = WeakMap<Node, Node>;
+enum Mode {
+  Composed,
+  Flattened
+}
 
-const flattenedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
-
-const composedParentMaps: WeakMap<Node, ParentMap> = new WeakMap();
+const parentNodes = Cache.of<Mode, Cache<Node, Cache<Node, Node>>>({
+  weak: false
+});
 
 /**
  * Given a node and a context, get the parent of the node within the context.
@@ -25,40 +29,39 @@ export function getParentNode(
   context: Node,
   options: getParentNode.Options = {}
 ): Node | null {
-  let parentMaps = composedParentMaps;
+  let mode = Mode.Composed;
 
   if (options.flattened === true) {
-    parentMaps = flattenedParentMaps;
+    mode = Mode.Flattened;
   }
 
-  let parentMap = parentMaps.get(context);
+  const parentNode = parentNodes
+    .get(mode, Cache.of)
+    .get(context, () => {
+      const parentNodes = Cache.of<Node, Node>();
 
-  if (parentMap === undefined) {
-    parentMap = new WeakMap();
-
-    traverseNode(
-      context,
-      context,
-      {
-        enter(node, parentNode) {
-          if (parentNode !== null) {
-            parentMap!.set(node, parentNode);
+      traverseNode(
+        context,
+        context,
+        {
+          enter(node, parentNode) {
+            if (parentNode !== null) {
+              parentNodes.set(node, parentNode);
+            }
           }
+        },
+        {
+          composed: options.flattened !== true,
+          flattened: options.flattened,
+          nested: true
         }
-      },
-      {
-        composed: options.flattened !== true,
-        flattened: options.flattened,
-        nested: true
-      }
-    );
+      );
 
-    parentMaps.set(context, parentMap);
-  }
+      return parentNodes;
+    })
+    .get(node);
 
-  const parentNode = parentMap.get(node);
-
-  if (parentNode === undefined) {
+  if (parentNode === null) {
     return null;
   }
 

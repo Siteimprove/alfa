@@ -1,14 +1,14 @@
-import { getDocumentPosition } from "./get-document-position";
+import { Cache } from "@siteimprove/alfa-util";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
 
-type NodeList = Array<Node>;
+enum Mode {
+  Normal,
+  Composed,
+  Flattened
+}
 
-const normalNodeLists: WeakMap<Node, NodeList> = new WeakMap();
-
-const flattenedNodeLists: WeakMap<Node, NodeList> = new WeakMap();
-
-const composedNodeLists: WeakMap<Node, NodeList> = new WeakMap();
+const nodes = Cache.of<Mode, Cache<Node, Cache<number, Node>>>({ weak: false });
 
 /**
  * Given a context and a document position, get the node at the given document
@@ -20,38 +20,37 @@ export function getNode(
   documentPosition: number,
   options: getNode.Options = {}
 ): Node | null {
-  let nodeLists = normalNodeLists;
+  let mode = Mode.Normal;
+
+  if (options.composed === true) {
+    mode = Mode.Composed;
+  }
 
   if (options.flattened === true) {
-    nodeLists = flattenedNodeLists;
-  } else if (options.composed === true) {
-    nodeLists = composedNodeLists;
+    mode = Mode.Flattened;
   }
 
-  let nodeList = nodeLists.get(context);
+  return nodes
+    .get(mode, Cache.of)
+    .get(context, () => {
+      const nodes = Cache.of<number, Node>({ weak: false });
 
-  if (nodeList === undefined) {
-    nodeList = [];
+      let position = 0;
 
-    traverseNode(
-      context,
-      context,
-      {
-        enter(node) {
-          nodeList![getDocumentPosition(node, context, options)!] = node;
-        }
-      },
-      { ...options, nested: false }
-    );
+      traverseNode(
+        context,
+        context,
+        {
+          enter(node) {
+            nodes.set(position++, node);
+          }
+        },
+        { ...options, nested: false }
+      );
 
-    nodeLists.set(context, nodeList);
-  }
-
-  if (documentPosition in nodeList === false) {
-    return null;
-  }
-
-  return nodeList[documentPosition];
+      return nodes;
+    })
+    .get(documentPosition);
 }
 
 export namespace getNode {

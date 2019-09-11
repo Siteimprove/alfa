@@ -119,8 +119,7 @@ function fulfillsMediaFeature(
 ): boolean {
   const { value } = mediaFeature;
 
-  if (value === undefined) {
-  } else {
+  if (value !== undefined) {
     switch (value.type) {
       case ValueType.String: {
         switch (mediaFeature.name) {

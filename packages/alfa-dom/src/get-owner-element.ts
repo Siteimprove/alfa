@@ -1,8 +1,9 @@
+import { Cache } from "@siteimprove/alfa-util";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Attribute, Element, Node } from "./types";
 
-const ownerElementMaps = new WeakMap<Node, WeakMap<Attribute, Element>>();
+const ownerElements = Cache.of<Node, Cache<Attribute, Element>>();
 
 /**
  * Given an attribute and a context, get the owner element of that attribute
@@ -13,36 +14,28 @@ export function getOwnerElement(
   attribute: Attribute,
   context: Node
 ): Element | null {
-  let ownerElementMap = ownerElementMaps.get(context);
+  return ownerElements
+    .get(context, () => {
+      const ownerElements = Cache.of<Attribute, Element>({ weak: false });
 
-  if (ownerElementMap === undefined) {
-    ownerElementMap = new WeakMap();
+      traverseNode(
+        context,
+        context,
+        {
+          enter(node) {
+            if (isElement(node)) {
+              const { attributes } = node;
 
-    traverseNode(
-      context,
-      context,
-      {
-        enter(node) {
-          if (isElement(node)) {
-            const { attributes } = node;
-
-            for (let i = 0, n = attributes.length; i < n; i++) {
-              ownerElementMap!.set(attributes[i], node);
+              for (let i = 0, n = attributes.length; i < n; i++) {
+                ownerElements.set(attributes[i], node);
+              }
             }
           }
-        }
-      },
-      { composed: true, nested: true }
-    );
+        },
+        { composed: true, nested: true }
+      );
 
-    ownerElementMaps.set(context, ownerElementMap);
-  }
-
-  const ownerElement = ownerElementMap.get(attribute);
-
-  if (ownerElement === undefined) {
-    return null;
-  }
-
-  return ownerElement;
+      return ownerElements;
+    })
+    .get(attribute);
 }

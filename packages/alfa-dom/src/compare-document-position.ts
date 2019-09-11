@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-util";
 import { getParentNode } from "./get-parent-node";
 import { Node } from "./types";
 
@@ -175,15 +176,8 @@ function getForkingPoint<T>(first: Array<T>, second: Array<T>): number {
 // specific orderings for disconnected nodes should be consistent, i.e. if
 // "foo" and "bar" are disconnected, "foo" compared to "bar" will return the
 // opposite ordering of "bar" compared to "foo".
-const orderings: WeakMap<Node, number> = new WeakMap();
+const orderings = Cache.of<Node, number>();
 
 function getImplementationSpecificOrdering(node: Node): number {
-  let ordering = orderings.get(node);
-
-  if (ordering === undefined) {
-    ordering = Math.random();
-    orderings.set(node, ordering);
-  }
-
-  return ordering;
+  return orderings.get(node, Math.random);
 }

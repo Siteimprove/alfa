@@ -230,26 +230,17 @@ function getStyleEntry(
   return { target: node, declarations, children };
 }
 
-const pseudoElementMaps = new WeakMap<Element, Map<PseudoElement, object>>();
+const pseudoElements = Cache.of<
+  Element,
+  Cache<PseudoElement, { readonly pseudoElement: PseudoElement }>
+>();
 
 function getPseudoElement(element: Element, selector: Selector): object | null {
   switch (selector.type) {
     case SelectorType.PseudoElementSelector: {
-      let pseudoElementMap = pseudoElementMaps.get(element);
-
-      if (pseudoElementMap === undefined) {
-        pseudoElementMap = new Map();
-        pseudoElementMaps.set(element, pseudoElementMap);
-      }
-
-      let pseudoElement = pseudoElementMap.get(selector.name);
-
-      if (pseudoElement === undefined) {
-        pseudoElement = {};
-        pseudoElementMap.set(selector.name, pseudoElement);
-      }
-
-      return pseudoElement;
+      return pseudoElements.get(element, Cache.of).get(selector.name, () => {
+        return { pseudoElement: selector.name };
+      });
     }
 
     case SelectorType.CompoundSelector:
