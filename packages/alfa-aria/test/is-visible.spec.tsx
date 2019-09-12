@@ -5,7 +5,7 @@ import { isVisible } from "../src/is-visible";
 
 const device = getDefaultDevice();
 
-test("Returns true if an element is not visible to assistive technology", t => {
+test("Returns true if an element is visible to assistive technology", t => {
   const div = <div />;
   t(isVisible(div, div, device));
 });

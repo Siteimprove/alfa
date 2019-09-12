@@ -24,6 +24,10 @@ export const transform: Longhand<Transform, Canonical<Transform>> = {
   },
   computed(style) {
     const { value, source } = getSpecifiedProperty(style, "transform");
-    return { value: canonicalize(value), source };
+
+    return {
+      value: canonicalize(value),
+      source
+    };
   }
 };

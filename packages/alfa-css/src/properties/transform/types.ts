@@ -10,7 +10,10 @@ export namespace Transform {
     [Values.Number, ...Array<Values.Number>] & { readonly length: 16 }
   >;
 
-  export type Rotate = Values.Function<"rotate", [Values.Angle]>;
+  export type Rotate = Values.Function<
+    "rotate",
+    [Values.Angle] | [Values.Number, Values.Number, Values.Number, Values.Angle]
+  >;
 
   export type Translate = Values.Function<
     "translate",

@@ -96,6 +96,133 @@ const functionName: Production<Tokens.FunctionName> = {
         return Values.list(Values.func("rotate", [angle]));
       }
 
+      case "rotate3d": {
+        const x = args.number();
+
+        if (x === false) {
+          return null;
+        }
+
+        const y = args.number();
+
+        if (y === false) {
+          return null;
+        }
+
+        const z = args.number();
+
+        if (z === false) {
+          return null;
+        }
+
+        const zero = args.number();
+
+        if (zero !== false) {
+          if (zero.value !== 0 || !args.done()) {
+            return null;
+          }
+
+          return Values.list(
+            Values.func("rotate", [x, y, z, Values.angle(0, "deg")])
+          );
+        }
+
+        const angle = args.angle();
+
+        if (angle === false || !args.done()) {
+          return null;
+        }
+
+        return Values.list(Values.func("rotate", [x, y, z, angle]));
+      }
+
+      case "rotateX": {
+        const zero = args.number();
+
+        if (zero !== false) {
+          if (zero.value !== 0 || !args.done()) {
+            return null;
+          }
+
+          return Values.list(
+            Values.func("rotate", [
+              number(1),
+              number(0),
+              number(0),
+              Values.angle(0, "deg")
+            ])
+          );
+        }
+
+        const angle = args.angle();
+
+        if (angle === false || !args.done()) {
+          return null;
+        }
+
+        return Values.list(
+          Values.func("rotate", [number(1), number(0), number(0), angle])
+        );
+      }
+
+      case "rotateY": {
+        const zero = args.number();
+
+        if (zero !== false) {
+          if (zero.value !== 0 || !args.done()) {
+            return null;
+          }
+
+          return Values.list(
+            Values.func("rotate", [
+              number(0),
+              number(1),
+              number(0),
+              Values.angle(0, "deg")
+            ])
+          );
+        }
+
+        const angle = args.angle();
+
+        if (angle === false || !args.done()) {
+          return null;
+        }
+
+        return Values.list(
+          Values.func("rotate", [number(0), number(1), number(0), angle])
+        );
+      }
+
+      case "rotateZ": {
+        const zero = args.number();
+
+        if (zero !== false) {
+          if (zero.value !== 0 || !args.done()) {
+            return null;
+          }
+
+          return Values.list(
+            Values.func("rotate", [
+              number(0),
+              number(0),
+              number(1),
+              Values.angle(0, "deg")
+            ])
+          );
+        }
+
+        const angle = args.angle();
+
+        if (angle === false || !args.done()) {
+          return null;
+        }
+
+        return Values.list(
+          Values.func("rotate", [number(0), number(0), number(1), angle])
+        );
+      }
+
       case "translate": {
         const tx = args.length() || args.percentage();
 

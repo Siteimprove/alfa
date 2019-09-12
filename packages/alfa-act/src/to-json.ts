@@ -123,8 +123,6 @@ export function toJSON<
   const assertions: Array<JSON.Document> = [];
 
   for (const [rule, group] of Seq(results).groupBy(result => result.rule)) {
-    const { requirements = [] } = rule;
-
     for (const result of group.toList()) {
       const testCaseResult = {
         "@context": Contexts.Result,
@@ -155,31 +153,6 @@ export function toJSON<
         test: [{ "@id": rule.id, "@type": "earl:TestCase" }],
         result: testCaseResult
       });
-
-      for (const requirement of requirements) {
-        const outcome =
-          result.outcome === Outcome.Passed && requirement.partial === true
-            ? Outcome.CantTell
-            : result.outcome;
-
-        let id: string = requirement.requirement;
-
-        switch (requirement.requirement) {
-          case "wcag":
-            id = `${id}:${requirement.criterion}`;
-        }
-
-        assertions.push({
-          ...assertion,
-          test: [{ "@id": id, "@type": "earl:TestRequirement" }],
-          result: {
-            ...testCaseResult,
-            outcome: {
-              "@id": `earl:${outcome}`
-            }
-          }
-        });
-      }
     }
   }
 

@@ -1,13 +1,16 @@
+import { Cache } from "@siteimprove/alfa-util";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
 
-type PositionMap = WeakMap<Node, number>;
+enum Mode {
+  Normal,
+  Composed,
+  Flattened
+}
 
-const normalPositionMaps: WeakMap<Node, PositionMap> = new WeakMap();
-
-const flattenedPositionMaps: WeakMap<Node, PositionMap> = new WeakMap();
-
-const composedPositionMaps: WeakMap<Node, PositionMap> = new WeakMap();
+const documentPositions = Cache.of<Mode, Cache<Node, Cache<Node, number>>>({
+  weak: false
+});
 
 /**
  * Given a node and a context, get the document position of the node within the
@@ -19,42 +22,37 @@ export function getDocumentPosition(
   context: Node,
   options: getDocumentPosition.Options = {}
 ): number | null {
-  let positionMaps = normalPositionMaps;
+  let mode = Mode.Normal;
+
+  if (options.composed === true) {
+    mode = Mode.Composed;
+  }
 
   if (options.flattened === true) {
-    positionMaps = flattenedPositionMaps;
-  } else if (options.composed === true) {
-    positionMaps = composedPositionMaps;
+    mode = Mode.Flattened;
   }
 
-  let positionMap = positionMaps.get(context);
+  return documentPositions
+    .get(mode, Cache.of)
+    .get(context, () => {
+      const documentPositions = Cache.of<Node, number>();
 
-  if (positionMap === undefined) {
-    positionMap = new WeakMap();
+      let position = 0;
 
-    let position = 0;
+      traverseNode(
+        context,
+        context,
+        {
+          enter(node) {
+            documentPositions.set(node, position++);
+          }
+        },
+        { ...options, nested: false }
+      );
 
-    traverseNode(
-      context,
-      context,
-      {
-        enter(node) {
-          positionMap!.set(node, position++);
-        }
-      },
-      { ...options, nested: false }
-    );
-
-    positionMaps.set(context, positionMap);
-  }
-
-  const position = positionMap.get(node);
-
-  if (position === undefined) {
-    return null;
-  }
-
-  return position;
+      return documentPositions;
+    })
+    .get(node);
 }
 
 export namespace getDocumentPosition {

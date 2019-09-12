@@ -1,4 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
+import { round } from "@siteimprove/alfa-util";
 import { Converters } from "../../../converters";
 import { Longhand } from "../../../properties";
 import { Resolvers } from "../../../resolvers";
@@ -118,7 +119,7 @@ function resolveAbsoluteFontSize(
 
   const base = fontFamily.value[0].value === "monospace" ? 13 : 16;
 
-  return Values.length(Math.round(factor * base), "px");
+  return Values.length(round(factor * base), "px");
 }
 
 function resolveRelativeFontSize(

@@ -1,12 +1,13 @@
+import { Cache } from "@siteimprove/alfa-util";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { Attribute, Element, Namespace, Node } from "./types";
 
 const { isArray } = Array;
 
-const attributeMaps: WeakMap<
+const attributeMaps = Cache.of<
   Element,
   Map<string, Attribute | Array<Attribute>>
-> = new WeakMap();
+>();
 
 export function getAttributeNode(
   element: Element,
@@ -123,10 +124,8 @@ export function getAttributeNode(
 function getAttributeMap(
   element: Element
 ): Map<string, Attribute | Array<Attribute>> {
-  let attributeMap = attributeMaps.get(element);
-
-  if (attributeMap === undefined) {
-    attributeMap = new Map();
+  return attributeMaps.get(element, () => {
+    const attributeMap = new Map<string, Attribute | Array<Attribute>>();
 
     const { attributes } = element;
 
@@ -147,10 +146,8 @@ function getAttributeMap(
       }
     }
 
-    attributeMaps.set(element, attributeMap);
-  }
-
-  return attributeMap;
+    return attributeMap;
+  });
 }
 
 function splitQualifiedName(

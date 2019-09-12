@@ -5,19 +5,28 @@ export class Cache<K, V> {
     this.items = items;
   }
 
-  public get(key: K, factory: () => V): V {
+  public get(key: K): V | null;
+  public get(key: K, factory: () => V): V;
+
+  public get(key: K, factory?: () => V): V | null {
     let value = this.items.get(key);
 
     if (value === undefined) {
+      if (factory === undefined) {
+        return null;
+      }
+
       value = factory();
-      this.set(key, value);
+
+      this.items.set(key, value);
     }
 
     return value;
   }
 
-  public set(key: K, value: V): void {
+  public set(key: K, value: V): this {
     this.items.set(key, value);
+    return this;
   }
 }
 
