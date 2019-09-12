@@ -1,4 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import { decompose } from "@siteimprove/alfa-affine";
 import { MediaCondition, parseMediaQuery, Values } from "@siteimprove/alfa-css";
 import { Device, Orientation } from "@siteimprove/alfa-device";
 import {
@@ -78,7 +79,11 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
       },
 
       expectations: (aspect, target, question) => {
-        const rotation = getRelativeRotation(target, document, devices);
+        let rotation = getRelativeRotation(target, document, devices);
+
+        if (rotation !== null) {
+          rotation = Math.round(rotation);
+        }
 
         return {
           1: {
@@ -202,7 +207,49 @@ function getRotation(
   for (const { value } of transform.value) {
     switch (value.name) {
       case "rotate":
-        rotation += value.args[0].value;
+        if (value.args.length === 1) {
+          const [angle] = value.args;
+
+          rotation += angle.value;
+        } else {
+          const [x, y, z, angle] = value.args;
+
+          z;
+
+          if (x.value !== 0 || y.value !== 0) {
+            return null;
+          }
+
+          rotation += angle.value;
+        }
+        break;
+
+      case "matrix": {
+        const { args } = value;
+
+        const decomposed = decompose([
+          [args[0].value, args[4].value, args[8].value, args[12].value],
+          [args[1].value, args[5].value, args[9].value, args[13].value],
+          [args[2].value, args[6].value, args[10].value, args[14].value],
+          [args[3].value, args[7].value, args[11].value, args[15].value]
+        ]);
+
+        if (decomposed === null) {
+          continue;
+        }
+
+        const [x, y, z, w] = decomposed.rotate;
+
+        z;
+
+        if (x !== 0 || y !== 0) {
+          return null;
+        }
+
+        const angle = (2 * Math.acos(w) * 180) / Math.PI;
+
+        rotation += angle;
+      }
     }
   }
 
