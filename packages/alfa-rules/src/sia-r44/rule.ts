@@ -16,11 +16,11 @@ import {
   querySelectorAll,
   Rule
 } from "@siteimprove/alfa-dom";
-import { mod, values } from "@siteimprove/alfa-util";
+import { mod, round, values } from "@siteimprove/alfa-util";
 
 const { isArray } = Array;
 const { isString } = Values;
-const { abs } = Math;
+const { abs, acos, PI } = Math;
 
 export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r44.html",
@@ -82,7 +82,7 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
         let rotation = getRelativeRotation(target, document, devices);
 
         if (rotation !== null) {
-          rotation = Math.round(rotation);
+          rotation = round(rotation);
         }
 
         return {
@@ -246,7 +246,7 @@ function getRotation(
           return null;
         }
 
-        const angle = (2 * Math.acos(w) * 180) / Math.PI;
+        const angle = (2 * acos(w) * 180) / PI;
 
         rotation += angle;
       }
