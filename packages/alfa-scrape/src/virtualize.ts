@@ -107,18 +107,14 @@ function virtualizeComment(
   };
 }
 
-function hasCssRules(styleSheet: StyleSheet): styleSheet is CSSStyleSheet {
-  return "cssRules" in styleSheet;
-}
-
 function virtualizeDocument(
   document: Document
 ): import("@siteimprove/alfa-dom").Document {
   const childNodes = Array.from(document.childNodes).map(virtualizeNode);
 
-  const styleSheets = Array.from(document.styleSheets)
-    .filter(hasCssRules)
-    .map(virtualizeStyleSheet);
+  const styleSheets = Array.from(document.styleSheets).map(
+    virtualizeStyleSheet
+  );
 
   return {
     nodeType: 9,
@@ -161,19 +157,27 @@ function virtualizeShadowRoot(
 
   const childNodes = Array.from(shadowRoot.childNodes).map(virtualizeNode);
 
+  const styleSheets = Array.from(shadowRoot.styleSheets).map(
+    virtualizeStyleSheet
+  );
+
   return {
     nodeType: 11,
     childNodes,
-    mode
+    mode,
+    styleSheets
   };
 }
 
 function virtualizeStyleSheet(
-  styleSheet: CSSStyleSheet
+  styleSheet: StyleSheet | CSSStyleSheet
 ): import("@siteimprove/alfa-dom").StyleSheet {
   const { disabled } = styleSheet;
 
-  const cssRules = Array.from(styleSheet.cssRules).map(virtualizeRule);
+  const cssRules =
+    "cssRules" in styleSheet
+      ? Array.from(styleSheet.cssRules).map(virtualizeRule)
+      : [];
 
   return {
     disabled,

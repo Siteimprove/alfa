@@ -225,7 +225,7 @@ export const UserAgent: StyleSheet = {
  * @internal
  */
 export function isUserAgentRule(rule: Rule): boolean {
-  const { cssRules } = UserAgent;
+  const cssRules = UserAgent.cssRules!;
 
   for (let i = 0, n = cssRules.length; i < n; i++) {
     if (cssRules[i] === rule) {

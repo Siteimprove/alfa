@@ -49,7 +49,8 @@ export function jsx(
         shadowRoot = {
           nodeType: NodeType.DocumentFragment,
           mode: "open",
-          childNodes: child.childNodes
+          childNodes: child.childNodes,
+          styleSheets: []
         };
       } else if (contentDocument === null && child.localName === "content") {
         contentDocument = {

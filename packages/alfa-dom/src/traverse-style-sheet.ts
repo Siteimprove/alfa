@@ -16,9 +16,11 @@ export function traverseStyleSheet(
 ): boolean {
   const { cssRules } = styleSheet;
 
-  for (let i = 0, n = cssRules.length; i < n; i++) {
-    if (!traverseRule(cssRules[i], visitors)) {
-      return false;
+  if (cssRules !== undefined) {
+    for (let i = 0, n = cssRules.length; i < n; i++) {
+      if (!traverseRule(cssRules[i], visitors)) {
+        return false;
+      }
     }
   }
 

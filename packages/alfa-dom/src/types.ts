@@ -217,10 +217,15 @@ export interface ShadowRoot extends DocumentFragment {
    * @see https://www.w3.org/TR/dom41/#dom-shadowroot-mode
    */
   readonly mode: "open" | "closed";
+
+  /**
+   * @see https://w3c.github.io/webcomponents/spec/shadow/#dom-documentorshadowroot-stylesheets
+   */
+  readonly styleSheets: ArrayLike<StyleSheet>;
 }
 
 /**
- * @see https://www.w3.org/TR/cssom/#cssstylesheet
+ * @see https://www.w3.org/TR/cssom/#stylesheet
  */
 export interface StyleSheet {
   /**
@@ -229,9 +234,13 @@ export interface StyleSheet {
   readonly disabled: boolean;
 
   /**
+   * In CSSOM, there's a distinction between style sheets and CSS style sheets.
+   * As such, the `cssRules` property may not exist for a style sheet unless it
+   * is a CSS style sheet.
+   *
    * @see https://www.w3.org/TR/cssom/#dom-cssstylesheet-cssrules
    */
-  readonly cssRules: ArrayLike<Rule>;
+  readonly cssRules?: ArrayLike<Rule>;
 }
 
 /**
