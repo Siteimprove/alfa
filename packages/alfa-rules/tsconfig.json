@@ -68,6 +68,7 @@
     "test/helpers/document-from-nodes.tsx",
     "test/helpers/has-language-attribute.spec.tsx",
     "test/helpers/is-document-element.spec.tsx",
+    "test/helpers/is-element-by-name.spec.tsx",
     "test/helpers/outcome.ts",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r10/rule.spec.tsx",
