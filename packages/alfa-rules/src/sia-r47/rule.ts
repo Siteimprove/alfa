@@ -40,7 +40,7 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
         const separator = [",", ";"];
         const equal = ["="];
         const properties = parsePropertiesList(
-          getAttribute(target, "content"),
+          getAttribute(target, "content")!,
           whitespace,
           separator,
           equal
@@ -86,9 +86,10 @@ function parsePropertiesList(
 ): Map<string, string> {
   const valueMap = new Map<string, string>();
 
-  const allSpecial = ignored.concat(separator, equal);
-  const separatorAndEqual = separator.concat(equal);
-  const notSeparator = ignored.concat(equal);
+  const sepSet = new Set(separator);
+  const allSpecial = new Set([...ignored, ...separator, ...equal]);
+  const separatorAndEqual = new Set([...separator, ...equal]);
+  const notSeparator = new Set([...ignored, ...equal]);
 
   const { length } = propertiesList;
   let i = 0;
@@ -97,28 +98,28 @@ function parsePropertiesList(
   let value: string;
   while (i < length) {
     // find the start of the next name
-    while (i < length && allSpecial.includes(propertiesList[i])) {
+    while (i < length && allSpecial.has(propertiesList[i])) {
       i++;
     }
     // parse the name of the property
     start = i;
-    while (i < length && !allSpecial.includes(propertiesList[i])) {
+    while (i < length && !allSpecial.has(propertiesList[i])) {
       i++;
     }
     name = propertiesList.substring(start, i);
     // find a separator (end of property) or equal sign
-    while (i < length && !separatorAndEqual.includes(propertiesList[i])) {
+    while (i < length && !separatorAndEqual.has(propertiesList[i])) {
       i++;
     }
     // skip all further ignored or equal characters
-    while (i < length && notSeparator.includes(propertiesList[i])) {
+    while (i < length && notSeparator.has(propertiesList[i])) {
       i++;
     }
     // if we are hitting a separator, the current property has just a name and no value, move on
-    if (!separator.includes(propertiesList[i])) {
+    if (!sepSet.has(propertiesList[i])) {
       // parse the value of the property
       start = i;
-      while (i < length && !allSpecial.includes(propertiesList[i])) {
+      while (i < length && !allSpecial.has(propertiesList[i])) {
         i++;
       }
       value = propertiesList.substring(start, i);
