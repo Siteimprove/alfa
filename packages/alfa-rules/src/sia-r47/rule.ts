@@ -78,7 +78,7 @@ function isMeta(element: Element, context: Node): boolean {
  * @param equal - A list of characters that are considered as equal sign
  * @returns a Map where each correctly formed "name=value" pair has a "name" key with value "value"
  */
-function parsePropertiesList(
+export function parsePropertiesList(
   propertiesList: string,
   ignored: Array<string>,
   separator: Array<string>,
