@@ -10,6 +10,7 @@
     "src/index.ts",
     "src/number/clamp.ts",
     "src/number/mod.ts",
+    "src/number/round.ts",
     "src/object/keys.ts",
     "src/object/set.ts",
     "src/object/values.ts",
