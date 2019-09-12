@@ -30,6 +30,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-act": "^0.0.0",
+    "@siteimprove/alfa-affine": "^0.0.0",
     "@siteimprove/alfa-aria": "^0.0.0",
     "@siteimprove/alfa-collection": "^0.0.0",
     "@siteimprove/alfa-compatibility": "^0.0.0",
