@@ -9,6 +9,7 @@
     "src/helpers/has-outcome.ts",
     "src/helpers/is-allowed-attribute.ts",
     "src/helpers/is-document-element.ts",
+    "src/helpers/is-element-by-name.ts",
     "src/helpers/is-perceivable.ts",
     "src/helpers/is-required-attribute.ts",
     "src/helpers/is-supported-attribute.ts",
