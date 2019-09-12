@@ -11,7 +11,7 @@ if (process.argv.length > 2) {
 }
 
 for (const pkg of packages) {
-  const root = `packages/${pkg}/test`;
+  const root = `packages/${pkg.replace("packages/", "")}/test`;
   const files = findFiles(root, endsWith(".spec.ts", ".spec.tsx"));
 
   for (const file of files) {
