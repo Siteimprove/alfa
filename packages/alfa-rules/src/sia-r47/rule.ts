@@ -5,11 +5,13 @@ import {
   Element,
   getAttribute,
   getElementNamespace,
+  hasAttribute,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { clamp } from "@siteimprove/alfa-util";
 
 export const SIA_R47: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r47.html",
@@ -24,12 +26,12 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
             return (
               isElement(node) &&
               isMeta(node, document) &&
-              getAttribute(node, "name").toLowerCase() === "viewport" &&
-              getAttribute(node, "content") !== null
+              getAttribute(node, "name", { lowerCase: true }) === "viewport" &&
+              hasAttribute(node, "content")
             );
           })
-        ).map(elt => {
-          return { applicable: true, aspect: document, target: elt };
+        ).map(element => {
+          return { applicable: true, aspect: document, target: element };
         });
       },
 
@@ -44,8 +46,8 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
           equal
         );
 
-        const scale = parseMaximumScale(properties["maximum-scale"]);
-        const scalable = parseUserScalable(properties["user-scalable"]);
+        const scale = parseMaximumScale(properties.get("maximum-scale"));
+        const scalable = parseUserScalable(properties.get("user-scalable"));
 
         return {
           1: { holds: scale >= 2 && scalable !== "fixed" }
@@ -64,74 +66,75 @@ function isMeta(element: Element, context: Node): boolean {
 }
 
 /*
- * parse a list of "name=value" properties according to https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
- * Note that this seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
- * Note that the algorithm considers "foo bar =  = === foobar" as a valid string for "foo=foobar"
+ * Parses a list of "name=value" properties according to https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
  *
- * @propertiesList: the list to be parsed
- * @ignored: list of characters that are ignored (considered as whitespace)
- * @separator: list of characters that are allowed to separate "name=value" pairs
- * @equal: list of characters that are considered as equal sign
+ * @remarks
+ * This seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
+ * The algorithm considers "foo bar =  = === foobar" as a valid string for "foo=foobar"
  *
- * @return an object where each correctly formed "name=value" pair is a {name: value} property
+ * @param propertiesList - The list to be parsed
+ * @param ignored - A list of characters that are ignored (considered as whitespace)
+ * @param separator - A list of characters that are allowed to separate "name=value" pairs
+ * @param equal - A list of characters that are considered as equal sign
+ * @returns a Map where each correctly formed "name=value" pair has a "name" key with value "value"
  */
 function parsePropertiesList(
   propertiesList: string,
   ignored: Array<string>,
   separator: Array<string>,
   equal: Array<string>
-): { [name: string]: string } {
-  const valueObj: { [name: string]: string } = {};
+): Map<string, string> {
+  const valueMap = new Map<string, string>();
 
   const allSpecial = ignored.concat(separator, equal);
   const separatorAndEqual = separator.concat(equal);
   const notSeparator = ignored.concat(equal);
 
-  const len = propertiesList.length;
+  const { length } = propertiesList;
   let i = 0;
   let start: number;
   let name: string;
   let value: string;
-  while (i < len) {
+  while (i < length) {
     // find the start of the next name
-    while (i < len && allSpecial.includes(propertiesList[i])) {
+    while (i < length && allSpecial.includes(propertiesList[i])) {
       i++;
     }
     // parse the name of the property
     start = i;
-    while (i < len && !allSpecial.includes(propertiesList[i])) {
+    while (i < length && !allSpecial.includes(propertiesList[i])) {
       i++;
     }
     name = propertiesList.substring(start, i);
     // find a separator (end of property) or equal sign
-    while (i < len && !separatorAndEqual.includes(propertiesList[i])) {
+    while (i < length && !separatorAndEqual.includes(propertiesList[i])) {
       i++;
     }
     // skip all further ignored or equal characters
-    while (i < len && notSeparator.includes(propertiesList[i])) {
+    while (i < length && notSeparator.includes(propertiesList[i])) {
       i++;
     }
     // if we are hitting a separator, the current property has just a name and no value, move on
-    if (separator.includes(propertiesList[i])) {
-      valueObj[name] = null;
-    } else {
+    if (!separator.includes(propertiesList[i])) {
       // parse the value of the property
       start = i;
-      while (i < len && !allSpecial.includes(propertiesList[i])) {
+      while (i < length && !allSpecial.includes(propertiesList[i])) {
         i++;
       }
       value = propertiesList.substring(start, i);
 
-      valueObj[name] = value;
+      valueMap.set(name, value);
     }
   }
 
-  return valueObj;
+  return valueMap;
 }
 
 /*
- * parse a "maximum-scale" property according to https://www.w3.org/TR/css-device-adapt-1/#min-scale-max-scale
- * Note that this seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
+ * Parses a "maximum-scale" property according to https://www.w3.org/TR/css-device-adapt-1/#min-scale-max-scale
+ *
+ * @remarks
+ * This seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
  */
 function parseMaximumScale(scale: string | undefined): number {
   switch (scale) {
@@ -146,15 +149,17 @@ function parseMaximumScale(scale: string | undefined): number {
       return 0.1;
     default:
       const scaleValue = Number(scale);
-      return isNaN(scaleValue) ? 0.1 : Math.max(0.1, Math.min(scaleValue, 10));
+      return isNaN(scaleValue) ? 0.1 : clamp(scaleValue, 0.1, 10);
   }
 }
 
 /*
- * parse a "user-scalable" property according to https://www.w3.org/TR/css-device-adapt-1/#user-scalable
- * Note that this seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
+ * Parses a "user-scalable" property according to https://www.w3.org/TR/css-device-adapt-1/#user-scalable
+ *
+ * @remark
+ * This seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
  */
-function parseUserScalable(scalable: string | undefined): string {
+function parseUserScalable(scalable: string | undefined): "zoom" | "fixed" {
   switch (scalable) {
     case undefined:
       return "fixed";
