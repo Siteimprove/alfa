@@ -144,6 +144,8 @@ for (const key of include) {
   parse(key);
 }
 
+features.sort((a, b) => (a.key > b.key ? 1 : a.key < b.key ? -1 : 0));
+
 let code = `
 // This file has been automatically generated based on the MDN browser
 // compatibility data. Do therefore not modify it directly! If you wish to make

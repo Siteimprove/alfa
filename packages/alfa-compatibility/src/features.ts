@@ -14,21 +14,23 @@ import { Feature } from "./types";
  */
 export type FeatureName =
   | "css.properties.border-radius"
-  | "css.properties.border-radius.elliptical_borders"
   | "css.properties.border-radius.4_values_for_4_corners"
+  | "css.properties.border-radius.elliptical_borders"
   | "css.properties.border-radius.percentages"
   | "css.properties.color"
-  | "css.properties.color.keyword_color_values"
-  | "css.properties.color.rgb_hexadecimal_notation"
-  | "css.properties.color.rgb_functional_notation"
-  | "css.properties.color.hsl"
   | "css.properties.color.alpha"
-  | "css.properties.color.currentcolor"
-  | "css.properties.color.transparent"
-  | "css.properties.color.rebeccapurple"
   | "css.properties.color.alpha_hexadecimal_notation"
-  | "css.properties.color.space_separated_functional_notation"
+  | "css.properties.color.currentcolor"
   | "css.properties.color.floats_in_rgb_rgba"
+  | "css.properties.color.hsl"
+  | "css.properties.color.hsl_function_accepts_alpha"
+  | "css.properties.color.keyword_color_values"
+  | "css.properties.color.rebeccapurple"
+  | "css.properties.color.rgb_function_accepts_alpha"
+  | "css.properties.color.rgb_functional_notation"
+  | "css.properties.color.rgb_hexadecimal_notation"
+  | "css.properties.color.space_separated_functional_notation"
+  | "css.properties.color.transparent"
   | "css.properties.font-weight"
   | "css.properties.font-weight.number";
 
@@ -55,28 +57,6 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
       }
     }
   },
-  "css.properties.border-radius.elliptical_borders": {
-    support: {
-      chrome: {
-        added: true
-      },
-      edge: {
-        added: "12"
-      },
-      firefox: {
-        added: "3.5"
-      },
-      ie: {
-        added: "9"
-      },
-      opera: {
-        added: true
-      },
-      safari: {
-        added: true
-      }
-    }
-  },
   "css.properties.border-radius.4_values_for_4_corners": {
     support: {
       chrome: {
@@ -86,7 +66,7 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
         added: "12"
       },
       firefox: {
-        added: true
+        added: "4"
       },
       ie: {
         added: "9"
@@ -95,7 +75,29 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
         added: true
       },
       safari: {
-        added: "5"
+        added: "4.1"
+      }
+    }
+  },
+  "css.properties.border-radius.elliptical_borders": {
+    support: {
+      chrome: {
+        added: "1"
+      },
+      edge: {
+        added: "12"
+      },
+      firefox: {
+        added: "4"
+      },
+      ie: {
+        added: "9"
+      },
+      opera: {
+        added: true
+      },
+      safari: {
+        added: "3"
       }
     }
   },
@@ -139,7 +141,121 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
         added: true
       },
       safari: {
-        added: true
+        added: "1"
+      }
+    }
+  },
+  "css.properties.color.alpha": {
+    support: {
+      chrome: {
+        added: "1"
+      },
+      edge: {
+        added: "12"
+      },
+      firefox: {
+        added: "3"
+      },
+      ie: {
+        added: "9"
+      },
+      opera: {
+        added: "10"
+      },
+      safari: {
+        added: "3.1"
+      }
+    }
+  },
+  "css.properties.color.alpha_hexadecimal_notation": {
+    support: {
+      chrome: {
+        added: "62"
+      },
+      firefox: {
+        added: "49"
+      },
+      opera: {
+        added: "49"
+      },
+      safari: {
+        added: "9.1"
+      }
+    }
+  },
+  "css.properties.color.currentcolor": {
+    support: {
+      chrome: {
+        added: "1"
+      },
+      edge: {
+        added: "12"
+      },
+      firefox: {
+        added: "1.5"
+      },
+      ie: {
+        added: "9"
+      },
+      opera: {
+        added: "9.5"
+      },
+      safari: {
+        added: "4"
+      }
+    }
+  },
+  "css.properties.color.floats_in_rgb_rgba": {
+    support: {
+      chrome: {
+        added: "66"
+      },
+      firefox: {
+        added: "52"
+      },
+      opera: {
+        added: "53"
+      },
+      safari: {
+        added: "12.1"
+      }
+    }
+  },
+  "css.properties.color.hsl": {
+    support: {
+      chrome: {
+        added: "1"
+      },
+      edge: {
+        added: "12"
+      },
+      firefox: {
+        added: "1"
+      },
+      ie: {
+        added: "9"
+      },
+      opera: {
+        added: "9.5"
+      },
+      safari: {
+        added: "3.1"
+      }
+    }
+  },
+  "css.properties.color.hsl_function_accepts_alpha": {
+    support: {
+      chrome: {
+        added: "65"
+      },
+      firefox: {
+        added: "52"
+      },
+      opera: {
+        added: "52"
+      },
+      safari: {
+        added: "12.1"
       }
     }
   },
@@ -156,6 +272,66 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
       },
       ie: {
         added: "3"
+      },
+      opera: {
+        added: "3.5"
+      },
+      safari: {
+        added: "1"
+      }
+    }
+  },
+  "css.properties.color.rebeccapurple": {
+    support: {
+      chrome: {
+        added: "38"
+      },
+      edge: {
+        added: "12"
+      },
+      firefox: {
+        added: "33"
+      },
+      ie: {
+        added: "11"
+      },
+      opera: {
+        added: "25"
+      },
+      safari: {
+        added: "9"
+      }
+    }
+  },
+  "css.properties.color.rgb_function_accepts_alpha": {
+    support: {
+      chrome: {
+        added: "65"
+      },
+      firefox: {
+        added: "52"
+      },
+      opera: {
+        added: "52"
+      },
+      safari: {
+        added: "12.1"
+      }
+    }
+  },
+  "css.properties.color.rgb_functional_notation": {
+    support: {
+      chrome: {
+        added: "1"
+      },
+      edge: {
+        added: "12"
+      },
+      firefox: {
+        added: "1"
+      },
+      ie: {
+        added: "4"
       },
       opera: {
         added: "3.5"
@@ -187,91 +363,19 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
       }
     }
   },
-  "css.properties.color.rgb_functional_notation": {
+  "css.properties.color.space_separated_functional_notation": {
     support: {
       chrome: {
-        added: "1"
-      },
-      edge: {
-        added: "12"
+        added: "65"
       },
       firefox: {
-        added: "1"
-      },
-      ie: {
-        added: "4"
+        added: "52"
       },
       opera: {
-        added: "3.5"
+        added: "52"
       },
       safari: {
-        added: "1"
-      }
-    }
-  },
-  "css.properties.color.hsl": {
-    support: {
-      chrome: {
-        added: "1"
-      },
-      edge: {
-        added: "12"
-      },
-      firefox: {
-        added: "1"
-      },
-      ie: {
-        added: "9"
-      },
-      opera: {
-        added: "9.5"
-      },
-      safari: {
-        added: "3.1"
-      }
-    }
-  },
-  "css.properties.color.alpha": {
-    support: {
-      chrome: {
-        added: "1"
-      },
-      edge: {
-        added: "12"
-      },
-      firefox: {
-        added: "3"
-      },
-      ie: {
-        added: "9"
-      },
-      opera: {
-        added: "10"
-      },
-      safari: {
-        added: "3.1"
-      }
-    }
-  },
-  "css.properties.color.currentcolor": {
-    support: {
-      chrome: {
-        added: "1"
-      },
-      edge: {
-        added: "12"
-      },
-      firefox: {
-        added: "1.5"
-      },
-      ie: {
-        added: "9"
-      },
-      opera: {
-        added: "9.5"
-      },
-      safari: {
-        added: "4"
+        added: "12.1"
       }
     }
   },
@@ -294,73 +398,6 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
       },
       safari: {
         added: "3.1"
-      }
-    }
-  },
-  "css.properties.color.rebeccapurple": {
-    support: {
-      chrome: {
-        added: "38"
-      },
-      edge: {
-        added: "12"
-      },
-      firefox: {
-        added: "33"
-      },
-      ie: {
-        added: "11"
-      },
-      opera: {
-        added: "25"
-      },
-      safari: {
-        added: true
-      }
-    }
-  },
-  "css.properties.color.alpha_hexadecimal_notation": {
-    support: {
-      chrome: {
-        added: "62"
-      },
-      firefox: {
-        added: "49"
-      },
-      safari: {
-        added: "9.1"
-      }
-    }
-  },
-  "css.properties.color.space_separated_functional_notation": {
-    support: {
-      chrome: {
-        added: "65"
-      },
-      firefox: {
-        added: "52"
-      },
-      opera: {
-        added: "52"
-      },
-      safari: {
-        added: "12.1"
-      }
-    }
-  },
-  "css.properties.color.floats_in_rgb_rgba": {
-    support: {
-      chrome: {
-        added: "66"
-      },
-      firefox: {
-        added: "52"
-      },
-      opera: {
-        added: "53"
-      },
-      safari: {
-        added: "12.1"
       }
     }
   },
@@ -392,13 +429,16 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
         added: "62"
       },
       edge: {
-        added: true
+        added: "17"
       },
       firefox: {
         added: "61"
       },
       opera: {
         added: "49"
+      },
+      safari: {
+        added: "11"
       }
     }
   }
