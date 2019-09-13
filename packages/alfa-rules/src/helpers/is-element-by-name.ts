@@ -11,9 +11,15 @@ export function isElementByName(
   names: string | Array<string>,
   namespaces: Namespace | Array<Namespace> = Namespace.HTML
 ): boolean {
-  if (!new Set(namespaces).has(getElementNamespace(element, context))) {
-    return false;
-  }
+  const namesSet = new Set(names instanceof Array ? names : [names]);
+  const namespacesSet = new Set(
+    namespaces instanceof Array ? namespaces : [namespaces]
+  );
+  const elementNamespace = getElementNamespace(element, context);
 
-  return new Set(names).has(element.localName);
+  return (
+    elementNamespace !== null &&
+    namespacesSet.has(elementNamespace) &&
+    namesSet.has(element.localName)
+  );
 }
