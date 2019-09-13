@@ -8,7 +8,7 @@ import { Element, Node } from "./types";
  * Given an element and a context, check if the element is focusable within the
  * context.
  *
- * @see https://www.w3.org/TR/html/editing.html#focusable
+ * @see https://html.spec.whatwg.org/#focusable-area
  */
 export function isFocusable(
   element: Element,

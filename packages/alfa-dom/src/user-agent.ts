@@ -3,7 +3,7 @@ import { keys } from "@siteimprove/alfa-util";
 import { Rule, RuleType, StyleRule, StyleSheet } from "./types";
 
 /**
- * @see https://www.w3.org/TR/html/rendering.html
+ * @see https://html.spec.whatwg.org/#rendering
  *
  * @internal
  */
@@ -13,7 +13,7 @@ export const UserAgent: StyleSheet = {
     // cssRule("@namespace url(http://www.w3.org/1999/xhtml)"),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#hidden-elements
+     * @see https://html.spec.whatwg.org/#hidden-elements
      */
 
     cssRule(
@@ -42,7 +42,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#the-page
+     * @see https://html.spec.whatwg.org/#the-page
      */
 
     cssRule("html, body", {
@@ -50,7 +50,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#non-replaced-elements-flow-content
+     * @see https://html.spec.whatwg.org/#non-replaced-elements-flow-content
      */
 
     cssRule(
@@ -73,7 +73,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#non-replaced-elements-phrasing-content
+     * @see https://html.spec.whatwg.org/#non-replaced-elements-phrasing-content
      */
 
     cssRule("big", {
@@ -109,7 +109,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#sections-and-headings
+     * @see https://html.spec.whatwg.org/#sections-and-headings
      */
 
     cssRule("article, aside, h1, h2, h3, h4, h5, h6, hgroup, nav, section", {
@@ -141,7 +141,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#section-lists
+     * @see https://html.spec.whatwg.org/#section-lists
      */
 
     cssRule("dir, dd, dl, dt, ol, ul", {
@@ -153,7 +153,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#tables
+     * @see https://html.spec.whatwg.org/#tables
      */
 
     cssRule("table", {
@@ -204,7 +204,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#the-hr-element-rendering
+     * @see https://html.spec.whatwg.org/#the-hr-element-rendering
      */
 
     cssRule("hr", {
@@ -212,7 +212,7 @@ export const UserAgent: StyleSheet = {
     }),
 
     /**
-     * @see https://www.w3.org/TR/html/rendering.html#the-fieldset-and-legend-elements
+     * @see https://html.spec.whatwg.org/#the-fieldset-and-legend-elements
      */
 
     cssRule("fieldset", {

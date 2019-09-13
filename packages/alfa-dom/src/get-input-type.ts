@@ -30,7 +30,7 @@ export const enum InputType {
  * Given an `<input>` element, get the type of the element. If the element is
  * not an `<input>`, `null` is returned.
  *
- * @see https://www.w3.org/TR/html/sec-forms.html#element-attrdef-input-type
+ * @see https://html.spec.whatwg.org/#attr-input-type
  */
 export function getInputType(element: Element): InputType | null {
   if (element.localName !== "input") {
@@ -39,7 +39,7 @@ export function getInputType(element: Element): InputType | null {
 
   // The `type` attribute of is an enumerated attribute and is therefore case-
   // insensitive.
-  // https://www.w3.org/TR/html/infrastructure.html#enumerated-attributes
+  // https://html.spec.whatwg.org/#enumerated-attribute
   const type = getAttribute(element, "type", { lowerCase: true });
 
   switch (type) {

@@ -9,7 +9,7 @@ import { Namespace, Node } from "./types";
  * Given a node and a context, construct an HTML serialization of the node
  * within the context.
  *
- * @see https://www.w3.org/TR/html/syntax.html#serializing-html-fragments
+ * @see https://html.spec.whatwg.org/#serializing-html-fragments
  */
 export function serialize(
   node: Node,
@@ -154,7 +154,7 @@ export namespace serialize {
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#escaping-a-string
+ * @see https://html.spec.whatwg.org/#escapingString
  */
 function escape(input: string, options: escape.Options = {}): string {
   input = input.replace(/&/g, "&amp;").replace(/\u00a0/g, "&nbsp;");

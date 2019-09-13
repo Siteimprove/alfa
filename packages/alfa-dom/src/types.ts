@@ -496,31 +496,31 @@ export interface SupportsRule extends ConditionRule {
 }
 
 /**
- * @see https://www.w3.org/TR/html/infrastructure.html#namespaces
+ * @see https://infra.spec.whatwg.org/#namespaces
  */
 export const enum Namespace {
   /**
-   * @see https://www.w3.org/TR/html/infrastructure.html#html-namespace
+   * @see https://infra.spec.whatwg.org/#html-namespace
    */
   HTML = "http://www.w3.org/1999/xhtml",
 
   /**
-   * @see https://www.w3.org/TR/html/infrastructure.html#mathml-namespace
+   * @see https://infra.spec.whatwg.org/#mathml-namespace
    */
   MathML = "http://www.w3.org/1998/Math/MathML",
 
   /**
-   * @see https://www.w3.org/TR/html/infrastructure.html#svg-namespace
+   * @see https://infra.spec.whatwg.org/#svg-namespace
    */
   SVG = "http://www.w3.org/2000/svg",
 
   /**
-   * @see https://www.w3.org/TR/html/infrastructure.html#xlink-namespace
+   * @see https://infra.spec.whatwg.org/#xlink-namespace
    */
   XLink = "http://www.w3.org/1999/xlink",
 
   /**
-   * @see https://www.w3.org/TR/html/infrastructure.html#xml-namespace
+   * @see https://infra.spec.whatwg.org/#xml-namespace
    */
   XML = "http://www.w3.org/XML/1998/namespace",
 
@@ -529,7 +529,7 @@ export const enum Namespace {
    * the specification and whether or not it is strictly required is an awfully
    * good question.
    *
-   * @see https://www.w3.org/TR/html/infrastructure.html#xmlns-namespace
+   * @see https://infra.spec.whatwg.org/#xmlns-namespace
    */
   XMLNS = "http://www.w3.org/2000/xmlns/"
 }

@@ -9,16 +9,16 @@ import { Element, Node } from "./types";
  * Given an element and a context, check if the element is disabled within the
  * context.
  *
- * @see https://www.w3.org/TR/html/disabled-elements.html#disabling
+ * @see https://html.spec.whatwg.org/#concept-fe-disabled
  */
 export function isDisabled(element: Element, context: Node): boolean {
   switch (element.localName) {
-    // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-disabledformelements-disabled
+    // https://html.spec.whatwg.org/#attr-fe-disabled
     case "button":
     case "input":
     case "select":
     case "textarea":
-    // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-fieldset-disabled
+    // https://html.spec.whatwg.org/#attr-fieldset-disabled
     case "fieldset":
       if (hasAttribute(element, "disabled")) {
         return true;
@@ -40,7 +40,7 @@ export function isDisabled(element: Element, context: Node): boolean {
 
       return legend !== null && !contains(legend, context, element);
 
-    // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-option-disabled
+    // https://html.spec.whatwg.org/#attr-option-disabled
     case "option":
       if (hasAttribute(element, "disabled")) {
         return true;
@@ -50,7 +50,7 @@ export function isDisabled(element: Element, context: Node): boolean {
 
       return optgroup !== null && isDisabled(optgroup, context);
 
-    // https://www.w3.org/TR/html/sec-forms.html#element-attrdef-optgroup-disabled
+    // https://html.spec.whatwg.org/#attr-optgroup-disabled
     case "optgroup":
       return hasAttribute(element, "disabled");
   }

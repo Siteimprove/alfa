@@ -22,50 +22,50 @@ type InsertionMode = (token: Token, document: Document, state: State) => void;
 type InsertionLocation = [Array<Node>, number];
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#markers
+ * @see https://html.spec.whatwg.org/#concept-parser-marker
  */
 const Marker = Symbol("marker");
 type Marker = typeof Marker;
 
 interface State {
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#insertion-mode
+   * @see https://html.spec.whatwg.org/#insertion-mode
    */
   insertionMode: InsertionMode;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#original-insertion-mode
+   * @see https://html.spec.whatwg.org/#original-insertion-mode
    */
   originalInsertionMode: InsertionMode | null;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#stack-of-open-elements
+   * @see https://html.spec.whatwg.org/#stack-of-open-elements
    */
   openElements: Array<Mutable<Element>>;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#list-of-active-formatting-elements
+   * @see https://html.spec.whatwg.org/#list-of-active-formatting-elements
    */
   activeFormattingElements: Array<Element | Marker>;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#frameset-ok-flag
+   * @see https://html.spec.whatwg.org/#frameset-ok-flag
    */
   framesetOk: boolean;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#stack-of-template-insertion-modes
+   * @see https://html.spec.whatwg.org/#stack-of-template-insertion-modes
    */
   templateInsertionModes: Array<InsertionMode>;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#head-element-pointer
+   * @see https://html.spec.whatwg.org/#head-element-pointer
    */
   headElementPointer: Element | null;
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-initial-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-initial-insertion-mode
  */
 const initial: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -106,7 +106,7 @@ const initial: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-before-html-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-before-html-insertion-mode
  */
 const beforeHtml: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -148,7 +148,7 @@ const beforeHtml: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-before-head-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-before-head-insertion-mode
  */
 const beforeHead: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -168,7 +168,7 @@ const beforeHead: InsertionMode = (token, document, state) => {
       return;
 
     case TokenType.Doctype:
-      return; // parse error
+      return; // Parse error
 
     case TokenType.StartTag:
       switch (token.name) {
@@ -194,7 +194,7 @@ const beforeHead: InsertionMode = (token, document, state) => {
             break;
 
           default:
-            return; // parse error
+            return; // Parse error
         }
       }
 
@@ -206,7 +206,7 @@ const beforeHead: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-head-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-head-insertion-mode
  */
 const inHead: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -334,12 +334,12 @@ const inHead: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-head-noscript-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-head-noscript-insertion-mode
  */
 const inHeadNoscript: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-after-head-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-after-head-insertion-mode
  */
 const afterHead: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -431,7 +431,7 @@ const afterHead: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-body-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-body-insertion-mode
  */
 const inBody: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -524,7 +524,7 @@ const inBody: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#sec-the-text-insertion-mode
+ * @see https://html.spec.whatwg.org/#sec-the-text-insertion-mode
  */
 const text: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -544,52 +544,52 @@ const text: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-table-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-table-insertion-mode
  */
 const inTable: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-table-text-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-table-text-insertion-mode
  */
 // const inTableText: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-caption-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-caption-insertion-mode
  */
 const inCaption: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-column-group-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-column-group-insertion-mode
  */
 const inColumnGroup: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-table-body-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-table-body-insertion-mode
  */
 const inTableBody: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-row-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-row-insertion-mode
  */
 const inRow: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-cell-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-cell-insertion-mode
  */
 const inCell: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-select-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-select-insertion-mode
  */
 const inSelect: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-select-in-table-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-select-in-table-insertion-mode
  */
 const inSelectInTable: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-template-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-template-insertion-mode
  */
 const inTemplate: InsertionMode = (token, document, state) => {
   switch (token.type) {
@@ -667,32 +667,32 @@ const inTemplate: InsertionMode = (token, document, state) => {
 };
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-after-body-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-after-body-insertion-mode
  */
 // const afterBody: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-in-frameset-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-in-frameset-insertion-mode
  */
 const inFrameset: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-after-frameset-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-after-frameset-insertion-mode
  */
 // const afterFrameset: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-after-after-body-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-after-after-body-insertion-mode
  */
 // const afterAfterBody: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#the-after-after-frameset-insertion-mode
+ * @see https://html.spec.whatwg.org/#the-after-after-frameset-insertion-mode
  */
 // const afterAfterFrameset: InsertionMode = () => {};
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#tree-construction
+ * @see https://html.spec.whatwg.org/#tree-construction
  */
 function constructTree(
   token: Token,
@@ -780,7 +780,7 @@ function currentNode(state: State): Mutable<Node> | null {
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#current-template-insertion-mode
+ * @see https://html.spec.whatwg.org/#current-template-insertion-mode
  */
 function currentTemplateInsertionMode(state: State): InsertionMode | null {
   const insertionMode =
@@ -853,7 +853,7 @@ function createDocumentType(
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#generate-all-implied-end-tags-thoroughly
+ * @see https://html.spec.whatwg.org/#generate-all-implied-end-tags-thoroughly
  */
 function generateImpliedTags(state: State) {
   while (true) {
@@ -892,7 +892,7 @@ function generateImpliedTags(state: State) {
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#reset-the-insertion-mode-appropriately
+ * @see https://html.spec.whatwg.org/#reset-the-insertion-mode-appropriately
  */
 function resetInsertionMode(state: State) {
   let last = false;
@@ -1001,7 +1001,7 @@ function resetInsertionMode(state: State) {
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#clear-the-list-of-active-formatting-elements-up-to-the-last-marker
+ * @see https://html.spec.whatwg.org/#clear-the-list-of-active-formatting-elements-up-to-the-last-marker
  */
 function clearUntilLastMarker(state: State) {
   while (true) {
@@ -1014,7 +1014,7 @@ function clearUntilLastMarker(state: State) {
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#reconstruct-the-active-formatting-elements
+ * @see https://html.spec.whatwg.org/#reconstruct-the-active-formatting-elements
  */
 function reconstructActiveFormattingElements(state: State) {
   if (state.activeFormattingElements.length === 0) {

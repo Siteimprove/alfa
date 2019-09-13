@@ -65,7 +65,7 @@ const whitespace = /\s/;
 const digit = /\d/;
 
 /**
- * @see https://www.w3.org/TR/html/document-metadata.html#statedef-http-equiv-refresh
+ * @see https://html.spec.whatwg.org/#attr-meta-http-equiv-refresh
  */
 function getRefreshTime(content: string): number | null {
   const stream = new Stream(content.length, i => content[i]);

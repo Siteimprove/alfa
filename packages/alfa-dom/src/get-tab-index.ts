@@ -10,7 +10,7 @@ const { isNaN } = Number;
 /**
  * Given an element, get the tab index of the element.
  *
- * @see https://www.w3.org/TR/html/editing.html#the-tabindex-attribute
+ * @see https://html.spec.whatwg.org/#attr-tabindex
  */
 export function getTabIndex(element: Element, context: Node): number | null {
   const tabIndex = getAttribute(element, "tabindex");
@@ -88,14 +88,14 @@ function isSuggestedFocusableElement(element: Element, context: Node): boolean {
 }
 
 /**
- * @see https://www.w3.org/TR/html/editing.html#editing-host
+ * @see https://html.spec.whatwg.org/#editing-host
  */
 function isEditingHost(element: Element): boolean {
   return hasAttribute(element, "contenteditable");
 }
 
 /**
- * @see https://www.w3.org/TR/html/browsers.html#browsing-context-container
+ * @see https://html.spec.whatwg.org/#browsing-context-container
  */
 function isBrowsingContextContainer(element: Element): boolean {
   return element.localName === "iframe";

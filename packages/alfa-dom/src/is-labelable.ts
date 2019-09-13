@@ -4,7 +4,7 @@ import { Element } from "./types";
 /**
  * Given an element, check if the element can be associated with a form label.
  *
- * @see https://www.w3.org/TR/html/forms.html#labelable-element
+ * @see https://html.spec.whatwg.org/#category-label
  *
  * @example
  * const input = <input type="text" />;

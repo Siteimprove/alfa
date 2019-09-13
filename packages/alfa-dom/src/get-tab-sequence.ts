@@ -9,7 +9,7 @@ import { Element, Node } from "./types";
  * Given a node and a context, get the sequential focus navigation order of the
  * node and its children within the context.
  *
- * @see https://www.w3.org/TR/html/editing.html#sequential-focus-navigation
+ * @see https://html.spec.whatwg.org/#sequential-focus-navigation
  */
 export function getTabSequence(
   node: Node,
