@@ -9,7 +9,7 @@ import { Element, Node } from "./types";
  * within the context. If the element is not a `<slot>` or no nodes are assigned
  * to the `<slot>`, an empty array is returned.
  *
- * @see https://www.w3.org/TR/dom41/#slot-assigned-nodes
+ * @see https://dom.spec.whatwg.org/#slot-assigned-nodes
  *
  * @example
  * const slot = <slot name="foo" />;
@@ -47,7 +47,7 @@ export namespace getAssignedNodes {
 }
 
 /**
- * @see https://www.w3.org/TR/dom41/#find-slotables
+ * @see https://dom.spec.whatwg.org/#find-slotables
  */
 function findSlotables(slot: Element, context: Node): Array<Node> {
   const result: Array<Node> = [];
@@ -80,7 +80,7 @@ function findSlotables(slot: Element, context: Node): Array<Node> {
 }
 
 /**
- * @see https://www.w3.org/TR/dom41/#find-flattened-slotables
+ * @see https://dom.spec.whatwg.org/#find-flattened-slotables
  */
 function findFlattenedSlotables(slot: Element, context: Node): Array<Node> {
   const result: Array<Node> = [];

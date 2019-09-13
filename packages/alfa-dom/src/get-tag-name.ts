@@ -6,7 +6,7 @@ import { Element, Namespace, Node } from "./types";
  * context. For elements in the HTML namespace, the tag name will be upper
  * cased.
  *
- * @see https://www.w3.org/TR/dom/#dom-element-tagname
+ * @see https://dom.spec.whatwg.org/#dom-element-tagname
  */
 export function getTagName(element: Element, context: Node): string {
   let qualifiedName: string;

@@ -1,36 +1,36 @@
 export const enum NodeType {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-element_node
+   * @see https://dom.spec.whatwg.org/#dom-node-element_node
    */
   Element = 1,
 
   /**
-   * @see https://www.w3.org/TR/dom41/#dom-node-attribute_node
+   * @see https://dom.spec.whatwg.org/#dom-node-attribute_node
    */
   Attribute = 2,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-text_node
+   * @see https://dom.spec.whatwg.org/#dom-node-text_node
    */
   Text = 3,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-comment_node
+   * @see https://dom.spec.whatwg.org/#dom-node-comment_node
    */
   Comment = 8,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_node
+   * @see https://dom.spec.whatwg.org/#dom-node-document_node
    */
   Document = 9,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_type_node
+   * @see https://dom.spec.whatwg.org/#dom-node-document_type_node
    */
   DocumentType = 10,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_fragment_node
+   * @see https://dom.spec.whatwg.org/#dom-node-document_fragment_node
    */
   DocumentFragment = 11
 }
@@ -50,76 +50,76 @@ export const enum NodeType {
  * provide access to parent nodes in amortized constant time. When moving down
  * the DOM tree, we get access to parent pointers for free.
  *
- * @see https://www.w3.org/TR/dom/#interface-node
+ * @see https://dom.spec.whatwg.org/#interface-node
  */
 export interface Node {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-nodetype
+   * @see https://dom.spec.whatwg.org/#dom-node-nodetype
    */
   readonly nodeType: NodeType;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-childnodes
+   * @see https://dom.spec.whatwg.org/#dom-node-childnodes
    */
   readonly childNodes: ArrayLike<Node>;
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-characterdata
+ * @see https://dom.spec.whatwg.org/#interface-characterdata
  */
 export interface CharacterData extends Node {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-characterdata-data
+   * @see https://dom.spec.whatwg.org/#dom-characterdata-data
    */
   readonly data: string;
 }
 
 /**
- * @see https://www.w3.org/TR/dom41/#interface-attr
+ * @see https://dom.spec.whatwg.org/#interface-attr
  */
 export interface Attribute extends Node {
   /**
-   * @see https://www.w3.org/TR/dom41/#dom-node-attribute_node
+   * @see https://dom.spec.whatwg.org/#dom-node-attribute_node
    */
   readonly nodeType: NodeType.Attribute;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-attr-prefix
+   * @see https://dom.spec.whatwg.org/#dom-attr-prefix
    */
   readonly prefix: string | null;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-attr-localname
+   * @see https://dom.spec.whatwg.org/#dom-attr-localname
    */
   readonly localName: string;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-attr-value
+   * @see https://dom.spec.whatwg.org/#dom-attr-value
    */
   readonly value: string;
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-element
+ * @see https://dom.spec.whatwg.org/#interface-element
  */
 export interface Element extends Node {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-element_node
+   * @see https://dom.spec.whatwg.org/#dom-node-element_node
    */
   readonly nodeType: NodeType.Element;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-element-prefix
+   * @see https://dom.spec.whatwg.org/#dom-element-prefix
    */
   readonly prefix: string | null;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-element-localname
+   * @see https://dom.spec.whatwg.org/#dom-element-localname
    */
   readonly localName: string;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-element-attributes
+   * @see https://dom.spec.whatwg.org/#dom-element-attributes
    */
   readonly attributes: ArrayLike<Attribute>;
 
@@ -127,7 +127,7 @@ export interface Element extends Node {
    * NB: In environments where Shadow DOM is not supported, the `shadowRoot`
    * property will not be defined.
    *
-   * @see https://www.w3.org/TR/dom41/#dom-element-shadowroot
+   * @see https://dom.spec.whatwg.org/#dom-element-shadowroot
    */
   readonly shadowRoot?: ShadowRoot | null;
 
@@ -140,31 +140,31 @@ export interface Element extends Node {
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-text
+ * @see https://dom.spec.whatwg.org/#interface-text
  */
 export interface Text extends CharacterData {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-text_node
+   * @see https://dom.spec.whatwg.org/#dom-node-text_node
    */
   readonly nodeType: NodeType.Text;
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-comment
+ * @see https://dom.spec.whatwg.org/#interface-comment
  */
 export interface Comment extends CharacterData {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-comment_node
+   * @see https://dom.spec.whatwg.org/#dom-node-comment_node
    */
   readonly nodeType: NodeType.Comment;
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-document
+ * @see https://dom.spec.whatwg.org/#interface-document
  */
 export interface Document extends Node {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_node
+   * @see https://dom.spec.whatwg.org/#dom-node-document_node
    */
   readonly nodeType: NodeType.Document;
 
@@ -175,46 +175,46 @@ export interface Document extends Node {
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-documenttype
+ * @see https://dom.spec.whatwg.org/#interface-documenttype
  */
 export interface DocumentType extends Node {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_type_node
+   * @see https://dom.spec.whatwg.org/#dom-node-document_type_node
    */
   readonly nodeType: NodeType.DocumentType;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-documenttype-name
+   * @see https://dom.spec.whatwg.org/#dom-documenttype-name
    */
   readonly name: string;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-documenttype-publicid
+   * @see https://dom.spec.whatwg.org/#dom-documenttype-publicid
    */
   readonly publicId: string;
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-documenttype-systemid
+   * @see https://dom.spec.whatwg.org/#dom-documenttype-systemid
    */
   readonly systemId: string;
 }
 
 /**
- * @see https://www.w3.org/TR/dom/#interface-documentfragment
+ * @see https://dom.spec.whatwg.org/#interface-documentfragment
  */
 export interface DocumentFragment extends Node {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_fragment_node
+   * @see https://dom.spec.whatwg.org/#dom-node-document_fragment_node
    */
   readonly nodeType: NodeType.DocumentFragment;
 }
 
 /**
- * @see https://www.w3.org/TR/dom41/#interface-shadowroot
+ * @see https://dom.spec.whatwg.org/#interface-shadowroot
  */
 export interface ShadowRoot extends DocumentFragment {
   /**
-   * @see https://www.w3.org/TR/dom41/#dom-shadowroot-mode
+   * @see https://dom.spec.whatwg.org/#dom-shadowroot-mode
    */
   readonly mode: "open" | "closed";
 

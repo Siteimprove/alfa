@@ -37,17 +37,16 @@ test("Returns Disconnected if the nodes are not in the same tree", t => {
   const isDisc = cmp & DocumentPosition.Disconnected;
   t.equal(isDisc, DocumentPosition.Disconnected);
 
-  /*
-   * The following checks are needed according to the spec
-   * @see https://www.w3.org/TR/dom/#dom-node-comparedocumentposition
-   */
+  // The following checks are needed according to the spec
+  // https://dom.spec.whatwg.org/#dom-node-comparedocumentposition
 
   const isPrec = cmp & DocumentPosition.Preceding;
   const isFoll = cmp & DocumentPosition.Following;
 
-  // check that only the preceding flag xor the following flag is set
+  // Check that only the preceding flag xor the following flag is set
   t.equal((isPrec >> 1) ^ (isFoll >> 2), 1);
-  // chech that if strong precedes div then the div should follow strong
+
+  // Check that if strong precedes div then the div should follow strong
   if (isPrec === DocumentPosition.Preceding) {
     t(
       cmp ===

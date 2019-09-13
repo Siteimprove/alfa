@@ -11,7 +11,7 @@ const classLists = Cache.of<Element, Iterable<string>>();
 /**
  * Given an element, get the class list of the element.
  *
- * @see https://www.w3.org/TR/dom/#dom-element-classlist
+ * @see https://dom.spec.whatwg.org/#dom-element-classlist
  *
  * @example
  * const div = <div class="foo bar" />;
