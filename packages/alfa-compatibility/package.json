@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "mdn-browser-compat-data": "0.0.80",
+    "mdn-browser-compat-data": "0.0.94",
     "prettier": "1.18.2"
   }
 }
