@@ -7268,6 +7268,11 @@ export namespace PrimaryLanguages {
     name: "cet"
   };
 
+  export const CEY: PrimaryLanguage = {
+    type: "language",
+    name: "cey"
+  };
+
   export const CFA: PrimaryLanguage = {
     type: "language",
     name: "cfa"
@@ -9446,6 +9451,11 @@ export namespace PrimaryLanguages {
     name: "dnn"
   };
 
+  export const DNO: PrimaryLanguage = {
+    type: "language",
+    name: "dno"
+  };
+
   export const DNR: PrimaryLanguage = {
     type: "language",
     name: "dnr"
@@ -9956,6 +9966,11 @@ export namespace PrimaryLanguages {
   export const DWY: PrimaryLanguage = {
     type: "language",
     name: "dwy"
+  };
+
+  export const DWZ: PrimaryLanguage = {
+    type: "language",
+    name: "dwz"
   };
 
   export const DYA: PrimaryLanguage = {
@@ -19994,6 +20009,11 @@ export namespace PrimaryLanguages {
     name: "lsm"
   };
 
+  export const LSN: PrimaryLanguage = {
+    type: "language",
+    name: "lsn"
+  };
+
   export const LSO: PrimaryLanguage = {
     type: "language",
     name: "lso"
@@ -20017,6 +20037,11 @@ export namespace PrimaryLanguages {
   export const LST: PrimaryLanguage = {
     type: "language",
     name: "lst"
+  };
+
+  export const LSV: PrimaryLanguage = {
+    type: "language",
+    name: "lsv"
   };
 
   export const LSY: PrimaryLanguage = {
@@ -20178,6 +20203,11 @@ export namespace PrimaryLanguages {
   export const LVA: PrimaryLanguage = {
     type: "language",
     name: "lva"
+  };
+
+  export const LVI: PrimaryLanguage = {
+    type: "language",
+    name: "lvi"
   };
 
   export const LVK: PrimaryLanguage = {
@@ -27875,6 +27905,11 @@ export namespace PrimaryLanguages {
     name: "pnc"
   };
 
+  export const PND: PrimaryLanguage = {
+    type: "language",
+    name: "pnd"
+  };
+
   export const PNE: PrimaryLanguage = {
     type: "language",
     name: "pne"
@@ -35462,6 +35497,11 @@ export namespace PrimaryLanguages {
     name: "szw"
   };
 
+  export const SZY: PrimaryLanguage = {
+    type: "language",
+    name: "szy"
+  };
+
   export const TAA: PrimaryLanguage = {
     type: "language",
     name: "taa"
@@ -36439,6 +36479,11 @@ export namespace PrimaryLanguages {
     name: "tji"
   };
 
+  export const TJJ: PrimaryLanguage = {
+    type: "language",
+    name: "tjj"
+  };
+
   export const TJL: PrimaryLanguage = {
     type: "language",
     name: "tjl"
@@ -36457,6 +36502,11 @@ export namespace PrimaryLanguages {
   export const TJO: PrimaryLanguage = {
     type: "language",
     name: "tjo"
+  };
+
+  export const TJP: PrimaryLanguage = {
+    type: "language",
+    name: "tjp"
   };
 
   export const TJS: PrimaryLanguage = {
@@ -37779,6 +37829,11 @@ export namespace PrimaryLanguages {
     name: "tvw"
   };
 
+  export const TVX: PrimaryLanguage = {
+    type: "language",
+    name: "tvx"
+  };
+
   export const TVY: PrimaryLanguage = {
     type: "language",
     name: "tvy"
@@ -38636,6 +38691,11 @@ export namespace PrimaryLanguages {
     name: "usp"
   };
 
+  export const USS: PrimaryLanguage = {
+    type: "language",
+    name: "uss"
+  };
+
   export const USU: PrimaryLanguage = {
     type: "language",
     name: "usu"
@@ -38649,6 +38709,11 @@ export namespace PrimaryLanguages {
   export const UTE: PrimaryLanguage = {
     type: "language",
     name: "ute"
+  };
+
+  export const UTH: PrimaryLanguage = {
+    type: "language",
+    name: "uth"
   };
 
   export const UTP: PrimaryLanguage = {
@@ -39681,6 +39746,11 @@ export namespace PrimaryLanguages {
   export const WKL: PrimaryLanguage = {
     type: "language",
     name: "wkl"
+  };
+
+  export const WKR: PrimaryLanguage = {
+    type: "language",
+    name: "wkr"
   };
 
   export const WKU: PrimaryLanguage = {
@@ -44757,6 +44827,12 @@ export namespace ExtendedLanguages {
     prefix: "sgn"
   };
 
+  export const LSN: ExtendedLanguage = {
+    type: "extlang",
+    name: "lsn",
+    prefix: "sgn"
+  };
+
   export const LSO: ExtendedLanguage = {
     type: "extlang",
     name: "lso",
@@ -44772,6 +44848,12 @@ export namespace ExtendedLanguages {
   export const LST: ExtendedLanguage = {
     type: "extlang",
     name: "lst",
+    prefix: "sgn"
+  };
+
+  export const LSV: ExtendedLanguage = {
+    type: "extlang",
+    name: "lsv",
     prefix: "sgn"
   };
 
@@ -45625,6 +45707,11 @@ export namespace Scripts {
     name: "elba"
   };
 
+  export const ELYM: Script = {
+    type: "script",
+    name: "elym"
+  };
+
   export const ETHI: Script = {
     type: "script",
     name: "ethi"
@@ -45993,6 +46080,11 @@ export namespace Scripts {
   export const MYMR: Script = {
     type: "script",
     name: "mymr"
+  };
+
+  export const NAND: Script = {
+    type: "script",
+    name: "nand"
   };
 
   export const NARB: Script = {
@@ -48519,6 +48611,12 @@ export namespace Variants {
     type: "variant",
     name: "boont",
     prefix: "en"
+  };
+
+  export const BORNHOLM: Variant = {
+    type: "variant",
+    name: "bornholm",
+    prefix: "da"
   };
 
   export const CISAUP: Variant = {
