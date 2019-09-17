@@ -6,7 +6,7 @@ import { Node } from "./types";
  * Given a node and a context, get the child nodes of the node within the
  * context.
  *
- * @see https://www.w3.org/TR/dom/#dom-node-childnodes
+ * @see https://dom.spec.whatwg.org/#dom-node-childnodes
  */
 export function getChildNodes(
   node: Node,

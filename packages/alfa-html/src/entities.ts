@@ -7,7 +7,7 @@ export interface Entity {
 }
 
 /**
- * @see https://www.w3.org/TR/html/entities.json
+ * @see https://html.spec.whatwg.org/entities.json
  *
  * @internal
  */

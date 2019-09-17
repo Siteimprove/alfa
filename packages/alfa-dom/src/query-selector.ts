@@ -9,7 +9,7 @@ import { Element, Node } from "./types";
  * the given selector within the context. If no node is found that matches the
  * selector, `null` is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
+ * @see https://dom.spec.whatwg.org/#dom-parentnode-queryselector
  */
 export function querySelector(
   scope: Node,
@@ -23,7 +23,7 @@ export function querySelector(
  * the given predicate within the context. If no node is found that matches the
  * predicate, `null` is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselector
+ * @see https://dom.spec.whatwg.org/#dom-parentnode-queryselector
  */
 export function querySelector<T extends Node>(
   scope: Node,
@@ -79,7 +79,7 @@ export namespace querySelector {
  * given selector within the context. If no nodes are found that match the
  * selector, an empty array is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
+ * @see https://dom.spec.whatwg.org/#dom-parentnode-queryselectorall
  */
 export function querySelectorAll(
   scope: Node,
@@ -93,7 +93,7 @@ export function querySelectorAll(
  * given predicate within the context. If no nodes are found that match the
  * predicate, an empty array is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-parentnode-queryselectorall
+ * @see https://dom.spec.whatwg.org/#dom-parentnode-queryselectorall
  */
 export function querySelectorAll<T extends Node>(
   scope: Node,

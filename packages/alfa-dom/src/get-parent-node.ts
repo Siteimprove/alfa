@@ -16,7 +16,7 @@ const parentNodes = Cache.of<Mode, Cache<Node, Cache<Node, Node>>>({
  * Given a node and a context, get the parent of the node within the context.
  * If the node has no parent, `null` is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-node-parentnode
+ * @see https://dom.spec.whatwg.org/#dom-node-parentnode
  *
  * @example
  * const span = <span />;

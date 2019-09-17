@@ -8,8 +8,8 @@ import { Node } from "./types";
  * matches the given selector, predicate, or node. One node is said to contain
  * another node if the other node is an inclusive descendant of the first.
  *
- * @see https://www.w3.org/TR/dom/#dom-node-contains
- * @see https://www.w3.org/TR/dom/#concept-tree-inclusive-descendant
+ * @see https://dom.spec.whatwg.org/#dom-node-contains
+ * @see https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant
  *
  * @example
  * const div = <div><span /></div>;

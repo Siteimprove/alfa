@@ -7,7 +7,7 @@ import { Element, Node } from "./types";
  * element, of the node within the context. If no sibling that is an element
  * precedes the node within the context, `null` is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-nondocumenttypechildnode-previouselementsibling
+ * @see https://dom.spec.whatwg.org/#dom-nondocumenttypechildnode-previouselementsibling
  */
 export function getPreviousElementSibling<T extends Node>(
   node: Node,

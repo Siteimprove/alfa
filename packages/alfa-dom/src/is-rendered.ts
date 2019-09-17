@@ -14,7 +14,7 @@ const renders = Cache.of<Node, Cache<Device, Cache<Element, boolean>>>();
  * within the context. An element is considered as being rendered if it
  * generates layout boxes.
  *
- * @see https://www.w3.org/TR/html/rendering.html#being-rendered
+ * @see https://html.spec.whatwg.org/#being-rendered
  *
  * @todo Handle `display: contents` once it gains wider support.
  *

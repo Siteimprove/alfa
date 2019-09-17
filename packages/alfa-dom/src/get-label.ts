@@ -23,7 +23,7 @@ import { Element, Node } from "./types";
  * getLabel(input, form);
  * // => <label for="foo">...</label>
  *
- * @see https://www.w3.org/TR/html/forms.html#labeled-control
+ * @see https://html.spec.whatwg.org/#labeled-control
  */
 export function getLabel(element: Element, context: Node): Element | null {
   if (!isLabelable(element)) {

@@ -70,18 +70,17 @@ class Project {
   getNextAffectedFile() {
     const next = this.program.emitNextAffectedFile(() => {});
 
-    if (next !== undefined) {
-      const { affected } = next;
-
-      if ("fileName" in affected) {
-        return path.relative(
-          this.host.getCurrentDirectory(),
-          affected.fileName
-        );
-      }
+    if (next === undefined) {
+      return null;
     }
 
-    return null;
+    const { affected } = next;
+
+    if ("fileName" in affected) {
+      return path.relative(this.host.getCurrentDirectory(), affected.fileName);
+    }
+
+    return this.getNextAffectedFile();
   }
 
   /**
