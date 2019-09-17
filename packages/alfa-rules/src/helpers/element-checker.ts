@@ -4,6 +4,8 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   // Element,
   getElementNamespace,
+  getInputType,
+  InputType,
   isElement,
   Namespace,
   Node
@@ -16,17 +18,28 @@ function emptyOrHas<T>(elt: T, set?: Set<T>) {
 }
 
 export class ElementChecker {
-  constructor(namesSet?: Set<string>) {
+  constructor(namesSet?: Set<string>, inputTypeSet?: Set<InputType>) {
     this.namesSet = namesSet;
+    this.inputTypeSet = inputTypeSet;
   }
 
   public withContext(context: Node): ElementCheckerWithContext {
-    return new ElementCheckerWithContext(context, this.namesSet);
+    return new ElementCheckerWithContext(
+      context,
+      this.namesSet,
+      this.inputTypeSet
+    );
   }
 
   protected namesSet?: Set<string>;
   public withName(...names: Array<string>): ElementChecker {
     this.namesSet = new Set(names);
+    return this;
+  }
+
+  protected inputTypeSet?: Set<InputType>;
+  public withInputType(...inputTypes: Array<InputType>): ElementChecker {
+    this.inputTypeSet = new Set(inputTypes);
     return this;
   }
 
@@ -39,8 +52,10 @@ export class ElementChecker {
       return false;
     }
 
-    // Checking name, always passing if no names were specified
-    return emptyOrHas(node.localName, this.namesSet);
+    return (
+      emptyOrHas(node.localName, this.namesSet) &&
+      emptyOrHas(getInputType(node), this.inputTypeSet)
+    );
   }
 }
 
@@ -50,9 +65,10 @@ class ElementCheckerWithContext extends ElementChecker {
   constructor(
     context: Node,
     namesSet?: Set<string>,
+    inputTypeSet?: Set<InputType>,
     namespacesSet?: Set<Namespace>
   ) {
-    super(namesSet);
+    super((namesSet = namesSet), (inputTypeSet = inputTypeSet));
     this.context = context;
     this.namespacesSet = namespacesSet;
   }
@@ -74,26 +90,21 @@ class ElementCheckerWithContext extends ElementChecker {
       device,
       new Set(roles),
       this.namesSet,
+      this.inputTypeSet,
       this.namespacesSet
     );
   }
 
   public evaluate(node: Node): boolean | BrowserSpecific<boolean> {
-    if (!isElement(node)) {
+    if (!isElement(node) || !super.evaluate(node)) {
       return false;
     }
 
     const elementNamespace = getElementNamespace(node, this.context);
-
-    const simpleChecks = // checks that are not browser Specific
-      // Checking name, always passing if no names were specified
-      emptyOrHas(node.localName, this.namesSet) &&
-      // Checking namespace, always passing if no namespace
-      (this.namespacesSet === undefined ||
-        (elementNamespace !== null &&
-          this.namespacesSet.has(elementNamespace)));
-
-    return simpleChecks;
+    return (
+      elementNamespace !== null &&
+      emptyOrHas(elementNamespace, this.namespacesSet)
+    );
   }
 }
 
@@ -106,35 +117,26 @@ class BrowserSpecificElementChecker extends ElementCheckerWithContext {
     device: Device,
     rolesSet: Set<Option<Role>>,
     namesSet?: Set<string>,
+    inputTypeSet?: Set<InputType>,
     namespacesSet?: Set<Namespace>
   ) {
-    super(context, (namesSet = namesSet), (namespacesSet = namespacesSet));
+    super(
+      context,
+      (namesSet = namesSet),
+      (inputTypeSet = inputTypeSet),
+      (namespacesSet = namespacesSet)
+    );
     this.device = device;
     this.rolesSet = rolesSet;
   }
 
   public evaluate(node: Node): boolean | BrowserSpecific<boolean> {
-    if (!isElement(node)) {
+    if (!isElement(node) || !super.evaluate(node)) {
       return false;
     }
 
-    const elementNamespace = getElementNamespace(node, this.context);
-
-    const simpleChecks = // checks that are not browser Specific
-      // Checking name, always passing if no names were specified
-      emptyOrHas(node.localName, this.namesSet) &&
-      // Checking namespace, always passing if no namespace
-      (this.namespacesSet === undefined ||
-        (elementNamespace !== null &&
-          this.namespacesSet.has(elementNamespace)));
-
-    const browserSpecificChecks:
-      | boolean
-      | BrowserSpecific<boolean> = BrowserSpecific.map(
-      getRole(node, this.context, this.device),
-      role => emptyOrHas(role, this.rolesSet)
+    return BrowserSpecific.map(getRole(node, this.context, this.device), role =>
+      emptyOrHas(role, this.rolesSet)
     );
-
-    return simpleChecks ? browserSpecificChecks : simpleChecks;
   }
 }

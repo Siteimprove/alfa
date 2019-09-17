@@ -1,6 +1,6 @@
 import { Roles } from "@siteimprove/alfa-aria";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
-import { getAttributeNode, Namespace } from "@siteimprove/alfa-dom";
+import { getAttributeNode, InputType, Namespace } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { ElementChecker } from "../../src/helpers/element-checker";
@@ -10,9 +10,20 @@ const spanLink = <span role="link" />;
 const span = <span id="foo" />;
 const div = <div id="bar" />;
 const link = <a href="www.siteimprove.com">Siteimprove</a>;
-const img = <img />;
+const img = <img type="hidden" />;
 const svg = <svg />;
-const document = documentFromNodes([spanLink, div, link, img, svg, span]);
+const inputHidden = <input type="hidden" />;
+const inputSearch = <input type="search" />;
+const document = documentFromNodes([
+  spanLink,
+  div,
+  link,
+  img,
+  svg,
+  span,
+  inputHidden,
+  inputSearch
+]);
 
 const device = getDefaultDevice();
 
@@ -39,6 +50,22 @@ test("Correctly checks single or multiple name", t => {
   t(isDivOrSpan(div));
   t(isDivOrSpan(spanLink));
   t(!isDivOrSpan(svg));
+});
+
+test("Correctly checks single or multiple input type", t => {
+  const isHidden = new ElementChecker().withInputType(InputType.Hidden).build();
+  const isHiddenOrSearch = new ElementChecker()
+    .withInputType(InputType.Hidden, InputType.Search)
+    .build();
+
+  t(isHidden(inputHidden));
+  t(!isHidden(inputSearch));
+  t(!isHidden(img));
+  t(!isHidden(div));
+  t(isHiddenOrSearch(inputHidden));
+  t(isHiddenOrSearch(inputSearch));
+  t(!isHiddenOrSearch(img));
+  t(!isHiddenOrSearch(div));
 });
 
 test("Correctly checks single or multiple namespace", t => {
