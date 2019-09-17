@@ -12,7 +12,6 @@ import {
   Element,
   getAttribute,
   getRootNode,
-  isElement,
   Namespace,
   Node,
   querySelectorAll
@@ -41,7 +40,7 @@ export const SIA_R15: Atomic.Rule<Device | Document, Iterable<Element>> = {
                 document,
                 document,
                 node => {
-                  return isElement(node) && isIframe(node, document);
+                  return isIframe(node, document);
                 },
                 {
                   flattened: true
@@ -109,10 +108,10 @@ export const SIA_R15: Atomic.Rule<Device | Document, Iterable<Element>> = {
   }
 };
 
-function isIframe(element: Element, context: Node): boolean {
+function isIframe(node: Node, context: Node): node is Element {
   return new ElementChecker()
     .withContext(context)
     .withNamespace(Namespace.HTML)
     .withName("iframe")
-    .evaluate(element) as boolean;
+    .evaluate(node) as boolean;
 }

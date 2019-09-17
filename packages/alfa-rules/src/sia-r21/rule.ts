@@ -11,7 +11,6 @@ import {
   getAttributeNode,
   getOwnerElement,
   hasAttribute,
-  isElement,
   Namespace,
   Node,
   querySelectorAll
@@ -35,7 +34,6 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
           filter(
             querySelectorAll<Element>(document, document, node => {
               return (
-                isElement(node) &&
                 isHtmlOrSvgElement(node, document) &&
                 hasAttribute(node, "role") &&
                 getAttribute(node, "role") !== ""
@@ -73,9 +71,9 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
   }
 };
 
-function isHtmlOrSvgElement(element: Element, context: Node): boolean {
+function isHtmlOrSvgElement(node: Node, context: Node): node is Element {
   return new ElementChecker()
     .withContext(context)
     .withNamespace(Namespace.HTML, Namespace.SVG)
-    .evaluate(element) as boolean;
+    .evaluate(node) as boolean;
 }

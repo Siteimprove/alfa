@@ -43,7 +43,7 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
             document,
             document,
             node => {
-              return isElement(node) && isHtmlOrSvgElement(node, document);
+              return isHtmlOrSvgElement(node, document);
             },
             {
               composed: true
@@ -185,9 +185,9 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
   }
 };
 
-function isHtmlOrSvgElement(element: Element, context: Node): boolean {
+function isHtmlOrSvgElement(node: Node, context: Node): node is Element {
   return new ElementChecker()
     .withContext(context)
     .withNamespace(Namespace.HTML, Namespace.SVG)
-    .evaluate(element) as boolean;
+    .evaluate(node) as boolean;
 }

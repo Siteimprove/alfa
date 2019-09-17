@@ -23,10 +23,8 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   evaluate: ({ document }) => {
     return {
       applicability: () => {
-        const body = querySelector(
-          document,
-          document,
-          node => isElement(node) && isBody(node, document)
+        const body = querySelector(document, document, node =>
+          isBody(node, document)
         );
 
         if (body === null) {
@@ -78,10 +76,10 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   }
 };
 
-function isBody(element: Element, context: Node): boolean {
+function isBody(node: Node, context: Node): node is Element {
   return new ElementChecker()
     .withName("body")
     .withContext(context)
     .withNamespace(Namespace.HTML)
-    .evaluate(element) as boolean;
+    .evaluate(node) as boolean;
 }

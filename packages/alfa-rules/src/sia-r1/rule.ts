@@ -25,7 +25,7 @@ export const SIA_R1: Atomic.Rule<Document, Document> = {
 
       expectations: (aspect, target) => {
         const title = querySelector(target, document, node => {
-          return isElement(node) && isTitle(node, document);
+          return isTitle(node, document);
         });
 
         return {
@@ -51,10 +51,10 @@ function hasDocumentElement(document: Document): boolean {
   return false;
 }
 
-function isTitle(element: Element, context: Node): boolean {
+function isTitle(node: Node, context: Node): node is Element {
   return new ElementChecker()
     .withName("title")
     .withContext(context)
     .withNamespace(Namespace.HTML)
-    .evaluate(element) as boolean;
+    .evaluate(node) as boolean;
 }

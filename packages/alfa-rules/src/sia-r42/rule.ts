@@ -6,7 +6,6 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  isElement,
   Namespace,
   Node,
   querySelectorAll
@@ -34,7 +33,7 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
               document,
               document,
               node => {
-                return isElement(node) && isHtmlOrSvgElement(node, document);
+                return isHtmlOrSvgElement(node, document);
               },
               {
                 flattened: true
@@ -81,11 +80,11 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
   }
 };
 
-function isHtmlOrSvgElement(element: Element, context: Node): boolean {
+function isHtmlOrSvgElement(node: Node, context: Node): node is Element {
   return new ElementChecker()
     .withContext(context)
     .withNamespace(Namespace.HTML, Namespace.SVG)
-    .evaluate(element) as boolean;
+    .evaluate(node) as boolean;
 }
 
 function hasRequiredContext(

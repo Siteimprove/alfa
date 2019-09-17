@@ -6,7 +6,6 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  isElement,
   Namespace,
   Node,
   querySelectorAll
@@ -32,7 +31,7 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
               document,
               document,
               node => {
-                return isElement(node) && isFormField(node, document, device);
+                return isFormField(node, document, device);
               },
               {
                 flattened: true
@@ -68,7 +67,11 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   }
 };
 
-function isFormField(element: Element, context: Node, device: Device): boolean {
+function isFormField(
+  node: Node,
+  context: Node,
+  device: Device
+): node is Element {
   return new ElementChecker()
     .withContext(context)
     .withNamespace(Namespace.HTML)
@@ -86,5 +89,5 @@ function isFormField(element: Element, context: Node, device: Device): boolean {
       Roles.Switch,
       Roles.TextBox
     )
-    .evaluate(element) as boolean;
+    .evaluate(node) as boolean;
 }
