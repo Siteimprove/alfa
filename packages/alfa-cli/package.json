@@ -15,6 +15,7 @@
   ],
   "contributors": [
     "Búgvi Benjamin Magnussen <bbm@siteimprove.com>",
+    "Jean-Yves Moyen <jym@siteimprove.com>",
     "Kasper Kronborg Isager <kki@siteimprove.com>",
     "Niclas Hedam <nhe@siteimprove.com>",
     "Per Jakobsen <pja@siteimprove.com>",
@@ -40,7 +41,7 @@
     "@siteimprove/alfa-util": "^0.0.0",
     "@types/yargs": "^13.0.0",
     "enquirer": "^2.3.0",
-    "yargs": "^13.2.4"
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"

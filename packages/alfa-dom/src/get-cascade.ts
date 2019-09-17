@@ -5,7 +5,7 @@ import { isElement } from "./guards";
 import { RuleEntry, RuleTree } from "./rule-tree";
 import { SelectorEntry, SelectorMap } from "./selector-map";
 import { traverseNode } from "./traverse-node";
-import { Document, Element } from "./types";
+import { Document, Element, ShadowRoot } from "./types";
 import { UserAgent } from "./user-agent";
 
 /**
@@ -29,12 +29,15 @@ export class Cascade {
   }
 }
 
-const cascades = Cache.of<Document, Cache<Device, Cascade>>();
+const cascades = Cache.of<Document | ShadowRoot, Cache<Device, Cascade>>();
 
 /**
  * @internal
  */
-export function getCascade(context: Document, device: Device): Cascade {
+export function getCascade(
+  context: Document | ShadowRoot,
+  device: Device
+): Cascade {
   return cascades.get(context, Cache.of).get(device, () => {
     const entries: WeakMap<Element, RuleEntry> = new WeakMap();
 

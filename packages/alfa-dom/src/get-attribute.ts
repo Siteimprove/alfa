@@ -2,7 +2,7 @@ import { getAttributeNode } from "./get-attribute-node";
 import { Element, Namespace, Node } from "./types";
 
 /**
- * @see https://www.w3.org/TR/dom/#dom-element-getattribute
+ * @see https://dom.spec.whatwg.org/#dom-element-getattribute
  *
  * @example
  * const div = <div title="Foo" />;
@@ -16,7 +16,7 @@ export function getAttribute(
 ): string | null;
 
 /**
- * @see https://www.w3.org/TR/dom/#dom-element-getattributens
+ * @see https://dom.spec.whatwg.org/#dom-element-getattributens
  */
 export function getAttribute(
   element: Element,

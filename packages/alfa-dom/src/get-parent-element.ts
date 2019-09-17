@@ -7,7 +7,7 @@ import { Element, Node } from "./types";
  * context. If the node has no parent element within the context, `null` is
  * returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-node-parentelement
+ * @see https://dom.spec.whatwg.org/#dom-node-parentelement
  */
 export function getParentElement(
   node: Node,

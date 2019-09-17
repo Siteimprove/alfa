@@ -16,7 +16,7 @@ const commands: traverseNode.Commands = {
  * without interruption, `true` is returned. A visitor may also return `Skip`
  * in order to skip recursive traversal of a given node.
  *
- * @see https://www.w3.org/TR/dom/#concept-tree-order
+ * @see https://dom.spec.whatwg.org/#concept-tree-order
  */
 export function traverseNode(
   node: Node,
@@ -121,7 +121,7 @@ function visitNode(
 
     // Shadow roots should be traversed as soon as they're encountered per the
     // definition of shadow-including preorder depth-first traversal.
-    // https://www.w3.org/TR/dom41/#shadow-including-preorder-depth-first-traversal
+    // https://dom.spec.whatwg.org/#shadow-including-preorder-depth-first-traversal
     if (options.composed === true) {
       if (!visitNode(shadowRoot, node, context, visitors, options)) {
         return false;

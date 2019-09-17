@@ -9,7 +9,7 @@ const namespaces = Cache.of<Node, Cache<Element, Namespace>>();
  * Given an element and a context, get the namespace of the element within the
  * context.
  *
- * @see https://www.w3.org/TR/dom/#dom-element-namespaceuri
+ * @see https://dom.spec.whatwg.org/#dom-element-namespaceuri
  */
 export function getElementNamespace(
   element: Element,

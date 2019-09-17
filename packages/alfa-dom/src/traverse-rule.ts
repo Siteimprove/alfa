@@ -23,7 +23,7 @@ const commands: Readonly<{ skip: Skip; exit: Exit }> = {
  * Given a rule, perform a depth-first traversal of the rule, invoking the
  * given visitors for the context itself and all of its children.
  *
- * @see https://www.w3.org/TR/dom/#concept-tree-order
+ * @see https://dom.spec.whatwg.org/#concept-tree-order
  */
 export function traverseRule(
   rule: Rule,

@@ -129,17 +129,23 @@ function cloneShadowRoot(shadowRoot: t.ShadowRoot): t.ShadowRoot {
 
   const childNodes = Array.from(shadowRoot.childNodes).map(cloneNode);
 
+  const styleSheets = Array.from(shadowRoot.styleSheets).map(cloneStyleSheet);
+
   return {
     nodeType: t.NodeType.DocumentFragment,
     childNodes,
-    mode
+    mode,
+    styleSheets
   };
 }
 
 function cloneStyleSheet(styleSheet: t.StyleSheet): t.StyleSheet {
   const { disabled } = styleSheet;
 
-  const cssRules = Array.from(styleSheet.cssRules).map(cloneRule);
+  const cssRules =
+    styleSheet.cssRules === undefined
+      ? []
+      : Array.from(styleSheet.cssRules).map(cloneRule);
 
   return {
     disabled,

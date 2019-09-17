@@ -8,7 +8,7 @@ import { StyleSheet } from "./types";
  * itself returning `false`. If traversal finishes without interruption, `true`
  * is returned.
  *
- * @see https://www.w3.org/TR/dom/#concept-tree-order
+ * @see https://dom.spec.whatwg.org/#concept-tree-order
  */
 export function traverseStyleSheet(
   styleSheet: StyleSheet,
@@ -16,9 +16,11 @@ export function traverseStyleSheet(
 ): boolean {
   const { cssRules } = styleSheet;
 
-  for (let i = 0, n = cssRules.length; i < n; i++) {
-    if (!traverseRule(cssRules[i], visitors)) {
-      return false;
+  if (cssRules !== undefined) {
+    for (let i = 0, n = cssRules.length; i < n; i++) {
+      if (!traverseRule(cssRules[i], visitors)) {
+        return false;
+      }
     }
   }
 

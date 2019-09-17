@@ -207,7 +207,8 @@ test("Constructs and attaches shadow roots from <shadow> elements", t => {
     shadowRoot: {
       nodeType: NodeType.DocumentFragment,
       mode: "open",
-      childNodes: [text]
+      childNodes: [text],
+      styleSheets: []
     },
     childNodes: []
   });

@@ -7,7 +7,7 @@ import { Attribute, Namespace, Node } from "./types";
  * the context. If the attribute does not have an associated namespace then
  * `null` is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-attr-namespaceuri
+ * @see https://dom.spec.whatwg.org/#dom-attr-namespaceuri
  */
 export function getAttributeNamespace(
   attribute: Attribute,
@@ -25,7 +25,7 @@ export function getAttributeNamespace(
     return null;
   }
 
-  // https://www.w3.org/TR/html/syntax.html#adjust-foreign-attributes
+  // https://html.spec.whatwg.org/#adjust-foreign-attributes
 
   if (attribute.prefix === null) {
     return attribute.localName === "xmlns" ? Namespace.XMLNS : null;

@@ -4,32 +4,32 @@ import { Node } from "./types";
 
 export const enum DocumentPosition {
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_position_disconnected
+   * @see https://dom.spec.whatwg.org/#dom-node-document_position_disconnected
    */
   Disconnected = 1,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_position_preceding
+   * @see https://dom.spec.whatwg.org/#dom-node-document_position_preceding
    */
   Preceding = 2,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_position_following
+   * @see https://dom.spec.whatwg.org/#dom-node-document_position_following
    */
   Following = 4,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_position_contains
+   * @see https://dom.spec.whatwg.org/#dom-node-document_position_contains
    */
   Contains = 8,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_position_contained_by
+   * @see https://dom.spec.whatwg.org/#dom-node-document_position_contained_by
    */
   ContainedBy = 16,
 
   /**
-   * @see https://www.w3.org/TR/dom/#dom-node-document_position_implementation_specific
+   * @see https://dom.spec.whatwg.org/#dom-node-document_position_implementation_specific
    */
   ImplementationSpecific = 32
 }
@@ -45,7 +45,7 @@ export const enum DocumentPosition {
  * `DocumentPosition.Preceding` will result in a positive sign. Do note that
  * when the result is `DocumentPosition.Disconnected`, a positive sign is used.
  *
- * @see https://www.w3.org/TR/dom/#dom-node-comparedocumentposition
+ * @see https://dom.spec.whatwg.org/#dom-node-comparedocumentposition
  */
 export function compareDocumentPosition(
   reference: Node,

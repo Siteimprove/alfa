@@ -15,6 +15,7 @@
   ],
   "contributors": [
     "Búgvi Benjamin Magnussen <bbm@siteimprove.com>",
+    "Jean-Yves Moyen <jym@siteimprove.com>",
     "Kasper Kronborg Isager <kki@siteimprove.com>",
     "Niclas Hedam <nhe@siteimprove.com>",
     "Per Jakobsen <pja@siteimprove.com>",
@@ -32,7 +33,7 @@
     "@siteimprove/alfa-assert": "^0.0.0",
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-rules": "^0.0.0",
-    "@types/eslint": "^4.16.6",
+    "@types/eslint": "^6.1.1",
     "@types/estree": "^0.0.39",
     "eslint": "^6.1.0"
   },

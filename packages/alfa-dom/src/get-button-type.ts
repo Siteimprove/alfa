@@ -11,7 +11,7 @@ export const enum ButtonType {
  * Given a `<button>` element, get the type of the element. If the element is
  * not a `<button>`, `null` is returned.
  *
- * @see https://www.w3.org/TR/html/sec-forms.html#element-attrdef-button-type
+ * @see https://html.spec.whatwg.org/#attr-button-type
  */
 export function getButtonType(element: Element): ButtonType | null {
   if (element.localName !== "button") {
@@ -20,7 +20,7 @@ export function getButtonType(element: Element): ButtonType | null {
 
   // The `type` attribute of is an enumerated attribute and is therefore case-
   // insensitive.
-  // https://www.w3.org/TR/html/infrastructure.html#enumerated-attributes
+  // https://html.spec.whatwg.org/#enumerated-attribute
   const type = getAttribute(element, "type", { lowerCase: true });
 
   switch (type) {

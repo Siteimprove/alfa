@@ -6,7 +6,7 @@ import { Node } from "./types";
  * within the context. If no sibling precedes the node within the context,
  * `null` is returned.
  *
- * @see https://www.w3.org/TR/dom/#dom-node-previoussibling
+ * @see https://dom.spec.whatwg.org/#dom-node-previoussibling
  */
 export function getPreviousSibling<T extends Node>(
   node: Node,

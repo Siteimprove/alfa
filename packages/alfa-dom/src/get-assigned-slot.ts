@@ -9,7 +9,7 @@ import { Element, Node, Text } from "./types";
  * element or text node is assigned to within the context. If the element or
  * text node is not assigned to a `<slot>` then `null` is returned.
  *
- * @see https://www.w3.org/TR/dom41/#dom-slotable-assignedslot
+ * @see https://dom.spec.whatwg.org/#dom-slotable-assignedslot
  */
 export function getAssignedSlot(
   node: Element | Text,
@@ -19,7 +19,7 @@ export function getAssignedSlot(
 }
 
 /**
- * @see https://www.w3.org/TR/dom41/#find-a-slot
+ * @see https://dom.spec.whatwg.org/#find-a-slot
  */
 function findSlot(slotable: Element | Text, context: Node): Element | null {
   const parentElement = getParentElement(slotable, context);

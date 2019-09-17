@@ -3,22 +3,12 @@ const { endsWith } = require("./helpers/predicates");
 const { workspace } = require("./helpers/workspace");
 const { packages } = require("./helpers/meta");
 const { forEach } = require("./helpers/iterable");
-const { getTodos, writeTodos } = require("./helpers/todos");
 const time = require("./helpers/time");
 const notify = require("./helpers/notify");
 
 const { build } = require("./tasks/build");
 const { diagnose } = require("./tasks/diagnose");
 const { clean } = require("./tasks/clean");
-
-/**
- * @typedef {import("./helpers/todos").Todo} Todo
- */
-
-/**
- * @type {Array<Todo>}
- */
-const todos = [];
 
 /**
  * @param {string} file
@@ -44,8 +34,6 @@ function handle(file, pkg) {
   } else {
     process.exit(1);
   }
-
-  todos.push(...getTodos(file, pkg, project));
 }
 
 forEach(findFiles("scripts", endsWith(".js")), file => {
@@ -69,5 +57,3 @@ for (const pkg of packages) {
 forEach(findFiles("docs", endsWith(".ts", ".tsx")), file => {
   handle(file, "docs");
 });
-
-writeTodos("TODO.md", todos);

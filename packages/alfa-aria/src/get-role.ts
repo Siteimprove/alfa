@@ -43,7 +43,7 @@ featuresByNamespace.set(Namespace.SVG, svgFeaturesByElement);
  * Given an element and a context, get the semantic role of the element within
  * the context. If the element does not have a role then `null` is returned.
  *
- * @see https://www.w3.org/TR/html/dom.html#aria-role-attribute
+ * @see https://html.spec.whatwg.org/#attr-aria-role
  *
  * @example
  * const button = <button>Foo</button>;

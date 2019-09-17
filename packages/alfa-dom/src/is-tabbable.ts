@@ -11,7 +11,7 @@ import { Element, Namespace, Node } from "./types";
  * context. An element is considered tabbable if it can be reached through
  * sequential focus navgiation.
  *
- * @see https://www.w3.org/TR/html/editing.html#sequential-focus-navigation
+ * @see https://html.spec.whatwg.org/#sequential-focus-navigation
  */
 export function isTabbable(
   element: Element,
@@ -39,14 +39,14 @@ function redirectsFocus(element: Element, context: Node): boolean {
       // focusable descendant or the next element in the sequential focus
       // navigation order.
       //
-      // https://www.w3.org/TR/html/browsers.html#browsing-context-container
-      // https://www.w3.org/TR/html/editing.html#sequential-navigation-search-algorithm
+      // https://html.spec.whatwg.org/#browsing-context-container
+      // https://html.spec.whatwg.org/#sequential-navigation-search-algorithm
       case "iframe":
         return true;
 
       // <label> elements redirect focus to their control.
       //
-      // https://www.w3.org/TR/html/sec-forms.html#the-label-element
+      // https://html.spec.whatwg.org/#the-label-element
       case "label":
         return true;
     }

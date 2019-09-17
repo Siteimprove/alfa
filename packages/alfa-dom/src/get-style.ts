@@ -17,7 +17,7 @@ import { getAttribute } from "./get-attribute";
 import { Cascade, getCascade } from "./get-cascade";
 import { getChildNodes } from "./get-child-nodes";
 import { getRootNode } from "./get-root-node";
-import { isDocument, isElement } from "./guards";
+import { isDocument, isElement, isShadowRoot } from "./guards";
 import { matches } from "./matches";
 import { Element, Node, Rule } from "./types";
 
@@ -141,7 +141,10 @@ function getStyleTree(
     .get(context, Cache.of)
     .get(device, Cache.of)
     .get(node, () => {
-      const cascade = isDocument(node) ? getCascade(node, device) : null;
+      const cascade =
+        isDocument(node) || isShadowRoot(node)
+          ? getCascade(node, device)
+          : null;
 
       return new StyleTree(
         getStyleEntry(node, context, cascade, device, options),

@@ -15,6 +15,7 @@
   ],
   "contributors": [
     "Búgvi Benjamin Magnussen <bbm@siteimprove.com>",
+    "Jean-Yves Moyen <jym@siteimprove.com>",
     "Kasper Kronborg Isager <kki@siteimprove.com>",
     "Niclas Hedam <nhe@siteimprove.com>",
     "Per Jakobsen <pja@siteimprove.com>",
@@ -39,7 +40,7 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0",
-    "mdn-browser-compat-data": "0.0.80",
+    "mdn-browser-compat-data": "0.0.94",
     "prettier": "1.18.2"
   }
 }

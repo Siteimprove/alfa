@@ -65,7 +65,7 @@ export namespace Tokens {
 }
 
 /**
- * @see https://www.w3.org/TR/html/syntax.html#appropriate-end-tag-token
+ * @see https://html.spec.whatwg.org/#appropriate-end-tag-token
  */
 function isAppropriateEndTagToken(state: State): boolean {
   if (state.tag === null) {
@@ -80,7 +80,7 @@ function isAppropriateEndTagToken(state: State): boolean {
 
 /**
  * 8.2.4
- * @see https://www.w3.org/TR/html/syntax.html#tokenization
+ * @see https://html.spec.whatwg.org/#tokenization
  */
 export type Token =
   | Tokens.Doctype
@@ -103,17 +103,17 @@ interface State {
   tagStack: Array<string>;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#return-state
+   * @see https://html.spec.whatwg.org/#return-state
    */
   returnState: Pattern | null;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#temporary-buffer
+   * @see https://html.spec.whatwg.org/#temporary-buffer
    */
   temporaryBuffer: string;
 
   /**
-   * @see https://www.w3.org/TR/html/syntax.html#character-reference-code
+   * @see https://html.spec.whatwg.org/#character-reference-code
    */
   characterReferenceCode: number;
 }
@@ -122,7 +122,7 @@ type Pattern = Lang.Pattern<Token, State>;
 
 /**
  * 8.2.4.1
- * @see https://www.w3.org/TR/html/syntax.html#data-state
+ * @see https://html.spec.whatwg.org/#data-state
  */
 const data: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -144,7 +144,7 @@ const data: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.2
- * @see https://www.w3.org/TR/html/syntax.html#RCDATA-state
+ * @see https://html.spec.whatwg.org/#RCDATA-state
  */
 
 const RCData: Pattern = (stream, emit, state, { exit }) => {
@@ -172,7 +172,7 @@ const RCData: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.3
- * @see https://www.w3.org/TR/html/syntax.html#rawtext-state
+ * @see https://html.spec.whatwg.org/#rawtext-state
  */
 const RawText: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -195,7 +195,7 @@ const RawText: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.4
- * @see https://www.w3.org/TR/html/syntax.html#script-data-state
+ * @see https://html.spec.whatwg.org/#script-data-state
  */
 const scriptData: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -218,7 +218,7 @@ const scriptData: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.5
- * @see https://www.w3.org/TR/html/syntax.html#plaintext-state
+ * @see https://html.spec.whatwg.org/#plaintext-state
  */
 const plaintext: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -238,7 +238,7 @@ const plaintext: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.6
- * @see https://www.w3.org/TR/html/syntax.html#tag-open-state
+ * @see https://html.spec.whatwg.org/#tag-open-state
  */
 const tagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -279,7 +279,7 @@ const tagOpen: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.7
- * @see https://www.w3.org/TR/html/syntax.html#end-tag-open-state
+ * @see https://html.spec.whatwg.org/#end-tag-open-state
  */
 const endTagOpen: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
@@ -314,7 +314,7 @@ const endTagOpen: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.8
- * @see https://www.w3.org/TR/html/syntax.html#tag-name-state
+ * @see https://html.spec.whatwg.org/#tag-name-state
  */
 const tagName: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -354,7 +354,7 @@ const tagName: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.9
- * @see https://www.w3.org/TR/html/syntax.html#RCDATA-less-than-sign-state
+ * @see https://html.spec.whatwg.org/#RCDATA-less-than-sign-state
  */
 const RCDataLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -371,7 +371,7 @@ const RCDataLessThanSign: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.10
- * @see https://www.w3.org/TR/html/syntax.html#RCDATA-end-tag-open-state
+ * @see https://html.spec.whatwg.org/#RCDATA-end-tag-open-state
  */
 const RCDataEndTagOpenState: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -392,7 +392,7 @@ const RCDataEndTagOpenState: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.11
- * @see https://www.w3.org/TR/html/syntax.html#RCDATA-end-tag-name-state
+ * @see https://html.spec.whatwg.org/#RCDATA-end-tag-name-state
  */
 const RCDataEndTagName: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -451,7 +451,7 @@ const RCDataEndTagName: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.12
- * @see https://www.w3.org/TR/html/syntax.html#rawtext-less-than-sign-state
+ * @see https://html.spec.whatwg.org/#rawtext-less-than-sign-state
  */
 const RawTextLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -468,7 +468,7 @@ const RawTextLessThanSign: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.13
- * @see https://www.w3.org/TR/html/syntax.html#rawtext-end-tag-open-state
+ * @see https://html.spec.whatwg.org/#rawtext-end-tag-open-state
  */
 const RawTextEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -489,7 +489,7 @@ const RawTextEndTagOpen: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.14
- * @see https://www.w3.org/TR/html/syntax.html#rawtext-end-tag-name-state
+ * @see https://html.spec.whatwg.org/#rawtext-end-tag-name-state
  */
 const RawTextEndTagName: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -548,7 +548,7 @@ const RawTextEndTagName: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.15
- * @see https://www.w3.org/TR/html/syntax.html#script-data-less-than-sign-state
+ * @see https://html.spec.whatwg.org/#script-data-less-than-sign-state
  */
 const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -573,7 +573,7 @@ const scriptDataLessThanSign: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.16
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-end-tag-open-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-end-tag-open-state
  */
 const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -593,7 +593,7 @@ const scriptDataEndTagOpen: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.17
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-end-tag-name-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-end-tag-name-state
  */
 const scriptDataEndTagName: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -652,7 +652,7 @@ const scriptDataEndTagName: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.18
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escape-start-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-escape-start-state
  */
 const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -670,7 +670,7 @@ const scriptDataEscapeStart: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.19
- * @see https://www.w3.org/TR/html/syntax.html#ref-for-tokenizer-script-data-escapse-start-dash-state
+ * @see https://html.spec.whatwg.org/#ref-for-tokenizer-script-data-escapse-start-dash-state
  */
 const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -688,7 +688,7 @@ const scriptDataEscapeStartDash: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.20
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-escaped-state
  */
 const scriptDataEscaped: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -715,7 +715,7 @@ const scriptDataEscaped: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.21
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-escaped-dash-state
  */
 const scriptDataEscapedDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -743,7 +743,7 @@ const scriptDataEscapedDash: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.22
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-dash-dash-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-escaped-dash-dash-state
  */
 const scriptDataEscapedDashDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -775,7 +775,7 @@ const scriptDataEscapedDashDash: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.23
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-less-than-sign-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-escaped-less-than-sign-state
  */
 const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -798,7 +798,7 @@ const scriptDataEscapedLessThanSign: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.24
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-end-tag-open-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-escaped-end-tag-open-state
  */
 const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -818,7 +818,7 @@ const scriptDataEscapedEndTagOpen: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.25
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-escaped-end-tag-name-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-escaped-end-tag-name-state
  */
 const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -877,7 +877,7 @@ const scriptDataEscapedEndTagName: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.26
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escape-start-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-double-escape-start-state
  */
 const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -910,7 +910,7 @@ const scriptDataDoubleEscapeStart: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.27
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-double-escaped-state
  */
 const scriptDataDoubleEscaped: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -938,7 +938,7 @@ const scriptDataDoubleEscaped: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.28
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-double-escaped-dash-state
  */
 const scriptDataDoubleEscapedDash: Pattern = (
   stream,
@@ -972,7 +972,7 @@ const scriptDataDoubleEscapedDash: Pattern = (
 
 /**
  * 8.2.4.29
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-dash-dash-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-double-escaped-dash-dash-state
  */
 const scriptDataDoubleEscapedDashDash: Pattern = (
   stream,
@@ -1010,7 +1010,7 @@ const scriptDataDoubleEscapedDashDash: Pattern = (
 
 /**
  * 8.2.4.30
- * @see https://www.w3.org/TR/html/syntax.html#tokenizer-script-data-double-escaped-less-than-sign-state
+ * @see https://html.spec.whatwg.org/#tokenizer-script-data-double-escaped-less-than-sign-state
  */
 const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -1027,7 +1027,7 @@ const scriptDataDoubleEscapedLessThanSign: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.31
- * @see https://www.w3.org/TR/html/syntax.html#script-data-double-escape-end-state
+ * @see https://html.spec.whatwg.org/#script-data-double-escape-end-state
  */
 const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -1062,7 +1062,7 @@ const scriptDataDoubleEscapeEnd: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.32
- * @see https://www.w3.org/TR/html/syntax.html#before-attribute-name-state
+ * @see https://html.spec.whatwg.org/#before-attribute-name-state
  */
 const beforeAttributeName: Pattern = (stream, emit, state) => {
   const tag = state.tag!;
@@ -1104,7 +1104,7 @@ const beforeAttributeName: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.33
- * @see https://www.w3.org/TR/html/syntax.html#attribute-name-state
+ * @see https://html.spec.whatwg.org/#attribute-name-state
  */
 const attributeName: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -1152,7 +1152,7 @@ const attributeName: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.34
- * @see https://www.w3.org/TR/html/syntax.html#after-attribute-name-state
+ * @see https://html.spec.whatwg.org/#after-attribute-name-state
  */
 const afterAttributeName: Pattern = (stream, emit, state, { exit }) => {
   const tag = state.tag!;
@@ -1194,7 +1194,7 @@ const afterAttributeName: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.35
- * @see https://www.w3.org/TR/html/syntax.html#before-attribute-value-state
+ * @see https://html.spec.whatwg.org/#before-attribute-value-state
  */
 const beforeAttributeValue: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -1221,7 +1221,7 @@ const beforeAttributeValue: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.36
- * @see https://www.w3.org/TR/html/syntax.html#attribute-value-double-quoted-state
+ * @see https://html.spec.whatwg.org/#attribute-value-double-quoted-state
  */
 const attributeValueDoubleQuoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1247,7 +1247,7 @@ const attributeValueDoubleQuoted: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.37
- * @see https://www.w3.org/TR/html/syntax.html#attribute-value-single-quoted-state
+ * @see https://html.spec.whatwg.org/#attribute-value-single-quoted-state
  */
 const attributeValueSingleQuoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1273,7 +1273,7 @@ const attributeValueSingleQuoted: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.38
- * @see https://www.w3.org/TR/html/syntax.html#attribute-value-unquoted-state
+ * @see https://html.spec.whatwg.org/#attribute-value-unquoted-state
  */
 const attributeValueUnquoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1308,7 +1308,7 @@ const attributeValueUnquoted: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.39
- * @see https://www.w3.org/TR/html/syntax.html#after-attribute-value-quoted-state
+ * @see https://html.spec.whatwg.org/#after-attribute-value-quoted-state
  */
 const afterAttributeValueQuoted: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
@@ -1341,7 +1341,7 @@ const afterAttributeValueQuoted: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.40
- * @see https://www.w3.org/TR/html/syntax.html#self-closing-start-tag-state
+ * @see https://html.spec.whatwg.org/#self-closing-start-tag-state
  */
 const selfClosingStartTag: Pattern = (stream, emit, state, { exit }) => {
   const tag = state.tag!;
@@ -1368,7 +1368,7 @@ const selfClosingStartTag: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.41
- * @see https://www.w3.org/TR/html/syntax.html#bogus-comment-state
+ * @see https://html.spec.whatwg.org/#bogus-comment-state
  */
 const bogusComment: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1393,7 +1393,7 @@ const bogusComment: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.42
- * @see https://www.w3.org/TR/html/syntax.html#markup-declaration-open-state
+ * @see https://html.spec.whatwg.org/#markup-declaration-open-state
  */
 const markupDeclarationOpen: Pattern = (stream, emit, state) => {
   if (startsWith(stream, "doctype", { lowerCase: true })) {
@@ -1433,7 +1433,7 @@ const markupDeclarationOpen: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.43
- * @see https://www.w3.org/TR/html/syntax.html#comment-start-state
+ * @see https://html.spec.whatwg.org/#comment-start-state
  */
 const commentStart: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -1454,7 +1454,7 @@ const commentStart: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.44
- * @see https://www.w3.org/TR/html/syntax.html#comment-start-dash-state
+ * @see https://html.spec.whatwg.org/#comment-start-dash-state
  */
 const commentStartDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
@@ -1486,7 +1486,7 @@ const commentStartDash: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.45
- * @see https://www.w3.org/TR/html/syntax.html#comment-state
+ * @see https://html.spec.whatwg.org/#comment-state
  */
 const comment: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1516,7 +1516,7 @@ const comment: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.46
- * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-state
+ * @see https://html.spec.whatwg.org/#comment-less-than-sign-state
  */
 const commentLessThanSign: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -1538,7 +1538,7 @@ const commentLessThanSign: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.47
- * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-state
+ * @see https://html.spec.whatwg.org/#comment-less-than-sign-bang-state
  */
 const commentLessThanSignBang: Pattern = stream => {
   if (stream.peek(0) === Char.HyphenMinus) {
@@ -1551,7 +1551,7 @@ const commentLessThanSignBang: Pattern = stream => {
 
 /**
  * 8.2.4.48
- * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-state
+ * @see https://html.spec.whatwg.org/#comment-less-than-sign-bang-dash-state
  */
 const commentLessThanSignBangDash: Pattern = stream => {
   if (stream.peek(0) === Char.HyphenMinus) {
@@ -1564,7 +1564,7 @@ const commentLessThanSignBangDash: Pattern = stream => {
 
 /**
  * 8.2.4.49
- * @see https://www.w3.org/TR/html/syntax.html#comment-less-than-sign-bang-dash-dash-state
+ * @see https://html.spec.whatwg.org/#comment-less-than-sign-bang-dash-dash-state
  */
 const commentLessThanSignBangDashDash: Pattern = stream => {
   return commentEnd;
@@ -1572,7 +1572,7 @@ const commentLessThanSignBangDashDash: Pattern = stream => {
 
 /**
  * 8.2.4.50
- * @see https://www.w3.org/TR/html/syntax.html#comment-end-dash-state
+ * @see https://html.spec.whatwg.org/#comment-end-dash-state
  */
 const commentEndDash: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
@@ -1594,7 +1594,7 @@ const commentEndDash: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.51
- * @see https://www.w3.org/TR/html/syntax.html#comment-end-state
+ * @see https://html.spec.whatwg.org/#comment-end-state
  */
 const commentEnd: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
@@ -1626,7 +1626,7 @@ const commentEnd: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.52
- * @see https://www.w3.org/TR/html/syntax.html#comment-end-bang-state
+ * @see https://html.spec.whatwg.org/#comment-end-bang-state
  */
 const commentEndBang: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
@@ -1654,7 +1654,7 @@ const commentEndBang: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.53
- * @see https://www.w3.org/TR/html/syntax.html#doctype-state
+ * @see https://html.spec.whatwg.org/#doctype-state
  */
 const doctype: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.peek(0);
@@ -1686,7 +1686,7 @@ const doctype: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.54
- * @see https://www.w3.org/TR/html/syntax.html#before-doctype-name-state
+ * @see https://html.spec.whatwg.org/#before-doctype-name-state
  */
 const beforeDoctypeName: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1753,7 +1753,7 @@ const beforeDoctypeName: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.55
- * @see https://www.w3.org/TR/html/syntax.html#doctype-name-state
+ * @see https://html.spec.whatwg.org/#doctype-name-state
  */
 const doctypeName: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1788,7 +1788,7 @@ const doctypeName: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.56
- * @see https://www.w3.org/TR/html/syntax.html#after-doctype-name-state
+ * @see https://html.spec.whatwg.org/#after-doctype-name-state
  */
 const afterDoctypeName: Pattern = (stream, emit, state, { exit }) => {
   if (startsWith(stream, "public", { lowerCase: true })) {
@@ -1827,7 +1827,7 @@ const afterDoctypeName: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.57
- * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-keyword-state
+ * @see https://html.spec.whatwg.org/#after-doctype-public-keyword-state
  */
 const afterDoctypePublicKeyword: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -1865,7 +1865,7 @@ const afterDoctypePublicKeyword: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.58
- * @see https://www.w3.org/TR/html/syntax.html#before-doctype-public-identifier-state
+ * @see https://html.spec.whatwg.org/#before-doctype-public-identifier-state
  */
 const beforeDoctypePublicIdentifier: Pattern = (
   stream,
@@ -1908,7 +1908,7 @@ const beforeDoctypePublicIdentifier: Pattern = (
 
 /**
  * 8.2.4.59
- * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-double-quoted-state
+ * @see https://html.spec.whatwg.org/#doctype-public-identifier-double-quoted-state
  */
 const doctypePublicIdentifierDoubleQuoted: Pattern = (
   stream,
@@ -1942,7 +1942,7 @@ const doctypePublicIdentifierDoubleQuoted: Pattern = (
 
 /**
  * 8.2.4.60
- * @see https://www.w3.org/TR/html/syntax.html#doctype-public-identifier-single-quoted-state
+ * @see https://html.spec.whatwg.org/#doctype-public-identifier-single-quoted-state
  */
 const doctypePublicIdentifierSingleQuoted: Pattern = (
   stream,
@@ -1976,7 +1976,7 @@ const doctypePublicIdentifierSingleQuoted: Pattern = (
 
 /**
  * 8.2.4.61
- * @see https://www.w3.org/TR/html/syntax.html#after-doctype-public-identifier-state
+ * @see https://html.spec.whatwg.org/#after-doctype-public-identifier-state
  */
 const afterDoctypePublicIdentifier: Pattern = (
   stream,
@@ -2018,7 +2018,7 @@ const afterDoctypePublicIdentifier: Pattern = (
 
 /**
  * 8.2.4.62
- * @see https://www.w3.org/TR/html/syntax.html#between-doctype-public-and-system-identifiers-state
+ * @see https://html.spec.whatwg.org/#between-doctype-public-and-system-identifiers-state
  */
 const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
   stream,
@@ -2060,7 +2060,7 @@ const betweenDoctypePublicAndSystemIdentifiers: Pattern = (
 
 /**
  * 8.2.4.63
- * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-keyword-state
+ * @see https://html.spec.whatwg.org/#after-doctype-system-keyword-state
  */
 const afterDoctypeSystemKeyword: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -2098,7 +2098,7 @@ const afterDoctypeSystemKeyword: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.64
- * @see https://www.w3.org/TR/html/syntax.html#before-doctype-system-identifier-state
+ * @see https://html.spec.whatwg.org/#before-doctype-system-identifier-state
  */
 const beforeDoctypeSystemIdentifier: Pattern = (
   stream,
@@ -2141,7 +2141,7 @@ const beforeDoctypeSystemIdentifier: Pattern = (
 
 /**
  * 8.2.4.65
- * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-double-quoted-state
+ * @see https://html.spec.whatwg.org/#doctype-system-identifier-double-quoted-state
  */
 const doctypeSystemIdentifierDoubleQuoted: Pattern = (
   stream,
@@ -2175,7 +2175,7 @@ const doctypeSystemIdentifierDoubleQuoted: Pattern = (
 
 /**
  * 8.2.4.66
- * @see https://www.w3.org/TR/html/syntax.html#doctype-system-identifier-single-quoted-state
+ * @see https://html.spec.whatwg.org/#doctype-system-identifier-single-quoted-state
  */
 const doctypeSystemIdentifierSingleQuoted: Pattern = (
   stream,
@@ -2209,7 +2209,7 @@ const doctypeSystemIdentifierSingleQuoted: Pattern = (
 
 /**
  * 8.2.4.67
- * @see https://www.w3.org/TR/html/syntax.html#after-doctype-system-identifier-state
+ * @see https://html.spec.whatwg.org/#after-doctype-system-identifier-state
  */
 const afterDoctypeSystemIdentifier: Pattern = (
   stream,
@@ -2241,7 +2241,7 @@ const afterDoctypeSystemIdentifier: Pattern = (
 
 /**
  * 8.2.4.68
- * @see https://www.w3.org/TR/html/syntax.html#bogus-doctype-state
+ * @see https://html.spec.whatwg.org/#bogus-doctype-state
  */
 const bogusDoctype: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -2259,7 +2259,7 @@ const bogusDoctype: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.69
- * @see https://www.w3.org/TR/html/syntax.html#CDATA-section-state
+ * @see https://html.spec.whatwg.org/#CDATA-section-state
  */
 const CDATASection: Pattern = (stream, emit, state, { exit }) => {
   const char = stream.next();
@@ -2278,7 +2278,7 @@ const CDATASection: Pattern = (stream, emit, state, { exit }) => {
 
 /**
  * 8.2.4.70
- * @see https://www.w3.org/TR/html/syntax.html#CDATA-section-bracket-state
+ * @see https://html.spec.whatwg.org/#CDATA-section-bracket-state
  */
 const CDATASectionBracket: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -2296,7 +2296,7 @@ const CDATASectionBracket: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.71
- * @see https://www.w3.org/TR/html/syntax.html#CDATA-section-end-state
+ * @see https://html.spec.whatwg.org/#CDATA-section-end-state
  */
 const CDATASectionEnd: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -2320,7 +2320,7 @@ const CDATASectionEnd: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.72
- * @see https://www.w3.org/TR/html/syntax.html#character-reference-state
+ * @see https://html.spec.whatwg.org/#character-reference-state
  */
 const characterReference: Pattern = (stream, emit, state) => {
   state.temporaryBuffer = "&";
@@ -2383,7 +2383,7 @@ const characterReference: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.73
- * @see https://www.w3.org/TR/html/syntax.html#numeric-character-reference-state
+ * @see https://html.spec.whatwg.org/#numeric-character-reference-state
  */
 const numericCharacterReference: Pattern = (stream, emit, state) => {
   state.characterReferenceCode = 0;
@@ -2403,7 +2403,7 @@ const numericCharacterReference: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.74
- * @see https://www.w3.org/TR/html/syntax.html#hexadecimal-character-reference-start-state
+ * @see https://html.spec.whatwg.org/#hexadecimal-character-reference-start-state
  */
 const hexadecimalCharacterReferenceStart: Pattern = stream => {
   const char = stream.peek(0);
@@ -2417,7 +2417,7 @@ const hexadecimalCharacterReferenceStart: Pattern = stream => {
 
 /**
  * 8.2.4.75
- * @see https://www.w3.org/TR/html/syntax.html#decimal-character-reference-start-state
+ * @see https://html.spec.whatwg.org/#decimal-character-reference-start-state
  */
 const decimalCharacterReferenceStart: Pattern = stream => {
   const char = stream.peek(0);
@@ -2431,7 +2431,7 @@ const decimalCharacterReferenceStart: Pattern = stream => {
 
 /**
  * 8.2.4.76
- * @see https://www.w3.org/TR/html/syntax.html#hexadecimal-character-reference-state
+ * @see https://html.spec.whatwg.org/#hexadecimal-character-reference-state
  */
 const hexadecimalCharacterReference: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -2462,7 +2462,7 @@ const hexadecimalCharacterReference: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.77
- * @see https://www.w3.org/TR/html/syntax.html#decimal-character-reference-state
+ * @see https://html.spec.whatwg.org/#decimal-character-reference-state
  */
 const decimalCharacterReference: Pattern = (stream, emit, state) => {
   const char = stream.peek(0);
@@ -2507,7 +2507,7 @@ const replacementCodes: { [code: number]: number } = {
 
 /**
  * 8.2.4.78
- * @see https://www.w3.org/TR/html/syntax.html#numeric-character-reference-end-state
+ * @see https://html.spec.whatwg.org/#numeric-character-reference-end-state
  */
 const numericCharacterReferenceEnd: Pattern = (stream, emit, state) => {
   let code = state.characterReferenceCode;
@@ -2525,7 +2525,7 @@ const numericCharacterReferenceEnd: Pattern = (stream, emit, state) => {
 
 /**
  * 8.2.4.79
- * @see https://www.w3.org/TR/html/syntax.html#character-reference-end-state
+ * @see https://html.spec.whatwg.org/#character-reference-end-state
  */
 const characterReferenceEnd: Pattern = (stream, emit, state) => {
   switch (state.returnState) {
