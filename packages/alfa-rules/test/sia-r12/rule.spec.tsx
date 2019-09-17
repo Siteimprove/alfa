@@ -43,3 +43,15 @@ test("Is inapplicable when element is not in the accessibility tree", t => {
     Outcome.Inapplicable
   );
 });
+
+test("Is inapplicable when element is not a button", t => {
+  const div = <div />;
+  const document = documentFromNodes([div]);
+
+  outcome(
+    t,
+    SIA_R12,
+    { document, device: getDefaultDevice() },
+    Outcome.Inapplicable
+  );
+});
