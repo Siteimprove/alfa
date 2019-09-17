@@ -1,6 +1,5 @@
 import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import {
-  getRole,
   getTextAlternative,
   hasTextAlternative,
   isExposed,
@@ -20,6 +19,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
+import { ElementChecker } from "../helpers/element-checker";
 
 import { EN } from "./locales/en";
 
@@ -125,8 +125,8 @@ function isLink(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return BrowserSpecific.map(
-    getRole(element, context, device),
-    role => role === Roles.Link
-  );
+  return new ElementChecker()
+    .withContext(context)
+    .withRole(device, Roles.Link)
+    .evaluate(element);
 }

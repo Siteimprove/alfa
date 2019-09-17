@@ -1,22 +1,17 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  getTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { getTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 const {
   map,
@@ -81,12 +76,9 @@ function isLink(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return BrowserSpecific.map(
-    getRole(element, context, device),
-    role => role === Roles.Link
-  );
+  return new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .withRole(device, Roles.Link)
+    .evaluate(element);
 }

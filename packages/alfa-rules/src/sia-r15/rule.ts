@@ -11,7 +11,6 @@ import {
   Document,
   Element,
   getAttribute,
-  getElementNamespace,
   getRootNode,
   isElement,
   Namespace,
@@ -20,6 +19,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
+import { ElementChecker } from "../helpers/element-checker";
 
 const {
   map,
@@ -110,8 +110,9 @@ export const SIA_R15: Atomic.Rule<Device | Document, Iterable<Element>> = {
 };
 
 function isIframe(element: Element, context: Node): boolean {
-  return (
-    getElementNamespace(element, context) === Namespace.HTML &&
-    element.localName === "iframe"
-  );
+  return new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .withName("iframe")
+    .evaluate(element) as boolean;
 }

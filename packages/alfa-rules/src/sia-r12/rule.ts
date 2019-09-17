@@ -1,17 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  hasTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { hasTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
   getInputType,
   InputType,
   isElement,
@@ -19,6 +13,7 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 import { EN } from "./locales/en";
 
@@ -90,9 +85,9 @@ function isButton(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return map(getRole(element, context, device), role => role === Roles.Button);
+  return new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .withRole(device, Roles.Button)
+    .evaluate(element);
 }

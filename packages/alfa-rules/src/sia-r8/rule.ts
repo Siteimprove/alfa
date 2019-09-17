@@ -1,22 +1,17 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  hasTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { hasTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 const {
   map,
@@ -74,24 +69,22 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
 };
 
 function isFormField(element: Element, context: Node, device: Device): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  switch (getRole(element, context, device)) {
-    case Roles.Checkbox:
-    case Roles.Combobox:
-    case Roles.ListBox:
-    case Roles.MenuItemCheckbox:
-    case Roles.MenuItemRadio:
-    case Roles.Radio:
-    case Roles.SearchBox:
-    case Roles.Slider:
-    case Roles.SpinButton:
-    case Roles.Switch:
-    case Roles.TextBox:
-      return true;
-  }
-
-  return false;
+  return new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .withRole(
+      device,
+      Roles.Checkbox,
+      Roles.Combobox,
+      Roles.ListBox,
+      Roles.MenuItemCheckbox,
+      Roles.MenuItemRadio,
+      Roles.Radio,
+      Roles.SearchBox,
+      Roles.Slider,
+      Roles.SpinButton,
+      Roles.Switch,
+      Roles.TextBox
+    )
+    .evaluate(element) as boolean;
 }

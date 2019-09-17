@@ -6,12 +6,12 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 const {
   map,
@@ -71,8 +71,9 @@ export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
 };
 
 function isIframe(element: Element, context: Node): boolean {
-  return (
-    getElementNamespace(element, context) === Namespace.HTML &&
-    element.localName === "iframe"
-  );
+  return new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .withName("iframe")
+    .evaluate(element) as boolean;
 }

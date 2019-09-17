@@ -1,6 +1,5 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
-  getRole,
   getTextAlternative,
   hasTextAlternative,
   isExposed,
@@ -12,12 +11,12 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 import { EN } from "./locales/en";
 
@@ -101,15 +100,18 @@ function isImage(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
+  const imgByName = new ElementChecker()
+    .withName("img")
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .evaluate(element) as boolean;
+  const imgByRole = new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .withRole(device, Roles.Img)
+    .evaluate(element);
 
-  if (element.localName === "img") {
-    return true;
-  }
-
-  return map(getRole(element, context, device), role => role === Roles.Img);
+  return imgByName ? imgByName : imgByRole;
 }
 
 function isDecorative(
@@ -117,14 +119,8 @@ function isDecorative(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return map(getRole(element, context, device), role => {
-    switch (role) {
-      case Roles.None:
-      case Roles.Presentation:
-      case null:
-        return true;
-    }
-
-    return false;
-  });
+  return new ElementChecker()
+    .withContext(context)
+    .withRole(device, null, Roles.None, Roles.Presentation)
+    .evaluate(element);
 }

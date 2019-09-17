@@ -2,13 +2,13 @@ import { Atomic } from "@siteimprove/alfa-act";
 import {
   Document,
   Element,
-  getElementNamespace,
   hasTextContent,
   isElement,
   Namespace,
   Node,
   querySelector
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 export const SIA_R1: Atomic.Rule<Document, Document> = {
   id: "sanshikan:rules/sia-r1.html",
@@ -52,9 +52,9 @@ function hasDocumentElement(document: Document): boolean {
 }
 
 function isTitle(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return element.localName === "title";
+  return new ElementChecker()
+    .withName("title")
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .evaluate(element) as boolean;
 }

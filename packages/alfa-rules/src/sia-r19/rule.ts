@@ -7,7 +7,6 @@ import {
   Attribute,
   Document,
   Element,
-  getElementNamespace,
   getId,
   getOwnerElement,
   getRootNode,
@@ -19,6 +18,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { URL, values } from "@siteimprove/alfa-util";
 
+import { ElementChecker } from "../helpers/element-checker";
 import { isRequiredAttribute } from "../helpers/is-required-attribute";
 
 import { EN } from "./locales/en";
@@ -186,7 +186,8 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
 };
 
 function isHtmlOrSvgElement(element: Element, context: Node): boolean {
-  const namespace = getElementNamespace(element, context);
-
-  return namespace === Namespace.HTML || namespace === Namespace.SVG;
+  return new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML, Namespace.SVG)
+    .evaluate(element) as boolean;
 }

@@ -6,13 +6,13 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
+import { ElementChecker } from "../helpers/element-checker";
 import { getExplicitRole } from "../helpers/get-explicit-role";
 
 const {
@@ -82,13 +82,10 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
 };
 
 function isHtmlOrSvgElement(element: Element, context: Node): boolean {
-  switch (getElementNamespace(element, context)) {
-    case Namespace.HTML:
-    case Namespace.SVG:
-      return true;
-  }
-
-  return false;
+  return new ElementChecker()
+    .withContext(context)
+    .withNamespace(Namespace.HTML, Namespace.SVG)
+    .evaluate(element) as boolean;
 }
 
 function hasRequiredContext(

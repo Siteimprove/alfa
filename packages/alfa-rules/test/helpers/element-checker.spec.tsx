@@ -88,10 +88,17 @@ test("Correctly checks several conditions", t => {
     .withContext(document)
     .withRole(device, Roles.Link)
     .build();
+  const isHTMLLink = new ElementChecker()
+    .withContext(document)
+    .withNamespace(Namespace.HTML)
+    .withRole(device, Roles.Link)
+    .build();
 
   t(isHTMLDiv(div));
   t(!isHTMLDiv(spanLink));
   t(isSpanLink(spanLink));
   t(!isSpanLink(link));
   t(!isSpanLink(span));
+  t(isHTMLLink(link));
+  t(!isHTMLLink(div));
 });

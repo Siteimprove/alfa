@@ -5,7 +5,6 @@ import {
   Document,
   Element,
   getAttributeNode,
-  getElementNamespace,
   isElement,
   Namespace,
   Node,
@@ -13,6 +12,7 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
+import { ElementChecker } from "../helpers/element-checker";
 import { hasLanguageAttribute } from "../helpers/has-language-attribute";
 
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
@@ -79,9 +79,9 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
 };
 
 function isBody(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return element.localName === "body";
+  return new ElementChecker()
+    .withName("body")
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .evaluate(element) as boolean;
 }
