@@ -15,27 +15,54 @@ function emptyOrHas<T>(elt: T, set?: Set<T>) {
 }
 
 export class ElementChecker {
-  private context?: Node;
-  public withContext(context: Node): ElementChecker {
-    this.context = context;
-    return this;
+  constructor(namesSet?: Set<string>) {
+    this.namesSet = namesSet;
   }
 
-  private namespacesSet?: Set<Namespace>;
-  public withNamespace(...namespaces: Array<Namespace>): ElementChecker {
-    this.namespacesSet = new Set(namespaces);
-    return this;
+  public withContext(context: Node): ElementCheckerWithContext {
+    const checker = new ElementCheckerWithContext(context, this.namesSet);
+    return checker;
   }
 
-  private namesSet?: Set<string>;
+  protected namesSet?: Set<string>;
   public withName(...names: Array<string>): ElementChecker {
     this.namesSet = new Set(names);
     return this;
   }
 
+  public build(): (node: Node) => boolean | BrowserSpecific<boolean> {
+    return node => {
+      if (!isElement(node)) {
+        return false;
+      }
+
+      return emptyOrHas(node.localName, this.namesSet);
+    };
+  }
+}
+
+class ElementCheckerWithContext extends ElementChecker {
+  private readonly context: Node;
+
+  constructor(context: Node, namesSet?: Set<string>) {
+    super(namesSet);
+    this.context = context;
+  }
+
+  private namespacesSet?: Set<Namespace>;
+  public withNamespace(
+    ...namespaces: Array<Namespace>
+  ): ElementCheckerWithContext {
+    this.namespacesSet = new Set(namespaces);
+    return this;
+  }
+
   private device?: Device;
   private rolesSet?: Set<Role>;
-  public withRole(device: Device, ...roles: Array<Role>): ElementChecker {
+  public withRole(
+    device: Device,
+    ...roles: Array<Role>
+  ): ElementCheckerWithContext {
     this.device = device;
     this.rolesSet = new Set(roles);
     return this;
@@ -47,10 +74,7 @@ export class ElementChecker {
         return false;
       }
 
-      const elementNamespace =
-        this.context === undefined
-          ? null
-          : getElementNamespace(node, this.context);
+      const elementNamespace = getElementNamespace(node, this.context);
 
       const simpleChecks = // checks that are not browser Specific
         // Checking name, always passing if no names were specified
@@ -63,8 +87,7 @@ export class ElementChecker {
       const browserSpecificChecks: boolean | BrowserSpecific<boolean> =
         this.device === undefined
           ? true
-          : this.context !== undefined &&
-            BrowserSpecific.map(
+          : BrowserSpecific.map(
               getRole(node, this.context, this.device),
               role => emptyOrHas(role, this.rolesSet)
             );

@@ -1,27 +1,32 @@
 import { Roles } from "@siteimprove/alfa-aria";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
-import { getAttribute, Namespace } from "@siteimprove/alfa-dom";
+import { getAttributeNode, Namespace } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { ElementChecker } from "../../src/helpers/element-checker";
 import { documentFromNodes } from "./document-from-nodes";
 
-const spanLink = <span id="foo" role="link" />;
-const span = <span></span>;
+const spanLink = <span role="link" />;
+const span = <span id="foo" />;
 const div = <div id="bar" />;
 const link = <a href="www.siteimprove.com">Siteimprove</a>;
-const img = <img></img>;
-const svg = <svg></svg>;
+const img = <img />;
+const svg = <svg />;
 const document = documentFromNodes([spanLink, div, link, img, svg, span]);
 
 const device = getDefaultDevice();
 
 test("Correctly detects element nodes", t => {
   const isElement = new ElementChecker().build();
-  const foo = getAttribute(span, document, "id");
+  const isElementWithContext = new ElementChecker()
+    .withContext(document)
+    .build();
+  const foo = getAttributeNode(span, "id")!;
   t(isElement(span));
-  t(isElement(document));
+  t(isElementWithContext(span));
+  t(!isElement(document));
   t(!isElement(foo));
+  t(!isElementWithContext(foo));
 });
 
 test("Correctly checks single or multiple name", t => {
@@ -72,16 +77,16 @@ test("Correctly checks single or multiple implicit and explicit roles", t => {
   t(!isLinkOrImage(svg));
 });
 
-test("Correclty checks several conditions", t => {
+test("Correctly checks several conditions", t => {
   const isHTMLDiv = new ElementChecker()
     .withContext(document)
     .withNamespace(Namespace.HTML)
     .withName("div")
     .build();
   const isSpanLink = new ElementChecker()
+    .withName("span")
     .withContext(document)
     .withRole(device, Roles.Link)
-    .withName("span")
     .build();
 
   t(isHTMLDiv(div));
