@@ -6,14 +6,12 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
-  getInputType,
   InputType,
-  isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 const {
   map,
@@ -35,7 +33,7 @@ export const SIA_R28: Atomic.Rule<Device | Document, Element> = {
               document,
               document,
               node => {
-                return isElement(node) && isImageButton(node, document);
+                return isImageButton(node, document);
               },
               {
                 flattened: true
@@ -76,10 +74,10 @@ export const SIA_R28: Atomic.Rule<Device | Document, Element> = {
   }
 };
 
-function isImageButton(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return getInputType(element) === InputType.Image;
+function isImageButton(node: Node, context: Node): node is Element {
+  return new ElementChecker()
+    .withInputType(InputType.Image)
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .evaluate(node) as boolean;
 }

@@ -1,10 +1,5 @@
 import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  getTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { getTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
@@ -12,14 +7,13 @@ import {
   Document,
   Element,
   getAttribute,
-  getElementNamespace,
-  getInputType,
   InputType,
   isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+import { ElementChecker } from "../helpers/element-checker";
 
 const {
   map,
@@ -104,19 +98,19 @@ function isImage(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
+  const imgByType = new ElementChecker()
+    .withInputType(InputType.Image)
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .evaluate(element) as boolean;
+  const imgByNameAndRole = new ElementChecker()
+    .withName("img")
+    .withContext(context)
+    .withNamespace(Namespace.HTML)
+    .withRole(device, Roles.Img)
+    .evaluate(element);
 
-  if (getInputType(element) === InputType.Image) {
-    return true;
-  }
-
-  if (element.localName !== "img") {
-    return false;
-  }
-
-  return map(getRole(element, context, device), role => role === Roles.Img);
+  return imgByType ? true : imgByNameAndRole;
 }
 
 function getFilename(path: string): string {
