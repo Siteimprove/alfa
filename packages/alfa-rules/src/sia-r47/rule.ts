@@ -36,7 +36,7 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
       },
 
       expectations: (aspect, target) => {
-        const whitespace = [" "]; // todo: complete list
+        const whitespace = [" ", "\xa0", "\t", "\n", "\f", "\r", "\v"];
         const separator = [",", ";"];
         const equal = ["="];
         const properties = parsePropertiesList(
