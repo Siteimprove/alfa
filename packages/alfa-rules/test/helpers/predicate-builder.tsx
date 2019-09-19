@@ -4,6 +4,7 @@ import { getAttributeNode, InputType, Namespace } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { ElementChecker } from "../../src/helpers/element-checker";
+import { isElement } from "../../src/helpers/predicate-builder";
 import { documentFromNodes } from "./document-from-nodes";
 
 const spanLink = <span role="link" />;
@@ -28,21 +29,15 @@ const document = documentFromNodes([
 const device = getDefaultDevice();
 
 test("Correctly detects element nodes", t => {
-  const isElement = new ElementChecker().build();
-  const isElementWithContext = new ElementChecker()
-    .withContext(document)
-    .build();
   const foo = getAttributeNode(span, "id")!;
-  t(isElement(span));
-  t(isElementWithContext(span));
-  t(!isElement(document));
-  t(!isElement(foo));
-  t(!isElementWithContext(foo));
+  t(isElement()(span));
+  t(!isElement()(document));
+  t(!isElement()(foo));
 });
 
 test("Correctly checks single or multiple name", t => {
-  const isDiv = new ElementChecker().withName("div").build();
-  const isDivOrSpan = new ElementChecker().withName("div", "span").build();
+  const isDiv = isElement(builder => builder.withName("div"));
+  const isDivOrSpan = isElement(builder => builder.withName("div", "span"));
 
   t(isDiv(div));
   t(!isDiv(spanLink));
@@ -53,10 +48,12 @@ test("Correctly checks single or multiple name", t => {
 });
 
 test("Correctly checks single or multiple input type", t => {
-  const isHidden = new ElementChecker().withInputType(InputType.Hidden).build();
-  const isHiddenOrSearch = new ElementChecker()
-    .withInputType(InputType.Hidden, InputType.Search)
-    .build();
+  const isHidden = isElement(builder =>
+    builder.withInputType(InputType.Hidden)
+  );
+  const isHiddenOrSearch = isElement(builder =>
+    builder.withInputType(InputType.Hidden, InputType.Search)
+  );
 
   t(isHidden(inputHidden));
   t(!isHidden(inputSearch));
@@ -69,14 +66,12 @@ test("Correctly checks single or multiple input type", t => {
 });
 
 test("Correctly checks single or multiple namespace", t => {
-  const isHTML = new ElementChecker()
-    .withContext(document)
-    .withNamespace(Namespace.HTML)
-    .build();
-  const isHTMLOrSVG = new ElementChecker()
-    .withContext(document)
-    .withNamespace(Namespace.HTML, Namespace.SVG)
-    .build();
+  const isHTML = isElement(builder =>
+    builder.withNamespace(document, Namespace.HTML)
+  );
+  const isHTMLOrSVG = isElement(builder =>
+    builder.withNamespace(document, Namespace.HTML, Namespace.SVG)
+  );
 
   t(isHTML(div));
   t(isHTML(spanLink));
@@ -105,11 +100,9 @@ test("Correctly checks single or multiple implicit and explicit roles", t => {
 });
 
 test("Correctly checks several conditions", t => {
-  const isHTMLDiv = new ElementChecker()
-    .withContext(document)
-    .withNamespace(Namespace.HTML)
-    .withName("div")
-    .build();
+  const isHTMLDiv = isElement(builder =>
+    builder.withName("div").withNamespace(document, Namespace.HTML)
+  );
   const isSpanLink = new ElementChecker()
     .withName("span")
     .withContext(document)
