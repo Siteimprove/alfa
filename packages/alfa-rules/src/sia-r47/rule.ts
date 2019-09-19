@@ -11,7 +11,7 @@ import {
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { clamp } from "@siteimprove/alfa-util";
+import { clamp, Option } from "@siteimprove/alfa-util";
 
 export const SIA_R47: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r47.html",
@@ -50,7 +50,11 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
         const scalable = parseUserScalable(properties.get("user-scalable"));
 
         return {
-          1: { holds: scale >= 2 && scalable !== "fixed" }
+          1: {
+            holds:
+              (scale === null || scale >= 2) &&
+              (scalable === null || scalable !== "fixed")
+          }
         };
       }
     };
@@ -124,7 +128,9 @@ export function parsePropertiesList(
       }
       value = propertiesList.substring(start, i);
 
-      valueMap.set(name, value);
+      if (value.length > 0) {
+        valueMap.set(name, value);
+      }
     }
   }
 
@@ -137,10 +143,10 @@ export function parsePropertiesList(
  * @remarks
  * This seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
  */
-function parseMaximumScale(scale: string | undefined): number {
+export function parseMaximumScale(scale: string | undefined): Option<number> {
   switch (scale) {
     case undefined:
-      return 0.1;
+      return null;
     case "yes":
       return 1;
     case "device-width":
@@ -160,10 +166,12 @@ function parseMaximumScale(scale: string | undefined): number {
  * @remark
  * This seems to be the iOS/Safari algorithm and other browsers might handle it in unknown ways.
  */
-function parseUserScalable(scalable: string | undefined): "zoom" | "fixed" {
+export function parseUserScalable(
+  scalable: string | undefined
+): Option<"zoom" | "fixed"> {
   switch (scalable) {
     case undefined:
-      return "fixed";
+      return null;
     case "yes":
     case "device-width":
     case "device-height":
