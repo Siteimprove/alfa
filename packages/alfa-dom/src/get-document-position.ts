@@ -2,10 +2,12 @@ import { Cache } from "@siteimprove/alfa-util";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
 
+// prettier-ignore
 enum Mode {
-  Normal,
-  Composed,
-  Flattened
+  Normal    = 0b01_0,
+  Composed  = 0b10_0,
+  Flattened = 0b11_0,
+  Nested    = 0b00_1
 }
 
 const documentPositions = Cache.of<Mode, Cache<Node, Cache<Node, number>>>({
@@ -32,6 +34,10 @@ export function getDocumentPosition(
     mode = Mode.Flattened;
   }
 
+  if (options.nested === true) {
+    mode |= Mode.Nested;
+  }
+
   return documentPositions
     .get(mode, Cache.of)
     .get(context, () => {
@@ -47,7 +53,7 @@ export function getDocumentPosition(
             documentPositions.set(node, position++);
           }
         },
-        { ...options, nested: false }
+        options
       );
 
       return documentPositions;
@@ -59,5 +65,6 @@ export namespace getDocumentPosition {
   export interface Options {
     readonly composed?: boolean;
     readonly flattened?: boolean;
+    readonly nested?: boolean;
   }
 }
