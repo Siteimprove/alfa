@@ -9,6 +9,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Option, Predicate } from "@siteimprove/alfa-util";
 
+function member<T>(elt: Option<T>, arr: Array<T>): boolean {
+  return elt !== null && new Set(arr).has(elt);
+}
+
 class NodePredicateBuilder<T extends Node = Node> {
   public readonly predicate: Predicate<Node, T>;
 
@@ -25,18 +29,17 @@ class NodePredicateBuilder<T extends Node = Node> {
 
 class ElementPredicateBuilder extends NodePredicateBuilder<Element> {
   public withName(...names: Array<string>): ElementPredicateBuilder {
-    return new ElementPredicateBuilder(node => {
-      return this.predicate(node) && new Set(names).has(node.localName);
+    return new ElementPredicateBuilder(element => {
+      return this.predicate(element) && member(element.localName, names);
     });
   }
 
   public withInputType(
     ...inputTypes: Array<InputType>
   ): ElementPredicateBuilder {
-    return new ElementPredicateBuilder(node => {
+    return new ElementPredicateBuilder(element => {
       return (
-        this.predicate(node) &&
-        new Set<Option<InputType>>(inputTypes).has(getInputType(node))
+        this.predicate(element) && member(getInputType(element), inputTypes)
       );
     });
   }
@@ -45,12 +48,10 @@ class ElementPredicateBuilder extends NodePredicateBuilder<Element> {
     context: Node,
     ...namespaces: Array<Namespace>
   ): ElementPredicateBuilder {
-    return new ElementPredicateBuilder(node => {
+    return new ElementPredicateBuilder(element => {
       return (
-        this.predicate(node) &&
-        new Set<Option<Namespace>>(namespaces).has(
-          getElementNamespace(node, context)
-        )
+        this.predicate(element) &&
+        member(getElementNamespace(element, context), namespaces)
       );
     });
   }
