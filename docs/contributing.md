@@ -38,7 +38,7 @@ Signed-off-by: John Doe <john.doe@example.com>
 
 If you are committing changes from the GitHub UI, you can add a sign-off message by adding it as an extended description to your commit:
 
-![Video showing how to sign-off on commits through the GitHub UI](media/sign-off.gif)
+![Video showing how to sign-off on commits through the GitHub UI](../media/sign-off.gif)
 
 To automatically sign-off on commits when using git via CLI, pass the `--signoff` flag to git when commiting:
 

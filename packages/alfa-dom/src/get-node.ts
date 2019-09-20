@@ -2,10 +2,12 @@ import { Cache } from "@siteimprove/alfa-util";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
 
+// prettier-ignore
 enum Mode {
-  Normal,
-  Composed,
-  Flattened
+  Normal    = 0b01_0,
+  Composed  = 0b10_0,
+  Flattened = 0b11_0,
+  Nested    = 0b00_1
 }
 
 const nodes = Cache.of<Mode, Cache<Node, Cache<number, Node>>>({ weak: false });
@@ -30,6 +32,10 @@ export function getNode(
     mode = Mode.Flattened;
   }
 
+  if (options.nested === true) {
+    mode |= Mode.Nested;
+  }
+
   return nodes
     .get(mode, Cache.of)
     .get(context, () => {
@@ -45,7 +51,7 @@ export function getNode(
             nodes.set(position++, node);
           }
         },
-        { ...options, nested: false }
+        options
       );
 
       return nodes;
@@ -57,5 +63,6 @@ export namespace getNode {
   export interface Options {
     readonly composed?: boolean;
     readonly flattened?: boolean;
+    readonly nested?: boolean;
   }
 }

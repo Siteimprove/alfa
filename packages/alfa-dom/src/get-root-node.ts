@@ -36,7 +36,7 @@ export function getRootNode(
   const rootNode = rootNodes
     .get(mode, Cache.of)
     .get(context, () => {
-      return collectRootNodes(context, context, options);
+      return collectRootNodes(context, options);
     })
     .get(node);
 
@@ -56,13 +56,12 @@ export namespace getRootNode {
 
 function collectRootNodes(
   root: Node,
-  context: Node,
   options: getRootNode.Options,
   rootNodes = Cache.of<Node, Node>()
 ): Cache<Node, Node> {
   traverseNode(
     root,
-    context,
+    root,
     {
       enter(node) {
         rootNodes.set(node, root);
@@ -74,14 +73,14 @@ function collectRootNodes(
           // composed nor flattened root, recurse into the shadow root and mark
           // it as the root of itself and all its descendants.
           if (shadowRoot !== null && shadowRoot !== undefined) {
-            collectRootNodes(shadowRoot, context, options, rootNodes);
+            collectRootNodes(shadowRoot, options, rootNodes);
           }
         }
 
         const contentDocument = isElement(node) ? node.contentDocument : null;
 
         if (contentDocument !== null && contentDocument !== undefined) {
-          collectRootNodes(contentDocument, context, options, rootNodes);
+          collectRootNodes(contentDocument, options, rootNodes);
         }
       }
     },
