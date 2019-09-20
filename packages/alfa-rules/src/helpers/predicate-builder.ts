@@ -1,3 +1,8 @@
+/*
+import { getRole, Role } from "@siteimprove/alfa-aria";
+import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Device } from "@siteimprove/alfa-device";
+*/
 import {
   Element,
   getElementNamespace,
@@ -20,6 +25,14 @@ class NodePredicateBuilder<T extends Node = Node> {
     this.predicate = predicate;
   }
 
+  protected and<U extends T = T>(
+    predicate: Predicate<T, U>
+  ): NodePredicateBuilder<U> {
+    return new NodePredicateBuilder(
+      node => this.predicate(node) && predicate(node)
+    );
+  }
+
   public isElement(): ElementPredicateBuilder {
     return new ElementPredicateBuilder(node => {
       return this.predicate(node) && isElt(node);
@@ -27,34 +40,47 @@ class NodePredicateBuilder<T extends Node = Node> {
   }
 }
 
-class ElementPredicateBuilder extends NodePredicateBuilder<Element> {
+class ElementPredicateBuilder<
+  T extends Element = Element
+> extends NodePredicateBuilder<T> {
+  protected and<T extends Element = Element>(
+    predicate: Predicate<Element, T>
+  ): ElementPredicateBuilder {
+    return new ElementPredicateBuilder(
+      element => this.predicate(element) && predicate(element)
+    );
+  }
+
   public withName(...names: Array<string>): ElementPredicateBuilder {
-    return new ElementPredicateBuilder(element => {
-      return this.predicate(element) && member(element.localName, names);
-    });
+    return this.and(element => member(element.localName, names));
   }
 
   public withInputType(
     ...inputTypes: Array<InputType>
   ): ElementPredicateBuilder {
-    return new ElementPredicateBuilder(element => {
-      return (
-        this.predicate(element) && member(getInputType(element), inputTypes)
-      );
-    });
+    return this.and(element => member(getInputType(element), inputTypes));
   }
 
   public withNamespace(
     context: Node,
     ...namespaces: Array<Namespace>
   ): ElementPredicateBuilder {
-    return new ElementPredicateBuilder(element => {
-      return (
-        this.predicate(element) &&
-        member(getElementNamespace(element, context), namespaces)
-      );
-    });
+    return this.and(element =>
+      member(getElementNamespace(element, context), namespaces)
+    );
   }
+
+  /*
+  public withRole(device: Device, context: Node, role: Role): BrowserSpecific<ElementPredicateBuilder> | ElementPredicateBuilder {
+    const foo = (element: Element) => {
+      return BrowserSpecific.map(getRole(element, context, device) === role, b => this.predicate(element) && b)
+    }
+
+    return new ElementPredicateBuilder(foo)
+  
+
+  } 
+  */
 }
 
 export function isNode<T extends Node>(
