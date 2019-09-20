@@ -21,7 +21,7 @@ function member<T>(elt: Option<T>, arr: Array<T>): boolean {
 class NodePredicateBuilder<T extends Node = Node> {
   public readonly predicate: Predicate<Node, T>;
 
-  public constructor(predicate: Predicate<Node, T> = (x: Node) => true) {
+  public constructor(predicate: Predicate<Node, T> = () => true) {
     this.predicate = predicate;
   }
 
