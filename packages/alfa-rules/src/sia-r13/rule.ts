@@ -7,10 +7,9 @@ import {
   Document,
   Element,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
@@ -36,9 +35,15 @@ export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(document, document, node => {
-              return isIframe(node, document);
-            }),
+            querySelectorAll<Element>(
+              document,
+              document,
+              isElement(builder =>
+                builder
+                  .withNamespace(document, Namespace.HTML)
+                  .withName("iframe")
+              )
+            ),
             element => {
               return isExposed(element, document, device);
             }
@@ -68,11 +73,3 @@ export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isIframe(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .withName("iframe")
-    .evaluate(node) as boolean;
-}

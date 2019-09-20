@@ -10,16 +10,14 @@ import {
   getId,
   getOwnerElement,
   getRootNode,
-  isElement,
   Namespace,
-  Node,
   querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { URL, values } from "@siteimprove/alfa-util";
 
-import { ElementChecker } from "../helpers/element-checker";
 import { isRequiredAttribute } from "../helpers/is-required-attribute";
+import { isElement } from "../helpers/predicate-builder";
 
 import { EN } from "./locales/en";
 
@@ -42,9 +40,9 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
           querySelectorAll<Element>(
             document,
             document,
-            node => {
-              return isHtmlOrSvgElement(node, document);
-            },
+            isElement(builder =>
+              builder.withNamespace(document, Namespace.HTML, Namespace.SVG)
+            ),
             {
               composed: true
             }
@@ -110,7 +108,9 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                   querySelector(
                     root,
                     document,
-                    node => isElement(node) && getId(node) === value
+                    isElement(builder =>
+                      builder.and(element => getId(element) === value)
+                    )
                   ) !== null;
               } else {
                 hasMatches = value
@@ -121,7 +121,9 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                       querySelector(
                         root,
                         document,
-                        node => isElement(node) && getId(node) === value
+                        isElement(builder =>
+                          builder.and(element => getId(element) === value)
+                        )
                       ) !== null
                   );
               }
@@ -184,10 +186,3 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
     };
   }
 };
-
-function isHtmlOrSvgElement(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML, Namespace.SVG)
-    .evaluate(node) as boolean;
-}

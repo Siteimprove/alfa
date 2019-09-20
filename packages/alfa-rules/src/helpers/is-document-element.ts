@@ -1,8 +1,8 @@
 import { Element, getParentNode, Node } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "./element-checker";
-
-const isHTML = new ElementChecker().withName("html").build();
+import { isElement } from "./predicate-builder";
 
 export function isDocumentElement(element: Element, context: Node): boolean {
-  return isHTML(element) && getParentNode(element, context) === context;
+  return isElement(builder =>
+    builder.withName("html").and(elt => getParentNode(elt, context) === context)
+  )(element);
 }

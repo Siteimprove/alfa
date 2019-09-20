@@ -12,10 +12,9 @@ import {
   getOwnerElement,
   hasAttribute,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
@@ -32,13 +31,16 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(document, document, node => {
-              return (
-                isHtmlOrSvgElement(node, document) &&
-                hasAttribute(node, "role") &&
-                getAttribute(node, "role") !== ""
-              );
-            }),
+            querySelectorAll<Element>(
+              document,
+              document,
+              isElement(builder =>
+                builder
+                  .withNamespace(document, Namespace.HTML, Namespace.SVG)
+                  .and(element => hasAttribute(element, "role"))
+                  .and(element => getAttribute(element, "role") !== "")
+              )
+            ),
             element => {
               return isExposed(element, document, device);
             }
@@ -70,10 +72,3 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
     };
   }
 };
-
-function isHtmlOrSvgElement(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML, Namespace.SVG)
-    .evaluate(node) as boolean;
-}

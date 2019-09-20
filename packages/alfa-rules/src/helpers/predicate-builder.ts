@@ -25,7 +25,7 @@ class NodePredicateBuilder<T extends Node = Node> {
     this.predicate = predicate;
   }
 
-  protected and<U extends T = T>(
+  public and<U extends T = T>(
     predicate: Predicate<T, U>
   ): NodePredicateBuilder<U> {
     return new NodePredicateBuilder(
@@ -43,7 +43,7 @@ class NodePredicateBuilder<T extends Node = Node> {
 class ElementPredicateBuilder<
   T extends Element = Element
 > extends NodePredicateBuilder<T> {
-  protected and<T extends Element = Element>(
+  public and<T extends Element = Element>(
     predicate: Predicate<Element, T>
   ): ElementPredicateBuilder {
     return new ElementPredicateBuilder(
@@ -77,8 +77,6 @@ class ElementPredicateBuilder<
     }
 
     return new ElementPredicateBuilder(foo)
-  
-
   } 
   */
 }

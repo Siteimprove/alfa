@@ -1,14 +1,11 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
   Document,
-  Element,
   hasTextContent,
-  isElement,
   Namespace,
-  Node,
   querySelector
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 export const SIA_R1: Atomic.Rule<Document, Document> = {
   id: "sanshikan:rules/sia-r1.html",
@@ -24,9 +21,13 @@ export const SIA_R1: Atomic.Rule<Document, Document> = {
       },
 
       expectations: (aspect, target) => {
-        const title = querySelector(target, document, node => {
-          return isTitle(node, document);
-        });
+        const title = querySelector(
+          target,
+          document,
+          isElement(builder =>
+            builder.withNamespace(document, Namespace.HTML).withName("title")
+          )
+        );
 
         return {
           1: { holds: title !== null },
@@ -43,18 +44,10 @@ function hasDocumentElement(document: Document): boolean {
   for (let i = 0, n = childNodes.length; i < n; i++) {
     const childNode = childNodes[i];
 
-    if (isElement(childNode) && childNode.localName === "html") {
+    if (isElement(builder => builder.withName("html"))(childNode)) {
       return true;
     }
   }
 
   return false;
-}
-
-function isTitle(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withName("title")
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .evaluate(node) as boolean;
 }

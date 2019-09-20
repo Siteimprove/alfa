@@ -5,15 +5,13 @@ import {
   Document,
   Element,
   getAttributeNode,
-  isElement,
   Namespace,
-  Node,
   querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
-import { ElementChecker } from "../helpers/element-checker";
 import { hasLanguageAttribute } from "../helpers/has-language-attribute";
+import { isElement } from "../helpers/predicate-builder";
 
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r7.html",
@@ -23,8 +21,12 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   evaluate: ({ document }) => {
     return {
       applicability: () => {
-        const body = querySelector(document, document, node =>
-          isBody(node, document)
+        const body = querySelector(
+          document,
+          document,
+          isElement(builder =>
+            builder.withNamespace(document, Namespace.HTML).withName("body")
+          )
         );
 
         if (body === null) {
@@ -35,7 +37,7 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
           querySelectorAll<Element>(
             body,
             document,
-            node => isElement(node) && hasLanguageAttribute(node),
+            isElement(builder => builder.and(hasLanguageAttribute)),
             {
               flattened: true
             }
@@ -75,11 +77,3 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
     };
   }
 };
-
-function isBody(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withName("body")
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .evaluate(node) as boolean;
-}

@@ -11,8 +11,8 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
-import { ElementChecker } from "../helpers/element-checker";
 import { getExplicitRole } from "../helpers/get-explicit-role";
+import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
@@ -32,9 +32,9 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll<Element>(
               document,
               document,
-              node => {
-                return isHtmlOrSvgElement(node, document);
-              },
+              isElement(builder =>
+                builder.withNamespace(document, Namespace.HTML, Namespace.SVG)
+              ),
               {
                 flattened: true
               }
@@ -79,13 +79,6 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isHtmlOrSvgElement(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML, Namespace.SVG)
-    .evaluate(node) as boolean;
-}
 
 function hasRequiredContext(
   element: Element,

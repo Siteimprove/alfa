@@ -8,10 +8,9 @@ import {
   Element,
   InputType,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
@@ -32,9 +31,11 @@ export const SIA_R28: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll<Element>(
               document,
               document,
-              node => {
-                return isImageButton(node, document);
-              },
+              isElement(builder =>
+                builder
+                  .withInputType(InputType.Image)
+                  .withNamespace(document, Namespace.HTML)
+              ),
               {
                 flattened: true
               }
@@ -73,11 +74,3 @@ export const SIA_R28: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isImageButton(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withInputType(InputType.Image)
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .evaluate(node) as boolean;
-}

@@ -4,14 +4,12 @@ import {
   Document,
   Element,
   getAttribute,
-  getElementNamespace,
   hasAttribute,
-  isElement,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { clamp, Option } from "@siteimprove/alfa-util";
+import { isElement } from "../helpers/predicate-builder";
 
 export const SIA_R47: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r47.html",
@@ -22,14 +20,21 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
     return {
       applicability: () => {
         return Seq(
-          querySelectorAll<Element>(document, document, node => {
-            return (
-              isElement(node) &&
-              isMeta(node, document) &&
-              getAttribute(node, "name", { lowerCase: true }) === "viewport" &&
-              hasAttribute(node, "content")
-            );
-          })
+          querySelectorAll<Element>(
+            document,
+            document,
+            isElement(builder =>
+              builder
+                .withNamespace(document, Namespace.HTML)
+                .withName("meta")
+                .and(
+                  element =>
+                    getAttribute(element, "name", { lowerCase: true }) ===
+                    "viewport"
+                )
+                .and(element => hasAttribute(element, "content"))
+            )
+          )
         ).map(element => {
           return { applicable: true, aspect: document, target: element };
         });
@@ -60,14 +65,6 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
     };
   }
 };
-
-function isMeta(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return element.localName === "meta";
-}
 
 /*
  * Parses a list of "name=value" properties according to https://drafts.csswg.org/css-device-adapt/#parsing-algorithm

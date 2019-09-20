@@ -13,12 +13,11 @@ import {
   getAttribute,
   getRootNode,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
@@ -39,9 +38,11 @@ export const SIA_R15: Atomic.Rule<Device | Document, Iterable<Element>> = {
               querySelectorAll<Element>(
                 document,
                 document,
-                node => {
-                  return isIframe(node, document);
-                },
+                isElement(builder =>
+                  builder
+                    .withNamespace(document, Namespace.HTML)
+                    .withName("iframe")
+                ),
                 {
                   flattened: true
                 }
@@ -107,11 +108,3 @@ export const SIA_R15: Atomic.Rule<Device | Document, Iterable<Element>> = {
     };
   }
 };
-
-function isIframe(node: Node, context: Node): node is Element {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .withName("iframe")
-    .evaluate(node) as boolean;
-}
