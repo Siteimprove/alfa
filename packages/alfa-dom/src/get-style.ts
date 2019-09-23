@@ -239,9 +239,16 @@ const pseudoElements = Cache.of<
 function getPseudoElement(element: Element, selector: Selector): object | null {
   switch (selector.type) {
     case SelectorType.PseudoElementSelector: {
-      return pseudoElements.get(element, Cache.of).get(selector.name, () => {
-        return { pseudoElement: selector.name };
-      });
+      return pseudoElements
+        .get(element, () => {
+          return Cache.of<
+            PseudoElement,
+            { readonly pseudoElement: PseudoElement }
+          >({ weak: false });
+        })
+        .get(selector.name, () => {
+          return { pseudoElement: selector.name };
+        });
     }
 
     case SelectorType.CompoundSelector:
