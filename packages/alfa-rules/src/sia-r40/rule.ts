@@ -48,7 +48,7 @@ export const SIA_R40: Atomic.Rule<Device | Document, Element> = {
         );
       },
 
-      expectations: (aspect, target, question) => {
+      expectations: (aspect, target) => {
         return map(
           hasTextAlternative(target, document, device),
           hasTextAlternative => {

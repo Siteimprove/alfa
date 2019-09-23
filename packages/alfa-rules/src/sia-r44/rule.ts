@@ -78,7 +78,7 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
         });
       },
 
-      expectations: (aspect, target, question) => {
+      expectations: (aspect, target) => {
         let rotation = getRelativeRotation(target, document, devices);
 
         if (rotation !== null) {
