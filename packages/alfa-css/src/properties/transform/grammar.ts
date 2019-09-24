@@ -5,7 +5,7 @@ import { Values } from "../../values";
 import { FunctionArguments } from "../helpers/function-arguments";
 import { Transform } from "./types";
 
-const { isKeyword, number } = Values;
+const { isKeyword } = Values;
 
 type Production<T extends Token> = Lang.Production<Token, Transform, T>;
 
@@ -58,20 +58,20 @@ const functionName: Production<Tokens.FunctionName> = {
           Values.func("matrix", [
             a,
             b,
-            number(0),
-            number(0),
+            Values.number(0),
+            Values.number(0),
             c,
             d,
-            number(0),
-            number(0),
-            number(0),
-            number(0),
-            number(1),
-            number(0),
+            Values.number(0),
+            Values.number(0),
+            Values.number(0),
+            Values.number(0),
+            Values.number(1),
+            Values.number(0),
             e,
             f,
-            number(0),
-            number(1)
+            Values.number(0),
+            Values.number(1)
           ])
         );
       }
@@ -84,7 +84,14 @@ const functionName: Production<Tokens.FunctionName> = {
             return null;
           }
 
-          return Values.list(Values.func("rotate", [Values.angle(0, "deg")]));
+          return Values.list(
+            Values.func("rotate", [
+              Values.number(0),
+              Values.number(0),
+              Values.number(1),
+              Values.angle(0, "deg")
+            ])
+          );
         }
 
         const angle = args.angle();
@@ -93,7 +100,14 @@ const functionName: Production<Tokens.FunctionName> = {
           return null;
         }
 
-        return Values.list(Values.func("rotate", [angle]));
+        return Values.list(
+          Values.func("rotate", [
+            Values.number(0),
+            Values.number(0),
+            Values.number(1),
+            angle
+          ])
+        );
       }
 
       case "rotate3d": {
@@ -146,9 +160,9 @@ const functionName: Production<Tokens.FunctionName> = {
 
           return Values.list(
             Values.func("rotate", [
-              number(1),
-              number(0),
-              number(0),
+              Values.number(1),
+              Values.number(0),
+              Values.number(0),
               Values.angle(0, "deg")
             ])
           );
@@ -161,7 +175,12 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("rotate", [number(1), number(0), number(0), angle])
+          Values.func("rotate", [
+            Values.number(1),
+            Values.number(0),
+            Values.number(0),
+            angle
+          ])
         );
       }
 
@@ -175,9 +194,9 @@ const functionName: Production<Tokens.FunctionName> = {
 
           return Values.list(
             Values.func("rotate", [
-              number(0),
-              number(1),
-              number(0),
+              Values.number(0),
+              Values.number(1),
+              Values.number(0),
               Values.angle(0, "deg")
             ])
           );
@@ -190,7 +209,12 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("rotate", [number(0), number(1), number(0), angle])
+          Values.func("rotate", [
+            Values.number(0),
+            Values.number(1),
+            Values.number(0),
+            angle
+          ])
         );
       }
 
@@ -204,9 +228,9 @@ const functionName: Production<Tokens.FunctionName> = {
 
           return Values.list(
             Values.func("rotate", [
-              number(0),
-              number(0),
-              number(1),
+              Values.number(0),
+              Values.number(0),
+              Values.number(1),
               Values.angle(0, "deg")
             ])
           );
@@ -219,7 +243,12 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("rotate", [number(0), number(0), number(1), angle])
+          Values.func("rotate", [
+            Values.number(0),
+            Values.number(0),
+            Values.number(1),
+            angle
+          ])
         );
       }
 
@@ -237,7 +266,10 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("translate", ty === false ? [tx] : [tx, ty])
+          Values.func(
+            "translate",
+            ty === false ? [tx, Values.length(0, "px")] : [tx, ty]
+          )
         );
       }
     }

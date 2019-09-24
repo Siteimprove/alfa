@@ -12,13 +12,12 @@ export namespace Transform {
 
   export type Rotate = Values.Function<
     "rotate",
-    [Values.Angle] | [Values.Number, Values.Number, Values.Number, Values.Angle]
+    [Values.Number, Values.Number, Values.Number, Values.Angle]
   >;
 
   export type Translate = Values.Function<
     "translate",
-    | [Values.Length | Values.Percentage]
-    | [Values.Length | Values.Percentage, Values.Length | Values.Percentage]
+    [Values.Length | Values.Percentage, Values.Length | Values.Percentage]
   >;
 
   export type Function = Matrix | Rotate | Translate;

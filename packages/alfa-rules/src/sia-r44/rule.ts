@@ -206,23 +206,19 @@ function getRotation(
 
   for (const { value } of transform.value) {
     switch (value.name) {
-      case "rotate":
-        if (value.args.length === 1) {
-          const [angle] = value.args;
+      case "rotate": {
+        const [x, y, z, angle] = value.args;
 
-          rotation += angle.value;
-        } else {
-          const [x, y, z, angle] = value.args;
+        z;
 
-          z;
-
-          if (x.value !== 0 || y.value !== 0) {
-            return null;
-          }
-
-          rotation += angle.value;
+        if (x.value !== 0 || y.value !== 0) {
+          return null;
         }
+
+        rotation += angle.value;
+
         break;
+      }
 
       case "matrix": {
         const { args } = value;
