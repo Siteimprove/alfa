@@ -76,6 +76,71 @@ const functionName: Production<Tokens.FunctionName> = {
         );
       }
 
+      case "matrix3d": {
+        const a = args.number();
+        const b = args.number();
+        const c = args.number();
+        const d = args.number();
+        const e = args.number();
+        const f = args.number();
+        const g = args.number();
+        const h = args.number();
+        const i = args.number();
+        const j = args.number();
+        const k = args.number();
+        const l = args.number();
+        const m = args.number();
+        const n = args.number();
+        const o = args.number();
+        const p = args.number();
+
+        if (
+          a === false ||
+          b === false ||
+          c === false ||
+          d === false ||
+          e === false ||
+          f === false ||
+          g === false ||
+          h === false ||
+          i === false ||
+          j === false ||
+          k === false ||
+          l === false ||
+          m === false ||
+          n === false ||
+          o === false ||
+          p === false
+        ) {
+          return null;
+        }
+
+        if (!args.done()) {
+          return null;
+        }
+
+        return Values.list(
+          Values.func("matrix", [
+            a,
+            b,
+            c,
+            d,
+            e,
+            f,
+            g,
+            h,
+            i,
+            j,
+            k,
+            l,
+            m,
+            n,
+            o,
+            p
+          ])
+        );
+      }
+
       case "rotate": {
         const zero = args.number();
 
