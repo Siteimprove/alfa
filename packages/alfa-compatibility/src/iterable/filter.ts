@@ -2,8 +2,6 @@ import { List } from "@siteimprove/alfa-collection";
 import { BrowserSpecific } from "../browser-specific";
 import { reduce } from "./reduce";
 
-const { map } = BrowserSpecific;
-
 export function filter<T>(
   values: BrowserSpecific<Iterable<T>>,
   predicate: (value: T) => boolean | BrowserSpecific<boolean>
@@ -26,7 +24,7 @@ export function filter<T>(
   return reduce<T, List<T>>(
     values,
     (filtered, value) => {
-      return map(predicate(value), include => {
+      return BrowserSpecific.map(predicate(value), include => {
         return include ? filtered.push(value) : filtered;
       });
     },

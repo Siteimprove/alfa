@@ -2,8 +2,6 @@ import { Option, Some } from "@siteimprove/alfa-util";
 import { BrowserSpecific } from "../browser-specific";
 import { reduce } from "./reduce";
 
-const { map } = BrowserSpecific;
-
 export function find<T>(
   values: BrowserSpecific<Iterable<Option<T>>>,
   predicate: (value: Some<T>) => boolean | BrowserSpecific<boolean>
@@ -27,7 +25,9 @@ export function find<T>(
     values,
     (found, value) => {
       if (found === null && value !== null) {
-        return map(predicate(value), match => (match ? value : null));
+        return BrowserSpecific.map(predicate(value), match =>
+          match ? value : null
+        );
       }
 
       return found;

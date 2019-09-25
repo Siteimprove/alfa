@@ -1,7 +1,5 @@
 import { BrowserSpecific } from "../browser-specific";
 
-const { map } = BrowserSpecific;
-
 export function reduce<T>(
   values: BrowserSpecific<Iterable<T>>,
   iteratee: (accumulator: T, value: T) => T | BrowserSpecific<T>
@@ -40,7 +38,7 @@ export function reduce<T, U = T>(
   iteratee: (accumulator: T | U, value: T) => T | U,
   initial?: T | U | BrowserSpecific<T | U>
 ): T | U | BrowserSpecific<T | U> {
-  return map(values, values => {
+  return BrowserSpecific.map(values, values => {
     const iterator = values[Symbol.iterator]();
 
     let next = iterator.next();
@@ -59,7 +57,7 @@ export function reduce<T, U = T>(
     while (next.done !== true) {
       const { value } = next;
 
-      accumulator = map(accumulator, accumulator => {
+      accumulator = BrowserSpecific.map(accumulator, accumulator => {
         return iteratee(accumulator, value);
       });
 
