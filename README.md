@@ -59,7 +59,7 @@ import { Rules } from "@siteimprove/alfa-rules";
 
 const aspects = { ... };
 
-const results = audit(aspects, Rules);
+const results = audit(aspects, Object.values(Rules));
 ```
 
 The last piece we are missing is aspects. Aspects are the individual parts that make up the content we wish to audit, from the HTTP request sent by a browser to fetch the content, the HTTP response supplied by the server with a chunk of HTML, the DOM constructed by the browser from this HTML, and more. Which specific aspects that need to be supplied when running an audit will depend on the rules that are part of the audit as each rule specifies which aspects it requires. To get you started, Alfa ships with a scraper that will simply fetch _all_ aspects of a given piece of content:
@@ -74,7 +74,7 @@ const scraper = new Scraper();
 scraper
   .scrape("https://example.com")
   .then(aspects => {
-    const results = audit(aspects, Rules);
+    const results = audit(aspects, Object.values(Rules));
   })
   .catch(err => {
     console.error(err);
