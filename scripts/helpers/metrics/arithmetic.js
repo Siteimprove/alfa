@@ -1,5 +1,6 @@
 const TypeScript = require("typescript");
 const { parseSource } = require("../typescript");
+
 /**
  * @typedef {import("../coverage").Script} Script
  */
