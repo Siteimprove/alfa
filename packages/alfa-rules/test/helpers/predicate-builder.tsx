@@ -3,7 +3,6 @@ import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { getAttributeNode, InputType, Namespace } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { ElementChecker } from "../../src/helpers/element-checker";
 import { isElement } from "../../src/helpers/predicate-builder";
 import { documentFromNodes } from "./document-from-nodes";
 
@@ -30,9 +29,9 @@ const device = getDefaultDevice();
 
 test("Correctly detects element nodes", t => {
   const foo = getAttributeNode(span, "id")!;
-  t(isElement()(span));
-  t(!isElement()(document));
-  t(!isElement()(foo));
+  t(isElement(b => b)(span));
+  t(!isElement(b => b)(document));
+  t(!isElement(b => b)(foo));
 });
 
 test("Correctly checks single or multiple name", t => {
@@ -82,14 +81,12 @@ test("Correctly checks single or multiple namespace", t => {
 });
 
 test("Correctly checks single or multiple implicit and explicit roles", t => {
-  const isLink = new ElementChecker()
-    .withContext(document)
-    .withRole(device, Roles.Link)
-    .build();
-  const isLinkOrImage = new ElementChecker()
-    .withContext(document)
-    .withRole(device, Roles.Link, Roles.Img)
-    .build();
+  const isLink = isElement(builder =>
+    builder.withRole(device, document, Roles.Link)
+  );
+  const isLinkOrImage = isElement(builder =>
+    builder.withRole(device, document, Roles.Link, Roles.Img)
+  );
 
   t(isLink(link));
   t(isLink(spanLink));
@@ -103,16 +100,14 @@ test("Correctly checks several conditions", t => {
   const isHTMLDiv = isElement(builder =>
     builder.withName("div").withNamespace(document, Namespace.HTML)
   );
-  const isSpanLink = new ElementChecker()
-    .withName("span")
-    .withContext(document)
-    .withRole(device, Roles.Link)
-    .build();
-  const isHTMLLink = new ElementChecker()
-    .withContext(document)
-    .withNamespace(Namespace.HTML)
-    .withRole(device, Roles.Link)
-    .build();
+  const isSpanLink = isElement(builder =>
+    builder.withName("span").withRole(device, document, Roles.Link)
+  );
+  const isHTMLLink = isElement(builder =>
+    builder
+      .withNamespace(document, Namespace.HTML)
+      .withRole(device, document, Roles.Link)
+  );
 
   t(isHTMLDiv(div));
   t(!isHTMLDiv(spanLink));
