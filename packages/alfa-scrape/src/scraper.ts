@@ -1,5 +1,12 @@
 import { Aspects } from "@siteimprove/alfa-act";
-import { Device, DeviceType, Orientation } from "@siteimprove/alfa-device";
+import {
+  Device,
+  DeviceType,
+  Display,
+  getDefaultDevice,
+  Orientation,
+  Viewport
+} from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-util";
@@ -7,6 +14,8 @@ import { readFileSync } from "fs";
 import puppeteer from "puppeteer";
 
 const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
+
+const defaultDevice = getDefaultDevice();
 
 export const enum Wait {
   Ready = "domcontentloaded",
@@ -17,12 +26,8 @@ export const enum Wait {
 export interface ScrapeOptions {
   readonly timeout?: number;
   readonly wait?: Wait;
-  readonly viewport?: {
-    readonly width: number;
-    readonly height: number;
-    readonly scale?: number;
-    readonly landscape?: boolean;
-  };
+  readonly viewport?: Viewport;
+  readonly display?: Display;
   readonly credentials?: {
     readonly username: string;
     readonly password: string;
@@ -45,25 +50,17 @@ export class Scraper {
     options: ScrapeOptions = {}
   ): Promise<Aspects> {
     const {
-      viewport = { width: 1280, height: 720, scale: 1, landscape: true },
-      credentials = null,
       wait = Wait.Loaded,
-      timeout = 10000
+      timeout = 10000,
+      viewport = defaultDevice.viewport,
+      display = defaultDevice.display,
+      credentials = null
     } = options;
 
     const device: Device = {
       type: DeviceType.Screen,
-      viewport: {
-        width: viewport.width,
-        height: viewport.height,
-        orientation:
-          viewport.landscape !== false
-            ? Orientation.Landscape
-            : Orientation.Portrait
-      },
-      display: {
-        resolution: viewport.scale === undefined ? 1 : viewport.scale
-      }
+      viewport,
+      display
     };
 
     const browser = await this.browser;
@@ -72,8 +69,8 @@ export class Scraper {
     await page.setViewport({
       width: viewport.width,
       height: viewport.width,
-      deviceScaleFactor: viewport.scale,
-      isLandscape: viewport.landscape
+      deviceScaleFactor: display.resolution,
+      isLandscape: viewport.orientation === Orientation.Landscape
     });
 
     await page.authenticate(credentials);

@@ -3,13 +3,23 @@ import yargs from "yargs";
 
 export type Arguments<T> = yargs.Arguments<T>;
 
-export type ArgumentsBuilder<T> = yargs.Argv<T>;
+export namespace Arguments {
+  export type Builder<T> = yargs.Argv<T>;
+}
 
 export interface Command<U> {
   readonly command: string;
   readonly describe: string;
-  readonly builder?: <T>(builder: ArgumentsBuilder<T>) => ArgumentsBuilder<U>;
-  readonly handler?: (args: Arguments<U>) => void;
+  readonly builder?: Command.Builder<U>;
+  readonly handler?: Command.Handler<U>;
+}
+
+export namespace Command {
+  export type Builder<U> = <T>(
+    builder: Arguments.Builder<T>
+  ) => Arguments.Builder<U>;
+
+  export type Handler<U> = (args: Arguments<U>) => void;
 }
 
 export type Formatter<A extends Aspect, T extends Target> = (
