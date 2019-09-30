@@ -1,4 +1,5 @@
 import { Roles } from "@siteimprove/alfa-aria";
+import { withBrowsers } from "@siteimprove/alfa-compatibility";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { getAttributeNode, InputType, Namespace } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
@@ -15,14 +16,7 @@ const svg = <svg />;
 const inputHidden = <input type="hidden" />;
 const inputSearch = <input type="search" />;
 const button = <button />;
-const Button = {
-  nodeType: 1,
-  prefix: null,
-  localName: "Button",
-  attributes: [],
-  shadowRoot: null,
-  childNodes: []
-};
+const Button = <div role="Button" />;
 const document = documentFromNodes([
   spanLink,
   div,
@@ -40,9 +34,9 @@ const device = getDefaultDevice();
 
 test("Correctly detects element nodes", t => {
   const foo = getAttributeNode(span, "id")!;
-  t(isElement(b => b)(span));
-  t(!isElement(b => b)(document));
-  t(!isElement(b => b)(foo));
+  t(isElement()(span));
+  t(!isElement()(document));
+  t(!isElement()(foo));
 });
 
 test("Correctly checks single or multiple name", t => {
@@ -112,8 +106,13 @@ test("Correctly handles browser specific values", t => {
     builder.withRole(device, document, Roles.Button)
   );
 
-  t(isButton(button));
-  // t(isButton(Button));
+  withBrowsers([["firefox", "<=", "60"]], () => {
+    t(!isButton(Button));
+  });
+
+  withBrowsers([["chrome", ">=", "60"]], () => {
+    t(isButton(Button));
+  });
 });
 
 test("Correctly checks several conditions", t => {
