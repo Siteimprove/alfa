@@ -26,9 +26,9 @@ class PredicateBuilder<T, U extends T = T> {
   }
 }
 
-class NodePredicateBuilder<T extends Node = Node> extends PredicateBuilder<
+class NodePredicateBuilder<U extends Node = Node> extends PredicateBuilder<
   Node,
-  T
+  U
 > {
   public isElement(): ElementPredicateBuilder {
     return new ElementPredicateBuilder(node => {
@@ -38,12 +38,12 @@ class NodePredicateBuilder<T extends Node = Node> extends PredicateBuilder<
 }
 
 class ElementPredicateBuilder<
-  T extends Element = Element
-> extends NodePredicateBuilder<T> {
-  public and<T extends Element = Element>(
-    predicate: Predicate<Element, T>
-  ): ElementPredicateBuilder {
-    return new ElementPredicateBuilder<T>(
+  U extends Element = Element
+> extends NodePredicateBuilder<U> {
+  public and<V extends U = U>(
+    predicate: Predicate<U, V>
+  ): ElementPredicateBuilder<V> {
+    return new ElementPredicateBuilder<V>(
       element => this.predicate(element) && predicate(element)
     );
   }
@@ -75,31 +75,35 @@ class ElementPredicateBuilder<
     device: Device,
     context: Node,
     ...roles: Array<Role>
-  ): BrowserSpecificPredicateBuilder<Node> {
-    return new BrowserSpecificPredicateBuilder(node =>
-      this.predicate(node) // node must be narrowed to Element before calling getRole
-        ? BrowserSpecific.map(getRole(node, context, device), elementRole =>
-            roles.some(role => role === elementRole)
-          )
-        : false
+  ): BrowserSpecificPredicateBuilder<Node, U> {
+    return new BrowserSpecificPredicateBuilder<Node, U>(node =>
+      this.predicate(node)
+    ).and(element =>
+      BrowserSpecific.map(getRole(element, context, device), elementRole =>
+        roles.some(role => role === elementRole)
+      )
     );
   }
 }
 
-type BrowserSpecificPredicate<T> = (t: T) => boolean | BrowserSpecific<boolean>;
+type BrowserSpecificPredicate<T, U extends T = T> = (
+  t: T
+) => boolean | BrowserSpecific<boolean>; // t is U
 
-class BrowserSpecificPredicateBuilder<T> {
-  public readonly predicate: BrowserSpecificPredicate<T>;
+class BrowserSpecificPredicateBuilder<T, U extends T = T> {
+  public readonly predicate: BrowserSpecificPredicate<T, U>;
 
-  public constructor(predicate: BrowserSpecificPredicate<T> = () => true) {
+  public constructor(predicate: BrowserSpecificPredicate<T, U> = () => true) {
     this.predicate = predicate;
   }
 
-  public and(
-    predicate: BrowserSpecificPredicate<T>
-  ): BrowserSpecificPredicateBuilder<T> {
+  public and<V extends U = U>(
+    predicate: BrowserSpecificPredicate<U, V>
+  ): BrowserSpecificPredicateBuilder<T, V> {
     return new BrowserSpecificPredicateBuilder((t: T) =>
-      BrowserSpecific.map(predicate(t), b => b && this.predicate(t))
+      BrowserSpecific.map(this.predicate(t), b =>
+        b ? predicate(t as U) : false
+      )
     );
   }
 }
@@ -123,7 +127,7 @@ function isNode<T extends Node>(
 */
 
 export function isElement<T extends Element = Element>(
-  factory: (builder: ElementPredicateBuilder) => ElementPredicateBuilder<T>
+  factory?: (builder: ElementPredicateBuilder) => ElementPredicateBuilder<T>
 ): Predicate<Node, T>;
 
 export function isElement(
