@@ -133,11 +133,11 @@ export function isElement(
 ): BrowserSpecificPredicate<Node>;
 
 export function isElement(
-  factory: (
-    builder: ElementPredicateBuilder
-  ) =>
-    | ElementPredicateBuilder
-    | BrowserSpecificPredicateBuilder<Node> = builder => builder
+  factory:
+    | ((builder: ElementPredicateBuilder) => ElementPredicateBuilder)
+    | ((
+        builder: ElementPredicateBuilder
+      ) => BrowserSpecificPredicateBuilder<Node>) = builder => builder
 ): Predicate<Node, Element> | BrowserSpecificPredicate<Node> {
   return node =>
     factory(new NodePredicateBuilder().isElement()).predicate(node);

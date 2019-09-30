@@ -14,6 +14,15 @@ const img = <img type="hidden" />;
 const svg = <svg />;
 const inputHidden = <input type="hidden" />;
 const inputSearch = <input type="search" />;
+const button = <button />;
+const Button = {
+  nodeType: 1,
+  prefix: null,
+  localName: "Button",
+  attributes: [],
+  shadowRoot: null,
+  childNodes: []
+};
 const document = documentFromNodes([
   spanLink,
   div,
@@ -22,7 +31,9 @@ const document = documentFromNodes([
   svg,
   span,
   inputHidden,
-  inputSearch
+  inputSearch,
+  button,
+  Button
 ]);
 
 const device = getDefaultDevice();
@@ -94,6 +105,15 @@ test("Correctly checks single or multiple implicit and explicit roles", t => {
   t(isLinkOrImage(link));
   t(isLinkOrImage(img));
   t(!isLinkOrImage(svg));
+});
+
+test("Correctly handles browser specific values", t => {
+  const isButton = isElement(builder =>
+    builder.withRole(device, document, Roles.Button)
+  );
+
+  t(isButton(button));
+  // t(isButton(Button));
 });
 
 test("Correctly checks several conditions", t => {

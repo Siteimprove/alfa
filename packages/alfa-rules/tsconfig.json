@@ -72,7 +72,7 @@
     "test/helpers/has-language-attribute.spec.tsx",
     "test/helpers/is-document-element.spec.tsx",
     "test/helpers/outcome.ts",
-    "test/helpers/predicate-builder.tsx",
+    "test/helpers/predicate-builder.spec.tsx",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r10/rule.spec.tsx",
     "test/sia-r11/rule.spec.tsx",
