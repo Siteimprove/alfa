@@ -42,3 +42,6 @@ export { SIA_R41 } from "./sia-r41/rule";
 export { SIA_R42 } from "./sia-r42/rule";
 export { SIA_R44 } from "./sia-r44/rule";
 export { SIA_R47 } from "./sia-r47/rule";
+export { SIA_R48 } from "./sia-r48/rule";
+export { SIA_R49 } from "./sia-r49/rule";
+export { SIA_R50 } from "./sia-r50/rule";
