@@ -68,7 +68,6 @@
     "src/sia-r8/rule.ts",
     "src/sia-r9/rule.ts",
     "test/helpers/document-from-nodes.tsx",
-    "test/helpers/element-checker.spec.tsx",
     "test/helpers/has-language-attribute.spec.tsx",
     "test/helpers/is-document-element.spec.tsx",
     "test/helpers/outcome.ts",
