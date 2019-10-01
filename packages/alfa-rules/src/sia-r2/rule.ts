@@ -11,12 +11,12 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 import { EN } from "./locales/en";
 
@@ -36,7 +36,7 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll(document, document, isElement, {
+            querySelectorAll(document, document, isElement(), {
               flattened: true
             }),
             element => {
@@ -119,8 +119,7 @@ function isDecorative(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return new ElementChecker()
-    .withContext(context)
-    .withRole(device, null, Roles.None, Roles.Presentation)
-    .evaluate(element);
+  return isElement(builder =>
+    builder.withRole(device, context, Roles.None, Roles.Presentation)
+  )(element);
 }
