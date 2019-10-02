@@ -172,8 +172,10 @@ export namespace BrowserSpecific {
 
 // Import of iterable helpers must happen after the `BrowserSpecific` class has
 // been declared as all of the iterable helpers rely on this class.
+import * as binOp from "./binary-operation";
 import * as iterable from "./iterable";
 
 export namespace BrowserSpecific {
   export const Iterable = iterable;
+  export const BinOp = binOp;
 }

@@ -1,6 +1,8 @@
 {
   "extends": "../tsconfig.json",
   "files": [
+    "src/binary-operation.ts",
+    "src/binary-operation/binary-operation.ts",
     "src/browser-specific.ts",
     "src/browsers.ts",
     "src/expand-browsers.ts",
@@ -13,7 +15,6 @@
     "src/is-browser-supported.ts",
     "src/is-feature-supported.ts",
     "src/iterable.ts",
-    "src/iterable/binary-operation.ts",
     "src/iterable/filter.ts",
     "src/iterable/find.ts",
     "src/iterable/group-by.ts",

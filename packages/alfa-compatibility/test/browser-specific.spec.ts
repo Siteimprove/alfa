@@ -1,7 +1,10 @@
 import { test } from "@siteimprove/alfa-test";
 import { BrowserSpecific } from "../src/browser-specific";
 
-const { map } = BrowserSpecific;
+const {
+  map,
+  BinOp: { binOp }
+} = BrowserSpecific;
 
 const n = BrowserSpecific.of(1, ["chrome"]).branch(2, ["firefox"]);
 
@@ -32,7 +35,7 @@ test("Satisfies the law of associativity", t => {
 
 test("Perform binary operations on browser specific values", t => {
   // using a non-commutative operation
-  const sub = BrowserSpecific.Iterable.binOp((x: number, y: number) => x - y);
+  const sub = binOp((x: number, y: number) => x - y);
 
   const m = BrowserSpecific.of(3, ["chrome"]).branch(4, ["firefox"]);
   const p = BrowserSpecific.of(1, ["chrome"]).branch(0, ["firefox"]);
