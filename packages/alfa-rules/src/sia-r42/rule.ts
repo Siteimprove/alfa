@@ -66,7 +66,7 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
         );
       },
 
-      expectations: (aspect, target, question) => {
+      expectations: (aspect, target) => {
         return map(
           hasRequiredContext(target, document, device),
           hasRequiredContext => {

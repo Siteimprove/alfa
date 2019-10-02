@@ -37,8 +37,8 @@ export const SIA_R4: Atomic.Rule<Document, Element> = {
         return {
           1: {
             holds:
-              (lang !== null && lang !== "") ||
-              (xmlLang !== null && xmlLang !== "")
+              (lang !== null && lang.trim() !== "") ||
+              (xmlLang !== null && xmlLang.trim() !== "")
           }
         };
       }

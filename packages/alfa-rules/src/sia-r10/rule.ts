@@ -142,7 +142,7 @@ function isAutocompletable(
 function hasAutocomplete(element: Element): boolean {
   return (
     hasAttribute(element, "autocomplete") &&
-    getAttribute(element, "autocomplete") !== ""
+    getAttribute(element, "autocomplete", { trim: true }) !== ""
   );
 }
 

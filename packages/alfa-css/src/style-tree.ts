@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { keys, Option, set } from "@siteimprove/alfa-util";
+import { keys, Mutable, Option, set } from "@siteimprove/alfa-util";
 
 import {
   CascadedPropertyValue,
@@ -50,7 +50,7 @@ export class StyleTree<T extends object, S> {
       const parent =
         parentEntry === null ? null : this.styles.get(parentEntry.target)!;
 
-      const style = {
+      const style: Mutable<Style<S>> = {
         parent,
         cascaded: {},
         specified: {},

@@ -5,7 +5,7 @@ import { Values } from "../../values";
 import { FunctionArguments } from "../helpers/function-arguments";
 import { Transform } from "./types";
 
-const { isKeyword, number } = Values;
+const { isKeyword } = Values;
 
 type Production<T extends Token> = Lang.Production<Token, Transform, T>;
 
@@ -58,20 +58,85 @@ const functionName: Production<Tokens.FunctionName> = {
           Values.func("matrix", [
             a,
             b,
-            number(0),
-            number(0),
+            Values.number(0),
+            Values.number(0),
             c,
             d,
-            number(0),
-            number(0),
-            number(0),
-            number(0),
-            number(1),
-            number(0),
+            Values.number(0),
+            Values.number(0),
+            Values.number(0),
+            Values.number(0),
+            Values.number(1),
+            Values.number(0),
             e,
             f,
-            number(0),
-            number(1)
+            Values.number(0),
+            Values.number(1)
+          ])
+        );
+      }
+
+      case "matrix3d": {
+        const a = args.number();
+        const b = args.number();
+        const c = args.number();
+        const d = args.number();
+        const e = args.number();
+        const f = args.number();
+        const g = args.number();
+        const h = args.number();
+        const i = args.number();
+        const j = args.number();
+        const k = args.number();
+        const l = args.number();
+        const m = args.number();
+        const n = args.number();
+        const o = args.number();
+        const p = args.number();
+
+        if (
+          a === false ||
+          b === false ||
+          c === false ||
+          d === false ||
+          e === false ||
+          f === false ||
+          g === false ||
+          h === false ||
+          i === false ||
+          j === false ||
+          k === false ||
+          l === false ||
+          m === false ||
+          n === false ||
+          o === false ||
+          p === false
+        ) {
+          return null;
+        }
+
+        if (!args.done()) {
+          return null;
+        }
+
+        return Values.list(
+          Values.func("matrix", [
+            a,
+            b,
+            c,
+            d,
+            e,
+            f,
+            g,
+            h,
+            i,
+            j,
+            k,
+            l,
+            m,
+            n,
+            o,
+            p
           ])
         );
       }
@@ -84,7 +149,14 @@ const functionName: Production<Tokens.FunctionName> = {
             return null;
           }
 
-          return Values.list(Values.func("rotate", [Values.angle(0, "deg")]));
+          return Values.list(
+            Values.func("rotate", [
+              Values.number(0),
+              Values.number(0),
+              Values.number(1),
+              Values.angle(0, "deg")
+            ])
+          );
         }
 
         const angle = args.angle();
@@ -93,7 +165,14 @@ const functionName: Production<Tokens.FunctionName> = {
           return null;
         }
 
-        return Values.list(Values.func("rotate", [angle]));
+        return Values.list(
+          Values.func("rotate", [
+            Values.number(0),
+            Values.number(0),
+            Values.number(1),
+            angle
+          ])
+        );
       }
 
       case "rotate3d": {
@@ -146,9 +225,9 @@ const functionName: Production<Tokens.FunctionName> = {
 
           return Values.list(
             Values.func("rotate", [
-              number(1),
-              number(0),
-              number(0),
+              Values.number(1),
+              Values.number(0),
+              Values.number(0),
               Values.angle(0, "deg")
             ])
           );
@@ -161,7 +240,12 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("rotate", [number(1), number(0), number(0), angle])
+          Values.func("rotate", [
+            Values.number(1),
+            Values.number(0),
+            Values.number(0),
+            angle
+          ])
         );
       }
 
@@ -175,9 +259,9 @@ const functionName: Production<Tokens.FunctionName> = {
 
           return Values.list(
             Values.func("rotate", [
-              number(0),
-              number(1),
-              number(0),
+              Values.number(0),
+              Values.number(1),
+              Values.number(0),
               Values.angle(0, "deg")
             ])
           );
@@ -190,7 +274,12 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("rotate", [number(0), number(1), number(0), angle])
+          Values.func("rotate", [
+            Values.number(0),
+            Values.number(1),
+            Values.number(0),
+            angle
+          ])
         );
       }
 
@@ -204,9 +293,9 @@ const functionName: Production<Tokens.FunctionName> = {
 
           return Values.list(
             Values.func("rotate", [
-              number(0),
-              number(0),
-              number(1),
+              Values.number(0),
+              Values.number(0),
+              Values.number(1),
               Values.angle(0, "deg")
             ])
           );
@@ -219,7 +308,12 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("rotate", [number(0), number(0), number(1), angle])
+          Values.func("rotate", [
+            Values.number(0),
+            Values.number(0),
+            Values.number(1),
+            angle
+          ])
         );
       }
 
@@ -237,7 +331,10 @@ const functionName: Production<Tokens.FunctionName> = {
         }
 
         return Values.list(
-          Values.func("translate", ty === false ? [tx] : [tx, ty])
+          Values.func(
+            "translate",
+            ty === false ? [tx, Values.length(0, "px")] : [tx, ty]
+          )
         );
       }
     }

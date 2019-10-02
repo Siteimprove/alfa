@@ -10,8 +10,9 @@ import {
   Result,
   Target
 } from "@siteimprove/alfa-act";
+import { Orientation } from "@siteimprove/alfa-device";
 import { Rules } from "@siteimprove/alfa-rules";
-import { Scraper } from "@siteimprove/alfa-scrape";
+import { Scraper, Wait } from "@siteimprove/alfa-scrape";
 import { URL, values } from "@siteimprove/alfa-util";
 
 import * as Formatters from "../../../src/formatters";
@@ -30,6 +31,12 @@ export const Audit: Command<Audit.Options> = {
 
       .option("timeout", { type: "number", default: 10000 })
 
+      .option("wait", {
+        type: "string",
+        choices: ["ready", "loaded", "idle"],
+        default: "ready"
+      })
+
       .option("format", { type: "string", alias: "f", default: "earl" })
 
       .option("output", { type: "string", alias: "o" })
@@ -44,13 +51,13 @@ export const Audit: Command<Audit.Options> = {
 
       .option("height", { type: "number", alias: "h", default: 600 })
 
-      .option("scale", { type: "number", default: 1 })
-
       .option("orientation", {
         type: "string",
         choices: ["landscape", "portrait"],
         default: "landscape"
       })
+
+      .option("resolution", { type: "number", default: 1 })
 };
 
 export namespace Audit {
@@ -58,6 +65,7 @@ export namespace Audit {
     url: string;
     interactive: boolean;
     timeout: number;
+    wait: string;
     format: string;
     output?: string;
     outcomes: Array<string> | null;
@@ -65,8 +73,10 @@ export namespace Audit {
     // Viewport options
     width: number;
     height: number;
-    scale: number;
-    orientation: string | Array<string>;
+    orientation: string;
+
+    // Display options
+    resolution: number;
   }
 }
 
@@ -75,18 +85,31 @@ const rules = values(Rules);
 async function handler(args: Arguments<Audit.Options>): Promise<void> {
   const scraper = new Scraper();
 
+  const { timeout, width, height, resolution } = args;
+
+  let wait = Wait.Ready;
+
+  if (args.wait === "loaded") {
+    wait = Wait.Loaded;
+  } else if (args.wait === "idle") {
+    wait = Wait.Idle;
+  }
+
+  let orientation = Orientation.Landscape;
+
+  if (args.orientation === "portrait") {
+    orientation = Orientation.Portrait;
+  }
+
   let aspects: Aspects;
   try {
     aspects = await scraper.scrape(
       new URL(args.url, url.pathToFileURL(process.cwd() + path.sep)),
       {
-        timeout: args.timeout,
-        viewport: {
-          width: args.width,
-          height: args.height,
-          scale: args.scale,
-          landscape: args.orientation === "landscape"
-        }
+        timeout,
+        wait,
+        viewport: { width, height, orientation },
+        display: { resolution }
       }
     );
   } catch (err) {

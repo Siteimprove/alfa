@@ -78,7 +78,7 @@ export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
         });
       },
 
-      expectations: (aspect, target, question) => {
+      expectations: (aspect, target) => {
         let rotation = getRelativeRotation(target, document, devices);
 
         if (rotation !== null) {
@@ -206,23 +206,19 @@ function getRotation(
 
   for (const { value } of transform.value) {
     switch (value.name) {
-      case "rotate":
-        if (value.args.length === 1) {
-          const [angle] = value.args;
+      case "rotate": {
+        const [x, y, z, angle] = value.args;
 
-          rotation += angle.value;
-        } else {
-          const [x, y, z, angle] = value.args;
+        z;
 
-          z;
-
-          if (x.value !== 0 || y.value !== 0) {
-            return null;
-          }
-
-          rotation += angle.value;
+        if (x.value !== 0 || y.value !== 0) {
+          return null;
         }
+
+        rotation += angle.value;
+
         break;
+      }
 
       case "matrix": {
         const { args } = value;
