@@ -29,3 +29,17 @@ test("Satisfies the law of associativity", t => {
 
   t.deepEqual(left, right);
 });
+
+test("Perform binary operations on browser specific values", t => {
+  // using a non-commutative operation
+  const sub = BrowserSpecific.Iterable.binOp((x: number, y: number) => x - y);
+
+  const m = BrowserSpecific.of(3, ["chrome"]).branch(4, ["firefox"]);
+  const p = BrowserSpecific.of(1, ["chrome"]).branch(0, ["firefox"]);
+  const q = BrowserSpecific.of(2, ["chrome"]).branch(2, ["firefox"]);
+
+  t.equal(sub(5, 3), 2);
+  t.deepEqual(sub(2, n), p);
+  t.deepEqual(sub(m, 2), n);
+  t.deepEqual(sub(m, n), q);
+});
