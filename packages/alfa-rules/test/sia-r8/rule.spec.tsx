@@ -17,7 +17,7 @@ test("Passes when a input has an accessible name", t => {
     t,
     SIA_R8,
     { document, device: getDefaultDevice() },
-    // div is only here for non-firefoy browsers, input is here for both.
+    // div is only here for non-firefox browsers, input is here for both.
     // outcome needs to be updated for browser specific values.
     { passed: [input, input, div] }
   );
