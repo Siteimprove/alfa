@@ -10,13 +10,16 @@ import { outcome } from "../helpers/outcome";
 
 test("Passes when a input has an accessible name", t => {
   const input = <input type="radio" aria-label="foo" />;
-  const document = documentFromNodes([input]);
+  const div = <div role="Radio" aria-label="bar" />;
+  const document = documentFromNodes([input, div]);
 
   outcome(
     t,
     SIA_R8,
     { document, device: getDefaultDevice() },
-    { passed: [input] }
+    // div is only here for non-firefoy browsers, input is here for both.
+    // outcome needs to be updated for browser specific values.
+    { passed: [input, input, div] }
   );
 });
 
