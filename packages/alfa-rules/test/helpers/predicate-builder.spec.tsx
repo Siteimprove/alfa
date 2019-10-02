@@ -127,6 +127,11 @@ test("Correctly checks several conditions", t => {
       .withNamespace(document, Namespace.HTML)
       .withRole(device, document, Roles.Link)
   );
+  const isDivOrLink = isElement(builder =>
+    builder
+      .withRole(device, document, Roles.Link)
+      .or(isElement(builder => builder.withName("div")))
+  );
 
   t(isHTMLDiv(div));
   t(!isHTMLDiv(spanLink));
@@ -135,4 +140,8 @@ test("Correctly checks several conditions", t => {
   t(!isSpanLink(span));
   t(isHTMLLink(link));
   t(!isHTMLLink(div));
+  t(isDivOrLink(link));
+  t(isDivOrLink(spanLink));
+  t(isDivOrLink(div));
+  t(!isDivOrLink(button));
 });

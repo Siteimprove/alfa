@@ -100,9 +100,25 @@ class BrowserSpecificPredicateBuilder<T, U extends T = T> {
   public and<V extends U = U>(
     predicate: BrowserSpecificPredicate<U, V>
   ): BrowserSpecificPredicateBuilder<T, V> {
+    return new BrowserSpecificPredicateBuilder(
+      (t: T) =>
+        BrowserSpecific.Iterable.binOp((x: boolean, y: boolean) => x && y)(
+          this.predicate(t),
+          predicate(t as U)
+        )
+      // BrowserSpecific.map(this.predicate(t), b =>
+      //  b ? predicate(t as U) : false
+      // )
+    );
+  }
+
+  public or(
+    predicate: BrowserSpecificPredicate<T, U>
+  ): BrowserSpecificPredicateBuilder<T, U> {
     return new BrowserSpecificPredicateBuilder((t: T) =>
-      BrowserSpecific.map(this.predicate(t), b =>
-        b ? predicate(t as U) : false
+      BrowserSpecific.Iterable.binOp((x: boolean, y: boolean) => x || y)(
+        this.predicate(t),
+        predicate(t)
       )
     );
   }
