@@ -12,10 +12,8 @@ import {
   Document,
   Element,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
 import { isElement } from "../helpers/predicate-builder";
 
 import { EN } from "./locales/en";
@@ -40,17 +38,29 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
               flattened: true
             }),
             element => {
-              return map(isImage(element, document, device), isImage => {
-                if (!isImage) {
-                  return false;
-                }
+              return map(
+                isElement(builder =>
+                  builder
+                    .withRole(device, document, Roles.Img)
+                    .or(isElement(builder => builder.withName("img")))
+                    .and(
+                      isElement(builder =>
+                        builder.withNamespace(document, Namespace.HTML)
+                      )
+                    )
+                )(element),
+                isImage => {
+                  if (!isImage) {
+                    return false;
+                  }
 
-                if (element.localName === "img") {
-                  return true;
-                }
+                  if (element.localName === "img") {
+                    return true;
+                  }
 
-                return isExposed(element, document, device);
-              });
+                  return isExposed(element, document, device);
+                }
+              );
             }
           ),
           elements => {
@@ -73,7 +83,14 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
               getTextAlternative(target, document, device),
               textAlternative => {
                 return map(
-                  isDecorative(target, document, device),
+                  isElement(builder =>
+                    builder.withRole(
+                      device,
+                      document,
+                      Roles.None,
+                      Roles.Presentation
+                    )
+                  )(target),
                   isDecorative => {
                     return {
                       1: {
@@ -94,32 +111,3 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isImage(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  const imgByName = new ElementChecker()
-    .withName("img")
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .evaluate(element) as boolean;
-  const imgByRole = new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .withRole(device, Roles.Img)
-    .evaluate(element);
-
-  return imgByName ? imgByName : imgByRole;
-}
-
-function isDecorative(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return isElement(builder =>
-    builder.withRole(device, context, Roles.None, Roles.Presentation)
-  )(element);
-}
