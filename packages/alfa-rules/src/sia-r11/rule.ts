@@ -13,7 +13,6 @@ import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
-  BinOp: { and },
   Iterable: { filter }
 } = BrowserSpecific;
 
@@ -36,14 +35,12 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(querySelectorAll(document, document, isElement()), element => {
-            return and(
-              isElement(builder =>
-                builder
-                  .withNamespace(document, Namespace.HTML)
-                  .withRole(device, document, Roles.Link)
-              )(element),
-              isExposed(element, document, device)
-            );
+            return isElement(builder =>
+              builder
+                .withNamespace(document, Namespace.HTML)
+                .withRole(device, document, Roles.Link)
+                .and(element => isExposed(element, document, device))
+            )(element);
           }),
           elements => {
             return Seq(elements).map(element => {
