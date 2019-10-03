@@ -14,11 +14,12 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "sourceMap": true,
     "skipLibCheck": true,
+    "sourceMap": true,
     "strict": true,
     "stripInternal": true,
     "target": "es2015",
+    "tsBuildInfoFile": ".tsbuildinfo",
     "types": []
   },
   "files": [],

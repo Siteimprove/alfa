@@ -6,11 +6,11 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
+  isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
 
 const {
   map,
@@ -27,18 +27,15 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              node => {
-                return isFormField(node, document, device);
-              },
-              {
-                flattened: true
-              }
-            ),
+            querySelectorAll<Element>(document, document, isElement, {
+              flattened: true
+            }),
             element => {
-              return isExposed(element, document, device);
+              return map(
+                isFormField(element, document, device),
+                isFormField =>
+                  isFormField && isExposed(element, document, device)
+              );
             }
           ),
           elements => {
@@ -68,26 +65,30 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
 };
 
 function isFormField(
-  node: Node,
+  element: Element,
   context: Node,
   device: Device
-): node is Element {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .withRole(
-      device,
-      Roles.Checkbox,
-      Roles.Combobox,
-      Roles.ListBox,
-      Roles.MenuItemCheckbox,
-      Roles.MenuItemRadio,
-      Roles.Radio,
-      Roles.SearchBox,
-      Roles.Slider,
-      Roles.SpinButton,
-      Roles.Switch,
-      Roles.TextBox
-    )
-    .evaluate(node) as boolean;
+): boolean | BrowserSpecific<boolean> {
+  if (getElementNamespace(element, context) !== Namespace.HTML) {
+    return false;
+  }
+
+  return map(getRole(element, context, device), role => {
+    switch (role) {
+      case Roles.Checkbox:
+      case Roles.Combobox:
+      case Roles.ListBox:
+      case Roles.MenuItemCheckbox:
+      case Roles.MenuItemRadio:
+      case Roles.Radio:
+      case Roles.SearchBox:
+      case Roles.Slider:
+      case Roles.SpinButton:
+      case Roles.Switch:
+      case Roles.TextBox:
+        return true;
+    }
+
+    return false;
+  });
 }
