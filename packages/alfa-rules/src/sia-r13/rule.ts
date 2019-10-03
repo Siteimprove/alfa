@@ -35,18 +35,14 @@ export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              isElement(builder =>
-                builder
-                  .withNamespace(document, Namespace.HTML)
-                  .withName("iframe")
-              )
-            ),
-            element => {
-              return isExposed(element, document, device);
-            }
+            querySelectorAll<Element>(document, document, isElement()),
+            isElement(builder =>
+              builder
+                .withNamespace(document, Namespace.HTML)
+                .withName("iframe")
+                .browserSpecific()
+                .and(element => isExposed(element, document, device))
+            )
           ),
           elements => {
             return Seq(elements).map(element => {

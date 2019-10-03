@@ -34,14 +34,15 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
     return {
       applicability: () => {
         return map(
-          filter(querySelectorAll(document, document, isElement()), element => {
-            return isElement(builder =>
+          filter(
+            querySelectorAll(document, document, isElement()),
+            isElement(builder =>
               builder
                 .withNamespace(document, Namespace.HTML)
                 .withRole(device, document, Roles.Link)
                 .and(element => isExposed(element, document, device))
-            )(element);
-          }),
+            )
+          ),
           elements => {
             return Seq(elements).map(element => {
               return {

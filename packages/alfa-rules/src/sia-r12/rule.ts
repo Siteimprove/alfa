@@ -40,13 +40,12 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
                 flattened: true
               }
             ),
-            element =>
-              isElement(builder =>
-                builder
-                  .withNamespace(document, Namespace.HTML)
-                  .withRole(device, document, Roles.Button)
-                  .and(element => isExposed(element, document, device))
-              )(element)
+            isElement(builder =>
+              builder
+                .withNamespace(document, Namespace.HTML)
+                .withRole(device, document, Roles.Button)
+                .and(element => isExposed(element, document, device))
+            )
           ),
           elements => {
             return Seq(elements).map(element => {
