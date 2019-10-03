@@ -41,11 +41,13 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
               return map(
                 isElement(builder =>
                   builder
-                    .withRole(device, document, Roles.Img)
-                    .or(isElement(builder => builder.withName("img")))
+                    .withNamespace(document, Namespace.HTML)
+                    .browserSpecific()
                     .and(
                       isElement(builder =>
-                        builder.withNamespace(document, Namespace.HTML)
+                        builder
+                          .withRole(device, document, Roles.Img)
+                          .or(isElement(builder => builder.withName("img")))
                       )
                     )
                 )(element),
