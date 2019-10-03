@@ -12,6 +12,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-util";
 
+const {
+  BinOp: { and, or }
+} = BrowserSpecific;
+
 class PredicateBuilder<T, U extends T = T> {
   public readonly predicate: Predicate<T, U>;
 
@@ -23,6 +27,10 @@ class PredicateBuilder<T, U extends T = T> {
     predicate: Predicate<U, V>
   ): PredicateBuilder<T, V> {
     return new PredicateBuilder(v => this.predicate(v) && predicate(v));
+  }
+
+  public browserSpecific(): BrowserSpecificPredicateBuilder<T, U> {
+    return new BrowserSpecificPredicateBuilder(this.predicate);
   }
 }
 
@@ -76,9 +84,7 @@ class ElementPredicateBuilder<
     context: Node,
     ...roles: Array<Role>
   ): BrowserSpecificPredicateBuilder<Node, U> {
-    return new BrowserSpecificPredicateBuilder<Node, U>(node =>
-      this.predicate(node)
-    ).and(element =>
+    return this.browserSpecific().and(element =>
       BrowserSpecific.map(getRole(element, context, device), elementRole =>
         roles.some(role => role === elementRole)
       )
@@ -100,11 +106,8 @@ class BrowserSpecificPredicateBuilder<T, U extends T = T> {
   public and<V extends U = U>(
     predicate: BrowserSpecificPredicate<U, V>
   ): BrowserSpecificPredicateBuilder<T, V> {
-    return new BrowserSpecificPredicateBuilder(
-      (t: T) => BrowserSpecific.BinOp.and(this.predicate(t), predicate(t as U))
-      // BrowserSpecific.map(this.predicate(t), b =>
-      //  b ? predicate(t as U) : false
-      // )
+    return new BrowserSpecificPredicateBuilder((t: T) =>
+      and(this.predicate(t), predicate(t as U))
     );
   }
 
@@ -112,7 +115,7 @@ class BrowserSpecificPredicateBuilder<T, U extends T = T> {
     predicate: BrowserSpecificPredicate<T, U>
   ): BrowserSpecificPredicateBuilder<T, U> {
     return new BrowserSpecificPredicateBuilder((t: T) =>
-      BrowserSpecific.BinOp.or(this.predicate(t), predicate(t))
+      or(this.predicate(t), predicate(t))
     );
   }
 }
