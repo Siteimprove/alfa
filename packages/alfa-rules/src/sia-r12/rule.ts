@@ -8,17 +8,16 @@ import {
   Element,
   getInputType,
   InputType,
-  isElement,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 import { EN } from "./locales/en";
 
 const {
   map,
+  BinOp: { and },
   Iterable: { filter }
 } = BrowserSpecific;
 
@@ -36,24 +35,21 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll<Element>(
               document,
               document,
-              node => {
-                return (
-                  isElement(node) && getInputType(node) !== InputType.Image
-                );
-              },
+              node =>
+                isElement()(node) && getInputType(node) !== InputType.Image,
               {
                 flattened: true
               }
             ),
-            element => {
-              return map(isButton(element, document, device), isButton => {
-                if (!isButton) {
-                  return false;
-                }
-
-                return isExposed(element, document, device);
-              });
-            }
+            element =>
+              and(
+                isElement(builder =>
+                  builder
+                    .withNamespace(document, Namespace.HTML)
+                    .withRole(device, document, Roles.Button)
+                )(element),
+                isExposed(element, document, device)
+              )
           ),
           elements => {
             return Seq(elements).map(element => {
@@ -79,15 +75,3 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isButton(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .withRole(device, Roles.Button)
-    .evaluate(element);
-}
