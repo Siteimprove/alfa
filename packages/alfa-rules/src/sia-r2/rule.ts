@@ -37,20 +37,19 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll(document, document, isElement(), {
               flattened: true
             }),
-            element =>
-              isElement(builder =>
-                builder
-                  .withNamespace(document, Namespace.HTML)
-                  .browserSpecific()
-                  .and(
-                    isElement(builder =>
-                      builder
-                        .withRole(device, document, Roles.Img)
-                        .and(element => isExposed(element, document, device))
-                        .or(isElement(builder => builder.withName("img")))
-                    )
+            isElement(builder =>
+              builder
+                .withNamespace(document, Namespace.HTML)
+                .browserSpecific()
+                .and(
+                  isElement(builder =>
+                    builder
+                      .withRole(device, document, Roles.Img)
+                      .and(element => isExposed(element, document, device))
+                      .or(isElement(builder => builder.withName("img")))
                   )
-              )(element)
+                )
+            )
           ),
           elements => {
             return Seq(elements).map(element => {
