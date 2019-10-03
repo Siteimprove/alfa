@@ -3,6 +3,8 @@ import { isElement } from "./predicate-builder";
 
 export function isDocumentElement(element: Element, context: Node): boolean {
   return isElement(builder =>
-    builder.withName("html").and(elt => getParentNode(elt, context) === context)
+    builder
+      .withName("html")
+      .and(element => getParentNode(element, context) === context)
   )(element);
 }

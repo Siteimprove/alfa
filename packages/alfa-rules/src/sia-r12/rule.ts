@@ -17,7 +17,6 @@ import { EN } from "./locales/en";
 
 const {
   map,
-  BinOp: { and },
   Iterable: { filter }
 } = BrowserSpecific;
 
@@ -42,14 +41,12 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
               }
             ),
             element =>
-              and(
-                isElement(builder =>
-                  builder
-                    .withNamespace(document, Namespace.HTML)
-                    .withRole(device, document, Roles.Button)
-                )(element),
-                isExposed(element, document, device)
-              )
+              isElement(builder =>
+                builder
+                  .withNamespace(document, Namespace.HTML)
+                  .withRole(device, document, Roles.Button)
+                  .and(element => isExposed(element, document, device))
+              )(element)
           ),
           elements => {
             return Seq(elements).map(element => {
