@@ -8,12 +8,10 @@ import {
   Element,
   getAttribute,
   InputType,
-  isElement,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
@@ -30,7 +28,7 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll(document, document, isElement, {
+            querySelectorAll(document, document, isElement(), {
               flattened: true
             }),
             element => {
@@ -49,27 +47,49 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
                 return false;
               }
 
-              return map(isImage(element, document, device), isImage => {
-                if (!isImage) {
-                  return false;
-                }
-
-                return map(isExposed(element, document, device), isExposed => {
-                  if (!isExposed) {
+              return map(
+                isElement(builder =>
+                  builder
+                    .withNamespace(document, Namespace.HTML)
+                    .browserSpecific()
+                    .and(
+                      isElement(builder =>
+                        builder
+                          .withName("img")
+                          .withRole(device, document, Roles.Img)
+                          .or(
+                            isElement(builder =>
+                              builder.withInputType(InputType.Image)
+                            )
+                          )
+                      )
+                    )
+                )(element),
+                isImage => {
+                  if (!isImage) {
                     return false;
                   }
 
                   return map(
-                    getTextAlternative(element, document, device),
-                    textAlternative => {
-                      return (
-                        textAlternative !== null &&
-                        textAlternative.toLowerCase() === filename
+                    isExposed(element, document, device),
+                    isExposed => {
+                      if (!isExposed) {
+                        return false;
+                      }
+
+                      return map(
+                        getTextAlternative(element, document, device),
+                        textAlternative => {
+                          return (
+                            textAlternative !== null &&
+                            textAlternative.toLowerCase() === filename
+                          );
+                        }
                       );
                     }
                   );
-                });
-              });
+                }
+              );
             }
           ),
           elements => {
@@ -92,26 +112,6 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isImage(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  const imgByType = new ElementChecker()
-    .withInputType(InputType.Image)
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .evaluate(element) as boolean;
-  const imgByNameAndRole = new ElementChecker()
-    .withName("img")
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .withRole(device, Roles.Img)
-    .evaluate(element);
-
-  return imgByType ? true : imgByNameAndRole;
-}
 
 function getFilename(path: string): string {
   const base = path.substring(path.lastIndexOf("/") + 1);
