@@ -33,18 +33,15 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              node => {
-                return isElement(node) && isFormField(node, document, device);
-              },
-              {
-                flattened: true
-              }
-            ),
+            querySelectorAll<Element>(document, document, isElement, {
+              flattened: true
+            }),
             element => {
-              return isExposed(element, document, device);
+              return map(
+                isFormField(element, document, device),
+                isFormField =>
+                  isFormField && isExposed(element, document, device)
+              );
             }
           ),
           elements => {
@@ -73,25 +70,31 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
   }
 };
 
-function isFormField(element: Element, context: Node, device: Device): boolean {
+function isFormField(
+  element: Element,
+  context: Node,
+  device: Device
+): boolean | BrowserSpecific<boolean> {
   if (getElementNamespace(element, context) !== Namespace.HTML) {
     return false;
   }
 
-  switch (getRole(element, context, device)) {
-    case Roles.Checkbox:
-    case Roles.Combobox:
-    case Roles.ListBox:
-    case Roles.MenuItemCheckbox:
-    case Roles.MenuItemRadio:
-    case Roles.Radio:
-    case Roles.SearchBox:
-    case Roles.Slider:
-    case Roles.SpinButton:
-    case Roles.Switch:
-    case Roles.TextBox:
-      return true;
-  }
+  return map(getRole(element, context, device), role => {
+    switch (role) {
+      case Roles.Checkbox:
+      case Roles.Combobox:
+      case Roles.ListBox:
+      case Roles.MenuItemCheckbox:
+      case Roles.MenuItemRadio:
+      case Roles.Radio:
+      case Roles.SearchBox:
+      case Roles.Slider:
+      case Roles.SpinButton:
+      case Roles.Switch:
+      case Roles.TextBox:
+        return true;
+    }
 
-  return false;
+    return false;
+  });
 }
