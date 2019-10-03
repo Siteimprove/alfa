@@ -15,6 +15,7 @@ import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
+  //  BinOp: { and },
   Iterable: { filter }
 } = BrowserSpecific;
 
@@ -47,49 +48,35 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
                 return false;
               }
 
-              return map(
-                isElement(builder =>
-                  builder
-                    .withNamespace(document, Namespace.HTML)
-                    .browserSpecific()
-                    .and(
-                      isElement(builder =>
-                        builder
-                          .withName("img")
-                          .withRole(device, document, Roles.Img)
-                          .or(
-                            isElement(builder =>
-                              builder.withInputType(InputType.Image)
-                            )
+              return isElement(builder =>
+                builder
+                  .withNamespace(document, Namespace.HTML)
+                  .browserSpecific()
+                  .and(
+                    isElement(builder =>
+                      builder
+                        .withName("img")
+                        .withRole(device, document, Roles.Img)
+                        .or(
+                          isElement(builder =>
+                            builder.withInputType(InputType.Image)
                           )
-                      )
+                        )
                     )
-                )(element),
-                isImage => {
-                  if (!isImage) {
-                    return false;
-                  }
-
-                  return map(
-                    isExposed(element, document, device),
-                    isExposed => {
-                      if (!isExposed) {
-                        return false;
+                  )
+                  .and(element => isExposed(element, document, device))
+                  .and(element =>
+                    map(
+                      getTextAlternative(element, document, device),
+                      textAlternative => {
+                        return (
+                          textAlternative !== null &&
+                          textAlternative.toLowerCase() === filename
+                        );
                       }
-
-                      return map(
-                        getTextAlternative(element, document, device),
-                        textAlternative => {
-                          return (
-                            textAlternative !== null &&
-                            textAlternative.toLowerCase() === filename
-                          );
-                        }
-                      );
-                    }
-                  );
-                }
-              );
+                    )
+                  )
+              )(element);
             }
           ),
           elements => {
