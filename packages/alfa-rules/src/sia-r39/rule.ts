@@ -15,7 +15,6 @@ import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
-  //  BinOp: { and },
   Iterable: { filter }
 } = BrowserSpecific;
 

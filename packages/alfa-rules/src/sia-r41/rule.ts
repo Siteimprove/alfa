@@ -41,15 +41,12 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
               querySelectorAll<Element>(document, document, isElement(), {
                 flattened: true
               }),
-              element =>
-                isElement(builder =>
-                  builder
-                    .withRole(device, document, Roles.Link)
-                    .and(element => isExposed(element, document, device))
-                    .and(element =>
-                      hasTextAlternative(element, document, device)
-                    )
-                )(element)
+              isElement(builder =>
+                builder
+                  .withRole(device, document, Roles.Link)
+                  .and(element => isExposed(element, document, device))
+                  .and(element => hasTextAlternative(element, document, device))
+              )
             ),
             element => {
               return map(

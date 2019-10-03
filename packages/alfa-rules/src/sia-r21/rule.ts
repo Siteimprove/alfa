@@ -31,19 +31,15 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              isElement(builder =>
-                builder
-                  .withNamespace(document, Namespace.HTML, Namespace.SVG)
-                  .and(element => hasAttribute(element, "role"))
-                  .and(element => getAttribute(element, "role") !== "")
-              )
-            ),
-            element => {
-              return isExposed(element, document, device);
-            }
+            querySelectorAll<Element>(document, document, isElement()),
+            isElement(builder =>
+              builder
+                .withNamespace(document, Namespace.HTML, Namespace.SVG)
+                .and(element => hasAttribute(element, "role"))
+                .and(element => getAttribute(element, "role") !== "")
+                .browserSpecific()
+                .and(element => isExposed(element, document, device))
+            )
           ),
           elements => {
             return Seq(elements).map(element => {

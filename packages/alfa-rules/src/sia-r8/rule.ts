@@ -29,27 +29,26 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll<Element>(document, document, isElement(), {
               flattened: true
             }),
-            element =>
-              isElement(builder =>
-                builder
-                  .withNamespace(document, Namespace.HTML)
-                  .withRole(
-                    device,
-                    document,
-                    Roles.Checkbox,
-                    Roles.Combobox,
-                    Roles.ListBox,
-                    Roles.MenuItemCheckbox,
-                    Roles.MenuItemRadio,
-                    Roles.Radio,
-                    Roles.SearchBox,
-                    Roles.Slider,
-                    Roles.SpinButton,
-                    Roles.Switch,
-                    Roles.TextBox
-                  )
-                  .and(element => isExposed(element, document, device))
-              )(element)
+            isElement(builder =>
+              builder
+                .withNamespace(document, Namespace.HTML)
+                .withRole(
+                  device,
+                  document,
+                  Roles.Checkbox,
+                  Roles.Combobox,
+                  Roles.ListBox,
+                  Roles.MenuItemCheckbox,
+                  Roles.MenuItemRadio,
+                  Roles.Radio,
+                  Roles.SearchBox,
+                  Roles.Slider,
+                  Roles.SpinButton,
+                  Roles.Switch,
+                  Roles.TextBox
+                )
+                .and(element => isExposed(element, document, device))
+            )
           ),
           elements => {
             return Seq(elements).map(element => {
