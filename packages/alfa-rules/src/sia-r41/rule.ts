@@ -13,13 +13,11 @@ import {
   Element,
   getAttribute,
   getRootNode,
-  isElement,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 import { EN } from "./locales/en";
 
@@ -40,27 +38,18 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
         return map(
           groupBy(
             filter(
-              querySelectorAll<Element>(document, document, isElement, {
+              querySelectorAll<Element>(document, document, isElement(), {
                 flattened: true
               }),
-              element => {
-                return map(isLink(element, document, device), isLink => {
-                  if (!isLink) {
-                    return false;
-                  }
-
-                  return map(
-                    isExposed(element, document, device),
-                    isExposed => {
-                      if (!isExposed) {
-                        return false;
-                      }
-
-                      return hasTextAlternative(element, document, device);
-                    }
-                  );
-                });
-              }
+              element =>
+                isElement(builder =>
+                  builder
+                    .withRole(device, document, Roles.Link)
+                    .and(element => isExposed(element, document, device))
+                    .and(element =>
+                      hasTextAlternative(element, document, device)
+                    )
+                )(element)
             ),
             element => {
               return map(
@@ -119,14 +108,3 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
     };
   }
 };
-
-function isLink(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return new ElementChecker()
-    .withContext(context)
-    .withRole(device, Roles.Link)
-    .evaluate(element);
-}
