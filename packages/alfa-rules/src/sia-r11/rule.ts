@@ -6,15 +6,14 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  isElement,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { ElementChecker } from "../helpers/element-checker";
+import { isElement } from "../helpers/predicate-builder";
 
 const {
   map,
+  BinOp: { and },
   Iterable: { filter }
 } = BrowserSpecific;
 
@@ -36,14 +35,15 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
     return {
       applicability: () => {
         return map(
-          filter(querySelectorAll(document, document, isElement), element => {
-            return map(isLink(element, document, device), isLink => {
-              if (!isLink) {
-                return false;
-              }
-
-              return isExposed(element, document, device);
-            });
+          filter(querySelectorAll(document, document, isElement()), element => {
+            return and(
+              isElement(builder =>
+                builder
+                  .withNamespace(document, Namespace.HTML)
+                  .withRole(device, document, Roles.Link)
+              )(element),
+              isExposed(element, document, device)
+            );
           }),
           elements => {
             return Seq(elements).map(element => {
@@ -70,15 +70,3 @@ export const SIA_R11: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isLink(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return new ElementChecker()
-    .withContext(context)
-    .withNamespace(Namespace.HTML)
-    .withRole(device, Roles.Link)
-    .evaluate(element);
-}
