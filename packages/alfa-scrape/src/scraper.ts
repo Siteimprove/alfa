@@ -9,11 +9,9 @@ import {
 } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
+import { fromPuppeteerHandle } from "@siteimprove/alfa-puppeteer";
 import { URL } from "@siteimprove/alfa-util";
-import { readFileSync } from "fs";
 import puppeteer from "puppeteer";
-
-const virtualize = readFileSync(require.resolve("./virtualize"), "utf8");
 
 const defaultDevice = getDefaultDevice();
 
@@ -183,17 +181,17 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
 
 async function parseDocument(
   page: puppeteer.Page,
-  html?: string
+  html: string | null = null
 ): Promise<Document> {
-  const document =
-    html === undefined
-      ? "window.document"
-      : `new DOMParser().parseFromString(${JSON.stringify(html)}, "text/html")`;
+  const handle = await page.evaluateHandle((html: string | null) => {
+    if (html === null) {
+      return window.document;
+    }
 
-  const snapshot = `{
-    ${virtualize};
-    virtualizeNode(${document});
-  }`;
+    const parser = new DOMParser();
 
-  return (await page.evaluate(snapshot)) as Document;
+    return parser.parseFromString(html, "text/html");
+  }, html);
+
+  return fromPuppeteerHandle(handle) as Promise<Document>;
 }

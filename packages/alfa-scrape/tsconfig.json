@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/scraper.ts", "src/virtualize.ts"],
+  "files": ["src/index.ts", "src/scraper.ts"],
   "references": [
     {
       "path": "../alfa-act"
@@ -13,6 +13,9 @@
     },
     {
       "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-puppeteer"
     },
     {
       "path": "../alfa-test"

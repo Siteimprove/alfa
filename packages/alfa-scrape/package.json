@@ -34,10 +34,10 @@
     "@siteimprove/alfa-device": "^0.0.0",
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-http": "^0.0.0",
+    "@siteimprove/alfa-puppeteer": "^0.0.0",
     "@siteimprove/alfa-util": "^0.0.0",
-    "@types/node": "^12.0.2",
-    "@types/puppeteer": "^1.12.1",
-    "puppeteer": "^1.12.2"
+    "@types/puppeteer": "^1.20.1",
+    "puppeteer": "^1.20.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
