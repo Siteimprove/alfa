@@ -43,9 +43,9 @@ export function createChaiPlugin<T>(
         let reason = "";
 
         if (error !== null) {
-          const target = util.inspect(serialize(error.target, element));
-
-          reason = `, but ${target} is not: ${error.message}`;
+          reason = `, but ${util.inspect(
+            serialize(error.target, element)
+          )} is not: ${error.message}`;
         }
 
         this.assert(

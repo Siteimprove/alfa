@@ -257,14 +257,17 @@ function getRelativeRotation(
   context: Node,
   devices: { landscape: Device; portrait: Device }
 ): number | null {
-  const rotations = {
-    landscape: getRotation(element, context, devices.landscape),
-    portrait: getRotation(element, context, devices.portrait)
-  };
+  const landscape = getRotation(element, context, devices.landscape);
 
-  if (rotations.landscape === null || rotations.portrait === null) {
+  if (landscape === null) {
     return null;
   }
 
-  return mod(abs(rotations.landscape - rotations.portrait), 360);
+  const portrait = getRotation(element, context, devices.portrait);
+
+  if (portrait === null) {
+    return null;
+  }
+
+  return mod(abs(landscape - portrait), 360);
 }

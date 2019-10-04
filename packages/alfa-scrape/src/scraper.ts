@@ -114,7 +114,7 @@ export class Scraper {
 
     try {
       // Attempt navigating to the origin until we either have a parsed request
-      // and response or the timeout is reached.
+      // and response, or the timeout is reached.
       while (request === null || response === null) {
         await page.goto(origin.href, {
           timeout: timeout - (Date.now() - start),
@@ -126,11 +126,8 @@ export class Scraper {
         response = await response;
       }
     } catch (err) {
-      if (err instanceof Error) {
-        switch (err.name) {
-          case "TimeoutError":
-            err.message = `Navigation Timeout Exceeded: ${timeout}ms exceeded`;
-        }
+      if (err instanceof Error && err.name === "TimeoutError") {
+        err.message = `Navigation Timeout Exceeded: ${timeout}ms exceeded`;
       }
 
       throw err;
