@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/from-puppeteer-handle.ts",
+    "src/index.ts",
+    "src/is-puppeteer-handle.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
+}
