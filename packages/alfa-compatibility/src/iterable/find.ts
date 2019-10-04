@@ -3,14 +3,9 @@ import { BrowserSpecific } from "../browser-specific";
 import { reduce } from "./reduce";
 
 export function find<T>(
-  values: BrowserSpecific<Iterable<Option<T>>>,
-  predicate: (value: Some<T>) => boolean | BrowserSpecific<boolean>
-): BrowserSpecific<Option<T>>;
-
-export function find<T>(
-  values: Iterable<Option<T>> | BrowserSpecific<Iterable<Option<T>>>,
-  predicate: (value: Some<T>) => boolean | BrowserSpecific<boolean>
-): Option<T> | BrowserSpecific<Option<T>>;
+  values: BrowserSpecific.Maybe<Iterable<Option<T>>>,
+  predicate: (value: Some<T>) => BrowserSpecific.Maybe<boolean>
+): BrowserSpecific.Maybe<Option<T>>;
 
 export function find<T>(
   values: Iterable<Option<T>>,
@@ -18,9 +13,9 @@ export function find<T>(
 ): Option<T>;
 
 export function find<T>(
-  values: Iterable<Option<T>> | BrowserSpecific<Iterable<Option<T>>>,
-  predicate: (value: Some<T>) => boolean | BrowserSpecific<boolean>
-): Option<T> | BrowserSpecific<Option<T>> {
+  values: BrowserSpecific.Maybe<Iterable<Option<T>>>,
+  predicate: (value: Some<T>) => BrowserSpecific.Maybe<boolean>
+): BrowserSpecific.Maybe<Option<T>> {
   return reduce<Option<T>, Option<T>>(
     values,
     (found, value) => {

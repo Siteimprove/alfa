@@ -1,26 +1,15 @@
 import { BrowserSpecific } from "../browser-specific";
 
 export function reduce<T>(
-  values: BrowserSpecific<Iterable<T>>,
-  iteratee: (accumulator: T, value: T) => T | BrowserSpecific<T>
-): BrowserSpecific<T>;
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  iteratee: (accumulator: T, value: T) => BrowserSpecific.Maybe<T>
+): BrowserSpecific.Maybe<T>;
 
 export function reduce<T, U>(
-  values: BrowserSpecific<Iterable<T>>,
-  iteratee: (accumulator: U, value: T) => U | BrowserSpecific<U>,
-  initial: U | BrowserSpecific<U>
-): BrowserSpecific<U>;
-
-export function reduce<T>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  iteratee: (accumulator: T, value: T) => T | BrowserSpecific<T>
-): T | BrowserSpecific<T>;
-
-export function reduce<T, U>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  iteratee: (accumulator: U, value: T) => U | BrowserSpecific<U>,
-  initial: U | BrowserSpecific<U>
-): U | BrowserSpecific<U>;
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  iteratee: (accumulator: U, value: T) => BrowserSpecific.Maybe<U>,
+  initial: BrowserSpecific.Maybe<U>
+): BrowserSpecific.Maybe<U>;
 
 export function reduce<T>(
   values: Iterable<T>,
@@ -34,10 +23,10 @@ export function reduce<T, U>(
 ): U;
 
 export function reduce<T, U = T>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  iteratee: (accumulator: T | U, value: T) => T | U,
-  initial?: T | U | BrowserSpecific<T | U>
-): T | U | BrowserSpecific<T | U> {
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  iteratee: (accumulator: T | U, value: T) => BrowserSpecific.Maybe<T | U>,
+  initial?: BrowserSpecific.Maybe<T | U>
+): BrowserSpecific.Maybe<T | U> {
   return BrowserSpecific.map(values, values => {
     const iterator = values[Symbol.iterator]();
 

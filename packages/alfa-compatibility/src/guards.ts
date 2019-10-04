@@ -12,8 +12,8 @@ export function isBrowserName(name: string): name is BrowserName {
 /**
  * @internal
  */
-export function isBrowserSpecific<T>(
-  value: T | BrowserSpecific<T>
-): value is BrowserSpecific<T> {
+export function isBrowserSpecific<T, U>(
+  value: BrowserSpecific.Maybe<U>
+): value is BrowserSpecific<U> {
   return value instanceof BrowserSpecific;
 }

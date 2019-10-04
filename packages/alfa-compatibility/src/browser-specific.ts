@@ -5,11 +5,6 @@ import { getSupportedBrowsers } from "./supported-browsers";
 import { BrowserName, BrowserQuery, Version } from "./types";
 import { withBrowsers } from "./with-browsers";
 
-export interface Value<T> {
-  readonly value: T;
-  readonly browsers: Map<BrowserName, Set<Version> | true>;
-}
-
 /**
  * This class is used for representing browser specific values upon which
  * computations can be performed. A browser specific value is not a single value
@@ -30,91 +25,93 @@ export class BrowserSpecific<T> {
     );
   }
 
-  private readonly values: List<Value<T>>;
+  private readonly values: List<BrowserSpecific.Value<T>>;
 
-  private constructor(values: List<Value<T>>) {
+  private constructor(values: List<BrowserSpecific.Value<T>>) {
     this.values = values;
   }
 
-  public get(): T | BrowserSpecific<T> {
+  public get(): BrowserSpecific.Maybe<T> {
     return this.values.size === 1 ? this.values.get(0)!.value : this;
   }
 
-  public unwrap(): Iterable<Value<T>> {
+  public unwrap(): Iterable<BrowserSpecific.Value<T>> {
     return this.values;
   }
 
   public map<U>(
-    iteratee: (value: T) => U | BrowserSpecific<U>
+    iteratee: (value: T) => BrowserSpecific.Maybe<U>
   ): BrowserSpecific<U> {
-    const values: List<Value<U>> = List().withMutations(values => {
-      for (const source of this.values) {
-        const value = withBrowsers(source.browsers, () =>
-          iteratee(source.value)
-        );
+    const values: List<BrowserSpecific.Value<U>> = List().withMutations(
+      values => {
+        for (const source of this.values) {
+          const value = withBrowsers(source.browsers, () =>
+            iteratee(source.value)
+          );
 
-        if (isBrowserSpecific(value)) {
-          for (const target of value.values) {
-            const browsers = Map<
-              BrowserName,
-              Set<Version> | true
-            >().withMutations(browsers => {
-              for (const [browser, sourceVersions] of source.browsers) {
-                const targetVersions = target.browsers.get(browser);
+          if (isBrowserSpecific(value)) {
+            for (const target of value.values) {
+              const browsers = Map<
+                BrowserName,
+                Set<Version> | true
+              >().withMutations(browsers => {
+                for (const [browser, sourceVersions] of source.browsers) {
+                  const targetVersions = target.browsers.get(browser);
 
-                // Case 0: The target value is undefined for all versions of the
-                // current range of browser versions; move on.
-                if (targetVersions === undefined) {
-                  continue;
-                }
+                  // Case 0: The target value is undefined for all versions of
+                  // the current range of browser versions; move on.
+                  if (targetVersions === undefined) {
+                    continue;
+                  }
 
-                // Case 1: Both the target value and the source value are
-                // defined for any version of the current range of browser
-                // versions.
-                if (targetVersions === true && sourceVersions === true) {
-                  browsers.set(browser, true);
-                }
+                  // Case 1: Both the target value and the source value are
+                  // defined for any version of the current range of browser
+                  // versions.
+                  if (targetVersions === true && sourceVersions === true) {
+                    browsers.set(browser, true);
+                  }
 
-                // Case 2: Only the source value is defined for any version of
-                // the current range of browser versions; use the browser
-                // versions for which the target value is defined.
-                else if (sourceVersions === true) {
-                  browsers.set(browser, targetVersions);
-                }
+                  // Case 2: Only the source value is defined for any version of
+                  // the current range of browser versions; use the browser
+                  // versions for which the target value is defined.
+                  else if (sourceVersions === true) {
+                    browsers.set(browser, targetVersions);
+                  }
 
-                // Case 3: Only the target value is defined for any version of
-                // the current range of browser versions; use the browser
-                // versions for which the source value is defined.
-                else if (targetVersions === true) {
-                  browsers.set(browser, sourceVersions);
-                }
+                  // Case 3: Only the target value is defined for any version of
+                  // the current range of browser versions; use the browser
+                  // versions for which the source value is defined.
+                  else if (targetVersions === true) {
+                    browsers.set(browser, sourceVersions);
+                  }
 
-                // Case 4: Both the target value and the source value are
-                // defined for specific versions of the current range of browser
-                // versions; use the intersection between these two sets of
-                // versions.
-                else {
-                  const common = targetVersions.intersect(sourceVersions);
+                  // Case 4: Both the target value and the source value are
+                  // defined for specific versions of the current range of
+                  // browser versions; use the intersection between these two
+                  // sets of versions.
+                  else {
+                    const common = targetVersions.intersect(sourceVersions);
 
-                  if (common.size > 0) {
-                    browsers.set(browser, common);
+                    if (common.size > 0) {
+                      browsers.set(browser, common);
+                    }
                   }
                 }
-              }
-            });
+              });
 
-            if (browsers.size > 0) {
-              values.push({ value: target.value, browsers });
+              if (browsers.size > 0) {
+                values.push({ value: target.value, browsers });
+              }
             }
+          } else {
+            values.push({
+              value,
+              browsers: source.browsers
+            });
           }
-        } else {
-          values.push({
-            value,
-            browsers: source.browsers
-          });
         }
       }
-    });
+    );
 
     return new BrowserSpecific(values);
   }
@@ -139,26 +136,16 @@ export class BrowserSpecific<T> {
 }
 
 export namespace BrowserSpecific {
-  export function map<T, U>(
-    value: BrowserSpecific<T>,
-    iteratee: (value: T) => U | BrowserSpecific<U>
-  ): BrowserSpecific<U>;
-
-  export function map<T, U>(
-    value: T | BrowserSpecific<T>,
-    iteratee: (value: T) => U | BrowserSpecific<U>
-  ): U | BrowserSpecific<U>;
-
-  export function map<T, U>(value: T, iteratee: (value: T) => U): U;
-
-  export function map<T, U>(
-    value: T | BrowserSpecific<T>,
-    iteratee: (value: T) => U | BrowserSpecific<U>
-  ): U | BrowserSpecific<U> {
-    return isBrowserSpecific(value) ? value.map(iteratee) : iteratee(value);
+  export interface Value<T> {
+    readonly value: T;
+    readonly browsers: Map<BrowserName, Set<Version> | true>;
   }
 
-  export function unwrap<T>(value: T | BrowserSpecific<T>): Iterable<Value<T>> {
+  export type Maybe<T> = T | BrowserSpecific<T>;
+
+  export function unwrap<T>(
+    value: BrowserSpecific.Maybe<T>
+  ): Iterable<Value<T>> {
     return isBrowserSpecific(value)
       ? value.unwrap()
       : [
@@ -167,6 +154,34 @@ export namespace BrowserSpecific {
             browsers: getSupportedBrowsers()
           }
         ];
+  }
+
+  export function map<T, U>(
+    value: Maybe<T>,
+    iteratee: (value: T) => Maybe<U>
+  ): Maybe<U>;
+
+  export function map<T, U>(value: T, iteratee: (value: T) => U): U;
+
+  export function map<T, U>(
+    value: Maybe<T>,
+    iteratee: (value: T) => Maybe<U>
+  ): Maybe<U> {
+    return isBrowserSpecific(value) ? value.map(iteratee) : iteratee(value);
+  }
+
+  export function apply<T, U>(
+    value: Maybe<T>,
+    iteratee: Maybe<(value: T) => U>
+  ): Maybe<U>;
+
+  export function apply<T, U>(value: T, operation: (value: T) => U): U;
+
+  export function apply<T, U>(
+    value: Maybe<T>,
+    iteratee: Maybe<(value: T) => U>
+  ): Maybe<U> {
+    return map(iteratee, iteratee => map(value, iteratee));
   }
 }
 
