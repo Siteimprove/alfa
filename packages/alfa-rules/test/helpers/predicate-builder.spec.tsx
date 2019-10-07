@@ -4,7 +4,13 @@ import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { getAttributeNode, InputType, Namespace } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { isElement } from "../../src/helpers/predicate-builder";
+import {
+  checker,
+  inputTypeIs,
+  nameIs,
+  namespaceIs,
+  roleIs
+} from "../../src/helpers/predicate-builder";
 import { documentFromNodes } from "./document-from-nodes";
 
 const spanLink = <span role="link" />;
@@ -34,14 +40,16 @@ const device = getDefaultDevice();
 
 test("Correctly detects element nodes", t => {
   const foo = getAttributeNode(span, "id")!;
-  t(isElement()(span));
-  t(!isElement()(document));
-  t(!isElement()(foo));
+  t(checker()(span));
+  t(!checker()(document));
+  t(!checker()(foo));
 });
 
 test("Correctly checks single or multiple name", t => {
-  const isDiv = isElement(builder => builder.withName("div"));
-  const isDivOrSpan = isElement(builder => builder.withName("div", "span"));
+  const isDiv = checker(isElement => isElement.and(nameIs("div")));
+  const isDivOrSpan = checker(isElement =>
+    isElement.and(nameIs("div", "span"))
+  );
 
   t(isDiv(div));
   t(!isDiv(spanLink));
@@ -52,11 +60,11 @@ test("Correctly checks single or multiple name", t => {
 });
 
 test("Correctly checks single or multiple input type", t => {
-  const isHidden = isElement(builder =>
-    builder.withInputType(InputType.Hidden)
+  const isHidden = checker(isElement =>
+    isElement.and(inputTypeIs(InputType.Hidden))
   );
-  const isHiddenOrSearch = isElement(builder =>
-    builder.withInputType(InputType.Hidden, InputType.Search)
+  const isHiddenOrSearch = checker(isElement =>
+    isElement.and(inputTypeIs(InputType.Hidden, InputType.Search))
   );
 
   t(isHidden(inputHidden));
@@ -70,11 +78,11 @@ test("Correctly checks single or multiple input type", t => {
 });
 
 test("Correctly checks single or multiple namespace", t => {
-  const isHTML = isElement(builder =>
-    builder.withNamespace(document, Namespace.HTML)
+  const isHTML = checker(isElement =>
+    isElement.and(namespaceIs(document, Namespace.HTML))
   );
-  const isHTMLOrSVG = isElement(builder =>
-    builder.withNamespace(document, Namespace.HTML, Namespace.SVG)
+  const isHTMLOrSVG = checker(isElement =>
+    isElement.and(namespaceIs(document, Namespace.HTML, Namespace.SVG))
   );
 
   t(isHTML(div));
@@ -86,11 +94,13 @@ test("Correctly checks single or multiple namespace", t => {
 });
 
 test("Correctly checks single or multiple implicit and explicit roles", t => {
-  const isLink = isElement(builder =>
-    builder.withRole(device, document, Roles.Link)
+  const isLink = checker(isElement =>
+    isElement.browserSpecific().and(roleIs(device, document, Roles.Link))
   );
-  const isLinkOrImage = isElement(builder =>
-    builder.withRole(device, document, Roles.Link, Roles.Img)
+  const isLinkOrImage = checker(IsElement =>
+    IsElement.browserSpecific().and(
+      roleIs(device, document, Roles.Link, Roles.Img)
+    )
   );
 
   t(isLink(link));
@@ -102,8 +112,8 @@ test("Correctly checks single or multiple implicit and explicit roles", t => {
 });
 
 test("Correctly handles browser specific values", t => {
-  const isButton = isElement(builder =>
-    builder.withRole(device, document, Roles.Button)
+  const isButton = checker(isElement =>
+    isElement.browserSpecific().and(roleIs(device, document, Roles.Button))
   );
 
   withBrowsers([["firefox", "<=", "60"]], () => {
@@ -116,21 +126,26 @@ test("Correctly handles browser specific values", t => {
 });
 
 test("Correctly checks several conditions", t => {
-  const isHTMLDiv = isElement(builder =>
-    builder.withName("div").withNamespace(document, Namespace.HTML)
+  const isHTMLDiv = checker(isElement =>
+    isElement.and(nameIs("div")).and(namespaceIs(document, Namespace.HTML))
   );
-  const isSpanLink = isElement(builder =>
-    builder.withName("span").withRole(device, document, Roles.Link)
+  const isSpanLink = checker(isElement =>
+    isElement
+      .and(nameIs("span"))
+      .browserSpecific()
+      .and(roleIs(device, document, Roles.Link))
   );
-  const isHTMLLink = isElement(builder =>
-    builder
-      .withNamespace(document, Namespace.HTML)
-      .withRole(device, document, Roles.Link)
+  const isHTMLLink = checker(isElement =>
+    isElement
+      .browserSpecific()
+      .and(roleIs(device, document, Roles.Link))
+      .and(namespaceIs(document, Namespace.HTML))
   );
-  const isDivOrLink = isElement(builder =>
-    builder
-      .withRole(device, document, Roles.Link)
-      .or(isElement(builder => builder.withName("div")))
+  const isDivOrLink = checker(isElement =>
+    isElement
+      .browserSpecific()
+      .and(roleIs(device, document, Roles.Link))
+      .or(checker(isElement => isElement.and(nameIs("div"))))
   );
 
   t(isHTMLDiv(div));

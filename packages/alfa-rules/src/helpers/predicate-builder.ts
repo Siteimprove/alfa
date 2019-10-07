@@ -158,3 +158,37 @@ export function isElement(
   return node =>
     factory(new NodePredicateBuilder().isElement()).predicate(node);
 }
+
+export const checker = isElement;
+
+export function nameIs(...names: Array<string>): Predicate<Element> {
+  return element => names.some(name => name === element.localName);
+}
+
+export function inputTypeIs(
+  ...inputTypes: Array<InputType>
+): Predicate<Element> {
+  return element =>
+    inputTypes.some(inputType => inputType === getInputType(element));
+}
+
+export function namespaceIs(
+  context: Node,
+  ...namespaces: Array<Namespace>
+): Predicate<Element> {
+  return element =>
+    namespaces.some(
+      namespace => namespace === getElementNamespace(element, context)
+    );
+}
+
+export function roleIs(
+  device: Device,
+  context: Node,
+  ...roles: Array<Role>
+): BrowserSpecificPredicate<Element> {
+  return element =>
+    BrowserSpecific.map(getRole(element, context, device), elementRole =>
+      roles.some(role => role === elementRole)
+    );
+}
