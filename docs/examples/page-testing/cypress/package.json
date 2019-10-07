@@ -1,14 +1,12 @@
 {
   "private": true,
-  "name": "browser-testing-cypress",
+  "name": "page-testing-cypress",
   "version": "0.0.0",
   "scripts": {
     "test": "cypress run"
   },
-  "dependencies": {
-    "@siteimprove/alfa-cypress": "^0.0.0"
-  },
   "devDependencies": {
+    "@siteimprove/alfa-cypress": "^0.0.0",
     "cypress": "^3.3.1"
   }
 }
