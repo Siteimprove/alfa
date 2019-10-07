@@ -3,14 +3,9 @@ import { BrowserSpecific } from "../browser-specific";
 import { reduce } from "./reduce";
 
 export function map<T, U>(
-  values: BrowserSpecific<Iterable<T>>,
-  iteratee: (value: T) => U | BrowserSpecific<U>
-): BrowserSpecific<Iterable<U>>;
-
-export function map<T, U>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  iteratee: (value: T) => U | BrowserSpecific<U>
-): Iterable<U> | BrowserSpecific<Iterable<U>>;
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  iteratee: (value: T) => BrowserSpecific.Maybe<U>
+): BrowserSpecific.Maybe<Iterable<U>>;
 
 export function map<T, U>(
   values: Iterable<T>,
@@ -18,9 +13,9 @@ export function map<T, U>(
 ): Iterable<U>;
 
 export function map<T, U>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  iteratee: (value: T) => U | BrowserSpecific<U>
-): Iterable<U> | BrowserSpecific<Iterable<U>> {
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  iteratee: (value: T) => BrowserSpecific.Maybe<U>
+): BrowserSpecific.Maybe<Iterable<U>> {
   return reduce<T, List<U>>(
     values,
     (result, value) => {

@@ -3,14 +3,9 @@ import { BrowserSpecific } from "../browser-specific";
 import { reduce } from "./reduce";
 
 export function filter<T>(
-  values: BrowserSpecific<Iterable<T>>,
-  predicate: (value: T) => boolean | BrowserSpecific<boolean>
-): BrowserSpecific<Iterable<T>>;
-
-export function filter<T>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  predicate: (value: T) => boolean | BrowserSpecific<boolean>
-): Iterable<T> | BrowserSpecific<Iterable<T>>;
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  predicate: (value: T) => BrowserSpecific.Maybe<boolean>
+): BrowserSpecific.Maybe<Iterable<T>>;
 
 export function filter<T>(
   values: Iterable<T>,
@@ -18,9 +13,9 @@ export function filter<T>(
 ): Iterable<T>;
 
 export function filter<T>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  predicate: (value: T) => boolean | BrowserSpecific<boolean>
-): Iterable<T> | BrowserSpecific<Iterable<T>> {
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  predicate: (value: T) => BrowserSpecific.Maybe<boolean>
+): BrowserSpecific.Maybe<Iterable<T>> {
   return reduce<T, List<T>>(
     values,
     (filtered, value) => {

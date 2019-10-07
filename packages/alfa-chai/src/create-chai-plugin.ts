@@ -11,23 +11,23 @@ import { serialize } from "@siteimprove/alfa-dom";
 // tslint:disable:no-unsafe-any
 
 declare global {
-  export namespace Chai {
+  namespace Chai {
     interface Assertion {
-      accessible: void;
+      accessible: Promise<void>;
     }
   }
 }
 
 export function createChaiPlugin<T>(
   identify: (input: unknown) => input is T,
-  transform: (input: T) => Assertable
+  transform: (input: T) => Assertable | Promise<Assertable>
 ): (chai: any, util: any) => void {
   return (chai, util) => {
-    chai.Assertion.addProperty("accessible", function(this: typeof chai) {
+    chai.Assertion.addProperty("accessible", async function(this: typeof chai) {
       const object = util.flag(this, "object");
 
       if (identify(object)) {
-        const element = transform(object);
+        const element = await transform(object);
 
         let error: AssertionError | null = null;
         try {
@@ -43,9 +43,9 @@ export function createChaiPlugin<T>(
         let reason = "";
 
         if (error !== null) {
-          const target = util.inspect(serialize(error.target, element));
-
-          reason = `, but ${target} is not: ${error.message}`;
+          reason = `, but ${util.inspect(
+            serialize(error.target, element)
+          )} is not: ${error.message}`;
         }
 
         this.assert(

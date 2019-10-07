@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "chai.ts",
+    "src/from-puppeteer-handle.ts",
+    "src/index.ts",
+    "src/is-puppeteer-handle.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-chai"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-util"
+    }
+  ]
+}

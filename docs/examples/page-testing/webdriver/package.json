@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "page-testing-webdriver",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "wdio wdio.conf.js"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-chai": "^0.0.0",
+    "@siteimprove/alfa-webdriver": "^0.0.0",
+    "@types/chai": "^4.2.3",
+    "@types/mocha": "^5.2.7",
+    "@wdio/cli": "^5.14.4",
+    "@wdio/local-runner": "^5.14.4",
+    "@wdio/mocha-framework": "^5.14.4",
+    "@wdio/spec-reporter": "^5.14.4",
+    "chai": "^4.2.0",
+    "chromedriver": "^77.0.0",
+    "mocha": "^6.2.1",
+    "wdio-chromedriver-service": "^5.0.2",
+    "webdriverio": "^5.14.4"
+  }
+}

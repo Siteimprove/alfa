@@ -1,5 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "files": [],
-  "references": [{ "path": "cypress" }]
+  "references": [
+    { "path": "cypress" },
+    { "path": "puppeteer" },
+    { "path": "webdriver" }
+  ]
 }

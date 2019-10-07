@@ -5,14 +5,9 @@ import { reduce } from "./reduce";
 const { map } = BrowserSpecific;
 
 export function groupBy<T, K>(
-  values: BrowserSpecific<Iterable<T>>,
-  iteratee: (value: T) => K | BrowserSpecific<K>
-): BrowserSpecific<Iterable<[K, Iterable<T>]>>;
-
-export function groupBy<T, K>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  iteratee: (value: T) => K | BrowserSpecific<K>
-): Iterable<[K, Iterable<T>]> | BrowserSpecific<Iterable<[K, Iterable<T>]>>;
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  iteratee: (value: T) => BrowserSpecific.Maybe<K>
+): BrowserSpecific.Maybe<Iterable<[K, Iterable<T>]>>;
 
 export function groupBy<T, K>(
   values: Iterable<T>,
@@ -20,9 +15,9 @@ export function groupBy<T, K>(
 ): Iterable<[K, Iterable<T>]>;
 
 export function groupBy<T, K>(
-  values: Iterable<T> | BrowserSpecific<Iterable<T>>,
-  iteratee: (value: T) => K | BrowserSpecific<K>
-): Iterable<[K, Iterable<T>]> | BrowserSpecific<Iterable<[K, Iterable<T>]>> {
+  values: BrowserSpecific.Maybe<Iterable<T>>,
+  iteratee: (value: T) => BrowserSpecific.Maybe<K>
+): BrowserSpecific.Maybe<Iterable<[K, Iterable<T>]>> {
   return reduce<T, Map<K, List<T>>>(
     values,
     (groups, value) => {
