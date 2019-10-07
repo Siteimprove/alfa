@@ -38,6 +38,7 @@
     { "path": "alfa-unicode" },
     { "path": "alfa-util" },
     { "path": "alfa-vue" },
+    { "path": "alfa-webdriver" },
     { "path": "alfa-xpath" },
     { "path": "eslint-plugin-alfa" }
   ]

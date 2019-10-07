@@ -1,8 +1,9 @@
 import * as dom from "@siteimprove/alfa-dom";
-import { JSHandle } from "puppeteer";
 import { rollup } from "rollup";
 import cjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
+import { Browser } from "webdriverio";
+import { WebElement } from "./types";
 
 const clone = rollup({
   input: require.resolve("@siteimprove/alfa-dom/src/clone"),
@@ -25,10 +26,11 @@ const clone = rollup({
   return clone as (node: Node) => string;
 });
 
-export async function fromPuppeteerHandle(
-  handle: JSHandle<Document | Element>
-): Promise<dom.Document | dom.Element> {
-  const json = await handle.evaluate(await clone);
+export async function fromWebElement(
+  webElement: WebElement,
+  browser: Browser
+): Promise<dom.Element> {
+  const json = await browser.execute(await clone, webElement);
 
-  return JSON.parse(json) as dom.Document | dom.Element;
+  return JSON.parse(json) as dom.Element;
 }

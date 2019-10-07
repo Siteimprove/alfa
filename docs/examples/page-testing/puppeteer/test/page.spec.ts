@@ -10,9 +10,13 @@ const { expect } = chai;
 
 describe("page.html", () => {
   let browser: puppeteer.Browser;
+  let page: puppeteer.Page;
 
   before(async () => {
     browser = await puppeteer.launch();
+    [page] = await browser.pages();
+
+    await page.goto(`file://${require.resolve("./fixtures/page.html")}`);
   });
 
   after(async () => {
@@ -20,10 +24,6 @@ describe("page.html", () => {
   });
 
   it("should be accessible", async () => {
-    const [page] = await browser.pages();
-
-    await page.goto(`file://${require.resolve("./fixtures/page.html")}`);
-
     await expect(await page.$("html")).to.be.accessible;
   });
 });
