@@ -19,7 +19,6 @@
     "strict": true,
     "stripInternal": true,
     "target": "es2015",
-    "tsBuildInfoFile": ".tsbuildinfo",
     "types": []
   },
   "files": [],
