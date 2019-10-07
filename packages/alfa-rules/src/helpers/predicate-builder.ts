@@ -192,3 +192,43 @@ export function roleIs(
       roles.some(role => role === elementRole)
     );
 }
+
+interface MultiCheckOptions {
+  names?: Array<string>;
+  inputTypes?: Array<InputType>;
+  namespace?: { context: Node; namespaces: Array<Namespace> };
+  role?: { device: Device; context: Node; roles: Array<Role> };
+}
+
+export function multicheck(
+  options: MultiCheckOptions
+): BrowserSpecificPredicate<Node, Element> {
+  const tautology = (element: Element) => true;
+  return checker(isElement =>
+    isElement
+      .and(options.names !== undefined ? nameIs(...options.names) : tautology)
+      .and(
+        options.inputTypes !== undefined
+          ? inputTypeIs(...options.inputTypes)
+          : tautology
+      )
+      .and(
+        options.namespace !== undefined
+          ? namespaceIs(
+              options.namespace.context,
+              ...options.namespace.namespaces
+            )
+          : tautology
+      )
+      .browserSpecific()
+      .and(
+        options.role !== undefined
+          ? roleIs(
+              options.role.device,
+              options.role.context,
+              ...options.role.roles
+            )
+          : tautology
+      )
+  );
+}

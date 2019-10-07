@@ -7,6 +7,7 @@ import { test } from "@siteimprove/alfa-test";
 import {
   checker,
   inputTypeIs,
+  multicheck,
   nameIs,
   namespaceIs,
   roleIs
@@ -135,12 +136,10 @@ test("Correctly checks several conditions", t => {
       .browserSpecific()
       .and(roleIs(device, document, Roles.Link))
   );
-  const isHTMLLink = checker(isElement =>
-    isElement
-      .browserSpecific()
-      .and(roleIs(device, document, Roles.Link))
-      .and(namespaceIs(document, Namespace.HTML))
-  );
+  const isHTMLLink = multicheck({
+    namespace: { context: document, namespaces: [Namespace.HTML] },
+    role: { device: device, context: document, roles: [Roles.Link] }
+  });
   const isDivOrLink = checker(isElement =>
     isElement
       .browserSpecific()
