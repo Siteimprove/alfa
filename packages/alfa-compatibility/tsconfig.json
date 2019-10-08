@@ -19,6 +19,7 @@
     "src/iterable/group-by.ts",
     "src/iterable/map.ts",
     "src/iterable/reduce.ts",
+    "src/predicate.ts",
     "src/supported-browsers.ts",
     "src/types.ts",
     "src/with-browsers.ts",
