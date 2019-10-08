@@ -13,6 +13,7 @@
     "src/helpers/is-required-attribute.ts",
     "src/helpers/is-supported-attribute.ts",
     "src/helpers/predicate-builder.ts",
+    "src/helpers/predicate.ts",
     "src/index.ts",
     "src/rules.ts",
     "src/sia-r1/locales/en.ts",
