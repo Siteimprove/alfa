@@ -19,9 +19,8 @@ export namespace Predicate {
   export type Chainable<
     T,
     U extends T = T,
-    P extends Predicate.Value = boolean,
-    O extends "and" | "or" = never
-  > = Predicate<T, P> | Chain<T, U, P, O>;
+    P extends Predicate.Value = boolean
+  > = Predicate<T, P> | Chain<T, U, P>;
 
   export class Builder<
     T,
