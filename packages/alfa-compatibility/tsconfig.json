@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig.json",
   "files": [
-    "src/binary-operation.ts",
     "src/browser-specific.ts",
     "src/browsers.ts",
     "src/expand-browsers.ts",

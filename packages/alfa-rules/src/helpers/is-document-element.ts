@@ -1,10 +1,9 @@
 import { Element, getParentNode, Node } from "@siteimprove/alfa-dom";
-import { isElement } from "./predicate-builder";
+import { isElement, nameIs } from "./predicates";
 
 export function isDocumentElement(element: Element, context: Node): boolean {
-  return isElement(builder =>
-    builder
-      .withName("html")
-      .and(element => getParentNode(element, context) === context)
-  )(element);
+  return isElement
+    .and(nameIs("html"))
+    .and(element => getParentNode(element, context) === context)
+    .test(element);
 }
