@@ -60,7 +60,7 @@ export namespace Predicate {
     public and<V extends U, Q extends Predicate.Value>(
       predicate: Chainable<U, V, Q>
     ): Chain<T, V, P | Q, "and"> {
-      return new Builder<T, V, P | Q>(item => {
+      return Builder.of<T, V, P | Q>(item => {
         return this.test(item, item => test(item, predicate), () => false);
       });
     }
@@ -76,7 +76,7 @@ export namespace Predicate {
     public or<V extends T, Q extends Predicate.Value>(
       predicate: Chainable<T, V, Q>
     ): Chain<T, U | V, P | Q, "or"> {
-      return new Builder<T, U, P | Q>(item => {
+      return Builder.of<T, U, P | Q>(item => {
         return this.test(item, () => true, item => test(item, predicate));
       });
     }
