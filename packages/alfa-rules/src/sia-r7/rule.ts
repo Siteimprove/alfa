@@ -1,19 +1,18 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { List, Seq } from "@siteimprove/alfa-collection";
+import { Predicate } from "@siteimprove/alfa-compatibility";
 import {
   Attribute,
   Document,
-  Element,
   getAttributeNode,
-  getElementNamespace,
-  isElement,
   Namespace,
-  Node,
   querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
+
 import { hasLanguageAttribute } from "../helpers/has-language-attribute";
+import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
 
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r7.html",
@@ -26,7 +25,11 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
         const body = querySelector(
           document,
           document,
-          node => isElement(node) && isBody(node, document)
+          Predicate.from(
+            isElement
+              .and(namespaceIs(document, Namespace.HTML))
+              .and(nameIs("body"))
+          )
         );
 
         if (body === null) {
@@ -34,10 +37,10 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
         }
 
         return Seq(
-          querySelectorAll<Element>(
+          querySelectorAll(
             body,
             document,
-            node => isElement(node) && hasLanguageAttribute(node),
+            Predicate.from(isElement.and(hasLanguageAttribute)),
             {
               flattened: true
             }
@@ -77,11 +80,3 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
     };
   }
 };
-
-function isBody(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return element.localName === "body";
-}

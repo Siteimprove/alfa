@@ -1,19 +1,18 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { getOwnerElement, getRole, isExposed } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
-  isElement,
   Namespace,
   Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 
 import { getExplicitRole } from "../helpers/get-explicit-role";
+import { isElement, namespaceIs } from "../helpers/predicates";
 
 const {
   map,
@@ -33,9 +32,11 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll<Element>(
               document,
               document,
-              node => {
-                return isElement(node) && isHtmlOrSvgElement(node, document);
-              },
+              Predicate.from(
+                isElement.and(
+                  namespaceIs(document, Namespace.HTML, Namespace.SVG)
+                )
+              ),
               {
                 flattened: true
               }
@@ -80,16 +81,6 @@ export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isHtmlOrSvgElement(element: Element, context: Node): boolean {
-  switch (getElementNamespace(element, context)) {
-    case Namespace.HTML:
-    case Namespace.SVG:
-      return true;
-  }
-
-  return false;
-}
 
 function hasRequiredContext(
   element: Element,

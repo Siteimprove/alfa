@@ -1,17 +1,9 @@
-import {
-  Element,
-  getElementNamespace,
-  getParentNode,
-  Namespace,
-  Node
-} from "@siteimprove/alfa-dom";
+import { Element, getParentNode, Node } from "@siteimprove/alfa-dom";
+import { isElement, nameIs } from "./predicates";
 
 export function isDocumentElement(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return (
-    element.localName === "html" && getParentNode(element, context) === context
-  );
+  return isElement
+    .and(nameIs("html"))
+    .and(element => getParentNode(element, context) === context)
+    .test(element);
 }

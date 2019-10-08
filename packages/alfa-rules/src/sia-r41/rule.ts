@@ -1,25 +1,24 @@
 import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import {
-  getRole,
   getTextAlternative,
   hasTextAlternative,
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
 import { Map, Seq, Set } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
   getAttribute,
   getRootNode,
-  isElement,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
+
+import { isElement, roleIs } from "../helpers/predicates";
 
 import { EN } from "./locales/en";
 
@@ -40,27 +39,15 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
         return map(
           groupBy(
             filter(
-              querySelectorAll<Element>(document, document, isElement, {
+              querySelectorAll(document, document, Predicate.from(isElement), {
                 flattened: true
               }),
-              element => {
-                return map(isLink(element, document, device), isLink => {
-                  if (!isLink) {
-                    return false;
-                  }
-
-                  return map(
-                    isExposed(element, document, device),
-                    isExposed => {
-                      if (!isExposed) {
-                        return false;
-                      }
-
-                      return hasTextAlternative(element, document, device);
-                    }
-                  );
-                });
-              }
+              Predicate.from(
+                isElement
+                  .and(roleIs(document, device, Roles.Link))
+                  .and(element => isExposed(element, document, device))
+                  .and(element => hasTextAlternative(element, document, device))
+              )
             ),
             element => {
               return map(
@@ -119,14 +106,3 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
     };
   }
 };
-
-function isLink(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return BrowserSpecific.map(
-    getRole(element, context, device),
-    role => role === Roles.Link
-  );
-}

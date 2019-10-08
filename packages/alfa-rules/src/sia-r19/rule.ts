@@ -1,25 +1,23 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { Attributes, getRole } from "@siteimprove/alfa-aria";
 import { List, Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
   Element,
-  getElementNamespace,
   getId,
   getOwnerElement,
   getRootNode,
-  isElement,
   Namespace,
-  Node,
   querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { URL, values } from "@siteimprove/alfa-util";
 
 import { isRequiredAttribute } from "../helpers/is-required-attribute";
+import { isElement, namespaceIs } from "../helpers/predicates";
 
 import { EN } from "./locales/en";
 
@@ -42,9 +40,11 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
           querySelectorAll<Element>(
             document,
             document,
-            node => {
-              return isElement(node) && isHtmlOrSvgElement(node, document);
-            },
+            Predicate.from(
+              isElement.and(
+                namespaceIs(document, Namespace.HTML, Namespace.SVG)
+              )
+            ),
             {
               composed: true
             }
@@ -110,7 +110,9 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                   querySelector(
                     root,
                     document,
-                    node => isElement(node) && getId(node) === value
+                    Predicate.from(
+                      isElement.and(element => getId(element) === value)
+                    )
                   ) !== null;
               } else {
                 hasMatches = value
@@ -121,7 +123,9 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                       querySelector(
                         root,
                         document,
-                        node => isElement(node) && getId(node) === value
+                        Predicate.from(
+                          isElement.and(element => getId(element) === value)
+                        )
                       ) !== null
                   );
               }
@@ -184,9 +188,3 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
     };
   }
 };
-
-function isHtmlOrSvgElement(element: Element, context: Node): boolean {
-  const namespace = getElementNamespace(element, context);
-
-  return namespace === Namespace.HTML || namespace === Namespace.SVG;
-}

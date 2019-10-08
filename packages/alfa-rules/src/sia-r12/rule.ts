@@ -1,24 +1,22 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  hasTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { hasTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
-  getInputType,
   InputType,
-  isElement,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+
+import {
+  inputTypeIs,
+  isElement,
+  namespaceIs,
+  roleIs
+} from "../helpers/predicates";
 
 import { EN } from "./locales/en";
 
@@ -26,6 +24,7 @@ const {
   map,
   Iterable: { filter }
 } = BrowserSpecific;
+const { not } = Predicate;
 
 export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r12.html",
@@ -38,27 +37,20 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(
+            querySelectorAll(
               document,
               document,
-              node => {
-                return (
-                  isElement(node) && getInputType(node) !== InputType.Image
-                );
-              },
+              Predicate.from(isElement.and(not(inputTypeIs(InputType.Image)))),
               {
                 flattened: true
               }
             ),
-            element => {
-              return map(isButton(element, document, device), isButton => {
-                if (!isButton) {
-                  return false;
-                }
-
-                return isExposed(element, document, device);
-              });
-            }
+            Predicate.from(
+              isElement
+                .and(namespaceIs(document, Namespace.HTML))
+                .and(roleIs(document, device, Roles.Button))
+                .and(element => isExposed(element, document, device))
+            )
           ),
           elements => {
             return Seq(elements).map(element => {
@@ -84,15 +76,3 @@ export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isButton(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return map(getRole(element, context, device), role => role === Roles.Button);
-}

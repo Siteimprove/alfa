@@ -1,22 +1,16 @@
 import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  hasTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
+import { hasTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
-  isElement,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+
+import { isElement, namespaceIs, roleIs } from "../helpers/predicates";
 
 const {
   map,
@@ -33,16 +27,31 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(document, document, isElement, {
+            querySelectorAll(document, document, Predicate.from(isElement), {
               flattened: true
             }),
-            element => {
-              return map(
-                isFormField(element, document, device),
-                isFormField =>
-                  isFormField && isExposed(element, document, device)
-              );
-            }
+            Predicate.from(
+              isElement
+                .and(namespaceIs(document, Namespace.HTML))
+                .and(
+                  roleIs(
+                    document,
+                    device,
+                    Roles.Checkbox,
+                    Roles.Combobox,
+                    Roles.ListBox,
+                    Roles.MenuItemCheckbox,
+                    Roles.MenuItemRadio,
+                    Roles.Radio,
+                    Roles.SearchBox,
+                    Roles.Slider,
+                    Roles.SpinButton,
+                    Roles.Switch,
+                    Roles.TextBox
+                  )
+                )
+                .and(element => isExposed(element, document, device))
+            )
           ),
           elements => {
             return Seq(elements).map(element => {
@@ -69,32 +78,3 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isFormField(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  return map(getRole(element, context, device), role => {
-    switch (role) {
-      case Roles.Checkbox:
-      case Roles.Combobox:
-      case Roles.ListBox:
-      case Roles.MenuItemCheckbox:
-      case Roles.MenuItemRadio:
-      case Roles.Radio:
-      case Roles.SearchBox:
-      case Roles.Slider:
-      case Roles.SpinButton:
-      case Roles.Switch:
-      case Roles.TextBox:
-        return true;
-    }
-
-    return false;
-  });
-}

@@ -1,15 +1,17 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import { Predicate } from "@siteimprove/alfa-compatibility";
 import {
   Document,
   Element,
   getAttribute,
   getElementNamespace,
-  isElement,
   Namespace,
   Node,
   querySelector
 } from "@siteimprove/alfa-dom";
 import { Stream } from "@siteimprove/alfa-lang";
+
+import { isElement } from "../helpers/predicates";
 
 export const SIA_R9: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r9.html",
@@ -21,10 +23,12 @@ export const SIA_R9: Atomic.Rule<Document, Element> = {
   evaluate: ({ document }) => {
     return {
       applicability: () => {
-        const metaRefresh = querySelector<Element>(
+        const metaRefresh = querySelector(
           document,
           document,
-          node => isElement(node) && isValidMetaRefresh(node, document)
+          Predicate.from(
+            isElement.and(element => isValidMetaRefresh(element, document))
+          )
         );
 
         return metaRefresh === null

@@ -1,23 +1,21 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import {
-  getRole,
   getTextAlternative,
   hasTextAlternative,
   isExposed,
   Roles
 } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
-  getElementNamespace,
-  isElement,
   Namespace,
-  Node,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
+
+import { isElement, nameIs, namespaceIs, roleIs } from "../helpers/predicates";
 
 import { EN } from "./locales/en";
 
@@ -37,22 +35,20 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll(document, document, isElement, {
+            querySelectorAll(document, document, Predicate.from(isElement), {
               flattened: true
             }),
-            element => {
-              return map(isImage(element, document, device), isImage => {
-                if (!isImage) {
-                  return false;
-                }
-
-                if (element.localName === "img") {
-                  return true;
-                }
-
-                return isExposed(element, document, device);
-              });
-            }
+            Predicate.from(
+              isElement
+                .and(namespaceIs(document, Namespace.HTML))
+                .and(
+                  nameIs("img").or(
+                    roleIs(document, device, Roles.Img).and(element =>
+                      isExposed(element, document, device)
+                    )
+                  )
+                )
+            )
           ),
           elements => {
             return Seq(elements).map(element => {
@@ -74,7 +70,12 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
               getTextAlternative(target, document, device),
               textAlternative => {
                 return map(
-                  isDecorative(target, document, device),
+                  Predicate.test(
+                    target,
+                    isElement.and(
+                      roleIs(document, device, Roles.None, Roles.Presentation)
+                    )
+                  ),
                   isDecorative => {
                     return {
                       1: {
@@ -95,36 +96,3 @@ export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
     };
   }
 };
-
-function isImage(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  if (getElementNamespace(element, context) !== Namespace.HTML) {
-    return false;
-  }
-
-  if (element.localName === "img") {
-    return true;
-  }
-
-  return map(getRole(element, context, device), role => role === Roles.Img);
-}
-
-function isDecorative(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return map(getRole(element, context, device), role => {
-    switch (role) {
-      case Roles.None:
-      case Roles.Presentation:
-      case null:
-        return true;
-    }
-
-    return false;
-  });
-}
