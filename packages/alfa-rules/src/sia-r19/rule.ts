@@ -1,7 +1,7 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { Attributes, getRole } from "@siteimprove/alfa-aria";
 import { List, Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -17,7 +17,7 @@ import {
 import { URL, values } from "@siteimprove/alfa-util";
 
 import { isRequiredAttribute } from "../helpers/is-required-attribute";
-import { isElement } from "../helpers/predicate-builder";
+import { isElement, namespaceIs } from "../helpers/predicates";
 
 import { EN } from "./locales/en";
 
@@ -40,8 +40,10 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
           querySelectorAll<Element>(
             document,
             document,
-            isElement(builder =>
-              builder.withNamespace(document, Namespace.HTML, Namespace.SVG)
+            Predicate.from(
+              isElement.and(
+                namespaceIs(document, Namespace.HTML, Namespace.SVG)
+              )
             ),
             {
               composed: true
@@ -108,8 +110,8 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                   querySelector(
                     root,
                     document,
-                    isElement(builder =>
-                      builder.and(element => getId(element) === value)
+                    Predicate.from(
+                      isElement.and(element => getId(element) === value)
                     )
                   ) !== null;
               } else {
@@ -121,8 +123,8 @@ export const SIA_R19: Atomic.Rule<Document | Device, Attribute> = {
                       querySelector(
                         root,
                         document,
-                        isElement(builder =>
-                          builder.and(element => getId(element) === value)
+                        Predicate.from(
+                          isElement.and(element => getId(element) === value)
                         )
                       ) !== null
                   );

@@ -1,7 +1,7 @@
 import { Atomic, QuestionType } from "@siteimprove/alfa-act";
 import { getTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -11,7 +11,14 @@ import {
   Namespace,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { isElement } from "../helpers/predicate-builder";
+
+import {
+  inputTypeIs,
+  isElement,
+  nameIs,
+  namespaceIs,
+  roleIs
+} from "../helpers/predicates";
 
 const {
   map,
@@ -28,7 +35,7 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll(document, document, isElement(), {
+            querySelectorAll(document, document, Predicate.from(isElement), {
               flattened: true
             }),
             element => {
@@ -47,21 +54,14 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
                 return false;
               }
 
-              return isElement(builder =>
-                builder
-                  .withNamespace(document, Namespace.HTML)
-                  .browserSpecific()
+              return Predicate.test(
+                element,
+                isElement
+                  .and(namespaceIs(document, Namespace.HTML))
                   .and(
-                    isElement(builder =>
-                      builder
-                        .withName("img")
-                        .withRole(device, document, Roles.Img)
-                        .or(
-                          isElement(builder =>
-                            builder.withInputType(InputType.Image)
-                          )
-                        )
-                    )
+                    nameIs("img")
+                      .or(roleIs(document, device, Roles.Img))
+                      .or(inputTypeIs(InputType.Image))
                   )
                   .and(element => isExposed(element, document, device))
                   .and(element =>
@@ -75,7 +75,7 @@ export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
                       }
                     )
                   )
-              )(element);
+              );
             }
           ),
           elements => {

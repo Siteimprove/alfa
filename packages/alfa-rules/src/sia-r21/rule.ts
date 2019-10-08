@@ -1,7 +1,7 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { getRole, isExposed } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -14,7 +14,8 @@ import {
   Namespace,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { isElement } from "../helpers/predicate-builder";
+
+import { isElement, namespaceIs } from "../helpers/predicates";
 
 const {
   map,
@@ -31,13 +32,16 @@ export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(document, document, isElement()),
-            isElement(builder =>
-              builder
-                .withNamespace(document, Namespace.HTML, Namespace.SVG)
+            querySelectorAll<Element>(
+              document,
+              document,
+              Predicate.from(isElement)
+            ),
+            Predicate.from(
+              isElement
+                .and(namespaceIs(document, Namespace.HTML, Namespace.SVG))
                 .and(element => hasAttribute(element, "role"))
                 .and(element => getAttribute(element, "role") !== "")
-                .browserSpecific()
                 .and(element => isExposed(element, document, device))
             )
           ),

@@ -1,7 +1,7 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { getTextAlternative, isExposed } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -10,7 +10,8 @@ import {
   Namespace,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { isElement } from "../helpers/predicate-builder";
+
+import { inputTypeIs, isElement, namespaceIs } from "../helpers/predicates";
 
 const {
   map,
@@ -31,10 +32,10 @@ export const SIA_R28: Atomic.Rule<Device | Document, Element> = {
             querySelectorAll<Element>(
               document,
               document,
-              isElement(builder =>
-                builder
-                  .withInputType(InputType.Image)
-                  .withNamespace(document, Namespace.HTML)
+              Predicate.from(
+                isElement
+                  .and(inputTypeIs(InputType.Image))
+                  .and(namespaceIs(document, Namespace.HTML))
               ),
               {
                 flattened: true

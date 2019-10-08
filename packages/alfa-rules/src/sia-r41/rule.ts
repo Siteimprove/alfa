@@ -6,7 +6,7 @@ import {
   Roles
 } from "@siteimprove/alfa-aria";
 import { Map, Seq, Set } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -17,7 +17,8 @@ import {
 } from "@siteimprove/alfa-dom";
 import { isWhitespace } from "@siteimprove/alfa-unicode";
 import { trim } from "@siteimprove/alfa-util";
-import { isElement } from "../helpers/predicate-builder";
+
+import { isElement, roleIs } from "../helpers/predicates";
 
 import { EN } from "./locales/en";
 
@@ -38,12 +39,12 @@ export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
         return map(
           groupBy(
             filter(
-              querySelectorAll<Element>(document, document, isElement(), {
+              querySelectorAll(document, document, Predicate.from(isElement), {
                 flattened: true
               }),
-              isElement(builder =>
-                builder
-                  .withRole(device, document, Roles.Link)
+              Predicate.from(
+                isElement
+                  .and(roleIs(document, device, Roles.Link))
                   .and(element => isExposed(element, document, device))
                   .and(element => hasTextAlternative(element, document, device))
               )

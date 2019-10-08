@@ -1,5 +1,6 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { Seq } from "@siteimprove/alfa-collection";
+import { Predicate } from "@siteimprove/alfa-compatibility";
 import {
   Document,
   Element,
@@ -9,7 +10,8 @@ import {
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { clamp, Option } from "@siteimprove/alfa-util";
-import { isElement } from "../helpers/predicate-builder";
+
+import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
 
 export const SIA_R47: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r47.html",
@@ -23,10 +25,10 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
           querySelectorAll<Element>(
             document,
             document,
-            isElement(builder =>
-              builder
-                .withNamespace(document, Namespace.HTML)
-                .withName("meta")
+            Predicate.from(
+              isElement
+                .and(namespaceIs(document, Namespace.HTML))
+                .and(nameIs("meta"))
                 .and(
                   element =>
                     getAttribute(element, "name", { lowerCase: true }) ===

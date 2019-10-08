@@ -1,7 +1,7 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { hasTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
 import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -9,7 +9,8 @@ import {
   Namespace,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { isElement } from "../helpers/predicate-builder";
+
+import { isElement, namespaceIs, roleIs } from "../helpers/predicates";
 
 const {
   map,
@@ -26,26 +27,28 @@ export const SIA_R8: Atomic.Rule<Device | Document, Element> = {
       applicability: () => {
         return map(
           filter(
-            querySelectorAll<Element>(document, document, isElement(), {
+            querySelectorAll(document, document, Predicate.from(isElement), {
               flattened: true
             }),
-            isElement(builder =>
-              builder
-                .withNamespace(document, Namespace.HTML)
-                .withRole(
-                  device,
-                  document,
-                  Roles.Checkbox,
-                  Roles.Combobox,
-                  Roles.ListBox,
-                  Roles.MenuItemCheckbox,
-                  Roles.MenuItemRadio,
-                  Roles.Radio,
-                  Roles.SearchBox,
-                  Roles.Slider,
-                  Roles.SpinButton,
-                  Roles.Switch,
-                  Roles.TextBox
+            Predicate.from(
+              isElement
+                .and(namespaceIs(document, Namespace.HTML))
+                .and(
+                  roleIs(
+                    document,
+                    device,
+                    Roles.Checkbox,
+                    Roles.Combobox,
+                    Roles.ListBox,
+                    Roles.MenuItemCheckbox,
+                    Roles.MenuItemRadio,
+                    Roles.Radio,
+                    Roles.SearchBox,
+                    Roles.Slider,
+                    Roles.SpinButton,
+                    Roles.Switch,
+                    Roles.TextBox
+                  )
                 )
                 .and(element => isExposed(element, document, device))
             )

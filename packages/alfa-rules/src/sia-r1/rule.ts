@@ -1,11 +1,13 @@
 import { Atomic } from "@siteimprove/alfa-act";
+import { Predicate } from "@siteimprove/alfa-compatibility";
 import {
   Document,
   hasTextContent,
   Namespace,
   querySelector
 } from "@siteimprove/alfa-dom";
-import { isElement } from "../helpers/predicate-builder";
+
+import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
 
 export const SIA_R1: Atomic.Rule<Document, Document> = {
   id: "sanshikan:rules/sia-r1.html",
@@ -24,8 +26,10 @@ export const SIA_R1: Atomic.Rule<Document, Document> = {
         const title = querySelector(
           target,
           document,
-          isElement(builder =>
-            builder.withNamespace(document, Namespace.HTML).withName("title")
+          Predicate.from(
+            isElement
+              .and(namespaceIs(document, Namespace.HTML))
+              .and(nameIs("title"))
           )
         );
 
@@ -44,7 +48,7 @@ function hasDocumentElement(document: Document): boolean {
   for (let i = 0, n = childNodes.length; i < n; i++) {
     const childNode = childNodes[i];
 
-    if (isElement(builder => builder.withName("html"))(childNode)) {
+    if (isElement.and(nameIs("html")).test(childNode)) {
       return true;
     }
   }

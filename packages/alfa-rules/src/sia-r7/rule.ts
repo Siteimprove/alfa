@@ -1,17 +1,18 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { List, Seq } from "@siteimprove/alfa-collection";
+import { Predicate } from "@siteimprove/alfa-compatibility";
 import {
   Attribute,
   Document,
-  Element,
   getAttributeNode,
   Namespace,
   querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
+
 import { hasLanguageAttribute } from "../helpers/has-language-attribute";
-import { isElement } from "../helpers/predicate-builder";
+import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
 
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r7.html",
@@ -24,8 +25,10 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
         const body = querySelector(
           document,
           document,
-          isElement(builder =>
-            builder.withNamespace(document, Namespace.HTML).withName("body")
+          Predicate.from(
+            isElement
+              .and(namespaceIs(document, Namespace.HTML))
+              .and(nameIs("body"))
           )
         );
 
@@ -34,10 +37,10 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
         }
 
         return Seq(
-          querySelectorAll<Element>(
+          querySelectorAll(
             body,
             document,
-            isElement(builder => builder.and(hasLanguageAttribute)),
+            Predicate.from(isElement.and(hasLanguageAttribute)),
             {
               flattened: true
             }
