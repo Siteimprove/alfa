@@ -91,6 +91,20 @@ export namespace Predicate {
     }
   }
 
+  export function from<T, U extends T>(
+    builder: Chain<T, U>
+  ): (item: T) => item is U;
+
+  export function from<T, U extends T, P extends Predicate.Value>(
+    builder: Chain<T, U, P>
+  ): Predicate<T, P>;
+
+  export function from<T, U extends T, P extends Predicate.Value>(
+    builder: Chain<T, U, P>
+  ): Predicate<T, P> {
+    return item => builder.test(item);
+  }
+
   export function not<T, U extends T>(
     predicate: Predicate.Chainable<T, U>
   ): Predicate.Builder<T, U>;
