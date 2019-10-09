@@ -1,14 +1,16 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { Seq } from "@siteimprove/alfa-collection";
+import { Predicate } from "@siteimprove/alfa-compatibility";
 import {
   Document,
   Element,
   getAttribute,
-  isElement,
+  hasAttribute,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
 import { isDocumentElement } from "../helpers/is-document-element";
+import { isElement } from "../helpers/predicates";
 
 export const SIA_R6: Atomic.Rule<Document, Element> = {
   id: "sanshikan:rules/sia-r6.html",
@@ -19,13 +21,16 @@ export const SIA_R6: Atomic.Rule<Document, Element> = {
     return {
       applicability: () => {
         return Seq(
-          querySelectorAll<Element>(document, document, node => {
-            return (
-              isElement(node) &&
-              isDocumentElement(node, document) &&
-              hasValidLanguageAttributes(node)
-            );
-          })
+          querySelectorAll<Element>(
+            document,
+            document,
+            Predicate.from(
+              isElement
+                .and(element => isDocumentElement(element, document))
+                .and(hasValidLanguageAttribute)
+                .and(element => hasAttribute(element, "xml:lang"))
+            )
+          )
         ).map(element => {
           return {
             applicable: true,
@@ -37,26 +42,18 @@ export const SIA_R6: Atomic.Rule<Document, Element> = {
 
       expectations: (aspect, target) => {
         const lang = getLanguage(getAttribute(target, "lang")!)!;
-        const xmlLang = getLanguage(getAttribute(target, "xml:lang")!)!;
+        const xmlLang = getLanguage(getAttribute(target, "xml:lang")!);
 
         return {
-          1: { holds: lang.primary === xmlLang.primary }
+          1: { holds: xmlLang !== null && lang.primary === xmlLang.primary }
         };
       }
     };
   }
 };
 
-function hasValidLanguageAttributes(element: Element): boolean {
+function hasValidLanguageAttribute(element: Element): boolean {
   const lang = getAttribute(element, "lang");
-  const xmlLang = getAttribute(element, "xml:lang");
 
-  if (lang === null || xmlLang === null) {
-    return false;
-  }
-
-  const parsedLang = getLanguage(lang);
-  const parsedXmlLang = getLanguage(xmlLang);
-
-  return parsedLang !== null && parsedXmlLang !== null;
+  return lang !== null && getLanguage(lang) !== null;
 }

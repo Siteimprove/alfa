@@ -32,13 +32,10 @@ export const SIA_R4: Atomic.Rule<Document, Element> = {
 
       expectations: (aspect, target) => {
         const lang = getAttribute(target, "lang");
-        const xmlLang = getAttribute(target, "xml:lang");
 
         return {
           1: {
-            holds:
-              (lang !== null && lang.trim() !== "") ||
-              (xmlLang !== null && xmlLang.trim() !== "")
+            holds: lang !== null && lang.trim() !== ""
           }
         };
       }
