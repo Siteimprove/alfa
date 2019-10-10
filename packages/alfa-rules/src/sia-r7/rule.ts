@@ -5,13 +5,13 @@ import {
   Attribute,
   Document,
   getAttributeNode,
+  hasAttribute,
   Namespace,
   querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
 
-import { hasLanguageAttribute } from "../helpers/has-language-attribute";
 import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
 
 export const SIA_R7: Atomic.Rule<Document, Attribute> = {
@@ -40,7 +40,9 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
           querySelectorAll(
             body,
             document,
-            Predicate.from(isElement.and(hasLanguageAttribute)),
+            Predicate.from(
+              isElement.and(element => hasAttribute(element, "lang"))
+            ),
             {
               flattened: true
             }
@@ -53,12 +55,6 @@ export const SIA_R7: Atomic.Rule<Document, Attribute> = {
 
             if (lang !== null && lang.value.trim() !== "") {
               languages.push(lang);
-            }
-
-            const xmlLang = getAttributeNode(element, "xml:lang");
-
-            if (xmlLang !== null && xmlLang.value.trim() !== "") {
-              languages.push(xmlLang);
             }
 
             return attributes.concat(languages);
