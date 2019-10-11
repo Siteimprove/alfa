@@ -40,7 +40,6 @@ for (const name of include) {
 
   browsers.push({
     key: name,
-    name: browser.name,
     releases
   });
 }
@@ -51,21 +50,13 @@ let code = `
 // changes, do so in \`scripts/browsers.js\` and run \`yarn prepare\` to rebuild this
 // file.
 
-import { Browser } from "./types";
+export type Data = typeof Data;
 
-/**
- * Names of browsers for which we have compatibility data.
- *
- * @see https://github.com/mdn/browser-compat-data#usage
- */
-export type BrowserName = ${include.map(name => `"${name}"`).join("|")};
-
-export const Browsers: { readonly [P in BrowserName]: Browser } = {
+export const Data = {
   ${browsers
     .map(
       browser => `
         "${browser.key}": {
-          name: "${browser.name}",
           releases: {
             ${browser.releases
               .map(
@@ -86,4 +77,4 @@ code = prettier.format(code, {
   parser: "typescript"
 });
 
-fs.writeFileSync("src/browsers.ts", code);
+fs.writeFileSync("src/browser/data.ts", code);
