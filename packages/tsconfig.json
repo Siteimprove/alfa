@@ -29,6 +29,7 @@
     { "path": "alfa-lang" },
     { "path": "alfa-math" },
     { "path": "alfa-pointer" },
+    { "path": "alfa-predicate" },
     { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },
     { "path": "alfa-rules" },
