@@ -87,7 +87,7 @@ function hasRequiredContext(
   context: Node,
   device: Device
 ): boolean | BrowserSpecific<boolean> {
-  return map(getOwnerElement(element, document, device), ownerElement => {
+  return map(getOwnerElement(element, context, device), ownerElement => {
     if (ownerElement === null) {
       return false;
     }
