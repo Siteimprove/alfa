@@ -28,6 +28,7 @@
     { "path": "alfa-json-ld" },
     { "path": "alfa-lang" },
     { "path": "alfa-math" },
+    { "path": "alfa-option" },
     { "path": "alfa-pointer" },
     { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },

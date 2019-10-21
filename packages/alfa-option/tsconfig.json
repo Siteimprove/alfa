@@ -1,0 +1,30 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/index.ts",
+    "src/none.ts",
+    "src/option.ts",
+    "src/some.ts",
+    "test/option.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
+    }
+  ]
+}
