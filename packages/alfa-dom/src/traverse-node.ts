@@ -27,8 +27,25 @@ export function traverseNode<T>(
 
 export namespace traverseNode {
   export interface Options {
+    /**
+     * When `true`, traverse the node in shadow-including tree order.
+     *
+     * @see https://dom.spec.whatwg.org/#concept-shadow-including-tree-order
+     */
     readonly composed?: boolean;
+
+    /**
+     * When `true`, traverse the flattened element tree rooted at the node.
+     *
+     * @see https://drafts.csswg.org/css-scoping/#flat-tree
+     */
     readonly flattened?: boolean;
+
+    /**
+     * When `true`, traverse all nested browsing contexts encountered.
+     *
+     * @see https://html.spec.whatwg.org/#nested-browsing-context
+     */
     readonly nested?: boolean;
   }
 
