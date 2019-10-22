@@ -17,28 +17,32 @@ export function getParentRule(rule: Rule, context: Node): Rule | null {
     .get(context, () => {
       const parentRules = Cache.of<Rule, Rule>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node) {
-            if (isDocument(node)) {
-              const { styleSheets } = node;
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node) {
+              if (isDocument(node)) {
+                const { styleSheets } = node;
 
-              for (let i = 0, n = styleSheets.length; i < n; i++) {
-                traverseStyleSheet(styleSheets[i], {
-                  enter(rule, parentRule) {
-                    if (parentRule !== null) {
-                      parentRules.set(rule, parentRule);
-                    }
-                  }
-                });
+                for (let i = 0, n = styleSheets.length; i < n; i++) {
+                  [
+                    ...traverseStyleSheet(styleSheets[i], {
+                      *enter(rule, parentRule) {
+                        if (parentRule !== null) {
+                          parentRules.set(rule, parentRule);
+                        }
+                      }
+                    })
+                  ];
+                }
               }
             }
-          }
-        },
-        { composed: true, nested: true }
-      );
+          },
+          { composed: true, nested: true }
+        )
+      ];
 
       return parentRules;
     })

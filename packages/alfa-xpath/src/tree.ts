@@ -94,61 +94,63 @@ export function getTree<T extends Node>(
 
   const parents: Array<Tree> = [];
 
-  traverseNode(
-    context,
-    context,
-    {
-      enter(node) {
-        const parent = last(parents);
+  [
+    ...traverseNode(
+      context,
+      context,
+      {
+        *enter(node) {
+          const parent = last(parents);
 
-        const tree: Mutable<Tree> = {
-          node,
-          context,
-          parent,
-          prev: null,
-          next: null,
-          children: [],
-          attributes: []
-        };
+          const tree: Mutable<Tree> = {
+            node,
+            context,
+            parent,
+            prev: null,
+            next: null,
+            children: [],
+            attributes: []
+          };
 
-        parents.push(tree);
+          parents.push(tree);
 
-        if (scope === node) {
-          entry = tree;
-        }
-
-        if (parent !== null) {
-          const sibling = last(parent.children) as Mutable<Tree> | null;
-
-          if (sibling !== null) {
-            sibling.next = tree;
-            tree.prev = sibling;
+          if (scope === node) {
+            entry = tree;
           }
 
-          parent.children.push(tree);
-        }
+          if (parent !== null) {
+            const sibling = last(parent.children) as Mutable<Tree> | null;
 
-        if (isElement(node)) {
-          tree.attributes = Array.from(node.attributes).map(attribute => {
-            return {
-              node: attribute,
-              context,
-              parent: tree,
-              prev: null,
-              next: null,
-              children: [],
-              attributes: []
-            };
-          });
+            if (sibling !== null) {
+              sibling.next = tree;
+              tree.prev = sibling;
+            }
+
+            parent.children.push(tree);
+          }
+
+          if (isElement(node)) {
+            tree.attributes = Array.from(node.attributes).map(attribute => {
+              return {
+                node: attribute,
+                context,
+                parent: tree,
+                prev: null,
+                next: null,
+                children: [],
+                attributes: []
+              };
+            });
+          }
+        },
+
+        *exit(node) {
+          parents.pop();
         }
       },
-
-      exit(node) {
-        parents.pop();
-      }
-    },
-    options
-  );
+      options
+    )
+  ];
 
   return entry;
 }

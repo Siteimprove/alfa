@@ -96,49 +96,53 @@ export class SelectorMap {
     // reusing parsed declarations.
     const declarationsCache: Map<string, Array<Declaration>> = new Map();
 
+    const self = this; // tslint:disable-line:no-this-assignment
+
     for (const styleSheet of styleSheets) {
       if (styleSheet.disabled) {
         continue;
       }
 
-      traverseStyleSheet(styleSheet, {
-        enter: (rule, parentRule, { skip }) => {
-          if (isConditionRule(rule) && !fulfills(device, rule)) {
-            return skip;
+      [
+        ...traverseStyleSheet(styleSheet, {
+          *enter(rule, parentRule) {
+            if (isConditionRule(rule) && !fulfills(device, rule)) {
+              return false;
+            }
+
+            if (isStyleRule(rule)) {
+              const selectors = parseSelectors(rule.selectorText);
+
+              if (selectors.length === 0) {
+                return;
+              }
+
+              const { cssText } = rule.style;
+
+              let declarations = declarationsCache.get(cssText);
+
+              if (declarations === undefined) {
+                declarations = parseDeclarations(cssText);
+                declarationsCache.set(cssText, declarations);
+              }
+
+              if (declarations.length === 0) {
+                return;
+              }
+
+              const origin = isUserAgentRule(rule)
+                ? Origin.UserAgent
+                : Origin.Author;
+
+              order++;
+
+              for (let i = 0, n = selectors.length; i < n; i++) {
+                self.addRule(rule, selectors[i], declarations, origin, order);
+              }
+            }
           }
-
-          if (isStyleRule(rule)) {
-            const selectors = parseSelectors(rule.selectorText);
-
-            if (selectors.length === 0) {
-              return;
-            }
-
-            const { cssText } = rule.style;
-
-            let declarations = declarationsCache.get(cssText);
-
-            if (declarations === undefined) {
-              declarations = parseDeclarations(cssText);
-              declarationsCache.set(cssText, declarations);
-            }
-
-            if (declarations.length === 0) {
-              return;
-            }
-
-            const origin = isUserAgentRule(rule)
-              ? Origin.UserAgent
-              : Origin.Author;
-
-            order++;
-
-            for (let i = 0, n = selectors.length; i < n; i++) {
-              this.addRule(rule, selectors[i], declarations, origin, order);
-            }
-          }
-        }
-      });
+        })
+      ];
     }
   }
 

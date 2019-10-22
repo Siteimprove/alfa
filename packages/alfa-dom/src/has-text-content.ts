@@ -15,23 +15,20 @@ export function hasTextContent(
   context: Node,
   options: hasTextContent.Options = {}
 ): boolean {
-  let text = false;
-
-  traverseNode(
+  const [hasTextContent = false] = traverseNode(
     node,
     context,
     {
-      enter(node, parentNode, { exit }) {
+      *enter(node, parentNode) {
         if (isText(node) && node.data.trim() !== "") {
-          text = true;
-          return exit;
+          yield true;
         }
       }
     },
     { ...options, nested: false }
   );
 
-  return text;
+  return hasTextContent;
 }
 
 export namespace hasTextContent {

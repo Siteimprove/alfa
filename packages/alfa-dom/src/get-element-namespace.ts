@@ -19,47 +19,49 @@ export function getElementNamespace(
     .get(context, () => {
       const namespaces = Cache.of<Element, Namespace>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node, parentNode) {
-            if (!isElement(node)) {
-              return;
-            }
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node, parentNode) {
+              if (!isElement(node)) {
+                return;
+              }
 
-            if (node.localName === "svg") {
-              namespaces.set(node, Namespace.SVG);
-              return;
-            }
+              if (node.localName === "svg") {
+                namespaces.set(node, Namespace.SVG);
+                return;
+              }
 
-            if (node.localName === "math") {
-              namespaces.set(node, Namespace.MathML);
-              return;
-            }
+              if (node.localName === "math") {
+                namespaces.set(node, Namespace.MathML);
+                return;
+              }
 
-            if (parentNode === null || !isElement(parentNode)) {
-              namespaces.set(node, Namespace.HTML);
-              return;
-            }
+              if (parentNode === null || !isElement(parentNode)) {
+                namespaces.set(node, Namespace.HTML);
+                return;
+              }
 
-            // As we're doing a top-down traversal, setting the namespace of
-            // every parent element before visiting its children, we can safely
-            // assert that the parent node will have a namespace defined.
-            const parentNamespace = namespaces.get(parentNode)!;
+              // As we're doing a top-down traversal, setting the namespace of
+              // every parent element before visiting its children, we can safely
+              // assert that the parent node will have a namespace defined.
+              const parentNamespace = namespaces.get(parentNode)!;
 
-            if (
-              node.localName === "foreignObject" &&
-              parentNamespace === Namespace.SVG
-            ) {
-              namespaces.set(node, Namespace.HTML);
-            } else {
-              namespaces.set(node, parentNamespace);
+              if (
+                node.localName === "foreignObject" &&
+                parentNamespace === Namespace.SVG
+              ) {
+                namespaces.set(node, Namespace.HTML);
+              } else {
+                namespaces.set(node, parentNamespace);
+              }
             }
-          }
-        },
-        { composed: true, nested: true }
-      );
+          },
+          { composed: true, nested: true }
+        )
+      ];
 
       return namespaces;
     })

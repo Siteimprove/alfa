@@ -40,22 +40,24 @@ export function getParentNode(
     .get(context, () => {
       const parentNodes = Cache.of<Node, Node>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node, parentNode) {
-            if (parentNode !== null) {
-              parentNodes.set(node, parentNode);
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node, parentNode) {
+              if (parentNode !== null) {
+                parentNodes.set(node, parentNode);
+              }
             }
+          },
+          {
+            composed: options.flattened !== true,
+            flattened: options.flattened,
+            nested: true
           }
-        },
-        {
-          composed: options.flattened !== true,
-          flattened: options.flattened,
-          nested: true
-        }
-      );
+        )
+      ];
 
       return parentNodes;
     })

@@ -18,131 +18,133 @@ export function serialize(
 ): string {
   let result = "";
 
-  traverseNode(
-    node,
-    context,
-    {
-      enter(node) {
-        if (isElement(node)) {
-          const namespace = getElementNamespace(node, context);
+  [
+    ...traverseNode(
+      node,
+      context,
+      {
+        *enter(node) {
+          if (isElement(node)) {
+            const namespace = getElementNamespace(node, context);
 
-          let name = node.localName;
+            let name = node.localName;
 
-          if (
-            node.prefix !== null &&
-            namespace !== Namespace.HTML &&
-            namespace !== Namespace.MathML &&
-            namespace !== Namespace.SVG
-          ) {
-            name = `${node.prefix}:${node.localName}`;
-          }
+            if (
+              node.prefix !== null &&
+              namespace !== Namespace.HTML &&
+              namespace !== Namespace.MathML &&
+              namespace !== Namespace.SVG
+            ) {
+              name = `${node.prefix}:${node.localName}`;
+            }
 
-          result += `<${name}`;
+            result += `<${name}`;
 
-          const { attributes } = node;
+            const { attributes } = node;
 
-          for (let i = 0, n = attributes.length; i < n; i++) {
-            const attribute = attributes[i];
-            const namespace = getAttributeNamespace(attribute, context);
+            for (let i = 0, n = attributes.length; i < n; i++) {
+              const attribute = attributes[i];
+              const namespace = getAttributeNamespace(attribute, context);
 
-            let name = attribute.localName;
+              let name = attribute.localName;
 
-            if (namespace !== null) {
-              switch (namespace) {
-                case Namespace.XML:
-                  name = `xml:${attribute.localName}`;
-                  break;
-                case Namespace.XMLNS:
-                  if (attribute.localName !== "xmlns") {
-                    name = `xmlns:${attribute.localName}`;
-                  }
-                  break;
-                case Namespace.XLink:
-                  name = `xlink:${attribute.localName}`;
+              if (namespace !== null) {
+                switch (namespace) {
+                  case Namespace.XML:
+                    name = `xml:${attribute.localName}`;
+                    break;
+                  case Namespace.XMLNS:
+                    if (attribute.localName !== "xmlns") {
+                      name = `xmlns:${attribute.localName}`;
+                    }
+                    break;
+                  case Namespace.XLink:
+                    name = `xlink:${attribute.localName}`;
+                    break;
+                  default:
+                    if (attribute.prefix !== null) {
+                      name = `${attribute.prefix}:${attribute.localName}`;
+                    }
+                }
+              }
+
+              const value = escape(attribute.value, { attributeMode: true });
+
+              result += ` ${name}="${value}"`;
+            }
+
+            result += ">";
+          } else if (isText(node)) {
+            const parentElement = getParentElement(node, context);
+
+            if (parentElement !== null) {
+              switch (parentElement.localName) {
+                case "style":
+                case "script":
+                case "xmp":
+                case "iframe":
+                case "noembed":
+                case "noframes":
+                case "plaintext":
+                case "noscript":
+                  result += node.data;
                   break;
                 default:
-                  if (attribute.prefix !== null) {
-                    name = `${attribute.prefix}:${attribute.localName}`;
-                  }
+                  result += escape(node.data);
               }
+            } else {
+              result += escape(node.data);
             }
-
-            const value = escape(attribute.value, { attributeMode: true });
-
-            result += ` ${name}="${value}"`;
+          } else if (isComment(node)) {
+            result += `<!--${node.data}-->`;
+          } else if (isDocumentType(node)) {
+            result += `<!DOCTYPE ${node.name}>`;
           }
+        },
 
-          result += ">";
-        } else if (isText(node)) {
-          const parentElement = getParentElement(node, context);
-
-          if (parentElement !== null) {
-            switch (parentElement.localName) {
-              case "style":
-              case "script":
-              case "xmp":
-              case "iframe":
-              case "noembed":
-              case "noframes":
-              case "plaintext":
-              case "noscript":
-                result += node.data;
+        *exit(node) {
+          if (isElement(node)) {
+            switch (node.localName) {
+              case "area":
+              case "base":
+              case "basefont":
+              case "bgsound":
+              case "br":
+              case "col":
+              case "embed":
+              case "frame":
+              case "hr":
+              case "img":
+              case "input":
+              case "link":
+              case "meta":
+              case "param":
+              case "source":
+              case "track":
+              case "wbr":
                 break;
               default:
-                result += escape(node.data);
+                const namespace = getElementNamespace(node, context);
+
+                let name = node.localName;
+
+                if (
+                  node.prefix !== null &&
+                  namespace !== Namespace.HTML &&
+                  namespace !== Namespace.MathML &&
+                  namespace !== Namespace.SVG
+                ) {
+                  name = `${node.prefix}:${node.localName}`;
+                }
+
+                result += `</${name}>`;
             }
-          } else {
-            result += escape(node.data);
           }
-        } else if (isComment(node)) {
-          result += `<!--${node.data}-->`;
-        } else if (isDocumentType(node)) {
-          result += `<!DOCTYPE ${node.name}>`;
         }
       },
-
-      exit(node) {
-        if (isElement(node)) {
-          switch (node.localName) {
-            case "area":
-            case "base":
-            case "basefont":
-            case "bgsound":
-            case "br":
-            case "col":
-            case "embed":
-            case "frame":
-            case "hr":
-            case "img":
-            case "input":
-            case "link":
-            case "meta":
-            case "param":
-            case "source":
-            case "track":
-            case "wbr":
-              break;
-            default:
-              const namespace = getElementNamespace(node, context);
-
-              let name = node.localName;
-
-              if (
-                node.prefix !== null &&
-                namespace !== Namespace.HTML &&
-                namespace !== Namespace.MathML &&
-                namespace !== Namespace.SVG
-              ) {
-                name = `${node.prefix}:${node.localName}`;
-              }
-
-              result += `</${name}>`;
-          }
-        }
-      }
-    },
-    options
-  );
+      options
+    )
+  ];
 
   return result;
 }

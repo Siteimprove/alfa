@@ -51,16 +51,13 @@ export function querySelector<T extends Node>(
     predicate = query;
   }
 
-  let found: T | null = null;
-
-  traverseNode(
+  const [found = null] = traverseNode(
     scope,
     context,
     {
-      enter(node, parentNode, { exit }) {
+      *enter(node, parentNode) {
         if (predicate(node)) {
-          found = node;
-          return exit;
+          yield node;
         }
       }
     },
@@ -121,22 +118,18 @@ export function querySelectorAll<T extends Node>(
     predicate = query;
   }
 
-  const found: Array<T> = [];
-
-  traverseNode(
+  return traverseNode(
     scope,
     context,
     {
-      enter(node) {
+      *enter(node) {
         if (predicate(node)) {
-          found.push(node);
+          yield node;
         }
       }
     },
     options
   );
-
-  return found;
 }
 
 export namespace querySelectorAll {

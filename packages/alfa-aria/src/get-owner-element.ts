@@ -26,30 +26,32 @@ export function getOwnerElement(
     .get(context, () => {
       const ownerElements = Cache.of<Element, Element>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node) {
-            if (isElement(node)) {
-              const owns = getAttribute(node, "aria-owns");
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node) {
+              if (isElement(node)) {
+                const owns = getAttribute(node, "aria-owns");
 
-              if (owns !== null) {
-                const references = resolveReferences(
-                  getRootNode(node, context),
-                  context,
-                  owns
-                );
+                if (owns !== null) {
+                  const references = resolveReferences(
+                    getRootNode(node, context),
+                    context,
+                    owns
+                  );
 
-                for (const reference of references) {
-                  ownerElements.set(reference, node);
+                  for (const reference of references) {
+                    ownerElements.set(reference, node);
+                  }
                 }
               }
             }
-          }
-        },
-        { composed: true, nested: true }
-      );
+          },
+          { composed: true, nested: true }
+        )
+      ];
 
       return ownerElements;
     })

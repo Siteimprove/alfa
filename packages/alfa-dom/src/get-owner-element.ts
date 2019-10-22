@@ -18,22 +18,24 @@ export function getOwnerElement(
     .get(context, () => {
       const ownerElements = Cache.of<Attribute, Element>({ weak: false });
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node) {
-            if (isElement(node)) {
-              const { attributes } = node;
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node) {
+              if (isElement(node)) {
+                const { attributes } = node;
 
-              for (let i = 0, n = attributes.length; i < n; i++) {
-                ownerElements.set(attributes[i], node);
+                for (let i = 0, n = attributes.length; i < n; i++) {
+                  ownerElements.set(attributes[i], node);
+                }
               }
             }
-          }
-        },
-        { composed: true, nested: true }
-      );
+          },
+          { composed: true, nested: true }
+        )
+      ];
 
       return ownerElements;
     })
