@@ -78,7 +78,10 @@ export namespace traverseNode {
   }
 }
 
-function* visitNode<T>(
+/**
+ * @internal
+ */
+export function* visitNode<T>(
   node: Node,
   parentNode: Node | null,
   context: Node,
