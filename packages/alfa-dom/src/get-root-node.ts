@@ -59,33 +59,35 @@ function collectRootNodes(
   options: getRootNode.Options,
   rootNodes = Cache.of<Node, Node>()
 ): Cache<Node, Node> {
-  traverseNode(
-    root,
-    root,
-    {
-      enter(node) {
-        rootNodes.set(node, root);
+  [
+    ...traverseNode(
+      root,
+      root,
+      {
+        *enter(node) {
+          rootNodes.set(node, root);
 
-        if (options.composed !== true && options.flattened !== true) {
-          const shadowRoot = isElement(node) ? node.shadowRoot : null;
+          if (options.composed !== true && options.flattened !== true) {
+            const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
-          // If a shadow root is encountered and we're looking for neither a
-          // composed nor flattened root, recurse into the shadow root and mark
-          // it as the root of itself and all its descendants.
-          if (shadowRoot !== null && shadowRoot !== undefined) {
-            collectRootNodes(shadowRoot, options, rootNodes);
+            // If a shadow root is encountered and we're looking for neither a
+            // composed nor flattened root, recurse into the shadow root and
+            // mark it as the root of itself and all its descendants.
+            if (shadowRoot !== null && shadowRoot !== undefined) {
+              collectRootNodes(shadowRoot, options, rootNodes);
+            }
+          }
+
+          const contentDocument = isElement(node) ? node.contentDocument : null;
+
+          if (contentDocument !== null && contentDocument !== undefined) {
+            collectRootNodes(contentDocument, options, rootNodes);
           }
         }
-
-        const contentDocument = isElement(node) ? node.contentDocument : null;
-
-        if (contentDocument !== null && contentDocument !== undefined) {
-          collectRootNodes(contentDocument, options, rootNodes);
-        }
-      }
-    },
-    { ...options, nested: false }
-  );
+      },
+      { ...options, nested: false }
+    )
+  ];
 
   return rootNodes;
 }

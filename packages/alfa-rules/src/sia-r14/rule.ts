@@ -126,20 +126,22 @@ function getVisibleTextContent(
 ): string {
   let textContent = "";
 
-  traverseNode(
-    element,
-    context,
-    {
-      enter(node) {
-        if (isText(node) && isVisible(node, context, device)) {
-          textContent += node.data;
+  [
+    ...traverseNode(
+      element,
+      context,
+      {
+        *enter(node) {
+          if (isText(node) && isVisible(node, context, device)) {
+            textContent += node.data;
+          }
         }
+      },
+      {
+        flattened: true
       }
-    },
-    {
-      flattened: true
-    }
-  );
+    )
+  ];
 
   return normalize(textContent);
 }

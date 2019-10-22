@@ -19,18 +19,20 @@ export function getTextContent(
 ): string {
   let text = "";
 
-  traverseNode(
-    node,
-    context,
-    {
-      enter(node) {
-        if (isText(node)) {
-          text += node.data;
+  [
+    ...traverseNode(
+      node,
+      context,
+      {
+        *enter(node) {
+          if (isText(node)) {
+            text += node.data;
+          }
         }
-      }
-    },
-    { ...options, nested: false }
-  );
+      },
+      { ...options, nested: false }
+    )
+  ];
 
   return text;
 }

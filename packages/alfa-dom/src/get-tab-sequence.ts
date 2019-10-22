@@ -18,26 +18,28 @@ export function getTabSequence(
 ): Iterable<Element> {
   const tabSequence: Array<Element> = [];
 
-  traverseNode(
-    node,
-    context,
-    {
-      enter(node) {
-        if (isElement(node)) {
-          const index = getTabIndex(node, context);
+  [
+    ...traverseNode(
+      node,
+      context,
+      {
+        *enter(node) {
+          if (isElement(node)) {
+            const index = getTabIndex(node, context);
 
-          if (index !== null && index >= 0) {
-            tabSequence.splice(
-              indexWithin(tabSequence, node, context),
-              0,
-              node
-            );
+            if (index !== null && index >= 0) {
+              tabSequence.splice(
+                indexWithin(tabSequence, node, context),
+                0,
+                node
+              );
+            }
           }
         }
-      }
-    },
-    { flattened: true }
-  );
+      },
+      { flattened: true }
+    )
+  ];
 
   for (let i = 0, n = tabSequence.length; i < n; i++) {
     const { contentDocument } = tabSequence[i];

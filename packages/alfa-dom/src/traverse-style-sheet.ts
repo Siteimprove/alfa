@@ -1,28 +1,31 @@
-import { RuleVisitor, traverseRule } from "./traverse-rule";
+import { traverseRule, visitRule } from "./traverse-rule";
 import { StyleSheet } from "./types";
 
 /**
  * Given a style sheet, perform a depth-first traversal of the rules of the
- * style sheet, invoking the visitors for all of its children. A visitor may
- * return `false` in order to stop the traversal, resulting in the function
- * itself returning `false`. If traversal finishes without interruption, `true`
- * is returned.
+ * style sheet, invoking the given visitors for all of its children.
  *
  * @see https://dom.spec.whatwg.org/#concept-tree-order
  */
-export function traverseStyleSheet(
+export function traverseStyleSheet<T>(
   styleSheet: StyleSheet,
-  visitors: Readonly<{ enter?: RuleVisitor; exit?: RuleVisitor }>
-): boolean {
+  visitors: traverseRule.Visitors<T>
+): Iterable<T> {
+  return visitStyleSheet(styleSheet, visitors);
+}
+
+/**
+ * @internal
+ */
+export function* visitStyleSheet<T>(
+  styleSheet: StyleSheet,
+  visitors: traverseRule.Visitors<T>
+): Generator<T, void> {
   const { cssRules } = styleSheet;
 
   if (cssRules !== undefined) {
     for (let i = 0, n = cssRules.length; i < n; i++) {
-      if (!traverseRule(cssRules[i], visitors)) {
-        return false;
-      }
+      yield* visitRule(cssRules[i], null, visitors);
     }
   }
-
-  return true;
 }

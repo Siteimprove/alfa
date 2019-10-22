@@ -30,54 +30,56 @@ export function isVisible(
     .get(device, () => {
       const visibilities = Cache.of<Element, boolean>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node, parentNode) {
-            if (isElement(node)) {
-              visibilities.set(node, true);
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node, parentNode) {
+              if (isElement(node)) {
+                visibilities.set(node, true);
 
-              if (!isRendered(node, context, device)) {
-                visibilities.set(node, false);
-              } else {
-                const opacity = getPropertyValue(
-                  getCascadedStyle(node, context, device),
-                  "opacity"
+                if (!isRendered(node, context, device)) {
+                  visibilities.set(node, false);
+                } else {
+                  const opacity = getPropertyValue(
+                    getCascadedStyle(node, context, device),
+                    "opacity"
+                  );
+
+                  if (opacity !== null && opacity.value === 0) {
+                    visibilities.set(node, false);
+                  } else if (parentNode !== null && isElement(parentNode)) {
+                    const isParentVisible = visibilities.get(parentNode);
+
+                    if (isParentVisible === false) {
+                      visibilities.set(node, false);
+                    }
+                  }
+                }
+              }
+            },
+            *exit(node) {
+              if (isElement(node)) {
+                const visibility = getPropertyValue(
+                  getComputedStyle(node, context, device),
+                  "visibility"
                 );
 
-                if (opacity !== null && opacity.value === 0) {
-                  visibilities.set(node, false);
-                } else if (parentNode !== null && isElement(parentNode)) {
-                  const isParentVisible = visibilities.get(parentNode);
-
-                  if (isParentVisible === false) {
+                if (visibility !== null) {
+                  if (
+                    visibility.value === "hidden" ||
+                    visibility.value === "collapse"
+                  ) {
                     visibilities.set(node, false);
                   }
                 }
               }
             }
           },
-          exit(node) {
-            if (isElement(node)) {
-              const visibility = getPropertyValue(
-                getComputedStyle(node, context, device),
-                "visibility"
-              );
-
-              if (visibility !== null) {
-                if (
-                  visibility.value === "hidden" ||
-                  visibility.value === "collapse"
-                ) {
-                  visibilities.set(node, false);
-                }
-              }
-            }
-          }
-        },
-        { flattened: true, nested: true }
-      );
+          { flattened: true, nested: true }
+        )
+      ];
 
       return visibilities;
     })

@@ -43,16 +43,18 @@ export function getNode(
 
       let position = 0;
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node) {
-            nodes.set(position++, node);
-          }
-        },
-        options
-      );
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node) {
+              nodes.set(position++, node);
+            }
+          },
+          options
+        )
+      ];
 
       return nodes;
     })

@@ -38,17 +38,14 @@ function findSlot(slotable: Element | Text, context: Node): Element | null {
     ? getAttribute(slotable, "slot")
     : null;
 
-  let assignedSlot: Element | null = null;
-
-  traverseNode(shadowRoot, context, {
-    enter(node, parentNode, { exit }) {
+  const [assignedSlot = null] = traverseNode(shadowRoot, context, {
+    *enter(node, parentNode) {
       if (
         isElement(node) &&
         node.localName === "slot" &&
         name === getAttribute(node, "name")
       ) {
-        assignedSlot = node;
-        return exit;
+        yield node;
       }
     }
   });

@@ -49,32 +49,34 @@ export function getCascade(
       device
     );
 
-    traverseNode(context, context, {
-      enter(node) {
-        if (isElement(node)) {
-          const rules = selectorMap.getRules(node, context, {
-            filter,
-            hover: true,
-            active: true,
-            focus: true,
-            pseudo: true
-          });
+    [
+      ...traverseNode(context, context, {
+        *enter(node) {
+          if (isElement(node)) {
+            const rules = selectorMap.getRules(node, context, {
+              filter,
+              hover: true,
+              active: true,
+              focus: true,
+              pseudo: true
+            });
 
-          const entry = ruleTree.add(sort(rules));
+            const entry = ruleTree.add(sort(rules));
 
-          if (entry !== null) {
-            entries.set(node, entry);
+            if (entry !== null) {
+              entries.set(node, entry);
+            }
+
+            filter.add(node);
           }
-
-          filter.add(node);
+        },
+        *exit(node) {
+          if (isElement(node)) {
+            filter.remove(node);
+          }
         }
-      },
-      exit(node) {
-        if (isElement(node)) {
-          filter.remove(node);
-        }
-      }
-    });
+      })
+    ];
 
     return new Cascade(entries);
   });

@@ -43,31 +43,33 @@ export function isRendered(
     .get(device, () => {
       const renders = Cache.of<Element, boolean>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node, parentNode) {
-            if (isElement(node)) {
-              const display = getPropertyValue(
-                getCascadedStyle(node, context, device),
-                "display"
-              );
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node, parentNode) {
+              if (isElement(node)) {
+                const display = getPropertyValue(
+                  getCascadedStyle(node, context, device),
+                  "display"
+                );
 
-              if (display !== null && display.value === "none") {
-                renders.set(node, false);
-              } else if (parentNode !== null && isElement(parentNode)) {
-                const isParentRendered = renders.get(parentNode);
-
-                if (isParentRendered === false) {
+                if (display !== null && display.value === "none") {
                   renders.set(node, false);
+                } else if (parentNode !== null && isElement(parentNode)) {
+                  const isParentRendered = renders.get(parentNode);
+
+                  if (isParentRendered === false) {
+                    renders.set(node, false);
+                  }
                 }
               }
             }
-          }
-        },
-        { flattened: true, nested: true }
-      );
+          },
+          { flattened: true, nested: true }
+        )
+      ];
 
       return renders;
     })

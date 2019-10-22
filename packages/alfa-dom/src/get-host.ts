@@ -16,22 +16,24 @@ export function getHost(shadowRoot: ShadowRoot, context: Node): Element | null {
     .get(context, () => {
       const hosts = Cache.of<ShadowRoot, Element>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node) {
-            if (
-              isElement(node) &&
-              node.shadowRoot !== null &&
-              node.shadowRoot !== undefined
-            ) {
-              hosts.set(node.shadowRoot, node);
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node) {
+              if (
+                isElement(node) &&
+                node.shadowRoot !== null &&
+                node.shadowRoot !== undefined
+              ) {
+                hosts.set(node.shadowRoot, node);
+              }
             }
-          }
-        },
-        { composed: true, nested: true }
-      );
+          },
+          { composed: true, nested: true }
+        )
+      ];
 
       return hosts;
     })

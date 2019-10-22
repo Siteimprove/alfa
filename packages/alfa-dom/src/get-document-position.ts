@@ -45,16 +45,18 @@ export function getDocumentPosition(
 
       let position = 0;
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node) {
-            documentPositions.set(node, position++);
-          }
-        },
-        options
-      );
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node) {
+              documentPositions.set(node, position++);
+            }
+          },
+          options
+        )
+      ];
 
       return documentPositions;
     })

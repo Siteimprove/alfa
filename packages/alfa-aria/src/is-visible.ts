@@ -36,51 +36,53 @@ export function isVisible(
     .get(device, () => {
       const visibilities = Cache.of<Element, boolean>();
 
-      traverseNode(
-        context,
-        context,
-        {
-          enter(node, parentNode) {
-            if (isElement(node)) {
-              visibilities.set(node, true);
+      [
+        ...traverseNode(
+          context,
+          context,
+          {
+            *enter(node, parentNode) {
+              if (isElement(node)) {
+                visibilities.set(node, true);
 
-              if (!isRendered(node, context, device)) {
-                visibilities.set(node, false);
-              } else {
-                const hidden = getAttribute(node, "aria-hidden");
-
-                if (hidden === "true") {
+                if (!isRendered(node, context, device)) {
                   visibilities.set(node, false);
-                } else if (parentNode !== null && isElement(parentNode)) {
-                  const isParentVisible = visibilities.get(parentNode);
+                } else {
+                  const hidden = getAttribute(node, "aria-hidden");
 
-                  if (isParentVisible === false) {
+                  if (hidden === "true") {
+                    visibilities.set(node, false);
+                  } else if (parentNode !== null && isElement(parentNode)) {
+                    const isParentVisible = visibilities.get(parentNode);
+
+                    if (isParentVisible === false) {
+                      visibilities.set(node, false);
+                    }
+                  }
+                }
+              }
+            },
+            *exit(node) {
+              if (isElement(node)) {
+                const visibility = getPropertyValue(
+                  getComputedStyle(node, context, device),
+                  "visibility"
+                );
+
+                if (visibility !== null) {
+                  if (
+                    visibility.value === "hidden" ||
+                    visibility.value === "collapse"
+                  ) {
                     visibilities.set(node, false);
                   }
                 }
               }
             }
           },
-          exit(node) {
-            if (isElement(node)) {
-              const visibility = getPropertyValue(
-                getComputedStyle(node, context, device),
-                "visibility"
-              );
-
-              if (visibility !== null) {
-                if (
-                  visibility.value === "hidden" ||
-                  visibility.value === "collapse"
-                ) {
-                  visibilities.set(node, false);
-                }
-              }
-            }
-          }
-        },
-        { flattened: true, nested: true }
-      );
+          { flattened: true, nested: true }
+        )
+      ];
 
       return visibilities;
     })
