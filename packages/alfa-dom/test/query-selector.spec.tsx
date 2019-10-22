@@ -13,7 +13,7 @@ test("Finds all elements matching a selector", t => {
     </div>
   );
 
-  t.deepEqual(querySelectorAll(context, context, ".foo"), [foo1, foo2]);
+  t.deepEqual([...querySelectorAll(context, context, ".foo")], [foo1, foo2]);
 });
 
 test("Finds the first element matching a selector", t => {
