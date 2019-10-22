@@ -20,6 +20,7 @@
     "src/string/trim-right.ts",
     "src/string/trim.ts",
     "src/type/immutable.ts",
+    "src/type/keys.ts",
     "src/type/mutable.ts",
     "src/type/predicate.ts",
     "src/type/primitive.ts",
