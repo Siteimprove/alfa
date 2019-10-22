@@ -60,7 +60,6 @@
     "prefer-switch": true,
     "prefer-template": true,
     "prefer-while": true,
-    "promise-function-async": true,
     "restrict-plus-operands": true,
     "strict-boolean-expressions": true,
     "switch-final-break": true,

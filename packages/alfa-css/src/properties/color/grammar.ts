@@ -1,4 +1,3 @@
-import { isFeatureSupported } from "@siteimprove/alfa-compatibility";
 import * as Lang from "@siteimprove/alfa-lang";
 import { getNumericValue, Grammar, skip } from "@siteimprove/alfa-lang";
 import { Token, Tokens, TokenType } from "../../alphabet";
@@ -32,10 +31,6 @@ function rgbColor(args: FunctionArguments): Color.RGB | null {
 }
 
 function rgbaColor(args: FunctionArguments): Color.RGB | null {
-  if (!isFeatureSupported("css.properties.color.alpha")) {
-    return null;
-  }
-
   const color = rgbColor(args);
 
   if (color === null) {
@@ -54,10 +49,6 @@ function rgbaColor(args: FunctionArguments): Color.RGB | null {
 }
 
 function hslColor(args: FunctionArguments): Color.HSL | null {
-  if (!isFeatureSupported("css.properties.color.hsl")) {
-    return null;
-  }
-
   const hue = args.number() || args.angle();
 
   if (hue === false) {
@@ -122,13 +113,6 @@ function hexColor(token: Tokens.Hash): Color | null {
       break;
     default:
       return null;
-  }
-
-  if (
-    alpha &&
-    !isFeatureSupported("css.properties.color.alpha_hexadecimal_notation")
-  ) {
-    return null;
   }
 
   let hex = 0;

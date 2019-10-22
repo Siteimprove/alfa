@@ -1,4 +1,3 @@
-import { withBrowsers } from "@siteimprove/alfa-compatibility";
 import { lex, parse } from "@siteimprove/alfa-lang";
 import { Assertions, test } from "@siteimprove/alfa-test";
 import { Alphabet } from "../../../src/alphabet";
@@ -28,31 +27,19 @@ test("Can parse a RGB color", t => {
 });
 
 test("Can parse a RGBA color", t => {
-  withBrowsers([["chrome", ">", "61"], ["firefox", ">", "48"]], () => {
-    color(
-      t,
-      "rgba(0, 50%, 100, 0.5)",
-      func("rgb", [number(0), percentage(0.5), number(100), number(0.5)])
-    );
-  });
-
-  withBrowsers([["firefox", "52"], ["ie", "8"]], () => {
-    color(t, "rgba(0, 50%, 100, 0.5)", null);
-  });
+  color(
+    t,
+    "rgba(0, 50%, 100, 0.5)",
+    func("rgb", [number(0), percentage(0.5), number(100), number(0.5)])
+  );
 });
 
 test("Can parse an HSL color", t => {
-  withBrowsers([["chrome", ">", "61"], ["firefox", ">", "48"]], () => {
-    color(
-      t,
-      "hsl(225, 55%, 26%)",
-      func("hsl", [number(225), percentage(0.55), percentage(0.26)])
-    );
-  });
-
-  withBrowsers([["firefox", "52"], ["ie", "8"]], () => {
-    color(t, "hsl(225, 55%, 26%)", null);
-  });
+  color(
+    t,
+    "hsl(225, 55%, 26%)",
+    func("hsl", [number(225), percentage(0.55), percentage(0.26)])
+  );
 });
 
 test("Can parse a HSLA color", t => {
@@ -91,24 +78,12 @@ test("Can parse a short hex color", t => {
   color(t, "#abc", number(0xaabbccff));
 });
 
-test("Can parse a medium hex color in browsers that support it", t => {
-  withBrowsers([["chrome", ">=", "63"], ["firefox", ">=", "49"]], () => {
-    color(t, "#abcd", number(0xaabbccdd));
-  });
-
-  withBrowsers([["firefox", "<=", "48"], ["ie", "<=", "6"]], () => {
-    color(t, "#abcd", null);
-  });
+test("Can parse a medium hex color", t => {
+  color(t, "#abcd", number(0xaabbccdd));
 });
 
 test("Can parse a long hex color", t => {
-  withBrowsers([["chrome", ">=", "63"], ["firefox", ">=", "49"]], () => {
-    color(t, "#abcdefcc", number(0xabcdefcc));
-  });
-
-  withBrowsers([["firefox", "<=", "48"], ["ie", "<=", "6"]], () => {
-    color(t, "#abcdefcc", null);
-  });
+  color(t, "#abcdefcc", number(0xabcdefcc));
 });
 
 test("Can parse the transparent color", t => {

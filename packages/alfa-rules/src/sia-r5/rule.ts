@@ -1,16 +1,17 @@
 import { Atomic } from "@siteimprove/alfa-act";
 import { List, Seq } from "@siteimprove/alfa-collection";
+import { Predicate } from "@siteimprove/alfa-compatibility";
 import {
   Attribute,
   Document,
   Element,
   getAttributeNode,
-  isElement,
+  hasAttribute,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
 import { getLanguage } from "@siteimprove/alfa-iana";
-import { hasLanguageAttribute } from "../helpers/has-language-attribute";
 import { isDocumentElement } from "../helpers/is-document-element";
+import { isElement } from "../helpers/predicates";
 
 export const SIA_R5: Atomic.Rule<Document, Attribute> = {
   id: "sanshikan:rules/sia-r5.html",
@@ -24,10 +25,11 @@ export const SIA_R5: Atomic.Rule<Document, Attribute> = {
           querySelectorAll<Element>(
             document,
             document,
-            node =>
-              isElement(node) &&
-              isDocumentElement(node, document) &&
-              hasLanguageAttribute(node)
+            Predicate.from(
+              isElement
+                .and(element => isDocumentElement(element, document))
+                .and(element => hasAttribute(element, "lang"))
+            )
           )
         )
           .reduce<List<Attribute>>((attributes, element) => {
@@ -37,12 +39,6 @@ export const SIA_R5: Atomic.Rule<Document, Attribute> = {
 
             if (lang !== null && lang.value.trim() !== "") {
               languages.push(lang);
-            }
-
-            const xmlLang = getAttributeNode(element, "xml:lang");
-
-            if (xmlLang !== null && xmlLang.value.trim() !== "") {
-              languages.push(xmlLang);
             }
 
             return attributes.concat(languages);

@@ -21,6 +21,7 @@ export * from "./string/trim-right";
 export * from "./string/trim";
 
 export * from "./type/immutable";
+export * from "./type/keys";
 export * from "./type/mutable";
 export * from "./type/predicate";
 export * from "./type/primitive";
