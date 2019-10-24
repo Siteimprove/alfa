@@ -35,6 +35,7 @@
     { "path": "alfa-monad" },
     { "path": "alfa-option" },
     { "path": "alfa-pointer" },
+    { "path": "alfa-predicate" },
     { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },
     { "path": "alfa-reducer" },
