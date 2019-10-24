@@ -18,6 +18,7 @@
     { "path": "alfa-device" },
     { "path": "alfa-dom" },
     { "path": "alfa-enzyme" },
+    { "path": "alfa-functor" },
     { "path": "alfa-highlight" },
     { "path": "alfa-html" },
     { "path": "alfa-http" },
