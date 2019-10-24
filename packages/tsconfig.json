@@ -32,6 +32,7 @@
     { "path": "alfa-lang" },
     { "path": "alfa-mapper" },
     { "path": "alfa-math" },
+    { "path": "alfa-monad" },
     { "path": "alfa-pointer" },
     { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },
