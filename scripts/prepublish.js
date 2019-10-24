@@ -18,7 +18,6 @@ const sync = [
   "homepage",
   "license",
   "description",
-  "contributors",
   "keywords",
   "repository",
   "bugs"
