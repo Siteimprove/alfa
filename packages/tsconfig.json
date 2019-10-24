@@ -19,6 +19,7 @@
     { "path": "alfa-dom" },
     { "path": "alfa-enzyme" },
     { "path": "alfa-functor" },
+    { "path": "alfa-generator" },
     { "path": "alfa-highlight" },
     { "path": "alfa-html" },
     { "path": "alfa-http" },
