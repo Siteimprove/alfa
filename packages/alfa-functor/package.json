@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "@siteimprove/alfa-functor",
+  "author": "Siteimprove A/S",
+  "homepage": "https://siteimprove.com",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
+  "keywords": [
+    "a11y",
+    "accessibility",
+    "aria",
+    "typescript",
+    "wcag"
+  ],
+  "repository": "https://github.com/siteimprove/alfa",
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-mapper": "^0.0.0"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "^0.0.0"
+  }
+}

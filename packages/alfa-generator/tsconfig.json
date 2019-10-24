@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/generator.ts", "src/index.ts", "test/generator.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

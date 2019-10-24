@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/iterable.ts", "test/iterable.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

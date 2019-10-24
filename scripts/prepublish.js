@@ -41,9 +41,6 @@ for (const directory of packages) {
 }
 
 /**
- * Update tsconfig.json in directory with
- * - Add all .ts?(x) files to files
- * - Add @siteimprove/ dependencies from package.json as relative path references
  * @param {string} directory
  * @param {Manifest} pkg
  * @param {{ normal?: boolean, dev?: boolean, peer?: boolean }} [options]
