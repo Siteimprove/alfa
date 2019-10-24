@@ -36,6 +36,7 @@
     { "path": "alfa-pointer" },
     { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },
+    { "path": "alfa-reducer" },
     { "path": "alfa-rules" },
     { "path": "alfa-scrape" },
     { "path": "alfa-test" },
