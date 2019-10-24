@@ -24,8 +24,6 @@ export interface Result<T, E> extends Monad<T>, Functor<T> {
 }
 
 export namespace Result {
-  export type Maybe<T, E> = T | E | Result<T, E>;
-
   export type Flattened<T, E, U, F> = T extends Result<U, F>
     ? Result<U, F>
     : Result<T, E>;
