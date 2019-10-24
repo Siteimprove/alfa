@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/thunk.ts", "test/thunk.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

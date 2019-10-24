@@ -40,6 +40,7 @@
     { "path": "alfa-rules" },
     { "path": "alfa-scrape" },
     { "path": "alfa-test" },
+    { "path": "alfa-thunk" },
     { "path": "alfa-unexpected" },
     { "path": "alfa-unicode" },
     { "path": "alfa-util" },
