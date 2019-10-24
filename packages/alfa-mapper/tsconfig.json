@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/mapper.ts", "test/mapper.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
