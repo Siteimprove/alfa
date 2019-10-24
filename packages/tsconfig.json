@@ -24,6 +24,7 @@
     { "path": "alfa-html" },
     { "path": "alfa-http" },
     { "path": "alfa-iana" },
+    { "path": "alfa-iterable" },
     { "path": "alfa-jasmine" },
     { "path": "alfa-jest" },
     { "path": "alfa-jquery" },
