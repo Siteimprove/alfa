@@ -223,3 +223,51 @@ test("flatten() assigns unused branches to branchless values", t => {
     ]
   });
 });
+
+test("traverse() traverses a list of values and lifts them to a branched value of lists", t => {
+  const ns = [1, 2, 3];
+
+  t.deepEqual(
+    Branched.traverse(ns, n => Branched.of(n, "foo").branch(n * 2, "bar"))
+      .map(values => [...values])
+      .toJSON(),
+    {
+      values: [
+        {
+          value: [1, 2, 3],
+          branches: ["foo"]
+        },
+        {
+          value: [2, 4, 6],
+          branches: ["bar"]
+        }
+      ]
+    }
+  );
+});
+
+test("sequence() inverts a list of branched values to a branched value of lists", t => {
+  const ns = [
+    Branched.of(1, "foo").branch(2, "bar"),
+    Branched.of(3, "foo").branch(4, "bar"),
+    Branched.of(5, "foo", "bar")
+  ];
+
+  t.deepEqual(
+    Branched.sequence(ns)
+      .map(values => [...values])
+      .toJSON(),
+    {
+      values: [
+        {
+          value: [1, 3, 5],
+          branches: ["foo"]
+        },
+        {
+          value: [2, 4, 5],
+          branches: ["bar"]
+        }
+      ]
+    }
+  );
+});

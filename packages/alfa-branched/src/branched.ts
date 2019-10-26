@@ -1,4 +1,4 @@
-import { is, List, Set } from "@siteimprove/alfa-collection";
+import { is, List, Seq, Set } from "@siteimprove/alfa-collection";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
@@ -101,6 +101,25 @@ export namespace Branched {
   export type Flattened<T, U, B> = T extends Branched<U, B>
     ? Branched<U, B>
     : Branched<T, B>;
+
+  export function traverse<T, U, B>(
+    values: Iterable<T>,
+    mapper: Mapper<T, Branched<U, B>>
+  ): Branched<Iterable<U>, B> {
+    return Seq(values).reduce(
+      (values, value) =>
+        values.flatMap(values =>
+          mapper(value).map(value => values.push(value))
+        ),
+      Branched.of<List<U>, B>(List())
+    );
+  }
+
+  export function sequence<T, B>(
+    values: Iterable<Branched<T, B>>
+  ): Branched<Iterable<T>, B> {
+    return traverse(values, value => value);
+  }
 
   export function isBranched<T, B>(value: unknown): value is Branched<T, B> {
     return value instanceof Branched;

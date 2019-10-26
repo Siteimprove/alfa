@@ -47,7 +47,8 @@ export const SIA_R3: Atomic.Rule<Document, Element> = {
 };
 
 function hasId(element: Element, context: Node): boolean {
-  return getId(element) !== null;
+  const id = getId(element);
+  return id !== null && id !== "";
 }
 
 function hasUniqueId(element: Element, context: Node): boolean {
