@@ -12,6 +12,9 @@ export namespace Browser {
     N extends Name = Name,
     V extends Version<N> = Version<N>
   > {
+    /**
+     * @internal
+     */
     public static of<N extends Name, V extends Version<N>>(
       browser: N,
       version: V,
@@ -22,12 +25,20 @@ export namespace Browser {
 
     public readonly browser: N;
     public readonly version: V;
+
+    /**
+     * @internal
+     */
     public readonly date: number;
 
     private constructor(browser: N, version: V, date: number) {
       this.browser = browser;
       this.version = version;
       this.date = date;
+    }
+
+    public toJSON() {
+      return { browser: this.browser, version: this.version };
     }
 
     public toString(): string {
@@ -117,19 +128,19 @@ export namespace Browser {
     export function isEvery<N extends Name>(
       query: Query<N>
     ): query is Every<N> {
-      return typeof query === "string";
+      return query.length === 1;
     }
 
     export function isSingle<N extends Name>(
       query: Query<N>
     ): query is Single<N> {
-      return !isEvery(query) && query.length === 2;
+      return query.length === 2;
     }
 
     export function isRange<N extends Name>(
       query: Query<N>
     ): query is Range<N> {
-      return !isEvery(query) && query.length === 3;
+      return query.length === 3;
     }
   }
 
