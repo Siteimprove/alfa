@@ -17,12 +17,6 @@ export const None: None = new (class None {
     return this;
   }
 
-  public flatten(): Option.Flattened<never, never>;
-
-  public flatten(): this {
-    return this;
-  }
-
   public flatMap(): this {
     return this;
   }
@@ -53,6 +47,10 @@ export const None: None = new (class None {
 
   public getOrElse<U>(value: Thunk<U>): U {
     return value();
+  }
+
+  public equals(value: unknown): value is None {
+    return value === this;
   }
 
   public toJSON(): {} {

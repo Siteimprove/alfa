@@ -1,4 +1,5 @@
-import { is, List, Seq, Set } from "@siteimprove/alfa-collection";
+import { List, Seq, Set } from "@siteimprove/alfa-collection";
+import { Equality } from "@siteimprove/alfa-compare";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
@@ -7,7 +8,9 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Branched<T, B> implements Monad<T>, Functor<T> {
   public static of<T, B>(value: T, ...branches: Array<B>): Branched<T, B> {
-    return new Branched<T, B>(List()).branch(value, ...branches);
+    return new Branched<T, B>(
+      List.of(Value.of(value, branches.length === 0 ? None : Some.of(branches)))
+    );
   }
 
   private readonly values: List<Value<T, B>>;
@@ -37,38 +40,27 @@ export class Branched<T, B> implements Monad<T>, Functor<T> {
     );
   }
 
-  public flatten<U>(): Branched.Flattened<T, U, B>;
-
-  public flatten(): Branched<T, B> {
-    return new Branched(
-      this.values.reduce((values, value) => {
-        if (Branched.isBranched<T, B>(value.value)) {
-          const scope = value.branches;
-
-          const that: Branched<T, B> = value.value;
-
-          return that.values.reduce((values, value) => {
-            let branches: Option<Set<B>>;
-
-            if (scope.isNone() && value.branches.isSome()) {
-              branches = Some.of(unused(value.branches.get(), this.values));
-            } else {
-              branches = narrow(value.branches, scope);
-            }
-
-            return merge(values, value.value, branches);
-          }, values);
-        }
-
-        return values.push(value);
-      }, List<Value<T, B>>())
-    );
-  }
-
   public flatMap<U>(
     mapper: Mapper<T, Branched<U, B>, [Option<Iterable<B>>]>
   ): Branched<U, B> {
-    return this.map(mapper).flatten();
+    return new Branched(
+      this.values.reduce((values, { value, branches }) => {
+        const scope = branches;
+
+        return mapper(value, branches).values.reduce(
+          (values, { value, branches }) => {
+            if (scope.isNone() && branches.isSome()) {
+              branches = unused(branches, this.values);
+            } else {
+              branches = narrow(branches, scope);
+            }
+
+            return merge(values, value, branches);
+          },
+          values
+        );
+      }, List<Value<U, B>>())
+    );
   }
 
   public reduce<U>(
@@ -84,12 +76,10 @@ export class Branched<T, B> implements Monad<T>, Functor<T> {
   public toJSON() {
     return {
       values: this.values
-        .map(value => {
-          const branches = value.branches.map(branches => branches.toJSON());
-
+        .map(({ value, branches }) => {
           return {
-            value: value.value,
-            branches: branches.isSome() ? branches.get() : null
+            value,
+            branches: branches.map(branches => branches.toJSON()).getOr(null)
           };
         })
         .toJSON()
@@ -98,10 +88,6 @@ export class Branched<T, B> implements Monad<T>, Functor<T> {
 }
 
 export namespace Branched {
-  export type Flattened<T, U, B> = T extends Branched<U, B>
-    ? Branched<U, B>
-    : Branched<T, B>;
-
   export function traverse<T, U, B>(
     values: Iterable<T>,
     mapper: Mapper<T, Branched<U, B>>
@@ -135,7 +121,6 @@ class Value<T, B> {
   }
 
   public readonly value: T;
-
   public readonly branches: Option<Set<B>>;
 
   private constructor(value: T, branches: Option<Set<B>>) {
@@ -150,20 +135,14 @@ function merge<T, B>(
   branches: Option<Set<B>>
 ): List<Value<T, B>> {
   branches = Option.from(
-    values.find(
-      existing =>
-        existing.branches.isSome() === branches.isSome() &&
-        is(existing.value, value)
-    )
+    values.find(existing => Equality.equals(existing.value, value))
   )
-    .flatMap(existing =>
-      branches
-        .flatMap(left =>
-          existing.branches.map(right => right.concat(left)).or(branches)
-        )
-        .or(existing.branches)
+    .map(existing =>
+      existing.branches.flatMap(left =>
+        branches.map(right => left.concat(right))
+      )
     )
-    .or(branches);
+    .getOr(branches);
 
   return deduplicate(values, value, branches).push(Value.of(value, branches));
 }
@@ -174,10 +153,7 @@ function deduplicate<T, B>(
   branches: Option<Set<B>>
 ): List<Value<T, B>> {
   return values.reduce((values, existing) => {
-    if (
-      existing.branches.isSome() === branches.isSome() &&
-      is(existing.value, value)
-    ) {
+    if (Equality.equals(existing.value, value)) {
       return values;
     }
 
@@ -209,12 +185,17 @@ function narrow<T, B>(
   );
 }
 
-function unused<T, B>(branches: Set<B>, values: List<Value<T, B>>): Set<B> {
+function unused<T, B>(
+  branches: Option<Set<B>>,
+  values: List<Value<T, B>>
+): Option<Set<B>> {
   return values.reduce(
     (branches, value) =>
       value.branches
-        .map(existing => branches.subtract(existing))
-        .getOr(branches),
+        .flatMap(existing =>
+          branches.map(branches => branches.subtract(existing))
+        )
+        .or(branches),
     branches
   );
 }
