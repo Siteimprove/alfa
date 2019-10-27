@@ -1,3 +1,4 @@
+import { Equality } from "@siteimprove/alfa-compare";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { None } from "./none";
@@ -24,12 +25,6 @@ export class Some<T> implements Option<T> {
 
   public map<U>(mapper: Mapper<T, U>): Option<U> {
     return Some.of(mapper(this.value));
-  }
-
-  public flatten<U>(): Option.Flattened<T, U>;
-
-  public flatten<U>(): this | Option<U> {
-    return Option.isOption<U>(this.value) ? this.value : this;
   }
 
   public flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U> {
@@ -66,6 +61,10 @@ export class Some<T> implements Option<T> {
 
   public getOrElse(): T {
     return this.value;
+  }
+
+  public equals(value: unknown): value is Some<T> {
+    return value instanceof Some && Equality.equals(value.value, this.value);
   }
 
   public toJSON(): { value: T } {

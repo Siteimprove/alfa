@@ -1,3 +1,4 @@
+import { Equality } from "@siteimprove/alfa-compare";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
@@ -6,12 +7,11 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { Err } from "./err";
 import { Ok } from "./ok";
 
-export interface Result<T, E> extends Monad<T>, Functor<T> {
+export interface Result<T, E> extends Monad<T>, Functor<T>, Equality {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
   mapErr<F>(mapper: Mapper<E, F>): Result<T, F>;
-  flatten<U, F>(): Result.Flattened<T, E, U, F>;
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   and<U>(result: Result<U, E>): Result<U, E>;
@@ -20,16 +20,11 @@ export interface Result<T, E> extends Monad<T>, Functor<T> {
   orElse<F>(result: Thunk<Result<T, F>>): Result<T, F>;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  equals(value: unknown): value is Result<T, E>;
   toJSON(): { value: T } | { error: E };
 }
 
 export namespace Result {
-  export type Maybe<T, E> = T | E | Result<T, E>;
-
-  export type Flattened<T, E, U, F> = T extends Result<U, F>
-    ? Result<U, F>
-    : Result<T, E>;
-
   export function from<T>(
     thunk: Thunk<Promise<T>>
   ): Promise<Result<T, unknown>>;

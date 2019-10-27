@@ -1,3 +1,4 @@
+import { Equality } from "@siteimprove/alfa-compare";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Ok } from "./ok";
@@ -28,12 +29,6 @@ export class Err<E> implements Result<never, E> {
 
   public mapErr<F>(mapper: Mapper<E, F>): Err<F> {
     return new Err(mapper(this.error));
-  }
-
-  public flatten<U, F>(): Result.Flattened<never, E, U, F>;
-
-  public flatten(): this {
-    return this;
   }
 
   public flatMap(): this {
@@ -70,6 +65,10 @@ export class Err<E> implements Result<never, E> {
 
   public getOrElse<U>(value: Thunk<U>): U {
     return value();
+  }
+
+  public equals(value: unknown): value is Err<E> {
+    return value instanceof Err && Equality.equals(value.error, this.error);
   }
 
   public toJSON(): { error: E } {
