@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/foldable.ts", "src/index.ts", "test/foldable.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

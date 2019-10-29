@@ -1,4 +1,5 @@
 import { Equality } from "@siteimprove/alfa-equality";
+import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
@@ -7,7 +8,11 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { Err } from "./err";
 import { Ok } from "./ok";
 
-export interface Result<T, E> extends Monad<T>, Functor<T>, Equality {
+export interface Result<T, E>
+  extends Monad<T>,
+    Functor<T>,
+    Foldable<T>,
+    Equality {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;

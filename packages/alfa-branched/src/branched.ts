@@ -1,4 +1,5 @@
 import { Equality } from "@siteimprove/alfa-equality";
+import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -7,7 +8,8 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-export class Branched<T, B> implements Monad<T>, Functor<T>, Equality {
+export class Branched<T, B>
+  implements Monad<T>, Functor<T>, Foldable<T>, Equality {
   public static of<T, B>(value: T, ...branches: Array<B>): Branched<T, B> {
     return new Branched<T, B>(
       List.of(

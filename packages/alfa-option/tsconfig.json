@@ -12,6 +12,9 @@
       "path": "../alfa-equality"
     },
     {
+      "path": "../alfa-foldable"
+    },
+    {
       "path": "../alfa-functor"
     },
     {

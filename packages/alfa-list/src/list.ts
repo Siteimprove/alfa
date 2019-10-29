@@ -1,4 +1,5 @@
 import { Equality } from "@siteimprove/alfa-equality";
+import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -8,7 +9,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Leaf, Node } from "./node";
 
-export class List<T> implements Monad<T>, Functor<T>, Iterable<T>, Equality {
+export class List<T>
+  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equality {
   public static of<T>(...values: Array<T>): List<T> {
     return values.reduce((list, value) => list.push(value), List.empty<T>());
   }
