@@ -3,6 +3,21 @@
   "files": ["src/index.ts", "src/iterable.ts", "test/iterable.spec.ts"],
   "references": [
     {
+      "path": "../alfa-compare"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-reducer"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
