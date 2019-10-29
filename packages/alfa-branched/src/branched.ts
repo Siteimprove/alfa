@@ -1,15 +1,23 @@
-import { List, Seq, Set } from "@siteimprove/alfa-collection";
-import { Equality } from "@siteimprove/alfa-compare";
+import { Equality } from "@siteimprove/alfa-equality";
+import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-export class Branched<T, B> implements Monad<T>, Functor<T> {
+export class Branched<T, B>
+  implements Monad<T>, Functor<T>, Foldable<T>, Equality {
   public static of<T, B>(value: T, ...branches: Array<B>): Branched<T, B> {
     return new Branched<T, B>(
-      List.of(Value.of(value, branches.length === 0 ? None : Some.of(branches)))
+      List.of(
+        Value.of(
+          value,
+          branches.length === 0 ? None : Some.of(List.from(branches))
+        )
+      )
     );
   }
 
@@ -24,7 +32,7 @@ export class Branched<T, B> implements Monad<T>, Functor<T> {
       merge(
         this.values,
         value,
-        branches.length === 0 ? None : Some.of(Set(branches))
+        branches.length === 0 ? None : Some.of(List.from(branches))
       )
     );
   }
@@ -32,10 +40,7 @@ export class Branched<T, B> implements Monad<T>, Functor<T> {
   public map<U>(mapper: Mapper<T, U, [Option<Iterable<B>>]>): Branched<U, B> {
     return new Branched(
       this.values.map(({ value, branches }) => {
-        return {
-          value: mapper(value, branches),
-          branches
-        };
+        return Value.of(mapper(value, branches), branches);
       })
     );
   }
@@ -59,7 +64,7 @@ export class Branched<T, B> implements Monad<T>, Functor<T> {
           },
           values
         );
-      }, List<Value<U, B>>())
+      }, List.empty())
     );
   }
 
@@ -70,6 +75,12 @@ export class Branched<T, B> implements Monad<T>, Functor<T> {
     return this.values.reduce(
       (accumulator, value) => reducer(accumulator, value.value, value.branches),
       accumulator
+    );
+  }
+
+  public equals(value: unknown): value is Branched<T, B> {
+    return (
+      value instanceof Branched && Equality.equals(value.values, this.values)
     );
   }
 
@@ -92,12 +103,13 @@ export namespace Branched {
     values: Iterable<T>,
     mapper: Mapper<T, Branched<U, B>>
   ): Branched<Iterable<U>, B> {
-    return Seq(values).reduce(
+    return Iterable.reduce(
+      values,
       (values, value) =>
         values.flatMap(values =>
           mapper(value).map(value => values.push(value))
         ),
-      Branched.of<List<U>, B>(List())
+      Branched.of(List.empty())
     );
   }
 
@@ -112,31 +124,38 @@ export namespace Branched {
   }
 }
 
-class Value<T, B> {
+class Value<T, B> implements Equality {
   public static of<T, B>(
     value: T,
-    branches: Option<Iterable<B>> = None
+    branches: Option<List<B>> = None
   ): Value<T, B> {
-    return new Value(value, branches.map<Set<B>>(Set));
+    return new Value(value, branches);
   }
 
   public readonly value: T;
-  public readonly branches: Option<Set<B>>;
+  public readonly branches: Option<List<B>>;
 
-  private constructor(value: T, branches: Option<Set<B>>) {
+  private constructor(value: T, branches: Option<List<B>>) {
     this.value = value;
     this.branches = branches;
+  }
+
+  public equals(value: unknown): value is Value<T, B> {
+    return (
+      value instanceof Value &&
+      Equality.equals(value.value, this.value) &&
+      Equality.equals(value.branches, this.branches)
+    );
   }
 }
 
 function merge<T, B>(
   values: List<Value<T, B>>,
   value: T,
-  branches: Option<Set<B>>
+  branches: Option<List<B>>
 ): List<Value<T, B>> {
-  branches = Option.from(
-    values.find(existing => Equality.equals(existing.value, value))
-  )
+  branches = values
+    .find(existing => Equality.equals(existing.value, value))
     .map(existing =>
       existing.branches.flatMap(left =>
         branches.map(right => left.concat(right))
@@ -150,7 +169,7 @@ function merge<T, B>(
 function deduplicate<T, B>(
   values: List<Value<T, B>>,
   value: T,
-  branches: Option<Set<B>>
+  branches: Option<List<B>>
 ): List<Value<T, B>> {
   return values.reduce((values, existing) => {
     if (Equality.equals(existing.value, value)) {
@@ -167,28 +186,28 @@ function deduplicate<T, B>(
         existingBranches
       );
 
-      if (deduplicated.count() === 0) {
+      if (deduplicated.size === 0) {
         return values;
       }
 
       return values.push(Value.of(existing.value, Some.of(deduplicated)));
     }, values);
-  }, List<Value<T, B>>());
+  }, List.empty());
 }
 
 function narrow<T, B>(
-  branches: Option<Set<B>>,
-  scope: Option<Set<B>>
-): Option<Set<B>> {
+  branches: Option<List<B>>,
+  scope: Option<List<B>>
+): Option<List<B>> {
   return scope.map(scope =>
     branches.reduce((scope, branches) => scope.intersect(branches), scope)
   );
 }
 
 function unused<T, B>(
-  branches: Option<Set<B>>,
+  branches: Option<List<B>>,
   values: List<Value<T, B>>
-): Option<Set<B>> {
+): Option<List<B>> {
   return values.reduce(
     (branches, value) =>
       value.branches

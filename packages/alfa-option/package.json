@@ -22,7 +22,8 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-compare": "^0.0.0",
+    "@siteimprove/alfa-equality": "^0.0.0",
+    "@siteimprove/alfa-foldable": "^0.0.0",
     "@siteimprove/alfa-functor": "^0.0.0",
     "@siteimprove/alfa-mapper": "^0.0.0",
     "@siteimprove/alfa-monad": "^0.0.0",

@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-compare";
+import { Equality } from "@siteimprove/alfa-equality";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Ok } from "./ok";

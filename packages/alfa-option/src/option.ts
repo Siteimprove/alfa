@@ -1,4 +1,5 @@
-import { Equality } from "@siteimprove/alfa-compare";
+import { Equality } from "@siteimprove/alfa-equality";
+import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
@@ -7,7 +8,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { None } from "./none";
 import { Some } from "./some";
 
-export interface Option<T> extends Monad<T>, Functor<T>, Equality {
+export interface Option<T> extends Monad<T>, Functor<T>, Foldable<T>, Equality {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;

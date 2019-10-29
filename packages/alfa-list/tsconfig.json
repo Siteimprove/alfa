@@ -1,12 +1,24 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/iterable.ts", "test/iterable.spec.ts"],
+  "files": ["src/index.ts", "src/list.ts", "src/node.ts", "test/list.spec.ts"],
   "references": [
     {
       "path": "../alfa-equality"
     },
     {
+      "path": "../alfa-foldable"
+    },
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
     },
     {
       "path": "../alfa-option"

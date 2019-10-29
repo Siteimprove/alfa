@@ -1,10 +1,7 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/generator.ts", "src/index.ts", "test/generator.spec.ts"],
+  "files": ["src/foldable.ts", "src/index.ts", "test/foldable.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-mapper"
-    },
     {
       "path": "../alfa-reducer"
     },
