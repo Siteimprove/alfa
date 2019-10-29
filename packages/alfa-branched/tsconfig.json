@@ -3,10 +3,16 @@
   "files": ["src/branched.ts", "src/index.ts", "test/branched.spec.ts"],
   "references": [
     {
-      "path": "../alfa-collection"
+      "path": "../alfa-equality"
     },
     {
       "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-list"
     },
     {
       "path": "../alfa-mapper"

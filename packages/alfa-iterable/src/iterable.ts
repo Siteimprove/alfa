@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-compare";
+import { Equality } from "@siteimprove/alfa-equality";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";

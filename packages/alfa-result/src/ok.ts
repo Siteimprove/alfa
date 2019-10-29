@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-compare";
+import { Equality } from "@siteimprove/alfa-equality";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Err } from "./err";

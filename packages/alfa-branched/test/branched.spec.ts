@@ -193,6 +193,20 @@ test("branch() removes duplicated branches", t => {
   });
 });
 
+test("equals() returns true if two branched values are equal", t => {
+  const n = Branched.of(1).branch(2, "foo");
+  const m = Branched.of(1).branch(2, "foo");
+
+  t.equal(n.equals(m), true);
+});
+
+test("equals() returns false if two branched values are not equal", t => {
+  const n = Branched.of(1).branch(2, "foo");
+  const m = Branched.of(1).branch(3, "bar");
+
+  t.equal(n.equals(m), false);
+});
+
 test("traverse() traverses a list of values and lifts them to a branched value of lists", t => {
   const ns = [1, 2, 3];
 

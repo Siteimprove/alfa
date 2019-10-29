@@ -3,7 +3,7 @@
   "files": ["src/index.ts", "src/iterable.ts", "test/iterable.spec.ts"],
   "references": [
     {
-      "path": "../alfa-compare"
+      "path": "../alfa-equality"
     },
     {
       "path": "../alfa-mapper"

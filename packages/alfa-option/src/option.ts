@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-compare";
+import { Equality } from "@siteimprove/alfa-equality";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";

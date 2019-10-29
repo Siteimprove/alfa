@@ -9,7 +9,7 @@
   ],
   "references": [
     {
-      "path": "../alfa-compare"
+      "path": "../alfa-equality"
     },
     {
       "path": "../alfa-functor"
