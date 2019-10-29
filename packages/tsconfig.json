@@ -20,6 +20,7 @@
     { "path": "alfa-dom" },
     { "path": "alfa-enzyme" },
     { "path": "alfa-equality" },
+    { "path": "alfa-foldable" },
     { "path": "alfa-functor" },
     { "path": "alfa-generator" },
     { "path": "alfa-highlight" },
