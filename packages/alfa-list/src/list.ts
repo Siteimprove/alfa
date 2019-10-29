@@ -148,25 +148,23 @@ export class List<T>
 
   public push(value: T): List<T> {
     // If no tail exists yet, this means that the list is empty. We therefore
-    // create a new tail with the pushed value.
+    // create a new tail with the pushed value. As the current list is empty,
+    // it won't have a head. As such, there's no need to pass the head along.
     //
     // In:  List { head: null, tail: null }
     // Out: List { head: null, tail: [value] }
     //
-    // As the current list is empty, it won't have a head. As such, there's no
-    // need to pass the head along.
     if (this.tail === null) {
       return new List(null, [value], 0, 1);
     }
 
     // If the tail has capacity for another value, we concatenate the pushed
-    // value onto the current tail.
+    // value onto the current tail. The current list may or may not have a head,
+    // so we pass the head along as-is.
     //
     // In:  List { head, tail }
     // Out: List { head, tail: [...tail, value] }
     //
-    // The current list may or may not have a head, so we pass the head along
-    // as-is.
     if (this.tail.length < Node.Capacity) {
       return new List(
         this.head,
@@ -179,12 +177,12 @@ export class List<T>
     // If the tail does not have capacity for another value, we need to add it
     // to the head to make room for a new tail. If the current list does not
     // have a head, we use the current tail as the new head and create a new
-    // tail with the pushed value.
+    // tail with the pushed value. As a result of this, the depth of the list
+    // increases by 1.
     //
     // In:  List { head: null, tail }
     // Out: List { head: tail, tail: [value] }
     //
-    // As a result of this, the depth of the list increases by 1.
     if (this.head === null) {
       return new List(this.tail, [value], this.depth + 1, this.size + 1);
     }
@@ -205,45 +203,61 @@ export class List<T>
 
     let prev = head;
 
+    // We now add the tail to the head in order to make room for a new tail. To
+    // do this, we make our way to `offset` as this is where the tail will need
+    // to be inserted.
     for (let level = depth - 1; level > 0; level--) {
       const i = Node.key(offset, level);
       const next = prev[i] as Node<T> | undefined;
 
+      // Once we reach a missing node, either insert the tail of the current
+      // list if we're at the leaf or create a new branch node if we're not.
       if (next === undefined) {
-        // Once we reach a missing leaf node, insert the tail of the current
-        // list. If we're not yet at the leaf node, we instead create new branch
-        // nodes along the way to the leaf node.
         prev = prev[i] = level === 1 ? this.tail : [];
-      } else {
+      }
+
+      // Otherwise, copy the node and store the copy with the previous node.
+      // This creates a copy of the path to the tail we're inserting.
+      else {
         prev = prev[i] = next.slice(0);
       }
     }
 
     // With the current tail inserted into the new head, we can now make a new
-    // tail with the pushed value.
+    // tail with the pushed value. Do note that the spread syntax is only used
+    // for illustrative purposes here; the tail is actually inserted in the
+    // rightmost branch of the head.
     //
     // In:  List { head, tail }
     // Out: List { head: [...head, ...tail], tail: [value] }
     //
-    // Do note that that spread syntax is only used for illustrative purposes
-    // here; the tail is inserted in the rightmost branch of the head, not
-    // concatenated with the head.
     return new List(head, [value], depth, this.size + 1);
   }
 
   public pop(): List<T> {
+    // If the list has no tail then it is empty. We therefore return the list
+    // itself as the pop has no effect.
     if (this.tail === null) {
       return this;
     }
 
+    // If the list has a size of 1 then the result of the popping its last
+    // element will be an empty list.
+    //
     // In:  List { head: null, tail: [value] }
     // Out: List { head: null, tail: null }
+    //
     if (this.size === 1) {
       return List.empty();
     }
 
+    // If the tail has more than one element, it will have a non-zero length
+    // after popping the last element. We can therefore get away with removing
+    // the last element from the tail and reuse the head.
+    //
     // In:  List { head, tail: [...tail, value] }
     // Out: List { head, tail }
+    //
     if (this.tail.length > 1) {
       return new List(
         this.head,
@@ -258,14 +272,22 @@ export class List<T>
 
     let prev = head;
 
+    // We now remove the rightmost leaf of the head as this will be used as the
+    // new tail.
     for (let level = this.depth - 1; level > 0; level--) {
       const i = prev.length - 1;
       const next = prev[i] as Node<T>;
 
+      // Once we reach the rightmost leaf node, remove it as it will be used as
+      // the new tail.
       if (level === 1) {
         prev.pop();
         prev = next;
-      } else {
+      }
+
+      // Otherwise, copy the node and store the copy with the previous node.
+      // This creates a copy of the path to the rightmost leaf node.
+      else {
         prev = prev[i] = next.slice(0);
       }
     }
@@ -273,14 +295,21 @@ export class List<T>
     const offset = this.size - Node.Capacity - 1;
 
     // If the head has underflown, we unwrap its first child and use that as the
-    // new head which in turn decreases the depth of the list.
+    // new head which in turn decreases the depth of the list. If the head is a
+    // leaf node, we instead set the new head to null.
     if (offset === Node.underflow(depth)) {
-      head = Node.isBranch(head, depth) ? head[0] : null;
+      head = Node.isLeaf(head, depth) ? null : head[0];
       depth -= 1;
     }
 
+    // With the rightmost branch of the head removed, we can now use it as the
+    // new tail and discard the old. Do note that the spread syntax is only used
+    // for illustrative purposes here; the tail is actually removed from the
+    // rightmost branch of the head.
+    //
     // In:  List { head: [...head, tail]: tail: [value] }
     // Out: List { head, tail }
+    //
     return new List(head, prev as Leaf<T>, this.depth, this.size - 1);
   }
 
