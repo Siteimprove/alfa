@@ -102,7 +102,6 @@ export class List<T>
 
       for (let level = this.depth - 1; level > 0; level--) {
         const i = Node.key(index, level);
-
         const next = prev[i] as Node<T>;
 
         prev = next;
@@ -133,7 +132,6 @@ export class List<T>
 
       for (let level = this.depth - 1; level > 0; level--) {
         const i = Node.key(index, level);
-
         const next = prev[i] as Node<T>;
 
         prev = prev[i] = next.slice(0);
@@ -191,32 +189,34 @@ export class List<T>
       return new List(this.tail, [value], this.depth + 1, this.size + 1);
     }
 
-    const offset = this.size - this.tail.length;
+    const offset = this.size - Node.Capacity;
 
     let head = this.head;
     let depth = this.depth;
 
-    // If there is enough capacity within the head of the current list, copy the
-    // head and use it as the insertion point. The head will overflow when the
-    // offset is equal to a power of the branching factor of the list.
-    if (offset < Node.overflow(depth)) {
-      head = head.slice(0);
-    }
-
-    // If the head has overflown we need to split it and increase the depth of
-    // the list by 1.
-    else {
+    // If the head has overflown, we need to split it which in turn increases
+    // the depth of the list.
+    if (offset === Node.overflow(depth)) {
       head = [head];
       depth += 1;
+    } else {
+      head = head.slice(0);
     }
 
     let prev = head;
 
     for (let level = depth - 1; level > 0; level--) {
-      // Once we reach a missing leaf node, insert the tail of the current
-      // list. If we're not yet at the leaf node, we instead create new branch
-      // nodes along the way to the leaf node.
-      prev = prev[prev.length] = level === 1 ? this.tail : [];
+      const i = Node.key(offset, level);
+      const next = prev[i] as Node<T> | undefined;
+
+      if (next === undefined) {
+        // Once we reach a missing leaf node, insert the tail of the current
+        // list. If we're not yet at the leaf node, we instead create new branch
+        // nodes along the way to the leaf node.
+        prev = prev[i] = level === 1 ? this.tail : [];
+      } else {
+        prev = prev[i] = next.slice(0);
+      }
     }
 
     // With the current tail inserted into the new head, we can now make a new
@@ -229,6 +229,59 @@ export class List<T>
     // here; the tail is inserted in the rightmost branch of the head, not
     // concatenated with the head.
     return new List(head, [value], depth, this.size + 1);
+  }
+
+  public pop(): List<T> {
+    if (this.tail === null) {
+      return this;
+    }
+
+    // In:  List { head: null, tail: [value] }
+    // Out: List { head: null, tail: null }
+    if (this.size === 1) {
+      return List.empty();
+    }
+
+    // In:  List { head, tail: [...tail, value] }
+    // Out: List { head, tail }
+    if (this.tail.length > 1) {
+      return new List(
+        this.head,
+        this.tail.slice(0, this.tail.length - 1),
+        this.depth,
+        this.size - 1
+      );
+    }
+
+    let head: Node<T> | null = this.head!.slice(0);
+    let depth = this.depth;
+
+    let prev = head;
+
+    for (let level = this.depth - 1; level > 0; level--) {
+      const i = prev.length - 1;
+      const next = prev[i] as Node<T>;
+
+      if (level === 1) {
+        prev.pop();
+        prev = next;
+      } else {
+        prev = prev[i] = next.slice(0);
+      }
+    }
+
+    const offset = this.size - Node.Capacity - 1;
+
+    // If the head has underflown, we unwrap its first child and use that as the
+    // new head which in turn decreases the depth of the list.
+    if (offset === Node.underflow(depth)) {
+      head = Node.isBranch(head, depth) ? head[0] : null;
+      depth -= 1;
+    }
+
+    // In:  List { head: [...head, tail]: tail: [value] }
+    // Out: List { head, tail }
+    return new List(head, prev as Leaf<T>, this.depth, this.size - 1);
   }
 
   public equals(value: unknown): value is List<T> {
