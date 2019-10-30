@@ -152,20 +152,9 @@ let code = `
 // changes, do so in \`scripts/features.js\` and run \`yarn prepare\` to rebuild this
 // file.
 
-import { Feature } from "./types";
+export type Data = typeof Data;
 
-/**
- * Names of browser features for which we have compatibility data. These names
- * correspond to a path to a browser feature in the MDN browser compatibility
- * data.
- *
- * @see https://github.com/mdn/browser-compat-data#usage
- */
-export type FeatureName = ${features
-  .map(feature => `"${feature.key}"`)
-  .join("|")};
-
-export const Features: { readonly [P in FeatureName]: Feature } = {
+export const Data = {
   ${features
     .map(
       feature => `
@@ -175,8 +164,12 @@ export const Features: { readonly [P in FeatureName]: Feature } = {
               .map(
                 support => `
                   "${support.browser}": {
-                    added: ${support.added}
-                    ${support.removed ? `, removed: ${support.removed}` : ""}
+                    added: ${support.added} as const
+                    ${
+                      support.removed
+                        ? `, removed: ${support.removed} as const`
+                        : ""
+                    }
                   }
                 `
               )
@@ -193,4 +186,4 @@ code = prettier.format(code, {
   parser: "typescript"
 });
 
-fs.writeFileSync("src/features.ts", code);
+fs.writeFileSync("src/feature/data.ts", code);

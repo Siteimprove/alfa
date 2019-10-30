@@ -3,24 +3,10 @@
 // changes, do so in `scripts/browsers.js` and run `yarn prepare` to rebuild this
 // file.
 
-import { Browser } from "./types";
+export type Data = typeof Data;
 
-/**
- * Names of browsers for which we have compatibility data.
- *
- * @see https://github.com/mdn/browser-compat-data#usage
- */
-export type BrowserName =
-  | "chrome"
-  | "edge"
-  | "firefox"
-  | "ie"
-  | "opera"
-  | "safari";
-
-export const Browsers: { readonly [P in BrowserName]: Browser } = {
+export const Data = {
   chrome: {
-    name: "Chrome",
     releases: {
       "1": { date: 1228953600000 },
       "2": { date: 1242864000000 },
@@ -101,7 +87,6 @@ export const Browsers: { readonly [P in BrowserName]: Browser } = {
     }
   },
   edge: {
-    name: "Edge",
     releases: {
       "12": { date: 1438041600000 },
       "13": { date: 1447286400000 },
@@ -113,7 +98,6 @@ export const Browsers: { readonly [P in BrowserName]: Browser } = {
     }
   },
   firefox: {
-    name: "Firefox",
     releases: {
       "1": { date: 1099958400000 },
       "1.5": { date: 1133222400000 },
@@ -191,7 +175,6 @@ export const Browsers: { readonly [P in BrowserName]: Browser } = {
     }
   },
   ie: {
-    name: "Internet Explorer",
     releases: {
       "1": { date: 808531200000 },
       "2": { date: 816998400000 },
@@ -208,7 +191,6 @@ export const Browsers: { readonly [P in BrowserName]: Browser } = {
     }
   },
   opera: {
-    name: "Opera",
     releases: {
       "2": { date: 837302400000 },
       "3": { date: 880934400000 },
@@ -289,7 +271,6 @@ export const Browsers: { readonly [P in BrowserName]: Browser } = {
     }
   },
   safari: {
-    name: "Safari",
     releases: {
       "1": { date: 1056326400000 },
       "1.1": { date: 1066953600000 },
