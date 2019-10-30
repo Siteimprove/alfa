@@ -5,12 +5,12 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 /**
  * @internal
  */
-export type Leaf<T> = Array<T>;
+export interface Leaf<T> extends Array<T> {}
 
 /**
  * @internal
  */
-export type Branch<T> = Array<Node<T>>;
+export interface Branch<T> extends Array<Node<T>> {}
 
 /**
  * @internal
