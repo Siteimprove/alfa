@@ -3,6 +3,11 @@ import { Keys } from "@siteimprove/alfa-util";
 import browserslist = require("browserslist");
 import { Data } from "./browser/data";
 
+export type Browser<
+  N extends Browser.Name = Browser.Name,
+  V extends Browser.Version<N> = Browser.Version<N>
+> = Browser.Release<N, V>;
+
 export namespace Browser {
   export type Name = Data.Name;
 

@@ -3,12 +3,20 @@ import { Keys } from "@siteimprove/alfa-util";
 import { Browser } from "./browser";
 import { Data } from "./feature/data";
 
+export type Feature<
+  N extends Feature.Name = Feature.Name,
+  I extends Feature.Implementer<N> = Feature.Implementer<N>
+> = Feature.Implementation<N, I>;
+
 export namespace Feature {
   export type Name = Data.Name;
 
   export type Implementer<N extends Name> = Data.Implementer<N>;
 
-  export interface Implementation<N extends Name, I extends Implementer<N>> {
+  export interface Implementation<
+    N extends Name = Name,
+    I extends Implementer<N> = Implementer<N>
+  > {
     readonly added: Browser.Version<I> | true;
     readonly removed?: Browser.Version<I>;
   }
