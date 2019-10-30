@@ -41,7 +41,10 @@ test("Is order independant when digesting element attributes", t => {
   const foo = <div class="foo" id="foo" />;
   const bar = <div id="foo" class="foo" />;
 
-  t.equal(getDigest(foo, <div>{foo}</div>), getDigest(bar, <div>{bar}</div>));
+  t.deepEqual(
+    getDigest(foo, <div>{foo}</div>),
+    getDigest(bar, <div>{bar}</div>)
+  );
 });
 
 test("Correctly distinguishes literal boolean values from boolean attributes", t => {

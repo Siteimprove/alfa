@@ -4,7 +4,7 @@ import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Element, Namespace, Node } from "./types";
 
-const namespaces = Cache.empty<Node, Cache<Element, Namespace>>();
+const cache = Cache.empty<Node, Cache<Element, Namespace>>();
 
 /**
  * Given an element and a context, get the namespace of the element within the
@@ -16,9 +16,11 @@ export function getElementNamespace(
   element: Element,
   context: Node
 ): Option<Namespace> {
-  return namespaces
-    .get(context, () =>
-      Cache.from<Element, Namespace>(
+  return cache
+    .get(context, () => {
+      const namespaces = Cache.empty<Element, Namespace>();
+
+      return namespaces.merge(
         traverseNode(
           context,
           context,
@@ -35,24 +37,24 @@ export function getElementNamespace(
               } else if (parentNode === null || !isElement(parentNode)) {
                 yield [node, Namespace.HTML];
               } else {
-                // As we're doing a top-down traversal, setting the namespace of
-                // every parent element before visiting its children, we can safely
-                // assert that the parent node will have a namespace defined.
-                // const parentNamespace = namespaces.get(parentNode)!;
-                // if (
-                //   node.localName === "foreignObject" &&
-                //   parentNamespace === Namespace.SVG
-                // ) {
-                //   yield [node, Namespace.HTML];
-                // } else {
-                //   yield [node, parentNamespace];
-                // }
+                const parentNamespace = namespaces
+                  .get(parentNode)
+                  .getOr(Namespace.HTML);
+
+                if (
+                  node.localName === "foreignObject" &&
+                  parentNamespace === Namespace.SVG
+                ) {
+                  yield [node, Namespace.HTML];
+                } else {
+                  yield [node, parentNamespace];
+                }
               }
             }
           },
           { composed: true, nested: true }
         )
-      )
-    )
+      );
+    })
     .get(element);
 }
