@@ -24,6 +24,9 @@
       "path": "../alfa-monad"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-reducer"
     },
     {

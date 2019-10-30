@@ -25,6 +25,14 @@ export const None: None = new (class None {
     return accumulator;
   }
 
+  public includes(): boolean {
+    return false;
+  }
+
+  public filter(): this {
+    return this;
+  }
+
   public and(): this {
     return this;
   }

@@ -1,5 +1,6 @@
 import { Equality } from "@siteimprove/alfa-equality";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { None } from "./none";
 import { Option } from "./option";
@@ -24,7 +25,7 @@ export class Some<T> implements Option<T> {
   }
 
   public map<U>(mapper: Mapper<T, U>): Option<U> {
-    return Some.of(mapper(this.value));
+    return new Some(mapper(this.value));
   }
 
   public flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U> {
@@ -33,6 +34,14 @@ export class Some<T> implements Option<T> {
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
     return reducer(accumulator, this.value);
+  }
+
+  public includes(value: T): boolean {
+    return Equality.equals(value, this.value);
+  }
+
+  public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
+    return Predicate.test(predicate, this.value) ? new Some(this.value) : None;
   }
 
   public and<U>(option: Option<U>): Option<U> {
