@@ -1,58 +1,71 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
 import { getInputType, InputType } from "../src/get-input-type";
 
-test("Returns null for non input element", t => {
-  const div = <div />;
-  t.equal(getInputType(div), null);
-});
-
-test("Returns file for input element with file type", t => {
+test("getInputType() gets the type of a file input", t => {
   const input = <input type="file" />;
-  t.equal(getInputType(input), InputType.File);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.File));
 });
 
-test("Returns hidden for input element with hidden type", t => {
+test("getInputType() gets the type of a hidden input", t => {
   const input = <input type="hidden" />;
-  t.equal(getInputType(input), InputType.Hidden);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Hidden));
 });
 
-test("Returns search for input element with search type", t => {
+test("getInputType() gets the type of a search input", t => {
   const input = <input type="search" />;
-  t.equal(getInputType(input), InputType.Search);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Search));
 });
 
-test("Returns image for input element with image type", t => {
+test("getInputType() gets the type of an image input", t => {
   const input = <input type="image" />;
-  t.equal(getInputType(input), InputType.Image);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Image));
 });
 
-test("Returns button for input element with button type", t => {
+test("getInputType() gets the type of a button input", t => {
   const input = <input type="button" />;
-  t.equal(getInputType(input), InputType.Button);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Button));
 });
 
-test("Returns reset for input element with reset type", t => {
+test("getInputType() gets the type of a reset input", t => {
   const input = <input type="reset" />;
-  t.equal(getInputType(input), InputType.Reset);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Reset));
 });
 
-test("Returns radio for input element with radio type", t => {
+test("getInputType() gets the type of a radio input", t => {
   const input = <input type="radio" />;
-  t.equal(getInputType(input), InputType.Radio);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Radio));
 });
 
-test("Returns submit for input element with submit type", t => {
+test("getInputType() gets the type of a submit input", t => {
   const input = <input type="submit" />;
-  t.equal(getInputType(input), InputType.Submit);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Submit));
 });
 
-test("Returns text for input element with undefined type", t => {
+test("getInputType() gets the type of a text input", t => {
   const input = <input />;
-  t.equal(getInputType(input), InputType.Text);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Text));
 });
 
-test("Returns tel for input element with tel type", t => {
+test("getInputType() gets the type of a telephone input", t => {
   const input = <input type="tel" />;
-  t.equal(getInputType(input), InputType.Tel);
+
+  t.deepEqual(getInputType(input, input), Some.of(InputType.Tel));
+});
+
+test("getInputType() returns none when getting the type of a non-input element", t => {
+  const div = <div />;
+
+  t.equal(getInputType(div, div), None);
 });

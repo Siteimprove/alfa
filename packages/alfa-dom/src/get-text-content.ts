@@ -1,3 +1,4 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { isText } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
@@ -17,24 +18,21 @@ export function getTextContent(
   context: Node,
   options: getTextContent.Options = {}
 ): string {
-  let text = "";
-
-  [
-    ...traverseNode(
+  return Iterable.join(
+    traverseNode(
       node,
       context,
       {
         *enter(node) {
           if (isText(node)) {
-            text += node.data;
+            yield node.data;
           }
         }
       },
       { ...options, nested: false }
-    )
-  ];
-
-  return text;
+    ),
+    ""
+  );
 }
 
 export namespace getTextContent {

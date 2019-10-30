@@ -1,4 +1,4 @@
-import { Option } from "@siteimprove/alfa-util";
+import { Option } from "@siteimprove/alfa-option";
 import {
   CascadedPropertyValue,
   ComputedPropertyValue,
@@ -7,7 +7,7 @@ import {
 } from "./properties";
 
 export interface Style<S> {
-  readonly parent: Option<Style<S>>;
+  readonly parent: Style<S> | null;
 
   readonly cascaded: CascadedStyle<S>;
   readonly specified: SpecifiedStyle<S>;

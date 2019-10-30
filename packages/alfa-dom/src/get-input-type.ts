@@ -1,5 +1,6 @@
+import { None, Option } from "@siteimprove/alfa-option";
 import { getAttribute } from "./get-attribute";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
 export const enum InputType {
   Hidden,
@@ -32,61 +33,64 @@ export const enum InputType {
  *
  * @see https://html.spec.whatwg.org/#attr-input-type
  */
-export function getInputType(element: Element): InputType | null {
+export function getInputType(
+  element: Element,
+  context: Node
+): Option<InputType> {
   if (element.localName !== "input") {
-    return null;
+    return None;
   }
 
-  // The `type` attribute of is an enumerated attribute and is therefore case-
-  // insensitive.
-  // https://html.spec.whatwg.org/#enumerated-attribute
-  const type = getAttribute(element, "type", { lowerCase: true });
-
-  switch (type) {
-    case "hidden":
-      return InputType.Hidden;
-    case "search":
-      return InputType.Search;
-    case "tel":
-      return InputType.Tel;
-    case "url":
-      return InputType.Url;
-    case "email":
-      return InputType.Email;
-    case "password":
-      return InputType.Password;
-    case "date":
-      return InputType.Date;
-    case "month":
-      return InputType.Month;
-    case "week":
-      return InputType.Week;
-    case "time":
-      return InputType.Time;
-    case "datetime-local":
-      return InputType.DatetimeLocal;
-    case "number":
-      return InputType.Number;
-    case "range":
-      return InputType.Range;
-    case "color":
-      return InputType.Color;
-    case "checkbox":
-      return InputType.Checkbox;
-    case "radio":
-      return InputType.Radio;
-    case "file":
-      return InputType.File;
-    case "submit":
-      return InputType.Submit;
-    case "image":
-      return InputType.Image;
-    case "reset":
-      return InputType.Reset;
-    case "button":
-      return InputType.Button;
-    case "text":
-    default:
-      return InputType.Text;
-  }
+  return getAttribute(element, context, "type").map(type => {
+    // The `type` attribute of is an enumerated attribute and is therefore case-
+    // insensitive.
+    // https://html.spec.whatwg.org/#enumerated-attribute
+    switch (type.toLowerCase()) {
+      case "hidden":
+        return InputType.Hidden;
+      case "search":
+        return InputType.Search;
+      case "tel":
+        return InputType.Tel;
+      case "url":
+        return InputType.Url;
+      case "email":
+        return InputType.Email;
+      case "password":
+        return InputType.Password;
+      case "date":
+        return InputType.Date;
+      case "month":
+        return InputType.Month;
+      case "week":
+        return InputType.Week;
+      case "time":
+        return InputType.Time;
+      case "datetime-local":
+        return InputType.DatetimeLocal;
+      case "number":
+        return InputType.Number;
+      case "range":
+        return InputType.Range;
+      case "color":
+        return InputType.Color;
+      case "checkbox":
+        return InputType.Checkbox;
+      case "radio":
+        return InputType.Radio;
+      case "file":
+        return InputType.File;
+      case "submit":
+        return InputType.Submit;
+      case "image":
+        return InputType.Image;
+      case "reset":
+        return InputType.Reset;
+      case "button":
+        return InputType.Button;
+      case "text":
+      default:
+        return InputType.Text;
+    }
+  });
 }

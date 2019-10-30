@@ -1,3 +1,4 @@
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { getElementNamespace } from "./get-element-namespace";
 import { getOwnerElement } from "./get-owner-element";
 import { Attribute, Namespace, Node } from "./types";
@@ -12,50 +13,45 @@ import { Attribute, Namespace, Node } from "./types";
 export function getAttributeNamespace(
   attribute: Attribute,
   context: Node
-): Namespace | null {
-  const ownerElement = getOwnerElement(attribute, context);
+): Option<Namespace> {
+  return getOwnerElement(attribute, context)
+    .flatMap(ownerElement => getElementNamespace(ownerElement, context))
+    .filter(elementNamespace => elementNamespace !== Namespace.HTML)
+    .flatMap(() => {
+      // https://html.spec.whatwg.org/#adjust-foreign-attributes
 
-  if (ownerElement === null) {
-    return null;
-  }
-
-  const elementNamespace = getElementNamespace(ownerElement, context);
-
-  if (elementNamespace === null || elementNamespace === Namespace.HTML) {
-    return null;
-  }
-
-  // https://html.spec.whatwg.org/#adjust-foreign-attributes
-
-  if (attribute.prefix === null) {
-    return attribute.localName === "xmlns" ? Namespace.XMLNS : null;
-  }
-
-  switch (attribute.prefix) {
-    case "xlink":
-      switch (attribute.localName) {
-        case "actutate":
-        case "arcrole":
-        case "href":
-        case "role":
-        case "show":
-        case "title":
-        case "type":
-          return Namespace.XLink;
+      if (attribute.prefix === null) {
+        return attribute.localName === "xmlns"
+          ? Some.of(Namespace.XMLNS)
+          : None;
       }
-      break;
-    case "xml":
-      switch (attribute.localName) {
-        case "lang":
-        case "space":
-          return Namespace.XML;
-      }
-      break;
-    case "xmlns":
-      if (attribute.localName === "xlink") {
-        return Namespace.XMLNS;
-      }
-  }
 
-  return null;
+      switch (attribute.prefix) {
+        case "xlink":
+          switch (attribute.localName) {
+            case "actutate":
+            case "arcrole":
+            case "href":
+            case "role":
+            case "show":
+            case "title":
+            case "type":
+              return Some.of(Namespace.XLink);
+          }
+          break;
+        case "xml":
+          switch (attribute.localName) {
+            case "lang":
+            case "space":
+              return Some.of(Namespace.XML);
+          }
+          break;
+        case "xmlns":
+          if (attribute.localName === "xlink") {
+            return Some.of(Namespace.XMLNS);
+          }
+      }
+
+      return None;
+    });
 }

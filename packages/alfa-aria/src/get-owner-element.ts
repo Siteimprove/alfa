@@ -1,4 +1,6 @@
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Branched } from "@siteimprove/alfa-branched";
+import { Cache } from "@siteimprove/alfa-cache";
+import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
@@ -9,31 +11,29 @@ import {
   Node,
   traverseNode
 } from "@siteimprove/alfa-dom";
-import { Cache, Option } from "@siteimprove/alfa-util";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { isExposed } from "./is-exposed";
 import { resolveReferences } from "./resolve-references";
 
-const { map } = BrowserSpecific;
-
-const ownerElements = Cache.of<Node, Cache<Element, Element>>();
+const ownerElements = Cache.empty<Node, Cache<Element, Element>>();
 
 export function getOwnerElement(
   element: Element,
   context: Node,
   device: Device
-): Option<Element> | BrowserSpecific<Option<Element>> {
+): Branched<Option<Element>, Browser.Release> {
   const ownerElement = ownerElements
-    .get(context, () => {
-      const ownerElements = Cache.of<Element, Element>();
-
-      [
-        ...traverseNode(
+    .get(context, () =>
+      Cache.from(
+        traverseNode(
           context,
           context,
           {
             *enter(node) {
               if (isElement(node)) {
-                const owns = getAttribute(node, "aria-owns");
+                const owns = getAttribute(node, context, "aria-owns").getOr(
+                  null
+                );
 
                 if (owns !== null) {
                   const references = resolveReferences(
@@ -43,7 +43,7 @@ export function getOwnerElement(
                   );
 
                   for (const reference of references) {
-                    ownerElements.set(reference, node);
+                    yield [reference, node];
                   }
                 }
               }
@@ -51,19 +51,17 @@ export function getOwnerElement(
           },
           { composed: true, nested: true }
         )
-      ];
-
-      return ownerElements;
-    })
+      )
+    )
     .get(element);
 
-  return map(isExposed(element, context, device), isExposed => {
+  return isExposed(element, context, device).flatMap(isExposed => {
     if (!isExposed) {
-      return null;
+      return Branched.of(None);
     }
 
-    if (ownerElement !== null) {
-      return ownerElement;
+    if (ownerElement.isSome()) {
+      return Branched.of(ownerElement);
     }
 
     return getExposedAncestor(element, context, device);
@@ -74,16 +72,16 @@ function getExposedAncestor(
   element: Element,
   context: Node,
   device: Device
-): Option<Element> | BrowserSpecific<Option<Element>> {
-  const parentElement = getParentElement(element, context);
+): Branched<Option<Element>, Browser.Release> {
+  const parentElement = getParentElement(element, context).getOr(null);
 
   if (parentElement === null) {
-    return null;
+    return Branched.of(None);
   }
 
-  return map(isExposed(parentElement, context, device), isExposed => {
+  return isExposed(parentElement, context, device).flatMap(isExposed => {
     if (isExposed) {
-      return parentElement;
+      return Branched.of(Some.of(parentElement));
     }
 
     return getExposedAncestor(parentElement, context, device);

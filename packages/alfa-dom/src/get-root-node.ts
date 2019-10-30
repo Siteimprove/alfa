@@ -1,4 +1,4 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
@@ -9,9 +9,9 @@ enum Mode {
   Flattened
 }
 
-const rootNodes = Cache.of<Mode, Cache<Node, Cache<Node, Node>>>({
-  weak: false
-});
+const cache = Cache.empty<Mode, Cache<Node, Cache<Node, Node>>>(
+  Cache.Type.Strong
+);
 
 /**
  * Given a node and a context, get the root of the node within the context.
@@ -33,18 +33,11 @@ export function getRootNode(
     mode = Mode.Flattened;
   }
 
-  const rootNode = rootNodes
-    .get(mode, Cache.of)
-    .get(context, () => {
-      return collectRootNodes(context, options);
-    })
-    .get(node);
-
-  if (rootNode === null) {
-    return node;
-  }
-
-  return rootNode;
+  return cache
+    .get(mode, Cache.empty)
+    .get(context, () => Cache.from(collectRootNodes(context, options)))
+    .get(node)
+    .getOr(node);
 }
 
 export namespace getRootNode {
@@ -56,38 +49,33 @@ export namespace getRootNode {
 
 function collectRootNodes(
   root: Node,
-  options: getRootNode.Options,
-  rootNodes = Cache.of<Node, Node>()
-): Cache<Node, Node> {
-  [
-    ...traverseNode(
-      root,
-      root,
-      {
-        *enter(node) {
-          rootNodes.set(node, root);
+  options: getRootNode.Options
+): Iterable<[Node, Node]> {
+  return traverseNode(
+    root,
+    root,
+    {
+      *enter(node) {
+        yield [node, root];
 
-          if (options.composed !== true && options.flattened !== true) {
-            const shadowRoot = isElement(node) ? node.shadowRoot : null;
+        if (options.composed !== true && options.flattened !== true) {
+          const shadowRoot = isElement(node) ? node.shadowRoot : null;
 
-            // If a shadow root is encountered and we're looking for neither a
-            // composed nor flattened root, recurse into the shadow root and
-            // mark it as the root of itself and all its descendants.
-            if (shadowRoot !== null && shadowRoot !== undefined) {
-              collectRootNodes(shadowRoot, options, rootNodes);
-            }
-          }
-
-          const contentDocument = isElement(node) ? node.contentDocument : null;
-
-          if (contentDocument !== null && contentDocument !== undefined) {
-            collectRootNodes(contentDocument, options, rootNodes);
+          // If a shadow root is encountered and we're looking for neither a
+          // composed nor flattened root, recurse into the shadow root and
+          // mark it as the root of itself and all its descendants.
+          if (shadowRoot !== null && shadowRoot !== undefined) {
+            yield* collectRootNodes(shadowRoot, options);
           }
         }
-      },
-      { ...options, nested: false }
-    )
-  ];
 
-  return rootNodes;
+        const contentDocument = isElement(node) ? node.contentDocument : null;
+
+        if (contentDocument !== null && contentDocument !== undefined) {
+          yield* collectRootNodes(contentDocument, options);
+        }
+      }
+    },
+    { ...options, nested: false }
+  );
 }

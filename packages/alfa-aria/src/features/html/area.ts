@@ -7,6 +7,7 @@ import { Feature, None } from "../../types";
  */
 export const Area: Feature = {
   element: "area",
-  role: area => (hasAttribute(area, "href") ? Roles.Link : null),
+  role: (area, context) =>
+    hasAttribute(area, context, "href") ? Roles.Link : null,
   allowedRoles: () => None(Roles)
 };

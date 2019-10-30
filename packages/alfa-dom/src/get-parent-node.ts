@@ -1,3 +1,4 @@
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Cache } from "@siteimprove/alfa-util";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
@@ -17,18 +18,12 @@ const parentNodes = Cache.of<Mode, Cache<Node, Cache<Node, Node>>>({
  * If the node has no parent, `null` is returned.
  *
  * @see https://dom.spec.whatwg.org/#dom-node-parentnode
- *
- * @example
- * const span = <span />;
- * const div = <div>{span}</div>;
- * getParentNode(span, <section>{div}</section>);
- * // => <div>...</div>
  */
 export function getParentNode(
   node: Node,
   context: Node,
   options: getParentNode.Options = {}
-): Node | null {
+): Option<Node> {
   let mode = Mode.Composed;
 
   if (options.flattened === true) {
@@ -64,7 +59,7 @@ export function getParentNode(
     .get(node);
 
   if (parentNode === null) {
-    return null;
+    return None;
   }
 
   if (
@@ -72,10 +67,10 @@ export function getParentNode(
     isElement(parentNode) &&
     parentNode.shadowRoot === node
   ) {
-    return null;
+    return None;
   }
 
-  return parentNode;
+  return Some.of(parentNode);
 }
 
 export namespace getParentNode {

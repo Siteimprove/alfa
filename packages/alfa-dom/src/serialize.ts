@@ -1,3 +1,4 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getElementNamespace } from "./get-element-namespace";
 import { getParentElement } from "./get-parent-element";
@@ -16,10 +17,8 @@ export function serialize(
   context: Node,
   options: serialize.Options = {}
 ): string {
-  let result = "";
-
-  [
-    ...traverseNode(
+  return Iterable.join(
+    traverseNode(
       node,
       context,
       {
@@ -31,14 +30,14 @@ export function serialize(
 
             if (
               node.prefix !== null &&
-              namespace !== Namespace.HTML &&
-              namespace !== Namespace.MathML &&
-              namespace !== Namespace.SVG
+              !namespace.includes(Namespace.HTML) &&
+              !namespace.includes(Namespace.MathML) &&
+              !namespace.includes(Namespace.SVG)
             ) {
               name = `${node.prefix}:${node.localName}`;
             }
 
-            result += `<${name}`;
+            yield `<${name}`;
 
             const { attributes } = node;
 
@@ -48,8 +47,8 @@ export function serialize(
 
               let name = attribute.localName;
 
-              if (namespace !== null) {
-                switch (namespace) {
+              if (namespace.isSome()) {
+                switch (namespace.get()) {
                   case Namespace.XML:
                     name = `xml:${attribute.localName}`;
                     break;
@@ -70,35 +69,32 @@ export function serialize(
 
               const value = escape(attribute.value, { attributeMode: true });
 
-              result += ` ${name}="${value}"`;
+              yield ` ${name}="${value}"`;
             }
 
-            result += ">";
+            yield ">";
           } else if (isText(node)) {
-            const parentElement = getParentElement(node, context);
-
-            if (parentElement !== null) {
-              switch (parentElement.localName) {
-                case "style":
-                case "script":
-                case "xmp":
-                case "iframe":
-                case "noembed":
-                case "noframes":
-                case "plaintext":
-                case "noscript":
-                  result += node.data;
-                  break;
-                default:
-                  result += escape(node.data);
-              }
-            } else {
-              result += escape(node.data);
-            }
+            yield getParentElement(node, context)
+              .map(parentElement => {
+                switch (parentElement.localName) {
+                  case "style":
+                  case "script":
+                  case "xmp":
+                  case "iframe":
+                  case "noembed":
+                  case "noframes":
+                  case "plaintext":
+                  case "noscript":
+                    return node.data;
+                  default:
+                    return escape(node.data);
+                }
+              })
+              .getOrElse(() => escape(node.data));
           } else if (isComment(node)) {
-            result += `<!--${node.data}-->`;
+            yield `<!--${node.data}-->`;
           } else if (isDocumentType(node)) {
-            result += `<!DOCTYPE ${node.name}>`;
+            yield `<!DOCTYPE ${node.name}>`;
           }
         },
 
@@ -130,23 +126,22 @@ export function serialize(
 
                 if (
                   node.prefix !== null &&
-                  namespace !== Namespace.HTML &&
-                  namespace !== Namespace.MathML &&
-                  namespace !== Namespace.SVG
+                  !namespace.includes(Namespace.HTML) &&
+                  !namespace.includes(Namespace.MathML) &&
+                  !namespace.includes(Namespace.SVG)
                 ) {
                   name = `${node.prefix}:${node.localName}`;
                 }
 
-                result += `</${name}>`;
+                yield `</${name}>`;
             }
           }
         }
       },
       options
-    )
-  ];
-
-  return result;
+    ),
+    ""
+  );
 }
 
 export namespace serialize {

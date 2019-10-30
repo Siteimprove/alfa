@@ -12,7 +12,7 @@ export const A: Feature = {
 };
 
 function role(input: Element, context: Node): Role | null {
-  if (hasAttribute(input, "href")) {
+  if (hasAttribute(input, context, "href")) {
     return Roles.Link;
   } else if (getClosest(input, context, "text") !== null) {
     return Roles.Group;

@@ -6,7 +6,7 @@ import {
 } from "@siteimprove/alfa-css";
 import { getClassList } from "./get-class-list";
 import { getId } from "./get-id";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
 /**
  * The ancestor filter is a data structure used for optimising selector matching
@@ -55,12 +55,12 @@ export class AncestorFilter {
   private readonly classes: AncestorBucket = new Map();
   private readonly types: AncestorBucket = new Map();
 
-  public add(element: Element): void {
-    this.process(element, addEntry);
+  public add(element: Element, context: Node): void {
+    this.process(element, context, addEntry);
   }
 
-  public remove(element: Element): void {
-    this.process(element, removeEntry);
+  public remove(element: Element, context: Node): void {
+    this.process(element, context, removeEntry);
   }
 
   public matches(selector: IdSelector | ClassSelector | TypeSelector): boolean {
@@ -80,6 +80,7 @@ export class AncestorFilter {
 
   private process(
     element: Element,
+    context: Node,
     fn: (bucket: AncestorBucket, entry: string) => void
   ): void {
     // Elements with no child nodes are not relevant for ancestor filtering so
@@ -88,7 +89,7 @@ export class AncestorFilter {
       return;
     }
 
-    const id = getId(element);
+    const id = getId(element, context).getOr(null);
 
     if (id !== null) {
       fn(this.ids, id);
@@ -96,7 +97,7 @@ export class AncestorFilter {
 
     fn(this.types, element.localName);
 
-    for (const className of getClassList(element)) {
+    for (const className of getClassList(element, context)) {
       fn(this.classes, className);
     }
   }

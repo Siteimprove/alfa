@@ -29,13 +29,9 @@ export function isRendered(
   device: Device
 ): boolean {
   if (isText(node)) {
-    const parentElement = getParentElement(node, context, { flattened: true });
-
-    if (parentElement === null) {
-      return false;
-    }
-
-    node = parentElement;
+    return getParentElement(node, context, { flattened: true })
+      .map(parentElement => isRendered(parentElement, context, device))
+      .getOr(false);
   }
 
   return renders

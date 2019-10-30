@@ -1,3 +1,4 @@
+import { None } from "@siteimprove/alfa-option";
 import {
   CascadedPropertyValue,
   ComputedPropertyValue,
@@ -53,7 +54,7 @@ function getSpecifiedPropertyValue<S>(
   const property = Longhands[propertyName];
 
   if (style === null) {
-    return { value: property.initial(), source: null };
+    return { value: property.initial(), source: None };
   }
 
   const { specified } = style;
@@ -64,7 +65,7 @@ function getSpecifiedPropertyValue<S>(
       return getComputedProperty(style.parent, propertyName);
     }
 
-    return { value: property.initial(), source: null };
+    return { value: property.initial(), source: None };
   }
 
   return value;
@@ -87,7 +88,7 @@ function getComputedPropertyValue<S>(
   const property = Longhands[propertyName];
 
   if (style === null) {
-    return { value: property.initial(), source: null };
+    return { value: property.initial(), source: None };
   }
 
   const { computed } = style;
@@ -98,7 +99,7 @@ function getComputedPropertyValue<S>(
       return getComputedProperty(style.parent, propertyName);
     }
 
-    return { value: property.initial(), source: null };
+    return { value: property.initial(), source: None };
   }
 
   return value;

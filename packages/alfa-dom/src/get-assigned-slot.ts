@@ -1,3 +1,4 @@
+import { None, Option } from "@siteimprove/alfa-option";
 import { getAttribute } from "./get-attribute";
 import { getParentElement } from "./get-parent-element";
 import { isElement } from "./guards";
@@ -14,41 +15,37 @@ import { Element, Node, Text } from "./types";
 export function getAssignedSlot(
   node: Element | Text,
   context: Node
-): Element | null {
+): Option<Element> {
   return findSlot(node, context);
 }
 
 /**
  * @see https://dom.spec.whatwg.org/#find-a-slot
  */
-function findSlot(slotable: Element | Text, context: Node): Element | null {
-  const parentElement = getParentElement(slotable, context);
+function findSlot(slotable: Element | Text, context: Node): Option<Element> {
+  return getParentElement(slotable, context).flatMap(parentElement => {
+    const { shadowRoot } = parentElement;
 
-  if (parentElement === null) {
-    return null;
-  }
-
-  const { shadowRoot } = parentElement;
-
-  if (shadowRoot === null || shadowRoot === undefined) {
-    return null;
-  }
-
-  const name: string | null = isElement(slotable)
-    ? getAttribute(slotable, "slot")
-    : null;
-
-  const [assignedSlot = null] = traverseNode(shadowRoot, context, {
-    *enter(node, parentNode) {
-      if (
-        isElement(node) &&
-        node.localName === "slot" &&
-        name === getAttribute(node, "name")
-      ) {
-        yield node;
-      }
+    if (shadowRoot === null || shadowRoot === undefined) {
+      return None;
     }
-  });
 
-  return assignedSlot;
+    const name: Option<string> = isElement(slotable)
+      ? getAttribute(slotable, context, "slot")
+      : None;
+
+    const [assignedSlot = null] = traverseNode(shadowRoot, context, {
+      *enter(node, parentNode) {
+        if (
+          isElement(node) &&
+          node.localName === "slot" &&
+          name.equals(getAttribute(node, context, "name"))
+        ) {
+          yield node;
+        }
+      }
+    });
+
+    return Option.from(assignedSlot);
+  });
 }

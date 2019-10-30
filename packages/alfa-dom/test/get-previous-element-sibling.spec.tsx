@@ -1,8 +1,10 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
 import { getPreviousElementSibling } from "../src/get-previous-element-sibling";
 
-test("Return previous sibling that is an element", t => {
+test("getPreviousElementSibling() gets the previous element sibling of an element", t => {
   const button = <button />;
   const span = <span />;
   const div = (
@@ -12,10 +14,11 @@ test("Return previous sibling that is an element", t => {
       {span}
     </div>
   );
-  t.equal(getPreviousElementSibling(span, div), button);
+
+  t.deepEqual(getPreviousElementSibling(span, div), Some.of(button));
 });
 
-test("Return null when no previous element sibling exists", t => {
+test("getPreviousElementSibling() returns none when no previous element sibling exists", t => {
   const button = <button />;
   const div = (
     <div>
@@ -23,10 +26,11 @@ test("Return null when no previous element sibling exists", t => {
       {button}
     </div>
   );
-  t.equal(getPreviousElementSibling(button, div), null);
+
+  t.equal(getPreviousElementSibling(button, div), None);
 });
 
-test("Return null when parent is null", t => {
+test("getPreviousElementSibling returns none when no parent exists", t => {
   const button = <button />;
   const span = <span />;
   const div = (
@@ -36,5 +40,6 @@ test("Return null when parent is null", t => {
       {span}
     </div>
   );
-  t.equal(getPreviousElementSibling(div, div), null);
+
+  t.equal(getPreviousElementSibling(div, div), None);
 });

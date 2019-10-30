@@ -1,11 +1,14 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
 import { hasClass } from "../src/has-class";
 
-test("Returns true when an element has a given class name", t => {
-  t(hasClass(<div class="foo bar" />, "foo"));
+const div = <div class="foo bar" />;
+
+test("hasClass() returns true when an element has a given class name", t => {
+  t(hasClass(div, div, "foo"));
 });
 
-test("Returns false when an element does not have a given class name", t => {
-  t(!hasClass(<div class="foo bar" />, "baz"));
+test("hasClass() returns false when an element does not have a given class name", t => {
+  t(!hasClass(div, div, "baz"));
 });

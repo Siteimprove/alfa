@@ -1,9 +1,10 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
+import { Option } from "@siteimprove/alfa-option";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Element, Node, ShadowRoot } from "./types";
 
-const hosts = Cache.of<Node, Cache<ShadowRoot, Element>>();
+const cache = Cache.empty<Node, Cache<ShadowRoot, Element>>();
 
 /**
  * Given a shadow root and a context, get the host of the shadow root within the
@@ -11,13 +12,14 @@ const hosts = Cache.of<Node, Cache<ShadowRoot, Element>>();
  *
  * @see https://dom.spec.whatwg.org/#dom-shadowroot-host
  */
-export function getHost(shadowRoot: ShadowRoot, context: Node): Element | null {
-  return hosts
-    .get(context, () => {
-      const hosts = Cache.of<ShadowRoot, Element>();
-
-      [
-        ...traverseNode(
+export function getHost(
+  shadowRoot: ShadowRoot,
+  context: Node
+): Option<Element> {
+  return cache
+    .get(context, () =>
+      Cache.from<ShadowRoot, Element>(
+        traverseNode(
           context,
           context,
           {
@@ -27,15 +29,13 @@ export function getHost(shadowRoot: ShadowRoot, context: Node): Element | null {
                 node.shadowRoot !== null &&
                 node.shadowRoot !== undefined
               ) {
-                hosts.set(node.shadowRoot, node);
+                yield [node.shadowRoot, node];
               }
             }
           },
           { composed: true, nested: true }
         )
-      ];
-
-      return hosts;
-    })
+      )
+    )
     .get(shadowRoot);
 }

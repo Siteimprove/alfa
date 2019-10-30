@@ -1,15 +1,14 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { getClassList } from "./get-class-list";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
 /**
  * Given an element, check if the element has the specified class name.
  */
-export function hasClass(element: Element, className: string): boolean {
-  for (const found of getClassList(element)) {
-    if (found === className) {
-      return true;
-    }
-  }
-
-  return false;
+export function hasClass(
+  element: Element,
+  context: Node,
+  className: string
+): boolean {
+  return Iterable.includes(getClassList(element, context), className);
 }

@@ -1,4 +1,4 @@
-import { Element, getAttribute } from "@siteimprove/alfa-dom";
+import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import * as Attributes from "../../attributes";
 import * as Roles from "../../roles";
 import { Any, Except, Feature, Role } from "../../types";
@@ -9,16 +9,16 @@ import { Any, Except, Feature, Role } from "../../types";
 export const Img: Feature = {
   element: "img",
   role,
-  allowedRoles: img =>
-    role(img) === null
+  allowedRoles: (img, context) =>
+    role(img, context) === null
       ? [Roles.None, Roles.Presentation]
       : Except(Roles, [Roles.None, Roles.Presentation]),
-  allowedAttributes: img =>
-    role(img) === null ? [Attributes.Hidden] : Any(Attributes)
+  allowedAttributes: (img, context) =>
+    role(img, context) === null ? [Attributes.Hidden] : Any(Attributes)
 };
 
-function role(img: Element): Role | null {
-  const alt = getAttribute(img, "alt");
+function role(img: Element, context: Node): Role | null {
+  const alt = getAttribute(img, context, "alt").getOr(null);
 
   if (alt === "") {
     return null;

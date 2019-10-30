@@ -1,12 +1,12 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
 import { getAttribute } from "./get-attribute";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
 const whitespace = /\s+/;
 
 const empty: Readonly<Array<string>> = [];
 
-const classLists = Cache.of<Element, Iterable<string>>();
+const cache = Cache.empty<Element, Iterable<string>>();
 
 /**
  * Given an element, get the class list of the element.
@@ -15,17 +15,16 @@ const classLists = Cache.of<Element, Iterable<string>>();
  *
  * @example
  * const div = <div class="foo bar" />;
- * getClassList(div);
+ * getClassList(div, div);
  * // => ["foo", "bar"]
  */
-export function getClassList(element: Element): Iterable<string> {
-  return classLists.get(element, () => {
-    const classNames = getAttribute(element, "class", { trim: true });
-
-    if (classNames === null) {
-      return empty;
-    }
-
-    return classNames.split(whitespace);
-  });
+export function getClassList(
+  element: Element,
+  context: Node
+): Iterable<string> {
+  return cache.get(element, () =>
+    getAttribute(element, context, "class")
+      .map(classList => classList.trim().split(whitespace))
+      .getOr(empty)
+  );
 }

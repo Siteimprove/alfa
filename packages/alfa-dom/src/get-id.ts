@@ -1,14 +1,15 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
+import { Option } from "@siteimprove/alfa-option";
 import { getAttribute } from "./get-attribute";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
-const ids = Cache.of<Element, string | null>();
+const cache = Cache.empty<Element, Option<string>>();
 
 /**
  * Given an element, get the ID of the element.
  *
  * @see https://dom.spec.whatwg.org/#dom-element-id
  */
-export function getId(element: Element): string | null {
-  return ids.get(element, () => getAttribute(element, "id"));
+export function getId(element: Element, context: Node): Option<string> {
+  return cache.get(element, () => getAttribute(element, context, "id"));
 }

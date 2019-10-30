@@ -1,5 +1,4 @@
-import { Predicate } from "@siteimprove/alfa-util";
-import { getClosest } from "./get-closest";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { querySelector } from "./query-selector";
 import { Node } from "./types";
 
@@ -29,18 +28,13 @@ export function contains<T extends Node>(
   options: contains.Options = {}
 ): boolean {
   if (typeof query === "object") {
-    return getClosest(query, context, node => node === scope, options) !== null;
+    query = node => node === scope;
   }
 
-  let match: Node | null;
-
-  if (typeof query === "string") {
-    match = querySelector(scope, context, query, { ...options, nested: false });
-  } else {
-    match = querySelector(scope, context, query, { ...options, nested: false });
-  }
-
-  return match !== null;
+  return querySelector(scope, context, query, {
+    ...options,
+    nested: false
+  }).isSome();
 }
 
 export namespace contains {

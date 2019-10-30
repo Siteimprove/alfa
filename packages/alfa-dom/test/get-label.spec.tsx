@@ -1,8 +1,10 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
 import { getLabel } from "../src/get-label";
 
-test("Returns the label of a labelable element", t => {
+test("getLabel() gets the label of a labelable element", t => {
   const input = <input id="foo" />;
   const label = <label for="foo">Bar</label>;
   const form = (
@@ -12,17 +14,17 @@ test("Returns the label of a labelable element", t => {
     </form>
   );
 
-  t.equal(getLabel(input, form), label);
+  t.deepEqual(getLabel(input, form), Some.of(label));
 });
 
-test("Returns null when no label exists", t => {
+test("getLabel() returns none when no label exists", t => {
   const input = <input id="foo" />;
   const form = <form>{input}</form>;
 
-  t.equal(getLabel(input, form), null);
+  t.equal(getLabel(input, form), None);
 });
 
-test("Returns null when an element is not labelable", t => {
+test("getLabel() returns none when an element is not labelable", t => {
   const div = <div id="foo" />;
   const form = (
     <form>
@@ -30,10 +32,10 @@ test("Returns null when an element is not labelable", t => {
     </form>
   );
 
-  t.equal(getLabel(div, form), null);
+  t.equal(getLabel(div, form), None);
 });
 
-test("Returns null when an element is not the target of its label", t => {
+test("getLabel() returns none when an element is not the target of its label", t => {
   const input = <input id="foo" />;
   const button = <input id="foo" />;
   const label = <label for="foo">Foo</label>;
@@ -45,5 +47,5 @@ test("Returns null when an element is not the target of its label", t => {
     </form>
   );
 
-  t.equal(getLabel(input, form), null);
+  t.equal(getLabel(input, form), None);
 });

@@ -1,7 +1,9 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
+import { test } from "@siteimprove/alfa-test";
+
 import { Values } from "@siteimprove/alfa-css";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
-import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+import { None } from "@siteimprove/alfa-option";
 import {
   getCascadedStyle,
   getComputedStyle,
@@ -21,11 +23,11 @@ test("Gets the cascaded style of an element", t => {
   t.deepEqual(style, {
     color: {
       value: keyword("inherit"),
-      source: null
+      source: None
     },
     fontSize: {
       value: length(1.2, "em"),
-      source: null
+      source: None
     }
   });
 });
@@ -36,11 +38,11 @@ test("Gets the specified style of an element", t => {
   t.deepEqual(style, {
     color: {
       value: func("rgb", [number(255), number(0), number(0)]),
-      source: null
+      source: None
     },
     fontSize: {
       value: length(1.2, "em"),
-      source: null
+      source: None
     }
   });
 });
@@ -51,11 +53,11 @@ test("Gets the computed style of an element", t => {
   t.deepEqual(style, {
     color: {
       value: func("rgb", [number(255), number(0), number(0)]),
-      source: null
+      source: None
     },
     fontSize: {
       value: length(19.2, "px"),
-      source: null
+      source: None
     }
   });
 });
@@ -69,7 +71,7 @@ test("Correctly handles default inherited properties", t => {
   t.deepEqual(style, {
     fontSize: {
       value: length(14, "px"),
-      source: null
+      source: None
     }
   });
 });
@@ -82,7 +84,7 @@ test("Gets the initial values of properties when specified", t => {
   t.deepEqual(style, {
     fontSize: {
       value: length(16, "px"),
-      source: null
+      source: None
     }
   });
 });
@@ -115,7 +117,7 @@ test("Correctly handles light DOM inheriting from shadow DOM", t => {
   t.deepEqual(style, {
     color: {
       value: func("rgb", [number(255), number(0), number(0)]),
-      source: null
+      source: None
     }
   });
 });

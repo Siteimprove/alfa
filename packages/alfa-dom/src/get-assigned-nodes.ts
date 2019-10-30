@@ -24,20 +24,20 @@ import { Element, Node } from "./types";
  * getAssignedNodes(slot, context);
  * // => [<p>Hello world</p>]
  */
-export function getAssignedNodes(
+export function* getAssignedNodes(
   element: Element,
   context: Node,
   options: getAssignedNodes.Options = {}
 ): Iterable<Node> {
   if (element.localName !== "slot") {
-    return [];
+    return;
   }
 
   if (options.flattened === true) {
-    return findFlattenedSlotables(element, context);
+    yield* findFlattenedSlotables(element, context);
   }
 
-  return findSlotables(element, context);
+  yield* findSlotables(element, context);
 }
 
 export namespace getAssignedNodes {
@@ -49,49 +49,43 @@ export namespace getAssignedNodes {
 /**
  * @see https://dom.spec.whatwg.org/#find-slotables
  */
-function findSlotables(slot: Element, context: Node): Array<Node> {
-  const result: Array<Node> = [];
-
+function* findSlotables(slot: Element, context: Node): Iterable<Node> {
   const rootNode = getRootNode(slot, context);
 
   if (!isShadowRoot(rootNode)) {
-    return result;
+    return;
   }
 
   const host = getHost(rootNode, context);
 
-  if (host === null) {
-    return result;
+  if (!host.isSome()) {
+    return;
   }
 
-  const { childNodes } = host;
+  const { childNodes } = host.get();
 
   for (let i = 0, n = childNodes.length; i < n; i++) {
     const childNode = childNodes[i];
 
     if (isElement(childNode) || isText(childNode)) {
-      if (getAssignedSlot(childNode, context) === slot) {
-        result.push(childNode);
+      if (getAssignedSlot(childNode, context).includes(slot)) {
+        yield childNode;
       }
     }
   }
-
-  return result;
 }
 
 /**
  * @see https://dom.spec.whatwg.org/#find-flattened-slotables
  */
-function findFlattenedSlotables(slot: Element, context: Node): Array<Node> {
-  const result: Array<Node> = [];
-
+function* findFlattenedSlotables(slot: Element, context: Node): Iterable<Node> {
   const rootNode = getRootNode(slot, context);
 
   if (!isShadowRoot(rootNode)) {
-    return result;
+    return;
   }
 
-  const slotables = findSlotables(slot, context);
+  const slotables = [...findSlotables(slot, context)];
 
   if (slotables.length === 0) {
     const { childNodes } = slot;
@@ -110,13 +104,9 @@ function findFlattenedSlotables(slot: Element, context: Node): Array<Node> {
 
     if (isElement(slotable) && slotable.localName === "slot") {
       if (isShadowRoot(getRootNode(slotable, context))) {
-        result.push(...findFlattenedSlotables(slotable, context));
+        yield* findFlattenedSlotables(slotable, context);
         continue;
       }
     }
-
-    result.push(slotable);
   }
-
-  return result;
 }

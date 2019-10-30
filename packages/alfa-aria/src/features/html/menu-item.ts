@@ -13,7 +13,7 @@ export const MenuItem: Feature = {
 };
 
 function role(menuitem: Element, context: Node): Role | null {
-  switch (getAttribute(menuitem, "type")) {
+  switch (getAttribute(menuitem, context, "type").getOr(null)) {
     case "command":
       return Roles.MenuItem;
     case "checkbox":

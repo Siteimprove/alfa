@@ -1,7 +1,7 @@
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { getAttribute } from "./get-attribute";
 import { getInputType, InputType } from "./get-input-type";
 import { getParentElement } from "./get-parent-element";
-import { isElement } from "./guards";
 import { hasAttribute } from "./has-attribute";
 import { Element, Node } from "./types";
 
@@ -12,45 +12,40 @@ const { isNaN } = Number;
  *
  * @see https://html.spec.whatwg.org/#attr-tabindex
  */
-export function getTabIndex(element: Element, context: Node): number | null {
-  const tabIndex = getAttribute(element, "tabindex");
+export function getTabIndex(element: Element, context: Node): Option<number> {
+  return getAttribute(element, context, "tabindex")
+    .andThen(tabIndex => {
+      const number = Number(tabIndex);
 
-  if (tabIndex !== null) {
-    const number = Number(tabIndex);
+      if (isNaN(number) || number !== (number | 0)) {
+        return None;
+      }
 
-    if (!isNaN(number) && number === (number | 0)) {
-      return number;
-    }
-  }
+      return Some.of(number);
+    })
+    .orElse(() => {
+      if (isSuggestedFocusableElement(element, context)) {
+        return Some.of(0);
+      }
 
-  if (isSuggestedFocusableElement(element, context)) {
-    return 0;
-  }
-
-  return null;
+      return None;
+    });
 }
 
 function isSuggestedFocusableElement(element: Element, context: Node): boolean {
   switch (element.localName) {
     case "a":
     case "link":
-      if (hasAttribute(element, "href")) {
-        return true;
-      }
-      break;
+      return hasAttribute(element, context, "href");
 
     case "input":
-      if (getInputType(element) !== InputType.Hidden) {
-        return true;
-      }
-      break;
+      return getInputType(element, context)
+        .map(inputType => inputType !== InputType.Hidden)
+        .getOr(true);
 
     case "audio":
     case "video":
-      if (hasAttribute(element, "controls")) {
-        return true;
-      }
-      break;
+      return hasAttribute(element, context, "controls");
 
     case "button":
     case "select":
@@ -61,28 +56,28 @@ function isSuggestedFocusableElement(element: Element, context: Node): boolean {
     // `<summary>` element that is the first element child of a `<details>`
     // element.
     case "summary":
-      const parentElement = getParentElement(element, context);
+      return getParentElement(element, context)
+        .map(parentElement => {
+          if (parentElement.localName === "details") {
+            const { childNodes } = parentElement;
 
-      if (parentElement !== null && parentElement.localName === "details") {
-        const { childNodes } = parentElement;
+            for (let i = 0, n = childNodes.length; i < n; i++) {
+              const childNode = childNodes[i];
 
-        for (let i = 0, n = childNodes.length; i < n; i++) {
-          const childNode = childNodes[i];
-
-          if (isElement(childNode)) {
-            if (childNode === element) {
-              return true;
+              if (childNode === element) {
+                return true;
+              }
             }
-
-            break;
           }
-        }
-      }
+
+          return false;
+        })
+        .getOr(false);
   }
 
   return (
-    hasAttribute(element, "draggable") ||
-    isEditingHost(element) ||
+    hasAttribute(element, context, "draggable") ||
+    isEditingHost(element, context) ||
     isBrowsingContextContainer(element)
   );
 }
@@ -90,8 +85,8 @@ function isSuggestedFocusableElement(element: Element, context: Node): boolean {
 /**
  * @see https://html.spec.whatwg.org/#editing-host
  */
-function isEditingHost(element: Element): boolean {
-  return hasAttribute(element, "contenteditable");
+function isEditingHost(element: Element, context: Node): boolean {
+  return hasAttribute(element, context, "contenteditable");
 }
 
 /**

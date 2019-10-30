@@ -7,6 +7,7 @@ import { Feature, None } from "../../types";
  */
 export const Link: Feature = {
   element: "link",
-  role: link => (hasAttribute(link, "href") ? Roles.Link : null),
+  role: (link, context) =>
+    hasAttribute(link, context, "href") ? Roles.Link : null,
   allowedRoles: () => None(Roles)
 };

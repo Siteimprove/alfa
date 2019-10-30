@@ -163,7 +163,7 @@ export class SelectorMap {
       }
     }
 
-    const id = getId(element);
+    const id = getId(element, context).getOr(null);
 
     if (id !== null) {
       collectEntries(getEntries(this.ids, id));
@@ -171,7 +171,7 @@ export class SelectorMap {
 
     collectEntries(getEntries(this.types, element.localName));
 
-    for (const className of getClassList(element)) {
+    for (const className of getClassList(element, context)) {
       collectEntries(getEntries(this.classes, className));
     }
 

@@ -1,10 +1,9 @@
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Branched } from "@siteimprove/alfa-branched";
+import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { getRoleCategory } from "./get-role-category";
 import { Category } from "./types";
-
-const { map } = BrowserSpecific;
 
 /**
  * Given an element and a context, check if the element is a landmark within
@@ -16,8 +15,8 @@ export function isLandmark(
   element: Element,
   context: Node,
   device: Device
-): boolean | BrowserSpecific<boolean> {
-  return map(getRoleCategory(element, context, device), category => {
-    return category === Category.Landmark;
-  });
+): Branched<boolean, Browser> {
+  return getRoleCategory(element, context, device).map(category =>
+    category.includes(Category.Landmark)
+  );
 }

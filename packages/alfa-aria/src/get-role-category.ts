@@ -1,11 +1,10 @@
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Branched } from "@siteimprove/alfa-branched";
+import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-util";
+import { Option, Some } from "@siteimprove/alfa-option";
 import { getRole } from "./get-role";
 import { Category } from "./types";
-
-const { map } = BrowserSpecific;
 
 /**
  * Given an element and a context, get the category of the semantic role of the
@@ -18,14 +17,14 @@ export function getRoleCategory(
   element: Element,
   context: Node,
   device: Device
-): Option<Category> | BrowserSpecific<Option<Category>> {
-  return map(getRole(element, context, device), role => {
-    if (role === null) {
-      return null;
-    }
-
-    return typeof role.category === "function"
-      ? role.category(element, context, device)
-      : role.category;
-  });
+): Branched<Option<Category>, Browser.Release> {
+  return getRole(element, context, device).map(role =>
+    role.flatMap(role =>
+      Some.of(
+        typeof role.category === "function"
+          ? role.category(element, context, device)
+          : role.category
+      )
+    )
+  );
 }

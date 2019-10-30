@@ -149,7 +149,7 @@ function getPathFromRoot(
   for (
     let next: Node | null = node;
     next !== null;
-    next = getParentNode(next, context, options)
+    next = getParentNode(next, context, options).getOr(null)
   ) {
     pathFromRoot.unshift(next);
   }

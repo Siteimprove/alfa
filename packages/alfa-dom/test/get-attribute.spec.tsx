@@ -1,43 +1,30 @@
 import { test } from "@siteimprove/alfa-test";
+
+import { None } from "@siteimprove/alfa-option";
 import { jsx } from "../jsx";
 import { getAttribute } from "../src/get-attribute";
 import { Namespace, NodeType } from "../src/types";
 
 test("Gets the value of an attribute", t => {
-  t.equal(
-    getAttribute(<div aria-labelledby="foobar">Bar</div>, "aria-labelledby"),
-    "foobar"
-  );
+  const div = <div aria-labelledby="foo">Foo</div>;
+
+  t.deepEqual(getAttribute(div, div, "aria-labelledby").toJSON(), {
+    value: "foo"
+  });
 });
 
-test("Returns null when an attribute does not exist", t => {
-  t.equal(getAttribute(<div>Foo</div>, "aria-labelledby"), null);
+test("Returns none when an attribute does not exist", t => {
+  const div = <div>Foo</div>;
+
+  t.equal(getAttribute(div, div, "aria-labelledby"), None);
 });
 
-test("Can trim the attribute value", t => {
-  t.equal(
-    getAttribute(<div aria-labelledby="  foobar">Foo</div>, "aria-labelledby", {
-      trim: true
-    }),
-    "foobar"
-  );
-});
-
-test("Can lowercase the attribute value", t => {
-  t.equal(
-    getAttribute(<div aria-labelledby="fooBar">Foo</div>, "aria-labelledby", {
-      lowerCase: true
-    }),
-    "foobar"
-  );
-});
-
-test("Returns null when getting an attribute in the HTML namespace", t => {
+test("Returns none when getting an attribute in the HTML namespace", t => {
   const div = <div aria-labelledby="foobar" />;
 
   // In HTML5 attributes are not assigned to namespaces, not even the HTML
   // namespace.
-  t.equal(getAttribute(div, div, "aria-labelledby", Namespace.HTML), null);
+  t.equal(getAttribute(div, div, "aria-labelledby", Namespace.HTML), None);
 });
 
 test("Gets the value of an attribute in the SVG namespace", t => {
@@ -67,13 +54,26 @@ test("Gets the value of an attribute in the SVG namespace", t => {
     childNodes: [a]
   };
 
-  t.equal(getAttribute(a, "xlink:href"), "foo");
-  t.equal(getAttribute(a, svg, "href", Namespace.XLink), "foo");
+  t.deepEqual(getAttribute(a, svg, "xlink:href").toJSON(), {
+    value: "foo"
+  });
+
+  t.deepEqual(getAttribute(a, svg, "href", Namespace.XLink).toJSON(), {
+    value: "foo"
+  });
 });
 
 test("Gets an attribute matching any namespace", t => {
   const div = <div aria-labelledby="foobar" />;
-  t.deepEqual(getAttribute(div, div, "aria-labelledby", "*"), ["foobar"]);
+
+  t.deepEqual(
+    getAttribute(div, div, "aria-labelledby", "*")
+      .map(attributes => [...attributes])
+      .toJSON(),
+    {
+      value: ["foobar"]
+    }
+  );
 });
 
 test("Gets multiple attributes with different namespaces", t => {
@@ -110,17 +110,25 @@ test("Gets multiple attributes with different namespaces", t => {
     childNodes: [a]
   };
 
-  t.deepEqual(getAttribute(a, svg, "href", "*"), ["foo", "bar"]);
-  t.equal(getAttribute(a, svg, "title", "*"), null);
-  t.equal(getAttribute(a, "*:href"), null);
+  t.deepEqual(
+    getAttribute(a, svg, "href", "*")
+      .map(attributes => [...attributes])
+      .toJSON(),
+    {
+      value: ["foo", "bar"]
+    }
+  );
+
+  t.equal(getAttribute(a, svg, "title", "*"), None);
+  t.equal(getAttribute(a, svg, "*:href"), None);
 });
 
 test("Gets an attribute with an incorrect namespace", t => {
   const div = <div aria-labelledby="foobar" />;
 
-  t.equal(getAttribute(div, "svg:aria-labelledby"), null);
-  t.equal(getAttribute(div, div, "aria-labelledby", Namespace.SVG), null);
-  t.equal(getAttribute(div, div, "aria-hidden", Namespace.SVG), null);
+  t.equal(getAttribute(div, div, "svg:aria-labelledby"), None);
+  t.equal(getAttribute(div, div, "aria-labelledby", Namespace.SVG), None);
+  t.equal(getAttribute(div, div, "aria-hidden", Namespace.SVG), None);
 });
 
 test("Correctly handles attribute names containing colons", t => {
@@ -141,5 +149,5 @@ test("Correctly handles attribute names containing colons", t => {
     childNodes: []
   };
 
-  t.equal(getAttribute(html, "xml:lang"), "en");
+  t.deepEqual(getAttribute(html, html, "xml:lang").toJSON(), { value: "en" });
 });

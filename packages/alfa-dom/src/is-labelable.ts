@@ -1,5 +1,5 @@
 import { getInputType, InputType } from "./get-input-type";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
 /**
  * Given an element, check if the element can be associated with a form label.
@@ -8,15 +8,15 @@ import { Element } from "./types";
  *
  * @example
  * const input = <input type="text" />;
- * isLabelable(input);
+ * isLabelable(input, input);
  * // => true
  *
  * @example
  * const div = <div />;
- * isLabelable(div);
+ * isLabelable(div, div);
  * // => false
  */
-export function isLabelable(element: Element): boolean {
+export function isLabelable(element: Element, context: Node): boolean {
   switch (element.localName) {
     case "button":
     case "meter":
@@ -27,7 +27,9 @@ export function isLabelable(element: Element): boolean {
       return true;
 
     case "input":
-      return getInputType(element) !== InputType.Hidden;
+      return getInputType(element, context)
+        .map(inputType => inputType !== InputType.Hidden)
+        .getOr(true);
   }
 
   return false;

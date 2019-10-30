@@ -1,5 +1,7 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Cache } from "@siteimprove/alfa-util";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Option } from "@siteimprove/alfa-option";
 import { AncestorFilter } from "./ancestor-filter";
 import { isElement } from "./guards";
 import { RuleEntry, RuleTree } from "./rule-tree";
@@ -12,24 +14,37 @@ import { UserAgent } from "./user-agent";
  * @internal
  */
 export class Cascade {
+  public static of(entries: WeakMap<Element, RuleEntry>): Cascade {
+    return new Cascade(entries);
+  }
+
   private readonly entries: WeakMap<Element, RuleEntry>;
 
-  public constructor(entries: WeakMap<Element, RuleEntry>) {
+  private constructor(entries: WeakMap<Element, RuleEntry>) {
     this.entries = entries;
   }
 
-  public get(element: Element): RuleEntry | null {
-    const entry = this.entries.get(element);
-
-    if (entry === undefined) {
-      return null;
-    }
-
-    return entry;
+  public get(element: Element): Option<RuleEntry> {
+    return Option.from(this.entries.get(element));
   }
 }
 
-const cascades = Cache.of<Document | ShadowRoot, Cache<Device, Cascade>>();
+/**
+ * @internal
+ */
+export namespace Cascade {
+  export function from(iterable: Iterable<[Element, RuleEntry]>): Cascade {
+    return Cascade.of(
+      Iterable.reduce(
+        iterable,
+        (entries, [element, entry]) => entries.set(element, entry),
+        new WeakMap()
+      )
+    );
+  }
+}
+
+const cascades = Cache.empty<Document | ShadowRoot, Cache<Device, Cascade>>();
 
 /**
  * @internal
@@ -38,9 +53,7 @@ export function getCascade(
   context: Document | ShadowRoot,
   device: Device
 ): Cascade {
-  return cascades.get(context, Cache.of).get(device, () => {
-    const entries: WeakMap<Element, RuleEntry> = new WeakMap();
-
+  return cascades.get(context, Cache.empty).get(device, () => {
     const filter = new AncestorFilter();
     const ruleTree = new RuleTree();
 
@@ -49,8 +62,8 @@ export function getCascade(
       device
     );
 
-    [
-      ...traverseNode(context, context, {
+    return Cascade.from(
+      traverseNode(context, context, {
         *enter(node) {
           if (isElement(node)) {
             const rules = selectorMap.getRules(node, context, {
@@ -64,21 +77,19 @@ export function getCascade(
             const entry = ruleTree.add(sort(rules));
 
             if (entry !== null) {
-              entries.set(node, entry);
+              yield [node, entry];
             }
 
-            filter.add(node);
+            filter.add(node, context);
           }
         },
         *exit(node) {
           if (isElement(node)) {
-            filter.remove(node);
+            filter.remove(node, context);
           }
         }
       })
-    ];
-
-    return new Cascade(entries);
+    );
   });
 }
 

@@ -1,11 +1,10 @@
-import { List } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Branched } from "@siteimprove/alfa-branched";
+import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   getAttribute,
   getChildNodes,
-  getComputedStyle,
   getElementNamespace,
   getInputType,
   getLabel,
@@ -19,19 +18,14 @@ import {
   querySelector,
   Text
 } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-util";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { getRole } from "./get-role";
 import { hasNameFrom } from "./has-name-from";
 import { isVisible } from "./is-visible";
 import { resolveReferences } from "./resolve-references";
 import * as Roles from "./roles";
-
-const { isArray } = Array;
-const { ifNone, ifSome } = Option;
-const {
-  map,
-  Iterable: { reduce, map: mapIterable }
-} = BrowserSpecific;
 
 /**
  * Get the computed accessible text alternative of an element.
@@ -52,7 +46,7 @@ export function getTextAlternative(
   node: Element | Text,
   context: Node,
   device: Device
-): Option<string> | BrowserSpecific<Option<string>>;
+): Branched<Option<string>, Browser>;
 
 /**
  * @internal
@@ -63,7 +57,7 @@ export function getTextAlternative(
   device: Device,
   visited: Set<Element | Text>,
   options?: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>>;
+): Branched<Option<string>, Browser>;
 
 export function getTextAlternative(
   node: Element | Text,
@@ -71,16 +65,16 @@ export function getTextAlternative(
   device: Device,
   visited: Set<Element | Text> = new Set(),
   options: getTextAlternative.Options = {}
-): Option<string> | BrowserSpecific<Option<string>> {
+): Branched<Option<string>, Browser> {
   if (visited.has(node) && options.revisiting !== true) {
-    return null;
+    return Branched.of(None);
   }
 
   visited.add(node);
 
   // https://www.w3.org/TR/accname/#step2A
   if (!isVisible(node, context, device) && options.referencing !== true) {
-    return null;
+    return Branched.of(None);
   }
 
   // Perform the last step at this point in order to appease the type checker.
@@ -90,47 +84,30 @@ export function getTextAlternative(
   if (isText(node)) {
     const label = flatten(node.data, options);
 
-    if (label === "") {
-      return null;
-    }
-
-    return label;
+    return Branched.of(label === "" ? None : Some.of(label));
   }
 
   return (
-    BrowserSpecific.of<Option<string>>(null, [
-      "chrome",
-      "edge",
-      "firefox",
-      "ie",
-      "opera",
-      "safari"
-    ])
-      // https://www.w3.org/TR/accname/#step2B
-      .map(alt =>
-        ifNone(alt, () =>
-          getAriaLabelledbyTextAlternative(
-            node,
-            context,
-            device,
-            visited,
-            options
-          )
-        )
-      )
-
+    // https://www.w3.org/TR/accname/#step2B
+    getAriaLabelledbyTextAlternative(node, context, device, visited, options)
       // https://www.w3.org/TR/accname/#step2C
       .map(alt =>
-        ifNone(alt, () =>
+        alt.orElse(() =>
           getAriaLabelTextAlternative(node, context, visited, options)
         )
       )
-
       // https://www.w3.org/TR/accname/#step2D
-      .map(alt =>
-        ifNone(alt, () =>
-          map(getRole(node, context, device, { implicit: false }), role => {
-            if (role !== Roles.Presentation && role !== Roles.None) {
+      .flatMap(alt => {
+        if (alt.isNone()) {
+          return getRole(node, context, device, { implicit: false }).flatMap(
+            role => {
+              if (
+                role.includes(Roles.Presentation) ||
+                role.includes(Roles.None)
+              ) {
+                return Branched.of(None);
+              }
+
               return getNativeTextAlternative(
                 node,
                 context,
@@ -139,36 +116,36 @@ export function getTextAlternative(
                 options
               );
             }
+          );
+        }
 
-            return null;
-          })
-        )
-      )
-
+        return Branched.of(alt);
+      })
       // https://www.w3.org/TR/accname/#step2E
-      .map(alt =>
-        ifNone(alt, () => {
-          if (options.labelling === true || options.referencing === true) {
-            return getEmbeddedControlTextAlternative(
-              node,
-              context,
-              device,
-              visited,
-              options
-            );
+      .flatMap(alt => {
+        if (alt.isNone()) {
+          if (options.labelling !== true && options.referencing !== true) {
+            return Branched.of(None);
           }
 
-          return null;
-        })
-      )
+          return getEmbeddedControlTextAlternative(
+            node,
+            context,
+            device,
+            visited,
+            options
+          );
+        }
 
+        return Branched.of(alt);
+      })
       // https://www.w3.org/TR/accname/#step2F
       // https://www.w3.org/TR/accname/#step2G
-      .map(alt =>
-        ifNone(alt, () =>
-          map(getRole(node, context, device), role => {
+      .flatMap(alt => {
+        if (alt.isNone()) {
+          return getRole(node, context, device).flatMap(role => {
             if (
-              (role !== null && hasNameFrom(role, "contents")) ||
+              (role.isSome() && hasNameFrom(role.get(), "contents")) ||
               options.referencing === true ||
               options.descending === true ||
               isNativeTextAlternativeElement(node)
@@ -182,19 +159,19 @@ export function getTextAlternative(
               );
             }
 
-            return null;
-          })
-        )
-      )
+            return Branched.of(None);
+          });
+        }
+
+        return Branched.of(alt);
+      })
 
       // https://www.w3.org/TR/accname/#step2I
       .map(alt =>
-        ifNone(alt, () =>
+        alt.orElse(() =>
           getTooltipTextAlternative(node, context, visited, options)
         )
       )
-
-      .get()
   );
 }
 
@@ -231,39 +208,38 @@ function getAriaLabelledbyTextAlternative(
   device: Device,
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>> {
-  const labelledBy = getAttribute(element, "aria-labelledby");
+): Branched<Option<string>, Browser> {
+  const labelledBy = getAttribute(element, context, "aria-labelledby").getOr(
+    null
+  );
 
   if (
-    labelledBy !== null &&
-    labelledBy !== "" &&
-    options.referencing !== true
+    labelledBy === null ||
+    labelledBy === "" ||
+    options.referencing === true
   ) {
-    const rootNode = getRootNode(element, context);
-
-    const references = mapIterable(
-      resolveReferences(rootNode, context, labelledBy),
-      element => {
-        return getTextAlternative(element, context, device, visited, {
-          recursing: true,
-          referencing: true
-        });
-      }
-    );
-
-    const label = reduce(
-      references,
-      (alt, text) =>
-        ifSome(text, text =>
-          Option.map(alt, alt => `${alt} ${text}`, () => text)
-        ),
-      null as Option<string>
-    );
-
-    return map(label, label => ifSome(label, label => flatten(label, options)));
+    return Branched.of(None);
   }
 
-  return null;
+  const rootNode = getRootNode(element, context);
+
+  return Branched.sequence(
+    Iterable.map(resolveReferences(rootNode, context, labelledBy), element =>
+      getTextAlternative(element, context, device, visited, {
+        recursing: true,
+        referencing: true
+      })
+    )
+  ).map(alts =>
+    Iterable.reduce<Option<string>>(
+      alts,
+      (alt, text) =>
+        alt
+          .map(alt => text.reduce((alt, text) => `${alt} ${text}`, alt))
+          .or(text),
+      None
+    ).map(alt => flatten(alt, options))
+  );
 }
 
 /**
@@ -275,14 +251,10 @@ function getAriaLabelTextAlternative(
   context: Node,
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>> {
-  const label = getAttribute(element, "aria-label", { trim: true });
-
-  if (label !== null && label !== "") {
-    return flatten(label, options);
-  }
-
-  return null;
+): Option<string> {
+  return getAttribute(element, context, "aria-label")
+    .filter(label => label !== "")
+    .map(label => flatten(label, options));
 }
 
 /**
@@ -294,11 +266,11 @@ function getNativeTextAlternative(
   device: Device,
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>> {
+): Branched<Option<string>, Browser> {
   const namespace = getElementNamespace(element, context);
 
-  if (namespace !== null) {
-    switch (namespace) {
+  if (namespace.isSome()) {
+    switch (namespace.get()) {
       case Namespace.HTML:
         return getHtmlTextAlternative(
           element,
@@ -307,6 +279,7 @@ function getNativeTextAlternative(
           visited,
           options
         );
+
       case Namespace.SVG:
         return getSvgTextAlternative(
           element,
@@ -318,7 +291,7 @@ function getNativeTextAlternative(
     }
   }
 
-  return null;
+  return Branched.of(None);
 }
 
 /**
@@ -330,11 +303,11 @@ function getHtmlTextAlternative(
   device: Device,
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>> {
+): Branched<Option<string>, Browser> {
   const label = getLabel(element, context);
 
-  if (label !== null) {
-    return getTextAlternative(label, context, device, visited, {
+  if (label.isSome()) {
+    return getTextAlternative(label.get(), context, device, visited, {
       recursing: true,
       labelling: true,
       // https://github.com/w3c/accname/issues/48
@@ -344,101 +317,90 @@ function getHtmlTextAlternative(
 
   switch (element.localName) {
     case "input":
-      const type = getInputType(element);
-      switch (type) {
-        // https://www.w3.org/TR/html-aam/#input-type-button-input-type-submit-and-input-type-reset
-        case InputType.Button:
-        case InputType.Submit:
-        case InputType.Reset: {
-          const value = getAttribute(element, "value");
+      return Branched.of(
+        getInputType(element, context).flatMap(type => {
+          switch (type) {
+            // https://www.w3.org/TR/html-aam/#input-type-button-input-type-submit-and-input-type-reset
+            case InputType.Button:
+            case InputType.Submit:
+            case InputType.Reset:
+              return getAttribute(element, context, "value")
+                .andThen(value =>
+                  value === "" ? None : Some.of(flatten(value, options))
+                )
+                .orElse(() => {
+                  if (type === InputType.Submit) {
+                    return Some.of("Submit");
+                  }
 
-          if (value !== null && value !== "") {
-            return value;
+                  if (type === InputType.Reset) {
+                    return Some.of("Reset");
+                  }
+
+                  return None;
+                });
+
+            // https://www.w3.org/TR/html-aam/#input-type-image
+            case InputType.Image:
+            default:
+              return getAttribute(element, context, "alt")
+                .andThen(alt =>
+                  alt === "" ? None : Some.of(flatten(alt, options))
+                )
+                .orElse(() => getAttribute(element, context, "value"))
+                .andThen(value =>
+                  value === "" ? None : Some.of(flatten(value, options))
+                );
           }
-
-          if (type === InputType.Submit) {
-            return "Submit";
-          }
-
-          if (type === InputType.Reset) {
-            return "Reset";
-          }
-
-          break;
-        }
-
-        // https://www.w3.org/TR/html-aam/#input-type-image
-        case InputType.Image: {
-          const alt = getAttribute(element, "alt");
-
-          if (alt !== null && alt !== "") {
-            return flatten(alt, options);
-          }
-
-          const value = getAttribute(element, "value");
-
-          if (value !== null && value !== "") {
-            return flatten(value, options);
-          }
-        }
-      }
-      break;
+        })
+      );
 
     // https://www.w3.org/TR/html-aam/#fieldset-and-legend-elements
-    case "fieldset": {
-      const legend = querySelector(element, context, "legend");
-
-      if (legend !== null) {
-        return getTextAlternative(legend, context, device, visited, {
-          recursing: true,
-          descending: true
-        });
-      }
-
-      break;
-    }
+    case "fieldset":
+      return querySelector(element, context, "legend")
+        .map(legend =>
+          getTextAlternative(legend, context, device, visited, {
+            recursing: true,
+            descending: true
+          })
+        )
+        .getOrElse(() => Branched.of(None));
 
     // https://www.w3.org/TR/html-aam/#figure-and-figcaption-elements
     case "figure": {
-      const caption = querySelector(element, context, "figcaption");
-
-      if (caption !== null) {
-        return getTextAlternative(caption, context, device, visited, {
-          recursing: true,
-          descending: true
-        });
-      }
-
-      break;
+      return querySelector(element, context, "figcaption")
+        .map(caption =>
+          getTextAlternative(caption, context, device, visited, {
+            recursing: true,
+            descending: true
+          })
+        )
+        .getOrElse(() => Branched.of(None));
     }
 
     // https://www.w3.org/TR/html-aam/#img-element
     case "img":
     // https://github.com/w3c/html-aam/issues/176
-    case "area": {
-      const alt = getAttribute(element, "alt");
-
-      if (alt !== null && alt !== "") {
-        return flatten(alt, options);
-      }
-
-      break;
-    }
+    case "area":
+      return Branched.of(
+        getAttribute(element, context, "alt").flatMap(alt =>
+          alt === "" ? None : Some.of(flatten(alt, options))
+        )
+      );
 
     // https://www.w3.org/TR/html-aam/#table-element
-    case "table": {
-      const caption = querySelector(element, context, "caption");
-
-      if (caption !== null) {
-        return flatten(
-          getTextContent(caption, context, { flattened: true }),
-          options
-        );
-      }
-    }
+    case "table":
+      return Branched.of(
+        querySelector(element, context, "caption").map(caption =>
+          flatten(
+            getTextContent(caption, context, { flattened: true }),
+            options
+          )
+        )
+      );
   }
 
-  return null;
+  return Branched.of(None);
 }
 
 /**
@@ -450,15 +412,17 @@ function getSvgTextAlternative(
   device: Device,
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>> {
+): Branched<Option<string>, Browser> {
   if (element.localName === "title") {
-    return flatten(getTextContent(element, context), options);
+    return Branched.of(
+      Some.of(flatten(getTextContent(element, context), options))
+    );
   }
 
   const title = querySelector(element, context, ":scope > title");
 
-  if (title !== null) {
-    return getTextAlternative(title, context, device, visited, {
+  if (title.isSome()) {
+    return getTextAlternative(title.get(), context, device, visited, {
       recursing: true,
       descending: true
     });
@@ -466,14 +430,14 @@ function getSvgTextAlternative(
 
   switch (element.localName) {
     case "a":
-      const title = getAttribute(element, "xlink:title");
-
-      if (title !== null && title !== "") {
-        return flatten(title, options);
-      }
+      return Branched.of(
+        getAttribute(element, context, "xlink:title").flatMap(title =>
+          title === "" ? None : Some.of(flatten(title, options))
+        )
+      );
   }
 
-  return null;
+  return Branched.of(None);
 }
 
 /**
@@ -485,42 +449,43 @@ function getEmbeddedControlTextAlternative(
   device: Device,
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>> {
-  return map(getRole(element, context, device), role => {
-    switch (role) {
-      case Roles.TextBox:
-        switch (element.localName) {
-          case "input":
-            const value = getAttribute(element, "value");
+): Branched<Option<string>, Browser> {
+  return getRole(element, context, device).flatMap(role =>
+    role
+      .map<Branched<Option<string>, Browser>>(role => {
+        switch (role) {
+          case Roles.Button:
+            return getTextAlternative(element, context, device, visited, {
+              recursing: true,
+              revisiting: true
+            });
 
-            if (value !== null && value !== "") {
-              return flatten(value, options);
+          case Roles.TextBox:
+            switch (element.localName) {
+              case "input":
+                return Branched.of(
+                  getAttribute(element, context, "value").flatMap(value =>
+                    value === "" ? None : Some.of(flatten(value, options))
+                  )
+                );
+
+              default:
+                return Branched.of(
+                  Some.of(
+                    flatten(
+                      getTextContent(element, context, { flattened: true }),
+                      options
+                    )
+                  )
+                );
             }
 
-            return null;
-
           default:
-            return flatten(
-              getTextContent(element, context, { flattened: true }),
-              options
-            );
+            return Branched.of(None);
         }
-        break;
-
-      case Roles.Button:
-        const label = getTextAlternative(element, context, device, visited, {
-          recursing: true,
-          revisiting: true
-        });
-
-        return map(label, label =>
-          ifSome(label, label => flatten(label, options))
-        );
-
-      default:
-        return null;
-    }
-  });
+      })
+      .getOrElse(() => Branched.of(None))
+  );
 }
 
 /**
@@ -532,73 +497,47 @@ function getSubtreeTextAlternative(
   device: Device,
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
-): Option<string> | BrowserSpecific<Option<string>> {
-  const childNodes = getChildNodes(element, context, { flattened: true });
-
-  const childTextAlternatives = reduce<Node, List<string>>(
-    childNodes,
-    (childTextAlternatives, childNode) => {
-      if (!isElement(childNode) && !isText(childNode)) {
-        return childTextAlternatives;
-      }
-
-      return map(
-        getTextAlternative(childNode, context, device, visited, {
-          recursing: true,
-          descending: true,
-          // https://github.com/w3c/accname/issues/48
-          referencing: options.referencing,
-          // Pass down the labelling flag as the current call may have
-          // been initiated from a labelling element; the subtree will
-          // therefore also have to be considered part of the labelling
-          // element.
-          labelling: options.labelling
-        }),
-        childTextAlternative => {
-          return childTextAlternative === null
-            ? childTextAlternatives
-            : childTextAlternatives.push(childTextAlternative);
-        }
-      );
-    },
-    List()
+): Branched<Option<string>, Browser> {
+  const childNodes = Iterable.filter(
+    getChildNodes(element, context, { flattened: true }),
+    Predicate.or(isElement, isText)
   );
 
-  const textAlternative = map(childTextAlternatives, childTextAlternatives => {
-    return childTextAlternatives.size === 0
-      ? null
-      : childTextAlternatives.join("");
-  });
+  const childTextAlternatives = Branched.sequence(
+    Iterable.map(childNodes, childNode =>
+      getTextAlternative(childNode, context, device, visited, {
+        recursing: true,
+        descending: true,
+        // https://github.com/w3c/accname/issues/48
+        referencing: options.referencing,
+        // Pass down the labelling flag as the current call may have been
+        // initiated from a labelling element; the subtree will therefore also
+        // have to be considered part of the labelling element.
+        labelling: options.labelling
+      })
+    )
+  );
 
-  const contentAfter = getComputedStyle(element, context, device, {
-    pseudo: "after"
-  });
+  const textAlternative = childTextAlternatives.map(alts =>
+    Iterable.reduce<Option<string>>(
+      alts,
+      (alt, text) =>
+        alt.map(alt => text.reduce((alt, text) => alt + text, alt)).or(text),
+      None
+    )
+  );
 
-  const contentBefore = getComputedStyle(element, context, device, {
-    pseudo: "before"
-  });
+  // const contentAfter = getComputedStyle(element, context, device, {
+  //   pseudo: "after"
+  // });
 
-  return map(textAlternative, textAlternative => {
-    if (isArray(contentBefore.content)) {
-      const content = contentBefore.content.join("");
+  // const contentBefore = getComputedStyle(element, context, device, {
+  //   pseudo: "before"
+  // });
 
-      textAlternative =
-        textAlternative === null ? content : content + textAlternative;
-    }
-
-    if (isArray(contentAfter.content)) {
-      const content = contentAfter.content.join("");
-
-      textAlternative =
-        textAlternative === null ? content : textAlternative + content;
-    }
-
-    if (textAlternative === null) {
-      return null;
-    }
-
-    return flatten(textAlternative, options);
-  });
+  return textAlternative.map(textAlternative =>
+    textAlternative.map(textAlternative => flatten(textAlternative, options))
+  );
 }
 
 /**
@@ -611,13 +550,9 @@ function getTooltipTextAlternative(
   visited: Set<Element | Text>,
   options: getTextAlternative.Options
 ): Option<string> {
-  const title = getAttribute(element, "title");
-
-  if (title !== null && title !== "") {
-    return flatten(title, options);
-  }
-
-  return null;
+  return getAttribute(element, context, "title").flatMap(title =>
+    title === "" ? None : Some.of(flatten(title, options))
+  );
 }
 
 /**

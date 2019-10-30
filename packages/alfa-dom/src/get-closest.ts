@@ -1,4 +1,5 @@
-import { Predicate } from "@siteimprove/alfa-util";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { matches } from "./matches";
@@ -24,7 +25,7 @@ export function getClosest(
   context: Node,
   selector: string,
   options?: getClosest.Options
-): Element | null;
+): Option<Element>;
 
 /**
  * Given a node and a context, get the closest parent (or the node itself) that
@@ -46,14 +47,14 @@ export function getClosest<T extends Node>(
   context: Node,
   predicate: Predicate<Node, T>,
   options?: getClosest.Options
-): T | null;
+): Option<T>;
 
 export function getClosest<T extends Node>(
   scope: Node,
   context: Node,
   query: string | Predicate<Node, T>,
   options: getClosest.Options = {}
-): T | null {
+): Option<T> {
   let predicate: Predicate<Node, T>;
 
   if (typeof query === "string") {
@@ -70,14 +71,14 @@ export function getClosest<T extends Node>(
   for (
     let next: Node | null = scope;
     next !== null;
-    next = getParentNode(next, context, options)
+    next = getParentNode(next, context, options).getOr(null)
   ) {
-    if (predicate(next)) {
-      return next;
+    if (Predicate.test(predicate, next)) {
+      return Some.of(next);
     }
   }
 
-  return null;
+  return None;
 }
 
 export namespace getClosest {

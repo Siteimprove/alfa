@@ -18,7 +18,7 @@ export function isTabbable(
   context: Node,
   device: Device
 ): boolean {
-  const tabIndex = getTabIndex(element, context);
+  const tabIndex = getTabIndex(element, context).getOr(null);
 
   if (tabIndex === null || tabIndex < 0) {
     return false;
@@ -32,7 +32,7 @@ export function isTabbable(
 }
 
 function redirectsFocus(element: Element, context: Node): boolean {
-  if (getElementNamespace(element, context) === Namespace.HTML) {
+  if (getElementNamespace(element, context).includes(Namespace.HTML)) {
     switch (element.localName) {
       // Per the sequential navigation search algorithm, browsing context
       // containers (<iframe> elements) redirect focus to either their first

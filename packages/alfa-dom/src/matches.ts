@@ -14,6 +14,8 @@ import {
   SelectorType,
   TypeSelector
 } from "@siteimprove/alfa-css";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Option } from "@siteimprove/alfa-option";
 import { AncestorFilter } from "./ancestor-filter";
 import { contains } from "./contains";
 import { getAttribute } from "./get-attribute";
@@ -85,10 +87,10 @@ export function matches(
 
   switch (selector.type) {
     case SelectorType.IdSelector:
-      return matchesId(element, selector);
+      return matchesId(element, context, selector);
 
     case SelectorType.ClassSelector:
-      return matchesClass(element, selector);
+      return matchesClass(element, context, selector);
 
     case SelectorType.TypeSelector:
       return matchesType(element, context, selector, options);
@@ -214,7 +216,7 @@ function matchesDefaultNamespace(
 
         if (
           namespace !== undefined &&
-          namespace !== getElementNamespace(element, context)
+          !getElementNamespace(element, context).includes(namespace)
         ) {
           return false;
         }
@@ -227,15 +229,23 @@ function matchesDefaultNamespace(
 /**
  * @see https://www.w3.org/TR/selectors/#id-selectors
  */
-function matchesId(element: Element, selector: IdSelector): boolean {
-  return getId(element) === selector.name;
+function matchesId(
+  element: Element,
+  context: Node,
+  selector: IdSelector
+): boolean {
+  return getId(element, context).includes(selector.name);
 }
 
 /**
  * @see https://www.w3.org/TR/selectors/#class-html
  */
-function matchesClass(element: Element, selector: ClassSelector): boolean {
-  return hasClass(element, selector.name);
+function matchesClass(
+  element: Element,
+  context: Node,
+  selector: ClassSelector
+): boolean {
+  return hasClass(element, context, selector.name);
 }
 
 /**
@@ -278,7 +288,7 @@ function matchesElementNamespace(
 
   const elementNamespace = getElementNamespace(element, context);
 
-  if (selector.namespace === "" && elementNamespace === null) {
+  if (selector.namespace === "" && elementNamespace.isNone()) {
     return true;
   }
 
@@ -289,7 +299,8 @@ function matchesElementNamespace(
   const declaredNamespace = options.namespaces.get(selector.namespace);
 
   return (
-    declaredNamespace === undefined || elementNamespace === declaredNamespace
+    declaredNamespace === undefined ||
+    elementNamespace.includes(declaredNamespace)
   );
 }
 
@@ -308,26 +319,16 @@ function matchesAttribute(
     return false;
   }
 
-  const attributeOptions: getAttribute.Options = {
-    lowerCase: (selector.modifier & AttributeModifier.CaseInsensitive) !== 0
-  };
-
-  let value = null;
+  let value: Option<string | Iterable<string>>;
 
   switch (selector.namespace) {
     case null:
     case "":
-      value = getAttribute(element, selector.name, attributeOptions);
+      value = getAttribute(element, context, selector.name);
       break;
 
     case "*":
-      value = getAttribute(
-        element,
-        context,
-        selector.name,
-        "*",
-        attributeOptions
-      );
+      value = getAttribute(element, context, selector.name, "*");
       break;
 
     default:
@@ -343,35 +344,34 @@ function matchesAttribute(
         return false;
       }
 
-      value = getAttribute(
-        element,
-        context,
-        selector.name,
-        declaredNamespace,
-        attributeOptions
-      );
+      value = getAttribute(element, context, selector.name, declaredNamespace);
   }
 
-  if (value === null) {
-    return false;
-  }
+  const caseInsensitive =
+    (selector.modifier & AttributeModifier.CaseInsensitive) !== 0;
 
-  if (Array.isArray(value)) {
-    for (let i = 0, n = value.length; i < n; i++) {
-      if (matchesValue(value[i], selector)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  return matchesValue(value, selector);
+  return value
+    .map(value =>
+      typeof value === "string"
+        ? matchesValue(value, selector, caseInsensitive)
+        : Iterable.some(value, value =>
+            matchesValue(value, selector, caseInsensitive)
+          )
+    )
+    .getOr(false);
 }
 
-function matchesValue(value: string, selector: AttributeSelector): boolean {
+function matchesValue(
+  value: string,
+  selector: AttributeSelector,
+  caseInsensitive: boolean
+): boolean {
   if (selector.value === null) {
     return true;
+  }
+
+  if (caseInsensitive) {
+    value = value.toLowerCase();
   }
 
   switch (selector.matcher) {
@@ -391,15 +391,7 @@ function matchesValue(value: string, selector: AttributeSelector): boolean {
       return value === selector.value || value.startsWith(`${selector.value}-`);
 
     case AttributeMatcher.Includes:
-      const parts = value.split(whitespace);
-
-      for (let i = 0, n = parts.length; i < n; i++) {
-        if (parts[i] === selector.value) {
-          return true;
-        }
-      }
-
-      return false;
+      return Iterable.includes(value.split(whitespace), selector.value);
   }
 
   return false;
@@ -431,11 +423,12 @@ function matchesAttributeNamespace(
         if (attributeNamespace === null) {
           return true;
         }
-      } else if (
-        options.namespaces !== undefined &&
-        options.namespaces.get(selector.namespace) === attributeNamespace
-      ) {
-        return true;
+      } else if (options.namespaces !== undefined) {
+        const namespace = options.namespaces.get(selector.namespace);
+
+        if (namespace !== undefined && attributeNamespace.includes(namespace)) {
+          return true;
+        }
       }
     }
   }
@@ -534,14 +527,16 @@ function matchesDescendant(
   options: matches.Options,
   root: Selector
 ): boolean {
-  let parentElement = getParentElement(element, context, options);
+  let parentElement = getParentElement(element, context, options).getOr(null);
 
   while (parentElement !== null) {
     if (matches(parentElement, context, selector, options, root)) {
       return true;
     }
 
-    parentElement = getParentElement(parentElement, context, options);
+    parentElement = getParentElement(parentElement, context, options).getOr(
+      null
+    );
   }
 
   return false;
@@ -557,13 +552,11 @@ function matchesDirectDescendant(
   options: matches.Options,
   root: Selector
 ): boolean {
-  const parentElement = getParentElement(element, context, options);
-
-  if (parentElement === null) {
-    return false;
-  }
-
-  return matches(parentElement, context, selector, options, root);
+  return getParentElement(element, context, options)
+    .map(parentElement =>
+      matches(parentElement, context, selector, options, root)
+    )
+    .getOr(false);
 }
 
 /**
@@ -580,7 +573,7 @@ function matchesSibling(
     element,
     context,
     options
-  );
+  ).getOr(null);
 
   while (previousElementSibling !== null) {
     if (matches(previousElementSibling, context, selector, options, root)) {
@@ -591,7 +584,7 @@ function matchesSibling(
       previousElementSibling,
       context,
       options
-    );
+    ).getOr(null);
   }
 
   return false;
@@ -607,17 +600,11 @@ function matchesDirectSibling(
   options: matches.Options,
   root: Selector
 ): boolean {
-  const previousElementSibling = getPreviousElementSibling(
-    element,
-    context,
-    options
-  );
-
-  if (previousElementSibling === null) {
-    return false;
-  }
-
-  return matches(previousElementSibling, context, selector, options, root);
+  return getPreviousElementSibling(element, context, options)
+    .map(previousElementSibling =>
+      matches(previousElementSibling, context, selector, options, root)
+    )
+    .getOr(false);
 }
 
 /**
@@ -648,17 +635,14 @@ function matchesPseudoClass(
         return false;
       }
 
-      const host = getHost(treeContext, context);
-
-      if (host !== element) {
-        return false;
-      }
-
-      // Match host with possible selector argument (e.g. ":host(.foo)")
-      return (
-        selector.value === undefined ||
-        matches(element, context, selector.value, options, root)
-      );
+      return getHost(treeContext, context)
+        .filter(host => host === element)
+        .map(
+          host =>
+            selector.value === undefined ||
+            matches(element, context, selector.value, options, root)
+        )
+        .getOr(false);
     }
 
     // https://drafts.csswg.org/css-scoping/#host-selector
@@ -679,16 +663,17 @@ function matchesPseudoClass(
         return false;
       }
 
-      const host = getHost(treeContext, context);
-
-      if (host !== element) {
-        return false;
-      }
-
-      const predicate = (node: Node) =>
-        isElement(node) && matches(node, context, query, options, root);
-
-      return getClosest(host, context, predicate) !== null;
+      return getHost(treeContext, context)
+        .filter(host => host === element)
+        .flatMap(host =>
+          getClosest(
+            host,
+            context,
+            node =>
+              isElement(node) && matches(node, context, query, options, root)
+          )
+        )
+        .isSome();
     }
 
     // https://www.w3.org/TR/selectors/#negation-pseudo

@@ -1,8 +1,10 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { Some } from "@siteimprove/alfa-option";
 import { getAssignedSlot } from "../src/get-assigned-slot";
 
-test("Gets the assigned slot of an element", t => {
+test("getAssignedSlot() gets the assigned slot of an element", t => {
   const slot = <slot name="foo" />;
   const element = <span slot="foo">Hello world</span>;
 
@@ -13,5 +15,5 @@ test("Gets the assigned slot of an element", t => {
     </div>
   );
 
-  t.equal(getAssignedSlot(element, context), slot);
+  t.deepEqual(getAssignedSlot(element, context), Some.of(slot));
 });

@@ -18,7 +18,7 @@ export const Input: Feature = {
 };
 
 function role(input: Element, context: Node): Role | null {
-  switch (getInputType(input)) {
+  switch (getInputType(input, context).getOr(null)) {
     case InputType.Button:
     case InputType.Image:
     case InputType.Reset:
@@ -38,7 +38,7 @@ function role(input: Element, context: Node): Role | null {
       return Roles.Slider;
 
     case InputType.Search:
-      if (!hasAttribute(input, "list")) {
+      if (!hasAttribute(input, context, "list")) {
         return Roles.SearchBox;
       }
       return Roles.Combobox;
@@ -47,7 +47,7 @@ function role(input: Element, context: Node): Role | null {
     case InputType.Tel:
     case InputType.Text:
     case InputType.Url:
-      if (!hasAttribute(input, "list")) {
+      if (!hasAttribute(input, context, "list")) {
         return Roles.TextBox;
       }
       return Roles.Combobox;
@@ -58,7 +58,7 @@ function role(input: Element, context: Node): Role | null {
 }
 
 function allowedRoles(input: Element, context: Node): Array<Role> {
-  switch (getInputType(input)) {
+  switch (getInputType(input, context).getOr(null)) {
     case InputType.Button:
       return [
         Roles.Link,
@@ -72,7 +72,7 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
       ];
 
     case InputType.Checkbox:
-      if (hasAttribute(input, "aria-pressed")) {
+      if (hasAttribute(input, context, "aria-pressed")) {
         return [
           Roles.Button,
           Roles.MenuItemCheckbox,
@@ -96,7 +96,7 @@ function allowedRoles(input: Element, context: Node): Array<Role> {
       return [Roles.MenuItemRadio];
 
     case InputType.Text:
-      if (!hasAttribute(input, "list")) {
+      if (!hasAttribute(input, context, "list")) {
         return [Roles.Combobox, Roles.SearchBox, Roles.SpinButton];
       }
   }

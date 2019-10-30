@@ -30,7 +30,7 @@ export const Combobox: Role = {
 };
 
 function owned(combobox: Element, context: Node): Array<Role | [Role, Role]> {
-  if (getAttribute(combobox, "expanded") === "true") {
+  if (getAttribute(combobox, context, "expanded").includes("true")) {
     return [TextBox, ListBox, Tree, Grid, Dialog];
   }
 

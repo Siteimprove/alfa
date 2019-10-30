@@ -1,9 +1,10 @@
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Branched } from "@siteimprove/alfa-branched";
+import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   getParentElement,
-  isElement,
+  isText,
   Node,
   Text
 } from "@siteimprove/alfa-dom";
@@ -15,22 +16,17 @@ export function isExposed(
   node: Element | Text,
   context: Node,
   device: Device
-): boolean | BrowserSpecific<boolean> {
-  if (isElement(node)) {
-    return BrowserSpecific.map(getRole(node, context, device), role => {
-      if (role === Roles.Presentation || role === Roles.None) {
-        return false;
-      }
-
-      return isVisible(node, context, device);
-    });
+): Branched<boolean, Browser.Release> {
+  if (isText(node)) {
+    return getParentElement(node, context, { flattened: true })
+      .map(parentElement => isExposed(parentElement, context, device))
+      .getOrElse(() => Branched.of(false));
   }
 
-  const parentElement = getParentElement(node, context, { flattened: true });
-
-  if (parentElement !== null) {
-    return isExposed(parentElement, context, device);
-  }
-
-  return true;
+  return getRole(node, context, device).map(role =>
+    role
+      .filter(role => role !== Roles.Presentation && role !== Roles.None)
+      .map(() => isVisible(node, context, device))
+      .getOr(true)
+  );
 }

@@ -1,3 +1,4 @@
+import { Option } from "@siteimprove/alfa-option";
 import { getParentNode } from "./get-parent-node";
 import { isElement } from "./guards";
 import { Element, Node } from "./types";
@@ -13,17 +14,10 @@ export function getParentElement(
   node: Node,
   context: Node,
   options: getParentElement.Options = {}
-): Element | null {
-  const parentNode = getParentNode(node, context, {
-    ...options,
-    composed: false
-  });
-
-  if (parentNode === null || !isElement(parentNode)) {
-    return null;
-  }
-
-  return parentNode;
+): Option<Element> {
+  return getParentNode(node, context, { ...options, composed: false }).filter(
+    isElement
+  );
 }
 
 export namespace getParentElement {

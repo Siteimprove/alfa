@@ -1,3 +1,5 @@
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { getAttribute } from "./get-attribute";
 import { getClosest } from "./get-closest";
 import { getId } from "./get-id";
@@ -25,37 +27,44 @@ import { Element, Node } from "./types";
  *
  * @see https://html.spec.whatwg.org/#labeled-control
  */
-export function getLabel(element: Element, context: Node): Element | null {
-  if (!isLabelable(element)) {
-    return null;
+export function getLabel(element: Element, context: Node): Option<Element> {
+  if (!isLabelable(element, context)) {
+    return None;
   }
 
-  const id = getId(element);
+  return getId(element, context)
+    .andThen(id => {
+      if (id !== "") {
+        const rootNode = getRootNode(element, context);
 
-  if (id !== null && id !== "") {
-    const rootNode = getRootNode(element, context);
+        if (rootNode !== element) {
+          const label = querySelector(
+            rootNode,
+            context,
+            Predicate.chain(isElement)
+              .and(
+                element =>
+                  element.localName === "label" &&
+                  getAttribute(element, context, "for").includes(id)
+              )
+              .get()
+          );
 
-    if (rootNode !== element) {
-      const label = querySelector(
-        rootNode,
-        context,
-        node =>
-          isElement(node) &&
-          node.localName === "label" &&
-          getAttribute(node, "for") === id
-      );
+          return label.filter(label => {
+            const target = querySelector(
+              rootNode,
+              context,
+              Predicate.chain(isElement)
+                .and(element => getId(element, context).includes(id))
+                .get()
+            );
 
-      const target = querySelector(
-        rootNode,
-        context,
-        node => isElement(node) && getId(node) === id
-      );
-
-      if (label !== null && target === element) {
-        return label as Element;
+            return target.includes(element);
+          });
+        }
       }
-    }
-  }
 
-  return getClosest(element, context, "label");
+      return None;
+    })
+    .orElse(() => getClosest(element, context, "label"));
 }

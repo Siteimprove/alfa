@@ -1,9 +1,10 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
+import { Option } from "@siteimprove/alfa-option";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Element, Namespace, Node } from "./types";
 
-const namespaces = Cache.of<Node, Cache<Element, Namespace>>();
+const namespaces = Cache.empty<Node, Cache<Element, Namespace>>();
 
 /**
  * Given an element and a context, get the namespace of the element within the
@@ -14,13 +15,11 @@ const namespaces = Cache.of<Node, Cache<Element, Namespace>>();
 export function getElementNamespace(
   element: Element,
   context: Node
-): Namespace | null {
+): Option<Namespace> {
   return namespaces
-    .get(context, () => {
-      const namespaces = Cache.of<Element, Namespace>();
-
-      [
-        ...traverseNode(
+    .get(context, () =>
+      Cache.from<Element, Namespace>(
+        traverseNode(
           context,
           context,
           {
@@ -30,40 +29,30 @@ export function getElementNamespace(
               }
 
               if (node.localName === "svg") {
-                namespaces.set(node, Namespace.SVG);
-                return;
-              }
-
-              if (node.localName === "math") {
-                namespaces.set(node, Namespace.MathML);
-                return;
-              }
-
-              if (parentNode === null || !isElement(parentNode)) {
-                namespaces.set(node, Namespace.HTML);
-                return;
-              }
-
-              // As we're doing a top-down traversal, setting the namespace of
-              // every parent element before visiting its children, we can safely
-              // assert that the parent node will have a namespace defined.
-              const parentNamespace = namespaces.get(parentNode)!;
-
-              if (
-                node.localName === "foreignObject" &&
-                parentNamespace === Namespace.SVG
-              ) {
-                namespaces.set(node, Namespace.HTML);
+                yield [node, Namespace.SVG];
+              } else if (node.localName === "math") {
+                yield [node, Namespace.MathML];
+              } else if (parentNode === null || !isElement(parentNode)) {
+                yield [node, Namespace.HTML];
               } else {
-                namespaces.set(node, parentNamespace);
+                // As we're doing a top-down traversal, setting the namespace of
+                // every parent element before visiting its children, we can safely
+                // assert that the parent node will have a namespace defined.
+                // const parentNamespace = namespaces.get(parentNode)!;
+                // if (
+                //   node.localName === "foreignObject" &&
+                //   parentNamespace === Namespace.SVG
+                // ) {
+                //   yield [node, Namespace.HTML];
+                // } else {
+                //   yield [node, parentNamespace];
+                // }
               }
             }
           },
           { composed: true, nested: true }
         )
-      ];
-
-      return namespaces;
-    })
+      )
+    )
     .get(element);
 }

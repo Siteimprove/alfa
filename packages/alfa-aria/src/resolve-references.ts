@@ -5,6 +5,7 @@ import {
   Node,
   querySelector
 } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 const whitespace = /\s+/;
 
@@ -19,14 +20,16 @@ export function resolveReferences(
   const elements: Array<Element> = [];
 
   for (const id of references.trim().split(whitespace)) {
-    const element = querySelector<Element>(
+    const element = querySelector(
       node,
       context,
-      node => isElement(node) && getId(node) === id
+      Predicate.chain(isElement)
+        .and(element => getId(element, context).includes(id))
+        .get()
     );
 
-    if (element !== null) {
-      elements.push(element);
+    if (element.isSome()) {
+      elements.push(element.get());
     }
   }
 

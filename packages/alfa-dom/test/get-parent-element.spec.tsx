@@ -1,24 +1,27 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
 import { getParentElement } from "../src/get-parent-element";
 import { Document, NodeType } from "../src/types";
 
-test("Returns parent element", t => {
-  const body = <body />;
-  const html = <html>{body}</html>;
-  t.equal(getParentElement(body, html), html);
+const body = <body />;
+const html = <html>{body}</html>;
+
+const document: Document = {
+  nodeType: NodeType.Document,
+  childNodes: [<html />],
+  styleSheets: []
+};
+
+test("getParentElement() gets the parent element of an element", t => {
+  t.deepEqual(getParentElement(body, html), Some.of(html));
 });
 
-test("Returns null when parent does not exist", t => {
-  const div = <div />;
-  t.equal(getParentElement(div, div), null);
+test("getParentElement() returns none when no parent element exists", t => {
+  t.equal(getParentElement(html, html), None);
 });
 
-test("Returns null when parent is not an element", t => {
-  const document: Document = {
-    nodeType: NodeType.Document,
-    childNodes: [<html />],
-    styleSheets: []
-  };
-  t.equal(getParentElement(document.childNodes[0], document), null);
+test("getParentElement() returns none when a parent exists but it's not an element", t => {
+  t.equal(getParentElement(html, document), None);
 });

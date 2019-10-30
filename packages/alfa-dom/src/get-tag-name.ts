@@ -17,7 +17,7 @@ export function getTagName(element: Element, context: Node): string {
     qualifiedName = element.localName;
   }
 
-  if (getElementNamespace(element, context) === Namespace.HTML) {
+  if (getElementNamespace(element, context).includes(Namespace.HTML)) {
     return qualifiedName.toUpperCase();
   }
 

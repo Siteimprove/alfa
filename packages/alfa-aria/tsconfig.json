@@ -323,6 +323,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-branched"
+    },
+    {
       "path": "../alfa-collection"
     },
     {
@@ -333,6 +336,15 @@
     },
     {
       "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-test"

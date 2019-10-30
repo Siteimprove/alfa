@@ -109,6 +109,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-cache"
+    },
+    {
       "path": "../alfa-crypto"
     },
     {
@@ -118,7 +121,13 @@
       "path": "../alfa-device"
     },
     {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-lang"
+    },
+    {
+      "path": "../alfa-option"
     },
     {
       "path": "../alfa-test"

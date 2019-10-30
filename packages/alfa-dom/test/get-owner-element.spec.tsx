@@ -1,37 +1,16 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
 import { getOwnerElement } from "../src/get-owner-element";
-import { Attribute } from "../src/types";
 
-test("Returns owner element of attribute", t => {
-  const div1 = <div aria-label="foo" />;
-  const strong = <strong />;
-  const div2 = <div aria-label="bar" />;
-  const att: Attribute = div2.attributes[0];
-  const body = (
-    <body>
-      {div1}
-      foo
-      {strong}
-      {div2}
-    </body>
-  );
+const p = <p title="foo" />;
+const title = p.attributes[0];
 
-  t.equal(getOwnerElement(att, body), div2);
+test("getOwnerElement() gets the owner element of an attribute", t => {
+  t.deepEqual(getOwnerElement(title, p), Some.of(p));
 });
 
-test("Returns null when owner element is not present in the passed context", t => {
-  const div1 = <div aria-label="foo" />;
-  const strong = <strong />;
-  const div2 = <div aria-label="bar" />;
-  const att: Attribute = div2.attributes[0];
-  const body = (
-    <body>
-      {div1}
-      foo
-      {strong}
-    </body>
-  );
-
-  t.equal(getOwnerElement(att, body), null);
+test("getOwnerElement() returns none when an attribute has no owner in a context", t => {
+  t.equal(getOwnerElement(title, <div />), None);
 });

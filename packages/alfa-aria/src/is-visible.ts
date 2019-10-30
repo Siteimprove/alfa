@@ -22,13 +22,9 @@ export function isVisible(
   device: Device
 ): boolean {
   if (isText(node)) {
-    const parentElement = getParentElement(node, context, { flattened: true });
-
-    if (parentElement === null) {
-      return false;
-    }
-
-    node = parentElement;
+    return getParentElement(node, context, { flattened: true })
+      .map(parentElement => isVisible(parentElement, context, device))
+      .getOr(false);
   }
 
   return visibilities
@@ -48,9 +44,9 @@ export function isVisible(
                 if (!isRendered(node, context, device)) {
                   visibilities.set(node, false);
                 } else {
-                  const hidden = getAttribute(node, "aria-hidden");
+                  const hidden = getAttribute(node, context, "aria-hidden");
 
-                  if (hidden === "true") {
+                  if (hidden.includes("true")) {
                     visibilities.set(node, false);
                   } else if (parentNode !== null && isElement(parentNode)) {
                     const isParentVisible = visibilities.get(parentNode);

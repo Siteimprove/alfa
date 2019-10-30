@@ -18,12 +18,14 @@ export const Select: Feature = {
 };
 
 function role(select: Element, context: Node): Role {
-  const size = getAttribute(select, "size");
+  const size = getAttribute(select, context, "size").getOr(null);
+
   if (
-    !hasAttribute(select, "multiple") &&
+    !hasAttribute(select, context, "multiple") &&
     (size === null || parseInt(size) <= 1)
   ) {
     return Roles.Combobox;
   }
+
   return Roles.ListBox;
 }

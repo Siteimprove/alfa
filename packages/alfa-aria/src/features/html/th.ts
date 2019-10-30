@@ -1,4 +1,4 @@
-import { Element, getAttribute } from "@siteimprove/alfa-dom";
+import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import * as Roles from "../../roles";
 import { Any, Feature, Role } from "../../types";
 
@@ -13,8 +13,8 @@ export const Th: Feature = {
   allowedRoles: () => Any(Roles)
 };
 
-function role(th: Element): Role | null {
-  switch (getAttribute(th, "scope")) {
+function role(th: Element, context: Node): Role | null {
+  switch (getAttribute(th, context, "scope").getOr(null)) {
     case "row":
     case "rowgroup":
       return Roles.RowHeader;

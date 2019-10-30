@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import {
   CascadedStyle,
   ComputedStyle,
@@ -12,7 +13,8 @@ import {
   StyleTree
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Cache, Mutable, Option } from "@siteimprove/alfa-util";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Mutable } from "@siteimprove/alfa-util";
 import { getAttribute } from "./get-attribute";
 import { Cascade, getCascade } from "./get-cascade";
 import { getChildNodes } from "./get-child-nodes";
@@ -32,13 +34,9 @@ export function getCascadedStyle(
   device: Device,
   options: getCascadedStyle.Options = {}
 ): CascadedStyle<Rule> {
-  const style = getStyle(element, context, device, options);
-
-  if (style === null) {
-    return {};
-  }
-
-  return style.cascaded;
+  return getStyle(element, context, device, options)
+    .map(style => style.cascaded)
+    .getOr({});
 }
 
 export namespace getCascadedStyle {
@@ -54,13 +52,9 @@ export function getSpecifiedStyle(
   device: Device,
   options: getSpecifiedStyle.Options = {}
 ): SpecifiedStyle<Rule> {
-  const style = getStyle(element, context, device, options);
-
-  if (style === null) {
-    return {};
-  }
-
-  return style.specified;
+  return getStyle(element, context, device, options)
+    .map(style => style.specified)
+    .getOr({});
 }
 
 export namespace getSpecifiedStyle {
@@ -76,13 +70,9 @@ export function getComputedStyle(
   device: Device,
   options: getComputedStyle.Options = {}
 ): ComputedStyle<Rule> {
-  const style = getStyle(element, context, device, options);
-
-  if (style === null) {
-    return {};
-  }
-
-  return style.computed;
+  return getStyle(element, context, device, options)
+    .map(style => style.computed)
+    .getOr({});
 }
 
 export namespace getComputedStyle {
@@ -94,7 +84,7 @@ function getStyle(
   context: Node,
   device: Device,
   options: getStyle.Options = {}
-): Style<Rule> | null {
+): Option<Style<Rule>> {
   const styleTree = getStyleTree(
     getRootNode(element, context),
     context,
@@ -104,14 +94,10 @@ function getStyle(
 
   if (options.pseudo !== undefined) {
     const pseudoElement = pseudoElements
-      .get(element, Cache.of)
+      .get(element, Cache.empty)
       .get(options.pseudo);
 
-    if (pseudoElement !== null) {
-      return styleTree.get(pseudoElement);
-    }
-
-    return null;
+    return pseudoElement.flatMap(pseudoElement => styleTree.get(pseudoElement));
   }
 
   return styleTree.get(element);
@@ -126,7 +112,7 @@ namespace getStyle {
   }
 }
 
-const styleTrees = Cache.of<
+const styleTrees = Cache.empty<
   Node,
   Cache<Device, Cache<Node, StyleTree<Node | object, Rule>>>
 >();
@@ -138,13 +124,13 @@ function getStyleTree(
   options: getStyle.Options = {}
 ): StyleTree<Node | object, Rule> {
   return styleTrees
-    .get(context, Cache.of)
-    .get(device, Cache.of)
+    .get(context, Cache.empty)
+    .get(device, Cache.empty)
     .get(node, () => {
       const cascade =
         isDocument(node) || isShadowRoot(node)
-          ? getCascade(node, device)
-          : null;
+          ? Some.of(getCascade(node, device))
+          : None;
 
       return new StyleTree(
         getStyleEntry(node, context, cascade, device, options),
@@ -156,7 +142,7 @@ function getStyleTree(
 function getStyleEntry(
   node: Node,
   context: Node,
-  cascade: Cascade | null,
+  cascade: Option<Cascade>,
   device: Device,
   options: getStyle.Options = {}
 ): StyleEntry<Node | object, Rule> {
@@ -165,8 +151,15 @@ function getStyleEntry(
   const children: Array<StyleEntry<Node | object, Rule>> = [];
 
   if (isElement(node)) {
-    if (cascade !== null) {
-      for (let rule = cascade.get(node); rule !== null; rule = rule.parent) {
+    if (cascade.isSome()) {
+      for (
+        let rule = cascade
+          .get()
+          .get(node)
+          .getOr(null);
+        rule !== null;
+        rule = rule.parent
+      ) {
         const { selector } = rule;
         const { hover, active, focus } = options;
 
@@ -182,13 +175,13 @@ function getStyleEntry(
 
           if (pseudoElement === null) {
             for (let i = 0, n = rule.declarations.length; i < n; i++) {
-              declarations.push([rule.declarations[i], rule.rule]);
+              declarations.push([rule.declarations[i], Some.of(rule.rule)]);
             }
           } else {
             const declarations: Array<[Declaration, Option<Rule>]> = [];
 
             for (const declaration of rule.declarations) {
-              declarations.push([declaration, rule.rule]);
+              declarations.push([declaration, Some.of(rule.rule)]);
             }
 
             children.push({
@@ -201,18 +194,18 @@ function getStyleEntry(
       }
     }
 
-    const style = getAttribute(node, "style");
+    const style = getAttribute(node, context, "style");
 
-    if (style !== null) {
-      const declaration = parseDeclaration(style);
+    if (style.isSome()) {
+      const declaration = parseDeclaration(style.get());
 
       if (declaration !== null) {
         if (isArray(declaration)) {
           for (let i = 0, n = declaration.length; i < n; i++) {
-            declarations.push([important(declaration[i]), null]);
+            declarations.push([important(declaration[i]), None]);
           }
         } else {
-          declarations.push([important(declaration), null]);
+          declarations.push([important(declaration), None]);
         }
       }
     }
@@ -231,7 +224,7 @@ function getStyleEntry(
   return { target: node, declarations, children };
 }
 
-const pseudoElements = Cache.of<
+const pseudoElements = Cache.empty<
   Element,
   Cache<PseudoElement, { readonly pseudoElement: PseudoElement }>
 >();
@@ -240,12 +233,7 @@ function getPseudoElement(element: Element, selector: Selector): object | null {
   switch (selector.type) {
     case SelectorType.PseudoElementSelector: {
       return pseudoElements
-        .get(element, () => {
-          return Cache.of<
-            PseudoElement,
-            { readonly pseudoElement: PseudoElement }
-          >({ weak: false });
-        })
+        .get(element, () => Cache.empty(Cache.Type.Strong))
         .get(selector.name, () => {
           return { pseudoElement: selector.name };
         });

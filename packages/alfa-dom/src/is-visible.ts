@@ -16,13 +16,9 @@ export function isVisible(
   device: Device
 ): boolean {
   if (isText(node)) {
-    const parentElement = getParentElement(node, context, { flattened: true });
-
-    if (parentElement === null) {
-      return false;
-    }
-
-    node = parentElement;
+    return getParentElement(node, context, { flattened: true })
+      .map(parentElement => isVisible(parentElement, context, device))
+      .getOr(false);
   }
 
   return visibilities

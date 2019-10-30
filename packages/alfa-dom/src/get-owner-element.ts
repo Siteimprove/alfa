@@ -1,9 +1,10 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
+import { Option } from "@siteimprove/alfa-option";
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Attribute, Element, Node } from "./types";
 
-const ownerElements = Cache.of<Node, Cache<Attribute, Element>>();
+const ownerElements = Cache.empty<Node, Cache<Attribute, Element>>();
 
 /**
  * Given an attribute and a context, get the owner element of that attribute
@@ -13,13 +14,11 @@ const ownerElements = Cache.of<Node, Cache<Attribute, Element>>();
 export function getOwnerElement(
   attribute: Attribute,
   context: Node
-): Element | null {
+): Option<Element> {
   return ownerElements
-    .get(context, () => {
-      const ownerElements = Cache.of<Attribute, Element>({ weak: false });
-
-      [
-        ...traverseNode(
+    .get(context, () =>
+      Cache.from<Attribute, Element>(
+        traverseNode(
           context,
           context,
           {
@@ -28,16 +27,15 @@ export function getOwnerElement(
                 const { attributes } = node;
 
                 for (let i = 0, n = attributes.length; i < n; i++) {
-                  ownerElements.set(attributes[i], node);
+                  yield [attributes[i], node];
                 }
               }
             }
           },
           { composed: true, nested: true }
-        )
-      ];
-
-      return ownerElements;
-    })
+        ),
+        Cache.Type.Strong
+      )
+    )
     .get(attribute);
 }

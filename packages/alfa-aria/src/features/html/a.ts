@@ -8,9 +8,10 @@ import { Any, Feature } from "../../types";
  */
 export const A: Feature = {
   element: "a",
-  role: anchor => (hasAttribute(anchor, "href") ? Roles.Link : null),
-  allowedRoles: anchor =>
-    hasAttribute(anchor, "href")
+  role: (anchor, context) =>
+    hasAttribute(anchor, context, "href") ? Roles.Link : null,
+  allowedRoles: (anchor, context) =>
+    hasAttribute(anchor, context, "href")
       ? [
           Roles.Button,
           Roles.Checkbox,

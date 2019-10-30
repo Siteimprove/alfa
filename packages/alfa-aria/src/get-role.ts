@@ -1,4 +1,5 @@
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
+import { Branched } from "@siteimprove/alfa-branched";
+import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
@@ -7,12 +8,11 @@ import {
   Namespace,
   Node
 } from "@siteimprove/alfa-dom";
-import { Option, values } from "@siteimprove/alfa-util";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { values } from "@siteimprove/alfa-util";
 import * as Features from "./features";
 import * as Roles from "./roles";
 import { Category, Feature, Role } from "./types";
-
-const { map } = BrowserSpecific;
 
 const whitespace = /\s+/;
 
@@ -44,72 +44,73 @@ featuresByNamespace.set(Namespace.SVG, svgFeaturesByElement);
  * the context. If the element does not have a role then `null` is returned.
  *
  * @see https://html.spec.whatwg.org/#attr-aria-role
- *
- * @example
- * const button = <button>Foo</button>;
- * getRole(button, <section>{button}</section>);
- * // => Button
  */
 export function getRole(
   element: Element,
   context: Node,
   device: Device,
   options: getRole.Options = { explicit: true, implicit: true }
-): Option<Role> | BrowserSpecific<Option<Role>> {
-  const value = getAttribute(element, "role", { trim: true });
+): Branched<Option<Role>, Browser.Release> {
+  const role = getAttribute(element, context, "role").map(role => role.trim());
 
-  let role: Option<string> | BrowserSpecific<Option<string>>;
+  return (
+    Branched.of<Option<string>, Browser.Release>(
+      role.map(role => role.toLowerCase())
+    )
 
-  // Firefox currently treats the `role` attribute as case-sensitive so if it's
-  // set and it's not lowercased, we branch off.
-  // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
-  if (value !== null && value !== value.toLowerCase()) {
-    role = BrowserSpecific.of(value, ["firefox"])
-      .branch(value.toLowerCase(), ["chrome", "edge", "ie", "opera", "safari"])
-      .get();
-  } else {
-    role = value === null ? value : value.toLowerCase();
-  }
+      // Firefox currently treats the `role` attribute as case-sensitive so it
+      // is not lowercased.
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
+      .branch(role, ...Browser.query(["firefox"]))
 
-  return map(role, role => {
-    if (options.explicit !== false && role !== null) {
-      for (const name of role.split(whitespace)) {
-        const role = rolesByName.get(name);
+      .map(role =>
+        role
+          .andThen(role => {
+            if (options.explicit !== false) {
+              for (const name of role.split(whitespace)) {
+                const role = rolesByName.get(name);
 
-        if (role !== undefined && role.category !== Category.Abstract) {
-          return role;
-        }
-      }
-    }
+                if (role !== undefined && role.category !== Category.Abstract) {
+                  return Some.of(role);
+                }
+              }
+            }
 
-    if (options.implicit !== false) {
-      const elementNamespace = getElementNamespace(element, context);
+            return None;
+          })
+          .orElse(() => {
+            if (options.implicit !== false) {
+              return getElementNamespace(element, context).flatMap(
+                elementNamespace => {
+                  const featuresByElement = featuresByNamespace.get(
+                    elementNamespace
+                  );
 
-      if (elementNamespace === null) {
-        return null;
-      }
+                  const feature =
+                    featuresByElement === undefined
+                      ? undefined
+                      : featuresByElement.get(element.localName);
 
-      const featuresByElement = featuresByNamespace.get(elementNamespace);
+                  if (feature !== undefined) {
+                    const role =
+                      typeof feature.role === "function"
+                        ? feature.role(element, context, device)
+                        : feature.role;
 
-      const feature =
-        featuresByElement === undefined
-          ? undefined
-          : featuresByElement.get(element.localName);
+                    if (role !== undefined && role !== null) {
+                      return Some.of(role);
+                    }
+                  }
 
-      if (feature !== undefined) {
-        const role =
-          typeof feature.role === "function"
-            ? feature.role(element, context, device)
-            : feature.role;
+                  return None;
+                }
+              );
+            }
 
-        if (role !== undefined) {
-          return role;
-        }
-      }
-    }
-
-    return null;
-  });
+            return None;
+          })
+      )
+  );
 }
 
 export namespace getRole {

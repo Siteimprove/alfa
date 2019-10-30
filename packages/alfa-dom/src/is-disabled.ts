@@ -20,39 +20,32 @@ export function isDisabled(element: Element, context: Node): boolean {
     case "textarea":
     // https://html.spec.whatwg.org/#attr-fieldset-disabled
     case "fieldset":
-      if (hasAttribute(element, "disabled")) {
+      if (hasAttribute(element, context, "disabled")) {
         return true;
       }
 
-      const parentElement = getParentElement(element, context);
-
-      if (parentElement === null) {
-        return false;
-      }
-
-      const fieldset = getClosest(parentElement, context, "fieldset");
-
-      if (fieldset === null || !isDisabled(fieldset, context)) {
-        return false;
-      }
-
-      const legend = querySelector(fieldset, context, "legend");
-
-      return legend !== null && !contains(legend, context, element);
+      return getParentElement(element, context)
+        .flatMap(parentElement =>
+          getClosest(parentElement, context, "fieldset")
+        )
+        .filter(fieldset => !isDisabled(fieldset, context))
+        .flatMap(fieldset => querySelector(fieldset, context, "legend"))
+        .map(legend => !contains(legend, context, element))
+        .getOr(false);
 
     // https://html.spec.whatwg.org/#attr-option-disabled
     case "option":
-      if (hasAttribute(element, "disabled")) {
+      if (hasAttribute(element, context, "disabled")) {
         return true;
       }
 
-      const optgroup = getClosest(element, context, "optgroup");
-
-      return optgroup !== null && isDisabled(optgroup, context);
+      return getClosest(element, context, "optgroup")
+        .map(optgroup => isDisabled(optgroup, context))
+        .getOr(false);
 
     // https://html.spec.whatwg.org/#attr-optgroup-disabled
     case "optgroup":
-      return hasAttribute(element, "disabled");
+      return hasAttribute(element, context, "disabled");
   }
 
   return false;

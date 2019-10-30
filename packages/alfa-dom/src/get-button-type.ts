@@ -1,5 +1,6 @@
+import { None, Option } from "@siteimprove/alfa-option";
 import { getAttribute } from "./get-attribute";
-import { Element } from "./types";
+import { Element, Node } from "./types";
 
 export const enum ButtonType {
   Submit,
@@ -13,23 +14,26 @@ export const enum ButtonType {
  *
  * @see https://html.spec.whatwg.org/#attr-button-type
  */
-export function getButtonType(element: Element): ButtonType | null {
+export function getButtonType(
+  element: Element,
+  context: Node
+): Option<ButtonType> {
   if (element.localName !== "button") {
-    return null;
+    return None;
   }
 
-  // The `type` attribute of is an enumerated attribute and is therefore case-
-  // insensitive.
-  // https://html.spec.whatwg.org/#enumerated-attribute
-  const type = getAttribute(element, "type", { lowerCase: true });
-
-  switch (type) {
-    case "submit":
-    default:
-      return ButtonType.Submit;
-    case "reset":
-      return ButtonType.Reset;
-    case "button":
-      return ButtonType.Button;
-  }
+  return getAttribute(element, context, "type").map(type => {
+    // The `type` attribute of is an enumerated attribute and is therefore case-
+    // insensitive.
+    // https://html.spec.whatwg.org/#enumerated-attribute
+    switch (type.toLowerCase()) {
+      case "submit":
+      default:
+        return ButtonType.Submit;
+      case "reset":
+        return ButtonType.Reset;
+      case "button":
+        return ButtonType.Button;
+    }
+  });
 }

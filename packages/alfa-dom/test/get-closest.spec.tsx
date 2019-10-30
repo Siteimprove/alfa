@@ -1,40 +1,50 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { getClosest } from "../src/get-closest";
 import { isElement } from "../src/guards";
 import { hasAttribute } from "../src/has-attribute";
 
-test("Gets closest parent with class=foo using string query", t => {
+test("getClosest() gets the closest element that matches a selector", t => {
   const span = <span />;
   const div = <div class="foo">{span}</div>;
-  t.equal(getClosest(span, div, ".foo"), div);
+
+  t.deepEqual(getClosest(span, div, ".foo"), Some.of(div));
 });
 
-test("Gets closest parent with aria-label attribute using predicate query", t => {
+test("getClosest() gets the closest element that matches a predicate", t => {
   const span = <span />;
   const div = (
     <div aria-label="foo">
       <div class="bar">{span}</div>
     </div>
   );
-  t.equal(
+
+  t.deepEqual(
     getClosest(
       span,
       div,
-      node => isElement(node) && hasAttribute(node, "aria-label")
+      Predicate.chain(isElement)
+        .and(element => hasAttribute(element, div, "aria-label"))
+        .get()
     ),
-    div
+    Some.of(div)
   );
 });
 
-test("Returns null when no parent matches query", t => {
+test("getClosest() returns none when no element is found", t => {
   const span = <span />;
+
   t.equal(
     getClosest(
       span,
       span,
-      node => isElement(node) && hasAttribute(node, "aria-label")
+      Predicate.chain(isElement)
+        .and(element => hasAttribute(element, span, "aria-label"))
+        .get()
     ),
-    null
+    None
   );
 });

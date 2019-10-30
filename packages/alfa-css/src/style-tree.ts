@@ -1,5 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
-import { keys, Mutable, Option, set } from "@siteimprove/alfa-util";
+import { None, Option } from "@siteimprove/alfa-option";
+import { keys, Mutable, set } from "@siteimprove/alfa-util";
 
 import {
   CascadedPropertyValue,
@@ -21,8 +22,8 @@ type Shorthands = typeof Shorthands;
 
 export interface StyleEntry<T, S> {
   readonly target: T;
-  readonly declarations: Array<[Declaration, Option<S>]>;
-  readonly children: Array<StyleEntry<T, S>>;
+  readonly declarations: Iterable<[Declaration, Option<S>]>;
+  readonly children: Iterable<StyleEntry<T, S>>;
 }
 
 /**
@@ -68,22 +69,16 @@ export class StyleTree<T extends object, S> {
   }
 
   public get(target: T): Option<Style<S>> {
-    const style = this.styles.get(target);
-
-    if (style === undefined) {
-      return null;
-    }
-
-    return style;
+    return Option.from(this.styles.get(target));
   }
 }
 
 function visit<T, S>(
   entry: StyleEntry<T, S>,
-  parentEntry: Option<StyleEntry<T, S>>,
+  parentEntry: StyleEntry<T, S> | null,
   visitor: (
     entry: StyleEntry<T, S>,
-    parentEntry: Option<StyleEntry<T, S>>
+    parentEntry: StyleEntry<T, S> | null
   ) => void
 ): void {
   visitor(entry, parentEntry);
@@ -112,7 +107,7 @@ for (const propertyName of keys(Shorthands)) {
   addPropertyName(propertyName);
 }
 
-function getPropertyName(input: string): Option<PropertyName> {
+function getPropertyName(input: string): PropertyName | null {
   const propertyName = propertyNames.get(input);
 
   if (propertyName === undefined) {
@@ -248,7 +243,7 @@ function resolveSpecifiedStyle<S>(style: Style<S>): SpecifiedStyle<S> {
       const parentValue = parentStyle[propertyName];
 
       if (parentValue === undefined || inherits !== true) {
-        setProperty(propertyName, initial(), null);
+        setProperty(propertyName, initial(), None);
       } else {
         const { value, source } = parentValue;
         setProperty(propertyName, value, source);

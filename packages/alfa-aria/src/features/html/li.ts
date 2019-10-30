@@ -23,7 +23,7 @@ export const Li: Feature = {
 };
 
 function role(il: Element, context: Node): Role | null {
-  const parent = getParentElement(il, context);
+  const parent = getParentElement(il, context).getOr(null);
 
   if (parent !== null) {
     switch (parent.localName) {

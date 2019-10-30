@@ -19,7 +19,7 @@ export function traverseNode<T>(
   let parentNode: Node | null = null;
 
   if (node !== context) {
-    parentNode = getParentNode(node, context, options);
+    parentNode = getParentNode(node, context, options).getOr(null);
   }
 
   return visitNode(node, parentNode, context, visitors, options);
