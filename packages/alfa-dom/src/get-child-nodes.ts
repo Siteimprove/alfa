@@ -8,16 +8,14 @@ import { Node } from "./types";
  *
  * @see https://dom.spec.whatwg.org/#dom-node-childnodes
  */
-export function getChildNodes(
+export function* getChildNodes(
   node: Node,
   context: Node,
   options: getChildNodes.Options = {}
 ): Iterable<Node> {
-  const result: Array<Node> = [];
-
   if (options.flattened === true) {
     if (isElement(node) && node.localName === "slot") {
-      return getAssignedNodes(node, context);
+      return yield* getAssignedNodes(node, context);
     }
   }
 
@@ -25,11 +23,11 @@ export function getChildNodes(
 
   if (shadowRoot !== null && shadowRoot !== undefined) {
     if (options.flattened === true) {
-      return getChildNodes(shadowRoot, context, options);
+      return yield* getChildNodes(shadowRoot, context, options);
     }
 
     if (options.composed === true) {
-      result.push(shadowRoot);
+      yield shadowRoot;
     }
   }
 
@@ -43,13 +41,11 @@ export function getChildNodes(
       isElement(childNode) &&
       childNode.localName === "slot"
     ) {
-      result.push(...getAssignedNodes(childNode, context));
+      yield* getAssignedNodes(childNode, context);
     } else {
-      result.push(childNode);
+      yield childNode;
     }
   }
-
-  return result;
 }
 
 export namespace getChildNodes {

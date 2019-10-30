@@ -1,4 +1,5 @@
 import { Algorithm, Encoding, getHash } from "@siteimprove/alfa-crypto";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { getAttributeNamespace } from "./get-attribute-namespace";
 import { getChildNodes } from "./get-child-nodes";
 import { getElementNamespace } from "./get-element-namespace";
@@ -22,15 +23,15 @@ export function getDigest(
   node: Node,
   context: Node,
   options: getDigest.Options = {}
-): string | null {
+): Option<string> {
   if (isComment(node) || isDocumentType(node)) {
-    return null;
+    return None;
   }
 
   const { algorithm = "sha256", encoding = "base64", filters = {} } = options;
 
   if (filters.node !== undefined && !filters.node(node, context)) {
-    return null;
+    return None;
   }
 
   const hash = getHash(algorithm);
@@ -44,10 +45,10 @@ export function getDigest(
   if (isElement(node)) {
     const namespace = getElementNamespace(node, context);
 
-    if (namespace === null) {
-      hash.update(node.localName);
+    if (namespace.isSome()) {
+      hash.update(`${namespace.get()}:${node.localName}`);
     } else {
-      hash.update(`${namespace}:${node.localName}`);
+      hash.update(node.localName);
     }
 
     hash.update("\u{0000}");
@@ -76,10 +77,10 @@ export function getDigest(
 
       const value = `${attribute.localName}\u{0000}${attribute.value}`;
 
-      if (namespace === null) {
-        attributeDigests.push(value);
+      if (namespace.isSome()) {
+        attributeDigests.push(`${namespace.get()}:${value}`);
       } else {
-        attributeDigests.push(`${namespace}:${value}`);
+        attributeDigests.push(value);
       }
     }
 
@@ -95,8 +96,8 @@ export function getDigest(
   for (const childNode of getChildNodes(node, context, options)) {
     const childDigest = getDigest(childNode, context, options);
 
-    if (childDigest !== null) {
-      childDigests.push(childDigest);
+    if (childDigest.isSome()) {
+      childDigests.push(childDigest.get());
     }
   }
 
@@ -106,7 +107,7 @@ export function getDigest(
     hash.update(childDigests[i]);
   }
 
-  return hash.digest(encoding);
+  return Some.of(hash.digest(encoding));
 }
 
 export namespace getDigest {
