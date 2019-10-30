@@ -3,6 +3,7 @@ import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { None } from "./none";
@@ -14,6 +15,8 @@ export interface Option<T> extends Monad<T>, Functor<T>, Foldable<T>, Equality {
   map<U>(mapper: Mapper<T, U>): Option<U>;
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+  includes(value: T): boolean;
+  filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
   and<U>(option: Option<U>): Option<U>;
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
   or<U>(option: Option<U>): Some<T> | Option<U>;

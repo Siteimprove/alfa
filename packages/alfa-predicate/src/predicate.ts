@@ -1,6 +1,8 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 
-export type Predicate<T, U extends T = T> = (value: T) => boolean;
+export type Predicate<T, U extends T = T> =
+  | ((value: T) => boolean)
+  | ((value: T) => value is U);
 
 export namespace Predicate {
   export function fold<T, U extends T, V>(
@@ -69,20 +71,16 @@ export namespace Predicate {
       return this.predicate(value);
     }
 
-    public and<V extends U>(
-      predicate: Predicate<U, V>
-    ): Omit<Chain<T, V>, "or"> {
+    public and<V extends U>(predicate: Predicate<U, V>): Chain<T, V> {
       return new Chain(and(this.predicate, predicate));
     }
 
-    public or<V extends T>(
-      predicate: Predicate<T, V>
-    ): Omit<Chain<T, U | V>, "and"> {
+    public or<V extends T>(predicate: Predicate<T, V>): Chain<T, U | V> {
       return new Chain(or(this.predicate, predicate));
     }
   }
 
-  export function chain<T>(): Omit<Chain<T>, "or">;
+  export function chain<T>(): Chain<T>;
 
   export function chain<T, U extends T = T>(
     predicate: Predicate<T, U>

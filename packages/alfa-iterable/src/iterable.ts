@@ -5,7 +5,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 export namespace Iterable {
-  export function* map<T, U>(
+  export function* from<T>(arrayLike: ArrayLike<T>): Iterable<T> {
+    for (let i = 0, n = arrayLike.length; i < n; i++) {
+      yield arrayLike[i];
+    }
+  }
+
+  export function* map<T, U = T>(
     iterable: Iterable<T>,
     mapper: Mapper<T, U>
   ): Iterable<U> {
@@ -14,7 +20,7 @@ export namespace Iterable {
     }
   }
 
-  export function* flatMap<T, U>(
+  export function* flatMap<T, U = T>(
     iterable: Iterable<T>,
     mapper: Mapper<T, Iterable<U>>
   ): Iterable<U> {
@@ -23,7 +29,7 @@ export namespace Iterable {
     }
   }
 
-  export function reduce<T, U>(
+  export function reduce<T, U = T>(
     iterable: Iterable<T>,
     reducer: Reducer<T, U>,
     accumulator: U
@@ -45,7 +51,7 @@ export namespace Iterable {
     return false;
   }
 
-  export function find<T, U extends T>(
+  export function find<T, U extends T = T>(
     iterable: Iterable<T>,
     predicate: Predicate<T, U>
   ): Option<U> {
@@ -58,7 +64,33 @@ export namespace Iterable {
     return None;
   }
 
-  export function* filter<T, U extends T>(
+  export function some<T, U extends T = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, U>
+  ): boolean {
+    for (const value of iterable) {
+      if (Predicate.test(predicate, value)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  export function every<T, U extends T = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, U>
+  ): boolean {
+    for (const value of iterable) {
+      if (!Predicate.test(predicate, value)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  export function* filter<T, U extends T = T>(
     iterable: Iterable<T>,
     predicate: Predicate<T, U>
   ): Iterable<U> {
@@ -67,6 +99,34 @@ export namespace Iterable {
         yield value;
       }
     }
+  }
+
+  export function first<T>(iterable: Iterable<T>): Option<T> {
+    for (const value of iterable) {
+      return Some.of(value);
+    }
+
+    return None;
+  }
+
+  export function join(iterable: Iterable<string>, separator: string): string {
+    const iterator = iterable[Symbol.iterator]();
+
+    let next = iterator.next();
+
+    if (next.done === true) {
+      return "";
+    }
+
+    let result = next.value;
+    next = iterator.next();
+
+    while (next.done !== true) {
+      result += separator + next.value;
+      next = iterator.next();
+    }
+
+    return result;
   }
 
   export function subtract<T>(

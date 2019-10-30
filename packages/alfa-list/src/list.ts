@@ -112,7 +112,7 @@ export class List<T>
       value = tail[index - offset];
     }
 
-    return Some.of(value!);
+    return Some.of(value);
   }
 
   public set(index: number, value: T): List<T> {
