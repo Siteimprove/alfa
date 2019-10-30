@@ -47,6 +47,14 @@ export class Cache<K, V> {
     this.entries.set(key, value);
     return this;
   }
+
+  public merge(iterable: Iterable<[K, V]>): this {
+    return Iterable.reduce(
+      iterable,
+      (cache, [key, value]) => cache.set(key, value),
+      this
+    );
+  }
 }
 
 export namespace Cache {
@@ -76,10 +84,6 @@ export namespace Cache {
     const cache: Cache<K, V> =
       type === Cache.Type.Strong ? Cache.empty(type) : Cache.empty(type);
 
-    return Iterable.reduce(
-      iterable,
-      (cache, [key, value]) => cache.set(key, value),
-      cache
-    );
+    return cache.merge(iterable);
   }
 }
