@@ -12,7 +12,6 @@ export * from "./get-cascade";
 export * from "./get-child-nodes";
 export * from "./get-class-list";
 export * from "./get-closest";
-export * from "./get-digest";
 export * from "./get-document-position";
 export * from "./get-element-namespace";
 export * from "./get-id";
