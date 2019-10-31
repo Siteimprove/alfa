@@ -9,7 +9,7 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Branched<T, B>
-  implements Monad<T>, Functor<T>, Foldable<T>, Equality {
+  implements Monad<T>, Functor<T>, Foldable<T>, Equality<Branched<T, B>> {
   public static of<T, B>(value: T, ...branches: Array<B>): Branched<T, B> {
     return new Branched<T, B>(
       List.of(
@@ -124,7 +124,7 @@ export namespace Branched {
   }
 }
 
-class Value<T, B> implements Equality {
+class Value<T, B> implements Equality<Value<T, B>> {
   public static of<T, B>(
     value: T,
     branches: Option<List<B>> = None
