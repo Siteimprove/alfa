@@ -12,7 +12,7 @@ export interface Result<T, E>
   extends Monad<T>,
     Functor<T>,
     Foldable<T>,
-    Equality {
+    Equality<Result<T, E>> {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;

@@ -10,7 +10,7 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Leaf, Node } from "./node";
 
 export class List<T>
-  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equality {
+  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equality<List<T>> {
   public static of<T>(...values: Array<T>): List<T> {
     return values.reduce((list, value) => list.push(value), List.empty<T>());
   }

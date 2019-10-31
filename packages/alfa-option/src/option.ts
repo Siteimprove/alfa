@@ -9,7 +9,11 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import { None } from "./none";
 import { Some } from "./some";
 
-export interface Option<T> extends Monad<T>, Functor<T>, Foldable<T>, Equality {
+export interface Option<T>
+  extends Monad<T>,
+    Functor<T>,
+    Foldable<T>,
+    Equality<Option<T>> {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;

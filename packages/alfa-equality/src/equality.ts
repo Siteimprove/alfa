@@ -1,5 +1,5 @@
-export interface Equality {
-  equals(value: unknown): boolean;
+export interface Equality<T = unknown> {
+  equals(value: unknown): value is T;
 }
 
 export namespace Equality {
@@ -11,7 +11,7 @@ export namespace Equality {
     return typeof value === "function";
   }
 
-  export function isEquality(value: unknown): value is Equality {
+  export function isEquality<T>(value: unknown): value is Equality<T> {
     return isObject(value) && isFunction(value.equals);
   }
 
