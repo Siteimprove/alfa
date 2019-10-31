@@ -17,7 +17,6 @@
     "src/get-child-nodes.ts",
     "src/get-class-list.ts",
     "src/get-closest.ts",
-    "src/get-digest.ts",
     "src/get-document-position.ts",
     "src/get-element-namespace.ts",
     "src/get-host.ts",
@@ -75,7 +74,6 @@
     "test/get-child-nodes.spec.tsx",
     "test/get-class-list.spec.tsx",
     "test/get-closest.spec.tsx",
-    "test/get-digest.spec.tsx",
     "test/get-document-position.spec.tsx",
     "test/get-id.spec.tsx",
     "test/get-input-type.spec.tsx",
@@ -108,9 +106,6 @@
     "test/user-agent.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-crypto"
-    },
     {
       "path": "../alfa-css"
     },

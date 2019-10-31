@@ -24,7 +24,6 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-crypto": "^0.0.0",
     "@siteimprove/alfa-css": "^0.0.0",
     "@siteimprove/alfa-device": "^0.0.0",
     "@siteimprove/alfa-lang": "^0.0.0",
