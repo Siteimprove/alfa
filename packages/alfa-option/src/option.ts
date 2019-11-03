@@ -32,8 +32,8 @@ export interface Option<T>
 }
 
 export namespace Option {
-  export function from<T>(value: T | null | undefined): Option<T> {
-    return value === null || value === undefined ? None : Some.of(value);
+  export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
+    return value === null || value === undefined ? None : Some.of(value!);
   }
 
   export function isSome<T>(value: unknown): value is Some<T> {

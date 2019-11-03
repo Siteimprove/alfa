@@ -7,6 +7,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import { Leaf, Node } from "./node";
 
 export class List<T>
@@ -22,7 +23,6 @@ export class List<T>
   private readonly head: Node<T> | null;
   private readonly tail: Leaf<T> | null;
   private readonly depth: number;
-
   public readonly size: number;
 
   private constructor(
@@ -61,8 +61,12 @@ export class List<T>
     return Iterable.reduce(this, reducer, accumulator);
   }
 
-  public concat(list: List<T>): List<T> {
-    return list.reduce<List<T>>((values, value) => values.push(value), this);
+  public concat(iterable: Iterable<T>): List<T> {
+    return Iterable.reduce<T, List<T>>(
+      iterable,
+      (values, value) => values.push(value),
+      this
+    );
   }
 
   public includes(value: T): boolean {
@@ -339,11 +343,7 @@ export class List<T>
 
 export namespace List {
   export function from<T>(iterable: Iterable<T>): List<T> {
-    if (isList<T>(iterable)) {
-      return iterable;
-    }
-
-    return List.of(...iterable);
+    return isList<T>(iterable) ? iterable : List.of(...iterable);
   }
 
   export function isList<T>(value: unknown): value is List<T> {

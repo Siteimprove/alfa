@@ -17,13 +17,13 @@ export class Cache<K, V> {
     this.entries = entries;
   }
 
-  public get(key: K): Option<V>;
+  public get<U extends V>(key: K): Option<U>;
 
-  public get(key: K, ifMissing: Thunk<V>): V;
+  public get<U extends V>(key: K, ifMissing: Thunk<U>): U;
 
-  public get(key: K, ifMissing?: Thunk<V>): V | Option<V> {
-    if (this.entries.has(key)) {
-      const value = this.entries.get(key) as V;
+  public get<U extends V>(key: K, ifMissing?: Thunk<U>): U | Option<U> {
+    if (this.has(key)) {
+      const value = this.entries.get(key) as U;
 
       if (ifMissing === undefined) {
         return Some.of(value);
@@ -41,6 +41,10 @@ export class Cache<K, V> {
     this.entries.set(key, value);
 
     return value;
+  }
+
+  public has(key: K): boolean {
+    return this.entries.has(key);
   }
 
   public set(key: K, value: V): this {
