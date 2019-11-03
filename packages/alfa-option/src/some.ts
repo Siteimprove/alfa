@@ -76,6 +76,10 @@ export class Some<T> implements Option<T> {
     return value instanceof Some && Equality.equals(value.value, this.value);
   }
 
+  public *[Symbol.iterator]() {
+    yield this.value;
+  }
+
   public toJSON(): { value: T } {
     return { value: this.value };
   }
