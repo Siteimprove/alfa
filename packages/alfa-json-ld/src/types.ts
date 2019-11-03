@@ -21,30 +21,30 @@ export type Scalar = string | number | boolean;
 export type List = Array<Scalar | Dictionary | null>;
 
 export interface Dictionary {
-  readonly [key: string]: Scalar | List | Dictionary | null | undefined;
+  [key: string]: Scalar | List | Dictionary | null | undefined;
 }
 
 export interface ListObject extends Dictionary {
-  readonly "@list"?: List;
+  "@list"?: List;
 }
 
 export interface ValueObject extends Dictionary {
-  readonly "@value"?: Scalar;
+  "@value"?: Scalar;
 }
 
 export interface Definition extends Dictionary {
-  readonly "@id": string;
-  readonly "@reverse": boolean;
-  readonly "@type"?: string;
-  readonly "@language"?: string;
-  readonly "@container"?: string;
+  "@id": string;
+  "@reverse": boolean;
+  "@type"?: string;
+  "@language"?: string;
+  "@container"?: string;
 }
 
 export interface Context extends Dictionary {
-  readonly "@version"?: 1.1;
-  readonly "@base"?: string;
+  "@version"?: 1.1;
+  "@base"?: string;
 }
 
 export interface Document extends Dictionary {
-  readonly "@context"?: Context;
+  "@context"?: Context;
 }
