@@ -1,8 +1,12 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 
-export type Predicate<T, U extends T = T> =
-  | ((value: T) => boolean)
-  | ((value: T) => value is U);
+export type Predicate<
+  T,
+  U extends T = T,
+  A extends Array<unknown> = Array<unknown>
+> =
+  | ((value: T, ...args: A) => boolean)
+  | ((value: T, ...args: A) => value is U);
 
 export namespace Predicate {
   export function fold<T, U extends T, V>(

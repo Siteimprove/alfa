@@ -29,6 +29,10 @@ export namespace Iterable {
     }
   }
 
+  export function flatten<T>(iterable: Iterable<Iterable<T>>): Iterable<T> {
+    return flatMap(iterable, iterable => iterable);
+  }
+
   export function reduce<T, U = T>(
     iterable: Iterable<T>,
     reducer: Reducer<T, U>,
@@ -56,7 +60,7 @@ export namespace Iterable {
     predicate: Predicate<T, U>
   ): Option<U> {
     for (const value of iterable) {
-      if (Predicate.test(predicate, value)) {
+      if (predicate(value)) {
         return Some.of(value);
       }
     }
@@ -69,7 +73,7 @@ export namespace Iterable {
     predicate: Predicate<T, U>
   ): boolean {
     for (const value of iterable) {
-      if (Predicate.test(predicate, value)) {
+      if (predicate(value)) {
         return true;
       }
     }
@@ -82,7 +86,7 @@ export namespace Iterable {
     predicate: Predicate<T, U>
   ): boolean {
     for (const value of iterable) {
-      if (!Predicate.test(predicate, value)) {
+      if (!predicate(value)) {
         return false;
       }
     }
@@ -95,7 +99,7 @@ export namespace Iterable {
     predicate: Predicate<T, U>
   ): Iterable<U> {
     for (const value of iterable) {
-      if (Predicate.test(predicate, value)) {
+      if (predicate(value)) {
         yield value;
       }
     }
@@ -107,6 +111,28 @@ export namespace Iterable {
     }
 
     return None;
+  }
+
+  export function groupBy<T, K>(
+    iterable: Iterable<T>,
+    grouper: Mapper<T, K>
+  ): Iterable<[K, Iterable<T>]> {
+    const groups: Array<[K, Array<T>]> = [];
+
+    outer: for (const value of iterable) {
+      const group = grouper(value);
+
+      for (const [existing, values] of groups) {
+        if (Equality.equals(group, existing)) {
+          values.push(value);
+          continue outer;
+        }
+      }
+
+      groups.push([group, [value]]);
+    }
+
+    return [...groups];
   }
 
   export function join(iterable: Iterable<string>, separator: string): string {
@@ -147,5 +173,21 @@ export namespace Iterable {
     return (
       typeof value === "object" && value !== null && Symbol.iterator in value
     );
+  }
+
+  export class Chain<T> implements Iterable<T> {
+    public static of<T>(iterable: Iterable<T>): Chain<T> {
+      return new Chain(iterable);
+    }
+
+    private readonly iterable: Iterable<T>;
+
+    private constructor(iterable: Iterable<T>) {
+      this.iterable = iterable;
+    }
+
+    public *[Symbol.iterator]() {
+      return this.iterable[Symbol.iterator]();
+    }
   }
 }

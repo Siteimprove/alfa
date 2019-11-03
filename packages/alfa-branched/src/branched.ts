@@ -8,7 +8,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-export class Branched<T, B>
+export class Branched<T, B = never>
   implements Monad<T>, Functor<T>, Foldable<T>, Equality<Branched<T, B>> {
   public static of<T, B>(value: T, ...branches: Array<B>): Branched<T, B> {
     return new Branched<T, B>(
