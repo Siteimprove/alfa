@@ -1,102 +1,11 @@
-import { isIterable } from "@siteimprove/alfa-util";
-import {
-  Answer,
-  AnswerType,
-  Aspect,
-  Question,
-  QuestionScope,
-  QuestionType,
-  Target
-} from "./types";
+import { Option } from "@siteimprove/alfa-option";
 
-export interface Oracle<A extends Aspect, T extends Target> {
-  answer<Q extends QuestionType>(
-    question: Question<A, T, Q>
-  ): AnswerType[Q] | null;
-}
+import { Question } from "./question";
+import { Rule } from "./rule";
 
-export namespace Oracle {
-  /**
-   * @internal
-   */
-  export function forAnswers<A extends Aspect, T extends Target>(
-    answers: Iterable<Answer<A, T>>
-  ): Oracle<A, T> {
-    answers = [...answers];
-
-    return {
-      answer(question) {
-        const answer = findAnswer(answers, question);
-
-        if (answer === null) {
-          return null;
-        }
-
-        return answer.answer;
-      }
-    };
-  }
-}
-
-function findAnswer<A extends Aspect, T extends Target, Q extends QuestionType>(
-  answers: Iterable<Answer<A, T>>,
-  question: Question<A, T, Q>
-): Answer<A, T, Q> | null {
-  for (const answer of answers) {
-    if (isAnswerTo(answer, question)) {
-      return answer;
-    }
-  }
-
-  return null;
-}
-
-function isAnswerTo<A extends Aspect, T extends Target, Q extends QuestionType>(
-  answer: Answer<A, T>,
-  question: Question<A, T, Q>
-): answer is Answer<A, T, Q> {
-  if (
-    answer.type !== question.type ||
-    answer.id !== question.id ||
-    answer.aspect !== question.aspect
-  ) {
-    return false;
-  }
-
-  if (isIterable(answer.target) && isIterable(question.target)) {
-    const haystack = new Set(answer.target);
-    const needle = new Set(question.target);
-
-    if (haystack.size !== needle.size) {
-      return false;
-    }
-
-    for (const target of haystack) {
-      if (!needle.has(target)) {
-        return false;
-      }
-    }
-  } else if (answer.target !== question.target) {
-    return false;
-  }
-
-  if (answer.rule === undefined) {
-    return question.scope === QuestionScope.Global;
-  }
-
-  const haystack = new Set(
-    isIterable(answer.rule) ? answer.rule : [answer.rule]
-  );
-
-  const needle = new Set(
-    isIterable(question.rule) ? question.rule : [question.rule]
-  );
-
-  for (const rule of haystack) {
-    if (!needle.has(rule)) {
-      return false;
-    }
-  }
-
-  return true;
-}
+export type Oracle<Q> = <I, T, A, B>(
+  rule: Rule<I, T, Q, unknown>,
+  target: Rule.Target<Rule.Aspect<I>, T>,
+  question: { [K in keyof Q]: Question<K, Q[K], A> }[keyof Q],
+  branches: Option<Iterable<B>>
+) => Option<A>;

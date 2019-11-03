@@ -2,38 +2,42 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/audit.ts",
-    "src/contexts.ts",
-    "src/guards.ts",
     "src/index.ts",
     "src/oracle.ts",
-    "src/sort-rules.ts",
-    "src/to-json.ts",
-    "src/types.ts"
+    "src/outcome.ts",
+    "src/question.ts",
+    "src/rule.ts"
   ],
   "references": [
     {
-      "path": "../alfa-collection"
+      "path": "../alfa-branched"
     },
     {
-      "path": "../alfa-compatibility"
+      "path": "../alfa-cache"
     },
     {
-      "path": "../alfa-device"
+      "path": "../alfa-equality"
     },
     {
-      "path": "../alfa-dom"
+      "path": "../alfa-functor"
     },
     {
-      "path": "../alfa-http"
+      "path": "../alfa-iterable"
     },
     {
-      "path": "../alfa-json-ld"
+      "path": "../alfa-list"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-option"
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-util"
     }
   ]
 }

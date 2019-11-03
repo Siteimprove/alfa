@@ -22,13 +22,15 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-collection": "^0.0.0",
-    "@siteimprove/alfa-compatibility": "^0.0.0",
-    "@siteimprove/alfa-device": "^0.0.0",
-    "@siteimprove/alfa-dom": "^0.0.0",
-    "@siteimprove/alfa-http": "^0.0.0",
-    "@siteimprove/alfa-json-ld": "^0.0.0",
-    "@siteimprove/alfa-util": "^0.0.0"
+    "@siteimprove/alfa-branched": "^0.0.0",
+    "@siteimprove/alfa-cache": "^0.0.0",
+    "@siteimprove/alfa-equality": "^0.0.0",
+    "@siteimprove/alfa-functor": "^0.0.0",
+    "@siteimprove/alfa-iterable": "^0.0.0",
+    "@siteimprove/alfa-list": "^0.0.0",
+    "@siteimprove/alfa-mapper": "^0.0.0",
+    "@siteimprove/alfa-monad": "^0.0.0",
+    "@siteimprove/alfa-option": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
