@@ -12,13 +12,10 @@
       "path": "../alfa-branched"
     },
     {
-      "path": "../alfa-collection"
+      "path": "../alfa-iterable"
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-util"
     }
   ]
 }

@@ -1,5 +1,4 @@
-import { Seq } from "@siteimprove/alfa-collection";
-import { Keys } from "@siteimprove/alfa-util";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Browser } from "./browser";
 import { Data } from "./feature/data";
 
@@ -55,7 +54,8 @@ export namespace Feature {
   ): Browser.Scope<Implementer<N>> {
     const support = Data[feature].support as Data.Support<N>;
 
-    return Seq(getImplementers(feature)).flatMap(
+    return Iterable.flatMap(
+      getImplementers(feature),
       <I extends Implementer<N>>(browser: I) => {
         const { added, removed } = support[browser] as Data.Implementation<
           N,
@@ -79,6 +79,10 @@ export namespace Feature {
 }
 
 namespace Data {
+  type Keys<T, E extends string | number | symbol = string> = T extends {}
+    ? Extract<keyof T, E>
+    : never;
+
   export type Name = Keys<Data>;
 
   export type Feature<N extends Name> = Data[N];

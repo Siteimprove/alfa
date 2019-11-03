@@ -1,5 +1,4 @@
-import { Seq } from "@siteimprove/alfa-collection";
-import { Keys } from "@siteimprove/alfa-util";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import browserslist = require("browserslist");
 import { Data } from "./browser/data";
 
@@ -154,7 +153,8 @@ export namespace Browser {
     scope: Scope = getDefaultScope()
   ): Scope<N> {
     const browser = query[0];
-    const support = Seq(scope).filter(
+    const support = Iterable.filter(
+      scope,
       (release): release is Release<N> => release.browser === browser
     );
 
@@ -164,7 +164,7 @@ export namespace Browser {
       const version = query[1];
       const release = getRelease(browser, version);
 
-      if (support.contains(release)) {
+      if (Iterable.includes(support, release)) {
         yield release;
       }
     } else {
@@ -196,7 +196,7 @@ export namespace Browser {
         if (
           release.date >= lower &&
           release.date <= upper &&
-          support.contains(release)
+          Iterable.includes(support, release)
         ) {
           yield release;
         }
@@ -222,6 +222,10 @@ export namespace Browser {
 }
 
 namespace Data {
+  type Keys<T, E extends string | number | symbol = string> = T extends {}
+    ? Extract<keyof T, E>
+    : never;
+
   export type Name = Keys<Data>;
 
   export type Browser<N extends Name> = Data[N];
