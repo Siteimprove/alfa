@@ -71,6 +71,8 @@ export class Err<E> implements Result<never, E> {
     return value instanceof Err && Equality.equals(value.error, this.error);
   }
 
+  public *[Symbol.iterator]() {}
+
   public toJSON(): { error: E } {
     return { error: this.error };
   }

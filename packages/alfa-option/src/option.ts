@@ -13,6 +13,7 @@ export interface Option<T>
   extends Monad<T>,
     Functor<T>,
     Foldable<T>,
+    Iterable<T>,
     Equality<Option<T>> {
   isSome(): this is Some<T>;
   isNone(): this is None;

@@ -12,6 +12,7 @@ export interface Result<T, E>
   extends Monad<T>,
     Functor<T>,
     Foldable<T>,
+    Iterable<T>,
     Equality<Result<T, E>> {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;

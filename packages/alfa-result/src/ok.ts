@@ -71,6 +71,10 @@ export class Ok<T> implements Result<T, never> {
     return value instanceof Ok && Equality.equals(value.value, this.value);
   }
 
+  public *[Symbol.iterator]() {
+    yield this.value;
+  }
+
   public toJSON(): { value: T } {
     return { value: this.value };
   }

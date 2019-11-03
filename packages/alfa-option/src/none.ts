@@ -61,6 +61,8 @@ export const None: None = new (class None {
     return value === this;
   }
 
+  public *[Symbol.iterator]() {}
+
   public toJSON(): {} {
     return {};
   }
