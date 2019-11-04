@@ -35,11 +35,11 @@ export interface Body {
   /**
    * NB: As there's no way for us to represent the body mixin in a way that can
    * be serialized to JSON, we make the assumption that `body` will return the
-   * result of `Body.text()` rather than a `ReadableStream`.
+   * result of `Body#arrayBuffer()` rather than a `ReadableStream`.
    *
    * @see https://fetch.spec.whatwg.org/#dom-body-body
    */
-  readonly body: string;
+  readonly body: ArrayBuffer;
 }
 
 /**
