@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { ComponentFixture } from "@angular/core/testing";
 import * as dom from "@siteimprove/alfa-dom";
 import { clone } from "@siteimprove/alfa-dom";

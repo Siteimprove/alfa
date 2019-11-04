@@ -25,9 +25,6 @@
   ],
   "references": [
     {
-      "path": "../alfa-collection"
-    },
-    {
       "path": "../alfa-dom"
     },
     {
@@ -35,9 +32,6 @@
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-util"
     }
   ]
 }

@@ -1,5 +1,7 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
 import { getParentRule } from "../src/get-parent-rule";
 import {
   Document,
@@ -34,13 +36,13 @@ test("Returns parent rule", t => {
     styleSheets: [styleSheet]
   };
 
-  t.equal(getParentRule(childRule, document), parentRule);
+  t.deepEqual(getParentRule(childRule, document), Some.of(parentRule as Rule));
 });
 
 test("Returns null when context is not document type", t => {
   const div = <div />;
   const rule: Rule = { type: 1 };
-  t.equal(getParentRule(rule, div), null);
+  t.equal(getParentRule(rule, div), None);
 });
 
 test("Returns null when parent rule does not exist", t => {
@@ -62,5 +64,5 @@ test("Returns null when parent rule does not exist", t => {
     styleSheets: [styleSheet]
   };
 
-  t.equal(getParentRule(childRule, document), null);
+  t.equal(getParentRule(childRule, document), None);
 });

@@ -1,6 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, skip } from "@siteimprove/alfa-lang";
-import { Mutable } from "@siteimprove/alfa-util";
 import { Token, Tokens, TokenType } from "../../alphabet";
 import { Units } from "../../units";
 import { Values } from "../../values";
@@ -16,12 +15,12 @@ const ident: Production<Tokens.Ident> = {
       left.value.hanging === undefined &&
       left.value.eachLine === undefined
     ) {
-      (left as Mutable<TextIndent>).value.hanging = Values.boolean(true);
+      left.value.hanging = Values.boolean(true);
       return left;
     }
 
     if (token.value === "each-line" && left.value.eachLine === undefined) {
-      (left as Mutable<TextIndent>).value.eachLine = Values.boolean(true);
+      left.value.eachLine = Values.boolean(true);
       return left;
     }
 

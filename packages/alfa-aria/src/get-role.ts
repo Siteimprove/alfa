@@ -9,7 +9,7 @@ import {
   Node
 } from "@siteimprove/alfa-dom";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { values } from "@siteimprove/alfa-util";
+
 import * as Features from "./features";
 import * as Roles from "./roles";
 import { Category, Feature, Role } from "./types";

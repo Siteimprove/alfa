@@ -36,10 +36,13 @@
   ],
   "references": [
     {
-      "path": "../alfa-test"
+      "path": "../alfa-math"
     },
     {
-      "path": "../alfa-util"
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-test"
     }
   ]
 }

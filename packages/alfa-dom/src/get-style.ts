@@ -14,7 +14,7 @@ import {
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { Mutable } from "@siteimprove/alfa-util";
+
 import { getAttribute } from "./get-attribute";
 import { Cascade, getCascade } from "./get-cascade";
 import { getChildNodes } from "./get-child-nodes";
@@ -247,7 +247,7 @@ function getPseudoElement(element: Element, selector: Selector): object | null {
   return null;
 }
 
-function important(declaration: Mutable<Declaration>): Declaration {
+function important(declaration: Declaration): Declaration {
   declaration.important = true;
   return declaration;
 }

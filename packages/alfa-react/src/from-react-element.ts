@@ -5,7 +5,6 @@ import {
   NodeType,
   Text
 } from "@siteimprove/alfa-dom";
-import { hasKey, isObject } from "@siteimprove/alfa-util";
 import { ReactElement } from "react";
 import * as TestRenderer from "react-test-renderer";
 
@@ -124,12 +123,12 @@ function asText(data: string): Text {
   };
 }
 
-function asInlineStyle(props: object): string {
+function asInlineStyle(props: { [key: string]: unknown }): string {
   let style = "";
   let delimiter = "";
 
   for (const prop of keys(props)) {
-    if (hasKey(props, prop)) {
+    if (props[prop]) {
       style += prop.replace(/([A-Z])/g, "-$1").toLowerCase();
       style += ":";
       style += String(props[prop]);
@@ -140,4 +139,8 @@ function asInlineStyle(props: object): string {
   }
 
   return style;
+}
+
+function isObject(value: unknown): value is { [key: string]: unknown } {
+  return typeof value === "object" && value !== null;
 }

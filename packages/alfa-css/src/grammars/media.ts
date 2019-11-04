@@ -1,6 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Grammar, skip, Stream } from "@siteimprove/alfa-lang";
-import { Mutable } from "@siteimprove/alfa-util";
 import { Token, Tokens, TokenType } from "../alphabet";
 import {
   MediaCondition,
@@ -109,7 +108,7 @@ function mediaCondition(
   feature = mediaInParens(stream);
 
   if (feature !== null) {
-    const condition: Mutable<MediaCondition> = {
+    const condition: MediaCondition = {
       features: [feature]
     };
 

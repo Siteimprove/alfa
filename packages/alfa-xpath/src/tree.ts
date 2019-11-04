@@ -4,7 +4,6 @@ import {
   Node,
   traverseNode
 } from "@siteimprove/alfa-dom";
-import { Mutable } from "@siteimprove/alfa-util";
 import { Axis } from "./types";
 
 /**
@@ -102,7 +101,7 @@ export function getTree<T extends Node>(
         *enter(node) {
           const parent = last(parents);
 
-          const tree: Mutable<Tree> = {
+          const tree: Tree = {
             node,
             context,
             parent,
@@ -119,7 +118,7 @@ export function getTree<T extends Node>(
           }
 
           if (parent !== null) {
-            const sibling = last(parent.children) as Mutable<Tree> | null;
+            const sibling = last(parent.children);
 
             if (sibling !== null) {
               sibling.next = tree;

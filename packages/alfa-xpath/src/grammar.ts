@@ -1,6 +1,5 @@
 import * as Lang from "@siteimprove/alfa-lang";
 import { Char, Stream } from "@siteimprove/alfa-lang";
-import { Mutable } from "@siteimprove/alfa-util";
 import { Token, Tokens, TokenType } from "./alphabet";
 import * as g from "./guards";
 import * as t from "./types";
@@ -203,7 +202,7 @@ function axis(
   name: Tokens.Name,
   stream: Stream<Token>
 ): t.AxisExpression | null {
-  const axis: Mutable<t.AxisExpression> = {
+  const axis: t.AxisExpression = {
     type: ExpressionType.Axis,
     axis: "child",
     test: null,
@@ -310,7 +309,7 @@ function path(
     }
 
     case Char.AtSign: {
-      const axis: Mutable<t.AxisExpression> = {
+      const axis: t.AxisExpression = {
         type: ExpressionType.Axis,
         axis: "attribute",
         test: null,

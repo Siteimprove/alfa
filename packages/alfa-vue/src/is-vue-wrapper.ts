@@ -1,13 +1,17 @@
+/// <reference lib="dom" />
+
 import { isCheerioWrapper } from "@siteimprove/alfa-cheerio";
-import { hasKey, isObject } from "@siteimprove/alfa-util";
 import { VueWrapper } from "./types";
 
-export function isVueWrapper(input: unknown): input is VueWrapper {
+export function isVueWrapper(value: unknown): value is VueWrapper {
   return (
-    (isObject(input) &&
-      hasKey(input, "vm") &&
-      hasKey(input, "element") &&
-      input.element instanceof Element) ||
-    isCheerioWrapper(input)
+    (isObject(value) &&
+      value.vm !== undefined &&
+      value.element instanceof Element) ||
+    isCheerioWrapper(value)
   );
+}
+
+function isObject(value: unknown): value is { [key: string]: unknown } {
+  return typeof value === "object" && value !== null;
 }

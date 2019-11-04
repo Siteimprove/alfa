@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { clamp } from "@siteimprove/alfa-util";
+import { clamp } from "@siteimprove/alfa-math";
 import { Longhand } from "../../properties";
 import { Values } from "../../values";
 import { getSpecifiedProperty } from "../helpers/get-property";

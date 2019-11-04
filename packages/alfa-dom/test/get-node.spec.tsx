@@ -1,6 +1,9 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { Some } from "@siteimprove/alfa-option";
 import { getNode } from "../src/get-node";
+import { Node } from "../src/types";
 
 test("Gets the node at a given document position within a context", t => {
   const world = <span>world</span>;
@@ -13,6 +16,6 @@ test("Gets the node at a given document position within a context", t => {
       </div>,
       3
     ),
-    world
+    Some.of(world as Node)
   );
 });

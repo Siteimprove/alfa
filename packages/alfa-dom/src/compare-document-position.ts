@@ -1,4 +1,5 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
+
 import { getParentNode } from "./get-parent-node";
 import { Node } from "./types";
 
@@ -176,7 +177,7 @@ function getForkingPoint<T>(first: Array<T>, second: Array<T>): number {
 // specific orderings for disconnected nodes should be consistent, i.e. if
 // "foo" and "bar" are disconnected, "foo" compared to "bar" will return the
 // opposite ordering of "bar" compared to "foo".
-const orderings = Cache.of<Node, number>();
+const orderings = Cache.empty<Node, number>();
 
 function getImplementationSpecificOrdering(node: Node): number {
   return orderings.get(node, () => Math.random());

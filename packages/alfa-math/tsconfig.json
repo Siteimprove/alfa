@@ -1,6 +1,13 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/matrix.ts", "src/vector.ts"],
+  "files": [
+    "src/clamp.ts",
+    "src/index.ts",
+    "src/matrix.ts",
+    "src/mod.ts",
+    "src/round.ts",
+    "src/vector.ts"
+  ],
   "references": [
     {
       "path": "../alfa-test"

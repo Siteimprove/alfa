@@ -326,9 +326,6 @@
       "path": "../alfa-branched"
     },
     {
-      "path": "../alfa-collection"
-    },
-    {
       "path": "../alfa-compatibility"
     },
     {
@@ -351,9 +348,6 @@
     },
     {
       "path": "../alfa-unicode"
-    },
-    {
-      "path": "../alfa-util"
     }
   ]
 }

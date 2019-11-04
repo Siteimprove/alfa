@@ -1,10 +1,12 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
+import { Option } from "@siteimprove/alfa-option";
+
 import { isDocument } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { traverseStyleSheet } from "./traverse-style-sheet";
 import { Node, Rule } from "./types";
 
-const parentRules = Cache.of<Node, Cache<Rule, Rule>>();
+const parentRules = Cache.empty<Node, Cache<Rule, Rule>>();
 
 /**
  * Given a rule and a context, get the parent of the rule within the context.
@@ -12,13 +14,11 @@ const parentRules = Cache.of<Node, Cache<Rule, Rule>>();
  *
  * @see https://www.w3.org/TR/cssom/#dom-cssrule-parentrule
  */
-export function getParentRule(rule: Rule, context: Node): Rule | null {
+export function getParentRule(rule: Rule, context: Node): Option<Rule> {
   return parentRules
-    .get(context, () => {
-      const parentRules = Cache.of<Rule, Rule>();
-
-      [
-        ...traverseNode(
+    .get(context, () =>
+      Cache.from<Rule, Rule>(
+        traverseNode(
           context,
           context,
           {
@@ -27,24 +27,20 @@ export function getParentRule(rule: Rule, context: Node): Rule | null {
                 const { styleSheets } = node;
 
                 for (let i = 0, n = styleSheets.length; i < n; i++) {
-                  [
-                    ...traverseStyleSheet(styleSheets[i], {
-                      *enter(rule, parentRule) {
-                        if (parentRule !== null) {
-                          parentRules.set(rule, parentRule);
-                        }
+                  yield* traverseStyleSheet(styleSheets[i], {
+                    *enter(rule, parentRule) {
+                      if (parentRule !== null) {
+                        yield [rule, parentRule];
                       }
-                    })
-                  ];
+                    }
+                  });
                 }
               }
             }
           },
           { composed: true, nested: true }
         )
-      ];
-
-      return parentRules;
-    })
+      )
+    )
     .get(rule);
 }

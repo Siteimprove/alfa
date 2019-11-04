@@ -1,5 +1,4 @@
 import { Char, isAlpha, isNumeric, Stream } from "@siteimprove/alfa-lang";
-import { Mutable } from "@siteimprove/alfa-util";
 import {
   ExtendedLanguageIndex,
   PrimaryLanguageIndex,
@@ -15,7 +14,7 @@ export function getLanguage(tag: string): Language | null {
 
   const stream = new Stream(tag.length, i => tag.charCodeAt(i));
 
-  const language: Mutable<Language> | null = getPrimaryLanguage(stream);
+  const language: Language | null = getPrimaryLanguage(stream);
 
   if (language === null) {
     return null;

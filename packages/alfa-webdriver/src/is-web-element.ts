@@ -1,13 +1,12 @@
-import { hasKey, isObject } from "@siteimprove/alfa-util";
 import { WebElement } from "./types";
 
 /**
  * @see https://w3c.github.io/webdriver/#dfn-represents-a-web-element
  */
-export function isWebElement(input: unknown): input is WebElement {
-  return (
-    isObject(input) &&
-    input !== null &&
-    hasKey(input, "element-6066-11e4-a52e-4f735466cecf")
-  );
+export function isWebElement(value: unknown): value is WebElement {
+  return isObject(value) && WebElement.Reference in value;
+}
+
+function isObject(value: unknown): value is { [key: string]: unknown } {
+  return typeof value === "object" && value !== null;
 }

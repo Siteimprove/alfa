@@ -1,5 +1,6 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { Cache } from "@siteimprove/alfa-util";
+
 import { isElement } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
@@ -9,9 +10,9 @@ enum Mode {
   Flattened
 }
 
-const parentNodes = Cache.of<Mode, Cache<Node, Cache<Node, Node>>>({
-  weak: false
-});
+const parentNodes = Cache.empty<Mode, Cache<Node, Cache<Node, Node>>>(
+  Cache.Type.Strong
+);
 
 /**
  * Given a node and a context, get the parent of the node within the context.
@@ -30,19 +31,17 @@ export function getParentNode(
     mode = Mode.Flattened;
   }
 
-  const parentNode = parentNodes
-    .get(mode, Cache.of)
-    .get(context, () => {
-      const parentNodes = Cache.of<Node, Node>();
-
-      [
-        ...traverseNode(
+  return parentNodes
+    .get(mode, Cache.empty)
+    .get(context, () =>
+      Cache.from<Node, Node>(
+        traverseNode(
           context,
           context,
           {
             *enter(node, parentNode) {
               if (parentNode !== null) {
-                parentNodes.set(node, parentNode);
+                yield [node, parentNode];
               }
             }
           },
@@ -52,25 +51,20 @@ export function getParentNode(
             nested: true
           }
         )
-      ];
+      )
+    )
+    .get(node)
+    .flatMap(parentNode => {
+      if (
+        options.composed !== true &&
+        isElement(parentNode) &&
+        parentNode.shadowRoot === node
+      ) {
+        return None;
+      }
 
-      return parentNodes;
-    })
-    .get(node);
-
-  if (parentNode === null) {
-    return None;
-  }
-
-  if (
-    options.composed !== true &&
-    isElement(parentNode) &&
-    parentNode.shadowRoot === node
-  ) {
-    return None;
-  }
-
-  return Some.of(parentNode);
+      return Some.of(parentNode);
+    });
 }
 
 export namespace getParentNode {

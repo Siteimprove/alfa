@@ -1,5 +1,6 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Cache } from "@siteimprove/alfa-util";
+
 import { getParentElement } from "./get-parent-element";
 import { getPropertyValue } from "./get-property-value";
 import { getCascadedStyle } from "./get-style";
@@ -7,7 +8,7 @@ import { isElement, isText } from "./guards";
 import { traverseNode } from "./traverse-node";
 import { Element, Node, Text } from "./types";
 
-const renders = Cache.of<Node, Cache<Device, Cache<Element, boolean>>>();
+const renders = Cache.empty<Node, Cache<Device, Cache<Element, boolean>>>();
 
 /**
  * Given an element and a context, check if the element is being rendered
@@ -35,12 +36,12 @@ export function isRendered(
   }
 
   return renders
-    .get(context, Cache.of)
+    .get(context, Cache.empty)
     .get(device, () => {
-      const renders = Cache.of<Element, boolean>();
+      const renders = Cache.empty<Element, boolean>();
 
-      [
-        ...traverseNode(
+      return renders.merge(
+        traverseNode(
           context,
           context,
           {
@@ -51,13 +52,13 @@ export function isRendered(
                   "display"
                 );
 
-                if (display !== null && display.value === "none") {
-                  renders.set(node, false);
+                if (display.isSome() && display.get().value === "none") {
+                  yield [node, false];
                 } else if (parentNode !== null && isElement(parentNode)) {
                   const isParentRendered = renders.get(parentNode);
 
-                  if (isParentRendered === false) {
-                    renders.set(node, false);
+                  if (isParentRendered.includes(false)) {
+                    yield [node, false];
                   }
                 }
               }
@@ -65,9 +66,7 @@ export function isRendered(
           },
           { flattened: true, nested: true }
         )
-      ];
-
-      return renders;
+      );
     })
     .get(node, () => true);
 }

@@ -1,6 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { keys, Mutable, set } from "@siteimprove/alfa-util";
 
 import {
   CascadedPropertyValue,
@@ -15,6 +14,7 @@ import { CascadedStyle, ComputedStyle, SpecifiedStyle, Style } from "./style";
 import { Declaration } from "./types";
 import { Values } from "./values";
 
+const { keys } = Object;
 const { keyword, isKeyword } = Values;
 
 type Longhands = typeof Longhands;
@@ -51,7 +51,7 @@ export class StyleTree<T extends object, S> {
       const parent =
         parentEntry === null ? null : this.styles.get(parentEntry.target)!;
 
-      const style: Mutable<Style<S>> = {
+      const style: Style<S> = {
         parent,
         cascaded: {},
         specified: {},
@@ -199,11 +199,10 @@ function resolveCascadedStyle<S>(
     important: boolean
   ): void {
     if (propertyName in cascadedStyle === false || important) {
-      // tslint:disable:no-any
-      set<CascadedStyle<S>, any>(cascadedStyle, propertyName, {
+      cascadedStyle[propertyName] = {
         value: propertyValue,
         source
-      });
+      };
     }
   }
 }
@@ -258,11 +257,10 @@ function resolveSpecifiedStyle<S>(style: Style<S>): SpecifiedStyle<S> {
     propertyValue: SpecifiedPropertyValue,
     source: Option<S>
   ): void {
-    // tslint:disable:no-any
-    set<SpecifiedStyle<S>, any>(specifiedStyle, propertyName, {
+    specifiedStyle[propertyName] = {
       value: propertyValue,
       source
-    });
+    };
   }
 }
 
@@ -304,6 +302,6 @@ function resolveComputedStyle<S>(
       }
     }
 
-    set(computedStyle, propertyName, computed(style, device));
+    computedStyle[propertyName] = computed(style, device);
   }
 }

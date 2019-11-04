@@ -7,7 +7,7 @@ import {
   SpecifiedPropertyValue,
   SpecifiedStyle
 } from "@siteimprove/alfa-css";
-import { Option } from "@siteimprove/alfa-util";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 
 export function getPropertyValue<S, N extends PropertyName>(
   style: ComputedStyle<S>,
@@ -27,15 +27,14 @@ export function getPropertyValue<S, N extends PropertyName>(
 export function getPropertyValue<S>(
   style: CascadedStyle<S> | SpecifiedStyle<S> | ComputedStyle<S>,
   propertyName: PropertyName
-):
-  | Option<CascadedPropertyValue>
-  | Option<SpecifiedPropertyValue>
-  | Option<ComputedPropertyValue> {
+): Option<
+  CascadedPropertyValue | SpecifiedPropertyValue | ComputedPropertyValue
+> {
   const property = style[propertyName];
 
   if (property === undefined) {
-    return null;
+    return None;
   }
 
-  return property.value;
+  return Some.of(property.value);
 }

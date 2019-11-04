@@ -1,4 +1,5 @@
-import { clamp, Predicate } from "@siteimprove/alfa-util";
+import { clamp } from "@siteimprove/alfa-math";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { max, min } = Math;
 

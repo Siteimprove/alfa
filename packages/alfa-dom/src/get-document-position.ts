@@ -1,4 +1,6 @@
-import { Cache } from "@siteimprove/alfa-util";
+import { Cache } from "@siteimprove/alfa-cache";
+import { Option } from "@siteimprove/alfa-option";
+
 import { traverseNode } from "./traverse-node";
 import { Node } from "./types";
 
@@ -10,9 +12,9 @@ enum Mode {
   Nested    = 0b00_1
 }
 
-const documentPositions = Cache.of<Mode, Cache<Node, Cache<Node, number>>>({
-  weak: false
-});
+const documentPositions = Cache.empty<Mode, Cache<Node, Cache<Node, number>>>(
+  Cache.Type.Strong
+);
 
 /**
  * Given a node and a context, get the document position of the node within the
@@ -23,7 +25,7 @@ export function getDocumentPosition(
   node: Node,
   context: Node,
   options: getDocumentPosition.Options = {}
-): number | null {
+): Option<number> {
   let mode = Mode.Normal;
 
   if (options.composed === true) {
@@ -39,26 +41,22 @@ export function getDocumentPosition(
   }
 
   return documentPositions
-    .get(mode, Cache.of)
+    .get(mode, Cache.empty)
     .get(context, () => {
-      const documentPositions = Cache.of<Node, number>();
-
       let position = 0;
 
-      [
-        ...traverseNode(
+      return Cache.from<Node, number>(
+        traverseNode(
           context,
           context,
           {
             *enter(node) {
-              documentPositions.set(node, position++);
+              yield [node, position++];
             }
           },
           options
         )
-      ];
-
-      return documentPositions;
+      );
     })
     .get(node);
 }

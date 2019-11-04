@@ -1,4 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
+
 import { getElementNamespace } from "./get-element-namespace";
 import { getPropertyValue } from "./get-property-value";
 import { getComputedStyle } from "./get-style";
@@ -61,9 +62,11 @@ function isInert(element: Element, context: Node, device: Device): boolean {
     "visibility"
   );
 
-  if (visibility !== null) {
-    if (visibility.value === "hidden" || visibility.value === "collapse") {
-      return true;
+  if (visibility.isSome()) {
+    switch (visibility.get().value) {
+      case "hidden":
+      case "collapse":
+        return true;
     }
   }
 

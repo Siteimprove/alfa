@@ -1,13 +1,13 @@
-import { Map } from "@siteimprove/alfa-collection";
-import { values } from "@siteimprove/alfa-util";
 import { FunctionMap, registerFunction } from "../function";
 
 import { fn } from "./fn";
 
-let functions: FunctionMap = Map();
+const { keys } = Object;
 
-for (const func of [...values(fn)]) {
-  functions = registerFunction(functions, func);
+let functions: FunctionMap = new Map();
+
+for (const func of keys(fn)) {
+  functions = registerFunction(functions, fn[func]);
 }
 
 export { functions };

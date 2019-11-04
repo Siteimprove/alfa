@@ -203,7 +203,6 @@ fetch(registry).then(body => {
     // Registry. Do therefore not modify it directly! If you wish to make changes,
     // do so in \`scripts/subtags.js\` and run \`yarn prepare\` to rebuild this file.
 
-    import { values } from "@siteimprove/alfa-util";
     import { ExtendedLanguage, PrimaryLanguage, Region, Script, Variant } from "./types";
     `
   ];
@@ -227,7 +226,8 @@ fetch(registry).then(body => {
     lines.push(`
       export const ${index}Index: Map<string, ${index}> = new Map();
 
-      for (const subtag of values(${group})) {
+      for (const key of Object.keys(${group})) {
+        const subtag = ${group}[key];
         ${index}Index.set(subtag.name, subtag);
       }
     `);

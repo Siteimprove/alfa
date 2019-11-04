@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import * as dom from "@siteimprove/alfa-dom";
 import { JSHandle } from "puppeteer";
 import { rollup } from "rollup";

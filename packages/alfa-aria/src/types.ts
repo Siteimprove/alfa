@@ -1,8 +1,10 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+
 import * as Attributes from "./attributes";
 import * as Roles from "./roles";
+
+const { keys } = Object;
 
 export type ValueType =
   /**
@@ -163,7 +165,7 @@ export interface Role {
  */
 export const Any: <T extends typeof Roles | typeof Attributes>(
   type: T
-) => Array<T[keyof T]> = values;
+) => Array<T[keyof T]> = roles => keys(roles).map(role => roles[role]);
 
 /**
  * @internal

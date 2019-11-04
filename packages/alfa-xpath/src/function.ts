@@ -1,4 +1,3 @@
-import { Map } from "@siteimprove/alfa-collection";
 import { Environment } from "./environment";
 import { Item, TypeFor, Value } from "./types";
 
@@ -70,7 +69,7 @@ export function registerFunction(
   let definitions = functions.get(`${prefix}:${name}`);
 
   if (definitions === undefined) {
-    definitions = Map();
+    definitions = new Map();
   }
 
   return functions.set(`${prefix}:${name}`, definitions.set(arity, definition));

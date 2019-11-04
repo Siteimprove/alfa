@@ -1,5 +1,5 @@
 import { parse } from "@siteimprove/alfa-lang";
-import { round } from "@siteimprove/alfa-util";
+import { round } from "@siteimprove/alfa-math";
 import { Converters } from "../../../converters";
 import { Longhand } from "../../../properties";
 import { Resolvers } from "../../../resolvers";

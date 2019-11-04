@@ -1,5 +1,7 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { None, Some } from "@siteimprove/alfa-option";
 import { getDocumentPosition } from "../src/get-document-position";
 
 const p1 = <p>foo</p>;
@@ -30,21 +32,21 @@ const div = (
 );
 
 test("Returns the document position of an element", t => {
-  t.equal(getDocumentPosition(p1, div), 1);
+  t.deepEqual(getDocumentPosition(p1, div), Some.of(1));
 });
 
 test("Returns the composed document position of an element", t => {
-  t.equal(getDocumentPosition(p2, div, { composed: true }), 3);
+  t.deepEqual(getDocumentPosition(p2, div, { composed: true }), Some.of(3));
 });
 
 test("Returns the flattened document position of an element", t => {
-  t.equal(getDocumentPosition(p1, div, { flattened: true }), 1);
+  t.deepEqual(getDocumentPosition(p1, div, { flattened: true }), Some.of(1));
 });
 
 test("Returns the nested document position of an element", t => {
-  t.equal(getDocumentPosition(p4, div, { nested: true }), 7);
+  t.deepEqual(getDocumentPosition(p4, div, { nested: true }), Some.of(7));
 });
 
 test("Returns null when an element is not in a context", t => {
-  t.equal(getDocumentPosition(p2, div), null);
+  t.equal(getDocumentPosition(p2, div), None);
 });

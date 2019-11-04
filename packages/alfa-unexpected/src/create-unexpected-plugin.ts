@@ -5,7 +5,7 @@ import {
   Assertion,
   AssertionError
 } from "@siteimprove/alfa-assert";
-import { serialize } from "@siteimprove/alfa-dom";
+import { Element, serialize } from "@siteimprove/alfa-dom";
 import { highlight } from "@siteimprove/alfa-highlight";
 import * as unexpected from "unexpected";
 

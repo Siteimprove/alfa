@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { Aspects } from "@siteimprove/alfa-act";
 import {
   Device,
@@ -10,7 +12,6 @@ import {
 import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { fromPuppeteerHandle } from "@siteimprove/alfa-puppeteer";
-import { URL } from "@siteimprove/alfa-util";
 import puppeteer from "puppeteer";
 
 const defaultDevice = getDefaultDevice();

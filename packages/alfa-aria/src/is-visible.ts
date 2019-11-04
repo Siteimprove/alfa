@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
@@ -12,9 +13,11 @@ import {
   Text,
   traverseNode
 } from "@siteimprove/alfa-dom";
-import { Cache } from "@siteimprove/alfa-util";
 
-const visibilities = Cache.of<Node, Cache<Device, Cache<Element, boolean>>>();
+const visibilities = Cache.empty<
+  Node,
+  Cache<Device, Cache<Element, boolean>>
+>();
 
 export function isVisible(
   node: Element | Text,
@@ -28,31 +31,31 @@ export function isVisible(
   }
 
   return visibilities
-    .get(context, Cache.of)
+    .get(context, Cache.empty)
     .get(device, () => {
-      const visibilities = Cache.of<Element, boolean>();
+      const visibilities = Cache.empty<Element, boolean>();
 
-      [
-        ...traverseNode(
+      return visibilities.merge(
+        traverseNode(
           context,
           context,
           {
             *enter(node, parentNode) {
               if (isElement(node)) {
-                visibilities.set(node, true);
+                yield [node, true];
 
                 if (!isRendered(node, context, device)) {
-                  visibilities.set(node, false);
+                  yield [node, false];
                 } else {
                   const hidden = getAttribute(node, context, "aria-hidden");
 
                   if (hidden.includes("true")) {
-                    visibilities.set(node, false);
+                    yield [node, false];
                   } else if (parentNode !== null && isElement(parentNode)) {
                     const isParentVisible = visibilities.get(parentNode);
 
-                    if (isParentVisible === false) {
-                      visibilities.set(node, false);
+                    if (isParentVisible.includes(false)) {
+                      yield [node, false];
                     }
                   }
                 }
@@ -65,12 +68,11 @@ export function isVisible(
                   "visibility"
                 );
 
-                if (visibility !== null) {
-                  if (
-                    visibility.value === "hidden" ||
-                    visibility.value === "collapse"
-                  ) {
-                    visibilities.set(node, false);
+                if (visibility.isSome()) {
+                  switch (visibility.get().value) {
+                    case "hidden":
+                    case "collapse":
+                      yield [node, false];
                   }
                 }
               }
@@ -78,9 +80,7 @@ export function isVisible(
           },
           { flattened: true, nested: true }
         )
-      ];
-
-      return visibilities;
+      );
     })
     .get(node, () => false);
 }

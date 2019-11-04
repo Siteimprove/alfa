@@ -1,9 +1,0 @@
-{
-  "extends": "../tsconfig.json",
-  "files": ["src/index.ts"],
-  "references": [
-    {
-      "path": "../alfa-test"
-    }
-  ]
-}

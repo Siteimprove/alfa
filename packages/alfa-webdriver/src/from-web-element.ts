@@ -1,8 +1,11 @@
+/// <reference lib="dom" />
+
 import * as dom from "@siteimprove/alfa-dom";
 import { rollup } from "rollup";
 import cjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import { Browser } from "webdriverio";
+
 import { WebElement } from "./types";
 
 const clone = rollup({

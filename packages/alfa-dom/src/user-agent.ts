@@ -1,6 +1,7 @@
 import { parseRule, PropertyName } from "@siteimprove/alfa-css";
-import { keys } from "@siteimprove/alfa-util";
 import { Rule, RuleType, StyleRule, StyleSheet } from "./types";
+
+const { keys } = Object;
 
 /**
  * @see https://html.spec.whatwg.org/#rendering
