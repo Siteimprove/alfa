@@ -1,7 +1,7 @@
-import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
+import { Page } from "@siteimprove/alfa-web";
 
-export type Aspect = Document | Device;
+export type Input = Pick<Page, "document" | "device">;
 
 export type Target = Attribute | Document | Element;
 

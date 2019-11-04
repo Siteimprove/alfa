@@ -27,6 +27,26 @@ export namespace Outcome {
     }
 
     public abstract equals(value: unknown): value is Outcome<I, T, Q, B>;
+
+    public isPassed(): this is Passed<I, T, Q, B> {
+      return isPassed(this);
+    }
+
+    public isFailed(): this is Failed<I, T, Q, B> {
+      return isFailed(this);
+    }
+
+    public isCantTell(): this is CantTell<I, T, Q, B> {
+      return isCantTell(this);
+    }
+
+    public isApplicable(): this is Applicable<I, T, Q, B> {
+      return isApplicable(this);
+    }
+
+    public isInapplicable(): this is Inapplicable<I, T, Q, B> {
+      return isInapplicable(this);
+    }
   }
 
   export class Passed<I, T, Q, B> extends Outcome<I, T, Q, B> {
@@ -196,26 +216,32 @@ export namespace Outcome {
   }
 
   export function isPassed<I, T, Q, B>(
-    outcome: Outcome<I, T, Q, B>
-  ): outcome is Passed<I, T, Q, B> {
-    return outcome instanceof Passed;
+    value: unknown
+  ): value is Passed<I, T, Q, B> {
+    return value instanceof Passed;
   }
 
   export function isFailed<I, T, Q, B>(
-    outcome: Outcome<I, T, Q, B>
-  ): outcome is Failed<I, T, Q, B> {
-    return outcome instanceof Failed;
+    value: unknown
+  ): value is Failed<I, T, Q, B> {
+    return value instanceof Failed;
   }
 
   export function isCantTell<I, T, Q, B>(
-    outcome: Outcome<I, T, Q, B>
-  ): outcome is CantTell<I, T, Q, B> {
-    return outcome instanceof CantTell;
+    value: unknown
+  ): value is CantTell<I, T, Q, B> {
+    return value instanceof CantTell;
   }
 
   export function isApplicable<I, T, Q, B>(
-    outcome: Outcome<I, T, Q, B>
-  ): outcome is Applicable<I, T, Q, B> {
-    return isPassed(outcome) || isFailed(outcome) || isCantTell(outcome);
+    value: unknown
+  ): value is Applicable<I, T, Q, B> {
+    return isPassed(value) || isFailed(value) || isCantTell(value);
+  }
+
+  export function isInapplicable<I, T, Q, B>(
+    value: unknown
+  ): value is Inapplicable<I, T, Q, B> {
+    return value instanceof Inapplicable;
   }
 }

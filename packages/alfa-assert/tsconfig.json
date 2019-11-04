@@ -23,6 +23,9 @@
     },
     {
       "path": "../alfa-rules"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }

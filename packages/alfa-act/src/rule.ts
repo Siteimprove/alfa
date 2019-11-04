@@ -85,9 +85,9 @@ export namespace Rule {
       return value instanceof Expectations;
     }
 
-    public *[Symbol.iterator]() {
+    public *[Symbol.iterator](): Iterator<[N, Expectation]> {
       for (const key in this.expectations) {
-        yield [+key, this.expectations[key]] as [N, Expectation];
+        yield [+key as N, this.expectations[key]];
       }
     }
 
@@ -105,10 +105,7 @@ export namespace Rule {
   export type Evaluator<I, T, Q, B> = (
     input: Readonly<I>,
     oracle: Oracle<Q>,
-    outcomes: Cache<
-      Rule<I, T, unknown, unknown>,
-      Branched<Rule.Outcomes<I, T, unknown, unknown>, B>
-    >
+    outcomes: Cache<Rule<I, T, Q, B>, Branched<Rule.Outcomes<I, T, Q, B>, B>>
   ) => Branched<Rule.Outcomes<I, T, Q, B>, B>;
 
   export namespace Atomic {

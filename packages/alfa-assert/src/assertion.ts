@@ -1,4 +1,4 @@
-import { audit, Outcome, Rule } from "@siteimprove/alfa-act";
+import { Audit, Rule } from "@siteimprove/alfa-act";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -11,10 +11,9 @@ import {
   serialize
 } from "@siteimprove/alfa-dom";
 import { highlight, mark } from "@siteimprove/alfa-highlight";
-import { keys } from "@siteimprove/alfa-util";
 
 import { rules } from "./rules";
-import { Aspect, Target } from "./types";
+import { Input, Target } from "./types";
 
 const documentType: DocumentType = {
   nodeType: NodeType.DocumentType,
@@ -45,13 +44,13 @@ export class Assertion {
 
   public get accessible(): void {
     for (const rule of rules) {
-      this.pass(rule as Rule<Aspect, Target>);
+      this.pass(rule);
     }
 
     return;
   }
 
-  public pass(rule: Rule<Aspect, Target>): void {
+  public pass(rule: Rule<Input, Target>): void {
     const device = getDefaultDevice();
 
     const document: Document = isDocument(this.target)
@@ -62,56 +61,55 @@ export class Assertion {
           childNodes: [documentType, this.target]
         };
 
-    const { results } = audit({ device, document }, [rule]);
+    Audit.of({ device, document })
+      .add(rule)
+      .evaluate()
+      .map(outcomes => {
+        for (const outcome of outcomes) {
+          if (outcome.isFailed()) {
+            const { expectations, target } = outcome;
 
-    for (const result of results) {
-      if (result.outcome === Outcome.Inapplicable) {
-        continue;
-      }
+            for (const [n, expectation] of expectations) {
+              if (!expectation.holds) {
+                const message = `Expectation ${n} does not hold`;
 
-      if (result.outcome === Outcome.Failed) {
-        const { expectations, aspect, target } = result;
-
-        const failure = keys(expectations).find(
-          key => expectations[key].holds === false
-        );
-
-        if (failure !== undefined) {
-          let { message } = expectations[failure];
-
-          if (message === undefined) {
-            message = `Expectation ${failure} does not hold`;
+                throw new AssertionError(message, target);
+              }
+            }
           }
-
-          throw new AssertionError(message, aspect, target);
         }
-      }
-    }
+      });
   }
 }
 
 export class AssertionError extends Error {
   public readonly name = "AssertionError";
 
-  public readonly aspect: Aspect;
-  public readonly target: Target;
+  public readonly target: Rule.Target<Rule.Aspect<Input>, Target>;
 
-  public constructor(message: string, aspect: Aspect, target: Target) {
+  public constructor(
+    message: string,
+    target: Rule.Target<Rule.Aspect<Input>, Target>
+  ) {
     super(message);
 
-    this.aspect = aspect;
     this.target = target;
   }
 
   public toString(): string {
-    const document = this.aspect as Document;
+    const document = this.target.aspect as Document;
 
-    let target = this.target;
+    let target = this.target.target;
     let prelude: string;
 
     if (isAttribute(target)) {
-      prelude = `The attribute ${mark.yellow(target.localName)} on the`;
-      target = getOwnerElement(target, document)!;
+      const attribute = target;
+
+      prelude = `The attribute ${mark.yellow(attribute.localName)} on the`;
+
+      for (const ownerElement of getOwnerElement(attribute, document)) {
+        target = ownerElement;
+      }
     } else {
       prelude = "The";
     }
