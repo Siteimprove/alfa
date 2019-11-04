@@ -227,7 +227,7 @@ fetch(registry).then(body => {
       export const ${index}Index: Map<string, ${index}> = new Map();
 
       for (const key of Object.keys(${group})) {
-        const subtag = ${group}[key];
+        const subtag = ${group}[key as keyof typeof ${group}];
         ${index}Index.set(subtag.name, subtag);
       }
     `);

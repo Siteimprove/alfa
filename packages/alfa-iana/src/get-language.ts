@@ -7,6 +7,7 @@ import {
 } from "./subtags";
 import { ExtendedLanguage, Language, Region, Script } from "./types";
 
+const { assign } = Object;
 const { fromCharCode } = String;
 
 export function getLanguage(tag: string): Language | null {
@@ -28,7 +29,7 @@ export function getLanguage(tag: string): Language | null {
     if (script === null) {
       stream.backup(1);
     } else if (script !== false) {
-      language.script = script;
+      assign(language, { script });
     }
   }
 
@@ -40,7 +41,7 @@ export function getLanguage(tag: string): Language | null {
     if (region === null) {
       stream.backup(1);
     } else if (region !== false) {
-      language.region = region;
+      assign(language, { region });
     }
   }
 

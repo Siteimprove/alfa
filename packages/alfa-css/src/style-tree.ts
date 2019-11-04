@@ -14,7 +14,7 @@ import { CascadedStyle, ComputedStyle, SpecifiedStyle, Style } from "./style";
 import { Declaration } from "./types";
 import { Values } from "./values";
 
-const { keys } = Object;
+const { keys, assign } = Object;
 const { keyword, isKeyword } = Values;
 
 type Longhands = typeof Longhands;
@@ -58,11 +58,9 @@ export class StyleTree<T extends object, S> {
         computed: {}
       };
 
-      style.cascaded = resolveCascadedStyle(declarations);
-
-      style.specified = resolveSpecifiedStyle(style);
-
-      style.computed = resolveComputedStyle(style, device);
+      assign(style, { cascaded: resolveCascadedStyle(declarations) });
+      assign(style, { specified: resolveSpecifiedStyle(style) });
+      assign(style, { computed: resolveComputedStyle(style, device) });
 
       this.styles.set(entry.target, style);
     });
@@ -100,11 +98,11 @@ const addPropertyName = (propertyName: PropertyName) => {
 };
 
 for (const propertyName of keys(Longhands)) {
-  addPropertyName(propertyName);
+  addPropertyName(propertyName as keyof Longhands);
 }
 
 for (const propertyName of keys(Shorthands)) {
-  addPropertyName(propertyName);
+  addPropertyName(propertyName as keyof Longhands);
 }
 
 function getPropertyName(input: string): PropertyName | null {
@@ -180,10 +178,15 @@ function resolveCascadedStyle<S>(
 
       if (result !== null) {
         for (const propertyName of keys(result)) {
-          const value = result[propertyName];
+          const value = result[propertyName as keyof typeof result];
 
           if (value !== undefined) {
-            setProperty(propertyName, value, source, important);
+            setProperty(
+              propertyName as keyof Longhands,
+              value,
+              source,
+              important
+            );
           }
         }
       }
@@ -199,10 +202,12 @@ function resolveCascadedStyle<S>(
     important: boolean
   ): void {
     if (propertyName in cascadedStyle === false || important) {
-      cascadedStyle[propertyName] = {
-        value: propertyValue,
-        source
-      };
+      assign(cascadedStyle, {
+        [propertyName]: {
+          value: propertyValue,
+          source
+        }
+      });
     }
   }
 }
@@ -214,7 +219,10 @@ function resolveSpecifiedStyle<S>(style: Style<S>): SpecifiedStyle<S> {
 
   const parentStyle = style.parent === null ? {} : style.parent.computed;
 
-  const propertyNames = new Set([...keys(cascadedStyle), ...keys(parentStyle)]);
+  const propertyNames = new Set([
+    ...keys(cascadedStyle),
+    ...keys(parentStyle)
+  ]) as Iterable<keyof Longhands>;
 
   for (const propertyName of propertyNames) {
     const { initial, inherits } = Longhands[propertyName];
@@ -257,10 +265,12 @@ function resolveSpecifiedStyle<S>(style: Style<S>): SpecifiedStyle<S> {
     propertyValue: SpecifiedPropertyValue,
     source: Option<S>
   ): void {
-    specifiedStyle[propertyName] = {
-      value: propertyValue,
-      source
-    };
+    assign(specifiedStyle, {
+      [propertyName]: {
+        value: propertyValue,
+        source
+      }
+    });
   }
 }
 
@@ -277,7 +287,7 @@ function resolveComputedStyle<S>(
   const propertyNames = new Set([
     ...keys(specifiedStyle),
     ...keys(parentStyle)
-  ]);
+  ]) as Iterable<keyof Longhands>;
 
   for (const propertyName of propertyNames) {
     setProperty(propertyName);
@@ -302,6 +312,6 @@ function resolveComputedStyle<S>(
       }
     }
 
-    computedStyle[propertyName] = computed(style, device);
+    assign(computedStyle, { [propertyName]: computed(style, device) });
   }
 }

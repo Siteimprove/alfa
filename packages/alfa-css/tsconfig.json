@@ -115,6 +115,9 @@
       "path": "../alfa-lang"
     },
     {
+      "path": "../alfa-math"
+    },
+    {
       "path": "../alfa-option"
     },
     {

@@ -39,9 +39,7 @@ export function getAttributeNode(
   namespace?: Namespace | "*"
 ): Option<Attribute> | Option<Iterable<Attribute>> {
   const attributeNodes = cache.get(element, () => {
-    const attributeNodes = Cache.empty<string, Array<Attribute>>(
-      Cache.Type.Strong
-    );
+    const attributeNodes = Cache.empty<string, Array<Attribute>>();
 
     for (const attribute of Iterable.from(element.attributes)) {
       attributeNodes.get(attribute.localName, () => []).push(attribute);

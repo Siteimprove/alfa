@@ -12,9 +12,7 @@ enum Mode {
   Nested    = 0b00_1
 }
 
-const documentPositions = Cache.empty<Mode, Cache<Node, Cache<Node, number>>>(
-  Cache.Type.Strong
-);
+const documentPositions = Cache.empty<Mode, Cache<Node, Cache<Node, number>>>();
 
 /**
  * Given a node and a context, get the document position of the node within the

@@ -33,8 +33,7 @@ export function getOwnerElement(
             }
           },
           { composed: true, nested: true }
-        ),
-        Cache.Type.Strong
+        )
       )
     )
     .get(attribute);

@@ -10,9 +10,7 @@ enum Mode {
   Flattened
 }
 
-const parentNodes = Cache.empty<Mode, Cache<Node, Cache<Node, Node>>>(
-  Cache.Type.Strong
-);
+const parentNodes = Cache.empty<Mode, Cache<Node, Cache<Node, Node>>>();
 
 /**
  * Given a node and a context, get the parent of the node within the context.

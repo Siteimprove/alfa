@@ -14,23 +14,28 @@ import * as Features from "./features";
 import * as Roles from "./roles";
 import { Category, Feature, Role } from "./types";
 
+const { keys } = Object;
+
 const whitespace = /\s+/;
 
 const rolesByName = new Map<string, Role>();
 
-for (const role of values(Roles)) {
+for (const key of keys(Roles)) {
+  const role = Roles[key as keyof typeof Roles];
   rolesByName.set(role.name, role);
 }
 
 const htmlFeaturesByElement = new Map<string, Feature>();
 
-for (const feature of values(Features.HTML)) {
+for (const key of keys(Features.HTML)) {
+  const feature = Features.HTML[key as keyof typeof Features.HTML];
   htmlFeaturesByElement.set(feature.element, feature);
 }
 
 const svgFeaturesByElement = new Map<string, Feature>();
 
-for (const feature of values(Features.SVG)) {
+for (const key of keys(Features.SVG)) {
+  const feature = Features.SVG[key as keyof typeof Features.SVG];
   svgFeaturesByElement.set(feature.element, feature);
 }
 

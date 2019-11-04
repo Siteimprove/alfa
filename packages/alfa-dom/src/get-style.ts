@@ -23,6 +23,7 @@ import { isDocument, isElement, isShadowRoot } from "./guards";
 import { matches } from "./matches";
 import { Element, Node, Rule } from "./types";
 
+const { assign } = Object;
 const { isArray } = Array;
 
 /**
@@ -92,10 +93,10 @@ function getStyle(
     options
   );
 
-  if (options.pseudo !== undefined) {
-    const pseudoElement = pseudoElements
-      .get(element, Cache.empty)
-      .get(options.pseudo);
+  const { pseudo } = options;
+
+  if (pseudo !== undefined) {
+    const pseudoElement = pseudoElements.get(element, Cache.empty).get(pseudo);
 
     return pseudoElement.flatMap(pseudoElement => styleTree.get(pseudoElement));
   }
@@ -232,11 +233,9 @@ const pseudoElements = Cache.empty<
 function getPseudoElement(element: Element, selector: Selector): object | null {
   switch (selector.type) {
     case SelectorType.PseudoElementSelector: {
-      return pseudoElements
-        .get(element, () => Cache.empty(Cache.Type.Strong))
-        .get(selector.name, () => {
-          return { pseudoElement: selector.name };
-        });
+      return pseudoElements.get(element, Cache.empty).get(selector.name, () => {
+        return { pseudoElement: selector.name };
+      });
     }
 
     case SelectorType.CompoundSelector:
@@ -248,6 +247,5 @@ function getPseudoElement(element: Element, selector: Selector): object | null {
 }
 
 function important(declaration: Declaration): Declaration {
-  declaration.important = true;
-  return declaration;
+  return assign(declaration, { important: true });
 }

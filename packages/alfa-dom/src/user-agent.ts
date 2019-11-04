@@ -249,7 +249,12 @@ function cssRule(
       selectorText: prelude.trim().replace(/\s+/g, " "),
       style: {
         cssText: keys(style)
-          .map(property => `${hyphenCase(property)}: ${style[property]}`)
+          .map(
+            property =>
+              `${hyphenCase(property)}: ${
+                style[property as keyof typeof style]
+              }`
+          )
           .join("; ")
       }
     };

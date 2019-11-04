@@ -121,7 +121,7 @@ function mediaCondition(
         break;
       }
 
-      condition.operator = MediaOperator.And;
+      assign(condition, { operator: MediaOperator.And });
       condition.features.push(feature);
     }
 
@@ -135,7 +135,7 @@ function mediaCondition(
           break;
         }
 
-        condition.operator = MediaOperator.Or;
+        assign(condition, { operator: MediaOperator.Or });
         condition.features.push(feature);
       }
     }

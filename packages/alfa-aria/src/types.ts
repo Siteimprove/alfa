@@ -163,17 +163,25 @@ export interface Role {
 /**
  * @internal
  */
-export const Any: <T extends typeof Roles | typeof Attributes>(
-  type: T
-) => Array<T[keyof T]> = roles => keys(roles).map(role => roles[role]);
+export const Any = <T extends typeof Roles | typeof Attributes>(
+  types: T
+): Array<T[keyof T]> => {
+  const result: Array<T[keyof T]> = [];
+
+  for (const key of keys(types)) {
+    result.push(types[key as keyof T]);
+  }
+
+  return result;
+};
 
 /**
  * @internal
  */
-export const Except: <T extends typeof Roles | typeof Attributes>(
-  type: T,
+export const Except = <T extends typeof Roles | typeof Attributes>(
+  types: T,
   exclude: Array<T[keyof T]>
-) => Array<T[keyof T]> = (types, exclude) => {
+): Array<T[keyof T]> => {
   const filter = new Set(exclude);
   return Any(types).filter(type => !filter.has(type));
 };
@@ -181,9 +189,9 @@ export const Except: <T extends typeof Roles | typeof Attributes>(
 /**
  * @internal
  */
-export const None: <T extends typeof Roles | typeof Attributes>(
+export const None = <T extends typeof Roles | typeof Attributes>(
   type: T
-) => Array<T[keyof T]> = () => [];
+): Array<T[keyof T]> => [];
 
 /**
  * @see https://www.w3.org/TR/html-aria/

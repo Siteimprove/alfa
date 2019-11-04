@@ -12,9 +12,7 @@ enum Mode {
   Nested    = 0b00_1
 }
 
-const nodes = Cache.empty<Mode, Cache<Node, Cache<number, Node>>>(
-  Cache.Type.Strong
-);
+const nodes = Cache.empty<Mode, Cache<Node, Cache<number, Node>>>();
 
 /**
  * Given a context and a document position, get the node at the given document
@@ -55,8 +53,7 @@ export function getNode(
             }
           },
           options
-        ),
-        Cache.Type.Strong
+        )
       );
     })
     .get(documentPosition);

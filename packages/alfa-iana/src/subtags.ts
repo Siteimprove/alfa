@@ -2,7 +2,6 @@
 // Registry. Do therefore not modify it directly! If you wish to make changes,
 // do so in `scripts/subtags.js` and run `yarn prepare` to rebuild this file.
 
-import { values } from "@siteimprove/alfa-util";
 import {
   ExtendedLanguage,
   PrimaryLanguage,
@@ -44072,7 +44071,8 @@ export namespace PrimaryLanguages {
 
 export const PrimaryLanguageIndex: Map<string, PrimaryLanguage> = new Map();
 
-for (const subtag of values(PrimaryLanguages)) {
+for (const key of Object.keys(PrimaryLanguages)) {
+  const subtag = PrimaryLanguages[key as keyof typeof PrimaryLanguages];
   PrimaryLanguageIndex.set(subtag.name, subtag);
 }
 
@@ -45502,7 +45502,8 @@ export namespace ExtendedLanguages {
 
 export const ExtendedLanguageIndex: Map<string, ExtendedLanguage> = new Map();
 
-for (const subtag of values(ExtendedLanguages)) {
+for (const key of Object.keys(ExtendedLanguages)) {
+  const subtag = ExtendedLanguages[key as keyof typeof ExtendedLanguages];
   ExtendedLanguageIndex.set(subtag.name, subtag);
 }
 
@@ -45637,6 +45638,11 @@ export namespace Scripts {
     name: "cher"
   };
 
+  export const CHRS: Script = {
+    type: "script",
+    name: "chrs"
+  };
+
   export const CIRT: Script = {
     type: "script",
     name: "cirt"
@@ -45670,6 +45676,11 @@ export namespace Scripts {
   export const DEVA: Script = {
     type: "script",
     name: "deva"
+  };
+
+  export const DIAK: Script = {
+    type: "script",
+    name: "diak"
   };
 
   export const DOGR: Script = {
@@ -46687,6 +46698,11 @@ export namespace Scripts {
     name: "xsux"
   };
 
+  export const YEZI: Script = {
+    type: "script",
+    name: "yezi"
+  };
+
   export const YIII: Script = {
     type: "script",
     name: "yiii"
@@ -46735,7 +46751,8 @@ export namespace Scripts {
 
 export const ScriptIndex: Map<string, Script> = new Map();
 
-for (const subtag of values(Scripts)) {
+for (const key of Object.keys(Scripts)) {
+  const subtag = Scripts[key as keyof typeof Scripts];
   ScriptIndex.set(subtag.name, subtag);
 }
 
@@ -48453,7 +48470,8 @@ export namespace Regions {
 
 export const RegionIndex: Map<string, Region> = new Map();
 
-for (const subtag of values(Regions)) {
+for (const key of Object.keys(Regions)) {
+  const subtag = Regions[key as keyof typeof Regions];
   RegionIndex.set(subtag.name, subtag);
 }
 
@@ -49066,6 +49084,7 @@ export namespace Variants {
 
 export const VariantIndex: Map<string, Variant> = new Map();
 
-for (const subtag of values(Variants)) {
+for (const key of Object.keys(Variants)) {
+  const subtag = Variants[key as keyof typeof Variants];
   VariantIndex.set(subtag.name, subtag);
 }

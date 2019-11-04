@@ -9,9 +9,7 @@ enum Mode {
   Flattened
 }
 
-const cache = Cache.empty<Mode, Cache<Node, Cache<Node, Node>>>(
-  Cache.Type.Strong
-);
+const cache = Cache.empty<Mode, Cache<Node, Cache<Node, Node>>>();
 
 /**
  * Given a node and a context, get the root of the node within the context.
