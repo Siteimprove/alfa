@@ -1,7 +1,7 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import { Option, Some } from "@siteimprove/alfa-option";
 
 import { Cache } from "./cache";
 import { Oracle } from "./oracle";
@@ -72,20 +72,20 @@ export namespace Rule {
   ) => Branched<Iterable<Outcome<I, T, Q, B>>, B>;
 
   export namespace Atomic {
-    type Questionnaire<T, Q> =
-      | Expectations
+    type Questionnaire<Q, S, T> =
+      | T
       | {
-          [K in keyof Q]: Question<K, Q[K], T, Questionnaire<T, Q>>;
+          [K in keyof Q]: Question<K, Q[K], S, Questionnaire<Q, S, T>>;
         }[keyof Q];
 
     type Evaluator<I, T, Q, B> = (
       input: Readonly<I>
     ) => {
-      applicability(): Branched<Iterable<T>, B>;
+      applicability(): Branched<Iterable<Questionnaire<Q, T, Option<T>>>, B>;
       expectations(
         target: T,
         branches: Option<Iterable<B>>
-      ): Branched<Questionnaire<T, Q>, B>;
+      ): Branched<Questionnaire<Q, T, Expectations>, B>;
     };
 
     export function of<I, T, Q = never, B = never>(properties: {
@@ -102,7 +102,25 @@ export namespace Rule {
 
             return applicability().flatMap<Iterable<Outcome<I, T, Q, B>>>(
               (applicability, branches) => {
-                const targets = [...applicability];
+                const targets = [
+                  ...Iterable.chain(applicability)
+                    .filter((target): target is Some<T> => {
+                      while (target instanceof Question) {
+                        const question = target;
+
+                        const answer = oracle(rule, question, branches);
+
+                        if (answer.isSome()) {
+                          target = answer.get();
+                        } else {
+                          return false;
+                        }
+                      }
+
+                      return target.isSome();
+                    })
+                    .map(target => target.get())
+                ];
 
                 if (targets.length === 0) {
                   return Branched.of([Outcome.Inapplicable.of(rule)]);
