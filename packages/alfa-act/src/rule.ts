@@ -98,30 +98,35 @@ export namespace Rule {
 
   export type Aspect<T> = T | T[keyof T];
 
-  export type Outcomes<I, T, Q = never, B = never> = Iterable<
-    Outcome<I, T, Q, B>
-  >;
-
   export type Evaluator<I, T, Q, B> = (
     input: Readonly<I>,
     oracle: Oracle<Q>,
-    outcomes: Cache<Rule<I, T, Q, B>, Branched<Rule.Outcomes<I, T, Q, B>, B>>
-  ) => Branched<Rule.Outcomes<I, T, Q, B>, B>;
+    outcomes: Cache<
+      Rule<I, T, Q, B>,
+      Branched<Iterable<Outcome<I, T, Q, B>>, B>
+    >
+  ) => Branched<Iterable<Outcome<I, T, Q, B>>, B>;
 
   export namespace Atomic {
-    type Questionnaire<Q> =
+    type Questionnaire<A, T, Q> =
       | Expectations
-      | { [K in keyof Q]: Question<K, Q[K], Questionnaire<Q>> }[keyof Q];
+      | {
+          [K in keyof Q]: Question<
+            K,
+            Q[K],
+            Target<A, T>,
+            Questionnaire<A, T, Q>
+          >;
+        }[keyof Q];
 
     type Evaluator<I, T, Q, B> = (
       input: Readonly<I>
     ) => {
       applicability(): Branched<Applicability<I, T>, B>;
       expectations(
-        target: T,
-        aspect: Aspect<I>,
+        target: Target<Aspect<I>, T>,
         branches: Option<Iterable<B>>
-      ): Branched<Questionnaire<Q>, B>;
+      ): Branched<Questionnaire<Aspect<I>, T, Q>, B>;
     };
 
     export function of<I, T, Q = never, B = never>(properties: {
@@ -146,17 +151,12 @@ export namespace Rule {
 
                 return Branched.sequence(
                   Iterable.map(targets, target =>
-                    expectations(target.target, target.aspect, branches).map(
+                    expectations(target, branches).map(
                       (expectations, branches) => {
                         while (expectations instanceof Question) {
                           const question = expectations;
 
-                          const answer = oracle(
-                            rule,
-                            target,
-                            question,
-                            branches
-                          );
+                          const answer = oracle(rule, question, branches);
 
                           if (answer.isSome()) {
                             expectations = answer.get();

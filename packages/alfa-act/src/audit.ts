@@ -41,7 +41,7 @@ export class Audit<I, T = never, Q = unknown, B = never> {
   public evaluate(): Branched<Iterable<Outcome<I, T, Q, B>>, B> {
     const outcomes = Cache.empty<
       Rule<I, T, Q, B>,
-      Branched<Rule.Outcomes<I, T, Q, B>, B>
+      Branched<Iterable<Outcome<I, T, Q, B>>, B>
     >();
 
     return Iterable.reduce(
