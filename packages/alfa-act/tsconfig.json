@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/audit.ts",
+    "src/cache.ts",
     "src/index.ts",
     "src/oracle.ts",
     "src/outcome.ts",
@@ -11,9 +12,6 @@
   "references": [
     {
       "path": "../alfa-branched"
-    },
-    {
-      "path": "../alfa-cache"
     },
     {
       "path": "../alfa-equality"

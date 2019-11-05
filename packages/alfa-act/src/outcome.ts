@@ -3,9 +3,16 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 
 import { Rule } from "./rule";
 
-export type Outcome<I, T, Q, B> =
-  | Outcome.Applicable<I, T, Q, B>
-  | Outcome.Inapplicable<I, T, Q, B>;
+export abstract class Outcome<I, T, Q, B> implements Equality {
+  public readonly rule: Rule<I, T, Q, B>;
+  public readonly target?: T;
+
+  protected constructor(rule: Rule<I, T, Q, B>) {
+    this.rule = rule;
+  }
+
+  public abstract equals(value: unknown): value is Outcome<I, T, Q, B>;
+}
 
 export namespace Outcome {
   export const enum Type {
@@ -19,51 +26,21 @@ export namespace Outcome {
     export type Applicable = Exclude<Type, Type.Inapplicable>;
   }
 
-  abstract class Outcome<I, T, Q, B> implements Equality {
-    public readonly rule: Rule<I, T, Q, B>;
-
-    protected constructor(rule: Rule<I, T, Q, B>) {
-      this.rule = rule;
-    }
-
-    public abstract equals(value: unknown): value is Outcome<I, T, Q, B>;
-
-    public isPassed(): this is Passed<I, T, Q, B> {
-      return isPassed(this);
-    }
-
-    public isFailed(): this is Failed<I, T, Q, B> {
-      return isFailed(this);
-    }
-
-    public isCantTell(): this is CantTell<I, T, Q, B> {
-      return isCantTell(this);
-    }
-
-    public isApplicable(): this is Applicable<I, T, Q, B> {
-      return isApplicable(this);
-    }
-
-    public isInapplicable(): this is Inapplicable<I, T, Q, B> {
-      return isInapplicable(this);
-    }
-  }
-
   export class Passed<I, T, Q, B> extends Outcome<I, T, Q, B> {
     public static of<I, T, Q, B>(
       rule: Rule<I, T, Q, B>,
-      target: Rule.Target<Rule.Aspect<I>, T>,
+      target: T,
       expectations: Rule.Expectations
     ): Passed<I, T, Q, B> {
       return new Passed(rule, target, expectations);
     }
 
-    public readonly target: Rule.Target<Rule.Aspect<I>, T>;
+    public readonly target: T;
     public readonly expectations: Rule.Expectations;
 
     private constructor(
       rule: Rule<I, T, Q, B>,
-      target: Rule.Target<Rule.Aspect<I>, T>,
+      target: T,
       expectations: Rule.Expectations
     ) {
       super(rule);
@@ -76,7 +53,8 @@ export namespace Outcome {
       return (
         value instanceof Passed &&
         Equality.equals(value.rule, this.rule) &&
-        Equality.equals(value.target, this.target)
+        Equality.equals(value.target, this.target) &&
+        Equality.equals(value.expectations, this.expectations)
       );
     }
 
@@ -84,8 +62,7 @@ export namespace Outcome {
       return {
         outcome: Type.Passed,
         rule: this.rule,
-        aspect: this.target.aspect,
-        target: this.target.target,
+        target: this.target,
         expectations: this.expectations
       };
     }
@@ -94,18 +71,18 @@ export namespace Outcome {
   export class Failed<I, T, Q, B> extends Outcome<I, T, Q, B> {
     public static of<I, T, Q, B>(
       rule: Rule<I, T, Q, B>,
-      target: Rule.Target<Rule.Aspect<I>, T>,
+      target: T,
       expectations: Rule.Expectations
     ): Failed<I, T, Q, B> {
       return new Failed(rule, target, expectations);
     }
 
-    public readonly target: Rule.Target<Rule.Aspect<I>, T>;
+    public readonly target: T;
     public readonly expectations: Rule.Expectations;
 
     private constructor(
       rule: Rule<I, T, Q, B>,
-      target: Rule.Target<Rule.Aspect<I>, T>,
+      target: T,
       expectations: Rule.Expectations
     ) {
       super(rule);
@@ -118,7 +95,8 @@ export namespace Outcome {
       return (
         value instanceof Failed &&
         Equality.equals(value.rule, this.rule) &&
-        Equality.equals(value.target, this.target)
+        Equality.equals(value.target, this.target) &&
+        Equality.equals(value.expectations, this.expectations)
       );
     }
 
@@ -126,8 +104,7 @@ export namespace Outcome {
       return {
         outcome: Type.Failed,
         rule: this.rule,
-        aspect: this.target.aspect,
-        target: this.target.target,
+        target: this.target,
         expectations: this.expectations
       };
     }
@@ -136,17 +113,14 @@ export namespace Outcome {
   export class CantTell<I, T, Q, B> extends Outcome<I, T, Q, B> {
     public static of<I, T, Q, B>(
       rule: Rule<I, T, Q, B>,
-      target: Rule.Target<Rule.Aspect<I>, T>
+      target: T
     ): CantTell<I, T, Q, B> {
       return new CantTell(rule, target);
     }
 
-    public readonly target: Rule.Target<Rule.Aspect<I>, T>;
+    public readonly target: T;
 
-    private constructor(
-      rule: Rule<I, T, Q, B>,
-      target: Rule.Target<Rule.Aspect<I>, T>
-    ) {
+    private constructor(rule: Rule<I, T, Q, B>, target: T) {
       super(rule);
 
       this.target = target;
@@ -164,8 +138,7 @@ export namespace Outcome {
       return {
         outcome: Type.CantTell,
         rule: this.rule,
-        aspect: this.target.aspect,
-        target: this.target.target
+        target: this.target
       };
     }
   }
@@ -202,7 +175,7 @@ export namespace Outcome {
 
   export function from<I, T, Q, B>(
     rule: Rule<I, T, Q, B>,
-    target: Rule.Target<Rule.Aspect<I>, T>,
+    target: T,
     expectations: Rule.Expectations
   ): Outcome.Applicable<I, T, Q, B> {
     const holds = Iterable.every(
@@ -216,32 +189,32 @@ export namespace Outcome {
   }
 
   export function isPassed<I, T, Q, B>(
-    value: unknown
-  ): value is Passed<I, T, Q, B> {
-    return value instanceof Passed;
+    outcome: Outcome<I, T, Q, B>
+  ): outcome is Passed<I, T, Q, B> {
+    return outcome instanceof Passed;
   }
 
   export function isFailed<I, T, Q, B>(
-    value: unknown
-  ): value is Failed<I, T, Q, B> {
-    return value instanceof Failed;
+    outcome: Outcome<I, T, Q, B>
+  ): outcome is Failed<I, T, Q, B> {
+    return outcome instanceof Failed;
   }
 
   export function isCantTell<I, T, Q, B>(
-    value: unknown
-  ): value is CantTell<I, T, Q, B> {
-    return value instanceof CantTell;
+    outcome: Outcome<I, T, Q, B>
+  ): outcome is CantTell<I, T, Q, B> {
+    return outcome instanceof CantTell;
   }
 
   export function isApplicable<I, T, Q, B>(
-    value: unknown
-  ): value is Applicable<I, T, Q, B> {
-    return isPassed(value) || isFailed(value) || isCantTell(value);
+    outcome: Outcome<I, T, Q, B>
+  ): outcome is Applicable<I, T, Q, B> {
+    return isPassed(outcome) || isFailed(outcome) || isCantTell(outcome);
   }
 
   export function isInapplicable<I, T, Q, B>(
-    value: unknown
-  ): value is Inapplicable<I, T, Q, B> {
-    return value instanceof Inapplicable;
+    outcome: Outcome<I, T, Q, B>
+  ): outcome is Inapplicable<I, T, Q, B> {
+    return outcome instanceof Inapplicable;
   }
 }

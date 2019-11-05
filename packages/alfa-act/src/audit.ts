@@ -1,9 +1,9 @@
 import { Branched } from "@siteimprove/alfa-branched";
-import { Cache } from "@siteimprove/alfa-cache";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { None } from "@siteimprove/alfa-option";
 
+import { Cache } from "./cache";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
@@ -39,10 +39,7 @@ export class Audit<I, T = never, Q = unknown, B = never> {
   }
 
   public evaluate(): Branched<Iterable<Outcome<I, T, Q, B>>, B> {
-    const outcomes = Cache.empty<
-      Rule<I, T, Q, B>,
-      Branched<Iterable<Outcome<I, T, Q, B>>, B>
-    >();
+    const outcomes = Cache.empty();
 
     return Iterable.reduce(
       this.rules,

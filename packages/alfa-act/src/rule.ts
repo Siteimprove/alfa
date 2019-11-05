@@ -1,9 +1,9 @@
 import { Branched } from "@siteimprove/alfa-branched";
-import { Cache } from "@siteimprove/alfa-cache";
 import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 
+import { Cache } from "./cache";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Question } from "./question";
@@ -32,37 +32,6 @@ export class Rule<I, T, Q = never, B = never> {
 }
 
 export namespace Rule {
-  export class Target<A, T> implements Equality<Target<A, T>> {
-    public static of<A, T>(aspect: A, target: T): Target<A, T> {
-      return new Target(aspect, target);
-    }
-
-    public readonly aspect: A;
-    public readonly target: T;
-
-    private constructor(aspect: A, target: T) {
-      this.aspect = aspect;
-      this.target = target;
-    }
-
-    public equals(value: unknown): value is Target<A, T> {
-      return (
-        value instanceof Target &&
-        Equality.equals(value.aspect, this.aspect) &&
-        Equality.equals(value.target, this.target)
-      );
-    }
-
-    public toJSON() {
-      return {
-        aspect: this.aspect,
-        target: this.target
-      };
-    }
-  }
-
-  export type Applicability<I, T> = Iterable<Target<Aspect<I>, T>>;
-
   export interface Expectation {
     readonly holds: boolean;
   }
@@ -96,37 +65,27 @@ export namespace Rule {
     }
   }
 
-  export type Aspect<T> = T | T[keyof T];
-
   export type Evaluator<I, T, Q, B> = (
     input: Readonly<I>,
     oracle: Oracle<Q>,
-    outcomes: Cache<
-      Rule<I, T, Q, B>,
-      Branched<Iterable<Outcome<I, T, Q, B>>, B>
-    >
+    outcomes: Cache
   ) => Branched<Iterable<Outcome<I, T, Q, B>>, B>;
 
   export namespace Atomic {
-    type Questionnaire<A, T, Q> =
+    type Questionnaire<T, Q> =
       | Expectations
       | {
-          [K in keyof Q]: Question<
-            K,
-            Q[K],
-            Target<A, T>,
-            Questionnaire<A, T, Q>
-          >;
+          [K in keyof Q]: Question<K, Q[K], T, Questionnaire<T, Q>>;
         }[keyof Q];
 
     type Evaluator<I, T, Q, B> = (
       input: Readonly<I>
     ) => {
-      applicability(): Branched<Applicability<I, T>, B>;
+      applicability(): Branched<Iterable<T>, B>;
       expectations(
-        target: Target<Aspect<I>, T>,
+        target: T,
         branches: Option<Iterable<B>>
-      ): Branched<Questionnaire<Aspect<I>, T, Q>, B>;
+      ): Branched<Questionnaire<T, Q>, B>;
     };
 
     export function of<I, T, Q = never, B = never>(properties: {
