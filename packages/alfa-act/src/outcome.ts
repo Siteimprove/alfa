@@ -1,5 +1,6 @@
 import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Record } from "@siteimprove/alfa-record";
 
 import { Rule } from "./rule";
 
@@ -30,18 +31,18 @@ export namespace Outcome {
     public static of<I, T, Q, B>(
       rule: Rule<I, T, Q, B>,
       target: T,
-      expectations: Rule.Expectations
+      expectations: Record<Rule.Expectations>
     ): Passed<I, T, Q, B> {
       return new Passed(rule, target, expectations);
     }
 
     public readonly target: T;
-    public readonly expectations: Rule.Expectations;
+    public readonly expectations: Record<Rule.Expectations>;
 
     private constructor(
       rule: Rule<I, T, Q, B>,
       target: T,
-      expectations: Rule.Expectations
+      expectations: Record<Rule.Expectations>
     ) {
       super(rule);
 
@@ -72,18 +73,18 @@ export namespace Outcome {
     public static of<I, T, Q, B>(
       rule: Rule<I, T, Q, B>,
       target: T,
-      expectations: Rule.Expectations
+      expectations: Record<Rule.Expectations>
     ): Failed<I, T, Q, B> {
       return new Failed(rule, target, expectations);
     }
 
     public readonly target: T;
-    public readonly expectations: Rule.Expectations;
+    public readonly expectations: Record<Rule.Expectations>;
 
     private constructor(
       rule: Rule<I, T, Q, B>,
       target: T,
-      expectations: Rule.Expectations
+      expectations: Record<Rule.Expectations>
     ) {
       super(rule);
 
@@ -176,7 +177,7 @@ export namespace Outcome {
   export function from<I, T, Q, B>(
     rule: Rule<I, T, Q, B>,
     target: T,
-    expectations: Rule.Expectations
+    expectations: Record<Rule.Expectations>
   ): Outcome.Applicable<I, T, Q, B> {
     const holds = Iterable.every(
       expectations,
