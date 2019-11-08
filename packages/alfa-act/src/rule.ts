@@ -1,4 +1,3 @@
-import { Branched } from "@siteimprove/alfa-branched";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -9,18 +8,18 @@ import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 
-export class Rule<I, T, Q = never, B = never> {
-  public static of<I, T, Q = never, B = never>(properties: {
+export class Rule<I, T, Q = never> {
+  public static of<I, T, Q = never>(properties: {
     uri: string;
-    evaluate: Rule.Evaluator<I, T, Q, B>;
-  }): Rule<I, T, Q, B> {
+    evaluate: Rule.Evaluator<I, T, Q>;
+  }): Rule<I, T, Q> {
     return new Rule(properties.uri, properties.evaluate);
   }
 
   public readonly uri: string;
-  public readonly evaluator: Rule.Evaluator<I, T, Q, B>;
+  public readonly evaluator: Rule.Evaluator<I, T, Q>;
 
-  private constructor(uri: string, evaluator: Rule.Evaluator<I, T, Q, B>) {
+  private constructor(uri: string, evaluator: Rule.Evaluator<I, T, Q>) {
     this.uri = uri;
     this.evaluator = evaluator;
   }
@@ -29,7 +28,7 @@ export class Rule<I, T, Q = never, B = never> {
     input: Readonly<I>,
     oracle: Oracle<Q> = () => None,
     outcomes: Cache = Cache.empty()
-  ): Branched<Iterable<Outcome<I, T, Q, B>>, B> {
+  ): Iterable<Outcome<I, T, Q>> {
     return this.evaluator(input, oracle, outcomes);
   }
 
@@ -49,153 +48,52 @@ export namespace Rule {
     readonly [key: string]: Expectation<T>;
   }
 
-  export type Evaluator<I, T, Q, B> = (
+  export type Evaluator<I, T, Q> = (
     input: Readonly<I>,
     oracle: Oracle<Q>,
     outcomes: Cache
-  ) => Branched<Iterable<Outcome<I, T, Q, B>>, B>;
+  ) => Iterable<Outcome<I, T, Q>>;
 
   export namespace Atomic {
-    type Evaluator<I, T, Q, B> = (
+    type Evaluator<I, T, Q> = (
       input: Readonly<I>
     ) => {
-      applicability(): Iterable<Branched<Interview<Q, T, Option<T>>, B>>;
-      expectations(
-        target: T,
-        branches: Iterable<B>
-      ): Expectations<Branched<Interview<Q, T, boolean>, B>>;
+      applicability(): Iterable<Interview<Q, T, T | Option<T>>>;
+      expectations(target: T): Expectations<Interview<Q, T, boolean>>;
     };
 
-    export function of<I, T, Q = never, B = never>(properties: {
+    export function of<I, T, Q = never>(properties: {
       uri: string;
-      evaluate: Evaluator<I, T, Q, B>;
-    }): Rule<I, T, Q, B> {
+      evaluate: Evaluator<I, T, Q>;
+    }): Rule<I, T, Q> {
       const { uri, evaluate } = properties;
 
-      const rule: Rule<I, T, Q, B> = Rule.of({
+      const rule: Rule<I, T, Q> = Rule.of({
         uri,
         evaluate(input, oracle, outcomes) {
           return outcomes.get(rule, () => {
             const { applicability, expectations } = evaluate(input);
 
-            return Branched.traverse(applicability(), interview =>
-              interview.flatMap((interview, branches) => {
-                const target = Option.flatten(
-                  Interview.conduct(interview, rule, oracle, branches)
-                );
-
-                if (target.isSome()) {
-                  return resolve(
-                    rule,
-                    Record.of(expectations(target.get(), branches)),
-                    oracle,
-                    branches
-                  ).map(expectations => {
-                    if (expectations.isSome()) {
-                      return Option.of(
-                        Outcome.from(
-                          rule,
-                          target.get(),
-                          Record.from(expectations.get())
-                        )
-                      );
-                    }
-
-                    return Option.of(Outcome.CantTell.of(rule, target.get()));
-                  });
+            const targets = Array.from(
+              Iterable.flatMap(applicability(), function*(interview) {
+                for (const target of Interview.conduct(
+                  interview,
+                  rule,
+                  oracle
+                ).flatMap(target =>
+                  Option.isOption(target) ? target : Option.of(target)
+                )) {
+                  yield target;
                 }
-
-                return Branched.of(None);
               })
-            ).map(outcomes => {
-              const applicable = Iterable.reduce(
-                outcomes,
-                (applicable, outcome) =>
-                  outcome.isSome()
-                    ? applicable.push(outcome.get())
-                    : applicable,
-                List.empty<Outcome.Applicable<I, T, Q, B>>()
-              );
+            );
 
-              if (applicable.size === 0) {
-                return [Outcome.Inapplicable.of(rule)];
-              }
+            if (targets.length === 0) {
+              return [Outcome.Inapplicable.of(rule)];
+            }
 
-              return applicable;
-            });
-          });
-        }
-      });
-
-      return rule;
-    }
-  }
-
-  export namespace Composite {
-    type Evaluator<I, T, Q, B> = (
-      input: Readonly<I>
-    ) => {
-      expectations(
-        outcomes: Iterable<Outcome<I, T, Q, B>>,
-        branches: Iterable<B>
-      ): Expectations<Branched<Interview<Q, T, boolean>, B>>;
-    };
-
-    export function of<I, T, Q = never, B = never>(properties: {
-      uri: string;
-      composes: Iterable<Rule<I, T, Q, B>>;
-      evaluate: Evaluator<I, T, Q, B>;
-    }): Rule<I, T, Q, B> {
-      const { uri, composes, evaluate } = properties;
-
-      const rule: Rule<I, T, Q, B> = Rule.of({
-        uri,
-        evaluate(input, oracle, outcomes) {
-          return outcomes.get(rule, () => {
-            const applicability = Branched.sequence(
-              Iterable.map(composes, rule =>
-                rule.evaluate(input, oracle, outcomes)
-              )
-            ).map(Iterable.flatten);
-
-            const { expectations } = evaluate(input);
-
-            return applicability.flatMap<Iterable<Outcome<I, T, Q, B>>>(
-              (outcomes, branches) => {
-                const applicable = Iterable.reduce(
-                  outcomes,
-                  (applicable, outcome) =>
-                    Outcome.isApplicable(outcome)
-                      ? applicable.push(outcome)
-                      : applicable,
-                  List.empty<Outcome.Applicable<I, T, Q, B>>()
-                );
-
-                if (applicable.size === 0) {
-                  return Branched.of([Outcome.Inapplicable.of(rule)]);
-                }
-
-                return Branched.traverse(
-                  Iterable.groupBy(applicable, outcome => outcome.target),
-                  ([target, outcomes]) =>
-                    resolve(
-                      rule,
-                      Record.of(expectations(outcomes, branches)),
-                      oracle,
-                      branches
-                    ).map(expectations => {
-                      if (expectations.isSome()) {
-                        return Outcome.from(
-                          rule,
-                          target,
-                          Record.from(expectations.get())
-                        );
-                      }
-
-                      return Outcome.CantTell.of(rule, target);
-                    })
-                );
-              }
+            return targets.map(target =>
+              resolve(target, Record.of(expectations(target)), rule, oracle)
             );
           });
         }
@@ -205,26 +103,86 @@ export namespace Rule {
     }
   }
 
-  function resolve<I, T, Q, B>(
-    rule: Rule<I, T, Q, B>,
-    expectations: Record<Expectations<Branched<Interview<Q, T, boolean>, B>>>,
-    oracle: Oracle<Q>,
-    branches: Iterable<B>
-  ): Branched<Option<List<[string, Expectation]>>, B> {
+  export namespace Composite {
+    type Evaluator<I, T, Q> = (
+      input: Readonly<I>
+    ) => {
+      expectations(
+        outcomes: Iterable<Outcome<I, T, Q>>
+      ): Expectations<Interview<Q, T, boolean>>;
+    };
+
+    export function of<I, T, Q = never>(properties: {
+      uri: string;
+      composes: Iterable<Rule<I, T, Q>>;
+      evaluate: Evaluator<I, T, Q>;
+    }): Rule<I, T, Q> {
+      const { uri, composes, evaluate } = properties;
+
+      const rule: Rule<I, T, Q> = Rule.of({
+        uri,
+        evaluate(input, oracle, outcomes) {
+          return outcomes.get(rule, () => {
+            const targets = Array.from(
+              Iterable.flatMap(composes, function*(rule) {
+                for (const outcome of rule.evaluate(input, oracle, outcomes)) {
+                  if (Outcome.isApplicable(outcome)) {
+                    yield outcome;
+                  }
+                }
+              })
+            );
+
+            if (targets.length === 0) {
+              return [Outcome.Inapplicable.of(rule)];
+            }
+
+            const { expectations } = evaluate(input);
+
+            return Array.from(
+              Iterable.map(
+                Iterable.groupBy(targets, outcome => outcome.target),
+                ([target, outcomes]) =>
+                  resolve(
+                    target,
+                    Record.of(expectations(outcomes)),
+                    rule,
+                    oracle
+                  )
+              )
+            );
+          });
+        }
+      });
+
+      return rule;
+    }
+  }
+
+  function resolve<I, T, Q>(
+    target: T,
+    expectations: Record<Expectations<Interview<Q, T, boolean>>>,
+    rule: Rule<I, T, Q>,
+    oracle: Oracle<Q>
+  ): Outcome.Applicable<I, T, Q> {
     return Iterable.reduce(
       expectations,
-      (expectations, [id, expectation]) =>
-        expectations.flatMap((expectations, branches) =>
-          expectation.holds.map(interview =>
-            Interview.conduct(interview, rule, oracle, branches).flatMap(
-              holds =>
-                expectations.map(expectations =>
-                  expectations.push([id, { holds }])
-                )
-            )
+      (expectations, [id, expectation]) => {
+        const { holds: interview } = expectation;
+
+        return expectations.flatMap((expectations, branches) =>
+          Interview.conduct(interview, rule, oracle).map(holds =>
+            expectations.push([id, { holds }])
           )
-        ),
-      Branched.of(Option.of(List.empty()))
-    );
+        );
+      },
+      Option.of(List.empty<[string, Expectation]>())
+    )
+      .map(expectations => {
+        return Outcome.from(rule, target, Record.from(expectations));
+      })
+      .getOrElse(() => {
+        return Outcome.CantTell.of(rule, target);
+      });
   }
 }

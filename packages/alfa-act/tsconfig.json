@@ -12,9 +12,6 @@
   ],
   "references": [
     {
-      "path": "../alfa-branched"
-    },
-    {
       "path": "../alfa-equality"
     },
     {
