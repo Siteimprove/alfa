@@ -1,4 +1,4 @@
-import { Audit, Rule } from "@siteimprove/alfa-act";
+import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
 import { getDefaultDevice } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -66,7 +66,7 @@ export class Assertion {
       .evaluate()
       .map(outcomes => {
         for (const outcome of outcomes) {
-          if (outcome.isFailed()) {
+          if (Outcome.isFailed(outcome)) {
             const { expectations, target } = outcome;
 
             for (const [n, expectation] of expectations) {

@@ -1,9 +1,10 @@
-import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+
+import { Device } from "@siteimprove/alfa-device";
 import { isVisible } from "../src/is-visible";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("Returns true if an element is visible to assistive technology", t => {
   const div = <div />;

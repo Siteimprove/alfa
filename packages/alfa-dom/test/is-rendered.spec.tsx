@@ -1,9 +1,10 @@
-import { getDefaultDevice } from "@siteimprove/alfa-device";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { Device } from "@siteimprove/alfa-device";
 import { isRendered } from "../src/is-rendered";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("Returns true when an element is rendered", t => {
   const div = <div />;

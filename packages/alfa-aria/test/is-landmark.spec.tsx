@@ -1,9 +1,10 @@
-import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+
+import { Device } from "@siteimprove/alfa-device";
 import { isLandmark } from "../src/is-landmark";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("Returns true when an element is a landmark", t => {
   const banner = <div role="banner" />;

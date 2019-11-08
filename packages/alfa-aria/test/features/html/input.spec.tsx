@@ -1,11 +1,12 @@
-import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+
+import { Device } from "@siteimprove/alfa-device";
 import { Input } from "../../../src/features/html/input";
 import * as Roles from "../../../src/roles";
 import { None } from "../../../src/types";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 /**
  * @see https://www.w3.org/TR/html-aria/#input

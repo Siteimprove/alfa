@@ -9,7 +9,7 @@ import {
   Resolvers,
   ValueType
 } from "@siteimprove/alfa-css";
-import { Device, DeviceType, Orientation } from "@siteimprove/alfa-device";
+import { Device, Orientation } from "@siteimprove/alfa-device";
 import { isMediaRule } from "./guards";
 import { ConditionRule } from "./types";
 
@@ -67,13 +67,13 @@ function fulfillsMediaQuery(device: Device, mediaQuery: MediaQuery): boolean {
 function fulfillsMediaType(device: Device, mediaType: MediaType): boolean {
   switch (mediaType) {
     case "screen":
-      return device.type === DeviceType.Screen;
+      return device.type === Device.Type.Screen;
 
     case "print":
-      return device.type === DeviceType.Print;
+      return device.type === Device.Type.Print;
 
     case "speech":
-      return device.type === DeviceType.Speech;
+      return device.type === Device.Type.Speech;
 
     case "all":
       return true;

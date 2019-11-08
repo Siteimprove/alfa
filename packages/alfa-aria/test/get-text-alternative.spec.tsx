@@ -2,11 +2,11 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Browser } from "@siteimprove/alfa-compatibility";
-import { getDefaultDevice } from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import { None, Some } from "@siteimprove/alfa-option";
 import { getTextAlternative } from "../src/get-text-alternative";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("getTextAlternative() computes the text alternative of a button with text", t => {
   const button = <button>Button</button>;

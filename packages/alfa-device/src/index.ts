@@ -1,2 +1,1 @@
-export * from "./get-default-device";
-export * from "./types";
+export * from "./device";

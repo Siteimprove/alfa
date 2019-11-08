@@ -2,12 +2,12 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Browser } from "@siteimprove/alfa-compatibility";
-import { getDefaultDevice } from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import { None, Some } from "@siteimprove/alfa-option";
 import { getRole } from "../src/get-role";
 import * as Roles from "../src/roles";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("Returns the semantic role of an element when explicitly set", t => {
   const button = <div role="button">Button</div>;

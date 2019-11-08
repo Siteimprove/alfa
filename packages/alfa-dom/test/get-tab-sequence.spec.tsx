@@ -1,9 +1,10 @@
-import { getDefaultDevice } from "@siteimprove/alfa-device";
+import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import { jsx } from "../jsx";
+
+import { Device } from "@siteimprove/alfa-device";
 import { getTabSequence } from "../src/get-tab-sequence";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("Gets the tab sequence of a node and its children", t => {
   const div = <div />;

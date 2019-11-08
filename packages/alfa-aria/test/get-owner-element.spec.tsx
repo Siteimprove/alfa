@@ -1,11 +1,11 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { getDefaultDevice } from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import { None, Some } from "@siteimprove/alfa-option";
 import { getOwnerElement } from "../src/get-owner-element";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("getOwnerElement() gets the implicit owner of an element", t => {
   const li = <li />;

@@ -1,9 +1,10 @@
-import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+
+import { Device } from "@siteimprove/alfa-device";
 import { isExposed } from "../src/is-exposed";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("Returns true if an element is exposed in the accessibility tree", t => {
   const div = <div />;

@@ -1,9 +1,10 @@
-import { getDefaultDevice } from "@siteimprove/alfa-device";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
+
+import { Device } from "@siteimprove/alfa-device";
 import { hasTextAlternative } from "../src/has-text-alternative";
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 test("Returns true if an element has a text alternative", t => {
   const button = <button>Button</button>;

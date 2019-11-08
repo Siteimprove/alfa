@@ -1,4 +1,4 @@
-import { Device, DeviceType, Orientation } from "@siteimprove/alfa-device";
+import { Device, Orientation } from "@siteimprove/alfa-device";
 import { test } from "@siteimprove/alfa-test";
 import { fulfills } from "../src/fulfills";
 import { MediaRule, RuleType } from "../src/types";
@@ -12,7 +12,7 @@ function mediaRule(condition: string): MediaRule {
 }
 
 const device: Device = {
-  type: DeviceType.Screen,
+  type: Device.Type.Screen,
   viewport: {
     width: 1280,
     height: 720,

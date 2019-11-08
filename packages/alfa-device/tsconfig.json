@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/get-default-device.ts", "src/index.ts", "src/types.ts"],
+  "files": ["src/device.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-test"

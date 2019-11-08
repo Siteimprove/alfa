@@ -2,7 +2,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
 import { Values } from "@siteimprove/alfa-css";
-import { getDefaultDevice } from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import { None } from "@siteimprove/alfa-option";
 import {
   getCascadedStyle,
@@ -12,7 +12,7 @@ import {
 
 const { keyword, length, func, number } = Values;
 
-const device = getDefaultDevice();
+const device = Device.getDefaultDevice();
 
 const span = <span style="font-size: 1.2em; color: inherit" />;
 const div = <div style="font-size: 16px; color: red">{span}</div>;

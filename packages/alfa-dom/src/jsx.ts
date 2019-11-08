@@ -110,7 +110,7 @@ export namespace jsx {
           };
     }
 
-    export import Element = t.Element;
+    export type Element = t.Element;
   }
 }
 
