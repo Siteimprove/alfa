@@ -1,63 +1,35 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Seq } from "@siteimprove/alfa-collection";
-import {
-  Document,
-  Element,
-  getId,
-  getRootNode,
-  isElement,
-  Node,
-  querySelector,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Document, Element, isElement, Node } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Page } from "@siteimprove/alfa-web";
 
-export const SIA_R3: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r3.html",
-  requirements: [{ requirement: "wcag", criterion: "parsing", partial: true }],
-  evaluate: ({ document }) => {
+import { hasId } from "../common/predicate/has-id";
+import { hasUniqueId } from "../common/predicate/has-unique-id";
+
+import { walk } from "../common/walk";
+
+const { filter } = Iterable;
+const { and, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r3.html",
+  evaluate({ document }) {
     return {
-      applicability: () => {
-        return Seq(
-          querySelectorAll<Element>(
-            document,
-            document,
-            node => {
-              return isElement(node) && hasId(node, document);
-            },
-            {
-              composed: true
-            }
-          )
-        ).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: element
-          };
-        });
+      applicability() {
+        return filter(
+          walk(document, document, { composed: true, nested: true }),
+          and(isElement, hasId(document))
+        );
       },
 
-      expectations: (aspect, target) => {
+      expectations(target) {
         return {
-          1: { holds: hasUniqueId(target, document) }
+          1: {
+            holds: test(hasUniqueId(document), target)
+          }
         };
       }
     };
   }
-};
-
-function hasId(element: Element, context: Node): boolean {
-  const id = getId(element);
-  return id !== null && id !== "";
-}
-
-function hasUniqueId(element: Element, context: Node): boolean {
-  const id = getId(element);
-  return (
-    querySelector(
-      getRootNode(element, context),
-      context,
-      node => isElement(node) && getId(node) === id && node !== element
-    ) === null
-  );
-}
+});

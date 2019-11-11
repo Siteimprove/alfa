@@ -1,98 +1,58 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getTextAlternative,
-  hasTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  Namespace,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Roles } from "@siteimprove/alfa-aria";
+import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isElement, nameIs, namespaceIs, roleIs } from "../helpers/predicates";
+import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasName } from "../common/predicate/has-name";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { hasRole } from "../common/predicate/has-role";
+import { isDecorative } from "../common/predicate/is-decorative";
+import { isExposed } from "../common/predicate/is-exposed";
 
-import { EN } from "./locales/en";
+import { walk } from "../common/walk";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+const { filter } = Iterable;
+const { and, or, test } = Predicate;
 
-export const SIA_R2: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r2.html",
-  requirements: [
-    { requirement: "wcag", criterion: "non-text-content", partial: true }
-  ],
-  locales: [EN],
-  evaluate: ({ device, document }) => {
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(
-            querySelectorAll(document, document, Predicate.from(isElement), {
-              flattened: true
-            }),
-            Predicate.from(
-              isElement
-                .and(namespaceIs(document, Namespace.HTML))
-                .and(
-                  nameIs("img").or(
-                    roleIs(document, device, Roles.Img).and(element =>
-                      isExposed(element, document, device)
-                    )
-                  )
+      applicability() {
+        return filter(
+          walk(document, document, { flattened: true, nested: true }),
+          and(
+            isElement,
+            and(
+              hasNamespace(document, Namespace.HTML),
+              or(
+                hasName("img"),
+                and(
+                  hasRole(document, device, Roles.Img),
+                  isExposed(document, device)
                 )
+              )
             )
-          ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
-          }
+          )
         );
       },
 
-      expectations: (aspect, target) => {
-        return map(
-          hasTextAlternative(target, document, device),
-          hasTextAlternative => {
-            return map(
-              getTextAlternative(target, document, device),
-              textAlternative => {
-                return map(
-                  Predicate.test(
-                    target,
-                    isElement.and(
-                      roleIs(document, device, Roles.None, Roles.Presentation)
-                    )
-                  ),
-                  isDecorative => {
-                    return {
-                      1: {
-                        holds: isDecorative || hasTextAlternative,
-                        data: {
-                          alt: textAlternative,
-                          decorative: isDecorative
-                        }
-                      }
-                    };
-                  }
-                );
-              }
-            );
+      expectations(target) {
+        return {
+          1: {
+            holds: test(
+              or(
+                isDecorative(document, device),
+                hasAccessibleName(document, device)
+              ),
+              target
+            )
           }
-        );
+        };
       }
     };
   }
-};
+});

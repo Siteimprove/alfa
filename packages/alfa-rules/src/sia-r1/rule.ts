@@ -1,57 +1,47 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Predicate } from "@siteimprove/alfa-compatibility";
-import {
-  Document,
-  hasTextContent,
-  Namespace,
-  querySelector
-} from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Document, isElement, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
+import { hasDocumentElement } from "../common/predicate/has-document-element";
+import { hasName } from "../common/predicate/has-name";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { hasTextContent } from "../common/predicate/has-text-content";
 
-export const SIA_R1: Atomic.Rule<Document, Document> = {
-  id: "sanshikan:rules/sia-r1.html",
-  requirements: [
-    { requirement: "wcag", criterion: "page-titled", partial: true }
-  ],
-  evaluate: ({ document }) => {
+import { walk } from "../common/walk";
+
+const { filter, first } = Iterable;
+const { and } = Predicate;
+
+export default Rule.Atomic.of<Page, Document>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r1.html",
+  evaluate({ document }) {
     return {
-      applicability: () => {
-        return hasDocumentElement(document)
-          ? [{ applicable: true, aspect: document, target: document }]
-          : [];
+      applicability() {
+        return hasDocumentElement(document) ? [document] : [];
       },
 
-      expectations: (aspect, target) => {
-        const title = querySelector(
-          target,
-          document,
-          Predicate.from(
-            isElement
-              .and(namespaceIs(document, Namespace.HTML))
-              .and(nameIs("title"))
+      expectations(target) {
+        const title = first(
+          filter(
+            walk(target, document),
+            and(
+              isElement,
+              and(hasNamespace(document, Namespace.HTML), hasName("title"))
+            )
           )
         );
 
         return {
-          1: { holds: title !== null },
-          2: { holds: title !== null && hasTextContent(title, document) }
+          1: {
+            holds: title.isSome()
+          },
+          2: {
+            holds: title.filter(hasTextContent(document)).isSome()
+          }
         };
       }
     };
   }
-};
-
-function hasDocumentElement(document: Document): boolean {
-  const { childNodes } = document;
-
-  for (let i = 0, n = childNodes.length; i < n; i++) {
-    const childNode = childNodes[i];
-
-    if (isElement.and(nameIs("html")).test(childNode)) {
-      return true;
-    }
-  }
-
-  return false;
-}
+});
