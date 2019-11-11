@@ -17,7 +17,7 @@ export class Rule<I, T, Q = never> {
   }
 
   public readonly uri: string;
-  public readonly evaluator: Rule.Evaluator<I, T, Q>;
+  private readonly evaluator: Rule.Evaluator<I, T, Q>;
 
   private constructor(uri: string, evaluator: Rule.Evaluator<I, T, Q>) {
     this.uri = uri;
@@ -108,7 +108,7 @@ export namespace Rule {
       input: Readonly<I>
     ) => {
       expectations(
-        outcomes: Iterable<Outcome<I, T, Q>>
+        outcomes: Iterable<Outcome.Applicable<I, T, Q>>
       ): Expectations<Interview<Q, T, boolean>>;
     };
 

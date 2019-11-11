@@ -7,7 +7,7 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
 
-export class Audit<I, T = never, Q = unknown, B = never> {
+export class Audit<I, T = never, Q = unknown> {
   public static of<I, Q = unknown>(
     input: I,
     oracle: Oracle<Q> = () => None
@@ -25,7 +25,7 @@ export class Audit<I, T = never, Q = unknown, B = never> {
     this.rules = rules;
   }
 
-  public add<U>(rule: Rule<I, U, Q>): Audit<I, T | U, Q> {
+  public add<U, R extends Q>(rule: Rule<I, U, R>): Audit<I, T | U, Q> {
     return new Audit(
       this.input,
       this.oracle,
