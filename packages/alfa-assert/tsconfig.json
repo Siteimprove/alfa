@@ -1,19 +1,9 @@
 {
   "extends": "../tsconfig.json",
-  "files": [
-    "src/assertion.ts",
-    "src/expect.ts",
-    "src/guards.ts",
-    "src/index.ts",
-    "src/rules.ts",
-    "src/types.ts"
-  ],
+  "files": ["src/assert.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-device"
     },
     {
       "path": "../alfa-dom"
@@ -22,7 +12,19 @@
       "path": "../alfa-highlight"
     },
     {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-list"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-rules"
+    },
+    {
+      "path": "../alfa-test"
     },
     {
       "path": "../alfa-web"
