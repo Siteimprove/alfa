@@ -29,25 +29,31 @@ export namespace Hashable {
 
     switch (typeof value) {
       case "string":
-        return Hash.writeString(hash, value);
+        Hash.writeString(hash, value);
+        break;
 
       case "number":
-        return Hash.writeNumber(hash, value);
+        Hash.writeNumber(hash, value);
+        break;
 
       case "boolean":
-        return Hash.writeUint8(hash, BuiltinOffset + (value ? 1 : 0));
+        Hash.writeUint8(hash, BuiltinOffset + (value ? 1 : 0));
+        break;
 
       case "undefined":
-        return Hash.writeUint32(hash, BuiltinOffset + 2);
+        Hash.writeUint32(hash, BuiltinOffset + 2);
+        break;
 
       case "object":
       case "function":
         if (value === null) {
-          return Hash.writeUint32(hash, BuiltinOffset + 3);
+          Hash.writeUint32(hash, BuiltinOffset + 3);
+          break;
         }
 
         if (isObject(value) && isFunction(value.hash)) {
-          return value.hash(hash);
+          value.hash(hash);
+          break;
         }
 
         let id = hashes.get(value);
@@ -62,7 +68,7 @@ export namespace Hashable {
           hashes.set(value, id);
         }
 
-        return Hash.writeUint32(hash, id);
+        Hash.writeUint32(hash, id);
     }
   }
 }
