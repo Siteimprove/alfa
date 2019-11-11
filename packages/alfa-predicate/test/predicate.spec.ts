@@ -8,8 +8,9 @@ const isFoo: Predicate<string, "foo"> = x => x === "foo";
 
 const isNumber: Predicate<unknown, number> = x => typeof x === "number";
 
-test("fold() constructs a mapper from a predicate", t => {
-  const f = Predicate.fold(isString, x => `hello ${x}`, () => "goodbye");
+test("fold() folds over the truth values of a predicate", t => {
+  const f = (value: unknown) =>
+    Predicate.fold(isString, value, x => `hello ${x}`, () => "goodbye");
 
   t.equal(f("world"), "hello world");
   t.equal(f(true), "goodbye");

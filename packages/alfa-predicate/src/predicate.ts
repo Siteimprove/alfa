@@ -1,3 +1,4 @@
+import { Equality } from "@siteimprove/alfa-equality";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
 export type Predicate<
@@ -11,11 +12,11 @@ export type Predicate<
 export namespace Predicate {
   export function fold<T, U extends T, V>(
     predicate: Predicate<T, U>,
+    value: T,
     ifTrue: Mapper<U, V>,
     ifFalse: Mapper<T, V>
-  ): Mapper<T, V> {
-    return value =>
-      is<T, U>(value, predicate(value)) ? ifTrue(value) : ifFalse(value);
+  ): V {
+    return is<T, U>(value, predicate(value)) ? ifTrue(value) : ifFalse(value);
   }
 
   export function test<T, U extends T>(
@@ -28,28 +29,36 @@ export namespace Predicate {
   export function not<T, U extends T>(
     predicate: Predicate<T, U>
   ): Predicate<T> {
-    return fold(predicate, contradiction, tautology);
+    return value => fold(predicate, value, contradiction, tautology);
   }
 
   export function and<T, U extends T, V extends U>(
     left: Predicate<T, U>,
     right: Predicate<U, V>
   ): Predicate<T, V> {
-    return fold(left, right, contradiction);
+    return value => fold(left, value, right, contradiction);
   }
 
   export function or<T, U extends T, V extends T>(
     left: Predicate<T, U>,
     right: Predicate<T, V>
   ): Predicate<T, U | V> {
-    return fold(left, tautology, right);
+    return value => fold(left, value, tautology, right);
   }
 
   export function xor<T, U extends T, V extends T>(
     left: Predicate<T, U>,
     right: Predicate<T, V>
   ): Predicate<T, U | V> {
-    return fold(left, not(right), right);
+    return value => fold(left, value, not(right), right);
+  }
+
+  export function equals<T>(value: Equality<T>): Predicate<unknown, T>;
+
+  export function equals<T>(value: T): Predicate<unknown, T>;
+
+  export function equals<T>(value: T): Predicate<unknown, T> {
+    return other => Equality.equals(other, value);
   }
 
   export class Chain<T, U extends T = T> {
@@ -67,8 +76,8 @@ export namespace Predicate {
       return this.predicate;
     }
 
-    public fold<V>(ifTrue: Mapper<U, V>, ifFalse: Mapper<T, V>): Mapper<T, V> {
-      return fold(this.predicate, ifTrue, ifFalse);
+    public fold<V>(value: T, ifTrue: Mapper<U, V>, ifFalse: Mapper<T, V>): V {
+      return fold(this.predicate, value, ifTrue, ifFalse);
     }
 
     public test(value: T): value is U {
