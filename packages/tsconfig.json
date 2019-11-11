@@ -26,6 +26,7 @@
     { "path": "alfa-functor" },
     { "path": "alfa-generator" },
     { "path": "alfa-graph" },
+    { "path": "alfa-guards" },
     { "path": "alfa-hash" },
     { "path": "alfa-highlight" },
     { "path": "alfa-html" },
