@@ -102,7 +102,9 @@ export class Map<K, V>
     );
   }
 
-  public *[Symbol.iterator](): Iterator<[K, V]> {}
+  public *[Symbol.iterator](): Iterator<[K, V]> {
+    yield* this.root;
+  }
 }
 
 export namespace Map {
