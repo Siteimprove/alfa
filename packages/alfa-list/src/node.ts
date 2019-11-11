@@ -1,21 +1,24 @@
+import { Bits } from "@siteimprove/alfa-bits";
 import { Equality } from "@siteimprove/alfa-equality";
+import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { None, Option } from "@siteimprove/alfa-option";
+
+const { bit, take, skip } = Bits;
 
 /**
  * @internal
  */
-export interface Leaf<T> extends Array<T> {}
-
-/**
- * @internal
- */
-export interface Branch<T> extends Array<Node<T>> {}
-
-/**
- * @internal
- */
-export type Node<T> = Leaf<T> | Branch<T>;
+export interface Node<T> extends Functor<T>, Iterable<T>, Equality<Node<T>> {
+  readonly size: number;
+  isEmpty(): this is Empty<T>;
+  clone(): Node<T>;
+  get(index: number, shift: number): Option<T>;
+  set(index: number, shift: number, value: T): Node<T>;
+  map<U>(mapper: Mapper<T, U>): Node<U>;
+  equals(value: unknown): value is Node<T>;
+}
 
 /**
  * @internal
@@ -23,80 +26,184 @@ export type Node<T> = Leaf<T> | Branch<T>;
 export namespace Node {
   export const Bits = 5;
 
-  export const Capacity = 1 << Bits;
+  export const Capacity = bit(Bits);
 
-  export const Mask = Capacity - 1;
-
-  export function isBranch<T>(
-    value: T | Node<T>,
-    depth: number
-  ): value is Branch<T> {
-    return depth > 1;
+  export function fragment(index: number, shift: number): number {
+    return take(skip(index, shift), Bits);
   }
 
-  export function isLeaf<T>(
-    value: T | Node<T>,
-    depth: number
-  ): value is Leaf<T> {
-    return depth === 1;
+  export function overflow(shift: number): number {
+    return Capacity << (shift - Bits);
   }
 
-  export function isNode<T>(
-    value: T | Node<T>,
-    depth: number
-  ): value is Node<T> {
-    return depth > 0;
+  export function underflow(shift: number): number {
+    return Capacity << (shift - Bits * 2);
+  }
+}
+
+/**
+ * @internal
+ */
+export class Empty<T> implements Node<T> {
+  public static of<T>(): Empty<T> {
+    return new Empty();
   }
 
-  export function key(index: number, depth: number): number {
-    return (index >>> (depth * Node.Bits)) & Node.Mask;
+  private constructor() {}
+
+  public get size(): number {
+    return 0;
   }
 
-  export function overflow(depth: number): number {
-    return Node.Capacity << ((depth - 1) * Node.Bits);
+  public isEmpty(): this is Empty<T> {
+    return true;
   }
 
-  export function underflow(depth: number): number {
-    return Node.Capacity << ((depth - 2) * Node.Bits);
+  public clone(): this {
+    return this;
   }
 
-  export function map<T, U>(
-    node: Node<T>,
-    depth: number,
-    mapper: Mapper<T, U>
-  ): Node<U> {
-    return isLeaf(node, depth)
-      ? node.map(mapper)
-      : node.map(node => map(node, depth - 1, mapper));
+  public get(): None {
+    return None;
   }
 
-  export function* iterate<T>(node: Node<T>, depth: number): Iterable<T> {
-    if (isLeaf(node, depth)) {
-      yield* node;
-    } else {
-      yield* Iterable.flatMap(node, node => iterate(node, depth - 1));
-    }
+  public set(): this {
+    return this;
   }
 
-  export function equals<T>(
-    a: Node<T> | null,
-    b: Node<T> | null,
-    depth: number
-  ): boolean {
-    if (a === null) {
-      return b === null;
-    } else if (b === null) {
-      return false;
-    }
+  public map(): this {
+    return this;
+  }
 
-    if (isLeaf(a, depth) && isLeaf(b, depth)) {
-      return a.every((a, i) => Equality.equals(a, b[i]));
-    }
+  public equals(value: unknown): value is Empty<T> {
+    return value instanceof Empty;
+  }
 
-    if (isBranch(a, depth) && isBranch(b, depth)) {
-      return a.every((a, i) => Node.equals(a, b[i], depth - 1));
-    }
+  public *[Symbol.iterator](): Iterator<never> {}
+}
 
+/**
+ * @internal
+ */
+export class Leaf<T> implements Node<T> {
+  public static of<T>(values: Array<T>): Leaf<T> {
+    return new Leaf(values);
+  }
+
+  public readonly values: Array<T>;
+
+  private constructor(values: Array<T>) {
+    this.values = values;
+  }
+
+  public get size(): number {
+    return this.values.length;
+  }
+
+  public isEmpty(): this is Empty<T> {
     return false;
+  }
+
+  public clone(): Leaf<T> {
+    return Leaf.of(this.values.slice(0));
+  }
+
+  public hasCapacity(): boolean {
+    return this.values.length < Node.Capacity;
+  }
+
+  public get(index: number, shift: number): Option<T> {
+    return Option.of(this.values[take(index, Node.Bits)]);
+  }
+
+  public set(index: number, shift: number, value: T): Leaf<T> {
+    const values = this.values.slice(0);
+
+    values[take(index, Node.Bits)] = value;
+
+    return Leaf.of(values);
+  }
+
+  public map<U>(mapper: Mapper<T, U>): Leaf<U> {
+    return Leaf.of(this.values.map(mapper));
+  }
+
+  public equals(value: unknown): value is Leaf<T> {
+    return (
+      value instanceof Leaf &&
+      value.values.length === this.values.length &&
+      value.values.every((value, i) => Equality.equals(value, this.values[i]))
+    );
+  }
+
+  public *[Symbol.iterator](): Iterator<T> {
+    yield* this.values;
+  }
+}
+
+/**
+ * @internal
+ */
+export class Branch<T> implements Node<T> {
+  public static of<T>(nodes: Array<Branch<T> | Leaf<T>>): Branch<T> {
+    return new Branch(nodes);
+  }
+
+  public static empty<T>(): Branch<T> {
+    return new Branch([]);
+  }
+
+  public readonly nodes: Array<Branch<T> | Leaf<T>>;
+
+  private constructor(nodes: Array<Branch<T> | Leaf<T>>) {
+    this.nodes = nodes;
+  }
+
+  public get size(): number {
+    return this.nodes.length;
+  }
+
+  public isEmpty(): this is Empty<T> {
+    return false;
+  }
+
+  public clone(): Branch<T> {
+    return Branch.of(this.nodes.slice(0));
+  }
+
+  public get(index: number, shift: number): Option<T> {
+    const fragment = Node.fragment(index, shift);
+
+    return this.nodes[fragment].get(index, shift - Node.Bits);
+  }
+
+  public set(index: number, shift: number, value: T): Branch<T> {
+    const fragment = Node.fragment(index, shift);
+
+    const nodes = this.nodes.slice(0);
+
+    nodes[fragment] = this.nodes[fragment].set(index, shift - Node.Bits, value);
+
+    return Branch.of(nodes);
+  }
+
+  public map<U>(mapper: Mapper<T, U>): Branch<U> {
+    return Branch.of(
+      this.nodes.map(node =>
+        node instanceof Branch ? node.map(mapper) : node.map(mapper)
+      )
+    );
+  }
+
+  public equals(value: unknown): value is Branch<T> {
+    return (
+      value instanceof Branch &&
+      value.nodes.length === this.nodes.length &&
+      value.nodes.every((node, i) => node.equals(this.nodes[i]))
+    );
+  }
+
+  public *[Symbol.iterator](): Iterator<T> {
+    yield* Iterable.concat(...this.nodes);
   }
 }
