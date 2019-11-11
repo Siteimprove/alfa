@@ -1,3 +1,5 @@
+import { isFunction, isObject } from "@siteimprove/alfa-guards";
+
 import { BuiltinOffset, IntegerOverflow } from "./constants";
 import { Hash } from "./hash";
 
@@ -6,14 +8,6 @@ export interface Hashable {
 }
 
 export namespace Hashable {
-  function isObject(value: unknown): value is { [key: string]: unknown } {
-    return typeof value === "object" && value !== null;
-  }
-
-  function isFunction(value: unknown): value is Function {
-    return typeof value === "function";
-  }
-
   export function isHashable(value: unknown): value is Hashable {
     return isObject(value) && isFunction(value.hash);
   }

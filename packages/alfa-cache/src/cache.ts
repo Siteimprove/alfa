@@ -1,3 +1,4 @@
+import { isObject } from "@siteimprove/alfa-guards";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -114,8 +115,4 @@ class Storage<K, V> {
   public toJSON() {
     return {};
   }
-}
-
-function isObject(value: unknown): value is object {
-  return typeof value === "object" && value !== null;
 }
