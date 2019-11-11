@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/record.ts", "test/record.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-equality"
+    },
+    {
+      "path": "../alfa-list"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
