@@ -24,6 +24,7 @@
     { "path": "alfa-fnv" },
     { "path": "alfa-foldable" },
     { "path": "alfa-functor" },
+    { "path": "alfa-future" },
     { "path": "alfa-generator" },
     { "path": "alfa-graph" },
     { "path": "alfa-guards" },

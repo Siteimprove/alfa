@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/future.ts", "src/index.ts", "test/future.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
