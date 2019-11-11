@@ -52,6 +52,9 @@
       "path": "../alfa-lang"
     },
     {
+      "path": "../alfa-result"
+    },
+    {
       "path": "../alfa-test"
     },
     {

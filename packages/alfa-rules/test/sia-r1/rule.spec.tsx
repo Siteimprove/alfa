@@ -3,6 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Outcome } from "@siteimprove/alfa-act";
 import { Record } from "@siteimprove/alfa-record";
+import { Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import rule from "../../src/sia-r1/rule";
@@ -29,18 +30,8 @@ test("evaluate() passes when a document has a title", t => {
         rule,
         page.document,
         Record.from([
-          [
-            "1",
-            {
-              holds: true
-            }
-          ],
-          [
-            "2",
-            {
-              holds: true
-            }
-          ]
+          ["1", Ok.of("The document has at least one <title> element")],
+          ["2", Ok.of("The first <title> element has text content")]
         ])
       )
     ]
