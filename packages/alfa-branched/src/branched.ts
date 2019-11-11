@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -9,8 +10,17 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Branched<T, B = never>
-  implements Monad<T>, Functor<T>, Foldable<T>, Equality<Branched<T, B>> {
-  public static of<T, B>(value: T, ...branches: Array<B>): Branched<T, B> {
+  implements
+    Monad<T>,
+    Functor<T>,
+    Applicative<T>,
+    Foldable<T>,
+    Iterable<[T, Iterable<B>]>,
+    Equality<Branched<T, B>> {
+  public static of<T, B = never>(
+    value: T,
+    ...branches: Array<B>
+  ): Branched<T, B> {
     return new Branched<T, B>(
       List.of(
         Value.of(
@@ -37,22 +47,22 @@ export class Branched<T, B = never>
     );
   }
 
-  public map<U>(mapper: Mapper<T, U, [Option<Iterable<B>>]>): Branched<U, B> {
+  public map<U>(mapper: Mapper<T, U, [Iterable<B>]>): Branched<U, B> {
     return new Branched(
       this.values.map(({ value, branches }) => {
-        return Value.of(mapper(value, branches), branches);
+        return Value.of(mapper(value, branches.getOr([])), branches);
       })
     );
   }
 
   public flatMap<U>(
-    mapper: Mapper<T, Branched<U, B>, [Option<Iterable<B>>]>
+    mapper: Mapper<T, Branched<U, B>, [Iterable<B>]>
   ): Branched<U, B> {
     return new Branched(
       this.values.reduce((values, { value, branches }) => {
         const scope = branches;
 
-        return mapper(value, branches).values.reduce(
+        return mapper(value, branches.getOr([])).values.reduce(
           (values, { value, branches }) => {
             if (scope.isNone() && branches.isSome()) {
               branches = unused(branches, this.values);
@@ -68,12 +78,14 @@ export class Branched<T, B = never>
     );
   }
 
-  public reduce<U>(
-    reducer: Reducer<T, U, [Option<Iterable<B>>]>,
-    accumulator: U
-  ): U {
+  public apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B> {
+    return this.flatMap(value => mapper.map(mapper => mapper(value)));
+  }
+
+  public reduce<U>(reducer: Reducer<T, U, [Iterable<B>]>, accumulator: U): U {
     return this.values.reduce(
-      (accumulator, value) => reducer(accumulator, value.value, value.branches),
+      (accumulator, value) =>
+        reducer(accumulator, value.value, value.branches.getOr([])),
       accumulator
     );
   }
@@ -82,6 +94,12 @@ export class Branched<T, B = never>
     return (
       value instanceof Branched && Equality.equals(value.values, this.values)
     );
+  }
+
+  public *[Symbol.iterator](): Iterator<[T, Iterable<B>]> {
+    for (const value of this.values) {
+      yield [value.value, value.branches.getOr([])];
+    }
   }
 
   public toJSON() {
@@ -119,7 +137,9 @@ export namespace Branched {
     return traverse(values, value => value);
   }
 
-  export function isBranched<T, B>(value: unknown): value is Branched<T, B> {
+  export function isBranched<T, B = never>(
+    value: unknown
+  ): value is Branched<T, B> {
     return value instanceof Branched;
   }
 }

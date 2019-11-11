@@ -21,6 +21,10 @@ export const None: None = new (class None {
     return this;
   }
 
+  public apply(): this {
+    return this;
+  }
+
   public reduce<U>(reducer: unknown, accumulator: U): U {
     return accumulator;
   }

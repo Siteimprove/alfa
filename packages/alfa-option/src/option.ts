@@ -1,3 +1,4 @@
+import { Applicative } from "@siteimprove/alfa-applicative";
 import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -13,12 +14,14 @@ export interface Option<T>
   extends Monad<T>,
     Functor<T>,
     Foldable<T>,
+    Applicative<T>,
     Iterable<T>,
     Equality<Option<T>> {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
+  apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   includes(value: T): boolean;
   filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
@@ -33,19 +36,27 @@ export interface Option<T>
 }
 
 export namespace Option {
+  export function of<T>(value: T): Option<T> {
+    return Some.of(value);
+  }
+
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
   }
 
-  export function isSome<T>(value: unknown): value is Some<T> {
-    return value instanceof Some;
+  export function flatten<T>(value: Option<Option<T>>): Option<T> {
+    return value.flatMap(value => value);
   }
 
-  export function isNone(value: unknown): value is None {
-    return value === None;
+  export function isSome<T>(value: Option<T>): value is Some<T> {
+    return value.isSome();
+  }
+
+  export function isNone<T>(value: Option<T>): value is None {
+    return value.isNone();
   }
 
   export function isOption<T>(value: unknown): value is Option<T> {
-    return isSome<T>(value) || isNone(value);
+    return value instanceof Some || value === None;
   }
 }

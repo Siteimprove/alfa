@@ -32,6 +32,10 @@ export class Some<T> implements Option<T> {
     return mapper(this.value);
   }
 
+  public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
+    return mapper.map(mapper => mapper(this.value));
+  }
+
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
     return reducer(accumulator, this.value);
   }
