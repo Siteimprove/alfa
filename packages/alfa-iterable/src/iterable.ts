@@ -4,12 +4,18 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
+export interface Iterable<T> {
+  [Symbol.iterator](): Iterator<T>;
+}
+
 export namespace Iterable {
   export function* from<T>(arrayLike: ArrayLike<T>): Iterable<T> {
     for (let i = 0, n = arrayLike.length; i < n; i++) {
       yield arrayLike[i];
     }
   }
+
+  export function* empty<T>(): Iterable<T> {}
 
   export function* map<T, U = T>(
     iterable: Iterable<T>,
@@ -43,6 +49,12 @@ export namespace Iterable {
     }
 
     return accumulator;
+  }
+
+  export function* concat<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
+    for (const iterable of iterables) {
+      yield* iterable;
+    }
   }
 
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
@@ -119,20 +131,21 @@ export namespace Iterable {
   ): Iterable<[K, Iterable<T>]> {
     const groups: Array<[K, Array<T>]> = [];
 
-    outer: for (const value of iterable) {
+    for (const value of iterable) {
       const group = grouper(value);
 
-      for (const [existing, values] of groups) {
-        if (Equality.equals(group, existing)) {
-          values.push(value);
-          continue outer;
-        }
-      }
+      const existing = groups.find(([existing]) =>
+        Equality.equals(group, existing)
+      );
 
-      groups.push([group, [value]]);
+      if (existing === undefined) {
+        groups.push([group, [value]]);
+      } else {
+        existing[1].push(value);
+      }
     }
 
-    return [...groups];
+    return groups;
   }
 
   export function join(iterable: Iterable<string>, separator: string): string {
@@ -186,8 +199,28 @@ export namespace Iterable {
       this.iterable = iterable;
     }
 
-    public *[Symbol.iterator]() {
+    public map<U>(mapper: Mapper<T, U>): Chain<U> {
+      return new Chain(map(this.iterable, mapper));
+    }
+
+    public flatMap<U>(mapper: Mapper<T, Iterable<U>>): Chain<U> {
+      return new Chain(flatMap(this.iterable, mapper));
+    }
+
+    public filter<U extends T>(predicate: Predicate<T, U>): Chain<U> {
+      return new Chain(filter(this.iterable, predicate));
+    }
+
+    public first(): Option<T> {
+      return Iterable.first(this.iterable);
+    }
+
+    public [Symbol.iterator](): Iterator<T> {
       return this.iterable[Symbol.iterator]();
     }
+  }
+
+  export function chain<T>(iterable: Iterable<T>): Chain<T> {
+    return Chain.of(iterable);
   }
 }
