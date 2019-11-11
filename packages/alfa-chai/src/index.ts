@@ -1,1 +1,1 @@
-export * from "./create-chai-plugin";
+export * from "./chai";

@@ -1,11 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": [
-    "src/from-cheerio-wrapper.ts",
-    "src/index.ts",
-    "src/is-cheerio-wrapper.ts",
-    "src/types.ts"
-  ],
+  "files": ["src/cheerio.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-dom"

@@ -1,6 +1,4 @@
-import { isAssertable } from "@siteimprove/alfa-assert";
-import { createUnexpectedPlugin } from "./src/create-unexpected-plugin";
+import { Page } from "@siteimprove/alfa-web";
+import { Unexpected } from "./src/unexpected";
 
-// tslint:disable:no-default-export
-
-export default createUnexpectedPlugin(isAssertable, node => node);
+export default Unexpected.createPlugin(Page.isPage, page => page);

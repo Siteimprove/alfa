@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["plugin.ts", "src/create-chai-plugin.ts", "src/index.ts"],
+  "files": ["plugin.ts", "src/chai.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-assert"

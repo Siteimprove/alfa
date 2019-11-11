@@ -1,6 +1,5 @@
-import { isAssertable } from "@siteimprove/alfa-assert";
-import { createChaiPlugin } from "./src/create-chai-plugin";
+import { Future } from "@siteimprove/alfa-future";
+import { Page } from "@siteimprove/alfa-web";
+import { Chai } from "./src/chai";
 
-// tslint:disable:no-default-export
-
-export default createChaiPlugin(isAssertable, node => node);
+export default Chai.createPlugin(Page.isPage, Future.settle);

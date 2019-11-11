@@ -4,10 +4,8 @@
     "chai.ts",
     "jasmine.ts",
     "jest.ts",
-    "src/from-enzyme-wrapper.ts",
+    "src/enzyme.ts",
     "src/index.ts",
-    "src/is-enzyme-wrapper.ts",
-    "src/types.ts",
     "unexpected.ts"
   ],
   "references": [

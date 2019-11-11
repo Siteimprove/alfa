@@ -1,20 +1,18 @@
 /// <reference lib="dom" />
 
-import { Aspects } from "@siteimprove/alfa-act";
 import {
   Device,
-  DeviceType,
   Display,
-  getDefaultDevice,
   Orientation,
   Viewport
 } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { fromPuppeteerHandle } from "@siteimprove/alfa-puppeteer";
+import { Puppeteer } from "@siteimprove/alfa-puppeteer";
+import { Page } from "@siteimprove/alfa-web";
 import puppeteer from "puppeteer";
 
-const defaultDevice = getDefaultDevice();
+const defaultDevice = Device.getDefaultDevice();
 
 export const enum Wait {
   Ready = "domcontentloaded",
@@ -47,7 +45,7 @@ export class Scraper {
   public async scrape(
     url: string | URL,
     options: ScrapeOptions = {}
-  ): Promise<Aspects> {
+  ): Promise<Page> {
     const {
       wait = Wait.Loaded,
       timeout = 10000,
@@ -57,7 +55,7 @@ export class Scraper {
     } = options;
 
     const device: Device = {
-      type: DeviceType.Screen,
+      type: Device.Type.Screen,
       viewport,
       display
     };
@@ -176,23 +174,30 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
   return {
     status: response.status(),
     headers: response.headers(),
-    body: response.ok() ? await response.text() : ""
+    body: response.ok() ? await response.buffer() : new ArrayBuffer(0)
   };
 }
 
+const decoder = new TextDecoder();
+
 async function parseDocument(
   page: puppeteer.Page,
-  html: string | null = null
+  html: ArrayBuffer | null = null
 ): Promise<Document> {
-  const handle = await page.evaluateHandle((html: string | null) => {
-    if (html === null) {
-      return window.document;
-    }
+  const handle = await page.evaluateHandle(
+    (html: string | null) => {
+      if (html === null) {
+        return window.document;
+      }
 
-    const parser = new DOMParser();
+      const parser = new DOMParser();
 
-    return parser.parseFromString(html, "text/html");
-  }, html);
+      return parser.parseFromString(html, "text/html");
+    },
+    html === null ? null : decoder.decode(html)
+  );
 
-  return fromPuppeteerHandle(handle) as Promise<Document>;
+  const { document } = await Puppeteer.asPage(handle);
+
+  return document;
 }

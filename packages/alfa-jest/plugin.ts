@@ -1,4 +1,4 @@
-import { isAssertable } from "@siteimprove/alfa-assert";
-import { createJestPlugin } from "./src/create-jest-plugin";
+import { Page } from "@siteimprove/alfa-web";
+import { Jest } from "./src/jest";
 
-createJestPlugin(isAssertable, node => node);
+Jest.createPlugin(Page.isPage, page => page);

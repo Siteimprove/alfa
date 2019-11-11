@@ -1,5 +1,4 @@
-import { createJestPlugin } from "@siteimprove/alfa-jest";
-import { fromReactElement } from "./src/from-react-element";
-import { isReactElement } from "./src/is-react-element";
+import { Jest } from "@siteimprove/alfa-jest";
+import { React } from "./src/react";
 
-createJestPlugin(isReactElement, fromReactElement);
+Jest.createPlugin(React.isType, React.asPage);

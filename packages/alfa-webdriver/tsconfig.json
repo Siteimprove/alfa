@@ -1,12 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": [
-    "chai.ts",
-    "src/from-web-element.ts",
-    "src/index.ts",
-    "src/is-web-element.ts",
-    "src/types.ts"
-  ],
+  "files": ["chai.ts", "src/index.ts", "src/web-element.ts"],
   "references": [
     {
       "path": "../alfa-chai"

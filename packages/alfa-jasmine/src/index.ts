@@ -1,1 +1,1 @@
-export * from "./create-jasmine-plugin";
+export * from "./jasmine";

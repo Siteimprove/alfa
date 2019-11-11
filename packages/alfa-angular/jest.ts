@@ -1,5 +1,4 @@
-import { createJestPlugin } from "@siteimprove/alfa-jest";
-import { fromAngularFixture } from "./src/from-angular-fixture";
-import { isAngularFixture } from "./src/is-angular-fixture";
+import { Jest } from "@siteimprove/alfa-jest";
+import { Angular } from "./src/angular";
 
-createJestPlugin(isAngularFixture, fromAngularFixture);
+Jest.createPlugin(Angular.isType, Angular.asPage);

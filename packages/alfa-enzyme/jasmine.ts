@@ -1,5 +1,4 @@
-import { createJasminePlugin } from "@siteimprove/alfa-jasmine";
-import { fromEnzymeWrapper } from "./src/from-enzyme-wrapper";
-import { isEnzymeWrapper } from "./src/is-enzyme-wrapper";
+import { Jasmine } from "@siteimprove/alfa-jasmine";
+import { Enzyme } from "./src/enzyme";
 
-createJasminePlugin(isEnzymeWrapper, fromEnzymeWrapper);
+Jasmine.createPlugin(Enzyme.isType, Enzyme.asPage);

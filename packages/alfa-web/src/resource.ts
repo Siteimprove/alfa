@@ -1,3 +1,4 @@
+import { isObject } from "@siteimprove/alfa-guards";
 import { Request, Response } from "@siteimprove/alfa-http";
 
 /**
@@ -25,5 +26,13 @@ export namespace Resource {
     } = resource;
 
     return { request, response };
+  }
+
+  export function isResource(value: unknown): value is Resource {
+    return (
+      isObject(value) &&
+      Request.isRequest(value.request) &&
+      Response.isResponse(value.response)
+    );
   }
 }

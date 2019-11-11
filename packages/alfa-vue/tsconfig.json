@@ -4,10 +4,8 @@
     "chai.ts",
     "jasmine.ts",
     "jest.ts",
-    "src/from-vue-wrapper.ts",
     "src/index.ts",
-    "src/is-vue-wrapper.ts",
-    "src/types.ts",
+    "src/vue.ts",
     "unexpected.ts"
   ],
   "references": [

@@ -12,6 +12,9 @@
       "path": "../alfa-graph"
     },
     {
+      "path": "../alfa-guards"
+    },
+    {
       "path": "../alfa-http"
     },
     {

@@ -4,9 +4,8 @@
     "chai.ts",
     "jasmine.ts",
     "jest.ts",
-    "src/from-react-element.ts",
     "src/index.ts",
-    "src/is-react-element.ts",
+    "src/react.ts",
     "unexpected.ts"
   ],
   "references": [

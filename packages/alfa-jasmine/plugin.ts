@@ -1,4 +1,4 @@
-import { isAssertable } from "@siteimprove/alfa-assert";
-import { createJasminePlugin } from "./src/create-jasmine-plugin";
+import { Page } from "@siteimprove/alfa-web";
+import { Jasmine } from "./src/jasmine";
 
-createJasminePlugin(isAssertable, node => node);
+Jasmine.createPlugin(Page.isPage, page => page);

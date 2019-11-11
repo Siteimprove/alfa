@@ -1,7 +1,7 @@
-import { createChaiPlugin } from "@siteimprove/alfa-chai";
-import { fromPuppeteerHandle } from "./src/from-puppeteer-handle";
-import { isPuppeteerHandle } from "./src/is-puppeteer-handle";
+import { Chai } from "@siteimprove/alfa-chai";
+import { Future } from "@siteimprove/alfa-future";
+import { Puppeteer } from "./src/puppeteer";
 
-// tslint:disable:no-default-export
-
-export default createChaiPlugin(isPuppeteerHandle, fromPuppeteerHandle);
+export default Chai.createPlugin(Puppeteer.isType, value =>
+  Future.from(Puppeteer.asPage(value))
+);

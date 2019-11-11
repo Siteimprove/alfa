@@ -1,7 +1,4 @@
-import { createUnexpectedPlugin } from "@siteimprove/alfa-unexpected";
-import { fromVueWrapper } from "./src/from-vue-wrapper";
-import { isVueWrapper } from "./src/is-vue-wrapper";
+import { Unexpected } from "@siteimprove/alfa-unexpected";
+import { Vue } from "./src/vue";
 
-// tslint:disable:no-default-export
-
-export default createUnexpectedPlugin(isVueWrapper, fromVueWrapper);
+export default Unexpected.createPlugin(Vue.isType, Vue.asPage);

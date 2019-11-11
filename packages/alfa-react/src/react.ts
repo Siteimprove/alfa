@@ -5,19 +5,35 @@ import {
   NodeType,
   Text
 } from "@siteimprove/alfa-dom";
-import { ReactElement } from "react";
+import { isBoolean, isObject, isString } from "@siteimprove/alfa-guards";
+import { Page } from "@siteimprove/alfa-web";
+import { isValidElement, ReactElement } from "react";
 import * as TestRenderer from "react-test-renderer";
 
 const { keys } = Object;
 
-export function fromReactElement<T>(reactElement: ReactElement<T>): Element {
-  const tree = TestRenderer.create(reactElement).toJSON();
+export namespace React {
+  export type Type = ReactElement<unknown>;
 
-  if (tree === null) {
-    throw new Error("Could not render React element");
+  export function isType(value: unknown): value is Type {
+    return isObject(value) && isValidElement(value);
   }
 
-  return asElement(tree);
+  export function asPage(value: Type): Page {
+    const tree = TestRenderer.create(value).toJSON();
+
+    if (tree === null) {
+      throw new Error("Could not render React element");
+    }
+
+    return Page.of({
+      document: {
+        nodeType: NodeType.Document,
+        styleSheets: [],
+        childNodes: [asElement(tree)]
+      }
+    });
+  }
 }
 
 type TestNode = TestElement | string;
@@ -25,7 +41,7 @@ type TestNode = TestElement | string;
 type TestElement = TestRenderer.ReactTestRendererJSON;
 
 function asNode(node: TestNode): Node {
-  return typeof node === "string" ? asText(node) : asElement(node);
+  return isString(node) ? asText(node) : asElement(node);
 }
 
 function asElement(element: TestElement): Element {
@@ -67,7 +83,7 @@ function asAttribute(localName: string, value: unknown): Attribute | null {
   localName = asAttributeName(localName);
   value = asAttributeValue(localName, value);
 
-  if (typeof value !== "string") {
+  if (!isString(value)) {
     return null;
   }
 
@@ -95,12 +111,12 @@ function asAttributeName(localName: string): string {
 function asAttributeValue(localName: string, value: unknown): string | null {
   switch (localName) {
     case "style":
-      if (isObject(value) && value !== null) {
+      if (isObject(value)) {
         return asInlineStyle(value);
       }
   }
 
-  if (localName.startsWith("aria-") && typeof value === "boolean") {
+  if (localName.startsWith("aria-") && isBoolean(value)) {
     return String(value);
   }
 
@@ -139,8 +155,4 @@ function asInlineStyle(props: { [key: string]: unknown }): string {
   }
 
   return style;
-}
-
-function isObject(value: unknown): value is { [key: string]: unknown } {
-  return typeof value === "object" && value !== null;
 }

@@ -1,11 +1,9 @@
 /// <reference types="webdriverio" />
 
-import { createChaiPlugin } from "@siteimprove/alfa-chai";
-import { fromWebElement } from "./src/from-web-element";
-import { isWebElement } from "./src/is-web-element";
+import { Chai } from "@siteimprove/alfa-chai";
+import { Future } from "@siteimprove/alfa-future";
+import { WebElement } from "./src/web-element";
 
-// tslint:disable:no-default-export
-
-export default createChaiPlugin(isWebElement, webElement =>
-  fromWebElement(webElement, browser)
+export default Chai.createPlugin(WebElement.isWebElement, webElement =>
+  Future.from(WebElement.asPage(webElement, browser))
 );

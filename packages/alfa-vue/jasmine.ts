@@ -1,5 +1,4 @@
-import { createJasminePlugin } from "@siteimprove/alfa-jasmine";
-import { fromVueWrapper } from "./src/from-vue-wrapper";
-import { isVueWrapper } from "./src/is-vue-wrapper";
+import { Jasmine } from "@siteimprove/alfa-jasmine";
+import { Vue } from "./src/vue";
 
-createJasminePlugin(isVueWrapper, fromVueWrapper);
+Jasmine.createPlugin(Vue.isType, Vue.asPage);

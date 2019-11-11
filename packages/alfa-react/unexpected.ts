@@ -1,7 +1,4 @@
-import { createUnexpectedPlugin } from "@siteimprove/alfa-unexpected";
-import { fromReactElement } from "./src/from-react-element";
-import { isReactElement } from "./src/is-react-element";
+import { Unexpected } from "@siteimprove/alfa-unexpected";
+import { React } from "./src/react";
 
-// tslint:disable:no-default-export
-
-export default createUnexpectedPlugin(isReactElement, fromReactElement);
+export default Unexpected.createPlugin(React.isType, React.asPage);

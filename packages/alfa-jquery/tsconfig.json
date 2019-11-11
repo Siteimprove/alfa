@@ -1,11 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": [
-    "src/from-jquery-wrapper.ts",
-    "src/index.ts",
-    "src/is-jquery-wrapper.ts",
-    "src/types.ts"
-  ],
+  "files": ["src/index.ts", "src/jquery.ts"],
   "references": [
     {
       "path": "../alfa-dom"

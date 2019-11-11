@@ -1,7 +1,7 @@
-import { createChaiPlugin } from "@siteimprove/alfa-chai";
-import { fromEnzymeWrapper } from "./src/from-enzyme-wrapper";
-import { isEnzymeWrapper } from "./src/is-enzyme-wrapper";
+import { Chai } from "@siteimprove/alfa-chai";
+import { Future } from "@siteimprove/alfa-future";
+import { Enzyme } from "./src/enzyme";
 
-// tslint:disable:no-default-export
-
-export default createChaiPlugin(isEnzymeWrapper, fromEnzymeWrapper);
+export default Chai.createPlugin(Enzyme.isType, value =>
+  Future.settle(Enzyme.asPage(value))
+);

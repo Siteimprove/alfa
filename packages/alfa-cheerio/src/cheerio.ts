@@ -5,12 +5,27 @@ import {
   NodeType,
   Text
 } from "@siteimprove/alfa-dom";
-import { CheerioElement, CheerioWrapper } from "./types";
+import { Page } from "@siteimprove/alfa-web";
+import * as cheerio from "cheerio";
 
 const { keys } = Object;
 
-export function fromCheerioWrapper<T>(cheerioWrapper: CheerioWrapper): Element {
-  return asElement(cheerioWrapper[0]);
+export namespace Cheerio {
+  export type Type = Cheerio;
+
+  export function isType(value: unknown): value is Type {
+    return value instanceof cheerio.default;
+  }
+
+  export function asPage(value: Type): Page {
+    return Page.of({
+      document: {
+        nodeType: NodeType.Document,
+        styleSheets: [],
+        childNodes: [asElement(value[0])]
+      }
+    });
+  }
 }
 
 function asNode(cheerioNode: CheerioElement): Node {

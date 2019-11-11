@@ -1,7 +1,7 @@
-import { createChaiPlugin } from "@siteimprove/alfa-chai";
-import { fromAngularFixture } from "./src/from-angular-fixture";
-import { isAngularFixture } from "./src/is-angular-fixture";
+import { Chai } from "@siteimprove/alfa-chai";
+import { Future } from "@siteimprove/alfa-future";
+import { Angular } from "./src/angular";
 
-// tslint:disable:no-default-export
-
-export default createChaiPlugin(isAngularFixture, fromAngularFixture);
+export default Chai.createPlugin(Angular.isType, value =>
+  Future.settle(Angular.asPage(value))
+);

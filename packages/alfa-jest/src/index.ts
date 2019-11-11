@@ -1,1 +1,1 @@
-export * from "./create-jest-plugin";
+export * from "./jest";

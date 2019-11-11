@@ -1,1 +1,1 @@
-export * from "./create-unexpected-plugin";
+export * from "./unexpected";

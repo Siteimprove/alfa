@@ -1,7 +1,4 @@
-import { createUnexpectedPlugin } from "@siteimprove/alfa-unexpected";
-import { fromAngularFixture } from "./src/from-angular-fixture";
-import { isAngularFixture } from "./src/is-angular-fixture";
+import { Unexpected } from "@siteimprove/alfa-unexpected";
+import { Angular } from "./src/angular";
 
-// tslint:disable:no-default-export
-
-export default createUnexpectedPlugin(isAngularFixture, fromAngularFixture);
+export default Unexpected.createPlugin(Angular.isType, Angular.asPage);

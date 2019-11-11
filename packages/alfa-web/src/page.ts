@@ -1,5 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
+import { isObject } from "@siteimprove/alfa-guards";
 
 import { Resource } from "./resource";
 
@@ -24,5 +25,9 @@ export namespace Page {
     } = page;
 
     return { ...Resource.of(page), document, device };
+  }
+
+  export function isPage(value: unknown): value is Page {
+    return isObject(value);
   }
 }

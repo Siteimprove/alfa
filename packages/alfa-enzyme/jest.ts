@@ -1,5 +1,4 @@
-import { createJestPlugin } from "@siteimprove/alfa-jest";
-import { fromEnzymeWrapper } from "./src/from-enzyme-wrapper";
-import { isEnzymeWrapper } from "./src/is-enzyme-wrapper";
+import { Jest } from "@siteimprove/alfa-jest";
+import { Enzyme } from "./src/enzyme";
 
-createJestPlugin(isEnzymeWrapper, fromEnzymeWrapper);
+Jest.createPlugin(Enzyme.isType, Enzyme.asPage);

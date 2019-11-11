@@ -1,7 +1,7 @@
-import { createChaiPlugin } from "@siteimprove/alfa-chai";
-import { fromVueWrapper } from "./src/from-vue-wrapper";
-import { isVueWrapper } from "./src/is-vue-wrapper";
+import { Chai } from "@siteimprove/alfa-chai";
+import { Future } from "@siteimprove/alfa-future";
+import { Vue } from "./src/vue";
 
-// tslint:disable:no-default-export
-
-export default createChaiPlugin(isVueWrapper, fromVueWrapper);
+export default Chai.createPlugin(Vue.isType, value =>
+  Future.settle(Vue.asPage(value))
+);

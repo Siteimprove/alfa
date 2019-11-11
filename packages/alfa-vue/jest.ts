@@ -1,5 +1,4 @@
-import { createJestPlugin } from "@siteimprove/alfa-jest";
-import { fromVueWrapper } from "./src/from-vue-wrapper";
-import { isVueWrapper } from "./src/is-vue-wrapper";
+import { Jest } from "@siteimprove/alfa-jest";
+import { Vue } from "./src/vue";
 
-createJestPlugin(isVueWrapper, fromVueWrapper);
+Jest.createPlugin(Vue.isType, Vue.asPage);

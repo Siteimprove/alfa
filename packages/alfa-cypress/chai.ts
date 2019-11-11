@@ -1,10 +1,8 @@
 /// <reference types="cypress" />
 
-import { createChaiPlugin } from "@siteimprove/alfa-chai";
-import { fromCypressElement } from "./src/from-cypress-element";
-import { isCypressElement } from "./src/is-cypress-element";
-
-// tslint:disable:no-default-export
+import { Chai } from "@siteimprove/alfa-chai";
+import { Future } from "@siteimprove/alfa-future";
+import { Cypress } from "./src/cypress";
 
 declare global {
   namespace Cypress {
@@ -15,4 +13,6 @@ declare global {
   }
 }
 
-export default createChaiPlugin(isCypressElement, fromCypressElement);
+export default Chai.createPlugin(Cypress.isType, value =>
+  Future.settle(Cypress.asPage(value))
+);

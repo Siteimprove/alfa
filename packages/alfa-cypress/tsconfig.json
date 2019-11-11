@@ -1,11 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": [
-    "chai.ts",
-    "src/from-cypress-element.ts",
-    "src/index.ts",
-    "src/is-cypress-element.ts"
-  ],
+  "files": ["chai.ts", "src/cypress.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-assert"

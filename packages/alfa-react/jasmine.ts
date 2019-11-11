@@ -1,5 +1,4 @@
-import { createJasminePlugin } from "@siteimprove/alfa-jasmine";
-import { fromReactElement } from "./src/from-react-element";
-import { isReactElement } from "./src/is-react-element";
+import { Jasmine } from "@siteimprove/alfa-jasmine";
+import { React } from "./src/react";
 
-createJasminePlugin(isReactElement, fromReactElement);
+Jasmine.createPlugin(React.isType, React.asPage);
