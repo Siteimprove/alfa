@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/constants.ts",
+    "src/hash.ts",
+    "src/hashable.ts",
+    "src/index.ts",
+    "test/hashable.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

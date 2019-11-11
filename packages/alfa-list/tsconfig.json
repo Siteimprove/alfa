@@ -3,6 +3,9 @@
   "files": ["src/index.ts", "src/list.ts", "src/node.ts", "test/list.spec.ts"],
   "references": [
     {
+      "path": "../alfa-bits"
+    },
+    {
       "path": "../alfa-equality"
     },
     {

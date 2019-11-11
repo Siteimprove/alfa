@@ -21,6 +21,10 @@ export const None: None = new (class None {
     return this;
   }
 
+  public apply(): this {
+    return this;
+  }
+
   public reduce<U>(reducer: unknown, accumulator: U): U {
     return accumulator;
   }
@@ -47,6 +51,10 @@ export const None: None = new (class None {
 
   public orElse<U>(option: Thunk<Option<U>>): Option<U> {
     return option();
+  }
+
+  public get(): never {
+    throw new Error("Attempted to .get() from None");
   }
 
   public getOr<U>(value: U): U {

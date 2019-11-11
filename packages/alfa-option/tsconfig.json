@@ -9,6 +9,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-applicative"
+    },
+    {
       "path": "../alfa-equality"
     },
     {
