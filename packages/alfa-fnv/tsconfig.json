@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/fnv.ts", "src/index.ts", "test/fnv.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-hash"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
