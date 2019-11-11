@@ -25,6 +25,7 @@
     { "path": "alfa-foldable" },
     { "path": "alfa-functor" },
     { "path": "alfa-generator" },
+    { "path": "alfa-graph" },
     { "path": "alfa-hash" },
     { "path": "alfa-highlight" },
     { "path": "alfa-html" },

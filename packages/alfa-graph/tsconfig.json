@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/graph.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-equality"
+    },
+    {
+      "path": "../alfa-map"
+    },
+    {
+      "path": "../alfa-set"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
