@@ -21,6 +21,9 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
+  "dependencies": {
+    "@siteimprove/alfa-guards": "^0.0.0"
+  },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"
   }

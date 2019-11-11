@@ -1,16 +1,10 @@
+import { isFunction, isObject } from "@siteimprove/alfa-guards";
+
 export interface Equality<T = unknown> {
   equals(value: unknown): value is T;
 }
 
 export namespace Equality {
-  function isObject(value: unknown): value is { [key: string]: unknown } {
-    return typeof value === "object" && value !== null;
-  }
-
-  function isFunction(value: unknown): value is Function {
-    return typeof value === "function";
-  }
-
   export function isEquality<T>(value: unknown): value is Equality<T> {
     return isObject(value) && isFunction(value.equals);
   }
