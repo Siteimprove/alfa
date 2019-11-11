@@ -29,6 +29,7 @@ export interface Option<T>
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
   or<U>(option: Option<U>): Some<T> | Option<U>;
   orElse<U>(option: Thunk<Option<U>>): Some<T> | Option<U>;
+  get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: () => U): T | U;
   equals(value: unknown): value is Option<T>;

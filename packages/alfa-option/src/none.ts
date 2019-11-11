@@ -53,6 +53,10 @@ export const None: None = new (class None {
     return option();
   }
 
+  public get(): never {
+    throw new Error("Attempted to .get() from None");
+  }
+
   public getOr<U>(value: U): U {
     return value;
   }
