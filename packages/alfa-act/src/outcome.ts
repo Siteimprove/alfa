@@ -4,7 +4,7 @@ import { Record } from "@siteimprove/alfa-record";
 
 import { Rule } from "./rule";
 
-export abstract class Outcome<I, T, Q> implements Equality {
+export abstract class Outcome<I, T, Q = never> implements Equality {
   public readonly rule: Rule<I, T, Q>;
   public readonly target?: T;
 
@@ -29,22 +29,22 @@ export namespace Outcome {
     export type Applicable = Exclude<Type, Type.Inapplicable>;
   }
 
-  export class Passed<I, T, Q> extends Outcome<I, T, Q> {
+  export class Passed<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<Rule.Expectations>
+      expectations: Record<{ [key: string]: Rule.Expectation }>
     ): Passed<I, T, Q> {
       return new Passed(rule, target, expectations);
     }
 
     public readonly target: T;
-    public readonly expectations: Record<Rule.Expectations>;
+    public readonly expectations: Record<{ [key: string]: Rule.Expectation }>;
 
     private constructor(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<Rule.Expectations>
+      expectations: Record<{ [key: string]: Rule.Expectation }>
     ) {
       super(rule);
 
@@ -71,22 +71,22 @@ export namespace Outcome {
     }
   }
 
-  export class Failed<I, T, Q> extends Outcome<I, T, Q> {
+  export class Failed<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<Rule.Expectations>
+      expectations: Record<{ [key: string]: Rule.Expectation }>
     ): Failed<I, T, Q> {
       return new Failed(rule, target, expectations);
     }
 
     public readonly target: T;
-    public readonly expectations: Record<Rule.Expectations>;
+    public readonly expectations: Record<{ [key: string]: Rule.Expectation }>;
 
     private constructor(
       rule: Rule<I, T, Q>,
       target: T,
-      expectations: Record<Rule.Expectations>
+      expectations: Record<{ [key: string]: Rule.Expectation }>
     ) {
       super(rule);
 
@@ -113,7 +113,7 @@ export namespace Outcome {
     }
   }
 
-  export class CantTell<I, T, Q> extends Outcome<I, T, Q> {
+  export class CantTell<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T
@@ -146,12 +146,12 @@ export namespace Outcome {
     }
   }
 
-  export type Applicable<I, T, Q> =
+  export type Applicable<I, T, Q = never> =
     | Passed<I, T, Q>
     | Failed<I, T, Q>
     | CantTell<I, T, Q>;
 
-  export class Inapplicable<I, T, Q> extends Outcome<I, T, Q> {
+  export class Inapplicable<I, T, Q = never> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(rule: Rule<I, T, Q>): Inapplicable<I, T, Q> {
       return new Inapplicable(rule);
     }
@@ -177,11 +177,10 @@ export namespace Outcome {
   export function from<I, T, Q>(
     rule: Rule<I, T, Q>,
     target: T,
-    expectations: Record<Rule.Expectations>
+    expectations: Record<{ [key: string]: Rule.Expectation }>
   ): Outcome.Applicable<I, T, Q> {
-    const holds = Iterable.every(
-      expectations,
-      ([id, expectation]) => expectation.holds
+    const holds = Iterable.every(expectations, ([id, expectation]) =>
+      expectation.isOk()
     );
 
     return holds

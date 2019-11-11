@@ -2,6 +2,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
+import { Result } from "@siteimprove/alfa-result";
 
 import { Cache } from "./cache";
 import { Interview } from "./interview";
@@ -40,13 +41,7 @@ export class Rule<I, T, Q = never> {
 }
 
 export namespace Rule {
-  export interface Expectation<T = boolean> {
-    readonly holds: T;
-  }
-
-  export interface Expectations<T = boolean> {
-    readonly [key: string]: Expectation<T>;
-  }
+  export type Expectation = Result<string, string>;
 
   export type Evaluator<I, T, Q> = (
     input: Readonly<I>,
@@ -59,7 +54,7 @@ export namespace Rule {
       input: Readonly<I>
     ) => {
       applicability(): Iterable<Interview<Q, T, T | Option<T>>>;
-      expectations(target: T): Expectations<Interview<Q, T, boolean>>;
+      expectations(target: T): { [key: string]: Interview<Q, T, Expectation> };
     };
 
     export function of<I, T, Q = never>(properties: {
@@ -109,7 +104,7 @@ export namespace Rule {
     ) => {
       expectations(
         outcomes: Iterable<Outcome.Applicable<I, T, Q>>
-      ): Expectations<Interview<Q, T, boolean>>;
+      ): { [key: string]: Interview<Q, T, Expectation> };
     };
 
     export function of<I, T, Q = never>(properties: {
@@ -161,18 +156,16 @@ export namespace Rule {
 
   function resolve<I, T, Q>(
     target: T,
-    expectations: Record<Expectations<Interview<Q, T, boolean>>>,
+    expectations: Record<{ [key: string]: Interview<Q, T, Expectation> }>,
     rule: Rule<I, T, Q>,
     oracle: Oracle<Q>
   ): Outcome.Applicable<I, T, Q> {
     return Iterable.reduce(
       expectations,
-      (expectations, [id, expectation]) => {
-        const { holds: interview } = expectation;
-
+      (expectations, [id, interview]) => {
         return expectations.flatMap((expectations, branches) =>
-          Interview.conduct(interview, rule, oracle).map(holds =>
-            expectations.push([id, { holds }])
+          Interview.conduct(interview, rule, oracle).map(expectation =>
+            expectations.push([id, expectation])
           )
         );
       },

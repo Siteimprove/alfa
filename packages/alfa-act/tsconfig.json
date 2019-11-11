@@ -36,6 +36,9 @@
       "path": "../alfa-record"
     },
     {
+      "path": "../alfa-result"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
