@@ -3,33 +3,27 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 export class Cache<K, V> {
-  public static empty<K extends object, V>(type?: Cache.Type.Weak): Cache<K, V>;
-
-  public static empty<K, V>(type: Cache.Type.Strong): Cache<K, V>;
-
-  public static empty<K extends object, V>(type?: Cache.Type): Cache<K, V> {
-    return new Cache(type === Cache.Type.Strong ? new Map() : new WeakMap());
+  public static empty<K, V>(): Cache<K, V> {
+    return new Cache();
   }
 
-  private readonly entries: Cache.Storage<K, V>;
+  private readonly storage = Storage.empty<K, V>();
 
-  private constructor(entries: Cache.Storage<K, V>) {
-    this.entries = entries;
-  }
+  private constructor() {}
 
-  public get<U extends V>(key: K): Option<U>;
+  public get(key: K): Option<V>;
 
-  public get<U extends V>(key: K, ifMissing: Thunk<U>): U;
+  public get<U extends V = V>(key: K, ifMissing: Thunk<U>): V;
 
-  public get<U extends V>(key: K, ifMissing?: Thunk<U>): U | Option<U> {
+  public get<U extends V = V>(key: K, ifMissing?: Thunk<U>): V | Option<V> {
     if (this.has(key)) {
-      const value = this.entries.get(key) as U;
+      const value = this.storage.get(key);
 
       if (ifMissing === undefined) {
-        return Some.of(value);
+        return value;
       }
 
-      return value;
+      return value.getOrElse(ifMissing);
     }
 
     if (ifMissing === undefined) {
@@ -38,17 +32,17 @@ export class Cache<K, V> {
 
     const value = ifMissing();
 
-    this.entries.set(key, value);
+    this.storage.set(key, value);
 
     return value;
   }
 
   public has(key: K): boolean {
-    return this.entries.has(key);
+    return this.storage.has(key);
   }
 
   public set(key: K, value: V): this {
-    this.entries.set(key, value);
+    this.storage.set(key, value);
     return this;
   }
 
@@ -59,35 +53,69 @@ export class Cache<K, V> {
       this
     );
   }
+
+  public toJSON() {
+    return {};
+  }
 }
 
 export namespace Cache {
-  export type Storage<K, V> = K extends object
-    ? Map<K, V> | WeakMap<K, V>
-    : Map<K, V>;
+  export function from<K, V>(iterable: Iterable<[K, V]>): Cache<K, V> {
+    return Cache.empty<K, V>().merge(iterable);
+  }
+}
 
-  export enum Type {
-    Weak,
-    Strong
+class Storage<K, V> {
+  public static empty<K, V>(): Storage<K, V> {
+    return new Storage();
   }
 
-  export function from<K extends object, V>(
-    iterable: Iterable<[K, V]>,
-    type?: Cache.Type.Weak
-  ): Cache<K, V>;
+  private readonly objects: WeakMap<object, V> = new WeakMap();
+  private readonly primitives: Map<unknown, V> = new Map();
 
-  export function from<K, V>(
-    iterable: Iterable<[K, V]>,
-    type: Cache.Type.Strong
-  ): Cache<K, V>;
+  private constructor() {}
 
-  export function from<K extends object, V>(
-    iterable: Iterable<[K, V]>,
-    type?: Cache.Type
-  ): Cache<K, V> {
-    const cache: Cache<K, V> =
-      type === Cache.Type.Strong ? Cache.empty(type) : Cache.empty(type);
+  public get(key: K): Option<V> {
+    let value: V;
 
-    return cache.merge(iterable);
+    if (isObject(key)) {
+      if (this.objects.has(key)) {
+        value = this.objects.get(key)!;
+      } else {
+        return None;
+      }
+    } else {
+      if (this.primitives.has(key)) {
+        value = this.primitives.get(key)!;
+      } else {
+        return None;
+      }
+    }
+
+    return Some.of(value);
   }
+
+  public has(key: K) {
+    if (isObject(key)) {
+      return this.objects.has(key);
+    } else {
+      return this.primitives.has(key);
+    }
+  }
+
+  public set(key: K, value: V) {
+    if (isObject(key)) {
+      this.objects.set(key, value);
+    } else {
+      this.primitives.set(key, value);
+    }
+  }
+
+  public toJSON() {
+    return {};
+  }
+}
+
+function isObject(value: unknown): value is object {
+  return typeof value === "object" && value !== null;
 }
