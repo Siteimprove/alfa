@@ -19,7 +19,7 @@ export namespace Resource {
 
       response = {
         status: 200,
-        body: "",
+        body: new ArrayBuffer(0),
         headers: {}
       }
     } = resource;

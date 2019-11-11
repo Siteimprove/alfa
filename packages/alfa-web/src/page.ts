@@ -1,4 +1,4 @@
-import { Device, getDefaultDevice } from "@siteimprove/alfa-device";
+import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 
 import { Resource } from "./resource";
@@ -20,7 +20,7 @@ export namespace Page {
         styleSheets: []
       },
 
-      device = getDefaultDevice()
+      device = Device.getDefaultDevice()
     } = page;
 
     return { ...Resource.of(page), document, device };
