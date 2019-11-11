@@ -23,9 +23,7 @@ export function resolveReferences(
     const element = querySelector(
       node,
       context,
-      Predicate.chain(isElement)
-        .and(element => getId(element, context).includes(id))
-        .get()
+      Predicate.and(isElement, element => getId(element, context).includes(id))
     );
 
     if (element.isSome()) {

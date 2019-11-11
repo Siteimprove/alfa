@@ -26,9 +26,9 @@ test("getClosest() gets the closest element that matches a predicate", t => {
     getClosest(
       span,
       div,
-      Predicate.chain(isElement)
-        .and(element => hasAttribute(element, div, "aria-label"))
-        .get()
+      Predicate.and(isElement, element =>
+        hasAttribute(element, div, "aria-label")
+      )
     ),
     Some.of(div)
   );
@@ -41,9 +41,9 @@ test("getClosest() returns none when no element is found", t => {
     getClosest(
       span,
       span,
-      Predicate.chain(isElement)
-        .and(element => hasAttribute(element, span, "aria-label"))
-        .get()
+      Predicate.and(isElement, element =>
+        hasAttribute(element, span, "aria-label")
+      )
     ),
     None
   );

@@ -41,22 +41,21 @@ export function getLabel(element: Element, context: Node): Option<Element> {
           const label = querySelector(
             rootNode,
             context,
-            Predicate.chain(isElement)
-              .and(
-                element =>
-                  element.localName === "label" &&
-                  getAttribute(element, context, "for").includes(id)
-              )
-              .get()
+            Predicate.and(
+              isElement,
+              element =>
+                element.localName === "label" &&
+                getAttribute(element, context, "for").includes(id)
+            )
           );
 
           return label.filter(label => {
             const target = querySelector(
               rootNode,
               context,
-              Predicate.chain(isElement)
-                .and(element => getId(element, context).includes(id))
-                .get()
+              Predicate.and(isElement, element =>
+                getId(element, context).includes(id)
+              )
             );
 
             return target.includes(element);
