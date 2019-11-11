@@ -24,6 +24,7 @@
     { "path": "alfa-foldable" },
     { "path": "alfa-functor" },
     { "path": "alfa-generator" },
+    { "path": "alfa-graph" },
     { "path": "alfa-hash" },
     { "path": "alfa-highlight" },
     { "path": "alfa-html" },
@@ -56,6 +57,7 @@
     { "path": "alfa-unexpected" },
     { "path": "alfa-unicode" },
     { "path": "alfa-vue" },
+    { "path": "alfa-web" },
     { "path": "alfa-webdriver" },
     { "path": "alfa-xpath" },
     { "path": "eslint-plugin-alfa" }

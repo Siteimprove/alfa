@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/page.ts", "src/resource.ts", "src/site.ts"],
+  "references": [
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-graph"
+    },
+    {
+      "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
