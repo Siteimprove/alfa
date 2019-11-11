@@ -1,0 +1,45 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/map.ts", "src/node.ts", "test/map.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-bits"
+    },
+    {
+      "path": "../alfa-equality"
+    },
+    {
+      "path": "../alfa-fnv"
+    },
+    {
+      "path": "../alfa-foldable"
+    },
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-hash"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
