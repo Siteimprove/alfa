@@ -61,7 +61,6 @@
     { "path": "alfa-vue" },
     { "path": "alfa-web" },
     { "path": "alfa-webdriver" },
-    { "path": "alfa-xpath" },
-    { "path": "eslint-plugin-alfa" }
+    { "path": "alfa-xpath" }
   ]
 }
