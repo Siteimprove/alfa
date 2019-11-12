@@ -12,7 +12,9 @@ export class Future<T> implements Monad<T>, Functor<T> {
   private subscribers: Array<Future.Settle<T>> = [];
 
   private constructor(settler: (settle: Future.Settle<T>) => void) {
-    settler(value => this.settle(value));
+    settler(value => {
+      this.settle(value);
+    });
   }
 
   private settle(value: T): void {
@@ -36,15 +38,19 @@ export class Future<T> implements Monad<T>, Functor<T> {
   }
 
   public map<U>(mapper: Mapper<T, U>): Future<U> {
-    return new Future<U>(settle =>
-      this.subscribe(value => settle(mapper(value)))
-    );
+    return new Future<U>(settle => {
+      this.subscribe(value => {
+        settle(mapper(value));
+      });
+    });
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
-    return new Future<U>(settle =>
-      this.subscribe(value => mapper(value).subscribe(settle))
-    );
+    return new Future<U>(settle => {
+      this.subscribe(value => {
+        mapper(value).subscribe(settle);
+      });
+    });
   }
 
   public then<U>(settled: Mapper<T, U>): Future<U> {
@@ -66,10 +72,14 @@ export namespace Future {
   export type Settle<T> = (value: T) => void;
 
   export function from<T>(promise: Promise<T>): Future<T> {
-    return Future.of(settle => promise.then(settle));
+    return Future.of(settle => {
+      promise.then(settle);
+    });
   }
 
   export function settle<T>(value: T): Future<T> {
-    return Future.of(settle => settle(value));
+    return Future.of(settle => {
+      settle(value);
+    });
   }
 }
