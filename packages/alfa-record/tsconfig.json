@@ -6,10 +6,19 @@
       "path": "../alfa-equality"
     },
     {
+      "path": "../alfa-foldable"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-list"
     },
     {
       "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-reducer"
     },
     {
       "path": "../alfa-test"
