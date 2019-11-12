@@ -1,9 +1,15 @@
-import { Aspect, Target, toJSON } from "@siteimprove/alfa-act";
+import { expand } from "@siteimprove/alfa-json-ld";
 
 import { Formatter } from "../types";
 
-export function EARL<A extends Aspect, T extends Target>(): Formatter<A, T> {
-  return function EARL(results, aspects) {
-    return JSON.stringify(toJSON(results, aspects), null, 2);
+const { stringify } = JSON;
+
+export default function<I, T, Q>(): Formatter<I, T, Q> {
+  return function EARL(outcomes) {
+    return stringify(
+      expand([...outcomes].map(outcome => outcome.toEARL())),
+      null,
+      2
+    );
   };
 }

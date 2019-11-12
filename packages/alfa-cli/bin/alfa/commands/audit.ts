@@ -2,23 +2,17 @@ import * as fs from "fs";
 import * as path from "path";
 import * as url from "url";
 
-import {
-  Aspect,
-  Aspects,
-  AspectsFor,
-  audit,
-  Result,
-  Target
-} from "@siteimprove/alfa-act";
+import { Audit, Outcome } from "@siteimprove/alfa-act";
 import { Orientation } from "@siteimprove/alfa-device";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Rules } from "@siteimprove/alfa-rules";
 import { Scraper, Wait } from "@siteimprove/alfa-scrape";
-import { URL, values } from "@siteimprove/alfa-util";
+import { Page } from "@siteimprove/alfa-web";
 
 import * as Formatters from "../../../src/formatters";
 import { Arguments, Command, Formatter } from "../../../src/types";
 
-export const Audit: Command<Audit.Options> = {
+export default Command.of<Options>({
   command: "audit <url>",
   describe: "Perform an accessibility audit of a page",
   handler,
@@ -37,14 +31,14 @@ export const Audit: Command<Audit.Options> = {
         default: "ready"
       })
 
-      .option("format", { type: "string", alias: "f", default: "earl" })
+      .option("format", { type: "string", alias: "f", default: "json" })
 
       .option("output", { type: "string", alias: "o" })
 
       .option("outcomes", {
         type: "array",
         choices: ["passed", "failed", "inapplicable", "cantTell"],
-        default: null
+        default: []
       })
 
       .option("width", { type: "number", alias: "w", default: 800 })
@@ -58,31 +52,27 @@ export const Audit: Command<Audit.Options> = {
       })
 
       .option("resolution", { type: "number", default: 1 })
-};
+});
 
-export namespace Audit {
-  export interface Options {
-    url: string;
-    interactive: boolean;
-    timeout: number;
-    wait: string;
-    format: string;
-    output?: string;
-    outcomes: Array<string> | null;
+interface Options {
+  url: string;
+  interactive: boolean;
+  timeout: number;
+  wait: string;
+  format: string;
+  output?: string;
+  outcomes: Array<string> | null;
 
-    // Viewport options
-    width: number;
-    height: number;
-    orientation: string;
+  // Viewport options
+  width: number;
+  height: number;
+  orientation: string;
 
-    // Display options
-    resolution: number;
-  }
+  // Display options
+  resolution: number;
 }
 
-const rules = values(Rules);
-
-async function handler(args: Arguments<Audit.Options>): Promise<void> {
+async function handler(args: Arguments<Options>): Promise<void> {
   const scraper = new Scraper();
 
   const { timeout, width, height, resolution } = args;
@@ -101,9 +91,9 @@ async function handler(args: Arguments<Audit.Options>): Promise<void> {
     orientation = Orientation.Portrait;
   }
 
-  let aspects: Aspects;
+  let page: Page;
   try {
-    aspects = await scraper.scrape(
+    page = await scraper.scrape(
       new URL(args.url, url.pathToFileURL(process.cwd() + path.sep)),
       {
         timeout,
@@ -118,19 +108,17 @@ async function handler(args: Arguments<Audit.Options>): Promise<void> {
     scraper.close();
   }
 
-  let { results } = audit(aspects, rules);
+  const audit = Rules.reduce((audit, rule) => audit.add(rule), Audit.of(page));
 
-  if (args.interactive) {
-    // Answer questions
-  }
+  const outcomes = audit.evaluate();
 
-  if (args.outcomes !== null) {
-    results = [...results].filter(result =>
-      args.outcomes!.includes(result.outcome)
-    );
-  }
+  // if (args.outcomes !== null) {
+  //   results = [...results].filter(result =>
+  //     args.outcomes!.includes(result.outcome)
+  //   );
+  // }
 
-  let output = await report(results, aspects, formatter(args.format));
+  let output = await report(outcomes, formatter(args.format));
 
   output += "\n";
 
@@ -141,24 +129,24 @@ async function handler(args: Arguments<Audit.Options>): Promise<void> {
   }
 }
 
-async function report<A extends Aspect, T extends Target>(
-  results: Iterable<Result<A, T>>,
-  aspects: AspectsFor<A>,
-  formatter: Formatter<A, T>
+async function report<I, T, Q>(
+  outcomes: Iterable<Outcome<I, T, Q>>,
+  formatter: Formatter<I, T, Q>
 ): Promise<string> {
-  return formatter(results, aspects);
+  return formatter(outcomes);
 }
 
-function formatter<A extends Aspect, T extends Target>(
-  format: string
-): Formatter<A, T> {
+function formatter<I, T, Q>(format: string): Formatter<I, T, Q> {
   switch (format) {
     case "earl":
       return Formatters.EARL();
 
+    case "json":
+      return Formatters.JSON();
+
     default:
       try {
-        return require(format) as Formatter<A, T>;
+        return require(format) as Formatter<I, T, Q>;
       } catch (err) {
         throw new Error(`No such formatter found: ${format}`);
       }

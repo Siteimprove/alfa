@@ -9,6 +9,7 @@
     "bin/alfa/commands/audit.ts",
     "src/formatters.ts",
     "src/formatters/earl.ts",
+    "src/formatters/json.ts",
     "src/index.ts",
     "src/types.ts"
   ],
@@ -20,6 +21,9 @@
       "path": "../alfa-device"
     },
     {
+      "path": "../alfa-json-ld"
+    },
+    {
       "path": "../alfa-rules"
     },
     {
@@ -27,6 +31,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }

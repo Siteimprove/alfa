@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
-import { values } from "@siteimprove/alfa-util";
 import yargs from "yargs";
 
 import * as commands from "./alfa/commands";
 
-values(commands).reduce((argv, command) => {
+const { keys } = Object;
+
+keys(commands).reduce((argv, key) => {
+  const command = commands[key as keyof typeof commands];
+
   return argv.command(
     command.command,
     command.describe,

@@ -1,4 +1,4 @@
-import { Aspect, AspectsFor, Result, Target } from "@siteimprove/alfa-act";
+import { Outcome } from "@siteimprove/alfa-act";
 import yargs from "yargs";
 
 export type Arguments<T> = yargs.Arguments<T>;
@@ -7,22 +7,25 @@ export namespace Arguments {
   export type Builder<T> = yargs.Argv<T>;
 }
 
-export interface Command<U> {
+export interface Command<T> {
   readonly command: string;
   readonly describe: string;
-  readonly builder?: Command.Builder<U>;
-  readonly handler?: Command.Handler<U>;
+  readonly builder?: Command.Builder<T>;
+  readonly handler?: Command.Handler<T>;
 }
 
 export namespace Command {
-  export type Builder<U> = <T>(
-    builder: Arguments.Builder<T>
-  ) => Arguments.Builder<U>;
+  export type Builder<T> = <U>(
+    builder: Arguments.Builder<U>
+  ) => Arguments.Builder<T>;
 
-  export type Handler<U> = (args: Arguments<U>) => void;
+  export type Handler<T> = (args: Arguments<T>) => void;
+
+  export function of<T>(command: Command<T>): Command<T> {
+    return command;
+  }
 }
 
-export type Formatter<A extends Aspect, T extends Target> = (
-  results: Iterable<Result<A, T>>,
-  aspects: AspectsFor<A>
+export type Formatter<I, T, Q> = (
+  outcomes: Iterable<Outcome<I, T, Q>>
 ) => string;
