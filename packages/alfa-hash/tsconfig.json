@@ -9,6 +9,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-guards"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
