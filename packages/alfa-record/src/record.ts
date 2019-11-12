@@ -1,9 +1,15 @@
 import { Equality } from "@siteimprove/alfa-equality";
+import { Foldable } from "@siteimprove/alfa-foldable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Record<T>
-  implements Iterable<Record.Entries<T>>, Equality<Record<T>> {
+  implements
+    Foldable<Record.Value<T>>,
+    Iterable<Record.Entry<T>>,
+    Equality<Record<T>> {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
     const values = List.from(keys.map(key => properties[key]));
@@ -12,8 +18,8 @@ export class Record<T>
   }
 
   private readonly indices: Indices<T>;
-  private readonly keys: Array<Record.Key<T>>;
-  private readonly values: List<T[Record.Key<T>]>;
+  private readonly _keys: Array<Record.Key<T>>;
+  private readonly _values: List<Record.Value<T>>;
 
   private constructor(
     indices: Indices<T>,
@@ -21,8 +27,8 @@ export class Record<T>
     values: List<T[Record.Key<T>]>
   ) {
     this.indices = indices;
-    this.keys = keys;
-    this.values = values;
+    this._keys = keys;
+    this._values = values;
   }
 
   public has(key: string): key is Record.Key<T> {
@@ -36,7 +42,7 @@ export class Record<T>
 
     const i = this.indices[key];
 
-    return this.values.get(i) as Option<T[K]>;
+    return this._values.get(i) as Option<T[K]>;
   }
 
   public set<K extends Record.Key<T>>(key: K, value: T[K]): Record<T> {
@@ -46,25 +52,44 @@ export class Record<T>
 
     return new Record(
       this.indices,
-      this.keys,
-      this.values.set(this.indices[key], value)
+      this._keys,
+      this._values.set(this.indices[key], value)
+    );
+  }
+
+  public reduce<R>(
+    reducer: Reducer<Record.Value<T>, R, [Record.Key<T>]>,
+    accumulator: R
+  ): R {
+    return Iterable.reduce(
+      this,
+      (accumulator, [key, value]) => reducer(accumulator, value, key),
+      accumulator
     );
   }
 
   public equals(value: unknown): value is Record<T> {
     return (
       value instanceof Record &&
-      value.keys.length === this.keys.length &&
-      value.keys.every((key, i) => key === this.keys[i]) &&
-      value.values.equals(this.values)
+      value._keys.length === this._keys.length &&
+      value._keys.every((key, i) => key === this._keys[i]) &&
+      value._values.equals(this._values)
     );
   }
 
-  public *[Symbol.iterator](): Iterator<Record.Entries<T>> {
+  public *keys(): Iterable<Record.Key<T>> {
+    yield* this._keys;
+  }
+
+  public *values(): Iterable<Record.Value<T>> {
+    yield* this._values;
+  }
+
+  public *[Symbol.iterator](): Iterator<Record.Entry<T>> {
     let i = 0;
 
-    for (const value of this.values) {
-      yield [this.keys[i++], value];
+    for (const value of this._values) {
+      yield [this._keys[i++], value];
     }
   }
 
@@ -82,9 +107,11 @@ export class Record<T>
 export namespace Record {
   export type Key<T> = Extract<keyof T, string>;
 
-  export type Entries<T> = { [K in Key<T>]: [K, T[K]] }[Key<T>];
+  export type Value<T> = T[Key<T>];
 
-  export function from<T>(entries: Iterable<Entries<T>>): Record<T> {
+  export type Entry<T> = { [K in Key<T>]: [K, T[K]] }[Key<T>];
+
+  export function from<T>(entries: Iterable<Entry<T>>): Record<T> {
     const record: { [key: string]: unknown } = {};
 
     for (const [key, value] of entries) {
