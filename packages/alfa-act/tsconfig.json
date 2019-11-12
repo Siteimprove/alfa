@@ -21,6 +21,9 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-json-ld"
+    },
+    {
       "path": "../alfa-list"
     },
     {

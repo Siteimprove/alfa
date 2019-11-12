@@ -1,5 +1,6 @@
 import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Document } from "@siteimprove/alfa-json-ld";
 import { Record } from "@siteimprove/alfa-record";
 
 import { Rule } from "./rule";
@@ -15,6 +16,16 @@ export abstract class Outcome<I, T, Q = never> implements Equality {
   public abstract equals(value: unknown): value is Outcome<I, T, Q>;
 
   public abstract toJSON(): { outcome: Outcome.Type };
+
+  public toEARL(): Document {
+    return {
+      "@context": {
+        earl: "http://www.w3.org/ns/earl#"
+      },
+      "@type": "earl:Assertion",
+      "earl:test": { "@id": this.rule.uri }
+    };
+  }
 }
 
 export namespace Outcome {
@@ -69,6 +80,16 @@ export namespace Outcome {
         expectations: this.expectations.toJSON()
       };
     }
+
+    public toEARL(): Document {
+      return {
+        ...super.toEARL(),
+        "earl:result": {
+          "@type": "earl:TestResult",
+          "earl:outcome": { "@id": `earl:${Type.Passed}` }
+        }
+      };
+    }
   }
 
   export class Failed<I, T, Q = never> extends Outcome<I, T, Q> {
@@ -111,6 +132,16 @@ export namespace Outcome {
         expectations: this.expectations.toJSON()
       };
     }
+
+    public toEARL(): Document {
+      return {
+        ...super.toEARL(),
+        "earl:result": {
+          "@type": "earl:TestResult",
+          "earl:outcome": { "@id": `earl:${Type.Failed}` }
+        }
+      };
+    }
   }
 
   export class CantTell<I, T, Q = never> extends Outcome<I, T, Q> {
@@ -144,6 +175,16 @@ export namespace Outcome {
         target: this.target
       };
     }
+
+    public toEARL(): Document {
+      return {
+        ...super.toEARL(),
+        "earl:result": {
+          "@type": "earl:TestResult",
+          "earl:outcome": { "@id": `earl:${Type.CantTell}` }
+        }
+      };
+    }
   }
 
   export type Applicable<I, T, Q = never> =
@@ -170,6 +211,16 @@ export namespace Outcome {
       return {
         outcome: Type.Inapplicable,
         rule: this.rule.toJSON()
+      };
+    }
+
+    public toEARL(): Document {
+      return {
+        ...super.toEARL(),
+        "earl:result": {
+          "@type": "earl:TestResult",
+          "earl:outcome": { "@id": `earl:${Type.Inapplicable}` }
+        }
       };
     }
   }

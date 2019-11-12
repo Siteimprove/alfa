@@ -7,11 +7,11 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
 
-export class Audit<I, T = never, Q = unknown> {
-  public static of<I, Q = unknown>(
+export class Audit<I, T = unknown, Q = never> {
+  public static of<I, T = unknown, Q = never>(
     input: I,
     oracle: Oracle<Q> = () => None
-  ): Audit<I, never, Q> {
+  ): Audit<I, T, Q> {
     return new Audit(input, oracle, List.empty());
   }
 
@@ -25,12 +25,8 @@ export class Audit<I, T = never, Q = unknown> {
     this.rules = rules;
   }
 
-  public add<U, R extends Q>(rule: Rule<I, U, R>): Audit<I, T | U, Q> {
-    return new Audit(
-      this.input,
-      this.oracle,
-      List.from<Rule<I, T | U, Q>>(this.rules).push(rule)
-    );
+  public add<R extends Rule<I, T, Q>>(rule: R): Audit<I, T, Q> {
+    return new Audit(this.input, this.oracle, this.rules.push(rule));
   }
 
   public evaluate(): Iterable<Outcome<I, T, Q>> {

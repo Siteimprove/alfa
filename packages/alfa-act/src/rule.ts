@@ -1,4 +1,5 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Document } from "@siteimprove/alfa-json-ld";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
@@ -36,6 +37,16 @@ export class Rule<I, T, Q = never> {
   public toJSON() {
     return {
       uri: this.uri
+    };
+  }
+
+  public toEARL(): Document {
+    return {
+      "@context": {
+        earl: "http://www.w3.org/ns/earl#"
+      },
+      "@type": "earl:TestCase",
+      "@id": this.uri
     };
   }
 }
