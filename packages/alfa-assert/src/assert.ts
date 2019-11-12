@@ -82,11 +82,9 @@ export namespace Assert {
   export namespace Page {
     export type Target = dom.Document | dom.Element;
 
-    const rules = [Rules.R1, Rules.R2];
-
     export function isAccessible(
       page: web.Page,
-      scope: Iterable<Rule<web.Page, Target>> = rules
+      scope: Iterable<Rule<web.Page, Target>> = Rules.values()
     ): Option<Error<Target>> {
       for (const rule of scope) {
         const error = doesNotFail(page, rule);
@@ -101,7 +99,7 @@ export namespace Assert {
 
     export function isNotAccessible(
       page: web.Page,
-      scope: Iterable<Rule<web.Page, Target>> = rules
+      scope: Iterable<Rule<web.Page, Target>> = Rules.values()
     ): Option<Error<Target>> {
       for (const rule of scope) {
         const error = doesNotPass(page, rule);
