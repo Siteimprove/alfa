@@ -12,10 +12,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import * as Lang from "@siteimprove/alfa-lang";
 import { Char } from "@siteimprove/alfa-lang";
-import { Mutable } from "@siteimprove/alfa-util";
 import { Token, Tokens, TokenType } from "./alphabet";
 
 const { fromCharCode } = String;
+const { assign } = Object;
 
 type InsertionMode = (token: Token, document: Document, state: State) => void;
 
@@ -41,7 +41,7 @@ interface State {
   /**
    * @see https://html.spec.whatwg.org/#stack-of-open-elements
    */
-  openElements: Array<Mutable<Element>>;
+  openElements: Array<Element>;
 
   /**
    * @see https://html.spec.whatwg.org/#list-of-active-formatting-elements
@@ -703,7 +703,7 @@ function constructTree(
   return document;
 }
 
-function enableQuirksMode(document: Mutable<Document>): void {}
+function enableQuirksMode(document: Document): void {}
 
 function appendChild(parentNode: Node, childNode: Node): void {
   (parentNode.childNodes as Array<Node>).push(childNode);
@@ -743,7 +743,7 @@ function insertCharacter(token: Tokens.Character, state: State) {
   const node = children[position - 1];
 
   if (node !== undefined && isText(node)) {
-    (node as Mutable<Text>).data += fromCharCode(token.data);
+    assign(node, { data: node.data + fromCharCode(token.data) });
   } else {
     insertNode(createText(fromCharCode(token.data)), state);
   }
@@ -769,7 +769,7 @@ function appropriateInsertionLocation(state: State): InsertionLocation | null {
 /**
  * @see https://html.spec.whatwg.org/#current-node
  */
-function currentNode(state: State): Mutable<Node> | null {
+function currentNode(state: State): Node | null {
   const tail = state.openElements[state.openElements.length - 1];
 
   if (tail === undefined) {

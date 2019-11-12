@@ -8,9 +8,10 @@ import {
   isNumeric,
   Stream
 } from "@siteimprove/alfa-lang";
-import { keys, Mutable } from "@siteimprove/alfa-util";
 import { Entities, Entity } from "./entities";
 import { PrefixTree } from "./prefix-tree";
+
+const { keys } = Object;
 
 const entities: PrefixTree<Entity> = new PrefixTree();
 
@@ -34,33 +35,33 @@ export namespace Tokens {
   interface Token<T extends TokenType> extends Lang.Token<T> {}
 
   export interface Doctype extends Token<TokenType.Doctype> {
-    readonly name: string | null;
-    readonly publicId: string | null;
-    readonly systemId: string | null;
-    readonly forceQuirks: boolean;
+    name: string | null;
+    publicId: string | null;
+    systemId: string | null;
+    forceQuirks: boolean;
   }
 
   export interface Attribute {
-    readonly name: string;
-    readonly value: string;
+    name: string;
+    value: string;
   }
 
   export interface StartTag extends Token<TokenType.StartTag> {
-    readonly name: string;
-    readonly selfClosing: boolean;
-    readonly attributes: Array<Attribute>;
+    name: string;
+    selfClosing: boolean;
+    attributes: Array<Attribute>;
   }
 
   export interface EndTag extends Token<TokenType.EndTag> {
-    readonly name: string;
+    name: string;
   }
 
   export interface Comment extends Token<TokenType.Comment> {
-    readonly data: string;
+    data: string;
   }
 
   export interface Character extends Token<TokenType.Character> {
-    readonly data: number;
+    data: number;
   }
 }
 
@@ -94,11 +95,11 @@ export type Token =
   | Tokens.Comment;
 
 interface State {
-  doctype: Mutable<Tokens.Doctype> | null;
-  tag: Mutable<Tokens.StartTag | Tokens.EndTag> | null;
-  startTag: Mutable<Tokens.StartTag | Tokens.EndTag> | null;
-  attribute: Mutable<Tokens.Attribute> | null;
-  comment: Mutable<Tokens.Comment> | null;
+  doctype: Tokens.Doctype | null;
+  tag: Tokens.StartTag | Tokens.EndTag | null;
+  startTag: Tokens.StartTag | Tokens.EndTag | null;
+  attribute: Tokens.Attribute | null;
+  comment: Tokens.Comment | null;
   namespaceStack: Array<string>;
   tagStack: Array<string>;
 

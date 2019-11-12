@@ -17,13 +17,13 @@ import { Axis } from "./types";
  * @internal
  */
 export interface Tree<T extends Node = Node> {
-  readonly node: T;
-  readonly context: Node;
-  readonly parent: Tree | null;
-  readonly prev: Tree | null;
-  readonly next: Tree | null;
-  readonly children: Array<Tree>;
-  readonly attributes: Array<Tree<Attribute>>;
+  node: T;
+  context: Node;
+  parent: Tree | null;
+  prev: Tree | null;
+  next: Tree | null;
+  children: Array<Tree>;
+  attributes: Array<Tree<Attribute>>;
 }
 
 /**
