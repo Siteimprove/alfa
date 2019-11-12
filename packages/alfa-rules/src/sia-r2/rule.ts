@@ -3,6 +3,7 @@ import { Roles } from "@siteimprove/alfa-aria";
 import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
@@ -42,15 +43,19 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: {
-            holds: test(
-              or(
-                isDecorative(document, device),
-                hasAccessibleName(document, device)
-              ),
-              target
-            )
-          }
+          1: test(
+            or(
+              isDecorative(document, device),
+              hasAccessibleName(document, device)
+            ),
+            target
+          )
+            ? Ok.of(
+                "The image has an accessible name or is marked as decorative"
+              )
+            : Err.of(
+                "The image neither has an accessible name nor is marked as decorative"
+              )
         };
       }
     };
