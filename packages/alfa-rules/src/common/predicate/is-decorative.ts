@@ -5,12 +5,11 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { hasRole } from "./has-role";
 
+const { equals } = Predicate;
+
 export function isDecorative(
   context: Node,
   device: Device
 ): Predicate<Element> {
-  return Predicate.or(
-    hasRole(context, device, Roles.None),
-    hasRole(context, device, Roles.Presentation)
-  );
+  return hasRole(context, device, equals(Roles.None, Roles.Presentation));
 }

@@ -20,8 +20,6 @@ import { trim } from "@siteimprove/alfa-util";
 
 import { isElement, roleIs } from "../helpers/predicates";
 
-import { EN } from "./locales/en";
-
 const {
   map,
   Iterable: { filter, groupBy }

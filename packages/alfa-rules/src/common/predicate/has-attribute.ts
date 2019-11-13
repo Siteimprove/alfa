@@ -1,13 +1,13 @@
-import { Element, Node } from "@siteimprove/alfa-dom";
-import { getId } from "@siteimprove/alfa-dom";
+import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function hasId(
+export function hasAttribute(
   context: Node,
+  attribute: string,
   predicate: Predicate<string> = () => true
 ): Predicate<Element> {
   return element =>
-    getId(element, context)
+    getAttribute(element, context, attribute)
       .filter(predicate)
       .isSome();
 }

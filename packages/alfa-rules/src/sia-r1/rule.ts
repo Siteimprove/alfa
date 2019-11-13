@@ -5,22 +5,25 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { hasDocumentElement } from "../common/predicate/has-document-element";
+import { hasChild } from "../common/predicate/has-child";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasTextContent } from "../common/predicate/has-text-content";
+import { isDocumentElement } from "../common/predicate/is-document-element";
 
 import { walk } from "../common/walk";
 
 const { filter, first } = Iterable;
-const { and } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r1.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return hasDocumentElement(document) ? [document] : [];
+        return hasChild(document, and(isElement, isDocumentElement(document)))
+          ? [document]
+          : [];
       },
 
       expectations(target) {
@@ -29,7 +32,10 @@ export default Rule.Atomic.of<Page, Document>({
             walk(target, document),
             and(
               isElement,
-              and(hasNamespace(document, Namespace.HTML), hasName("title"))
+              and(
+                hasNamespace(document, equals(Namespace.HTML)),
+                hasName(equals("title"))
+              )
             )
           )
         );

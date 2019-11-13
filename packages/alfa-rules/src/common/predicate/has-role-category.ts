@@ -1,15 +1,15 @@
-import { getRole, Role } from "@siteimprove/alfa-aria";
+import { Category, getRoleCategory } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function hasRole(
+export function hasRoleCategory(
   context: Node,
   device: Device,
-  predicate: Predicate<Role> = () => true
+  predicate: Predicate<Category> = () => true
 ): Predicate<Element> {
   return element =>
-    getRole(element, context, device).some(role =>
-      role.filter(predicate).isSome()
+    getRoleCategory(element, context, device).some(category =>
+      category.filter(predicate).isSome()
     );
 }

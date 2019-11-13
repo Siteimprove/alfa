@@ -1,2 +1,13 @@
 export { default as R1 } from "./sia-r1/rule";
 export { default as R2 } from "./sia-r2/rule";
+export { default as R3 } from "./sia-r3/rule";
+export { default as R4 } from "./sia-r4/rule";
+export { default as R5 } from "./sia-r5/rule";
+export { default as R6 } from "./sia-r6/rule";
+export { default as R7 } from "./sia-r7/rule";
+export { default as R8 } from "./sia-r8/rule";
+export { default as R9 } from "./sia-r9/rule";
+export { default as R10 } from "./sia-r10/rule";
+export { default as R11 } from "./sia-r11/rule";
+export { default as R12 } from "./sia-r12/rule";
+export { default as R13 } from "./sia-r13/rule";

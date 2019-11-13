@@ -8,7 +8,7 @@ import { walk } from "../walk";
 import { hasId } from "./has-id";
 
 const { find } = Iterable;
-const { and, equals } = Predicate;
+const { and, not, equals } = Predicate;
 
 export function hasUniqueId(context: Node): Predicate<Element> {
   return element =>
@@ -16,7 +16,7 @@ export function hasUniqueId(context: Node): Predicate<Element> {
       .flatMap(id =>
         find(
           walk(getRootNode(element, context), context),
-          and(isElement, and(equals(element), hasId(context, id)))
+          and(isElement, and(not(equals(element)), hasId(context, equals(id))))
         )
       )
       .isNone();

@@ -4,8 +4,6 @@ import { Document, Element } from "@siteimprove/alfa-dom";
 
 import { Video } from "../helpers/applicabilities/video";
 
-import { EN } from "./locales/en";
-
 export const SIA_R22: Atomic.Rule<Device | Document, Element> = {
   id: "sanshikan:rules/sia-r22.html",
   requirements: [

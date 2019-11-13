@@ -3,10 +3,10 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 export function hasInputType(
   context: Node,
-  inputType: InputType
+  predicate: Predicate<InputType> = () => true
 ): Predicate<Element> {
   return element =>
     getInputType(element, context)
-      .map(found => found === inputType)
-      .getOr(false);
+      .filter(predicate)
+      .isSome();
 }

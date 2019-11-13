@@ -1,8 +1,5 @@
-import { Atomic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Attributes, getRole } from "@siteimprove/alfa-aria";
-import { List, Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
@@ -14,14 +11,9 @@ import {
   querySelector,
   querySelectorAll
 } from "@siteimprove/alfa-dom";
-import { URL, values } from "@siteimprove/alfa-util";
 
 import { isRequiredAttribute } from "../helpers/is-required-attribute";
 import { isElement, namespaceIs } from "../helpers/predicates";
-
-import { EN } from "./locales/en";
-
-const { map } = BrowserSpecific;
 
 const whitespace = /\s+/;
 

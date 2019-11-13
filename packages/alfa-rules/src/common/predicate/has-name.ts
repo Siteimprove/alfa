@@ -1,6 +1,10 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function hasName(name: string): Predicate<Element> {
-  return element => name === element.localName;
+const { test } = Predicate;
+
+export function hasName(
+  predicate: Predicate<string> = () => true
+): Predicate<Element> {
+  return element => test(predicate, element.localName);
 }

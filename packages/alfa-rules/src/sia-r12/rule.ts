@@ -1,78 +1,58 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { hasTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
+import { Rule } from "@siteimprove/alfa-act";
+import { Roles } from "@siteimprove/alfa-aria";
 import {
-  Document,
   Element,
   InputType,
-  Namespace,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
-
-import {
-  inputTypeIs,
   isElement,
-  namespaceIs,
-  roleIs
-} from "../helpers/predicates";
+  Namespace
+} from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { EN } from "./locales/en";
+import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasInputType } from "../common/predicate/has-input-type";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { hasRole } from "../common/predicate/has-role";
+import { isEmpty } from "../common/predicate/is-empty";
+import { isExposed } from "../common/predicate/is-exposed";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
-const { not } = Predicate;
+import { walk } from "../common/walk";
 
-export const SIA_R12: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r12.html",
-  locales: [EN],
-  requirements: [
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+const { filter } = Iterable;
+const { and, not, equals, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r12.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(
-            querySelectorAll(
-              document,
-              document,
-              Predicate.from(isElement.and(not(inputTypeIs(InputType.Image)))),
-              {
-                flattened: true
-              }
-            ),
-            Predicate.from(
-              isElement
-                .and(namespaceIs(document, Namespace.HTML))
-                .and(roleIs(document, device, Roles.Button))
-                .and(element => isExposed(element, document, device))
+      applicability() {
+        return filter(
+          walk(document, document, { flattened: true, nested: true }),
+          and(
+            isElement,
+            and(
+              not(hasInputType(document, equals(InputType.Image))),
+              and(
+                hasNamespace(document, equals(Namespace.HTML)),
+                and(
+                  hasRole(document, device, equals(Roles.Button)),
+                  isExposed(document, device)
+                )
+              )
             )
-          ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                aspect: document,
-                target: element
-              };
-            });
-          }
+          )
         );
       },
 
-      expectations: (aspect, target) => {
-        return map(
-          hasTextAlternative(target, document, device),
-          hasTextAlternative => {
-            return {
-              1: { holds: hasTextAlternative }
-            };
-          }
-        );
+      expectations(target) {
+        return {
+          1: test(hasAccessibleName(document, device, not(isEmpty)), target)
+            ? Ok.of("The button has an accessible name")
+            : Err.of("The button does not have an accessible name")
+        };
       }
     };
   }
-};
+});

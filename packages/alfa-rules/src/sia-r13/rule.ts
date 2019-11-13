@@ -1,71 +1,45 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { hasTextAlternative, isExposed } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  Namespace,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
+import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasName } from "../common/predicate/has-name";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { isEmpty } from "../common/predicate/is-empty";
+import { isExposed } from "../common/predicate/is-exposed";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+import { walk } from "../common/walk";
 
-export const SIA_R13: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r13.html",
-  requirements: [
-    {
-      requirement: "wcag",
-      criterion: "link-purpose-in-context",
-      partial: true
-    },
-    {
-      requirement: "wcag",
-      criterion: "name-role-value",
-      partial: true
-    }
-  ],
-  evaluate: ({ device, document }) => {
+const { filter } = Iterable;
+const { and, not, equals, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r13.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(
-            querySelectorAll(document, document, Predicate.from(isElement)),
-            Predicate.from(
-              isElement
-                .and(namespaceIs(document, Namespace.HTML))
-                .and(nameIs("iframe"))
-                .and(element => isExposed(element, document, device))
+      applicability() {
+        return filter(
+          walk(document, document, { flattened: true, nested: true }),
+          and(
+            isElement,
+            and(
+              hasNamespace(document, equals(Namespace.HTML)),
+              and(hasName(equals("iframe")), isExposed(document, device))
             )
-          ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
-          }
+          )
         );
       },
 
-      expectations: (aspect, target) => {
-        return map(
-          hasTextAlternative(target, document, device),
-          hasTextAlternative => {
-            return {
-              1: { holds: hasTextAlternative }
-            };
-          }
-        );
+      expectations(target) {
+        return {
+          1: test(hasAccessibleName(document, device, not(isEmpty)), target)
+            ? Ok.of("The <iframe> has an accessible name")
+            : Err.of("The <iframe> does not have an accessible name")
+        };
       }
     };
   }
-};
+});

@@ -1,68 +1,76 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Predicate } from "@siteimprove/alfa-compatibility";
+import { Rule } from "@siteimprove/alfa-act";
 import {
-  Document,
   Element,
   getAttribute,
-  getElementNamespace,
+  isElement,
   Namespace,
-  Node,
-  querySelector
+  Node
 } from "@siteimprove/alfa-dom";
-import { Stream } from "@siteimprove/alfa-lang";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isElement } from "../helpers/predicates";
+import { hasAttribute } from "../common/predicate/has-attribute";
+import { hasName } from "../common/predicate/has-name";
+import { hasNamespace } from "../common/predicate/has-namespace";
 
-export const SIA_R9: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r9.html",
-  requirements: [
-    { requirement: "wcag", criterion: "timing-adjustable", partial: true },
-    { requirement: "wcag", criterion: "interruptions", partial: true },
-    { requirement: "wcag", criterion: "change-on-request", partial: true }
-  ],
-  evaluate: ({ document }) => {
+import { walk } from "../common/walk";
+
+const { filter, first } = Iterable;
+const { and, equals } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r9.html",
+  evaluate({ document }) {
     return {
-      applicability: () => {
-        const metaRefresh = querySelector(
-          document,
-          document,
-          Predicate.from(
-            isElement.and(element => isValidMetaRefresh(element, document))
+      applicability() {
+        return first(
+          filter(
+            walk(document, document),
+            and(isElement, isValidMetaRefresh(document))
           )
-        );
-
-        return metaRefresh === null
-          ? []
-          : [{ applicable: true, aspect: document, target: metaRefresh }];
+        )
+          .map(meta => [meta])
+          .getOr([]);
       },
 
-      expectations: (aspect, target) => {
-        const refreshTime = getRefreshTime(getAttribute(target, "content")!);
+      expectations(target) {
+        const refreshTime = getRefreshTime(
+          getAttribute(target, document, "content").get()
+        ).get();
 
         return {
-          1: { holds: refreshTime === 0 || refreshTime! > 72000 }
+          1:
+            refreshTime === 0 || refreshTime! > 72000
+              ? Ok.of(
+                  "The refresh or redirect happens immediately or after 20 hours"
+                )
+              : Err.of("The refresh or redirect is delayed less than 20 hours")
         };
       }
     };
   }
-};
+});
 
-function isValidMetaRefresh(element: Element, context: Node): boolean {
-  if (
-    getElementNamespace(element, context) !== Namespace.HTML ||
-    element.localName !== "meta" ||
-    getAttribute(element, "http-equiv", { lowerCase: true }) !== "refresh"
-  ) {
-    return false;
-  }
-
-  const content = getAttribute(element, "content");
-
-  if (content === null) {
-    return false;
-  }
-
-  return getRefreshTime(content) !== null;
+function isValidMetaRefresh(context: Node): Predicate<Element> {
+  return and(
+    hasNamespace(context, equals(Namespace.HTML)),
+    and(
+      hasName(equals("meta")),
+      and(
+        hasAttribute(
+          context,
+          "http-equiv",
+          equiv => equiv.toLowerCase() === "refresh"
+        ),
+        hasAttribute(context, "content", content =>
+          getRefreshTime(content).isSome()
+        )
+      )
+    )
+  );
 }
 
 const whitespace = /\s/;
@@ -71,25 +79,27 @@ const digit = /\d/;
 /**
  * @see https://html.spec.whatwg.org/#attr-meta-http-equiv-refresh
  */
-function getRefreshTime(content: string): number | null {
-  const stream = new Stream(content.length, i => content[i]);
+function getRefreshTime(content: string): Option<number> {
+  let i = 0;
 
-  stream.accept(char => whitespace.test(char));
-
-  const time: Array<string> = [];
-
-  if (!stream.accept(char => digit.test(char), time)) {
-    return null;
+  while (whitespace.test(content[i])) {
+    i++;
   }
 
-  const next = stream.peek(0);
+  const start = i;
+
+  while (digit.test(content[i])) {
+    i++;
+  }
+
+  const next = content[i];
 
   // As long as the time of the refresh is ended correctly, the URL won't matter
   // in terms of the validity of the refresh. If the URL is therefore invalid,
   // the refresh will simply redirect to the current page.
-  if (next !== null && next !== ";" && next !== ",") {
-    return null;
+  if (next !== undefined && next !== ";" && next !== ",") {
+    return None;
   }
 
-  return parseInt(time.join(""), 10);
+  return Option.of(parseInt(content.substring(start, i), 10));
 }

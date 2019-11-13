@@ -16,7 +16,7 @@ import { isExposed } from "../common/predicate/is-exposed";
 import { walk } from "../common/walk";
 
 const { filter } = Iterable;
-const { and, or, test } = Predicate;
+const { and, or, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
@@ -28,11 +28,11 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             isElement,
             and(
-              hasNamespace(document, Namespace.HTML),
+              hasNamespace(document, equals(Namespace.HTML)),
               or(
-                hasName("img"),
+                hasName(equals("img")),
                 and(
-                  hasRole(document, device, Roles.Img),
+                  hasRole(document, device, equals(Roles.Img)),
                   isExposed(document, device)
                 )
               )

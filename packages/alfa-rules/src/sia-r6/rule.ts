@@ -1,59 +1,68 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Seq } from "@siteimprove/alfa-collection";
-import { Predicate } from "@siteimprove/alfa-compatibility";
-import {
-  Document,
-  Element,
-  getAttribute,
-  hasAttribute,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
-import { getLanguage } from "@siteimprove/alfa-iana";
-import { isDocumentElement } from "../helpers/is-document-element";
-import { isElement } from "../helpers/predicates";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element, getAttribute, isElement, Node } from "@siteimprove/alfa-dom";
+import { Language } from "@siteimprove/alfa-iana";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-export const SIA_R6: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r6.html",
-  requirements: [
-    { requirement: "wcag", criterion: "language-of-page", partial: true }
-  ],
-  evaluate: ({ document }) => {
+import { hasAttribute } from "../common/predicate/has-attribute";
+import { isDocumentElement } from "../common/predicate/is-document-element";
+import { isEmpty } from "../common/predicate/is-empty";
+
+import { walk } from "../common/walk";
+
+const { filter } = Iterable;
+const { and, not } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove/github.io/sanshikan/rules/sia-r6.html",
+  evaluate({ document }) {
     return {
-      applicability: () => {
-        return Seq(
-          querySelectorAll<Element>(
-            document,
-            document,
-            Predicate.from(
-              isElement
-                .and(element => isDocumentElement(element, document))
-                .and(hasValidLanguageAttribute)
-                .and(element => hasAttribute(element, "xml:lang"))
+      applicability() {
+        return filter(
+          walk(document, document),
+          and(
+            isElement,
+            and(
+              isDocumentElement(document),
+              and(
+                hasValidLanguageAttribute(document),
+                hasAttribute(document, "xml:lang", not(isEmpty))
+              )
             )
           )
-        ).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: element
-          };
-        });
+        );
       },
 
-      expectations: (aspect, target) => {
-        const lang = getLanguage(getAttribute(target, "lang")!)!;
-        const xmlLang = getLanguage(getAttribute(target, "xml:lang")!);
+      expectations(target) {
+        const lang = Language.from(
+          getAttribute(target, document, "lang").get()
+        ).get();
+
+        const xmlLang = Language.from(
+          getAttribute(target, document, "xml:lang").get()
+        );
 
         return {
-          1: { holds: xmlLang !== null && lang.primary === xmlLang.primary }
+          1:
+            xmlLang.isNone() ||
+            xmlLang.filter(xmlLang => xmlLang.primary === lang.primary).isSome()
+              ? Ok.of(
+                  "The lang and xml:lang attributes have matching primary language subtags"
+                )
+              : Err.of(
+                  "The lang and xml:lang attributes do not have matching primary language subtags"
+                )
         };
       }
     };
   }
-};
+});
 
-function hasValidLanguageAttribute(element: Element): boolean {
-  const lang = getAttribute(element, "lang");
-
-  return lang !== null && getLanguage(lang) !== null;
+function hasValidLanguageAttribute(context: Node): Predicate<Element> {
+  return element =>
+    getAttribute(element, context, "lang")
+      .flatMap(Language.from)
+      .isSome();
 }

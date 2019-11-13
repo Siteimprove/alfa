@@ -8,10 +8,10 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 export function hasNamespace(
   context: Node,
-  namespace: Namespace
+  predicate: Predicate<Namespace> = () => true
 ): Predicate<Element> {
   return element =>
     getElementNamespace(element, context)
-      .map(found => found === namespace)
-      .getOr(false);
+      .filter(predicate)
+      .isSome();
 }

@@ -1,44 +1,41 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Seq } from "@siteimprove/alfa-collection";
-import {
-  Document,
-  Element,
-  getAttribute,
-  isElement,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
-import { isDocumentElement } from "../helpers/is-document-element";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element, isElement } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-export const SIA_R4: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r4.html",
-  requirements: [
-    { requirement: "wcag", criterion: "language-of-page", partial: true }
-  ],
-  evaluate: ({ document }) => {
+import { hasAttribute } from "../common/predicate/has-attribute";
+import { isDocumentElement } from "../common/predicate/is-document-element";
+import { isEmpty } from "../common/predicate/is-empty";
+import { isWhitespace } from "../common/predicate/is-whitespace";
+
+import { walk } from "../common/walk";
+
+const { filter } = Iterable;
+const { and, or, not, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r4.html",
+  evaluate({ document }) {
     return {
-      applicability: () => {
-        return Seq(
-          querySelectorAll<Element>(document, document, node => {
-            return isElement(node) && isDocumentElement(node, document);
-          })
-        ).map(element => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: element
-          };
-        });
+      applicability() {
+        return filter(
+          walk(document, document),
+          and(isElement, isDocumentElement(document))
+        );
       },
 
-      expectations: (aspect, target) => {
-        const lang = getAttribute(target, "lang");
-
+      expectations(target) {
         return {
-          1: {
-            holds: lang !== null && lang.trim() !== ""
-          }
+          1: test(
+            hasAttribute(document, "lang", not(or(isEmpty, isWhitespace))),
+            target
+          )
+            ? Ok.of("The lang attribute is neither empty nor only whitespace")
+            : Err.of("The lang attribute is either empty or only whitespace")
         };
       }
     };
   }
-};
+});
