@@ -6,39 +6,51 @@ export class Question<Q, A, S, T = A> implements Monad<T>, Functor<T> {
   public static of<Q, A, S>(
     uri: string,
     type: Q,
-    subject: S
+    subject: S,
+    message: string
   ): Question<Q, A, S> {
-    return new Question(uri, type, subject, answer => answer);
+    return new Question(uri, type, subject, message, answer => answer);
   }
 
   public readonly uri: string;
   public readonly type: Q;
   public readonly subject: S;
+  public readonly message: string;
   private readonly quester: Mapper<A, T>;
 
   protected constructor(
     uri: string,
     type: Q,
     subject: S,
+    message: string,
     quester: Mapper<A, T>
   ) {
     this.uri = uri;
     this.type = type;
     this.subject = subject;
+    this.message = message;
     this.quester = quester;
   }
 
   public map<U>(mapper: Mapper<T, U>): Question<Q, A, S, U> {
-    return new Question(this.uri, this.type, this.subject, answer =>
-      mapper(this.quester(answer))
+    return new Question(
+      this.uri,
+      this.type,
+      this.subject,
+      this.message,
+      answer => mapper(this.quester(answer))
     );
   }
 
   public flatMap<U>(
     mapper: Mapper<T, Question<Q, A, S, U>>
   ): Question<Q, A, S, U> {
-    return new Question(this.uri, this.type, this.subject, answer =>
-      mapper(this.quester(answer)).quester(answer)
+    return new Question(
+      this.uri,
+      this.type,
+      this.subject,
+      this.message,
+      answer => mapper(this.quester(answer)).quester(answer)
     );
   }
 
@@ -50,7 +62,8 @@ export class Question<Q, A, S, T = A> implements Monad<T>, Functor<T> {
     return {
       uri: this.uri,
       type: this.type,
-      subject: this.subject
+      subject: this.subject,
+      message: this.message
     };
   }
 }

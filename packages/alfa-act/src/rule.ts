@@ -10,6 +10,8 @@ import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 
+const { map, flatMap, reduce, groupBy } = Iterable;
+
 export class Rule<I, T, Q = never> {
   public static of<I, T, Q = never>(properties: {
     uri: string;
@@ -81,7 +83,7 @@ export namespace Rule {
             const { applicability, expectations } = evaluate(input);
 
             const targets = Array.from(
-              Iterable.flatMap(applicability(), function*(interview) {
+              flatMap(applicability(), function*(interview) {
                 for (const target of Interview.conduct(
                   interview,
                   rule,
@@ -130,7 +132,7 @@ export namespace Rule {
         evaluate(input, oracle, outcomes) {
           return outcomes.get(rule, () => {
             const targets = Array.from(
-              Iterable.flatMap(composes, function*(rule) {
+              flatMap(composes, function*(rule) {
                 for (const outcome of rule.evaluate(input, oracle, outcomes)) {
                   if (Outcome.isApplicable(outcome)) {
                     yield outcome;
@@ -146,8 +148,8 @@ export namespace Rule {
             const { expectations } = evaluate(input);
 
             return Array.from(
-              Iterable.map(
-                Iterable.groupBy(targets, outcome => outcome.target),
+              map(
+                groupBy(targets, outcome => outcome.target),
                 ([target, outcomes]) =>
                   resolve(
                     target,
@@ -171,7 +173,7 @@ export namespace Rule {
     rule: Rule<I, T, Q>,
     oracle: Oracle<Q>
   ): Outcome.Applicable<I, T, Q> {
-    return Iterable.reduce(
+    return reduce(
       expectations,
       (expectations, [id, interview]) => {
         return expectations.flatMap((expectations, branches) =>
