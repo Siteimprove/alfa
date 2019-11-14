@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Roles } from "@siteimprove/alfa-aria";
 import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -29,21 +28,22 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(document, equals(Namespace.HTML)),
               and(
-                hasRole(
-                  document,
-                  device,
-                  equals(
-                    Roles.Checkbox,
-                    Roles.Combobox,
-                    Roles.ListBox,
-                    Roles.MenuItemCheckbox,
-                    Roles.MenuItemRadio,
-                    Roles.Radio,
-                    Roles.SearchBox,
-                    Roles.Slider,
-                    Roles.SpinButton,
-                    Roles.Switch,
-                    Roles.TextBox
+                hasRole(document, role =>
+                  test(
+                    equals(
+                      "checkbox",
+                      "combobox",
+                      "listbox",
+                      "menuitemcheckbox",
+                      "menuitemradio",
+                      "radio",
+                      "searchbox",
+                      "slider",
+                      "spinbutton",
+                      "switch",
+                      "textbox"
+                    ),
+                    role.name
                   )
                 ),
                 isExposed(document, device)

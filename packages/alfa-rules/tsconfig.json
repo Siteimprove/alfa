@@ -10,7 +10,6 @@
     "src/common/predicate/has-name-from.ts",
     "src/common/predicate/has-name.ts",
     "src/common/predicate/has-namespace.ts",
-    "src/common/predicate/has-role-category.ts",
     "src/common/predicate/has-role.ts",
     "src/common/predicate/has-tab-index.ts",
     "src/common/predicate/has-text-content.ts",

@@ -1,4 +1,4 @@
-import { getTextAlternative } from "@siteimprove/alfa-aria";
+import { getAccessibleName } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,7 +9,7 @@ export function hasAccessibleName(
   predicate: Predicate<string> = () => true
 ): Predicate<Element | Text> {
   return node =>
-    getTextAlternative(node, context, device).some(textAlternative =>
-      textAlternative.filter(predicate).isSome()
+    getAccessibleName(node, context, device).some(accessibleName =>
+      accessibleName.filter(predicate).isSome()
     );
 }

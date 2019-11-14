@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { getTextAlternative } from "@siteimprove/alfa-aria";
+import { getAccessibleName } from "@siteimprove/alfa-aria";
 import {
   Element,
   getAttribute,
@@ -56,7 +56,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           reduce(
             iframes,
             (groups, iframe) => {
-              for (const [name] of getTextAlternative(
+              for (const [name] of getAccessibleName(
                 iframe,
                 document,
                 device

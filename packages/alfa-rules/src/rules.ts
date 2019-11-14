@@ -11,3 +11,5 @@ export { default as R10 } from "./sia-r10/rule";
 export { default as R11 } from "./sia-r11/rule";
 export { default as R12 } from "./sia-r12/rule";
 export { default as R13 } from "./sia-r13/rule";
+export { default as R14 } from "./sia-r14/rule";
+export { default as R15 } from "./sia-r15/rule";

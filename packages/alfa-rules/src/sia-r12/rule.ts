@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Roles } from "@siteimprove/alfa-aria";
 import {
   Element,
   InputType,
@@ -37,7 +36,7 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 hasNamespace(document, equals(Namespace.HTML)),
                 and(
-                  hasRole(document, device, equals(Roles.Button)),
+                  hasRole(document, role => role.name === "button"),
                   isExposed(document, device)
                 )
               )

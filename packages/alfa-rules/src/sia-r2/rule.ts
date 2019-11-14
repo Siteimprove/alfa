@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Roles } from "@siteimprove/alfa-aria";
 import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -32,7 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
               or(
                 hasName(equals("img")),
                 and(
-                  hasRole(document, device, equals(Roles.Img)),
+                  hasRole(document, role => role.name === "img"),
                   isExposed(document, device)
                 )
               )
@@ -44,10 +43,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: test(
-            or(
-              isDecorative(document, device),
-              hasAccessibleName(document, device)
-            ),
+            or(isDecorative(document), hasAccessibleName(document, device)),
             target
           )
             ? Ok.of(

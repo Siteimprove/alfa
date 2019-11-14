@@ -1,5 +1,4 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Roles } from "@siteimprove/alfa-aria";
 import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -29,7 +28,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(document, equals(Namespace.HTML)),
               and(
-                hasRole(document, device, equals(Roles.Link)),
+                hasRole(document, role => role.name === "link"),
                 isExposed(document, device)
               )
             )

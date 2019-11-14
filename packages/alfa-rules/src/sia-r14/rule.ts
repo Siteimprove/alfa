@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Category } from "@siteimprove/alfa-aria";
+import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
@@ -18,7 +18,6 @@ import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasNameFrom } from "../common/predicate/has-name-from";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { hasRoleCategory } from "../common/predicate/has-role-category";
 import { isExposed } from "../common/predicate/is-exposed";
 import { isVisible } from "../common/predicate/is-visible";
 
@@ -40,9 +39,12 @@ export default Rule.Atomic.of<Page, Element, Question>({
             and(
               hasNamespace(document, equals(Namespace.HTML, Namespace.SVG)),
               and(
-                hasRoleCategory(document, device, equals(Category.Widget)),
+                hasRole(
+                  document,
+                  role => role.category === Role.Category.Widget
+                ),
                 and(
-                  hasRole(document, device, hasNameFrom(equals("content"))),
+                  hasRole(document, hasNameFrom(equals("content"))),
                   and(
                     hasDescendant(
                       document,

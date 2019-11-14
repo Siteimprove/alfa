@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Category } from "@siteimprove/alfa-aria";
+import { Role } from "@siteimprove/alfa-aria";
 import {
   Attribute,
   Element,
@@ -20,7 +20,7 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasInputType } from "../common/predicate/has-input-type";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { hasRoleCategory } from "../common/predicate/has-role-category";
+import { hasRole } from "../common/predicate/has-role";
 import { hasTabIndex } from "../common/predicate/has-tab-index";
 import { isEmpty } from "../common/predicate/is-empty";
 import { isExposed } from "../common/predicate/is-exposed";
@@ -79,10 +79,9 @@ export default Rule.Atomic.of<Page, Attribute>({
                             ),
                             or(
                               hasTabIndex(document, tabIndex => tabIndex >= 0),
-                              hasRoleCategory(
+                              hasRole(
                                 document,
-                                device,
-                                equals(Category.Widget)
+                                role => role.category === Role.Category.Widget
                               )
                             )
                           )
