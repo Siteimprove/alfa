@@ -8,9 +8,11 @@ import {
   Node,
   Text
 } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { getRole } from "./get-role";
 import { isVisible } from "./is-visible";
-import * as Roles from "./roles";
+
+const { not, equals, test } = Predicate;
 
 export function isExposed(
   node: Element | Text,
@@ -23,10 +25,10 @@ export function isExposed(
       .getOrElse(() => Branched.of(false));
   }
 
-  return getRole(node, context, device).map(role =>
+  return getRole(node, context).map(role =>
     role
-      .filter(role => role !== Roles.Presentation && role !== Roles.None)
-      .map(() => isVisible(node, context, device))
-      .getOr(true)
+      .filter(role => test(not(equals("presentation", "none")), role.name))
+      .filter(() => isVisible(node, context, device))
+      .isSome()
   );
 }

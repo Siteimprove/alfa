@@ -19,6 +19,9 @@ const visibilities = Cache.empty<
   Cache<Device, Cache<Element, boolean>>
 >();
 
+/**
+ * @internal
+ */
 export function isVisible(
   node: Element | Text,
   context: Node,

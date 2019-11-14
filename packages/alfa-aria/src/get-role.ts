@@ -1,67 +1,31 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Browser } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   getAttribute,
   getElementNamespace,
-  Namespace,
   Node
 } from "@siteimprove/alfa-dom";
-import { None, Option, Some } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 
-import * as Features from "./features";
-import * as Roles from "./roles";
-import { Category, Feature, Role } from "./types";
-
-const { keys } = Object;
-
-const whitespace = /\s+/;
-
-const rolesByName = new Map<string, Role>();
-
-for (const key of keys(Roles)) {
-  const role = Roles[key as keyof typeof Roles];
-  rolesByName.set(role.name, role);
-}
-
-const htmlFeaturesByElement = new Map<string, Feature>();
-
-for (const key of keys(Features.HTML)) {
-  const feature = Features.HTML[key as keyof typeof Features.HTML];
-  htmlFeaturesByElement.set(feature.element, feature);
-}
-
-const svgFeaturesByElement = new Map<string, Feature>();
-
-for (const key of keys(Features.SVG)) {
-  const feature = Features.SVG[key as keyof typeof Features.SVG];
-  svgFeaturesByElement.set(feature.element, feature);
-}
-
-const featuresByNamespace = new Map<Namespace, Map<string, Feature>>();
-
-featuresByNamespace.set(Namespace.HTML, htmlFeaturesByElement);
-featuresByNamespace.set(Namespace.SVG, svgFeaturesByElement);
+import { Feature } from "./feature";
+import { Role } from "./role";
 
 /**
  * Given an element and a context, get the semantic role of the element within
- * the context. If the element does not have a role then `null` is returned.
+ * the context.
  *
  * @see https://html.spec.whatwg.org/#attr-aria-role
  */
 export function getRole(
   element: Element,
   context: Node,
-  device: Device,
-  options: getRole.Options = { explicit: true, implicit: true }
-): Branched<Option<Role>, Browser.Release> {
+  options: getRole.Options = {}
+): Branched<Option<Role>, Browser> {
   const role = getAttribute(element, context, "role").map(role => role.trim());
 
   return (
-    Branched.of<Option<string>, Browser.Release>(
-      role.map(role => role.toLowerCase())
-    )
+    Branched.of<Option<string>, Browser>(role.map(role => role.toLowerCase()))
 
       // Firefox currently treats the `role` attribute as case-sensitive so it
       // is not lowercased.
@@ -72,11 +36,15 @@ export function getRole(
         role
           .andThen(role => {
             if (options.explicit !== false) {
-              for (const name of role.split(whitespace)) {
-                const role = rolesByName.get(name);
+              for (const name of role.split(/\s+/)) {
+                const role = Role.lookup(name);
 
-                if (role !== undefined && role.category !== Category.Abstract) {
-                  return Some.of(role);
+                if (
+                  role
+                    .filter(role => role.category !== Role.Category.Abstract)
+                    .isSome()
+                ) {
+                  return role;
                 }
               }
             }
@@ -86,28 +54,12 @@ export function getRole(
           .orElse(() => {
             if (options.implicit !== false) {
               return getElementNamespace(element, context).flatMap(
-                elementNamespace => {
-                  const featuresByElement = featuresByNamespace.get(
-                    elementNamespace
+                namespace => {
+                  const feature = Feature.lookup(namespace, element.localName);
+
+                  return feature.flatMap(feature =>
+                    feature.role(element, context).flatMap(Role.lookup)
                   );
-
-                  const feature =
-                    featuresByElement === undefined
-                      ? undefined
-                      : featuresByElement.get(element.localName);
-
-                  if (feature !== undefined) {
-                    const role =
-                      typeof feature.role === "function"
-                        ? feature.role(element, context, device)
-                        : feature.role;
-
-                    if (role !== undefined && role !== null) {
-                      return Some.of(role);
-                    }
-                  }
-
-                  return None;
                 }
               );
             }
