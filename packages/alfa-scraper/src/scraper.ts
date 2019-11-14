@@ -14,40 +14,33 @@ import puppeteer from "puppeteer";
 
 const defaultDevice = Device.getDefaultDevice();
 
-export const enum Wait {
-  Ready = "domcontentloaded",
-  Loaded = "load",
-  Idle = "networkidle0"
-}
-
-export interface ScrapeOptions {
-  readonly timeout?: number;
-  readonly wait?: Wait;
-  readonly viewport?: Viewport;
-  readonly display?: Display;
-  readonly credentials?: {
-    readonly username: string;
-    readonly password: string;
-  };
-}
-
 export class Scraper {
-  private readonly browser = puppeteer.launch({
-    args: [
-      "--no-sandbox",
+  public static async of(
+    browser: Promise<puppeteer.Browser> = puppeteer.launch({
+      args: [
+        "--no-sandbox",
 
-      // In order to be able to access external style sheets through CSSOM, we
-      // have to disable CORS restrictions in Chromium.
-      "--disable-web-security"
-    ]
-  });
+        // In order to be able to access external style sheets through CSSOM, we
+        // have to disable CORS restrictions in Chromium.
+        "--disable-web-security"
+      ]
+    })
+  ): Promise<Scraper> {
+    return new Scraper(await browser);
+  }
+
+  private readonly browser: puppeteer.Browser;
+
+  private constructor(browser: puppeteer.Browser) {
+    this.browser = browser;
+  }
 
   public async scrape(
     url: string | URL,
-    options: ScrapeOptions = {}
+    options: Scraper.scrape.Options = {}
   ): Promise<Page> {
     const {
-      wait = Wait.Loaded,
+      wait = Scraper.Wait.Loaded,
       timeout = 10000,
       viewport = defaultDevice.viewport,
       display = defaultDevice.display,
@@ -60,8 +53,7 @@ export class Scraper {
       display
     };
 
-    const browser = await this.browser;
-    const page = await browser.newPage();
+    const page = await this.browser.newPage();
 
     await page.setViewport({
       width: viewport.width,
@@ -154,11 +146,32 @@ export class Scraper {
       document = await parseDocument(page, (response as Response).body);
     }
 
-    return { request, response, document, device };
+    return Page.of({ request, response, document, device });
   }
 
   public async close(): Promise<void> {
-    await (await this.browser).close();
+    await this.browser.close();
+  }
+}
+
+export namespace Scraper {
+  export const enum Wait {
+    Ready = "domcontentloaded",
+    Loaded = "load",
+    Idle = "networkidle0"
+  }
+
+  export namespace scrape {
+    export interface Options {
+      readonly timeout?: number;
+      readonly wait?: Wait;
+      readonly viewport?: Viewport;
+      readonly display?: Display;
+      readonly credentials?: {
+        readonly username: string;
+        readonly password: string;
+      };
+    }
   }
 }
 

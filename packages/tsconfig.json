@@ -52,7 +52,7 @@
     { "path": "alfa-reducer" },
     { "path": "alfa-result" },
     { "path": "alfa-rules" },
-    { "path": "alfa-scrape" },
+    { "path": "alfa-scraper" },
     { "path": "alfa-set" },
     { "path": "alfa-test" },
     { "path": "alfa-thunk" },

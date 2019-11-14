@@ -3,9 +3,6 @@
   "files": ["src/index.ts", "src/scraper.ts"],
   "references": [
     {
-      "path": "../alfa-act"
-    },
-    {
       "path": "../alfa-device"
     },
     {
@@ -19,6 +16,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }
