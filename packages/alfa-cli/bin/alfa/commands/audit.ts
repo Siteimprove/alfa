@@ -6,7 +6,7 @@ import { Audit, Outcome } from "@siteimprove/alfa-act";
 import { Orientation } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Rules } from "@siteimprove/alfa-rules";
-import { Scraper, Wait } from "@siteimprove/alfa-scrape";
+import { Scraper } from "@siteimprove/alfa-scraper";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as Formatters from "../../../src/formatters";
@@ -73,16 +73,16 @@ interface Options {
 }
 
 async function handler(args: Arguments<Options>): Promise<void> {
-  const scraper = new Scraper();
+  const scraper = await Scraper.of();
 
   const { timeout, width, height, resolution } = args;
 
-  let wait = Wait.Ready;
+  let wait = Scraper.Wait.Ready;
 
   if (args.wait === "loaded") {
-    wait = Wait.Loaded;
+    wait = Scraper.Wait.Loaded;
   } else if (args.wait === "idle") {
-    wait = Wait.Idle;
+    wait = Scraper.Wait.Idle;
   }
 
   let orientation = Orientation.Landscape;
