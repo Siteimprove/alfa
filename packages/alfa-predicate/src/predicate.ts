@@ -10,6 +10,13 @@ export type Predicate<
   | ((value: T, ...args: A) => value is U);
 
 export namespace Predicate {
+  export function test<T, U extends T>(
+    predicate: Predicate<T, U>,
+    value: T
+  ): value is U {
+    return predicate(value);
+  }
+
   export function fold<T, U extends T, V>(
     predicate: Predicate<T, U>,
     value: T,
@@ -17,13 +24,6 @@ export namespace Predicate {
     ifFalse: Mapper<T, V>
   ): V {
     return is<T, U>(value, predicate(value)) ? ifTrue(value) : ifFalse(value);
-  }
-
-  export function test<T, U extends T>(
-    predicate: Predicate<T, U>,
-    value: T
-  ): value is U {
-    return predicate(value);
   }
 
   export function not<T, U extends T>(
@@ -50,57 +50,25 @@ export namespace Predicate {
     left: Predicate<T, U>,
     right: Predicate<T, V>
   ): Predicate<T, U | V> {
-    return value => fold(left, value, not(right), right);
+    return and(or(left, right), not(and(left, right)));
   }
 
-  export function equals<T>(value: Equality<T>): Predicate<unknown, T>;
-
-  export function equals<T>(value: T): Predicate<unknown, T>;
-
-  export function equals<T>(value: T): Predicate<unknown, T> {
-    return other => Equality.equals(other, value);
+  export function nor<T, U extends T, V extends T>(
+    left: Predicate<T, U>,
+    right: Predicate<T, V>
+  ): Predicate<T> {
+    return not(or(left, right));
   }
 
-  export class Chain<T, U extends T = T> {
-    public static of<T, U extends T>(predicate: Predicate<T, U>): Chain<T, U> {
-      return new Chain(predicate);
-    }
-
-    private readonly predicate: Predicate<T, U>;
-
-    private constructor(predicate: Predicate<T, U>) {
-      this.predicate = predicate;
-    }
-
-    public get(): Predicate<T, U> {
-      return this.predicate;
-    }
-
-    public fold<V>(value: T, ifTrue: Mapper<U, V>, ifFalse: Mapper<T, V>): V {
-      return fold(this.predicate, value, ifTrue, ifFalse);
-    }
-
-    public test(value: T): value is U {
-      return this.predicate(value);
-    }
-
-    public and<V extends U>(predicate: Predicate<U, V>): Chain<T, V> {
-      return new Chain(and(this.predicate, predicate));
-    }
-
-    public or<V extends T>(predicate: Predicate<T, V>): Chain<T, U | V> {
-      return new Chain(or(this.predicate, predicate));
-    }
+  export function nand<T, U extends T, V extends U>(
+    left: Predicate<T, U>,
+    right: Predicate<T, V>
+  ): Predicate<T> {
+    return not(and(left, right));
   }
 
-  export function chain<T>(): Chain<T>;
-
-  export function chain<T, U extends T = T>(
-    predicate: Predicate<T, U>
-  ): Chain<T, U>;
-
-  export function chain<T>(predicate: Predicate<T> = tautology): Chain<T> {
-    return Chain.of(predicate);
+  export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
+    return other => values.some(value => Equality.equals(other, value));
   }
 }
 
