@@ -18,6 +18,9 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-map"
+    },
+    {
       "path": "../alfa-mapper"
     },
     {
