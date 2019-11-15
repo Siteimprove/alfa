@@ -31,6 +31,10 @@ export interface Result<T, E>
 }
 
 export namespace Result {
+  export function of<T, E>(value: T): Result<T, E> {
+    return Ok.of(value);
+  }
+
   export function from<T>(
     thunk: Thunk<Promise<T>>
   ): Promise<Result<T, unknown>>;
@@ -54,15 +58,7 @@ export namespace Result {
     return Ok.of(value);
   }
 
-  export function isOk<T>(value: unknown): value is Ok<T> {
-    return value instanceof Ok;
-  }
-
-  export function isErr<E>(value: unknown): value is Err<E> {
-    return value instanceof Err;
-  }
-
   export function isResult<T, E>(value: unknown): value is Result<T, E> {
-    return isOk<T>(value) || isErr<T>(value);
+    return value instanceof Ok || value instanceof Err;
   }
 }
