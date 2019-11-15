@@ -4,6 +4,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+import { Attribute } from "./attribute";
+
 const { some } = Iterable;
 
 export class Role<N extends string = string> implements Equality<Role<N>> {
@@ -38,6 +40,40 @@ export class Role<N extends string = string> implements Equality<Role<N>> {
     this.name = name;
     this.category = category;
     this.characteristics = characteristics;
+  }
+
+  public isRequired(predicate: Predicate<Attribute>): boolean {
+    return (
+      some(this.characteristics.requires, name =>
+        Attribute.lookup(name)
+          .filter(predicate)
+          .isSome()
+      ) ||
+      some(this.characteristics.inherits, name =>
+        Role.lookup(name)
+          .filter(role => role.isRequired(predicate))
+          .isSome()
+      )
+    );
+  }
+
+  public isSupported(predicate: Predicate<Attribute>): boolean {
+    return (
+      some(this.characteristics.supports, name =>
+        Attribute.lookup(name)
+          .filter(predicate)
+          .isSome()
+      ) ||
+      some(this.characteristics.inherits, name =>
+        Role.lookup(name)
+          .filter(role => role.isSupported(predicate))
+          .isSome()
+      )
+    );
+  }
+
+  public isAllowed(predicate: Predicate<Attribute>): boolean {
+    return this.isRequired(predicate) || this.isSupported(predicate);
   }
 
   public hasNameFrom(predicate: Predicate<"contents" | "author">): boolean {

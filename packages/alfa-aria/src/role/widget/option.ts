@@ -7,7 +7,7 @@ Role.register(
   Role.of("option", Role.Category.Widget, {
     inherits: ["input"],
     requires: ["aria-selected"],
-    supports: ["aria-checked", "aria-positioninset", "aria-setsize"],
+    supports: ["aria-checked", "aria-posinset", "aria-setsize"],
     context: ["listbox"],
     name: {
       from: ["contents", "author"],

@@ -1,6 +1,11 @@
+/// <reference lib="dom" />
+
 import { Cache } from "@siteimprove/alfa-cache";
 import { Equality } from "@siteimprove/alfa-equality";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+
+const { equals } = Predicate;
 
 export class Attribute<N extends string = string>
   implements Equality<Attribute<N>> {
@@ -36,6 +41,49 @@ export class Attribute<N extends string = string>
     this.value = value;
     this.implicit = implicit;
     this.status = status;
+  }
+
+  public isValid(value: string): boolean {
+    switch (this.value) {
+      case "true-false":
+        return value === "true" || value === "false";
+
+      case "true-false-undefined":
+        return value === "true" || value === "false" || value === "undefined";
+
+      case "tristate":
+        return value === "true" || value === "false" || value === "mixed";
+
+      case "id-reference":
+        return /\s+/.test(value);
+
+      case "id-reference-list":
+        return true;
+
+      case "integer":
+        return /^\d+$/.test(value);
+
+      case "number":
+        return /^\d+(\.\d+)?$/.test(value);
+
+      case "string":
+        return true;
+
+      case "token":
+        return value === "undefined" || this.valid.some(equals(value));
+
+      case "token-list":
+        return value
+          .split(/\s+/)
+          .every(token => this.valid.some(equals(token)));
+
+      case "uri":
+        try {
+          return new URL(value) instanceof URL;
+        } catch (err) {
+          return false;
+        }
+    }
   }
 
   public equals(value: unknown): value is Attribute<N> {
