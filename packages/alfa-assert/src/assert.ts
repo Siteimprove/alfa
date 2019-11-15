@@ -80,7 +80,7 @@ export namespace Assert {
   }
 
   export namespace Page {
-    export type Target = dom.Document | dom.Element;
+    export type Target = dom.Document | dom.Element | dom.Attribute;
 
     export function isAccessible(
       page: web.Page,
