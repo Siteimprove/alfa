@@ -18,6 +18,9 @@
       "path": "../alfa-functor"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {

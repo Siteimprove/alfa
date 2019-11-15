@@ -1,3 +1,4 @@
+import { Future } from "@siteimprove/alfa-future";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Outcome } from "./outcome";
@@ -14,10 +15,10 @@ export class Cache {
 
   public get<I, T, Q>(
     rule: Rule<I, T, Q>,
-    ifMissing: Thunk<Iterable<Outcome<I, T, Q>>>
-  ): Iterable<Outcome<I, T, Q>> {
+    ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q>>>>
+  ): Future<Iterable<Outcome<I, T, Q>>> {
     let outcomes = this.storage.get(rule) as
-      | Iterable<Outcome<I, T, Q>>
+      | Future<Iterable<Outcome<I, T, Q>>>
       | undefined;
 
     if (outcomes === undefined) {

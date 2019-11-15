@@ -1,3 +1,4 @@
+import { Future } from "@siteimprove/alfa-future";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Oracle } from "./oracle";
@@ -13,17 +14,15 @@ export namespace Interview {
     interview: Interview<Q, T, A>,
     rule: Rule<I, T, Q>,
     oracle: Oracle<Q>
-  ): Option<A> {
-    while (interview instanceof Question) {
-      const answer = oracle(rule, interview);
-
-      if (answer.isSome()) {
-        interview = answer.get();
-      } else {
-        return None;
-      }
+  ): Future<Option<A>> {
+    if (interview instanceof Question) {
+      return oracle(rule, interview).flatMap(answer =>
+        answer
+          .map(answer => conduct(answer, rule, oracle))
+          .getOrElse(() => Future.settle(None))
+      );
     }
 
-    return Option.of(interview);
+    return Future.settle(Option.of(interview));
   }
 }

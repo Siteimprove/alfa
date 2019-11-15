@@ -1,3 +1,4 @@
+import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Document } from "@siteimprove/alfa-json-ld";
 import { List } from "@siteimprove/alfa-list";
@@ -10,7 +11,7 @@ import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 
-const { map, flatMap, reduce, groupBy } = Iterable;
+const { flatMap, flatten, reduce, groupBy } = Iterable;
 
 export class Rule<I, T, Q = never> {
   public static of<I, T, Q = never>(properties: {
@@ -30,9 +31,9 @@ export class Rule<I, T, Q = never> {
 
   public evaluate(
     input: Readonly<I>,
-    oracle: Oracle<Q> = () => None,
+    oracle: Oracle<Q> = () => Future.settle(None),
     outcomes: Cache = Cache.empty()
-  ): Iterable<Outcome<I, T, Q>> {
+  ): Future<Iterable<Outcome<I, T, Q>>> {
     return this.evaluator(input, oracle, outcomes);
   }
 
@@ -60,7 +61,7 @@ export namespace Rule {
     input: Readonly<I>,
     oracle: Oracle<Q>,
     outcomes: Cache
-  ) => Iterable<Outcome<I, T, Q>>;
+  ) => Future<Iterable<Outcome<I, T, Q>>>;
 
   export namespace Atomic {
     type Evaluator<I, T, Q> = (
@@ -82,27 +83,23 @@ export namespace Rule {
           return outcomes.get(rule, () => {
             const { applicability, expectations } = evaluate(input);
 
-            const targets = Array.from(
-              flatMap(applicability(), function*(interview) {
-                for (const target of Interview.conduct(
-                  interview,
-                  rule,
-                  oracle
-                ).flatMap(target =>
+            return Future.traverse(applicability(), interview =>
+              Interview.conduct(interview, rule, oracle).map(target =>
+                target.flatMap(target =>
                   Option.isOption(target) ? target : Option.of(target)
-                )) {
-                  yield target;
+                )
+              )
+            )
+              .map(targets => Array.from(flatten<T>(targets)))
+              .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
+                if (targets.length === 0) {
+                  return Future.settle([Outcome.Inapplicable.of(rule)]);
                 }
-              })
-            );
 
-            if (targets.length === 0) {
-              return [Outcome.Inapplicable.of(rule)];
-            }
-
-            return targets.map(target =>
-              resolve(target, Record.of(expectations(target)), rule, oracle)
-            );
+                return Future.traverse(targets, target =>
+                  resolve(target, Record.of(expectations(target)), rule, oracle)
+                );
+              });
           });
         }
       });
@@ -131,34 +128,38 @@ export namespace Rule {
         uri,
         evaluate(input, oracle, outcomes) {
           return outcomes.get(rule, () => {
-            const targets = Array.from(
-              flatMap(composes, function*(rule) {
-                for (const outcome of rule.evaluate(input, oracle, outcomes)) {
-                  if (Outcome.isApplicable(outcome)) {
-                    yield outcome;
-                  }
-                }
-              })
-            );
-
-            if (targets.length === 0) {
-              return [Outcome.Inapplicable.of(rule)];
-            }
-
-            const { expectations } = evaluate(input);
-
-            return Array.from(
-              map(
-                groupBy(targets, outcome => outcome.target),
-                ([target, outcomes]) =>
-                  resolve(
-                    target,
-                    Record.of(expectations(outcomes)),
-                    rule,
-                    oracle
-                  )
+            return Future.traverse(composes, rule =>
+              rule.evaluate(input, oracle, outcomes)
+            )
+              .map(outcomes =>
+                Array.from(
+                  flatMap(outcomes, function*(outcomes) {
+                    for (const outcome of outcomes) {
+                      if (Outcome.isApplicable(outcome)) {
+                        yield outcome;
+                      }
+                    }
+                  })
+                )
               )
-            );
+              .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
+                if (targets.length === 0) {
+                  return Future.settle([Outcome.Inapplicable.of(rule)]);
+                }
+
+                const { expectations } = evaluate(input);
+
+                return Future.traverse(
+                  groupBy(targets, outcome => outcome.target),
+                  ([target, outcomes]) =>
+                    resolve(
+                      target,
+                      Record.of(expectations(outcomes)),
+                      rule,
+                      oracle
+                    )
+                );
+              });
           });
         }
       });
@@ -172,23 +173,26 @@ export namespace Rule {
     expectations: Record<{ [key: string]: Interview<Q, T, Expectation> }>,
     rule: Rule<I, T, Q>,
     oracle: Oracle<Q>
-  ): Outcome.Applicable<I, T, Q> {
-    return reduce(
-      expectations,
-      (expectations, [id, interview]) => {
-        return expectations.flatMap((expectations, branches) =>
-          Interview.conduct(interview, rule, oracle).map(expectation =>
-            expectations.push([id, expectation])
-          )
-        );
-      },
-      Option.of(List.empty<[string, Expectation]>())
-    )
-      .map(expectations => {
-        return Outcome.from(rule, target, Record.from(expectations));
-      })
-      .getOrElse(() => {
-        return Outcome.CantTell.of(rule, target);
-      });
+  ): Future<Outcome.Applicable<I, T, Q>> {
+    return Future.traverse(expectations, ([id, interview]) =>
+      Interview.conduct(interview, rule, oracle).map(
+        expectation => [id, expectation] as const
+      )
+    ).map(expectations =>
+      reduce(
+        expectations,
+        (expectations, [id, expectation]) =>
+          expectations.flatMap(expectations =>
+            expectation.map(expectation => expectations.push([id, expectation]))
+          ),
+        Option.of(List.empty<[string, Expectation]>())
+      )
+        .map(expectations => {
+          return Outcome.from(rule, target, Record.from(expectations));
+        })
+        .getOrElse(() => {
+          return Outcome.CantTell.of(rule, target);
+        })
+    );
   }
 }
