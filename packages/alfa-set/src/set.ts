@@ -75,3 +75,13 @@ export class Set<T>
     }
   }
 }
+
+export namespace Set {
+  export function isSet<T>(value: unknown): value is Set<T> {
+    return value instanceof Set;
+  }
+
+  export function from<T>(iterable: Iterable<T>): Set<T> {
+    return isSet<T>(iterable) ? iterable : Set.of(...iterable);
+  }
+}
