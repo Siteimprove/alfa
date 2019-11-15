@@ -5,6 +5,8 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { None } from "./none";
 import { Option } from "./option";
 
+const { test } = Predicate;
+
 export class Some<T> implements Option<T> {
   public static of<T>(value: T): Some<T> {
     return new Some(value);
@@ -44,8 +46,16 @@ export class Some<T> implements Option<T> {
     return Equality.equals(value, this.value);
   }
 
+  public some(predicate: Predicate<T>): boolean {
+    return test(predicate, this.value);
+  }
+
+  public every(predicate: Predicate<T>): boolean {
+    return test(predicate, this.value);
+  }
+
   public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return Predicate.test(predicate, this.value) ? new Some(this.value) : None;
+    return test(predicate, this.value) ? new Some(this.value) : None;
   }
 
   public and<U>(option: Option<U>): Option<U> {
