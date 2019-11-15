@@ -20,6 +20,12 @@ export function isVisible(
   device: Device
 ): boolean {
   if (isText(node)) {
+    // Text nodes that consist only of whitespace characters will never be
+    // visible.
+    if (node.data.trim() === "") {
+      return false;
+    }
+
     return getParentElement(node, context, { flattened: true })
       .map(parentElement => isVisible(parentElement, context, device))
       .getOr(false);
