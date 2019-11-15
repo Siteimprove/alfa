@@ -11,6 +11,8 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 import { Empty, Node } from "./node";
 
+const { map, reduce } = Iterable;
+
 export class Map<K, V>
   implements
     Monad<V>,
@@ -79,7 +81,7 @@ export class Map<K, V>
   }
 
   public reduce<R>(reducer: Reducer<V, R, [K]>, accumulator: R): R {
-    return Iterable.reduce(
+    return reduce(
       this,
       (accumulator, [key, value]) => reducer(accumulator, value, key),
       accumulator
@@ -87,7 +89,7 @@ export class Map<K, V>
   }
 
   public concat(iterable: Iterable<[K, V]>): Map<K, V> {
-    return Iterable.reduce<[K, V], Map<K, V>>(
+    return reduce<[K, V], Map<K, V>>(
       iterable,
       (map, [key, value]) => map.set(key, value),
       this
@@ -100,6 +102,14 @@ export class Map<K, V>
       value.size === this.size &&
       value.root.equals(this.root)
     );
+  }
+
+  public *keys(): Iterable<K> {
+    yield* map(this.root, entry => entry[0]);
+  }
+
+  public *values(): Iterable<V> {
+    yield* map(this.root, entry => entry[1]);
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
