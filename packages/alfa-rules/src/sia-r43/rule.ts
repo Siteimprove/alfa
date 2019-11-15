@@ -2,7 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
@@ -17,8 +17,8 @@ const { filter } = Iterable;
 const { and, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r8.html",
-  evaluate({ device, document }) {
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r43.html",
+  evaluate({ document, device }) {
     return {
       applicability() {
         return filter(
@@ -26,25 +26,16 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             isElement,
             and(
-              hasNamespace(document, equals(Namespace.HTML)),
+              hasNamespace(document, equals(Namespace.SVG)),
               and(
-                hasRole(document, role =>
-                  test(
-                    equals(
-                      "checkbox",
-                      "combobox",
-                      "listbox",
-                      "menuitemcheckbox",
-                      "menuitemradio",
-                      "radio",
-                      "searchbox",
-                      "slider",
-                      "spinbutton",
-                      "switch",
-                      "textbox"
+                hasRole(
+                  document,
+                  role =>
+                    test(
+                      equals("img", "graphics-document", "graphics-symbol"),
+                      role.name
                     ),
-                    role.name
-                  )
+                  { implicit: false }
                 ),
                 not(isIgnored(document, device))
               )
@@ -56,8 +47,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: test(hasAccessibleName(document, device, not(isEmpty)), target)
-            ? Ok.of("The form field has an accessible name")
-            : Err.of("The form field does not have an accessible name")
+            ? Ok.of("The <svg> element has an accessible name")
+            : Err.of("The <svg> element has no accessible name")
         };
       }
     };

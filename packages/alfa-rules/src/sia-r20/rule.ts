@@ -1,48 +1,40 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Attributes } from "@siteimprove/alfa-aria";
-import { List, Seq } from "@siteimprove/alfa-collection";
-import {
-  Attribute,
-  Document,
-  isElement,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+import { Rule } from "@siteimprove/alfa-act";
+import * as aria from "@siteimprove/alfa-aria";
+import { Attribute, isElement } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Ok, Err } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-export const SIA_R20: Atomic.Rule<Document, Attribute> = {
-  id: "sanshikan:rules/sia-r20.html",
-  requirements: [
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
-  evaluate: ({ document }) => {
-    const attributeNames = new Set(
-      values(Attributes).map(attribute => attribute.name)
-    );
+import { walk } from "../common/walk";
 
+const { filter, flatMap } = Iterable;
+
+export default Rule.Atomic.of<Page, Attribute>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r20.html",
+  evaluate({ document }) {
     return {
-      applicability: () => {
-        return Seq(querySelectorAll(document, document, isElement))
-          .reduce<List<Attribute>>((attributes, element) => {
-            return attributes.concat(
-              Array.from(element.attributes).filter(attribute => {
-                return attribute.localName.startsWith("aria-");
-              })
-            );
-          }, List())
-          .map(attribute => {
-            return {
-              applicable: true,
-              aspect: document,
-              target: attribute
-            };
-          });
+      applicability() {
+        return flatMap(
+          filter(
+            walk(document, document, { composed: true, nested: true }),
+            isElement
+          ),
+          element =>
+            filter(Iterable.from(element.attributes), attribute =>
+              attribute.localName.startsWith("aria-")
+            )
+        );
       },
 
-      expectations: (aspect, target) => {
+      expectations(target) {
+        const exists = aria.Attribute.lookup(target.localName).isSome();
+
         return {
-          1: { holds: attributeNames.has(target.localName) }
+          1: exists
+            ? Ok.of("The attribute is defined")
+            : Err.of("The attribute is not defined")
         };
       }
     };
   }
-};
+});

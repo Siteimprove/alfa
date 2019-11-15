@@ -1,6 +1,8 @@
 {
   "extends": "../tsconfig.json",
   "files": [
+    "src/common/applicability/audio.ts",
+    "src/common/applicability/video.ts",
     "src/common/predicate/has-accessible-name.ts",
     "src/common/predicate/has-attribute.ts",
     "src/common/predicate/has-child.ts",
@@ -18,8 +20,9 @@
     "src/common/predicate/is-defined.ts",
     "src/common/predicate/is-document-element.ts",
     "src/common/predicate/is-empty.ts",
-    "src/common/predicate/is-exposed.ts",
+    "src/common/predicate/is-ignored.ts",
     "src/common/predicate/is-visible.ts",
+    "src/common/predicate/is-tabbable.ts",
     "src/common/predicate/is-whitespace.ts",
     "src/common/question.ts",
     "src/common/walk.ts",
@@ -32,9 +35,17 @@
     "src/sia-r13/rule.ts",
     "src/sia-r14/rule.ts",
     "src/sia-r15/rule.ts",
+    "src/sia-r16/rule.ts",
+    "src/sia-r17/rule.ts",
+    "src/sia-r18/rule.ts",
+    "src/sia-r19/rule.ts",
     "src/sia-r2/rule.ts",
+    "src/sia-r20/rule.ts",
+    "src/sia-r21/rule.ts",
+    "src/sia-r22/rule.ts",
     "src/sia-r3/rule.ts",
     "src/sia-r4/rule.ts",
+    "src/sia-r43/rule.ts",
     "src/sia-r5/rule.ts",
     "src/sia-r6/rule.ts",
     "src/sia-r7/rule.ts",
@@ -80,9 +91,6 @@
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-unicode"
     },
     {
       "path": "../alfa-web"

@@ -4,8 +4,11 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 export function hasRole(
   context: Node,
-  predicate: Predicate<Role> = () => true
+  predicate: Predicate<Role> = () => true,
+  options: getRole.Options = {}
 ): Predicate<Element> {
   return element =>
-    getRole(element, context).some(role => role.filter(predicate).isSome());
+    getRole(element, context, options).some(role =>
+      role.filter(predicate).isSome()
+    );
 }

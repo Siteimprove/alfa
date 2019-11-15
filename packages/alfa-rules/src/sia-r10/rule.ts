@@ -23,7 +23,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { hasTabIndex } from "../common/predicate/has-tab-index";
 import { isEmpty } from "../common/predicate/is-empty";
-import { isExposed } from "../common/predicate/is-exposed";
+import { isIgnored } from "../common/predicate/is-ignored";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { walk } from "../common/walk";
@@ -50,7 +50,7 @@ export default Rule.Atomic.of<Page, Attribute>({
                     and(
                       or(
                         isVisible(document, device),
-                        isExposed(document, device)
+                        not(isIgnored(document, device))
                       ),
                       and(
                         not(

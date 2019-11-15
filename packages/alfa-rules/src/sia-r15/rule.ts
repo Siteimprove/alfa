@@ -20,7 +20,7 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { isEmpty } from "../common/predicate/is-empty";
-import { isExposed } from "../common/predicate/is-exposed";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 import { walk } from "../common/walk";
@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
               and(
                 hasNamespace(document, equals(Namespace.HTML)),
                 and(
-                  isExposed(document, device),
+                  not(isIgnored(document, device)),
                   hasAccessibleName(document, device, not(isEmpty))
                 )
               )

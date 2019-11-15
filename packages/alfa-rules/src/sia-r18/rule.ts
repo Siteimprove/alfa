@@ -1,95 +1,62 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Attributes, getRole, isExposed, Roles } from "@siteimprove/alfa-aria";
-import { List, Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Attribute,
-  Document,
-  getOwnerElement,
-  isElement,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
-import { values } from "@siteimprove/alfa-util";
+import { Rule } from "@siteimprove/alfa-act";
+import { Role } from "@siteimprove/alfa-aria";
+import * as aria from "@siteimprove/alfa-aria";
+import { Attribute, getOwnerElement, isElement } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Set } from "@siteimprove/alfa-set";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isAllowedAttribute } from "../helpers/is-allowed-attribute";
+import { hasRole } from "../common/predicate/has-role";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+import { walk } from "../common/walk";
+import { Ok, Err } from "@siteimprove/alfa-result";
 
-export const SIA_R18: Atomic.Rule<Device | Document, Attribute> = {
-  id: "sanshikan:rules/sia-r18.html",
-  requirements: [
-    { requirement: "wcag", criterion: "parsing", partial: true },
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
-    const attributeNames = new Set(
-      values(Attributes).map(attribute => attribute.name)
+const { filter, flatMap } = Iterable;
+const { and, not, equals, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Attribute>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
+  evaluate({ device, document }) {
+    const global = Set.from(
+      Role.lookup("roletype").get().characteristics.supports
     );
 
     return {
-      applicability: () => {
-        return map(
+      applicability() {
+        return flatMap(
           filter(
-            querySelectorAll(document, document, isElement, {
-              composed: true
-            }),
-            element => {
-              return isExposed(element, document, device);
-            }
+            walk(document, document, { flattened: true, nested: true }),
+            and(isElement, not(isIgnored(document, device)))
           ),
-          elements => {
-            return Seq(elements)
-              .reduce<List<Attribute>>((attributes, element) => {
-                return attributes.concat(
-                  Array.from(element.attributes).filter(attribute => {
-                    return attributeNames.has(attribute.localName);
-                  })
-                );
-              }, List())
-              .map(attribute => {
-                return {
-                  applicable: true,
-                  aspect: document,
-                  target: attribute
-                };
-              });
-          }
+          element =>
+            filter(Iterable.from(element.attributes), attribute =>
+              aria.Attribute.lookup(attribute.localName).isSome()
+            )
         );
       },
 
-      expectations: (aspect, target) => {
-        const owner = getOwnerElement(target, document)!;
-
-        const globalAttributeNames = new Set(
-          [...Roles.Roletype.supported!(owner, document, device)].map(
-            attribute => attribute.name
-          )
-        );
-
-        return map(getRole(owner, document, device), role => {
-          let isAllowed: boolean;
-
-          if (role !== null) {
-            isAllowed = isAllowedAttribute(
-              owner,
-              document,
-              target.localName,
-              role,
-              device
-            );
-          } else {
-            isAllowed = globalAttributeNames.has(target.localName);
-          }
-
-          return {
-            1: { holds: isAllowed }
-          };
-        });
+      expectations(target) {
+        return {
+          1:
+            global.has(target.localName) ||
+            test(
+              hasRole(document, role =>
+                role.isAllowed(attribute =>
+                  test(equals(target.localName), attribute.name)
+                )
+              ),
+              getOwnerElement(target, document).get()
+            )
+              ? Ok.of(
+                  "The attribute is allowed for the element on which it is specified"
+                )
+              : Err.of(
+                  "The attribute is not allowed for the element on which it is specified"
+                )
+        };
       }
     };
   }
-};
+});

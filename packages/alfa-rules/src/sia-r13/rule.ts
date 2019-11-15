@@ -9,7 +9,7 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { isEmpty } from "../common/predicate/is-empty";
-import { isExposed } from "../common/predicate/is-exposed";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 import { walk } from "../common/walk";
 
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
             isElement,
             and(
               hasNamespace(document, equals(Namespace.HTML)),
-              and(hasName(equals("iframe")), isExposed(document, device))
+              and(hasName(equals("iframe")), not(isIgnored(document, device)))
             )
           )
         );

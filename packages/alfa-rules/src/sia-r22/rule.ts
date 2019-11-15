@@ -1,24 +1,34 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { Video } from "../helpers/applicabilities/video";
+import { video } from "../common/applicability/video";
 
-export const SIA_R22: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r22.html",
-  requirements: [
-    { requirement: "wcag", criterion: "captions-prerecorded", partial: true }
-  ],
-  locales: [EN],
-  evaluate: ({ device, document }) => {
+import { Question } from "../common/question";
+
+export default Rule.Atomic.of<Page, Element, Question>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r22.html",
+  evaluate({ device, document }) {
     return {
-      applicability: Video(document, device, { audio: { has: true } }),
+      applicability() {
+        return video(document, device, { audio: { has: true } });
+      },
 
-      expectations: (aspect, target, question) => {
+      expectations(target) {
         return {
-          1: { holds: question(QuestionType.Boolean, "has-captions") }
+          1: Question.of(
+            "has-captions",
+            "boolean",
+            target,
+            "Does the <video> element have captions?"
+          ).map(hasCaptions =>
+            hasCaptions
+              ? Ok.of("The <video> element has captions")
+              : Err.of("The <video> element does not have captions")
+          )
         };
       }
     };
   }
-};
+});

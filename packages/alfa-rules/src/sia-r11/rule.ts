@@ -9,7 +9,7 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isEmpty } from "../common/predicate/is-empty";
-import { isExposed } from "../common/predicate/is-exposed";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 import { walk } from "../common/walk";
 
@@ -29,7 +29,7 @@ export default Rule.Atomic.of<Page, Element>({
               hasNamespace(document, equals(Namespace.HTML)),
               and(
                 hasRole(document, role => role.name === "link"),
-                isExposed(document, device)
+                not(isIgnored(document, device))
               )
             )
           )

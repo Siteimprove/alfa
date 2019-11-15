@@ -1,74 +1,59 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { getRole, isExposed } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
+import { Rule } from "@siteimprove/alfa-act";
 import {
   Attribute,
-  Document,
-  Element,
-  getAttribute,
   getAttributeNode,
   getOwnerElement,
-  hasAttribute,
-  Namespace,
-  querySelectorAll
+  isElement,
+  Namespace
 } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isElement, namespaceIs } from "../helpers/predicates";
+import { hasAttribute } from "../common/predicate/has-attribute";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { hasRole } from "../common/predicate/has-role";
+import { isEmpty } from "../common/predicate/is-empty";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+import { walk } from "../common/walk";
 
-export const SIA_R21: Atomic.Rule<Device | Document, Attribute> = {
-  id: "sanshikan:rules/sia-r21.html",
-  requirements: [
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+const { filter, map } = Iterable;
+const { and, not, equals, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Attribute>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r21.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
+      applicability() {
         return map(
           filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              Predicate.from(isElement)
-            ),
-            Predicate.from(
-              isElement
-                .and(namespaceIs(document, Namespace.HTML, Namespace.SVG))
-                .and(element => hasAttribute(element, "role"))
-                .and(element => getAttribute(element, "role") !== "")
-                .and(element => isExposed(element, document, device))
+            walk(document, document, { flattened: true, nested: true }),
+            and(
+              isElement,
+              and(
+                hasNamespace(document, equals(Namespace.HTML, Namespace.SVG)),
+                and(
+                  hasAttribute(document, "role", not(isEmpty)),
+                  not(isIgnored(document, device))
+                )
+              )
             )
           ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: getAttributeNode(element, "role")!
-              };
-            });
-          }
+          element => getAttributeNode(element, document, "role").get()
         );
       },
 
-      expectations: (aspect, target) => {
-        const owner = getOwnerElement(target, document)!;
+      expectations(target) {
+        const owner = getOwnerElement(target, document).get();
 
-        return map(
-          getRole(owner, document, device, { implicit: false }),
-          role => {
-            return {
-              1: { holds: role !== null }
-            };
-          }
-        );
+        return {
+          1: test(hasRole(document), owner)
+            ? Ok.of("The element has a valid role")
+            : Err.of("The element does not have a valid role")
+        };
       }
     };
   }
-};
+});

@@ -10,12 +10,12 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDecorative } from "../common/predicate/is-decorative";
-import { isExposed } from "../common/predicate/is-exposed";
+import { isIgnored } from "../common/predicate/is-ignored";
 
 import { walk } from "../common/walk";
 
 const { filter } = Iterable;
-const { and, or, equals, test } = Predicate;
+const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Element>({
                 hasName(equals("img")),
                 and(
                   hasRole(document, role => role.name === "img"),
-                  isExposed(document, device)
+                  not(isIgnored(document, device))
                 )
               )
             )

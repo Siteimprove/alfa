@@ -1,105 +1,87 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { isExposed } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
+import { Rule } from "@siteimprove/alfa-act";
+import { getRole } from "@siteimprove/alfa-aria";
 import {
-  Document,
   Element,
   getAttribute,
   isElement,
-  Node,
-  querySelectorAll
+  Namespace,
+  Node
 } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Ok, Err } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { getExplicitRole } from "../helpers/get-explicit-role";
-import { hasExplicitRole } from "../helpers/has-explicit-role";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { isEmpty } from "../common/predicate/is-empty";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+import { walk } from "../common/walk";
 
-export const SIA_R16: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r16.html",
-  requirements: [
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+const { filter, find } = Iterable;
+const { and, not, equals, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(
-            querySelectorAll(document, document, isElement, {
-              composed: true
-            }),
-            element => {
-              return map(isExposed(element, document, device), isExposed => {
-                if (!isExposed) {
-                  return false;
-                }
-
-                return hasExplicitRole(element, document, device);
-              });
-            }
-          ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
-          }
+      applicability() {
+        return filter(
+          walk(document, document, { composed: true, nested: true }),
+          and(
+            isElement,
+            and(
+              hasNamespace(document, equals(Namespace.HTML, Namespace.SVG)),
+              element =>
+                getRole(element, document, { explicit: false })
+                  .flatMap(implicit =>
+                    getRole(element, document, { implicit: false }).map(
+                      explicit =>
+                        explicit.isSome() &&
+                        implicit.isSome() &&
+                        explicit.get().name === implicit.get().name
+                    )
+                  )
+                  .some(identical => !identical)
+            )
+          )
         );
       },
 
-      expectations: (aspect, target) => {
-        return map(
-          hasRequiredValues(target, document, device),
-          hasRequiredValues => {
-            return {
-              1: { holds: hasRequiredValues }
-            };
-          }
-        );
+      expectations(target) {
+        return {
+          1: test(hasRequiredValues(document), target)
+            ? Ok.of("The element has all required states and properties")
+            : Err.of(
+                "The element does not have all required states and properties"
+              )
+        };
       }
     };
   }
-};
+});
 
-function hasRequiredValues(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return map(getExplicitRole(element, context, device), role => {
-    if (role === null || role.required === undefined) {
-      return true;
-    }
+function hasRequiredValues(context: Node): Predicate<Element> {
+  return element => {
+    for (const [role] of getRole(element, context)) {
+      if (role.isSome()) {
+        const { requires, implicits } = role.get().characteristics;
 
-    const implicits =
-      role.implicits === undefined
-        ? []
-        : role.implicits(element, context, device);
+        for (const attribute of requires) {
+          if (find(implicits, implicit => implicit[0] === attribute).isSome()) {
+            continue;
+          }
 
-    outer: for (const attribute of role.required(element, context, device)) {
-      const value = getAttribute(element, attribute.name, {
-        trim: true
-      });
-
-      if (value === null || value === "") {
-        for (const [found] of implicits) {
-          if (found === attribute) {
-            continue outer;
+          if (
+            getAttribute(element, context, attribute)
+              .filter(not(isEmpty))
+              .isNone()
+          ) {
+            return false;
           }
         }
-
-        return false;
       }
     }
 
     return true;
-  });
+  };
 }

@@ -1,74 +1,58 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Seq } from "@siteimprove/alfa-collection";
+import { Rule } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  getAttribute,
-  isElement,
-  isTabbable,
-  Node,
-  querySelector,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Element, isElement, Node } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Ok, Err } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-export const SIA_R17: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r17.html",
-  requirements: [
-    { requirement: "wcag", criterion: "info-and-relationships", partial: true },
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+import { hasAttribute } from "../common/predicate/has-attribute";
+import { isTabbable } from "../common/predicate/is-tabbable";
+
+import { walk } from "../common/walk";
+
+const { filter, some } = Iterable;
+const { and, not, nor, equals, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r17.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return Seq(
-          querySelectorAll<Element>(document, document, node => {
-            return (
-              isElement(node) &&
-              getAttribute(node, "aria-hidden", { lowerCase: true }) === "true"
-            );
-          })
-        ).map(attribute => {
-          return {
-            applicable: true,
-            aspect: document,
-            target: attribute
-          };
-        });
+      applicability() {
+        return filter(
+          walk(document, document, { composed: true, nested: true }),
+          and(isElement, hasAttribute(document, "aria-hidden", equals("true")))
+        );
       },
 
-      expectations: (aspect, target) => {
+      expectations(target) {
         return {
-          1: {
-            holds:
-              !isTabbable(target, document, device) &&
-              !hasTabbableDescendants(target, document, device)
-          }
+          1: test(
+            nor(
+              isTabbable(document, device),
+              hasTabbableDescendants(document, device)
+            ),
+            target
+          )
+            ? Ok.of(
+                "The element is neither tabbable nor has tabbable descendants"
+              )
+            : Err.of(
+                "The element is either tabbable or has tabbable descendants"
+              )
         };
       }
     };
   }
-};
+});
 
 function hasTabbableDescendants(
-  element: Element,
   context: Node,
   device: Device
-): boolean {
-  return (
-    querySelector(
-      element,
-      context,
-      node => {
-        return (
-          node !== element &&
-          isElement(node) &&
-          isTabbable(node, context, device)
-        );
-      },
-      {
-        flattened: true
-      }
-    ) !== null
-  );
+): Predicate<Element> {
+  return element =>
+    some(
+      walk(element, document, { flattened: true }),
+      and(not(equals(element)), and(isElement, isTabbable(document, device)))
+    );
 }

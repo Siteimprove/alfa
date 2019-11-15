@@ -18,14 +18,14 @@ import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasNameFrom } from "../common/predicate/has-name-from";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { isExposed } from "../common/predicate/is-exposed";
+import { isIgnored } from "../common/predicate/is-ignored";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 import { walk } from "../common/walk";
 
 const { filter, map, join } = Iterable;
-const { and, equals, test } = Predicate;
+const { and, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
@@ -52,7 +52,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                         isText,
                         and(
                           isVisible(document, device),
-                          isExposed(document, device)
+                          not(isIgnored(document, device))
                         )
                       ),
                       { flattened: true }
