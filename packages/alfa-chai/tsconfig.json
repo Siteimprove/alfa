@@ -9,7 +9,16 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }

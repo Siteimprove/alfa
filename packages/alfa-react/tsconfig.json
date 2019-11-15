@@ -16,6 +16,9 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-guards"
+    },
+    {
       "path": "../alfa-jasmine"
     },
     {
@@ -26,6 +29,9 @@
     },
     {
       "path": "../alfa-unexpected"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }

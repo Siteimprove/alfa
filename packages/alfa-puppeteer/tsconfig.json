@@ -9,6 +9,9 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-guards"
+    },
+    {
       "path": "../alfa-test"
     }
   ]

@@ -16,6 +16,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-web"
     }
   ]
 }
