@@ -7,6 +7,7 @@ import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Branched<T, B = never>
@@ -88,6 +89,26 @@ export class Branched<T, B = never>
         reducer(accumulator, value.value, value.branches.getOr([])),
       accumulator
     );
+  }
+
+  public some(predicate: Predicate<T, T, [Iterable<B>]>): boolean {
+    for (const value of this.values) {
+      if (predicate(value.value, value.branches.getOr([]))) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public every(predicate: Predicate<T, T, [Iterable<B>]>): boolean {
+    for (const value of this.values) {
+      if (!predicate(value.value, value.branches.getOr([]))) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   public equals(value: unknown): value is Branched<T, B> {

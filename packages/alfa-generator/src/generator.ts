@@ -1,6 +1,13 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
+interface Generator<T, R = void, N = undefined> extends Iterator<T, R, N> {
+  next(...args: [] | [N]): IteratorResult<T, R>;
+  return(value: R): IteratorResult<T, R>;
+  throw(error: unknown): IteratorResult<T, R>;
+  [Symbol.iterator](): Generator<T, R, N>;
+}
+
 export namespace Generator {
   export function* map<T, U, R, N>(
     generator: Generator<T, R, N>,

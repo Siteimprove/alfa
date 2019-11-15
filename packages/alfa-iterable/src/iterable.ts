@@ -4,6 +4,8 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
+const { equals } = Predicate;
+
 export interface Iterable<T> {
   [Symbol.iterator](): Iterator<T>;
 }
@@ -58,13 +60,7 @@ export namespace Iterable {
   }
 
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
-    for (const found of iterable) {
-      if (Equality.equals(value, found)) {
-        return true;
-      }
-    }
-
-    return false;
+    return some(iterable, equals(value));
   }
 
   export function find<T, U extends T = T>(
@@ -80,9 +76,9 @@ export namespace Iterable {
     return None;
   }
 
-  export function some<T, U extends T = T>(
+  export function some<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, U>
+    predicate: Predicate<T>
   ): boolean {
     for (const value of iterable) {
       if (predicate(value)) {
@@ -93,9 +89,9 @@ export namespace Iterable {
     return false;
   }
 
-  export function every<T, U extends T = T>(
+  export function every<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, U>
+    predicate: Predicate<T>
   ): boolean {
     for (const value of iterable) {
       if (!predicate(value)) {
@@ -186,41 +182,5 @@ export namespace Iterable {
     return (
       typeof value === "object" && value !== null && Symbol.iterator in value
     );
-  }
-
-  export class Chain<T> implements Iterable<T> {
-    public static of<T>(iterable: Iterable<T>): Chain<T> {
-      return new Chain(iterable);
-    }
-
-    private readonly iterable: Iterable<T>;
-
-    private constructor(iterable: Iterable<T>) {
-      this.iterable = iterable;
-    }
-
-    public map<U>(mapper: Mapper<T, U>): Chain<U> {
-      return new Chain(map(this.iterable, mapper));
-    }
-
-    public flatMap<U>(mapper: Mapper<T, Iterable<U>>): Chain<U> {
-      return new Chain(flatMap(this.iterable, mapper));
-    }
-
-    public filter<U extends T>(predicate: Predicate<T, U>): Chain<U> {
-      return new Chain(filter(this.iterable, predicate));
-    }
-
-    public first(): Option<T> {
-      return Iterable.first(this.iterable);
-    }
-
-    public [Symbol.iterator](): Iterator<T> {
-      return this.iterable[Symbol.iterator]();
-    }
-  }
-
-  export function chain<T>(iterable: Iterable<T>): Chain<T> {
-    return Chain.of(iterable);
   }
 }

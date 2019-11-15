@@ -24,6 +24,8 @@ export interface Option<T>
   apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   includes(value: T): boolean;
+  some(predicate: Predicate<T>): boolean;
+  every(predicate: Predicate<T>): boolean;
   filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
   and<U>(option: Option<U>): Option<U>;
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
@@ -47,14 +49,6 @@ export namespace Option {
 
   export function flatten<T>(value: Option<Option<T>>): Option<T> {
     return value.flatMap(value => value);
-  }
-
-  export function isSome<T>(value: Option<T>): value is Some<T> {
-    return value.isSome();
-  }
-
-  export function isNone<T>(value: Option<T>): value is None {
-    return value.isNone();
   }
 
   export function isOption<T>(value: unknown): value is Option<T> {

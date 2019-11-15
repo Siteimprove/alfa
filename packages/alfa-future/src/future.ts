@@ -62,9 +62,7 @@ export class Future<T> implements Monad<T>, Functor<T> {
   }
 
   public toJSON() {
-    return {
-      value: this.value
-    };
+    return this.value.toJSON();
   }
 }
 

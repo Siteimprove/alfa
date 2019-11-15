@@ -33,6 +33,14 @@ export const None: None = new (class None {
     return false;
   }
 
+  public some(): boolean {
+    return false;
+  }
+
+  public every(): boolean {
+    return true;
+  }
+
   public filter(): this {
     return this;
   }

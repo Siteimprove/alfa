@@ -2,6 +2,7 @@ import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -87,6 +88,20 @@ export class List<T>
 
   public intersect(list: List<T>): List<T> {
     return List.from(Iterable.intersect(this, list));
+  }
+
+  public groupBy<K>(grouper: Mapper<T, K>): Map<K, Iterable<T>> {
+    return this.reduce((groups, value) => {
+      const group = grouper(value);
+
+      return groups.set(
+        group,
+        groups
+          .get(group)
+          .getOrElse(() => List.empty<T>())
+          .push(value)
+      );
+    }, Map.empty<K, List<T>>());
   }
 
   public get(index: number): Option<T> {
