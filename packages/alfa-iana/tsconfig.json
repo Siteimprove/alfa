@@ -12,6 +12,9 @@
       "path": "../alfa-lang"
     },
     {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-test"
     }
   ]

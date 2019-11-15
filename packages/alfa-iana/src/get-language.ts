@@ -1,4 +1,6 @@
 import { Char, isAlpha, isNumeric, Stream } from "@siteimprove/alfa-lang";
+import { None, Option } from "@siteimprove/alfa-option";
+
 import {
   ExtendedLanguageIndex,
   PrimaryLanguageIndex,
@@ -10,7 +12,10 @@ import { ExtendedLanguage, Language, Region, Script } from "./types";
 const { assign } = Object;
 const { fromCharCode } = String;
 
-export function getLanguage(tag: string): Language | null {
+/**
+ * @internal
+ */
+export function getLanguage(tag: string): Option<Language> {
   tag = tag.toLowerCase();
 
   const stream = new Stream(tag.length, i => tag.charCodeAt(i));
@@ -18,7 +23,7 @@ export function getLanguage(tag: string): Language | null {
   const language: Language | null = getPrimaryLanguage(stream);
 
   if (language === null) {
-    return null;
+    return None;
   }
 
   if (stream.peek(0) === Char.HyphenMinus) {
@@ -46,10 +51,10 @@ export function getLanguage(tag: string): Language | null {
   }
 
   if (!stream.done()) {
-    return null;
+    return None;
   }
 
-  return language;
+  return Option.of(language);
 }
 
 function getPrimaryLanguage(stream: Stream<number>): Language | null {

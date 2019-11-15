@@ -1,9 +1,19 @@
+import { Option } from "@siteimprove/alfa-option";
+
+import { getLanguage } from "./get-language";
+
 export interface Language {
   readonly primary: PrimaryLanguage;
   readonly extended?: ExtendedLanguage;
   readonly script?: Script;
   readonly region?: Region;
   readonly variants?: Array<Variant>;
+}
+
+export namespace Language {
+  export function from(value: string): Option<Language> {
+    return getLanguage(value);
+  }
 }
 
 /**
