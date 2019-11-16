@@ -13,8 +13,8 @@ import { Outcome } from "./outcome";
 
 const { flatMap, flatten, reduce, groupBy } = Iterable;
 
-export class Rule<I, T, Q = never> {
-  public static of<I, T, Q = never>(properties: {
+export class Rule<I, T, Q = unknown> {
+  public static of<I, T, Q = unknown>(properties: {
     uri: string;
     evaluate: Rule.Evaluator<I, T, Q>;
   }): Rule<I, T, Q> {
@@ -71,7 +71,7 @@ export namespace Rule {
       expectations(target: T): { [key: string]: Interview<Q, T, Expectation> };
     };
 
-    export function of<I, T, Q = never>(properties: {
+    export function of<I, T, Q = unknown>(properties: {
       uri: string;
       evaluate: Evaluator<I, T, Q>;
     }): Rule<I, T, Q> {
@@ -117,7 +117,7 @@ export namespace Rule {
       ): { [key: string]: Interview<Q, T, Expectation> };
     };
 
-    export function of<I, T, Q = never>(properties: {
+    export function of<I, T, Q = unknown>(properties: {
       uri: string;
       composes: Iterable<Rule<I, T, Q>>;
       evaluate: Evaluator<I, T, Q>;

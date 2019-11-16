@@ -10,8 +10,8 @@ import { Rule } from "./rule";
 
 const { flatten } = Iterable;
 
-export class Audit<I, T = unknown, Q = never> {
-  public static of<I, T = unknown, Q = never>(
+export class Audit<I, T = unknown, Q = unknown> {
+  public static of<I, T = unknown, Q = unknown>(
     input: I,
     oracle: Oracle<Q> = () => Future.settle(None)
   ): Audit<I, T, Q> {
@@ -28,7 +28,7 @@ export class Audit<I, T = unknown, Q = never> {
     this.rules = rules;
   }
 
-  public add<R extends Rule<I, T, Q>>(rule: R): Audit<I, T, Q> {
+  public add(rule: Rule<I, T, Q>): Audit<I, T, Q> {
     return new Audit(this.input, this.oracle, this.rules.push(rule));
   }
 

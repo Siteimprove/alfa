@@ -5,7 +5,7 @@ import { Record } from "@siteimprove/alfa-record";
 
 import { Rule } from "./rule";
 
-export abstract class Outcome<I, T, Q = never> implements Equality {
+export abstract class Outcome<I, T, Q> implements Equality {
   public readonly rule: Rule<I, T, Q>;
   public readonly target?: T;
 
@@ -40,7 +40,7 @@ export namespace Outcome {
     export type Applicable = Exclude<Type, Type.Inapplicable>;
   }
 
-  export class Passed<I, T, Q = never> extends Outcome<I, T, Q> {
+  export class Passed<I, T, Q> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
@@ -92,7 +92,7 @@ export namespace Outcome {
     }
   }
 
-  export class Failed<I, T, Q = never> extends Outcome<I, T, Q> {
+  export class Failed<I, T, Q> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
@@ -144,7 +144,7 @@ export namespace Outcome {
     }
   }
 
-  export class CantTell<I, T, Q = never> extends Outcome<I, T, Q> {
+  export class CantTell<I, T, Q> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T
@@ -187,12 +187,12 @@ export namespace Outcome {
     }
   }
 
-  export type Applicable<I, T, Q = never> =
+  export type Applicable<I, T, Q> =
     | Passed<I, T, Q>
     | Failed<I, T, Q>
     | CantTell<I, T, Q>;
 
-  export class Inapplicable<I, T, Q = never> extends Outcome<I, T, Q> {
+  export class Inapplicable<I, T, Q> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(rule: Rule<I, T, Q>): Inapplicable<I, T, Q> {
       return new Inapplicable(rule);
     }
