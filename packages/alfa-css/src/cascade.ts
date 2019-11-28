@@ -36,7 +36,7 @@ export namespace Cascade {
     const ruleTree = new RuleTree();
 
     const selectorMap = new SelectorMap(
-      [UserAgent].concat(Array.from(node.styleSheets)),
+      [UserAgent].concat(Array.from(node.style)),
       device
     );
 

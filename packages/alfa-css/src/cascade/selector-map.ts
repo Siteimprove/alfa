@@ -3,9 +3,9 @@ import {
   Declaration,
   Element,
   Rule,
-  StyleRule,
-  StyleSheet,
-  MediaRule
+  Style,
+  Sheet,
+  Media as MediaRule
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -64,7 +64,7 @@ export class SelectorMap {
   private readonly types = SelectorMap.Bucket.empty();
   private readonly other: Array<SelectorMap.Node> = [];
 
-  public constructor(styleSheets: Iterable<StyleSheet>, device: Device) {
+  public constructor(sheets: Iterable<Sheet>, device: Device) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -73,7 +73,7 @@ export class SelectorMap {
     let order = 0;
 
     const visit = (rule: Rule) => {
-      if (MediaRule.isMediaRule(rule)) {
+      if (MediaRule.isMedia(rule)) {
         const query = Media.parse(rule.condition);
 
         if (query.isNone() || !query.get().matches(device)) {
@@ -81,7 +81,7 @@ export class SelectorMap {
         }
       }
 
-      if (StyleRule.isStyleRule(rule)) {
+      if (Style.isStyle(rule)) {
         const selector = Selector.parse(rule.selector);
 
         if (selector.isNone() || Iterable.isEmpty(rule.style)) {
@@ -103,8 +103,8 @@ export class SelectorMap {
       }
     };
 
-    for (const styleSheet of styleSheets) {
-      for (const rule of styleSheet.visit()) {
+    for (const sheet of sheets) {
+      for (const rule of sheet.visit()) {
         visit(rule);
       }
     }

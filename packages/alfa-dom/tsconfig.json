@@ -30,7 +30,16 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-set"
     },
     {
       "path": "../alfa-test"

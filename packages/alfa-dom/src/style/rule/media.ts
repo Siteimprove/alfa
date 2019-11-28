@@ -47,7 +47,7 @@ export class Media extends Condition {
 }
 
 export namespace Media {
-  export function isMediaRule(value: unknown): value is Media {
+  export function isMedia(value: unknown): value is Media {
     return value instanceof Media;
   }
 

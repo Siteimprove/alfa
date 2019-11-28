@@ -54,6 +54,9 @@
       "path": "../alfa-reducer"
     },
     {
+      "path": "../alfa-slice"
+    },
+    {
       "path": "../alfa-test"
     },
     {

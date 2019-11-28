@@ -99,7 +99,13 @@
       "path": "../alfa-branched"
     },
     {
+      "path": "../alfa-cache"
+    },
+    {
       "path": "../alfa-compatibility"
+    },
+    {
+      "path": "../alfa-css"
     },
     {
       "path": "../alfa-device"

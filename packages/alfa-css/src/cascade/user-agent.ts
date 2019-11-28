@@ -1,18 +1,18 @@
-import { StyleRule, StyleSheet, Declaration } from "@siteimprove/alfa-dom";
+import { Style, Sheet, Declaration } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 
 /**
  * @see https://html.spec.whatwg.org/#rendering
  * @internal
  */
-export const UserAgent = StyleSheet.of(self => [
+export const UserAgent = Sheet.of(self => [
   // cssRule("@namespace url(http://www.w3.org/1999/xhtml)"),
 
   /**
    * @see https://html.spec.whatwg.org/#hidden-elements
    */
 
-  StyleRule.of(
+  Style.of(
     "[hidden], base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
     self => [Declaration.of("display", "none", false, Option.of(self))],
     self
