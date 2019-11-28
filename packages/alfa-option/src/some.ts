@@ -1,4 +1,5 @@
 import { Equality } from "@siteimprove/alfa-equality";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
@@ -66,11 +67,11 @@ export class Some<T> implements Option<T> {
     return option(this.value);
   }
 
-  public or(): this {
+  public or(): Option<T> {
     return this;
   }
 
-  public orElse(): this {
+  public orElse(): Option<T> {
     return this;
   }
 
@@ -88,6 +89,10 @@ export class Some<T> implements Option<T> {
 
   public equals(value: unknown): value is Some<T> {
     return value instanceof Some && Equality.equals(value.value, this.value);
+  }
+
+  public hash(hash: Hash): void {
+    Hashable.hash(this.value, hash);
   }
 
   public *[Symbol.iterator]() {
