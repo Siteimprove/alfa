@@ -5,7 +5,8 @@ import { Record } from "@siteimprove/alfa-record";
 
 import { Rule } from "./rule";
 
-export abstract class Outcome<I, T, Q> implements Equality {
+export abstract class Outcome<I, T, Q = unknown>
+  implements Equality<Outcome<I, T, Q>> {
   public readonly rule: Rule<I, T, Q>;
   public readonly target?: T;
 
@@ -15,7 +16,7 @@ export abstract class Outcome<I, T, Q> implements Equality {
 
   public abstract equals(value: unknown): value is Outcome<I, T, Q>;
 
-  public abstract toJSON(): { outcome: Outcome.Type };
+  public abstract toJSON(): unknown;
 
   public toEARL(): Document {
     return {
@@ -29,18 +30,7 @@ export abstract class Outcome<I, T, Q> implements Equality {
 }
 
 export namespace Outcome {
-  export const enum Type {
-    Passed = "passed",
-    Failed = "failed",
-    CantTell = "cantTell",
-    Inapplicable = "inapplicable"
-  }
-
-  export namespace Type {
-    export type Applicable = Exclude<Type, Type.Inapplicable>;
-  }
-
-  export class Passed<I, T, Q> extends Outcome<I, T, Q> {
+  export class Passed<I, T, Q = unknown> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
@@ -72,9 +62,9 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): unknown {
       return {
-        outcome: Type.Passed,
+        outcome: "passed",
         rule: this.rule.toJSON(),
         target: this.target,
         expectations: this.expectations.toJSON()
@@ -86,13 +76,13 @@ export namespace Outcome {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:${Type.Passed}` }
+          "earl:outcome": { "@id": `earl:passed` }
         }
       };
     }
   }
 
-  export class Failed<I, T, Q> extends Outcome<I, T, Q> {
+  export class Failed<I, T, Q = unknown> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T,
@@ -124,9 +114,9 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): unknown {
       return {
-        outcome: Type.Failed,
+        outcome: "failed",
         rule: this.rule.toJSON(),
         target: this.target,
         expectations: this.expectations.toJSON()
@@ -138,13 +128,13 @@ export namespace Outcome {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:${Type.Failed}` }
+          "earl:outcome": { "@id": `earl:failed` }
         }
       };
     }
   }
 
-  export class CantTell<I, T, Q> extends Outcome<I, T, Q> {
+  export class CantTell<I, T, Q = unknown> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
       target: T
@@ -168,9 +158,9 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): unknown {
       return {
-        outcome: Type.CantTell,
+        outcome: "cantTell",
         rule: this.rule.toJSON(),
         target: this.target
       };
@@ -181,18 +171,18 @@ export namespace Outcome {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:${Type.CantTell}` }
+          "earl:outcome": { "@id": `earl:cantTell` }
         }
       };
     }
   }
 
-  export type Applicable<I, T, Q> =
+  export type Applicable<I, T, Q = unknown> =
     | Passed<I, T, Q>
     | Failed<I, T, Q>
     | CantTell<I, T, Q>;
 
-  export class Inapplicable<I, T, Q> extends Outcome<I, T, Q> {
+  export class Inapplicable<I, T, Q = unknown> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(rule: Rule<I, T, Q>): Inapplicable<I, T, Q> {
       return new Inapplicable(rule);
     }
@@ -207,9 +197,9 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): unknown {
       return {
-        outcome: Type.Inapplicable,
+        outcome: "inapplicable",
         rule: this.rule.toJSON()
       };
     }
@@ -219,7 +209,7 @@ export namespace Outcome {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:${Type.Inapplicable}` }
+          "earl:outcome": { "@id": `earl:inapplicable` }
         }
       };
     }
