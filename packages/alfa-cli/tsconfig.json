@@ -5,13 +5,11 @@
   },
   "files": [
     "bin/alfa.ts",
-    "bin/alfa/commands.ts",
     "bin/alfa/commands/audit.ts",
-    "src/formatters.ts",
-    "src/formatters/earl.ts",
-    "src/formatters/json.ts",
-    "src/index.ts",
-    "src/types.ts"
+    "src/formatter.ts",
+    "src/formatter/earl.ts",
+    "src/formatter/json.ts",
+    "src/index.ts"
   ],
   "references": [
     {

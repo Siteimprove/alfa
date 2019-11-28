@@ -1,4 +1,4 @@
-import { Formatter } from "../types";
+import { Formatter } from "../formatter";
 
 const { stringify } = JSON;
 

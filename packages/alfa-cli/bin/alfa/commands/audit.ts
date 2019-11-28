@@ -2,130 +2,197 @@ import * as fs from "fs";
 import * as path from "path";
 import * as url from "url";
 
-import { Audit, Outcome } from "@siteimprove/alfa-act";
+import { Command, flags } from "@oclif/command";
+
+import { Audit, Oracle, Outcome, Rule } from "@siteimprove/alfa-act";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Orientation } from "@siteimprove/alfa-device";
+import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Rules } from "@siteimprove/alfa-rules";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Rules, Question } from "@siteimprove/alfa-rules";
 import { Scraper } from "@siteimprove/alfa-scraper";
 import { Page } from "@siteimprove/alfa-web";
+import { evaluate } from "@siteimprove/alfa-xpath";
 
-import * as Formatters from "../../../src/formatters";
-import { Arguments, Command, Formatter } from "../../../src/types";
+import enquirer from "enquirer";
 
-export default Command.of<Options>({
-  command: "audit <url>",
-  describe: "Perform an accessibility audit of a page",
-  handler,
-  builder: argv =>
-    argv
-      .positional("url", { type: "string" })
-      .demandOption("url")
+import { Formatter } from "../../../src/formatter";
 
-      .option("interactive", { type: "boolean", alias: "i", default: false })
+const { first } = Iterable;
 
-      .option("timeout", { type: "number", default: 10000 })
+export default class Subcommand extends Command {
+  static flags = {
+    help: flags.help({ char: "h" }),
 
-      .option("wait", {
-        type: "string",
-        choices: ["ready", "loaded", "idle"],
-        default: "ready"
-      })
+    interactive: flags.boolean({ char: "i", default: false }),
 
-      .option("format", { type: "string", alias: "f", default: "json" })
+    timeout: flags.integer({ default: 10000 }),
 
-      .option("output", { type: "string", alias: "o" })
+    wait: flags.enum({
+      options: ["ready", "loaded", "idle"],
+      default: "ready"
+    }),
 
-      .option("outcomes", {
-        type: "array",
-        choices: ["passed", "failed", "inapplicable", "cantTell"],
-        default: []
-      })
+    format: flags.string({ char: "f", default: "json" }),
 
-      .option("width", { type: "number", alias: "w", default: 800 })
+    output: flags.string({ char: "o" }),
 
-      .option("height", { type: "number", alias: "h", default: 600 })
+    outcomes: flags.enum({
+      options: ["ready", "loaded", "idle"],
+      default: "ready"
+    }),
 
-      .option("orientation", {
-        type: "string",
-        choices: ["landscape", "portrait"],
-        default: "landscape"
-      })
+    width: flags.integer({ char: "w", default: 800 }),
+    height: flags.integer({ char: "h", default: 600 }),
 
-      .option("resolution", { type: "number", default: 1 })
-});
+    orientation: flags.enum({
+      options: ["landscape", "portrait"],
+      default: "landscape"
+    }),
 
-interface Options {
-  url: string;
-  interactive: boolean;
-  timeout: number;
-  wait: string;
-  format: string;
-  output?: string;
-  outcomes: Array<string> | null;
+    resolution: flags.integer({ default: 1 })
+  };
 
-  // Viewport options
-  width: number;
-  height: number;
-  orientation: string;
+  static args = [{ name: "url" }];
 
-  // Display options
-  resolution: number;
-}
+  async run() {
+    const { args, flags } = this.parse(Subcommand);
 
-async function handler(args: Arguments<Options>): Promise<void> {
-  const scraper = await Scraper.of();
+    const scraper = await Scraper.of();
 
-  const { timeout, width, height, resolution } = args;
+    const { timeout, width, height, resolution } = flags;
 
-  let wait = Scraper.Wait.Ready;
+    let wait = Scraper.Wait.Ready;
 
-  if (args.wait === "loaded") {
-    wait = Scraper.Wait.Loaded;
-  } else if (args.wait === "idle") {
-    wait = Scraper.Wait.Idle;
-  }
+    if (flags.wait === "loaded") {
+      wait = Scraper.Wait.Loaded;
+    } else if (flags.wait === "idle") {
+      wait = Scraper.Wait.Idle;
+    }
 
-  let orientation = Orientation.Landscape;
+    let orientation = Orientation.Landscape;
 
-  if (args.orientation === "portrait") {
-    orientation = Orientation.Portrait;
-  }
+    if (flags.orientation === "portrait") {
+      orientation = Orientation.Portrait;
+    }
 
-  let page: Page;
-  try {
-    page = await scraper.scrape(
-      new URL(args.url, url.pathToFileURL(process.cwd() + path.sep)),
-      {
-        timeout,
-        wait,
-        viewport: { width, height, orientation },
-        display: { resolution }
+    let page: Page;
+    try {
+      page = await scraper.scrape(
+        new URL(args.url, url.pathToFileURL(process.cwd() + path.sep)),
+        {
+          timeout,
+          wait,
+          viewport: { width, height, orientation },
+          display: { resolution }
+        }
+      );
+    } catch (err) {
+      throw err;
+    } finally {
+      scraper.close();
+    }
+
+    const answers = Cache.empty<unknown, Cache<string, Future<any>>>();
+
+    const oracle: Oracle<Question> = (rule, question) => {
+      if (flags.interactive) {
+        return answers
+          .get(question.subject, Cache.empty)
+          .get(question.uri, () => {
+            process.stdout.write(`\n${question.subject}\n\n`);
+
+            if (question.type === "boolean") {
+              return Future.of(settle => {
+                enquirer
+                  .prompt<{ [key: string]: boolean }>({
+                    name: question.uri,
+                    type: "toggle",
+                    message: question.message
+                  })
+                  .then(answer => {
+                    settle(Option.of(question.answer(answer[question.uri])));
+                  })
+                  .catch(() => {
+                    settle(None);
+                  });
+              });
+            }
+
+            if (question.type === "node") {
+              return Future.of(settle => {
+                enquirer
+                  .prompt<{ [key: string]: string }>({
+                    name: question.uri,
+                    type: "input",
+                    message: question.message,
+                    validate: expression => {
+                      if (expression === "") {
+                        return true;
+                      }
+
+                      const nodes = [
+                        ...evaluate(page.document, expression, {
+                          composed: true,
+                          nested: true
+                        })
+                      ];
+
+                      if (nodes.length === 1) {
+                        return true;
+                      }
+
+                      return "Invalid XPath expression";
+                    }
+                  })
+                  .then(answer => {
+                    const expression = answer[question.uri];
+
+                    const node = first(
+                      evaluate(page.document, expression, {
+                        composed: true,
+                        nested: true
+                      })
+                    );
+
+                    settle(Option.of(question.answer(node)));
+                  })
+                  .catch(() => {
+                    settle(None);
+                  });
+              });
+            }
+
+            return Future.settle(None);
+          });
       }
+
+      return Future.settle(None);
+    };
+
+    const audit = Rules.reduce(
+      (audit, rule) => audit.add(rule as Rule<Page, unknown, Question>),
+      Audit.of(page, oracle)
     );
-  } catch (err) {
-    throw err;
-  } finally {
-    scraper.close();
-  }
 
-  const audit = Rules.reduce((audit, rule) => audit.add(rule), Audit.of(page));
+    const outcomes = await audit.evaluate();
 
-  const outcomes = audit.evaluate();
+    // if (args.outcomes !== null) {
+    //   results = [...results].filter(result =>
+    //     args.outcomes!.includes(result.outcome)
+    //   );
+    // }
 
-  // if (args.outcomes !== null) {
-  //   results = [...results].filter(result =>
-  //     args.outcomes!.includes(result.outcome)
-  //   );
-  // }
+    let output = await report(outcomes, formatter(flags.format));
 
-  let output = await report(outcomes, formatter(args.format));
+    output += "\n";
 
-  output += "\n";
-
-  if (args.output === undefined) {
-    process.stdout.write(output);
-  } else {
-    fs.writeFileSync(args.output, output);
+    if (flags.output === undefined) {
+      process.stdout.write(output);
+    } else {
+      fs.writeFileSync(flags.output, output);
+    }
   }
 }
 
@@ -139,10 +206,10 @@ async function report<I, T, Q>(
 function formatter<I, T, Q>(format: string): Formatter<I, T, Q> {
   switch (format) {
     case "earl":
-      return Formatters.EARL();
+      return Formatter.EARL();
 
     case "json":
-      return Formatters.JSON();
+      return Formatter.JSON();
 
     default:
       try {

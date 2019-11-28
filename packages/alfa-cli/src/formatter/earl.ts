@@ -1,6 +1,6 @@
 import { expand } from "@siteimprove/alfa-json-ld";
 
-import { Formatter } from "../types";
+import { Formatter } from "../formatter";
 
 const { stringify } = JSON;
 
