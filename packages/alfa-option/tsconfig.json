@@ -21,6 +21,9 @@
       "path": "../alfa-functor"
     },
     {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-mapper"
     },
     {
