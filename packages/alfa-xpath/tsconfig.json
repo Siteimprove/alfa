@@ -16,12 +16,11 @@
     "src/matches.ts",
     "src/parse.ts",
     "src/serialize.ts",
-    "src/tree.ts",
+    "src/walk.ts",
     "src/types.ts",
     "test/alphabet.spec.ts",
     "test/evaluate.spec.tsx",
-    "test/grammar.spec.ts",
-    "test/tree.spec.tsx"
+    "test/grammar.spec.ts"
   ],
   "references": [
     {

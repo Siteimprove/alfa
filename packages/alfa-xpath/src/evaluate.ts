@@ -1,28 +1,26 @@
 import {
-  isAttribute,
-  isComment,
-  isDocument,
-  isElement,
-  isText,
-  Node,
-  traverseNode
+  Attribute,
+  Comment,
+  Document,
+  Element,
+  Text,
+  Node
 } from "@siteimprove/alfa-dom";
 import { ExpressionBuilder } from "./builder";
 import { coerceItems } from "./coerce";
-import { boolean, integer, node, numeric, string } from "./descriptors";
+import * as d from "./descriptors";
 import { Environment, Focus, withFocus } from "./environment";
 import { lookupFunction } from "./function";
 import { functions } from "./functions";
 import * as g from "./guards";
 import { matches } from "./matches";
 import { parse } from "./parse";
-import { getTree, Tree, walkTree } from "./tree";
 import * as t from "./types";
 import { Expression, Item, Type, Value } from "./types";
+import { walk } from "./walk";
 
 export function* evaluate(
   scope: Node,
-  context: Node,
   expression: string | Expression | ExpressionBuilder,
   options: evaluate.Options = {}
 ): Iterable<Node> {
@@ -40,32 +38,26 @@ export function* evaluate(
     expression = expression.expression;
   }
 
-  const tree = getTree(scope, context, options);
-
-  if (tree === null) {
-    return;
-  }
-
-  const environment: Environment<Tree<Node>> = {
+  const environment: Environment<Node> = {
     focus: {
-      type: node(),
-      value: tree,
+      type: d.node(),
+      value: scope,
       position: 1
     },
     functions
   };
 
-  const branches = evaluateExpression(expression, environment, options);
+  const items = evaluateExpression(expression, environment, options);
 
-  for (const branch of branches) {
-    if (matches(branch, node())) {
-      yield branch.value.node;
+  for (const item of items) {
+    if (matches(item, d.node())) {
+      yield item.value;
     }
   }
 }
 
 export namespace evaluate {
-  export type Options = traverseNode.Options;
+  export interface Options extends Node.Traversal {}
 }
 
 function* evaluateExpression<T extends Item.Value>(
@@ -115,16 +107,16 @@ function* evaluatePathExpression<T extends Item.Value>(
     );
   }
 
-  const hasNode = result.some(item => matches(item, node()));
+  const hasNode = result.some(item => matches(item, d.node()));
 
   if (hasNode) {
     const seen = new Set<Node>();
-    const nodes: Array<Item<Tree>> = [];
+    const nodes: Array<Item<Node>> = [];
 
     for (const item of result) {
-      if (matches(item, node())) {
-        if (!seen.has(item.value.node)) {
-          seen.add(item.value.node);
+      if (matches(item, d.node())) {
+        if (!seen.has(item.value)) {
+          seen.add(item.value);
           nodes.push(item);
         }
       } else {
@@ -145,68 +137,62 @@ function* evaluateAxisExpression<T extends Item.Value>(
 ): Iterable<Item> {
   const focus: Item = environment.focus;
 
-  if (!matches(focus, node())) {
+  if (!matches(focus, d.node())) {
     return;
   }
 
   let position = 1;
 
-  loop: for (const branch of walkTree(focus.value, expression.axis)) {
+  loop: for (const node of walk(focus.value, expression.axis)) {
     if (expression.test !== null) {
       const { test } = expression;
 
       if (g.isKindTest(test)) {
         switch (test.kind) {
           case "document-node":
-            if (!isDocument(branch.node)) {
+            if (!Document.isDocument(node)) {
               continue loop;
             }
             break;
 
           case "element":
-            if (!isElement(branch.node)) {
+            if (!Element.isElement(node)) {
               continue loop;
             }
 
-            if (
-              test.name !== null &&
-              branch.node.localName !== test.name.toLowerCase()
-            ) {
+            if (test.name !== null && node.name !== test.name.toLowerCase()) {
               continue loop;
             }
             break;
 
           case "attribute":
-            if (!isAttribute(branch.node)) {
+            if (!Attribute.isAttribute(node)) {
               continue loop;
             }
 
-            if (
-              test.name !== null &&
-              branch.node.localName !== test.name.toLowerCase()
-            ) {
+            if (test.name !== null && node.name !== test.name.toLowerCase()) {
               continue loop;
             }
             break;
 
           case "comment":
-            if (!isComment(branch.node)) {
+            if (!Comment.isComment(node)) {
               continue loop;
             }
             break;
 
           case "text":
-            if (!isText(branch.node)) {
+            if (!Text.isText(node)) {
               continue loop;
             }
         }
       } else {
-        if (!isElement(branch.node) && !isAttribute(branch.node)) {
+        if (!Element.isElement(node) && !Attribute.isAttribute(node)) {
           continue loop;
         }
 
         if (
-          branch.node.localName !== test.name.toLowerCase() ||
+          node.name !== test.name.toLowerCase() ||
           test.prefix !== undefined
         ) {
           continue loop;
@@ -214,15 +200,9 @@ function* evaluateAxisExpression<T extends Item.Value>(
       }
     }
 
-    const item = {
-      type: node(),
-      value: branch
-    };
+    const item = { type: d.node(), value: node };
 
-    const focus = {
-      ...item,
-      position: position++
-    };
+    const focus = { ...item, position: position++ };
 
     for (const predicate of expression.predicates) {
       const keep = evaluatePredicate(
@@ -284,7 +264,10 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
   switch (fn.result.type) {
     case "*":
     case "+": {
-      const result = as(fn.apply(environment, ...parameters), fn.result);
+      const result = as(
+        fn.apply(environment, options, ...parameters),
+        fn.result
+      );
 
       for (const value of result) {
         yield { type: fn.result.properties.descriptor, value };
@@ -294,7 +277,10 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
     }
 
     case "?": {
-      const result = as(fn.apply(environment, ...parameters), fn.result);
+      const result = as(
+        fn.apply(environment, options, ...parameters),
+        fn.result
+      );
 
       if (result !== undefined) {
         yield { type: fn.result.properties.descriptor, value: result };
@@ -304,7 +290,10 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
     }
 
     default:
-      const result = as(fn.apply(environment, ...parameters), fn.result);
+      const result = as(
+        fn.apply(environment, options, ...parameters),
+        fn.result
+      );
 
       yield { type: fn.result, value: result };
   }
@@ -316,7 +305,7 @@ function* evaluateLiteralExpression<T extends Item.Value>(
   options: evaluate.Options
 ): Iterable<Item> {
   if (g.isIntegerLiteralExpression(expression)) {
-    yield { type: integer(), value: expression.value };
+    yield { type: d.integer(), value: expression.value };
   }
 }
 
@@ -334,20 +323,20 @@ function evaluatePredicate<T extends Item.Value>(
     case 1:
       const [item] = result;
 
-      if (matches(item, boolean())) {
+      if (matches(item, d.boolean())) {
         return item.value;
       }
 
-      if (matches(item, string())) {
+      if (matches(item, d.string())) {
         return item.value.length !== 0;
       }
 
-      if (matches(item, numeric())) {
+      if (matches(item, d.numeric())) {
         return item.value === environment.focus.position;
       }
   }
 
-  return matches(result[0], node());
+  return matches(result[0], d.node());
 }
 
 function* evaluateContextItemExpression<T extends Item.Value>(

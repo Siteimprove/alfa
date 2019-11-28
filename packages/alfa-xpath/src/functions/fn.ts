@@ -1,23 +1,18 @@
+import { Node } from "@siteimprove/alfa-dom";
+
 import { node } from "../descriptors";
 import { Function } from "../function";
-import { Tree } from "../tree";
 
 export namespace fn {
   const prefix = "fn";
 
-  export const root: Function<[Tree], Tree> = {
+  export const root: Function<[Node], Node> = {
     prefix,
     name: "root",
     parameters: [node()],
     result: node(),
-    apply(environment, tree) {
-      let root = tree;
-
-      while (root.parent !== null) {
-        root = root.parent;
-      }
-
-      return root;
+    apply(environment, options, node) {
+      return node.root(options);
     }
   };
 }

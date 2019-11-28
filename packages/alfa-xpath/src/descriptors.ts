@@ -1,5 +1,4 @@
 import * as dom from "@siteimprove/alfa-dom";
-import { Tree } from "./tree";
 
 /**
  * @internal
@@ -51,8 +50,8 @@ export namespace Descriptors {
   export type Double = Descriptor<"double", number>;
   export type Boolean = Descriptor<"boolean", boolean>;
 
-  export type Node = Descriptor<"node", Tree<dom.Node>>;
-  export type Element = Descriptor<"element", Tree<dom.Element>>;
+  export type Node = Descriptor<"node", dom.Node>;
+  export type Element = Descriptor<"element", dom.Element>;
 
   export type Sequence<D extends Descriptor> = Descriptor<
     "*" | "+",

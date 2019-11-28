@@ -10,5 +10,5 @@ export * from "./guards";
 export * from "./matches";
 export * from "./parse";
 export * from "./serialize";
-export * from "./tree";
 export * from "./types";
+export * from "./walk";

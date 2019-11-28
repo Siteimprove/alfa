@@ -1,11 +1,12 @@
 import { Environment } from "./environment";
+import { evaluate } from "./evaluate";
 import { Item, TypeFor, Value } from "./types";
 
 /**
  * @internal
  */
 export interface Function<
-  P extends [...Array<Value>] = [...Array<Value>],
+  P extends Array<Value> = Array<Value>,
   R extends Value = Value
 > {
   readonly prefix: string;
@@ -13,14 +14,18 @@ export interface Function<
   readonly parameters: Function.Parameters<P>;
   readonly result: Function.Result<R>;
 
-  apply<T extends Item.Value>(environment: Environment<T>, ...parameters: P): R;
+  apply<T extends Item.Value>(
+    environment: Environment<T>,
+    options: evaluate.Options,
+    ...parameters: P
+  ): R;
 }
 
 /**
  * @internal
  */
 export namespace Function {
-  export type Parameters<V extends [...Array<Value>]> = {
+  export type Parameters<V extends Array<Value>> = {
     readonly [P in keyof V]: V[P] extends Value ? TypeFor<V[P]> : never;
   };
 
