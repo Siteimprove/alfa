@@ -11,6 +11,17 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 import { Branch, Empty, Leaf, Node } from "./node";
 
+const {
+  filter,
+  reduce,
+  join,
+  concat,
+  find,
+  includes,
+  subtract,
+  intersect
+} = Iterable;
+
 export class List<T>
   implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equality<List<T>> {
   public static of<T>(...values: Array<T>): List<T> {
@@ -59,11 +70,11 @@ export class List<T>
   }
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return Iterable.reduce(this, reducer, accumulator);
+    return reduce(this, reducer, accumulator);
   }
 
   public concat(iterable: Iterable<T>): List<T> {
-    return Iterable.reduce<T, List<T>>(
+    return reduce<T, List<T>>(
       iterable,
       (list, value) => list.push(value),
       this
@@ -71,23 +82,23 @@ export class List<T>
   }
 
   public includes(value: T): boolean {
-    return Iterable.includes(this, value);
+    return includes(this, value);
   }
 
   public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return Iterable.find(this, predicate);
+    return find(this, predicate);
   }
 
   public filter<U extends T>(predicate: Predicate<T, U>): List<T> {
-    return List.from(Iterable.filter(this, predicate));
+    return List.from(filter(this, predicate));
   }
 
   public subtract(list: List<T>): List<T> {
-    return List.from(Iterable.subtract(this, list));
+    return List.from(subtract(this, list));
   }
 
   public intersect(list: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, list));
+    return List.from(intersect(this, list));
   }
 
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, Iterable<T>> {
@@ -102,6 +113,10 @@ export class List<T>
           .push(value)
       );
     }, Map.empty<K, List<T>>());
+  }
+
+  public join(separator: string): string {
+    return join(this, separator);
   }
 
   public get(index: number): Option<T> {
@@ -332,11 +347,17 @@ export class List<T>
   }
 
   public *[Symbol.iterator](): Iterator<T> {
-    yield* Iterable.concat(this.head, this.tail);
+    yield* concat(this.head, this.tail);
   }
 
   public toJSON() {
     return [...this];
+  }
+
+  public toString(): string {
+    const values = this.join(", ");
+
+    return `List [${values === "" ? "" : ` ${values} `}]`;
   }
 }
 
