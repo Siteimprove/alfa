@@ -10,6 +10,13 @@ export type Predicate<
   | ((value: T, ...args: A) => value is U);
 
 export namespace Predicate {
+  export function test<T>(predicate: Predicate<T>, value: T): boolean;
+
+  export function test<T, U extends T>(
+    predicate: Predicate<T, U>,
+    value: T
+  ): value is U;
+
   export function test<T, U extends T>(
     predicate: Predicate<T, U>,
     value: T
