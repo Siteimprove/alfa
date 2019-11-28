@@ -1,9 +1,13 @@
+import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
+import { Browser } from "@siteimprove/alfa-compatibility";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
@@ -190,6 +194,66 @@ export namespace Role {
 
   export function lookup<N extends string>(name: N): Option<Role<N>> {
     return roles.get(name) as Option<Role<N>>;
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/#attr-aria-role
+   */
+  export function from(
+    element: Element,
+    options: from.Options = {}
+  ): Branched<Option<Role>, Browser> {
+    const role = element.attribute("role").map(attr => attr.value.trim());
+
+    return (
+      Branched.of<Option<string>, Browser>(role.map(role => role.toLowerCase()))
+
+        // Firefox currently treats the `role` attribute as case-sensitive so it
+        // is not lowercased.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
+        .branch(role, ...Browser.query(["firefox"]))
+
+        .map(role =>
+          role
+            .andThen(role => {
+              if (options.explicit !== false) {
+                for (const name of role.split(/\s+/)) {
+                  const role = Role.lookup(name);
+
+                  if (
+                    role
+                      .filter(role => role.category !== Role.Category.Abstract)
+                      .isSome()
+                  ) {
+                    return role;
+                  }
+                }
+              }
+
+              return None;
+            })
+            .orElse(() => {
+              if (options.implicit !== false) {
+                return element.namespace.flatMap(namespace => {
+                  const feature = Feature.lookup(namespace, element.name);
+
+                  return feature.flatMap(feature =>
+                    feature.role(element).flatMap(Role.lookup)
+                  );
+                });
+              }
+
+              return None;
+            })
+        )
+    );
+  }
+
+  export namespace from {
+    export interface Options {
+      readonly explicit?: boolean;
+      readonly implicit?: boolean;
+    }
   }
 }
 

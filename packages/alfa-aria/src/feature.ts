@@ -1,17 +1,11 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import {
-  Element,
-  getAttribute,
-  getClosest,
-  getInputType,
-  getParentElement,
-  InputType,
-  Namespace,
-  Node
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { getRole } from "./get-role";
+import { Role } from "./role";
+
+const { and, equals, test } = Predicate;
 
 export class Feature<N extends string = string> {
   public static of<N extends string>(
@@ -38,7 +32,7 @@ export class Feature<N extends string = string> {
 }
 
 export namespace Feature {
-  export type Aspect<T> = (element: Element, context: Node) => T;
+  export type Aspect<T> = (element: Element) => T;
 
   export interface Status {
     readonly obsolete: boolean;
@@ -66,15 +60,15 @@ export namespace Feature {
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("a", (anchor, context) =>
-    getAttribute(anchor, context, "href").map(() => "link")
+  Feature.of("a", element =>
+    element.attribute("href").isSome() ? Option.of("link") : None
   )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("area", (area, context) =>
-    getAttribute(area, context, "href").map(() => "link")
+  Feature.of("area", element =>
+    element.attribute("href").isSome() ? Option.of("link") : None
   )
 );
 
@@ -124,8 +118,17 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("footer", (footer, context) =>
-    getClosest(footer, context, "article, aside, main, nav, section").isNone()
+  Feature.of("footer", element =>
+    element
+      .closest(
+        and(Element.isElement, element =>
+          test(
+            equals("article", "aside", "main", "nav", "section"),
+            element.name
+          )
+        )
+      )
+      .isNone()
       ? Option.of("contentinfo")
       : None
   )
@@ -147,8 +150,17 @@ Feature.register(Namespace.HTML, Feature.of("h6", () => Option.of("heading")));
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("header", (footer, context) =>
-    getClosest(footer, context, "article, aside, main, nav, section").isNone()
+  Feature.of("header", element =>
+    element
+      .closest(
+        and(Element.isElement, element =>
+          test(
+            equals("article", "aside", "main", "nav", "section"),
+            element.name
+          )
+        )
+      )
+      .isNone()
       ? Option.of("banner")
       : None
   )
@@ -161,56 +173,54 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", (img, context) =>
-    getAttribute(img, context, "alt")
-      .filter(alt => alt !== "")
-      .and(Option.of("img"))
-      .or(Option.of("presentation"))
+  Feature.of("img", element =>
+    Option.of(
+      element
+        .attribute("alt")
+        .filter(alt => alt.value !== "")
+        .isSome()
+        ? "img"
+        : "presentation"
+    )
   )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("input", (input, context) =>
-    getInputType(input, context).flatMap(inputType => {
-      switch (inputType) {
-        case InputType.Button:
-        case InputType.Image:
-        case InputType.Reset:
-        case InputType.Submit:
+  Feature.of("input", element =>
+    element.attribute("type").flatMap(type => {
+      switch (type.value.toLowerCase()) {
+        case "button":
+        case "image":
+        case "reset":
+        case "submit":
           return Option.of("button");
 
-        case InputType.Checkbox:
+        case "checkbox":
           return Option.of("checkbox");
 
-        case InputType.Number:
+        case "number":
           return Option.of("spinbutton");
 
-        case InputType.Radio:
+        case "radio":
           return Option.of("radio");
 
-        case InputType.Range:
+        case "range":
           return Option.of("slider");
 
-        case InputType.Search:
+        case "search":
           return Option.of(
-            getAttribute(input, context, "list").isSome()
-              ? "combobox"
-              : "searchbox"
+            element.attribute("list").isSome() ? "combobox" : "searchbox"
           );
 
-        case InputType.Email:
-        case InputType.Tel:
-        case InputType.Text:
-        case InputType.Url:
-          return Option.of(
-            getAttribute(input, context, "list").isSome()
-              ? "combobox"
-              : "textbox"
-          );
-
+        case "email":
+        case "tel":
+        case "text":
+        case "url":
         default:
-          return None;
+          return Option.of(
+            element.attribute("list").isSome() ? "combobox" : "textbox"
+          );
       }
     })
   )
@@ -218,17 +228,20 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("li", (li, context) =>
-    getParentElement(li, context).flatMap(parentElement => {
-      switch (parentElement.localName) {
-        case "ol":
-        case "ul":
-        case "menu":
-          return Option.of("listitem");
-      }
+  Feature.of("li", element =>
+    element
+      .parent()
+      .filter(Element.isElement)
+      .flatMap(parent => {
+        switch (parent.name) {
+          case "ol":
+          case "ul":
+          case "menu":
+            return Option.of("listitem");
+        }
 
-      return None;
-    })
+        return None;
+      })
   )
 );
 
@@ -252,10 +265,16 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("option", (option, context) =>
-    getClosest(option, context, "select, optgroup, datalist").and(
-      Option.of("option")
-    )
+  Feature.of("option", element =>
+    element
+      .closest(
+        and(Element.isElement, element =>
+          test(equals("select", "optgroup", "datalist"), element.name)
+        )
+      )
+      .isSome()
+      ? Option.of("option")
+      : None
   )
 );
 
@@ -276,11 +295,12 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("select", (select, context) => {
+  Feature.of("select", element => {
     if (
-      getAttribute(select, context, "multiple").isSome() &&
-      getAttribute(select, context, "size")
-        .filter(size => parseInt(size) > 1)
+      element.attribute("multiple").isSome() &&
+      element
+        .attribute("size")
+        .filter(size => parseInt(size.value) > 1)
         .isSome()
     ) {
       return Option.of("listbox");
@@ -299,21 +319,23 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("td", (td, context) =>
-    getClosest(td, context, "table").flatMap(table => {
-      for (const [role] of getRole(table, context)) {
-        if (role.isSome()) {
-          switch (role.get().name) {
-            case "table":
-              return Option.of("cell");
-            case "grid":
-              return Option.of("gridcell");
+  Feature.of("td", element =>
+    element
+      .closest(and(Element.isElement, element => element.name === "table"))
+      .flatMap(table => {
+        for (const [role] of Role.from(table)) {
+          if (role.isSome()) {
+            switch (role.get().name) {
+              case "table":
+                return Option.of("cell");
+              case "grid":
+                return Option.of("gridcell");
+            }
           }
         }
-      }
 
-      return None;
-    })
+        return None;
+      })
   )
 );
 
@@ -329,9 +351,9 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("th", (th, context) =>
-    getAttribute(th, context, "scope").flatMap(scope => {
-      switch (scope) {
+  Feature.of("th", element =>
+    element.attribute("scope").flatMap(scope => {
+      switch (scope.value.toLowerCase()) {
         case "row":
         case "rowgroup":
           return Option.of("RowHeader");
@@ -356,10 +378,8 @@ Feature.register(Namespace.HTML, Feature.of("ul", () => Option.of("list")));
 
 Feature.register(
   Namespace.SVG,
-  Feature.of("a", (element, context) =>
-    getAttribute(element, context, "href")
-      .and(Option.of("link"))
-      .or(Option.of("group"))
+  Feature.of("a", element =>
+    Option.of(element.attribute("href").isSome() ? "link" : "group")
   )
 );
 

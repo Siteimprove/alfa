@@ -3,12 +3,8 @@
   "files": [
     "src/attribute.ts",
     "src/feature.ts",
-    "src/get-owner-element.ts",
-    "src/get-role.ts",
     "src/get-accessible-name.ts",
     "src/index.ts",
-    "src/is-exposed.ts",
-    "src/is-visible.ts",
     "src/resolve-references.ts",
     "src/role.ts",
     "src/role/abstract/command.ts",
@@ -95,11 +91,7 @@
     "src/role/widget/tree.ts",
     "src/role/window/alert-dialog.ts",
     "src/role/window/dialog.ts",
-    "test/get-owner-element.spec.tsx",
-    "test/get-role.spec.tsx",
     "test/get-accessible-name.spec.tsx",
-    "test/is-exposed.spec.tsx",
-    "test/is-visible.spec.tsx",
     "test/resolve-references.spec.tsx"
   ],
   "references": [

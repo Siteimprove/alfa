@@ -1,12 +1,9 @@
-import {
-  Element,
-  getId,
-  isElement,
-  Node,
-  querySelector
-} from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+const { isElement } = Element;
+const { find } = Iterable;
 const { and } = Predicate;
 
 /**
@@ -14,16 +11,14 @@ const { and } = Predicate;
  */
 export function resolveReferences(
   node: Node,
-  context: Node,
   references: string
 ): Array<Element> {
   const elements: Array<Element> = [];
 
   for (const id of references.trim().split(/\s+/)) {
-    const element = querySelector(
+    const element = find(
       node,
-      context,
-      and(isElement, element => getId(element, context).includes(id))
+      and(isElement, element => element.id.includes(id))
     );
 
     if (element.isSome()) {

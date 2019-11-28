@@ -1,50 +1,27 @@
 import { Branched } from "@siteimprove/alfa-branched";
+import { Style } from "@siteimprove/alfa-css";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Element,
-  getAttribute,
-  getChildNodes,
-  getElementNamespace,
-  getInputType,
-  getLabel,
-  getRootNode,
-  getTextContent,
-  InputType,
-  isElement,
-  isText,
-  Namespace,
-  Node,
-  querySelector,
-  Text
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { getRole } from "./get-role";
-import { isVisible } from "./is-visible";
+
+import { Role } from "./role";
 import { resolveReferences } from "./resolve-references";
 
-const { equals, test } = Predicate;
+const { isElement } = Element;
+const { isText } = Text;
+const { find, isEmpty } = Iterable;
+const { and, or, not, equals, test } = Predicate;
 
 /**
  * Get the computed accessible text alternative of an element.
  *
- * @see https://www.w3.org/TR/accname/
- *
- * @example
- * const button = <button>Foo</button>;
- * getTextAlternative(button, <section>{button}</section>);
- * // => "Foo"
- *
- * @example
- * const img = <img alt="Foo" src="foo.png" />;
- * getTextAlternative(img, <section>{img}</section>);
- * // => "Foo"
+ * @see https://w3c.github.io/accname/
  */
 export function getAccessibleName(
   node: Element | Text,
-  context: Node,
   device: Device
 ): Branched<Option<string>, Browser>;
 
@@ -53,18 +30,16 @@ export function getAccessibleName(
  */
 export function getAccessibleName(
   node: Element | Text,
-  context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options?: getTextAlternative.Options
+  options?: getAccessibleName.Options
 ): Branched<Option<string>, Browser>;
 
 export function getAccessibleName(
   node: Element | Text,
-  context: Node,
   device: Device,
   visited: Set<Element | Text> = new Set(),
-  options: getTextAlternative.Options = {}
+  options: getAccessibleName.Options = {}
 ): Branched<Option<string>, Browser> {
   if (visited.has(node) && options.revisiting !== true) {
     return Branched.of(None);
@@ -73,7 +48,7 @@ export function getAccessibleName(
   visited.add(node);
 
   // https://www.w3.org/TR/accname/#step2A
-  if (!isVisible(node, context, device) && options.referencing !== true) {
+  if (!isRendered(node, device) && options.referencing !== true) {
     return Branched.of(None);
   }
 
@@ -89,32 +64,22 @@ export function getAccessibleName(
 
   return (
     // https://www.w3.org/TR/accname/#step2B
-    getAriaLabelledbyTextAlternative(node, context, device, visited, options)
+    getAriaLabelledbyTextAlternative(node, device, visited, options)
       // https://www.w3.org/TR/accname/#step2C
       .map(alt =>
-        alt.orElse(() =>
-          getAriaLabelTextAlternative(node, context, visited, options)
-        )
+        alt.orElse(() => getAriaLabelTextAlternative(node, visited, options))
       )
       // https://www.w3.org/TR/accname/#step2D
       .flatMap(alt => {
         if (alt.isNone()) {
-          return getRole(node, context, { implicit: false }).flatMap(role => {
+          return Role.from(node, { implicit: false }).flatMap(role => {
             if (
-              role
-                .filter(role => test(equals("presentation", "none"), role.name))
-                .isSome()
+              role.some(role => test(equals("presentation", "none"), role.name))
             ) {
               return Branched.of(None);
             }
 
-            return getNativeTextAlternative(
-              node,
-              context,
-              device,
-              visited,
-              options
-            );
+            return getNativeTextAlternative(node, device, visited, options);
           });
         }
 
@@ -129,7 +94,6 @@ export function getAccessibleName(
 
           return getEmbeddedControlTextAlternative(
             node,
-            context,
             device,
             visited,
             options
@@ -142,7 +106,7 @@ export function getAccessibleName(
       // https://www.w3.org/TR/accname/#step2G
       .flatMap(alt => {
         if (alt.isNone()) {
-          return getRole(node, context).flatMap(role => {
+          return Role.from(node).flatMap(role => {
             if (
               role
                 .filter(role => role.hasNameFrom(equals("contents")))
@@ -151,13 +115,7 @@ export function getAccessibleName(
               options.descending === true ||
               isNativeTextAlternativeElement(node)
             ) {
-              return getSubtreeTextAlternative(
-                node,
-                context,
-                device,
-                visited,
-                options
-              );
+              return getSubtreeTextAlternative(node, device, visited, options);
             }
 
             return Branched.of(None);
@@ -169,14 +127,15 @@ export function getAccessibleName(
 
       // https://www.w3.org/TR/accname/#step2I
       .map(alt =>
-        alt.orElse(() =>
-          getTooltipTextAlternative(node, context, visited, options)
-        )
+        alt.orElse(() => getTooltipTextAlternative(node, visited, options))
       )
   );
 }
 
-namespace getTextAlternative {
+/**
+ * @internal
+ */
+namespace getAccessibleName {
   export interface Options {
     recursing?: boolean;
     referencing?: boolean;
@@ -186,17 +145,15 @@ namespace getTextAlternative {
   }
 }
 
-const whitespace = /\s+/g;
-
 /**
  * Return a flattened and trimmed version of a string.
  *
  * @see https://www.w3.org/TR/accname/#terminology
  */
-function flatten(string: string, options: getTextAlternative.Options): string {
+function flatten(string: string, options: getAccessibleName.Options): string {
   return options.recursing === true
     ? string
-    : string.replace(whitespace, " ").trim();
+    : string.replace(/\s+/g, " ").trim();
 }
 
 /**
@@ -205,31 +162,28 @@ function flatten(string: string, options: getTextAlternative.Options): string {
  */
 function getAriaLabelledbyTextAlternative(
   element: Element,
-  context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Branched<Option<string>, Browser> {
-  const labelledBy = getAttribute(element, context, "aria-labelledby").getOr(
-    null
-  );
+  const labelledBy = element.attribute("aria-labelledby");
 
   if (
-    labelledBy === null ||
-    labelledBy === "" ||
+    labelledBy.isNone() ||
+    labelledBy.filter(not(isEmpty)).isNone() ||
     options.referencing === true
   ) {
     return Branched.of(None);
   }
 
-  const rootNode = getRootNode(element, context);
-
   return Branched.sequence(
-    Iterable.map(resolveReferences(rootNode, context, labelledBy), element =>
-      getAccessibleName(element, context, device, visited, {
-        recursing: true,
-        referencing: true
-      })
+    Iterable.map(
+      resolveReferences(element.root(), labelledBy.get().value),
+      element =>
+        getAccessibleName(element, device, visited, {
+          recursing: true,
+          referencing: true
+        })
     )
   ).map(alts =>
     Iterable.reduce<Option<string>>(
@@ -249,13 +203,13 @@ function getAriaLabelledbyTextAlternative(
  */
 function getAriaLabelTextAlternative(
   element: Element,
-  context: Node,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Option<string> {
-  return getAttribute(element, context, "aria-label")
-    .filter(label => label !== "")
-    .map(label => flatten(label, options));
+  return element
+    .attribute("aria-label")
+    .filter(label => label.value !== "")
+    .map(label => flatten(label.value, options));
 }
 
 /**
@@ -263,32 +217,17 @@ function getAriaLabelTextAlternative(
  */
 function getNativeTextAlternative(
   element: Element,
-  context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Branched<Option<string>, Browser> {
-  const namespace = getElementNamespace(element, context);
-
-  if (namespace.isSome()) {
-    switch (namespace.get()) {
+  if (element.namespace.isSome()) {
+    switch (element.namespace.get()) {
       case Namespace.HTML:
-        return getHtmlTextAlternative(
-          element,
-          context,
-          device,
-          visited,
-          options
-        );
+        return getHtmlTextAlternative(element, device, visited, options);
 
       case Namespace.SVG:
-        return getSvgTextAlternative(
-          element,
-          context,
-          device,
-          visited,
-          options
-        );
+        return getSvgTextAlternative(element, device, visited, options);
     }
   }
 
@@ -296,19 +235,18 @@ function getNativeTextAlternative(
 }
 
 /**
- * @see https://www.w3.org/TR/html-aam/#accessible-name-and-description-computation
+ * @see https://w3c.github.io/html-aam/#accessible-name-and-description-computation
  */
 function getHtmlTextAlternative(
   element: Element,
-  context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Branched<Option<string>, Browser> {
-  const label = getLabel(element, context);
+  const label = getLabel(element);
 
   if (label.isSome()) {
-    return getAccessibleName(label.get(), context, device, visited, {
+    return getAccessibleName(label.get(), device, visited, {
       recursing: true,
       labelling: true,
       // https://github.com/w3c/accname/issues/48
@@ -316,62 +254,76 @@ function getHtmlTextAlternative(
     });
   }
 
-  switch (element.localName) {
+  switch (element.name) {
     case "input":
       return Branched.of(
-        getInputType(element, context).flatMap(type => {
-          switch (type) {
-            // https://www.w3.org/TR/html-aam/#input-type-button-input-type-submit-and-input-type-reset
-            case InputType.Button:
-            case InputType.Submit:
-            case InputType.Reset:
-              return getAttribute(element, context, "value")
-                .andThen(value =>
-                  value === "" ? None : Some.of(flatten(value, options))
-                )
-                .orElse(() => {
-                  if (type === InputType.Submit) {
-                    return Some.of("Submit");
-                  }
+        element
+          .attribute("type")
+          .map(type => type.value)
+          .flatMap(type => {
+            switch (type) {
+              // https://w3c.github.io/html-aam/#input-type-button-input-type-submit-and-input-type-reset
+              case "button":
+              case "submit":
+              case "reset":
+                return element
+                  .attribute("value")
+                  .andThen(value =>
+                    value.value === ""
+                      ? None
+                      : Some.of(flatten(value.value, options))
+                  )
+                  .orElse(() => {
+                    if (type === "submit") {
+                      return Some.of("Submit");
+                    }
 
-                  if (type === InputType.Reset) {
-                    return Some.of("Reset");
-                  }
+                    if (type === "reset") {
+                      return Some.of("Reset");
+                    }
 
-                  return None;
-                });
+                    return None;
+                  });
 
-            // https://www.w3.org/TR/html-aam/#input-type-image
-            case InputType.Image:
-            default:
-              return getAttribute(element, context, "alt")
-                .andThen(alt =>
-                  alt === "" ? None : Some.of(flatten(alt, options))
-                )
-                .orElse(() => getAttribute(element, context, "value"))
-                .andThen(value =>
-                  value === "" ? None : Some.of(flatten(value, options))
-                );
-          }
-        })
+              // https://w3c.github.io/html-aam/#input-type-image
+              case "image":
+              default:
+                return element
+                  .attribute("alt")
+                  .andThen(alt =>
+                    alt.value === ""
+                      ? None
+                      : Some.of(flatten(alt.value, options))
+                  )
+                  .orElse(() =>
+                    element.attribute("value").map(attr => attr.value)
+                  )
+                  .andThen(value =>
+                    value === "" ? None : Some.of(flatten(value, options))
+                  );
+            }
+          })
       );
 
-    // https://www.w3.org/TR/html-aam/#fieldset-and-legend-elements
+    // https://w3c.github.io/html-aam/#fieldset-and-legend-elements
     case "fieldset":
-      return querySelector(element, context, "legend")
+      return find(element, and(isElement, element => element.name === "legend"))
         .map(legend =>
-          getAccessibleName(legend, context, device, visited, {
+          getAccessibleName(legend, device, visited, {
             recursing: true,
             descending: true
           })
         )
         .getOrElse(() => Branched.of(None));
 
-    // https://www.w3.org/TR/html-aam/#figure-and-figcaption-elements
+    // https://w3c.github.io/html-aam/#figure-and-figcaption-elements
     case "figure": {
-      return querySelector(element, context, "figcaption")
+      return find(
+        element,
+        and(isElement, element => element.name === "figcaption")
+      )
         .map(caption =>
-          getAccessibleName(caption, context, device, visited, {
+          getAccessibleName(caption, device, visited, {
             recursing: true,
             descending: true
           })
@@ -379,24 +331,26 @@ function getHtmlTextAlternative(
         .getOrElse(() => Branched.of(None));
     }
 
-    // https://www.w3.org/TR/html-aam/#img-element
+    // https://w3c.github.io/html-aam/#img-element
     case "img":
     // https://github.com/w3c/html-aam/issues/176
     case "area":
       return Branched.of(
-        getAttribute(element, context, "alt").flatMap(alt =>
-          alt === "" ? None : Some.of(flatten(alt, options))
-        )
+        element
+          .attribute("alt")
+          .flatMap(alt =>
+            alt.value === "" ? None : Some.of(flatten(alt.value, options))
+          )
       );
 
-    // https://www.w3.org/TR/html-aam/#table-element
+    // https://w3c.github.io/html-aam/#table-element
     case "table":
       return Branched.of(
-        querySelector(element, context, "caption").map(caption =>
-          flatten(
-            getTextContent(caption, context, { flattened: true }),
-            options
-          )
+        find(
+          element,
+          and(isElement, element => element.name === "caption")
+        ).map(caption =>
+          flatten(caption.textContent({ flattened: true }), options)
         )
       );
   }
@@ -409,32 +363,36 @@ function getHtmlTextAlternative(
  */
 function getSvgTextAlternative(
   element: Element,
-  context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Branched<Option<string>, Browser> {
-  if (element.localName === "title") {
-    return Branched.of(
-      Some.of(flatten(getTextContent(element, context), options))
-    );
+  if (element.name === "title") {
+    return Branched.of(Option.of(flatten(element.textContent(), options)));
   }
 
-  const title = querySelector(element, context, ":scope > title");
+  const title = find(
+    element.children(),
+    and(isElement, child => child.name === "title")
+  );
 
   if (title.isSome()) {
-    return getAccessibleName(title.get(), context, device, visited, {
+    return getAccessibleName(title.get(), device, visited, {
       recursing: true,
       descending: true
     });
   }
 
-  switch (element.localName) {
+  switch (element.name) {
     case "a":
       return Branched.of(
-        getAttribute(element, context, "xlink:title").flatMap(title =>
-          title === "" ? None : Some.of(flatten(title, options))
-        )
+        element
+          .attribute(
+            attr => attr.name === "title" && attr.prefix.includes("xlink")
+          )
+          .flatMap(title =>
+            title.value === "" ? None : Some.of(flatten(title.value, options))
+          )
       );
   }
 
@@ -446,37 +404,37 @@ function getSvgTextAlternative(
  */
 function getEmbeddedControlTextAlternative(
   element: Element,
-  context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Branched<Option<string>, Browser> {
-  return getRole(element, context).flatMap(role =>
+  return Role.from(element).flatMap(role =>
     role
       .map<Branched<Option<string>, Browser>>(role => {
         switch (role.name) {
           case "button":
-            return getAccessibleName(element, context, device, visited, {
+            return getAccessibleName(element, device, visited, {
               recursing: true,
               revisiting: true
             });
 
           case "textbox":
-            switch (element.localName) {
+            switch (element.name) {
               case "input":
                 return Branched.of(
-                  getAttribute(element, context, "value").flatMap(value =>
-                    value === "" ? None : Some.of(flatten(value, options))
-                  )
+                  element
+                    .attribute("value")
+                    .flatMap(value =>
+                      value.value === ""
+                        ? None
+                        : Some.of(flatten(value.value, options))
+                    )
                 );
 
               default:
                 return Branched.of(
-                  Some.of(
-                    flatten(
-                      getTextContent(element, context, { flattened: true }),
-                      options
-                    )
+                  Option.of(
+                    flatten(element.textContent({ flattened: true }), options)
                   )
                 );
             }
@@ -494,19 +452,18 @@ function getEmbeddedControlTextAlternative(
  */
 function getSubtreeTextAlternative(
   element: Element,
-  context: Node,
   device: Device,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Branched<Option<string>, Browser> {
   const childNodes = Iterable.filter(
-    getChildNodes(element, context, { flattened: true }),
-    Predicate.or(isElement, isText)
+    element.children({ flattened: true }),
+    or(isElement, isText)
   );
 
   const childTextAlternatives = Branched.sequence(
     Iterable.map(childNodes, childNode =>
-      getAccessibleName(childNode, context, device, visited, {
+      getAccessibleName(childNode, device, visited, {
         recursing: true,
         descending: true,
         // https://github.com/w3c/accname/issues/48
@@ -547,13 +504,101 @@ function getSubtreeTextAlternative(
  */
 function getTooltipTextAlternative(
   element: Element,
-  context: Node,
   visited: Set<Element | Text>,
-  options: getTextAlternative.Options
+  options: getAccessibleName.Options
 ): Option<string> {
-  return getAttribute(element, context, "title").flatMap(title =>
-    title === "" ? None : Some.of(flatten(title, options))
-  );
+  return element
+    .attribute("title")
+    .flatMap(title =>
+      title.value === "" ? None : Some.of(flatten(title.value, options))
+    );
+}
+
+/**
+ * @see https://html.spec.whatwg.org/#category-label
+ */
+function isLabelable(element: Element): boolean {
+  switch (element.name) {
+    case "button":
+    case "meter":
+    case "output":
+    case "progress":
+    case "select":
+    case "textarea":
+      return true;
+
+    case "input":
+      return element
+        .attribute("type")
+        .every(attr => attr.value.toLowerCase() !== "hidden");
+  }
+
+  return false;
+}
+
+/**
+ * @see https://html.spec.whatwg.org/#labeled-control
+ */
+function getLabel(element: Element): Option<Element> {
+  if (!isLabelable(element)) {
+    return None;
+  }
+
+  return element.id
+    .andThen(id => {
+      if (id !== "") {
+        const root = element.root();
+
+        if (root !== element) {
+          const label = find(
+            root,
+            and(
+              Element.isElement,
+              element =>
+                element.name === "label" &&
+                element.attribute("for").some(attr => attr.value === id)
+            )
+          );
+
+          return label.filter(label => {
+            const target = find(
+              root,
+              and(Element.isElement, element => element.id.includes(id))
+            );
+
+            return target.includes(element);
+          });
+        }
+      }
+
+      return None;
+    })
+    .orElse(() =>
+      element.closest(
+        and(Element.isElement, element => element.name === "label")
+      )
+    );
+}
+
+/**
+ * @see https://www.w3.org/TR/accname/#dfn-hidden
+ */
+function isRendered(node: Node, device: Device): boolean {
+  if (Element.isElement(node)) {
+    const display = Style.from(node).cascaded("display");
+
+    if (display.isSome()) {
+      const [outside] = display.get().value;
+
+      if (outside.value === "none") {
+        return false;
+      }
+    }
+  }
+
+  return node
+    .parent({ flattened: true })
+    .every(parent => isRendered(parent, device));
 }
 
 /**
@@ -562,10 +607,10 @@ function getTooltipTextAlternative(
  * API Mappings specification as elements whose text alternative can be
  * computed from their subtree as well as <label> elements.
  *
- * @see https://www.w3.org/TR/html-aam/#accessible-name-and-description-computation
+ * @see https://w3c.github.io/html-aam/#accessible-name-and-description-computation
  */
 function isNativeTextAlternativeElement(element: Element): boolean {
-  switch (element.localName) {
+  switch (element.name) {
     case "label":
     case "a":
     case "button":
@@ -584,10 +629,10 @@ function isNativeTextAlternativeElement(element: Element): boolean {
  * text level elements, such as anchors, are handled elsewhere and are therefore
  * not considered by this function.
  *
- * @see https://www.w3.org/TR/html-aam/#text-level-elements-not-listed-elsewhere
+ * @see https://w3c.github.io/html-aam/#text-level-elements-not-listed-elsewhere
  */
 function isTextLevelElement(element: Element): boolean {
-  switch (element.localName) {
+  switch (element.name) {
     case "abbr":
     case "b":
     case "bdi":

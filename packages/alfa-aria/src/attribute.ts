@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import { Cache } from "@siteimprove/alfa-cache";
 import { Equality } from "@siteimprove/alfa-equality";
 import { None, Option } from "@siteimprove/alfa-option";
