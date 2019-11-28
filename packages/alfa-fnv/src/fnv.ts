@@ -24,6 +24,6 @@ export class FNV implements Hash {
   }
 
   public finish(): number {
-    return this.hash >>> 0;
+    return this.hash >>> 0; // Convert to unsigned 32-bit integer
   }
 }
