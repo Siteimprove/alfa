@@ -1,7 +1,11 @@
 import { Functor } from "@siteimprove/alfa-functor";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
+
+const { reduce } = Iterable;
 
 export class Future<T> implements Monad<T>, Functor<T> {
   public static of<T>(settler: (settle: Future.Settle<T>) => void): Future<T> {
@@ -89,26 +93,14 @@ export namespace Future {
     values: Iterable<T>,
     mapper: Mapper<T, Future<U>>
   ): Future<Iterable<U>> {
-    const input = Array.from(values);
-
-    return Future.of<Iterable<U>>(settle => {
-      let settled: Array<U> = [];
-      let unsettled = input.length;
-
-      for (let i = 0, n = input.length; i < n; i++) {
-        handle(mapper(input[i]), i++);
-      }
-
-      function handle(future: Future<U>, i: number) {
-        future.map(value => {
-          settled[i] = value;
-
-          if (--unsettled === 0) {
-            settle(settled);
-          }
-        });
-      }
-    });
+    return reduce(
+      values,
+      (values, value) =>
+        values.flatMap(values =>
+          mapper(value).map(value => values.push(value))
+        ),
+      Future.settle(List.empty())
+    );
   }
 
   export function sequence<T>(
