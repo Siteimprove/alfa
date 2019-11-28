@@ -1,11 +1,14 @@
-import { Outcome, Rule } from "@siteimprove/alfa-act";
-import * as dom from "@siteimprove/alfa-dom";
+import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
+import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
+import { Future } from "@siteimprove/alfa-future";
 import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Rules } from "@siteimprove/alfa-rules";
 import * as web from "@siteimprove/alfa-web";
+
+const { find, reduce } = Iterable;
 
 export namespace Assert {
   export class Error<T> implements Equality<Error<T>> {
@@ -37,79 +40,35 @@ export namespace Assert {
     }
   }
 
-  export function doesNotFail<I, T>(
-    input: I,
-    rule: Rule<I, T>
-  ): Option<Error<T>> {
-    return Iterable.find(
-      rule.evaluate(input),
-      (outcome): outcome is Outcome.Failed<I, T> => Outcome.isFailed(outcome)
-    ).map(outcome => {
-      const { target, expectations } = outcome;
-
-      const reasons = Iterable.reduce(
-        expectations,
-        (reasons, [id, expectation]) =>
-          expectation.isErr() ? reasons.push(expectation.getErr()) : reasons,
-        List.empty<string>()
-      );
-
-      return Error.of(target, reasons);
-    });
-  }
-
-  export function doesNotPass<I, T>(
-    input: I,
-    rule: Rule<I, T>
-  ): Option<Error<T>> {
-    return Iterable.find(
-      rule.evaluate(input),
-      (outcome): outcome is Outcome.Passed<I, T> => Outcome.isPassed(outcome)
-    ).map(outcome => {
-      const { target, expectations } = outcome;
-
-      const reasons = Iterable.reduce(
-        expectations,
-        (reasons, [id, expectation]) =>
-          expectation.isOk() ? reasons.push(expectation.get()) : reasons,
-        List.empty<string>()
-      );
-
-      return Error.of(target, reasons);
-    });
-  }
-
   export namespace Page {
-    export type Target = dom.Document | dom.Element | dom.Attribute;
+    export type Target = Document | Element | Attribute | Iterable<Element>;
 
     export function isAccessible(
       page: web.Page,
       scope: Iterable<Rule<web.Page, Target>> = Rules.values()
-    ): Option<Error<Target>> {
-      for (const rule of scope) {
-        const error = doesNotFail(page, rule);
+    ): Future<Option<Error<Target>>> {
+      const audit = reduce(
+        scope,
+        (audit, rule) => audit.add(rule),
+        Audit.of(page)
+      );
 
-        if (error.isSome()) {
-          return error;
-        }
-      }
+      return audit.evaluate().map(outcomes =>
+        find(outcomes, (outcome): outcome is Outcome.Failed<web.Page, Target> =>
+          Outcome.isFailed(outcome)
+        ).map(outcome => {
+          const { target, expectations } = outcome;
 
-      return None;
-    }
+          const reasons = reduce(
+            expectations,
+            (reasons, [id, expectation]) =>
+              expectation.isOk() ? reasons.push(expectation.get()) : reasons,
+            List.empty<string>()
+          );
 
-    export function isNotAccessible(
-      page: web.Page,
-      scope: Iterable<Rule<web.Page, Target>> = Rules.values()
-    ): Option<Error<Target>> {
-      for (const rule of scope) {
-        const error = doesNotPass(page, rule);
-
-        if (error.isSome()) {
-          return error;
-        }
-      }
-
-      return None;
+          return Error.of(target, reasons);
+        })
+      );
     }
   }
 }

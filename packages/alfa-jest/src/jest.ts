@@ -19,20 +19,16 @@ export namespace Jest {
     transform: Mapper<T, Page>
   ): void {
     expect.extend({
-      toBeAccessible(value: unknown) {
+      async toBeAccessible(value: unknown) {
         if (identify(value)) {
           const page = transform(value);
 
-          const error = Assert.Page.isAccessible(page);
-
-          if (error.isSome()) {
-            const message = error.toString();
-
+          return await Assert.Page.isAccessible(page).map(error => {
             return {
-              pass: false,
-              message: () => message
+              pass: error.isNone(),
+              message: () => ""
             };
-          }
+          });
         }
 
         return {

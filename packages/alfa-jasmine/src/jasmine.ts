@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 declare global {
   namespace jasmine {
     interface Matchers<T> {
-      toBeAccessible(): T;
+      toBeAccessible(): Promise<void>;
     }
   }
 }
@@ -20,23 +20,23 @@ export namespace Jasmine {
   ): void {
     beforeEach(() => {
       jasmine.addMatchers({
-        toBeAccessible(util) {
+        toBeAccessible(util): any {
           return {
-            compare(value: unknown) {
+            async compare(value: unknown) {
               if (identify(value)) {
                 const page = transform(value);
 
-                const error = Assert.Page.isAccessible(page);
-
-                return {
-                  pass: error.isNone(),
-                  message:
-                    util.buildFailureMessage(
-                      "toBeAccessible",
-                      error.isNone(),
-                      page
-                    ) + (error.isNone() ? "" : ` ${error.toString()}`)
-                };
+                return await Assert.Page.isAccessible(page).map(error => {
+                  return {
+                    pass: error.isNone(),
+                    message:
+                      util.buildFailureMessage(
+                        "toBeAccessible",
+                        error.isNone(),
+                        page
+                      ) + (error.isNone() ? "" : ` ${error.toString()}`)
+                  };
+                });
               }
 
               return {

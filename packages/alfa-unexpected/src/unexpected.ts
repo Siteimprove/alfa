@@ -41,9 +41,9 @@ export namespace Unexpected {
           (expect, subject) => {
             const page = transform(subject);
 
-            const error = Assert.Page.isAccessible(page);
-
-            expect(error.isNone(), "[not] to be", true);
+            return Assert.Page.isAccessible(page).map(error => {
+              expect(error.isNone(), "[not] to be", true);
+            });
           }
         );
       }

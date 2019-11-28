@@ -18,6 +18,8 @@ declare global {
   }
 }
 
+const { join } = Iterable;
+
 export namespace Chai {
   export function createPlugin<T>(
     identify: Predicate<unknown, T>,
@@ -28,21 +30,27 @@ export namespace Chai {
         const value = util.flag(this, "object");
 
         if (identify(value)) {
-          return transform(value).map(page => {
-            const error = Assert.Page.isAccessible(page).map(error => {
-              const reasons = Iterable.join(error.reasons, "; ");
+          return transform(value).map(page =>
+            Assert.Page.isAccessible(page)
+              .map(error =>
+                error.map(error => {
+                  const reasons = join(error.reasons, "; ");
 
-              return `, but ${util.inspect(error.target)} is not: ${reasons}`;
-            });
-
-            this.assert(
-              error.isNone(),
-              `expected #{this} to be accessible${error.getOr("")}`,
-              "expected #{this} to not be accessible",
-              null,
-              error
-            );
-          });
+                  return `, but ${util.inspect(
+                    error.target
+                  )} is not: ${reasons}`;
+                })
+              )
+              .map(error => {
+                this.assert(
+                  error.isNone(),
+                  `expected #{this} to be accessible${error.getOr("")}`,
+                  "expected #{this} to not be accessible",
+                  null,
+                  error
+                );
+              })
+          );
         }
       });
     };

@@ -15,11 +15,7 @@ export interface Page extends Resource {
 export namespace Page {
   export function of(page: Partial<Page>): Page {
     const {
-      document = {
-        nodeType: 9,
-        childNodes: [],
-        styleSheets: []
-      },
+      document = Document.of(self => []),
 
       device = Device.getDefaultDevice()
     } = page;
