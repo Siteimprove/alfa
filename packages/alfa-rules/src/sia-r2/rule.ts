@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -12,10 +12,8 @@ import { hasRole } from "../common/predicate/has-role";
 import { isDecorative } from "../common/predicate/is-decorative";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-import { walk } from "../common/walk";
-
 const { filter } = Iterable;
-const { and, or, not, equals, test } = Predicate;
+const { and, or, not, equals, property, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
@@ -23,16 +21,16 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return filter(
-          walk(document, document, { flattened: true, nested: true }),
+          document.descendants({ flattened: true, nested: true }),
           and(
-            isElement,
+            Element.isElement,
             and(
-              hasNamespace(document, equals(Namespace.HTML)),
+              hasNamespace(equals(Namespace.HTML)),
               or(
                 hasName(equals("img")),
                 and(
-                  hasRole(document, role => role.name === "img"),
-                  not(isIgnored(document, device))
+                  hasRole(property("name", equals("img"))),
+                  not(isIgnored(device))
                 )
               )
             )
@@ -42,10 +40,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(
-            or(isDecorative(document), hasAccessibleName(document, device)),
-            target
-          )
+          1: test(or(isDecorative, hasAccessibleName(device)), target)
             ? Ok.of(
                 "The image has an accessible name or is marked as decorative"
               )

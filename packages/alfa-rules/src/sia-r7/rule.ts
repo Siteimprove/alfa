@@ -1,10 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Attribute,
-  getAttributeNode,
-  isElement,
-  Namespace
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -14,13 +9,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { isEmpty } from "../common/predicate/is-empty";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
-import { walk } from "../common/walk";
-
-const { filter, first, map } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { filter, first, map, isEmpty } = Iterable;
+const { and, nor, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
@@ -29,26 +21,23 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return first(
           filter(
-            walk(document, document),
+            document.descendants(),
             and(
-              isElement,
-              and(
-                hasNamespace(document, equals(Namespace.HTML)),
-                hasName(equals("body"))
-              )
+              Element.isElement,
+              and(hasNamespace(equals(Namespace.HTML)), hasName(equals("body")))
             )
           )
         )
           .map(body =>
             map(
               filter(
-                walk(body, document),
+                body.descendants(),
                 and(
-                  isElement,
-                  hasAttribute(document, "lang", not(or(isEmpty, isWhitespace)))
+                  Element.isElement,
+                  hasAttribute("lang", nor(isEmpty, isWhitespace))
                 )
               ),
-              element => getAttributeNode(element, document, "lang").get()
+              element => element.attribute("lang").get()
             )
           )
           .getOr([]);

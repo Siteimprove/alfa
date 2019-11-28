@@ -1,36 +1,64 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { Video } from "../helpers/applicabilities/video";
-import { isPerceivable } from "../helpers/is-perceivable";
+import { video } from "../common/applicability/video";
 
-const { map } = BrowserSpecific;
+import { isPerceivable } from "../common/predicate/is-perceivable";
 
-export const SIA_R31: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r31.html",
-  evaluate: ({ device, document }) => {
+import { Question } from "../common/question";
+
+export default Rule.Atomic.of<Page, Element, Question>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r31.html",
+  evaluate({ device, document }) {
     return {
-      applicability: Video(document, device, { audio: { has: true } }),
+      applicability() {
+        return video(document, device, { audio: { has: true } });
+      },
 
-      expectations: (aspect, target, question) => {
-        const alt = question(QuestionType.Node, "text-alternative");
-        const label = question(QuestionType.Node, "label");
+      expectations(target) {
+        const alt = Question.of(
+          "text-alternative",
+          "node",
+          target,
+          "Where is the text alternative of the <video> element?"
+        );
 
-        return map(isPerceivable(alt, document, device), isAltPerceivable => {
-          return map(
-            isPerceivable(label, document, device),
-            isLabelPerceivable => {
-              return {
-                1: { holds: alt === null ? null : isAltPerceivable },
-                2: { holds: label === null ? null : true },
-                3: { holds: label === null ? null : isLabelPerceivable }
-              };
-            }
-          );
-        });
+        const label = Question.of(
+          "label",
+          "node",
+          target,
+          "Where is the text that labels the <video> element as a video alternative?"
+        );
+
+        return {
+          1: alt.map(alt =>
+            alt.isSome()
+              ? alt.filter(isPerceivable(device)).isSome()
+                ? Ok.of(
+                    "The <video> element has a text alternative that is perceivable"
+                  )
+                : Err.of(
+                    "The <video> element has a text alternative that is not perceivable"
+                  )
+              : Err.of("The <video> element has no text alternative")
+          ),
+          2: label.map(label =>
+            label.isSome()
+              ? label.filter(isPerceivable(device)).isSome()
+                ? Ok.of(
+                    "The <video> element is labelled as a video alternative and the label is perceivable"
+                  )
+                : Err.of(
+                    "The <video> element is labelled as a video alternative, but the label is not perceivable"
+                  )
+              : Err.of(
+                  "The <video> element is not labelled as a video alternative"
+                )
+          )
+        };
       }
     };
   }
-};
+});

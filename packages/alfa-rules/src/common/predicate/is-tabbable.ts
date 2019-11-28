@@ -1,8 +1,42 @@
-import { Node, Element } from "@siteimprove/alfa-dom";
-import * as dom from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function isTabbable(context: Node, device: Device): Predicate<Element> {
-  return element => dom.isTabbable(element, context, device);
+import { hasTabIndex } from "./has-tab-index";
+import { isInert } from "./is-inert";
+
+const { and, nor } = Predicate;
+
+/**
+ * @see https://html.spec.whatwg.org/#sequential-focus-navigation
+ */
+export function isTabbable(device: Device): Predicate<Element> {
+  return and(
+    hasTabIndex(tabIndex => tabIndex >= 0),
+    nor(redirectsFocus, isInert(device))
+  );
 }
+
+const redirectsFocus: Predicate<Element> = element => {
+  if (element.namespace.includes(Namespace.HTML)) {
+    switch (element.name) {
+      // Per the sequential navigation search algorithm, browsing context
+      // containers (<iframe> elements) redirect focus to either their first
+      // focusable descendant or the next element in the sequential focus
+      // navigation order.
+      //
+      // https://html.spec.whatwg.org/#browsing-context-container
+      // https://html.spec.whatwg.org/#sequential-navigation-search-algorithm
+      case "iframe":
+        return true;
+
+      // <label> elements redirect focus to their control.
+      //
+      // https://html.spec.whatwg.org/#the-label-element
+      case "label":
+        return true;
+    }
+  }
+
+  return false;
+};

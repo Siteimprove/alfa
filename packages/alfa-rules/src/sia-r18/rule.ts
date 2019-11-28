@@ -1,16 +1,16 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import * as aria from "@siteimprove/alfa-aria";
-import { Attribute, getOwnerElement, isElement } from "@siteimprove/alfa-dom";
+import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
+import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-import { walk } from "../common/walk";
 import { Ok, Err } from "@siteimprove/alfa-result";
 
 const { filter, flatMap } = Iterable;
@@ -27,12 +27,12 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return flatMap(
           filter(
-            walk(document, document, { flattened: true, nested: true }),
-            and(isElement, not(isIgnored(document, device)))
+            document.descendants({ flattened: true, nested: true }),
+            and(Element.isElement, not(isIgnored(device)))
           ),
           element =>
-            filter(Iterable.from(element.attributes), attribute =>
-              aria.Attribute.lookup(attribute.localName).isSome()
+            filter(element.attributes, attribute =>
+              aria.Attribute.lookup(attribute.name).isSome()
             )
         );
       },
@@ -40,14 +40,10 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1:
-            global.has(target.localName) ||
+            global.has(target.name) ||
             test(
-              hasRole(document, role =>
-                role.isAllowed(attribute =>
-                  test(equals(target.localName), attribute.name)
-                )
-              ),
-              getOwnerElement(target, document).get()
+              hasRole(role => role.isAllowed(hasName(equals(target.name)))),
+              target.owner.get()
             )
               ? Ok.of(
                   "The attribute is allowed for the element on which it is specified"

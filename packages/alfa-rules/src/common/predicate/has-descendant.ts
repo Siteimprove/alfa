@@ -1,10 +1,12 @@
-import { contains, Node } from "@siteimprove/alfa-dom";
+import { Node } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function hasDescendant<T extends Node>(
-  context: Node,
-  predicate: Predicate<Node, T>,
-  options: contains.Options = {}
+const { some } = Iterable;
+
+export function hasDescendant(
+  predicate: Predicate<Node>,
+  options: Node.Traversal = {}
 ): Predicate<Node> {
-  return node => contains(node, context, predicate, options);
+  return node => some(node.descendants(options), predicate);
 }

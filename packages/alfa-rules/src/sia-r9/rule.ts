@@ -1,11 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Element,
-  getAttribute,
-  isElement,
-  Namespace,
-  Node
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -15,8 +9,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
-
-import { walk } from "../common/walk";
 
 const { filter, first } = Iterable;
 const { and, equals } = Predicate;
@@ -28,8 +20,25 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return first(
           filter(
-            walk(document, document),
-            and(isElement, isValidMetaRefresh(document))
+            document.descendants(),
+            and(
+              Element.isElement,
+              and(
+                hasNamespace(equals(Namespace.HTML)),
+                and(
+                  hasName(equals("meta")),
+                  and(
+                    hasAttribute(
+                      "http-equiv",
+                      value => value.toLowerCase() === "refresh"
+                    ),
+                    hasAttribute("content", value =>
+                      getRefreshTime(value).isSome()
+                    )
+                  )
+                )
+              )
+            )
           )
         )
           .map(meta => [meta])
@@ -38,7 +47,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         const refreshTime = getRefreshTime(
-          getAttribute(target, document, "content").get()
+          target.attribute("content").get().value
         ).get();
 
         return {
@@ -53,25 +62,6 @@ export default Rule.Atomic.of<Page, Element>({
     };
   }
 });
-
-function isValidMetaRefresh(context: Node): Predicate<Element> {
-  return and(
-    hasNamespace(context, equals(Namespace.HTML)),
-    and(
-      hasName(equals("meta")),
-      and(
-        hasAttribute(
-          context,
-          "http-equiv",
-          equiv => equiv.toLowerCase() === "refresh"
-        ),
-        hasAttribute(context, "content", content =>
-          getRefreshTime(content).isSome()
-        )
-      )
-    )
-  );
-}
 
 const whitespace = /\s/;
 const digit = /\d/;

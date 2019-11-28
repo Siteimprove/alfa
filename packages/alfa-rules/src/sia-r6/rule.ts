@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, getAttribute, isElement, Node } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,11 +8,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
-import { isEmpty } from "../common/predicate/is-empty";
 
-import { walk } from "../common/walk";
-
-const { filter } = Iterable;
+const { filter, isEmpty } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -21,14 +18,14 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return filter(
-          walk(document, document),
+          document.children(),
           and(
-            isElement,
+            Element.isElement,
             and(
-              isDocumentElement(document),
+              isDocumentElement(),
               and(
-                hasValidLanguageAttribute(document),
-                hasAttribute(document, "xml:lang", not(isEmpty))
+                hasAttribute("lang", value => Language.from(value).isSome()),
+                hasAttribute("xml:lang", not(isEmpty))
               )
             )
           )
@@ -36,13 +33,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const lang = Language.from(
-          getAttribute(target, document, "lang").get()
-        ).get();
-
-        const xmlLang = Language.from(
-          getAttribute(target, document, "xml:lang").get()
-        );
+        const lang = Language.from(target.attribute("lang").get().value).get();
+        const xmlLang = Language.from(target.attribute("xml:lang").get().value);
 
         return {
           1:
@@ -59,10 +51,3 @@ export default Rule.Atomic.of<Page, Element>({
     };
   }
 });
-
-function hasValidLanguageAttribute(context: Node): Predicate<Element> {
-  return element =>
-    getAttribute(element, context, "lang")
-      .flatMap(Language.from)
-      .isSome();
-}

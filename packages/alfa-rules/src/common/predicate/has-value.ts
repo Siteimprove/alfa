@@ -2,8 +2,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { property } = Predicate;
 
-export function hasName<T extends { readonly name: string }>(
+export function hasValue<T extends { readonly value: string }>(
   predicate: Predicate<string> = () => true
 ): Predicate<T> {
-  return property("name", predicate);
+  return property("value", predicate);
 }

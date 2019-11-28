@@ -1,33 +1,29 @@
-import { Composite, Outcome } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { hasOutcome } from "../helpers/has-outcome";
+import { Question } from "../common/question";
 
-import { SIA_R23 } from "../sia-r23/rule";
-import { SIA_R29 } from "../sia-r29/rule";
+import R23 from "../sia-r23/rule";
+import R29 from "../sia-r29/rule";
 
-export const SIA_R30: Composite.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r30.html",
-  requirements: [
-    {
-      requirement: "wcag",
-      criterion: "audio-only-and-video-only-prerecorded",
-      partial: true
-    }
-  ],
-  compose: composition => {
-    composition.add(SIA_R23).add(SIA_R29);
-  },
-  evaluate: () => {
+const { some } = Iterable;
+const { isPassed } = Outcome;
+
+export default Rule.Composite.of<Page, Element, Question>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r30.html",
+  composes: [R23, R29],
+  evaluate() {
     return {
-      expectations: results => {
+      expectations(outcomes) {
         return {
-          1: {
-            holds: hasOutcome(results, Outcome.Passed)
-          }
+          1: some(outcomes, isPassed)
+            ? Ok.of("The <audio> element has a text alternative")
+            : Err.of("The <audio> element has no text alternative")
         };
       }
     };
   }
-};
+});

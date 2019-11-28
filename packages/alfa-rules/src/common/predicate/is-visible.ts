@@ -1,11 +1,23 @@
+import { Style } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Node, Text } from "@siteimprove/alfa-dom";
-import * as dom from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function isVisible<T extends Element | Text>(
-  context: Node,
-  device: Device
-): Predicate<T> {
-  return node => dom.isVisible(node, context, device);
+import { isRendered } from "./is-rendered";
+import { isTransparent } from "./is-transparent";
+
+const { and, not } = Predicate;
+
+export function isVisible<T extends Node>(device: Device): Predicate<T> {
+  return and(and(isRendered(device), not(isTransparent(device))), node => {
+    if (Element.isElement(node)) {
+      const visibility = Style.from(node).computed("visibility");
+
+      if (visibility.some(visibility => visibility.value.value !== "visible")) {
+        return false;
+      }
+    }
+
+    return true;
+  });
 }

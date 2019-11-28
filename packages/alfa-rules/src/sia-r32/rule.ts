@@ -1,20 +1,24 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
+import { Rule } from "@siteimprove/alfa-act";
 import { Document, Element } from "@siteimprove/alfa-dom";
+import { Page } from "@siteimprove/alfa-web";
 
-import { Video } from "../helpers/applicabilities/video";
+import { video } from "../common/applicability/video";
 
-export const SIA_R32: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r32.html",
-  evaluate: ({ device, document }) => {
+import { Question } from "../common/question";
+
+export default Rule.Atomic.of<Page, Element, Question>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r32.html",
+  evaluate({ device, document }) {
     return {
-      applicability: Video(document, device, { audio: { has: false } }),
+      applicability() {
+        return video(document, device, { audio: { has: false } });
+      },
 
-      expectations: (aspect, target, question) => {
+      expectations(target) {
         return {
           1: { holds: question(QuestionType.Boolean, "has-audio-track") }
         };
       }
     };
   }
-};
+});

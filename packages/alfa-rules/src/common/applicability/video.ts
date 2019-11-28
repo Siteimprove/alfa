@@ -1,12 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  contains,
-  Document,
-  Element,
-  isElement,
-  Namespace
-} from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -16,9 +10,9 @@ import { hasNamespace } from "../predicate/has-namespace";
 import { isVisible } from "../predicate/is-visible";
 
 import { Question } from "../question";
-import { walk } from "../walk";
+import { hasAttribute } from "../predicate/has-attribute";
 
-const { filter, map } = Iterable;
+const { filter, map, some } = Iterable;
 const { and, equals } = Predicate;
 
 export function video(
@@ -30,19 +24,28 @@ export function video(
 
   return map(
     filter(
-      walk(document, document, { flattened: true, nested: true }),
+      document.descendants({ flattened: true, nested: true }),
       and(
-        isElement,
+        Element.isElement,
         and(
-          hasNamespace(document, equals(Namespace.HTML)),
+          hasNamespace(equals(Namespace.HTML)),
           and(
             hasName(equals("video")),
             and(
-              isVisible(document, device),
+              isVisible(device),
               element =>
                 track === undefined ||
                 track.has ===
-                  contains(element, document, `track[kind="${track.kind}"]`)
+                  some(
+                    element.children(),
+                    and(
+                      Element.isElement,
+                      and(
+                        hasName(equals("track")),
+                        hasAttribute("kind", equals(track.kind))
+                      )
+                    )
+                  )
             )
           )
         )

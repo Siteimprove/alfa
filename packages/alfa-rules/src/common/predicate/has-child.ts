@@ -1,13 +1,12 @@
-import { getChildNodes, Node } from "@siteimprove/alfa-dom";
+import { Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { some } = Iterable;
 
-export function hasChild<T extends Node>(
-  context: Node,
-  predicate: Predicate<Node, T>,
-  options: getChildNodes.Options = {}
+export function hasChild(
+  predicate: Predicate<Node>,
+  options: Node.Traversal = {}
 ): Predicate<Node> {
-  return node => some(getChildNodes(node, context, options), predicate);
+  return node => some(node.children(options), predicate);
 }

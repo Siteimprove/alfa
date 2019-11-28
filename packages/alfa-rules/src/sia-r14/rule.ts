@@ -1,13 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Element,
-  isElement,
-  isText,
-  Namespace,
-  Node
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -22,7 +16,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
-import { walk } from "../common/walk";
+import { hasCategory } from "../common/predicate/has-category";
 
 const { filter, map, join } = Iterable;
 const { and, not, equals, test } = Predicate;
@@ -33,32 +27,27 @@ export default Rule.Atomic.of<Page, Element, Question>({
     return {
       applicability() {
         return filter(
-          walk(document, document, { flattened: true, nested: true }),
+          document.descendants({ flattened: true, nested: true }),
           and(
-            isElement,
+            Element.isElement,
             and(
-              hasNamespace(document, equals(Namespace.HTML, Namespace.SVG)),
+              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
               and(
                 hasRole(
-                  document,
-                  role => role.category === Role.Category.Widget
+                  and(
+                    hasCategory(equals(Role.Category.Widget)),
+                    hasNameFrom(equals("content"))
+                  )
                 ),
                 and(
-                  hasRole(document, hasNameFrom(equals("content"))),
-                  and(
-                    hasDescendant(
-                      document,
-                      and(
-                        isText,
-                        and(
-                          isVisible(document, device),
-                          not(isIgnored(document, device))
-                        )
-                      ),
-                      { flattened: true }
+                  hasDescendant(
+                    and(
+                      Text.isText,
+                      and(isVisible(device), not(isIgnored(device)))
                     ),
-                    hasAccessibleName(document, device)
-                  )
+                    { flattened: true }
+                  ),
+                  hasAccessibleName(device)
                 )
               )
             )
@@ -67,10 +56,10 @@ export default Rule.Atomic.of<Page, Element, Question>({
       },
 
       expectations(target) {
-        const textContent = getVisibleTextContent(target, document, device);
+        const textContent = getVisibleTextContent(target, device);
 
         const accessibleNameIncludesTextContent = test(
-          hasAccessibleName(document, device, accessibleName =>
+          hasAccessibleName(device, accessibleName =>
             normalize(accessibleName).includes(textContent)
           ),
           target
@@ -108,17 +97,13 @@ function normalize(input: string): string {
     .replace(/\s+/g, " ");
 }
 
-function getVisibleTextContent(
-  node: Element | Text,
-  context: Node,
-  device: Device
-): string {
+function getVisibleTextContent(element: Element, device: Device): string {
   return normalize(
     join(
       map(
         filter(
-          walk(node, context, { flattened: true }),
-          and(isText, isVisible(context, device))
+          element.descendants({ flattened: true }),
+          and(Text.isText, isVisible(device))
         ),
         text => text.data
       ),

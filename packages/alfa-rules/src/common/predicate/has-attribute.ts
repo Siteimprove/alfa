@@ -1,13 +1,27 @@
-import { Element, getAttribute, Node } from "@siteimprove/alfa-dom";
+import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+const { property } = Predicate;
+
 export function hasAttribute(
-  context: Node,
-  attribute: string,
-  predicate: Predicate<string> = () => true
+  predicate: Predicate<Attribute>
+): Predicate<Element>;
+
+export function hasAttribute(
+  name: string,
+  value?: Predicate<string>
+): Predicate<Element>;
+
+export function hasAttribute(
+  nameOrPredicate: string | Predicate<Attribute>,
+  value: Predicate<string> = () => true
 ): Predicate<Element> {
-  return element =>
-    getAttribute(element, context, attribute)
-      .filter(predicate)
-      .isSome();
+  if (typeof nameOrPredicate === "function") {
+    return element => element.attribute(nameOrPredicate).isSome();
+  }
+
+  const name = nameOrPredicate;
+  const predicate = property<Attribute, "value">("value", value);
+
+  return element => element.attribute(name).some(predicate);
 }

@@ -1,24 +1,15 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { getRole } from "@siteimprove/alfa-aria";
-import {
-  Element,
-  getAttribute,
-  isElement,
-  Namespace,
-  Node
-} from "@siteimprove/alfa-dom";
+import { Role } from "@siteimprove/alfa-aria";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { isEmpty } from "../common/predicate/is-empty";
 
-import { walk } from "../common/walk";
-
-const { filter, find } = Iterable;
-const { and, not, equals, test } = Predicate;
+const { filter, find, isEmpty } = Iterable;
+const { and, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
@@ -26,22 +17,21 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return filter(
-          walk(document, document, { composed: true, nested: true }),
+          document.descendants({ composed: true, nested: true }),
           and(
-            isElement,
-            and(
-              hasNamespace(document, equals(Namespace.HTML, Namespace.SVG)),
-              element =>
-                getRole(element, document, { explicit: false })
-                  .flatMap(implicit =>
-                    getRole(element, document, { implicit: false }).map(
-                      explicit =>
-                        explicit.isSome() &&
-                        implicit.isSome() &&
-                        explicit.get().name === implicit.get().name
-                    )
+            Element.isElement,
+            and(hasNamespace(equals(Namespace.HTML, Namespace.SVG)), element =>
+              Role.from(element, { explicit: false })
+                .flatMap(implicit =>
+                  Role.from(element, { implicit: false }).map(
+                    explicit =>
+                      explicit.isSome() !== implicit.isSome() ||
+                      explicit.some(explicit =>
+                        implicit.some(implicit => explicit !== implicit)
+                      )
                   )
-                  .some(identical => !identical)
+                )
+                .some(different => different)
             )
           )
         );
@@ -49,7 +39,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(hasRequiredValues(document), target)
+          1: test(hasRequiredValues, target)
             ? Ok.of("The element has all required states and properties")
             : Err.of(
                 "The element does not have all required states and properties"
@@ -60,28 +50,22 @@ export default Rule.Atomic.of<Page, Element>({
   }
 });
 
-function hasRequiredValues(context: Node): Predicate<Element> {
-  return element => {
-    for (const [role] of getRole(element, context)) {
-      if (role.isSome()) {
-        const { requires, implicits } = role.get().characteristics;
+const hasRequiredValues: Predicate<Element> = element => {
+  for (const [role] of Role.from(element)) {
+    if (role.isSome()) {
+      const { requires, implicits } = role.get().characteristics;
 
-        for (const attribute of requires) {
-          if (find(implicits, implicit => implicit[0] === attribute).isSome()) {
-            continue;
-          }
+      for (const attribute of requires) {
+        if (find(implicits, implicit => implicit[0] === attribute).isSome()) {
+          continue;
+        }
 
-          if (
-            getAttribute(element, context, attribute)
-              .filter(not(isEmpty))
-              .isNone()
-          ) {
-            return false;
-          }
+        if (element.attribute(attribute).every(isEmpty)) {
+          return false;
         }
       }
     }
+  }
 
-    return true;
-  };
-}
+  return true;
+};

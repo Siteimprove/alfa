@@ -1,20 +1,38 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { Ok, Err } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { Video } from "../helpers/applicabilities/video";
+import { video } from "../common/applicability/video";
 
-export const SIA_R25: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r25.html",
-  evaluate: ({ device, document }) => {
+import { Question } from "../common/question";
+
+export default Rule.Atomic.of<Page, Element, Question>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r25.html",
+  evaluate({ device, document }) {
     return {
-      applicability: Video(document, device, { audio: { has: true } }),
+      applicability() {
+        return video(document, device, { audio: { has: true } });
+      },
 
-      expectations: (aspect, target, question) => {
+      expectations(target) {
         return {
-          1: { holds: question(QuestionType.Boolean, "has-description") }
+          1: Question.of(
+            "has-description",
+            "boolean",
+            target,
+            "Is the visual information of the <video> available through its audio or a separate audio description track?"
+          ).map(hasAudio => {
+            hasAudio
+              ? Ok.of(
+                  "The visual information of the <video> element is available through audio"
+                )
+              : Err.of(
+                  "The visual information of the <video> element is not available through audio"
+                );
+          })
         };
       }
     };
   }
-};
+});

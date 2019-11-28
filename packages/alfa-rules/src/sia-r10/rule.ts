@@ -1,34 +1,22 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
-import {
-  Attribute,
-  Element,
-  getAttributeNode,
-  getInputType,
-  getOwnerElement,
-  InputType,
-  isElement,
-  Namespace,
-  Node
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
+import { hasCategory } from "../common/predicate/has-category";
 import { hasInputType } from "../common/predicate/has-input-type";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { hasTabIndex } from "../common/predicate/has-tab-index";
-import { isEmpty } from "../common/predicate/is-empty";
 import { isIgnored } from "../common/predicate/is-ignored";
 import { isVisible } from "../common/predicate/is-visible";
 
-import { walk } from "../common/walk";
-
-const { filter, map } = Iterable;
+const { filter, map, isEmpty } = Iterable;
 const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -38,51 +26,33 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return map(
           filter(
-            walk(document, document, { flattened: true, nested: true }),
+            document.descendants({ flattened: true, nested: true }),
             and(
-              isElement,
+              Element.isElement,
               and(
-                hasAttribute(document, "autocomplete", not(isEmpty)),
+                hasAttribute("autocomplete", not(isEmpty)),
                 and(
-                  hasNamespace(document, equals(Namespace.HTML)),
+                  hasNamespace(equals(Namespace.HTML)),
                   and(
                     hasName(equals("input", "select", "textarea")),
                     and(
-                      or(
-                        isVisible(document, device),
-                        not(isIgnored(document, device))
-                      ),
+                      or(isVisible(device), not(isIgnored(device))),
                       and(
                         not(
                           and(
                             hasName(equals("input")),
                             hasInputType(
-                              document,
-                              equals(
-                                InputType.Hidden,
-                                InputType.Button,
-                                InputType.Submit,
-                                InputType.Reset
-                              )
+                              equals("hidden", "button", "submit", "reset")
                             )
                           )
                         ),
                         and(
-                          not(hasAttribute(document, "disabled")),
+                          not(hasAttribute("disabled")),
                           and(
-                            not(
-                              hasAttribute(
-                                document,
-                                "aria-disabled",
-                                equals("true")
-                              )
-                            ),
+                            not(hasAttribute("aria-disabled", equals("true"))),
                             or(
-                              hasTabIndex(document, tabIndex => tabIndex >= 0),
-                              hasRole(
-                                document,
-                                role => role.category === Role.Category.Widget
-                              )
+                              hasTabIndex(tabIndex => tabIndex >= 0),
+                              hasRole(hasCategory(equals(Role.Category.Widget)))
                             )
                           )
                         )
@@ -93,13 +63,13 @@ export default Rule.Atomic.of<Page, Attribute>({
               )
             )
           ),
-          element => getAttributeNode(element, document, "autocomplete").get()
+          element => element.attribute("autocomplete").get()
         );
       },
 
       expectations(target) {
         return {
-          1: test(isValidAutocomplete(document), target)
+          1: test(isValidAutocomplete(), target)
             ? Ok.of("The autocomplete attribute has a valid value")
             : Err.of("The autocomplete attribute does not have a valid value")
         };
@@ -108,7 +78,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   }
 });
 
-function isValidAutocomplete(context: Node): Predicate<Attribute> {
+function isValidAutocomplete(): Predicate<Attribute> {
   return autocomplete => {
     const tokens = autocomplete.value
       .toLowerCase()
@@ -214,68 +184,67 @@ function isValidAutocomplete(context: Node): Predicate<Attribute> {
       return false;
     }
 
-    return getOwnerElement(autocomplete, context)
-      .filter(isAppropriateField(context, field))
-      .isSome();
+    return autocomplete.owner.some(isAppropriateField(field));
   };
 }
 
-function isAppropriateField(context: Node, field: string): Predicate<Element> {
+function isAppropriateField(field: string): Predicate<Element> {
   return element => {
-    if (element.localName === "textarea" || element.localName === "select") {
+    if (element.name === "textarea" || element.name === "select") {
       return true;
     }
 
-    return getInputType(element, context)
-      .map(inputType => {
-        // If "street-address" is specified on an <input> element, it must be
-        // hidden.
-        if (field === "street-address") {
-          return inputType === InputType.Hidden;
-        }
+    const type = element
+      .attribute("type")
+      .map(attr => attr.value.toLowerCase())
+      .getOr("text");
 
-        // The remaining fields are always appropriate for these <input> types.
-        switch (inputType) {
-          case InputType.Hidden:
-          case InputType.Text:
-          case InputType.Search:
-            return true;
-        }
+    // If "street-address" is specified on an <input> element, it must be
+    // hidden.
+    if (field === "street-address") {
+      return type === "hidden";
+    }
 
-        // Non-text fields may also have additional <input> types.
-        switch (field) {
-          case "new-password":
-          case "current-password":
-            return inputType === InputType.Password;
+    // The remaining fields are always appropriate for these <input> types.
+    switch (type) {
+      case "hidden":
+      case "text":
+      case "search":
+        return true;
+    }
 
-          case "cc-exp":
-            return inputType === InputType.Month;
+    // Non-text fields may also have additional <input> types.
+    switch (field) {
+      case "new-password":
+      case "current-password":
+        return type === "password";
 
-          case "cc-exp-month":
-          case "cc-exp-year":
-          case "transaction-amount":
-          case "bday-day":
-          case "bday-month":
-          case "bday-year":
-            return inputType === InputType.Number;
+      case "cc-exp":
+        return type === "month";
 
-          case "bday":
-            return inputType === InputType.Date;
+      case "cc-exp-month":
+      case "cc-exp-year":
+      case "transaction-amount":
+      case "bday-day":
+      case "bday-month":
+      case "bday-year":
+        return type === "number";
 
-          case "url":
-          case "photo":
-          case "impp":
-            return inputType === InputType.Url;
+      case "bday":
+        return type === "date";
 
-          case "tel":
-            return inputType === InputType.Tel;
+      case "url":
+      case "photo":
+      case "impp":
+        return type === "url";
 
-          case "email":
-            return inputType === InputType.Email;
-        }
+      case "tel":
+        return type === "tel";
 
-        return false;
-      })
-      .getOr(false);
+      case "email":
+        return type === "email";
+    }
+
+    return false;
   };
 }

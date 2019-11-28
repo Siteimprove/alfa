@@ -8,12 +8,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { isEmpty } from "../common/predicate/is-empty";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { walk } from "../common/walk";
 
-const { filter } = Iterable;
+const { filter, isEmpty } = Iterable;
 const { and, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({

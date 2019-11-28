@@ -1,12 +1,11 @@
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+import { hasName } from "./has-name";
 import { hasRole } from "./has-role";
 
-const { equals, test } = Predicate;
+const { equals } = Predicate;
 
-export function isDecorative(context: Node): Predicate<Element> {
-  return hasRole(context, role =>
-    test(equals("presentation", "none"), role.name)
-  );
-}
+export const isDecorative: Predicate<Element> = hasRole(
+  hasName(equals("presentation", "none"))
+);

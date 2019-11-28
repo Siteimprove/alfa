@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Attribute, getAttributeNode, isElement } from "@siteimprove/alfa-dom";
+import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,13 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
-import { isEmpty } from "../common/predicate/is-empty";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
-import { walk } from "../common/walk";
-
-const { filter, map } = Iterable;
-const { and, or, not } = Predicate;
+const { filter, map, isEmpty } = Iterable;
+const { and, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r5.html",
@@ -23,16 +20,16 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return map(
           filter(
-            walk(document, document),
+            document.children(),
             and(
-              isElement,
+              Element.isElement,
               and(
-                isDocumentElement(document),
-                hasAttribute(document, "lang", not(or(isEmpty, isWhitespace)))
+                isDocumentElement(),
+                hasAttribute("lang", nor(isEmpty, isWhitespace))
               )
             )
           ),
-          element => getAttributeNode(element, document, "lang").get()
+          element => element.attribute("lang").get()
         );
       },
 

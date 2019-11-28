@@ -1,9 +1,10 @@
 import * as act from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
 
 export interface Question {
   boolean: boolean;
-  node: Node;
+  node: Option<Node>;
   "node[]": Iterable<Node>;
 }
 

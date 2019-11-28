@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, isElement, Node } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -9,10 +9,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
-import { walk } from "../common/walk";
-
 const { filter, some } = Iterable;
-const { and, not, nor, equals, test } = Predicate;
+const { and, nor, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r17.html",
@@ -20,18 +18,15 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return filter(
-          walk(document, document, { composed: true, nested: true }),
-          and(isElement, hasAttribute(document, "aria-hidden", equals("true")))
+          document.descendants({ composed: true, nested: true }),
+          and(Element.isElement, hasAttribute("aria-hidden", equals("true")))
         );
       },
 
       expectations(target) {
         return {
           1: test(
-            nor(
-              isTabbable(document, device),
-              hasTabbableDescendants(document, device)
-            ),
+            nor(isTabbable(device), hasTabbableDescendants(device)),
             target
           )
             ? Ok.of(
@@ -46,13 +41,10 @@ export default Rule.Atomic.of<Page, Element>({
   }
 });
 
-function hasTabbableDescendants(
-  context: Node,
-  device: Device
-): Predicate<Element> {
+function hasTabbableDescendants(device: Device): Predicate<Element> {
   return element =>
     some(
-      walk(element, document, { flattened: true }),
-      and(not(equals(element)), and(isElement, isTabbable(document, device)))
+      element.descendants({ flattened: true }),
+      and(Element.isElement, isTabbable(device))
     );
 }

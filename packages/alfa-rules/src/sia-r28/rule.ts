@@ -1,77 +1,42 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { getTextAlternative, isExposed } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  InputType,
-  Namespace,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { inputTypeIs, isElement, namespaceIs } from "../helpers/predicates";
+import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasInputType } from "../common/predicate/has-input-type";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+const { filter, isEmpty } = Iterable;
+const { and, not, equals, test } = Predicate;
 
-export const SIA_R28: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r28.html",
-  requirements: [
-    { requirement: "wcag", criterion: "non-text-content", partial: true },
-    { requirement: "wcag", criterion: "name-role-value", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+export default Rule.Atomic.of<Page, Element>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r28.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              Predicate.from(
-                isElement
-                  .and(inputTypeIs(InputType.Image))
-                  .and(namespaceIs(document, Namespace.HTML))
-              ),
-              {
-                flattened: true
-              }
-            ),
-            element => {
-              return isExposed(element, document, device);
-            }
-          ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
-          }
+      applicability() {
+        return filter(
+          document.descendants({ flattened: true, nested: true }),
+          and(
+            Element.isElement,
+            and(
+              hasNamespace(equals(Namespace.HTML)),
+              and(hasInputType(equals("image")), not(isIgnored(device)))
+            )
+          )
         );
       },
 
-      expectations: (aspect, target) => {
-        return map(
-          getTextAlternative(target, document, device),
-          textAlternative => {
-            return {
-              1: {
-                holds: textAlternative !== null && textAlternative !== "",
-                data: {
-                  alt: textAlternative
-                }
-              }
-            };
-          }
-        );
+      expectations(target) {
+        return {
+          1: test(hasAccessibleName(device, not(isEmpty)), target)
+            ? Ok.of(`The <input type="button"> element has an accessible name`)
+            : Err.of(`The <input type="button"> element has no accessible name`)
+        };
       }
     };
   }
-};
+});

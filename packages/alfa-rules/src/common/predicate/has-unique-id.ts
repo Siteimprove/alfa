@@ -1,22 +1,19 @@
-import { Element, Node } from "@siteimprove/alfa-dom";
-import { getId, getRootNode, isElement } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-
-import { walk } from "../walk";
 
 import { hasId } from "./has-id";
 
 const { find } = Iterable;
 const { and, not, equals } = Predicate;
 
-export function hasUniqueId(context: Node): Predicate<Element> {
+export function hasUniqueId(): Predicate<Element> {
   return element =>
-    getId(element, context)
+    element.id
       .flatMap(id =>
         find(
-          walk(getRootNode(element, context), context),
-          and(isElement, and(not(equals(element)), hasId(context, equals(id))))
+          element.root(),
+          and(Element.isElement, and(not(equals(element)), hasId(equals(id))))
         )
       )
       .isNone();

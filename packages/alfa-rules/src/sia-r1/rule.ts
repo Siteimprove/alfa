@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Document, isElement, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -11,17 +11,18 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
-import { walk } from "../common/walk";
-
 const { filter, first } = Iterable;
-const { and, equals } = Predicate;
+const { and, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r1.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return hasChild(document, and(isElement, isDocumentElement(document)))
+        return test(
+          hasChild(and(Element.isElement, isDocumentElement())),
+          document
+        )
           ? [document]
           : [];
       },
@@ -29,11 +30,11 @@ export default Rule.Atomic.of<Page, Document>({
       expectations(target) {
         const title = first(
           filter(
-            walk(target, document),
+            target.descendants(),
             and(
-              isElement,
+              Element.isElement,
               and(
-                hasNamespace(document, equals(Namespace.HTML)),
+                hasNamespace(equals(Namespace.HTML)),
                 hasName(equals("title"))
               )
             )
@@ -45,7 +46,7 @@ export default Rule.Atomic.of<Page, Document>({
             ? Ok.of("The document has at least one <title> element")
             : Err.of("The document does not have a <title> element"),
 
-          2: title.filter(hasTextContent(document)).isSome()
+          2: title.filter(hasTextContent()).isSome()
             ? Ok.of("The first <title> element has text content")
             : Err.of("The first <title> element has no text content")
         };

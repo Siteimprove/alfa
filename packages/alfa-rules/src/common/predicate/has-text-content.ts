@@ -1,7 +1,9 @@
 import { Node } from "@siteimprove/alfa-dom";
-import * as dom from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function hasTextContent(context: Node): Predicate<Node> {
-  return node => dom.hasTextContent(node, context);
+export function hasTextContent(
+  predicate: Predicate<string> = () => true,
+  options: Node.Traversal = {}
+): Predicate<Node> {
+  return node => predicate(node.textContent(options));
 }

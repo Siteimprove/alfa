@@ -1,15 +1,14 @@
 import { getAccessibleName } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Element, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-export function hasAccessibleName(
-  context: Node,
+export function hasAccessibleName<T extends Element | Text>(
   device: Device,
   predicate: Predicate<string> = () => true
-): Predicate<Element | Text> {
+): Predicate<T> {
   return node =>
-    getAccessibleName(node, context, device).some(accessibleName =>
+    getAccessibleName(node, device).some(accessibleName =>
       accessibleName.filter(predicate).isSome()
     );
 }

@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, isElement } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -7,11 +7,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { hasId } from "../common/predicate/has-id";
 import { hasUniqueId } from "../common/predicate/has-unique-id";
-import { isEmpty } from "../common/predicate/is-empty";
 
-import { walk } from "../common/walk";
-
-const { filter } = Iterable;
+const { filter, isEmpty } = Iterable;
 const { and, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -20,14 +17,14 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return filter(
-          walk(document, document, { composed: true, nested: true }),
-          and(isElement, hasId(document, not(isEmpty)))
+          document.descendants({ composed: true, nested: true }),
+          and(Element.isElement, hasId(not(isEmpty)))
         );
       },
 
       expectations(target) {
         return {
-          1: test(hasUniqueId(document), target)
+          1: test(hasUniqueId(), target)
             ? Ok.of("The element has a unique ID")
             : Err.of("The element does not have a unique ID")
         };

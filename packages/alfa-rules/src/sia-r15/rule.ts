@@ -1,12 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { getAccessibleName } from "@siteimprove/alfa-aria";
-import {
-  Element,
-  getAttribute,
-  getRootNode,
-  isElement,
-  Namespace
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -19,48 +13,42 @@ import { Page } from "@siteimprove/alfa-web";
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { isEmpty } from "../common/predicate/is-empty";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
-import { walk } from "../common/walk";
 
-const { filter, map, flatMap, groupBy, reduce } = Iterable;
+const { filter, map, flatMap, reduce, groupBy, isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
-  uri: "sanshikan:rules/sia-r15.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
   evaluate({ device, document }) {
     return {
       applicability() {
         const iframes = filter(
-          walk(document, document, { flattened: true, nested: true }),
+          document.descendants({ flattened: true, nested: true }),
           and(
-            isElement,
+            Element.isElement,
             and(
               hasName(equals("iframe")),
               and(
-                hasNamespace(document, equals(Namespace.HTML)),
+                hasNamespace(equals(Namespace.HTML)),
                 and(
-                  not(isIgnored(document, device)),
-                  hasAccessibleName(document, device, not(isEmpty))
+                  not(isIgnored(device)),
+                  hasAccessibleName(device, not(isEmpty))
                 )
               )
             )
           )
         );
 
-        const roots = groupBy(iframes, iframe => getRootNode(iframe, document));
+        const roots = groupBy(iframes, iframe => iframe.root());
 
         return flatMap(roots, ([root, iframes]) =>
           reduce(
             iframes,
             (groups, iframe) => {
-              for (const [name] of getAccessibleName(
-                iframe,
-                document,
-                device
-              )) {
+              for (const [name] of getAccessibleName(iframe, device)) {
                 groups = groups.set(
                   name,
                   groups
@@ -79,7 +67,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
       expectations(target) {
         const sources = Set.from(
-          map(target, iframe => getAttribute(iframe, document, "src"))
+          map(target, iframe => iframe.attribute("src"))
         );
 
         return {
