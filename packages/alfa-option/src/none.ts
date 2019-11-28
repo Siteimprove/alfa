@@ -13,15 +13,15 @@ export const None: None = new (class None {
     return true;
   }
 
-  public map(): this {
+  public map(): None {
     return this;
   }
 
-  public flatMap(): this {
+  public flatMap(): None {
     return this;
   }
 
-  public apply(): this {
+  public apply(): None {
     return this;
   }
 
@@ -41,15 +41,15 @@ export const None: None = new (class None {
     return true;
   }
 
-  public filter(): this {
+  public filter(): None {
     return this;
   }
 
-  public and(): this {
+  public and(): None {
     return this;
   }
 
-  public andThen(): this {
+  public andThen(): None {
     return this;
   }
 
@@ -76,6 +76,8 @@ export const None: None = new (class None {
   public equals(value: unknown): value is None {
     return value === this;
   }
+
+  public hash(): void {}
 
   public *[Symbol.iterator]() {}
 

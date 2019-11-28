@@ -379,8 +379,8 @@ function insert<T>(
     result[i] = array[i];
   }
 
-  for (let i = index + 1, n = result.length; i < n; i++) {
-    result[i] = array[i];
+  for (let i = index, n = array.length; i < n; i++) {
+    result[i + 1] = array[i];
   }
 
   return result;
@@ -394,7 +394,7 @@ function remove<T>(array: Readonly<Array<T>>, index: number): Array<T> {
   }
 
   for (let i = index, n = result.length; i < n; i++) {
-    result[i] = array[i];
+    result[i] = array[i + 1];
   }
 
   return result;

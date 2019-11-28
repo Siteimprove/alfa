@@ -1,5 +1,6 @@
 import { Equality } from "@siteimprove/alfa-equality";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Ok } from "./ok";
 import { Result } from "./result";
@@ -55,6 +56,10 @@ export class Err<E> implements Result<never, E> {
     return result();
   }
 
+  public get(): never {
+    throw new Error("Attempted to .get() from Err");
+  }
+
   public getErr(): E {
     return this.error;
   }
@@ -65,6 +70,14 @@ export class Err<E> implements Result<never, E> {
 
   public getOrElse<U>(value: Thunk<U>): U {
     return value();
+  }
+
+  public ok(): None {
+    return None;
+  }
+
+  public err(): Option<E> {
+    return Option.of(this.error);
   }
 
   public equals(value: unknown): value is Err<E> {

@@ -4,7 +4,7 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-const { equals } = Predicate;
+const { not, equals } = Predicate;
 
 export interface Iterable<T> {
   [Symbol.iterator](): Iterator<T>;
@@ -63,19 +63,6 @@ export namespace Iterable {
     return some(iterable, equals(value));
   }
 
-  export function find<T, U extends T = T>(
-    iterable: Iterable<T>,
-    predicate: Predicate<T, U>
-  ): Option<U> {
-    for (const value of iterable) {
-      if (predicate(value)) {
-        return Some.of(value);
-      }
-    }
-
-    return None;
-  }
-
   export function some<T>(
     iterable: Iterable<T>,
     predicate: Predicate<T>
@@ -113,12 +100,110 @@ export namespace Iterable {
     }
   }
 
-  export function first<T>(iterable: Iterable<T>): Option<T> {
+  export function find<T, U extends T = T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T, U>
+  ): Option<U> {
     for (const value of iterable) {
-      return Some.of(value);
+      if (predicate(value)) {
+        return Some.of(value);
+      }
     }
 
     return None;
+  }
+
+  export function get<T>(iterable: Iterable<T>, index: number): Option<T> {
+    return first(skip(iterable, index));
+  }
+
+  export function first<T>(iterable: Iterable<T>): Option<T> {
+    for (const value of iterable) {
+      return Option.of(value);
+    }
+
+    return None;
+  }
+
+  export function last<T>(iterable: Iterable<T>): Option<T> {
+    let last: T | null = null;
+
+    for (const value of iterable) {
+      last = value;
+    }
+
+    return Option.from(last);
+  }
+
+  export function take<T>(iterable: Iterable<T>, count: number): Iterable<T> {
+    return takeWhile(iterable, () => count-- > 0);
+  }
+
+  export function* takeWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    for (const value of iterable) {
+      if (predicate(value)) {
+        yield value;
+      } else {
+        break;
+      }
+    }
+  }
+
+  export function takeUntil<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return takeWhile(iterable, not(predicate));
+  }
+
+  export function skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
+    return skipWhile(iterable, () => count-- > 0);
+  }
+
+  export function* skipWhile<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    let skipped = false;
+
+    for (const value of iterable) {
+      if (!skipped && predicate(value)) {
+        continue;
+      } else {
+        skipped = true;
+        yield value;
+      }
+    }
+  }
+
+  export function skipUntil<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): Iterable<T> {
+    return skipWhile(iterable, not(predicate));
+  }
+
+  export function rest<T>(iterable: Iterable<T>): Iterable<T> {
+    return skip(iterable, 1);
+  }
+
+  export function* reverse<T>(iterable: Iterable<T>): Iterable<T> {
+    const array = Array.from(iterable);
+
+    for (let i = array.length - 1; i >= 0; i--) {
+      yield array[i];
+    }
+  }
+
+  export function isEmpty<T>(iterable: Iterable<T>): boolean {
+    for (const _ of iterable) {
+      return false;
+    }
+
+    return true;
   }
 
   export function groupBy<T, K>(
@@ -144,7 +229,7 @@ export namespace Iterable {
     return groups;
   }
 
-  export function join(iterable: Iterable<string>, separator: string): string {
+  export function join<T>(iterable: Iterable<T>, separator: string): string {
     const iterator = iterable[Symbol.iterator]();
 
     let next = iterator.next();
@@ -153,11 +238,11 @@ export namespace Iterable {
       return "";
     }
 
-    let result = next.value;
+    let result = `${next.value}`;
     next = iterator.next();
 
     while (next.done !== true) {
-      result += separator + next.value;
+      result += `${separator}${next.value}`;
       next = iterator.next();
     }
 

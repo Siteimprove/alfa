@@ -24,6 +24,9 @@
       "path": "../alfa-monad"
     },
     {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-reducer"
     },
     {

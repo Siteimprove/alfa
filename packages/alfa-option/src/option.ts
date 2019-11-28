@@ -2,6 +2,7 @@ import { Applicative } from "@siteimprove/alfa-applicative";
 import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -16,7 +17,8 @@ export interface Option<T>
     Foldable<T>,
     Applicative<T>,
     Iterable<T>,
-    Equality<Option<T>> {
+    Equality<Option<T>>,
+    Hashable {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
@@ -29,8 +31,8 @@ export interface Option<T>
   filter<U extends T>(predicate: Predicate<T, U>): Option<U>;
   and<U>(option: Option<U>): Option<U>;
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
-  or<U>(option: Option<U>): Some<T> | Option<U>;
-  orElse<U>(option: Thunk<Option<U>>): Some<T> | Option<U>;
+  or<U>(option: Option<U>): Option<T | U>;
+  orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: () => U): T | U;
