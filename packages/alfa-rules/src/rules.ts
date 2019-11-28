@@ -28,3 +28,5 @@ export { default as R27 } from "./sia-r27/rule";
 export { default as R28 } from "./sia-r28/rule";
 export { default as R29 } from "./sia-r29/rule";
 export { default as R30 } from "./sia-r30/rule";
+export { default as R31 } from "./sia-r31/rule";
+export { default as R43 } from "./sia-r43/rule";

@@ -1,16 +1,15 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, isElement, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
-
-import { walk } from "../common/walk";
 
 const { filter, isEmpty } = Iterable;
 const { and, not, equals, test } = Predicate;
@@ -21,22 +20,19 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return filter(
-          walk(document, document, { flattened: true, nested: true }),
+          document.descendants({ flattened: true, nested: true }),
           and(
-            isElement,
+            Element.isElement,
             and(
-              hasNamespace(document, equals(Namespace.SVG)),
+              hasNamespace(equals(Namespace.SVG)),
               and(
                 hasRole(
-                  document,
-                  role =>
-                    test(
-                      equals("img", "graphics-document", "graphics-symbol"),
-                      role.name
-                    ),
+                  hasName(
+                    equals("img", "graphics-document", "graphics-symbol")
+                  ),
                   { implicit: false }
                 ),
-                not(isIgnored(document, device))
+                not(isIgnored(device))
               )
             )
           )
@@ -45,9 +41,11 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(hasAccessibleName(document, device, not(isEmpty)), target)
-            ? Ok.of("The <svg> element has an accessible name")
-            : Err.of("The <svg> element has no accessible name")
+          1: test(hasAccessibleName(device, not(isEmpty)), target)
+            ? Ok.of(`The <${target.name}> element has an accessible name`)
+            : Err.of(
+                `The <${target.name}> element does not have an accessible name`
+              )
         };
       }
     };

@@ -58,6 +58,7 @@
     "src/sia-r30/rule.ts",
     "src/sia-r31/rule.ts",
     "src/sia-r4/rule.ts",
+    "src/sia-r43/rule.ts",
     "src/sia-r5/rule.ts",
     "src/sia-r6/rule.ts",
     "src/sia-r7/rule.ts",
