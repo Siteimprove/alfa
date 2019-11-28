@@ -70,6 +70,13 @@ export namespace Predicate {
   export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
     return other => values.some(value => Equality.equals(other, value));
   }
+
+  export function property<T, K extends keyof T>(
+    property: K,
+    predicate: Predicate<T[K]>
+  ): Predicate<T> {
+    return value => predicate(value[property]);
+  }
 }
 
 function is<T, U extends T>(value: T, ok: boolean): value is U {
