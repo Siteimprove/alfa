@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/parser.ts", "test/parser.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

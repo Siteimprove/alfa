@@ -45,6 +45,7 @@
     { "path": "alfa-math" },
     { "path": "alfa-monad" },
     { "path": "alfa-option" },
+    { "path": "alfa-parser" },
     { "path": "alfa-pointer" },
     { "path": "alfa-predicate" },
     { "path": "alfa-puppeteer" },
