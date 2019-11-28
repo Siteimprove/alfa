@@ -3,6 +3,7 @@ import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+import { Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Err } from "./err";
@@ -24,8 +25,11 @@ export interface Result<T, E>
   andThen<U>(result: Mapper<T, Result<U, E>>): Result<U, E>;
   or<F>(result: Result<T, F>): Result<T, F>;
   orElse<F>(result: Thunk<Result<T, F>>): Result<T, F>;
+  get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  ok(): Option<T>;
+  err(): Option<E>;
   equals(value: unknown): value is Result<T, E>;
   toJSON(): { value: T } | { error: E };
 }

@@ -1,5 +1,6 @@
 import { Equality } from "@siteimprove/alfa-equality";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Err } from "./err";
 import { Result } from "./result";
@@ -65,6 +66,14 @@ export class Ok<T> implements Result<T, never> {
 
   public getOrElse(): T {
     return this.value;
+  }
+
+  public ok(): Option<T> {
+    return Option.of(this.value);
+  }
+
+  public err(): None {
+    return None;
   }
 
   public equals(value: unknown): value is Ok<T> {
