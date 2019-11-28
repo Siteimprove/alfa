@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/slice.ts", "test/slice.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

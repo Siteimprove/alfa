@@ -55,6 +55,7 @@
     { "path": "alfa-rules" },
     { "path": "alfa-scrape" },
     { "path": "alfa-set" },
+    { "path": "alfa-slice" },
     { "path": "alfa-test" },
     { "path": "alfa-thunk" },
     { "path": "alfa-unexpected" },
