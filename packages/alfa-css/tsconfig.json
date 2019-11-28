@@ -1,127 +1,63 @@
 {
   "extends": "../tsconfig.json",
   "files": [
-    "src/alphabet.ts",
-    "src/canonicalize.ts",
-    "src/converters.ts",
-    "src/escape.ts",
-    "src/grammars/child-index.ts",
-    "src/grammars/declaration.ts",
-    "src/grammars/media.ts",
-    "src/grammars/rule.ts",
-    "src/grammars/selector.ts",
+    "src/cascade.ts",
+    "src/cascade/ancestor-filter.ts",
+    "src/cascade/rule-tree.ts",
+    "src/cascade/selector-map.ts",
+    "src/cascade/user-agent.ts",
     "src/index.ts",
-    "src/parse.ts",
-    "src/properties.ts",
-    "src/properties/color/convert.ts",
-    "src/properties/color/grammar.ts",
-    "src/properties/color/named.ts",
-    "src/properties/color/property.ts",
-    "src/properties/color/types.ts",
-    "src/properties/content/grammar.ts",
-    "src/properties/content/property.ts",
-    "src/properties/content/types.ts",
-    "src/properties/display/grammar.ts",
-    "src/properties/display/property.ts",
-    "src/properties/display/types.ts",
-    "src/properties/font/family/grammar.ts",
-    "src/properties/font/family/property.ts",
-    "src/properties/font/property.ts",
-    "src/properties/font/size/grammar.ts",
-    "src/properties/font/size/property.ts",
-    "src/properties/font/stretch/grammar.ts",
-    "src/properties/font/stretch/property.ts",
-    "src/properties/font/style/grammar.ts",
-    "src/properties/font/style/property.ts",
-    "src/properties/font/types.ts",
-    "src/properties/font/variant/grammar.ts",
-    "src/properties/font/variant/property.ts",
-    "src/properties/font/weight/grammar.ts",
-    "src/properties/font/weight/property.ts",
-    "src/properties/height/grammar.ts",
-    "src/properties/height/property.ts",
-    "src/properties/height/types.ts",
-    "src/properties/helpers/function-arguments.ts",
-    "src/properties/helpers/get-property.ts",
-    "src/properties/helpers/get-root-style.ts",
-    "src/properties/line-height/grammar.ts",
-    "src/properties/line-height/property.ts",
-    "src/properties/line-height/types.ts",
-    "src/properties/longhands.ts",
-    "src/properties/opacity/grammar.ts",
-    "src/properties/opacity/property.ts",
-    "src/properties/opacity/types.ts",
-    "src/properties/overflow/grammar.ts",
-    "src/properties/overflow/property.ts",
-    "src/properties/overflow/types.ts",
-    "src/properties/overflow/x/property.ts",
-    "src/properties/overflow/y/property.ts",
-    "src/properties/shorthands.ts",
-    "src/properties/text-decoration/color/property.ts",
-    "src/properties/text-decoration/line/grammar.ts",
-    "src/properties/text-decoration/line/property.ts",
-    "src/properties/text-decoration/style/grammar.ts",
-    "src/properties/text-decoration/style/property.ts",
-    "src/properties/text-decoration/types.ts",
-    "src/properties/text-indent/grammar.ts",
-    "src/properties/text-indent/property.ts",
-    "src/properties/text-indent/types.ts",
-    "src/properties/transform/grammar.ts",
-    "src/properties/transform/property.ts",
-    "src/properties/transform/types.ts",
-    "src/properties/visibility/grammar.ts",
-    "src/properties/visibility/property.ts",
-    "src/properties/visibility/types.ts",
-    "src/properties/width/grammar.ts",
-    "src/properties/width/property.ts",
-    "src/properties/width/types.ts",
-    "src/resolvers.ts",
-    "src/style-tree.ts",
+    "src/media.ts",
+    "src/property.ts",
+    "src/property/display.ts",
+    "src/property/opacity.ts",
+    "src/property/visibility.ts",
+    "src/selector.ts",
     "src/style.ts",
-    "src/types.ts",
-    "src/units.ts",
-    "src/values.ts",
-    "test/alphabet.spec.ts",
-    "test/escape.spec.ts",
-    "test/grammars/child-index.spec.ts",
-    "test/grammars/declaration.spec.ts",
-    "test/grammars/media.spec.ts",
-    "test/grammars/rule.spec.ts",
-    "test/grammars/selector.spec.ts",
-    "test/parse.spec.ts",
-    "test/properties/color/grammar.spec.ts",
-    "test/properties/content/grammar.spec.ts",
-    "test/properties/display/grammar.spec.ts",
-    "test/properties/font/family/grammar.spec.ts",
-    "test/properties/font/size/grammar.spec.ts",
-    "test/properties/font/weight/grammar.spec.ts",
-    "test/properties/opacity/grammar.spec.ts",
-    "test/properties/overflow/grammar.spec.ts",
-    "test/properties/overflow/property.spec.ts",
-    "test/properties/text-decoration/line/grammar.spec.ts",
-    "test/properties/text-decoration/style/grammar.spec.ts",
-    "test/properties/text-indent/grammar.spec.ts",
-    "test/units.spec.ts",
-    "test/values.spec.ts"
+    "src/syntax/lex.ts",
+    "src/syntax/token.ts",
+    "src/value.ts",
+    "src/value/angle.ts",
+    "src/value/function.ts",
+    "src/value/integer.ts",
+    "src/value/keyword.ts",
+    "src/value/length.ts",
+    "src/value/percentage.ts",
+    "src/value/unit.ts"
   ],
   "references": [
     {
-      "path": "../alfa-compatibility"
+      "path": "../alfa-dom"
     },
     {
-      "path": "../alfa-device"
+      "path": "../alfa-equality"
     },
     {
-      "path": "../alfa-lang"
+      "path": "../alfa-foldable"
     },
     {
-      "path": "../alfa-math"
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
     },
     {
       "path": "../alfa-option"
     },
     {
+      "path": "../alfa-parser"
+    },
+    {
+      "path": "../alfa-reducer"
+    },
+    {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
     }
   ]
 }
