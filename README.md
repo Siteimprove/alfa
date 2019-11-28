@@ -42,39 +42,63 @@ On their own, each of these packages do very little, but when put together they 
 At a high level, Alfa consumes implementations of rules specified in the [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/) and produces audit results in the [Evaluation and Report Language (EARL) Schema](https://www.w3.org/TR/EARL10-Schema/) encoded as [JSON-LD](https://www.w3.org/TR/json-ld/). More often than not, your only interaction with Alfa will look similar to this:
 
 ```ts
-import { audit, toJSON } from "@siteimprove/alfa-act";
+import { Audit } from "@siteimprove/alfa-act";
 
-const aspects = { ... };
-const rules = [ ... ];
+const input = { ... };
 
-const results = audit(aspects, rules);
-const json = toJSON(rules, results, aspects);
+Audit.of(input)
+  // Add the rules we want to evaluate
+  .add(ruleA)
+  .add(ruleB)
+  .add(...)
+
+  // Evaluate the input
+  .evaluate()
+
+  // Translate the results to EARL
+  .then(outcomes => {
+    const earl = [...outcomes].map(outcome => outcome.toEARL());
+  });
 ```
 
 Alfa is completely pluggable with regards to rules and only prescribes the implementation format. As such, there is nothing to configure when it comes to rules; simply pass in the rules you wish to run and results will be provided for those rules. To get you started, Alfa ships with a solid set of rules based on the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/):
 
 ```ts
-import { audit } from "@siteimprove/alfa-act";
+import { Audit } from "@siteimprove/alfa-act";
 import { Rules } from "@siteimprove/alfa-rules";
 
-const aspects = { ... };
+const input = { ... };
 
-const results = audit(aspects, Object.values(Rules));
+const audit = Rules.reduce(
+  (audit, rule) => audit.add(rule),
+  Audit.of(input)
+ );
+
+audit.evaluate().then(outcomes => {
+  // ...
+});
 ```
 
-The last piece we are missing is aspects. Aspects are the individual parts that make up the content we wish to audit, from the HTTP request sent by a browser to fetch the content, the HTTP response supplied by the server with a chunk of HTML, the DOM constructed by the browser from this HTML, and more. Which specific aspects that need to be supplied when running an audit will depend on the rules that are part of the audit as each rule specifies which aspects it requires. To get you started, Alfa ships with a scraper that will simply fetch _all_ aspects of a given piece of content:
+The last piece we are missing is input. Which specific input that needs to be supplied when running an audit will depend on the rules that are part of the audit as each rule specifies the input it requires. For the default WCAG rule set, the input will be a web page. To get you started, Alfa ships with a scraper that given a URL will fetch a representation of the page that can be used as input to the default rules:
 
 ```ts
-import { audit } from "@siteimprove/alfa-act";
+import { Audit } from "@siteimprove/alfa-act";
 import { Rules } from "@siteimprove/alfa-rules";
-import { Scraper } from "@siteimprove/alfa-scrape";
+import { Scraper } from "@siteimprove/alfa-scraper";
 
-const scraper = new Scraper();
+const scraper = await Scraper.of();
 
 scraper
   .scrape("https://example.com")
-  .then(aspects => {
-    const results = audit(aspects, Object.values(Rules));
+  .then(page => {
+    const audit = Rules.reduce(
+      (audit, rule) => audit.add(rule),
+      Audit.of(page)
+    );
+
+    audit.evaluate().then(outcomes => {
+      // ...
+    });
   })
   .catch(err => {
     console.error(err);
