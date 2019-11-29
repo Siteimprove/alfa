@@ -28,7 +28,7 @@ export class Question<Q, A, S, T = A> implements Monad<T>, Functor<T> {
     this.uri = uri;
     this.type = type;
     this.subject = subject;
-    this.message = message;
+    this.message = normalize(message);
     this.quester = quester;
   }
 
@@ -66,4 +66,8 @@ export class Question<Q, A, S, T = A> implements Monad<T>, Functor<T> {
       message: this.message
     };
   }
+}
+
+function normalize(string: string): string {
+  return string.replace(/\s+/g, " ").trim();
 }

@@ -167,32 +167,41 @@ export namespace Rule {
       return rule;
     }
   }
+}
 
-  function resolve<I, T, Q>(
-    target: T,
-    expectations: Record<{ [key: string]: Interview<Q, T, Expectation> }>,
-    rule: Rule<I, T, Q>,
-    oracle: Oracle<Q>
-  ): Future<Outcome.Applicable<I, T, Q>> {
-    return Future.traverse(expectations, ([id, interview]) =>
-      Interview.conduct(interview, rule, oracle).map(
-        expectation => [id, expectation] as const
-      )
-    ).map(expectations =>
-      reduce(
-        expectations,
-        (expectations, [id, expectation]) =>
-          expectations.flatMap(expectations =>
-            expectation.map(expectation => expectations.push([id, expectation]))
-          ),
-        Option.of(List.empty<[string, Expectation]>())
-      )
-        .map(expectations => {
-          return Outcome.from(rule, target, Record.from(expectations));
-        })
-        .getOrElse(() => {
-          return Outcome.CantTell.of(rule, target);
-        })
-    );
-  }
+function resolve<I, T, Q>(
+  target: T,
+  expectations: Record<{ [key: string]: Interview<Q, T, Rule.Expectation> }>,
+  rule: Rule<I, T, Q>,
+  oracle: Oracle<Q>
+): Future<Outcome.Applicable<I, T, Q>> {
+  return Future.traverse(expectations, ([id, interview]) =>
+    Interview.conduct(interview, rule, oracle).map(
+      expectation => [id, expectation] as const
+    )
+  ).map(expectations =>
+    reduce(
+      expectations,
+      (expectations, [id, expectation]) =>
+        expectations.flatMap(expectations =>
+          expectation.map(expectation =>
+            expectations.push([
+              id,
+              expectation.map(normalize).mapErr(normalize)
+            ])
+          )
+        ),
+      Option.of(List.empty<[string, Rule.Expectation]>())
+    )
+      .map(expectations => {
+        return Outcome.from(rule, target, Record.from(expectations));
+      })
+      .getOrElse(() => {
+        return Outcome.CantTell.of(rule, target);
+      })
+  );
+}
+
+function normalize(string: string): string {
+  return string.replace(/\s+/g, " ").trim();
 }
