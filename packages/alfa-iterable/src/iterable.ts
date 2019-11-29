@@ -11,6 +11,12 @@ export interface Iterable<T> {
 }
 
 export namespace Iterable {
+  export function isIterable<T>(value: unknown): value is Iterable<T> {
+    return (
+      typeof value === "object" && value !== null && Symbol.iterator in value
+    );
+  }
+
   export function* from<T>(arrayLike: ArrayLike<T>): Iterable<T> {
     for (let i = 0, n = arrayLike.length; i < n; i++) {
       yield arrayLike[i];
@@ -18,6 +24,14 @@ export namespace Iterable {
   }
 
   export function* empty<T>(): Iterable<T> {}
+
+  export function isEmpty<T>(iterable: Iterable<T>): boolean {
+    for (const _ of iterable) {
+      return false;
+    }
+
+    return true;
+  }
 
   export function* map<T, U = T>(
     iterable: Iterable<T>,
@@ -190,20 +204,26 @@ export namespace Iterable {
     return skip(iterable, 1);
   }
 
+  export function slice<T>(
+    iterable: Iterable<T>,
+    start: number,
+    end?: number
+  ): Iterable<T> {
+    iterable = skip(iterable, start);
+
+    if (end !== undefined) {
+      iterable = take(iterable, end - start);
+    }
+
+    return iterable;
+  }
+
   export function* reverse<T>(iterable: Iterable<T>): Iterable<T> {
     const array = Array.from(iterable);
 
     for (let i = array.length - 1; i >= 0; i--) {
       yield array[i];
     }
-  }
-
-  export function isEmpty<T>(iterable: Iterable<T>): boolean {
-    for (const _ of iterable) {
-      return false;
-    }
-
-    return true;
   }
 
   export function groupBy<T, K>(
@@ -261,11 +281,5 @@ export namespace Iterable {
     right: Iterable<T>
   ): Iterable<T> {
     return filter(left, left => includes(right, left));
-  }
-
-  export function isIterable<T>(value: unknown): value is Iterable<T> {
-    return (
-      typeof value === "object" && value !== null && Symbol.iterator in value
-    );
   }
 }
