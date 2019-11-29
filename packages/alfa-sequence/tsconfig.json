@@ -1,0 +1,45 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/cons.ts",
+    "src/index.ts",
+    "src/nil.ts",
+    "src/sequence.ts",
+    "test/sequence.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-equality"
+    },
+    {
+      "path": "../alfa-foldable"
+    },
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
+    }
+  ]
+}
