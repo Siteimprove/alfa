@@ -53,6 +53,7 @@
     { "path": "alfa-rules" },
     { "path": "alfa-scraper" },
     { "path": "alfa-set" },
+    { "path": "alfa-sequence" },
     { "path": "alfa-slice" },
     { "path": "alfa-test" },
     { "path": "alfa-thunk" },

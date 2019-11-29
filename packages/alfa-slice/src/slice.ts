@@ -60,6 +60,12 @@ export class Slice<T> implements Iterable<T> {
   }
 }
 
+export namespace Slice {
+  export function isSlice<T>(value: unknown): value is Slice<T> {
+    return value instanceof Slice;
+  }
+}
+
 function clamp(value: number, length: number): number {
   return Math.max(0, Math.min(value, length));
 }
