@@ -5,7 +5,7 @@ import { Document, Element } from "@siteimprove/alfa-dom";
 import { Video } from "../helpers/applicabilities/video";
 
 export const SIA_R36: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r36.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r36.html",
   evaluate: ({ device, document }) => {
     return {
       applicability: Video(document, device, {

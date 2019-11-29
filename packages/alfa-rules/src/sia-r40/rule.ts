@@ -21,7 +21,7 @@ const {
 } = BrowserSpecific;
 
 export const SIA_R40: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r40.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r40.html",
   requirements: [{ requirement: "aria", partial: true }],
   evaluate: ({ device, document }) => {
     return {

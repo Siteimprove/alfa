@@ -26,7 +26,7 @@ const {
 } = BrowserSpecific;
 
 export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r39.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r39.html",
   requirements: [
     { requirement: "wcag", criterion: "non-text-content", partial: true }
   ],

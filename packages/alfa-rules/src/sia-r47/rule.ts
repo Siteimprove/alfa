@@ -14,7 +14,7 @@ import { clamp, Option } from "@siteimprove/alfa-util";
 import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
 
 export const SIA_R47: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r47.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r47.html",
   requirements: [
     { requirement: "wcag", criterion: "resize-text", partial: true }
   ],

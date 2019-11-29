@@ -41,7 +41,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(hasAccessibleName(device, not(isEmpty)), target)
+          1: test<Element>(hasAccessibleName(device, not(isEmpty)), target)
             ? Ok.of(`The <${target.name}> element has an accessible name`)
             : Err.of(
                 `The <${target.name}> element does not have an accessible name`

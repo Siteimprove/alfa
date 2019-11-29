@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
@@ -16,7 +17,20 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
       expectations(target) {
         return {
-          1: { holds: question(QuestionType.Boolean, "has-audio-track") }
+          1: Question.of(
+            "has-audio-track",
+            "boolean",
+            target,
+            "Does the <video> element have an audio track that describes its visual information?"
+          ).map(hasAudioTrack =>
+            hasAudioTrack
+              ? Ok.of(
+                  "The <video> element has an audio track that describes its visual information"
+                )
+              : Err.of(
+                  "The <video> element does not have an audio track that describes its visual information"
+                )
+          )
         };
       }
     };

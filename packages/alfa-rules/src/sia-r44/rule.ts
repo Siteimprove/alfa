@@ -23,7 +23,7 @@ const { isString } = Values;
 const { abs, acos, PI } = Math;
 
 export const SIA_R44: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r44.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r44.html",
   requirements: [
     { requirement: "wcag", criterion: "orientation", partial: true }
   ],

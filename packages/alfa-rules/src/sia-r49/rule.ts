@@ -17,7 +17,7 @@ import {
 const { map } = BrowserSpecific;
 
 export const SIA_R49: Atomic.Rule<Document | Device, Element> = {
-  id: "sanshikan:rules/sia-r49.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r49.html",
   evaluate: ({ document, device }) => {
     return {
       applicability: question => {

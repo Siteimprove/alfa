@@ -10,7 +10,7 @@ import { SIA_R31 } from "../sia-r31/rule";
 import { SIA_R36 } from "../sia-r36/rule";
 
 export const SIA_R38: Composite.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r38.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r38.html",
   requirements: [
     {
       requirement: "wcag",

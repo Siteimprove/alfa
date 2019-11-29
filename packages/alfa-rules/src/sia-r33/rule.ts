@@ -1,18 +1,41 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { Video } from "../helpers/applicabilities/video";
+import { video } from "../common/applicability/video";
 
-export const SIA_R33: Atomic.Rule<Device | Document, Element> = {
-  id: "sanshikan:rules/sia-r33.html",
+import { Question } from "../common/question";
+
+export default Rule.Atomic.of<Page, Element, Question>({
+  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r33.html",
   evaluate: ({ device, document }) => {
     return {
-      applicability: Video(document, device, { audio: { has: false } }),
+      applicability() {
+        return video(document, device, { audio: { has: false } })
+      },
 
-      expectations: (aspect, target, question) => {
+      expectations(target) {
         return {
-          1: { holds: question(QuestionType.Boolean, "has-transcript") }
+          1: Question.of(
+            "transcript",
+            "node",
+            target,
+            "Where is the transcript of the <video> element?"
+          ).map(transcript => {
+            return transcript.isSome()
+              ? Ok.of("The <video> element has a transcript")
+              : Question.of(
+                  "transcript-link",
+                  "node",
+                  target,
+                  "Where is the link pointing to the transcript of the <video> element?"
+                ).map(transcriptLink =>
+                  transcriptLink.isSome()
+                    ? Ok.of("The <video> element has a transcript")
+                    : Err.of("The <video> element does not have a transcript")
+                );
+          })
         };
       }
     };

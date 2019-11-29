@@ -8,7 +8,7 @@ import { SIA_R48 } from "../sia-r48/rule";
 import { SIA_R49 } from "../sia-r49/rule";
 
 export const SIA_R50: Composite.Rule<Document | Device, Element> = {
-  id: "sanshikan:rules/sia-r50.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r50.html",
   requirements: [
     { requirement: "wcag", criterion: "audio-control", partial: true }
   ],

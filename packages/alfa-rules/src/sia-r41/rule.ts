@@ -26,7 +26,7 @@ const {
 } = BrowserSpecific;
 
 export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
-  id: "sanshikan:rules/sia-r41.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r41.html",
   locales: [EN],
   requirements: [
     { requirement: "wcag", criterion: "link-purpose-link-only", partial: true }

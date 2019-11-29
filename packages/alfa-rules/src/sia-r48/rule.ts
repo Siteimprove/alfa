@@ -11,7 +11,7 @@ import {
 } from "@siteimprove/alfa-dom";
 
 export const SIA_R48: Atomic.Rule<Document, Element> = {
-  id: "sanshikan:rules/sia-r48.html",
+  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r48.html",
   evaluate: ({ document }) => {
     return {
       applicability: question => {
