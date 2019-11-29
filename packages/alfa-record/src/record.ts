@@ -17,7 +17,7 @@ export class Record<T>
     return new Record(Indices.from(keys), keys, values);
   }
 
-  private readonly indices: Indices<T>;
+  private readonly _indices: Indices<T>;
   private readonly _keys: Array<Record.Key<T>>;
   private readonly _values: List<Record.Value<T>>;
 
@@ -26,13 +26,13 @@ export class Record<T>
     keys: Array<Record.Key<T>>,
     values: List<T[Record.Key<T>]>
   ) {
-    this.indices = indices;
+    this._indices = indices;
     this._keys = keys;
     this._values = values;
   }
 
   public has(key: string): key is Record.Key<T> {
-    return this.indices.hasOwnProperty(key);
+    return this._indices.hasOwnProperty(key);
   }
 
   public get<K extends Record.Key<T>>(key: K): Option<T[K]> {
@@ -40,7 +40,7 @@ export class Record<T>
       return None;
     }
 
-    const i = this.indices[key];
+    const i = this._indices[key];
 
     return this._values.get(i) as Option<T[K]>;
   }
@@ -51,9 +51,9 @@ export class Record<T>
     }
 
     return new Record(
-      this.indices,
+      this._indices,
       this._keys,
-      this._values.set(this.indices[key], value)
+      this._values.set(this._indices[key], value)
     );
   }
 
@@ -77,12 +77,12 @@ export class Record<T>
     );
   }
 
-  public *keys(): Iterable<Record.Key<T>> {
-    yield* this._keys;
+  public keys(): Iterable<Record.Key<T>> {
+    return this._keys;
   }
 
-  public *values(): Iterable<Record.Value<T>> {
-    yield* this._values;
+  public values(): Iterable<Record.Value<T>> {
+    return this._values;
   }
 
   public *[Symbol.iterator](): Iterator<Record.Entry<T>> {

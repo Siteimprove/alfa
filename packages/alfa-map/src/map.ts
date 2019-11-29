@@ -31,12 +31,12 @@ export class Map<K, V>
     return new Map(Empty.of(), 0);
   }
 
-  private readonly root: Node<K, V>;
-  public readonly size: number;
+  private readonly _root: Node<K, V>;
+  public readonly length: number;
 
-  private constructor(root: Node<K, V>, size: number) {
-    this.root = root;
-    this.size = size;
+  private constructor(root: Node<K, V>, length: number) {
+    this._root = root;
+    this.length = length;
   }
 
   private hash(key: K): number {
@@ -52,25 +52,29 @@ export class Map<K, V>
   }
 
   public get(key: K): Option<V> {
-    return this.root.get(key, this.hash(key), 0);
+    return this._root.get(key, this.hash(key), 0);
   }
 
   public set(key: K, value: V): Map<K, V> {
-    const size = this.size + (this.has(key) ? 0 : 1);
-
-    return new Map(this.root.set(key, this.hash(key), 0, value), size);
+    return new Map(
+      this._root.set(key, this.hash(key), 0, value),
+      this.length + (this.has(key) ? 0 : 1)
+    );
   }
 
   public delete(key: K): Map<K, V> {
     if (this.has(key)) {
-      return new Map(this.root.delete(key, this.hash(key), 0), this.size - 1);
+      return new Map(
+        this._root.delete(key, this.hash(key), 0),
+        this.length - 1
+      );
     }
 
     return this;
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Map<K, U> {
-    return new Map(this.root.map(mapper), this.size);
+    return new Map(this._root.map(mapper), this.length);
   }
 
   public flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [K]>): Map<L, U> {
@@ -99,21 +103,21 @@ export class Map<K, V>
   public equals(value: unknown): value is Map<K, V> {
     return (
       value instanceof Map &&
-      value.size === this.size &&
-      value.root.equals(this.root)
+      value.length === this.length &&
+      value._root.equals(this._root)
     );
   }
 
-  public *keys(): Iterable<K> {
-    yield* map(this.root, entry => entry[0]);
+  public keys(): Iterable<K> {
+    return map(this._root, entry => entry[0]);
   }
 
-  public *values(): Iterable<V> {
-    yield* map(this.root, entry => entry[1]);
+  public values(): Iterable<V> {
+    return map(this._root, entry => entry[1]);
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
-    yield* this.root;
+    yield* this._root;
   }
 }
 

@@ -10,10 +10,10 @@ export class Err<E> implements Result<never, E> {
     return new Err(error);
   }
 
-  private readonly error: E;
+  private readonly _error: E;
 
   private constructor(error: E) {
-    this.error = error;
+    this._error = error;
   }
 
   public isOk(): this is Ok<never> {
@@ -29,7 +29,7 @@ export class Err<E> implements Result<never, E> {
   }
 
   public mapErr<F>(mapper: Mapper<E, F>): Err<F> {
-    return new Err(mapper(this.error));
+    return new Err(mapper(this._error));
   }
 
   public flatMap(): this {
@@ -61,7 +61,7 @@ export class Err<E> implements Result<never, E> {
   }
 
   public getErr(): E {
-    return this.error;
+    return this._error;
   }
 
   public getOr<U>(value: U): U {
@@ -77,21 +77,21 @@ export class Err<E> implements Result<never, E> {
   }
 
   public err(): Option<E> {
-    return Option.of(this.error);
+    return Option.of(this._error);
   }
 
   public equals(value: unknown): value is Err<E> {
-    return value instanceof Err && Equality.equals(value.error, this.error);
+    return value instanceof Err && Equality.equals(value._error, this._error);
   }
 
   public *[Symbol.iterator]() {}
 
   public toJSON(): { error: E } {
-    return { error: this.error };
+    return { error: this._error };
   }
 
   public toString(): string {
-    return `Err { ${this.error} }`;
+    return `Err { ${this._error} }`;
   }
 }
 

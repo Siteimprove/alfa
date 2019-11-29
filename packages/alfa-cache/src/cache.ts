@@ -8,7 +8,7 @@ export class Cache<K, V> {
     return new Cache();
   }
 
-  private readonly storage = Storage.empty<K, V>();
+  private readonly _storage = Storage.empty<K, V>();
 
   private constructor() {}
 
@@ -18,7 +18,7 @@ export class Cache<K, V> {
 
   public get<U extends V = V>(key: K, ifMissing?: Thunk<U>): V | Option<V> {
     if (this.has(key)) {
-      const value = this.storage.get(key);
+      const value = this._storage.get(key);
 
       if (ifMissing === undefined) {
         return value;
@@ -33,17 +33,17 @@ export class Cache<K, V> {
 
     const value = ifMissing();
 
-    this.storage.set(key, value);
+    this._storage.set(key, value);
 
     return value;
   }
 
   public has(key: K): boolean {
-    return this.storage.has(key);
+    return this._storage.has(key);
   }
 
   public set(key: K, value: V): this {
-    this.storage.set(key, value);
+    this._storage.set(key, value);
     return this;
   }
 
@@ -71,8 +71,8 @@ class Storage<K, V> {
     return new Storage();
   }
 
-  private readonly objects: WeakMap<object, V> = new WeakMap();
-  private readonly primitives: Map<unknown, V> = new Map();
+  private readonly _objects: WeakMap<object, V> = new WeakMap();
+  private readonly _primitives: Map<unknown, V> = new Map();
 
   private constructor() {}
 
@@ -80,14 +80,14 @@ class Storage<K, V> {
     let value: V;
 
     if (isObject(key)) {
-      if (this.objects.has(key)) {
-        value = this.objects.get(key)!;
+      if (this._objects.has(key)) {
+        value = this._objects.get(key)!;
       } else {
         return None;
       }
     } else {
-      if (this.primitives.has(key)) {
-        value = this.primitives.get(key)!;
+      if (this._primitives.has(key)) {
+        value = this._primitives.get(key)!;
       } else {
         return None;
       }
@@ -98,17 +98,17 @@ class Storage<K, V> {
 
   public has(key: K) {
     if (isObject(key)) {
-      return this.objects.has(key);
+      return this._objects.has(key);
     } else {
-      return this.primitives.has(key);
+      return this._primitives.has(key);
     }
   }
 
   public set(key: K, value: V) {
     if (isObject(key)) {
-      this.objects.set(key, value);
+      this._objects.set(key, value);
     } else {
-      this.primitives.set(key, value);
+      this._primitives.set(key, value);
     }
   }
 

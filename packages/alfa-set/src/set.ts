@@ -23,8 +23,8 @@ export class Set<T>
     this.values = values;
   }
 
-  public get size(): number {
-    return this.values.size;
+  public get length(): number {
+    return this.values.length;
   }
 
   public has(value: T): boolean {

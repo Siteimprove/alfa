@@ -11,7 +11,7 @@ const { bit, take, skip } = Bits;
  * @internal
  */
 export interface Node<T> extends Functor<T>, Iterable<T>, Equality<Node<T>> {
-  readonly size: number;
+  readonly length: number;
   isEmpty(): this is Empty<T>;
   clone(): Node<T>;
   get(index: number, shift: number): Option<T>;
@@ -51,7 +51,7 @@ export class Empty<T> implements Node<T> {
 
   private constructor() {}
 
-  public get size(): number {
+  public get length(): number {
     return 0;
   }
 
@@ -96,7 +96,7 @@ export class Leaf<T> implements Node<T> {
     this.values = values;
   }
 
-  public get size(): number {
+  public get length(): number {
     return this.values.length;
   }
 
@@ -159,7 +159,7 @@ export class Branch<T> implements Node<T> {
     this.nodes = nodes;
   }
 
-  public get size(): number {
+  public get length(): number {
     return this.nodes.length;
   }
 

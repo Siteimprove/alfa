@@ -29,10 +29,6 @@ export class Cons<T> implements Sequence<T> {
     this._tail = tail;
   }
 
-  private get head(): T {
-    return this._head;
-  }
-
   private get tail(): Sequence<T> {
     if (typeof this._tail === "function") {
       this._tail = this._tail();
@@ -56,16 +52,16 @@ export class Cons<T> implements Sequence<T> {
   public map<U>(mapper: Mapper<T, U>): Sequence<U> {
     const tail = () => this.tail.map(mapper);
 
-    return new Cons(mapper(this.head), tail);
+    return new Cons(mapper(this._head), tail);
   }
 
   public flatMap<U>(mapper: Mapper<T, Sequence<U>>): Sequence<U> {
-    const sequence = mapper(this.head);
+    const sequence = mapper(this._head);
 
     if (Cons.isCons<U>(sequence)) {
       const tail = () => sequence.tail.concat(this.tail.flatMap(mapper));
 
-      return new Cons(sequence.head, tail);
+      return new Cons(sequence._head, tail);
     }
 
     return this.tail.flatMap(mapper);
@@ -90,7 +86,7 @@ export class Cons<T> implements Sequence<T> {
 
     const tail = () => this.tail.concat(iterable);
 
-    return new Cons(this.head, tail);
+    return new Cons(this._head, tail);
   }
 
   public filter<U extends T>(predicate: Predicate<T, U>): Sequence<U> {
@@ -106,12 +102,12 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public first(): Option<T> {
-    return Option.of(this.head);
+    return Option.of(this._head);
   }
 
   public last(): Option<T> {
     if (this.tail === Nil) {
-      return Option.of(this.head);
+      return Option.of(this._head);
     }
 
     return Iterable.last(this);
@@ -163,7 +159,7 @@ export class Cons<T> implements Sequence<T> {
   public equals(value: unknown): value is Cons<T> {
     return (
       value instanceof Cons &&
-      Equality.equals(value.head, this.head) &&
+      Equality.equals(value._head, this._head) &&
       value.tail.equals(this.tail)
     );
   }
@@ -172,7 +168,7 @@ export class Cons<T> implements Sequence<T> {
     let next: Cons<T> = this;
 
     while (true) {
-      yield next.head;
+      yield next._head;
 
       if (Cons.isCons<T>(next.tail)) {
         next = next.tail;
