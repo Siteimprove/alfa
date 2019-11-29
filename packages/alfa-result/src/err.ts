@@ -94,3 +94,9 @@ export class Err<E> implements Result<never, E> {
     return `Err { ${this.error} }`;
   }
 }
+
+export namespace Err {
+  export function isErr<E>(value: unknown): value is Err<E> {
+    return value instanceof Err;
+  }
+}

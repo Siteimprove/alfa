@@ -92,3 +92,9 @@ export class Ok<T> implements Result<T, never> {
     return `Ok { ${this.value} }`;
   }
 }
+
+export namespace Ok {
+  export function isOk<T>(value: unknown): value is Ok<T> {
+    return value instanceof Ok;
+  }
+}

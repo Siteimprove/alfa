@@ -63,6 +63,6 @@ export namespace Result {
   }
 
   export function isResult<T, E>(value: unknown): value is Result<T, E> {
-    return value instanceof Ok || value instanceof Err;
+    return Ok.isOk(value) || Err.isErr(value);
   }
 }
