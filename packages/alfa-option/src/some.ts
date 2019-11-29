@@ -107,3 +107,9 @@ export class Some<T> implements Option<T> {
     return `Some { ${this.value} }`;
   }
 }
+
+export namespace Some {
+  export function isSome<T>(value: unknown): value is Some<T> {
+    return value instanceof Some;
+  }
+}

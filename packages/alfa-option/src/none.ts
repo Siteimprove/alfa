@@ -79,7 +79,7 @@ export const None: None = new (class None {
 
   public hash(): void {}
 
-  public *[Symbol.iterator]() {}
+  public *[Symbol.iterator](): Iterator<never> {}
 
   public toJSON(): {} {
     return {};
