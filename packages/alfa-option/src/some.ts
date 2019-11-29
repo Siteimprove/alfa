@@ -13,10 +13,10 @@ export class Some<T> implements Option<T> {
     return new Some(value);
   }
 
-  private readonly value: T;
+  private readonly _value: T;
 
   private constructor(value: T) {
-    this.value = value;
+    this._value = value;
   }
 
   public isSome(): this is Some<T> {
@@ -28,35 +28,35 @@ export class Some<T> implements Option<T> {
   }
 
   public map<U>(mapper: Mapper<T, U>): Option<U> {
-    return new Some(mapper(this.value));
+    return new Some(mapper(this._value));
   }
 
   public flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U> {
-    return mapper(this.value);
+    return mapper(this._value);
   }
 
   public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
-    return mapper.map(mapper => mapper(this.value));
+    return mapper.map(mapper => mapper(this._value));
   }
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return reducer(accumulator, this.value);
+    return reducer(accumulator, this._value);
   }
 
   public includes(value: T): boolean {
-    return Equality.equals(value, this.value);
+    return Equality.equals(value, this._value);
   }
 
   public some(predicate: Predicate<T>): boolean {
-    return test(predicate, this.value);
+    return test(predicate, this._value);
   }
 
   public every(predicate: Predicate<T>): boolean {
-    return test(predicate, this.value);
+    return test(predicate, this._value);
   }
 
   public filter<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return test(predicate, this.value) ? new Some(this.value) : None;
+    return test(predicate, this._value) ? new Some(this._value) : None;
   }
 
   public and<U>(option: Option<U>): Option<U> {
@@ -64,7 +64,7 @@ export class Some<T> implements Option<T> {
   }
 
   public andThen<U>(option: Mapper<T, Option<U>>): Option<U> {
-    return option(this.value);
+    return option(this._value);
   }
 
   public or(): Option<T> {
@@ -76,35 +76,35 @@ export class Some<T> implements Option<T> {
   }
 
   public get(): T {
-    return this.value;
+    return this._value;
   }
 
   public getOr(): T {
-    return this.value;
+    return this._value;
   }
 
   public getOrElse(): T {
-    return this.value;
+    return this._value;
   }
 
   public equals(value: unknown): value is Some<T> {
-    return value instanceof Some && Equality.equals(value.value, this.value);
+    return value instanceof Some && Equality.equals(value._value, this._value);
   }
 
   public hash(hash: Hash): void {
-    Hashable.hash(this.value, hash);
+    Hashable.hash(this._value, hash);
   }
 
   public *[Symbol.iterator]() {
-    yield this.value;
+    yield this._value;
   }
 
   public toJSON(): { value: T } {
-    return { value: this.value };
+    return { value: this._value };
   }
 
   public toString() {
-    return `Some { ${this.value} }`;
+    return `Some { ${this._value} }`;
   }
 }
 

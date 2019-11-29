@@ -7,18 +7,18 @@ export class Graph<T> implements Equality<Graph<T>> {
     return new Graph(Map.empty());
   }
 
-  private readonly nodes: Map<T, Set<T>>;
+  private readonly _nodes: Map<T, Set<T>>;
 
   private constructor(nodes: Map<T, Set<T>>) {
-    this.nodes = nodes;
+    this._nodes = nodes;
   }
 
   public has(node: T): boolean {
-    return this.nodes.has(node);
+    return this._nodes.has(node);
   }
 
   public add(node: T): Graph<T> {
-    const { nodes } = this;
+    const { _nodes: nodes } = this;
 
     if (nodes.has(node)) {
       return this;
@@ -28,7 +28,7 @@ export class Graph<T> implements Equality<Graph<T>> {
   }
 
   public delete(node: T): Graph<T> {
-    let { nodes } = this;
+    let { _nodes: nodes } = this;
 
     if (!nodes.has(node)) {
       return this;
@@ -48,7 +48,7 @@ export class Graph<T> implements Equality<Graph<T>> {
   }
 
   public connect(from: T, to: T): Graph<T> {
-    let { nodes } = this;
+    let { _nodes: nodes } = this;
 
     if (!nodes.has(from)) {
       nodes = nodes.set(from, Set.empty());
@@ -70,7 +70,7 @@ export class Graph<T> implements Equality<Graph<T>> {
   }
 
   public disconnect(from: T, to: T): Graph<T> {
-    const { nodes } = this;
+    const { _nodes: nodes } = this;
 
     if (!nodes.has(from) || nodes.has(to)) {
       return this;
@@ -88,6 +88,6 @@ export class Graph<T> implements Equality<Graph<T>> {
   }
 
   public equals(value: unknown): value is Graph<T> {
-    return value instanceof Graph && value.nodes.equals(this.nodes);
+    return value instanceof Graph && value._nodes.equals(this._nodes);
   }
 }

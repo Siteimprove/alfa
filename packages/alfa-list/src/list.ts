@@ -32,33 +32,33 @@ export class List<T>
     return new List(Empty.of(), Empty.of(), 0, 0);
   }
 
-  private readonly head: Empty<T> | Branch<T> | Leaf<T>;
-  private readonly tail: Empty<T> | Leaf<T>;
-  private readonly shift: number;
-  public readonly size: number;
+  private readonly _head: Empty<T> | Branch<T> | Leaf<T>;
+  private readonly _tail: Empty<T> | Leaf<T>;
+  private readonly _shift: number;
+  public readonly length: number;
 
   private constructor(
     head: Empty<T> | Branch<T> | Leaf<T>,
     tail: Leaf<T> | Empty<T>,
     shift: number,
-    size: number
+    length: number
   ) {
-    this.head = head;
-    this.tail = tail;
-    this.shift = shift;
-    this.size = size;
+    this._head = head;
+    this._tail = tail;
+    this._shift = shift;
+    this.length = length;
   }
 
   public map<U>(mapper: Mapper<T, U>): List<U> {
     return new List<U>(
-      this.head instanceof Empty
-        ? this.head
-        : this.head instanceof Branch
-        ? this.head.map(mapper)
-        : this.head.map(mapper),
-      this.tail.map(mapper),
-      this.shift,
-      this.size
+      this._head instanceof Empty
+        ? this._head
+        : this._head instanceof Branch
+        ? this._head.map(mapper)
+        : this._head.map(mapper),
+      this._tail.map(mapper),
+      this._shift,
+      this.length
     );
   }
 
@@ -120,40 +120,40 @@ export class List<T>
   }
 
   public get(index: number): Option<T> {
-    if (index < 0 || index >= this.size) {
+    if (index < 0 || index >= this.length) {
       return None;
     }
 
-    const offset = this.size - this.tail.size;
+    const offset = this.length - this._tail.length;
 
     let value: Option<T>;
 
     if (index < offset) {
-      value = this.head.get(index, this.shift - Node.Bits);
+      value = this._head.get(index, this._shift - Node.Bits);
     } else {
-      value = this.tail.get(index - offset, this.shift);
+      value = this._tail.get(index - offset, this._shift);
     }
 
     return value;
   }
 
   public set(index: number, value: T): List<T> {
-    if (index < 0 || index >= this.size) {
+    if (index < 0 || index >= this.length) {
       return this;
     }
 
-    const offset = this.size - this.tail.size;
+    const offset = this.length - this._tail.length;
 
-    let head = this.head;
-    let tail = this.tail;
+    let head = this._head;
+    let tail = this._tail;
 
     if (index < offset) {
-      head = head.set(index, this.shift, value);
+      head = head.set(index, this._shift, value);
     } else {
-      tail = tail.set(index - offset, this.shift, value);
+      tail = tail.set(index - offset, this._shift, value);
     }
 
-    return new List(head, tail, this.shift, this.size);
+    return new List(head, tail, this._shift, this.length);
   }
 
   public push(value: T): List<T> {
@@ -164,7 +164,7 @@ export class List<T>
     // In:  List { head: Empty, tail: Empty }
     // Out: List { head: Empty, tail: Leaf(value) }
     //
-    if (this.tail.isEmpty()) {
+    if (this._tail.isEmpty()) {
       return new List(Empty.of(), Leaf.of([value]), 0, 1);
     }
 
@@ -175,12 +175,12 @@ export class List<T>
     // In:  List { head, tail }
     // Out: List { head, tail: Leaf(...tail, value) }
     //
-    if (this.tail.hasCapacity()) {
+    if (this._tail.hasCapacity()) {
       return new List(
-        this.head,
-        Leaf.of([...this.tail.values, value]),
-        this.shift,
-        this.size + 1
+        this._head,
+        Leaf.of([...this._tail.values, value]),
+        this._shift,
+        this.length + 1
       );
     }
 
@@ -192,19 +192,19 @@ export class List<T>
     // In:  List { head: Empty, tail }
     // Out: List { head: tail, tail: Leaf(value) }
     //
-    if (this.head.isEmpty()) {
+    if (this._head.isEmpty()) {
       return new List(
-        this.tail,
+        this._tail,
         Leaf.of([value]),
-        this.shift + Node.Bits,
-        this.size + 1
+        this._shift + Node.Bits,
+        this.length + 1
       );
     }
 
-    const index = this.size - Node.Capacity;
+    const index = this.length - Node.Capacity;
 
-    let head = this.head;
-    let shift = this.shift;
+    let head = this._head;
+    let shift = this._shift;
 
     // If the head has overflown, we need to split it which in turn increases
     // the depth of the list.
@@ -228,7 +228,7 @@ export class List<T>
 
       if (next === undefined) {
         if (level === 0) {
-          prev.nodes[i] = this.tail;
+          prev.nodes[i] = this._tail;
         } else {
           prev.nodes[i] = prev = Branch.empty<T>();
         }
@@ -245,13 +245,13 @@ export class List<T>
     // In:  List { head, tail }
     // Out: List { head: Branch(...head, ...tail), tail: Leaf(value) }
     //
-    return new List(head, Leaf.of([value]), shift, this.size + 1);
+    return new List(head, Leaf.of([value]), shift, this.length + 1);
   }
 
   public pop(): List<T> {
     // If the list has no tail then it is empty. We therefore return the list
     // itself as the pop has no effect.
-    if (this.tail.isEmpty()) {
+    if (this._tail.isEmpty()) {
       return this;
     }
 
@@ -261,7 +261,7 @@ export class List<T>
     // In:  List { head: Empty, tail: Leaf(value) }
     // Out: List { head: Empty, tail: Empty }
     //
-    if (this.size === 1) {
+    if (this.length === 1) {
       return List.empty();
     }
 
@@ -272,29 +272,29 @@ export class List<T>
     // In:  List { head, tail: Leaf(...tail, value) }
     // Out: List { head, tail }
     //
-    if (this.tail.size > 1) {
+    if (this._tail.length > 1) {
       return new List(
-        this.head,
-        Leaf.of(this.tail.values.slice(0, this.tail.size - 1)),
-        this.shift,
-        this.size - 1
+        this._head,
+        Leaf.of(this._tail.values.slice(0, this._tail.length - 1)),
+        this._shift,
+        this.length - 1
       );
     }
 
-    if (this.head instanceof Leaf) {
+    if (this._head instanceof Leaf) {
       return new List(
         Empty.of(),
-        this.head,
-        this.shift - Node.Bits,
-        this.size - 1
+        this._head,
+        this._shift - Node.Bits,
+        this.length - 1
       );
     }
 
-    let head = this.head.clone() as Empty<T> | Branch<T> | Leaf<T>;
-    let tail = this.tail;
-    let shift = this.shift;
+    let head = this._head.clone() as Empty<T> | Branch<T> | Leaf<T>;
+    let tail = this._tail;
+    let shift = this._shift;
 
-    const index = this.size - Node.Capacity - 1;
+    const index = this.length - Node.Capacity - 1;
 
     let prev = head as Branch<T>;
     let level = shift - Node.Bits;
@@ -334,20 +334,20 @@ export class List<T>
     // In:  List { head: Branch(...head, tail), tail: Leaf(value) }
     // Out: List { head, tail }
     //
-    return new List(head, tail, shift, this.size - 1);
+    return new List(head, tail, shift, this.length - 1);
   }
 
   public equals(value: unknown): value is List<T> {
     return (
       value instanceof List &&
-      value.size === this.size &&
-      value.head.equals(this.head) &&
-      value.tail.equals(this.tail)
+      value.length === this.length &&
+      value._head.equals(this._head) &&
+      value._tail.equals(this._tail)
     );
   }
 
   public *[Symbol.iterator](): Iterator<T> {
-    yield* concat(this.head, this.tail);
+    yield* concat(this._head, this._tail);
   }
 
   public toJSON() {

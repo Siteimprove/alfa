@@ -10,10 +10,10 @@ export class Ok<T> implements Result<T, never> {
     return new Ok(value);
   }
 
-  private readonly value: T;
+  private readonly _value: T;
 
   private constructor(value: T) {
-    this.value = value;
+    this._value = value;
   }
 
   public isOk(): this is Ok<T> {
@@ -25,7 +25,7 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public map<U>(mapper: Mapper<T, U>): Ok<U> {
-    return new Ok(mapper(this.value));
+    return new Ok(mapper(this._value));
   }
 
   public mapErr(): this {
@@ -33,11 +33,11 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F> {
-    return mapper(this.value);
+    return mapper(this._value);
   }
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return reducer(accumulator, this.value);
+    return reducer(accumulator, this._value);
   }
 
   public and<U, F>(result: Result<U, F>): Result<U, F> {
@@ -45,7 +45,7 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, F> {
-    return result(this.value);
+    return result(this._value);
   }
 
   public or(): this {
@@ -57,19 +57,19 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public get(): T {
-    return this.value;
+    return this._value;
   }
 
   public getOr(): T {
-    return this.value;
+    return this._value;
   }
 
   public getOrElse(): T {
-    return this.value;
+    return this._value;
   }
 
   public ok(): Option<T> {
-    return Option.of(this.value);
+    return Option.of(this._value);
   }
 
   public err(): None {
@@ -77,19 +77,19 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public equals(value: unknown): value is Ok<T> {
-    return value instanceof Ok && Equality.equals(value.value, this.value);
+    return value instanceof Ok && Equality.equals(value._value, this._value);
   }
 
   public *[Symbol.iterator]() {
-    yield this.value;
+    yield this._value;
   }
 
   public toJSON(): { value: T } {
-    return { value: this.value };
+    return { value: this._value };
   }
 
   public toString(): string {
-    return `Ok { ${this.value} }`;
+    return `Ok { ${this._value} }`;
   }
 }
 
