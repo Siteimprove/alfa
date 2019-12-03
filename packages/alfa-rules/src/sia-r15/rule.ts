@@ -72,10 +72,10 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
         return {
           1:
-            sources.size === 1
+            sources.length === 1
               ? Ok.of("The <iframe> elements embed the same resource")
               : Question.of(
-                  "embed-equivalent-resources",
+                  "reference-equivalent-resources",
                   "boolean",
                   target,
                   "Do the <iframe> elements embed equivalent resources?"
