@@ -12,7 +12,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
   evaluate: ({ device, document }) => {
     return {
       applicability() {
-        return video(document, device, { audio: { has: false } })
+        return video(document, device, { audio: { has: false } });
       },
 
       expectations(target) {
@@ -40,4 +40,4 @@ export default Rule.Atomic.of<Page, Element, Question>({
       }
     };
   }
-};
+});

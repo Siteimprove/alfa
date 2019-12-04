@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import rule from "../../src/sia-r1/rule";
 
-test("evaluate() passes when a document has a title", t => {
+test("evaluate() passes when a document has a title", async t => {
   const page = Page.of({
     document: {
       nodeType: 9,
@@ -24,7 +24,7 @@ test("evaluate() passes when a document has a title", t => {
   });
 
   t.deepEqual(
-    [...rule.evaluate(page)],
+    [...(await rule.evaluate(page))],
     [
       Outcome.Passed.of(
         rule,

@@ -1,63 +1,39 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import {
-  getRole,
-  hasTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  isElement,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasName } from "../common/predicate/has-name";
+import { hasRole } from "../common/predicate/has-role";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-export const SIA_R40: Atomic.Rule<Device | Document, Element> = {
-  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r40.html",
-  requirements: [{ requirement: "aria", partial: true }],
-  evaluate: ({ device, document }) => {
+const { filter, isEmpty } = Iterable;
+const { and, not, equals } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r40.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(querySelectorAll(document, document, isElement), element => {
-            return map(getRole(element, document, device), role => {
-              if (role !== Roles.Region) {
-                return false;
-              }
-
-              return isExposed(element, document, device);
-            });
-          }),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
-          }
+      applicability() {
+        return filter(
+          document.descendants({ flattened: true, nested: true }),
+          and(
+            Element.isElement,
+            and(hasRole(hasName(equals("region"))), not(isIgnored(device)))
+          )
         );
       },
 
-      expectations: (aspect, target) => {
-        return map(
-          hasTextAlternative(target, document, device),
-          hasTextAlternative => {
-            return {
-              1: { holds: hasTextAlternative }
-            };
-          }
-        );
+      expectations(target) {
+        return {
+          1: hasAccessibleName(device, not(isEmpty))
+            ? Ok.of("The region has an accessible name")
+            : Err.of("The region does not have an accessible name")
+        };
       }
     };
   }
-};
+});

@@ -7,6 +7,6 @@ import { isVisible } from "./is-visible";
 
 const { and, not } = Predicate;
 
-export function isPerceivable(device: Device): Predicate<Node> {
+export function isPerceivable<T extends Node>(device: Device): Predicate<T> {
   return and(isVisible(device), not(isIgnored(device)));
 }

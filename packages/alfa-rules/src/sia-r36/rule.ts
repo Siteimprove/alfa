@@ -1,23 +1,46 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { Video } from "../helpers/applicabilities/video";
+import { video } from "../common/applicability/video";
 
-export const SIA_R36: Atomic.Rule<Device | Document, Element> = {
-  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r36.html",
-  evaluate: ({ device, document }) => {
+import { Question } from "../common/question";
+
+export default Rule.Atomic.of<Page, Element, Question>({
+  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r36.html",
+  evaluate({ device, document }) {
     return {
-      applicability: Video(document, device, {
-        audio: { has: true },
-        track: { has: true, kind: "descriptions" }
-      }),
+      applicability() {
+        return video(document, device, {
+          audio: { has: true },
+          track: { has: true, kind: "descriptions" }
+        });
+      },
 
-      expectations: (aspect, target, question) => {
+      expectations(target) {
         return {
-          1: { holds: question(QuestionType.Boolean, "track-describes-video") }
+          1: Question.of(
+            "track-describes-video",
+            "boolean",
+            target,
+            `Does at least 1 track describe the visual information of the
+            <video> element, either in the language of the <video> element or
+            the language of the page?`
+          ).map(trackDescribesVideo =>
+            trackDescribesVideo
+              ? Ok.of(
+                  `The <video> element has a track that describes its visual
+                  information in the language of the <video> element or the page`
+                )
+              : Err.of(
+                  `The <video> element does not have a track that describes its
+                  visual information in the language of the <video> element or
+                  the page`
+                )
+          )
         };
       }
     };
   }
-};
+});

@@ -13,6 +13,7 @@
     "src/common/predicate/has-name-from.ts",
     "src/common/predicate/has-name.ts",
     "src/common/predicate/has-namespace.ts",
+    "src/common/predicate/has-nondefault-role.ts",
     "src/common/predicate/has-role.ts",
     "src/common/predicate/has-tab-index.ts",
     "src/common/predicate/has-text-content.ts",
@@ -57,9 +58,23 @@
     "src/sia-r3/rule.ts",
     "src/sia-r30/rule.ts",
     "src/sia-r31/rule.ts",
+    "src/sia-r32/rule.ts",
+    "src/sia-r33/rule.ts",
+    "src/sia-r34/rule.ts",
+    "src/sia-r35/rule.ts",
+    "src/sia-r36/rule.ts",
+    "src/sia-r37/rule.ts",
+    "src/sia-r38/rule.ts",
+    "src/sia-r39/rule.ts",
     "src/sia-r4/rule.ts",
+    "src/sia-r40/rule.ts",
+    "src/sia-r41/rule.ts",
+    "src/sia-r42/rule.ts",
     "src/sia-r43/rule.ts",
+    "src/sia-r48/rule.ts",
+    "src/sia-r49/rule.ts",
     "src/sia-r5/rule.ts",
+    "src/sia-r50/rule.ts",
     "src/sia-r6/rule.ts",
     "src/sia-r7/rule.ts",
     "src/sia-r8/rule.ts",
@@ -98,6 +113,9 @@
     },
     {
       "path": "../alfa-lang"
+    },
+    {
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-result"

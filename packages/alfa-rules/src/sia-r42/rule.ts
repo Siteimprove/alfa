@@ -1,111 +1,50 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { getOwnerElement, getRole, isExposed } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
+import { Rule } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  Namespace,
-  Node,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Page } from "@siteimprove/alfa-web";
 
-import { getExplicitRole } from "../helpers/get-explicit-role";
-import { isElement, namespaceIs } from "../helpers/predicates";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { hasNondefaultRole } from "../common/predicate/has-nondefault-role";
+import { isIgnored } from "../common/predicate/is-ignored";
+import { Ok, Err } from "@siteimprove/alfa-result";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+const { filter } = Iterable;
+const { and, not, equals, test } = Predicate;
 
-export const SIA_R42: Atomic.Rule<Device | Document, Element> = {
-  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r42.html",
-  requirements: [
-    { requirement: "wcag", criterion: "info-and-relationships", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+export default Rule.Atomic.of<Page, Element>({
+  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r42.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(
-            querySelectorAll<Element>(
-              document,
-              document,
-              Predicate.from(
-                isElement.and(
-                  namespaceIs(document, Namespace.HTML, Namespace.SVG)
-                )
-              ),
-              {
-                flattened: true
-              }
-            ),
-            element => {
-              return map(isExposed(element, document, device), isExposed => {
-                if (!isExposed) {
-                  return false;
-                }
-
-                return map(getExplicitRole(element, document, device), role => {
-                  return (
-                    role !== null &&
-                    role.context !== undefined &&
-                    [...role.context(element, document, device)].length > 0
-                  );
-                });
-              });
-            }
-          ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                aspect: document,
-                target: element
-              };
-            });
-          }
+      applicability() {
+        return filter(
+          document.descendants({ flattened: true, nested: true }),
+          and(
+            Element.isElement,
+            and(
+              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              and(not(isIgnored(device)), hasNondefaultRole)
+            )
+          )
         );
       },
 
-      expectations: (aspect, target) => {
-        return map(
-          hasRequiredContext(target, document, device),
-          hasRequiredContext => {
-            return {
-              1: { holds: hasRequiredContext }
-            };
-          }
-        );
+      expectations(target) {
+        return {
+          1: test(hasRequiredContext(device), target)
+            ? Ok.of(
+                "The element is owned by an element of its required context role"
+              )
+            : Err.of(
+                "The element is not owned by an element of its required context role"
+              )
+        };
       }
     };
   }
-};
+});
 
-function hasRequiredContext(
-  element: Element,
-  context: Node,
-  device: Device
-): boolean | BrowserSpecific<boolean> {
-  return map(getOwnerElement(element, context, device), ownerElement => {
-    if (ownerElement === null) {
-      return false;
-    }
-
-    return map(getRole(element, context, device), role => {
-      const required = role!.context!(element, context, device);
-
-      return map(getRole(ownerElement, context, device), role => {
-        if (role !== null) {
-          for (const found of required) {
-            if (found === role) {
-              return true;
-            }
-          }
-        }
-
-        return false;
-      });
-    });
-  });
+function hasRequiredContext(device: Device): Predicate<Element> {
+  return () => true;
 }

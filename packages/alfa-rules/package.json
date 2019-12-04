@@ -33,6 +33,7 @@
     "@siteimprove/alfa-iana": "^0.0.0",
     "@siteimprove/alfa-iterable": "^0.0.0",
     "@siteimprove/alfa-lang": "^0.0.0",
+    "@siteimprove/alfa-predicate": "^0.0.0",
     "@siteimprove/alfa-result": "^0.0.0",
     "@siteimprove/alfa-web": "^0.0.0"
   },

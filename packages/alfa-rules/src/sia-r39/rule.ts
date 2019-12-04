@@ -1,103 +1,76 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import { getTextAlternative, isExposed, Roles } from "@siteimprove/alfa-aria";
-import { Seq } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  getAttribute,
-  InputType,
-  Namespace,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import {
-  inputTypeIs,
-  isElement,
-  nameIs,
-  namespaceIs,
-  roleIs
-} from "../helpers/predicates";
+import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { hasInputType } from "../common/predicate/has-input-type";
+import { hasName } from "../common/predicate/has-name";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const {
-  map,
-  Iterable: { filter }
-} = BrowserSpecific;
+import { Question } from "../common/question";
 
-export const SIA_R39: Atomic.Rule<Device | Document, Element> = {
-  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r39.html",
-  requirements: [
-    { requirement: "wcag", criterion: "non-text-content", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+const { filter } = Iterable;
+const { and, or, not, equals, test } = Predicate;
+
+export default Rule.Atomic.of<Page, Element, Question>({
+  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r39.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          filter(
-            querySelectorAll(document, document, Predicate.from(isElement), {
-              flattened: true
-            }),
-            element => {
-              const src = getAttribute(element, "src", {
-                trim: true,
-                lowerCase: true
-              });
-
-              if (src === null) {
-                return false;
-              }
-
-              const filename = getFilename(src);
-
-              if (filename === "") {
-                return false;
-              }
-
-              return Predicate.test(
-                element,
-                isElement
-                  .and(namespaceIs(document, Namespace.HTML))
-                  .and(
-                    nameIs("img")
-                      .or(roleIs(document, device, Roles.Img))
-                      .or(inputTypeIs(InputType.Image))
+      applicability() {
+        return filter(
+          document.descendants({ flattened: true, nested: true }),
+          and(
+            Element.isElement,
+            and(
+              hasNamespace(equals(Namespace.HTML)),
+              and(
+                or(
+                  hasName(equals("img")),
+                  and(hasName(equals("input")), hasInputType(equals("image")))
+                ),
+                and(not(isIgnored(device)), element =>
+                  test(
+                    hasAccessibleName(device, accessibleName =>
+                      element
+                        .attribute("src")
+                        .map(attr => getFilename(attr.value))
+                        .some(
+                          filename =>
+                            filename === accessibleName.toLowerCase().trim()
+                        )
+                    ),
+                    element
                   )
-                  .and(element => isExposed(element, document, device))
-                  .and(element =>
-                    map(
-                      getTextAlternative(element, document, device),
-                      textAlternative => {
-                        return (
-                          textAlternative !== null &&
-                          textAlternative.toLowerCase() === filename
-                        );
-                      }
-                    )
-                  )
-              );
-            }
-          ),
-          elements => {
-            return Seq(elements).map(element => {
-              return {
-                applicable: true,
-                aspect: document,
-                target: element
-              };
-            });
-          }
+                )
+              )
+            )
+          )
         );
       },
 
-      expectations: (aspect, target, question) => {
+      expectations(target) {
         return {
-          1: { holds: question(QuestionType.Boolean, "name-describes-image") }
+          1: Question.of(
+            "name-describes-purpose",
+            "boolean",
+            target,
+            `Does the accessible name of the <${target.name}> element describe its purpose?`
+          )
+            ? Ok.of(
+                `The accessible name of the <${target.name}> element describes its purpose`
+              )
+            : Err.of(
+                `The accessible name of the <${target.name}> element does not describe its purpose`
+              )
         };
       }
     };
   }
-};
+});
 
 function getFilename(path: string): string {
   const base = path.substring(path.lastIndexOf("/") + 1);

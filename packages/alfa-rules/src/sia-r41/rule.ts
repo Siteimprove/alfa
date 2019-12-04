@@ -1,106 +1,100 @@
-import { Atomic, QuestionType } from "@siteimprove/alfa-act";
-import {
-  getTextAlternative,
-  hasTextAlternative,
-  isExposed,
-  Roles
-} from "@siteimprove/alfa-aria";
-import { Map, Seq, Set } from "@siteimprove/alfa-collection";
-import { BrowserSpecific, Predicate } from "@siteimprove/alfa-compatibility";
-import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  getAttribute,
-  getRootNode,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
-import { isWhitespace } from "@siteimprove/alfa-unicode";
-import { trim } from "@siteimprove/alfa-util";
+import { Rule } from "@siteimprove/alfa-act";
+import { getAccessibleName } from "@siteimprove/alfa-aria";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
+import { Map } from "@siteimprove/alfa-map";
+import { Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Set } from "@siteimprove/alfa-set";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isElement, roleIs } from "../helpers/predicates";
+import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasName } from "../common/predicate/has-name";
+import { hasNamespace } from "../common/predicate/has-namespace";
+import { hasRole } from "../common/predicate/has-role";
+import { isIgnored } from "../common/predicate/is-ignored";
 
-const {
-  map,
-  Iterable: { filter, groupBy }
-} = BrowserSpecific;
+import { Question } from "../common/question";
 
-export const SIA_R41: Atomic.Rule<Device | Document, Iterable<Element>> = {
-  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r41.html",
-  locales: [EN],
-  requirements: [
-    { requirement: "wcag", criterion: "link-purpose-link-only", partial: true }
-  ],
-  evaluate: ({ device, document }) => {
+const { filter, map, flatMap, reduce, groupBy, isEmpty } = Iterable;
+const { and, or, not, equals } = Predicate;
+
+export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
+  evaluate({ device, document }) {
     return {
-      applicability: () => {
-        return map(
-          groupBy(
-            filter(
-              querySelectorAll(document, document, Predicate.from(isElement), {
-                flattened: true
-              }),
-              Predicate.from(
-                isElement
-                  .and(roleIs(document, device, Roles.Link))
-                  .and(element => isExposed(element, document, device))
-                  .and(element => hasTextAlternative(element, document, device))
+      applicability() {
+        const elements = filter(
+          document.descendants({ flattened: true, nested: true }),
+          and(
+            Element.isElement,
+            and(
+              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              and(
+                hasRole(
+                  or(hasName(equals("link")), role =>
+                    role.inheritsFrom(hasName(equals("link")))
+                  )
+                ),
+                and(
+                  not(isIgnored(device)),
+                  hasAccessibleName(device, not(isEmpty))
+                )
               )
-            ),
-            element => {
-              return map(
-                getTextAlternative(element, document, device),
-                textAlternative => {
-                  return trim(textAlternative!, isWhitespace).toLowerCase();
-                }
-              );
-            }
-          ),
-          groups => {
-            return Map(groups)
-              .toList()
-              .flatMap(elements => {
-                return Seq(elements)
-                  .groupBy(element => {
-                    return getRootNode(element, document);
-                  })
-                  .toList()
-                  .map(elements => elements.toList())
-                  .filter(elements => elements.size >= 2)
-                  .map(elements => {
-                    return {
-                      aspect: document,
-                      target: elements
-                    };
-                  });
-              });
-          }
+            )
+          )
+        );
+
+        const roots = groupBy(elements, element => element.root());
+
+        return flatMap(roots, ([root, elements]) =>
+          reduce(
+            elements,
+            (groups, element) => {
+              for (const [name] of getAccessibleName(element, device)) {
+                groups = groups.set(
+                  name,
+                  groups
+                    .get(name)
+                    .getOrElse(() => List.empty<Element>())
+                    .push(element)
+                );
+              }
+
+              return groups;
+            },
+            Map.empty<Option<string>, List<Element>>()
+          ).values()
         );
       },
 
-      expectations: (aspect, target, question) => {
-        const references = [
-          ...Seq(target).reduce<Set<string | null>>((sources, target) => {
-            switch (target.localName) {
-              case "a":
-              case "area":
-                return sources.add(getAttribute(target, "href"));
-
-              default:
-                return sources.add(null);
-            }
-          }, Set())
-        ];
+      expectations(target) {
+        const sources = Set.from(
+          map(target, element =>
+            element.attribute("href").map(attr => attr.value)
+          )
+        );
 
         return {
-          1: {
-            holds:
-              references.length === 1 && references[0] !== null
-                ? true
-                : question(QuestionType.Boolean, "embed-equivalent-resources")
-          }
+          1:
+            sources.length === 1
+              ? Ok.of("The links resolve to the same resource")
+              : Question.of(
+                  "reference-equivalent-resources",
+                  "boolean",
+                  target,
+                  "Do the links resolve to equivalent resources?"
+                ).map(embedEquivalentResources =>
+                  embedEquivalentResources
+                    ? Ok.of("The links resolve to equivalent resources")
+                    : Err.of(
+                        "The links do not resolve to the same or equivalent resources"
+                      )
+                )
         };
       }
     };
   }
-};
+});
