@@ -11,6 +11,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
+const { or } = Predicate;
 
 export class Role<N extends string = string> implements Equality<Role<N>> {
   public static of<N extends string>(
@@ -46,33 +47,27 @@ export class Role<N extends string = string> implements Equality<Role<N>> {
     this.characteristics = characteristics;
   }
 
+  public inheritsFrom(predicate: Predicate<Role>): boolean {
+    return some(this.characteristics.inherits, name =>
+      Role.lookup(name).some(
+        or(predicate, role => role.inheritsFrom(predicate))
+      )
+    );
+  }
+
   public isRequired(predicate: Predicate<Attribute>): boolean {
     return (
       some(this.characteristics.requires, name =>
-        Attribute.lookup(name)
-          .filter(predicate)
-          .isSome()
-      ) ||
-      some(this.characteristics.inherits, name =>
-        Role.lookup(name)
-          .filter(role => role.isRequired(predicate))
-          .isSome()
-      )
+        Attribute.lookup(name).some(predicate)
+      ) || this.inheritsFrom(role => role.isRequired(predicate))
     );
   }
 
   public isSupported(predicate: Predicate<Attribute>): boolean {
     return (
       some(this.characteristics.supports, name =>
-        Attribute.lookup(name)
-          .filter(predicate)
-          .isSome()
-      ) ||
-      some(this.characteristics.inherits, name =>
-        Role.lookup(name)
-          .filter(role => role.isSupported(predicate))
-          .isSome()
-      )
+        Attribute.lookup(name).some(predicate)
+      ) || this.inheritsFrom(role => role.isSupported(predicate))
     );
   }
 
