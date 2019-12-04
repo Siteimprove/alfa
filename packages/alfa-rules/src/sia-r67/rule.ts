@@ -24,11 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
             Element.isElement,
             and(
               hasNamespace(equals(Namespace.HTML)),
-              and(
-                hasName(equals("img")),
-
-                isDecorative
-              )
+              and(hasName(equals("img")), isDecorative)
             )
           )
         );
