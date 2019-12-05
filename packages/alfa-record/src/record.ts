@@ -77,12 +77,12 @@ export class Record<T>
     );
   }
 
-  public keys(): Iterable<Record.Key<T>> {
-    return this._keys;
+  public *keys(): Iterable<Record.Key<T>> {
+    yield* this._keys;
   }
 
-  public values(): Iterable<Record.Value<T>> {
-    return this._values;
+  public *values(): Iterable<Record.Value<T>> {
+    yield* this._values;
   }
 
   public *[Symbol.iterator](): Iterator<Record.Entry<T>> {
@@ -93,14 +93,14 @@ export class Record<T>
     }
   }
 
-  public toJSON() {
+  public toJSON(): T {
     const record: { [key: string]: unknown } = {};
 
     for (const [key, value] of this) {
       record[key] = value;
     }
 
-    return record;
+    return (record as unknown) as T;
   }
 }
 
