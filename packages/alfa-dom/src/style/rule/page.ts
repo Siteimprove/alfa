@@ -6,14 +6,14 @@ import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 
-export class Style extends Rule {
+export class Page extends Rule {
   public static of(
     selector: string,
-    declarations: Mapper<Style, Iterable<Declaration>>,
+    declarations: Mapper<Page, Iterable<Declaration>>,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Style {
-    return new Style(selector, declarations, owner, parent);
+  ): Page {
+    return new Page(selector, declarations, owner, parent);
   }
 
   public readonly selector: string;
@@ -21,7 +21,7 @@ export class Style extends Rule {
 
   private constructor(
     selector: string,
-    declarations: Mapper<Style, Iterable<Declaration>>,
+    declarations: Mapper<Page, Iterable<Declaration>>,
     owner: Sheet,
     parent: Option<Rule>
   ) {
@@ -31,9 +31,9 @@ export class Style extends Rule {
     this.style = Block.of(declarations(this));
   }
 
-  public toJSON(): Style.JSON {
+  public toJSON(): Page.JSON {
     return {
-      type: "style",
+      type: "page",
       selector: this.selector,
       style: this.style.toJSON()
     };
@@ -42,27 +42,29 @@ export class Style extends Rule {
   public toString(): string {
     const style = this.style.toString();
 
-    return `${this.selector} {${style === "" ? "" : `\n${indent(style)}\n`}}`;
+    return `@page ${this.selector} {${
+      style === "" ? "" : `\n${indent(style)}\n`
+    }}`;
   }
 }
 
-export namespace Style {
-  export function isStyle(value: unknown): value is Style {
-    return value instanceof Style;
+export namespace Page {
+  export function isPage(value: unknown): value is Page {
+    return value instanceof Page;
   }
 
   export interface JSON {
-    type: "style";
+    type: "page";
     selector: string;
     style: Block.JSON;
   }
 
-  export function fromStyle(
+  export function fromPage(
     json: JSON,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Style {
-    return Style.of(
+  ): Page {
+    return Page.of(
       json.selector,
       self => {
         const parent = Option.of(self);

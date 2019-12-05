@@ -9,14 +9,14 @@ import { Grouping } from "./grouping";
 
 const { map, join } = Iterable;
 
-export class Media extends Condition {
+export class Supports extends Condition {
   public static of(
     condition: string,
     rules: Mapper<Grouping, Iterable<Rule>>,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Media {
-    return new Media(condition, rules, owner, parent);
+  ): Supports {
+    return new Supports(condition, rules, owner, parent);
   }
 
   private constructor(
@@ -28,9 +28,9 @@ export class Media extends Condition {
     super(condition, rules, owner, parent);
   }
 
-  public toJSON(): Media.JSON {
+  public toJSON(): Supports.JSON {
     return {
-      type: "media",
+      type: "supports",
       rules: [...this.rules].map(rule => rule.toJSON()),
       condition: this.condition
     };
@@ -42,25 +42,27 @@ export class Media extends Condition {
       "\n\n"
     );
 
-    return `@media ${this.condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
+    return `@supports ${this.condition} {${
+      rules === "" ? "" : `\n${rules}\n`
+    }}`;
   }
 }
 
-export namespace Media {
-  export function isMedia(value: unknown): value is Media {
-    return value instanceof Media;
+export namespace Supports {
+  export function isSupports(value: unknown): value is Supports {
+    return value instanceof Supports;
   }
 
   export interface JSON extends Condition.JSON {
-    type: "media";
+    type: "supports";
   }
 
-  export function fromMedia(
+  export function fromSupports(
     json: JSON,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Media {
-    return Media.of(
+  ): Supports {
+    return Supports.of(
       json.condition,
       self => {
         const parent = Option.of(self);

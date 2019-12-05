@@ -4,35 +4,38 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
-import { Condition } from "./condition";
 import { Grouping } from "./grouping";
 
 const { map, join } = Iterable;
 
-export class Media extends Condition {
+export class Keyframes extends Grouping {
   public static of(
-    condition: string,
+    name: string,
     rules: Mapper<Grouping, Iterable<Rule>>,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Media {
-    return new Media(condition, rules, owner, parent);
+  ): Keyframes {
+    return new Keyframes(name, rules, owner, parent);
   }
 
+  public readonly name: string;
+
   private constructor(
-    condition: string,
+    name: string,
     rules: Mapper<Grouping, Iterable<Rule>>,
     owner: Sheet,
     parent: Option<Rule>
   ) {
-    super(condition, rules, owner, parent);
+    super(rules, owner, parent);
+
+    this.name = name;
   }
 
-  public toJSON(): Media.JSON {
+  public toJSON(): Keyframes.JSON {
     return {
-      type: "media",
+      type: "keyframes",
       rules: [...this.rules].map(rule => rule.toJSON()),
-      condition: this.condition
+      name: this.name
     };
   }
 
@@ -42,26 +45,27 @@ export class Media extends Condition {
       "\n\n"
     );
 
-    return `@media ${this.condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
+    return `@keyframes ${this.name} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }
 }
 
-export namespace Media {
-  export function isMedia(value: unknown): value is Media {
-    return value instanceof Media;
+export namespace Keyframes {
+  export function isKeyframes(value: unknown): value is Keyframes {
+    return value instanceof Keyframes;
   }
 
-  export interface JSON extends Condition.JSON {
-    type: "media";
+  export interface JSON extends Grouping.JSON {
+    type: "keyframes";
+    name: string;
   }
 
-  export function fromMedia(
+  export function fromKeyframes(
     json: JSON,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Media {
-    return Media.of(
-      json.condition,
+  ): Keyframes {
+    return Keyframes.of(
+      json.name,
       self => {
         const parent = Option.of(self);
         return json.rules.map(rule => Rule.fromRule(rule, owner, parent));

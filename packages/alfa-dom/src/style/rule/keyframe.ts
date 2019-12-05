@@ -6,35 +6,35 @@ import { Declaration } from "../declaration";
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 
-export class Style extends Rule {
+export class Keyframe extends Rule {
   public static of(
-    selector: string,
-    declarations: Mapper<Style, Iterable<Declaration>>,
+    key: string,
+    declarations: Mapper<Keyframe, Iterable<Declaration>>,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Style {
-    return new Style(selector, declarations, owner, parent);
+  ): Keyframe {
+    return new Keyframe(key, declarations, owner, parent);
   }
 
-  public readonly selector: string;
+  public readonly key: string;
   public readonly style: Block;
 
   private constructor(
-    selector: string,
-    declarations: Mapper<Style, Iterable<Declaration>>,
+    key: string,
+    declarations: Mapper<Keyframe, Iterable<Declaration>>,
     owner: Sheet,
     parent: Option<Rule>
   ) {
     super(owner, parent);
 
-    this.selector = selector;
+    this.key = key;
     this.style = Block.of(declarations(this));
   }
 
-  public toJSON(): Style.JSON {
+  public toJSON(): Keyframe.JSON {
     return {
-      type: "style",
-      selector: this.selector,
+      type: "keyframe",
+      key: this.key,
       style: this.style.toJSON()
     };
   }
@@ -42,28 +42,30 @@ export class Style extends Rule {
   public toString(): string {
     const style = this.style.toString();
 
-    return `${this.selector} {${style === "" ? "" : `\n${indent(style)}\n`}}`;
+    return `@keyframe ${this.key} {${
+      style === "" ? "" : `\n${indent(style)}\n`
+    }}`;
   }
 }
 
-export namespace Style {
-  export function isStyle(value: unknown): value is Style {
-    return value instanceof Style;
+export namespace Keyframe {
+  export function isKeyframe(value: unknown): value is Keyframe {
+    return value instanceof Keyframe;
   }
 
   export interface JSON {
-    type: "style";
-    selector: string;
+    type: "keyframe";
+    key: string;
     style: Block.JSON;
   }
 
-  export function fromStyle(
+  export function fromKeyframe(
     json: JSON,
     owner: Sheet,
     parent: Option<Rule> = None
-  ): Style {
-    return Style.of(
-      json.selector,
+  ): Keyframe {
+    return Keyframe.of(
+      json.key,
       self => {
         const parent = Option.of(self);
         return json.style.map(declaration =>

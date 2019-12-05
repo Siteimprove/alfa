@@ -18,7 +18,7 @@ export abstract class Grouping extends Rule {
     this.rules = rules(this);
   }
 
-  public *visit(): Iterable<Rule> {
+  public *children(): Iterable<Rule> {
     yield* this.rules;
   }
 
