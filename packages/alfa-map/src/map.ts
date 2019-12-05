@@ -119,6 +119,18 @@ export class Map<K, V>
   public *[Symbol.iterator](): Iterator<[K, V]> {
     yield* this._root;
   }
+
+  public toJSON(): Array<[K, V]> {
+    return [...this];
+  }
+
+  public toString(): string {
+    const entries = [...this]
+      .map(([key, value]) => `${key} => ${value}`)
+      .join(", ");
+
+    return `Map {${entries === "" ? "" : ` ${entries} `}}`;
+  }
 }
 
 export namespace Map {
