@@ -63,6 +63,7 @@
     { "path": "alfa-slice" },
     { "path": "alfa-test" },
     { "path": "alfa-thunk" },
+    { "path": "alfa-trampoline" },
     { "path": "alfa-unexpected" },
     { "path": "alfa-unicode" },
     { "path": "alfa-util" },
