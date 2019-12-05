@@ -5,13 +5,14 @@ import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Cache } from "./cache";
 import { Interview } from "./interview";
 import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 
-const { flatMap, flatten, reduce, groupBy } = Iterable;
+const { flatMap, flatten, reduce } = Iterable;
 
 export class Rule<I, T, Q = unknown> {
   public static of<I, T, Q = unknown>(properties: {
@@ -90,7 +91,7 @@ export namespace Rule {
                 )
               )
             )
-              .map(targets => Array.from(flatten<T>(targets)))
+              .map(targets => Sequence.from(flatten<T>(targets)))
               .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
                 if (targets.length === 0) {
                   return Future.settle([Outcome.Inapplicable.of(rule)]);
@@ -113,7 +114,7 @@ export namespace Rule {
       input: Readonly<I>
     ) => {
       expectations(
-        outcomes: Iterable<Outcome.Applicable<I, T, Q>>
+        outcomes: Sequence<Outcome.Applicable<I, T, Q>>
       ): { [key: string]: Interview<Q, T, Expectation> };
     };
 
@@ -132,7 +133,7 @@ export namespace Rule {
               rule.evaluate(input, oracle, outcomes)
             )
               .map(outcomes =>
-                Array.from(
+                Sequence.from(
                   flatMap(outcomes, function*(outcomes) {
                     for (const outcome of outcomes) {
                       if (Outcome.isApplicable(outcome)) {
@@ -150,7 +151,7 @@ export namespace Rule {
                 const { expectations } = evaluate(input);
 
                 return Future.traverse(
-                  groupBy(targets, outcome => outcome.target),
+                  targets.groupBy(outcome => outcome.target),
                   ([target, outcomes]) =>
                     resolve(
                       target,
