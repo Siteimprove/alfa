@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/callback.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

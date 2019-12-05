@@ -10,6 +10,7 @@
     { "path": "alfa-assert" },
     { "path": "alfa-branched" },
     { "path": "alfa-cache" },
+    { "path": "alfa-callback" },
     { "path": "alfa-chai" },
     { "path": "alfa-cheerio" },
     { "path": "alfa-cli" },
