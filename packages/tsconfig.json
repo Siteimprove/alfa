@@ -21,6 +21,7 @@
     { "path": "alfa-cypress" },
     { "path": "alfa-device" },
     { "path": "alfa-dom" },
+    { "path": "alfa-either" },
     { "path": "alfa-enzyme" },
     { "path": "alfa-equality" },
     { "path": "alfa-fnv" },
