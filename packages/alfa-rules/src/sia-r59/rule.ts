@@ -29,7 +29,7 @@ export default Rule.Atomic.of<Page, Document>({
 
       expectations(target) {
         const headings = filter(
-          target.descendants(),
+          target.descendants({ flattened: true }),
           and(
             Element.isElement,
             and(
