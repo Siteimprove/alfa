@@ -1,5 +1,6 @@
 import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -150,6 +151,20 @@ export class Cons<T> implements Sequence<T> {
       (reversed, value) => new Cons(value, reversed),
       Nil
     );
+  }
+
+  public groupBy<K>(grouper: Mapper<T, K>): Map<K, Sequence<T>> {
+    return this.reverse().reduce((groups, value) => {
+      const group = grouper(value);
+
+      return groups.set(
+        group,
+        Sequence.of(
+          value,
+          groups.get(group).getOrElse(() => Sequence.empty<T>())
+        )
+      );
+    }, Map.empty<K, Sequence<T>>());
   }
 
   public join(separator: string): string {
