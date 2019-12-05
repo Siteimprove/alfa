@@ -3,6 +3,12 @@
   "files": ["src/future.ts", "src/index.ts", "test/future.spec.ts"],
   "references": [
     {
+      "path": "../alfa-callback"
+    },
+    {
+      "path": "../alfa-continuation"
+    },
+    {
       "path": "../alfa-functor"
     },
     {
@@ -15,13 +21,16 @@
       "path": "../alfa-monad"
     },
     {
-      "path": "../alfa-option"
-    },
-    {
       "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
+    },
+    {
+      "path": "../alfa-trampoline"
     }
   ]
 }
