@@ -16,6 +16,7 @@
     { "path": "alfa-cli" },
     { "path": "alfa-collection" },
     { "path": "alfa-compatibility" },
+    { "path": "alfa-continuation" },
     { "path": "alfa-css" },
     { "path": "alfa-cypress" },
     { "path": "alfa-device" },
