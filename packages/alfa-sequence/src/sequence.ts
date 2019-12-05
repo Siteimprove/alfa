@@ -2,6 +2,7 @@ import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
@@ -40,6 +41,7 @@ export interface Sequence<T>
   rest(): Sequence<T>;
   slice(start: number, end?: number): Sequence<T>;
   reverse(): Sequence<T>;
+  groupBy<K>(grouper: Mapper<T, K>): Map<K, Sequence<T>>;
   join(separator: string): string;
   toJSON(): Array<T>;
 }

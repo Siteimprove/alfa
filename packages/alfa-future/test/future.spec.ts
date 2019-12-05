@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Future } from "../src/future";
 
 function wait(delay: number): Future<void> {
-  return Future.of(settle => setTimeout(settle, delay));
+  return Future.defer(callback => setTimeout(callback, delay));
 }
 
 test(".map() applies a function to the value of a future", async t => {

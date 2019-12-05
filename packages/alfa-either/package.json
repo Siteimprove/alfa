@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@siteimprove/alfa-future",
+  "name": "@siteimprove/alfa-either",
   "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
@@ -22,15 +22,13 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-callback": "^0.0.0",
-    "@siteimprove/alfa-continuation": "^0.0.0",
+    "@siteimprove/alfa-equality": "^0.0.0",
+    "@siteimprove/alfa-foldable": "^0.0.0",
     "@siteimprove/alfa-functor": "^0.0.0",
-    "@siteimprove/alfa-iterable": "^0.0.0",
     "@siteimprove/alfa-mapper": "^0.0.0",
     "@siteimprove/alfa-monad": "^0.0.0",
-    "@siteimprove/alfa-sequence": "^0.0.0",
-    "@siteimprove/alfa-thunk": "^0.0.0",
-    "@siteimprove/alfa-trampoline": "^0.0.0"
+    "@siteimprove/alfa-option": "^0.0.0",
+    "@siteimprove/alfa-reducer": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"

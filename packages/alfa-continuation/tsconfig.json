@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/continuation.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-callback"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

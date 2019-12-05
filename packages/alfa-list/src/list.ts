@@ -101,7 +101,7 @@ export class List<T>
     return List.from(intersect(this, list));
   }
 
-  public groupBy<K>(grouper: Mapper<T, K>): Map<K, Iterable<T>> {
+  public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
     return this.reduce((groups, value) => {
       const group = grouper(value);
 

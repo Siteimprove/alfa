@@ -1,3 +1,4 @@
+import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
 import { Sequence } from "./sequence";
@@ -101,6 +102,10 @@ export const Nil: Nil = new (class Nil {
 
   public reverse(): Nil {
     return this;
+  }
+
+  public groupBy<K, T>(): Map<K, Sequence<T>> {
+    return Map.empty();
   }
 
   public join(): string {

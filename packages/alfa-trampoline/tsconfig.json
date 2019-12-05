@@ -1,0 +1,24 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/trampoline.ts", "test/trampoline.spec.ts"],
+  "references": [
+    {
+      "path": "../alfa-either"
+    },
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
+    }
+  ]
+}

@@ -1,12 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "files": [
-    "src/cons.ts",
-    "src/index.ts",
-    "src/nil.ts",
-    "src/sequence.ts",
-    "test/sequence.spec.ts"
-  ],
+  "files": ["src/either.ts", "src/index.ts", "src/left.ts", "src/right.ts"],
   "references": [
     {
       "path": "../alfa-equality"
@@ -18,12 +12,6 @@
       "path": "../alfa-functor"
     },
     {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
       "path": "../alfa-mapper"
     },
     {
@@ -33,16 +21,10 @@
       "path": "../alfa-option"
     },
     {
-      "path": "../alfa-predicate"
-    },
-    {
       "path": "../alfa-reducer"
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
     }
   ]
 }
