@@ -3,9 +3,9 @@ import {
   Declaration,
   Element,
   Rule,
-  Style,
+  StyleRule,
   Sheet,
-  Media as MediaRule
+  MediaRule
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -81,7 +81,7 @@ export class SelectorMap {
         }
       }
 
-      if (Style.isStyle(rule)) {
+      if (StyleRule.isStyle(rule)) {
         const selector = Selector.parse(rule.selector);
 
         if (selector.isNone() || Iterable.isEmpty(rule.style)) {
@@ -98,13 +98,13 @@ export class SelectorMap {
         }
       }
 
-      for (const child of rule.visit()) {
+      for (const child of rule.children()) {
         visit(child);
       }
     };
 
     for (const sheet of sheets) {
-      for (const rule of sheet.visit()) {
+      for (const rule of sheet.children()) {
         visit(rule);
       }
     }
@@ -129,8 +129,8 @@ export class SelectorMap {
 
     return nodes;
 
-    function collect(nodes: Array<SelectorMap.Node>) {
-      for (const node of nodes) {
+    function collect(candidates: Array<SelectorMap.Node>) {
+      for (const node of candidates) {
         if (node.selector.matches(element)) {
           nodes.push(node);
         }

@@ -14,7 +14,7 @@ export type Opacity = number;
 const Opacity: Property<Opacity> = Property.of(
   1,
   map(
-    either(Token.Number.parse(), Token.Percentage.parse()),
+    either(Token.parseNumber(), Token.parsePercentage()),
     token => token.value
   ),
   style =>
