@@ -1,9 +1,12 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/decompose.ts", "src/index.ts", "src/transformation.ts"],
+  "files": ["src/index.ts", "src/transformation.ts"],
   "references": [
     {
       "path": "../alfa-math"
+    },
+    {
+      "path": "../alfa-option"
     },
     {
       "path": "../alfa-test"
