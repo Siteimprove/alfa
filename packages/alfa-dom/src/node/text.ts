@@ -5,7 +5,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 export class Text extends Node implements Slotable {
-  public static of(data: string, parent: Option<Node>): Text {
+  public static of(data: string, parent: Option<Node> = None): Text {
     return new Text(data, parent);
   }
 

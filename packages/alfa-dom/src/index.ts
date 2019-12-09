@@ -11,8 +11,4 @@ export * from "./node/type";
 export * from "./style/block";
 export * from "./style/declaration";
 export * from "./style/rule";
-export * from "./style/rule/condition";
-export * from "./style/rule/grouping";
-export * from "./style/rule/media";
-export * from "./style/rule/style";
 export * from "./style/sheet";

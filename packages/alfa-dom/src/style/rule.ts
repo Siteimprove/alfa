@@ -20,6 +20,13 @@ export abstract class Rule {
     }
   }
 
+  public *ancestors(): Iterable<Rule> {
+    for (const parent of this.parent) {
+      yield parent;
+      yield* parent.ancestors();
+    }
+  }
+
   public abstract toJSON(): Rule.JSON;
 }
 
@@ -32,6 +39,20 @@ import { Namespace } from "./rule/namespace";
 import { Page } from "./rule/page";
 import { Style } from "./rule/style";
 import { Supports } from "./rule/supports";
+
+// Export CSSOM rules with a `Rule` postfix to avoid clashes with DOM nodes such
+// as `Namespace`.
+export {
+  FontFace as FontFaceRule,
+  Import as ImportRule,
+  Keyframe as KeyframeRule,
+  Keyframes as KeyframesRule,
+  Media as MediaRule,
+  Namespace as NamespaceRule,
+  Page as PageRule,
+  Style as StyleRule,
+  Supports as SupportsRule
+};
 
 export namespace Rule {
   export interface JSON {
