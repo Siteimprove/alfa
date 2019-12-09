@@ -21,6 +21,9 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-lazy"
+    },
+    {
       "path": "../alfa-map"
     },
     {
@@ -40,9 +43,6 @@
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
     }
   ]
 }

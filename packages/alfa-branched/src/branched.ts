@@ -3,6 +3,7 @@ import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
@@ -154,7 +155,7 @@ export namespace Branched {
       .reduce(
         (values, value) =>
           values.flatMap(values =>
-            mapper(value).map(value => Sequence.of(value, values))
+            mapper(value).map(value => Sequence.of(value, Lazy.force(values)))
           ),
         Branched.of(Sequence.empty())
       );
