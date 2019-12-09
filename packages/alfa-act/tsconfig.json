@@ -3,8 +3,8 @@
   "files": [
     "src/audit.ts",
     "src/cache.ts",
-    "src/interview.ts",
     "src/index.ts",
+    "src/interview.ts",
     "src/oracle.ts",
     "src/outcome.ts",
     "src/question.ts",
