@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "files": [
+    "src/accessible-node.ts",
     "src/attribute.ts",
     "src/feature.ts",
     "src/get-accessible-name.ts",
@@ -116,10 +117,22 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-lazy"
+    },
+    {
+      "path": "../alfa-map"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
       "path": "../alfa-option"
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-test"
