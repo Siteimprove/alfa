@@ -6,13 +6,13 @@ export type Matrix<M extends number = number, N extends number = number> = [
   ...Array<Vector<N>>
 ] & { readonly length: M };
 
-export function Matrix<M extends number, N extends number>(
-  matrix: Matrix<M, N>
-): Matrix<M, N> {
-  return matrix;
-}
-
 export namespace Matrix {
+  export function of<M extends number, N extends number>(
+    matrix: Matrix<M, N>
+  ): Matrix<M, N> {
+    return matrix;
+  }
+
   export function identity<M extends number, N extends number>(
     m: M,
     n: N

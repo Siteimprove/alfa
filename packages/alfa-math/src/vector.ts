@@ -4,13 +4,13 @@ export type Vector<N extends number = number> = [number, ...Array<number>] & {
   readonly length: N;
 };
 
-export function Vector<N extends number>(vector: Vector<N>): Vector<N> {
-  return vector;
-}
-
 export namespace Vector {
+  export function of<N extends number>(vector: Vector<N>): Vector<N> {
+    return vector;
+  }
+
   export function clone<N extends number>(vector: Vector<N>): Vector<N> {
-    return vector.slice() as Vector<N>;
+    return vector.slice(0) as Vector<N>;
   }
 
   export function multiply<N extends number>(
