@@ -6,7 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 export function isTransparent(device: Device): Predicate<Node> {
   return node => {
     if (Element.isElement(node)) {
-      const opacity = Style.from(node).computed("opacity");
+      const opacity = Style.from(node, device).computed("opacity");
 
       if (opacity.some(opacity => opacity.value !== 1)) {
         return true;

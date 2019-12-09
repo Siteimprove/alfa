@@ -1,53 +1,48 @@
-import { Atomic } from "@siteimprove/alfa-act";
-import { Seq } from "@siteimprove/alfa-collection";
-import { Predicate } from "@siteimprove/alfa-compatibility";
-import {
-  Document,
-  Element,
-  getAttribute,
-  hasAttribute,
-  Namespace,
-  querySelectorAll
-} from "@siteimprove/alfa-dom";
-import { clamp, Option } from "@siteimprove/alfa-util";
+import { Rule } from "@siteimprove/alfa-act";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { clamp } from "@siteimprove/alfa-math";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Page } from "@siteimprove/alfa-web";
 
-import { isElement, nameIs, namespaceIs } from "../helpers/predicates";
+import { hasAttribute } from "../common/predicate/has-attribute";
+import { hasName } from "../common/predicate/has-name";
+import { hasNamespace } from "../common/predicate/has-namespace";
 
-export const SIA_R47: Atomic.Rule<Document, Element> = {
-  id: "ttps://siteimprove.github.io/sanshikan/rules/sia-r47.html",
-  requirements: [
-    { requirement: "wcag", criterion: "resize-text", partial: true }
-  ],
-  evaluate: ({ document }) => {
+const { filter } = Iterable;
+const { and, equals } = Predicate;
+
+export default Rule.Atomic.of<Page, Element>({
+  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r47.html",
+  evaluate({ document }) {
     return {
-      applicability: () => {
-        return Seq(
-          querySelectorAll<Element>(
-            document,
-            document,
-            Predicate.from(
-              isElement
-                .and(namespaceIs(document, Namespace.HTML))
-                .and(nameIs("meta"))
-                .and(
-                  element =>
-                    getAttribute(element, "name", { lowerCase: true }) ===
-                    "viewport"
+      applicability() {
+        return filter(
+          document.descendants(),
+          and(
+            Element.isElement,
+            and(
+              hasNamespace(equals(Namespace.HTML)),
+              and(
+                hasName(equals("meta")),
+                and(
+                  hasAttribute("name", equals("viewport")),
+                  hasAttribute("content")
                 )
-                .and(element => hasAttribute(element, "content"))
+              )
             )
           )
-        ).map(element => {
-          return { applicable: true, aspect: document, target: element };
-        });
+        );
       },
 
-      expectations: (aspect, target) => {
+      expectations(target) {
         const whitespace = [" ", "\xa0", "\t", "\n", "\f", "\r", "\v"];
         const separator = [",", ";"];
         const equal = ["="];
         const properties = parsePropertiesList(
-          getAttribute(target, "content")!,
+          target.attribute("content").get().value,
           whitespace,
           separator,
           equal
@@ -57,16 +52,18 @@ export const SIA_R47: Atomic.Rule<Document, Element> = {
         const scalable = parseUserScalable(properties.get("user-scalable"));
 
         return {
-          1: {
-            holds:
-              (scale === null || scale >= 2) &&
-              (scalable === null || scalable !== "fixed")
-          }
+          1:
+            scale.every(scale => scale >= 2) &&
+            scalable.every(scalable => scalable !== "fixed")
+              ? Ok.of(
+                  "The <meta> element does not restrict the ability to zoom"
+                )
+              : Err.of("The <meta> element restricts the ability to zoom")
         };
       }
     };
   }
-};
+});
 
 /*
  * Parses a list of "name=value" properties according to https://drafts.csswg.org/css-device-adapt/#parsing-algorithm
@@ -145,17 +142,17 @@ export function parsePropertiesList(
 export function parseMaximumScale(scale: string | undefined): Option<number> {
   switch (scale) {
     case undefined:
-      return null;
+      return None;
     case "yes":
-      return 1;
+      return Option.of(1);
     case "device-width":
     case "device-height":
-      return 10;
+      return Option.of(10);
     case "no":
-      return 0.1;
+      return Option.of(0.1);
     default:
       const scaleValue = Number(scale);
-      return isNaN(scaleValue) ? 0.1 : clamp(scaleValue, 0.1, 10);
+      return Option.of(isNaN(scaleValue) ? 0.1 : clamp(scaleValue, 0.1, 10));
   }
 }
 
@@ -170,15 +167,17 @@ export function parseUserScalable(
 ): Option<"zoom" | "fixed"> {
   switch (scalable) {
     case undefined:
-      return null;
+      return None;
     case "yes":
     case "device-width":
     case "device-height":
-      return "zoom";
+      return Option.of("zoom");
     case "no":
-      return "fixed";
+      return Option.of("fixed");
     default:
       const scalableValue = Number(scalable);
-      return scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed";
+      return Option.of(
+        scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed"
+      );
   }
 }

@@ -5,7 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 export function isInert(device: Device): Predicate<Element> {
   return element => {
-    const visibility = Style.from(element).computed("visibility");
+    const visibility = Style.from(element, device).computed("visibility");
 
     if (visibility.isSome()) {
       switch (visibility.get().value.value) {
