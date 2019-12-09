@@ -13,7 +13,7 @@ const { flatten } = Iterable;
 export class Audit<I, T = unknown, Q = unknown> {
   public static of<I, T = unknown, Q = unknown>(
     input: I,
-    oracle: Oracle<Q> = () => Future.settle(None)
+    oracle: Oracle<Q> = () => Future.now(None)
   ): Audit<I, T, Q> {
     return new Audit(input, oracle, List.empty());
   }
