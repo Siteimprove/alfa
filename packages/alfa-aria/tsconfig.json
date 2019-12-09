@@ -91,8 +91,7 @@
     "src/role/widget/tree.ts",
     "src/role/window/alert-dialog.ts",
     "src/role/window/dialog.ts",
-    "test/get-accessible-name.spec.tsx",
-    "test/resolve-references.spec.tsx"
+    "test/get-accessible-name.spec.tsx"
   ],
   "references": [
     {

@@ -3,13 +3,14 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
+import { Element } from "@siteimprove/alfa-dom";
 import { None, Some } from "@siteimprove/alfa-option";
 import { getAccessibleName } from "../src/get-accessible-name";
 
 const device = Device.getDefaultDevice();
 
 test("getAccessibleName() computes the text alternative of a button with text", t => {
-  const button = <button>Button</button>;
+  const button = Element.fromElement(<button>Button</button>);
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -22,7 +23,7 @@ test("getAccessibleName() computes the text alternative of a button with text", 
 });
 
 test("getAccessibleName() correctly resolves explicit roles", t => {
-  const button = <div role="button">Button</div>;
+  const button = Element.fromElement(<div role="button">Button</div>);
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -35,7 +36,7 @@ test("getAccessibleName() correctly resolves explicit roles", t => {
 });
 
 test("getAccessibleName() computes the text alternative of a button with text within a span", t => {
-  const button = (
+  const button = Element.fromElement(
     <button>
       <span>Button</span>
     </button>
@@ -52,7 +53,7 @@ test("getAccessibleName() computes the text alternative of a button with text wi
 });
 
 test("getAccessibleName() ignores non-visible nodes", t => {
-  const button = (
+  const button = Element.fromElement(
     <button>
       Button <span style="display: none">Hidden</span>
     </button>
@@ -69,7 +70,7 @@ test("getAccessibleName() ignores non-visible nodes", t => {
 });
 
 test("getAccessibleName() computes the text alternative of a button with a title and no text", t => {
-  const button = <button title="Hello world" />;
+  const button = Element.fromElement(<button title="Hello world" />);
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -82,7 +83,9 @@ test("getAccessibleName() computes the text alternative of a button with a title
 });
 
 test("getAccessibleName() computes the text alternative of a button with an aria-label", t => {
-  const button = <button aria-label="Hello world">Button</button>;
+  const button = Element.fromElement(
+    <button aria-label="Hello world">Button</button>
+  );
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -95,7 +98,7 @@ test("getAccessibleName() computes the text alternative of a button with an aria
 });
 
 test("getAccessibleName() falls through when aria-label is the empty string", t => {
-  const button = <button aria-label="">Button</button>;
+  const button = Element.fromElement(<button aria-label="">Button</button>);
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -108,13 +111,18 @@ test("getAccessibleName() falls through when aria-label is the empty string", t 
 });
 
 test("getAccessibleName() computes the text alternative of a button with an aria-labelledby", t => {
-  const button = <button aria-labelledby="h w">Button</button>;
+  const div = Element.fromElement(
+    <div>
+      <button aria-labelledby="h w">Button</button>
+      <p id="h">Hello</p>
+      <p id="w">world</p>
+    </div>
+  );
 
-  <div>
-    {button}
-    <p id="h">Hello</p>
-    <p id="w">world</p>
-  </div>;
+  const button = div
+    .children()
+    .find(Element.isElement)
+    .get();
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -127,7 +135,9 @@ test("getAccessibleName() computes the text alternative of a button with an aria
 });
 
 test("getAccessibleName() falls through when no text alternative is found in aria-labelledby", t => {
-  const button = <button aria-labelledby="h w">Button</button>;
+  const button = Element.fromElement(
+    <button aria-labelledby="h w">Button</button>
+  );
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -140,7 +150,7 @@ test("getAccessibleName() falls through when no text alternative is found in ari
 });
 
 test("getAccessibleName() does not infitely recurse when recursive aria-labelledby references are encountered", t => {
-  const button = (
+  const button = Element.fromElement(
     <button id="button">
       Hello <span aria-labelledby="button">world</span>
     </button>
@@ -157,7 +167,7 @@ test("getAccessibleName() does not infitely recurse when recursive aria-labelled
 });
 
 test("getAccessibleName() returns none when a button has no text alternative", t => {
-  const button = <button />;
+  const button = Element.fromElement(<button />);
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -170,7 +180,7 @@ test("getAccessibleName() returns none when a button has no text alternative", t
 });
 
 test("getAccessibleName() computes the text alternative of an image with an alt", t => {
-  const img = <img src="foo.png" alt="Hello world" />;
+  const img = Element.fromElement(<img src="foo.png" alt="Hello world" />);
 
   t.deepEqual(getAccessibleName(img, device).toJSON(), {
     values: [
@@ -183,7 +193,7 @@ test("getAccessibleName() computes the text alternative of an image with an alt"
 });
 
 test("getAccessibleName() computes the text alternative of an image with a title", t => {
-  const img = <img src="foo.png" title="Hello world" />;
+  const img = Element.fromElement(<img src="foo.png" title="Hello world" />);
 
   t.deepEqual(getAccessibleName(img, device).toJSON(), {
     values: [
@@ -196,7 +206,7 @@ test("getAccessibleName() computes the text alternative of an image with a title
 });
 
 test("getAccessibleName() returns none when an image has no text alternative", t => {
-  const img = <img src="foo.png" />;
+  const img = Element.fromElement(<img src="foo.png" />);
 
   t.deepEqual(getAccessibleName(img, device).toJSON(), {
     values: [
@@ -209,7 +219,7 @@ test("getAccessibleName() returns none when an image has no text alternative", t
 });
 
 test("getAccessibleName() computes the text alternative of a paragraph with a title", t => {
-  const p = <p title="Hello world">Paragraph</p>;
+  const p = Element.fromElement(<p title="Hello world">Paragraph</p>);
 
   t.deepEqual(getAccessibleName(p, device).toJSON(), {
     values: [
@@ -222,7 +232,7 @@ test("getAccessibleName() computes the text alternative of a paragraph with a ti
 });
 
 test("getAccessibleName() computes the text alternative of a paragraph with an aria-label", t => {
-  const p = <p aria-label="Hello world">Paragraph</p>;
+  const p = Element.fromElement(<p aria-label="Hello world">Paragraph</p>);
 
   t.deepEqual(getAccessibleName(p, device).toJSON(), {
     values: [
@@ -235,7 +245,7 @@ test("getAccessibleName() computes the text alternative of a paragraph with an a
 });
 
 test("getAccessibleName() returns none when a paragraph has no text alternative", t => {
-  const p = <p>Paragraph</p>;
+  const p = Element.fromElement(<p>Paragraph</p>);
 
   t.deepEqual(getAccessibleName(p, device).toJSON(), {
     values: [
@@ -248,7 +258,7 @@ test("getAccessibleName() returns none when a paragraph has no text alternative"
 });
 
 test("getAccessibleName() computes the text alternative of an anchor with an href", t => {
-  const a = <a href="http://foo.com">Hello world</a>;
+  const a = Element.fromElement(<a href="http://foo.com">Hello world</a>);
 
   t.deepEqual(getAccessibleName(a, device).toJSON(), {
     values: [
@@ -261,7 +271,7 @@ test("getAccessibleName() computes the text alternative of an anchor with an hre
 });
 
 test("getAccessibleName() computes the text alternative of an anchor without an href", t => {
-  const a = <a>Hello world</a>;
+  const a = Element.fromElement(<a>Hello world</a>);
 
   t.deepEqual(getAccessibleName(a, device).toJSON(), {
     values: [
@@ -274,7 +284,7 @@ test("getAccessibleName() computes the text alternative of an anchor without an 
 });
 
 test("getAccessibleName() computes the text alternative of a table with a caption", t => {
-  const table = (
+  const table = Element.fromElement(
     <table>
       <caption>Hello world</caption>
       <tbody>
@@ -296,7 +306,7 @@ test("getAccessibleName() computes the text alternative of a table with a captio
 });
 
 test("getAccessibleName() computes the text alternative of a figure with a figcaption", t => {
-  const figure = (
+  const figure = Element.fromElement(
     <figure>
       <img src="foo.png" alt="Foo" />
       <figcaption>Hello world</figcaption>
@@ -314,7 +324,7 @@ test("getAccessibleName() computes the text alternative of a figure with a figca
 });
 
 test("getAccessibleName() computes the text alternative of a fieldset with a legend", t => {
-  const fieldset = (
+  const fieldset = Element.fromElement(
     <fieldset>
       <legend>Hello world</legend>
       <input type="submit" />
@@ -332,12 +342,18 @@ test("getAccessibleName() computes the text alternative of a fieldset with a leg
 });
 
 test("getAccessibleName() computes the text alternative of an input with an explicit label", t => {
-  const input = <input type="text" id="test" />;
+  const div = Element.fromElement(
+    <div>
+      <label for="test">Hello world</label>
+      <input type="text" id="test" />
+    </div>
+  );
 
-  <div>
-    <label for="test">Hello world</label>
-    {input}
-  </div>;
+  const input = div
+    .children()
+    .filter(Element.isElement)
+    .find(element => element.name === "input")
+    .get();
 
   t.deepEqual(getAccessibleName(input, device).toJSON(), {
     values: [
@@ -350,12 +366,17 @@ test("getAccessibleName() computes the text alternative of an input with an expl
 });
 
 test("getAccessibleName() computes the text alternative of an input with an implicit label", t => {
-  const input = <input type="text" id="test" />;
+  const label = Element.fromElement(
+    <label>
+      Hello world
+      <input type="text" id="test" />;
+    </label>
+  );
 
-  <label>
-    Hello world
-    {input}
-  </label>;
+  const input = label
+    .children()
+    .find(Element.isElement)
+    .get();
 
   t.deepEqual(getAccessibleName(input, device).toJSON(), {
     values: [
@@ -368,14 +389,20 @@ test("getAccessibleName() computes the text alternative of an input with an impl
 });
 
 test("getAccessibleName() computes the text alternative of an input with an explicit label that includes an embedded control", t => {
-  const input = <input type="text" id="test" />;
+  const div = Element.fromElement(
+    <div>
+      <label for="test">
+        <textarea>Hello world</textarea>
+      </label>
+      <input type="text" id="test" />
+    </div>
+  );
 
-  <div>
-    <label for="test">
-      <textarea>Hello world</textarea>
-    </label>
-    {input}
-  </div>;
+  const input = div
+    .children()
+    .filter(Element.isElement)
+    .find(element => element.name === "input")
+    .get();
 
   t.deepEqual(getAccessibleName(input, device).toJSON(), {
     values: [
@@ -388,7 +415,7 @@ test("getAccessibleName() computes the text alternative of an input with an expl
 });
 
 test("getAccessibleName() computes the text alternative of an SVG with a title element", t => {
-  const svg = (
+  const svg = Element.fromElement(
     <svg>
       <title>Hello world</title>
       <g>
@@ -408,14 +435,20 @@ test("getAccessibleName() computes the text alternative of an SVG with a title e
 });
 
 test("getAccessibleName() computes the text alternative of an element with content in Shadow DOM", t => {
-  const button = <button aria-labelledby="foo" />;
+  const div = Element.fromElement(
+    <div>
+      <p id="foo">
+        <shadow>Hello world</shadow>
+      </p>
+      <button aria-labelledby="foo" />
+    </div>
+  );
 
-  <div>
-    <p id="foo">
-      <shadow>Hello world</shadow>
-    </p>
-    {button}
-  </div>;
+  const button = div
+    .children()
+    .filter(Element.isElement)
+    .find(element => element.name === "button")
+    .get();
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -428,7 +461,7 @@ test("getAccessibleName() computes the text alternative of an element with conte
 });
 
 test("getAccessibleName() correctly handles browser specific case sensitivity of roles", t => {
-  const button = <div role="Button">Button</div>;
+  const button = Element.fromElement(<div role="Button">Button</div>);
 
   t.deepEqual(getAccessibleName(button, device).toJSON(), {
     values: [
@@ -445,7 +478,7 @@ test("getAccessibleName() correctly handles browser specific case sensitivity of
 });
 
 test("getAccessibleName() correctly handles aria-labelledby that points to aria-hidden=true", t => {
-  const button = (
+  const button = Element.fromElement(
     <button aria-labelledby="foo">
       <span id="foo" aria-hidden="true">
         Hello world

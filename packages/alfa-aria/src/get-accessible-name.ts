@@ -585,7 +585,7 @@ function getLabel(element: Element): Option<Element> {
  */
 function isRendered(node: Node, device: Device): boolean {
   if (Element.isElement(node)) {
-    const display = Style.from(node).cascaded("display");
+    const display = Style.from(node, device).cascaded("display");
 
     if (display.isSome()) {
       const [outside] = display.get().value;
