@@ -40,6 +40,7 @@
     { "path": "alfa-jquery" },
     { "path": "alfa-json-ld" },
     { "path": "alfa-lang" },
+    { "path": "alfa-lazy" },
     { "path": "alfa-list" },
     { "path": "alfa-map" },
     { "path": "alfa-mapper" },

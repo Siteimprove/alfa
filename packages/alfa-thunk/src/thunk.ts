@@ -4,6 +4,10 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 export type Thunk<T> = () => T;
 
 export namespace Thunk {
+  export function of<T>(value: T): Thunk<T> {
+    return () => value;
+  }
+
   export function map<T, U>(thunk: Thunk<T>, mapper: Mapper<T, U>): Thunk<U> {
     return () => mapper(thunk());
   }

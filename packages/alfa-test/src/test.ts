@@ -6,7 +6,7 @@ import { Assertions } from "./types";
  * @internal
  */
 export interface Notifier {
-  error: (message: string) => void;
+  error(message: string): void;
 }
 
 const defaultNotifier: Notifier = {

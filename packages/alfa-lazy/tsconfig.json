@@ -1,30 +1,18 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["src/future.ts", "src/index.ts", "test/future.spec.ts"],
+  "files": ["src/index.ts", "src/lazy.ts", "test/lazy.spec.ts"],
   "references": [
     {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-continuation"
+      "path": "../alfa-equality"
     },
     {
       "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-lazy"
     },
     {
       "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-monad"
-    },
-    {
-      "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-test"
