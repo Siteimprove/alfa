@@ -3,17 +3,18 @@
 
 import {
   Attribute,
+  Block,
   Comment,
+  Declaration,
   Document,
   Element,
+  ImportRule,
   Node,
   Rule,
   Sheet,
+  StyleRule,
   Text,
-  Type,
-  Style,
-  Block,
-  Declaration
+  Type
 } from "@siteimprove/alfa-dom";
 import { isFunction, isObject } from "@siteimprove/alfa-guards";
 import { Page } from "@siteimprove/alfa-web";
@@ -126,17 +127,29 @@ export namespace Puppeteer {
       function toRule(rule: globalThis.CSSRule): Rule.JSON {
         switch (rule.type) {
           case rule.STYLE_RULE:
-            return toStyle(rule as globalThis.CSSStyleRule);
+            return toStyleRule(rule as globalThis.CSSStyleRule);
+
+          case rule.IMPORT_RULE:
+            return toImportRule(rule as globalThis.CSSImportRule);
         }
 
         throw new Error(`Unsupported rule of type: ${rule.type}`);
       }
 
-      function toStyle(style: globalThis.CSSStyleRule): Style.JSON {
+      function toStyleRule(styleRule: globalThis.CSSStyleRule): StyleRule.JSON {
         return {
           type: "style",
-          selector: style.selectorText,
-          style: toBlock(style.style)
+          selector: styleRule.selectorText,
+          style: toBlock(styleRule.style)
+        };
+      }
+
+      function toImportRule(rule: globalThis.CSSImportRule): ImportRule.JSON {
+        return {
+          type: "import",
+          rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
+          condition: rule.media.mediaText,
+          href: rule.href
         };
       }
 
