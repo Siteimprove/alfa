@@ -104,7 +104,7 @@ export default class Subcommand extends Command {
             process.stdout.write(`\n${question.subject}\n\n`);
 
             if (question.type === "boolean") {
-              return Future.of(settle => {
+              return Future.defer(settle => {
                 enquirer
                   .prompt<{ [key: string]: boolean }>({
                     name: question.uri,
@@ -121,7 +121,7 @@ export default class Subcommand extends Command {
             }
 
             if (question.type === "node") {
-              return Future.of(settle => {
+              return Future.defer(settle => {
                 enquirer
                   .prompt<{ [key: string]: string }>({
                     name: question.uri,
@@ -164,11 +164,11 @@ export default class Subcommand extends Command {
               });
             }
 
-            return Future.settle(None);
+            return Future.now(None);
           });
       }
 
-      return Future.settle(None);
+      return Future.now(None);
     };
 
     const audit = Rules.reduce(

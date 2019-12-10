@@ -65,6 +65,7 @@ export namespace Property {
 
 import display from "./property/display";
 import opacity from "./property/opacity";
+import transform from "./property/transform";
 import visibility from "./property/visibility";
 
 export namespace Property {
@@ -74,6 +75,7 @@ export namespace Property {
   export const Longhand = {
     display,
     opacity,
+    transform,
     visibility
   };
 

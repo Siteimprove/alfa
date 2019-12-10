@@ -20,14 +20,24 @@
     "src/style/declaration.ts",
     "src/style/rule.ts",
     "src/style/rule/condition.ts",
+    "src/style/rule/font-face.ts",
     "src/style/rule/grouping.ts",
+    "src/style/rule/import.ts",
+    "src/style/rule/keyframe.ts",
+    "src/style/rule/keyframes.ts",
     "src/style/rule/media.ts",
+    "src/style/rule/namespace.ts",
+    "src/style/rule/page.ts",
     "src/style/rule/style.ts",
+    "src/style/rule/supports.ts",
     "src/style/sheet.ts"
   ],
   "references": [
     {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-lazy"
     },
     {
       "path": "../alfa-mapper"
@@ -37,6 +47,9 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-set"

@@ -1,8 +1,10 @@
-import { Element, Declaration } from "@siteimprove/alfa-dom";
+import { Device } from "@siteimprove/alfa-device";
+import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Cascade } from "./cascade";
 import { Property } from "./property";
 import { lex } from "./syntax/lex";
 import { Value } from "./value";
@@ -79,8 +81,33 @@ export class Style {
 }
 
 export namespace Style {
-  export function from(element: Element): Style {
-    return Style.of(element.style.getOr([]));
+  export function from(element: Element, device: Device): Style {
+    const declarations: Array<Declaration> = [];
+
+    const root = element.root();
+
+    if (Document.isDocument(root) || Shadow.isShadow(root)) {
+      const cascade = Cascade.from(root, device);
+
+      let next = cascade.get(element);
+
+      while (next.isSome()) {
+        const node = next.get();
+
+        declarations.push(...node.declarations);
+        next = node.parent;
+      }
+    }
+
+    declarations.push(...element.style.getOr([]));
+
+    return Style.of(
+      declarations,
+      element
+        .parent({ flattened: true })
+        .filter(Element.isElement)
+        .map(parent => Style.from(parent, device))
+    );
   }
 
   export type Cascaded<N extends Name> = Property.Value.Cascaded<

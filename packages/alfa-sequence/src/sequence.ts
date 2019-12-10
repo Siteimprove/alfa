@@ -2,13 +2,13 @@ import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
-import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Cons } from "./cons";
 import { Nil } from "./nil";
@@ -51,10 +51,7 @@ export namespace Sequence {
     return Cons.isCons(value) || value === Nil;
   }
 
-  export function of<T>(
-    head: T,
-    tail?: Thunk<Sequence<T>> | Sequence<T>
-  ): Sequence<T> {
+  export function of<T>(head: T, tail?: Lazy<Sequence<T>>): Sequence<T> {
     return Cons.of(head, tail);
   }
 
@@ -76,7 +73,7 @@ export namespace Sequence {
         return empty();
       }
 
-      return of(head.value, tail);
+      return of(head.value, Lazy.of(tail));
     };
 
     return tail();

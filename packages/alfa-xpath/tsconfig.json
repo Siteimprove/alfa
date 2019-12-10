@@ -16,10 +16,9 @@
     "src/matches.ts",
     "src/parse.ts",
     "src/serialize.ts",
-    "src/walk.ts",
     "src/types.ts",
+    "src/walk.ts",
     "test/alphabet.spec.ts",
-    "test/evaluate.spec.tsx",
     "test/grammar.spec.ts"
   ],
   "references": [

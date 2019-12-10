@@ -1,14 +1,14 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
-const { join, find, filter, takeUntil, skip, skipUntil, reverse } = Iterable;
 const { equals } = Predicate;
 
 export abstract class Node implements Iterable<Node> {
   private readonly _children: Array<Node>;
-  private _parent: Option<Node>;
+  private readonly _parent: Option<Node>;
 
   protected constructor(
     children: Mapper<Node, Iterable<Node>>,
@@ -39,28 +39,28 @@ export abstract class Node implements Iterable<Node> {
   /**
    * @see https://dom.spec.whatwg.org/#concept-tree-child
    */
-  public children(_: Node.Traversal = {}): Iterable<Node> {
-    return this._children;
+  public children(_: Node.Traversal = {}): Sequence<Node> {
+    return Sequence.from(this._children);
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-tree-descendant
    */
-  public *descendants(options: Node.Traversal = {}): Iterable<Node> {
-    for (const child of this.children(options)) {
-      yield child;
-      yield* child.descendants(options);
-    }
+  public descendants(options: Node.Traversal = {}): Sequence<Node> {
+    return this.children(options).flatMap(child =>
+      Sequence.of(child, Lazy.force(child.descendants(options)))
+    );
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-tree-ancestor
    */
-  public *ancestors(options: Node.Traversal = {}): Iterable<Node> {
-    for (const parent of this.parent(options)) {
-      yield parent;
-      yield* parent.ancestors(options);
-    }
+  public ancestors(options: Node.Traversal = {}): Sequence<Node> {
+    return this.parent(options)
+      .map(parent =>
+        Sequence.of(parent, Lazy.of(() => parent.ancestors(options)))
+      )
+      .getOrElse(() => Sequence.empty());
   }
 
   /**
@@ -71,10 +71,11 @@ export abstract class Node implements Iterable<Node> {
     options: Node.Traversal = {}
   ): Option<T> {
     return this.parent(options).flatMap(parent =>
-      find(
-        reverse(takeUntil(parent.children(options), equals(this))),
-        predicate
-      )
+      parent
+        .children(options)
+        .takeUntil(equals(this))
+        .reverse()
+        .find(predicate)
     );
   }
 
@@ -86,10 +87,11 @@ export abstract class Node implements Iterable<Node> {
     options: Node.Traversal = {}
   ): Option<T> {
     return this.parent(options).flatMap(parent =>
-      find(
-        skip(skipUntil(parent.children(options), equals(this)), 1),
-        predicate
-      )
+      parent
+        .children(options)
+        .skipUntil(equals(this))
+        .skip(1)
+        .find(predicate)
     );
   }
 
@@ -111,12 +113,9 @@ export abstract class Node implements Iterable<Node> {
    * @see https://dom.spec.whatwg.org/#concept-descendant-text-content
    */
   public textContent(options: Node.Traversal = {}): string {
-    return join(filter(this.descendants(options), Text.isText), "");
-  }
-
-  public adopt(child: Node): Node {
-    child._parent = Option.of(this);
-    return child;
+    return this.descendants(options)
+      .filter(Text.isText)
+      .join("");
   }
 
   public *[Symbol.iterator](): Iterator<Node> {

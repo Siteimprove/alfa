@@ -1,7 +1,9 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
 import { Namespace } from "../namespace";
@@ -103,34 +105,36 @@ export class Element extends Node implements Slot, Slotable {
     return super.parent();
   }
 
-  public *children(options: Node.Traversal = {}): Iterable<Node> {
+  public children(options: Node.Traversal = {}): Sequence<Node> {
+    let children: Sequence<Node>;
+
     if (options.flattened === true) {
       if (this.shadow.isSome()) {
-        return yield* this.shadow.get().children(options);
+        return this.shadow.get().children(options);
       }
 
       if (Slot.isSlot(this)) {
-        return yield* this.assignedNodes();
+        return Sequence.from(this.assignedNodes());
       }
 
-      for (const child of super.children()) {
-        if (Slot.isSlot(child)) {
-          yield* child.children(options);
-        } else {
-          yield child;
-        }
-      }
+      children = super
+        .children()
+        .flatMap(child =>
+          Slot.isSlot(child) ? child.children(options) : Sequence.of(child)
+        );
     } else {
-      if (options.composed === true) {
-        yield* this.shadow;
+      if (options.composed === true && this.shadow.isSome()) {
+        children = Sequence.of(this.shadow.get(), Lazy.force(super.children()));
+      } else {
+        children = super.children();
       }
-
-      yield* super.children();
     }
 
-    if (options.nested === true) {
-      yield* this.content;
+    if (options.nested === true && this.content.isSome()) {
+      children = children.concat(Sequence.of(this.content.get()));
     }
+
+    return children;
   }
 
   public attribute(
@@ -273,7 +277,7 @@ export namespace Element {
     parent: Option<Node> = None
   ): Element {
     return Element.of(
-      Option.from(element.namespace as Namespace),
+      Option.from(element.namespace as Namespace | null),
       Option.from(element.prefix),
       element.name,
       self => {

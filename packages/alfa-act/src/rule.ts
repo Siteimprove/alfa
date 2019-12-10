@@ -32,7 +32,7 @@ export class Rule<I, T, Q = unknown> {
 
   public evaluate(
     input: Readonly<I>,
-    oracle: Oracle<Q> = () => Future.settle(None),
+    oracle: Oracle<Q> = () => Future.now(None),
     outcomes: Cache = Cache.empty()
   ): Future<Iterable<Outcome<I, T, Q>>> {
     return this.evaluator(input, oracle, outcomes);
@@ -94,7 +94,7 @@ export namespace Rule {
               .map(targets => Sequence.from(flatten<T>(targets)))
               .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
                 if (targets.length === 0) {
-                  return Future.settle([Outcome.Inapplicable.of(rule)]);
+                  return Future.now([Outcome.Inapplicable.of(rule)]);
                 }
 
                 return Future.traverse(targets, target =>
@@ -145,7 +145,7 @@ export namespace Rule {
               )
               .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
                 if (targets.length === 0) {
-                  return Future.settle([Outcome.Inapplicable.of(rule)]);
+                  return Future.now([Outcome.Inapplicable.of(rule)]);
                 }
 
                 const { expectations } = evaluate(input);

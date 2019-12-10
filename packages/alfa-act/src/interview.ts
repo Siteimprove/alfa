@@ -19,10 +19,10 @@ export namespace Interview {
       return oracle(rule, interview).flatMap(answer =>
         answer
           .map(answer => conduct(answer, rule, oracle))
-          .getOrElse(() => Future.settle(None))
+          .getOrElse(() => Future.now(None))
       );
     }
 
-    return Future.settle(Option.of(interview));
+    return Future.now(Option.of(interview));
   }
 }

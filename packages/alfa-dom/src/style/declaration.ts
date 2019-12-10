@@ -29,6 +29,13 @@ export class Declaration {
     this.parent = parent;
   }
 
+  public *ancestors(): Iterable<Rule> {
+    for (const parent of this.parent) {
+      yield parent;
+      yield* parent.ancestors();
+    }
+  }
+
   public toJSON(): Declaration.JSON {
     return {
       name: this.name,

@@ -56,15 +56,15 @@ export namespace Media {
   }
 
   export function fromMedia(
-    media: JSON,
+    json: JSON,
     owner: Sheet,
     parent: Option<Rule> = None
   ): Media {
     return Media.of(
-      media.condition,
+      json.condition,
       self => {
         const parent = Option.of(self);
-        return media.rules.map(rule => Rule.fromRule(rule, owner, parent));
+        return json.rules.map(rule => Rule.fromRule(rule, owner, parent));
       },
       owner,
       parent

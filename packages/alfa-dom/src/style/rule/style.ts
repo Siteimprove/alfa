@@ -58,15 +58,15 @@ export namespace Style {
   }
 
   export function fromStyle(
-    style: JSON,
+    json: JSON,
     owner: Sheet,
     parent: Option<Rule> = None
   ): Style {
     return Style.of(
-      style.selector,
+      json.selector,
       self => {
         const parent = Option.of(self);
-        return style.style.map(declaration =>
+        return json.style.map(declaration =>
           Declaration.fromDeclaration(declaration, parent)
         );
       },

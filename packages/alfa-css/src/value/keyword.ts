@@ -11,7 +11,8 @@ const { equals } = Predicate;
 /**
  * @see https://drafts.csswg.org/css-values/#keywords
  */
-export class Keyword<T extends string> implements Equality<Keyword<T>> {
+export class Keyword<T extends string = string>
+  implements Equality<Keyword<T>> {
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }
@@ -32,11 +33,15 @@ export class Keyword<T extends string> implements Equality<Keyword<T>> {
 }
 
 export namespace Keyword {
+  export function isKeyword(value: unknown): value is Keyword {
+    return value instanceof Keyword;
+  }
+
   export function parse<T extends string>(
     ...keywords: Array<T>
   ): Parser<Slice<Token>, Keyword<T>, string> {
     return map(
-      Token.Ident.parse(ident => keywords.some(equals(ident.value))),
+      Token.parseIdent(ident => keywords.some(equals(ident.value))),
       ident => Keyword.of(ident.value as T)
     );
   }

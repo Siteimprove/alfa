@@ -34,7 +34,7 @@ export namespace Slot {
   export function* findSlotables(slot: Slot): Iterable<Slotable> {
     const root = slot.root();
 
-    if (Shadow.isShadowRoot(root)) {
+    if (Shadow.isShadow(root)) {
       for (const child of root.host.children()) {
         if (Slotable.isSlotable(child) && child.assignedSlot().includes(slot)) {
           yield child;

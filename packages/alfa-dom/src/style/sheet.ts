@@ -18,14 +18,14 @@ export class Sheet {
     this.disabled = disabled;
   }
 
-  public *visit(): Iterable<Rule> {
+  public *children(): Iterable<Rule> {
     yield* this.rules;
   }
 
-  public *iterate(): Iterable<Rule> {
-    for (const child of this.visit()) {
+  public *descendants(): Iterable<Rule> {
+    for (const child of this.children()) {
       yield child;
-      yield* child.iterate();
+      yield* child.descendants();
     }
   }
 

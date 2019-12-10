@@ -1,7 +1,8 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -11,7 +12,16 @@ import { lex } from "./syntax/lex";
 import { Token } from "./syntax/token";
 
 const { some, isEmpty } = Iterable;
-const { map, either, option, pair, zeroOrMore } = Parser;
+const {
+  map,
+  either,
+  option,
+  pair,
+  left,
+  right,
+  delimited,
+  zeroOrMore
+} = Parser;
 
 export namespace Media {
   /**
@@ -22,27 +32,14 @@ export namespace Media {
     Not = "not"
   }
 
-  export namespace Modifier {
-    export const parse: Parser<Slice<Token>, Modifier, string> = either(
-      map(Token.Ident.parse("only"), () => Modifier.Only),
-      map(Token.Ident.parse("not"), () => Modifier.Not)
-    );
-  }
+  const parseModifier = either(
+    map(Token.parseIdent("only"), () => Modifier.Only),
+    map(Token.parseIdent("not"), () => Modifier.Not)
+  );
 
-  export enum Operator {
-    Not = "not",
+  export enum Combinator {
     And = "and",
     Or = "or"
-  }
-
-  export namespace Operator {
-    export const parse: Parser<Slice<Token>, Operator, string> = either(
-      map(Token.Ident.parse("not"), () => Operator.Not),
-      either(
-        map(Token.Ident.parse("and"), () => Operator.And),
-        map(Token.Ident.parse("or"), () => Operator.Or)
-      )
-    );
   }
 
   export enum Comparator {
@@ -50,31 +47,6 @@ export namespace Media {
     GreaterThanEqual = ">=",
     LessThan = "<",
     LessThanEqual = "<="
-  }
-
-  export namespace Comparator {
-    export const parse: Parser<Slice<Token>, Comparator, string> = map(
-      pair(
-        either(
-          map(Token.Delim.parse(">"), () => Comparator.GreaterThan),
-          map(Token.Delim.parse("<"), () => Comparator.LessThan)
-        ),
-        option(Token.Delim.parse("="))
-      ),
-      result => {
-        const [comparator, equal] = result;
-
-        if (equal.isNone()) {
-          return comparator;
-        }
-
-        if (comparator === Comparator.GreaterThan) {
-          return Comparator.GreaterThanEqual;
-        } else {
-          return Comparator.LessThanEqual;
-        }
-      }
-    );
   }
 
   /**
@@ -100,73 +72,22 @@ export namespace Media {
     }
   }
 
-  export namespace Type {
-    /**
-     * @see https://drafts.csswg.org/mediaqueries/#typedef-media-type
-     */
-    export const parse: Parser<Slice<Token>, Type, string> = map(
-      Token.Ident.parse(),
-      ident => Type.of(ident.value)
-    );
-  }
-
   /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-query
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-type
    */
-  export class Query {
-    public readonly modifier: Option<Modifier>;
-    public readonly type: Option<Type>;
-    public readonly condition: Option<Condition>;
-
-    private constructor(
-      modifier: Option<Modifier>,
-      type: Option<Type>,
-      condition: Option<Condition>
-    ) {
-      this.modifier = modifier;
-      this.type = type;
-      this.condition = condition;
-    }
-
-    public matches(device: Device): boolean {
-      return false;
-    }
-  }
-
-  export namespace Query {
-    export const parse: Parser<Slice<Token>, Query, string> = input => {
-      return Err.of("Not yet implemented");
-    };
-  }
-
-  /**
-   * @see https://drafts.csswg.org/mediaqueries/#media-condition
-   */
-  export class Condition {
-    public readonly operator: Option<Operator>;
-    public readonly features: Iterable<Feature | Condition>;
-
-    private constructor(
-      operator: Option<Operator>,
-      features: Iterable<Feature | Condition>
-    ) {
-      this.operator = operator;
-      this.features = Array.from(features);
-    }
-
-    public matches(device: Device): boolean {
-      return false;
-    }
-  }
-
-  export namespace Condition {
-    // export const parse: Parser<Slice<Token>, Query, string> =
-  }
+  const parseType = map(Token.parseIdent(), ident => Type.of(ident.value));
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
   export class Feature {
+    public static of(
+      name: string,
+      value: Option<Feature.Value> = None,
+      comparator: Option<Comparator> = None
+    ): Feature {
+      return new Feature(name, value, comparator);
+    }
     public readonly name: string;
     public readonly value: Option<Feature.Value>;
     public readonly comparator: Option<Comparator>;
@@ -188,14 +109,245 @@ export namespace Media {
 
   export namespace Feature {
     export type Value = number | string | Percentage | Length;
-
-    // export const parse: Parser<Slice<Token>, Feature, string> =
   }
+
+  export const isFeature: Predicate<unknown, Feature> = value =>
+    value instanceof Feature;
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-name
+   */
+  const parseFeatureName = map(Token.parseIdent(), ident => ident.value);
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-value
+   */
+  const parseFeatureValue = map(
+    either(Token.parseNumber(), Token.parseString()),
+    number => number.value
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-plain
+   */
+  const parseFeaturePlain = map(
+    pair(
+      parseFeatureName,
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseColon),
+        parseFeatureValue
+      )
+    ),
+    result => {
+      const [name, value] = result;
+
+      return Feature.of(name, Option.of(value));
+    }
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
+   */
+  const parseFeatureBoolean = map(parseFeatureName, name => Feature.of(name));
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
+   */
+  const parseFeature = delimited(
+    Token.parseOpenParenthesis,
+    delimited(
+      option(Token.parseWhitespace),
+      either(parseFeaturePlain, parseFeatureBoolean)
+    ),
+    Token.parseCloseParenthesis
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#media-condition
+   */
+  export class Condition {
+    public static of(
+      combinator: Combinator,
+      left: Feature | Condition | Negation,
+      right: Feature | Condition | Negation
+    ): Condition {
+      return new Condition(combinator, left, right);
+    }
+
+    public readonly combinator: Combinator;
+    public readonly left: Feature | Condition | Negation;
+    public readonly right: Feature | Condition | Negation;
+
+    private constructor(
+      operator: Combinator,
+      left: Feature | Condition | Negation,
+      right: Feature | Condition | Negation
+    ) {
+      this.combinator = operator;
+      this.left = left;
+      this.right = right;
+    }
+
+    public matches(device: Device): boolean {
+      return false;
+    }
+  }
+
+  export const isCondition: Predicate<unknown, Condition> = value =>
+    value instanceof Condition;
+
+  export class Negation {
+    public static of(condition: Feature | Condition | Negation): Negation {
+      return new Negation(condition);
+    }
+
+    public readonly condition: Feature | Condition | Negation;
+
+    private constructor(condition: Feature | Condition | Negation) {
+      this.condition = condition;
+    }
+  }
+
+  export const isNegation: Predicate<unknown, Negation> = value =>
+    value instanceof Negation;
+
+  // Hoist the condition parser to break the recursive initialisation between
+  // its different subparsers.
+  let parseCondition: Parser<
+    Slice<Token>,
+    Feature | Condition | Negation,
+    string
+  >;
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-in-parens
+   */
+  const parseInParens = either(
+    delimited(
+      Token.parseOpenParenthesis,
+      delimited(option(Token.parseWhitespace), input => parseCondition(input)),
+      Token.parseCloseParenthesis
+    ),
+    parseFeature
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-not
+   */
+  const parseNot = map(
+    right(left(Token.parseIdent("not"), Token.parseWhitespace), parseInParens),
+    condition => Negation.of(condition)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-and
+   */
+  const parseAnd = right(
+    left(Token.parseIdent("and"), Token.parseWhitespace),
+    parseInParens
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-or
+   */
+  const parseOr = right(Token.parseIdent("or"), parseInParens);
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-condition
+   */
+  parseCondition = either(
+    parseNot,
+    either(
+      parseInParens,
+      either(
+        map(pair(parseInParens, zeroOrMore(parseAnd)), result => {
+          const [left, right] = result;
+          return [left, ...right].reduce((left, right) =>
+            Condition.of(Combinator.And, left, right)
+          );
+        }),
+        map(pair(parseInParens, zeroOrMore(parseOr)), result => {
+          const [left, right] = result;
+          return [left, ...right].reduce((left, right) =>
+            Condition.of(Combinator.Or, left, right)
+          );
+        })
+      )
+    )
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-condition-without-or
+   */
+  const parseConditionWithoutOr = either(
+    parseNot,
+    map(pair(parseInParens, zeroOrMore(parseAnd)), result => {
+      const [left, right] = result;
+      return [left, ...right].reduce((left, right) =>
+        Condition.of(Combinator.And, left, right)
+      );
+    })
+  );
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#media-query
+   */
+  export class Query {
+    public static of(
+      modifier: Option<Modifier>,
+      type: Option<Type>,
+      condition: Option<Feature | Condition | Negation>
+    ): Query {
+      return new Query(modifier, type, condition);
+    }
+
+    public readonly modifier: Option<Modifier>;
+    public readonly type: Option<Type>;
+    public readonly condition: Option<Feature | Condition | Negation>;
+
+    private constructor(
+      modifier: Option<Modifier>,
+      type: Option<Type>,
+      condition: Option<Feature | Condition | Negation>
+    ) {
+      this.modifier = modifier;
+      this.type = type;
+      this.condition = condition;
+    }
+
+    public matches(device: Device): boolean {
+      return false;
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/mediaqueries/#typedef-media-query
+   */
+  const parseQuery = either(
+    map(parseCondition, condition =>
+      Query.of(None, None, Option.of(condition))
+    ),
+    map(
+      pair(
+        pair(option(parseModifier), parseType),
+        option(
+          right(
+            delimited(Token.parseWhitespace, Token.parseIdent("and")),
+            parseConditionWithoutOr
+          )
+        )
+      ),
+      result => {
+        const [[modifier, type], condition] = result;
+        return Query.of(modifier, Option.of(type), condition);
+      }
+    )
+  );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query-list
    */
-  export class List {
+  export class List implements Iterable<Query> {
     public static of(queries: Iterable<Query>): List {
       return new List(queries);
     }
@@ -212,17 +364,18 @@ export namespace Media {
         some(this.queries, query => query.matches(device))
       );
     }
+
+    public *[Symbol.iterator](): Iterator<Query> {
+      yield* this.queries;
+    }
   }
 
-  export namespace List {
-    export const parse: Parser<Slice<Token>, List, string> = map(
-      zeroOrMore(Query.parse),
-      queries => List.of(queries)
-    );
-  }
+  export const parseList = map(zeroOrMore(parseQuery), queries =>
+    List.of(queries)
+  );
 
   export function parse(input: string): Option<List> {
-    return List.parse(Slice.of([...lex(input)]))
+    return parseList(Slice.of([...lex(input)]))
       .flatMap<List>(([tokens, selector]) =>
         tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token")
       )

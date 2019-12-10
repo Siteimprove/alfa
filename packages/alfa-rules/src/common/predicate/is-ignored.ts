@@ -21,7 +21,7 @@ export function isIgnored<T extends Node>(device: Device): Predicate<T> {
           return true;
         }
 
-        const visibility = Style.from(node).computed("visibility");
+        const visibility = Style.from(node, device).computed("visibility");
 
         if (
           visibility.some(visibility => visibility.value.value !== "visible")

@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -9,6 +10,7 @@ import { SelectorMap } from "./cascade/selector-map";
 import { UserAgent } from "./cascade/user-agent";
 
 /**
+ * @see https://drafts.csswg.org/css-cascade/
  * @internal
  */
 export class Cascade {
@@ -31,42 +33,42 @@ export class Cascade {
  * @internal
  */
 export namespace Cascade {
+  const cache = Cache.empty<Device, Cache<Document | Shadow, Cascade>>();
+
   export function from(node: Document | Shadow, device: Device): Cascade {
-    const filter = new AncestorFilter();
-    const ruleTree = new RuleTree();
+    return cache.get(device, Cache.empty).get(node, () => {
+      const filter = new AncestorFilter();
+      const ruleTree = new RuleTree();
+      const selectorMap = new SelectorMap([UserAgent, ...node.style], device);
 
-    const selectorMap = new SelectorMap(
-      [UserAgent].concat(Array.from(node.style)),
-      device
-    );
+      return Cascade.of(
+        Iterable.reduce(
+          Iterable.flatMap(node.children(), visit),
+          (entries, [element, entry]) => entries.set(element, entry),
+          new WeakMap()
+        )
+      );
 
-    return Cascade.of(
-      Iterable.reduce(
-        visit(node),
-        (entries, [element, entry]) => entries.set(element, entry),
-        new WeakMap()
-      )
-    );
+      function* visit(node: Node): Iterable<[Element, RuleTree.Node]> {
+        if (Element.isElement(node)) {
+          const rules = selectorMap.get(node);
 
-    function* visit(node: Node): Iterable<[Element, RuleTree.Node]> {
-      if (Element.isElement(node)) {
-        const rules = selectorMap.get(node);
+          const entry = ruleTree.add(sort(rules));
 
-        const entry = ruleTree.add(sort(rules));
+          if (entry.isSome()) {
+            yield [node, entry.get()];
+          }
 
-        if (entry.isSome()) {
-          yield [node, entry.get()];
+          filter.add(node);
+
+          for (const child of node.children()) {
+            yield* visit(child);
+          }
+
+          filter.remove(node);
         }
-
-        filter.add(node);
-
-        for (const child of node.children()) {
-          yield* visit(child);
-        }
-
-        filter.remove(node);
       }
-    }
+    });
   }
 }
 

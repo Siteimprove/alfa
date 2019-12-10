@@ -6,7 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 export function isRendered(device: Device): Predicate<Node> {
   return node => {
     if (Element.isElement(node)) {
-      const display = Style.from(node).cascaded("display");
+      const display = Style.from(node, device).cascaded("display");
 
       if (display.isSome()) {
         const [outside] = display.get().value;

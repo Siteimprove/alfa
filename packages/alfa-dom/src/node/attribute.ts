@@ -10,7 +10,7 @@ export class Attribute extends Node {
     prefix: Option<string>,
     name: string,
     value: string,
-    owner: Option<Element>
+    owner: Option<Element> = None
   ): Attribute {
     return new Attribute(namespace, prefix, name, value, owner);
   }
@@ -94,7 +94,7 @@ export namespace Attribute {
     owner: Option<Element> = None
   ): Attribute {
     return Attribute.of(
-      Option.from(attribute.namespace as Namespace),
+      Option.from(attribute.namespace as Namespace | null),
       Option.from(attribute.prefix),
       attribute.name,
       attribute.value,

@@ -70,7 +70,7 @@ export namespace Shadow {
     Closed = "closed"
   }
 
-  export function isShadowRoot(value: unknown): value is Shadow {
+  export function isShadow(value: unknown): value is Shadow {
     return value instanceof Shadow;
   }
 

@@ -101,15 +101,12 @@ export namespace Selector {
     return value instanceof Id;
   }
 
-  export namespace Id {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-id-selector
-     */
-    export const parse: Parser<Slice<Token>, Id, string> = map(
-      Token.Hash.parse(hash => hash.isIdentifier),
-      hash => Id.of(hash.value)
-    );
-  }
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-id-selector
+   */
+  const parseId = map(Token.parseHash(hash => hash.isIdentifier), hash =>
+    Id.of(hash.value)
+  );
 
   /**
    * @see https://drafts.csswg.org/selectors/#class-selector
@@ -154,20 +151,18 @@ export namespace Selector {
     return value instanceof Class;
   }
 
-  export namespace Class {
-    export const parse: Parser<Slice<Token>, Class, string> = map(
-      right(Token.Delim.parse("."), Token.Ident.parse()),
-      ident => Class.of(ident.value)
-    );
-  }
+  const parseClass = map(
+    right(Token.parseDelim("."), Token.parseIdent()),
+    ident => Class.of(ident.value)
+  );
 
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-ns-prefix
    */
-  const namespace: Parser<Slice<Token>, string, string> = map(
+  const parseNamespace = map(
     left(
-      option(either(Token.Ident.parse(), Token.Delim.parse("*"))),
-      Token.Delim.parse("|")
+      option(either(Token.parseIdent(), Token.parseDelim("*"))),
+      Token.parseDelim("|")
     ),
     token => token.map(token => token.toString()).getOr("")
   );
@@ -175,9 +170,9 @@ export namespace Selector {
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-wq-name
    */
-  const name: Parser<Slice<Token>, [Option<string>, string], string> = pair(
-    option(namespace),
-    map(Token.Ident.parse(), ident => ident.value)
+  const parseName = pair(
+    option(parseNamespace),
+    map(Token.parseIdent(), ident => ident.value)
   );
 
   /**
@@ -299,31 +294,6 @@ export namespace Selector {
       Substring = "*="
     }
 
-    export namespace Matcher {
-      /**
-       * @see https://drafts.csswg.org/selectors/#typedef-attr-matcher
-       */
-      export const parse: Parser<Slice<Token>, Matcher, string> = map(
-        left(
-          option(
-            either(
-              Token.Delim.parse("~"),
-              either(
-                Token.Delim.parse("|"),
-                either(
-                  Token.Delim.parse("^"),
-                  either(Token.Delim.parse("$"), Token.Delim.parse("*"))
-                )
-              )
-            )
-          ),
-          Token.Delim.parse("=")
-        ),
-        delim =>
-          delim.isNone() ? Matcher.Equal : (`${delim.get()}=` as Matcher)
-      );
-    }
-
     export enum Modifier {
       /**
        * @example [foo=bar i]
@@ -335,56 +305,76 @@ export namespace Selector {
        */
       CaseSensitive = "s"
     }
+  }
 
-    export namespace Modifier {
-      /**
-       * @see https://drafts.csswg.org/selectors/#typedef-attr-modifier
-       */
-      export const parse: Parser<Slice<Token>, Modifier, string> = either(
-        map(Token.Ident.parse("i"), () => Modifier.CaseInsensitive),
-        map(Token.Ident.parse("s"), () => Modifier.CaseSensitive)
-      );
-    }
-
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-attribute-selector
-     */
-    export const parse: Parser<Slice<Token>, Attribute, string> = map(
-      delimited(
-        Token.OpenSquareBracket.parse,
-        pair(
-          name,
-          option(
-            pair(
-              pair(
-                Matcher.parse,
-                either(Token.String.parse(), Token.Ident.parse())
-              ),
-              delimited(option(Token.Whitespace.parse), option(Modifier.parse))
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-attr-matcher
+   */
+  const parseMatcher = map(
+    left(
+      option(
+        either(
+          Token.parseDelim("~"),
+          either(
+            Token.parseDelim("|"),
+            either(
+              Token.parseDelim("^"),
+              either(Token.parseDelim("$"), Token.parseDelim("*"))
             )
           )
-        ),
-        Token.CloseSquareBracket.parse
+        )
       ),
-      result => {
-        const [[namespace, name], rest] = result;
+      Token.parseDelim("=")
+    ),
+    delim =>
+      delim.isNone()
+        ? Attribute.Matcher.Equal
+        : (`${delim.get()}=` as Attribute.Matcher)
+  );
 
-        if (rest.isNone()) {
-          return Attribute.of(namespace, name);
-        }
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-attr-modifier
+   */
+  const parseModifier = either(
+    map(Token.parseIdent("i"), () => Attribute.Modifier.CaseInsensitive),
+    map(Token.parseIdent("s"), () => Attribute.Modifier.CaseSensitive)
+  );
 
-        const [[matcher, value], modifier] = rest.get();
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-attribute-selector
+   */
+  const parseAttribute = map(
+    delimited(
+      Token.parseOpenSquareBracket,
+      pair(
+        parseName,
+        option(
+          pair(
+            pair(parseMatcher, either(Token.parseString(), Token.parseIdent())),
+            delimited(option(Token.parseWhitespace), option(parseModifier))
+          )
+        )
+      ),
+      Token.parseCloseSquareBracket
+    ),
+    result => {
+      const [[namespace, name], rest] = result;
 
-        return Attribute.of(
-          namespace,
-          name,
-          Option.of(value.value),
-          Option.of(matcher),
-          modifier
-        );
+      if (rest.isNone()) {
+        return Attribute.of(namespace, name);
       }
-    );
-  }
+
+      const [[matcher, value], modifier] = rest.get();
+
+      return Attribute.of(
+        namespace,
+        name,
+        Option.of(value.value),
+        Option.of(matcher),
+        modifier
+      );
+    }
+  );
 
   /**
    * @see https://drafts.csswg.org/selectors/#type-selector
@@ -404,9 +394,15 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return (
-        element.namespace.equals(this.namespace) && element.name === this.name
-      );
+      if (this.name !== element.name) {
+        return false;
+      }
+
+      if (this.namespace.isNone() || this.namespace.includes("*")) {
+        return true;
+      }
+
+      return element.namespace.equals(this.namespace);
     }
 
     public equals(value: unknown): value is Type {
@@ -442,15 +438,12 @@ export namespace Selector {
     return value instanceof Type;
   }
 
-  export namespace Type {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-type-selector
-     */
-    export const parse: Parser<Slice<Token>, Type, string> = map(
-      name,
-      ([namespace, name]) => Type.of(namespace, name)
-    );
-  }
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-type-selector
+   */
+  const parseType = map(parseName, ([namespace, name]) =>
+    Type.of(namespace, name)
+  );
 
   /**
    * @see https://drafts.csswg.org/selectors/#universal-selector
@@ -497,15 +490,13 @@ export namespace Selector {
     }
   }
 
-  export namespace Universal {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-type-selector
-     */
-    export const parse: Parser<Slice<Token>, Universal, string> = map(
-      left(option(namespace), Token.Delim.parse("*")),
-      namespace => Universal.of(namespace)
-    );
-  }
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-type-selector
+   */
+  const parseUniversal = map(
+    left(option(parseNamespace), Token.parseDelim("*")),
+    namespace => Universal.of(namespace)
+  );
 
   export namespace Pseudo {
     export abstract class Class extends Selector {
@@ -679,18 +670,13 @@ export namespace Selector {
    */
   export type Simple = Type | Universal | Attribute | Class | Id | Pseudo;
 
-  export namespace Simple {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-simple-selector
-     */
-    export const parse: Parser<Slice<Token>, Simple, string> = either(
-      Class.parse,
-      either(
-        Type.parse,
-        either(Attribute.parse, either(Id.parse, Universal.parse))
-      )
-    );
-  }
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-simple-selector
+   */
+  const parseSimple = either(
+    parseClass,
+    either(parseType, either(parseAttribute, either(parseId, parseUniversal)))
+  );
 
   /**
    * @see https://drafts.csswg.org/selectors/#compound
@@ -738,23 +724,16 @@ export namespace Selector {
     }
   }
 
-  export namespace Compound {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-compound-selector
-     */
-    export const parse: Parser<Slice<Token>, Simple | Compound, string> = map(
-      oneOrMore(Simple.parse),
-      result => {
-        const [left, ...selectors] = reverse(result);
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-compound-selector
+   */
+  const parseCompound = map(oneOrMore(parseSimple), result => {
+    const [left, ...selectors] = reverse(result);
 
-        return reduce(
-          selectors,
-          (right, left) => Compound.of(left, right),
-          left as Simple | Compound
-        );
-      }
-    );
-  }
+    return reduce(selectors, (right, left) => Compound.of(left, right), left as
+      | Simple
+      | Compound);
+  });
 
   /**
    * @see https://drafts.csswg.org/selectors/#selector-combinator
@@ -781,24 +760,22 @@ export namespace Selector {
     DirectSibling = "+"
   }
 
-  export namespace Combinator {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-combinator
-     */
-    export const parse: Parser<Slice<Token>, Combinator, string> = either(
-      delimited(
-        option(Token.Whitespace.parse),
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-combinator
+   */
+  const parseCombinator = either(
+    delimited(
+      option(Token.parseWhitespace),
+      either(
+        map(Token.parseDelim(">"), () => Combinator.DirectDescendant),
         either(
-          map(Token.Delim.parse(">"), () => Combinator.DirectDescendant),
-          either(
-            map(Token.Delim.parse("~"), () => Combinator.Sibling),
-            map(Token.Delim.parse("+"), () => Combinator.DirectSibling)
-          )
+          map(Token.parseDelim("~"), () => Combinator.Sibling),
+          map(Token.parseDelim("+"), () => Combinator.DirectSibling)
         )
-      ),
-      map(Token.Whitespace.parse, () => Combinator.Descendant)
-    );
-  }
+      )
+    ),
+    map(Token.parseWhitespace, () => Combinator.Descendant)
+  );
 
   /**
    * @see https://drafts.csswg.org/selectors/#complex
@@ -897,27 +874,21 @@ export namespace Selector {
     }
   }
 
-  export namespace Complex {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-complex-selector
-     */
-    export const parse: Parser<
-      Slice<Token>,
-      Simple | Compound | Complex,
-      string
-    > = map(
-      pair(Compound.parse, zeroOrMore(pair(Combinator.parse, Compound.parse))),
-      result => {
-        const [left, selectors] = result;
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-complex-selector
+   */
+  const parseComplex = map(
+    pair(parseCompound, zeroOrMore(pair(parseCombinator, parseCompound))),
+    result => {
+      const [left, selectors] = result;
 
-        return reduce(
-          selectors,
-          (left, [combinator, right]) => Complex.of(combinator, left, right),
-          left as Simple | Compound | Complex
-        );
-      }
-    );
-  }
+      return reduce(
+        selectors,
+        (left, [combinator, right]) => Complex.of(combinator, left, right),
+        left as Simple | Compound | Complex
+      );
+    }
+  );
 
   /**
    * @see https://drafts.csswg.org/selectors/#relative-selector
@@ -974,19 +945,14 @@ export namespace Selector {
     }
   }
 
-  export namespace Relative {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-relative-selector
-     */
-    export const parse: Parser<Slice<Token>, Relative, string> = map(
-      pair(Combinator.parse, Complex.parse),
-      result => {
-        const [combinator, selector] = result;
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-relative-selector
+   */
+  const parseRelative = map(pair(parseCombinator, parseComplex), result => {
+    const [combinator, selector] = result;
 
-        return Relative.of(combinator, selector);
-      }
-    );
-  }
+    return Relative.of(combinator, selector);
+  });
 
   /**
    * @see https://drafts.csswg.org/selectors/#selector-list
@@ -1046,42 +1012,36 @@ export namespace Selector {
     }
   }
 
-  export namespace List {
-    /**
-     * @see https://drafts.csswg.org/selectors/#typedef-selector-list
-     * @internal
-     */
-    export const parse: Parser<
-      Slice<Token>,
-      Simple | Compound | Complex | Relative | List,
-      string
-    > = map(
-      pair(
-        either(Relative.parse, Complex.parse),
-        zeroOrMore(
-          right(
-            delimited(option(Token.Whitespace.parse), Token.Comma.parse),
-            either(Relative.parse, Complex.parse)
-          )
+  /**
+   * @see https://drafts.csswg.org/selectors/#typedef-selector-list
+   * @internal
+   */
+  const parseList = map(
+    pair(
+      either(parseRelative, parseComplex),
+      zeroOrMore(
+        right(
+          delimited(option(Token.parseWhitespace), Token.parseComma),
+          either(parseRelative, parseComplex)
         )
-      ),
-      result => {
-        let [left, selectors] = result;
+      )
+    ),
+    result => {
+      let [left, selectors] = result;
 
-        [left, ...selectors] = [...reverse(selectors), left];
+      [left, ...selectors] = [...reverse(selectors), left];
 
-        return reduce(selectors, (right, left) => List.of(left, right), left as
-          | Simple
-          | Compound
-          | Complex
-          | Relative
-          | List);
-      }
-    );
-  }
+      return reduce(selectors, (right, left) => List.of(left, right), left as
+        | Simple
+        | Compound
+        | Complex
+        | Relative
+        | List);
+    }
+  );
 
   export function parse(input: string): Option<Selector> {
-    return List.parse(Slice.of([...lex(input)]))
+    return parseList(Slice.of([...lex(input)]))
       .flatMap<Selector>(([tokens, selector]) =>
         tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token")
       )

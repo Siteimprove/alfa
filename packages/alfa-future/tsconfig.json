@@ -15,6 +15,9 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-lazy"
+    },
+    {
       "path": "../alfa-mapper"
     },
     {

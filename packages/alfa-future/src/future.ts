@@ -2,6 +2,7 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -86,7 +87,7 @@ export namespace Future {
       .reduce(
         (values, value) =>
           values.flatMap(values =>
-            mapper(value).map(value => Sequence.of(value, values))
+            mapper(value).map(value => Sequence.of(value, Lazy.force(values)))
           ),
         Future.now(Sequence.empty())
       );

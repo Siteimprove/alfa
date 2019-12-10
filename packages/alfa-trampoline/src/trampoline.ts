@@ -13,6 +13,14 @@ export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
    */
   public abstract step(): Either<Trampoline<T>, T>;
 
+  public isDone(): boolean {
+    return this instanceof Done;
+  }
+
+  public isSuspended(): boolean {
+    return this instanceof Suspend;
+  }
+
   public run(): T {
     let result = this.step();
 
