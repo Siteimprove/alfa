@@ -8,38 +8,23 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Role } from "./role";
-import { resolveReferences } from "./resolve-references";
 
 const { isElement } = Element;
 const { isText } = Text;
-const { find, isEmpty } = Iterable;
-const { and, or, not, equals, test } = Predicate;
+const { isEmpty } = Iterable;
+const { and, or, equals, test } = Predicate;
 
 /**
  * Get the computed accessible text alternative of an element.
  *
+ * @internal
  * @see https://w3c.github.io/accname/
  */
-export function getAccessibleName(
-  node: Element | Text,
-  device: Device
-): Branched<Option<string>, Browser>;
-
-/**
- * @internal
- */
-export function getAccessibleName(
-  node: Element | Text,
-  device: Device,
-  visited: Set<Element | Text>,
-  options?: getAccessibleName.Options
-): Branched<Option<string>, Browser>;
-
-export function getAccessibleName(
+export function getName(
   node: Element | Text,
   device: Device,
   visited: Set<Element | Text> = new Set(),
-  options: getAccessibleName.Options = {}
+  options: getName.Options = {}
 ): Branched<Option<string>, Browser> {
   if (visited.has(node) && options.revisiting !== true) {
     return Branched.of(None);
@@ -47,7 +32,7 @@ export function getAccessibleName(
 
   visited.add(node);
 
-  // https://www.w3.org/TR/accname/#step2A
+  // https://w3c.github.io/accname/#step2A
   if (!isRendered(node, device) && options.referencing !== true) {
     return Branched.of(None);
   }
@@ -55,7 +40,7 @@ export function getAccessibleName(
   // Perform the last step at this point in order to appease the type checker.
   // Otherwise, we might risk that we're not dealing with an element in the
   // remaining steps below.
-  // https://www.w3.org/TR/accname/#step2G
+  // https://w3c.github.io/accname/#step2G
   if (isText(node)) {
     const label = flatten(node.data, options);
 
@@ -63,13 +48,13 @@ export function getAccessibleName(
   }
 
   return (
-    // https://www.w3.org/TR/accname/#step2B
+    // https://w3c.github.io/accname/#step2B
     getAriaLabelledbyTextAlternative(node, device, visited, options)
-      // https://www.w3.org/TR/accname/#step2C
+      // https://w3c.github.io/accname/#step2C
       .map(alt =>
         alt.orElse(() => getAriaLabelTextAlternative(node, visited, options))
       )
-      // https://www.w3.org/TR/accname/#step2D
+      // https://w3c.github.io/accname/#step2D
       .flatMap(alt => {
         if (alt.isNone()) {
           return Role.from(node, { implicit: false }).flatMap(role => {
@@ -85,7 +70,7 @@ export function getAccessibleName(
 
         return Branched.of(alt);
       })
-      // https://www.w3.org/TR/accname/#step2E
+      // https://w3c.github.io/accname/#step2E
       .flatMap(alt => {
         if (alt.isNone()) {
           if (options.labelling !== true && options.referencing !== true) {
@@ -102,8 +87,8 @@ export function getAccessibleName(
 
         return Branched.of(alt);
       })
-      // https://www.w3.org/TR/accname/#step2F
-      // https://www.w3.org/TR/accname/#step2G
+      // https://w3c.github.io/accname/#step2F
+      // https://w3c.github.io/accname/#step2G
       .flatMap(alt => {
         if (alt.isNone()) {
           return Role.from(node).flatMap(role => {
@@ -125,7 +110,7 @@ export function getAccessibleName(
         return Branched.of(alt);
       })
 
-      // https://www.w3.org/TR/accname/#step2I
+      // https://w3c.github.io/accname/#step2I
       .map(alt =>
         alt.orElse(() => getTooltipTextAlternative(node, visited, options))
       )
@@ -135,7 +120,7 @@ export function getAccessibleName(
 /**
  * @internal
  */
-namespace getAccessibleName {
+namespace getName {
   export interface Options {
     recursing?: boolean;
     referencing?: boolean;
@@ -148,9 +133,9 @@ namespace getAccessibleName {
 /**
  * Return a flattened and trimmed version of a string.
  *
- * @see https://www.w3.org/TR/accname/#terminology
+ * @see https://w3c.github.io/accname/#terminology
  */
-function flatten(string: string, options: getAccessibleName.Options): string {
+function flatten(string: string, options: getName.Options): string {
   return options.recursing === true
     ? string
     : string.replace(/\s+/g, " ").trim();
@@ -164,15 +149,11 @@ function getAriaLabelledbyTextAlternative(
   element: Element,
   device: Device,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Branched<Option<string>, Browser> {
   const labelledBy = element.attribute("aria-labelledby");
 
-  if (
-    labelledBy.isNone() ||
-    labelledBy.filter(not(isEmpty)).isNone() ||
-    options.referencing === true
-  ) {
+  if (labelledBy.every(isEmpty) || options.referencing === true) {
     return Branched.of(None);
   }
 
@@ -180,7 +161,7 @@ function getAriaLabelledbyTextAlternative(
     Iterable.map(
       resolveReferences(element.root(), labelledBy.get().value),
       element =>
-        getAccessibleName(element, device, visited, {
+        getName(element, device, visited, {
           recursing: true,
           referencing: true
         })
@@ -204,7 +185,7 @@ function getAriaLabelledbyTextAlternative(
 function getAriaLabelTextAlternative(
   element: Element,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Option<string> {
   return element
     .attribute("aria-label")
@@ -219,7 +200,7 @@ function getNativeTextAlternative(
   element: Element,
   device: Device,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Branched<Option<string>, Browser> {
   if (element.namespace.isSome()) {
     switch (element.namespace.get()) {
@@ -241,12 +222,12 @@ function getHtmlTextAlternative(
   element: Element,
   device: Device,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Branched<Option<string>, Browser> {
   const label = getLabel(element);
 
   if (label.isSome()) {
-    return getAccessibleName(label.get(), device, visited, {
+    return getName(label.get(), device, visited, {
       recursing: true,
       labelling: true,
       // https://github.com/w3c/accname/issues/48
@@ -259,7 +240,7 @@ function getHtmlTextAlternative(
       return Branched.of(
         element
           .attribute("type")
-          .map(type => type.value)
+          .map(type => type.value.toLowerCase())
           .flatMap(type => {
             switch (type) {
               // https://w3c.github.io/html-aam/#input-type-button-input-type-submit-and-input-type-reset
@@ -307,9 +288,11 @@ function getHtmlTextAlternative(
 
     // https://w3c.github.io/html-aam/#fieldset-and-legend-elements
     case "fieldset":
-      return find(element, and(isElement, element => element.name === "legend"))
+      return element
+        .children()
+        .find(and(isElement, element => element.name === "legend"))
         .map(legend =>
-          getAccessibleName(legend, device, visited, {
+          getName(legend, device, visited, {
             recursing: true,
             descending: true
           })
@@ -318,12 +301,11 @@ function getHtmlTextAlternative(
 
     // https://w3c.github.io/html-aam/#figure-and-figcaption-elements
     case "figure": {
-      return find(
-        element,
-        and(isElement, element => element.name === "figcaption")
-      )
+      return element
+        .children()
+        .find(and(isElement, element => element.name === "figcaption"))
         .map(caption =>
-          getAccessibleName(caption, device, visited, {
+          getName(caption, device, visited, {
             recursing: true,
             descending: true
           })
@@ -346,12 +328,12 @@ function getHtmlTextAlternative(
     // https://w3c.github.io/html-aam/#table-element
     case "table":
       return Branched.of(
-        find(
-          element,
-          and(isElement, element => element.name === "caption")
-        ).map(caption =>
-          flatten(caption.textContent({ flattened: true }), options)
-        )
+        element
+          .children()
+          .find(and(isElement, element => element.name === "caption"))
+          .map(caption =>
+            flatten(caption.textContent({ flattened: true }), options)
+          )
       );
   }
 
@@ -359,25 +341,24 @@ function getHtmlTextAlternative(
 }
 
 /**
- * @see https://www.w3.org/TR/svg-aam/#mapping_additional_nd
+ * @see https://w3c.github.io/svg-aam/#mapping_additional_nd
  */
 function getSvgTextAlternative(
   element: Element,
   device: Device,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Branched<Option<string>, Browser> {
   if (element.name === "title") {
     return Branched.of(Option.of(flatten(element.textContent(), options)));
   }
 
-  const title = find(
-    element.children(),
-    and(isElement, child => child.name === "title")
-  );
+  const title = element
+    .children()
+    .find(and(isElement, child => child.name === "title"));
 
   if (title.isSome()) {
-    return getAccessibleName(title.get(), device, visited, {
+    return getName(title.get(), device, visited, {
       recursing: true,
       descending: true
     });
@@ -406,14 +387,14 @@ function getEmbeddedControlTextAlternative(
   element: Element,
   device: Device,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Branched<Option<string>, Browser> {
   return Role.from(element).flatMap(role =>
     role
       .map<Branched<Option<string>, Browser>>(role => {
         switch (role.name) {
           case "button":
-            return getAccessibleName(element, device, visited, {
+            return getName(element, device, visited, {
               recursing: true,
               revisiting: true
             });
@@ -454,16 +435,15 @@ function getSubtreeTextAlternative(
   element: Element,
   device: Device,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Branched<Option<string>, Browser> {
-  const childNodes = Iterable.filter(
-    element.children({ flattened: true }),
-    or(isElement, isText)
-  );
+  const childNodes = element
+    .children({ flattened: true })
+    .filter(or(isElement, isText));
 
   const childTextAlternatives = Branched.sequence(
-    Iterable.map(childNodes, childNode =>
-      getAccessibleName(childNode, device, visited, {
+    childNodes.map(childNode =>
+      getName(childNode, device, visited, {
         recursing: true,
         descending: true,
         // https://github.com/w3c/accname/issues/48
@@ -505,7 +485,7 @@ function getSubtreeTextAlternative(
 function getTooltipTextAlternative(
   element: Element,
   visited: Set<Element | Text>,
-  options: getAccessibleName.Options
+  options: getName.Options
 ): Option<string> {
   return element
     .attribute("title")
@@ -550,23 +530,23 @@ function getLabel(element: Element): Option<Element> {
         const root = element.root();
 
         if (root !== element) {
-          const label = find(
-            root,
-            and(
-              Element.isElement,
-              element =>
-                element.name === "label" &&
-                element.attribute("for").some(attr => attr.value === id)
-            )
-          );
-
-          return label.filter(label => {
-            const target = find(
-              root,
-              and(Element.isElement, element => element.id.includes(id))
+          const label = root
+            .descendants()
+            .find(
+              and(
+                Element.isElement,
+                element =>
+                  element.name === "label" &&
+                  element.attribute("for").some(attr => attr.value === id)
+              )
             );
 
-            return target.includes(element);
+          return label.filter(label => {
+            const target = root
+              .descendants()
+              .find(and(Element.isElement, element => element.id.includes(id)));
+
+            return target.includes(label);
           });
         }
       }
@@ -581,7 +561,7 @@ function getLabel(element: Element): Option<Element> {
 }
 
 /**
- * @see https://www.w3.org/TR/accname/#dfn-hidden
+ * @see https://w3c.github.io/accname/#dfn-hidden
  */
 function isRendered(node: Node, device: Device): boolean {
   if (Element.isElement(node)) {
@@ -663,4 +643,20 @@ function isTextLevelElement(element: Element): boolean {
   }
 
   return false;
+}
+
+function resolveReferences(node: Node, references: string): Array<Element> {
+  const elements: Array<Element> = [];
+
+  for (const id of references.trim().split(/\s+/)) {
+    const element = node
+      .descendants()
+      .find(and(isElement, element => element.id.includes(id)));
+
+    if (element.isSome()) {
+      elements.push(element.get());
+    }
+  }
+
+  return elements;
 }

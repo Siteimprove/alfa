@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { getAccessibleName } from "@siteimprove/alfa-aria";
+import { Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -53,14 +53,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           reduce(
             elements,
             (groups, element) => {
-              for (const [name] of getAccessibleName(element, device)) {
-                groups = groups.set(
-                  name,
-                  groups
-                    .get(name)
-                    .getOrElse(() => List.empty<Element>())
-                    .push(element)
-                );
+              for (const [node] of Node.from(element, device)) {
+                for (const name of node.map(node => node.name())) {
+                  groups = groups.set(
+                    name,
+                    groups
+                      .get(name)
+                      .getOrElse(() => List.empty<Element>())
+                      .push(element)
+                  );
+                }
               }
 
               return groups;

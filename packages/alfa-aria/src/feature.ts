@@ -1,5 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -32,7 +33,7 @@ export class Feature<N extends string = string> {
 }
 
 export namespace Feature {
-  export type Aspect<T> = (element: Element) => T;
+  export type Aspect<T> = Mapper<Element, T>;
 
   export interface Status {
     readonly obsolete: boolean;

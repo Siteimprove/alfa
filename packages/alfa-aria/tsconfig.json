@@ -1,12 +1,11 @@
 {
   "extends": "../tsconfig.json",
   "files": [
-    "src/accessible-node.ts",
+    "src/node.ts",
     "src/attribute.ts",
     "src/feature.ts",
-    "src/get-accessible-name.ts",
+    "src/get-name.ts",
     "src/index.ts",
-    "src/resolve-references.ts",
     "src/role.ts",
     "src/role/abstract/command.ts",
     "src/role/abstract/composite.ts",
@@ -92,7 +91,8 @@
     "src/role/widget/tree.ts",
     "src/role/window/alert-dialog.ts",
     "src/role/window/dialog.ts",
-    "test/get-accessible-name.spec.tsx"
+    "test/node.spec.tsx",
+    "test/get-name.spec.tsx"
   ],
   "references": [
     {

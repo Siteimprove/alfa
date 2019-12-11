@@ -6,6 +6,7 @@ import { Equality } from "@siteimprove/alfa-equality";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Set } from "@siteimprove/alfa-set";
 
 import { Feature } from "./feature";
 import { Attribute } from "./attribute";
@@ -55,20 +56,40 @@ export class Role<N extends string = string> implements Equality<Role<N>> {
     );
   }
 
+  public required(): Iterable<Attribute> {
+    return Set.from(
+      Iterable.flatMap(this.characteristics.requires, name =>
+        Attribute.lookup(name)
+      )
+    ).concat(
+      Iterable.flatten(
+        Iterable.flatMap(this.characteristics.requires, name =>
+          Role.lookup(name).map(role => role.required())
+        )
+      )
+    );
+  }
+
   public isRequired(predicate: Predicate<Attribute>): boolean {
-    return (
-      some(this.characteristics.requires, name =>
-        Attribute.lookup(name).some(predicate)
-      ) || this.inheritsFrom(role => role.isRequired(predicate))
+    return some(this.required(), predicate);
+  }
+
+  public supported(): Iterable<Attribute> {
+    return Set.from(
+      Iterable.flatMap(this.characteristics.supports, name =>
+        Attribute.lookup(name)
+      )
+    ).concat(
+      Iterable.flatten(
+        Iterable.flatMap(this.characteristics.inherits, name =>
+          Role.lookup(name).map(role => role.supported())
+        )
+      )
     );
   }
 
   public isSupported(predicate: Predicate<Attribute>): boolean {
-    return (
-      some(this.characteristics.supports, name =>
-        Attribute.lookup(name).some(predicate)
-      ) || this.inheritsFrom(role => role.isSupported(predicate))
-    );
+    return some(this.supported(), predicate);
   }
 
   public isAllowed(predicate: Predicate<Attribute>): boolean {
