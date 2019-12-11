@@ -76,6 +76,10 @@ class Done<T> extends Trampoline<T> {
     return this._value;
   }
 
+  public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
+    return new Done(mapper(this._value));
+  }
+
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
     return Suspend.of(() => mapper(this._value));
   }

@@ -85,7 +85,7 @@ export const None: None = new (class None {
     return {};
   }
 
-  public toString() {
+  public toString(): string {
     return "None";
   }
 })();

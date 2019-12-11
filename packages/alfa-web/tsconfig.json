@@ -12,10 +12,10 @@
       "path": "../alfa-graph"
     },
     {
-      "path": "../alfa-guards"
+      "path": "../alfa-http"
     },
     {
-      "path": "../alfa-http"
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-test"

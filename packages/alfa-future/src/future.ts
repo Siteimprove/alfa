@@ -73,9 +73,7 @@ export namespace Future {
   }
 
   export function from<T>(promise: Promise<T>): Future<T> {
-    return Future.defer(callback => {
-      promise.then(callback);
-    });
+    return Future.defer(callback => promise.then(callback));
   }
 
   export function traverse<T, U>(

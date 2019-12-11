@@ -9,7 +9,13 @@
       "path": "../alfa-dom"
     },
     {
-      "path": "../alfa-guards"
+      "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-web"
     },
     {
       "path": "../alfa-test"

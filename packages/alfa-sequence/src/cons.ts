@@ -3,7 +3,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
@@ -22,8 +22,8 @@ export class Cons<T> implements Sequence<T> {
   }
 
   private readonly _head: T;
-  private _tail: Lazy<Sequence<T>>;
-  private _length?: number;
+  private readonly _tail: Lazy<Sequence<T>>;
+  private _length: Option<number> = None;
 
   private constructor(head: T, tail: Lazy<Sequence<T>>) {
     this._head = head;
@@ -31,11 +31,11 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public get length(): number {
-    if (this._length === undefined) {
-      this._length = 1 + this._tail.force().length;
+    if (this._length.isNone()) {
+      this._length = Option.of(1 + this._tail.force().length);
     }
 
-    return this._length;
+    return this._length.get();
   }
 
   public isEmpty(): boolean {
@@ -55,8 +55,8 @@ export class Cons<T> implements Sequence<T> {
     if (Cons.isCons<U>(sequence)) {
       return new Cons(
         sequence._head,
-        sequence._tail.flatMap(tail =>
-          this._tail.map(rest => tail.concat(rest.flatMap(mapper)))
+        sequence._tail.flatMap(left =>
+          this._tail.map(right => left.concat(right.flatMap(mapper)))
         )
       );
     }

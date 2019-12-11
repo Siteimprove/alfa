@@ -3,7 +3,7 @@
   "files": ["src/index.ts", "src/types.ts"],
   "references": [
     {
-      "path": "../alfa-guards"
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-test"

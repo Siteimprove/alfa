@@ -36,21 +36,27 @@ export namespace Predicate {
   export function not<T, U extends T>(
     predicate: Predicate<T, U>
   ): Predicate<T> {
-    return value => fold(predicate, value, contradiction, tautology);
+    return function not(value) {
+      return fold(predicate, value, contradiction, tautology);
+    };
   }
 
   export function and<T, U extends T, V extends U>(
     left: Predicate<T, U>,
     right: Predicate<U, V>
   ): Predicate<T, V> {
-    return value => fold(left, value, right, contradiction);
+    return function and(value) {
+      return fold(left, value, right, contradiction);
+    };
   }
 
   export function or<T, U extends T, V extends T>(
     left: Predicate<T, U>,
     right: Predicate<T, V>
   ): Predicate<T, U | V> {
-    return value => fold(left, value, tautology, right);
+    return function or(value) {
+      return fold(left, value, tautology, right);
+    };
   }
 
   export function xor<T, U extends T, V extends T>(
@@ -75,7 +81,9 @@ export namespace Predicate {
   }
 
   export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
-    return other => values.some(value => Equality.equals(other, value));
+    return function equals(other) {
+      return values.some(value => Equality.equals(other, value));
+    };
   }
 
   export function property<T, K extends keyof T>(
@@ -84,6 +92,52 @@ export namespace Predicate {
   ): Predicate<T> {
     return value => predicate(value[property]);
   }
+
+  export function isString(value: unknown): value is string {
+    return typeof value === "string";
+  }
+
+  export function isNumber(value: unknown): value is number {
+    return typeof value === "number";
+  }
+
+  export function isBigInt(value: unknown): value is bigint {
+    return typeof value === "bigint";
+  }
+
+  export function isBoolean(value: unknown): value is boolean {
+    return typeof value === "boolean";
+  }
+
+  export function isNull(value: unknown): value is null {
+    return value === null;
+  }
+
+  export function isUndefined(value: unknown): value is undefined {
+    return value === undefined;
+  }
+
+  export function isSymbol(value: unknown): value is symbol {
+    return typeof value === "symbol";
+  }
+
+  export function isFunction(value: unknown): value is Function {
+    return typeof value === "function";
+  }
+
+  export function isObject(
+    value: unknown
+  ): value is { [key: string]: unknown } {
+    return typeof value === "object" && value !== null;
+  }
+
+  export const isPrimitive = or(
+    isString,
+    or(
+      isNumber,
+      or(isBigInt, or(isBoolean, or(isNull, or(isUndefined, isSymbol))))
+    )
+  );
 }
 
 function is<T, U extends T>(value: T, ok: boolean): value is U {

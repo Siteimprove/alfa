@@ -9,7 +9,7 @@
   ],
   "references": [
     {
-      "path": "../alfa-guards"
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-test"
