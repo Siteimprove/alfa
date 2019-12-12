@@ -3,14 +3,12 @@ import { Equality } from "@siteimprove/alfa-equality";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Lazy } from "@siteimprove/alfa-lazy";
 import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 export class Branched<T, B = never>
   implements
@@ -150,15 +148,16 @@ export namespace Branched {
     values: Iterable<T>,
     mapper: Mapper<T, Branched<U, B>>
   ): Branched<Iterable<U>, B> {
-    return Sequence.from(values)
-      .reverse()
-      .reduce(
-        (values, value) =>
-          values.flatMap(values =>
-            mapper(value).map(value => Sequence.of(value, Lazy.force(values)))
-          ),
-        Branched.of(Sequence.empty())
-      );
+    return [...values].reduce<Branched<Array<U>, B>>(
+      (values, value) =>
+        values.flatMap(values =>
+          mapper(value).map(value => {
+            values.push(value);
+            return values;
+          })
+        ),
+      Branched.of([])
+    );
   }
 
   export function sequence<T, B>(
