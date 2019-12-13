@@ -1,6 +1,7 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
 import { Functor } from "@siteimprove/alfa-functor";
+import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -77,15 +78,12 @@ export namespace Future {
     values: Iterable<T>,
     mapper: Mapper<T, Future<U>>
   ): Future<Iterable<U>> {
-    return [...values].reduce<Future<Array<U>>>(
+    return [...values].reduce<Future<List<U>>>(
       (values, value) =>
         values.flatMap(values =>
-          mapper(value).map(value => {
-            values.push(value);
-            return values;
-          })
+          mapper(value).map(value => values.push(value))
         ),
-      Future.now([])
+      Future.now(List.empty())
     );
   }
 

@@ -12,6 +12,9 @@
       "path": "../alfa-functor"
     },
     {
+      "path": "../alfa-list"
+    },
+    {
       "path": "../alfa-mapper"
     },
     {
