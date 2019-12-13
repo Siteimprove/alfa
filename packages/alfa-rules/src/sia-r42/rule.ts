@@ -1,4 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -46,5 +47,15 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 function hasRequiredContext(device: Device): Predicate<Element> {
-  return () => true;
+  return element =>
+    Node.from(element, device).every(node =>
+      node.parent().some(parent =>
+        parent.role().some(role =>
+          node
+            .role()
+            .get()
+            .hasContext(context => context.name === role.name)
+        )
+      )
+    );
 }

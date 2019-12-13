@@ -96,6 +96,14 @@ export class Role<N extends string = string> implements Equality<Role<N>> {
     return this.isRequired(predicate) || this.isSupported(predicate);
   }
 
+  public hasContext(predicate: Predicate<Role>): boolean {
+    return (
+      some(this.characteristics.context, name =>
+        Role.lookup(name).some(predicate)
+      ) || this.inheritsFrom(role => role.hasContext(predicate))
+    );
+  }
+
   public hasNameFrom(predicate: Predicate<"contents" | "author">): boolean {
     return some(this.characteristics.name.from, predicate);
   }

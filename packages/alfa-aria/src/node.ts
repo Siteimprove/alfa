@@ -1,5 +1,6 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Browser } from "@siteimprove/alfa-compatibility";
+import { Style } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
@@ -10,14 +11,15 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import * as dom from "@siteimprove/alfa-dom";
 
 import { Role } from "./role";
+import { getName } from "./get-name";
 
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
  */
 export abstract class Node {
-  private readonly _node: dom.Node;
-  private _children: Array<Node>;
-  private _parent: Option<Node>;
+  protected readonly _node: dom.Node;
+  protected _children: Array<Node>;
+  protected _parent: Option<Node>;
 
   protected constructor(
     owner: dom.Node,
@@ -33,21 +35,37 @@ export abstract class Node {
     return this._node;
   }
 
-  public children(): Sequence<Node> {
-    return Sequence.from(this._children);
+  public children(options: Node.Traversal = {}): Sequence<Node> {
+    const children = Sequence.from(this._children);
+
+    if (options.ignored === true) {
+      return children;
+    }
+
+    return children.flatMap(child =>
+      child.isIgnored() ? child.children(options) : Sequence.of(child)
+    );
   }
 
-  public parent(): Option<Node> {
-    return this._parent;
+  public parent(options: Node.Traversal = {}): Option<Node> {
+    const parent = this._parent;
+
+    if (options.ignored === true) {
+      return parent;
+    }
+
+    return parent.flatMap(parent =>
+      parent.isIgnored() ? parent.parent(options) : Option.of(parent)
+    );
   }
 
   public abstract name(): Option<string>;
 
   public abstract role(): Option<Role>;
 
-  public abstract isIgnored(): boolean;
-
   public abstract clone(parent?: Option<Node>): Node;
+
+  public abstract isIgnored(): boolean;
 
   /**
    * @internal
@@ -67,33 +85,64 @@ export namespace Node {
   export function from(
     node: dom.Node,
     device: Device
-  ): Branched<Option<Node>, Browser> {
+  ): Branched<Node, Browser> {
     return build(node, device);
+  }
+
+  export interface Traversal {
+    /**
+     * When `true`, traverse both exposed and ignored nodes.
+     */
+    readonly ignored?: boolean;
   }
 
   function build(
     node: dom.Node,
     device: Device,
     parent: Option<Node> = None
-  ): Branched<Option<Node>, Browser> {
+  ): Branched<Node, Browser> {
     let accessibleNode: Branched<Node, Browser>;
 
     // Text nodes are _always_ exposed in the accessibility tree.
     if (dom.Text.isText(node)) {
-      accessibleNode = Branched.of(Text.of(node, Option.of(node.data)));
+      accessibleNode = Branched.of(Text.of(node, node.data));
     }
 
-    // Element node are _sometimes_ exposed in the accessibility tree.
+    // Element nodes are _sometimes_ exposed in the accessibility tree.
     else if (dom.Element.isElement(node)) {
       if (
         node
           .attribute("aria-hidden")
           .some(attr => attr.value.toLowerCase() === "true")
       ) {
-        return Branched.of(None);
+        return Branched.of(Inert.of(node));
       }
 
-      accessibleNode = Role.from(node).map(role => Element.of(node, role));
+      const style = Style.from(node, device);
+
+      if (
+        style
+          .cascaded("display")
+          .some(display => display.value[0].value === "none")
+      ) {
+        return Branched.of(Inert.of(node));
+      }
+
+      if (
+        style
+          .computed("visibility")
+          .some(visibility => visibility.value.value !== "visible")
+      ) {
+        accessibleNode = Branched.of(Container.of(node));
+      } else {
+        accessibleNode = Role.from(node).flatMap(role =>
+          role.some(
+            role => role.name === "none" || role.name === "presentation"
+          )
+            ? Branched.of(Container.of(node))
+            : getName(node, device).map(name => Element.of(node, role, name))
+        );
+      }
     }
 
     // Other nodes are _never_ exposed in the accessibility tree.
@@ -110,9 +159,7 @@ export namespace Node {
       );
 
       return children.map(children =>
-        Option.of(
-          accessibleNode.clone(parent).adopt(Iterable.flatten(children))
-        )
+        accessibleNode.clone(parent).adopt(children)
       );
     });
   }
@@ -161,64 +208,67 @@ class Element extends Node {
     return this._role;
   }
 
+  public clone(parent: Option<Node> = None): Element {
+    return new Element(
+      this._node,
+      this._role,
+      this._name,
+      this._attributes,
+      self => this._children.map(child => child.clone(Option.of(self))),
+      parent
+    );
+  }
+
   public isIgnored(): boolean {
     return false;
   }
 
-  public clone(parent: Option<Node> = None): Element {
-    return new Element(
-      this.node(),
-      this._role,
-      this._name,
-      this._attributes,
-      self => this.children().map(child => child.clone(Option.of(self))),
-      parent
-    );
+  public toString(): string {
+    return [
+      [
+        this._role.map(role => role.name).getOr("element"),
+        ...this._name.map(name => `"${name}"`)
+      ].join(" "),
+      ...this._children.map(child => indent(child.toString()))
+    ].join("\n");
   }
 }
 
 class Text extends Node {
   public static of(
     owner: dom.Node,
-    name: Option<string>,
-    children: Mapper<Node, Iterable<Node>> = () => [],
+    name: string,
     parent: Option<Node> = None
   ): Text {
-    return new Text(owner, name, children, parent);
+    return new Text(owner, name, parent);
   }
 
-  private readonly _name: Option<string>;
+  private readonly _name: string;
 
-  private constructor(
-    owner: dom.Node,
-    name: Option<string>,
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node>
-  ) {
-    super(owner, children, parent);
+  private constructor(owner: dom.Node, name: string, parent: Option<Node>) {
+    super(owner, () => [], parent);
 
     this._name = name;
   }
 
   public name(): Option<string> {
-    return this._name;
+    return Option.of(this._name);
   }
 
-  public role(): None {
+  public role(): Option<Role> {
     return None;
+  }
+
+  public clone(parent: Option<Node> = None): Text {
+    return new Text(this._node, this._name, parent);
   }
 
   public isIgnored(): boolean {
     return false;
   }
 
-  public clone(parent: Option<Node> = None): Text {
-    return new Text(
-      this.node(),
-      this._name,
-      self => this.children().map(child => child.clone(Option.of(self))),
-      parent
-    );
+  public toString(): string {
+    return `text "${this._name}"`;
   }
 }
 
@@ -239,23 +289,64 @@ class Container extends Node {
     super(owner, children, parent);
   }
 
-  public name(): None {
+  public name(): Option<string> {
     return None;
   }
 
-  public role(): None {
+  public role(): Option<Role> {
     return None;
+  }
+
+  public clone(parent: Option<Node> = None): Container {
+    return new Container(
+      this._node,
+      self => this._children.map(child => child.clone(Option.of(self))),
+      parent
+    );
   }
 
   public isIgnored(): boolean {
     return true;
   }
 
-  public clone(parent: Option<Node> = None): Container {
-    return new Container(
-      this.node(),
-      self => this.children().map(child => child.clone(Option.of(self))),
-      parent
-    );
+  public toString(): string {
+    return [
+      "container",
+      ...this._children.map(child => indent(child.toString()))
+    ].join("\n");
   }
+}
+
+class Inert extends Node {
+  public static of(owner: dom.Node): Inert {
+    return new Inert(owner);
+  }
+
+  private constructor(owner: dom.Node) {
+    super(owner, () => [], None);
+  }
+
+  public name(): Option<string> {
+    return None;
+  }
+
+  public role(): Option<Role> {
+    return None;
+  }
+
+  public clone(): Inert {
+    return new Inert(this._node);
+  }
+
+  public isIgnored(): boolean {
+    return true;
+  }
+
+  public toString(): string {
+    return "ignored";
+  }
+}
+
+function indent(input: string): string {
+  return input.replace(/^/gm, "  ");
 }
