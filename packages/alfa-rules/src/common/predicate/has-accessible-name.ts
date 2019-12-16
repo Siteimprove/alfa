@@ -8,7 +8,5 @@ export function hasAccessibleName<T extends Element | Text>(
   predicate: Predicate<string> = () => true
 ): Predicate<T> {
   return node =>
-    Node.from(node, device).some(node =>
-      node.some(node => node.name().some(predicate))
-    );
+    Node.from(node, device).some(node => node.name().some(predicate));
 }

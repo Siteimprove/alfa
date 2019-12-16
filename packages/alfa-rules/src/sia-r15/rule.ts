@@ -49,15 +49,13 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             iframes,
             (groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
-                for (const name of node.map(node => node.name())) {
-                  groups = groups.set(
-                    name,
-                    groups
-                      .get(name)
-                      .getOrElse(() => List.empty<Element>())
-                      .push(iframe)
-                  );
-                }
+                groups = groups.set(
+                  node.name(),
+                  groups
+                    .get(node.name())
+                    .getOrElse(() => List.empty<Element>())
+                    .push(iframe)
+                );
               }
 
               return groups;
