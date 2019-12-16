@@ -45,6 +45,9 @@
       "path": "../alfa-result"
     },
     {
+      "path": "../alfa-sequence"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
