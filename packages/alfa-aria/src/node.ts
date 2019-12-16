@@ -1,4 +1,5 @@
 import { Branched } from "@siteimprove/alfa-branched";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Style } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -82,13 +83,6 @@ export abstract class Node {
 }
 
 export namespace Node {
-  export function from(
-    node: dom.Node,
-    device: Device
-  ): Branched<Node, Browser> {
-    return build(node, device);
-  }
-
   export interface Traversal {
     /**
      * When `true`, traverse both exposed and ignored nodes.
@@ -96,71 +90,96 @@ export namespace Node {
     readonly ignored?: boolean;
   }
 
+  const cache = Cache.empty<Device, Cache<dom.Node, Branched<Node, Browser>>>();
+
+  export function from(
+    node: dom.Node,
+    device: Device
+  ): Branched<Node, Browser> {
+    const _cache = cache.get(device, Cache.empty);
+
+    if (_cache.has(node)) {
+      return _cache.get(node).get();
+    }
+
+    const root = node.root({ flattened: true });
+
+    build(root, device);
+
+    if (_cache.has(node)) {
+      return _cache.get(node).get();
+    }
+
+    return Branched.of(Inert.of(node));
+  }
+
   function build(
     node: dom.Node,
     device: Device,
     parent: Option<Node> = None
   ): Branched<Node, Browser> {
-    let accessibleNode: Branched<Node, Browser>;
+    return cache.get(device, Cache.empty).get(node, () => {
+      let accessibleNode: Branched<Node, Browser>;
 
-    // Text nodes are _always_ exposed in the accessibility tree.
-    if (dom.Text.isText(node)) {
-      accessibleNode = Branched.of(Text.of(node, node.data));
-    }
-
-    // Element nodes are _sometimes_ exposed in the accessibility tree.
-    else if (dom.Element.isElement(node)) {
-      if (
-        node
-          .attribute("aria-hidden")
-          .some(attr => attr.value.toLowerCase() === "true")
-      ) {
-        return Branched.of(Inert.of(node));
+      // Text nodes are _always_ exposed in the accessibility tree.
+      if (dom.Text.isText(node)) {
+        accessibleNode = Branched.of(Text.of(node, node.data));
       }
 
-      const style = Style.from(node, device);
-
-      if (
-        style
-          .cascaded("display")
-          .some(display => display.value[0].value === "none")
-      ) {
-        return Branched.of(Inert.of(node));
-      }
-
-      if (
-        style
-          .computed("visibility")
-          .some(visibility => visibility.value.value !== "visible")
-      ) {
-        accessibleNode = Branched.of(Container.of(node));
-      } else {
-        accessibleNode = Role.from(node).flatMap(role =>
-          role.some(
-            role => role.name === "none" || role.name === "presentation"
-          )
-            ? Branched.of(Container.of(node))
-            : getName(node, device).map(name => Element.of(node, role, name))
-        );
-      }
-    }
-
-    // Other nodes are _never_ exposed in the accessibility tree.
-    else {
-      accessibleNode = Branched.of(Container.of(node));
-    }
-
-    return accessibleNode.flatMap(accessibleNode => {
-      const children = Branched.traverse(
-        node.children({ flattened: true }),
-        child => {
-          return build(child, device);
+      // Element nodes are _sometimes_ exposed in the accessibility tree.
+      else if (dom.Element.isElement(node)) {
+        if (
+          node
+            .attribute("aria-hidden")
+            .some(attr => attr.value.toLowerCase() === "true")
+        ) {
+          return Branched.of(Inert.of(node));
         }
-      );
 
-      return children.map(children =>
-        accessibleNode.clone(parent).adopt(children)
-      );
+        const style = Style.from(node, device);
+
+        if (
+          style
+            .cascaded("display")
+            .some(display => display.value[0].value === "none")
+        ) {
+          return Branched.of(Inert.of(node));
+        }
+
+        if (
+          style
+            .computed("visibility")
+            .some(visibility => visibility.value.value !== "visible")
+        ) {
+          accessibleNode = Branched.of(Container.of(node));
+        } else {
+          accessibleNode = Role.from(node).flatMap(role =>
+            role.some(
+              role => role.name === "none" || role.name === "presentation"
+            )
+              ? Branched.of(Container.of(node))
+              : getName(node, device).map(name => Element.of(node, role, name))
+          );
+        }
+      }
+
+      // Other nodes are _never_ exposed in the accessibility tree.
+      else {
+        accessibleNode = Branched.of(Container.of(node));
+      }
+
+      return accessibleNode.flatMap(accessibleNode => {
+        const children = Branched.traverse(
+          node.children({ flattened: true }),
+          child => {
+            return build(child, device);
+          }
+        );
+
+        return children.map(children =>
+          accessibleNode.clone(parent).adopt(children)
+        );
+      });
     });
   }
 }
