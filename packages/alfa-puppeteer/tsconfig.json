@@ -15,10 +15,10 @@
       "path": "../alfa-predicate"
     },
     {
-      "path": "../alfa-web"
+      "path": "../alfa-test"
     },
     {
-      "path": "../alfa-test"
+      "path": "../alfa-web"
     }
   ]
 }
