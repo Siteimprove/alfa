@@ -22,9 +22,9 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-guards": "^0.0.0",
     "@siteimprove/alfa-iterable": "^0.0.0",
     "@siteimprove/alfa-option": "^0.0.0",
+    "@siteimprove/alfa-predicate": "^0.0.0",
     "@siteimprove/alfa-thunk": "^0.0.0"
   },
   "devDependencies": {

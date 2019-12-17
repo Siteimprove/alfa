@@ -95,7 +95,7 @@ export class Some<T> implements Option<T> {
     Hashable.hash(this._value, hash);
   }
 
-  public *[Symbol.iterator]() {
+  public *[Symbol.iterator](): Iterator<T> {
     yield this._value;
   }
 
@@ -103,7 +103,7 @@ export class Some<T> implements Option<T> {
     return { value: this._value };
   }
 
-  public toString() {
+  public toString(): string {
     return `Some { ${this._value} }`;
   }
 }

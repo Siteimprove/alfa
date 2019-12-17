@@ -35,7 +35,7 @@ export interface Option<T>
   orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
   get(): T;
   getOr<U>(value: U): T | U;
-  getOrElse<U>(value: () => U): T | U;
+  getOrElse<U>(value: Thunk<U>): T | U;
   equals(value: unknown): value is Option<T>;
   toJSON(): { value: T } | {};
 }

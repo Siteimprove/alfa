@@ -48,7 +48,7 @@ export abstract class Node implements Iterable<Node> {
    */
   public descendants(options: Node.Traversal = {}): Sequence<Node> {
     return this.children(options).flatMap(child =>
-      Sequence.of(child, Lazy.force(child.descendants(options)))
+      Sequence.of(child, Lazy.of(() => child.descendants(options)))
     );
   }
 

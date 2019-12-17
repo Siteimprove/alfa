@@ -18,9 +18,6 @@
       "path": "../alfa-iterable"
     },
     {
-      "path": "../alfa-lazy"
-    },
-    {
       "path": "../alfa-list"
     },
     {
@@ -37,9 +34,6 @@
     },
     {
       "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-test"

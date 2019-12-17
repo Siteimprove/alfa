@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -81,33 +82,37 @@ export class Style {
 }
 
 export namespace Style {
+  const cache = Cache.empty<Device, Cache<Element, Style>>();
+
   export function from(element: Element, device: Device): Style {
-    const declarations: Array<Declaration> = [];
+    return cache.get(device, Cache.empty).get(element, () => {
+      const declarations: Array<Declaration> = [];
 
-    const root = element.root();
+      const root = element.root();
 
-    if (Document.isDocument(root) || Shadow.isShadow(root)) {
-      const cascade = Cascade.from(root, device);
+      if (Document.isDocument(root) || Shadow.isShadow(root)) {
+        const cascade = Cascade.from(root, device);
 
-      let next = cascade.get(element);
+        let next = cascade.get(element);
 
-      while (next.isSome()) {
-        const node = next.get();
+        while (next.isSome()) {
+          const node = next.get();
 
-        declarations.push(...node.declarations);
-        next = node.parent;
+          declarations.push(...node.declarations);
+          next = node.parent;
+        }
       }
-    }
 
-    declarations.push(...element.style.getOr([]));
+      declarations.push(...element.style.getOr([]));
 
-    return Style.of(
-      declarations,
-      element
-        .parent({ flattened: true })
-        .filter(Element.isElement)
-        .map(parent => Style.from(parent, device))
-    );
+      return Style.of(
+        declarations,
+        element
+          .parent({ flattened: true })
+          .filter(Element.isElement)
+          .map(parent => Style.from(parent, device))
+      );
+    });
   }
 
   export type Cascaded<N extends Name> = Property.Value.Cascaded<

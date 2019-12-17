@@ -16,9 +16,11 @@ import {
   Text,
   Type
 } from "@siteimprove/alfa-dom";
-import { isFunction, isObject } from "@siteimprove/alfa-guards";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 import { JSHandle } from "puppeteer";
+
+const { isFunction, isObject } = Predicate;
 
 export namespace Puppeteer {
   export type Type = JSHandle<globalThis.Document>;

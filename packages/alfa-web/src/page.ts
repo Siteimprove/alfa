@@ -1,8 +1,10 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
-import { isObject } from "@siteimprove/alfa-guards";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Resource } from "./resource";
+
+const { isObject } = Predicate;
 
 /**
  * @see https://en.wikipedia.org/wiki/Web_page

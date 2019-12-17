@@ -3,13 +3,13 @@
   "files": ["src/cache.ts", "src/index.ts", "test/cache.spec.ts"],
   "references": [
     {
-      "path": "../alfa-guards"
-    },
-    {
       "path": "../alfa-iterable"
     },
     {
       "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-test"

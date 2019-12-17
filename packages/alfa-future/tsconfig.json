@@ -12,19 +12,13 @@
       "path": "../alfa-functor"
     },
     {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-lazy"
+      "path": "../alfa-list"
     },
     {
       "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-monad"
-    },
-    {
-      "path": "../alfa-sequence"
     },
     {
       "path": "../alfa-test"

@@ -3,9 +3,6 @@
   "files": ["src/equality.ts", "src/index.ts"],
   "references": [
     {
-      "path": "../alfa-guards"
-    },
-    {
       "path": "../alfa-test"
     }
   ]

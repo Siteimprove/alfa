@@ -11,16 +11,7 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 import { Branch, Empty, Leaf, Node } from "./node";
 
-const {
-  filter,
-  reduce,
-  join,
-  concat,
-  find,
-  includes,
-  subtract,
-  intersect
-} = Iterable;
+const { filter, reduce, join, find, includes, subtract, intersect } = Iterable;
 
 export class List<T>
   implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equality<List<T>> {
@@ -347,7 +338,8 @@ export class List<T>
   }
 
   public *[Symbol.iterator](): Iterator<T> {
-    yield* concat(this._head, this._tail);
+    yield* this._head;
+    yield* this._tail;
   }
 
   public toJSON() {

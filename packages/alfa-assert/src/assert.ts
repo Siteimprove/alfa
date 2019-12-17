@@ -32,7 +32,7 @@ export namespace Assert {
       );
     }
 
-    public toJSON() {
+    public toJSON(): { target: T; reasons: Array<string> } {
       return {
         target: this.target,
         reasons: this.reasons.toJSON()

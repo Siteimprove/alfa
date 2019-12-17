@@ -1,4 +1,6 @@
-import { isNumber, isObject, isString } from "@siteimprove/alfa-guards";
+import { Predicate } from "@siteimprove/alfa-predicate";
+
+const { isNumber, isObject, isString } = Predicate;
 
 /**
  * @see https://fetch.spec.whatwg.org/#headers-class

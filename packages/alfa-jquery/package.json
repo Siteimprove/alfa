@@ -25,7 +25,6 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-dom": "^0.0.0",
-    "@siteimprove/alfa-guards": "^0.0.0",
     "@siteimprove/alfa-web": "^0.0.0",
     "@types/jquery": "^3.3.29",
     "jquery": "^3.4.1"

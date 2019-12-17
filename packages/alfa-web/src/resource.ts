@@ -1,5 +1,7 @@
-import { isObject } from "@siteimprove/alfa-guards";
 import { Request, Response } from "@siteimprove/alfa-http";
+import { Predicate } from "@siteimprove/alfa-predicate";
+
+const { isObject } = Predicate;
 
 /**
  * @see https://en.wikipedia.org/wiki/Web_resource

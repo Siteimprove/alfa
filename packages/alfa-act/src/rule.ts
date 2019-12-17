@@ -38,7 +38,7 @@ export class Rule<I, T, Q = unknown> {
     return this.evaluator(input, oracle, outcomes);
   }
 
-  public toJSON() {
+  public toJSON(): { uri: string } {
     return {
       uri: this.uri
     };
@@ -93,7 +93,7 @@ export namespace Rule {
             )
               .map(targets => Sequence.from(flatten<T>(targets)))
               .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
-                if (targets.length === 0) {
+                if (targets.isEmpty()) {
                   return Future.now([Outcome.Inapplicable.of(rule)]);
                 }
 
@@ -144,7 +144,7 @@ export namespace Rule {
                 )
               )
               .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
-                if (targets.length === 0) {
+                if (targets.isEmpty()) {
                   return Future.now([Outcome.Inapplicable.of(rule)]);
                 }
 

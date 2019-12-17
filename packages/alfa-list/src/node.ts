@@ -204,6 +204,8 @@ export class Branch<T> implements Node<T> {
   }
 
   public *[Symbol.iterator](): Iterator<T> {
-    yield* Iterable.concat(...this.nodes);
+    for (const node of this.nodes) {
+      yield* node;
+    }
   }
 }

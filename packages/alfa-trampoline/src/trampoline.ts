@@ -124,12 +124,14 @@ namespace Suspend {
     }
 
     public step(): Either<Trampoline<T>, T> {
-      return Left.of(this._thunk().flatMap(this._mapper));
+      return this._thunk()
+        .flatMap(this._mapper)
+        .step();
     }
 
     public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
-      return Suspend.of(() =>
-        Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
+      return this._thunk().flatMap(value =>
+        this._mapper(value).flatMap(mapper)
       );
     }
   }

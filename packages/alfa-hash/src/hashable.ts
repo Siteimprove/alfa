@@ -1,7 +1,9 @@
-import { isFunction, isObject } from "@siteimprove/alfa-guards";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { BuiltinOffset, IntegerOverflow } from "./constants";
 import { Hash } from "./hash";
+
+const { isFunction, isObject } = Predicate;
 
 export interface Hashable {
   hash(hash: Hash): void;

@@ -1,11 +1,9 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
 import { Functor } from "@siteimprove/alfa-functor";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Lazy } from "@siteimprove/alfa-lazy";
+import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -13,7 +11,9 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
   /**
    * @internal
    */
-  public abstract step(): Future<T>;
+  public step(): Future<T> {
+    return this;
+  }
 
   /**
    * @internal
@@ -25,13 +25,11 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
       const step = future.step();
 
       if (future === step) {
-        break;
+        return future.listen(callback);
       }
 
       future = step;
     }
-
-    future.listen(callback);
   }
 
   public then(callback: Callback<T>): void {
@@ -73,24 +71,20 @@ export namespace Future {
   }
 
   export function from<T>(promise: Promise<T>): Future<T> {
-    return Future.defer(callback => {
-      promise.then(callback);
-    });
+    return Future.defer(callback => promise.then(callback));
   }
 
   export function traverse<T, U>(
     values: Iterable<T>,
     mapper: Mapper<T, Future<U>>
   ): Future<Iterable<U>> {
-    return Sequence.from(values)
-      .reverse()
-      .reduce(
-        (values, value) =>
-          values.flatMap(values =>
-            mapper(value).map(value => Sequence.of(value, Lazy.force(values)))
-          ),
-        Future.now(Sequence.empty())
-      );
+    return [...values].reduce<Future<List<U>>>(
+      (values, value) =>
+        values.flatMap(values =>
+          mapper(value).map(value => values.push(value))
+        ),
+      Future.now(List.empty())
+    );
   }
 
   export function sequence<T>(
@@ -110,10 +104,6 @@ class Now<T> extends Future<T> {
   private constructor(value: T) {
     super();
     this._value = value;
-  }
-
-  public step(): Future<T> {
-    return this;
   }
 
   public listen(callback: Callback<T, Trampoline<void>>): void {
@@ -137,10 +127,6 @@ class Defer<T> extends Future<T> {
   private constructor(continuation: Continuation<T, Trampoline<void>>) {
     super();
     this._continuation = continuation;
-  }
-
-  public step(): Future<T> {
-    return this;
   }
 
   public listen(callback: Callback<T, Trampoline<void>>): void {
@@ -173,13 +159,11 @@ namespace Defer {
       this._mapper = mapper;
     }
 
-    public step(): Future<T> {
-      return this;
-    }
-
     public listen(callback: Callback<T, Trampoline<void>>): void {
       this._continuation(value =>
-        Trampoline.delay(() => this._mapper(value).listen(callback))
+        Trampoline.delay(() => this._mapper(value)).map(future =>
+          future.listen(callback)
+        )
       );
     }
 
@@ -233,12 +217,14 @@ namespace Suspend {
     }
 
     public step(): Future<T> {
-      return this._thunk().flatMap(this._mapper);
+      return this._thunk()
+        .flatMap(this._mapper)
+        .step();
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
-      return Suspend.of(() =>
-        Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
+      return this._thunk().flatMap(value =>
+        this._mapper(value).flatMap(mapper)
       );
     }
   }
