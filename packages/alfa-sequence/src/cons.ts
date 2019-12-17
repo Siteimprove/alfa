@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
@@ -164,7 +164,7 @@ export class Cons<T> implements Sequence<T> {
   public equals(value: unknown): value is Cons<T> {
     return (
       value instanceof Cons &&
-      Equality.equals(value._head, this._head) &&
+      Equatable.equals(value._head, this._head) &&
       value._tail.force().equals(this._tail.force())
     );
   }

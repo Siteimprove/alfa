@@ -1,7 +1,7 @@
 import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Option } from "@siteimprove/alfa-option";
@@ -11,7 +11,7 @@ import * as web from "@siteimprove/alfa-web";
 const { find, reduce } = Iterable;
 
 export namespace Assert {
-  export class Error<T> implements Equality<Error<T>> {
+  export class Error<T> implements Equatable<Error<T>> {
     public static of<T>(target: T, reasons: Iterable<string>): Error<T> {
       return new Error(target, List.from(reasons));
     }
@@ -27,7 +27,7 @@ export namespace Assert {
     public equals(value: unknown): value is Error<T> {
       return (
         value instanceof Error &&
-        Equality.equals(value.target, this.target) &&
+        Equatable.equals(value.target, this.target) &&
         value.reasons.equals(this.reasons)
       );
     }

@@ -1,5 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Hashable } from "@siteimprove/alfa-hash";
@@ -17,7 +17,7 @@ export interface Option<T>
     Foldable<T>,
     Applicative<T>,
     Iterable<T>,
-    Equality<Option<T>>,
+    Equatable<Option<T>>,
     Hashable {
   isSome(): this is Some<T>;
   isNone(): this is None;

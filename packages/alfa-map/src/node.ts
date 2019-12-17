@@ -1,5 +1,5 @@
 import { Bits } from "@siteimprove/alfa-bits";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -13,7 +13,7 @@ const { bit, take, skip, test, set, clear, popCount } = Bits;
 export interface Node<K, V>
   extends Functor<V>,
     Iterable<[K, V]>,
-    Equality<Node<K, V>> {
+    Equatable<Node<K, V>> {
   isEmpty(): this is Empty<K, V>;
   isLeaf(): this is Leaf<K, V>;
   get(key: K, hash: number, shift: number): Option<V>;
@@ -105,7 +105,7 @@ export class Leaf<K, V> implements Node<K, V> {
   }
 
   public get(key: K, hash: number, shift: number): Option<V> {
-    return hash === this.hash && Equality.equals(key, this.key)
+    return hash === this.hash && Equatable.equals(key, this.key)
       ? Option.of(this.value)
       : None;
   }
@@ -119,7 +119,7 @@ export class Leaf<K, V> implements Node<K, V> {
     if (hash === this.hash) {
       const leaf = Leaf.of(hash, key, value);
 
-      return Equality.equals(key, this.key)
+      return Equatable.equals(key, this.key)
         ? leaf
         : Collision.of(hash, [this, leaf]);
     }
@@ -144,7 +144,7 @@ export class Leaf<K, V> implements Node<K, V> {
   }
 
   public delete(key: K, hash: number, shift: number): Leaf<K, V> | Empty<K, V> {
-    return hash === this.hash && Equality.equals(key, this.key)
+    return hash === this.hash && Equatable.equals(key, this.key)
       ? Empty.of()
       : this;
   }
@@ -157,8 +157,8 @@ export class Leaf<K, V> implements Node<K, V> {
     return (
       value instanceof Leaf &&
       value.hash === this.hash &&
-      Equality.equals(value.key, this.key) &&
-      Equality.equals(value.value, this.value)
+      Equatable.equals(value.key, this.key) &&
+      Equatable.equals(value.value, this.value)
     );
   }
 
@@ -212,7 +212,7 @@ export class Collision<K, V> implements Node<K, V> {
     for (let i = 0, n = this.nodes.length; i < n; i++) {
       const node = this.nodes[i];
 
-      if (Equality.equals(key, node.key)) {
+      if (Equatable.equals(key, node.key)) {
         return Collision.of(this.hash, replace(this.nodes, i, leaf));
       }
     }
@@ -231,7 +231,7 @@ export class Collision<K, V> implements Node<K, V> {
     for (let i = 0, n = this.nodes.length; i < n; i++) {
       const node = this.nodes[i];
 
-      if (Equality.equals(key, node.key)) {
+      if (Equatable.equals(key, node.key)) {
         if (this.nodes.length === 1) {
           return Empty.of();
         }

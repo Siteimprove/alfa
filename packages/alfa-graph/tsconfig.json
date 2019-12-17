@@ -3,7 +3,7 @@
   "files": ["src/graph.ts", "src/index.ts"],
   "references": [
     {
-      "path": "../alfa-equality"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-map"

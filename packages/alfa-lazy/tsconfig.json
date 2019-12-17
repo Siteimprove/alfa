@@ -3,7 +3,7 @@
   "files": ["src/index.ts", "src/lazy.ts", "test/lazy.spec.ts"],
   "references": [
     {
-      "path": "../alfa-equality"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-functor"

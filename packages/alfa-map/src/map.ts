@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { FNV } from "@siteimprove/alfa-fnv";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -19,7 +19,7 @@ export class Map<K, V>
     Functor<V>,
     Foldable<V>,
     Iterable<[K, V]>,
-    Equality<Map<K, V>> {
+    Equatable<Map<K, V>> {
   public static of<K, V>(...entries: Array<[K, V]>): Map<K, V> {
     return entries.reduce(
       (map, [key, value]) => map.set(key, value),

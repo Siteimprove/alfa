@@ -1,8 +1,8 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
 import { Set } from "@siteimprove/alfa-set";
 
-export class Graph<T> implements Equality<Graph<T>> {
+export class Graph<T> implements Equatable<Graph<T>> {
   public static empty<T>(): Graph<T> {
     return new Graph(Map.empty());
   }

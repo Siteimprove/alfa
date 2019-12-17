@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -14,7 +14,7 @@ export interface Either<L, R>
     Functor<L | R>,
     Foldable<L | R>,
     Iterable<L | R>,
-    Equality<Either<L, R>> {
+    Equatable<Either<L, R>> {
   isLeft(): this is Left<L>;
   isRight(): this is Right<R>;
   get(): L | R;

@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -14,7 +14,12 @@ import { Branch, Empty, Leaf, Node } from "./node";
 const { filter, reduce, join, find, includes, subtract, intersect } = Iterable;
 
 export class List<T>
-  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equality<List<T>> {
+  implements
+    Monad<T>,
+    Functor<T>,
+    Foldable<T>,
+    Iterable<T>,
+    Equatable<List<T>> {
   public static of<T>(...values: Array<T>): List<T> {
     return values.reduce((list, value) => list.push(value), List.empty<T>());
   }

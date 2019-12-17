@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -44,7 +44,7 @@ export class Some<T> implements Option<T> {
   }
 
   public includes(value: T): boolean {
-    return Equality.equals(value, this._value);
+    return Equatable.equals(value, this._value);
   }
 
   public some(predicate: Predicate<T>): boolean {
@@ -88,7 +88,7 @@ export class Some<T> implements Option<T> {
   }
 
   public equals(value: unknown): value is Some<T> {
-    return value instanceof Some && Equality.equals(value._value, this._value);
+    return value instanceof Some && Equatable.equals(value._value, this._value);
   }
 
   public hash(hash: Hash): void {

@@ -1,12 +1,12 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { equals } = Predicate;
 
 export class Attribute<N extends string = string>
-  implements Equality<Attribute<N>> {
+  implements Equatable<Attribute<N>> {
   public static of<N extends string>(
     name: N,
     type: Attribute.Type,

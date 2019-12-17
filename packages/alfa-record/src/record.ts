@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -9,7 +9,7 @@ export class Record<T>
   implements
     Foldable<Record.Value<T>>,
     Iterable<Record.Entry<T>>,
-    Equality<Record<T>> {
+    Equatable<Record<T>> {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
     const values = List.from(keys.map(key => properties[key]));

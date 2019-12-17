@@ -6,7 +6,7 @@
       "path": "../alfa-bits"
     },
     {
-      "path": "../alfa-equality"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-fnv"

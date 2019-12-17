@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
@@ -77,7 +77,7 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public equals(value: unknown): value is Ok<T> {
-    return value instanceof Ok && Equality.equals(value._value, this._value);
+    return value instanceof Ok && Equatable.equals(value._value, this._value);
   }
 
   public *[Symbol.iterator]() {

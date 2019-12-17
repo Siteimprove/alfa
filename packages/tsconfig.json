@@ -22,7 +22,7 @@
     { "path": "alfa-dom" },
     { "path": "alfa-either" },
     { "path": "alfa-enzyme" },
-    { "path": "alfa-equality" },
+    { "path": "alfa-equatable" },
     { "path": "alfa-fnv" },
     { "path": "alfa-foldable" },
     { "path": "alfa-functor" },

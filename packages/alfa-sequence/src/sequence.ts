@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -18,7 +18,7 @@ export interface Sequence<T>
     Functor<T>,
     Foldable<T>,
     Iterable<T>,
-    Equality<Sequence<T>> {
+    Equatable<Sequence<T>> {
   readonly length: number;
   isEmpty(): boolean;
   map<U>(mapper: Mapper<T, U>): Sequence<U>;

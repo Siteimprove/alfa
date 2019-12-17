@@ -1,11 +1,11 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-export class Lazy<T> implements Monad<T>, Functor<T>, Equality<Lazy<T>> {
+export class Lazy<T> implements Monad<T>, Functor<T>, Equatable<Lazy<T>> {
   public static of<T>(thunk: Thunk<T>): Lazy<T> {
     return new Lazy(Trampoline.delay(thunk));
   }
@@ -38,7 +38,7 @@ export class Lazy<T> implements Monad<T>, Functor<T>, Equality<Lazy<T>> {
 
   public equals(value: unknown): value is Lazy<T> {
     return (
-      value instanceof Lazy && Equality.equals(value.force(), this.force())
+      value instanceof Lazy && Equatable.equals(value.force(), this.force())
     );
   }
 

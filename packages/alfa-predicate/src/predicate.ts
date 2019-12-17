@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
 export type Predicate<
@@ -82,7 +82,7 @@ export namespace Predicate {
 
   export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
     return function equals(other) {
-      return values.some(value => Equality.equals(other, value));
+      return values.some(value => Equatable.equals(other, value));
     };
   }
 

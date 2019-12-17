@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -81,7 +81,7 @@ export class Err<E> implements Result<never, E> {
   }
 
   public equals(value: unknown): value is Err<E> {
-    return value instanceof Err && Equality.equals(value._error, this._error);
+    return value instanceof Err && Equatable.equals(value._error, this._error);
   }
 
   public *[Symbol.iterator]() {}

@@ -3,7 +3,7 @@
   "files": ["src/either.ts", "src/index.ts", "src/left.ts", "src/right.ts"],
   "references": [
     {
-      "path": "../alfa-equality"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-foldable"

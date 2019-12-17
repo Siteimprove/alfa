@@ -1,5 +1,5 @@
 import { Element } from "@siteimprove/alfa-dom";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -40,7 +40,7 @@ export namespace Selector {
   abstract class Selector
     implements
       Iterable<Simple | Compound | Complex | Relative>,
-      Equality<Selector> {
+      Equatable<Selector> {
     /**
      * @see https://drafts.csswg.org/selectors/#match
      */

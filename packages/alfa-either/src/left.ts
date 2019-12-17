@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
@@ -54,7 +54,7 @@ export class Left<L> implements Either<L, never> {
   }
 
   public equals(value: unknown): value is Left<L> {
-    return value instanceof Left && Equality.equals(value._value, this._value);
+    return value instanceof Left && Equatable.equals(value._value, this._value);
   }
 
   public *[Symbol.iterator](): Iterator<L> {

@@ -1,5 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -17,7 +17,7 @@ export class Branched<T, B = never>
     Applicative<T>,
     Foldable<T>,
     Iterable<[T, Iterable<B>]>,
-    Equality<Branched<T, B>> {
+    Equatable<Branched<T, B>> {
   public static of<T, B = never>(
     value: T,
     ...branches: Array<B>
@@ -113,7 +113,7 @@ export class Branched<T, B = never>
 
   public equals(value: unknown): value is Branched<T, B> {
     return (
-      value instanceof Branched && Equality.equals(value._values, this._values)
+      value instanceof Branched && Equatable.equals(value._values, this._values)
     );
   }
 
@@ -164,7 +164,7 @@ export namespace Branched {
   }
 }
 
-class Value<T, B> implements Equality<Value<T, B>> {
+class Value<T, B> implements Equatable<Value<T, B>> {
   public static of<T, B>(
     value: T,
     branches: Option<List<B>> = None
@@ -183,8 +183,8 @@ class Value<T, B> implements Equality<Value<T, B>> {
   public equals(value: unknown): value is Value<T, B> {
     return (
       value instanceof Value &&
-      Equality.equals(value.value, this.value) &&
-      Equality.equals(value.branches, this.branches)
+      Equatable.equals(value.value, this.value) &&
+      Equatable.equals(value.branches, this.branches)
     );
   }
 }
@@ -195,7 +195,7 @@ function merge<T, B>(
   branches: Option<List<B>>
 ): List<Value<T, B>> {
   branches = values
-    .find(existing => Equality.equals(existing.value, value))
+    .find(existing => Equatable.equals(existing.value, value))
     .map(existing =>
       existing.branches.flatMap(left =>
         branches.map(right => left.concat(right))
@@ -212,7 +212,7 @@ function deduplicate<T, B>(
   branches: Option<List<B>>
 ): List<Value<T, B>> {
   return values.reduce((values, existing) => {
-    if (Equality.equals(existing.value, value)) {
+    if (Equatable.equals(existing.value, value)) {
       return values;
     }
 

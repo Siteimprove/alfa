@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-bits": "^0.0.0",
-    "@siteimprove/alfa-equality": "^0.0.0",
+    "@siteimprove/alfa-equatable": "^0.0.0",
     "@siteimprove/alfa-fnv": "^0.0.0",
     "@siteimprove/alfa-foldable": "^0.0.0",
     "@siteimprove/alfa-functor": "^0.0.0",

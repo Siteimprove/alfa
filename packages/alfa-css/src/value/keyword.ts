@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -12,7 +12,7 @@ const { equals } = Predicate;
  * @see https://drafts.csswg.org/css-values/#keywords
  */
 export class Keyword<T extends string = string>
-  implements Equality<Keyword<T>> {
+  implements Equatable<Keyword<T>> {
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }

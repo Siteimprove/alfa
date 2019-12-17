@@ -12,7 +12,7 @@
       "path": "../alfa-applicative"
     },
     {
-      "path": "../alfa-equality"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-foldable"

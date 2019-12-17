@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Document } from "@siteimprove/alfa-json-ld";
 import { Record } from "@siteimprove/alfa-record";
@@ -6,7 +6,7 @@ import { Record } from "@siteimprove/alfa-record";
 import { Rule } from "./rule";
 
 export abstract class Outcome<I, T, Q = unknown>
-  implements Equality<Outcome<I, T, Q>> {
+  implements Equatable<Outcome<I, T, Q>> {
   public readonly rule: Rule<I, T, Q>;
   public readonly target?: T;
 
@@ -56,9 +56,9 @@ export namespace Outcome {
     public equals(value: unknown): value is Passed<I, T, Q> {
       return (
         value instanceof Passed &&
-        Equality.equals(value.rule, this.rule) &&
-        Equality.equals(value.target, this.target) &&
-        Equality.equals(value.expectations, this.expectations)
+        Equatable.equals(value.rule, this.rule) &&
+        Equatable.equals(value.target, this.target) &&
+        Equatable.equals(value.expectations, this.expectations)
       );
     }
 
@@ -108,9 +108,9 @@ export namespace Outcome {
     public equals(value: unknown): value is Failed<I, T, Q> {
       return (
         value instanceof Failed &&
-        Equality.equals(value.rule, this.rule) &&
-        Equality.equals(value.target, this.target) &&
-        Equality.equals(value.expectations, this.expectations)
+        Equatable.equals(value.rule, this.rule) &&
+        Equatable.equals(value.target, this.target) &&
+        Equatable.equals(value.expectations, this.expectations)
       );
     }
 
@@ -153,8 +153,8 @@ export namespace Outcome {
     public equals(value: unknown): value is CantTell<I, T, Q> {
       return (
         value instanceof CantTell &&
-        Equality.equals(value.rule, this.rule) &&
-        Equality.equals(value.target, this.target)
+        Equatable.equals(value.rule, this.rule) &&
+        Equatable.equals(value.target, this.target)
       );
     }
 
@@ -193,7 +193,7 @@ export namespace Outcome {
 
     public equals(value: unknown): value is Inapplicable<I, T, Q> {
       return (
-        value instanceof Inapplicable && Equality.equals(value.rule, this.rule)
+        value instanceof Inapplicable && Equatable.equals(value.rule, this.rule)
       );
     }
 

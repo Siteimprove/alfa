@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -14,7 +14,7 @@ export interface Result<T, E>
     Functor<T>,
     Foldable<T>,
     Iterable<T>,
-    Equality<Result<T, E>> {
+    Equatable<Result<T, E>> {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;

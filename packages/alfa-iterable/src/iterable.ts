@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -236,7 +236,7 @@ export namespace Iterable {
       const group = grouper(value);
 
       const existing = groups.find(([existing]) =>
-        Equality.equals(group, existing)
+        Equatable.equals(group, existing)
       );
 
       if (existing === undefined) {

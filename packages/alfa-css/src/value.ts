@@ -1,12 +1,12 @@
 import { Declaration } from "@siteimprove/alfa-dom";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 
 export class Value<T = unknown>
-  implements Monad<T>, Functor<T>, Iterable<T>, Equality<Value<T>> {
+  implements Monad<T>, Functor<T>, Iterable<T>, Equatable<Value<T>> {
   public static of<T>(value: T, source: Option<Declaration>): Value<T> {
     return new Value(value, source);
   }
@@ -30,7 +30,7 @@ export class Value<T = unknown>
   public equals(value: unknown): value is Value<T> {
     return (
       value instanceof Value &&
-      Equality.equals(value.value, this.value) &&
+      Equatable.equals(value.value, this.value) &&
       value.source.equals(this.source)
     );
   }

@@ -1,8 +1,8 @@
-export interface Equality<T = unknown> {
+export interface Equatable<T = unknown> {
   equals(value: unknown): value is T;
 }
 
-export namespace Equality {
+export namespace Equatable {
   function isFunction(value: unknown): value is Function {
     return typeof value === "function";
   }
@@ -11,7 +11,7 @@ export namespace Equality {
     return typeof value === "object" && value !== null;
   }
 
-  export function isEquality<T>(value: unknown): value is Equality<T> {
+  export function isEquatable<T>(value: unknown): value is Equatable<T> {
     return isObject(value) && isFunction(value.equals);
   }
 
@@ -28,11 +28,11 @@ export namespace Equality {
       return true;
     }
 
-    if (Equality.isEquality(a)) {
+    if (Equatable.isEquatable(a)) {
       return a.equals(b);
     }
 
-    if (Equality.isEquality(b)) {
+    if (Equatable.isEquatable(b)) {
       return b.equals(a);
     }
 

@@ -1,4 +1,4 @@
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -8,7 +8,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Set<T>
-  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equality<Set<T>> {
+  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable<Set<T>> {
   public static of<T>(...values: Array<T>): Set<T> {
     return values.reduce((set, value) => set.add(value), Set.empty<T>());
   }

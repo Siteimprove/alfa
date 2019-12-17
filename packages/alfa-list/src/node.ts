@@ -1,5 +1,5 @@
 import { Bits } from "@siteimprove/alfa-bits";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -10,7 +10,7 @@ const { bit, take, skip } = Bits;
 /**
  * @internal
  */
-export interface Node<T> extends Functor<T>, Iterable<T>, Equality<Node<T>> {
+export interface Node<T> extends Functor<T>, Iterable<T>, Equatable<Node<T>> {
   readonly length: number;
   isEmpty(): this is Empty<T>;
   clone(): Node<T>;
@@ -132,7 +132,7 @@ export class Leaf<T> implements Node<T> {
     return (
       value instanceof Leaf &&
       value.values.length === this.values.length &&
-      value.values.every((value, i) => Equality.equals(value, this.values[i]))
+      value.values.every((value, i) => Equatable.equals(value, this.values[i]))
     );
   }
 

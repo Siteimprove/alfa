@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@siteimprove/alfa-equality",
+  "name": "@siteimprove/alfa-equatable",
   "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",

@@ -2,7 +2,7 @@ import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Element } from "@siteimprove/alfa-dom";
-import { Equality } from "@siteimprove/alfa-equality";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -14,7 +14,7 @@ import { Attribute } from "./attribute";
 const { some } = Iterable;
 const { or } = Predicate;
 
-export class Role<N extends string = string> implements Equality<Role<N>> {
+export class Role<N extends string = string> implements Equatable<Role<N>> {
   public static of<N extends string>(
     name: N,
     category: Role.Category,

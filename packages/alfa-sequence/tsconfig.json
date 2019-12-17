@@ -9,7 +9,7 @@
   ],
   "references": [
     {
-      "path": "../alfa-equality"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-foldable"
