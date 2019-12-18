@@ -10,7 +10,6 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
-import { isElement } from "../helpers/predicates";
 
 const { some } = Iterable;
 const { and, equals, test } = Predicate;
