@@ -10,8 +10,9 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
+import { isElement } from "../helpers/predicates";
 
-const { filter, isEmpty } = Iterable;
+const { some } = Iterable;
 const { and, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
@@ -28,7 +29,7 @@ export default Rule.Atomic.of<Page, Document>({
       },
 
       expectations(target) {
-        const headings = filter(
+        const hasHeadings = some(
           target.descendants({ flattened: true }),
           and(
             Element.isElement,
@@ -40,9 +41,9 @@ export default Rule.Atomic.of<Page, Document>({
         );
 
         return {
-          1: isEmpty(headings)
-            ? Err.of("The document does not have a heading element")
-            : Ok.of("The document has at least one heading element")
+          1: hasHeadings
+            ? Ok.of("The document has at least one heading element")
+            : Err.of("The document does not have a heading element")
         };
       }
     };
