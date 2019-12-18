@@ -15,7 +15,7 @@ import { Scraper } from "@siteimprove/alfa-scraper";
 import { Page } from "@siteimprove/alfa-web";
 import { evaluate } from "@siteimprove/alfa-xpath";
 
-import enquirer from "enquirer";
+import * as enquirer from "enquirer";
 
 import { Formatter } from "../../../src/formatter";
 

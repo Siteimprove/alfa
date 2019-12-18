@@ -10,7 +10,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
 import { Page } from "@siteimprove/alfa-web";
-import puppeteer from "puppeteer";
+import * as puppeteer from "puppeteer";
 
 const defaultDevice = Device.getDefaultDevice();
 
