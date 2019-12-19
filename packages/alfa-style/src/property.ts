@@ -1,10 +1,10 @@
+import { Token } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Style } from "./style";
-import { Token } from "./syntax/token";
 import { Value } from "./value";
 
 export class Property<T = unknown, U = T> {

@@ -1,11 +1,11 @@
 import { Branched } from "@siteimprove/alfa-branched";
-import { Style } from "@siteimprove/alfa-css";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 
 import { Role } from "./role";
 

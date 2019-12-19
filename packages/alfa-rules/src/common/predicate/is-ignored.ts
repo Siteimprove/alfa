@@ -1,7 +1,7 @@
-import { Style } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 
 import { isRendered } from "./is-rendered";
 import { isDecorative } from "./is-decorative";

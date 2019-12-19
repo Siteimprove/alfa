@@ -1,0 +1,40 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/ancestor-filter.ts",
+    "src/cascade.ts",
+    "src/index.ts",
+    "src/rule-tree.ts",
+    "src/selector-map.ts",
+    "src/user-agent.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-cache"
+    },
+    {
+      "path": "../alfa-css"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-media"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-selector"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

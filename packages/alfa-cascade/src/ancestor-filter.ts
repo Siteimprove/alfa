@@ -1,7 +1,6 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-
-import { Selector } from "../selector";
+import { Selector } from "@siteimprove/alfa-selector";
 
 const { isEmpty } = Iterable;
 

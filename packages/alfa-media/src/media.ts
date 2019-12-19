@@ -1,3 +1,4 @@
+import { Length, Lexer, Percentage, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -5,11 +6,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
-
-import { Length } from "./value/length";
-import { Percentage } from "./value/percentage";
-import { lex } from "./syntax/lex";
-import { Token } from "./syntax/token";
 
 const { some, isEmpty } = Iterable;
 const {
@@ -375,7 +371,7 @@ export namespace Media {
   );
 
   export function parse(input: string): Option<List> {
-    return parseList(Slice.of([...lex(input)]))
+    return parseList(Slice.of([...Lexer.lex(input)]))
       .flatMap<List>(([tokens, selector]) =>
         tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token")
       )

@@ -1,22 +1,12 @@
 {
   "extends": "../tsconfig.json",
-  "files": [
-    "src/index.ts",
-    "src/syntax.ts",
-    "src/syntax/lexer.ts",
-    "src/syntax/token.ts",
-    "src/value.ts",
-    "src/value/angle.ts",
-    "src/value/convert.ts",
-    "src/value/function.ts",
-    "src/value/keyword.ts",
-    "src/value/length.ts",
-    "src/value/percentage.ts",
-    "src/value/unit.ts"
-  ],
+  "files": ["src/index.ts", "src/selector.ts"],
   "references": [
     {
-      "path": "../alfa-device"
+      "path": "../alfa-css"
+    },
+    {
+      "path": "../alfa-dom"
     },
     {
       "path": "../alfa-equatable"
@@ -41,9 +31,6 @@
     },
     {
       "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
     }
   ]
 }

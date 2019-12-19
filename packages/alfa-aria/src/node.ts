@@ -1,13 +1,13 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
-import { Style } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Style } from "@siteimprove/alfa-style";
 
 import * as dom from "@siteimprove/alfa-dom";
 

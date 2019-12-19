@@ -25,7 +25,6 @@
     "@siteimprove/alfa-branched": "^0.0.0",
     "@siteimprove/alfa-cache": "^0.0.0",
     "@siteimprove/alfa-compatibility": "^0.0.0",
-    "@siteimprove/alfa-css": "^0.0.0",
     "@siteimprove/alfa-device": "^0.0.0",
     "@siteimprove/alfa-dom": "^0.0.0",
     "@siteimprove/alfa-iterable": "^0.0.0",
@@ -34,7 +33,8 @@
     "@siteimprove/alfa-mapper": "^0.0.0",
     "@siteimprove/alfa-option": "^0.0.0",
     "@siteimprove/alfa-predicate": "^0.0.0",
-    "@siteimprove/alfa-sequence": "^0.0.0"
+    "@siteimprove/alfa-sequence": "^0.0.0",
+    "@siteimprove/alfa-style": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"

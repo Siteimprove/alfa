@@ -4,10 +4,10 @@ import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 
-import { AncestorFilter } from "./cascade/ancestor-filter";
-import { RuleTree } from "./cascade/rule-tree";
-import { SelectorMap } from "./cascade/selector-map";
-import { UserAgent } from "./cascade/user-agent";
+import { AncestorFilter } from "./ancestor-filter";
+import { RuleTree } from "./rule-tree";
+import { SelectorMap } from "./selector-map";
+import { UserAgent } from "./user-agent";
 
 /**
  * @see https://drafts.csswg.org/css-cascade/

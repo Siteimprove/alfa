@@ -8,10 +8,10 @@ import {
   MediaRule
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Selector } from "@siteimprove/alfa-selector";
 
-import { Media } from "../media";
-import { Selector } from "../selector";
 import { UserAgent } from "./user-agent";
 
 /**

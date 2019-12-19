@@ -1,5 +1,6 @@
+import { Keyword } from "@siteimprove/alfa-css";
+
 import { Property } from "../property";
-import { Keyword } from "../value/keyword";
 
 export type Visibility = Keyword<"visible" | "hidden" | "collapse">;
 

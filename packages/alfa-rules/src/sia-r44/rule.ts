@@ -1,13 +1,15 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
-import { Keyword, Media, Style } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Orientation } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { mod, round } from "@siteimprove/alfa-math";
+import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { isVisible } from "../common/predicate/is-visible";

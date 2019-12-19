@@ -1,8 +1,8 @@
+import { Token } from "@siteimprove/alfa-css";
 import { clamp } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
-import { Token } from "../syntax/token";
 
 const { map, either } = Parser;
 

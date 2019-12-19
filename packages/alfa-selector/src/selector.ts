@@ -1,3 +1,4 @@
+import { Lexer, Token } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -6,9 +7,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
-
-import { lex } from "./syntax/lex";
-import { Token } from "./syntax/token";
 
 const { reduce, reverse, some } = Iterable;
 
@@ -229,7 +227,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON(): object {
       return {
         type: "attribute",
         namespace: this.namespace.getOr(null),
@@ -417,7 +415,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON(): object {
       return {
         type: "type",
         namespace: this.namespace.getOr(null),
@@ -474,7 +472,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON(): object {
       return {
         type: "universal",
         namespace: this.namespace.getOr(null)
@@ -519,7 +517,7 @@ export namespace Selector {
         yield this;
       }
 
-      public toJSON(): unknown {
+      public toJSON(): object {
         return {
           type: "pseudo-class",
           name: this.name
@@ -551,7 +549,7 @@ export namespace Selector {
         yield this;
       }
 
-      public toJSON(): unknown {
+      public toJSON(): object {
         return {
           type: "pseudo-element",
           name: this.name
@@ -581,7 +579,7 @@ export namespace Selector {
       return value instanceof Is && value.selector.equals(this.selector);
     }
 
-    public toJSON(): unknown {
+    public toJSON(): object {
       return {
         ...super.toJSON(),
         selector: this.selector
@@ -608,7 +606,7 @@ export namespace Selector {
       return value instanceof Not && value.selector.equals(this.selector);
     }
 
-    public toJSON(): unknown {
+    public toJSON(): object {
       return {
         ...super.toJSON(),
         selector: this.selector
@@ -635,7 +633,7 @@ export namespace Selector {
       return value instanceof Has && value.selector.equals(this.selector);
     }
 
-    public toJSON(): unknown {
+    public toJSON(): object {
       return {
         ...super.toJSON(),
         selector: this.selector
@@ -711,7 +709,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON(): object {
       return {
         type: "compound",
         left: this.left,
@@ -1041,7 +1039,7 @@ export namespace Selector {
   );
 
   export function parse(input: string): Option<Selector> {
-    return parseList(Slice.of([...lex(input)]))
+    return parseList(Slice.of([...Lexer.lex(input)]))
       .flatMap<Selector>(([tokens, selector]) =>
         tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token")
       )

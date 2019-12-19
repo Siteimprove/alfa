@@ -1,0 +1,33 @@
+{
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/media.ts"],
+  "references": [
+    {
+      "path": "../alfa-css"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-parser"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-slice"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

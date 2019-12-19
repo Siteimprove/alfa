@@ -1,0 +1,60 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/index.ts",
+    "src/property.ts",
+    "src/property/display.ts",
+    "src/property/opacity.ts",
+    "src/property/transform.ts",
+    "src/property/visibility.ts",
+    "src/style.ts",
+    "src/value.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-cache"
+    },
+    {
+      "path": "../alfa-cascade"
+    },
+    {
+      "path": "../alfa-css"
+    },
+    {
+      "path": "../alfa-device"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-math"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-parser"
+    },
+    {
+      "path": "../alfa-slice"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

@@ -1,9 +1,12 @@
+import {
+  Angle,
+  Function,
+  Keyword,
+  Length,
+  Percentage
+} from "@siteimprove/alfa-css";
+
 import { Property } from "../property";
-import { Angle } from "../value/angle";
-import { Function } from "../value/function";
-import { Keyword } from "../value/keyword";
-import { Length } from "../value/length";
-import { Percentage } from "../value/percentage";
 
 export namespace Transform {
   export type None = Keyword<"none">;

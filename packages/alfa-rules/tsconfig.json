@@ -79,6 +79,7 @@
     "src/sia-r49/rule.ts",
     "src/sia-r5/rule.ts",
     "src/sia-r50/rule.ts",
+    "src/sia-r59/rule.ts",
     "src/sia-r6/rule.ts",
     "src/sia-r63/rule.ts",
     "src/sia-r67/rule.ts",
@@ -121,10 +122,22 @@
       "path": "../alfa-lang"
     },
     {
+      "path": "../alfa-math"
+    },
+    {
+      "path": "../alfa-media"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-predicate"
     },
     {
       "path": "../alfa-result"
+    },
+    {
+      "path": "../alfa-style"
     },
     {
       "path": "../alfa-test"

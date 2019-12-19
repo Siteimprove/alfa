@@ -1,13 +1,13 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { Cascade } from "@siteimprove/alfa-cascade";
+import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Cascade } from "./cascade";
 import { Property } from "./property";
-import { lex } from "./syntax/lex";
 import { Value } from "./value";
 
 const { find, isEmpty } = Iterable;
@@ -42,7 +42,7 @@ export class Style {
       declaration => declaration.name === name
     ).flatMap(declaration =>
       property
-        .parse(Slice.of([...lex(declaration.value)]))
+        .parse(Slice.of([...Lexer.lex(declaration.value)]))
         .map(([remainder, value]) =>
           isEmpty(remainder)
             ? Option.of(Value.of(value, Option.of(declaration)))

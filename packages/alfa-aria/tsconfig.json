@@ -105,9 +105,6 @@
       "path": "../alfa-compatibility"
     },
     {
-      "path": "../alfa-css"
-    },
-    {
       "path": "../alfa-device"
     },
     {
@@ -133,6 +130,9 @@
     },
     {
       "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-style"
     },
     {
       "path": "../alfa-test"

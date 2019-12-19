@@ -1,7 +1,6 @@
 import { Declaration, Rule } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
-
-import { Selector } from "../selector";
+import { Selector } from "@siteimprove/alfa-selector";
 
 /**
  * The rule tree is a data structure used for storing the rules that match each

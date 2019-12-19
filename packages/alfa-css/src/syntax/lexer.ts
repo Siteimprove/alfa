@@ -10,20 +10,24 @@ const { map } = Iterable;
 const { zeroOrMore, take } = Parser;
 const { and, or, not, equals } = Predicate;
 
-export function* lex(input: string): Iterable<Token> {
-  let characters = Slice.of([...map(input.trim(), char => char.charCodeAt(0))]);
+export namespace Lexer {
+  export function* lex(input: string): Iterable<Token> {
+    let characters = Slice.of([
+      ...map(input.trim(), char => char.charCodeAt(0))
+    ]);
 
-  while (true) {
-    const result = consumeToken(characters);
+    while (true) {
+      const result = consumeToken(characters);
 
-    if (result.isOk()) {
-      const [remainder, token] = result.get();
+      if (result.isOk()) {
+        const [remainder, token] = result.get();
 
-      characters = remainder;
+        characters = remainder;
 
-      yield token;
-    } else {
-      break;
+        yield token;
+      } else {
+        break;
+      }
     }
   }
 }

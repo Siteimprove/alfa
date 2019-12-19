@@ -1,7 +1,7 @@
+import { Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
-import { Keyword } from "../value/keyword";
 
 const { map, either } = Parser;
 
