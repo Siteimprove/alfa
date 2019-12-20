@@ -13,14 +13,6 @@ export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
    */
   public abstract step(): Either<Trampoline<T>, T>;
 
-  public isDone(): boolean {
-    return this instanceof Done;
-  }
-
-  public isSuspended(): boolean {
-    return this instanceof Suspend;
-  }
-
   public run(): T {
     let result = this.step();
 
@@ -29,6 +21,14 @@ export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
     }
 
     return result.get() as T;
+  }
+
+  public isDone(): boolean {
+    return this instanceof Done;
+  }
+
+  public isSuspended(): boolean {
+    return this instanceof Suspend || this instanceof Suspend.Bind;
   }
 
   public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
@@ -130,8 +130,8 @@ namespace Suspend {
     }
 
     public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
-      return this._thunk().flatMap(value =>
-        this._mapper(value).flatMap(mapper)
+      return Suspend.of(() =>
+        Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
       );
     }
   }
