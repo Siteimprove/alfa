@@ -35,6 +35,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-css"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {
