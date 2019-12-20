@@ -372,6 +372,9 @@ export namespace Token {
     }
   }
 
+  export const isSemicolon: Predicate<unknown, Semicolon> = value =>
+    value instanceof Semicolon;
+
   export class Comma extends Token {
     public static of(): Comma {
       return new Comma();
@@ -489,6 +492,11 @@ export namespace Token {
     }
   }
 
+  export const isOpenCurlyBracket: Predicate<
+    unknown,
+    OpenCurlyBracket
+  > = value => value instanceof OpenCurlyBracket;
+
   export class CloseCurlyBracket extends Token {
     public static of(): CloseCurlyBracket {
       return new CloseCurlyBracket();
@@ -502,6 +510,11 @@ export namespace Token {
       return "}";
     }
   }
+
+  export const isCloseCurlyBracket: Predicate<
+    unknown,
+    CloseCurlyBracket
+  > = value => value instanceof CloseCurlyBracket;
 
   export class OpenComment extends Token {
     public static of(): OpenComment {
