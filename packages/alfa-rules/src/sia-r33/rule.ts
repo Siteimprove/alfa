@@ -22,8 +22,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             "Where is the transcript of the <video> element?"
-          ).map(transcript => {
-            return transcript.isSome()
+          ).map(transcript =>
+            transcript.isSome()
               ? Ok.of("The <video> element has a transcript")
               : Question.of(
                   "transcript-link",
@@ -34,8 +34,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   transcriptLink.isSome()
                     ? Ok.of("The <video> element has a transcript")
                     : Err.of("The <video> element does not have a transcript")
-                );
-          })
+                )
+          )
         };
       }
     };

@@ -22,15 +22,15 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "boolean",
             target,
             "Is the visual information of the <video> available through its audio or a separate audio description track?"
-          ).map(hasAudio => {
+          ).map(hasAudio =>
             hasAudio
               ? Ok.of(
                   "The visual information of the <video> element is available through audio"
                 )
               : Err.of(
                   "The visual information of the <video> element is not available through audio"
-                );
-          })
+                )
+          )
         };
       }
     };
