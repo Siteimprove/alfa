@@ -24,12 +24,12 @@
   "dependencies": {
     "@siteimprove/alfa-callback": "^0.0.0",
     "@siteimprove/alfa-continuation": "^0.0.0",
+    "@siteimprove/alfa-either": "^0.0.0",
     "@siteimprove/alfa-functor": "^0.0.0",
     "@siteimprove/alfa-list": "^0.0.0",
     "@siteimprove/alfa-mapper": "^0.0.0",
     "@siteimprove/alfa-monad": "^0.0.0",
-    "@siteimprove/alfa-thunk": "^0.0.0",
-    "@siteimprove/alfa-trampoline": "^0.0.0"
+    "@siteimprove/alfa-thunk": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"

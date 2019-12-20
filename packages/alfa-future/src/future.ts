@@ -1,39 +1,38 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
+import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Functor } from "@siteimprove/alfa-functor";
 import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 export abstract class Future<T> implements Monad<T>, Functor<T> {
   /**
    * @internal
    */
-  public step(): Future<T> {
-    return this;
-  }
-
-  /**
-   * @internal
-   */
-  public listen(callback: Callback<T, Trampoline<void>>): void {
-    let future = this.step();
-
-    while (true) {
-      const step = future.step();
-
-      if (future === step) {
-        return future.listen(callback);
-      }
-
-      future = step;
-    }
-  }
+  public abstract step(): Either<Future<T>, Future<T>>;
 
   public then(callback: Callback<T>): void {
-    this.listen(value => Trampoline.done(callback(value)));
+    let result = this.step();
+
+    while (result.isLeft()) {
+      result = result.get().step();
+    }
+
+    result.get().then(callback);
+  }
+
+  public isNow(): boolean {
+    return this instanceof Now;
+  }
+
+  public isDeferred(): boolean {
+    return this instanceof Defer || this instanceof Defer.Bind;
+  }
+
+  public isSuspended(): boolean {
+    return this instanceof Suspend || this instanceof Suspend.Bind;
   }
 
   public map<U>(mapper: Mapper<T, U>): Future<U> {
@@ -57,9 +56,7 @@ export namespace Future {
   }
 
   export function defer<T>(continuation: Continuation<T>): Future<T> {
-    return Defer.of(callback =>
-      Trampoline.done(continuation(value => callback(value).run()))
-    );
+    return Defer.of(continuation);
   }
 
   export function suspend<T>(thunk: Thunk<Future<T>>): Future<T> {
@@ -106,8 +103,12 @@ class Now<T> extends Future<T> {
     this._value = value;
   }
 
-  public listen(callback: Callback<T, Trampoline<void>>): void {
-    callback(this._value).run();
+  public step(): Right<Future<T>> {
+    return Right.of(this);
+  }
+
+  public then(callback: Callback<T>): void {
+    callback(this._value);
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -116,20 +117,22 @@ class Now<T> extends Future<T> {
 }
 
 class Defer<T> extends Future<T> {
-  public static of<T>(
-    continuation: Continuation<T, Trampoline<void>>
-  ): Defer<T> {
+  public static of<T>(continuation: Continuation<T>): Defer<T> {
     return new Defer(continuation);
   }
 
-  private readonly _continuation: Continuation<T, Trampoline<void>>;
+  private readonly _continuation: Continuation<T>;
 
-  private constructor(continuation: Continuation<T, Trampoline<void>>) {
+  private constructor(continuation: Continuation<T>) {
     super();
     this._continuation = continuation;
   }
 
-  public listen(callback: Callback<T, Trampoline<void>>): void {
+  public step(): Right<Future<T>> {
+    return Right.of(this);
+  }
+
+  public then(callback: Callback<T>): void {
     this._continuation(callback);
   }
 
@@ -141,17 +144,17 @@ class Defer<T> extends Future<T> {
 namespace Defer {
   export class Bind<S, T> extends Future<T> {
     public static of<S, T>(
-      continuation: Continuation<S, Trampoline<void>>,
+      continuation: Continuation<S>,
       mapper: Mapper<S, Future<T>>
     ): Bind<S, T> {
       return new Bind(continuation, mapper);
     }
 
-    private readonly _continuation: Continuation<S, Trampoline<void>>;
+    private readonly _continuation: Continuation<S>;
     private readonly _mapper: Mapper<S, Future<T>>;
 
     private constructor(
-      continuation: Continuation<S, Trampoline<void>>,
+      continuation: Continuation<S>,
       mapper: Mapper<S, Future<T>>
     ) {
       super();
@@ -159,12 +162,12 @@ namespace Defer {
       this._mapper = mapper;
     }
 
-    public listen(callback: Callback<T, Trampoline<void>>): void {
-      this._continuation(value =>
-        Trampoline.delay(() => this._mapper(value)).map(future =>
-          future.listen(callback)
-        )
-      );
+    public step(): Right<Future<T>> {
+      return Right.of(this);
+    }
+
+    public then(callback: Callback<T>): void {
+      this._continuation(value => this._mapper(value).then(callback));
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -189,8 +192,8 @@ class Suspend<T> extends Future<T> {
     this._thunk = thunk;
   }
 
-  public step(): Future<T> {
-    return this._thunk();
+  public step(): Left<Future<T>> {
+    return Left.of(this._thunk());
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -216,15 +219,15 @@ namespace Suspend {
       this._mapper = mapper;
     }
 
-    public step(): Future<T> {
+    public step(): Either<Future<T>, Future<T>> {
       return this._thunk()
         .flatMap(this._mapper)
         .step();
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
-      return this._thunk().flatMap(value =>
-        this._mapper(value).flatMap(mapper)
+      return Suspend.of(() =>
+        Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
       );
     }
   }

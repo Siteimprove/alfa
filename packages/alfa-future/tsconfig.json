@@ -10,6 +10,9 @@
       "path": "../alfa-continuation"
     },
     {
+      "path": "../alfa-either"
+    },
+    {
       "path": "../alfa-functor"
     },
     {
@@ -26,9 +29,6 @@
     },
     {
       "path": "../alfa-thunk"
-    },
-    {
-      "path": "../alfa-trampoline"
     }
   ]
 }

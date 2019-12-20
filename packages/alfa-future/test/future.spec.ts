@@ -1,4 +1,5 @@
 /// <reference lib="dom" />
+/// <reference types="node" />
 
 import { test } from "@siteimprove/alfa-test";
 
@@ -14,8 +15,28 @@ test("map() applies a function to the value of a future", async t => {
   t.equal(await n.map(n => n * 3), 6);
 });
 
-test("map() does not overflow for long chains", async t => {
-  let n = wait(10).map(() => 0);
+test("map() does not overflow for long now() chains", async t => {
+  let n = Future.now(0);
+
+  for (let i = 0; i < 10000; i++) {
+    n = n.map(i => i + 1);
+  }
+
+  t.equal(await n, 10000);
+});
+
+test("map() does not overflow for long delay() chains", async t => {
+  let n = Future.delay(() => 0);
+
+  for (let i = 0; i < 10000; i++) {
+    n = n.map(i => i + 1);
+  }
+
+  t.equal(await n, 10000);
+});
+
+test("map() does not overflow for long defer() chains", async t => {
+  let n = Future.defer<number>(done => done(0));
 
   for (let i = 0; i < 10000; i++) {
     n = n.map(i => i + 1);
@@ -75,10 +96,10 @@ test("flatMap() does not overflow for long nested delay() chains", async t => {
 });
 
 test("flatMap() does not overflow for long defer() chains", async t => {
-  let n = wait(0).map(() => 0);
+  let n = Future.defer<number>(done => setImmediate(() => done(0)));
 
   for (let i = 0; i < 10000; i++) {
-    n = n.flatMap(i => wait(0).map(() => i + 1));
+    n = n.flatMap(i => Future.defer(done => setImmediate(() => done(i + 1))));
   }
 
   t.equal(await n, 10000);
@@ -86,7 +107,7 @@ test("flatMap() does not overflow for long defer() chains", async t => {
 
 test("flatMap() does not overflow for long nested defer() chains", async t => {
   function count(n: number, i = 0): Future<number> {
-    const t = wait(0).map(() => i);
+    const t = Future.defer<number>(done => setImmediate(() => done(i)));
     return t.flatMap(i => (i === n ? t : count(n, i + 1)));
   }
 
