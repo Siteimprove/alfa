@@ -124,23 +124,9 @@ export class Leaf<K, V> implements Node<K, V> {
         : Collision.of(hash, [this, leaf]);
     }
 
-    const nextFragment = Node.fragment(hash, shift);
-    const prevFragment = Node.fragment(this.hash, shift);
+    const fragment = Node.fragment(this.hash, shift);
 
-    if (nextFragment === prevFragment) {
-      return Sparse.of(bit(nextFragment), [this]).set(
-        key,
-        hash,
-        shift + Node.Bits,
-        value
-      );
-    }
-
-    const leaf = Leaf.of(hash, key, value);
-
-    const children = prevFragment < nextFragment ? [this, leaf] : [leaf, this];
-
-    return Sparse.of(set(bit(nextFragment), prevFragment), children);
+    return Sparse.of(bit(fragment), [this]).set(key, hash, shift, value);
   }
 
   public delete(key: K, hash: number, shift: number): Leaf<K, V> | Empty<K, V> {
