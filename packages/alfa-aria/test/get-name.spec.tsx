@@ -224,7 +224,7 @@ test("getName() computes the text alternative of a paragraph with a title", t =>
   t.deepEqual(getName(p, device).toJSON(), {
     values: [
       {
-        value: None,
+        value: Some.of("Hello world"),
         branches: null
       }
     ]
@@ -369,7 +369,7 @@ test("getName() computes the text alternative of an input with an implicit label
   const label = Element.fromElement(
     <label>
       Hello world
-      <input type="text" id="test" />;
+      <input type="text" id="test" />
     </label>
   );
 

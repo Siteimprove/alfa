@@ -151,20 +151,20 @@ function getAriaLabelledbyTextAlternative(
   visited: Set<Element | Text>,
   options: getName.Options
 ): Branched<Option<string>, Browser> {
-  const labelledBy = element.attribute("aria-labelledby");
+  const labelledBy = element
+    .attribute("aria-labelledby")
+    .map(attr => attr.value);
 
   if (labelledBy.every(isEmpty) || options.referencing === true) {
     return Branched.of(None);
   }
 
   return Branched.sequence(
-    Iterable.map(
-      resolveReferences(element.root(), labelledBy.get().value),
-      element =>
-        getName(element, device, visited, {
-          recursing: true,
-          referencing: true
-        })
+    Iterable.map(resolveReferences(element.root(), labelledBy.get()), element =>
+      getName(element, device, visited, {
+        recursing: true,
+        referencing: true
+      })
     )
   ).map(alts =>
     Iterable.reduce<Option<string>>(
@@ -541,12 +541,12 @@ function getLabel(element: Element): Option<Element> {
               )
             );
 
-          return label.filter(label => {
+          return label.filter(() => {
             const target = root
               .descendants()
               .find(and(Element.isElement, element => element.id.includes(id)));
 
-            return target.includes(label);
+            return target.includes(element);
           });
         }
       }
