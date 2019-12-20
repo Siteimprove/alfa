@@ -1,6 +1,6 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import browserslist = require("browserslist");
-import { Data } from "./browser/data";
+import * as data from "./browser/data";
 
 export type Browser<
   N extends Browser.Name = Browser.Name,
@@ -53,11 +53,11 @@ export namespace Browser {
   export type Scope<N extends Name = Name> = Iterable<Release<N>>;
 
   export function isBrowser(browser: string): browser is Name {
-    return browser in Data;
+    return browser in data.Data;
   }
 
   function* getBrowsers(): Iterable<Name> {
-    for (const browser in Data) {
+    for (const browser in data.Data) {
       if (isBrowser(browser)) {
         yield browser;
       }
@@ -68,11 +68,11 @@ export namespace Browser {
     browser: N,
     version: string
   ): version is Version<N> {
-    return version in Data[browser].releases;
+    return version in data.Data[browser].releases;
   }
 
   function* getVersions<N extends Name>(browser: N): Iterable<Version<N>> {
-    for (const version in Data[browser].releases) {
+    for (const version in data.Data[browser].releases) {
       if (isVersion(browser, version)) {
         yield version;
       }
@@ -83,10 +83,9 @@ export namespace Browser {
 
   type Releases = { [N in Name]: Versions<N> };
 
-  // tslint:disable:no-object-literal-type-assertion
   const releases = [...getBrowsers()].reduce(
     <N extends Name>(support: Releases, browser: N) => {
-      const releases = Data[browser].releases as Data.Releases<N>;
+      const releases = data.Data[browser].releases as Data.Releases<N>;
 
       return {
         ...support,
@@ -226,9 +225,9 @@ namespace Data {
     ? Extract<keyof T, E>
     : never;
 
-  export type Name = Keys<Data>;
+  export type Name = Keys<data.Data>;
 
-  export type Browser<N extends Name> = Data[N];
+  export type Browser<N extends Name> = data.Data[N];
 
   export type Releases<N extends Name> = Browser<N>["releases"];
 

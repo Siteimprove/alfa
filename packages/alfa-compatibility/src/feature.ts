@@ -1,6 +1,6 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Browser } from "./browser";
-import { Data } from "./feature/data";
+import * as data from "./feature/data";
 
 export type Feature<
   N extends Feature.Name = Feature.Name,
@@ -25,20 +25,20 @@ export namespace Feature {
   };
 
   export function isFeature(feature: string): feature is Name {
-    return feature in Data;
+    return feature in data.Data;
   }
 
   export function isImplementer<N extends Name>(
     feature: N,
     browser: Browser.Name
   ): browser is Implementer<N> {
-    return browser in Data[feature];
+    return browser in data.Data[feature];
   }
 
   function* getImplementers<N extends Name>(
     feature: N
   ): Iterable<Implementer<N>> {
-    for (const implementer in Data[feature]) {
+    for (const implementer in data.Data[feature]) {
       if (
         Browser.isBrowser(implementer) &&
         isImplementer(feature, implementer)
@@ -52,7 +52,7 @@ export namespace Feature {
     feature: N,
     scope: Browser.Scope = Browser.getDefaultScope()
   ): Browser.Scope<Implementer<N>> {
-    const support = Data[feature].support as Data.Support<N>;
+    const support = data.Data[feature].support as Data.Support<N>;
 
     return Iterable.flatMap(
       getImplementers(feature),
@@ -83,9 +83,9 @@ namespace Data {
     ? Extract<keyof T, E>
     : never;
 
-  export type Name = Keys<Data>;
+  export type Name = Keys<data.Data>;
 
-  export type Feature<N extends Name> = Data[N];
+  export type Feature<N extends Name> = data.Data[N];
 
   export type Support<N extends Name> = Feature<N>["support"];
 
