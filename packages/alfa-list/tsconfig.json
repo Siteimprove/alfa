@@ -1,4 +1,5 @@
 {
+  "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/list.ts", "src/node.ts", "test/list.spec.ts"],
   "references": [
