@@ -96,7 +96,7 @@ export class Role<N extends string = string> implements Equatable<Role<N>> {
     return this.isRequired(predicate) || this.isSupported(predicate);
   }
 
-  public hasContext(predicate: Predicate<Role>): boolean {
+  public hasContext(predicate: Predicate<Role> = () => true): boolean {
     return (
       some(this.characteristics.context, name =>
         Role.lookup(name).some(predicate)

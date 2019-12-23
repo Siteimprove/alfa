@@ -8,6 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasNondefaultRole } from "../common/predicate/has-nondefault-role";
+import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 import { Ok, Err } from "@siteimprove/alfa-result";
 
@@ -25,7 +26,13 @@ export default Rule.Atomic.of<Page, Element>({
             Element.isElement,
             and(
               hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-              and(not(isIgnored(device)), hasNondefaultRole)
+              and(
+                not(isIgnored(device)),
+                and(
+                  hasNondefaultRole,
+                  hasRole(role => role.hasContext())
+                )
+              )
             )
           )
         );
