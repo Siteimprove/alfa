@@ -237,12 +237,15 @@ export class Collision<K, V> implements Node<K, V> {
     return (
       value instanceof Collision &&
       value.hash === this.hash &&
+      value.nodes.length === this.nodes.length &&
       value.nodes.every((node, i) => node.equals(this.nodes[i]))
     );
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
-    yield* Iterable.concat(...this.nodes);
+    for (const node of this.nodes) {
+      yield* node;
+    }
   }
 }
 
@@ -343,12 +346,15 @@ export class Sparse<K, V> implements Node<K, V> {
     return (
       value instanceof Sparse &&
       value.mask === this.mask &&
+      value.nodes.length === this.nodes.length &&
       value.nodes.every((node, i) => node.equals(this.nodes[i]))
     );
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
-    yield* Iterable.concat(...this.nodes);
+    for (const node of this.nodes) {
+      yield* node;
+    }
   }
 }
 
