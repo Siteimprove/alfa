@@ -8,11 +8,18 @@ import {
   Declaration,
   Document,
   Element,
+  FontFaceRule,
   ImportRule,
+  KeyframeRule,
+  KeyframesRule,
+  MediaRule,
+  NamespaceRule,
   Node,
+  PageRule,
   Rule,
   Sheet,
   StyleRule,
+  SupportsRule,
   Text,
   Type
 } from "@siteimprove/alfa-dom";
@@ -133,6 +140,27 @@ export namespace Puppeteer {
 
           case rule.IMPORT_RULE:
             return toImportRule(rule as globalThis.CSSImportRule);
+
+          case rule.MEDIA_RULE:
+            return toMediaRule(rule as globalThis.CSSMediaRule);
+
+          case rule.FONT_FACE_RULE:
+            return toFontFaceRule(rule as globalThis.CSSFontFaceRule);
+
+          case rule.PAGE_RULE:
+            return toPageRule(rule as globalThis.CSSPageRule);
+
+          case rule.KEYFRAMES_RULE:
+            return toKeyframesRule(rule as globalThis.CSSKeyframesRule);
+
+          case rule.KEYFRAME_RULE:
+            return toKeyframeRule(rule as globalThis.CSSKeyframeRule);
+
+          case rule.NAMESPACE_RULE:
+            return toNamespaceRule(rule as globalThis.CSSNamespaceRule);
+
+          case rule.SUPPORTS_RULE:
+            return toSupportsRule(rule as globalThis.CSSSupportsRule);
         }
 
         throw new Error(`Unsupported rule of type: ${rule.type}`);
@@ -152,6 +180,71 @@ export namespace Puppeteer {
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
           condition: rule.media.mediaText,
           href: rule.href
+        };
+      }
+
+      function toMediaRule(rule: globalThis.CSSMediaRule): MediaRule.JSON {
+        return {
+          type: "media",
+          condition: rule.conditionText,
+          rules: [...rule.cssRules].map(toRule)
+        };
+      }
+
+      function toFontFaceRule(
+        rule: globalThis.CSSFontFaceRule
+      ): FontFaceRule.JSON {
+        return {
+          type: "font-face",
+          style: toBlock(rule.style)
+        };
+      }
+
+      function toPageRule(rule: globalThis.CSSPageRule): PageRule.JSON {
+        return {
+          type: "page",
+          selector: rule.selectorText,
+          style: toBlock(rule.style)
+        };
+      }
+
+      function toKeyframesRule(
+        rule: globalThis.CSSKeyframesRule
+      ): KeyframesRule.JSON {
+        return {
+          type: "keyframes",
+          rules: [...rule.cssRules].map(toRule),
+          name: rule.name
+        };
+      }
+
+      function toKeyframeRule(
+        rule: globalThis.CSSKeyframeRule
+      ): KeyframeRule.JSON {
+        return {
+          type: "keyframe",
+          key: rule.keyText,
+          style: toBlock(rule.style)
+        };
+      }
+
+      function toNamespaceRule(
+        rule: globalThis.CSSNamespaceRule
+      ): NamespaceRule.JSON {
+        return {
+          type: "namespace",
+          namespace: rule.namespaceURI,
+          prefix: rule.prefix
+        };
+      }
+
+      function toSupportsRule(
+        rule: globalThis.CSSSupportsRule
+      ): SupportsRule.JSON {
+        return {
+          type: "supports",
+          condition: rule.conditionText,
+          rules: [...rule.cssRules].map(toRule)
         };
       }
 
