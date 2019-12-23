@@ -16,7 +16,8 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 const { isNaN } = Number;
-const { map, concat, join, find } = Iterable;
+const { map, filter, concat, join, find, isEmpty } = Iterable;
+const { not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
@@ -243,8 +244,14 @@ export class Element extends Node implements Slot, Slotable {
     }
 
     const children = join(
-      map(concat(this.shadow, this.children()), child =>
-        indent(child.toString())
+      map(
+        filter(
+          map(concat(this.shadow, this.children()), child =>
+            child.toString().trim()
+          ),
+          not(isEmpty)
+        ),
+        child => indent(child)
       ),
       "\n"
     );
