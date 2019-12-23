@@ -104,24 +104,22 @@ export default class Subcommand extends Command {
             process.stdout.write(`\n${question.subject}\n\n`);
 
             if (question.type === "boolean") {
-              return Future.defer(settle => {
+              return Future.from(
                 enquirer
                   .prompt<{ [key: string]: boolean }>({
                     name: question.uri,
                     type: "toggle",
                     message: question.message
                   })
-                  .then(answer => {
-                    settle(Option.of(question.answer(answer[question.uri])));
-                  })
-                  .catch(() => {
-                    settle(None);
-                  });
-              });
+                  .then(answer =>
+                    Option.of(question.answer(answer[question.uri]))
+                  )
+                  .catch(() => None)
+              );
             }
 
             if (question.type === "node") {
-              return Future.defer(settle => {
+              return Future.from(
                 enquirer
                   .prompt<{ [key: string]: string }>({
                     name: question.uri,
@@ -156,12 +154,10 @@ export default class Subcommand extends Command {
                       })
                     );
 
-                    settle(Option.of(question.answer(node)));
+                    return Option.of(question.answer(node));
                   })
-                  .catch(() => {
-                    settle(None);
-                  });
-              });
+                  .catch(() => None)
+              );
             }
 
             return Future.now(None);
