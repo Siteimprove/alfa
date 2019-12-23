@@ -24,6 +24,11 @@ export namespace Bits {
   }
 
   /**
+   * @remarks
+   * This is a 32-bit variant of the 64-bit population count algorithm outlined
+   * on Wikipedia. Until ECMAScript natively provides an efficient population
+   * count algorithm, this is the best we can do.
+   *
    * @see https://en.wikipedia.org/wiki/Hamming_weight
    */
   export function popCount(bits: number): number {
