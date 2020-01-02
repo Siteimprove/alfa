@@ -12,7 +12,7 @@ export interface Nil extends Sequence<never> {}
  * @internal
  */
 export const Nil: Nil = new (class Nil {
-  public get length(): number {
+  public get size(): number {
     return 0;
   }
 
@@ -112,17 +112,17 @@ export const Nil: Nil = new (class Nil {
     return "";
   }
 
-  public equals(value: unknown): value is Nil {
-    return value === this;
+  public equals(value: unknown): value is this {
+    return value instanceof Nil;
   }
 
   public *[Symbol.iterator](): Iterator<never> {}
 
-  public toJSON(): [] {
+  public toJSON() {
     return [];
   }
 
-  public toString() {
+  public toString(): string {
     return "Sequence []";
   }
 })();

@@ -53,7 +53,7 @@ export class Left<L> implements Either<L, never> {
     return reducer(accumulator, this._value);
   }
 
-  public equals(value: unknown): value is Left<L> {
+  public equals(value: unknown): value is this {
     return value instanceof Left && Equatable.equals(value._value, this._value);
   }
 
@@ -61,8 +61,12 @@ export class Left<L> implements Either<L, never> {
     yield this._value;
   }
 
-  public toJSON(): { left: L } {
+  public toJSON() {
     return { left: this._value };
+  }
+
+  public toString(): string {
+    return `Left { ${this._value} }`;
   }
 }
 

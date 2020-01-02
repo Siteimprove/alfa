@@ -18,8 +18,8 @@ export interface Sequence<T>
     Functor<T>,
     Foldable<T>,
     Iterable<T>,
-    Equatable<Sequence<T>> {
-  readonly length: number;
+    Equatable {
+  readonly size: number;
   isEmpty(): boolean;
   map<U>(mapper: Mapper<T, U>): Sequence<U>;
   flatMap<U>(mapper: Mapper<T, Sequence<U>>): Sequence<U>;

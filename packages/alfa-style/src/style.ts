@@ -10,7 +10,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Property } from "./property";
 import { Value } from "./value";
 
-const { find, isEmpty } = Iterable;
+const { map, find, isEmpty } = Iterable;
 
 type Name = Property.Name;
 
@@ -74,9 +74,11 @@ export class Style {
     return property.compute(this);
   }
 
-  public toJSON(): unknown {
+  public toJSON() {
     return {
-      declarations: this.declarations
+      declarations: [
+        ...map(this.declarations, declaration => declaration.toJSON())
+      ]
     };
   }
 }

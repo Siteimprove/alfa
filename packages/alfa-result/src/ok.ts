@@ -76,7 +76,7 @@ export class Ok<T> implements Result<T, never> {
     return None;
   }
 
-  public equals(value: unknown): value is Ok<T> {
+  public equals(value: unknown): value is this {
     return value instanceof Ok && Equatable.equals(value._value, this._value);
   }
 
@@ -84,7 +84,7 @@ export class Ok<T> implements Result<T, never> {
     yield this._value;
   }
 
-  public toJSON(): { value: T } {
+  public toJSON() {
     return { value: this._value };
   }
 

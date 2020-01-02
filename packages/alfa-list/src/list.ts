@@ -14,12 +14,7 @@ import { Branch, Empty, Leaf, Node } from "./node";
 const { filter, reduce, join, find, includes, subtract, intersect } = Iterable;
 
 export class List<T>
-  implements
-    Monad<T>,
-    Functor<T>,
-    Foldable<T>,
-    Iterable<T>,
-    Equatable<List<T>> {
+  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable {
   public static of<T>(...values: Array<T>): List<T> {
     return values.reduce((list, value) => list.push(value), List.empty<T>());
   }
@@ -31,18 +26,18 @@ export class List<T>
   private readonly _head: Empty<T> | Branch<T> | Leaf<T>;
   private readonly _tail: Empty<T> | Leaf<T>;
   private readonly _shift: number;
-  public readonly length: number;
+  public readonly size: number;
 
   private constructor(
     head: Empty<T> | Branch<T> | Leaf<T>,
     tail: Leaf<T> | Empty<T>,
     shift: number,
-    length: number
+    size: number
   ) {
     this._head = head;
     this._tail = tail;
     this._shift = shift;
-    this.length = length;
+    this.size = size;
   }
 
   public map<U>(mapper: Mapper<T, U>): List<U> {
@@ -54,7 +49,7 @@ export class List<T>
         : this._head.map(mapper),
       this._tail.map(mapper),
       this._shift,
-      this.length
+      this.size
     );
   }
 
@@ -116,11 +111,11 @@ export class List<T>
   }
 
   public get(index: number): Option<T> {
-    if (index < 0 || index >= this.length) {
+    if (index < 0 || index >= this.size) {
       return None;
     }
 
-    const offset = this.length - this._tail.length;
+    const offset = this.size - this._tail.size;
 
     let value: Option<T>;
 
@@ -134,11 +129,11 @@ export class List<T>
   }
 
   public set(index: number, value: T): List<T> {
-    if (index < 0 || index >= this.length) {
+    if (index < 0 || index >= this.size) {
       return this;
     }
 
-    const offset = this.length - this._tail.length;
+    const offset = this.size - this._tail.size;
 
     let head = this._head;
     let tail = this._tail;
@@ -149,7 +144,7 @@ export class List<T>
       tail = tail.set(index - offset, this._shift, value);
     }
 
-    return new List(head, tail, this._shift, this.length);
+    return new List(head, tail, this._shift, this.size);
   }
 
   public push(value: T): List<T> {
@@ -176,7 +171,7 @@ export class List<T>
         this._head,
         Leaf.of([...this._tail.values, value]),
         this._shift,
-        this.length + 1
+        this.size + 1
       );
     }
 
@@ -193,11 +188,11 @@ export class List<T>
         this._tail,
         Leaf.of([value]),
         this._shift + Node.Bits,
-        this.length + 1
+        this.size + 1
       );
     }
 
-    const index = this.length - Node.Capacity;
+    const index = this.size - Node.Capacity;
 
     let head = this._head;
     let shift = this._shift;
@@ -241,7 +236,7 @@ export class List<T>
     // In:  List { head, tail }
     // Out: List { head: Branch(...head, ...tail), tail: Leaf(value) }
     //
-    return new List(head, Leaf.of([value]), shift, this.length + 1);
+    return new List(head, Leaf.of([value]), shift, this.size + 1);
   }
 
   public pop(): List<T> {
@@ -257,23 +252,23 @@ export class List<T>
     // In:  List { head: Empty, tail: Leaf(value) }
     // Out: List { head: Empty, tail: Empty }
     //
-    if (this.length === 1) {
+    if (this.size === 1) {
       return List.empty();
     }
 
-    // If the tail has more than one element, it will have a non-zero length
-    // after popping the last element. We can therefore get away with removing
-    // the last element from the tail and reuse the head.
+    // If the tail has more than one element, it will have a non-zero size after
+    // popping the last element. We can therefore get away with removing the
+    // last element from the tail and reuse the head.
     //
     // In:  List { head, tail: Leaf(...tail, value) }
     // Out: List { head, tail }
     //
-    if (this._tail.length > 1) {
+    if (this._tail.size > 1) {
       return new List(
         this._head,
-        Leaf.of(this._tail.values.slice(0, this._tail.length - 1)),
+        Leaf.of(this._tail.values.slice(0, this._tail.size - 1)),
         this._shift,
-        this.length - 1
+        this.size - 1
       );
     }
 
@@ -282,7 +277,7 @@ export class List<T>
         Empty.of(),
         this._head,
         this._shift - Node.Bits,
-        this.length - 1
+        this.size - 1
       );
     }
 
@@ -290,7 +285,7 @@ export class List<T>
     let tail = this._tail;
     let shift = this._shift;
 
-    const index = this.length - Node.Capacity - 1;
+    const index = this.size - Node.Capacity - 1;
 
     let prev = head as Branch<T>;
     let level = shift - Node.Bits;
@@ -330,13 +325,13 @@ export class List<T>
     // In:  List { head: Branch(...head, tail), tail: Leaf(value) }
     // Out: List { head, tail }
     //
-    return new List(head, tail, shift, this.length - 1);
+    return new List(head, tail, shift, this.size - 1);
   }
 
-  public equals(value: unknown): value is List<T> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof List &&
-      value.length === this.length &&
+      value.size === this.size &&
       value._head.equals(this._head) &&
       value._tail.equals(this._tail)
     );

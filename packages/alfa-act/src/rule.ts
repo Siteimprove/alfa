@@ -23,11 +23,11 @@ export class Rule<I, T, Q = unknown> {
   }
 
   public readonly uri: string;
-  private readonly evaluator: Rule.Evaluator<I, T, Q>;
+  private readonly _evaluator: Rule.Evaluator<I, T, Q>;
 
   private constructor(uri: string, evaluator: Rule.Evaluator<I, T, Q>) {
     this.uri = uri;
-    this.evaluator = evaluator;
+    this._evaluator = evaluator;
   }
 
   public evaluate(
@@ -35,10 +35,10 @@ export class Rule<I, T, Q = unknown> {
     oracle: Oracle<Q> = () => Future.now(None),
     outcomes: Cache = Cache.empty()
   ): Future<Iterable<Outcome<I, T, Q>>> {
-    return this.evaluator(input, oracle, outcomes);
+    return this._evaluator(input, oracle, outcomes);
   }
 
-  public toJSON(): { uri: string } {
+  public toJSON() {
     return {
       uri: this.uri
     };

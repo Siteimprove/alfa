@@ -49,7 +49,7 @@ export class Slice<T> implements Iterable<T> {
     }
   }
 
-  public toJSON(): unknown {
+  public toJSON() {
     return [...this];
   }
 

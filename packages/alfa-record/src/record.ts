@@ -6,10 +6,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Record<T>
-  implements
-    Foldable<Record.Value<T>>,
-    Iterable<Record.Entry<T>>,
-    Equatable<Record<T>> {
+  implements Foldable<Record.Value<T>>, Iterable<Record.Entry<T>>, Equatable {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
     const values = List.from(keys.map(key => properties[key]));
@@ -68,7 +65,7 @@ export class Record<T>
     );
   }
 
-  public equals(value: unknown): value is Record<T> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Record &&
       value._keys.length === this._keys.length &&
@@ -93,7 +90,7 @@ export class Record<T>
     }
   }
 
-  public toJSON(): T {
+  public toJSON() {
     const record: { [key: string]: unknown } = {};
 
     for (const [key, value] of this) {

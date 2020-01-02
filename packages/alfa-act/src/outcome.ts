@@ -5,8 +5,7 @@ import { Record } from "@siteimprove/alfa-record";
 
 import { Rule } from "./rule";
 
-export abstract class Outcome<I, T, Q = unknown>
-  implements Equatable<Outcome<I, T, Q>> {
+export abstract class Outcome<I, T, Q = unknown> implements Equatable {
   public readonly rule: Rule<I, T, Q>;
   public readonly target?: T;
 
@@ -14,9 +13,9 @@ export abstract class Outcome<I, T, Q = unknown>
     this.rule = rule;
   }
 
-  public abstract equals(value: unknown): value is Outcome<I, T, Q>;
+  public abstract equals(value: unknown): value is this;
 
-  public abstract toJSON(): unknown;
+  public abstract toJSON(): { outcome: string };
 
   public toEARL(): Document {
     return {
@@ -53,7 +52,7 @@ export namespace Outcome {
       this.expectations = expectations;
     }
 
-    public equals(value: unknown): value is Passed<I, T, Q> {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Passed &&
         Equatable.equals(value.rule, this.rule) &&
@@ -62,7 +61,7 @@ export namespace Outcome {
       );
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         outcome: "passed",
         rule: this.rule.toJSON(),
@@ -105,7 +104,7 @@ export namespace Outcome {
       this.expectations = expectations;
     }
 
-    public equals(value: unknown): value is Failed<I, T, Q> {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Failed &&
         Equatable.equals(value.rule, this.rule) &&
@@ -114,7 +113,7 @@ export namespace Outcome {
       );
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         outcome: "failed",
         rule: this.rule.toJSON(),
@@ -150,7 +149,7 @@ export namespace Outcome {
       this.target = target;
     }
 
-    public equals(value: unknown): value is CantTell<I, T, Q> {
+    public equals(value: unknown): value is this {
       return (
         value instanceof CantTell &&
         Equatable.equals(value.rule, this.rule) &&
@@ -158,7 +157,7 @@ export namespace Outcome {
       );
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         outcome: "cantTell",
         rule: this.rule.toJSON(),
@@ -191,13 +190,13 @@ export namespace Outcome {
       super(rule);
     }
 
-    public equals(value: unknown): value is Inapplicable<I, T, Q> {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Inapplicable && Equatable.equals(value.rule, this.rule)
       );
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         outcome: "inapplicable",
         rule: this.rule.toJSON()

@@ -6,7 +6,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 
 export class Value<T = unknown>
-  implements Monad<T>, Functor<T>, Iterable<T>, Equatable<Value<T>> {
+  implements Monad<T>, Functor<T>, Iterable<T>, Equatable {
   public static of<T>(value: T, source: Option<Declaration>): Value<T> {
     return new Value(value, source);
   }
@@ -27,7 +27,7 @@ export class Value<T = unknown>
     return mapper(this.value);
   }
 
-  public equals(value: unknown): value is Value<T> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Value &&
       Equatable.equals(value.value, this.value) &&
@@ -37,6 +37,13 @@ export class Value<T = unknown>
 
   public *[Symbol.iterator](): Iterator<T> {
     yield this.value;
+  }
+
+  public toJSON() {
+    return {
+      value: this.value,
+      source: this.source.map(source => source.toJSON()).getOr(null)
+    };
   }
 
   public toString(): string {

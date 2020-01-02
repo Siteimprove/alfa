@@ -10,10 +10,7 @@ const { bit, take, skip, test, set, clear, popCount } = Bits;
 /**
  * @internal
  */
-export interface Node<K, V>
-  extends Functor<V>,
-    Iterable<[K, V]>,
-    Equatable<Node<K, V>> {
+export interface Node<K, V> extends Functor<V>, Iterable<[K, V]>, Equatable {
   isEmpty(): this is Empty<K, V>;
   isLeaf(): this is Leaf<K, V>;
   get(key: K, hash: number, shift: number): Option<V>;
@@ -71,7 +68,7 @@ export class Empty<K, V> implements Node<K, V> {
     return new Empty();
   }
 
-  public equals(value: unknown): value is Empty<K, V> {
+  public equals(value: unknown): value is this {
     return value instanceof Empty;
   }
 
@@ -139,7 +136,7 @@ export class Leaf<K, V> implements Node<K, V> {
     return Leaf.of(this.hash, this.key, mapper(this.value, this.key));
   }
 
-  public equals(value: unknown): value is Leaf<K, V> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Leaf &&
       value.hash === this.hash &&
@@ -230,10 +227,13 @@ export class Collision<K, V> implements Node<K, V> {
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Collision<K, U> {
-    return Collision.of(this.hash, this.nodes.map(node => node.map(mapper)));
+    return Collision.of(
+      this.hash,
+      this.nodes.map(node => node.map(mapper))
+    );
   }
 
-  public equals(value: unknown): value is Collision<K, V> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Collision &&
       value.hash === this.hash &&
@@ -339,10 +339,13 @@ export class Sparse<K, V> implements Node<K, V> {
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Sparse<K, U> {
-    return Sparse.of(this.mask, this.nodes.map(node => node.map(mapper)));
+    return Sparse.of(
+      this.mask,
+      this.nodes.map(node => node.map(mapper))
+    );
   }
 
-  public equals(value: unknown): value is Sparse<K, V> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Sparse &&
       value.mask === this.mask &&

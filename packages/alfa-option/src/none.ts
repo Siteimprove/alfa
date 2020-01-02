@@ -74,15 +74,15 @@ export const None: None = new (class None {
     return value();
   }
 
-  public equals(value: unknown): value is None {
-    return value === this;
+  public equals(value: unknown): value is this {
+    return value instanceof None;
   }
 
   public hash(): void {}
 
   public *[Symbol.iterator](): Iterator<never> {}
 
-  public toJSON(): {} {
+  public toJSON() {
     return {};
   }
 

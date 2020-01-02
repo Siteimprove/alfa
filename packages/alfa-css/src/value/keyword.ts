@@ -11,8 +11,7 @@ const { equals } = Predicate;
 /**
  * @see https://drafts.csswg.org/css-values/#keywords
  */
-export class Keyword<T extends string = string>
-  implements Equatable<Keyword<T>> {
+export class Keyword<T extends string = string> implements Equatable {
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }
@@ -23,7 +22,7 @@ export class Keyword<T extends string = string>
     this.value = value;
   }
 
-  public equals(value: unknown): value is Keyword<T> {
+  public equals(value: unknown): value is this {
     return value instanceof Keyword && value.value === this.value;
   }
 

@@ -88,7 +88,7 @@ export class Some<T> implements Option<T> {
     return this._value;
   }
 
-  public equals(value: unknown): value is Some<T> {
+  public equals(value: unknown): value is this {
     return value instanceof Some && Equatable.equals(value._value, this._value);
   }
 
@@ -100,7 +100,7 @@ export class Some<T> implements Option<T> {
     yield this._value;
   }
 
-  public toJSON(): { value: T } {
+  public toJSON() {
     return { value: this._value };
   }
 

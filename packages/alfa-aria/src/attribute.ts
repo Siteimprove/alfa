@@ -7,8 +7,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { equals } = Predicate;
 
-export class Attribute<N extends string = string>
-  implements Equatable<Attribute<N>> {
+export class Attribute<N extends string = string> implements Equatable {
   public static of<N extends string>(
     name: N,
     type: Attribute.Type,
@@ -86,7 +85,7 @@ export class Attribute<N extends string = string>
     }
   }
 
-  public equals(value: unknown): value is Attribute<N> {
+  public equals(value: unknown): value is this {
     return value instanceof Attribute && value.name === this.name;
   }
 }

@@ -10,14 +10,13 @@ const { bit, take, skip } = Bits;
 /**
  * @internal
  */
-export interface Node<T> extends Functor<T>, Iterable<T>, Equatable<Node<T>> {
-  readonly length: number;
+export interface Node<T> extends Functor<T>, Iterable<T>, Equatable {
+  readonly size: number;
   isEmpty(): this is Empty<T>;
   clone(): Node<T>;
   get(index: number, shift: number): Option<T>;
   set(index: number, shift: number, value: T): Node<T>;
   map<U>(mapper: Mapper<T, U>): Node<U>;
-  equals(value: unknown): value is Node<T>;
 }
 
 /**
@@ -51,7 +50,7 @@ export class Empty<T> implements Node<T> {
 
   private constructor() {}
 
-  public get length(): number {
+  public get size(): number {
     return 0;
   }
 
@@ -75,7 +74,7 @@ export class Empty<T> implements Node<T> {
     return this;
   }
 
-  public equals(value: unknown): value is Empty<T> {
+  public equals(value: unknown): value is this {
     return value instanceof Empty;
   }
 
@@ -96,7 +95,7 @@ export class Leaf<T> implements Node<T> {
     this.values = values;
   }
 
-  public get length(): number {
+  public get size(): number {
     return this.values.length;
   }
 
@@ -128,7 +127,7 @@ export class Leaf<T> implements Node<T> {
     return Leaf.of(this.values.map(mapper));
   }
 
-  public equals(value: unknown): value is Leaf<T> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Leaf &&
       value.values.length === this.values.length &&
@@ -159,7 +158,7 @@ export class Branch<T> implements Node<T> {
     this.nodes = nodes;
   }
 
-  public get length(): number {
+  public get size(): number {
     return this.nodes.length;
   }
 
@@ -195,7 +194,7 @@ export class Branch<T> implements Node<T> {
     );
   }
 
-  public equals(value: unknown): value is Branch<T> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Branch &&
       value.nodes.length === this.nodes.length &&

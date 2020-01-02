@@ -14,7 +14,7 @@ export interface Either<L, R>
     Functor<L | R>,
     Foldable<L | R>,
     Iterable<L | R>,
-    Equatable<Either<L, R>> {
+    Equatable {
   isLeft(): this is Left<L>;
   isRight(): this is Right<R>;
   get(): L | R;
@@ -24,7 +24,6 @@ export interface Either<L, R>
   map<T>(mapper: Mapper<L | R, T>): Either<T, T>;
   flatMap<T>(mapper: Mapper<L | R, Either<T, T>>): Either<T, T>;
   reduce<T>(reducer: Reducer<L | R, T>, accumulator: T): T;
-  equals(value: unknown): value is Either<L, R>;
   toJSON(): { left: L } | { right: R };
 }
 

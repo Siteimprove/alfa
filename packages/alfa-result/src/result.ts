@@ -14,7 +14,7 @@ export interface Result<T, E>
     Functor<T>,
     Foldable<T>,
     Iterable<T>,
-    Equatable<Result<T, E>> {
+    Equatable {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
@@ -30,7 +30,6 @@ export interface Result<T, E>
   getOrElse<U>(value: Thunk<U>): T | U;
   ok(): Option<T>;
   err(): Option<E>;
-  equals(value: unknown): value is Result<T, E>;
   toJSON(): { value: T } | { error: E };
 }
 

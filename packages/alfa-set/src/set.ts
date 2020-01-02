@@ -8,7 +8,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 export class Set<T>
-  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable<Set<T>> {
+  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable {
   public static of<T>(...values: Array<T>): Set<T> {
     return values.reduce((set, value) => set.add(value), Set.empty<T>());
   }
@@ -17,30 +17,30 @@ export class Set<T>
     return new Set(Map.empty());
   }
 
-  private readonly values: Map<T, true>;
+  private readonly _values: Map<T, true>;
 
   private constructor(values: Map<T, true>) {
-    this.values = values;
+    this._values = values;
   }
 
-  public get length(): number {
-    return this.values.length;
+  public get size(): number {
+    return this._values.size;
   }
 
   public has(value: T): boolean {
-    return this.values.has(value);
+    return this._values.has(value);
   }
 
   public add(value: T): Set<T> {
-    return new Set(this.values.set(value, true));
+    return new Set(this._values.set(value, true));
   }
 
   public delete(value: T): Set<T> {
-    return new Set(this.values.delete(value));
+    return new Set(this._values.delete(value));
   }
 
   public map<U>(mapper: Mapper<T, U>): Set<U> {
-    return this.values.reduce(
+    return this._values.reduce(
       (set, _, value) => set.add(mapper(value)),
       Set.empty<U>()
     );
@@ -65,14 +65,24 @@ export class Set<T>
     );
   }
 
-  public equals(value: unknown): value is Set<T> {
-    return value instanceof Set && value.values.equals(this.values);
+  public equals(value: unknown): value is this {
+    return value instanceof Set && value._values.equals(this._values);
   }
 
   public *[Symbol.iterator](): Iterator<T> {
-    for (const [value] of this.values) {
+    for (const [value] of this._values) {
       yield value;
     }
+  }
+
+  public toJSON() {
+    return [...this._values.keys()];
+  }
+
+  public toString(): string {
+    const entries = [...this].join(", ");
+
+    return `Set {${entries === "" ? "" : ` ${entries} `}}`;
   }
 }
 

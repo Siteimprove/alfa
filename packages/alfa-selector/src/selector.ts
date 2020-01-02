@@ -36,9 +36,7 @@ export type Selector =
 
 export namespace Selector {
   abstract class Selector
-    implements
-      Iterable<Simple | Compound | Complex | Relative>,
-      Equatable<Selector> {
+    implements Iterable<Simple | Compound | Complex | Relative>, Equatable {
     /**
      * @see https://drafts.csswg.org/selectors/#match
      */
@@ -47,13 +45,13 @@ export namespace Selector {
       scope?: Iterable<Element>
     ): boolean;
 
-    public abstract equals(value: unknown): value is Selector;
+    public abstract equals(value: unknown): value is this;
 
     public abstract [Symbol.iterator](): Iterator<
       Simple | Compound | Complex | Relative
     >;
 
-    public abstract toJSON(): unknown;
+    public abstract toJSON(): { type: string };
   }
 
   /**
@@ -75,7 +73,7 @@ export namespace Selector {
       return element.id.includes(this.name);
     }
 
-    public equals(value: unknown): value is Id {
+    public equals(value: unknown): value is this {
       return value instanceof Id && value.name === this.name;
     }
 
@@ -83,7 +81,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         type: "id",
         name: this.name
@@ -102,8 +100,9 @@ export namespace Selector {
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-id-selector
    */
-  const parseId = map(Token.parseHash(hash => hash.isIdentifier), hash =>
-    Id.of(hash.value)
+  const parseId = map(
+    Token.parseHash(hash => hash.isIdentifier),
+    hash => Id.of(hash.value)
   );
 
   /**
@@ -125,7 +124,7 @@ export namespace Selector {
       return element.classes.has(this.name);
     }
 
-    public equals(value: unknown): value is Class {
+    public equals(value: unknown): value is this {
       return value instanceof Class && value.name === this.name;
     }
 
@@ -133,7 +132,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         type: "class",
         name: this.name
@@ -212,7 +211,7 @@ export namespace Selector {
       return false;
     }
 
-    public equals(value: unknown): value is Attribute {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Attribute &&
         value.namespace.equals(this.namespace) &&
@@ -227,7 +226,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): object {
+    public toJSON() {
       return {
         type: "attribute",
         namespace: this.namespace.getOr(null),
@@ -403,7 +402,7 @@ export namespace Selector {
       return element.namespace.equals(this.namespace);
     }
 
-    public equals(value: unknown): value is Type {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Type &&
         value.namespace.equals(this.namespace) &&
@@ -415,7 +414,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): object {
+    public toJSON() {
       return {
         type: "type",
         namespace: this.namespace.getOr(null),
@@ -462,7 +461,7 @@ export namespace Selector {
       return element.namespace.equals(this.namespace);
     }
 
-    public equals(value: unknown): value is Universal {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Universal && value.namespace.equals(this.namespace)
       );
@@ -472,7 +471,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): object {
+    public toJSON() {
       return {
         type: "universal",
         namespace: this.namespace.getOr(null)
@@ -509,7 +508,7 @@ export namespace Selector {
         return false;
       }
 
-      public equals(value: unknown): value is Class {
+      public equals(value: unknown): value is this {
         return value instanceof Class && value.name === this.name;
       }
 
@@ -517,7 +516,7 @@ export namespace Selector {
         yield this;
       }
 
-      public toJSON(): object {
+      public toJSON() {
         return {
           type: "pseudo-class",
           name: this.name
@@ -541,7 +540,7 @@ export namespace Selector {
         return false;
       }
 
-      public equals(value: unknown): value is Element {
+      public equals(value: unknown): value is this {
         return value instanceof Element && value.name === this.name;
       }
 
@@ -549,7 +548,7 @@ export namespace Selector {
         yield this;
       }
 
-      public toJSON(): object {
+      public toJSON() {
         return {
           type: "pseudo-element",
           name: this.name
@@ -575,11 +574,11 @@ export namespace Selector {
       this.selector = selector;
     }
 
-    public equals(value: unknown): value is Is {
+    public equals(value: unknown): value is this {
       return value instanceof Is && value.selector.equals(this.selector);
     }
 
-    public toJSON(): object {
+    public toJSON() {
       return {
         ...super.toJSON(),
         selector: this.selector
@@ -602,11 +601,11 @@ export namespace Selector {
       this.selector = selector;
     }
 
-    public equals(value: unknown): value is Not {
+    public equals(value: unknown): value is this {
       return value instanceof Not && value.selector.equals(this.selector);
     }
 
-    public toJSON(): object {
+    public toJSON() {
       return {
         ...super.toJSON(),
         selector: this.selector
@@ -629,11 +628,11 @@ export namespace Selector {
       this.selector = selector;
     }
 
-    public equals(value: unknown): value is Has {
+    public equals(value: unknown): value is this {
       return value instanceof Has && value.selector.equals(this.selector);
     }
 
-    public toJSON(): object {
+    public toJSON() {
       return {
         ...super.toJSON(),
         selector: this.selector
@@ -697,7 +696,7 @@ export namespace Selector {
       return this.left.matches(element) && this.right.matches(element);
     }
 
-    public equals(value: unknown): value is Compound {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Compound &&
         value.left.equals(this.left) &&
@@ -709,7 +708,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): object {
+    public toJSON() {
       return {
         type: "compound",
         left: this.left,
@@ -728,9 +727,11 @@ export namespace Selector {
   const parseCompound = map(oneOrMore(parseSimple), result => {
     const [left, ...selectors] = reverse(result);
 
-    return reduce(selectors, (right, left) => Compound.of(left, right), left as
-      | Simple
-      | Compound);
+    return reduce(
+      selectors,
+      (right, left) => Compound.of(left, right),
+      left as Simple | Compound
+    );
   });
 
   /**
@@ -840,7 +841,7 @@ export namespace Selector {
       return false;
     }
 
-    public equals(value: unknown): value is Complex {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Complex &&
         value.combinator === this.combinator &&
@@ -853,7 +854,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         type: "complex",
         combinator: this.combinator,
@@ -915,7 +916,7 @@ export namespace Selector {
       return false;
     }
 
-    public equals(value: unknown): value is Relative {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Relative &&
         value.combinator === this.combinator &&
@@ -927,7 +928,7 @@ export namespace Selector {
       yield this;
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         type: "relative",
         combinator: this.combinator,
@@ -982,7 +983,7 @@ export namespace Selector {
       return this.left.matches(element) || this.right.matches(element);
     }
 
-    public equals(value: unknown): value is List {
+    public equals(value: unknown): value is this {
       return (
         value instanceof List &&
         value.left.equals(this.left) &&
@@ -997,7 +998,7 @@ export namespace Selector {
       yield* this.right;
     }
 
-    public toJSON(): unknown {
+    public toJSON() {
       return {
         type: "list",
         left: this.left,
@@ -1029,12 +1030,11 @@ export namespace Selector {
 
       [left, ...selectors] = [...reverse(selectors), left];
 
-      return reduce(selectors, (right, left) => List.of(left, right), left as
-        | Simple
-        | Compound
-        | Complex
-        | Relative
-        | List);
+      return reduce(
+        selectors,
+        (right, left) => List.of(left, right),
+        left as Simple | Compound | Complex | Relative | List
+      );
     }
   );
 

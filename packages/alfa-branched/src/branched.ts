@@ -17,7 +17,7 @@ export class Branched<T, B = never>
     Applicative<T>,
     Foldable<T>,
     Iterable<[T, Iterable<B>]>,
-    Equatable<Branched<T, B>> {
+    Equatable {
   public static of<T, B = never>(
     value: T,
     ...branches: Array<B>
@@ -111,7 +111,7 @@ export class Branched<T, B = never>
     return true;
   }
 
-  public equals(value: unknown): value is Branched<T, B> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Branched && Equatable.equals(value._values, this._values)
     );
@@ -164,7 +164,7 @@ export namespace Branched {
   }
 }
 
-class Value<T, B> implements Equatable<Value<T, B>> {
+class Value<T, B> implements Equatable {
   public static of<T, B>(
     value: T,
     branches: Option<List<B>> = None
@@ -180,7 +180,7 @@ class Value<T, B> implements Equatable<Value<T, B>> {
     this.branches = branches;
   }
 
-  public equals(value: unknown): value is Value<T, B> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Value &&
       Equatable.equals(value.value, this.value) &&
@@ -226,7 +226,7 @@ function deduplicate<T, B>(
         existingBranches
       );
 
-      if (deduplicated.length === 0) {
+      if (deduplicated.size === 0) {
         return values;
       }
 

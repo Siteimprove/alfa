@@ -18,7 +18,7 @@ export interface Option<T>
     Foldable<T>,
     Applicative<T>,
     Iterable<T>,
-    Equatable<Option<T>>,
+    Equatable,
     Hashable {
   isSome(): this is Some<T>;
   isNone(): this is None;
@@ -37,7 +37,6 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
-  equals(value: unknown): value is Option<T>;
   toJSON(): { value: T } | {};
 }
 

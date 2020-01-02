@@ -5,7 +5,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-export class Lazy<T> implements Monad<T>, Functor<T>, Equatable<Lazy<T>> {
+export class Lazy<T> implements Monad<T>, Functor<T>, Equatable {
   public static of<T>(thunk: Thunk<T>): Lazy<T> {
     return new Lazy(Trampoline.delay(thunk));
   }
@@ -36,7 +36,7 @@ export class Lazy<T> implements Monad<T>, Functor<T>, Equatable<Lazy<T>> {
     return new Lazy(this._value.flatMap(value => mapper(value)._value));
   }
 
-  public equals(value: unknown): value is Lazy<T> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Lazy && Equatable.equals(value.force(), this.force())
     );
@@ -44,5 +44,13 @@ export class Lazy<T> implements Monad<T>, Functor<T>, Equatable<Lazy<T>> {
 
   public toThunk(): Thunk<T> {
     return () => this.force();
+  }
+
+  public toJSON() {
+    return this.force();
+  }
+
+  public toString(): string {
+    return `Lazy { ${this.force()} }`;
   }
 }

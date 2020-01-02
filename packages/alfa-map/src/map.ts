@@ -14,12 +14,7 @@ import { Empty, Node } from "./node";
 const { map, reduce } = Iterable;
 
 export class Map<K, V>
-  implements
-    Monad<V>,
-    Functor<V>,
-    Foldable<V>,
-    Iterable<[K, V]>,
-    Equatable<Map<K, V>> {
+  implements Monad<V>, Functor<V>, Foldable<V>, Iterable<[K, V]>, Equatable {
   public static of<K, V>(...entries: Array<[K, V]>): Map<K, V> {
     return entries.reduce(
       (map, [key, value]) => map.set(key, value),
@@ -32,11 +27,11 @@ export class Map<K, V>
   }
 
   private readonly _root: Node<K, V>;
-  public readonly length: number;
+  public readonly size: number;
 
-  private constructor(root: Node<K, V>, length: number) {
+  private constructor(root: Node<K, V>, size: number) {
     this._root = root;
-    this.length = length;
+    this.size = size;
   }
 
   private hash(key: K): number {
@@ -58,23 +53,20 @@ export class Map<K, V>
   public set(key: K, value: V): Map<K, V> {
     return new Map(
       this._root.set(key, this.hash(key), 0, value),
-      this.length + (this.has(key) ? 0 : 1)
+      this.size + (this.has(key) ? 0 : 1)
     );
   }
 
   public delete(key: K): Map<K, V> {
     if (this.has(key)) {
-      return new Map(
-        this._root.delete(key, this.hash(key), 0),
-        this.length - 1
-      );
+      return new Map(this._root.delete(key, this.hash(key), 0), this.size - 1);
     }
 
     return this;
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Map<K, U> {
-    return new Map(this._root.map(mapper), this.length);
+    return new Map(this._root.map(mapper), this.size);
   }
 
   public flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [K]>): Map<L, U> {
@@ -100,10 +92,10 @@ export class Map<K, V>
     );
   }
 
-  public equals(value: unknown): value is Map<K, V> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Map &&
-      value.length === this.length &&
+      value.size === this.size &&
       value._root.equals(this._root)
     );
   }
@@ -120,7 +112,7 @@ export class Map<K, V>
     yield* this._root;
   }
 
-  public toJSON(): Array<[K, V]> {
+  public toJSON() {
     return [...this];
   }
 

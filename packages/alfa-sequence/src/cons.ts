@@ -23,19 +23,19 @@ export class Cons<T> implements Sequence<T> {
 
   private readonly _head: T;
   private readonly _tail: Lazy<Sequence<T>>;
-  private _length: Option<number> = None;
+  private _size: Option<number> = None;
 
   private constructor(head: T, tail: Lazy<Sequence<T>>) {
     this._head = head;
     this._tail = tail;
   }
 
-  public get length(): number {
-    if (this._length.isNone()) {
-      this._length = Option.of(1 + this._tail.force().length);
+  public get size(): number {
+    if (this._size.isNone()) {
+      this._size = Option.of(1 + this._tail.force().size);
     }
 
-    return this._length.get();
+    return this._size.get();
   }
 
   public isEmpty(): boolean {
@@ -81,7 +81,10 @@ export class Cons<T> implements Sequence<T> {
       return this;
     }
 
-    return new Cons(this._head, this._tail.map(tail => tail.concat(iterable)));
+    return new Cons(
+      this._head,
+      this._tail.map(tail => tail.concat(iterable))
+    );
   }
 
   public filter<U extends T>(predicate: Predicate<T, U>): Sequence<U> {
@@ -161,7 +164,7 @@ export class Cons<T> implements Sequence<T> {
     return Iterable.join(this, separator);
   }
 
-  public equals(value: unknown): value is Cons<T> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Cons &&
       Equatable.equals(value._head, this._head) &&
@@ -185,7 +188,7 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON(): Array<T> {
+  public toJSON() {
     return [...this];
   }
 

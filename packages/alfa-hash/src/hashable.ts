@@ -19,10 +19,6 @@ export namespace Hashable {
   let uid = 1;
 
   export function hash(value: unknown, hash: Hash): void {
-    if (isObject(value)) {
-      value = value.valueOf();
-    }
-
     switch (typeof value) {
       case "string":
         Hash.writeString(hash, value);

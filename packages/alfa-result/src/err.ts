@@ -80,13 +80,13 @@ export class Err<E> implements Result<never, E> {
     return Option.of(this._error);
   }
 
-  public equals(value: unknown): value is Err<E> {
+  public equals(value: unknown): value is this {
     return value instanceof Err && Equatable.equals(value._error, this._error);
   }
 
   public *[Symbol.iterator]() {}
 
-  public toJSON(): { error: E } {
+  public toJSON() {
     return { error: this._error };
   }
 

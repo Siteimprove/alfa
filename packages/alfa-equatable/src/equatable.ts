@@ -1,5 +1,5 @@
-export interface Equatable<T = unknown> {
-  equals(value: unknown): value is T;
+export interface Equatable {
+  equals(value: unknown): value is this;
 }
 
 export namespace Equatable {
@@ -11,19 +11,11 @@ export namespace Equatable {
     return typeof value === "object" && value !== null;
   }
 
-  export function isEquatable<T>(value: unknown): value is Equatable<T> {
+  export function isEquatable<T>(value: unknown): value is Equatable {
     return isObject(value) && isFunction(value.equals);
   }
 
   export function equals(a: unknown, b: unknown): boolean {
-    if (isObject(a)) {
-      a = a.valueOf();
-    }
-
-    if (isObject(b)) {
-      b = b.valueOf();
-    }
-
     if (a === b || (a !== a && b !== b)) {
       return true;
     }

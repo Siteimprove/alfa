@@ -14,7 +14,7 @@ import { Attribute } from "./attribute";
 const { some } = Iterable;
 const { or } = Predicate;
 
-export class Role<N extends string = string> implements Equatable<Role<N>> {
+export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
     name: N,
     category: Role.Category,
@@ -108,7 +108,7 @@ export class Role<N extends string = string> implements Equatable<Role<N>> {
     return some(this.characteristics.name.from, predicate);
   }
 
-  public equals(value: unknown): value is Role<N> {
+  public equals(value: unknown): value is this {
     return value instanceof Role && value.name === this.name;
   }
 

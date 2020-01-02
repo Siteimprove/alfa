@@ -53,7 +53,7 @@ export class Right<R> implements Either<never, R> {
     return reducer(accumulator, this._value);
   }
 
-  public equals(value: unknown): value is Right<R> {
+  public equals(value: unknown): value is this {
     return (
       value instanceof Right && Equatable.equals(value._value, this._value)
     );
@@ -63,8 +63,12 @@ export class Right<R> implements Either<never, R> {
     yield this._value;
   }
 
-  public toJSON(): { right: R } {
+  public toJSON() {
     return { right: this._value };
+  }
+
+  public toString(): string {
+    return `Right { ${this._value} }`;
   }
 }
 

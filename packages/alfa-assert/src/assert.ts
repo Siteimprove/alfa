@@ -11,7 +11,7 @@ import * as web from "@siteimprove/alfa-web";
 const { find, reduce } = Iterable;
 
 export namespace Assert {
-  export class Error<T> implements Equatable<Error<T>> {
+  export class Error<T> implements Equatable {
     public static of<T>(target: T, reasons: Iterable<string>): Error<T> {
       return new Error(target, List.from(reasons));
     }
@@ -24,7 +24,7 @@ export namespace Assert {
       this.reasons = reasons;
     }
 
-    public equals(value: unknown): value is Error<T> {
+    public equals(value: unknown): value is this {
       return (
         value instanceof Error &&
         Equatable.equals(value.target, this.target) &&
@@ -32,7 +32,7 @@ export namespace Assert {
       );
     }
 
-    public toJSON(): { target: T; reasons: Array<string> } {
+    public toJSON() {
       return {
         target: this.target,
         reasons: this.reasons.toJSON()

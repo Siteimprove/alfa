@@ -2,7 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
 import { Set } from "@siteimprove/alfa-set";
 
-export class Graph<T> implements Equatable<Graph<T>> {
+export class Graph<T> implements Iterable<[T, Iterable<T>]>, Equatable {
   public static empty<T>(): Graph<T> {
     return new Graph(Map.empty());
   }
@@ -11,6 +11,10 @@ export class Graph<T> implements Equatable<Graph<T>> {
 
   private constructor(nodes: Map<T, Set<T>>) {
     this._nodes = nodes;
+  }
+
+  public get size(): number {
+    return this._nodes.size;
   }
 
   public has(node: T): boolean {
@@ -72,7 +76,7 @@ export class Graph<T> implements Equatable<Graph<T>> {
   public disconnect(from: T, to: T): Graph<T> {
     const { _nodes: nodes } = this;
 
-    if (!nodes.has(from) || nodes.has(to)) {
+    if (!nodes.has(from) || !nodes.has(to)) {
       return this;
     }
 
@@ -87,7 +91,29 @@ export class Graph<T> implements Equatable<Graph<T>> {
     );
   }
 
-  public equals(value: unknown): value is Graph<T> {
+  public equals(value: unknown): value is this {
     return value instanceof Graph && value._nodes.equals(this._nodes);
+  }
+
+  public *[Symbol.iterator](): Iterator<[T, Iterable<T>]> {
+    yield* this._nodes;
+  }
+
+  public toJSON() {
+    return {
+      nodes: this._nodes.map(edges => edges.toJSON()).toJSON()
+    };
+  }
+
+  public toString(): string {
+    const entries = [...this._nodes]
+      .map(([node, edges]) => {
+        const entries = [...edges].join(", ");
+
+        return `${node}${entries === "" ? "" : ` => [ ${entries} ]`}`;
+      })
+      .join(", ");
+
+    return `Graph {${entries === "" ? "" : ` ${entries} `}}`;
   }
 }
