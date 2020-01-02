@@ -10,6 +10,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-encoding"
+    },
+    {
       "path": "../alfa-predicate"
     },
     {

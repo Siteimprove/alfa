@@ -1,4 +1,4 @@
-/// <reference lib="dom" />
+import { Encoder } from "@siteimprove/alfa-encoding";
 
 import { IntegerOverflow } from "./constants";
 
@@ -8,10 +8,8 @@ export interface Hash {
 }
 
 export namespace Hash {
-  const encoder = new TextEncoder();
-
   export function writeString(hash: Hash, data: string): void {
-    hash.write(encoder.encode(data));
+    hash.write(Encoder.encode(data));
   }
 
   export function writeNumber(hash: Hash, data: number): void {
