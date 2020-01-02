@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/decoder.ts", "src/encoder.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
