@@ -86,7 +86,9 @@
     "src/sia-r67/rule.ts",
     "src/sia-r7/rule.ts",
     "src/sia-r8/rule.ts",
-    "src/sia-r9/rule.ts"
+    "src/sia-r9/rule.ts",
+    "test/common/evaluate.ts",
+    "test/sia-r1/rule.spec.tsx"
   ],
   "references": [
     {
@@ -114,6 +116,9 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
       "path": "../alfa-iana"
     },
     {
@@ -133,6 +138,9 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-record"
     },
     {
       "path": "../alfa-result"
