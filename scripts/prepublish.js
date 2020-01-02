@@ -1,4 +1,5 @@
 const path = require("path");
+
 const { packages } = require("./helpers/meta");
 const { Manifest } = require("./helpers/manifest");
 const { and, not, startsWith, endsWith } = require("./helpers/predicates");
@@ -9,7 +10,7 @@ const master = new Manifest("package.json");
 
 /**
  * These are the fields we want to keep in sync between the different package
- * manifest of packages within Alfa.
+ * manifests of packages within Alfa.
  *
  * @type {Array<string>}
  */

@@ -1,8 +1,9 @@
 const TypeScript = require("typescript");
+
 const { Project } = require("./project");
 const { isFile } = require("./file-system");
 
-class Workspace {
+exports.Workspace = class Workspace {
   constructor() {
     /**
      * @private
@@ -36,13 +37,11 @@ class Workspace {
 
     return project;
   }
-}
-
-exports.Workspace = Workspace;
+};
 
 /**
  * Shared workspace used between different tasks.
  *
- * @type {Workspace}
+ * @type {exports.Workspace}
  */
-exports.workspace = new Workspace();
+exports.workspace = new exports.Workspace();

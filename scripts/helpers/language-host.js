@@ -24,47 +24,55 @@ const {
  * @property {Array<TypeScript.OutputFile>} files
  */
 
-class LanguageHost {
+exports.LanguageHost = class LanguageHost {
   /**
    * @param {string} configFile
    */
   constructor(configFile) {
+    const config = getConfiguration(configFile);
+
     /**
      * @private
      * @type {Map<string, ScriptInfo>}
      */
-    this.files = new Map();
+    this._files = new Map();
 
     /**
      * @private
      * @type {string}
      */
-    this.version = this.computeVersion();
+    this._version = this.computeVersion();
 
     /**
      * @private
      * @type {TypeScript.CompilerOptions}
      */
-    this.options = getCompilerOptions(configFile);
+    this._options = config.options;
 
     /**
      * @private
      * @type {Array<TypeScript.ProjectReference>}
      */
-    this.references = getProjectReferences(configFile);
+    this._references = config.projectReferences
+      ? [...config.projectReferences]
+      : [];
 
     /**
      * @private
      * @type {string}
      */
-    this.currentDirectory = process.cwd();
+    this._currentDirectory = process.cwd();
+
+    for (const file of config.fileNames) {
+      this.addFile(file);
+    }
   }
 
   /**
    * @return {TypeScript.CompilerOptions}
    */
   getCompilationSettings() {
-    return this.options;
+    return this._options;
   }
 
   /**
@@ -78,14 +86,14 @@ class LanguageHost {
    * @return {string}
    */
   getProjectVersion() {
-    return this.version;
+    return this._version;
   }
 
   /**
    * @return {Array<string>}
    */
   getScriptFileNames() {
-    return [...this.files.keys()];
+    return [...this._files.keys()];
   }
 
   /**
@@ -116,14 +124,14 @@ class LanguageHost {
    * @return {Array<TypeScript.ProjectReference>}
    */
   getProjectReferences() {
-    return this.references;
+    return this._references;
   }
 
   /**
    * @return {string}
    */
   getCurrentDirectory() {
-    return this.currentDirectory;
+    return this._currentDirectory;
   }
 
   /**
@@ -139,6 +147,18 @@ class LanguageHost {
    */
   useCaseSensitiveFileNames() {
     return false;
+  }
+
+  /**
+   * @param {string} directory
+   * @param {Array<string>} [extensions]
+   * @param {Array<string>} [exclude]
+   * @param {Array<string>} [include]
+   * @param {number} [depth]
+   * @return {Array<string>}
+   */
+  readDirectory(directory, extensions, exclude, include, depth) {
+    return [...readDirectory(directory)];
   }
 
   /**
@@ -207,7 +227,7 @@ class LanguageHost {
    * @return {string}
    */
   resolvePath(file) {
-    return path.resolve(this.currentDirectory, file);
+    return path.resolve(this._currentDirectory, file);
   }
 
   /**
@@ -218,11 +238,11 @@ class LanguageHost {
   getFile(file) {
     file = this.resolvePath(file);
 
-    if (!this.files.has(file)) {
+    if (!this._files.has(file)) {
       this.addFile(file);
     }
 
-    return /** @type {ScriptInfo} */ (this.files.get(file));
+    return /** @type {ScriptInfo} */ (this._files.get(file));
   }
 
   /**
@@ -235,7 +255,7 @@ class LanguageHost {
     const text = this.readFile(file);
     const version = this.createHash(text);
 
-    const current = this.files.get(file);
+    const current = this._files.get(file);
 
     if (current !== undefined && current.version === version) {
       return false;
@@ -252,6 +272,9 @@ class LanguageHost {
       case ".jsx":
         kind = TypeScript.ScriptKind.JSX;
         break;
+      case ".json":
+        kind = TypeScript.ScriptKind.JSON;
+        break;
       case ".ts":
         kind = TypeScript.ScriptKind.TS;
         break;
@@ -259,9 +282,9 @@ class LanguageHost {
         kind = TypeScript.ScriptKind.TSX;
     }
 
-    this.files.set(file, { version, kind, snapshot });
+    this._files.set(file, { version, kind, snapshot });
 
-    this.version = this.computeVersion();
+    this._version = this.computeVersion();
 
     return true;
   }
@@ -273,8 +296,8 @@ class LanguageHost {
   deleteFile(file) {
     file = this.resolvePath(file);
 
-    if (this.files.delete(file)) {
-      this.version = this.computeVersion();
+    if (this._files.delete(file)) {
+      this._version = this.computeVersion();
       return true;
     }
 
@@ -286,21 +309,19 @@ class LanguageHost {
    * @return {string}
    */
   computeVersion() {
-    const files = [...this.files.values()];
+    const files = [...this._files.values()];
 
     const versions = files.map(file => file.version);
 
     return getDigest(versions.sort().join("\0"));
   }
-}
-
-exports.LanguageHost = LanguageHost;
+};
 
 /**
  * @param {string} configFile
  * @return {TypeScript.ParsedCommandLine}
  */
-function getParsedConfiguration(configFile) {
+function getConfiguration(configFile) {
   const { config } = TypeScript.parseConfigFileTextToJson(
     configFile,
     readFile(configFile)
@@ -309,22 +330,8 @@ function getParsedConfiguration(configFile) {
   return TypeScript.parseJsonConfigFileContent(
     config,
     TypeScript.sys,
-    path.dirname(configFile)
+    path.dirname(configFile),
+    {},
+    path.basename(configFile)
   );
-}
-
-/**
- * @param {string} configFile
- * @return {TypeScript.CompilerOptions}
- */
-function getCompilerOptions(configFile) {
-  return getParsedConfiguration(configFile).options;
-}
-
-/**
- * @param {string} configFile
- * @return {Array<TypeScript.ProjectReference>}
- */
-function getProjectReferences(configFile) {
-  return [...(getParsedConfiguration(configFile).projectReferences || [])];
 }

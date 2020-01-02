@@ -1,12 +1,9 @@
 const path = require("path");
 const TypeScript = require("typescript");
-const TSLint = require("tslint");
-const { default: chalk } = require("chalk");
+const chalk = require("chalk");
 
 const { workspace } = require("../helpers/workspace");
 const { Project } = require("../helpers/project");
-const { isIgnored } = require("../helpers/git");
-const { isTestable, hasSpecification } = require("../helpers/typescript");
 const notify = require("../helpers/notify");
 
 /**
@@ -15,15 +12,6 @@ const notify = require("../helpers/notify");
  * @return {boolean}
  */
 function diagnose(file, project = workspace.projectFor(file)) {
-  if (
-    file.includes("src") &&
-    file.endsWith(".ts") &&
-    !hasSpecification(file) &&
-    isTestable(file, project)
-  ) {
-    notify.warn(`${chalk.gray(file)} Missing spec file`);
-  }
-
   const diagnostics = [...project.getDiagnostics(file)];
 
   if (diagnostics.length > 0) {
@@ -32,27 +20,6 @@ function diagnose(file, project = workspace.projectFor(file)) {
     }
 
     return false;
-  }
-
-  const failures = [...project.getLintResults(file)];
-
-  if (failures.length > 0 && !isIgnored(file)) {
-    let error = false;
-
-    for (const failure of failures) {
-      switch (failure.getRuleSeverity()) {
-        case "error":
-          error = true;
-          notify.error(formatFailure(failure));
-          break;
-        case "warning":
-          notify.warn(formatFailure(failure));
-      }
-    }
-
-    if (error) {
-      return false;
-    }
   }
 
   return true;
@@ -81,17 +48,4 @@ function formatDiagnostic(diagnostic) {
   }
 
   return message;
-}
-
-/**
- * @param {TSLint.RuleFailure} failure
- * @return {string}
- */
-function formatFailure(failure) {
-  const message = failure.getFailure();
-  const { line } = failure.getStartPosition().getLineAndCharacter();
-
-  const filePath = path.relative(process.cwd(), failure.getFileName());
-
-  return `${chalk.gray(`${filePath}:${line + 1}`)} ${message}`;
 }

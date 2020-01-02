@@ -1,4 +1,4 @@
-const { default: chalk } = require("chalk");
+const chalk = require("chalk");
 
 const git = require("./helpers/git");
 const notify = require("./helpers/notify");

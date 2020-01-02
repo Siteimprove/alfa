@@ -22,7 +22,7 @@ const cacheRoot = process.env.CACHE_DIR || ".cache";
 /**
  * @template T
  */
-class Cache {
+exports.Cache = class Cache {
   /**
    * @type {number}
    */
@@ -55,15 +55,18 @@ class Cache {
   /**
    * @return {Iterable<string>}
    */
-  keys() {
-    if (!isDirectory(this.root)) {
-      return [];
-    }
+  *keys() {
+    if (isDirectory(this.root)) {
+      for (const file of readDirectory(this.root)) {
+        if (isFile(file)) {
+          const data = readFile(file);
 
-    return [...readDirectory(this.root)]
-      .map(file => path.join(this.root, file))
-      .filter(isFile)
-      .map(file => JSON.parse(readFile(file)).key);
+          if (data !== null) {
+            yield JSON.parse(data).key;
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -85,10 +88,7 @@ class Cache {
       return undefined;
     }
 
-    /** @type {Entry<T>} */
-    const { value } = JSON.parse(readFile(file));
-
-    return value;
+    return JSON.parse(readFile(file)).value;
   }
 
   /**
@@ -116,6 +116,4 @@ class Cache {
 
     return true;
   }
-}
-
-exports.Cache = Cache;
+};

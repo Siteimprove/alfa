@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const chokidar = require("chokidar");
+
 const git = require("./git");
 
 /**
@@ -210,21 +211,19 @@ exports.makeDirectory = makeDirectory;
  * @return {void}
  */
 function removeDirectory(directory) {
-  if (!isDirectory(directory)) {
-    return;
-  }
+  if (isDirectory(directory)) {
+    for (let file of readDirectory(directory)) {
+      file = path.join(directory, file);
 
-  for (let file of readDirectory(directory)) {
-    file = path.join(directory, file);
-
-    if (isDirectory(file)) {
-      removeDirectory(file);
-    } else {
-      removeFile(file);
+      if (isDirectory(file)) {
+        removeDirectory(file);
+      } else {
+        removeFile(file);
+      }
     }
-  }
 
-  fs.rmdirSync(directory);
+    fs.rmdirSync(directory);
+  }
 }
 
 exports.removeDirectory = removeDirectory;

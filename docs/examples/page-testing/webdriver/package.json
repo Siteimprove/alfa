@@ -15,7 +15,7 @@
     "@wdio/mocha-framework": "^5.14.4",
     "@wdio/spec-reporter": "^5.14.4",
     "chai": "^4.2.0",
-    "chromedriver": "^77.0.0",
+    "chromedriver": "^79.0.0",
     "mocha": "^6.2.1",
     "wdio-chromedriver-service": "^5.0.2",
     "webdriverio": "^5.14.4"

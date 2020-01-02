@@ -1,12 +1,11 @@
-const { default: chalk } = require("chalk");
+const chalk = require("chalk");
 
 const { withExtension } = require("../helpers/path");
 const { fork } = require("../helpers/child-process");
 const notify = require("../helpers/notify");
 
 const flags = [
-  ...["--require", require.resolve("source-map-support/register")],
-  ...["--require", require.resolve("../helpers/coverage")]
+  ...["--require", require.resolve("source-map-support/register")]
 ];
 
 /**

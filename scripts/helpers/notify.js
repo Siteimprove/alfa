@@ -1,6 +1,6 @@
 const util = require("util");
 const readline = require("readline");
-const { default: chalk } = require("chalk");
+const chalk = require("chalk");
 
 const stream = process.stdout;
 
@@ -76,7 +76,7 @@ function replace() {
 exports.replace = replace;
 
 /**
- * @param {typeof chalk} color
+ * @param {chalk.Chalk} color
  * @param {string} symbol
  * @param {string} title
  * @param {string} format

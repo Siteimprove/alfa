@@ -1,9 +1,10 @@
-const { readFile, writeFile } = require("./file-system");
 const prettier = require("prettier");
+
+const { readFile, writeFile } = require("./file-system");
 
 const { deleteProperty } = Reflect;
 
-class Manifest {
+exports.Manifest = class Manifest {
   /**
    * @param {string} file
    */
@@ -40,15 +41,20 @@ class Manifest {
   async write() {
     if (this.writer === null) {
       this.writer = new Promise(resolve =>
-        setTimeout(() => {
+        setImmediate(() => {
           const formatted = prettier.format(
             JSON.stringify(this.manifest, null, 2),
-            { filepath: this.file }
+            {
+              filepath: this.file
+            }
           );
+
           writeFile(this.file, formatted);
+
           this.writer = null;
+
           resolve();
-        }, 100)
+        })
       );
     }
 
@@ -77,18 +83,20 @@ class Manifest {
    * @template T
    * @param {string} key
    * @param {T} value
+   * @return {Promise<void>}
    */
-  set(key, value) {
+  async set(key, value) {
     this.manifest[key] = value;
-    this.write();
+    return this.write();
   }
 
   /**
    * @param {string} key
+   * @return {Promise<void>}
    */
-  delete(key) {
+  async delete(key) {
     deleteProperty(this.manifest, key);
-    this.write();
+    return this.write();
   }
 
   /**
@@ -124,6 +132,4 @@ class Manifest {
 
     return dependencies;
   }
-}
-
-exports.Manifest = Manifest;
+};

@@ -1,4 +1,4 @@
-const { default: chalk } = require("chalk");
+const chalk = require("chalk");
 
 const { findFiles } = require("./helpers/file-system");
 const notify = require("./helpers/notify");

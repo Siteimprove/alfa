@@ -2,7 +2,6 @@ const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
 const { workspace } = require("./helpers/workspace");
 const { packages } = require("./helpers/meta");
-const { forEach } = require("./helpers/iterable");
 const time = require("./helpers/time");
 const notify = require("./helpers/notify");
 
@@ -12,16 +11,13 @@ const { clean } = require("./tasks/clean");
 
 /**
  * @param {string} file
- * @param {string} pkg
  */
-function handle(file, pkg) {
+function handle(file) {
   const start = time.now();
 
   const project = workspace.projectFor(file);
 
   project.addFile(file);
-
-  [...project.buildProgram()];
 
   const success = diagnose(file, project) && build(file, project);
 
@@ -36,24 +32,27 @@ function handle(file, pkg) {
   }
 }
 
-forEach(findFiles("scripts", endsWith(".js")), file => {
-  handle(file, "scripts");
-});
+/**
+ * @template T
+ * @param {Iterable<T>} iterable
+ * @param {(item: T) => void} iteratee
+ */
+function each(iterable, iteratee) {
+  for (const item of iterable) {
+    iteratee(item);
+  }
+}
+
+each(findFiles("scripts", endsWith(".js")), handle);
 
 for (const pkg of packages) {
   const root = `packages/${pkg}`;
 
   clean(root);
 
-  forEach(findFiles(`${root}/scripts`, endsWith(".js")), file => {
-    handle(file, pkg);
-  });
+  each(findFiles(`${root}/scripts`, endsWith(".js")), handle);
 
-  forEach(findFiles(root, endsWith(".ts", ".tsx")), file => {
-    handle(file, pkg);
-  });
+  each(findFiles(root, endsWith(".ts", ".tsx")), handle);
 }
 
-forEach(findFiles("docs", endsWith(".ts", ".tsx")), file => {
-  handle(file, "docs");
-});
+each(findFiles("docs", endsWith(".ts", ".tsx")), handle);

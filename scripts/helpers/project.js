@@ -1,10 +1,8 @@
-const path = require("path");
 const TypeScript = require("typescript");
-const TSLint = require("tslint");
 
 const { LanguageHost } = require("./language-host");
 
-class Project {
+exports.Project = class Project {
   /**
    * @param {string} configFile
    * @param {TypeScript.DocumentRegistry} [registry]
@@ -13,74 +11,37 @@ class Project {
     /**
      * @private
      */
-    this.host = new LanguageHost(configFile);
+    this._host = new LanguageHost(configFile);
 
     /**
      * @private
      */
-    this.service = TypeScript.createLanguageService(this.host, registry);
+    this._service = TypeScript.createLanguageService(this._host, registry);
 
     /**
      * @private
      */
-    const factory = (this.factory =
-      TypeScript.createEmitAndSemanticDiagnosticsBuilderProgram);
+    this._factory = TypeScript.createAbstractBuilder;
 
     /**
      * @private
-     * @type {ReturnType<typeof factory>}
+     * @type {TypeScript.BuilderProgram}
      */
-    this.program = this.factory(
-      /** @type {TypeScript.Program} */ (this.service.getProgram()),
-      this.host,
-      this.program
-    );
-
-    /**
-     * @private
-     */
-    this.linter = getLinterOptions(configFile);
-  }
-
-  /**
-   * @return {Iterable<string>}
-   */
-  *buildProgram() {
-    this.program = this.factory(
-      /** @type {TypeScript.Program} */ (this.service.getProgram()),
-      this.host,
-      this.program
-    );
-
-    let next = this.getNextAffectedFile();
-
-    while (next !== null) {
-      const file = next;
-
-      next = this.getNextAffectedFile();
-
-      yield file;
-    }
+    this._program = this.getProgram();
   }
 
   /**
    * @private
-   * @return {string | null}
+   * @return {TypeScript.BuilderProgram}
    */
-  getNextAffectedFile() {
-    const next = this.program.emitNextAffectedFile(() => {});
+  getProgram() {
+    this._program = this._factory(
+      /** @type {TypeScript.Program} */ (this._service.getProgram()),
+      this._host,
+      this._program
+    );
 
-    if (next === undefined) {
-      return null;
-    }
-
-    const { affected } = next;
-
-    if ("fileName" in affected) {
-      return path.relative(this.host.getCurrentDirectory(), affected.fileName);
-    }
-
-    return this.getNextAffectedFile();
+    return this._program;
   }
 
   /**
@@ -88,7 +49,7 @@ class Project {
    * @return {boolean}
    */
   addFile(file) {
-    return this.host.addFile(file);
+    return this._host.addFile(file);
   }
 
   /**
@@ -96,7 +57,7 @@ class Project {
    * @return {boolean}
    */
   deleteFile(file) {
-    return this.host.deleteFile(file);
+    return this._host.deleteFile(file);
   }
 
   /**
@@ -104,14 +65,16 @@ class Project {
    * @return {Iterable<string>}
    */
   getDependencies(file) {
-    const source = this.program.getSourceFile(file);
+    const program = this.getProgram();
+
+    const source = program.getSourceFile(file);
 
     if (source === undefined) {
       return [];
     }
 
     return (
-      this.program
+      program
         .getAllDependencies(source)
         // The first dependency is always the file itself
         .slice(1)
@@ -123,7 +86,7 @@ class Project {
    * @return {Iterable<TypeScript.Diagnostic>}
    */
   getDiagnostics(file) {
-    const program = this.program;
+    const program = this.getProgram();
 
     /** @type {Array<TypeScript.Diagnostic>} */
     const diagnostics = [];
@@ -150,7 +113,7 @@ class Project {
    * @return {Iterable<TypeScript.OutputFile>}
    */
   getOutputFiles(file) {
-    const program = this.program;
+    const program = this.getProgram();
 
     /** @type {Array<TypeScript.OutputFile>} */
     const files = [];
@@ -165,90 +128,4 @@ class Project {
 
     return files;
   }
-
-  /**
-   * @param {string} file
-   * @return {Iterable<TSLint.RuleFailure>}
-   */
-  getLintResults(file) {
-    const program = this.program;
-
-    /** @type {Array<TSLint.RuleFailure>} */
-    const results = [];
-
-    const source = program.getSourceFile(file);
-
-    if (source !== undefined) {
-      const { fileName, text } = source;
-
-      const linter = new TSLint.Linter({ fix: false }, program.getProgram());
-
-      linter.lint(fileName, text, this.linter);
-
-      const { failures } = linter.getResult();
-
-      failures.sort((a, b) => {
-        return (
-          a.getStartPosition().getPosition() -
-          b.getStartPosition().getPosition()
-        );
-      });
-
-      results.push(...failures);
-    }
-
-    return results;
-  }
-
-  /**
-   * @template T
-   * @param {string} file
-   * @param {function(TypeScript.Node): T | void} visitor
-   * @return {T | void}
-   */
-  forEachChild(file, visitor) {
-    const source = this.program.getSourceFile(file);
-
-    if (source !== undefined) {
-      return visit(source);
-    }
-
-    /**
-     * @param {TypeScript.Node} node
-     * @return {T | void}
-     */
-    function visit(node) {
-      const result = visitor(node);
-
-      if (result !== undefined) {
-        return result;
-      }
-
-      return TypeScript.forEachChild(node, visit);
-    }
-  }
-
-  /**
-   * @param {string} file
-   * @param {Iterable<TypeScript.TodoCommentDescriptor>} descriptors
-   * @return {Iterable<TypeScript.TodoComment>}
-   */
-  getTodos(file, descriptors) {
-    return this.service.getTodoComments(file, [...descriptors]);
-  }
-}
-
-exports.Project = Project;
-
-/**
- * @param {string} configFile
- * @return {TSLint.Configuration.IConfigurationFile | undefined}
- */
-function getLinterOptions(configFile) {
-  const { results } = TSLint.Configuration.findConfiguration(
-    "tslint.json",
-    configFile
-  );
-
-  return results;
-}
+};

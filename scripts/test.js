@@ -1,7 +1,8 @@
 const { findFiles } = require("./helpers/file-system");
 const { endsWith } = require("./helpers/predicates");
-let { packages } = require("./helpers/meta");
 const notify = require("./helpers/notify");
+
+let { packages } = require("./helpers/meta");
 
 const { test } = require("./tasks/test");
 

@@ -1,4 +1,6 @@
-const { readDirectory } = require("./file-system");
+const path = require("path");
+
+const { isFile, readDirectory } = require("./file-system");
 const { Graph } = require("./graph");
 
 const { keys } = Object;
@@ -30,3 +32,40 @@ for (const pkg of readDirectory("packages")) {
 }
 
 exports.packages = graph.sort();
+
+/**
+ * Return the path to specification file matching specified file
+ *
+ * @param {string} file
+ * @return {string?}
+ */
+function getSpecification(file) {
+  const base = path
+    .dirname(file)
+    .split(path.sep)
+    .map((part, index) =>
+      part === "src"
+        ? "test"
+        : part === "scripts" && index === 0
+        ? `${part}${path.sep}test`
+        : part
+    )
+    .join(path.sep);
+
+  const extensions = [".ts", ".tsx"];
+
+  for (const extension of extensions) {
+    const spec = path.join(
+      base,
+      `${path.basename(file, path.extname(file))}.spec${extension}`
+    );
+
+    if (isFile(spec)) {
+      return spec;
+    }
+  }
+
+  return null;
+}
+
+exports.getSpecification = getSpecification;

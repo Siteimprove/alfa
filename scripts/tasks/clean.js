@@ -1,4 +1,4 @@
-const { default: chalk } = require("chalk");
+const chalk = require("chalk");
 
 const { findFiles, removeFile } = require("../helpers/file-system");
 const { endsWith } = require("../helpers/predicates");
