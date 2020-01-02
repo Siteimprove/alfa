@@ -1,5 +1,3 @@
-/// <reference types="webdriverio" />
-
 import { Chai } from "@siteimprove/alfa-chai";
 import { Future } from "@siteimprove/alfa-future";
 

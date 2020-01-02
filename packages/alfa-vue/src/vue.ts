@@ -1,6 +1,5 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
-/// <reference types="cheerio" />
 
 import { Cheerio } from "@siteimprove/alfa-cheerio";
 import {
