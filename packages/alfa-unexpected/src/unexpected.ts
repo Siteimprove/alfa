@@ -6,8 +6,6 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 import * as unexpected from "unexpected";
 
-// tslint:disable:callable-types
-
 declare module "unexpected" {
   interface Expect {
     (
@@ -41,9 +39,11 @@ export namespace Unexpected {
           (expect, subject) => {
             const page = transform(subject);
 
-            return Assert.Page.isAccessible(page).map(error => {
-              expect(error.isNone(), "[not] to be", true);
-            });
+            return Assert.Page.isAccessible(page)
+              .map(error => {
+                expect(error.isNone(), "[not] to be", true);
+              })
+              .toPromise();
           }
         );
       }

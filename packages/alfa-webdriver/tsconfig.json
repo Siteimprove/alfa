@@ -10,6 +10,15 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-test"
     },
     {

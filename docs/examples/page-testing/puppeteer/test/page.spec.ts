@@ -1,8 +1,8 @@
 /// <reference types="@siteimprove/alfa-chai" />
 
 import alfa from "@siteimprove/alfa-puppeteer/chai";
-import chai from "chai";
-import puppeteer from "puppeteer";
+import * as chai from "chai";
+import * as puppeteer from "puppeteer";
 
 chai.use(alfa);
 

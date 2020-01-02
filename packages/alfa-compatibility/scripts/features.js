@@ -7,7 +7,11 @@ const data = require("mdn-browser-compat-data");
 // file with the path to a given feature.
 // See https://github.com/mdn/browser-compat-data for the complete list of
 // features available.
-const include = require("./features.json");
+const include = [
+  "css.properties.border-radius",
+  "css.properties.color",
+  "css.properties.font-weight"
+];
 
 const { isArray } = Array;
 const { keys } = Object;

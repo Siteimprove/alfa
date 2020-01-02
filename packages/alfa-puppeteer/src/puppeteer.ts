@@ -23,22 +23,24 @@ import {
   Text,
   Type
 } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
+
 import { JSHandle } from "puppeteer";
 
 const { isFunction, isObject } = Predicate;
 
 export namespace Puppeteer {
-  export type Type = JSHandle<globalThis.Document>;
+  export type Type = JSHandle<globalThis.Node>;
 
   export function isType(value: unknown): value is Type {
     return isObject(value) && isFunction(value.dispose);
   }
 
   export async function asPage(value: Type): Promise<Page> {
-    const document = await value.evaluate(document => {
-      return toDocument(document);
+    const node = await value.evaluate(node => {
+      return toNode(node);
 
       function toNode(node: globalThis.Node): Node.JSON {
         switch (node.nodeType) {
@@ -263,6 +265,11 @@ export namespace Puppeteer {
       }
     });
 
-    return Page.of({ document: Document.fromDocument(document) });
+    return Page.of({
+      document:
+        node.type === "document"
+          ? Document.fromDocument(node as Document.JSON)
+          : Document.of(self => [Node.fromNode(node, Option.of(self))])
+    });
   }
 }

@@ -1,16 +1,20 @@
 import {
   Attribute,
+  Document,
   Element,
   Node,
-  NodeType,
-  Text
+  Text,
+  Namespace
 } from "@siteimprove/alfa-dom";
-import { isBoolean, isObject, isString } from "@siteimprove/alfa-guards";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
+
 import { isValidElement, ReactElement } from "react";
 import * as TestRenderer from "react-test-renderer";
 
 const { keys } = Object;
+const { isBoolean, isObject, isString } = Predicate;
 
 export namespace React {
   export type Type = ReactElement<unknown>;
@@ -27,11 +31,9 @@ export namespace React {
     }
 
     return Page.of({
-      document: {
-        nodeType: NodeType.Document,
-        styleSheets: [],
-        childNodes: [asElement(tree)]
-      }
+      document: Document.of(self => [
+        Element.fromElement(toElement(tree), Option.of(self))
+      ])
     });
   }
 }
@@ -40,18 +42,16 @@ type TestNode = TestElement | string;
 
 type TestElement = TestRenderer.ReactTestRendererJSON;
 
-function asNode(node: TestNode): Node {
-  return isString(node) ? asText(node) : asElement(node);
+function toNode(node: TestNode): Node.JSON {
+  return isString(node) ? toText(node) : toElement(node);
 }
 
-function asElement(element: TestElement): Element {
-  const { type: localName, props, children } = element;
+function toElement(element: TestElement): Element.JSON {
+  const { type: name, props, children } = element;
 
-  const attributes = keys(props).reduce<Array<Attribute>>(
+  const attributes = keys(props).reduce<Array<Attribute.JSON>>(
     (attributes, prop) => {
-      const attribute = asAttribute(prop, props[prop]);
-
-      if (attribute !== null) {
+      for (const attribute of toAttribute(prop, props[prop])) {
         attributes.push(attribute);
       }
 
@@ -60,44 +60,42 @@ function asElement(element: TestElement): Element {
     []
   );
 
-  const childNodes: Array<Node> = children === null ? [] : children.map(asNode);
-
   return {
-    nodeType: NodeType.Element,
+    type: "element",
+    namespace: Namespace.HTML,
     prefix: null,
-    localName,
+    name,
     attributes,
-    shadowRoot: null,
-    childNodes
+    style: null,
+    children: children?.map(toNode) ?? [],
+    shadow: null,
+    content: null
   };
 }
 
-function asAttribute(localName: string, value: unknown): Attribute | null {
+function toAttribute(name: string, value: unknown): Option<Attribute.JSON> {
   switch (value) {
     // Attributes that are either `null` or `undefined` are always ignored.
     case null:
     case undefined:
-      return null;
+      return None;
   }
 
-  localName = asAttributeName(localName);
-  value = asAttributeValue(localName, value);
+  name = toAttributeName(name);
 
-  if (!isString(value)) {
-    return null;
-  }
-
-  return {
-    nodeType: NodeType.Attribute,
-    prefix: null,
-    localName,
-    value,
-    childNodes: []
-  };
+  return toAttributeValue(name, value).map(value => {
+    return {
+      type: "attribute",
+      namespace: null,
+      prefix: null,
+      name,
+      value
+    };
+  });
 }
 
-function asAttributeName(localName: string): string {
-  switch (localName) {
+function toAttributeName(name: string): string {
+  switch (name) {
     case "className":
       return "class";
 
@@ -105,49 +103,48 @@ function asAttributeName(localName: string): string {
       return "for";
   }
 
-  return localName;
+  return name;
 }
 
-function asAttributeValue(localName: string, value: unknown): string | null {
-  switch (localName) {
+function toAttributeValue(name: string, value: unknown): Option<string> {
+  switch (name) {
     case "style":
       if (isObject(value)) {
-        return asInlineStyle(value);
+        return Option.of(toInlineStyle(value));
       }
   }
 
-  if (localName.startsWith("aria-") && isBoolean(value)) {
-    return String(value);
+  if (name.startsWith("aria-") && isBoolean(value)) {
+    return Option.of(String(value));
   }
 
   switch (value) {
     case false:
-      return null;
+      return None;
 
     case true:
-      return localName;
+      return Option.of(name);
   }
 
-  return String(value);
+  return Option.of(String(value));
 }
 
-function asText(data: string): Text {
+function toText(data: string): Text.JSON {
   return {
-    nodeType: NodeType.Text,
-    data,
-    childNodes: []
+    type: "text",
+    data
   };
 }
 
-function asInlineStyle(props: { [key: string]: unknown }): string {
+function toInlineStyle(props: { [key: string]: unknown }): string {
   let style = "";
   let delimiter = "";
 
   for (const prop of keys(props)) {
     if (props[prop]) {
       style += prop.replace(/([A-Z])/g, "-$1").toLowerCase();
-      style += ":";
-      style += String(props[prop]);
+      style += ": ";
+      style += String(props[prop]).trim();
       style += delimiter;
 
       delimiter = ";";

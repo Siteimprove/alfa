@@ -1,3 +1,5 @@
 {
-  "extends": "../../../scripts/tsconfig.json"
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../../../scripts/tsconfig.json",
+  "files": ["browsers.js", "features.js"]
 }

@@ -2,10 +2,12 @@ import {
   Attribute,
   Element,
   Node,
-  NodeType,
-  Text
+  Text,
+  Document,
+  Namespace
 } from "@siteimprove/alfa-dom";
 import { Page } from "@siteimprove/alfa-web";
+
 import * as cheerio from "cheerio";
 
 const { keys } = Object;
@@ -14,63 +16,61 @@ export namespace Cheerio {
   export type Type = Cheerio;
 
   export function isType(value: unknown): value is Type {
-    return value instanceof cheerio.default;
+    return value instanceof cheerio;
   }
 
   export function asPage(value: Type): Page {
     return Page.of({
-      document: {
-        nodeType: NodeType.Document,
-        styleSheets: [],
-        childNodes: [asElement(value[0])]
-      }
+      document: Document.of(self => [Node.fromNode(toNode(value[0]))])
     });
   }
 }
 
-function asNode(cheerioNode: CheerioElement): Node {
+function toNode(cheerioNode: CheerioElement): Node.JSON {
   switch (cheerioNode.type) {
     case "text":
-      return asText(cheerioNode);
+      return toText(cheerioNode);
 
     default:
-      return asElement(cheerioNode);
+      return toElement(cheerioNode);
   }
 }
 
-function asElement(cheerioElement: CheerioElement): Element {
-  const { name: localName, attribs } = cheerioElement;
+function toElement(cheerioElement: CheerioElement): Element.JSON {
+  const { name, attribs, childNodes } = cheerioElement;
 
-  const attributes: Array<Attribute> = keys(attribs).map(localName => {
-    return asAttribute(localName, attribs[localName]);
+  const attributes = keys(attribs).map(localName => {
+    return toAttribute(localName, attribs[localName]);
   });
 
-  const childNodes: Array<Node> = cheerioElement.childNodes.map(asNode);
+  const children = childNodes.map(toNode);
 
   return {
-    nodeType: NodeType.Element,
+    type: "element",
+    namespace: Namespace.HTML,
     prefix: null,
-    localName,
+    name,
     attributes,
-    shadowRoot: null,
-    childNodes
+    style: null,
+    children,
+    shadow: null,
+    content: null
   };
 }
 
-function asAttribute(localName: string, value: string): Attribute {
+function toAttribute(name: string, value: string): Attribute.JSON {
   return {
-    nodeType: NodeType.Attribute,
+    type: "attribute",
+    namespace: null,
     prefix: null,
-    localName,
-    value,
-    childNodes: []
+    name,
+    value
   };
 }
 
-function asText(cheerioElement: CheerioElement): Text {
+function toText(cheerioElement: CheerioElement): Text.JSON {
   return {
-    nodeType: NodeType.Text,
-    data: cheerioElement.nodeValue,
-    childNodes: []
+    type: "text",
+    data: cheerioElement.nodeValue
   };
 }

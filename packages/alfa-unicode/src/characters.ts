@@ -2,8 +2,6 @@
 // Database. Do therefore not modify it directly! If you wish to make changes,
 // do so in `scripts/characters.js` and run `yarn prepare` to rebuild this file.
 
-// tslint:disable:no-object-literal-type-assertion
-
 import { Category, Character } from "./types";
 
 export const Characters: Array<Character> = [

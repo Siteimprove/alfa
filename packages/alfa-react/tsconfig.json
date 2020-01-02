@@ -23,6 +23,12 @@
       "path": "../alfa-jest"
     },
     {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-test"
     },
     {

@@ -1,6 +1,14 @@
-import * as g from "./guards";
+import { isAxisExpression, isFilterExpression } from "./guards";
 import { serialize } from "./serialize";
-import * as t from "./types";
+import {
+  Axis,
+  AxisExpression,
+  ContextItemExpression,
+  FilterExpression,
+  IntegerLiteralExpression,
+  PathExpression,
+  StepExpression
+} from "./types";
 import { Expression, ExpressionType } from "./types";
 
 export class ExpressionBuilder<T extends Expression = Expression> {
@@ -15,8 +23,8 @@ export class ExpressionBuilder<T extends Expression = Expression> {
   }
 }
 
-function PathOperand<T extends t.StepExpression | t.PathExpression>(
-  Base: new (...args: Array<any>) => ExpressionBuilder<T> // tslint:disable-line:no-any
+function PathOperand<T extends StepExpression | PathExpression>(
+  Base: new (...args: Array<any>) => ExpressionBuilder<T>
 ) {
   return class PathOperand extends Base {
     public child(name?: string): PathExpressionBuilder {
@@ -42,7 +50,7 @@ function PathOperand<T extends t.StepExpression | t.PathExpression>(
 }
 
 export class ContextItemExpressionBuilder extends PathOperand<
-  t.ContextItemExpression
+  ContextItemExpression
 >(ExpressionBuilder) {
   public where(predicate: ExpressionBuilder): FilterExpressionBuilder {
     return new FilterExpressionBuilder({
@@ -53,7 +61,7 @@ export class ContextItemExpressionBuilder extends PathOperand<
   }
 }
 
-export class FilterExpressionBuilder extends PathOperand<t.FilterExpression>(
+export class FilterExpressionBuilder extends PathOperand<FilterExpression>(
   ExpressionBuilder
 ) {
   public where(predicate: ExpressionBuilder): FilterExpressionBuilder {
@@ -64,7 +72,7 @@ export class FilterExpressionBuilder extends PathOperand<t.FilterExpression>(
   }
 }
 
-export class AxisExpressionBuilder extends PathOperand<t.AxisExpression>(
+export class AxisExpressionBuilder extends PathOperand<AxisExpression>(
   ExpressionBuilder
 ) {
   public where(predicate: ExpressionBuilder): AxisExpressionBuilder {
@@ -75,13 +83,13 @@ export class AxisExpressionBuilder extends PathOperand<t.AxisExpression>(
   }
 }
 
-export class PathExpressionBuilder extends PathOperand<t.PathExpression>(
+export class PathExpressionBuilder extends PathOperand<PathExpression>(
   ExpressionBuilder
 ) {
   public where(predicate: ExpressionBuilder): PathExpressionBuilder {
     if (
-      g.isFilterExpression(this.expression.right) ||
-      g.isAxisExpression(this.expression.right)
+      isFilterExpression(this.expression.right) ||
+      isAxisExpression(this.expression.right)
     ) {
       return new PathExpressionBuilder({
         ...this.expression,
@@ -112,7 +120,7 @@ export function context(): ContextItemExpressionBuilder {
   });
 }
 
-export function axis(axis: t.Axis, name?: string): AxisExpressionBuilder {
+export function axis(axis: Axis, name?: string): AxisExpressionBuilder {
   return new AxisExpressionBuilder({
     type: ExpressionType.Axis,
     axis,
@@ -148,8 +156,8 @@ export namespace axis {
 }
 
 export function step(
-  left: ExpressionBuilder<t.StepExpression | t.PathExpression>,
-  right: ExpressionBuilder<t.StepExpression>
+  left: ExpressionBuilder<StepExpression | PathExpression>,
+  right: ExpressionBuilder<StepExpression>
 ): PathExpressionBuilder {
   return new PathExpressionBuilder({
     type: ExpressionType.Path,
@@ -158,7 +166,7 @@ export function step(
   });
 }
 
-export function nth(i: number): ExpressionBuilder<t.IntegerLiteralExpression> {
+export function nth(i: number): ExpressionBuilder<IntegerLiteralExpression> {
   return new ExpressionBuilder({
     type: ExpressionType.IntegerLiteral,
     value: i

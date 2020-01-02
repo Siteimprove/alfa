@@ -8,6 +8,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Thunk } from "@siteimprove/alfa-thunk";
+
 import { None } from "./none";
 import { Some } from "./some";
 

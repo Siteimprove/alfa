@@ -3,6 +3,7 @@ import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import { None } from "./none";
 import { Option } from "./option";
 

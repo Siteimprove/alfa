@@ -1,7 +1,7 @@
 /// <reference types="@siteimprove/alfa-chai" />
 
 import alfa from "@siteimprove/alfa-webdriver/chai";
-import chai from "chai";
+import * as chai from "chai";
 
 chai.use(alfa);
 

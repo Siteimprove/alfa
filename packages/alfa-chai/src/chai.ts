@@ -7,9 +7,6 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
-// tslint:disable:no-any
-// tslint:disable:no-unsafe-any
-
 declare global {
   namespace Chai {
     interface Assertion {

@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { Cache } from "@siteimprove/alfa-cache";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { None, Option } from "@siteimprove/alfa-option";

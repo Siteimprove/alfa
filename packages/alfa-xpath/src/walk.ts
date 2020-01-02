@@ -1,5 +1,4 @@
 import { Element, Node } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 import { Axis } from "./types";
 

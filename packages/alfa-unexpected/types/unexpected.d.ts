@@ -1,7 +1,5 @@
 /// <reference path="./magicpen.d.ts" />
 
-// tslint:disable:class-name
-
 declare module "unexpected" {
   import * as magicpen from "magicpen";
 

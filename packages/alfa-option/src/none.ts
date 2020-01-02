@@ -1,4 +1,5 @@
 import { Thunk } from "@siteimprove/alfa-thunk";
+
 import { Option } from "./option";
 import { Some } from "./some";
 

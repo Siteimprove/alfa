@@ -5,7 +5,7 @@ import { Item } from "./types";
  * @internal
  */
 export function matches<T extends Item.Type>(
-  item: Item<any>, // tslint:disable-line:no-any
+  item: Item<any>,
   type: T
 ): item is Item<Item.Value<T>> {
   return derivesFrom(item.type, type);

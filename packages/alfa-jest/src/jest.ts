@@ -2,13 +2,14 @@
 
 import { Assert } from "@siteimprove/alfa-assert";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
 
 declare global {
   namespace jest {
-    interface Matchers<R> {
-      toBeAccessible(): R;
+    interface Matchers<R, T> {
+      toBeAccessible(): Promise<void>;
     }
   }
 }
@@ -20,20 +21,18 @@ export namespace Jest {
   ): void {
     expect.extend({
       async toBeAccessible(value: unknown) {
-        if (identify(value)) {
-          const page = transform(value);
+        let error: Option<Assert.Error<Assert.Page.Target>> = None;
 
-          return await Assert.Page.isAccessible(page).map(error => {
-            return {
-              pass: error.isNone(),
-              message: () => ""
-            };
-          });
+        if (identify(value)) {
+          error = await Assert.Page.isAccessible(transform(value));
         }
 
         return {
-          pass: true,
-          message: () => "Expected to not be accessible"
+          pass: error.isNone(),
+          message: () =>
+            this.utils.matcherHint("toBeAccessible", "received", "", {
+              isNot: this.isNot
+            })
         };
       }
     });

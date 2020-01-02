@@ -2,6 +2,7 @@
 
 import { Chai } from "@siteimprove/alfa-chai";
 import { Future } from "@siteimprove/alfa-future";
+
 import { Cypress } from "./src/cypress";
 
 declare global {
@@ -14,5 +15,5 @@ declare global {
 }
 
 export default Chai.createPlugin(Cypress.isType, value =>
-  Future.settle(Cypress.asPage(value))
+  Future.now(Cypress.asPage(value))
 );
