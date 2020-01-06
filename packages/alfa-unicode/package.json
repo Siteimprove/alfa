@@ -25,7 +25,6 @@
     "prepare": "node scripts/characters.js"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "prettier": "1.18.2"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }

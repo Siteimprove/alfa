@@ -29,7 +29,6 @@
     "@siteimprove/alfa-option": "^0.0.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
-    "prettier": "1.18.2"
+    "@siteimprove/alfa-test": "^0.0.0"
   }
 }
