@@ -66,6 +66,15 @@ export function jsx(
     );
   }
 
+  switch (json.name) {
+    case "svg":
+      adjustNamespace(json, Namespace.SVG);
+      break;
+
+    case "math":
+      adjustNamespace(json, Namespace.MathML);
+  }
+
   return json;
 }
 
@@ -75,6 +84,16 @@ export namespace jsx {
 
     export interface IntrinsicElements {
       [tag: string]: {} | { readonly [attribute: string]: unknown };
+    }
+  }
+}
+
+function adjustNamespace(element: Element.JSON, namespace: Namespace): void {
+  element.namespace = namespace;
+
+  for (const child of element.children) {
+    if (child.type === "element") {
+      adjustNamespace(child as Element.JSON, namespace);
     }
   }
 }
