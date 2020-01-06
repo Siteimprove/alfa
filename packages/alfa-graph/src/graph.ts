@@ -1,5 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
+import { Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
 
 export class Graph<T> implements Iterable<[T, Iterable<T>]>, Equatable {
@@ -15,6 +16,14 @@ export class Graph<T> implements Iterable<[T, Iterable<T>]>, Equatable {
 
   public get size(): number {
     return this._nodes.size;
+  }
+
+  public nodes(): Iterable<T> {
+    return this._nodes.keys();
+  }
+
+  public neighbors(node: T): Option<Set<T>> {
+    return this._nodes.get(node);
   }
 
   public has(node: T): boolean {
