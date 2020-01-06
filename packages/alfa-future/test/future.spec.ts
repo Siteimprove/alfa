@@ -118,18 +118,16 @@ test("flatMap() does not overflow for long nested defer() chains", async t => {
 
 test("traverse() traverses a list of values and lifts them to a future of lists", async t => {
   t.deepEqual(
-    [
-      ...(await Future.traverse([1, 2, 3, 4], n =>
-        wait(n * 10).map(() => n * 2)
-      ))
-    ],
+    await Future.traverse([1, 2, 3, 4], n =>
+      wait(n * 10).map(() => n * 2)
+    ).map(ns => [...ns]),
     [2, 4, 6, 8]
   );
 });
 
 test("traverse() does not run any resulting deferred futures", t => {
   Future.traverse([1, 2, 3, 4], n =>
-    Future.defer(() => {
+    Future.delay(() => {
       throw new Error("The future was run");
     })
   );
@@ -147,7 +145,9 @@ test("sequence() inverts a list of futures to a future of lists", async t => {
 });
 
 test("from() converts a promise to a future", async t => {
-  const future = Future.from(new Promise<number>(resolve => resolve(2)));
+  const future = Future.from(
+    new Promise<number>(resolve => resolve(2))
+  );
 
   t.equal(await future, 2);
 });
