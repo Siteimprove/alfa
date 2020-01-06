@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import {
   Device,
   Display,
@@ -7,9 +5,11 @@ import {
   Viewport
 } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
+import { Decoder } from "@siteimprove/alfa-encoding";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
 import { Page } from "@siteimprove/alfa-web";
+
 import * as puppeteer from "puppeteer";
 
 const defaultDevice = Device.getDefaultDevice();
@@ -155,7 +155,7 @@ export class Scraper {
 }
 
 export namespace Scraper {
-  export const enum Wait {
+  export enum Wait {
     Ready = "domcontentloaded",
     Loaded = "load",
     Idle = "networkidle0"
@@ -191,8 +191,6 @@ async function parseResponse(response: puppeteer.Response): Promise<Response> {
   };
 }
 
-const decoder = new TextDecoder();
-
 async function parseDocument(
   page: puppeteer.Page,
   html: ArrayBuffer | null = null
@@ -207,7 +205,7 @@ async function parseDocument(
 
       return parser.parseFromString(html, "text/html");
     },
-    html === null ? null : decoder.decode(html)
+    html === null ? null : Decoder.decode(new Uint8Array(html))
   );
 
   const { document } = await Puppeteer.asPage(handle);
