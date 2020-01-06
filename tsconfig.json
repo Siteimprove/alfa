@@ -8,11 +8,11 @@
     "incremental": true,
     "jsx": "react",
     "jsxFactory": "jsx",
-    "lib": ["es2015"],
+    "lib": ["es2017"],
     "module": "commonjs",
     "sourceMap": true,
     "strict": true,
-    "target": "es2015",
+    "target": "es2017",
     "types": []
   },
   "files": [],

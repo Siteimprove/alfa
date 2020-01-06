@@ -72,7 +72,7 @@ const input = { ... };
 const audit = Rules.reduce(
   (audit, rule) => audit.add(rule),
   Audit.of(input)
- );
+);
 
 audit.evaluate().then(outcomes => {
   // ...
@@ -126,7 +126,7 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 
 ## Requirements
 
-Alfa will run in any [ECMAScript 2015](https://www.ecma-international.org/ecma-262/6.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is highly reliant on especially data structures introduced in newer versions of ECMAScript.
+Alfa will run in any [ECMAScript 2017](https://www.ecma-international.org/ecma-262/8.0/) compatible JavaScript environment including, but not limited to, recent versions of [Node.js](https://nodejs.org/en/), [Chrome](https://www.google.com/chrome/), [Firefox](https://www.mozilla.org/en-US/firefox/), [Safari](https://www.apple.com/lae/safari/), and [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge). While it should be possible to [build](#building) Alfa from source targeting older environments, we do not explicitly provide support for doing so as Alfa is highly reliant on especially data structures introduced in newer versions of ECMAScript.
 
 ## Building
 
