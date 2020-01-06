@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/fnv.ts", "src/index.ts", "test/fnv.spec.ts"],
+  "files": ["src/fnv.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-hash"

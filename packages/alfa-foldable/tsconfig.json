@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/foldable.ts", "src/index.ts", "test/foldable.spec.ts"],
+  "files": ["src/foldable.ts", "src/index.ts"],
   "references": [
     {
       "path": "../alfa-reducer"

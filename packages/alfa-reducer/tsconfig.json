@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/reducer.ts", "test/reducer.spec.ts"],
+  "files": ["src/index.ts", "src/reducer.ts"],
   "references": [
     {
       "path": "../alfa-test"

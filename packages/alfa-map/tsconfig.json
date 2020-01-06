@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/map.ts", "src/node.ts", "test/map.spec.ts"],
+  "files": ["src/index.ts", "src/map.ts", "src/node.ts"],
   "references": [
     {
       "path": "../alfa-bits"

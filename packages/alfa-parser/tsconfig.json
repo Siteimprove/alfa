@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/parser.ts", "test/parser.spec.ts"],
+  "files": ["src/index.ts", "src/parser.ts"],
   "references": [
     {
       "path": "../alfa-mapper"

@@ -5,8 +5,7 @@
     "src/constants.ts",
     "src/hash.ts",
     "src/hashable.ts",
-    "src/index.ts",
-    "test/hashable.spec.ts"
+    "src/index.ts"
   ],
   "references": [
     {

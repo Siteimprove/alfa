@@ -92,8 +92,7 @@
     "src/role/widget/tree.ts",
     "src/role/window/alert-dialog.ts",
     "src/role/window/dialog.ts",
-    "test/get-name.spec.tsx",
-    "test/node.spec.tsx"
+    "test/get-name.spec.tsx"
   ],
   "references": [
     {

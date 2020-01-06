@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/slice.ts", "test/slice.spec.ts"],
+  "files": ["src/index.ts", "src/slice.ts"],
   "references": [
     {
       "path": "../alfa-option"
