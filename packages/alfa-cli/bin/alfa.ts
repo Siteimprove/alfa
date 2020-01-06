@@ -1,5 +1,14 @@
 #!/usr/bin/env node
-require("@oclif/command")
-  .run()
-  .then(require("@oclif/command/flush"))
-  .catch(require("@oclif/errors/handle"));
+
+import * as command from "@oclif/command";
+import * as errors from "@oclif/errors";
+
+async function alfa() {
+  try {
+    await command.run();
+  } catch (err) {
+    errors.handle(err);
+  }
+}
+
+alfa();

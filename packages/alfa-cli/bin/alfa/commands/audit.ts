@@ -54,7 +54,13 @@ export default class Subcommand extends Command {
     resolution: flags.integer({ default: 1 })
   };
 
-  static args = [{ name: "url" }];
+  static args = [
+    {
+      name: "url",
+      required: true,
+      description: "The URL of the page to audit"
+    }
+  ];
 
   async run() {
     const { args, flags } = this.parse(Subcommand);
