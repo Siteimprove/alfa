@@ -22,7 +22,7 @@ import { UserAgent } from "./user-agent";
  *
  * @internal
  */
-export const enum Origin {
+export enum Origin {
   /**
    * @see https://www.w3.org/TR/css-cascade/#cascade-origin-ua
    */

@@ -1,6 +1,6 @@
 import { Descriptor, Descriptors } from "./descriptors";
 
-export const enum ExpressionType {
+export enum ExpressionType {
   StringLiteral,
   IntegerLiteral,
   DecimalLiteral,

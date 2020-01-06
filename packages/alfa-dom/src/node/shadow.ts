@@ -65,7 +65,7 @@ export class Shadow extends Node {
 }
 
 export namespace Shadow {
-  export const enum Mode {
+  export enum Mode {
     Open = "open",
     Closed = "closed"
   }

@@ -1,7 +1,7 @@
 /**
  * @see https://www.unicode.org/versions/Unicode11.0.0/ch04.pdf#G134153
  */
-export const enum Category {
+export enum Category {
   Lu = 1 << 0, // Uppercase
   Ll = 1 << 1, // Lowercase
   Lt = 1 << 2, // Titlecase

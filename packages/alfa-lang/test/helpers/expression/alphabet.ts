@@ -5,7 +5,7 @@ import { isWhitespace } from "../../../src/is-whitespace";
 
 const { fromCharCode } = String;
 
-export const enum TokenType {
+export enum TokenType {
   Number,
   Add,
   Subtract,

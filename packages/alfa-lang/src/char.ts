@@ -1,7 +1,7 @@
 /**
  * @see https://en.wikipedia.org/wiki/List_of_Unicode_characters
  */
-export const enum Char {
+export enum Char {
   // Control codes
   Null = 0x00,
   StartOfHeading = 0x01,

@@ -125,7 +125,7 @@ export namespace Role {
   /**
    * @see https://www.w3.org/TR/wai-aria/#roles_categorization
    */
-  export const enum Category {
+  export enum Category {
     /**
      * @see https://www.w3.org/TR/wai-aria/#abstract_roles
      */

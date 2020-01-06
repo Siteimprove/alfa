@@ -91,7 +91,7 @@ export class Attribute<N extends string = string> implements Equatable {
 }
 
 export namespace Attribute {
-  export const enum Type {
+  export enum Type {
     /**
      * @see https://www.w3.org/TR/wai-aria/#dfn-state
      */

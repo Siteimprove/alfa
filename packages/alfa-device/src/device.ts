@@ -1,11 +1,11 @@
 const { freeze } = Object;
 
-export const enum Orientation {
+export enum Orientation {
   Portrait = "portrait",
   Landscape = "landscape"
 }
 
-export const enum Scan {
+export enum Scan {
   Interlace = "interlace",
   Progressive = "progressive"
 }
@@ -46,7 +46,7 @@ export interface Device {
 }
 
 export namespace Device {
-  export const enum Type {
+  export enum Type {
     Print = "print",
     Screen = "screen",
     Speech = "speech"

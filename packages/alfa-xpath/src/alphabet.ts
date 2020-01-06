@@ -10,7 +10,7 @@ import {
 const { fromCharCode } = String;
 const { pow } = Math;
 
-export const enum TokenType {
+export enum TokenType {
   Integer,
   Decimal,
   Double,

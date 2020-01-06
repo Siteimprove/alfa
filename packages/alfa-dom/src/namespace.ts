@@ -1,7 +1,7 @@
 /**
  * @see https://infra.spec.whatwg.org/#namespaces
  */
-export const enum Namespace {
+export enum Namespace {
   /**
    * @see https://infra.spec.whatwg.org/#html-namespace
    */
