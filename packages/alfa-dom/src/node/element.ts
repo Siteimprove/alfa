@@ -52,6 +52,9 @@ export class Element extends Node implements Slot, Slotable {
   public readonly shadow: Option<Shadow>;
   public readonly content: Option<Document>;
 
+  private readonly _id: Lazy<Option<string>>;
+  private readonly _classes: Lazy<Set<string>>;
+
   private constructor(
     namespace: Option<Namespace>,
     prefix: Option<string>,
@@ -74,22 +77,28 @@ export class Element extends Node implements Slot, Slotable {
     this.style = style;
     this.shadow = self.apply(shadow);
     this.content = content;
+
+    this._id = Lazy.of(() => this.attribute("id").map(attr => attr.value));
+
+    this._classes = Lazy.of(() =>
+      this.attribute("class")
+        .map(attr => Set.from(attr.value.trim().split(/\s+/)))
+        .getOr(Set.empty())
+    );
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-id
    */
   public get id(): Option<string> {
-    return this.attribute("id").map(attr => attr.value);
+    return this._id.force();
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-class
    */
   public get classes(): Set<string> {
-    return this.attribute("class")
-      .map(attr => Set.from(attr.value.trim().split(/\s+/)))
-      .getOr(Set.empty());
+    return this._classes.force();
   }
 
   public parent(options: Node.Traversal = {}): Option<Node> {
