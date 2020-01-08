@@ -29,6 +29,10 @@ export const SIA_R37: Composite.Rule<Device | Document, Element> = {
         return {
           1: {
             holds: hasOutcome(results, Outcome.Passed)
+              ? true
+              : hasOutcome(results, Outcome.CantTell)
+              ? null
+              : false
           }
         };
       }
