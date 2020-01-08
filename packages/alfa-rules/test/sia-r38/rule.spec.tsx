@@ -87,7 +87,7 @@ test("Passes when composite rules are passing", t => {
   );
 });
 
-test("Fails when there are no answers", t => {
+test("Can't tell when there are no answers", t => {
   const video = (
     <video controls>
       <source src="foo.mp4" type="video/mp4" />
