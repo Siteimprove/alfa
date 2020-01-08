@@ -86,3 +86,38 @@ test("Passes when composite rules are passing", t => {
     ]
   );
 });
+
+test("Can't tell when there are no answers", t => {
+  const video = (
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+      <track kind="descriptions" src="foo.vtt" />
+    </video>
+  );
+
+  const document = documentFromNodes([<div>{video}</div>]);
+
+  outcome(
+    t,
+    SIA_R38,
+    { document, device: getDefaultDevice() },
+    { cantTell: [video] },
+    [
+      {
+        type: QuestionType.Boolean,
+        id: "is-streaming",
+        aspect: document,
+        target: video,
+        answer: false
+      },
+      {
+        type: QuestionType.Boolean,
+        id: "has-audio",
+        aspect: document,
+        target: video,
+        answer: true
+      }
+    ]
+  );
+});
