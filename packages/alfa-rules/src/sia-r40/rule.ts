@@ -14,7 +14,7 @@ const { filter, isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r40.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r40.html",
   evaluate({ device, document }) {
     return {
       applicability() {

@@ -19,7 +19,7 @@ const { filter, some } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r44.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
   evaluate({ device, document }) {
     let landscape: Device;
     let portrait: Device;
@@ -61,9 +61,11 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const rotation = getRelativeRotation(target, landscape, portrait).map(
-          rotation => round(rotation)
-        );
+        const rotation = getRelativeRotation(
+          target,
+          landscape,
+          portrait
+        ).map(rotation => round(rotation));
 
         return {
           1: rotation.every(rotation => rotation !== 90 && rotation !== 270)

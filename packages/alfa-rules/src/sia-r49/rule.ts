@@ -19,7 +19,7 @@ const { filter, map, isEmpty } = Iterable;
 const { and, or, nor, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
-  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r49.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r49.html",
   evaluate({ document, device }) {
     return {
       applicability() {

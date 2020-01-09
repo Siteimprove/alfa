@@ -8,7 +8,7 @@ import R31 from "../sia-r31/rule";
 import R36 from "../sia-r36/rule";
 
 export default Rule.Composite.of<Page, Element>({
-  uri: "ttps://siteimprove.github.io/sanshikan/rules/sia-r37.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r37.html",
   composes: [R25, R31, R36],
   evaluate() {
     return {
