@@ -13,7 +13,11 @@ import * as cheerio from "cheerio";
 const { keys } = Object;
 
 export namespace Cheerio {
-  export type Type = Cheerio;
+  // The Cheerio typings are somewhat unfortunately written as they don't expose
+  // the "Cheerio" type as an export. We can however extract it from the top-
+  // level type "CheerioAPI" as it's a selector function that returns objects of
+  // type "Cheerio".
+  export type Type = ReturnType<typeof cheerio>;
 
   export function isType(value: unknown): value is Type {
     return value instanceof cheerio;
