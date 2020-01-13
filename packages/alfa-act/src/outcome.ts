@@ -15,7 +15,7 @@ export abstract class Outcome<I, T, Q = unknown> implements Equatable {
 
   public abstract equals(value: unknown): value is this;
 
-  public abstract toJSON(): { outcome: string };
+  public abstract toJSON(): Outcome.JSON;
 
   public toEARL(): Document {
     return {
@@ -29,6 +29,10 @@ export abstract class Outcome<I, T, Q = unknown> implements Equatable {
 }
 
 export namespace Outcome {
+  export interface JSON {
+    outcome: string;
+  }
+
   export class Passed<I, T, Q = unknown> extends Outcome<I, T, Q> {
     public static of<I, T, Q>(
       rule: Rule<I, T, Q>,
