@@ -8,6 +8,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import * as dom from "@siteimprove/alfa-dom";
+
 const { reduce, reverse, some } = Iterable;
 
 const {
@@ -22,7 +24,7 @@ const {
   option
 } = Parser;
 
-const { and } = Predicate;
+const { and, property, equals } = Predicate;
 
 /**
  * @see https://drafts.csswg.org/selectors/#selector
@@ -208,7 +210,73 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return false;
+      if (this.namespace.isSome()) {
+        let predicate: Predicate<dom.Attribute>;
+
+        switch (this.namespace.get()) {
+          case "*":
+            predicate = property("name", equals(this.name));
+            break;
+
+          case "":
+            predicate = and(
+              property("name", equals(this.name)),
+              property("namespace", equals(None))
+            );
+            break;
+
+          default:
+            predicate = and(
+              property("name", equals(this.name)),
+              property("namespace", equals(this.namespace.get()))
+            );
+        }
+
+        return some(
+          element.attributes,
+          and(predicate, attribute => this.matchesValue(attribute.value))
+        );
+      }
+
+      return element
+        .attribute(this.name)
+        .some(attribute => this.matchesValue(attribute.value));
+    }
+
+    private matchesValue(value: string): boolean {
+      if (this.modifier.isSome()) {
+        switch (this.modifier.get()) {
+          case Attribute.Modifier.CaseInsensitive:
+            value = value.toLowerCase();
+        }
+      }
+
+      if (this.value.isSome()) {
+        switch (this.matcher.getOr(Attribute.Matcher.Equal)) {
+          case Attribute.Matcher.Equal:
+            return value === this.value.get();
+
+          case Attribute.Matcher.Prefix:
+            return value.startsWith(this.value.get());
+
+          case Attribute.Matcher.Suffix:
+            return value.endsWith(this.value.get());
+
+          case Attribute.Matcher.Substring:
+            return value.includes(this.value.get());
+
+          case Attribute.Matcher.DashMatch:
+            return (
+              value === this.value.get() ||
+              value.startsWith(`${this.value.get()}-`)
+            );
+
+          case Attribute.Matcher.Includes:
+            return value.split(/\s+/).some(equals(this.value.get()));
+        }
+      }
+
+      return true;
     }
 
     public equals(value: unknown): value is this {
@@ -242,9 +310,7 @@ export namespace Selector {
         .map(namespace => `${namespace}|`)
         .getOr("");
 
-      const value = this.value
-        .map(value => `"${value.replace(/"/g, `\\"`)}"`)
-        .getOr("");
+      const value = this.value.map(value => `"${JSON.stringify(value)}"`).get();
 
       const matcher = this.matcher.getOr("");
 
