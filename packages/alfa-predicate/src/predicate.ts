@@ -24,12 +24,12 @@ export namespace Predicate {
     return predicate(value);
   }
 
-  export function fold<T, U extends T, V>(
+  export function fold<T, U extends T, V, W>(
     predicate: Predicate<T, U>,
     value: T,
     ifTrue: Mapper<U, V>,
-    ifFalse: Mapper<T, V>
-  ): V {
+    ifFalse: Mapper<T, W>
+  ): V | W {
     return is<T, U>(value, predicate(value)) ? ifTrue(value) : ifFalse(value);
   }
 
