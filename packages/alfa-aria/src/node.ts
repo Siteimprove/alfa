@@ -3,6 +3,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -36,6 +37,35 @@ export abstract class Node {
     return this._node;
   }
 
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-parent
+   */
+  public parent(options: Node.Traversal = {}): Option<Node> {
+    const parent = this._parent;
+
+    if (options.ignored === true) {
+      return parent;
+    }
+
+    return parent.flatMap(parent =>
+      parent.isIgnored() ? parent.parent(options) : Option.of(parent)
+    );
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-root
+   */
+  public root(options: Node.Traversal = {}): Node {
+    for (const parent of this.parent(options)) {
+      return parent.root(options);
+    }
+
+    return this;
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-child
+   */
   public children(options: Node.Traversal = {}): Sequence<Node> {
     const children = Sequence.from(this._children);
 
@@ -48,16 +78,30 @@ export abstract class Node {
     );
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    const parent = this._parent;
-
-    if (options.ignored === true) {
-      return parent;
-    }
-
-    return parent.flatMap(parent =>
-      parent.isIgnored() ? parent.parent(options) : Option.of(parent)
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-descendant
+   */
+  public descendants(options: Node.Traversal = {}): Sequence<Node> {
+    return this.children(options).flatMap(child =>
+      Sequence.of(
+        child,
+        Lazy.of(() => child.descendants(options))
+      )
     );
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-ancestor
+   */
+  public ancestors(options: Node.Traversal = {}): Sequence<Node> {
+    return this.parent(options)
+      .map(parent =>
+        Sequence.of(
+          parent,
+          Lazy.of(() => parent.ancestors(options))
+        )
+      )
+      .getOrElse(() => Sequence.empty());
   }
 
   public abstract name(): Option<string>;
