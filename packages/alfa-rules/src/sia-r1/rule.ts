@@ -12,19 +12,19 @@ import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
 const { filter, first } = Iterable;
-const { and, equals, test } = Predicate;
+const { and, equals, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r1.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return test(
+        return fold(
           hasChild(and(Element.isElement, isDocumentElement())),
-          document
-        )
-          ? [document]
-          : [];
+          document,
+          () => [document],
+          () => []
+        );
       },
 
       expectations(target) {
@@ -42,15 +42,39 @@ export default Rule.Atomic.of<Page, Document>({
         );
 
         return {
-          1: title.isSome()
-            ? Ok.of("The document has at least one <title> element")
-            : Err.of("The document does not have a <title> element"),
+          1: fold(
+            title => title.isSome(),
+            title,
+            () => Outcomes.HasTitle,
+            () => Outcomes.HasNoTitle
+          ),
 
-          2: title.filter(hasTextContent()).isSome()
-            ? Ok.of("The first <title> element has text content")
-            : Err.of("The first <title> element has no text content")
+          2: fold(
+            title => title.some(hasTextContent()),
+            title,
+            () => Outcomes.HasNonEmptyTitle,
+            () => Outcomes.HasEmptyTitle
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasTitle = Ok.of(
+    "The document has at least one <title> element"
+  );
+
+  export const HasNoTitle = Err.of(
+    "The document does not have a <title> element"
+  );
+
+  export const HasNonEmptyTitle = Ok.of(
+    "The first <title> element has text content"
+  );
+
+  export const HasEmptyTitle: Rule.Expectation = Err.of(
+    "The first <title> element has no text content"
+  );
+}

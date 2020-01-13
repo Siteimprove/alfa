@@ -13,7 +13,7 @@ import { isDecorative } from "../common/predicate/is-decorative";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { filter } = Iterable;
-const { and, or, not, equals, property, test } = Predicate;
+const { and, or, not, equals, property, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
@@ -40,15 +40,30 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(or(isDecorative, hasAccessibleName(device)), target)
-            ? Ok.of(
-                "The image has an accessible name or is marked as decorative"
+          1: fold(
+            isDecorative,
+            target,
+            () => Outcomes.IsDecorative,
+            () =>
+              fold(
+                hasAccessibleName(device),
+                target,
+                () => Outcomes.HasAccessibleName,
+                () => Outcomes.HasNoAccessibleNameNorIsDecorative
               )
-            : Err.of(
-                "The image neither has an accessible name nor is marked as decorative"
-              )
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasAccessibleName = Ok.of("The image has an accessible name");
+
+  export const IsDecorative = Ok.of("The image is marked as decorative");
+
+  export const HasNoAccessibleNameNorIsDecorative = Err.of(
+    "The image neither has an accessible name nor is marked as decorative"
+  );
+}

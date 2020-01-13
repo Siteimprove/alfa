@@ -9,7 +9,7 @@ import { hasId } from "../common/predicate/has-id";
 import { hasUniqueId } from "../common/predicate/has-unique-id";
 
 const { filter, isEmpty } = Iterable;
-const { and, not, test } = Predicate;
+const { and, not, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r3.html",
@@ -24,11 +24,20 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(hasUniqueId(), target)
-            ? Ok.of("The element has a unique ID")
-            : Err.of("The element does not have a unique ID")
+          1: fold(
+            hasUniqueId(),
+            target,
+            () => Outcomes.HasUniqueId,
+            () => Outcomes.HasNonUniqueId
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasUniqueId = Ok.of("The element has a unique ID");
+
+  export const HasNonUniqueId = Err.of("The element does not have a unique ID");
+}

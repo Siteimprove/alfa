@@ -1,17 +1,15 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
-import { Outcome } from "@siteimprove/alfa-act";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
-import { Record } from "@siteimprove/alfa-record";
-import { Err, Ok } from "@siteimprove/alfa-result";
 
-import R1 from "../../src/sia-r1/rule";
+import R1, { Outcomes } from "../../src/sia-r1/rule";
 
 import { evaluate } from "../common/evaluate";
+import { passed, failed, inapplicable } from "../common/outcome";
 
-test("evaluate() passes a document with a non-empty <title> element", async t => {
+test("evaluate() passes a document that that a non-empty <title> element", async t => {
   const document = Document.of(self => [
     Element.fromElement(
       <html>
@@ -24,35 +22,27 @@ test("evaluate() passes a document with a non-empty <title> element", async t =>
   ]);
 
   t.deepEqual(await evaluate(R1, { document }), [
-    Outcome.Passed.of(
-      R1,
-      document,
-      Record.from([
-        ["1", Ok.of("The document has at least one <title> element")],
-        ["2", Ok.of("The first <title> element has text content")]
-      ])
-    )
+    passed(R1, document, [
+      ["1", Outcomes.HasTitle],
+      ["2", Outcomes.HasNonEmptyTitle]
+    ])
   ]);
 });
 
-test("evaluate() fails a document without a <title> element", async t => {
+test("evaluate() fails a document that has no <title> element", async t => {
   const document = Document.of(self => [
     Element.fromElement(<html></html>, Option.of(self))
   ]);
 
   t.deepEqual(await evaluate(R1, { document }), [
-    Outcome.Failed.of(
-      R1,
-      document,
-      Record.from([
-        ["1", Err.of("The document does not have a <title> element")],
-        ["2", Err.of("The first <title> element has no text content")]
-      ])
-    )
+    failed(R1, document, [
+      ["1", Outcomes.HasNoTitle],
+      ["2", Outcomes.HasEmptyTitle]
+    ])
   ]);
 });
 
-test("evaluate() fails a document with an empty <title> element", async t => {
+test("evaluate() fails a document that has an empty <title> element", async t => {
   const document = Document.of(self => [
     Element.fromElement(
       <html>
@@ -65,13 +55,15 @@ test("evaluate() fails a document with an empty <title> element", async t => {
   ]);
 
   t.deepEqual(await evaluate(R1, { document }), [
-    Outcome.Failed.of(
-      R1,
-      document,
-      Record.from([
-        ["1", Ok.of("The document has at least one <title> element")],
-        ["2", Err.of("The first <title> element has no text content")]
-      ])
-    )
+    failed(R1, document, [
+      ["1", Outcomes.HasTitle],
+      ["2", Outcomes.HasEmptyTitle]
+    ])
   ]);
+});
+
+test("evaluate() is inapplicable when a document is not an HTML document", async t => {
+  const document = Document.of();
+
+  t.deepEqual(await evaluate(R1, { document }), [inapplicable(R1)]);
 });
