@@ -1,36 +1,9 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Style } from "@siteimprove/alfa-style";
 
-import { isRendered } from "./is-rendered";
-import { isDecorative } from "./is-decorative";
-
-const { and, or, not } = Predicate;
+import * as aria from "@siteimprove/alfa-aria";
 
 export function isIgnored<T extends Node>(device: Device): Predicate<T> {
-  return or(
-    or(not(isRendered(device)), and(Element.isElement, isDecorative)),
-    node => {
-      if (Element.isElement(node)) {
-        if (
-          node
-            .attribute("aria-hidden")
-            .some(attr => attr.value.toLowerCase() === "true")
-        ) {
-          return true;
-        }
-
-        const visibility = Style.from(node, device).computed("visibility");
-
-        if (
-          visibility.some(visibility => visibility.value.value !== "visible")
-        ) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-  );
+  return node => aria.Node.from(node, device).some(node => node.isIgnored());
 }
