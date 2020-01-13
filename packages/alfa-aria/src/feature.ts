@@ -176,12 +176,9 @@ Feature.register(
   Namespace.HTML,
   Feature.of("img", element =>
     Option.of(
-      element
-        .attribute("alt")
-        .filter(alt => alt.value !== "")
-        .isSome()
-        ? "img"
-        : "presentation"
+      element.attribute("alt").some(alt => alt.value === "")
+        ? "presentation"
+        : "img"
     )
   )
 );
