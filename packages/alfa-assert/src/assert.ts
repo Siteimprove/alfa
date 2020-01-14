@@ -1,5 +1,5 @@
 import { Audit, Outcome, Rule } from "@siteimprove/alfa-act";
-import { Attribute, Document, Element } from "@siteimprove/alfa-dom";
+import { Attribute, Document, Element, Text } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -41,7 +41,12 @@ export namespace Assert {
   }
 
   export namespace Page {
-    export type Target = Document | Element | Attribute | Iterable<Element>;
+    export type Target =
+      | Document
+      | Element
+      | Attribute
+      | Text
+      | Iterable<Element>;
 
     export function isAccessible(
       page: web.Page,
