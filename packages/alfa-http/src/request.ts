@@ -17,7 +17,7 @@ export class Request implements Body {
   }
 
   public static empty(): Request {
-    return Request.of("get", "about:blank");
+    return Request.of("GET", "about:blank");
   }
 
   private readonly _method: string;
