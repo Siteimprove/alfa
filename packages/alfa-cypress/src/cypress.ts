@@ -1,6 +1,7 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Block,
@@ -23,6 +24,7 @@ import {
   Text,
   Type
 } from "@siteimprove/alfa-dom";
+import { Request, Response } from "@siteimprove/alfa-http";
 import { JQuery } from "@siteimprove/alfa-jquery";
 import { Option } from "@siteimprove/alfa-option";
 import { Page } from "@siteimprove/alfa-web";
@@ -41,12 +43,14 @@ export namespace Cypress {
 
     const node = toNode(value);
 
-    return Page.of({
-      document:
-        node.type === "document"
-          ? Document.fromDocument(node as Document.JSON)
-          : Document.of(self => [Node.fromNode(node, Option.of(self))])
-    });
+    return Page.of(
+      Request.empty(),
+      Response.empty(),
+      node.type === "document"
+        ? Document.fromDocument(node as Document.JSON)
+        : Document.of(self => [Node.fromNode(node, Option.of(self))]),
+      Device.standard()
+    );
   }
 }
 

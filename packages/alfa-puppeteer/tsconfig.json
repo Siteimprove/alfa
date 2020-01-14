@@ -7,10 +7,16 @@
       "path": "../alfa-chai"
     },
     {
+      "path": "../alfa-device"
+    },
+    {
       "path": "../alfa-dom"
     },
     {
       "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-http"
     },
     {
       "path": "../alfa-option"

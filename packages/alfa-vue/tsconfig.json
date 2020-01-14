@@ -17,7 +17,13 @@
       "path": "../alfa-cheerio"
     },
     {
+      "path": "../alfa-device"
+    },
+    {
       "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-http"
     },
     {
       "path": "../alfa-jasmine"

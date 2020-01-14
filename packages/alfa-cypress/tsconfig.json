@@ -10,7 +10,13 @@
       "path": "../alfa-chai"
     },
     {
+      "path": "../alfa-device"
+    },
+    {
       "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-http"
     },
     {
       "path": "../alfa-jquery"

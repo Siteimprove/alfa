@@ -2,6 +2,7 @@
 /// <reference lib="dom.iterable" />
 
 import { Cheerio } from "@siteimprove/alfa-cheerio";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Block,
@@ -13,6 +14,7 @@ import {
   Text,
   Type
 } from "@siteimprove/alfa-dom";
+import { Request, Response } from "@siteimprove/alfa-http";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
@@ -39,11 +41,14 @@ export namespace Vue {
       return Cheerio.asPage(value);
     }
 
-    return Page.of({
-      document: Document.of(self => [
+    return Page.of(
+      Request.empty(),
+      Response.empty(),
+      Document.of(self => [
         Element.fromElement(toElement(value.element), Option.of(self))
-      ])
-    });
+      ]),
+      Device.standard()
+    );
   }
 }
 

@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 
-import { ComponentFixture } from "@angular/core/testing";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Block,
@@ -13,8 +13,11 @@ import {
   Text,
   Type
 } from "@siteimprove/alfa-dom";
+import { Request, Response } from "@siteimprove/alfa-http";
 import { Option } from "@siteimprove/alfa-option";
 import { Page } from "@siteimprove/alfa-web";
+
+import { ComponentFixture } from "@angular/core/testing";
 
 export namespace Angular {
   export type Type = ComponentFixture<unknown>;
@@ -26,11 +29,14 @@ export namespace Angular {
   export function asPage(value: Type): Page {
     const { nativeElement } = value;
 
-    return Page.of({
-      document: Document.of(self => [
+    return Page.of(
+      Request.empty(),
+      Response.empty(),
+      Document.of(self => [
         Element.fromElement(toElement(nativeElement), Option.of(self))
-      ])
-    });
+      ]),
+      Device.standard()
+    );
   }
 }
 

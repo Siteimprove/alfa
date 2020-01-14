@@ -4,7 +4,13 @@
   "files": ["src/index.ts", "src/jquery.ts"],
   "references": [
     {
+      "path": "../alfa-device"
+    },
+    {
       "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-http"
     },
     {
       "path": "../alfa-option"

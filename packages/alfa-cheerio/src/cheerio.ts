@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Element,
@@ -6,6 +7,7 @@ import {
   Document,
   Namespace
 } from "@siteimprove/alfa-dom";
+import { Request, Response } from "@siteimprove/alfa-http";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as cheerio from "cheerio";
@@ -24,9 +26,12 @@ export namespace Cheerio {
   }
 
   export function asPage(value: Type): Page {
-    return Page.of({
-      document: Document.of(self => [Node.fromNode(toNode(value[0]))])
-    });
+    return Page.of(
+      Request.empty(),
+      Response.empty(),
+      Document.of(self => [Node.fromNode(toNode(value[0]))]),
+      Device.standard()
+    );
   }
 }
 

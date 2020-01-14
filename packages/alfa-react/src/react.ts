@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
   Document,
@@ -6,6 +7,7 @@ import {
   Text,
   Namespace
 } from "@siteimprove/alfa-dom";
+import { Request, Response } from "@siteimprove/alfa-http";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
@@ -30,11 +32,14 @@ export namespace React {
       throw new Error("Could not render React element");
     }
 
-    return Page.of({
-      document: Document.of(self => [
+    return Page.of(
+      Request.empty(),
+      Response.empty(),
+      Document.of(self => [
         Element.fromElement(toElement(tree), Option.of(self))
-      ])
-    });
+      ]),
+      Device.standard()
+    );
   }
 }
 
