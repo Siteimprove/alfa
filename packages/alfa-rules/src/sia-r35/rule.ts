@@ -3,12 +3,14 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { Question } from "../common/question";
+
 import R26 from "../sia-r26/rule";
 import R32 from "../sia-r32/rule";
 import R33 from "../sia-r33/rule";
 import R34 from "../sia-r34/rule";
 
-export default Rule.Composite.of<Page, Element>({
+export default Rule.Composite.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r35.html",
   composes: [R26, R32, R33, R34],
   evaluate() {
