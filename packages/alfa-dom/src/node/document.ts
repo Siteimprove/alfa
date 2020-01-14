@@ -11,10 +11,14 @@ export class Document extends Node {
   public readonly style: Iterable<Sheet>;
 
   public static of(
-    children: Mapper<Node, Iterable<Node>> = () => [],
+    children: Mapper<Node, Iterable<Node>>,
     style: Iterable<Sheet> = []
   ): Document {
     return new Document(children, style);
+  }
+
+  public static empty(): Document {
+    return new Document(() => [], []);
   }
 
   private constructor(

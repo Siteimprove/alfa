@@ -58,7 +58,7 @@ test("evaluate() fails an image that has no accessible name", async t => {
 });
 
 test("evaluate() is inapplicable when a document has no images", async t => {
-  const document = Document.of();
+  const document = Document.empty();
 
   t.deepEqual(await evaluate(R2, { document }), [inapplicable(R2)]);
 });
