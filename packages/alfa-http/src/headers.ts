@@ -33,6 +33,20 @@ export class Headers {
     return this._headers.has(header);
   }
 
+  /**
+   * @see https://fetch.spec.whatwg.org/#dom-headers-set
+   */
+  public set(header: string, value: string): Headers {
+    return new Headers(this._headers.set(header, value));
+  }
+
+  /**
+   * @see https://fetch.spec.whatwg.org/#dom-headers-delete
+   */
+  public delete(header: string): Headers {
+    return new Headers(this._headers.delete(header));
+  }
+
   public toJSON(): Headers.JSON {
     return this._headers.toJSON();
   }
