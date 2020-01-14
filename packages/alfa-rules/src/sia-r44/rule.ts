@@ -1,7 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
-import { Device, Orientation } from "@siteimprove/alfa-device";
+import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { mod, round } from "@siteimprove/alfa-math";
@@ -24,24 +24,28 @@ export default Rule.Atomic.of<Page, Element>({
     let landscape: Device;
     let portrait: Device;
 
-    if (device.viewport.orientation === Orientation.Landscape) {
+    if (device.viewport.orientation === Viewport.Orientation.Landscape) {
       landscape = device;
-      portrait = {
-        ...device,
-        viewport: {
-          ...device.viewport,
-          orientation: Orientation.Portrait
-        }
-      };
+      portrait = Device.of(
+        device.type,
+        Viewport.of(
+          device.viewport.width,
+          device.viewport.height,
+          Viewport.Orientation.Portrait
+        ),
+        device.display
+      );
     } else {
       portrait = device;
-      landscape = {
-        ...device,
-        viewport: {
-          ...device.viewport,
-          orientation: Orientation.Landscape
-        }
-      };
+      landscape = Device.of(
+        device.type,
+        Viewport.of(
+          device.viewport.width,
+          device.viewport.height,
+          Viewport.Orientation.Landscape
+        ),
+        device.display
+      );
     }
 
     return {

@@ -1,18 +1,13 @@
-import {
-  Device,
-  Display,
-  Orientation,
-  Viewport
-} from "@siteimprove/alfa-device";
+import { Device, Display, Viewport } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
-import { Request, Response } from "@siteimprove/alfa-http";
+import { Headers, Request, Response } from "@siteimprove/alfa-http";
 import { Puppeteer } from "@siteimprove/alfa-puppeteer";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as puppeteer from "puppeteer";
 
-const defaultDevice = Device.getDefaultDevice();
+const { entries } = Object;
 
 export class Scraper {
   public static async of(
@@ -42,16 +37,12 @@ export class Scraper {
     const {
       wait = Scraper.Wait.Loaded,
       timeout = 10000,
-      viewport = defaultDevice.viewport,
-      display = defaultDevice.display,
+      viewport = Viewport.standard(),
+      display = Display.standard(),
       credentials = null
     } = options;
 
-    const device: Device = {
-      type: Device.Type.Screen,
-      viewport,
-      display
-    };
+    const device = Device.of(Device.Type.Screen, viewport, display);
 
     const page = await this.browser.newPage();
 
@@ -59,7 +50,7 @@ export class Scraper {
       width: viewport.width,
       height: viewport.width,
       deviceScaleFactor: display.resolution,
-      isLandscape: viewport.orientation === Orientation.Landscape
+      isLandscape: viewport.orientation === Viewport.Orientation.Landscape
     });
 
     await page.authenticate(credentials);
@@ -146,7 +137,7 @@ export class Scraper {
       document = await parseDocument(page, (response as Response).body);
     }
 
-    return Page.of({ request, response, document, device });
+    return Page.of(request, response, document, device);
   }
 
   public async close(): Promise<void> {
@@ -176,19 +167,19 @@ export namespace Scraper {
 }
 
 function parseRequest(request: puppeteer.Request): Request {
-  return {
-    method: request.method(),
-    url: request.url(),
-    headers: request.headers()
-  };
+  return Request.of(
+    request.method(),
+    request.url(),
+    Headers.from(entries(request.headers()))
+  );
 }
 
 async function parseResponse(response: puppeteer.Response): Promise<Response> {
-  return {
-    status: response.status(),
-    headers: response.headers(),
-    body: response.ok() ? await response.buffer() : new ArrayBuffer(0)
-  };
+  return Response.of(
+    response.status(),
+    Headers.from(entries(response.headers())),
+    response.ok() ? await response.buffer() : new ArrayBuffer(0)
+  );
 }
 
 async function parseDocument(

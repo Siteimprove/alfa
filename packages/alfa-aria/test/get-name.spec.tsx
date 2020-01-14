@@ -7,7 +7,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { None, Some } from "@siteimprove/alfa-option";
 import { getName } from "../src/get-name";
 
-const device = Device.getDefaultDevice();
+const device = Device.standard();
 
 test("getName() computes the text alternative of a button with text", t => {
   const button = Element.fromElement(<button>Button</button>);

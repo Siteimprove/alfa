@@ -6,7 +6,7 @@ import { Command, flags } from "@oclif/command";
 
 import { Audit, Oracle, Outcome, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Orientation } from "@siteimprove/alfa-device";
+import { Display, Viewport } from "@siteimprove/alfa-device";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -77,11 +77,10 @@ export default class Subcommand extends Command {
       wait = Scraper.Wait.Idle;
     }
 
-    let orientation = Orientation.Landscape;
-
-    if (flags.orientation === "portrait") {
-      orientation = Orientation.Portrait;
-    }
+    const orientation =
+      flags.orientation === "portrait"
+        ? Viewport.Orientation.Portrait
+        : Viewport.Orientation.Landscape;
 
     let page: Page;
     try {
@@ -90,8 +89,8 @@ export default class Subcommand extends Command {
         {
           timeout,
           wait,
-          viewport: { width, height, orientation },
-          display: { resolution }
+          viewport: Viewport.of(width, height, orientation),
+          display: Display.of(resolution)
         }
       );
     } catch (err) {

@@ -1,48 +1,44 @@
-const { freeze } = Object;
+import { Display } from "./display";
+import { Viewport } from "./viewport";
 
-export enum Orientation {
-  Portrait = "portrait",
-  Landscape = "landscape"
-}
+export class Device {
+  public static of(
+    type: Device.Type,
+    viewport: Viewport,
+    display: Display
+  ): Device {
+    return new Device(type, viewport, display);
+  }
 
-export enum Scan {
-  Interlace = "interlace",
-  Progressive = "progressive"
-}
+  private readonly _type: Device.Type;
+  private readonly _viewport: Viewport;
+  private readonly _display: Display;
 
-export interface Viewport {
-  /**
-   * @see https://www.w3.org/TR/mediaqueries/#width
-   */
-  readonly width: number;
+  private constructor(type: Device.Type, viewport: Viewport, display: Display) {
+    this._type = type;
+    this._viewport = viewport;
+    this._display = display;
+  }
 
-  /**
-   * @see https://www.w3.org/TR/mediaqueries/#height
-   */
-  readonly height: number;
+  public get type(): Device.Type {
+    return this._type;
+  }
 
-  /**
-   * @see https://www.w3.org/TR/mediaqueries/#orientation
-   */
-  readonly orientation: Orientation;
-}
+  public get viewport(): Viewport {
+    return this._viewport;
+  }
 
-export interface Display {
-  /**
-   * @see https://www.w3.org/TR/mediaqueries/#resolution
-   */
-  readonly resolution: number;
+  public get display(): Display {
+    return this._display;
+  }
 
-  /**
-   * @see https://www.w3.org/TR/mediaqueries/#scan
-   */
-  readonly scan?: Scan;
-}
-
-export interface Device {
-  readonly type: Device.Type;
-  readonly viewport: Viewport;
-  readonly display: Display;
+  public toJSON(): Device.JSON {
+    return {
+      type: this._type,
+      viewport: this._viewport.toJSON(),
+      display: this._display.toJSON()
+    };
+  }
 }
 
 export namespace Device {
@@ -52,19 +48,21 @@ export namespace Device {
     Speech = "speech"
   }
 
-  const defaultDevice: Device = freeze({
-    type: Device.Type.Screen,
-    viewport: {
-      width: 1280,
-      height: 720,
-      orientation: Orientation.Landscape
-    },
-    display: {
-      resolution: 1
-    }
-  });
+  export interface JSON {
+    type: Type;
+    viewport: Viewport.JSON;
+    display: Display.JSON;
+  }
 
-  export function getDefaultDevice(): Device {
-    return defaultDevice;
+  export function from(json: JSON): Device {
+    return Device.of(
+      json.type,
+      Viewport.from(json.viewport),
+      Display.from(json.display)
+    );
+  }
+
+  export function standard(): Device {
+    return Device.of(Type.Screen, Viewport.standard(), Display.standard());
   }
 }

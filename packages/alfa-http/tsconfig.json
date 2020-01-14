@@ -1,7 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/types.ts"],
+  "files": [
+    "src/body.ts",
+    "src/headers.ts",
+    "src/index.ts",
+    "src/request.ts",
+    "src/response.ts"
+  ],
   "references": [
     {
       "path": "../alfa-predicate"
