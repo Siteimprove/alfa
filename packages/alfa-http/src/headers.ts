@@ -4,7 +4,7 @@ import { Option } from "@siteimprove/alfa-option";
 /**
  * @see https://fetch.spec.whatwg.org/#headers-class
  */
-export class Headers {
+export class Headers implements Iterable<[string, string]> {
   public static of(headers: Map<string, string>): Headers {
     return new Headers(headers);
   }
@@ -49,6 +49,10 @@ export class Headers {
 
   public toJSON(): Headers.JSON {
     return this._headers.toJSON();
+  }
+
+  public *[Symbol.iterator](): Iterator<[string, string]> {
+    yield* this._headers;
   }
 }
 
