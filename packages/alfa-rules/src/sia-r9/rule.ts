@@ -10,8 +10,8 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 
-const { filter, first } = Iterable;
-const { and, equals } = Predicate;
+const { filter, first, isEmpty } = Iterable;
+const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r9.html",
@@ -70,6 +70,10 @@ const digit = /\d/;
  * @see https://html.spec.whatwg.org/#attr-meta-http-equiv-refresh
  */
 function getRefreshTime(content: string): Option<number> {
+  if (content.length === 0) {
+    return None;
+  }
+
   let i = 0;
 
   while (whitespace.test(content[i])) {
@@ -80,6 +84,10 @@ function getRefreshTime(content: string): Option<number> {
 
   while (digit.test(content[i])) {
     i++;
+  }
+
+  if (start === i) {
+    return None;
   }
 
   const next = content[i];

@@ -7,6 +7,7 @@ import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -14,6 +15,9 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { Role } from "./role";
 import { getName } from "./get-name";
+
+const { isEmpty } = Iterable;
+const { not } = Predicate;
 
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
@@ -255,7 +259,7 @@ class Element extends Node {
     super(owner, children, parent);
 
     this._role = role;
-    this._name = name;
+    this._name = name.map(name => name.trim()).filter(not(isEmpty));
     this._attributes = attributes;
   }
 

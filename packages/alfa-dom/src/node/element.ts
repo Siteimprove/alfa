@@ -15,7 +15,6 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
-const { isNaN } = Number;
 const { map, filter, concat, join, find, isEmpty } = Iterable;
 const { not } = Predicate;
 
@@ -190,23 +189,19 @@ export class Element extends Node implements Slot, Slotable {
    * @see https://html.spec.whatwg.org/#dom-tabindex
    */
   public tabIndex(): Option<number> {
-    return this.attribute("tabindex")
-      .andThen(tabIndex => {
-        const number = Number(tabIndex);
+    for (const tabIndex of this.attribute("tabindex")) {
+      const number = Number(tabIndex.value);
 
-        if (isNaN(number) || number !== (number | 0)) {
-          return None;
-        }
-
+      if (number === number && number === (number | 0)) {
         return Some.of(number);
-      })
-      .orElse(() => {
-        if (isSuggestedFocusableElement(this)) {
-          return Some.of(0);
-        }
+      }
+    }
 
-        return None;
-      });
+    if (isSuggestedFocusableElement(this)) {
+      return Some.of(0);
+    }
+
+    return None;
   }
 
   /**
@@ -346,7 +341,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
         .filter(Element.isElement)
         .some(parent => {
           if (parent.name === "details") {
-            for (const child of element.children()) {
+	    for (const child of parent.children()) {
               if (Element.isElement(child) && child.name === "summary") {
                 return child === element;
               }

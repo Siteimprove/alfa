@@ -3,9 +3,11 @@ import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { hasTabIndex } from "./has-tab-index";
+import { isDisabled } from "./is-disabled";
 import { isInert } from "./is-inert";
+import { isRendered } from "./is-rendered";
 
-const { and, nor } = Predicate;
+const { and, not } = Predicate;
 
 /**
  * @see https://html.spec.whatwg.org/#sequential-focus-navigation
@@ -13,7 +15,10 @@ const { and, nor } = Predicate;
 export function isTabbable(device: Device): Predicate<Element> {
   return and(
     hasTabIndex(tabIndex => tabIndex >= 0),
-    nor(redirectsFocus, isInert(device))
+    and(
+      not(redirectsFocus),
+      and(not(isDisabled), and(not(isInert(device)), isRendered(device)))
+    )
   );
 }
 

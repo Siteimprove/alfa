@@ -8,8 +8,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { hasNamespace } from "../common/predicate/has-namespace";
 
-const { filter, flatMap } = Iterable;
-const { and, equals } = Predicate;
+const { filter, flatMap, isEmpty } = Iterable;
+const { and, not, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r19.html",
@@ -25,8 +25,12 @@ export default Rule.Atomic.of<Page, Attribute>({
             )
           ),
           element =>
-            filter(element.attributes, attribute =>
-              aria.Attribute.lookup(attribute.name).isSome()
+	    filter(
+	      element.attributes,
+	      and(
+		property("name", name => aria.Attribute.lookup(name).isSome()),
+		property("value", not(isEmpty))
+	      )
             )
         );
       },

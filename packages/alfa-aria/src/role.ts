@@ -245,9 +245,7 @@ export namespace Role {
                   const role = Role.lookup(name);
 
                   if (
-                    role
-                      .filter(role => role.category !== Role.Category.Abstract)
-                      .isSome()
+		    role.some(role => role.category !== Role.Category.Abstract)
                   ) {
                     return role;
                   }

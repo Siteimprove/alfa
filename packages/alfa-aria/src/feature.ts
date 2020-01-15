@@ -98,14 +98,20 @@ Feature.register(
   Feature.of("dd", () => Option.of("definition"))
 );
 
-Feature.register(Namespace.HTML, Feature.of("dfn", () => Option.of("term")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("dfn", () => Option.of("term"))
+);
 
 Feature.register(
   Namespace.HTML,
   Feature.of("dialog", () => Option.of("dialog"))
 );
 
-Feature.register(Namespace.HTML, Feature.of("dt", () => Option.of("term")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("dt", () => Option.of("term"))
+);
 
 Feature.register(
   Namespace.HTML,
@@ -135,19 +141,40 @@ Feature.register(
   )
 );
 
-Feature.register(Namespace.HTML, Feature.of("form", () => Option.of("form")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("form", () => Option.of("form"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("h1", () => Option.of("heading")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("h1", () => Option.of("heading"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("h2", () => Option.of("heading")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("h2", () => Option.of("heading"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("h3", () => Option.of("heading")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("h3", () => Option.of("heading"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("h4", () => Option.of("heading")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("h4", () => Option.of("heading"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("h5", () => Option.of("heading")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("h5", () => Option.of("heading"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("h6", () => Option.of("heading")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("h6", () => Option.of("heading"))
+);
 
 Feature.register(
   Namespace.HTML,
@@ -186,41 +213,44 @@ Feature.register(
 Feature.register(
   Namespace.HTML,
   Feature.of("input", element =>
-    element.attribute("type").flatMap(type => {
-      switch (type.value.toLowerCase()) {
-        case "button":
-        case "image":
-        case "reset":
-        case "submit":
-          return Option.of("button");
+    element
+      .attribute("type")
+      .andThen(type => {
+	switch (type.value.toLowerCase()) {
+	  case "button":
+	  case "image":
+	  case "reset":
+	  case "submit":
+	    return Option.of("button");
 
-        case "checkbox":
-          return Option.of("checkbox");
+	  case "checkbox":
+	    return Option.of("checkbox");
 
-        case "number":
-          return Option.of("spinbutton");
+	  case "number":
+	    return Option.of("spinbutton");
 
-        case "radio":
-          return Option.of("radio");
+	  case "radio":
+	    return Option.of("radio");
 
-        case "range":
-          return Option.of("slider");
+	  case "range":
+	    return Option.of("slider");
 
-        case "search":
-          return Option.of(
-            element.attribute("list").isSome() ? "combobox" : "searchbox"
-          );
+	  case "search":
+	    return Option.of(
+	      element.attribute("list").isSome() ? "combobox" : "searchbox"
+	    );
 
-        case "email":
-        case "tel":
-        case "text":
-        case "url":
-        default:
-          return Option.of(
-            element.attribute("list").isSome() ? "combobox" : "textbox"
-          );
-      }
-    })
+	  case "email":
+	  case "tel":
+	  case "text":
+	  case "url":
+	  default:
+	    return Option.of(
+	      element.attribute("list").isSome() ? "combobox" : "textbox"
+	    );
+	}
+      })
+      .orElse(() => Option.of("textbox"))
   )
 );
 
@@ -243,18 +273,30 @@ Feature.register(
   )
 );
 
-Feature.register(Namespace.HTML, Feature.of("main", () => Option.of("main")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("main", () => Option.of("main"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("math", () => Option.of("math")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("math", () => Option.of("math"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("menu", () => Option.of("list")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("menu", () => Option.of("list"))
+);
 
 Feature.register(
   Namespace.HTML,
   Feature.of("nav", () => Option.of("navigation"))
 );
 
-Feature.register(Namespace.HTML, Feature.of("ol", () => Option.of("list")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("ol", () => Option.of("list"))
+);
 
 Feature.register(
   Namespace.HTML,
@@ -296,10 +338,7 @@ Feature.register(
   Feature.of("select", element => {
     if (
       element.attribute("multiple").isSome() &&
-      element
-        .attribute("size")
-        .filter(size => parseInt(size.value) > 1)
-        .isSome()
+      element.attribute("size").some(size => parseInt(size.value) > 1)
     ) {
       return Option.of("listbox");
     }
@@ -308,7 +347,10 @@ Feature.register(
   })
 );
 
-Feature.register(Namespace.HTML, Feature.of("table", () => Option.of("table")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("table", () => Option.of("table"))
+);
 
 Feature.register(
   Namespace.HTML,
@@ -370,9 +412,15 @@ Feature.register(
   Feature.of("thead", () => Option.of("rowgroup"))
 );
 
-Feature.register(Namespace.HTML, Feature.of("tr", () => Option.of("row")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("tr", () => Option.of("row"))
+);
 
-Feature.register(Namespace.HTML, Feature.of("ul", () => Option.of("list")));
+Feature.register(
+  Namespace.HTML,
+  Feature.of("ul", () => Option.of("list"))
+);
 
 Feature.register(
   Namespace.SVG,
@@ -396,16 +444,25 @@ Feature.register(
   Feature.of("foreignObject", () => Option.of("group"))
 );
 
-Feature.register(Namespace.SVG, Feature.of("g", () => Option.of("group")));
+Feature.register(
+  Namespace.SVG,
+  Feature.of("g", () => Option.of("group"))
+);
 
-Feature.register(Namespace.SVG, Feature.of("image", () => Option.of("img")));
+Feature.register(
+  Namespace.SVG,
+  Feature.of("image", () => Option.of("img"))
+);
 
 Feature.register(
   Namespace.SVG,
   Feature.of("line", () => Option.of("graphics-symbol"))
 );
 
-Feature.register(Namespace.SVG, Feature.of("mesh", () => Option.of("img")));
+Feature.register(
+  Namespace.SVG,
+  Feature.of("mesh", () => Option.of("img"))
+);
 
 Feature.register(
   Namespace.SVG,
@@ -437,7 +494,10 @@ Feature.register(
   Feature.of("symbol", () => Option.of("graphics-object"))
 );
 
-Feature.register(Namespace.SVG, Feature.of("text", () => Option.of("group")));
+Feature.register(
+  Namespace.SVG,
+  Feature.of("text", () => Option.of("group"))
+);
 
 Feature.register(
   Namespace.SVG,

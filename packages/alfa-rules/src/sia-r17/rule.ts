@@ -18,7 +18,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return filter(
-          document.descendants({ composed: true, nested: true }),
+	  document.descendants({ flattened: true, nested: true }),
           and(Element.isElement, hasAttribute("aria-hidden", equals("true")))
         );
       },

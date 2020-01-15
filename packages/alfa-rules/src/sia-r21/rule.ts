@@ -37,7 +37,10 @@ export default Rule.Atomic.of<Page, Attribute>({
         const owner = target.owner.get();
 
         return {
-          1: test(hasRole(), owner)
+	  1: test(
+	    hasRole(() => true, { implicit: false }),
+	    owner
+	  )
             ? Ok.of("The element has a valid role")
             : Err.of("The element does not have a valid role")
         };

@@ -12,11 +12,11 @@ import { hasInputType } from "../common/predicate/has-input-type";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { hasTabIndex } from "../common/predicate/has-tab-index";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { isTabbable } from "../common/predicate/is-tabbable";
 import { isVisible } from "../common/predicate/is-visible";
 
-const { filter, map, isEmpty } = Iterable;
+const { filter, map } = Iterable;
 const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Attribute>({
             and(
               Element.isElement,
               and(
-                hasAttribute("autocomplete", not(isEmpty)),
+		hasAttribute("autocomplete", hasTokens),
                 and(
                   hasNamespace(equals(Namespace.HTML)),
                   and(
@@ -47,13 +47,10 @@ export default Rule.Atomic.of<Page, Attribute>({
                           )
                         ),
                         and(
-                          not(hasAttribute("disabled")),
-                          and(
-                            not(hasAttribute("aria-disabled", equals("true"))),
-                            or(
-                              hasTabIndex(tabIndex => tabIndex >= 0),
-                              hasRole(hasCategory(equals(Role.Category.Widget)))
-                            )
+			  not(hasAttribute("aria-disabled", equals("true"))),
+			  or(
+			    isTabbable(device),
+			    hasRole(hasCategory(equals(Role.Category.Widget)))
                           )
                         )
                       )
@@ -77,6 +74,10 @@ export default Rule.Atomic.of<Page, Attribute>({
     };
   }
 });
+
+function hasTokens(input: string): boolean {
+  return input.trim() !== "" && input.split(/\s+/).length > 0;
+}
 
 function isValidAutocomplete(): Predicate<Attribute> {
   return autocomplete => {

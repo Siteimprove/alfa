@@ -7,10 +7,10 @@ import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { hasNondefaultRole } from "../common/predicate/has-nondefault-role";
+import { hasRole } from "../common/predicate/has-role";
 
 const { filter, find, isEmpty } = Iterable;
-const { and, equals, test } = Predicate;
+const { and, equals, property, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
@@ -21,10 +21,7 @@ export default Rule.Atomic.of<Page, Element>({
           document.descendants({ composed: true, nested: true }),
           and(
             Element.isElement,
-            and(
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-              hasNondefaultRole
-            )
+	    and(hasNamespace(equals(Namespace.HTML, Namespace.SVG)), hasRole())
           )
         );
       },
@@ -52,7 +49,7 @@ const hasRequiredValues: Predicate<Element> = element => {
           continue;
         }
 
-        if (element.attribute(attribute).every(isEmpty)) {
+	if (element.attribute(attribute).every(property("value", isEmpty))) {
           return false;
         }
       }
