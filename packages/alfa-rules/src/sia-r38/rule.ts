@@ -1,7 +1,10 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+
+const { fold } = Predicate;
 
 import { Question } from "../common/question";
 
@@ -17,13 +20,24 @@ export default Rule.Composite.of<Page, Element, Question>({
     return {
       expectations(outcomes) {
         return {
-          1: outcomes.some(Outcome.isPassed)
-            ? Ok.of("The <video> element has an audio or text alternative")
-            : Err.of(
-                "The <video> element does not have an audio or text alternative"
-              )
+          1: fold(
+            outcomes => outcomes.some(Outcome.isPassed),
+            outcomes,
+            () => Outcomes.HasAlternative,
+            () => Outcomes.HasNoAlternative
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasAlternative = Ok.of(
+    "The <video> element has an audio or text alternative"
+  );
+
+  export const HasNoAlternative = Err.of(
+    "The <video> element does not have an audio or text alternative"
+  );
+}
