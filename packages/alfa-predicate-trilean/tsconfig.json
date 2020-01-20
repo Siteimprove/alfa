@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/index.ts",
+    "src/predicate-trilean.ts",
+    "test/predicate-trilean.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}
