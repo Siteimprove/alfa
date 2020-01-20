@@ -42,7 +42,7 @@ test("and() combines two predicates to a predicate that is true if both predicat
   t.equal(p([-9, 0]), false);
   t.equal(p([-3, -4]), false);
 
-  t.equal(p([0, 19]), true);
+  t.equal(p([0, 19]), undefined);
   t.equal(p([0, 0]), undefined);
   t.equal(p([0, -1]), false);
 });
