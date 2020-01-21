@@ -9,12 +9,16 @@ export class Text extends Node implements Slotable {
     return new Text(data, parent);
   }
 
-  public readonly data: string;
+  private readonly _data: string;
 
   private constructor(data: string, parent: Option<Node>) {
     super(self => [], parent);
 
-    this.data = data;
+    this._data = data;
+  }
+
+  public get data(): string {
+    return this._data;
   }
 
   public assignedSlot(): Option<Slot> {

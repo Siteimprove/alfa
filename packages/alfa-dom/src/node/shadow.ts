@@ -18,9 +18,9 @@ export class Shadow extends Node {
     return new Shadow(mode, host, children, style);
   }
 
-  public readonly mode: Shadow.Mode;
-  public readonly host: Element;
-  public readonly style: Iterable<Sheet>;
+  private readonly _mode: Shadow.Mode;
+  private readonly _host: Element;
+  private readonly _style: Array<Sheet>;
 
   private constructor(
     mode: Shadow.Mode,
@@ -30,14 +30,26 @@ export class Shadow extends Node {
   ) {
     super(children, None);
 
-    this.mode = mode;
-    this.host = host;
-    this.style = style;
+    this._mode = mode;
+    this._host = host;
+    this._style = Array.from(style);
+  }
+
+  public get mode(): Shadow.Mode {
+    return this._mode;
+  }
+
+  public get host(): Element {
+    return this._host;
+  }
+
+  public get style(): Iterable<Sheet> {
+    return this._style;
   }
 
   public parent(options: Node.Traversal = {}): Option<Node> {
     if (options.composed === true) {
-      return Option.of(this.host);
+      return Option.of(this._host);
     }
 
     return None;
@@ -46,19 +58,19 @@ export class Shadow extends Node {
   public toJSON(): Shadow.JSON {
     return {
       type: "shadow",
-      children: [...this.children()].map(child => child.toJSON()),
-      mode: this.mode,
-      style: [...this.style].map(sheet => sheet.toJSON())
+      children: this._children.map(child => child.toJSON()),
+      mode: this._mode,
+      style: this._style.map(sheet => sheet.toJSON())
     };
   }
 
   public toString(): string {
     const children = join(
-      map(this.children(), child => indent(child.toString())),
+      map(this._children, child => indent(child.toString())),
       "\n"
     );
 
-    return `#shadow-root (${this.mode})${
+    return `#shadow-root (${this._mode})${
       children === "" ? "" : `\n${children}`
     }`;
   }

@@ -43,14 +43,13 @@ export class Element extends Node implements Slot, Slotable {
     );
   }
 
-  public readonly namespace: Option<Namespace>;
-  public readonly prefix: Option<string>;
-  public readonly name: string;
-  public readonly attributes: Iterable<Attribute>;
-  public readonly style: Option<Block>;
-  public readonly shadow: Option<Shadow>;
-  public readonly content: Option<Document>;
-
+  private readonly _namespace: Option<Namespace>;
+  private readonly _prefix: Option<string>;
+  private readonly _name: string;
+  private readonly _attributes: Array<Attribute>;
+  private readonly _style: Option<Block>;
+  private readonly _shadow: Option<Shadow>;
+  private readonly _content: Option<Document>;
   private readonly _id: Lazy<Option<string>>;
   private readonly _classes: Lazy<Set<string>>;
 
@@ -69,13 +68,13 @@ export class Element extends Node implements Slot, Slotable {
 
     const self = Option.of(this);
 
-    this.namespace = namespace;
-    this.prefix = prefix;
-    this.name = name;
-    this.attributes = Array.from(attributes(this));
-    this.style = style;
-    this.shadow = self.apply(shadow);
-    this.content = content;
+    this._namespace = namespace;
+    this._prefix = prefix;
+    this._name = name;
+    this._attributes = Array.from(attributes(this));
+    this._style = style;
+    this._shadow = self.apply(shadow);
+    this._content = content;
 
     this._id = Lazy.of(() => this.attribute("id").map(attr => attr.value));
 
@@ -84,6 +83,34 @@ export class Element extends Node implements Slot, Slotable {
         .map(attr => Set.from(attr.value.trim().split(/\s+/)))
         .getOr(Set.empty())
     );
+  }
+
+  public get namespace(): Option<Namespace> {
+    return this._namespace;
+  }
+
+  public get prefix(): Option<string> {
+    return this._prefix;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get attributes(): Iterable<Attribute> {
+    return this._attributes;
+  }
+
+  public get style(): Option<Block> {
+    return this._style;
+  }
+
+  public get shadow(): Option<Shadow> {
+    return this._shadow;
+  }
+
+  public get content(): Option<Document> {
+    return this._content;
   }
 
   /**
@@ -102,8 +129,8 @@ export class Element extends Node implements Slot, Slotable {
 
   public parent(options: Node.Traversal = {}): Option<Node> {
     if (options.flattened === true) {
-      return super.parent().flatMap(parent => {
-        if (Element.isElement(parent) && parent.shadow.isSome()) {
+      return this._parent.flatMap(parent => {
+        if (Element.isElement(parent) && parent._shadow.isSome()) {
           return this.assignedSlot().flatMap(slot => slot.parent(options));
         }
 
@@ -111,15 +138,15 @@ export class Element extends Node implements Slot, Slotable {
       });
     }
 
-    return super.parent();
+    return this._parent;
   }
 
   public children(options: Node.Traversal = {}): Sequence<Node> {
     let children: Sequence<Node>;
 
     if (options.flattened === true) {
-      if (this.shadow.isSome()) {
-        return this.shadow.get().children(options);
+      if (this._shadow.isSome()) {
+        return this._shadow.get().children(options);
       }
 
       if (Slot.isSlot(this)) {
@@ -132,15 +159,18 @@ export class Element extends Node implements Slot, Slotable {
           Slot.isSlot(child) ? child.children(options) : Sequence.of(child)
         );
     } else {
-      if (options.composed === true && this.shadow.isSome()) {
-        children = Sequence.of(this.shadow.get(), Lazy.force(super.children()));
+      if (options.composed === true && this._shadow.isSome()) {
+        children = Sequence.of(
+          this._shadow.get(),
+          Lazy.force(super.children())
+        );
       } else {
         children = super.children();
       }
     }
 
-    if (options.nested === true && this.content.isSome()) {
-      children = children.concat(Sequence.of(this.content.get()));
+    if (options.nested === true && this._content.isSome()) {
+      children = children.concat(Sequence.of(this._content.get()));
     }
 
     return children;
@@ -150,7 +180,7 @@ export class Element extends Node implements Slot, Slotable {
     predicate: string | Predicate<Attribute>
   ): Option<Attribute> {
     return find(
-      this.attributes,
+      this._attributes,
       typeof predicate === "string"
         ? element => element.name === predicate
         : predicate
@@ -161,7 +191,7 @@ export class Element extends Node implements Slot, Slotable {
    * @see https://html.spec.whatwg.org/#void-elements
    */
   public isVoid(): boolean {
-    switch (this.name) {
+    switch (this._name) {
       case "area":
       case "base":
       case "basefont":
@@ -221,25 +251,25 @@ export class Element extends Node implements Slot, Slotable {
   public toJSON(): Element.JSON {
     return {
       type: "element",
-      namespace: this.namespace.getOr(null),
-      prefix: this.prefix.getOr(null),
-      name: this.name,
-      attributes: [...this.attributes].map(attribute => attribute.toJSON()),
-      style: this.style.map(style => style.toJSON()).getOr(null),
-      children: [...this.children()].map(child => child.toJSON()),
-      shadow: this.shadow.map(shadow => shadow.toJSON()).getOr(null),
-      content: this.content.map(content => content.toJSON()).getOr(null)
+      namespace: this._namespace.getOr(null),
+      prefix: this._prefix.getOr(null),
+      name: this._name,
+      attributes: this._attributes.map(attribute => attribute.toJSON()),
+      style: this._style.map(style => style.toJSON()).getOr(null),
+      children: this._children.map(child => child.toJSON()),
+      shadow: this._shadow.map(shadow => shadow.toJSON()).getOr(null),
+      content: this._content.map(content => content.toJSON()).getOr(null)
     };
   }
 
   public toString(): string {
-    const name = this.prefix.reduce(
+    const name = this._prefix.reduce(
       (name, prefix) => `${prefix}:${name}`,
-      this.name
+      this._name
     );
 
     const attributes = join(
-      map(this.attributes, attribute => ` ${attribute.toString()}`),
+      map(this._attributes, attribute => ` ${attribute.toString()}`),
       ""
     );
 
@@ -250,7 +280,7 @@ export class Element extends Node implements Slot, Slotable {
     const children = join(
       map(
         filter(
-          map(concat(this.shadow, this.children()), child =>
+          map(concat(this._shadow, this._children, this._content), child =>
             child.toString().trim()
           ),
           not(isEmpty)

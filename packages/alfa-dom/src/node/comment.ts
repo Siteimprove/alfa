@@ -7,23 +7,27 @@ export class Comment extends Node {
     return new Comment(data, parent);
   }
 
-  public readonly data: string;
+  private readonly _data: string;
 
   private constructor(data: string, parent: Option<Node>) {
     super(self => [], parent);
 
-    this.data = data;
+    this._data = data;
+  }
+
+  public get data(): string {
+    return this._data;
   }
 
   public toJSON(): Comment.JSON {
     return {
       type: "comment",
-      data: this.data
+      data: this._data
     };
   }
 
   public toString(): string {
-    return `<!--${this.data}-->`;
+    return `<!--${this._data}-->`;
   }
 }
 

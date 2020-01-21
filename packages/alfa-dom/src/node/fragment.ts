@@ -24,13 +24,13 @@ export class Fragment extends Node {
   public toJSON(): Fragment.JSON {
     return {
       type: "fragment",
-      children: [...this.children()].map(child => child.toJSON())
+      children: this._children.map(child => child.toJSON())
     };
   }
 
   public toString(): string {
     const children = join(
-      map(this.children(), child => indent(child.toString())),
+      map(this._children, child => indent(child.toString())),
       "\n"
     );
 

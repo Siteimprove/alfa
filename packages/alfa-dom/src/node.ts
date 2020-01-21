@@ -7,8 +7,8 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 const { equals } = Predicate;
 
 export abstract class Node implements Iterable<Node> {
-  private readonly _children: Array<Node>;
-  private readonly _parent: Option<Node>;
+  protected readonly _children: Array<Node>;
+  protected readonly _parent: Option<Node>;
 
   protected constructor(
     children: Mapper<Node, Iterable<Node>>,
@@ -48,7 +48,10 @@ export abstract class Node implements Iterable<Node> {
    */
   public descendants(options: Node.Traversal = {}): Sequence<Node> {
     return this.children(options).flatMap(child =>
-      Sequence.of(child, Lazy.of(() => child.descendants(options)))
+      Sequence.of(
+        child,
+        Lazy.of(() => child.descendants(options))
+      )
     );
   }
 
@@ -58,7 +61,24 @@ export abstract class Node implements Iterable<Node> {
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
     return this.parent(options)
       .map(parent =>
-        Sequence.of(parent, Lazy.of(() => parent.ancestors(options)))
+        Sequence.of(
+          parent,
+          Lazy.of(() => parent.ancestors(options))
+        )
+      )
+      .getOrElse(() => Sequence.empty());
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-preceding
+   */
+  public preceding(options: Node.Traversal = {}): Sequence<Node> {
+    return this.parent(options)
+      .map(parent =>
+        parent
+          .children(options)
+          .takeUntil(equals(this))
+          .reverse()
       )
       .getOrElse(() => Sequence.empty());
   }
@@ -70,13 +90,21 @@ export abstract class Node implements Iterable<Node> {
     predicate: Predicate<Node, T> = () => true,
     options: Node.Traversal = {}
   ): Option<T> {
-    return this.parent(options).flatMap(parent =>
-      parent
-        .children(options)
-        .takeUntil(equals(this))
-        .reverse()
-        .find(predicate)
-    );
+    return this.preceding(options).find(predicate);
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-following
+   */
+  public following(options: Node.Traversal = {}): Sequence<Node> {
+    return this.parent(options)
+      .map(parent =>
+        parent
+          .children(options)
+          .skipUntil(equals(this))
+          .skip(1)
+      )
+      .getOrElse(() => Sequence.empty());
   }
 
   /**
@@ -86,13 +114,7 @@ export abstract class Node implements Iterable<Node> {
     predicate: Predicate<Node, T> = () => true,
     options: Node.Traversal = {}
   ): Option<T> {
-    return this.parent(options).flatMap(parent =>
-      parent
-        .children(options)
-        .skipUntil(equals(this))
-        .skip(1)
-        .find(predicate)
-    );
+    return this.following(options).find(predicate);
   }
 
   /**

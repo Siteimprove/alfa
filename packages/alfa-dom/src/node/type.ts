@@ -12,9 +12,9 @@ export class Type extends Node {
     return new Type(name, publicId, systemId, parent);
   }
 
-  public readonly name: string;
-  public readonly publicId: Option<string>;
-  public readonly systemId: Option<string>;
+  private readonly _name: string;
+  private readonly _publicId: Option<string>;
+  private readonly _systemId: Option<string>;
 
   private constructor(
     name: string,
@@ -24,22 +24,34 @@ export class Type extends Node {
   ) {
     super(self => [], parent);
 
-    this.name = name;
-    this.publicId = publicId;
-    this.systemId = systemId;
+    this._name = name;
+    this._publicId = publicId;
+    this._systemId = systemId;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get publicId(): Option<string> {
+    return this._publicId;
+  }
+
+  public get systemId(): Option<string> {
+    return this._systemId;
   }
 
   public toJSON(): Type.JSON {
     return {
       type: "type",
-      name: this.name,
-      publicId: this.publicId.getOr(null),
-      systemId: this.systemId.getOr(null)
+      name: this._name,
+      publicId: this._publicId.getOr(null),
+      systemId: this._systemId.getOr(null)
     };
   }
 
   public toString(): string {
-    return `<!doctype ${this.name}>`;
+    return `<!doctype ${this._name}>`;
   }
 }
 
