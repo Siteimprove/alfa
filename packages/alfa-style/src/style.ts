@@ -10,7 +10,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Property } from "./property";
 import { Value } from "./value";
 
-const { map, find, isEmpty } = Iterable;
+const { find, isEmpty } = Iterable;
 
 type Name = Property.Name;
 
@@ -22,15 +22,15 @@ export class Style {
     return new Style(declarations, parent);
   }
 
-  private readonly declarations: Iterable<Declaration>;
-  private readonly parent: Option<Style>;
+  private readonly _declarations: Array<Declaration>;
+  private readonly _parent: Option<Style>;
 
   private constructor(
     declarations: Iterable<Declaration>,
     parent: Option<Style>
   ) {
-    this.declarations = declarations;
-    this.parent = parent;
+    this._declarations = Array.from(declarations);
+    this._parent = parent;
   }
 
   public cascaded<N extends Name>(name: N): Option<Style.Cascaded<N>>;
@@ -38,7 +38,7 @@ export class Style {
     const property: Property = Property.get(name);
 
     return find(
-      this.declarations,
+      this._declarations,
       declaration => declaration.name === name
     ).flatMap(declaration =>
       property
@@ -63,7 +63,7 @@ export class Style {
         return initial;
       }
 
-      return this.parent.flatMap(parent => parent.computed(name)).or(initial);
+      return this._parent.flatMap(parent => parent.computed(name)).or(initial);
     });
   }
 
@@ -76,9 +76,7 @@ export class Style {
 
   public toJSON() {
     return {
-      declarations: [
-        ...map(this.declarations, declaration => declaration.toJSON())
-      ]
+      declarations: this._declarations.map(declaration => declaration.toJSON())
     };
   }
 }
