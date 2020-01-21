@@ -878,10 +878,11 @@ export namespace Selector {
         // for a sibling match.
         switch (this.combinator) {
           case Combinator.Descendant:
-            return some(
-              element.ancestors(),
-              and(Element.isElement, element => this.left.matches(element))
-            );
+            return element
+              .ancestors()
+              .some(
+                and(Element.isElement, element => this.left.matches(element))
+              );
 
           case Combinator.DirectDescendant:
             return element
@@ -892,10 +893,10 @@ export namespace Selector {
 
           case Combinator.Sibling:
             return element
-              .previous(
+              .preceding()
+              .some(
                 and(Element.isElement, element => this.left.matches(element))
-              )
-              .isSome();
+              );
 
           case Combinator.DirectSibling:
             return element
