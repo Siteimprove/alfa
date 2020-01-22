@@ -4,10 +4,12 @@ import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import * as json from "@siteimprove/alfa-json";
 
 import { Empty, Node } from "./node";
 
@@ -112,8 +114,13 @@ export class Map<K, V>
     yield* this._root;
   }
 
-  public toJSON() {
-    return [...this];
+  public toJSON(): Map.JSON {
+    return [
+      ...Iterable.map(
+        this._root,
+        entry => Serializable.toJSON(entry) as [json.JSON, json.JSON]
+      )
+    ];
   }
 
   public toString(): string {
@@ -133,4 +140,6 @@ export namespace Map {
   export function from<K, V>(iterable: Iterable<[K, V]>): Map<K, V> {
     return isMap<K, V>(iterable) ? iterable : Map.of(...iterable);
   }
+
+  export interface JSON extends Array<[json.JSON, json.JSON]> {}
 }

@@ -55,6 +55,10 @@ export class Shadow extends Node {
     return None;
   }
 
+  public path(): string {
+    return "/";
+  }
+
   public toJSON(): Shadow.JSON {
     return {
       type: "shadow",
@@ -86,7 +90,7 @@ export namespace Shadow {
     return value instanceof Shadow;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "shadow";
     children: Array<Node.JSON>;
     mode: string;

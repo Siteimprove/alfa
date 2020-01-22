@@ -3,10 +3,13 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
 
 const { equals } = Predicate;
 
-export abstract class Node implements Iterable<Node> {
+export abstract class Node
+  implements Iterable<Node>, json.Serializable, earl.Serializable {
   protected readonly _children: Array<Node>;
   protected readonly _parent: Option<Node>;
 
@@ -140,11 +143,43 @@ export abstract class Node implements Iterable<Node> {
       .join("");
   }
 
+  /**
+   * Get an XPath that uniquely identifies the node across descendants of its
+   * root.
+   */
+  public path(): string {
+    let path = this._parent.map(parent => parent.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += "node()";
+
+    const index = this.preceding().filter(Node.isNode).size;
+
+    path += `[${index + 1}]`;
+
+    return path;
+  }
+
   public *[Symbol.iterator](): Iterator<Node> {
     yield* this.descendants();
   }
 
   public abstract toJSON(): Node.JSON;
+
+  public toEARL(): Node.EARL {
+    return {
+      "@context": {
+        ptr: "http://www.w3.org/2009/pointers#"
+      },
+      "@type": [
+        "ptr:Pointer",
+        "ptr:SinglePointer",
+        "ptr:ExpressionPointer",
+        "ptr:XPathPointer"
+      ],
+      "ptr:expression": this.path()
+    };
+  }
 }
 
 export namespace Node {
@@ -186,6 +221,7 @@ import { Type } from "./node/type";
 
 export namespace Node {
   export interface JSON {
+    [key: string]: json.JSON;
     type: string;
   }
 
@@ -221,5 +257,21 @@ export namespace Node {
       default:
         throw new Error(`Unexpected node of type: ${node.type}`);
     }
+  }
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      ptr: "http://www.w3.org/2009/pointers#";
+    };
+    "@type": [
+      "ptr:Pointer",
+      "ptr:SinglePointer",
+      "ptr:ExpressionPointer",
+      "ptr:XPathPointer"
+    ];
+    "ptr:expression": string;
+    "ptr:reference"?: {
+      "@id": string;
+    };
   }
 }

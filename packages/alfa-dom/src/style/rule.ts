@@ -1,8 +1,9 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import * as json from "@siteimprove/alfa-json";
 
 import { Sheet } from "./sheet";
 
-export abstract class Rule {
+export abstract class Rule implements json.Serializable {
   public readonly owner: Sheet;
   public readonly parent: Option<Rule>;
 
@@ -56,6 +57,7 @@ export {
 
 export namespace Rule {
   export interface JSON {
+    [key: string]: json.JSON;
     type: string;
   }
 

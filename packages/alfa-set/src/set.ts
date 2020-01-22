@@ -2,13 +2,21 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import * as json from "@siteimprove/alfa-json";
 
 export class Set<T>
-  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable {
+  implements
+    Monad<T>,
+    Functor<T>,
+    Foldable<T>,
+    Iterable<T>,
+    Equatable,
+    Serializable {
   public static of<T>(...values: Array<T>): Set<T> {
     return values.reduce((set, value) => set.add(value), Set.empty<T>());
   }
@@ -75,8 +83,8 @@ export class Set<T>
     }
   }
 
-  public toJSON() {
-    return [...this._values.keys()];
+  public toJSON(): Set.JSON {
+    return [...Iterable.map(this._values.keys(), Serializable.toJSON)];
   }
 
   public toString(): string {
@@ -94,4 +102,6 @@ export namespace Set {
   export function from<T>(iterable: Iterable<T>): Set<T> {
     return isSet<T>(iterable) ? iterable : Set.of(...iterable);
   }
+
+  export interface JSON extends Array<json.JSON> {}
 }

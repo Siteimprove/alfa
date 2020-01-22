@@ -56,10 +56,6 @@ export class Cache<K, V> {
       this
     );
   }
-
-  public toJSON() {
-    return {};
-  }
 }
 
 export namespace Cache {

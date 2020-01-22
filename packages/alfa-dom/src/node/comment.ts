@@ -19,6 +19,19 @@ export class Comment extends Node {
     return this._data;
   }
 
+  public path(): string {
+    let path = this._parent.map(parent => parent.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += "comment()";
+
+    const index = this.preceding().filter(Comment.isComment).size;
+
+    path += `[${index + 1}]`;
+
+    return path;
+  }
+
   public toJSON(): Comment.JSON {
     return {
       type: "comment",
@@ -36,7 +49,7 @@ export namespace Comment {
     return value instanceof Comment;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "comment";
     data: string;
   }

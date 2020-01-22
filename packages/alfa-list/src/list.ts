@@ -2,19 +2,27 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import * as json from "@siteimprove/alfa-json";
 
 import { Branch, Empty, Leaf, Node } from "./node";
 
 const { filter, reduce, join, find, includes, subtract, intersect } = Iterable;
 
 export class List<T>
-  implements Monad<T>, Functor<T>, Foldable<T>, Iterable<T>, Equatable {
+  implements
+    Monad<T>,
+    Functor<T>,
+    Foldable<T>,
+    Iterable<T>,
+    Equatable,
+    Serializable {
   public static of<T>(...values: Array<T>): List<T> {
     return values.reduce((list, value) => list.push(value), List.empty<T>());
   }
@@ -342,8 +350,8 @@ export class List<T>
     yield* this._tail;
   }
 
-  public toJSON() {
-    return [...this];
+  public toJSON(): List.JSON {
+    return [...Iterable.map(this, Serializable.toJSON)];
   }
 
   public toString(): string {
@@ -361,4 +369,6 @@ export namespace List {
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
   }
+
+  export interface JSON extends Array<json.JSON> {}
 }

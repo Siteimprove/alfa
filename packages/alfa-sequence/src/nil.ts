@@ -118,7 +118,7 @@ export const Nil: Nil = new (class Nil {
 
   public *[Symbol.iterator](): Iterator<never> {}
 
-  public toJSON() {
+  public toJSON(): Array<never> {
     return [];
   }
 

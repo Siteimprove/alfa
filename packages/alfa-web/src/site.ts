@@ -1,11 +1,12 @@
 import { Graph } from "@siteimprove/alfa-graph";
+import * as json from "@siteimprove/alfa-json";
 
 import { Resource } from "./resource";
 
 /**
  * @see https://en.wikipedia.org/wiki/Web_site
  */
-export class Site {
+export class Site implements json.Serializable {
   public static of(resources: Graph<Resource>): Site {
     return new Site(resources);
   }
@@ -20,9 +21,16 @@ export class Site {
     return this._resources;
   }
 
-  public toJSON() {
+  public toJSON(): Site.JSON {
     return {
       resources: this._resources.toJSON()
     };
+  }
+}
+
+export namespace Site {
+  export interface JSON {
+    [key: string]: json.JSON;
+    resources: Graph.JSON;
   }
 }

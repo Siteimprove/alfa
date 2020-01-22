@@ -56,7 +56,7 @@ export class Type extends Node {
 }
 
 export namespace Type {
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "type";
     name: string;
     publicId: string | null;

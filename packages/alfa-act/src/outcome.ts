@@ -1,11 +1,13 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Document } from "@siteimprove/alfa-json-ld";
 import { Record } from "@siteimprove/alfa-record";
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
-export abstract class Outcome<I, T, Q = unknown> implements Equatable {
+export abstract class Outcome<I, T, Q = unknown>
+  implements Equatable, json.Serializable, earl.Serializable {
   public readonly rule: Rule<I, T, Q>;
   public readonly target?: T;
 
@@ -17,20 +19,31 @@ export abstract class Outcome<I, T, Q = unknown> implements Equatable {
 
   public abstract toJSON(): Outcome.JSON;
 
-  public toEARL(): Document {
+  public toEARL(): Outcome.EARL {
     return {
       "@context": {
         earl: "http://www.w3.org/ns/earl#"
       },
       "@type": "earl:Assertion",
-      "earl:test": { "@id": this.rule.uri }
+      "earl:test": {
+        "@id": this.rule.uri
+      }
     };
   }
 }
 
 export namespace Outcome {
   export interface JSON {
+    [key: string]: json.JSON;
     outcome: string;
+    rule: Rule.JSON;
+  }
+
+  export interface EARL extends earl.EARL {
+    "@type": "earl:Assertion";
+    "earl:test": {
+      "@id": string;
+    };
   }
 
   export class Passed<I, T, Q = unknown> extends Outcome<I, T, Q> {
@@ -65,22 +78,49 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): Passed.JSON {
       return {
         outcome: "passed",
         rule: this.rule.toJSON(),
-        target: this.target,
+        target: json.Serializable.toJSON(this.target),
         expectations: this.expectations.toJSON()
       };
     }
 
-    public toEARL(): Document {
-      return {
+    public toEARL(): Passed.EARL {
+      const outcome: Passed.EARL = {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:passed` }
+          "earl:outcome": {
+            "@id": "earl:passed"
+          }
         }
+      };
+
+      for (const pointer of earl.Serializable.toEARL(this.target)) {
+        outcome["earl:result"]["earl:pointer"] = pointer;
+      }
+
+      return outcome;
+    }
+  }
+
+  export namespace Passed {
+    export interface JSON extends Outcome.JSON {
+      [key: string]: json.JSON;
+      outcome: "passed";
+      target: json.JSON;
+      expectations: Record.JSON;
+    }
+
+    export interface EARL extends Outcome.EARL {
+      "earl:result": {
+        "@type": "earl:TestResult";
+        "earl:outcome": {
+          "@id": "earl:passed";
+        };
+        "earl:pointer"?: earl.EARL;
       };
     }
   }
@@ -117,22 +157,49 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): Failed.JSON {
       return {
         outcome: "failed",
         rule: this.rule.toJSON(),
-        target: this.target,
+        target: json.Serializable.toJSON(this.target),
         expectations: this.expectations.toJSON()
       };
     }
 
-    public toEARL(): Document {
-      return {
+    public toEARL(): Failed.EARL {
+      const outcome: Failed.EARL = {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:failed` }
+          "earl:outcome": {
+            "@id": "earl:failed"
+          }
         }
+      };
+
+      for (const pointer of earl.Serializable.toEARL(this.target)) {
+        outcome["earl:result"]["earl:pointer"] = pointer;
+      }
+
+      return outcome;
+    }
+  }
+
+  export namespace Failed {
+    export interface JSON extends Outcome.JSON {
+      [key: string]: json.JSON;
+      outcome: "failed";
+      target: json.JSON;
+      expectations: Record.JSON;
+    }
+
+    export interface EARL extends Outcome.EARL {
+      "earl:result": {
+        "@type": "earl:TestResult";
+        "earl:outcome": {
+          "@id": "earl:failed";
+        };
+        "earl:pointer"?: earl.EARL;
       };
     }
   }
@@ -161,21 +228,40 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): CantTell.JSON {
       return {
         outcome: "cantTell",
         rule: this.rule.toJSON(),
-        target: this.target
+        target: json.Serializable.toJSON(this.target)
       };
     }
 
-    public toEARL(): Document {
+    public toEARL(): CantTell.EARL {
       return {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:cantTell` }
+          "earl:outcome": {
+            "@id": "earl:cantTell"
+          }
         }
+      };
+    }
+  }
+
+  export namespace CantTell {
+    export interface JSON extends Outcome.JSON {
+      [key: string]: json.JSON;
+      outcome: "cantTell";
+      target: json.JSON;
+    }
+
+    export interface EARL extends Outcome.EARL {
+      "earl:result": {
+        "@type": "earl:TestResult";
+        "earl:outcome": {
+          "@id": "earl:cantTell";
+        };
       };
     }
   }
@@ -200,20 +286,38 @@ export namespace Outcome {
       );
     }
 
-    public toJSON() {
+    public toJSON(): Inapplicable.JSON {
       return {
         outcome: "inapplicable",
         rule: this.rule.toJSON()
       };
     }
 
-    public toEARL(): Document {
+    public toEARL(): Inapplicable.EARL {
       return {
         ...super.toEARL(),
         "earl:result": {
           "@type": "earl:TestResult",
-          "earl:outcome": { "@id": `earl:inapplicable` }
+          "earl:outcome": {
+            "@id": "earl:inapplicable"
+          }
         }
+      };
+    }
+  }
+
+  export namespace Inapplicable {
+    export interface JSON extends Outcome.JSON {
+      [key: string]: json.JSON;
+      outcome: "inapplicable";
+    }
+
+    export interface EARL extends Outcome.EARL {
+      "earl:result": {
+        "@type": "earl:TestResult";
+        "earl:outcome": {
+          "@id": "earl:inapplicable";
+        };
       };
     }
   }

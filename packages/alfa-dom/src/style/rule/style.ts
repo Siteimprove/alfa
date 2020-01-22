@@ -51,7 +51,7 @@ export namespace Style {
     return value instanceof Style;
   }
 
-  export interface JSON {
+  export interface JSON extends Rule.JSON {
     type: "style";
     selector: string;
     style: Block.JSON;

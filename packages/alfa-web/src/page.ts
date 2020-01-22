@@ -1,13 +1,15 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Response, Request } from "@siteimprove/alfa-http";
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
 
 import { Resource } from "./resource";
 
 /**
  * @see https://en.wikipedia.org/wiki/Web_page
  */
-export class Page implements Resource {
+export class Page implements Resource, json.Serializable, earl.Serializable {
   public static of(
     request: Request,
     response: Response,
@@ -58,14 +60,39 @@ export class Page implements Resource {
       device: this._device.toJSON()
     };
   }
+
+  public toEARL(): Page.EARL {
+    return {
+      "@context": {
+        earl: "http://www.w3.org/ns/earl#",
+        dct: "http://purl.org/dc/terms/"
+      },
+      "@type": ["earl:TestSubject"],
+      "@id": this.response.url,
+      "dct:source": this.response.url,
+      "dct:hasPart": [this._request.toEARL(), this._response.toEARL()]
+    };
+  }
 }
 
 export namespace Page {
   export interface JSON {
+    [key: string]: json.JSON;
     request: Request.JSON;
     response: Response.JSON;
     document: Document.JSON;
     device: Device.JSON;
+  }
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      earl: "http://www.w3.org/ns/earl#";
+      dct: "http://purl.org/dc/terms/";
+    };
+    "@type": ["earl:TestSubject"];
+    "@id": string;
+    "dct:source": string;
+    "dct:hasPart": [Request.EARL, Response.EARL];
   }
 
   export function from(json: JSON): Page {

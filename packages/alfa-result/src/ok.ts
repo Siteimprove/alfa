@@ -1,7 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import * as json from "@siteimprove/alfa-json";
+
 import { Err } from "./err";
 import { Result } from "./result";
 
@@ -84,8 +87,10 @@ export class Ok<T> implements Result<T, never> {
     yield this._value;
   }
 
-  public toJSON() {
-    return { value: this._value };
+  public toJSON(): Ok.JSON {
+    return {
+      value: Serializable.toJSON(this._value)
+    };
   }
 
   public toString(): string {
@@ -96,5 +101,10 @@ export class Ok<T> implements Result<T, never> {
 export namespace Ok {
   export function isOk<T>(value: unknown): value is Ok<T> {
     return value instanceof Ok;
+  }
+
+  export interface JSON {
+    [key: string]: json.JSON;
+    value: json.JSON;
   }
 }

@@ -34,6 +34,10 @@ export class Document extends Node {
     return this._style;
   }
 
+  public path(): string {
+    return "/";
+  }
+
   public toJSON(): Document.JSON {
     return {
       type: "document",
@@ -42,7 +46,7 @@ export class Document extends Node {
     };
   }
 
-  public toString() {
+  public toString(): string {
     const children = join(
       map(this._children, child => indent(child.toString())),
       "\n"
@@ -57,7 +61,7 @@ export namespace Document {
     return value instanceof Document;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "document";
     children: Array<Node.JSON>;
     style: Array<Sheet.JSON>;

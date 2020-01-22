@@ -176,6 +176,7 @@ function parseRequest(request: puppeteer.Request): Request {
 
 async function parseResponse(response: puppeteer.Response): Promise<Response> {
   return Response.of(
+    response.url(),
     response.status(),
     Headers.from(entries(response.headers())),
     response.ok() ? await response.buffer() : new ArrayBuffer(0)

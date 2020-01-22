@@ -16,7 +16,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 const { map, filter, concat, join, find, isEmpty } = Iterable;
-const { not } = Predicate;
+const { and, not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
@@ -248,6 +248,21 @@ export class Element extends Node implements Slot, Slotable {
     return Slot.findSlotables(this);
   }
 
+  public path(): string {
+    let path = this._parent.map(parent => parent.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += this._name;
+
+    const index = this.preceding().filter(
+      and(Element.isElement, element => element._name === this._name)
+    ).size;
+
+    path += `[${index + 1}]`;
+
+    return path;
+  }
+
   public toJSON(): Element.JSON {
     return {
       type: "element",
@@ -301,7 +316,7 @@ export namespace Element {
     return value instanceof Element;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "element";
     namespace: string | null;
     prefix: string | null;
@@ -371,7 +386,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
         .filter(Element.isElement)
         .some(parent => {
           if (parent.name === "details") {
-	    for (const child of parent.children()) {
+            for (const child of parent.children()) {
               if (Element.isElement(child) && child.name === "summary") {
                 return child === element;
               }

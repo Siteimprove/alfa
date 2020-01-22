@@ -1,4 +1,7 @@
-export class Display {
+import { Serializable } from "@siteimprove/alfa-json";
+import * as json from "@siteimprove/alfa-json";
+
+export class Display implements Serializable {
   public static of(
     resolution: number,
     scan: Display.Scan = Display.Scan.Progressive
@@ -43,6 +46,7 @@ export namespace Display {
   }
 
   export interface JSON {
+    [key: string]: json.JSON;
     resolution: number;
     scan: Scan;
   }

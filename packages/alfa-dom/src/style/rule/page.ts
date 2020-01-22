@@ -53,7 +53,7 @@ export namespace Page {
     return value instanceof Page;
   }
 
-  export interface JSON {
+  export interface JSON extends Rule.JSON {
     type: "page";
     selector: string;
     style: Block.JSON;

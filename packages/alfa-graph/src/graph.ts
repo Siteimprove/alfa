@@ -1,9 +1,13 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
+import * as json from "@siteimprove/alfa-json";
 
-export class Graph<T> implements Iterable<[T, Iterable<T>]>, Equatable {
+export class Graph<T>
+  implements Iterable<[T, Iterable<T>]>, Equatable, Serializable {
   public static empty<T>(): Graph<T> {
     return new Graph(Map.empty());
   }
@@ -108,9 +112,18 @@ export class Graph<T> implements Iterable<[T, Iterable<T>]>, Equatable {
     yield* this._nodes;
   }
 
-  public toJSON() {
+  public toJSON(): Graph.JSON {
     return {
-      nodes: this._nodes.map(edges => edges.toJSON()).toJSON()
+      nodes: [
+        ...Iterable.map(
+          this._nodes,
+          ([node, neighbors]) =>
+            [
+              Serializable.toJSON(node),
+              [...Iterable.map(neighbors, Serializable.toJSON)]
+            ] as [json.JSON, Array<json.JSON>]
+        )
+      ]
     };
   }
 
@@ -124,5 +137,12 @@ export class Graph<T> implements Iterable<[T, Iterable<T>]>, Equatable {
       .join(", ");
 
     return `Graph {${entries === "" ? "" : ` ${entries} `}}`;
+  }
+}
+
+export namespace Graph {
+  export interface JSON {
+    [key: string]: json.JSON;
+    nodes: Array<[json.JSON, Array<json.JSON>]>;
   }
 }

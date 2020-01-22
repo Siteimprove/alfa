@@ -25,6 +25,19 @@ export class Text extends Node implements Slotable {
     return Slotable.findSlot(this);
   }
 
+  public path(): string {
+    let path = this._parent.map(parent => parent.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += "text()";
+
+    const index = this.preceding().filter(Text.isText).size;
+
+    path += `[${index + 1}]`;
+
+    return path;
+  }
+
   public toJSON(): Text.JSON {
     return {
       type: "text",
@@ -42,7 +55,7 @@ export namespace Text {
     return value instanceof Text;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "text";
     data: string;
   }

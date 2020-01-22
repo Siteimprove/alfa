@@ -25,6 +25,9 @@
       "path": "../alfa-hash"
     },
     {
+      "path": "../alfa-json"
+    },
+    {
       "path": "../alfa-mapper"
     },
     {

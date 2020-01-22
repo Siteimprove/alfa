@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/index.ts", "src/json.ts", "src/serializable.ts"],
+  "references": [
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

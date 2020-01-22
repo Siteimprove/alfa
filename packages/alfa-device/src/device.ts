@@ -1,7 +1,10 @@
+import { Serializable } from "@siteimprove/alfa-json";
+import * as json from "@siteimprove/alfa-json";
+
 import { Display } from "./display";
 import { Viewport } from "./viewport";
 
-export class Device {
+export class Device implements Serializable {
   public static of(
     type: Device.Type,
     viewport: Viewport,
@@ -49,6 +52,7 @@ export namespace Device {
   }
 
   export interface JSON {
+    [key: string]: json.JSON;
     type: Type;
     viewport: Viewport.JSON;
     display: Display.JSON;

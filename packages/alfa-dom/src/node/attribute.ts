@@ -77,6 +77,15 @@ export class Attribute extends Node {
     }
   }
 
+  public path(): string {
+    let path = this.owner.map(owner => owner.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += `@${this._name}`;
+
+    return path;
+  }
+
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
@@ -101,7 +110,7 @@ export namespace Attribute {
     return value instanceof Attribute;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "attribute";
     namespace: string | null;
     prefix: string | null;

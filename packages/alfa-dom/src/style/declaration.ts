@@ -1,4 +1,5 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
@@ -51,6 +52,7 @@ export class Declaration {
 
 export namespace Declaration {
   export interface JSON {
+    [key: string]: json.JSON;
     name: string;
     value: string;
     important: boolean;

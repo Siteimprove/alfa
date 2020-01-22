@@ -21,6 +21,10 @@ export class Fragment extends Node {
     super(children, parent);
   }
 
+  public path(): string {
+    return "/";
+  }
+
   public toJSON(): Fragment.JSON {
     return {
       type: "fragment",
@@ -43,7 +47,7 @@ export namespace Fragment {
     return value instanceof Fragment;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "fragment";
     children: Array<Node.JSON>;
   }

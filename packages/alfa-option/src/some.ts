@@ -1,8 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import * as json from "@siteimprove/alfa-json";
 
 import { None } from "./none";
 import { Option } from "./option";
@@ -100,8 +102,10 @@ export class Some<T> implements Option<T> {
     yield this._value;
   }
 
-  public toJSON() {
-    return { value: this._value };
+  public toJSON(): Some.JSON {
+    return {
+      value: Serializable.toJSON(this._value)
+    };
   }
 
   public toString(): string {
@@ -112,5 +116,10 @@ export class Some<T> implements Option<T> {
 export namespace Some {
   export function isSome<T>(value: unknown): value is Some<T> {
     return value instanceof Some;
+  }
+
+  export interface JSON {
+    [key: string]: json.JSON;
+    value: json.JSON;
   }
 }

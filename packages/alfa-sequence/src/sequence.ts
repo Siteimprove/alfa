@@ -2,6 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { JSON, Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -18,7 +19,8 @@ export interface Sequence<T>
     Functor<T>,
     Foldable<T>,
     Iterable<T>,
-    Equatable {
+    Equatable,
+    Serializable {
   readonly size: number;
   isEmpty(): boolean;
   map<U>(mapper: Mapper<T, U>): Sequence<U>;
@@ -43,7 +45,7 @@ export interface Sequence<T>
   reverse(): Sequence<T>;
   groupBy<K>(grouper: Mapper<T, K>): Map<K, Sequence<T>>;
   join(separator: string): string;
-  toJSON(): Array<T>;
+  toJSON(): Array<JSON>;
 }
 
 export namespace Sequence {

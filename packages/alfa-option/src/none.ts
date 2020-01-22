@@ -1,4 +1,5 @@
 import { Thunk } from "@siteimprove/alfa-thunk";
+import * as json from "@siteimprove/alfa-json";
 
 import { Option } from "./option";
 import { Some } from "./some";
@@ -82,7 +83,7 @@ export const None: None = new (class None {
 
   public *[Symbol.iterator](): Iterator<never> {}
 
-  public toJSON() {
+  public toJSON(): None.JSON {
     return {};
   }
 
@@ -90,3 +91,9 @@ export const None: None = new (class None {
     return "None";
   }
 })();
+
+export namespace None {
+  export interface JSON {
+    [key: string]: json.JSON;
+  }
+}
