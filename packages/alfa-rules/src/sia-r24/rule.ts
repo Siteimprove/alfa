@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "Where is the transcript of the <video> element?"
           ).map(transcript => {
             return transcript.isSome()
-              ? Ok.of("The <video> element has a transcript")
+              ? Outcomes.HasTranscript
               : Question.of(
                   "transcript-link",
                   "node",
@@ -32,8 +32,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   "Where is the link pointing to the transcript of the <video> element?"
                 ).map(transcriptLink =>
                   transcriptLink.isSome()
-                    ? Ok.of("The <video> element has a transcript")
-                    : Err.of("The <video> element does not have a transcript")
+                    ? Outcomes.HasTranscript
+                    : Outcomes.HasNoTranscript
                 );
           })
         };
@@ -41,3 +41,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasTranscript = Ok.of("The <video> element has a transcript");
+
+  export const HasNoTranscript = Err.of(
+    "The <video> element does not have a transcript"
+  );
+}
