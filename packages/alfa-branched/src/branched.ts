@@ -3,12 +3,14 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import * as json from "@siteimprove/alfa-json";
 
 export class Branched<T, B = never>
   implements
@@ -17,7 +19,8 @@ export class Branched<T, B = never>
     Applicative<T>,
     Foldable<T>,
     Iterable<[T, Iterable<B>]>,
-    Equatable {
+    Equatable,
+    Serializable {
   public static of<T, B = never>(
     value: T,
     ...branches: Array<B>
@@ -123,21 +126,29 @@ export class Branched<T, B = never>
     }
   }
 
-  public toJSON() {
+  public toJSON(): Branched.JSON {
     return {
-      values: this._values
-        .map(({ value, branches }) => {
+      values: [
+        ...Iterable.map(this._values, ({ value, branches }) => {
           return {
-            value,
+            value: Serializable.toJSON(value),
             branches: branches.map(branches => branches.toJSON()).getOr(null)
           };
         })
-        .toJSON()
+      ]
     };
   }
 }
 
 export namespace Branched {
+  export interface JSON {
+    [key: string]: json.JSON;
+    values: Array<{
+      value: json.JSON;
+      branches: List.JSON | null;
+    }>;
+  }
+
   export function isBranched<T, B = never>(
     value: unknown
   ): value is Branched<T, B> {
