@@ -23,3 +23,10 @@ export function inapplicable<T, Q>(
 ): Outcome.Inapplicable<Page, T, Q> {
   return Outcome.Inapplicable.of(rule);
 }
+
+export function cantTell<T, Q>(
+  rule: Rule<Page, T, Q>,
+  target: T
+): Outcome.CantTell<Page, T, Q> {
+  return Outcome.CantTell.of(rule, target);
+}
