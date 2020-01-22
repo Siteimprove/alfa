@@ -254,9 +254,9 @@ export class Element extends Node implements Slot, Slotable {
     path += path === "/" ? "" : "/";
     path += this._name;
 
-    const index = this.preceding().filter(
+    const index = this.preceding().count(
       and(Element.isElement, element => element._name === this._name)
-    ).size;
+    );
 
     path += `[${index + 1}]`;
 

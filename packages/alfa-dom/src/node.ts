@@ -153,7 +153,7 @@ export abstract class Node
     path += path === "/" ? "" : "/";
     path += "node()";
 
-    const index = this.preceding().filter(Node.isNode).size;
+    const index = this.preceding().count(Node.isNode);
 
     path += `[${index + 1}]`;
 

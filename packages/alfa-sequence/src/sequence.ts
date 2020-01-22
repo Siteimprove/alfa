@@ -31,6 +31,7 @@ export interface Sequence<T>
   concat(iterable: Iterable<T>): Sequence<T>;
   filter<U extends T>(predicate: Predicate<T, U>): Sequence<U>;
   find<U extends T>(predicate: Predicate<T, U>): Option<U>;
+  count(predicate: Predicate<T>): number;
   get(index: number): Option<T>;
   first(): Option<T>;
   last(): Option<T>;

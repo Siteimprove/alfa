@@ -31,7 +31,7 @@ export class Text extends Node implements Slotable {
     path += path === "/" ? "" : "/";
     path += "text()";
 
-    const index = this.preceding().filter(Text.isText).size;
+    const index = this.preceding().count(Text.isText);
 
     path += `[${index + 1}]`;
 

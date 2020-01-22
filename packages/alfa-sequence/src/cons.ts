@@ -96,6 +96,10 @@ export class Cons<T> implements Sequence<T> {
     return Iterable.find(this, predicate);
   }
 
+  public count(predicate: Predicate<T>): number {
+    return Iterable.count(this, predicate);
+  }
+
   public get(index: number): Option<T> {
     return Iterable.get(this, index);
   }

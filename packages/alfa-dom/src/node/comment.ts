@@ -25,7 +25,7 @@ export class Comment extends Node {
     path += path === "/" ? "" : "/";
     path += "comment()";
 
-    const index = this.preceding().filter(Comment.isComment).size;
+    const index = this.preceding().count(Comment.isComment);
 
     path += `[${index + 1}]`;
 
