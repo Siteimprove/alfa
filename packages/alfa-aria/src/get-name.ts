@@ -189,8 +189,9 @@ function getAriaLabelTextAlternative(
 ): Option<string> {
   return element
     .attribute("aria-label")
-    .filter(label => label.value !== "")
-    .map(label => flatten(label.value, options));
+    .map(attr => attr.value)
+    .filter(label => label.trim() !== "")
+    .map(label => flatten(label, options));
 }
 
 /**
