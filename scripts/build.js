@@ -1,6 +1,5 @@
-const process = require("process");
-
+const { system } = require("./common/system");
 const { flags } = require("./common/flags");
 const { builder } = require("./common/builder");
 
-process.exit(builder.build(flags.project));
+system.exit(builder.build(flags.project));
