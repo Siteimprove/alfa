@@ -1,7 +1,6 @@
 const fs = require("fs");
 const prettier = require("prettier");
-
-const { fetch } = require("../../../scripts/helpers/http");
+const axios = require("axios");
 
 const { isArray } = Array;
 
@@ -19,8 +18,8 @@ const database = "https://www.unicode.org/Public/12.0.0/ucd/UnicodeData.txt";
  */
 const range = /<([\w\s]+),\s*(First|Last)>/;
 
-fetch(database).then(body => {
-  const entries = body.split("\n").filter(entry => entry.trim() !== "");
+axios.get(database).then(({ data }) => {
+  const entries = data.split("\n").filter(entry => entry.trim() !== "");
 
   /**
    * @type {Array<Character>}
