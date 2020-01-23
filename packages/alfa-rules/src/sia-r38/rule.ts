@@ -1,10 +1,11 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { PredicateTrilean } from "@siteimprove/alfa-predicate-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Page } from "@siteimprove/alfa-web";
 
-const { fold } = Predicate;
+const { fold } = PredicateTrilean;
 
 import { Question } from "../common/question";
 
@@ -21,10 +22,11 @@ export default Rule.Composite.of<Page, Element, Question>({
       expectations(outcomes) {
         return {
           1: fold(
-            outcomes => outcomes.some(Outcome.isPassed),
+            someTrilean(outcomeToTrilean),
             outcomes,
             () => Outcomes.HasAlternative,
-            () => Outcomes.HasNoAlternative
+            () => Outcomes.HasNoAlternative,
+            () => Outcomes.HasAlternative
           )
         };
       }
@@ -40,4 +42,22 @@ export namespace Outcomes {
   export const HasNoAlternative = Err.of(
     "The <video> element does not have an audio or text alternative"
   );
+}
+
+function outcomeToTrilean<I, T, Q>(outcome: Outcome.Applicable<I, T, Q>) {
+  if (Outcome.isPassed(outcome)) return true;
+  if (Outcome.isFailed(outcome)) return false;
+  return undefined;
+}
+
+function someTrilean<T>(
+  predicate: PredicateTrilean<T>
+): PredicateTrilean<Iterable<T>> {
+  return iterable =>
+    Iterable.reduce(
+      iterable,
+      (pred: PredicateTrilean<void>, val) =>
+        PredicateTrilean.or(pred, () => predicate(val)),
+      () => true
+    )();
 }
