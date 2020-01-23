@@ -11,7 +11,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter } = Iterable;
+const { filter, isEmpty } = Iterable;
 const { and, not, equals, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: fold(
-            hasAccessibleName(device),
+            hasAccessibleName(device, not(isEmpty)),
             target,
             () => Outcomes.HasAccessibleName,
             () => Outcomes.HasNoAccessibleName
