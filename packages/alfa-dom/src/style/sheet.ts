@@ -1,4 +1,5 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
+import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
@@ -39,6 +40,7 @@ export class Sheet {
 
 export namespace Sheet {
   export interface JSON {
+    [key: string]: json.JSON;
     rules: Array<Rule.JSON>;
     disabled: boolean;
   }

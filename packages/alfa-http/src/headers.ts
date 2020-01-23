@@ -1,10 +1,14 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
 
 /**
  * @see https://fetch.spec.whatwg.org/#headers-class
  */
-export class Headers implements Iterable<[string, string]> {
+export class Headers
+  implements Iterable<[string, string]>, json.Serializable, earl.Serializable {
   public static of(headers: Map<string, string>): Headers {
     return new Headers(headers);
   }
@@ -48,7 +52,24 @@ export class Headers implements Iterable<[string, string]> {
   }
 
   public toJSON(): Headers.JSON {
-    return this._headers.toJSON();
+    return [...this._headers];
+  }
+
+  public toEARL(): Headers.EARL {
+    return {
+      "@context": {
+        http: "http://www.w3.org/2011/http#"
+      },
+      "@list": [
+        ...Iterable.map(this._headers, ([name, value]) => {
+          return {
+            "@type": "http:MessageHeader" as const,
+            "http:fieldName": name,
+            "http:fieldValue": value
+          };
+        })
+      ]
+    };
   }
 
   public *[Symbol.iterator](): Iterator<[string, string]> {
@@ -58,6 +79,17 @@ export class Headers implements Iterable<[string, string]> {
 
 export namespace Headers {
   export interface JSON extends Array<[string, string]> {}
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      http: "http://www.w3.org/2011/http#";
+    };
+    "@list": Array<{
+      "@type": "http:MessageHeader";
+      "http:fieldName": string;
+      "http:fieldValue": string;
+    }>;
+  }
 
   export function from(json: JSON): Headers {
     return Headers.of(Map.from(json));

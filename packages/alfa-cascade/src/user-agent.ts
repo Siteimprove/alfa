@@ -23,7 +23,7 @@ export const UserAgent = Sheet.of(owner => {
       "[hidden], base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
       self => [Declaration.of("display", "none", false, Option.of(self))],
       owner
-    )
+    ),
 
     // // <area> elements are a little special in that while they are not rendered,
     // // they are focusable for the purpose of users interacting with the image
@@ -39,9 +39,11 @@ export const UserAgent = Sheet.of(owner => {
     //   width: "0"
     // }),
 
-    // cssRule("input[type=hidden i]", {
-    //   display: "none !important"
-    // }),
+    StyleRule.of(
+      "input[type=hidden i]",
+      self => [Declaration.of("display", "none", true, Option.of(self))],
+      owner
+    )
 
     // /**
     //  * @see https://html.spec.whatwg.org/#the-page

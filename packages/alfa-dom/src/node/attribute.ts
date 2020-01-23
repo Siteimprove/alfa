@@ -15,11 +15,11 @@ export class Attribute extends Node {
     return new Attribute(namespace, prefix, name, value, owner);
   }
 
-  public readonly namespace: Option<Namespace>;
-  public readonly prefix: Option<string>;
-  public readonly name: string;
-  public readonly value: string;
-  public readonly owner: Option<Element>;
+  private readonly _namespace: Option<Namespace>;
+  private readonly _prefix: Option<string>;
+  private readonly _name: string;
+  private readonly _value: string;
+  private readonly _owner: Option<Element>;
 
   private constructor(
     namespace: Option<Namespace>,
@@ -30,18 +30,38 @@ export class Attribute extends Node {
   ) {
     super(self => [], None);
 
-    this.namespace = namespace;
-    this.prefix = prefix;
-    this.name = name;
-    this.value = value;
-    this.owner = owner;
+    this._namespace = namespace;
+    this._prefix = prefix;
+    this._name = name;
+    this._value = value;
+    this._owner = owner;
+  }
+
+  public get namespace(): Option<Namespace> {
+    return this._namespace;
+  }
+
+  public get prefix(): Option<string> {
+    return this._prefix;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get value(): string {
+    return this._value;
+  }
+
+  public get owner(): Option<Element> {
+    return this._owner;
   }
 
   /**
    * @see https://html.spec.whatwg.org/#boolean-attribute
    */
   public isBoolean(): boolean {
-    switch (this.name) {
+    switch (this._name) {
       case "allowfullscreen":
       case "allowpaymentrequest":
       case "async":
@@ -57,22 +77,31 @@ export class Attribute extends Node {
     }
   }
 
+  public path(): string {
+    let path = this.owner.map(owner => owner.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += `@${this._name}`;
+
+    return path;
+  }
+
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
-      namespace: this.namespace.getOr(null),
-      prefix: this.prefix.getOr(null),
-      name: this.name,
-      value: this.value
+      namespace: this._namespace.getOr(null),
+      prefix: this._prefix.getOr(null),
+      name: this._name,
+      value: this._value
     };
   }
 
   public toString(): string {
     if (this.isBoolean()) {
-      return this.name;
+      return this._name;
     }
 
-    return `${this.name}="${this.value.replace(/"/g, "&quot;")}"`;
+    return `${this._name}="${this._value.replace(/"/g, "&quot;")}"`;
   }
 }
 
@@ -81,7 +110,7 @@ export namespace Attribute {
     return value instanceof Attribute;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "attribute";
     namespace: string | null;
     prefix: string | null;

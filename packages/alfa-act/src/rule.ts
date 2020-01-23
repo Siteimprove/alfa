@@ -1,11 +1,12 @@
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Document } from "@siteimprove/alfa-json-ld";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
 
 import { Cache } from "./cache";
 import { Interview } from "./interview";
@@ -14,7 +15,8 @@ import { Outcome } from "./outcome";
 
 const { flatMap, flatten, reduce } = Iterable;
 
-export class Rule<I, T, Q = unknown> {
+export class Rule<I, T, Q = unknown>
+  implements json.Serializable, earl.Serializable {
   public static of<I, T, Q = unknown>(properties: {
     uri: string;
     evaluate: Rule.Evaluator<I, T, Q>;
@@ -22,12 +24,16 @@ export class Rule<I, T, Q = unknown> {
     return new Rule(properties.uri, properties.evaluate);
   }
 
-  public readonly uri: string;
+  private readonly _uri: string;
   private readonly _evaluator: Rule.Evaluator<I, T, Q>;
 
   private constructor(uri: string, evaluator: Rule.Evaluator<I, T, Q>) {
-    this.uri = uri;
+    this._uri = uri;
     this._evaluator = evaluator;
+  }
+
+  public get uri(): string {
+    return this._uri;
   }
 
   public evaluate(
@@ -38,24 +44,34 @@ export class Rule<I, T, Q = unknown> {
     return this._evaluator(input, oracle, outcomes);
   }
 
-  public toJSON() {
+  public toJSON(): Rule.JSON {
     return {
-      uri: this.uri
+      uri: this._uri
     };
   }
 
-  public toEARL(): Document {
+  public toEARL(): Rule.EARL {
     return {
       "@context": {
         earl: "http://www.w3.org/ns/earl#"
       },
-      "@type": "earl:TestCase",
-      "@id": this.uri
+      "@type": ["earl:TestCriterion", "earl:TestCase"],
+      "@id": this._uri
     };
   }
 }
 
 export namespace Rule {
+  export interface JSON {
+    [key: string]: json.JSON;
+    uri: string;
+  }
+
+  export interface EARL extends earl.EARL {
+    "@type": ["earl:TestCriterion", "earl:TestCase"];
+    "@id": string;
+  }
+
   export type Expectation = Result<string, string>;
 
   export type Evaluator<I, T, Q> = (

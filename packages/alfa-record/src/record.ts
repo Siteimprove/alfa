@@ -1,12 +1,18 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import * as json from "@siteimprove/alfa-json";
 
 export class Record<T>
-  implements Foldable<Record.Value<T>>, Iterable<Record.Entry<T>>, Equatable {
+  implements
+    Foldable<Record.Value<T>>,
+    Iterable<Record.Entry<T>>,
+    Equatable,
+    Serializable {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
     const values = List.from(keys.map(key => properties[key]));
@@ -90,14 +96,14 @@ export class Record<T>
     }
   }
 
-  public toJSON() {
-    const record: { [key: string]: unknown } = {};
+  public toJSON(): Record.JSON {
+    const json: { [key: string]: json.JSON } = {};
 
     for (const [key, value] of this) {
-      record[key] = value;
+      json[key] = Serializable.toJSON(value);
     }
 
-    return (record as unknown) as T;
+    return json;
   }
 }
 
@@ -107,6 +113,10 @@ export namespace Record {
   export type Value<T> = T[Key<T>];
 
   export type Entry<T> = { [K in Key<T>]: [K, T[K]] }[Key<T>];
+
+  export interface JSON {
+    [key: string]: json.JSON;
+  }
 
   export function from<T>(entries: Iterable<Entry<T>>): Record<T> {
     const record: { [key: string]: unknown } = {};

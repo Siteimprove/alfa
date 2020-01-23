@@ -1,3 +1,4 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -10,7 +11,6 @@ import { Element } from "./node/element";
 import { Text } from "./node/text";
 import { Block } from "./style/block";
 import { Declaration } from "./style/declaration";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 const { keys } = Object;
 

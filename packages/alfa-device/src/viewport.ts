@@ -1,4 +1,7 @@
-export class Viewport {
+import { Serializable } from "@siteimprove/alfa-json";
+import * as json from "@siteimprove/alfa-json";
+
+export class Viewport implements Serializable {
   public static of(
     width: number,
     height: number,
@@ -58,6 +61,7 @@ export namespace Viewport {
   }
 
   export interface JSON {
+    [key: string]: json.JSON;
     width: number;
     height: number;
     orientation: Orientation;

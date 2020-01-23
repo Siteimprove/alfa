@@ -1,4 +1,6 @@
 import { Decoder, Encoder } from "@siteimprove/alfa-encoding";
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
 
 import { Body } from "./body";
 import { Headers } from "./headers";
@@ -6,7 +8,7 @@ import { Headers } from "./headers";
 /**
  * @see https://fetch.spec.whatwg.org/#request-class
  */
-export class Request implements Body {
+export class Request implements Body, json.Serializable, earl.Serializable {
   public static of(
     method: string,
     url: string,
@@ -73,14 +75,46 @@ export class Request implements Body {
       body: Decoder.decode(new Uint8Array(this._body))
     };
   }
+
+  public toEARL(): Request.EARL {
+    return {
+      "@context": {
+        http: "http://www.w3.org/2011/http#"
+      },
+      "@type": ["http:Message", "http:Request"],
+      "http:methodName": this._method,
+      "http:requestURI": this._url,
+      "http:headers": this._headers.toEARL(),
+      "http:body": {
+        "@context": {
+          cnt: "http://www.w3.org/2011/content#"
+        },
+        "@type": ["cnt:Content", "cnt:ContentAsText"],
+        "cnt:characterEncoding": "utf-8",
+        "cnt:chars": Decoder.decode(new Uint8Array(this._body))
+      }
+    };
+  }
 }
 
 export namespace Request {
   export interface JSON {
+    [key: string]: json.JSON;
     method: string;
     url: string;
     headers: Headers.JSON;
     body: string;
+  }
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      http: "http://www.w3.org/2011/http#";
+    };
+    "@type": ["http:Message", "http:Request"];
+    "http:methodName": string;
+    "http:requestURI": string;
+    "http:headers": Headers.EARL;
+    "http:body": Body.EARL;
   }
 
   export function from(json: JSON): Request {

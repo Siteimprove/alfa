@@ -1,7 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Thunk } from "@siteimprove/alfa-thunk";
+import * as json from "@siteimprove/alfa-json";
+
 import { Ok } from "./ok";
 import { Result } from "./result";
 
@@ -86,8 +89,10 @@ export class Err<E> implements Result<never, E> {
 
   public *[Symbol.iterator]() {}
 
-  public toJSON() {
-    return { error: this._error };
+  public toJSON(): Err.JSON {
+    return {
+      error: Serializable.toJSON(this._error)
+    };
   }
 
   public toString(): string {
@@ -98,5 +103,10 @@ export class Err<E> implements Result<never, E> {
 export namespace Err {
   export function isErr<E>(value: unknown): value is Err<E> {
     return value instanceof Err;
+  }
+
+  export interface JSON {
+    [key: string]: json.JSON;
+    error: json.JSON;
   }
 }

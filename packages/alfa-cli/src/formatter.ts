@@ -4,6 +4,7 @@ import earl from "./formatter/earl";
 import json from "./formatter/json";
 
 export type Formatter<I, T, Q> = (
+  input: I,
   outcomes: Iterable<Outcome<I, T, Q>>
 ) => string;
 

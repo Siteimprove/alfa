@@ -7,23 +7,40 @@ export class Comment extends Node {
     return new Comment(data, parent);
   }
 
-  public readonly data: string;
+  private readonly _data: string;
 
   private constructor(data: string, parent: Option<Node>) {
     super(self => [], parent);
 
-    this.data = data;
+    this._data = data;
+  }
+
+  public get data(): string {
+    return this._data;
+  }
+
+  public path(): string {
+    let path = this._parent.map(parent => parent.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += "comment()";
+
+    const index = this.preceding().count(Comment.isComment);
+
+    path += `[${index + 1}]`;
+
+    return path;
   }
 
   public toJSON(): Comment.JSON {
     return {
       type: "comment",
-      data: this.data
+      data: this._data
     };
   }
 
   public toString(): string {
-    return `<!--${this.data}-->`;
+    return `<!--${this._data}-->`;
   }
 }
 
@@ -32,7 +49,7 @@ export namespace Comment {
     return value instanceof Comment;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "comment";
     data: string;
   }

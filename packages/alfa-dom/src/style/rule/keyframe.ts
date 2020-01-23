@@ -53,7 +53,7 @@ export namespace Keyframe {
     return value instanceof Keyframe;
   }
 
-  export interface JSON {
+  export interface JSON extends Rule.JSON {
     type: "keyframe";
     key: string;
     style: Block.JSON;

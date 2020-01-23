@@ -13,6 +13,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-earl"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
@@ -25,7 +28,7 @@
       "path": "../alfa-iterable"
     },
     {
-      "path": "../alfa-json-ld"
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-list"

@@ -3,6 +3,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Hashable } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -19,7 +20,8 @@ export interface Option<T>
     Applicative<T>,
     Iterable<T>,
     Equatable,
-    Hashable {
+    Hashable,
+    Serializable {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
@@ -37,10 +39,12 @@ export interface Option<T>
   get(): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
-  toJSON(): { value: T } | {};
+  toJSON(): Option.JSON;
 }
 
 export namespace Option {
+  export type JSON = Some.JSON | None.JSON;
+
   export function of<T>(value: T): Option<T> {
     return Some.of(value);
   }

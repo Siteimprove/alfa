@@ -48,7 +48,7 @@ export namespace Namespace {
     return value instanceof Namespace;
   }
 
-  export interface JSON {
+  export interface JSON extends Rule.JSON {
     type: "namespace";
     namespace: string;
     prefix: string | null;

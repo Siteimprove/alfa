@@ -9,16 +9,33 @@ export class Text extends Node implements Slotable {
     return new Text(data, parent);
   }
 
-  public readonly data: string;
+  private readonly _data: string;
 
   private constructor(data: string, parent: Option<Node>) {
     super(self => [], parent);
 
-    this.data = data;
+    this._data = data;
+  }
+
+  public get data(): string {
+    return this._data;
   }
 
   public assignedSlot(): Option<Slot> {
     return Slotable.findSlot(this);
+  }
+
+  public path(): string {
+    let path = this._parent.map(parent => parent.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += "text()";
+
+    const index = this.preceding().count(Text.isText);
+
+    path += `[${index + 1}]`;
+
+    return path;
   }
 
   public toJSON(): Text.JSON {
@@ -38,7 +55,7 @@ export namespace Text {
     return value instanceof Text;
   }
 
-  export interface JSON {
+  export interface JSON extends Node.JSON {
     type: "text";
     data: string;
   }

@@ -1,6 +1,9 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+import * as json from "@siteimprove/alfa-json";
 
-export class Slice<T> implements Iterable<T> {
+export class Slice<T> implements Iterable<T>, Serializable {
   public static of<T>(
     array: Readonly<Array<T>>,
     start: number = 0,
@@ -49,8 +52,8 @@ export class Slice<T> implements Iterable<T> {
     }
   }
 
-  public toJSON() {
-    return [...this];
+  public toJSON(): Slice.JSON {
+    return [...Iterable.map(this, Serializable.toJSON)];
   }
 
   public toString(): string {
@@ -64,6 +67,8 @@ export namespace Slice {
   export function isSlice<T>(value: unknown): value is Slice<T> {
     return value instanceof Slice;
   }
+
+  export interface JSON extends Array<json.JSON> {}
 }
 
 function clamp(value: number, length: number): number {

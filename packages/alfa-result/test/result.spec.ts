@@ -12,7 +12,10 @@ test("map() applies a function to an ok value", t => {
 });
 
 test("map() does nothing to an err value", t => {
-  t.equal(err.map(n => n + 2), err);
+  t.equal(
+    err.map(n => n + 2),
+    err
+  );
 });
 
 test("from() constructs a result from a thunk", t => {
@@ -23,10 +26,10 @@ test("from() constructs a result from a thunk", t => {
 
 test("from() constructs a result from a thunk that throws", t => {
   const err = Result.from((): number => {
-    throw new Error("error");
+    throw "fail";
   });
 
-  t.deepEqual(err.toJSON(), { error: new Error("error") });
+  t.deepEqual(err.toJSON(), { error: "fail" });
 });
 
 test("from() constructs a result from an async thunk", async t => {
@@ -38,9 +41,9 @@ test("from() constructs a result from an async thunk", async t => {
 test("from() constructs a result from an async thunk that throws", async t => {
   const err = await Result.from(
     async (): Promise<number> => {
-      throw new Error("error");
+      throw "fail";
     }
   );
 
-  t.deepEqual(err.toJSON(), { error: new Error("error") });
+  t.deepEqual(err.toJSON(), { error: "fail" });
 });

@@ -1,5 +1,6 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
+import * as json from "@siteimprove/alfa-json";
 
 import { Block } from "../block";
 import { Declaration } from "../declaration";
@@ -47,6 +48,7 @@ export namespace FontFace {
   }
 
   export interface JSON {
+    [key: string]: json.JSON;
     type: "font-face";
     style: Block.JSON;
   }

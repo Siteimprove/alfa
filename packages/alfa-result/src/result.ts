@@ -1,6 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
@@ -14,7 +15,8 @@ export interface Result<T, E>
     Functor<T>,
     Foldable<T>,
     Iterable<T>,
-    Equatable {
+    Equatable,
+    Serializable {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
@@ -30,10 +32,12 @@ export interface Result<T, E>
   getOrElse<U>(value: Thunk<U>): T | U;
   ok(): Option<T>;
   err(): Option<E>;
-  toJSON(): { value: T } | { error: E };
+  toJSON(): Result.JSON;
 }
 
 export namespace Result {
+  export type JSON = Ok.JSON | Err.JSON;
+
   export function of<T, E>(value: T): Result<T, E> {
     return Ok.of(value);
   }

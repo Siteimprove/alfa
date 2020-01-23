@@ -10,6 +10,21 @@
   ],
   "references": [
     {
+      "path": "../alfa-earl"
+    },
+    {
+      "path": "../alfa-encoding"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-map"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-predicate"
     },
     {

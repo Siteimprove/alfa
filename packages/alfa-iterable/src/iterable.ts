@@ -127,6 +127,17 @@ export namespace Iterable {
     return None;
   }
 
+  export function count<T>(
+    iterable: Iterable<T>,
+    predicate: Predicate<T>
+  ): number {
+    return reduce(
+      iterable,
+      (count, value) => (predicate(value) ? count + 1 : count),
+      0
+    );
+  }
+
   export function get<T>(iterable: Iterable<T>, index: number): Option<T> {
     return first(skip(iterable, index));
   }

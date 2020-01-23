@@ -10,10 +10,10 @@
   ],
   "references": [
     {
-      "path": "../alfa-branched"
+      "path": "../alfa-iterable"
     },
     {
-      "path": "../alfa-iterable"
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-test"

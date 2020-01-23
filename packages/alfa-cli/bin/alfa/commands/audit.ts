@@ -34,7 +34,7 @@ export default class Subcommand extends Command {
       default: "ready"
     }),
 
-    format: flags.string({ char: "f", default: "json" }),
+    format: flags.string({ char: "f", default: "earl" }),
 
     output: flags.string({ char: "o" }),
 
@@ -185,7 +185,7 @@ export default class Subcommand extends Command {
     //   );
     // }
 
-    let output = await report(outcomes, formatter(flags.format));
+    let output = await report(page, outcomes, formatter(flags.format));
 
     output += "\n";
 
@@ -198,10 +198,11 @@ export default class Subcommand extends Command {
 }
 
 async function report<I, T, Q>(
+  input: I,
   outcomes: Iterable<Outcome<I, T, Q>>,
   formatter: Formatter<I, T, Q>
 ): Promise<string> {
-  return formatter(outcomes);
+  return formatter(input, outcomes);
 }
 
 function formatter<I, T, Q>(format: string): Formatter<I, T, Q> {

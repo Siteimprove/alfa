@@ -1,9 +1,18 @@
+import { Serializable } from "@siteimprove/alfa-json";
+
 import { Formatter } from "../formatter";
 
 const { stringify } = JSON;
 
 export default function<I, T, Q>(): Formatter<I, T, Q> {
-  return function JSON(outcomes) {
-    return stringify([...outcomes].map(outcome => outcome.toJSON()), null, 2);
+  return function JSON(input, outcomes) {
+    return stringify(
+      {
+        input: Serializable.toJSON(input),
+        outcomes: [...outcomes].map(outcome => outcome.toJSON())
+      },
+      null,
+      2
+    );
   };
 }

@@ -3,12 +3,15 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
 
 const { equals } = Predicate;
 
-export abstract class Node implements Iterable<Node> {
-  private readonly _children: Array<Node>;
-  private readonly _parent: Option<Node>;
+export abstract class Node
+  implements Iterable<Node>, json.Serializable, earl.Serializable {
+  protected readonly _children: Array<Node>;
+  protected readonly _parent: Option<Node>;
 
   protected constructor(
     children: Mapper<Node, Iterable<Node>>,
@@ -48,7 +51,10 @@ export abstract class Node implements Iterable<Node> {
    */
   public descendants(options: Node.Traversal = {}): Sequence<Node> {
     return this.children(options).flatMap(child =>
-      Sequence.of(child, Lazy.of(() => child.descendants(options)))
+      Sequence.of(
+        child,
+        Lazy.of(() => child.descendants(options))
+      )
     );
   }
 
@@ -58,7 +64,24 @@ export abstract class Node implements Iterable<Node> {
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
     return this.parent(options)
       .map(parent =>
-        Sequence.of(parent, Lazy.of(() => parent.ancestors(options)))
+        Sequence.of(
+          parent,
+          Lazy.of(() => parent.ancestors(options))
+        )
+      )
+      .getOrElse(() => Sequence.empty());
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-preceding
+   */
+  public preceding(options: Node.Traversal = {}): Sequence<Node> {
+    return this.parent(options)
+      .map(parent =>
+        parent
+          .children(options)
+          .takeUntil(equals(this))
+          .reverse()
       )
       .getOrElse(() => Sequence.empty());
   }
@@ -70,13 +93,21 @@ export abstract class Node implements Iterable<Node> {
     predicate: Predicate<Node, T> = () => true,
     options: Node.Traversal = {}
   ): Option<T> {
-    return this.parent(options).flatMap(parent =>
-      parent
-        .children(options)
-        .takeUntil(equals(this))
-        .reverse()
-        .find(predicate)
-    );
+    return this.preceding(options).find(predicate);
+  }
+
+  /**
+   * @see https://dom.spec.whatwg.org/#concept-tree-following
+   */
+  public following(options: Node.Traversal = {}): Sequence<Node> {
+    return this.parent(options)
+      .map(parent =>
+        parent
+          .children(options)
+          .skipUntil(equals(this))
+          .skip(1)
+      )
+      .getOrElse(() => Sequence.empty());
   }
 
   /**
@@ -86,13 +117,7 @@ export abstract class Node implements Iterable<Node> {
     predicate: Predicate<Node, T> = () => true,
     options: Node.Traversal = {}
   ): Option<T> {
-    return this.parent(options).flatMap(parent =>
-      parent
-        .children(options)
-        .skipUntil(equals(this))
-        .skip(1)
-        .find(predicate)
-    );
+    return this.following(options).find(predicate);
   }
 
   /**
@@ -118,11 +143,43 @@ export abstract class Node implements Iterable<Node> {
       .join("");
   }
 
+  /**
+   * Get an XPath that uniquely identifies the node across descendants of its
+   * root.
+   */
+  public path(): string {
+    let path = this._parent.map(parent => parent.path()).getOr("/");
+
+    path += path === "/" ? "" : "/";
+    path += "node()";
+
+    const index = this.preceding().count(Node.isNode);
+
+    path += `[${index + 1}]`;
+
+    return path;
+  }
+
   public *[Symbol.iterator](): Iterator<Node> {
     yield* this.descendants();
   }
 
   public abstract toJSON(): Node.JSON;
+
+  public toEARL(): Node.EARL {
+    return {
+      "@context": {
+        ptr: "http://www.w3.org/2009/pointers#"
+      },
+      "@type": [
+        "ptr:Pointer",
+        "ptr:SinglePointer",
+        "ptr:ExpressionPointer",
+        "ptr:XPathPointer"
+      ],
+      "ptr:expression": this.path()
+    };
+  }
 }
 
 export namespace Node {
@@ -164,6 +221,7 @@ import { Type } from "./node/type";
 
 export namespace Node {
   export interface JSON {
+    [key: string]: json.JSON;
     type: string;
   }
 
@@ -199,5 +257,21 @@ export namespace Node {
       default:
         throw new Error(`Unexpected node of type: ${node.type}`);
     }
+  }
+
+  export interface EARL extends earl.EARL {
+    "@context": {
+      ptr: "http://www.w3.org/2009/pointers#";
+    };
+    "@type": [
+      "ptr:Pointer",
+      "ptr:SinglePointer",
+      "ptr:ExpressionPointer",
+      "ptr:XPathPointer"
+    ];
+    "ptr:expression": string;
+    "ptr:reference"?: {
+      "@id": string;
+    };
   }
 }

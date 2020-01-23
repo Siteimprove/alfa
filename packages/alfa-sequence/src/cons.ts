@@ -1,5 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { JSON, Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -95,6 +96,10 @@ export class Cons<T> implements Sequence<T> {
     return Iterable.find(this, predicate);
   }
 
+  public count(predicate: Predicate<T>): number {
+    return Iterable.count(this, predicate);
+  }
+
   public get(index: number): Option<T> {
     return Iterable.get(this, index);
   }
@@ -188,8 +193,8 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON() {
-    return [...this];
+  public toJSON(): Array<JSON> {
+    return [...Iterable.map(this, Serializable.toJSON)];
   }
 
   public toString(): string {

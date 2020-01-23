@@ -56,6 +56,10 @@ export const Nil: Nil = new (class Nil {
     return None;
   }
 
+  public count(): number {
+    return 0;
+  }
+
   public get(): None {
     return None;
   }
@@ -118,7 +122,7 @@ export const Nil: Nil = new (class Nil {
 
   public *[Symbol.iterator](): Iterator<never> {}
 
-  public toJSON() {
+  public toJSON(): Array<never> {
     return [];
   }
 

@@ -10,10 +10,16 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-earl"
+    },
+    {
       "path": "../alfa-graph"
     },
     {
       "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-predicate"

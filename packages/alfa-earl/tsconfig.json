@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/earl.ts", "src/index.ts", "src/serializable.ts"],
+  "references": [
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-json-ld"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

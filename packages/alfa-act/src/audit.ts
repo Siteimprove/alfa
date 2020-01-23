@@ -18,25 +18,25 @@ export class Audit<I, T = unknown, Q = unknown> {
     return new Audit(input, oracle, List.empty());
   }
 
-  private readonly input: I;
-  private readonly oracle: Oracle<Q>;
-  private readonly rules: List<Rule<I, T, Q>>;
+  private readonly _input: I;
+  private readonly _oracle: Oracle<Q>;
+  private readonly _rules: List<Rule<I, T, Q>>;
 
   private constructor(input: I, oracle: Oracle<Q>, rules: List<Rule<I, T, Q>>) {
-    this.input = input;
-    this.oracle = oracle;
-    this.rules = rules;
+    this._input = input;
+    this._oracle = oracle;
+    this._rules = rules;
   }
 
   public add(rule: Rule<I, T, Q>): Audit<I, T, Q> {
-    return new Audit(this.input, this.oracle, this.rules.push(rule));
+    return new Audit(this._input, this._oracle, this._rules.push(rule));
   }
 
   public evaluate(): Future<Iterable<Outcome<I, T, Q>>> {
     const outcomes = Cache.empty();
 
-    return Future.traverse(this.rules, rule =>
-      rule.evaluate(this.input, this.oracle, outcomes)
+    return Future.traverse(this._rules, rule =>
+      rule.evaluate(this._input, this._oracle, outcomes)
     ).map(flatten);
   }
 }
