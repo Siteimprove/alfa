@@ -38,11 +38,11 @@ test("Passes when non-streaming video elements have all audio and visual informa
     .first()
     .get();
 
-  const oracle = makeOracle(
-    { "is-streaming": false, "has-audio": true },
-    { transcript: Option.of(transcript as Node) },
-    {}
-  );
+  const oracle = makeOracle({
+    "is-streaming": false,
+    "has-audio": true,
+    transcript: Option.of(transcript as Node)
+  });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
     passed(R24, video, [["1", Outcomes.HasTranscript]])
@@ -66,11 +66,12 @@ test("Fails when non-streaming video elements have no audio and visual informati
     .first()
     .get();
 
-  const oracle = makeOracle(
-    { "is-streaming": false, "has-audio": true },
-    { transcript: None, "transcript-link": None },
-    {}
-  );
+  const oracle = makeOracle({
+    "is-streaming": false,
+    "has-audio": true,
+    transcript: None,
+    "transcript-link": None
+  });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
     failed(R24, video, [["1", Outcomes.HasNoTranscript]])
@@ -94,11 +95,11 @@ test("Can't tell when some questions are left unanswered", async t => {
     .first()
     .get();
 
-  const oracle = makeOracle(
-    { "is-streaming": false, "has-audio": true },
-    { transcript: None },
-    {}
-  );
+  const oracle = makeOracle({
+    "is-streaming": false,
+    "has-audio": true,
+    transcript: None
+  });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
     cantTell(R24, video)
