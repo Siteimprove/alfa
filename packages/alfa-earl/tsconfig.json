@@ -4,10 +4,10 @@
   "files": ["src/earl.ts", "src/index.ts", "src/serializable.ts"],
   "references": [
     {
-      "path": "../alfa-option"
+      "path": "../alfa-json-ld"
     },
     {
-      "path": "../alfa-json-ld"
+      "path": "../alfa-option"
     },
     {
       "path": "../alfa-predicate"
