@@ -22,7 +22,8 @@ import {
   StyleRule,
   SupportsRule,
   Text,
-  Type
+  Type,
+  Shadow
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Option } from "@siteimprove/alfa-option";
@@ -72,6 +73,7 @@ export namespace Puppeteer {
         element:
           | globalThis.Element
           | globalThis.HTMLElement
+          | globalThis.HTMLIFrameElement
           | globalThis.SVGElement
       ): Element.JSON {
         return {
@@ -82,8 +84,12 @@ export namespace Puppeteer {
           attributes: [...element.attributes].map(toAttribute),
           style: "style" in element ? toBlock(element.style) : null,
           children: [...element.childNodes].map(toNode),
-          shadow: null,
-          content: null
+          shadow:
+            element.shadowRoot !== null ? toShadow(element.shadowRoot) : null,
+          content:
+            "contentDocument" in element && element.contentDocument !== null
+              ? toDocument(element.contentDocument)
+              : null
         };
       }
 
@@ -127,6 +133,17 @@ export namespace Puppeteer {
           name: type.name,
           publicId: type.publicId === "" ? null : type.publicId,
           systemId: type.systemId === "" ? null : type.systemId
+        };
+      }
+
+      function toShadow(shadow: globalThis.ShadowRoot): Shadow.JSON {
+        return {
+          type: "shadow",
+          mode: shadow.mode,
+          children: [...document.childNodes].map(toNode),
+          style: [...document.styleSheets].map(sheet =>
+            toSheet(sheet as CSSStyleSheet)
+          )
         };
       }
 
