@@ -4,6 +4,8 @@ import { Record } from "@siteimprove/alfa-record";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
+import { PredicateTrilean, Trilean } from "@siteimprove/alfa-predicate-trilean";
+
 import { Rule } from "./rule";
 
 export abstract class Outcome<I, T, Q = unknown>
@@ -322,18 +324,34 @@ export namespace Outcome {
     }
   }
 
+  function expectationToTrilean(expectation: Rule.Expectation): Trilean {
+    return expectation.isOk() || (expectation.isErr() ? false : undefined);
+  }
+
+  function everyTrilean<T>(
+    predicate: PredicateTrilean<T>
+  ): PredicateTrilean<Iterable<T>> {
+    return iterable =>
+      Iterable.reduce(
+        iterable,
+        (pred: PredicateTrilean<void>, val) =>
+          PredicateTrilean.and(pred, () => predicate(val)),
+        () => false
+      )();
+  }
+
   export function from<I, T, Q>(
     rule: Rule<I, T, Q>,
     target: T,
     expectations: Record<{ [key: string]: Rule.Expectation }>
   ): Outcome.Applicable<I, T, Q> {
-    const holds = Iterable.every(expectations, ([id, expectation]) =>
-      expectation.isOk()
+    return PredicateTrilean.fold(
+      everyTrilean(expectationToTrilean),
+      expectations.values(),
+      () => Passed.of(rule, target, expectations),
+      () => Failed.of(rule, target, expectations),
+      () => CantTell.of(rule, target)
     );
-
-    return holds
-      ? Passed.of(rule, target, expectations)
-      : Failed.of(rule, target, expectations);
   }
 
   export function isPassed<I, T, Q>(
