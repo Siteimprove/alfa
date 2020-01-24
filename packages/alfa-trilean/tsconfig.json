@@ -3,8 +3,9 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/index.ts",
-    "src/predicate-trilean.ts",
-    "test/predicate-trilean.spec.ts"
+    "src/predicate.ts",
+    "src/trilean.ts",
+    "test/predicate.spec.tsx"
   ],
   "references": [
     {

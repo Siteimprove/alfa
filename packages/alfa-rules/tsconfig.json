@@ -161,6 +161,9 @@
       "path": "../alfa-test"
     },
     {
+      "path": "../alfa-trilean"
+    },
+    {
       "path": "../alfa-web"
     }
   ]

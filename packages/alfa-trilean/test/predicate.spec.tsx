@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { PredicateTrilean } from "../src/predicate-trilean";
+import { Predicate } from "../src/predicate";
 
 function isPositive(x: number) {
   if (x === 0) return undefined;
@@ -18,7 +18,7 @@ function isPositiveSecond(arr: Array<number>) {
 
 test("fold() folds over the truth values of a predicate", t => {
   const f = (value: number) =>
-    PredicateTrilean.fold(
+    Predicate.fold(
       isPositive,
       value,
       x => "positive",
@@ -32,7 +32,7 @@ test("fold() folds over the truth values of a predicate", t => {
 });
 
 test("and() combines two predicates to a predicate that is true if both predicates are definitely true", t => {
-  const p = PredicateTrilean.and(isPositiveFirst, isPositiveSecond);
+  const p = Predicate.and(isPositiveFirst, isPositiveSecond);
 
   t.equal(p([1, 1]), true);
   t.equal(p([1, 0]), undefined);
@@ -48,7 +48,7 @@ test("and() combines two predicates to a predicate that is true if both predicat
 });
 
 test("or() combines two predicates to a predicate that is true if either predicate is definitely true", t => {
-  const p = PredicateTrilean.or(isPositiveFirst, isPositiveSecond);
+  const p = Predicate.or(isPositiveFirst, isPositiveSecond);
 
   t.equal(p([1, 1]), true);
   t.equal(p([1, 0]), true);

@@ -1,20 +1,20 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
-export type Trilean = boolean | undefined;
+import { Trilean } from "./trilean";
 
-export type PredicateTrilean<T, A extends Array<unknown> = Array<unknown>> = (
+export type Predicate<T, A extends Array<unknown> = Array<unknown>> = (
   value: T,
   ...args: A
 ) => Trilean;
 
-export namespace PredicateTrilean {
-  export function test<T>(predicate: PredicateTrilean<T>, value: T): Trilean {
+export namespace Predicate {
+  export function test<T>(predicate: Predicate<T>, value: T): Trilean {
     return predicate(value);
   }
 
   export function fold<T, V, W, X>(
-    predicate: PredicateTrilean<T>,
+    predicate: Predicate<T>,
     value: T,
     ifTrue: Mapper<T, V>,
     ifFalse: Mapper<T, W>,
@@ -30,16 +30,16 @@ export namespace PredicateTrilean {
     }
   }
 
-  export function not<T>(predicate: PredicateTrilean<T>): PredicateTrilean<T> {
+  export function not<T>(predicate: Predicate<T>): Predicate<T> {
     return function not(value) {
       return fold(predicate, value, contradiction, tautology, unknown);
     };
   }
 
   export function and<T>(
-    left: PredicateTrilean<T>,
-    right: PredicateTrilean<T>
-  ): PredicateTrilean<T> {
+    left: Predicate<T>,
+    right: Predicate<T>
+  ): Predicate<T> {
     return function and(value) {
       return fold(left, value, right, contradiction, value =>
         fold(right, value, unknown, contradiction, unknown)
@@ -47,10 +47,7 @@ export namespace PredicateTrilean {
     };
   }
 
-  export function or<T>(
-    left: PredicateTrilean<T>,
-    right: PredicateTrilean<T>
-  ): PredicateTrilean<T> {
+  export function or<T>(left: Predicate<T>, right: Predicate<T>): Predicate<T> {
     return function or(value) {
       return fold(left, value, tautology, right, value =>
         fold(right, value, tautology, unknown, unknown)
@@ -59,27 +56,27 @@ export namespace PredicateTrilean {
   }
 
   export function xor<T>(
-    left: PredicateTrilean<T>,
-    right: PredicateTrilean<T>
-  ): PredicateTrilean<T> {
+    left: Predicate<T>,
+    right: Predicate<T>
+  ): Predicate<T> {
     return and(or(left, right), not(and(left, right)));
   }
 
   export function nor<T>(
-    left: PredicateTrilean<T>,
-    right: PredicateTrilean<T>
-  ): PredicateTrilean<T> {
+    left: Predicate<T>,
+    right: Predicate<T>
+  ): Predicate<T> {
     return not(or(left, right));
   }
 
   export function nand<T>(
-    left: PredicateTrilean<T>,
-    right: PredicateTrilean<T>
-  ): PredicateTrilean<T> {
+    left: Predicate<T>,
+    right: Predicate<T>
+  ): Predicate<T> {
     return not(and(left, right));
   }
 
-  export function equals<T>(...values: Array<T>): PredicateTrilean<T> {
+  export function equals<T>(...values: Array<T>): Predicate<T> {
     return function equals(other) {
       return values.some(value => Equatable.equals(other, value));
     };
@@ -87,8 +84,8 @@ export namespace PredicateTrilean {
 
   export function property<T, K extends keyof T>(
     property: K,
-    predicate: PredicateTrilean<T[K]>
-  ): PredicateTrilean<T> {
+    predicate: Predicate<T[K]>
+  ): Predicate<T> {
     return value => predicate(value[property]);
   }
 }

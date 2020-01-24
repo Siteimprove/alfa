@@ -4,7 +4,7 @@ import { Record } from "@siteimprove/alfa-record";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-import { PredicateTrilean, Trilean } from "@siteimprove/alfa-predicate-trilean";
+import { Predicate, Trilean } from "@siteimprove/alfa-trilean";
 
 import { Rule } from "./rule";
 
@@ -328,14 +328,12 @@ export namespace Outcome {
     return expectation.isOk() || (expectation.isErr() ? false : undefined);
   }
 
-  function everyTrilean<T>(
-    predicate: PredicateTrilean<T>
-  ): PredicateTrilean<Iterable<T>> {
+  function everyTrilean<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
     return iterable =>
       Iterable.reduce(
         iterable,
-        (pred: PredicateTrilean<void>, val) =>
-          PredicateTrilean.and(pred, () => predicate(val)),
+        (pred: Predicate<void>, val) =>
+          Predicate.and(pred, () => predicate(val)),
         () => true
       )();
   }
@@ -345,7 +343,7 @@ export namespace Outcome {
     target: T,
     expectations: Record<{ [key: string]: Rule.Expectation }>
   ): Outcome.Applicable<I, T, Q> {
-    return PredicateTrilean.fold(
+    return Predicate.fold(
       everyTrilean(expectationToTrilean),
       expectations.values(),
       () => Passed.of(rule, target, expectations),

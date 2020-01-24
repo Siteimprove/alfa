@@ -1,12 +1,12 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { PredicateTrilean, Trilean } from "@siteimprove/alfa-predicate-trilean";
+import { Predicate, Trilean } from "@siteimprove/alfa-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Noresult } from "@siteimprove/alfa-result/src/noresult";
 import { Page } from "@siteimprove/alfa-web";
 
-const { fold } = PredicateTrilean;
+const { fold } = Predicate;
 
 import { Question } from "../common/question";
 
@@ -53,14 +53,11 @@ function outcomeToTrilean<I, T, Q>(
   return undefined;
 }
 
-function someTrilean<T>(
-  predicate: PredicateTrilean<T>
-): PredicateTrilean<Iterable<T>> {
+function someTrilean<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
   return iterable =>
     Iterable.reduce(
       iterable,
-      (pred: PredicateTrilean<void>, val) =>
-        PredicateTrilean.or(pred, () => predicate(val)),
+      (pred: Predicate<void>, val) => Predicate.or(pred, () => predicate(val)),
       () => false
     )();
 }
