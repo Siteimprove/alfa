@@ -140,8 +140,8 @@ export namespace Puppeteer {
         return {
           type: "shadow",
           mode: shadow.mode,
-          children: [...document.childNodes].map(toNode),
-          style: [...document.styleSheets].map(sheet =>
+          children: [...shadow.childNodes].map(toNode),
+          style: [...shadow.styleSheets].map(sheet =>
             toSheet(sheet as CSSStyleSheet)
           )
         };
