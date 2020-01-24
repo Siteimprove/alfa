@@ -1,8 +1,9 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { PredicateTrilean } from "@siteimprove/alfa-predicate-trilean";
+import { PredicateTrilean, Trilean } from "@siteimprove/alfa-predicate-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Iterable } from "@siteimprove/alfa-iterable";
+// import {Noresult} from "@siteimprove/alfa-result/src/noresult";
 import { Page } from "@siteimprove/alfa-web";
 
 const { fold } = PredicateTrilean;
@@ -44,7 +45,9 @@ export namespace Outcomes {
   );
 }
 
-function outcomeToTrilean<I, T, Q>(outcome: Outcome.Applicable<I, T, Q>) {
+function outcomeToTrilean<I, T, Q>(
+  outcome: Outcome.Applicable<I, T, Q>
+): Trilean {
   if (Outcome.isPassed(outcome)) return true;
   if (Outcome.isFailed(outcome)) return false;
   return undefined;
