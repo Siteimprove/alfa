@@ -3,7 +3,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { PredicateTrilean, Trilean } from "@siteimprove/alfa-predicate-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Iterable } from "@siteimprove/alfa-iterable";
-// import {Noresult} from "@siteimprove/alfa-result/src/noresult";
+import { Noresult } from "@siteimprove/alfa-result/src/noresult";
 import { Page } from "@siteimprove/alfa-web";
 
 const { fold } = PredicateTrilean;
@@ -27,7 +27,7 @@ export default Rule.Composite.of<Page, Element, Question>({
             outcomes,
             () => Outcomes.HasAlternative,
             () => Outcomes.HasNoAlternative,
-            () => Outcomes.HasAlternative
+            () => Noresult
           )
         };
       }
@@ -61,6 +61,6 @@ function someTrilean<T>(
       iterable,
       (pred: PredicateTrilean<void>, val) =>
         PredicateTrilean.or(pred, () => predicate(val)),
-      () => true
+      () => false
     )();
 }
