@@ -336,7 +336,7 @@ export namespace Outcome {
         iterable,
         (pred: PredicateTrilean<void>, val) =>
           PredicateTrilean.and(pred, () => predicate(val)),
-        () => false
+        () => true
       )();
   }
 
