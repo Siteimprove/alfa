@@ -95,7 +95,6 @@
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
     "test/sia-r24/rule.spec.tsx",
-    "test/sia-r38/rule.spec.tsx",
     "test/sia-r57/rule.spec.tsx",
     "test/sia-r64/rule.spec.tsx"
   ],
