@@ -12,10 +12,8 @@ import { Ok } from "./ok";
 // import { NoResult } from "./noresult";
 import * as json from "@siteimprove/alfa-json";
 
-namespace NoResult {
-  export interface JSON {
-    [key: string]: json.JSON;
-  }
+interface NRJSON {
+  [key: string]: json.JSON;
 }
 
 export interface Result<T, E>
@@ -45,7 +43,7 @@ export interface Result<T, E>
 }
 
 export namespace Result {
-  export type JSON = Ok.JSON | Err.JSON | NoResult.JSON;
+  export type JSON = Ok.JSON | Err.JSON | NRJSON;
 
   export function of<T, E>(value: T): Result<T, E> {
     return Ok.of(value);
@@ -75,6 +73,6 @@ export namespace Result {
   }
 
   export function isResult<T, E>(value: unknown): value is Result<T, E> {
-    return Ok.isOk(value) || Err.isErr(value) || NoResult.isNoResult(value);
+    return Ok.isOk(value) || Err.isErr(value) /*|| NoResult.isNoResult(value)*/;
   }
 }
