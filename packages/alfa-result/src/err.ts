@@ -6,7 +6,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 import * as json from "@siteimprove/alfa-json";
 
 import { Ok } from "./ok";
-// import { NoResult } from "./noresult";
+import { NoResult } from "./noresult";
 import { Result } from "./result";
 
 export class Err<E> implements Result<never, E> {
@@ -28,7 +28,7 @@ export class Err<E> implements Result<never, E> {
     return true;
   }
 
-  public isNoResult(): boolean /*this is NoResult*/ {
+  public isNoResult(): this is NoResult {
     return false;
   }
 

@@ -9,12 +9,7 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import { Err } from "./err";
 import { Ok } from "./ok";
-// import { NoResult } from "./noresult";
-import * as json from "@siteimprove/alfa-json";
-
-interface NRJSON {
-  [key: string]: json.JSON;
-}
+import { NoResult } from "./noresult";
 
 export interface Result<T, E>
   extends Monad<T>,
@@ -25,7 +20,7 @@ export interface Result<T, E>
     Serializable {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
-  isNoResult(): boolean /*this is NoResult*/;
+  isNoResult(): this is NoResult;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
   mapErr<F>(mapper: Mapper<E, F>): Result<T, F>;
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
@@ -43,7 +38,7 @@ export interface Result<T, E>
 }
 
 export namespace Result {
-  export type JSON = Ok.JSON | Err.JSON | NRJSON;
+  export type JSON = Ok.JSON | Err.JSON | NoResult.JSON;
 
   export function of<T, E>(value: T): Result<T, E> {
     return Ok.of(value);
@@ -73,6 +68,6 @@ export namespace Result {
   }
 
   export function isResult<T, E>(value: unknown): value is Result<T, E> {
-    return Ok.isOk(value) || Err.isErr(value) /*|| NoResult.isNoResult(value)*/;
+    return Ok.isOk(value) || Err.isErr(value) || NoResult.isNoResult(value);
   }
 }
