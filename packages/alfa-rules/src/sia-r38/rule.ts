@@ -1,8 +1,7 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Predicate, Trilean } from "@siteimprove/alfa-trilean";
+import { Predicate, some, Trilean } from "@siteimprove/alfa-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Noresult } from "@siteimprove/alfa-result/src/noresult";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -23,7 +22,7 @@ export default Rule.Composite.of<Page, Element, Question>({
       expectations(outcomes) {
         return {
           1: fold(
-            someTrilean(outcomeToTrilean),
+            some(outcomeToTrilean),
             outcomes,
             () => Outcomes.HasAlternative,
             () => Outcomes.HasNoAlternative,
@@ -51,13 +50,4 @@ function outcomeToTrilean<I, T, Q>(
   if (Outcome.isPassed(outcome)) return true;
   if (Outcome.isFailed(outcome)) return false;
   return undefined;
-}
-
-function someTrilean<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
-  return iterable =>
-    Iterable.reduce(
-      iterable,
-      (pred: Predicate<void>, val) => Predicate.or(pred, () => predicate(val)),
-      () => false
-    )();
 }

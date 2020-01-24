@@ -1,10 +1,9 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Record } from "@siteimprove/alfa-record";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-import { Predicate, Trilean } from "@siteimprove/alfa-trilean";
+import { Predicate, Trilean, every } from "@siteimprove/alfa-trilean";
 
 import { Rule } from "./rule";
 
@@ -328,23 +327,13 @@ export namespace Outcome {
     return expectation.isOk() || (expectation.isErr() ? false : undefined);
   }
 
-  function everyTrilean<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
-    return iterable =>
-      Iterable.reduce(
-        iterable,
-        (pred: Predicate<void>, val) =>
-          Predicate.and(pred, () => predicate(val)),
-        () => true
-      )();
-  }
-
   export function from<I, T, Q>(
     rule: Rule<I, T, Q>,
     target: T,
     expectations: Record<{ [key: string]: Rule.Expectation }>
   ): Outcome.Applicable<I, T, Q> {
     return Predicate.fold(
-      everyTrilean(expectationToTrilean),
+      every(expectationToTrilean),
       expectations.values(),
       () => Passed.of(rule, target, expectations),
       () => Failed.of(rule, target, expectations),
