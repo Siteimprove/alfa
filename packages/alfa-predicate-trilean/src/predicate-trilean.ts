@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
-type Trilean = boolean | undefined;
+export type Trilean = boolean | undefined;
 
 export type PredicateTrilean<T, A extends Array<unknown> = Array<unknown>> = (
   value: T,
