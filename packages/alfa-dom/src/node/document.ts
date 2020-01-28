@@ -8,8 +8,6 @@ import { Sheet } from "../style/sheet";
 const { map, join } = Iterable;
 
 export class Document extends Node {
-  private readonly _style: Array<Sheet>;
-
   public static of(
     children: Mapper<Node, Iterable<Node>>,
     style: Iterable<Sheet> = []
@@ -20,6 +18,8 @@ export class Document extends Node {
   public static empty(): Document {
     return new Document(() => [], []);
   }
+
+  private readonly _style: Array<Sheet>;
 
   private constructor(
     children: Mapper<Node, Iterable<Node>>,

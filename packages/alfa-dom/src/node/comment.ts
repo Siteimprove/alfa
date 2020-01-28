@@ -3,8 +3,12 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Node } from "../node";
 
 export class Comment extends Node {
-  public static of(data: string, parent: Option<Node>): Comment {
+  public static of(data: string, parent: Option<Node> = None): Comment {
     return new Comment(data, parent);
+  }
+
+  public static empty(parent: Option<Node> = None): Comment {
+    return new Comment("", parent);
   }
 
   private readonly _data: string;

@@ -12,6 +12,10 @@ export class Type extends Node {
     return new Type(name, publicId, systemId, parent);
   }
 
+  public static empty(parent: Option<Node> = None): Type {
+    return new Type("html", None, None, parent);
+  }
+
   private readonly _name: string;
   private readonly _publicId: Option<string>;
   private readonly _systemId: Option<string>;

@@ -14,6 +14,10 @@ export class Fragment extends Node {
     return new Fragment(children, parent);
   }
 
+  public static empty(parent: Option<Node> = None): Fragment {
+    return new Fragment(() => [], parent);
+  }
+
   private constructor(
     children: Mapper<Node, Iterable<Node>>,
     parent: Option<Node>
