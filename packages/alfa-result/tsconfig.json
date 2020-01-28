@@ -4,7 +4,6 @@
   "files": [
     "src/err.ts",
     "src/index.ts",
-    "src/noresult.ts",
     "src/ok.ts",
     "src/result.ts",
     "test/result.spec.ts"
