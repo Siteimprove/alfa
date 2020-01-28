@@ -6,7 +6,6 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import * as json from "@siteimprove/alfa-json";
 
 import { Err } from "./err";
-import { NoResult } from "./noresult";
 import { Result } from "./result";
 
 export class Ok<T> implements Result<T, never> {
@@ -25,10 +24,6 @@ export class Ok<T> implements Result<T, never> {
   }
 
   public isErr(): this is Err<never> {
-    return false;
-  }
-
-  public isNoResult(): this is NoResult {
     return false;
   }
 
