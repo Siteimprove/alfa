@@ -31,18 +31,18 @@ export class Media extends Condition {
   public toJSON(): Media.JSON {
     return {
       type: "media",
-      rules: [...this.rules].map(rule => rule.toJSON()),
-      condition: this.condition
+      rules: [...this._rules].map(rule => rule.toJSON()),
+      condition: this._condition
     };
   }
 
   public toString(): string {
     const rules = join(
-      map(this.rules, rule => indent(rule.toString())),
+      map(this._rules, rule => indent(rule.toString())),
       "\n\n"
     );
 
-    return `@media ${this.condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
+    return `@media ${this._condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }
 }
 

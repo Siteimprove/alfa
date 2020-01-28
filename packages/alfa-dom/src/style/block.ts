@@ -12,17 +12,21 @@ export class Block implements Iterable<Declaration> {
     return new Block(declarations);
   }
 
-  private readonly declarations: Array<Declaration>;
+  private readonly _declarations: Array<Declaration>;
 
   private constructor(declarations: Iterable<Declaration>) {
-    this.declarations = Array.from(declarations);
+    this._declarations = Array.from(declarations);
+  }
+
+  public get declarations(): Iterable<Declaration> {
+    return this._declarations;
   }
 
   public declaration(
     predicate: string | Predicate<Declaration>
   ): Option<Declaration> {
     return find(
-      this.declarations,
+      this._declarations,
       typeof predicate === "string"
         ? declaration => declaration.name === predicate
         : predicate
@@ -30,16 +34,16 @@ export class Block implements Iterable<Declaration> {
   }
 
   public *[Symbol.iterator](): Iterator<Declaration> {
-    yield* this.declarations;
+    yield* this._declarations;
   }
 
   public toJSON(): Block.JSON {
-    return this.declarations.map(declaration => declaration.toJSON());
+    return this._declarations.map(declaration => declaration.toJSON());
   }
 
   public toString(): string {
     return join(
-      map(this.declarations, declaration => declaration.toString()),
+      map(this._declarations, declaration => declaration.toString()),
       ";\n"
     );
   }

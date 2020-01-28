@@ -16,8 +16,8 @@ export class Keyframe extends Rule {
     return new Keyframe(key, declarations, owner, parent);
   }
 
-  public readonly key: string;
-  public readonly style: Block;
+  private readonly _key: string;
+  private readonly _style: Block;
 
   private constructor(
     key: string,
@@ -27,22 +27,30 @@ export class Keyframe extends Rule {
   ) {
     super(owner, parent);
 
-    this.key = key;
-    this.style = Block.of(declarations(this));
+    this._key = key;
+    this._style = Block.of(declarations(this));
+  }
+
+  public get key(): string {
+    return this._key;
+  }
+
+  public get style(): Block {
+    return this._style;
   }
 
   public toJSON(): Keyframe.JSON {
     return {
       type: "keyframe",
-      key: this.key,
-      style: this.style.toJSON()
+      key: this._key,
+      style: this._style.toJSON()
     };
   }
 
   public toString(): string {
-    const style = this.style.toString();
+    const style = this._style.toString();
 
-    return `@keyframe ${this.key} {${
+    return `@keyframe ${this._key} {${
       style === "" ? "" : `\n${indent(style)}\n`
     }}`;
   }

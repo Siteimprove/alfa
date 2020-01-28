@@ -6,7 +6,7 @@ import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 
 export abstract class Grouping extends Rule {
-  public readonly rules: Iterable<Rule>;
+  protected readonly _rules: Iterable<Rule>;
 
   protected constructor(
     rules: Mapper<Grouping, Iterable<Rule>>,
@@ -15,11 +15,15 @@ export abstract class Grouping extends Rule {
   ) {
     super(owner, parent);
 
-    this.rules = rules(this);
+    this._rules = rules(this);
+  }
+
+  public get rules(): Iterable<Rule> {
+    return this._rules;
   }
 
   public *children(): Iterable<Rule> {
-    yield* this.rules;
+    yield* this._rules;
   }
 
   public abstract toJSON(): Grouping.JSON;

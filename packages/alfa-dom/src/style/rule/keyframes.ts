@@ -18,7 +18,7 @@ export class Keyframes extends Grouping {
     return new Keyframes(name, rules, owner, parent);
   }
 
-  public readonly name: string;
+  private readonly _name: string;
 
   private constructor(
     name: string,
@@ -28,14 +28,18 @@ export class Keyframes extends Grouping {
   ) {
     super(rules, owner, parent);
 
-    this.name = name;
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
   }
 
   public toJSON(): Keyframes.JSON {
     return {
       type: "keyframes",
       rules: [...this.rules].map(rule => rule.toJSON()),
-      name: this.name
+      name: this._name
     };
   }
 
@@ -45,7 +49,7 @@ export class Keyframes extends Grouping {
       "\n\n"
     );
 
-    return `@keyframes ${this.name} {${rules === "" ? "" : `\n${rules}\n`}}`;
+    return `@keyframes ${this._name} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }
 }
 

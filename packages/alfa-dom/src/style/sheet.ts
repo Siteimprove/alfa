@@ -11,16 +11,28 @@ export class Sheet {
     return new Sheet(rules, disabled);
   }
 
-  public readonly rules: Iterable<Rule>;
-  public readonly disabled: boolean;
+  public static empty(): Sheet {
+    return new Sheet(() => [], false);
+  }
+
+  private readonly _rules: Array<Rule>;
+  private readonly _disabled: boolean;
 
   private constructor(rules: Mapper<Sheet, Iterable<Rule>>, disabled: boolean) {
-    this.rules = Array.from(rules(this));
-    this.disabled = disabled;
+    this._rules = Array.from(rules(this));
+    this._disabled = disabled;
+  }
+
+  public get rules(): Iterable<Rule> {
+    return this._rules;
+  }
+
+  public get disabled(): boolean {
+    return this._disabled;
   }
 
   public *children(): Iterable<Rule> {
-    yield* this.rules;
+    yield* this._rules;
   }
 
   public *descendants(): Iterable<Rule> {
@@ -32,8 +44,8 @@ export class Sheet {
 
   public toJSON(): Sheet.JSON {
     return {
-      rules: [...this.rules].map(rule => rule.toJSON()),
-      disabled: this.disabled
+      rules: [...this._rules].map(rule => rule.toJSON()),
+      disabled: this._disabled
     };
   }
 }

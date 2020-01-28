@@ -16,8 +16,8 @@ export class Page extends Rule {
     return new Page(selector, declarations, owner, parent);
   }
 
-  public readonly selector: string;
-  public readonly style: Block;
+  private readonly _selector: string;
+  private readonly _style: Block;
 
   private constructor(
     selector: string,
@@ -27,22 +27,30 @@ export class Page extends Rule {
   ) {
     super(owner, parent);
 
-    this.selector = selector;
-    this.style = Block.of(declarations(this));
+    this._selector = selector;
+    this._style = Block.of(declarations(this));
+  }
+
+  public get selector(): string {
+    return this._selector;
+  }
+
+  public get style(): Block {
+    return this._style;
   }
 
   public toJSON(): Page.JSON {
     return {
       type: "page",
-      selector: this.selector,
-      style: this.style.toJSON()
+      selector: this._selector,
+      style: this._style.toJSON()
     };
   }
 
   public toString(): string {
-    const style = this.style.toString();
+    const style = this._style.toString();
 
-    return `@page ${this.selector} {${
+    return `@page ${this._selector} {${
       style === "" ? "" : `\n${indent(style)}\n`
     }}`;
   }

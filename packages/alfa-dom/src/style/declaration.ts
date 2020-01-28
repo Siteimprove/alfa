@@ -13,10 +13,10 @@ export class Declaration {
     return new Declaration(name, value, important, parent);
   }
 
-  public readonly name: string;
-  public readonly value: string;
-  public readonly important: boolean;
-  public readonly parent: Option<Rule>;
+  private readonly _name: string;
+  private readonly _value: string;
+  private readonly _important: boolean;
+  private readonly _parent: Option<Rule>;
 
   private constructor(
     name: string,
@@ -24,14 +24,30 @@ export class Declaration {
     important: boolean,
     parent: Option<Rule>
   ) {
-    this.name = name;
-    this.value = value;
-    this.important = important;
-    this.parent = parent;
+    this._name = name;
+    this._value = value;
+    this._important = important;
+    this._parent = parent;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get value(): string {
+    return this._value;
+  }
+
+  public get important(): boolean {
+    return this._important;
+  }
+
+  public get parent(): Option<Rule> {
+    return this._parent;
   }
 
   public *ancestors(): Iterable<Rule> {
-    for (const parent of this.parent) {
+    for (const parent of this._parent) {
       yield parent;
       yield* parent.ancestors();
     }
@@ -39,14 +55,16 @@ export class Declaration {
 
   public toJSON(): Declaration.JSON {
     return {
-      name: this.name,
-      value: this.value,
-      important: this.important
+      name: this._name,
+      value: this._value,
+      important: this._important
     };
   }
 
   public toString(): string {
-    return `${this.name}: ${this.value}${this.important ? " !important" : ""}`;
+    return `${this._name}: ${this._value}${
+      this._important ? " !important" : ""
+    }`;
   }
 }
 

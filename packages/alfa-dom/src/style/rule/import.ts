@@ -15,8 +15,8 @@ export class Import extends Condition {
     return new Import(href, sheet, condition, owner, parent);
   }
 
-  public readonly href: string;
-  public readonly sheet: Sheet;
+  private readonly _href: string;
+  private readonly _sheet: Sheet;
 
   private constructor(
     href: string,
@@ -27,25 +27,33 @@ export class Import extends Condition {
   ) {
     super(condition.getOr("all"), () => [], owner, parent);
 
-    this.href = href;
-    this.sheet = sheet;
+    this._href = href;
+    this._sheet = sheet;
   }
 
   public get rules(): Iterable<Rule> {
-    return this.sheet.rules;
+    return this._sheet.rules;
+  }
+
+  public get href(): string {
+    return this._href;
+  }
+
+  public get sheet(): Sheet {
+    return this._sheet;
   }
 
   public toJSON(): Import.JSON {
     return {
       type: "import",
-      rules: [...this.rules].map(rule => rule.toJSON()),
-      condition: this.condition,
-      href: this.href
+      rules: [...this._sheet.rules].map(rule => rule.toJSON()),
+      condition: this._condition,
+      href: this._href
     };
   }
 
   public toString(): string {
-    return `@import url(${this.href}) ${this.condition}`;
+    return `@import url(${this._href}) ${this._condition}`;
   }
 }
 
