@@ -1,7 +1,7 @@
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -72,7 +72,7 @@ export namespace Rule {
     "@id": string;
   }
 
-  export type Expectation = Result<string, string>;
+  export type Expectation = Option<Result<string, string>>;
 
   export type Evaluator<I, T, Q> = (
     input: Readonly<I>,
@@ -201,12 +201,12 @@ function resolve<I, T, Q>(
       expectations,
       (expectations, [id, expectation]) =>
         expectations.flatMap(expectations =>
-          expectation.map(expectation =>
-            expectations.push([
+          expectation.map(expectation => {
+            return expectations.push([
               id,
-              expectation.map(normalize).mapErr(normalize)
-            ])
-          )
+              expectation.map(val => val.map(normalize).mapErr(normalize))
+            ]);
+          })
         ),
       Option.of(List.empty<[string, Rule.Expectation]>())
     )

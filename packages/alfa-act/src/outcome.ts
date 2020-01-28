@@ -324,7 +324,7 @@ export namespace Outcome {
   }
 
   function expectationToTrilean(expectation: Rule.Expectation): Trilean {
-    return expectation.isOk() || (expectation.isErr() ? false : undefined);
+    return expectation.isNone() ? undefined : expectation.get().isOk();
   }
 
   export function from<I, T, Q>(
