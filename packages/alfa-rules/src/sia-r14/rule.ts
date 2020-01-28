@@ -3,8 +3,9 @@ import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
@@ -67,9 +68,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
         return {
           1: accessibleNameIncludesTextContent
-            ? Ok.of(
-                "The visible text content of the element is included within its accessible name"
-              )
+            ? Outcomes.VisibleIsInName
             : Question.of(
                 "is-human-language",
                 "boolean",
@@ -77,12 +76,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 "Does the accessible name of the element express anything in human language?"
               ).map(isHumanLanguage =>
                 !isHumanLanguage
-                  ? Ok.of(
-                      "The accessible name of the element does not express anything in human language"
-                    )
-                  : Err.of(
-                      "The visible text content of the element is not included within its accessible name"
-                    )
+                  ? Outcomes.NameIsNotLanguage
+                  : Outcomes.VisibleIsNotInName
               )
         };
       }
@@ -109,5 +104,25 @@ function getVisibleTextContent(element: Element, device: Device): string {
       ),
       ""
     )
+  );
+}
+
+export namespace Outcomes {
+  export const VisibleIsInName = Some.of(
+    Ok.of(
+      "The visible text content of the element is included within its accessible name"
+    ) as Result<string, string>
+  );
+
+  export const NameIsNotLanguage = Some.of(
+    Ok.of(
+      "The accessible name of the element does not express anything in human language"
+    ) as Result<string, string>
+  );
+
+  export const VisibleIsNotInName = Some.of(
+    Err.of(
+      "The visible text content of the element is not included within its accessible name"
+    ) as Result<string, string>
   );
 }

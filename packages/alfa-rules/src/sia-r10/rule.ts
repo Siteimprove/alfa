@@ -2,8 +2,9 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
@@ -30,7 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
             and(
               Element.isElement,
               and(
-		hasAttribute("autocomplete", hasTokens),
+                hasAttribute("autocomplete", hasTokens),
                 and(
                   hasNamespace(equals(Namespace.HTML)),
                   and(
@@ -47,10 +48,10 @@ export default Rule.Atomic.of<Page, Attribute>({
                           )
                         ),
                         and(
-			  not(hasAttribute("aria-disabled", equals("true"))),
-			  or(
-			    isTabbable(device),
-			    hasRole(hasCategory(equals(Role.Category.Widget)))
+                          not(hasAttribute("aria-disabled", equals("true"))),
+                          or(
+                            isTabbable(device),
+                            hasRole(hasCategory(equals(Role.Category.Widget)))
                           )
                         )
                       )
@@ -67,8 +68,8 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1: test(isValidAutocomplete(), target)
-            ? Ok.of("The autocomplete attribute has a valid value")
-            : Err.of("The autocomplete attribute does not have a valid value")
+            ? Outcomes.HasValidValue
+            : Outcomes.HasNoValidValue
         };
       }
     };
@@ -248,4 +249,20 @@ function isAppropriateField(field: string): Predicate<Element> {
 
     return false;
   };
+}
+
+export namespace Outcomes {
+  export const HasValidValue = Some.of(
+    Ok.of("The autocomplete attribute has a valid value") as Result<
+      string,
+      string
+    >
+  );
+
+  export const HasNoValidValue = Some.of(
+    Err.of("The autocomplete attribute does not have a valid value") as Result<
+      string,
+      string
+    >
+  );
 }

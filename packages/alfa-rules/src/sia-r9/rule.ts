@@ -1,9 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
@@ -53,10 +53,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1:
             refreshTime === 0 || refreshTime! > 72000
-              ? Ok.of(
-                  "The refresh or redirect happens immediately or after 20 hours"
-                )
-              : Err.of("The refresh or redirect is delayed less than 20 hours")
+              ? Outcomes.HasImmediateRefresh
+              : Outcomes.HasDelayedRefresh
         };
       }
     };
@@ -100,4 +98,19 @@ function getRefreshTime(content: string): Option<number> {
   }
 
   return Option.of(parseInt(content.substring(start, i), 10));
+}
+
+export namespace Outcomes {
+  export const HasImmediateRefresh = Some.of(
+    Ok.of(
+      "The refresh or redirect happens immediately or after 20 hours"
+    ) as Result<string, string>
+  );
+
+  export const HasDelayedRefresh = Some.of(
+    Err.of("The refresh or redirect is delayed less than 20 hours") as Result<
+      string,
+      string
+    >
+  );
 }

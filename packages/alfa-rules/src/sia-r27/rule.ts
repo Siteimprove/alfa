@@ -1,6 +1,7 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Some } from "@siteimprove/alfa-option";
+import { Ok, Err, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { Question } from "../common/question";
@@ -16,14 +17,24 @@ export default Rule.Composite.of<Page, Element, Question>({
       expectations(outcomes) {
         return {
           1: outcomes.some(Outcome.isPassed)
-            ? Ok.of(
-                "The <video> element has a text alternative for its audio content"
-              )
-            : Err.of(
-                "The <video> element has no text alternative for its audio content"
-              )
+            ? Outcomes.HasTextAlternative
+            : Outcomes.HasNoTextAlternative
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasTextAlternative = Some.of(
+    Ok.of(
+      "The <video> element has a text alternative for its audio content"
+    ) as Result<string, string>
+  );
+
+  export const HasNoTextAlternative = Some.of(
+    Err.of(
+      "The <video> element has no text alternative for its audio content"
+    ) as Result<string, string>
+  );
+}

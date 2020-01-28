@@ -2,8 +2,9 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Ok, Err, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -21,7 +22,7 @@ export default Rule.Atomic.of<Page, Element>({
           document.descendants({ composed: true, nested: true }),
           and(
             Element.isElement,
-	    and(hasNamespace(equals(Namespace.HTML, Namespace.SVG)), hasRole())
+            and(hasNamespace(equals(Namespace.HTML, Namespace.SVG)), hasRole())
           )
         );
       },
@@ -29,10 +30,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: test(hasRequiredValues, target)
-            ? Ok.of("The element has all required states and properties")
-            : Err.of(
-                "The element does not have all required states and properties"
-              )
+            ? Outcomes.HasAllStates
+            : Outcomes.HasNotAllStates
         };
       }
     };
@@ -49,7 +48,7 @@ const hasRequiredValues: Predicate<Element> = element => {
           continue;
         }
 
-	if (element.attribute(attribute).every(property("value", isEmpty))) {
+        if (element.attribute(attribute).every(property("value", isEmpty))) {
           return false;
         }
       }
@@ -58,3 +57,18 @@ const hasRequiredValues: Predicate<Element> = element => {
 
   return true;
 };
+
+export namespace Outcomes {
+  export const HasAllStates = Some.of(
+    Ok.of("The element has all required states and properties") as Result<
+      string,
+      string
+    >
+  );
+
+  export const HasNotAllStates = Some.of(
+    Err.of(
+      "The element does not have all required states and properties"
+    ) as Result<string, string>
+  );
+}

@@ -4,9 +4,9 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
+import { Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -73,7 +73,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
         return {
           1:
             sources.size === 1
-              ? Ok.of("The <iframe> elements embed the same resource")
+              ? Outcomes.EmbedSameResources
               : Question.of(
                   "reference-equivalent-resources",
                   "boolean",
@@ -81,13 +81,33 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                   "Do the <iframe> elements embed equivalent resources?"
                 ).map(embedEquivalentResources =>
                   embedEquivalentResources
-                    ? Ok.of("The <iframe> elements embed equivalent resources")
-                    : Err.of(
-                        "The <iframe> elements do not embed the same or equivalent resources"
-                      )
+                    ? Outcomes.EmbedEquivalentResources
+                    : Outcomes.EmbedDifferentResources
                 )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const EmbedSameResources = Some.of(
+    Ok.of("The <iframe> elements embed the same resource") as Result<
+      string,
+      string
+    >
+  );
+
+  export const EmbedEquivalentResources = Some.of(
+    Ok.of("The <iframe> elements embed equivalent resources") as Result<
+      string,
+      string
+    >
+  );
+
+  export const EmbedDifferentResources = Some.of(
+    Err.of(
+      "The <iframe> elements do not embed the same or equivalent resources"
+    ) as Result<string, string>
+  );
+}

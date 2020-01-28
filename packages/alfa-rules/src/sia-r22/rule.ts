@@ -1,6 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Some } from "@siteimprove/alfa-option";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
@@ -23,12 +24,23 @@ export default Rule.Atomic.of<Page, Element, Question>({
             target,
             "Does the <video> element have captions?"
           ).map(hasCaptions =>
-            hasCaptions
-              ? Ok.of("The <video> element has captions")
-              : Err.of("The <video> element does not have captions")
+            hasCaptions ? Outcomes.HasCaptions : Outcomes.HasNoCaptions
           )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasCaptions = Some.of(
+    Ok.of("The <video> element has captions") as Result<string, string>
+  );
+
+  export const HasNoCaptions = Some.of(
+    Err.of("The <video> element does not have captions") as Result<
+      string,
+      string
+    >
+  );
+}

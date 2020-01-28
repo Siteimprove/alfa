@@ -2,7 +2,8 @@ import { Rule } from "@siteimprove/alfa-act";
 import * as aria from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Some } from "@siteimprove/alfa-option";
+import { Ok, Err, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 const { filter, flatMap } = Iterable;
@@ -28,11 +29,19 @@ export default Rule.Atomic.of<Page, Attribute>({
         const exists = aria.Attribute.lookup(target.name).isSome();
 
         return {
-          1: exists
-            ? Ok.of("The attribute is defined")
-            : Err.of("The attribute is not defined")
+          1: exists ? Outcomes.IsDefined : Outcomes.IsNotDefined
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const IsDefined = Some.of(
+    Ok.of("The attribute is defined") as Result<string, string>
+  );
+
+  export const IsNotDefined = Some.of(
+    Err.of("The attribute is not defined") as Result<string, string>
+  );
+}

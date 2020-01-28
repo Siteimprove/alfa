@@ -3,6 +3,7 @@ import { Role } from "@siteimprove/alfa-aria";
 import * as aria from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
@@ -11,7 +12,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Ok, Err, Result } from "@siteimprove/alfa-result";
 
 const { filter, flatMap } = Iterable;
 const { and, not, equals, test } = Predicate;
@@ -45,14 +46,24 @@ export default Rule.Atomic.of<Page, Attribute>({
               hasRole(role => role.isAllowed(hasName(equals(target.name)))),
               target.owner.get()
             )
-              ? Ok.of(
-                  "The attribute is allowed for the element on which it is specified"
-                )
-              : Err.of(
-                  "The attribute is not allowed for the element on which it is specified"
-                )
+              ? Outcomes.IsAllowed
+              : Outcomes.IsNotAllowed
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const IsAllowed = Some.of(
+    Ok.of(
+      "The attribute is allowed for the element on which it is specified"
+    ) as Result<string, string>
+  );
+
+  export const IsNotAllowed = Some.of(
+    Err.of(
+      "The attribute is not allowed for the element on which it is specified"
+    ) as Result<string, string>
+  );
+}

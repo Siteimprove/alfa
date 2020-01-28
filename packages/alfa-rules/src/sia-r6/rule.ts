@@ -41,18 +41,24 @@ export default Rule.Atomic.of<Page, Element>({
           1:
             xmlLang.isNone() ||
             xmlLang.filter(xmlLang => xmlLang.primary === lang.primary).isSome()
-              ? Some.of(
-                  Ok.of(
-                    "The lang and xml:lang attributes have matching primary language subtags"
-                  ) as Result<string, string>
-                )
-              : Some.of(
-                  Err.of(
-                    "The lang and xml:lang attributes do not have matching primary language subtags"
-                  ) as Result<string, string>
-                )
+              ? Outcomes.HasMatchingLanguages
+              : Outcomes.HasNonMatchingLanguages
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasMatchingLanguages = Some.of(
+    Ok.of(
+      "The lang and xml:lang attributes have matching primary language subtags"
+    ) as Result<string, string>
+  );
+
+  export const HasNonMatchingLanguages = Some.of(
+    Err.of(
+      "The lang and xml:lang attributes do not have matching primary language subtags"
+    ) as Result<string, string>
+  );
+}

@@ -37,18 +37,24 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1: Language.from(target.value).isSome()
-            ? Some.of(
-                Ok.of(
-                  "The lang attribute has a valid primary language tag"
-                ) as Result<string, string>
-              )
-            : Some.of(
-                Err.of(
-                  "The lang attribute does not have a valid primary language tag"
-                ) as Result<string, string>
-              )
+            ? Outcomes.HasValidLanguage
+            : Outcomes.HasNoValidLanguage
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasValidLanguage = Some.of(
+    Ok.of("The lang attribute has a valid primary language tag") as Result<
+      string,
+      string
+    >
+  );
+  export const HasNoValidLanguage = Some.of(
+    Err.of(
+      "The lang attribute does not have a valid primary language tag"
+    ) as Result<string, string>
+  );
+}

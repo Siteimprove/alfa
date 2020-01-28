@@ -1,8 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
@@ -33,10 +34,23 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: test(hasAccessibleName(device, not(isEmpty)), target)
-            ? Ok.of("The <iframe> has an accessible name")
-            : Err.of("The <iframe> does not have an accessible name")
+            ? Outcomes.HasName
+            : Outcomes.HasNoName
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasName = Some.of(
+    Ok.of("The <iframe> has an accessible name") as Result<string, string>
+  );
+
+  export const HasNoName = Some.of(
+    Err.of("The <iframe> does not have an accessible name") as Result<
+      string,
+      string
+    >
+  );
+}

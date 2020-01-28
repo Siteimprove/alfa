@@ -1,6 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Some } from "@siteimprove/alfa-option";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
@@ -43,9 +44,14 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const HasTranscript = Ok.of("The <video> element has a transcript");
+  export const HasTranscript = Some.of(
+    Ok.of("The <video> element has a transcript") as Result<string, string>
+  );
 
-  export const HasNoTranscript = Err.of(
-    "The <video> element does not have a transcript"
+  export const HasNoTranscript = Some.of(
+    Err.of("The <video> element does not have a transcript") as Result<
+      string,
+      string
+    >
   );
 }
