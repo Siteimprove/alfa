@@ -2,8 +2,9 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
@@ -46,9 +47,15 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1: Language.from(target.value).isSome()
-            ? Ok.of("The lang attribute has a valid primary language subtag")
-            : Err.of(
-                "The lang attribute does not have a valid primary language subtag"
+            ? Some.of(
+                Ok.of(
+                  "The lang attribute has a valid primary language subtag"
+                ) as Result<string, string>
+              )
+            : Some.of(
+                Err.of(
+                  "The lang attribute does not have a valid primary language subtag"
+                ) as Result<string, string>
               )
         };
       }

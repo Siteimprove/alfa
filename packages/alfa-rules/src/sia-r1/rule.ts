@@ -1,8 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasChild } from "../common/predicate/has-child";
@@ -62,19 +63,31 @@ export default Rule.Atomic.of<Page, Document>({
 });
 
 export namespace Outcomes {
-  export const HasTitle = Ok.of(
-    "The document has at least one <title> element"
+  export const HasTitle = Some.of(
+    Ok.of("The document has at least one <title> element") as Result<
+      string,
+      string
+    >
   );
 
-  export const HasNoTitle = Err.of(
-    "The document does not have a <title> element"
+  export const HasNoTitle = Some.of(
+    Err.of("The document does not have a <title> element") as Result<
+      string,
+      string
+    >
   );
 
-  export const HasNonEmptyTitle = Ok.of(
-    "The first <title> element has text content"
+  export const HasNonEmptyTitle = Some.of(
+    Ok.of("The first <title> element has text content") as Result<
+      string,
+      string
+    >
   );
 
-  export const HasEmptyTitle: Rule.Expectation = Err.of(
-    "The first <title> element has no text content"
+  export const HasEmptyTitle = Some.of(
+    Err.of("The first <title> element has no text content") as Result<
+      string,
+      string
+    >
   );
 }

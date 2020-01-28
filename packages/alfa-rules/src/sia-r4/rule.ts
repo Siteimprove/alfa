@@ -1,8 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
@@ -26,11 +27,15 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: test(hasAttribute("lang", nor(isEmpty, isWhitespace)), target)
-            ? Ok.of(
-                "The lang attribute exists and is neither empty nor only whitespace"
+            ? Some.of(
+                Ok.of(
+                  "The lang attribute exists and is neither empty nor only whitespace"
+                ) as Result<string, string>
               )
-            : Err.of(
-                "The lang attribute is either missing, empty, or only whitespace"
+            : Some.of(
+                Err.of(
+                  "The lang attribute is either missing, empty, or only whitespace"
+                ) as Result<string, string>
               )
         };
       }

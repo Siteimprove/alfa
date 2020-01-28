@@ -2,8 +2,9 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
@@ -40,11 +41,15 @@ export default Rule.Atomic.of<Page, Element>({
           1:
             xmlLang.isNone() ||
             xmlLang.filter(xmlLang => xmlLang.primary === lang.primary).isSome()
-              ? Ok.of(
-                  "The lang and xml:lang attributes have matching primary language subtags"
+              ? Some.of(
+                  Ok.of(
+                    "The lang and xml:lang attributes have matching primary language subtags"
+                  ) as Result<string, string>
                 )
-              : Err.of(
-                  "The lang and xml:lang attributes do not have matching primary language subtags"
+              : Some.of(
+                  Err.of(
+                    "The lang and xml:lang attributes do not have matching primary language subtags"
+                  ) as Result<string, string>
                 )
         };
       }
