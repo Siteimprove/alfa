@@ -2,7 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasChild } from "../common/predicate/has-child";
@@ -10,7 +10,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
-import { foldExpectation, someFold } from "../common/predicate/some-fold";
+import { foldExpectation } from "../common/predicate/some-fold";
 
 const { filter, first } = Iterable;
 const { and, equals, fold } = Predicate;

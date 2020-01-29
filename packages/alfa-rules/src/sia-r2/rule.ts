@@ -1,9 +1,8 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
@@ -12,6 +11,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDecorative } from "../common/predicate/is-decorative";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { foldExpectation } from "../common/predicate/some-fold";
 
 const { filter } = Iterable;
 const { and, or, not, equals, property, fold } = Predicate;
@@ -41,17 +41,16 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: fold(
+          1: foldExpectation(
             isDecorative,
             target,
-            () => Outcomes.IsDecorative,
-            () =>
-              fold(
-                hasAccessibleName(device),
-                target,
-                () => Outcomes.HasAccessibleName,
-                () => Outcomes.HasNoAccessibleNameNorIsDecorative
-              )
+            Outcomes.IsDecorative,
+            foldExpectation(
+              hasAccessibleName(device),
+              target,
+              Outcomes.HasAccessibleName,
+              Outcomes.HasNoAccessibleNameNorIsDecorative
+            )
           )
         };
       }
@@ -60,17 +59,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasAccessibleName = Some.of(
-    Ok.of("The image has an accessible name") as Result<string, string>
-  );
+  export const HasAccessibleName = Ok.of("The image has an accessible name");
 
-  export const IsDecorative = Some.of(
-    Ok.of("The image is marked as decorative") as Result<string, string>
-  );
+  export const IsDecorative = Ok.of("The image is marked as decorative");
 
-  export const HasNoAccessibleNameNorIsDecorative = Some.of(
-    Err.of(
-      "The image neither has an accessible name nor is marked as decorative"
-    ) as Result<string, string>
+  export const HasNoAccessibleNameNorIsDecorative = Err.of(
+    "The image neither has an accessible name nor is marked as decorative"
   );
 }
