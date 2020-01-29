@@ -1,10 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
@@ -13,7 +13,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { filter, isEmpty } = Iterable;
-const { and, not, equals, test } = Predicate;
+const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r8.html",
@@ -53,9 +53,11 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(hasAccessibleName(device, not(isEmpty)), target)
-            ? Outcomes.HasName
-            : Outcomes.HasNoName
+          1: expectation(
+            hasAccessibleName(device, not(isEmpty))(target),
+            Outcomes.HasName,
+            Outcomes.HasNoName
+          )
         };
       }
     };
@@ -63,14 +65,9 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasName = Some.of(
-    Ok.of("The form field has an accessible name") as Result<string, string>
-  );
+  export const HasName = Ok.of("The form field has an accessible name");
 
-  export const HasNoName = Some.of(
-    Err.of("The form field does not have an accessible name") as Result<
-      string,
-      string
-    >
+  export const HasNoName = Err.of(
+    "The form field does not have an accessible name"
   );
 }

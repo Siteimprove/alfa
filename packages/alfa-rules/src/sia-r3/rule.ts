@@ -4,7 +4,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import {expectation} from "../common/expectations/expectation";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasId } from "../common/predicate/has-id";
 import { hasUniqueId } from "../common/predicate/has-unique-id";
@@ -37,9 +37,7 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasUniqueId =
-    Ok.of("The element has a unique ID");
+  export const HasUniqueId = Ok.of("The element has a unique ID");
 
-  export const HasNonUniqueId =
-    Err.of("The element does not have a unique ID");
+  export const HasNonUniqueId = Err.of("The element does not have a unique ID");
 }

@@ -4,11 +4,12 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
-import { Option, Some } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
@@ -71,19 +72,22 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
         );
 
         return {
-          1:
-            sources.size === 1
-              ? Outcomes.EmbedSameResources
-              : Question.of(
-                  "reference-equivalent-resources",
-                  "boolean",
-                  target,
-                  "Do the <iframe> elements embed equivalent resources?"
-                ).map(embedEquivalentResources =>
-                  embedEquivalentResources
-                    ? Outcomes.EmbedEquivalentResources
-                    : Outcomes.EmbedDifferentResources
-                )
+          1: expectation(
+            sources.size === 1,
+            Outcomes.EmbedSameResources,
+            Question.of(
+              "reference-equivalent-resources",
+              "boolean",
+              target,
+              "Do the <iframe> elements embed equivalent resources?"
+            ).map(embedEquivalentResources =>
+              expectation(
+                embedEquivalentResources,
+                Outcomes.EmbedEquivalentResources,
+                Outcomes.EmbedDifferentResources
+              )
+            )
+          )
         };
       }
     };
@@ -91,23 +95,15 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 });
 
 export namespace Outcomes {
-  export const EmbedSameResources = Some.of(
-    Ok.of("The <iframe> elements embed the same resource") as Result<
-      string,
-      string
-    >
+  export const EmbedSameResources = Ok.of(
+    "The <iframe> elements embed the same resource"
   );
 
-  export const EmbedEquivalentResources = Some.of(
-    Ok.of("The <iframe> elements embed equivalent resources") as Result<
-      string,
-      string
-    >
+  export const EmbedEquivalentResources = Ok.of(
+    "The <iframe> elements embed equivalent resources"
   );
 
-  export const EmbedDifferentResources = Some.of(
-    Err.of(
-      "The <iframe> elements do not embed the same or equivalent resources"
-    ) as Result<string, string>
+  export const EmbedDifferentResources = Err.of(
+    "The <iframe> elements do not embed the same or equivalent resources"
   );
 }

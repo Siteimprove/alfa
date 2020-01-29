@@ -1,10 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -38,12 +38,11 @@ export default Rule.Atomic.of<Page, Attribute>({
         const owner = target.owner.get();
 
         return {
-          1: test(
-            hasRole(() => true, { implicit: false }),
-            owner
+          1: expectation(
+            hasRole(() => true, { implicit: false })(owner),
+            Outcomes.HasValidRole,
+            Outcomes.HasNoValidRole
           )
-            ? Outcomes.HasValidRole
-            : Outcomes.HasNoValidRole
         };
       }
     };
@@ -51,11 +50,9 @@ export default Rule.Atomic.of<Page, Attribute>({
 });
 
 export namespace Outcomes {
-  export const HasValidRole = Some.of(
-    Ok.of("The element has a valid role") as Result<string, string>
-  );
+  export const HasValidRole = Ok.of("The element has a valid role");
 
-  export const HasNoValidRole = Some.of(
-    Err.of("The element does not have a valid role") as Result<string, string>
+  export const HasNoValidRole = Err.of(
+    "The element does not have a valid role"
   );
 }

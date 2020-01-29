@@ -5,7 +5,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import {expectation} from "../common/expectations/expectation";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
@@ -36,9 +36,11 @@ export default Rule.Atomic.of<Page, Attribute>({
 
       expectations(target) {
         return {
-          1: expectation(Language.from(target.value).isSome(),
+          1: expectation(
+            Language.from(target.value).isSome(),
             Outcomes.HasValidLanguage,
-            Outcomes.HasNoValidLanguage)
+            Outcomes.HasNoValidLanguage
+          )
         };
       }
     };
@@ -46,11 +48,10 @@ export default Rule.Atomic.of<Page, Attribute>({
 });
 
 export namespace Outcomes {
-  export const HasValidLanguage =
-    Ok.of("The lang attribute has a valid primary language tag"
+  export const HasValidLanguage = Ok.of(
+    "The lang attribute has a valid primary language tag"
   );
-  export const HasNoValidLanguage =
-    Err.of(
-      "The lang attribute does not have a valid primary language tag"
+  export const HasNoValidLanguage = Err.of(
+    "The lang attribute does not have a valid primary language tag"
   );
 }

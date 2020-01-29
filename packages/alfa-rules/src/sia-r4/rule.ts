@@ -4,7 +4,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import {expectation} from "../common/expectations/expectation";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
@@ -26,7 +26,11 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: expectation(hasAttribute("lang", nor(isEmpty, isWhitespace))(target), Outcomes.HasLanguage, Outcomes.HasNoLanguage)
+          1: expectation(
+            hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
+            Outcomes.HasLanguage,
+            Outcomes.HasNoLanguage
+          )
         };
       }
     };
@@ -34,13 +38,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasLanguage =
-    Ok.of(
-      "The lang attribute exists and is neither empty nor only whitespace"
+  export const HasLanguage = Ok.of(
+    "The lang attribute exists and is neither empty nor only whitespace"
   );
 
-  export const HasNoLanguage =
-    Err.of(
-      "The lang attribute is either missing, empty, or only whitespace"
+  export const HasNoLanguage = Err.of(
+    "The lang attribute is either missing, empty, or only whitespace"
   );
 }

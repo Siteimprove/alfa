@@ -2,10 +2,10 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
@@ -38,11 +38,14 @@ export default Rule.Atomic.of<Page, Element>({
         const xmlLang = Language.from(target.attribute("xml:lang").get().value);
 
         return {
-          1:
+          1: expectation(
             xmlLang.isNone() ||
-            xmlLang.filter(xmlLang => xmlLang.primary === lang.primary).isSome()
-              ? Outcomes.HasMatchingLanguages
-              : Outcomes.HasNonMatchingLanguages
+              xmlLang
+                .filter(xmlLang => xmlLang.primary === lang.primary)
+                .isSome(),
+            Outcomes.HasMatchingLanguages,
+            Outcomes.HasNonMatchingLanguages
+          )
         };
       }
     };
@@ -50,15 +53,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasMatchingLanguages = Some.of(
-    Ok.of(
-      "The lang and xml:lang attributes have matching primary language subtags"
-    ) as Result<string, string>
+  export const HasMatchingLanguages = Ok.of(
+    "The lang and xml:lang attributes have matching primary language subtags"
   );
 
-  export const HasNonMatchingLanguages = Some.of(
-    Err.of(
-      "The lang and xml:lang attributes do not have matching primary language subtags"
-    ) as Result<string, string>
+  export const HasNonMatchingLanguages = Err.of(
+    "The lang and xml:lang attributes do not have matching primary language subtags"
   );
 }
