@@ -11,7 +11,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDecorative } from "../common/predicate/is-decorative";
 import { isIgnored } from "../common/predicate/is-ignored";
-import { foldExpectation } from "../common/predicate/some-fold";
+import { foldExpectation } from "../common/predicate/fold-expectation";
 
 const { filter } = Iterable;
 const { and, or, not, equals, property, fold } = Predicate;

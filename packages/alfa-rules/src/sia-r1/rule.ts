@@ -10,7 +10,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
-import { foldExpectation } from "../common/predicate/some-fold";
+import { foldExpectation } from "../common/predicate/fold-expectation";
 
 const { filter, first } = Iterable;
 const { and, equals, fold } = Predicate;
