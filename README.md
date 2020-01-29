@@ -136,16 +136,18 @@ In order to build Alfa, a recent version (>= 10) of [Node.js](https://nodejs.org
 $ yarn install
 ```
 
-The above also performs an initial build of Alfa. When done, you can start a file watcher that watches source files for changes and kicks off the associated build steps when they change:
+When done, you can start a watcher that watches source files for changes and kicks off the associated build steps when they change:
 
 ```console
-$ yarn start
+$ yarn watch
 ```
 
-As new code is pulled from the repository, changes to dependencies and code may require you to run the installation again or, if only code has changed, a full build:
+Note that when the watcher is started it will perform also perform a build, which can take a bit of time if the project has not been built before.
+
+As new code is pulled from the repository, changes to dependencies and code may require you to run the installation again or, if only code has changed, a build:
 
 ```console
-$ yarn prepare
+$ yarn build
 ```
 
 If you would like to contribute to Alfa, make sure to check out the [contribution guidelines](CONTRIBUTING.md). If you have any questions, you are also welcome to [open an issue][].
