@@ -9,6 +9,10 @@ export class Text extends Node implements Slotable {
     return new Text(data, parent);
   }
 
+  public static empty(parent: Option<Node> = None): Text {
+    return new Text("", parent);
+  }
+
   private readonly _data: string;
 
   private constructor(data: string, parent: Option<Node>) {

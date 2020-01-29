@@ -18,6 +18,10 @@ export class Shadow extends Node {
     return new Shadow(mode, host, children, style);
   }
 
+  public static empty(host: Element): Shadow {
+    return new Shadow(Shadow.Mode.Open, host, () => [], []);
+  }
+
   private readonly _mode: Shadow.Mode;
   private readonly _host: Element;
   private readonly _style: Array<Sheet>;
