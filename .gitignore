@@ -1,4 +1,5 @@
 node_modules
+coverage
 
 **/*.log
 **/*.tsbuildinfo
@@ -9,5 +10,3 @@ node_modules
 
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
-
-.cache

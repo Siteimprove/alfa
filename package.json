@@ -17,30 +17,21 @@
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
-    "format": "node scripts/format.js",
-    "prepare": "node scripts/prepare.js",
+    "build": "node scripts/build.js",
+    "clean": "node scripts/clean.js",
     "test": "node scripts/test.js",
-    "start": "node scripts/start.js",
-    "prepublish": "node scripts/prepublish.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "node scripts/precommit.js"
-    }
+    "watch": "node scripts/watch.js"
   },
   "workspaces": [
     "packages/*",
     "docs/**/*"
   ],
   "devDependencies": {
-    "@types/node": "^12.12.21",
-    "@types/prettier": "^1.19.0",
+    "@types/node": "^12.12.24",
     "axios": "^0.19.0",
-    "chalk": "^3.0.0",
-    "chokidar": "^3.3.1",
-    "husky": "^3.1.0",
-    "ignore": "^5.0.5",
+    "execa": "^4.0.0",
     "lerna": "^3.19.0",
+    "minimist": "^1.2.0",
     "prettier": "1.19.1",
     "source-map-support": "^0.5.16",
     "typescript": "^3.7.4"

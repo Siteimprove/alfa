@@ -1,7 +1,6 @@
 const fs = require("fs");
 const prettier = require("prettier");
-
-const { fetch } = require("../../../scripts/helpers/http");
+const axios = require("axios");
 
 const registry = "https://www.iana.org/assignments/language-subtag-registry";
 
@@ -137,8 +136,8 @@ function parseRecords(input) {
   );
 }
 
-fetch(registry).then(body => {
-  const records = parseRecords(body);
+axios.get(registry).then(({ data }) => {
+  const records = parseRecords(data);
 
   /** @type {Array<Subtag>} */
   const subtags = [];
