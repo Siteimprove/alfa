@@ -17,10 +17,10 @@
   "repository": "https://github.com/siteimprove/alfa",
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
-    "build": "node scripts/build.js",
-    "clean": "node scripts/clean.js",
-    "test": "node scripts/test.js",
-    "watch": "node scripts/watch.js"
+    "build": "node scripts/build.js --pretty",
+    "clean": "node scripts/clean.js --pretty",
+    "test": "node scripts/test.js --pretty",
+    "watch": "node scripts/watch.js --pretty"
   },
   "workspaces": [
     "packages/*",
