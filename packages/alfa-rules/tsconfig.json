@@ -4,7 +4,7 @@
   "files": [
     "src/common/applicability/audio.ts",
     "src/common/applicability/video.ts",
-    "src/common/fold-expectation.ts",
+    "src/common/predicate/fold-expectation.ts",
     "src/common/predicate/has-accessible-name.ts",
     "src/common/predicate/has-attribute.ts",
     "src/common/predicate/has-category.ts",
