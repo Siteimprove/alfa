@@ -11,7 +11,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDecorative } from "../common/predicate/is-decorative";
 import { isIgnored } from "../common/predicate/is-ignored";
-import { foldExpectation } from "../common/predicate/fold-expectation";
+import { expectation } from "../common/expectations/expectation";
 
 const { filter } = Iterable;
 const { and, or, not, equals, property, fold } = Predicate;
@@ -41,13 +41,11 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: foldExpectation(
-            isDecorative,
-            target,
+          1: expectation(
+            isDecorative(target),
             Outcomes.IsDecorative,
-            foldExpectation(
-              hasAccessibleName(device),
-              target,
+            expectation(
+              hasAccessibleName(device)(target),
               Outcomes.HasAccessibleName,
               Outcomes.HasNoAccessibleNameNorIsDecorative
             )

@@ -1,17 +1,17 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+import {expectation} from "../common/expectations/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { filter, isEmpty } = Iterable;
-const { and, nor, test } = Predicate;
+const { and, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r4.html",
@@ -26,9 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(hasAttribute("lang", nor(isEmpty, isWhitespace)), target)
-            ? Outcomes.HasLanguage
-            : Outcomes.HasNoLanguage
+          1: expectation(hasAttribute("lang", nor(isEmpty, isWhitespace))(target), Outcomes.HasLanguage, Outcomes.HasNoLanguage)
         };
       }
     };
@@ -36,15 +34,13 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasLanguage = Some.of(
+  export const HasLanguage =
     Ok.of(
       "The lang attribute exists and is neither empty nor only whitespace"
-    ) as Result<string, string>
   );
 
-  export const HasNoLanguage = Some.of(
+  export const HasNoLanguage =
     Err.of(
       "The lang attribute is either missing, empty, or only whitespace"
-    ) as Result<string, string>
   );
 }

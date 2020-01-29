@@ -10,7 +10,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
-import { foldExpectation } from "../common/predicate/fold-expectation";
+import { expectation } from "../common/expectations/expectation";
 
 const { filter, first } = Iterable;
 const { and, equals, fold } = Predicate;
@@ -43,16 +43,14 @@ export default Rule.Atomic.of<Page, Document>({
         );
 
         return {
-          1: foldExpectation(
-            title => title.isSome(),
-            title,
+          1: expectation(
+            title.isSome(),
             Outcomes.HasTitle,
             Outcomes.HasNoTitle
           ),
 
-          2: foldExpectation(
-            title => title.some(hasTextContent()),
-            title,
+          2: expectation(
+            title.some(hasTextContent()),
             Outcomes.HasNonEmptyTitle,
             Outcomes.HasEmptyTitle
           )
