@@ -13,8 +13,8 @@ export class Namespace extends Rule {
     return new Namespace(namespace, prefix, owner, parent);
   }
 
-  public readonly namespace: string;
-  public readonly prefix: Option<string>;
+  private readonly _namespace: string;
+  private readonly _prefix: Option<string>;
 
   private constructor(
     namespace: string,
@@ -24,22 +24,30 @@ export class Namespace extends Rule {
   ) {
     super(owner, parent);
 
-    this.namespace = namespace;
-    this.prefix = prefix;
+    this._namespace = namespace;
+    this._prefix = prefix;
+  }
+
+  public get namespace(): string {
+    return this._namespace;
+  }
+
+  public get prefix(): Option<string> {
+    return this._prefix;
   }
 
   public toJSON(): Namespace.JSON {
     return {
       type: "namespace",
-      namespace: this.namespace,
-      prefix: this.prefix.getOr(null)
+      namespace: this._namespace,
+      prefix: this._prefix.getOr(null)
     };
   }
 
   public toString(): string {
-    const prefix = this.prefix.map(prefix => ` ${prefix}`).getOr("");
+    const prefix = this._prefix.map(prefix => ` ${prefix}`).getOr("");
 
-    return `@namespace ${prefix}url(${this.namespace})`;
+    return `@namespace ${prefix}url(${this._namespace})`;
   }
 }
 

@@ -7,7 +7,7 @@ import { Sheet } from "../sheet";
 import { Grouping } from "./grouping";
 
 export abstract class Condition extends Grouping {
-  public readonly condition: string;
+  protected readonly _condition: string;
 
   protected constructor(
     condition: string,
@@ -17,7 +17,11 @@ export abstract class Condition extends Grouping {
   ) {
     super(rules, owner, parent);
 
-    this.condition = condition;
+    this._condition = condition;
+  }
+
+  public get condition(): string {
+    return this._condition;
   }
 
   public abstract toJSON(): Condition.JSON;

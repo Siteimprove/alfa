@@ -4,12 +4,20 @@ import * as json from "@siteimprove/alfa-json";
 import { Sheet } from "./sheet";
 
 export abstract class Rule implements json.Serializable {
-  public readonly owner: Sheet;
-  public readonly parent: Option<Rule>;
+  protected readonly _owner: Sheet;
+  protected readonly _parent: Option<Rule>;
 
   protected constructor(owner: Sheet, parent: Option<Rule>) {
-    this.owner = owner;
-    this.parent = parent;
+    this._owner = owner;
+    this._parent = parent;
+  }
+
+  public get owner(): Sheet {
+    return this._owner;
+  }
+
+  public get parent(): Option<Rule> {
+    return this._parent;
   }
 
   public *children(): Iterable<Rule> {}
@@ -22,7 +30,7 @@ export abstract class Rule implements json.Serializable {
   }
 
   public *ancestors(): Iterable<Rule> {
-    for (const parent of this.parent) {
+    for (const parent of this._parent) {
       yield parent;
       yield* parent.ancestors();
     }

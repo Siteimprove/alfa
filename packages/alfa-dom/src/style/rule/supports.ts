@@ -31,18 +31,18 @@ export class Supports extends Condition {
   public toJSON(): Supports.JSON {
     return {
       type: "supports",
-      rules: [...this.rules].map(rule => rule.toJSON()),
-      condition: this.condition
+      rules: [...this._rules].map(rule => rule.toJSON()),
+      condition: this._condition
     };
   }
 
   public toString(): string {
     const rules = join(
-      map(this.rules, rule => indent(rule.toString())),
+      map(this._rules, rule => indent(rule.toString())),
       "\n\n"
     );
 
-    return `@supports ${this.condition} {${
+    return `@supports ${this._condition} {${
       rules === "" ? "" : `\n${rules}\n`
     }}`;
   }

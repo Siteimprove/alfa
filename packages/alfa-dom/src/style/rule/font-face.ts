@@ -16,7 +16,7 @@ export class FontFace extends Rule {
     return new FontFace(declarations, owner, parent);
   }
 
-  public readonly style: Block;
+  private readonly _style: Block;
 
   private constructor(
     declarations: Mapper<FontFace, Iterable<Declaration>>,
@@ -25,18 +25,22 @@ export class FontFace extends Rule {
   ) {
     super(owner, parent);
 
-    this.style = Block.of(declarations(this));
+    this._style = Block.of(declarations(this));
+  }
+
+  public get style(): Block {
+    return this._style;
   }
 
   public toJSON(): FontFace.JSON {
     return {
       type: "font-face",
-      style: this.style.toJSON()
+      style: this._style.toJSON()
     };
   }
 
   public toString(): string {
-    const style = this.style.toString();
+    const style = this._style.toString();
 
     return `@font-face {${style === "" ? "" : `\n${indent(style)}\n`}}`;
   }
