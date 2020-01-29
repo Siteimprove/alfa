@@ -1,7 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -11,6 +10,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
+import { foldExpectation, someFold } from "../common/predicate/some-fold";
 
 const { filter, first } = Iterable;
 const { and, equals, fold } = Predicate;
@@ -43,18 +43,18 @@ export default Rule.Atomic.of<Page, Document>({
         );
 
         return {
-          1: fold(
+          1: foldExpectation(
             title => title.isSome(),
             title,
-            () => Outcomes.HasTitle,
-            () => Outcomes.HasNoTitle
+            Outcomes.HasTitle,
+            Outcomes.HasNoTitle
           ),
 
-          2: fold(
+          2: foldExpectation(
             title => title.some(hasTextContent()),
             title,
-            () => Outcomes.HasNonEmptyTitle,
-            () => Outcomes.HasEmptyTitle
+            Outcomes.HasNonEmptyTitle,
+            Outcomes.HasEmptyTitle
           )
         };
       }
@@ -63,31 +63,19 @@ export default Rule.Atomic.of<Page, Document>({
 });
 
 export namespace Outcomes {
-  export const HasTitle = Some.of(
-    Ok.of("The document has at least one <title> element") as Result<
-      string,
-      string
-    >
+  export const HasTitle = Ok.of(
+    "The document has at least one <title> element"
   );
 
-  export const HasNoTitle = Some.of(
-    Err.of("The document does not have a <title> element") as Result<
-      string,
-      string
-    >
+  export const HasNoTitle = Err.of(
+    "The document does not have a <title> element"
   );
 
-  export const HasNonEmptyTitle = Some.of(
-    Ok.of("The first <title> element has text content") as Result<
-      string,
-      string
-    >
+  export const HasNonEmptyTitle = Ok.of(
+    "The first <title> element has text content"
   );
 
-  export const HasEmptyTitle = Some.of(
-    Err.of("The first <title> element has no text content") as Result<
-      string,
-      string
-    >
+  export const HasEmptyTitle = Err.of(
+    "The first <title> element has no text content"
   );
 }
