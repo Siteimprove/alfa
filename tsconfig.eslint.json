@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.json",
+  // ESLint needs a single TypeScript configuration that includes _all_ files
+  // to be linted.
+  // https://github.com/typescript-eslint/typescript-eslint/issues/1192
+  "include": ["packages/**/*.ts", "packages/**/*.tsx"]
+}
