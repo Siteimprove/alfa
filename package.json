@@ -20,7 +20,8 @@
     "build": "node scripts/build.js --pretty",
     "clean": "node scripts/clean.js --pretty",
     "test": "node scripts/test.js --pretty",
-    "watch": "node scripts/watch.js --pretty"
+    "watch": "node scripts/watch.js --pretty",
+    "lint": "node scripts/lint.js --pretty"
   },
   "workspaces": [
     "packages/*",
