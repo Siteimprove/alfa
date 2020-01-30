@@ -4,6 +4,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasAttribute } from "../common/predicate/has-attribute";
@@ -13,7 +14,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Ok, Err, Result } from "@siteimprove/alfa-result";
 
 const { filter, map, isEmpty } = Iterable;
 const { and, or, nor, not, equals, test } = Predicate;
@@ -77,29 +78,45 @@ export default Rule.Atomic.of<Page, Element, Question>({
             target,
             `Where is the mechanism that can pause or stop the audio of the <${target.name}> element?`
           ).map(mechanism =>
-            mechanism.isSome()
-              ? test(
+            expectation(
+              mechanism.isSome(),
+              expectation(
+                and(
+                  Element.isElement,
                   and(
-                    Element.isElement,
-                    and(
-                      isPerceivable(device),
-                      hasAccessibleName(device, not(isEmpty))
-                    )
-                  ),
-                  mechanism.get()
-                )
-                ? Ok.of(
-                    `The <${target.name}> element has a mechanism to pause or stop audio and the mechanism is perceivable`
+                    isPerceivable(device),
+                    hasAccessibleName(device, not(isEmpty))
                   )
-                : Err.of(
-                    `The <${target.name}> element has a mechanism to pause or stop audio but the mechanism is not perceivable`
-                  )
-              : Err.of(
-                  `The <${target.name}> element does not have a mechanism to pause or stop audio`
-                )
+                )(mechanism.get()),
+                Outcomes.HasPerceivablePauseMechanism(target.name),
+                Outcomes.HasNonPerceivablePauseMechanism(target.name)
+              ),
+              Outcomes.HasNoPauseMechanism(target.name)
+            )
           )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasPerceivablePauseMechanism = (
+    name: string
+  ): Result<string, string> =>
+    Ok.of(
+      `The <${name}> element has a mechanism to pause or stop audio and the mechanism is perceivable`
+    );
+
+  export const HasNonPerceivablePauseMechanism = (
+    name: string
+  ): Result<string, string> =>
+    Err.of(
+      `The <${name}> element has a mechanism to pause or stop audio but the mechanism is not perceivable`
+    );
+
+  export const HasNoPauseMechanism = (name: string): Result<string, string> =>
+    Err.of(
+      `The <${name}> element does not have a mechanism to pause or stop audio`
+    );
+}

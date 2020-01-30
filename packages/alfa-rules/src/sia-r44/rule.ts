@@ -11,6 +11,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { isVisible } from "../common/predicate/is-visible";
 
@@ -72,9 +73,11 @@ export default Rule.Atomic.of<Page, Element>({
         ).map(rotation => round(rotation));
 
         return {
-          1: rotation.every(rotation => rotation !== 90 && rotation !== 270)
-            ? Ok.of("The element is not orientation locked")
-            : Err.of("The element is orientation locked")
+          1: expectation(
+            rotation.every(rotation => rotation !== 90 && rotation !== 270),
+            Outcomes.RotationNotLocked,
+            Outcomes.RotationLocked
+          )
         };
       }
     };
@@ -223,4 +226,12 @@ function getRelativeRotation(
   return getRotation(element, left).flatMap(left =>
     getRotation(element, right).map(right => mod(abs(left - right), 360))
   );
+}
+
+export namespace Outcomes {
+  export const RotationNotLocked = Ok.of(
+    "The element is not orientation locked"
+  );
+
+  export const RotationLocked = Err.of("The element is orientation locked");
 }

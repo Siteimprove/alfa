@@ -6,6 +6,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
@@ -52,13 +53,12 @@ export default Rule.Atomic.of<Page, Element>({
         const scalable = parseUserScalable(properties.get("user-scalable"));
 
         return {
-          1:
+          1: expectation(
             scale.every(scale => scale >= 2) &&
-            scalable.every(scalable => scalable !== "fixed")
-              ? Ok.of(
-                  "The <meta> element does not restrict the ability to zoom"
-                )
-              : Err.of("The <meta> element restricts the ability to zoom")
+              scalable.every(scalable => scalable !== "fixed"),
+            Outcomes.MetaDoesNotPreventZoom,
+            Outcomes.MedatDoesPreventZoom
+          )
         };
       }
     };
@@ -180,4 +180,14 @@ export function parseUserScalable(
         scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed"
       );
   }
+}
+
+export namespace Outcomes {
+  export const MetaDoesNotPreventZoom = Ok.of(
+    "The <meta> element does not restrict the ability to zoom"
+  );
+
+  export const MedatDoesPreventZoom = Err.of(
+    "The <meta> element restricts the ability to zoom"
+  );
 }
