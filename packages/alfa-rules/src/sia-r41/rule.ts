@@ -9,6 +9,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
@@ -78,23 +79,38 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
         );
 
         return {
-          1:
-            sources.size === 1
-              ? Ok.of("The links resolve to the same resource")
-              : Question.of(
-                  "reference-equivalent-resources",
-                  "boolean",
-                  target,
-                  "Do the links resolve to equivalent resources?"
-                ).map(embedEquivalentResources =>
-                  embedEquivalentResources
-                    ? Ok.of("The links resolve to equivalent resources")
-                    : Err.of(
-                        "The links do not resolve to the same or equivalent resources"
-                      )
-                )
+          1: expectation(
+            sources.size === 1,
+            Outcomes.ResolveSameResource,
+            Question.of(
+              "reference-equivalent-resources",
+              "boolean",
+              target,
+              "Do the links resolve to equivalent resources?"
+            ).map(embedEquivalentResources =>
+              expectation(
+                embedEquivalentResources,
+                Outcomes.ResolveEquivalentResource,
+                Outcomes.ResolveDifferentResource
+              )
+            )
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const ResolveSameResource = Ok.of(
+    "The links resolve to the same resource"
+  );
+
+  export const ResolveEquivalentResource = Ok.of(
+    "The links resolve to equivalent resources"
+  );
+
+  export const ResolveDifferentResource = Err.of(
+    "The links do not resolve to the same or equivalent resources"
+  );
+}

@@ -1,11 +1,10 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Predicate, some, Trilean } from "@siteimprove/alfa-trilean";
+import { None } from "@siteimprove/alfa-option";
+import { some, Trilean } from "@siteimprove/alfa-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
-import { Noresult } from "@siteimprove/alfa-result/src/noresult";
 import { Page } from "@siteimprove/alfa-web";
-
-const { fold } = Predicate;
+import { expectation } from "../common/expectations/expectation";
 
 import { Question } from "../common/question";
 
@@ -21,12 +20,11 @@ export default Rule.Composite.of<Page, Element, Question>({
     return {
       expectations(outcomes) {
         return {
-          1: fold(
-            some(outcomeToTrilean),
-            outcomes,
-            () => Outcomes.HasAlternative,
-            () => Outcomes.HasNoAlternative,
-            () => Noresult
+          1: expectation(
+            some(outcomeToTrilean)(outcomes),
+            Outcomes.HasAlternative,
+            Outcomes.HasNoAlternative,
+            None
           )
         };
       }

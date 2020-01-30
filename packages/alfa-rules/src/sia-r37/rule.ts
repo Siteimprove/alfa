@@ -2,6 +2,7 @@ import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+import { expectation } from "../common/expectations/expectation";
 
 import { Question } from "../common/question";
 
@@ -16,11 +17,23 @@ export default Rule.Composite.of<Page, Element, Question>({
     return {
       expectations(outcomes) {
         return {
-          1: outcomes.some(Outcome.isPassed)
-            ? Ok.of("The <video> element has an audio description")
-            : Err.of("The <video> element does not have an audio description")
+          1: expectation(
+            outcomes.some(Outcome.isPassed),
+            Outcomes.HasAudioDescription,
+            Outcomes.HasNoAudioDescription
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasAudioDescription = Ok.of(
+    "The <video> element has an audio description"
+  );
+
+  export const HasNoAudioDescription = Err.of(
+    "The <video> element does not have an audio description"
+  );
+}
