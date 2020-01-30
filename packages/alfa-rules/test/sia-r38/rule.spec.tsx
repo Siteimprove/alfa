@@ -3,7 +3,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import {Document, Element} from "@siteimprove/alfa-dom";
 import { hasName } from "../../src/common/predicate/has-name";
 const { and, equals } = Predicate;
 
