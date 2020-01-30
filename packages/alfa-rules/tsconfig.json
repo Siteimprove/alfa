@@ -4,7 +4,7 @@
   "files": [
     "src/common/applicability/audio.ts",
     "src/common/applicability/video.ts",
-    "src/common/expectations/audio-or-video-text-alternative.ts",
+    "src/common/expectations/media-text-alternative.ts",
     "src/common/expectations/expectation.ts",
     "src/common/expectations/video-description-track-accurate.ts",
     "src/common/predicate/has-accessible-name.ts",

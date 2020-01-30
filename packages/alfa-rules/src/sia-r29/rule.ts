@@ -3,7 +3,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Page } from "@siteimprove/alfa-web";
 
 import { audio } from "../common/applicability/audio";
-import {audioTextAlternative} from "../common/expectations/audio-or-video-text-alternative";
+import {audioTextAlternative} from "../common/expectations/media-text-alternative";
 
 import { Question } from "../common/question";
 
