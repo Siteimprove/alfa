@@ -1,10 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Some } from "@siteimprove/alfa-option";
-import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
+import { expectation } from "../common/expectations/expectation";
 
 import { Question } from "../common/question";
 
@@ -24,9 +24,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
             target,
             "Is the visual information of the <video> available through its audio or a separate audio description track?"
           ).map(hasAudio =>
-            hasAudio
-              ? Outcomes.HasInformativeAudio
-              : Outcomes.HasNoInformativeAudio
+            expectation(
+              hasAudio,
+              Outcomes.HasInformativeAudio,
+              Outcomes.HasNoInformativeAudio
+            )
           )
         };
       }
@@ -35,15 +37,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
 });
 
 export namespace Outcomes {
-  export const HasInformativeAudio = Some.of(
-    Ok.of(
-      "The visual information of the <video> element is available through audio"
-    ) as Result<string, string>
+  export const HasInformativeAudio = Ok.of(
+    "The visual information of the <video> element is available through audio"
   );
 
-  export const HasNoInformativeAudio = Some.of(
-    Err.of(
-      "The visual information of the <video> element is not available through audio"
-    ) as Result<string, string>
+  export const HasNoInformativeAudio = Err.of(
+    "The visual information of the <video> element is not available through audio"
   );
 }
