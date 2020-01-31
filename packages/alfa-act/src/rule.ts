@@ -201,12 +201,12 @@ function resolve<I, T, Q>(
       expectations,
       (expectations, [id, expectation]) =>
         expectations.flatMap(expectations =>
-          expectation.map(expectation => {
-            return expectations.push([
+          expectation.map(expectation =>
+            expectations.push([
               id,
               expectation.map(val => val.map(normalize).mapErr(normalize))
-            ]);
-          })
+            ])
+          )
         ),
       Option.of(List.empty<[string, Rule.Expectation]>())
     )
