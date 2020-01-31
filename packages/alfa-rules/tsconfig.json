@@ -6,6 +6,7 @@
     "src/common/applicability/video.ts",
     "src/common/expectations/media-text-alternative.ts",
     "src/common/expectations/expectation.ts",
+    "src/common/expectations/outcome-to-trilean.ts",
     "src/common/expectations/video-description-track-accurate.ts",
     "src/common/predicate/has-accessible-name.ts",
     "src/common/predicate/has-attribute.ts",

@@ -1,10 +1,11 @@
-import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import { some, Trilean } from "@siteimprove/alfa-trilean";
+import { some } from "@siteimprove/alfa-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectations/expectation";
+import {outcomeToTrilean} from "../common/expectations/outcome-to-trilean";
 
 import { Question } from "../common/question";
 
@@ -42,10 +43,3 @@ export namespace Outcomes {
   );
 }
 
-function outcomeToTrilean<I, T, Q>(
-  outcome: Outcome.Applicable<I, T, Q>
-): Trilean {
-  if (Outcome.isPassed(outcome)) return true;
-  if (Outcome.isFailed(outcome)) return false;
-  return undefined;
-}
