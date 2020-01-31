@@ -5,7 +5,7 @@ import { some } from "@siteimprove/alfa-trilean";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectations/expectation";
-import {outcomeToTrilean} from "../common/expectations/outcome-to-trilean";
+import { outcomeToTrilean } from "../common/expectations/outcome-to-trilean";
 
 import { Question } from "../common/question";
 
@@ -42,4 +42,3 @@ export namespace Outcomes {
     "The <video> element does not have an audio or text alternative"
   );
 }
-

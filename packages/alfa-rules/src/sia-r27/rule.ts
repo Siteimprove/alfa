@@ -1,8 +1,11 @@
-import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
+import { None } from "@siteimprove/alfa-option";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { some } from "@siteimprove/alfa-trilean";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectations/expectation";
+import { outcomeToTrilean } from "../common/expectations/outcome-to-trilean";
 
 import { Question } from "../common/question";
 
@@ -17,9 +20,10 @@ export default Rule.Composite.of<Page, Element, Question>({
       expectations(outcomes) {
         return {
           1: expectation(
-            outcomes.some(Outcome.isPassed),
+            some(outcomeToTrilean)(outcomes),
             Outcomes.HasTextAlternative,
-            Outcomes.HasNoTextAlternative
+            Outcomes.HasNoTextAlternative,
+            None
           )
         };
       }
