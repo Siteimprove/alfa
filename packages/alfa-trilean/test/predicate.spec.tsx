@@ -21,7 +21,7 @@ test("fold() folds over the truth values of a predicate", t => {
     Predicate.fold(
       isPositive,
       value,
-      x => "positive",
+      () => "positive",
       () => "negative",
       () => "who knows?"
     );
