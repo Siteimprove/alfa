@@ -41,7 +41,7 @@ test("Passes when non-streaming video elements have all audio and visual informa
   const oracle = makeOracle({
     "is-streaming": false,
     "has-audio": true,
-    transcript: Option.of(transcript as Node)
+    transcript: Option.of(transcript)
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
