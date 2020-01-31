@@ -4,8 +4,9 @@ import { None } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { some } from "@siteimprove/alfa-trilean";
 import { Page } from "@siteimprove/alfa-web";
-import { expectation } from "../common/expectations/expectation";
-import { outcomeToTrilean } from "../common/expectations/outcome-to-trilean";
+
+import { expectation } from "../common/expectation";
+import { outcomeToTrilean } from "../common/expectation/outcome-to-trilean";
 
 import { Question } from "../common/question";
 

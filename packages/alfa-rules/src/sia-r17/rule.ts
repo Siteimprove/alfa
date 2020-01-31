@@ -5,13 +5,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { expectation } from "../common/expectations/expectation";
+
+import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 const { filter, some } = Iterable;
-const { and, nor, equals, test } = Predicate;
+const { and, nor, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r17.html",

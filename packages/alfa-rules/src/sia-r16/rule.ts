@@ -5,13 +5,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { expectation } from "../common/expectations/expectation";
+
+import { expectation } from "../common/expectation";
 
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 
 const { filter, find, isEmpty } = Iterable;
-const { and, equals, property, test } = Predicate;
+const { and, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",

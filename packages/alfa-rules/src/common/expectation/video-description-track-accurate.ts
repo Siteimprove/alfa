@@ -1,7 +1,7 @@
-import {Element} from "@siteimprove/alfa-dom";
-import {Err, Ok} from "@siteimprove/alfa-result";
-import {Question} from "../question";
-import {expectation} from "./expectation";
+import { Element } from "@siteimprove/alfa-dom";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { Question } from "../question";
+import { expectation } from "../expectation";
 
 export function videoDescriptionTrackAccurate(target: Element) {
   return {

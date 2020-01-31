@@ -6,7 +6,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { audio } from "../common/applicability/audio";
-import { expectation } from "../common/expectations/expectation";
+
+import { expectation } from "../common/expectation";
 
 import { isPerceivable } from "../common/predicate/is-perceivable";
 

@@ -4,7 +4,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { expectation } from "../common/expectations/expectation";
+
+import { expectation } from "../common/expectation";
 
 import { hasChild } from "../common/predicate/has-child";
 import { hasName } from "../common/predicate/has-name";

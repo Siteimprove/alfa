@@ -204,7 +204,7 @@ function resolve<I, T, Q>(
           expectation.map(expectation =>
             expectations.push([
               id,
-              expectation.map(val => val.map(normalize).mapErr(normalize))
+              expectation.map(value => value.map(normalize).mapErr(normalize))
             ])
           )
         ),

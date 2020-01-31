@@ -3,7 +3,8 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
-import { videoDescriptionTrackAccurate } from "../common/expectations/video-description-track-accurate";
+
+import { videoDescriptionTrackAccurate } from "../common/expectation/video-description-track-accurate";
 
 import { Question } from "../common/question";
 

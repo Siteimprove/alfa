@@ -95,6 +95,12 @@ export namespace Question {
     subject: json.JSON;
     message: string;
   }
+
+  export function isQuestion<Q, A, S, T = A>(
+    value: unknown
+  ): value is Question<Q, A, S, T> {
+    return value instanceof Question;
+  }
 }
 
 function normalize(string: string): string {

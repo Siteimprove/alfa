@@ -1,10 +1,12 @@
 import { Rule } from "@siteimprove/alfa-act";
-import * as aria from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { expectation } from "../common/expectations/expectation";
+
+import * as aria from "@siteimprove/alfa-aria";
+
+import { expectation } from "../common/expectation";
 
 const { filter, flatMap } = Iterable;
 

@@ -4,9 +4,11 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
+import { expectation } from "../expectation";
+
 import { isPerceivable } from "../predicate/is-perceivable";
+
 import { Question } from "../question";
-import { expectation } from "./expectation";
 
 function mediaTextAlternative(
   alt: ActQuestion<"node", Option<Node>, Element>,

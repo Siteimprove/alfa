@@ -1,18 +1,19 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
-import * as aria from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
-import { expectation } from "../common/expectations/expectation";
+
+import * as aria from "@siteimprove/alfa-aria";
+
+import { expectation } from "../common/expectation";
 
 import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
-
-import { Ok, Err } from "@siteimprove/alfa-result";
 
 const { filter, flatMap } = Iterable;
 const { and, not, equals, test } = Predicate;
