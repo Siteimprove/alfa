@@ -159,10 +159,11 @@ export namespace Branched {
     values: Iterable<T>,
     mapper: Mapper<T, Branched<U, B>>
   ): Branched<Iterable<U>, B> {
-    return [...values].reduce<Branched<List<U>, B>>(
+    return Iterable.reduce(
+      values,
       (values, value) =>
-        values.flatMap(values =>
-          mapper(value).map(value => values.push(value))
+        mapper(value).flatMap(value =>
+          values.map(values => values.push(value))
         ),
       Branched.of(List.empty())
     );
