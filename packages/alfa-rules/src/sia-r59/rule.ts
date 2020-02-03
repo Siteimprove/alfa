@@ -5,6 +5,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasChild } from "../common/predicate/has-child";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -40,11 +42,23 @@ export default Rule.Atomic.of<Page, Document>({
         );
 
         return {
-          1: hasHeadings
-            ? Ok.of("The document has at least one heading element")
-            : Err.of("The document does not have a heading element")
+          1: expectation(
+            hasHeadings,
+            Outcomes.HasOneHeading,
+            Outcomes.HasNoHeadings
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasOneHeading = Ok.of(
+    "The document has at least one heading element"
+  );
+
+  export const HasNoHeadings = Err.of(
+    "The document does not have a heading element"
+  );
+}

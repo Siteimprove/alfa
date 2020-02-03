@@ -6,11 +6,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 
 const { filter, find, isEmpty } = Iterable;
-const { and, equals, property, test } = Predicate;
+const { and, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
@@ -21,18 +23,18 @@ export default Rule.Atomic.of<Page, Element>({
           document.descendants({ composed: true, nested: true }),
           and(
             Element.isElement,
-	    and(hasNamespace(equals(Namespace.HTML, Namespace.SVG)), hasRole())
+            and(hasNamespace(equals(Namespace.HTML, Namespace.SVG)), hasRole())
           )
         );
       },
 
       expectations(target) {
         return {
-          1: test(hasRequiredValues, target)
-            ? Ok.of("The element has all required states and properties")
-            : Err.of(
-                "The element does not have all required states and properties"
-              )
+          1: expectation(
+            hasRequiredValues(target),
+            Outcomes.HasAllStates,
+            Outcomes.HasNotAllStates
+          )
         };
       }
     };
@@ -49,7 +51,7 @@ const hasRequiredValues: Predicate<Element> = element => {
           continue;
         }
 
-	if (element.attribute(attribute).every(property("value", isEmpty))) {
+        if (element.attribute(attribute).every(property("value", isEmpty))) {
           return false;
         }
       }
@@ -58,3 +60,13 @@ const hasRequiredValues: Predicate<Element> = element => {
 
   return true;
 };
+
+export namespace Outcomes {
+  export const HasAllStates = Ok.of(
+    "The element has all required states and properties"
+  );
+
+  export const HasNotAllStates = Err.of(
+    "The element does not have all required states and properties"
+  );
+}

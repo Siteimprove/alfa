@@ -5,6 +5,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -13,7 +15,7 @@ import { isDecorative } from "../common/predicate/is-decorative";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { filter } = Iterable;
-const { and, or, not, equals, property, fold } = Predicate;
+const { and, or, not, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
@@ -40,17 +42,14 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: fold(
-            isDecorative,
-            target,
-            () => Outcomes.IsDecorative,
-            () =>
-              fold(
-                hasAccessibleName(device),
-                target,
-                () => Outcomes.HasAccessibleName,
-                () => Outcomes.HasNoAccessibleNameNorIsDecorative
-              )
+          1: expectation(
+            isDecorative(target),
+            Outcomes.IsDecorative,
+            expectation(
+              hasAccessibleName(device)(target),
+              Outcomes.HasAccessibleName,
+              Outcomes.HasNoAccessibleNameNorIsDecorative
+            )
           )
         };
       }

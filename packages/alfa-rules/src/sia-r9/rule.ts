@@ -6,12 +6,14 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 
-const { filter, first, isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { filter, first } = Iterable;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r9.html",
@@ -51,12 +53,11 @@ export default Rule.Atomic.of<Page, Element>({
         ).get();
 
         return {
-          1:
-            refreshTime === 0 || refreshTime! > 72000
-              ? Ok.of(
-                  "The refresh or redirect happens immediately or after 20 hours"
-                )
-              : Err.of("The refresh or redirect is delayed less than 20 hours")
+          1: expectation(
+            refreshTime === 0 || refreshTime! > 72000,
+            Outcomes.HasImmediateRefresh,
+            Outcomes.HasDelayedRefresh
+          )
         };
       }
     };
@@ -100,4 +101,14 @@ function getRefreshTime(content: string): Option<number> {
   }
 
   return Option.of(parseInt(content.substring(start, i), 10));
+}
+
+export namespace Outcomes {
+  export const HasImmediateRefresh = Ok.of(
+    "The refresh or redirect happens immediately or after 20 hours"
+  );
+
+  export const HasDelayedRefresh = Err.of(
+    "The refresh or redirect is delayed less than 20 hours"
+  );
 }

@@ -1,7 +1,12 @@
-import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
+import { None } from "@siteimprove/alfa-option";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { some } from "@siteimprove/alfa-trilean";
 import { Page } from "@siteimprove/alfa-web";
+
+import { expectation } from "../common/expectation";
+import { outcomeToTrilean } from "../common/expectation/outcome-to-trilean";
 
 import { Question } from "../common/question";
 
@@ -15,15 +20,24 @@ export default Rule.Composite.of<Page, Element, Question>({
     return {
       expectations(outcomes) {
         return {
-          1: outcomes.some(Outcome.isPassed)
-            ? Ok.of(
-                "The <video> element has a text alternative for its audio content"
-              )
-            : Err.of(
-                "The <video> element has no text alternative for its audio content"
-              )
+          1: expectation(
+            some(outcomeToTrilean)(outcomes),
+            Outcomes.HasTextAlternative,
+            Outcomes.HasNoTextAlternative,
+            None
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasTextAlternative = Ok.of(
+    "The <video> element has a text alternative for its audio content"
+  );
+
+  export const HasNoTextAlternative = Err.of(
+    "The <video> element has no text alternative for its audio content"
+  );
+}

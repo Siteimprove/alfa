@@ -5,6 +5,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasChild } from "../common/predicate/has-child";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -42,18 +44,16 @@ export default Rule.Atomic.of<Page, Document>({
         );
 
         return {
-          1: fold(
-            title => title.isSome(),
-            title,
-            () => Outcomes.HasTitle,
-            () => Outcomes.HasNoTitle
+          1: expectation(
+            title.isSome(),
+            Outcomes.HasTitle,
+            Outcomes.HasNoTitle
           ),
 
-          2: fold(
-            title => title.some(hasTextContent()),
-            title,
-            () => Outcomes.HasNonEmptyTitle,
-            () => Outcomes.HasEmptyTitle
+          2: expectation(
+            title.some(hasTextContent()),
+            Outcomes.HasNonEmptyTitle,
+            Outcomes.HasEmptyTitle
           )
         };
       }
@@ -74,7 +74,7 @@ export namespace Outcomes {
     "The first <title> element has text content"
   );
 
-  export const HasEmptyTitle: Rule.Expectation = Err.of(
+  export const HasEmptyTitle = Err.of(
     "The first <title> element has no text content"
   );
 }

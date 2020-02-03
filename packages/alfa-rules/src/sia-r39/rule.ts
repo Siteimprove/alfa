@@ -1,8 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
@@ -60,12 +61,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
             target,
             `Does the accessible name of the <${target.name}> element describe its purpose?`
           )
-            ? Ok.of(
-                `The accessible name of the <${target.name}> element describes its purpose`
-              )
-            : Err.of(
-                `The accessible name of the <${target.name}> element does not describe its purpose`
-              )
+            ? Some.of(Outcomes.NameIsDescriptive(target.name))
+            : Some.of(Outcomes.NameIsNotDescriptive(target.name))
         };
       }
     };
@@ -81,4 +78,14 @@ function getFilename(path: string): string {
   }
 
   return base.trim();
+}
+
+export namespace Outcomes {
+  export const NameIsDescriptive = (name: string): Result<string, string> =>
+    Ok.of(`The accessible name of the <${name}> element describes its purpose`);
+
+  export const NameIsNotDescriptive = (name: string): Result<string, string> =>
+    Err.of(
+      `The accessible name of the <${name}> element does not describe its purpose`
+    );
 }

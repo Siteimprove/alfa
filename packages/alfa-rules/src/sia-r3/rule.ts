@@ -5,11 +5,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasId } from "../common/predicate/has-id";
 import { hasUniqueId } from "../common/predicate/has-unique-id";
 
 const { filter, isEmpty } = Iterable;
-const { and, not, fold } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r3.html",
@@ -24,11 +26,10 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: fold(
-            hasUniqueId(),
-            target,
-            () => Outcomes.HasUniqueId,
-            () => Outcomes.HasNonUniqueId
+          1: expectation(
+            hasUniqueId()(target),
+            Outcomes.HasUniqueId,
+            Outcomes.HasNonUniqueId
           )
         };
       }

@@ -10,6 +10,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -71,23 +73,38 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
         );
 
         return {
-          1:
-            sources.size === 1
-              ? Ok.of("The <iframe> elements embed the same resource")
-              : Question.of(
-                  "reference-equivalent-resources",
-                  "boolean",
-                  target,
-                  "Do the <iframe> elements embed equivalent resources?"
-                ).map(embedEquivalentResources =>
-                  embedEquivalentResources
-                    ? Ok.of("The <iframe> elements embed equivalent resources")
-                    : Err.of(
-                        "The <iframe> elements do not embed the same or equivalent resources"
-                      )
-                )
+          1: expectation(
+            sources.size === 1,
+            Outcomes.EmbedSameResources,
+            Question.of(
+              "reference-equivalent-resources",
+              "boolean",
+              target,
+              "Do the <iframe> elements embed equivalent resources?"
+            ).map(embedEquivalentResources =>
+              expectation(
+                embedEquivalentResources,
+                Outcomes.EmbedEquivalentResources,
+                Outcomes.EmbedDifferentResources
+              )
+            )
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const EmbedSameResources = Ok.of(
+    "The <iframe> elements embed the same resource"
+  );
+
+  export const EmbedEquivalentResources = Ok.of(
+    "The <iframe> elements embed equivalent resources"
+  );
+
+  export const EmbedDifferentResources = Err.of(
+    "The <iframe> elements do not embed the same or equivalent resources"
+  );
+}

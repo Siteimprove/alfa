@@ -7,7 +7,10 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
+import { hasCategory } from "../common/predicate/has-category";
 import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasNameFrom } from "../common/predicate/has-name-from";
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -16,7 +19,6 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
-import { hasCategory } from "../common/predicate/has-category";
 
 const { filter, map, join } = Iterable;
 const { and, not, equals, test } = Predicate;
@@ -66,24 +68,22 @@ export default Rule.Atomic.of<Page, Element, Question>({
         );
 
         return {
-          1: accessibleNameIncludesTextContent
-            ? Ok.of(
-                "The visible text content of the element is included within its accessible name"
+          1: expectation(
+            accessibleNameIncludesTextContent,
+            Outcomes.VisibleIsInName,
+            Question.of(
+              "is-human-language",
+              "boolean",
+              target,
+              "Does the accessible name of the element express anything in human language?"
+            ).map(isHumanLanguage =>
+              expectation(
+                !isHumanLanguage,
+                Outcomes.NameIsNotLanguage,
+                Outcomes.VisibleIsNotInName
               )
-            : Question.of(
-                "is-human-language",
-                "boolean",
-                target,
-                "Does the accessible name of the element express anything in human language?"
-              ).map(isHumanLanguage =>
-                !isHumanLanguage
-                  ? Ok.of(
-                      "The accessible name of the element does not express anything in human language"
-                    )
-                  : Err.of(
-                      "The visible text content of the element is not included within its accessible name"
-                    )
-              )
+            )
+          )
         };
       }
     };
@@ -109,5 +109,19 @@ function getVisibleTextContent(element: Element, device: Device): string {
       ),
       ""
     )
+  );
+}
+
+export namespace Outcomes {
+  export const VisibleIsInName = Ok.of(
+    "The visible text content of the element is included within its accessible name"
+  );
+
+  export const NameIsNotLanguage = Ok.of(
+    "The accessible name of the element does not express anything in human language"
+  );
+
+  export const VisibleIsNotInName = Err.of(
+    "The visible text content of the element is not included within its accessible name"
   );
 }

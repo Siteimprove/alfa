@@ -1,10 +1,13 @@
 import { Rule } from "@siteimprove/alfa-act";
-import * as aria from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+
+import * as aria from "@siteimprove/alfa-aria";
+
+import { expectation } from "../common/expectation";
 
 import { hasNamespace } from "../common/predicate/has-namespace";
 
@@ -25,12 +28,12 @@ export default Rule.Atomic.of<Page, Attribute>({
             )
           ),
           element =>
-	    filter(
-	      element.attributes,
-	      and(
-		property("name", name => aria.Attribute.lookup(name).isSome()),
-		property("value", not(isEmpty))
-	      )
+            filter(
+              element.attributes,
+              and(
+                property("name", name => aria.Attribute.lookup(name).isSome()),
+                property("value", not(isEmpty))
+              )
             )
         );
       },
@@ -39,11 +42,21 @@ export default Rule.Atomic.of<Page, Attribute>({
         const attribute = aria.Attribute.lookup(target.name).get();
 
         return {
-          1: attribute.isValid(target.value)
-            ? Ok.of("The attribute has a valid value")
-            : Err.of("The attribute does not have a valid value")
+          1: expectation(
+            attribute.isValid(target.value),
+            Outcomes.HasValidValue,
+            Outcomes.HasNoValidValue
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasValidValue = Ok.of("The attribute has a valid value");
+
+  export const HasNoValidValue = Err.of(
+    "The attribute does not have a valid value"
+  );
+}

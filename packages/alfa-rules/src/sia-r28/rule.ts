@@ -5,13 +5,15 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasInputType } from "../common/predicate/has-input-type";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { filter, isEmpty } = Iterable;
-const { and, not, equals, test } = Predicate;
+const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r28.html",
@@ -32,11 +34,23 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: test(hasAccessibleName(device, not(isEmpty)), target)
-            ? Ok.of(`The <input type="button"> element has an accessible name`)
-            : Err.of(`The <input type="button"> element has no accessible name`)
+          1: expectation(
+            hasAccessibleName(device, not(isEmpty))(target),
+            Outcomes.HasName,
+            Outcomes.HasNoName
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasName = Ok.of(
+    `The <input type="button"> element has an accessible name`
+  );
+
+  export const HasNoName = Err.of(
+    `The <input type="button"> element has no accessible name`
+  );
+}

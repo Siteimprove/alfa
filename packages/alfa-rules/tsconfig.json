@@ -4,6 +4,10 @@
   "files": [
     "src/common/applicability/audio.ts",
     "src/common/applicability/video.ts",
+    "src/common/expectation.ts",
+    "src/common/expectation/media-text-alternative.ts",
+    "src/common/expectation/outcome-to-trilean.ts",
+    "src/common/expectation/video-description-track-accurate.ts",
     "src/common/predicate/has-accessible-name.ts",
     "src/common/predicate/has-attribute.ts",
     "src/common/predicate/has-category.ts",
@@ -90,9 +94,12 @@
     "src/sia-r8/rule.ts",
     "src/sia-r9/rule.ts",
     "test/common/evaluate.ts",
+    "test/common/make-oracle.ts",
     "test/common/outcome.ts",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
+    "test/sia-r24/rule.spec.tsx",
+    "test/sia-r38/rule.spec.tsx",
     "test/sia-r57/rule.spec.tsx",
     "test/sia-r64/rule.spec.tsx"
   ],
@@ -156,6 +163,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-trilean"
     },
     {
       "path": "../alfa-web"

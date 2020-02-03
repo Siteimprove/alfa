@@ -6,6 +6,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
@@ -45,13 +47,23 @@ export default Rule.Atomic.of<Page, Attribute>({
 
       expectations(target) {
         return {
-          1: Language.from(target.value).isSome()
-            ? Ok.of("The lang attribute has a valid primary language subtag")
-            : Err.of(
-                "The lang attribute does not have a valid primary language subtag"
-              )
+          1: expectation(
+            Language.from(target.value).isSome(),
+            Outcomes.HasValidLanguage,
+            Outcomes.HasNoValidLanguage
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasValidLanguage = Ok.of(
+    "The lang attribute has a valid primary language subtag"
+  );
+
+  export const HasNoValidLanguage = Err.of(
+    "The lang attribute does not have a valid primary language subtag"
+  );
+}

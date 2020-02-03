@@ -1,7 +1,12 @@
-import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
+import { None } from "@siteimprove/alfa-option";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { some } from "@siteimprove/alfa-trilean";
 import { Page } from "@siteimprove/alfa-web";
+
+import { expectation } from "../common/expectation";
+import { outcomeToTrilean } from "../common/expectation/outcome-to-trilean";
 
 import { Question } from "../common/question";
 
@@ -16,11 +21,24 @@ export default Rule.Composite.of<Page, Element, Question>({
     return {
       expectations(outcomes) {
         return {
-          1: outcomes.some(Outcome.isPassed)
-            ? Ok.of("The <video> element has an audio description")
-            : Err.of("The <video> element does not have an audio description")
+          1: expectation(
+            some(outcomeToTrilean)(outcomes),
+            Outcomes.HasAudioDescription,
+            Outcomes.HasNoAudioDescription,
+            None
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasAudioDescription = Ok.of(
+    "The <video> element has an audio description"
+  );
+
+  export const HasNoAudioDescription = Err.of(
+    "The <video> element does not have an audio description"
+  );
+}

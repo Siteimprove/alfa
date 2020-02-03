@@ -7,11 +7,13 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
+import { expectation } from "../common/expectation";
+
 import { hasName } from "../common/predicate/has-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { filter, isEmpty } = Iterable;
-const { and, not, equals, fold, property } = Predicate;
+const { and, not, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
@@ -29,22 +31,20 @@ export default Rule.Atomic.of<Page, Text>({
 
       expectations(target) {
         return {
-          1: fold(
-            target =>
-              aria.Node.from(target, device).every(node =>
-                node
-                  .ancestors()
-                  .some(ancestor =>
-                    ancestor
-                      .role()
-                      .some(role =>
-                        role.inheritsFrom(hasName(equals("landmark")))
-                      )
-                  )
-              ),
-            target,
-            () => Outcomes.IsIncludedInLandmark,
-            () => Outcomes.IsNotIncludedInLandmark
+          1: expectation(
+            aria.Node.from(target, device).every(node =>
+              node
+                .ancestors()
+                .some(ancestor =>
+                  ancestor
+                    .role()
+                    .some(role =>
+                      role.inheritsFrom(hasName(equals("landmark")))
+                    )
+                )
+            ),
+            Outcomes.IsIncludedInLandmark,
+            Outcomes.IsNotIncludedInLandmark
           )
         };
       }

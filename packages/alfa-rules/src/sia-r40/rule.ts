@@ -5,6 +5,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
@@ -29,11 +31,21 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         return {
-          1: hasAccessibleName(device, not(isEmpty))
-            ? Ok.of("The region has an accessible name")
-            : Err.of("The region does not have an accessible name")
+          1: expectation(
+            hasAccessibleName(device, not(isEmpty))(target),
+            Outcomes.HasName,
+            Outcomes.HasNoName
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasName = Ok.of("The region has an accessible name");
+
+  export const HasNoName = Err.of(
+    "The region does not have an accessible name"
+  );
+}

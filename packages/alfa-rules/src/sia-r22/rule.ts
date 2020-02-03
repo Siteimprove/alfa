@@ -5,6 +5,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
 
+import { expectation } from "../common/expectation";
+
 import { Question } from "../common/question";
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -23,12 +25,22 @@ export default Rule.Atomic.of<Page, Element, Question>({
             target,
             "Does the <video> element have captions?"
           ).map(hasCaptions =>
-            hasCaptions
-              ? Ok.of("The <video> element has captions")
-              : Err.of("The <video> element does not have captions")
+            expectation(
+              hasCaptions,
+              Outcomes.HasCaptions,
+              Outcomes.HasNoCaptions
+            )
           )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasCaptions = Ok.of("The <video> element has captions");
+
+  export const HasNoCaptions = Err.of(
+    "The <video> element does not have captions"
+  );
+}

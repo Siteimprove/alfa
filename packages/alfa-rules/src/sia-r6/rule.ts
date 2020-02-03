@@ -6,6 +6,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
@@ -37,17 +39,26 @@ export default Rule.Atomic.of<Page, Element>({
         const xmlLang = Language.from(target.attribute("xml:lang").get().value);
 
         return {
-          1:
+          1: expectation(
             xmlLang.isNone() ||
-            xmlLang.filter(xmlLang => xmlLang.primary === lang.primary).isSome()
-              ? Ok.of(
-                  "The lang and xml:lang attributes have matching primary language subtags"
-                )
-              : Err.of(
-                  "The lang and xml:lang attributes do not have matching primary language subtags"
-                )
+              xmlLang
+                .filter(xmlLang => xmlLang.primary === lang.primary)
+                .isSome(),
+            Outcomes.HasMatchingLanguages,
+            Outcomes.HasNonMatchingLanguages
+          )
         };
       }
     };
   }
 });
+
+export namespace Outcomes {
+  export const HasMatchingLanguages = Ok.of(
+    "The lang and xml:lang attributes have matching primary language subtags"
+  );
+
+  export const HasNonMatchingLanguages = Err.of(
+    "The lang and xml:lang attributes do not have matching primary language subtags"
+  );
+}

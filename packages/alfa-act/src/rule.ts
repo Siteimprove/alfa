@@ -72,7 +72,7 @@ export namespace Rule {
     "@id": string;
   }
 
-  export type Expectation = Result<string, string>;
+  export type Expectation = Option<Result<string, string>>;
 
   export type Evaluator<I, T, Q> = (
     input: Readonly<I>,
@@ -204,7 +204,7 @@ function resolve<I, T, Q>(
           expectation.map(expectation =>
             expectations.push([
               id,
-              expectation.map(normalize).mapErr(normalize)
+              expectation.map(value => value.map(normalize).mapErr(normalize))
             ])
           )
         ),

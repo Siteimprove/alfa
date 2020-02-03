@@ -43,6 +43,8 @@ export interface Option<T>
 }
 
 export namespace Option {
+  export type Maybe<T> = T | Option<T>;
+
   export type JSON = Some.JSON | None.JSON;
 
   export function of<T>(value: T): Option<T> {
