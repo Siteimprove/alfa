@@ -10,8 +10,6 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-const { reduce, reverse, some } = Iterable;
-
 const {
   map,
   either,
@@ -123,7 +121,7 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      return element.classes.has(this.name);
+      return Iterable.includes(element.classes, this.name);
     }
 
     public equals(value: unknown): value is this {
@@ -232,7 +230,7 @@ export namespace Selector {
             );
         }
 
-        return some(
+        return Iterable.some(
           element.attributes,
           and(predicate, attribute => this.matchesValue(attribute.value))
         );
@@ -791,9 +789,9 @@ export namespace Selector {
    * @see https://drafts.csswg.org/selectors/#typedef-compound-selector
    */
   const parseCompound = map(oneOrMore(parseSimple), result => {
-    const [left, ...selectors] = reverse(result);
+    const [left, ...selectors] = Iterable.reverse(result);
 
-    return reduce(
+    return Iterable.reduce(
       selectors,
       (right, left) => Compound.of(left, right),
       left as Simple | Compound
@@ -948,7 +946,7 @@ export namespace Selector {
     result => {
       const [left, selectors] = result;
 
-      return reduce(
+      return Iterable.reduce(
         selectors,
         (left, [combinator, right]) => Complex.of(combinator, left, right),
         left as Simple | Compound | Complex
@@ -1095,9 +1093,9 @@ export namespace Selector {
     result => {
       let [left, selectors] = result;
 
-      [left, ...selectors] = [...reverse(selectors), left];
+      [left, ...selectors] = [...Iterable.reverse(selectors), left];
 
-      return reduce(
+      return Iterable.reduce(
         selectors,
         (right, left) => List.of(left, right),
         left as Simple | Compound | Complex | Relative | List

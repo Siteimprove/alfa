@@ -4,7 +4,6 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Set } from "@siteimprove/alfa-set";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -50,8 +49,8 @@ export class Element extends Node implements Slot, Slotable {
   private readonly _style: Option<Block>;
   private readonly _shadow: Option<Shadow>;
   private readonly _content: Option<Document>;
-  private readonly _id: Lazy<Option<string>>;
-  private readonly _classes: Lazy<Set<string>>;
+  private readonly _id: Option<string>;
+  private readonly _classes: Array<string>;
 
   private constructor(
     namespace: Option<Namespace>,
@@ -76,13 +75,11 @@ export class Element extends Node implements Slot, Slotable {
     this._shadow = self.apply(shadow);
     this._content = content;
 
-    this._id = Lazy.of(() => this.attribute("id").map(attr => attr.value));
+    this._id = this.attribute("id").map(attr => attr.value);
 
-    this._classes = Lazy.of(() =>
-      this.attribute("class")
-        .map(attr => Set.from(attr.value.trim().split(/\s+/)))
-        .getOr(Set.empty())
-    );
+    this._classes = this.attribute("class")
+      .map(attr => attr.value.trim().split(/\s+/))
+      .getOr([]);
   }
 
   public get namespace(): Option<Namespace> {
@@ -117,14 +114,14 @@ export class Element extends Node implements Slot, Slotable {
    * @see https://dom.spec.whatwg.org/#concept-id
    */
   public get id(): Option<string> {
-    return this._id.force();
+    return this._id;
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-class
    */
-  public get classes(): Set<string> {
-    return this._classes.force();
+  public get classes(): Iterable<string> {
+    return this._classes;
   }
 
   public parent(options: Node.Traversal = {}): Option<Node> {
