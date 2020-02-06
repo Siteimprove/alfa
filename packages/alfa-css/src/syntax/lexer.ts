@@ -132,50 +132,44 @@ const startsValidEscape: Predicate<Slice<number>> = input =>
  * @see https://drafts.csswg.org/css-syntax/#starts-with-a-number
  */
 const startsNumber: Predicate<Slice<number>> = input =>
-  input
-    .get(0)
-    .every(
+  input.get(0).every(
+    or(
+      isDigit,
       or(
-        isDigit,
-        or(
-          and(equals(0x2e), () => input.get(1).every(isDigit)),
-          and(equals(0x2b, 0x2d), () =>
-            input
-              .get(1)
-              .every(
-                or(
-                  isDigit,
-                  and(equals(0x2e), () => input.get(2).every(isDigit))
-                )
-              )
+        and(equals(0x2e), () => input.get(1).every(isDigit)),
+        and(equals(0x2b, 0x2d), () =>
+          input.get(1).every(
+            or(
+              isDigit,
+              and(equals(0x2e), () => input.get(2).every(isDigit))
+            )
           )
         )
       )
-    );
+    )
+  );
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#would-start-an-identifier
  */
 const startsIdentifier: Predicate<Slice<number>> = input =>
-  input
-    .get(0)
-    .some(
+  input.get(0).some(
+    or(
+      isNameStart,
       or(
-        isNameStart,
-        or(
-          and(equals(0x2d), () =>
-            input
-              .get(1)
-              .every(
-                or(or(isNameStart, equals(0x2d)), () =>
-                  startsValidEscape(input.slice(1))
-                )
+        and(equals(0x2d), () =>
+          input
+            .get(1)
+            .every(
+              or(or(isNameStart, equals(0x2d)), () =>
+                startsValidEscape(input.slice(1))
               )
-          ),
-          and(equals(0x5c), () => startsValidEscape(input))
-        )
+            )
+        ),
+        and(equals(0x5c), () => startsValidEscape(input))
       )
-    );
+    )
+  );
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-name
@@ -673,12 +667,9 @@ function convert(input: Slice<number>): number {
     integer.push(...value);
   }
 
-  const i =
-    integer.length === 0
-      ? 0
-      : integer
-          .map(code => code - 0x30)
-          .reduceRight((i, code) => 10 * code + i);
+  const i = integer
+    .map(code => code - 0x30)
+    .reduce((i, code) => 10 * i + code, 0);
 
   if (input.get(0).includes(0x2e)) {
     input = input.slice(1);
@@ -691,12 +682,9 @@ function convert(input: Slice<number>): number {
     fraction.push(...value);
   }
 
-  const f =
-    fraction.length === 0
-      ? 0
-      : fraction
-          .map(code => code - 0x30)
-          .reduceRight((i, code) => 10 * code + i);
+  const f = fraction
+    .map(code => code - 0x30)
+    .reduce((i, code) => 10 * i + code, 0);
 
   const d = fraction.length;
 
@@ -722,12 +710,9 @@ function convert(input: Slice<number>): number {
     exponent.push(...value);
   }
 
-  const e =
-    exponent.length === 0
-      ? 0
-      : exponent
-          .map(code => code - 0x30)
-          .reduceRight((i, code) => 10 * code + i);
+  const e = exponent
+    .map(code => code - 0x30)
+    .reduce((i, code) => 10 * i + code, 0);
 
   // To account for floating point precision errors, we flip the sign of the
   // exponents (`d` and `t`) and divide rather than multiply.
