@@ -17,20 +17,49 @@ type Name = Property.Name;
 export class Style {
   public static of(
     declarations: Iterable<Declaration>,
+    device: Device,
     parent: Option<Style> = None
   ): Style {
-    return new Style(declarations, parent);
+    return new Style(declarations, device, parent);
+  }
+
+  private static _empty = new Style([], Device.standard(), None);
+
+  public static empty(): Style {
+    return this._empty;
   }
 
   private readonly _declarations: Array<Declaration>;
+  private readonly _device: Device;
   private readonly _parent: Option<Style>;
 
   private constructor(
     declarations: Iterable<Declaration>,
+    device: Device,
     parent: Option<Style>
   ) {
     this._declarations = Array.from(declarations);
+    this._device = device;
     this._parent = parent;
+  }
+
+  public get device(): Device {
+    return this._device;
+  }
+
+  public get parent(): Style {
+    return this._parent.getOrElse(() => Style._empty);
+  }
+
+  public root(): Style {
+    return this._parent.map(parent => parent.root()).getOr(this);
+  }
+
+  public initial<N extends Name>(name: N): Style.Initial<N>;
+  public initial<N extends Name>(name: N): Value {
+    const property: Property = Property.get(name);
+
+    return Value.of(property.initial);
   }
 
   public cascaded<N extends Name>(name: N): Option<Style.Cascaded<N>>;
@@ -52,26 +81,30 @@ export class Style {
     );
   }
 
-  public specified<N extends Name>(name: N): Option<Style.Specified<N>>;
-  public specified<N extends Name>(name: N): Option<Value> {
-    const property: Property = Property.get(name);
-
-    return this.cascaded(name).orElse(() => {
-      const initial = Option.of(Value.of(property.initial, None));
+  public specified<N extends Name>(name: N): Style.Specified<N>;
+  public specified<N extends Name>(name: N): Value {
+    return this.cascaded(name).getOrElse(() => {
+      const property: Property = Property.get(name);
 
       if (property.options.inherits === false) {
-        return initial;
+        return this.initial(name);
       }
 
-      return this._parent.flatMap(parent => parent.computed(name)).or(initial);
+      return this._parent
+        .map(parent => parent.computed(name))
+        .getOrElse(() => this.initial(name));
     });
   }
 
-  public computed<N extends Name>(name: N): Option<Style.Computed<N>>;
-  public computed<N extends Name>(name: N): Option<Value> {
+  public computed<N extends Name>(name: N): Style.Computed<N>;
+  public computed<N extends Name>(name: N): Value {
+    if (this._parent.isNone() && this._declarations.length === 0) {
+      return this.initial(name);
+    }
+
     const property: Property = Property.get(name);
 
-    return property.compute(this);
+    return property.compute(this, this._device);
   }
 
   public toJSON() {
@@ -107,13 +140,18 @@ export namespace Style {
 
       return Style.of(
         declarations,
+        device,
         element
           .parent({ flattened: true })
           .filter(Element.isElement)
-          .map(parent => Style.from(parent, device))
+          .map(parent => from(parent, device))
       );
     });
   }
+
+  export type Initial<N extends Name> = Property.Value.Initial<
+    Property.Longhand[N]
+  >;
 
   export type Cascaded<N extends Name> = Property.Value.Cascaded<
     Property.Longhand[N]

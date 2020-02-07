@@ -6,9 +6,9 @@ import { Style } from "@siteimprove/alfa-style";
 export function isTransparent(device: Device): Predicate<Node> {
   return node => {
     if (Element.isElement(node)) {
-      const opacity = Style.from(node, device).computed("opacity");
+      const opacity = Style.from(node, device).computed("opacity").value;
 
-      if (opacity.some(opacity => opacity.value !== 1)) {
+      if (opacity.value !== 1) {
         return true;
       }
     }

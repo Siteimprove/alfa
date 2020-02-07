@@ -5,16 +5,15 @@ import { Style } from "@siteimprove/alfa-style";
 
 export function isInert(device: Device): Predicate<Element> {
   return element => {
-    const visibility = Style.from(element, device).computed("visibility");
+    const visibility = Style.from(element, device).computed("visibility").value;
 
-    if (visibility.isSome()) {
-      switch (visibility.get().value.value) {
-        case "hidden":
-        case "collapse":
-          return true;
-      }
+    switch (visibility.value) {
+      case "hidden":
+      case "collapse":
+        return true;
+
+      default:
+        return false;
     }
-
-    return false;
   };
 }

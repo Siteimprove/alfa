@@ -7,7 +7,7 @@ export type Visibility = Keyword<"visible" | "hidden" | "collapse">;
 /**
  * @see https://drafts.csswg.org/css2/visufx.html#propdef-visibility
  */
-const Visibility: Property<Visibility> = Property.of(
+export const Visibility: Property<Visibility> = Property.of(
   Keyword.of("visible"),
   Keyword.parse("visible", "hidden", "collapse"),
   style => style.specified("visibility"),
@@ -15,5 +15,3 @@ const Visibility: Property<Visibility> = Property.of(
     inherits: true
   }
 );
-
-export default Visibility;

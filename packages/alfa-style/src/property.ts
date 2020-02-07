@@ -11,27 +11,43 @@ export class Property<T = unknown, U = T> {
   public static of<T, U>(
     initial: U,
     parse: Parser<Slice<Token>, T, string>,
-    compute: Mapper<Style, Option<Value<U>>>,
+    compute: Mapper<Style, Value<U>>,
     options: Property.Options = { inherits: false }
   ): Property<T, U> {
     return new Property(initial, parse, compute, options);
   }
 
-  public readonly initial: U;
-  public readonly parse: Parser<Slice<Token>, T, string>;
-  public readonly compute: Mapper<Style, Option<Value<U>>>;
-  public readonly options: Property.Options;
+  private readonly _initial: U;
+  private readonly _parse: Parser<Slice<Token>, T, string>;
+  private readonly _compute: Mapper<Style, Value<U>>;
+  private readonly _options: Property.Options;
 
   private constructor(
     initial: U,
     parse: Parser<Slice<Token>, T, string>,
-    compute: Mapper<Style, Option<Value<U>>>,
+    compute: Mapper<Style, Value<U>>,
     options: Property.Options
   ) {
-    this.initial = initial;
-    this.parse = parse;
-    this.compute = compute;
-    this.options = options;
+    this._initial = initial;
+    this._parse = parse;
+    this._compute = compute;
+    this._options = options;
+  }
+
+  get initial(): U {
+    return this._initial;
+  }
+
+  get parse(): Parser<Slice<Token>, T, string> {
+    return this._parse;
+  }
+
+  get compute(): Mapper<Style, Value<U>> {
+    return this._compute;
+  }
+
+  get options(): Property.Options {
+    return this._options;
   }
 }
 
@@ -54,7 +70,7 @@ export namespace Property {
       : never;
 
     export type Specified<P> = P extends Property<infer T, infer U>
-      ? Value<T> | Value<U>
+      ? Value<T | U>
       : never;
 
     export type Computed<P> = P extends Property<infer T, infer U>
@@ -63,20 +79,20 @@ export namespace Property {
   }
 }
 
-import display from "./property/display";
-import opacity from "./property/opacity";
-import transform from "./property/transform";
-import visibility from "./property/visibility";
+import { Display } from "./property/display";
+import { Opacity } from "./property/opacity";
+import { Transform } from "./property/transform";
+import { Visibility } from "./property/visibility";
 
 export namespace Property {
   export type Name = keyof Longhand;
 
   export type Longhand = typeof Longhand;
   export const Longhand = {
-    display,
-    opacity,
-    transform,
-    visibility
+    display: Display,
+    opacity: Opacity,
+    transform: Transform,
+    visibility: Visibility
   };
 
   export type Shorthand = typeof Shorthand;

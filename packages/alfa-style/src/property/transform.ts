@@ -33,10 +33,8 @@ export type Transform =
   | Transform.None
   | Iterable<Transform.Matrix | Transform.Rotate | Transform.Translate>;
 
-const Transform: Property<Transform> = Property.of(
+export const Transform: Property<Transform> = Property.of(
   Keyword.of("none"),
   Keyword.parse("none"),
   style => style.specified("transform")
 );
-
-export default Transform;

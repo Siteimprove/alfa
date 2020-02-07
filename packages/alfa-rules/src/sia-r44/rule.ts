@@ -86,32 +86,25 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 function hasConditionalRotation(element: Element, device: Device): boolean {
-  return Style.from(element, device)
-    .computed("transform")
-    .some(transform => {
-      const { value, source } = transform;
+  const { value, source } = Style.from(element, device).computed("transform");
 
-      if (source.isNone()) {
-        return false;
-      }
+  if (source.isNone()) {
+    return false;
+  }
 
-      if (
-        Keyword.isKeyword(value) ||
-        source.some(not(isOrientationConditional))
-      ) {
-        return false;
-      }
+  if (Keyword.isKeyword(value) || source.some(not(isOrientationConditional))) {
+    return false;
+  }
 
-      for (const transform of value) {
-        switch (transform.name) {
-          case "rotate":
-          case "matrix":
-            return true;
-        }
-      }
+  for (const transform of value) {
+    switch (transform.name) {
+      case "rotate":
+      case "matrix":
+        return true;
+    }
+  }
 
-      return false;
-    });
+  return false;
 }
 
 function isOrientationConditional(declaration: Declaration): boolean {
@@ -167,22 +160,16 @@ function getRotation(element: Element, device: Device): Option<number> {
         .flatMap(parent => getRotation(parent, device));
 
   return rotation.flatMap(rotation => {
-    const transform = Style.from(element, device).computed("transform");
+    const transform = Style.from(element, device).computed("transform").value;
 
-    if (transform.isNone()) {
+    if (Keyword.isKeyword(transform)) {
       return Option.of(rotation);
     }
 
-    const { value } = transform.get();
-
-    if (Keyword.isKeyword(value)) {
-      return Option.of(rotation);
-    }
-
-    for (const transform of value) {
-      switch (transform.name) {
+    for (const fn of transform) {
+      switch (fn.name) {
         case "rotate": {
-          const [x, y, z, angle] = transform.args;
+          const [x, y, z, angle] = fn.args;
 
           z;
 
@@ -196,7 +183,7 @@ function getRotation(element: Element, device: Device): Option<number> {
         }
 
         case "matrix": {
-          const decomposed = Transformation.decompose(transform.args);
+          const decomposed = Transformation.decompose(fn.args);
 
           if (decomposed.isNone()) {
             continue;
