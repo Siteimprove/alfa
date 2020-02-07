@@ -149,4 +149,47 @@ export namespace Parser {
       flatMap(separator, () => map(right, right => [left, right]))
     );
   }
+
+  export function separatedList<I, T, E>(
+    parser: Parser<I, T, E>,
+    separator: Parser<I, unknown, E>
+  ): Parser<I, Iterable<T>, E> {
+    return input => {
+      const values: Array<T> = [];
+
+      const result = parser(input);
+
+      if (result.isErr()) {
+        return result;
+      }
+
+      const [remainder, value] = result.get();
+
+      values.push(value);
+      input = remainder;
+
+      while (true) {
+        const result = separator(input);
+
+        if (result.isErr()) {
+          return Ok.of([input, values] as const);
+        }
+
+        [input] = result.get();
+
+        {
+          const result = parser(input);
+
+          if (result.isErr()) {
+            return result;
+          }
+
+          const [remainder, value] = result.get();
+
+          values.push(value);
+          input = remainder;
+        }
+      }
+    };
+  }
 }

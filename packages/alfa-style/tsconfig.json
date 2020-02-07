@@ -5,9 +5,11 @@
     "src/index.ts",
     "src/property.ts",
     "src/property/display.ts",
+    "src/property/font.ts",
     "src/property/opacity.ts",
     "src/property/transform.ts",
     "src/property/visibility.ts",
+    "src/resolver.ts",
     "src/style.ts",
     "src/value.ts"
   ],

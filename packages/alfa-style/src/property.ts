@@ -80,6 +80,7 @@ export namespace Property {
 }
 
 import { Display } from "./property/display";
+import { Font } from "./property/font";
 import { Opacity } from "./property/opacity";
 import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
@@ -90,6 +91,9 @@ export namespace Property {
   export type Longhand = typeof Longhand;
   export const Longhand = {
     display: Display,
+    "font-family": Font.Family,
+    "font-size": Font.Size,
+    "font-weight": Font.Weight,
     opacity: Opacity,
     transform: Transform,
     visibility: Visibility
