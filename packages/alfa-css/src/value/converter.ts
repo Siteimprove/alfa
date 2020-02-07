@@ -39,9 +39,7 @@ type Rates<U extends string> = { readonly [P in U]: number };
 
 /**
  * Given a function that returns a set of rates for a set of units, construct a
- * set of rates for the set of units. This may seem redundant, and it indeed is
- * as it's simply the identity function, but provides us with an easy way of
- * performing rate construction within a closure.
+ * set of rates for the set of units.
  */
 function rates<U extends string>(fn: () => Rates<U>): Rates<U> {
   return fn();
@@ -51,7 +49,7 @@ function rates<U extends string>(fn: () => Rates<U>): Rates<U> {
  * Converters are functions that convert an input value from one unit within a
  * set of units to another unit within the same set of units.
  */
-export type Convert<U extends string> = (
+export type Converter<U extends string> = (
   value: number,
   from: U,
   to: U
@@ -61,15 +59,15 @@ export type Convert<U extends string> = (
  * Given a set of rates for a set of units, construct a converter for the set of
  * units.
  */
-function convert<U extends string>(rates: Rates<U>): Convert<U> {
+function converter<U extends string>(rates: Rates<U>): Converter<U> {
   return (value, from, to) => value * (rates[from] / rates[to]);
 }
 
-export namespace Convert {
+export namespace Converter {
   /**
    * @see https://drafts.csswg.org/css-values/#lengths
    */
-  export const length: Convert<Unit.Length.Absolute> = convert(
+  export const length: Converter<Unit.Length.Absolute> = converter(
     rates(() => {
       const px = 1;
 
@@ -97,7 +95,7 @@ export namespace Convert {
   /**
    * @see https://drafts.csswg.org/css-values/#angles
    */
-  export const angle: Convert<Unit.Angle> = convert({
+  export const angle: Converter<Unit.Angle> = converter({
     deg: 1,
     grad: 360 / 400,
     rad: 360 / (2 * PI),
@@ -107,7 +105,7 @@ export namespace Convert {
   /**
    * @see https://drafts.csswg.org/css-values/#time
    */
-  export const time: Convert<Unit.Time> = convert({
+  export const time: Converter<Unit.Time> = converter({
     s: 1,
     ms: 0.001
   });
@@ -115,7 +113,7 @@ export namespace Convert {
   /**
    * @see https://drafts.csswg.org/css-values/#frequency
    */
-  export const frequency: Convert<Unit.Frequency> = convert({
+  export const frequency: Converter<Unit.Frequency> = converter({
     hz: 1,
     kHz: 1000
   });

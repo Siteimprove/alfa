@@ -9,11 +9,11 @@ import { Token } from "../syntax/token";
 const { map } = Parser;
 
 /**
- * @see https://drafts.csswg.org/css-values/#percentages
+ * @see https://drafts.csswg.org/css-values/#numbers
  */
-export class Percentage implements Equatable, Serializable {
-  public static of(value: number): Percentage {
-    return new Percentage(value);
+export class Number implements Equatable, Serializable {
+  public static of(value: number): Number {
+    return new Number(value);
   }
 
   private readonly _value: number;
@@ -22,8 +22,8 @@ export class Percentage implements Equatable, Serializable {
     this._value = value;
   }
 
-  public get type(): "percentage" {
-    return "percentage";
+  public get type(): "number" {
+    return "number";
   }
 
   public get value(): number {
@@ -31,37 +31,35 @@ export class Percentage implements Equatable, Serializable {
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof Percentage && value._value === this._value;
+    return value instanceof Number && value._value === this._value;
   }
 
   public toString(): string {
-    return `${this._value}%`;
+    return `${this._value}`;
   }
 
-  public toJSON(): Percentage.JSON {
+  public toJSON(): Number.JSON {
     return {
-      type: "percentage",
+      type: "number",
       value: this._value
     };
   }
 }
 
-export namespace Percentage {
+export namespace Number {
   export interface JSON {
     [key: string]: json.JSON;
-    type: "percentage";
+    type: "number";
     value: number;
   }
 
-  export function isPercentage(value: unknown): value is Percentage {
-    return value instanceof Percentage;
+  export function isNumber(value: unknown): value is Number {
+    return value instanceof Number;
   }
 
   export const parse: Parser<
     Slice<Token>,
-    Percentage,
+    Number,
     string
-  > = map(Token.parsePercentage(), percentage =>
-    Percentage.of(percentage.value)
-  );
+  > = map(Token.parseNumber(), number => Number.of(number.value));
 }

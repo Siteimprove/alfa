@@ -11,11 +11,14 @@
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
-    "src/value/convert.ts",
+    "src/value/converter.ts",
     "src/value/function.ts",
+    "src/value/integer.ts",
     "src/value/keyword.ts",
     "src/value/length.ts",
+    "src/value/number.ts",
     "src/value/percentage.ts",
+    "src/value/string.ts",
     "src/value/unit.ts"
   ],
   "references": [

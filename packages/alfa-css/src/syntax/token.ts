@@ -319,6 +319,14 @@ export namespace Token {
     }
   }
 
+  export function isDimension(value: unknown): value is Dimension {
+    return value instanceof Dimension;
+  }
+
+  export function parseDimension(predicate: Predicate<Dimension> = () => true) {
+    return parseToken(and(isDimension, predicate));
+  }
+
   export class Whitespace extends Token {
     public static of(): Whitespace {
       return new Whitespace();
