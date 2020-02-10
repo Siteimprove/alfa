@@ -194,7 +194,7 @@ export namespace Node {
           return Branched.of(Inert.of(node));
         }
 
-        if (style.computed("visibility").value.value === "visible") {
+        if (style.computed("visibility").value.value !== "visible") {
           accessibleNode = Branched.of(Container.of(node));
         } else {
           accessibleNode = Role.from(node).flatMap(role =>
