@@ -6,14 +6,12 @@ import { Style } from "@siteimprove/alfa-style";
 export function isRendered(device: Device): Predicate<Node> {
   return node => {
     if (Element.isElement(node)) {
-      const display = Style.from(node, device).cascaded("display");
+      const display = Style.from(node, device).computed("display").value;
 
-      if (display.isSome()) {
-        const [outside] = display.get().value;
+      const [outside] = display;
 
-        if (outside.value === "none") {
-          return false;
-        }
+      if (outside.value === "none") {
+        return false;
       }
     }
 
