@@ -7,11 +7,11 @@ jobs:
       matrix:
         node-version: [10.x, 12.x]
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install -g yarn
-    - run: yarn install --ignore-scripts
-    - run: yarn prepare
-    - run: yarn test
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install -g yarn
+      - run: yarn install --ignore-scripts
+      - run: yarn build
+      - run: yarn test
