@@ -16,6 +16,6 @@ jobs:
           path: .cache/yarn
           key: yarn-${{ hashFiles('yarn.lock') }}
       - run: npm install -g yarn
-      - run: yarn install --ignore-scripts --cache-folder .cache/yarn
+      - run: yarn install --ignore-scripts --ignore-platform --cache-folder .cache/yarn
       - run: yarn build
       - run: yarn test
