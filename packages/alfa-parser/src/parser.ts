@@ -154,37 +154,9 @@ export namespace Parser {
     parser: Parser<I, T, E>,
     separator: Parser<I, unknown, E>
   ): Parser<I, Iterable<T>, E> {
-    return input => {
-      const values: Array<T> = [];
-      const result = parser(input);
-
-      if (result.isErr()) {
-        return result;
-      }
-
-      let value: T;
-
-      [input, value] = result.get();
-      values.push(value);
-
-      while (true) {
-        const separated = separator(input);
-
-        if (separated.isErr()) {
-          return Ok.of([input, values] as const);
-        }
-
-        [input] = separated.get();
-
-        const result = parser(input);
-
-        if (result.isErr()) {
-          return result;
-        }
-
-        [input, value] = result.get();
-        values.push(value);
-      }
-    };
+    return map(
+      pair(parser, zeroOrMore(right(separator, parser))),
+      ([first, rest]) => [first, ...rest]
+    );
   }
 }
