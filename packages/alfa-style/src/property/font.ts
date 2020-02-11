@@ -169,7 +169,7 @@ export namespace Font {
   export namespace Weight {
     export type Computed = Number;
 
-    export type Asbolute = Keyword<"normal" | "bold">;
+    export type Absolute = Keyword<"normal" | "bold">;
 
     export type Relative = Keyword<"bolder" | "lighter">;
   }
