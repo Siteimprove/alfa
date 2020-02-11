@@ -109,7 +109,7 @@ export namespace Font {
   /**
    * @see https://drafts.csswg.org/css-fonts/#propdef-font-size
    */
-  export const Size: Property<Size, Size.Computed> = Property.of(
+  export const Size: Property<Size.Specified, Size.Computed> = Property.of(
     Length.of(16, "px"),
     either(
       either(
