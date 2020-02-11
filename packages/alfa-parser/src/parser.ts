@@ -149,4 +149,14 @@ export namespace Parser {
       flatMap(separator, () => map(right, right => [left, right]))
     );
   }
+
+  export function separatedList<I, T, E>(
+    parser: Parser<I, T, E>,
+    separator: Parser<I, unknown, E>
+  ): Parser<I, Iterable<T>, E> {
+    return map(
+      pair(parser, zeroOrMore(right(separator, parser))),
+      ([first, rest]) => [first, ...rest]
+    );
+  }
 }
