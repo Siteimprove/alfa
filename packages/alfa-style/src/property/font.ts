@@ -164,7 +164,7 @@ export namespace Font {
     }
   );
 
-  export type Weight = Weight.Asbolute | Weight.Relative | Number;
+  export type Weight = Weight.Absolute | Weight.Relative | Number;
 
   export namespace Weight {
     export type Computed = Number;
