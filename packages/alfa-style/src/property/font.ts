@@ -14,18 +14,20 @@ import { Resolver } from "../resolver";
 const { map, either, option, delimited, separatedList } = Parser;
 
 export namespace Font {
-  export type Family = Array<Family.Generic | String>;
+  export type Family = Family.Specified;
 
   export namespace Family {
     export type Generic = Keyword<
       "serif" | "sans-serif" | "cursive" | "fantasy" | "monospace"
     >;
+
+    export type Specified = Array<Generic | String>;
   }
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#propdef-font-family
    */
-  export const Family: Property<Family> = Property.of(
+  export const Family: Property<Family.Specified> = Property.of(
     [Keyword.of("serif")],
     map(
       separatedList(
@@ -49,11 +51,9 @@ export namespace Font {
     }
   );
 
-  export type Size = Size.Absolute | Size.Relative | Length | Percentage;
+  export type Size = Size.Specified | Size.Computed;
 
   export namespace Size {
-    export type Computed = Length<"px">;
-
     export type Absolute = Keyword<
       | "xx-small"
       | "x-small"
@@ -66,6 +66,10 @@ export namespace Font {
     >;
 
     export type Relative = Keyword<"larger" | "smaller">;
+
+    export type Specified = Absolute | Relative | Length | Percentage;
+
+    export type Computed = Length<"px">;
   }
 
   /**
@@ -164,20 +168,25 @@ export namespace Font {
     }
   );
 
-  export type Weight = Weight.Absolute | Weight.Relative | Number;
+  export type Weight = Weight.Specified | Weight.Computed;
 
   export namespace Weight {
-    export type Computed = Number;
-
     export type Absolute = Keyword<"normal" | "bold">;
 
     export type Relative = Keyword<"bolder" | "lighter">;
+
+    export type Specified = Absolute | Relative | Number;
+
+    export type Computed = Number;
   }
 
   /**
    * @see https://drafts.csswg.org/css-fonts/#propdef-font-weight
    */
-  export const Weight: Property<Weight, Weight.Computed> = Property.of(
+  export const Weight: Property<
+    Weight.Specified,
+    Weight.Computed
+  > = Property.of(
     Number.of(400),
     either(
       Number.parse,
