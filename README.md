@@ -1,5 +1,3 @@
-[open an issue]: https://github.com/siteimprove/alfa/issues/new "Open a new issue"
-
 # <img alt="Alfa" src="media/logo.svg" height="40">
 
 > :wheelchair: Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale
@@ -142,7 +140,7 @@ When done, you can start a watcher that watches source files for changes and kic
 $ yarn watch
 ```
 
-Note that when the watcher is started it will perform also perform a build, which can take a bit of time if the project has not been built before.
+Note that when the watcher is started it will also perform a build, which can take a bit of time if the project has not been built before.
 
 As new code is pulled from the repository, changes to dependencies and code may require you to run the installation again or, if only code has changed, a build:
 
@@ -169,3 +167,5 @@ Alfa is part of a project that has received funding from the European Union's [H
 ## License
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
+
+[open an issue]: https://github.com/siteimprove/alfa/issues/new "Open a new issue"

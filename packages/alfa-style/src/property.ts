@@ -1,6 +1,5 @@
-import { Token } from "@siteimprove/alfa-css";
+import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -66,7 +65,7 @@ export namespace Property {
       : never;
 
     export type Cascaded<P> = P extends Property<infer T, infer U>
-      ? Value<T>
+      ? Value<T | Keyword<"initial" | "inherit">>
       : never;
 
     export type Specified<P> = P extends Property<infer T, infer U>

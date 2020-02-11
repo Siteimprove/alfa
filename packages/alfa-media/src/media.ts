@@ -4,7 +4,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 const { some, isEmpty } = Iterable;
@@ -366,15 +366,16 @@ export namespace Media {
     }
   }
 
-  export const parseList = map(zeroOrMore(parseQuery), queries =>
-    List.of(queries)
-  );
+  const parseList = map(zeroOrMore(parseQuery), queries => List.of(queries));
 
-  export function parse(input: string): Option<List> {
+  export function parse(input: string) {
     return parseList(Slice.of([...Lexer.lex(input)]))
-      .flatMap<List>(([tokens, selector]) =>
-        tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token")
-      )
+      .flatMap(([tokens, selector]) => {
+        const result: Result<typeof selector, string> =
+          tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token");
+
+        return result;
+      })
       .ok();
   }
 }

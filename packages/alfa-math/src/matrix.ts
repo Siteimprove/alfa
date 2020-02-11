@@ -42,7 +42,7 @@ export namespace Matrix {
     M extends number,
     P extends number
   >(a: Matrix<N, M>, b: Matrix<M, P> | Vector<M>): Matrix<N, P> | Vector<M> {
-    return math.multiply(a, b) as Matrix<N, P> | Vector<M>;
+    return math.multiply(a as math.MathType, b) as Matrix<N, P> | Vector<M>;
   }
 
   export function transpose<M extends number, N extends number>(

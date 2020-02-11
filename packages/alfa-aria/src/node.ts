@@ -186,19 +186,11 @@ export namespace Node {
 
         const style = Style.from(node, device);
 
-        if (
-          style
-            .cascaded("display")
-            .some(display => display.value[0].value === "none")
-        ) {
+        if (style.computed("display").value[0].value === "none") {
           return Branched.of(Inert.of(node));
         }
 
-        if (
-          style
-            .computed("visibility")
-            .some(visibility => visibility.value.value !== "visible")
-        ) {
+        if (style.computed("visibility").value.value !== "visible") {
           accessibleNode = Branched.of(Container.of(node));
         } else {
           accessibleNode = Role.from(node).flatMap(role =>

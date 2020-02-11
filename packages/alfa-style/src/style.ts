@@ -1,20 +1,25 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Lexer } from "@siteimprove/alfa-css";
+import { Lexer, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Property } from "./property";
 import { Value } from "./value";
 
 const { find, isEmpty } = Iterable;
+const { either } = Parser;
 
 type Name = Property.Name;
 
-export class Style {
+export class Style implements Serializable {
   public static of(
     declarations: Iterable<Declaration>,
     device: Device,
@@ -70,8 +75,10 @@ export class Style {
       this._declarations,
       declaration => declaration.name === name
     ).flatMap(declaration =>
-      property
-        .parse(Slice.of([...Lexer.lex(declaration.value)]))
+      either(
+        Keyword.parse("initial", "inherit"),
+        property.parse
+      )(Slice.of([...Lexer.lex(declaration.value)]))
         .map(([remainder, value]) =>
           isEmpty(remainder)
             ? Option.of(Value.of(value, Option.of(declaration)))
@@ -83,17 +90,31 @@ export class Style {
 
   public specified<N extends Name>(name: N): Style.Specified<N>;
   public specified<N extends Name>(name: N): Value {
-    return this.cascaded(name).getOrElse(() => {
-      const property: Property = Property.get(name);
+    return this.cascaded(name)
+      .map(cascaded => {
+        if (Keyword.isKeyword(cascaded.value)) {
+          switch (cascaded.value.value) {
+            case "initial":
+              return this.initial(name);
 
-      if (property.options.inherits === false) {
-        return this.initial(name);
-      }
+            case "inherit":
+              return this.parent.computed(name);
+          }
+        }
 
-      return this._parent
-        .map(parent => parent.computed(name))
-        .getOrElse(() => this.initial(name));
-    });
+        return cascaded;
+      })
+      .getOrElse(() => {
+        const property: Property = Property.get(name);
+
+        if (property.options.inherits === false) {
+          return this.initial(name);
+        }
+
+        return this._parent
+          .map(parent => parent.computed(name))
+          .getOrElse(() => this.initial(name));
+      });
   }
 
   public computed<N extends Name>(name: N): Style.Computed<N>;
@@ -104,10 +125,10 @@ export class Style {
 
     const property: Property = Property.get(name);
 
-    return property.compute(this, this._device);
+    return property.compute(this);
   }
 
-  public toJSON() {
+  public toJSON(): Style.JSON {
     return {
       declarations: this._declarations.map(declaration => declaration.toJSON())
     };
@@ -115,6 +136,11 @@ export class Style {
 }
 
 export namespace Style {
+  export interface JSON {
+    [key: string]: json.JSON;
+    declarations: Array<Declaration.JSON>;
+  }
+
   const cache = Cache.empty<Device, Cache<Element, Style>>();
 
   export function from(element: Element, device: Device): Style {
