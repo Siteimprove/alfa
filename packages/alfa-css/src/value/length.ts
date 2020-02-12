@@ -1,7 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
@@ -89,7 +88,7 @@ export namespace Length {
     return value instanceof Length;
   }
 
-  export const parse: Parser<Slice<Token>, Length, string> = map(
+  export const parse = map(
     Token.parseDimension(dimension => Unit.isLength(dimension.unit)),
     dimension => Length.of(dimension.value, dimension.unit as Unit.Length)
   );

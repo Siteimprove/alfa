@@ -64,8 +64,10 @@ export namespace Keyword {
     ...keywords: Array<T>
   ): Parser<Slice<Token>, Keyword<T>, string> {
     return map(
-      Token.parseIdent(ident => keywords.some(equals(ident.value))),
-      ident => Keyword.of(ident.value as T)
+      Token.parseIdent(ident =>
+        keywords.some(equals(ident.value.toLowerCase()))
+      ),
+      ident => Keyword.of(ident.value.toLowerCase() as T)
     );
   }
 }

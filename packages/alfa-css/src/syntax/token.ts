@@ -85,6 +85,26 @@ export namespace Token {
     }
   }
 
+  export function isFunction(value: unknown): value is Function {
+    return value instanceof Function;
+  }
+
+  export const parseFunction = (
+    query: string | Predicate<Function> = () => true
+  ) => {
+    let predicate: Predicate<Function>;
+
+    if (typeof query === "function") {
+      predicate = query;
+    } else {
+      const value = query;
+
+      predicate = ident => ident.value === value;
+    }
+
+    return parseToken(and(isFunction, predicate));
+  };
+
   export class AtKeyword extends Token {
     public static of(value: string): AtKeyword {
       return new AtKeyword(value);
@@ -248,7 +268,7 @@ export namespace Token {
     }
 
     public toString(): string {
-      return this.value.toString(10);
+      return `${this.value}`;
     }
   }
 
@@ -274,7 +294,7 @@ export namespace Token {
     }
 
     public toString(): string {
-      return `${this.value.toString(10)}%`;
+      return `${this.value * 100}%`;
     }
   }
 
@@ -315,7 +335,7 @@ export namespace Token {
     }
 
     public toString(): string {
-      return `${this.value.toString(10)}${this.unit}`;
+      return `${this.value}${this.unit}`;
     }
   }
 

@@ -57,9 +57,7 @@ export namespace Number {
     return value instanceof Number;
   }
 
-  export const parse: Parser<
-    Slice<Token>,
-    Number,
-    string
-  > = map(Token.parseNumber(), number => Number.of(number.value));
+  export const parse = map(Token.parseNumber(), number =>
+    Number.of(number.value)
+  );
 }

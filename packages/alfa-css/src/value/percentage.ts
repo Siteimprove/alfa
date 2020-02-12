@@ -35,7 +35,7 @@ export class Percentage implements Equatable, Serializable {
   }
 
   public toString(): string {
-    return `${this._value}%`;
+    return `${this._value * 100}%`;
   }
 
   public toJSON(): Percentage.JSON {

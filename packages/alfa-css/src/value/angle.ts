@@ -1,9 +1,14 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Parser } from "@siteimprove/alfa-parser";
+
 import * as json from "@siteimprove/alfa-json";
 
+import { Token } from "../syntax/token";
 import { Converter, Convertible } from "./converter";
 import { Unit } from "./unit";
+
+const { map } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#angles
@@ -78,4 +83,9 @@ export namespace Angle {
   export function isAngle(value: unknown): value is Angle {
     return value instanceof Angle;
   }
+
+  export const parse = map(
+    Token.parseDimension(dimension => Unit.isAngle(dimension.unit)),
+    dimension => Angle.of(dimension.value, dimension.unit as Unit.Angle)
+  );
 }
