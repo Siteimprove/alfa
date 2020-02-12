@@ -74,7 +74,7 @@ export namespace Parser {
         }
       }
 
-      return Ok.of([input, None] as const);
+      return Ok.of([input, values] as const);
     };
   }
 
