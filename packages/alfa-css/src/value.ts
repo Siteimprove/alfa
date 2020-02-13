@@ -1,4 +1,7 @@
 export * from "./value/angle";
+export * from "./value/color";
+export * from "./value/color/hex";
+export * from "./value/color/rgb";
 export * from "./value/converter";
 export * from "./value/function";
 export * from "./value/integer";
@@ -7,4 +10,8 @@ export * from "./value/length";
 export * from "./value/number";
 export * from "./value/percentage";
 export * from "./value/string";
+export * from "./value/transform";
+export * from "./value/transform/matrix";
+export * from "./value/transform/rotate";
+export * from "./value/transform/translate";
 export * from "./value/unit";

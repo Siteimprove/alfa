@@ -11,6 +11,9 @@
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
+    "src/value/color.ts",
+    "src/value/color/hex.ts",
+    "src/value/color/rgb.ts",
     "src/value/converter.ts",
     "src/value/function.ts",
     "src/value/integer.ts",
@@ -19,6 +22,10 @@
     "src/value/number.ts",
     "src/value/percentage.ts",
     "src/value/string.ts",
+    "src/value/transform.ts",
+    "src/value/transform/matrix.ts",
+    "src/value/transform/rotate.ts",
+    "src/value/transform/translate.ts",
     "src/value/unit.ts"
   ],
   "references": [
