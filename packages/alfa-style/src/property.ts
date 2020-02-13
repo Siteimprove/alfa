@@ -78,6 +78,8 @@ export namespace Property {
   }
 }
 
+import { Background } from "./property/background";
+import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
 import { Opacity } from "./property/opacity";
@@ -89,6 +91,8 @@ export namespace Property {
 
   export type Longhand = typeof Longhand;
   export const Longhand = {
+    "background-color": Background.Color,
+    color: Color,
     display: Display,
     "font-family": Font.Family,
     "font-size": Font.Size,
