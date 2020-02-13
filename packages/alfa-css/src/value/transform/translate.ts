@@ -78,4 +78,12 @@ export namespace Translate {
     y: Length.JSON | Percentage.JSON;
     z: Length.JSON;
   }
+
+  export function isTranslate<
+    X extends Length | Percentage,
+    Y extends Length | Percentage,
+    Z extends Length
+  >(value: unknown): value is Translate<X, Y, Z> {
+    return value instanceof Translate;
+  }
 }

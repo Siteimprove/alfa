@@ -75,4 +75,8 @@ export namespace Matrix {
     [T, T, T, T],
     [T, T, T, T]
   ];
+
+  export function isMatrix(value: unknown): value is Matrix {
+    return value instanceof Matrix;
+  }
 }

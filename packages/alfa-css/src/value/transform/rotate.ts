@@ -83,4 +83,10 @@ export namespace Rotate {
     z: Number.JSON;
     angle: Angle.JSON;
   }
+
+  export function isRotate<A extends Angle>(
+    value: unknown
+  ): value is Rotate<A> {
+    return value instanceof Rotate;
+  }
 }
