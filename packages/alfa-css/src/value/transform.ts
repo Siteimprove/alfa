@@ -10,6 +10,7 @@ import { Percentage } from "./percentage";
 
 import { Matrix } from "./transform/matrix";
 import { Rotate } from "./transform/rotate";
+import { Skew } from "./transform/skew";
 import { Translate } from "./transform/translate";
 
 const { either, oneOrMore, delimited, option, map } = Parser;
@@ -28,6 +29,13 @@ export namespace Transform {
     return Rotate.of(x, y, z, angle);
   }
 
+  export function skew<X extends Angle, Y extends Angle>(
+    x: X,
+    y: Y
+  ): Skew<X, Y> {
+    return Skew.of(x, y);
+  }
+
   export function translate<
     X extends Length | Percentage,
     Y extends Length | Percentage,
@@ -43,7 +51,10 @@ export namespace Transform {
     oneOrMore(
       delimited(
         option(Token.parseWhitespace),
-        either(Matrix.parse, either(Rotate.parse, Translate.parse))
+        either(
+          Matrix.parse,
+          either(Rotate.parse, either(Skew.parse, Translate.parse))
+        )
       )
     ),
     transforms => List.of([...transforms], " ")
