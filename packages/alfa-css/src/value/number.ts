@@ -57,6 +57,17 @@ export namespace Number {
     return value instanceof Number;
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-values/#zero-value
+   */
+  export const parseZero = map(
+    Token.parseNumber(number => number.value === 0),
+    number => Number.of(number.value)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-values/#number-value
+   */
   export const parse = map(Token.parseNumber(), number =>
     Number.of(number.value)
   );

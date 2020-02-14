@@ -1,10 +1,15 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Token } from "../../syntax/token";
 import { Angle } from "../angle";
 import { Number } from "../number";
+import { Unit } from "../unit";
+
+const { map, left, right, pair, either, delimited, option } = Parser;
 
 export class Rotate<A extends Angle = Angle>
   implements Equatable, Serializable {
@@ -27,6 +32,10 @@ export class Rotate<A extends Angle = Angle>
     this._y = y;
     this._z = z;
     this._angle = angle;
+  }
+
+  public get type(): "rotate" {
+    return "rotate";
   }
 
   public get x(): Number {
@@ -89,4 +98,63 @@ export namespace Rotate {
   ): value is Rotate<A> {
     return value instanceof Rotate;
   }
+
+  const parseAngleOrZero = either(
+    Angle.parse,
+    map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
+  );
+
+  const parseSeparator = delimited(
+    option(Token.parseWhitespace),
+    Token.parseComma
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-rotate
+   */
+  const parseRotate = map(
+    right(
+      Token.parseFunction("rotate"),
+      left(
+        delimited(option(Token.parseWhitespace), parseAngleOrZero),
+        Token.parseCloseParenthesis
+      )
+    ),
+    angle => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotate3d
+   */
+  const parseRotate3d = map(
+    right(
+      Token.parseFunction("rotate3d"),
+      left(
+        delimited(
+          option(Token.parseWhitespace),
+          pair(
+            Number.parse,
+            right(
+              parseSeparator,
+              pair(
+                Number.parse,
+                right(
+                  parseSeparator,
+                  pair(Number.parse, right(parseSeparator, parseAngleOrZero))
+                )
+              )
+            )
+          )
+        ),
+        Token.parseCloseParenthesis
+      )
+    ),
+    result => {
+      const [x, [y, [z, angle]]] = result;
+
+      return Rotate.of(x, y, z, angle);
+    }
+  );
+
+  export const parse = either(parseRotate, parseRotate3d);
 }

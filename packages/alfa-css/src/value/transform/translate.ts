@@ -1,10 +1,14 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Token } from "../../syntax/token";
 import { Length } from "../length";
 import { Percentage } from "../percentage";
+
+const { map, left, right, pair, either, delimited, option } = Parser;
 
 export class Translate<
   X extends Length | Percentage = Length | Percentage,
@@ -27,6 +31,10 @@ export class Translate<
     this._x = x;
     this._y = y;
     this._z = z;
+  }
+
+  public get type(): "translate" {
+    return "translate";
   }
 
   public get x(): X {
@@ -86,4 +94,72 @@ export namespace Translate {
   >(value: unknown): value is Translate<X, Y, Z> {
     return value instanceof Translate;
   }
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translate
+   */
+  const parseTranslate = map(
+    right(
+      Token.parseFunction("translate"),
+      left(
+        delimited(
+          option(Token.parseWhitespace),
+          pair(
+            either(Length.parse, Percentage.parse),
+            option(
+              right(
+                delimited(option(Token.parseWhitespace), Token.parseComma),
+                either(Length.parse, Percentage.parse)
+              )
+            )
+          )
+        ),
+        Token.parseCloseParenthesis
+      )
+    ),
+    result => {
+      const [x, y] = result;
+
+      return Translate.of<Length | Percentage, Length | Percentage, Length>(
+        x,
+        y.getOrElse(() => Length.of(0, "px")),
+        Length.of(0, "px")
+      );
+    }
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-translate3d
+   */
+  const parseTranslate3d = map(
+    right(
+      Token.parseFunction("translate3d"),
+      left(
+        delimited(
+          option(Token.parseWhitespace),
+          pair(
+            either(Length.parse, Percentage.parse),
+            pair(
+              right(
+                delimited(option(Token.parseWhitespace), Token.parseComma),
+                either(Length.parse, Percentage.parse)
+              ),
+              right(
+                delimited(option(Token.parseWhitespace), Token.parseComma),
+                Length.parse
+              )
+            )
+          )
+        ),
+        Token.parseCloseParenthesis
+      )
+    ),
+    result => {
+      const [x, [y, z]] = result;
+
+      return Translate.of(x, y, z);
+    }
+  );
+
+  export const parse = either(parseTranslate, parseTranslate3d);
 }

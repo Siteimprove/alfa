@@ -19,6 +19,7 @@
     "src/value/integer.ts",
     "src/value/keyword.ts",
     "src/value/length.ts",
+    "src/value/list.ts",
     "src/value/number.ts",
     "src/value/percentage.ts",
     "src/value/string.ts",
