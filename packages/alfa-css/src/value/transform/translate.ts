@@ -129,6 +129,69 @@ export namespace Translate {
   );
 
   /**
+   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translatex
+   */
+  const parseTranslateX = map(
+    right(
+      Token.parseFunction("translateX"),
+      left(
+        delimited(
+          option(Token.parseWhitespace),
+          either(Length.parse, Percentage.parse)
+        ),
+        Token.parseCloseParenthesis
+      )
+    ),
+    x =>
+      Translate.of<Length | Percentage, Length | Percentage, Length>(
+        x,
+        Length.of(0, "px"),
+        Length.of(0, "px")
+      )
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms/#funcdef-transform-translatey
+   */
+  const parseTranslateY = map(
+    right(
+      Token.parseFunction("translateY"),
+      left(
+        delimited(
+          option(Token.parseWhitespace),
+          either(Length.parse, Percentage.parse)
+        ),
+        Token.parseCloseParenthesis
+      )
+    ),
+    y =>
+      Translate.of<Length | Percentage, Length | Percentage, Length>(
+        Length.of(0, "px"),
+        y,
+        Length.of(0, "px")
+      )
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-translatez
+   */
+  const parseTranslateZ = map(
+    right(
+      Token.parseFunction("translateZ"),
+      left(
+        delimited(option(Token.parseWhitespace), Length.parse),
+        Token.parseCloseParenthesis
+      )
+    ),
+    z =>
+      Translate.of<Length | Percentage, Length | Percentage, Length>(
+        Length.of(0, "px"),
+        Length.of(0, "px"),
+        z
+      )
+  );
+
+  /**
    * @see https://drafts.csswg.org/css-transforms-2/#funcdef-translate3d
    */
   const parseTranslate3d = map(
@@ -161,5 +224,11 @@ export namespace Translate {
     }
   );
 
-  export const parse = either(parseTranslate, parseTranslate3d);
+  export const parse = either(
+    parseTranslate,
+    either(
+      either(parseTranslateX, parseTranslateY),
+      either(parseTranslateZ, parseTranslate3d)
+    )
+  );
 }

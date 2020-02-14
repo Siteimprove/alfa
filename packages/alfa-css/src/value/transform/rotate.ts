@@ -124,6 +124,48 @@ export namespace Rotate {
   );
 
   /**
+   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotatex
+   */
+  const parseRotateX = map(
+    right(
+      Token.parseFunction("rotateX"),
+      left(
+        delimited(option(Token.parseWhitespace), parseAngleOrZero),
+        Token.parseCloseParenthesis
+      )
+    ),
+    angle => Rotate.of(Number.of(1), Number.of(0), Number.of(0), angle)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey
+   */
+  const parseRotateY = map(
+    right(
+      Token.parseFunction("rotateY"),
+      left(
+        delimited(option(Token.parseWhitespace), parseAngleOrZero),
+        Token.parseCloseParenthesis
+      )
+    ),
+    angle => Rotate.of(Number.of(0), Number.of(1), Number.of(0), angle)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey
+   */
+  const parseRotateZ = map(
+    right(
+      Token.parseFunction("rotateZ"),
+      left(
+        delimited(option(Token.parseWhitespace), parseAngleOrZero),
+        Token.parseCloseParenthesis
+      )
+    ),
+    angle => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+  );
+
+  /**
    * @see https://drafts.csswg.org/css-transforms-2/#funcdef-rotate3d
    */
   const parseRotate3d = map(
@@ -156,5 +198,11 @@ export namespace Rotate {
     }
   );
 
-  export const parse = either(parseRotate, parseRotate3d);
+  export const parse = either(
+    parseRotate,
+    either(
+      either(parseRotateX, parseRotateY),
+      either(parseRotateZ, parseRotate3d)
+    )
+  );
 }
