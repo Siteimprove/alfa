@@ -9,6 +9,7 @@ import { Number } from "./number";
 import { Percentage } from "./percentage";
 
 import { Matrix } from "./transform/matrix";
+import { Perspective } from "./transform/perspective";
 import { Rotate } from "./transform/rotate";
 import { Scale } from "./transform/scale";
 import { Skew } from "./transform/skew";
@@ -19,6 +20,10 @@ const { either, oneOrMore, delimited, option, map } = Parser;
 export namespace Transform {
   export function matrix(...values: Matrix.Values<Number>): Matrix {
     return Matrix.of(...values);
+  }
+
+  export function perspective<D extends Length>(depth: D): Perspective<D> {
+    return Perspective.of(depth);
   }
 
   export function rotate<A extends Angle>(
@@ -59,8 +64,11 @@ export namespace Transform {
         either(
           Matrix.parse,
           either(
-            Rotate.parse,
-            either(Scale.parse, either(Skew.parse, Translate.parse))
+            Perspective.parse,
+            either(
+              Rotate.parse,
+              either(Scale.parse, either(Skew.parse, Translate.parse))
+            )
           )
         )
       )

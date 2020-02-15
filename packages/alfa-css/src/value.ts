@@ -13,6 +13,7 @@ export * from "./value/percentage";
 export * from "./value/string";
 export * from "./value/transform";
 export * from "./value/transform/matrix";
+export * from "./value/transform/perspective";
 export * from "./value/transform/rotate";
 export * from "./value/transform/scale";
 export * from "./value/transform/skew";
