@@ -1,6 +1,8 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Ok, Result } from "@siteimprove/alfa-result";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Ok, Result, Err } from "@siteimprove/alfa-result";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 export type Parser<I, T, E = never> = (input: I) => Result<readonly [I, T], E>;
 
@@ -21,6 +23,20 @@ export namespace Parser {
   ): Parser<I, U, E> {
     return input =>
       parser(input).flatMap(([remainder, value]) => mapper(value)(remainder));
+  }
+
+  export function filter<I, T, U extends T, E>(
+    parser: Parser<I, T, E>,
+    predicate: Predicate<T, U>,
+    ifError: Thunk<E>
+  ): Parser<I, U, E> {
+    return flatMap(parser, value => input => {
+      const result: Result<readonly [I, U], E> = predicate(value)
+        ? Ok.of([input, value] as const)
+        : Err.of(ifError());
+
+      return result;
+    });
   }
 
   export function zeroOrMore<I, T, E>(
