@@ -26,6 +26,7 @@
     "src/value/transform.ts",
     "src/value/transform/matrix.ts",
     "src/value/transform/rotate.ts",
+    "src/value/transform/scale.ts",
     "src/value/transform/skew.ts",
     "src/value/transform/translate.ts",
     "src/value/unit.ts"

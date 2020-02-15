@@ -10,6 +10,7 @@ import { Percentage } from "./percentage";
 
 import { Matrix } from "./transform/matrix";
 import { Rotate } from "./transform/rotate";
+import { Scale } from "./transform/scale";
 import { Skew } from "./transform/skew";
 import { Translate } from "./transform/translate";
 
@@ -27,6 +28,10 @@ export namespace Transform {
     angle: A
   ): Rotate<A> {
     return Rotate.of(x, y, z, angle);
+  }
+
+  export function scale(x: Number, y: Number): Scale {
+    return Scale.of(x, y);
   }
 
   export function skew<X extends Angle, Y extends Angle>(
@@ -53,7 +58,10 @@ export namespace Transform {
         option(Token.parseWhitespace),
         either(
           Matrix.parse,
-          either(Rotate.parse, either(Skew.parse, Translate.parse))
+          either(
+            Rotate.parse,
+            either(Scale.parse, either(Skew.parse, Translate.parse))
+          )
         )
       )
     ),
