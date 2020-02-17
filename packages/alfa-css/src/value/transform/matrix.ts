@@ -28,7 +28,12 @@ export class Matrix implements Transform {
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof Matrix;
+    return (
+      value instanceof Matrix &&
+      value._values.every((row, i) =>
+        row.every((value, j) => value === this._values[i][j])
+      )
+    );
   }
 
   public toJSON(): Matrix.JSON {
