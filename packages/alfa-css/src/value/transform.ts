@@ -1,3 +1,5 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Token } from "../syntax/token";
@@ -16,6 +18,10 @@ import { Skew } from "./transform/skew";
 import { Translate } from "./transform/translate";
 
 const { either, oneOrMore, delimited, option, map } = Parser;
+
+export interface Transform extends Equatable, Serializable {
+  readonly type: string;
+}
 
 export namespace Transform {
   export function matrix(...values: Matrix.Values<Number>): Matrix {
@@ -55,24 +61,24 @@ export namespace Transform {
   }
 
   /**
+   * @see https://drafts.csswg.org/css-transforms/#typedef-transform-function
+   */
+  export const parse = either(
+    Matrix.parse,
+    either(
+      Perspective.parse,
+      either(
+        Rotate.parse,
+        either(Scale.parse, either(Skew.parse, Translate.parse))
+      )
+    )
+  );
+
+  /**
    * @see https://drafts.csswg.org/css-transforms/#typedef-transform-list
    */
   export const parseList = map(
-    oneOrMore(
-      delimited(
-        option(Token.parseWhitespace),
-        either(
-          Matrix.parse,
-          either(
-            Perspective.parse,
-            either(
-              Rotate.parse,
-              either(Scale.parse, either(Skew.parse, Translate.parse))
-            )
-          )
-        )
-      )
-    ),
+    oneOrMore(delimited(option(Token.parseWhitespace), parse)),
     transforms => List.of([...transforms], " ")
   );
 }

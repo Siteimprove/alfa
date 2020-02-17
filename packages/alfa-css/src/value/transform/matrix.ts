@@ -1,15 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
 import { Number } from "../number";
+import { Transform } from "../transform";
 
 const { map, left, right, pair, either, take, delimited, option } = Parser;
 
-export class Matrix implements Equatable, Serializable {
+export class Matrix implements Transform {
   public static of(...values: Matrix.Values<Number>): Matrix {
     return new Matrix(values);
   }

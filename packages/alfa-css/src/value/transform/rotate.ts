@@ -1,5 +1,3 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -8,11 +6,11 @@ import { Token } from "../../syntax/token";
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Unit } from "../unit";
+import { Transform } from "../transform";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
-export class Rotate<A extends Angle = Angle>
-  implements Equatable, Serializable {
+export class Rotate<A extends Angle = Angle> implements Transform {
   public static of<A extends Angle>(
     x: Number,
     y: Number,
