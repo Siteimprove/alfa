@@ -31,7 +31,7 @@ export class Matrix implements Transform {
     return (
       value instanceof Matrix &&
       value._values.every((row, i) =>
-        row.every((value, j) => value === this._values[i][j])
+        row.every((value, j) => value.equals(this._values[i][j]))
       )
     );
   }
