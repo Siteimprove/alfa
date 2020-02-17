@@ -1,3 +1,4 @@
+import { mod, clamp } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -26,6 +27,9 @@ export class HSL<
   private readonly _hue: H;
   private readonly _saturation: Percentage;
   private readonly _lightness: Percentage;
+  private readonly _red: Percentage;
+  private readonly _green: Percentage;
+  private readonly _blue: Percentage;
   private readonly _alpha: A;
 
   private constructor(
@@ -38,6 +42,18 @@ export class HSL<
     this._saturation = saturation;
     this._lightness = lightness;
     this._alpha = alpha;
+
+    const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
+
+    const [red, green, blue] = hslToRgb(
+      mod(degrees, 360) / 60,
+      clamp(saturation.value, 0, 1),
+      clamp(lightness.value, 0, 1)
+    );
+
+    this._red = Percentage.of(red);
+    this._green = Percentage.of(green);
+    this._blue = Percentage.of(blue);
   }
 
   public get type(): "color" {
@@ -60,16 +76,16 @@ export class HSL<
     return this._lightness;
   }
 
-  public get red(): Number {
-    return Number.of(0);
+  public get red(): Percentage {
+    return this._red;
   }
 
-  public get green(): Number {
-    return Number.of(0);
+  public get green(): Percentage {
+    return this._green;
   }
 
-  public get blue(): Number {
-    return Number.of(0);
+  public get blue(): Percentage {
+    return this._blue;
   }
 
   public get alpha(): A {
@@ -191,4 +207,45 @@ export namespace HSL {
       );
     }
   );
+}
+
+/**
+ * @see https://drafts.csswg.org/css-color/#hsl-to-rgb
+ */
+function hslToRgb(
+  hue: number,
+  saturation: number,
+  lightness: number
+): [number, number, number] {
+  const t2 =
+    lightness <= 0.5
+      ? lightness * (saturation + 1)
+      : lightness + saturation - lightness * saturation;
+
+  const t1 = lightness * 2 - t2;
+
+  return [
+    hueToRgb(t1, t2, mod(hue + 2, 6)),
+    hueToRgb(t1, t2, hue),
+    hueToRgb(t1, t2, mod(hue - 2, 6))
+  ];
+}
+
+/**
+ * @see https://drafts.csswg.org/css-color/#hsl-to-rgb
+ */
+function hueToRgb(t1: number, t2: number, hue: number): number {
+  if (hue < 1) {
+    return t1 + (t2 - t1) * hue;
+  }
+
+  if (hue < 3) {
+    return t2;
+  }
+
+  if (hue < 4) {
+    return t1 + (t2 - t1) * (4 - hue);
+  }
+
+  return t1;
 }
