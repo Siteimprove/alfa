@@ -8,15 +8,15 @@ import { Color } from "../color";
 
 const { map } = Parser;
 
-export class Named<N extends Named.Name = Named.Name> implements Color {
-  public static of<N extends Named.Name>(name: N): Named<N> {
-    return new Named(name);
+export class Named<C extends Named.Color = Named.Color> implements Color {
+  public static of<C extends Named.Color>(color: C): Named<C> {
+    return new Named(color);
   }
 
-  private readonly _name: N;
+  private readonly _color: C;
 
-  private constructor(name: N) {
-    this._name = name;
+  private constructor(color: C) {
+    this._color = color;
   }
 
   public get type(): "color" {
@@ -27,12 +27,12 @@ export class Named<N extends Named.Name = Named.Name> implements Color {
     return "named";
   }
 
-  public get name(): N {
-    return this._name;
+  public get color(): C {
+    return this._color;
   }
 
   public get value(): number {
-    return Colors[this._name];
+    return Colors[this._color];
   }
 
   public get red(): Number {
@@ -50,23 +50,23 @@ export class Named<N extends Named.Name = Named.Name> implements Color {
   public get alpha(): Number {
     // The "transparent" color has an alpha of 0 as it's, well, transparent. All
     // other named colors are fully opaque and therefore have an alpha of 1.
-    return Number.of(this._name === "transparent" ? 0 : 1);
+    return Number.of(this._color === "transparent" ? 0 : 1);
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof Named && value._name === this._name;
+    return value instanceof Named && value._color === this._color;
   }
 
   public toJSON(): Named.JSON {
     return {
       type: "color",
       format: "named",
-      name: this._name
+      color: this._color
     };
   }
 
   public toString(): string {
-    return this._name;
+    return this._color;
   }
 }
 
@@ -75,14 +75,14 @@ export namespace Named {
     [key: string]: json.JSON;
     type: "color";
     format: "named";
-    name: string;
+    color: string;
   }
 
-  export type Name = keyof Colors;
+  export type Color = keyof Colors;
 
   export const parse = map(
     Token.parseIdent(ident => ident.value.toLowerCase() in Colors),
-    ident => Named.of(ident.value.toLowerCase() as Name)
+    ident => Named.of(ident.value.toLowerCase() as Color)
   );
 }
 

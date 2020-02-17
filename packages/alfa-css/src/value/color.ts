@@ -36,8 +36,8 @@ export namespace Color {
     return HSL.of(hue, saturation, lightness, alpha);
   }
 
-  export function named<N extends Named.Name>(name: N): Named<N> {
-    return Named.of(name);
+  export function named<C extends Named.Color>(color: C): Named<C> {
+    return Named.of(color);
   }
 
   export function rgb<
@@ -47,6 +47,9 @@ export namespace Color {
     return RGB.of(red, green, blue, alpha);
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-color/#typedef-color
+   */
   export const parse = either(
     Hex.parse,
     either(Named.parse, either(RGB.parse, HSL.parse))
