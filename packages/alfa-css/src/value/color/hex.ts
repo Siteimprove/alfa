@@ -1,15 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
 import { Number } from "../number";
+import { Color } from "../color";
 
 const { map } = Parser;
 
-export class Hex implements Equatable, Serializable {
+export class Hex implements Color {
   public static of(value: number): Hex {
     return new Hex(value);
   }

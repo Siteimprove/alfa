@@ -13,6 +13,8 @@
     "src/value/angle.ts",
     "src/value/color.ts",
     "src/value/color/hex.ts",
+    "src/value/color/hsl.ts",
+    "src/value/color/named.ts",
     "src/value/color/rgb.ts",
     "src/value/converter.ts",
     "src/value/function.ts",
