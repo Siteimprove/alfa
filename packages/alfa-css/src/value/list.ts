@@ -10,15 +10,15 @@ import * as json from "@siteimprove/alfa-json";
  * of configuring the value separator used in the `toString()` method.
  */
 export class List<T> implements Iterable<T>, Equatable, Serializable {
-  public static of<T>(values: Array<T>, separator = " "): List<T> {
+  public static of<T>(values: Iterable<T>, separator = " "): List<T> {
     return new List(values, separator);
   }
 
   private readonly _values: Array<T>;
   private readonly _separator: string;
 
-  private constructor(values: Array<T>, separator: string) {
-    this._values = values;
+  private constructor(values: Iterable<T>, separator: string) {
+    this._values = [...values];
     this._separator = separator;
   }
 
@@ -26,7 +26,7 @@ export class List<T> implements Iterable<T>, Equatable, Serializable {
     return "list";
   }
 
-  public get values(): Array<T> {
+  public get values(): Iterable<T> {
     return this._values;
   }
 
