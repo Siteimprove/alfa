@@ -32,7 +32,8 @@
     "src/value/transform/scale.ts",
     "src/value/transform/skew.ts",
     "src/value/transform/translate.ts",
-    "src/value/unit.ts"
+    "src/value/unit.ts",
+    "src/value/url.ts"
   ],
   "references": [
     {
