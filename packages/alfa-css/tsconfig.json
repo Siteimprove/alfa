@@ -20,6 +20,7 @@
     "src/value/function.ts",
     "src/value/gradient.ts",
     "src/value/gradient/linear.ts",
+    "src/value/image.ts",
     "src/value/integer.ts",
     "src/value/keyword.ts",
     "src/value/length.ts",
