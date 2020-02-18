@@ -1,10 +1,9 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Angle } from "./angle";
 import { Number } from "./number";
 import { Percentage } from "./percentage";
+import { Keyword } from "./keyword";
 
 import { Hex } from "./color/hex";
 import { HSL } from "./color/hsl";
@@ -13,16 +12,11 @@ import { RGB } from "./color/rgb";
 
 const { either } = Parser;
 
-export interface Color extends Equatable, Serializable {
-  readonly type: "color";
-  readonly format: string;
-  readonly red: Number | Percentage;
-  readonly green: Number | Percentage;
-  readonly blue: Number | Percentage;
-  readonly alpha: Number | Percentage;
-}
+export type Color = Hex | Named | HSL | RGB | Keyword<"current">;
 
 export namespace Color {
+  export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
+
   export function hex(value: number): Hex {
     return Hex.of(value);
   }
@@ -52,6 +46,9 @@ export namespace Color {
    */
   export const parse = either(
     Hex.parse,
-    either(Named.parse, either(RGB.parse, HSL.parse))
+    either(
+      Named.parse,
+      either(either(RGB.parse, HSL.parse), Keyword.parse("current"))
+    )
   );
 }

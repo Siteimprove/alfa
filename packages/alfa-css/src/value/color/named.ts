@@ -1,14 +1,16 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
 import { Number } from "../number";
-import { Color } from "../color";
 
 const { map } = Parser;
 
-export class Named<C extends Named.Color = Named.Color> implements Color {
+export class Named<C extends Named.Color = Named.Color>
+  implements Equatable, Serializable {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
   }

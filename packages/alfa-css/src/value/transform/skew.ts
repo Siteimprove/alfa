@@ -1,3 +1,5 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -6,12 +8,11 @@ import { Token } from "../../syntax/token";
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Unit } from "../unit";
-import { Transform } from "../transform";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
 export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
-  implements Transform {
+  implements Equatable, Serializable {
   public static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y> {
     return new Skew(x, y);
   }

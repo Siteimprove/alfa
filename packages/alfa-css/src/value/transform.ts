@@ -1,5 +1,3 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Token } from "../syntax/token";
@@ -19,9 +17,13 @@ import { Translate } from "./transform/translate";
 
 const { either, oneOrMore, delimited, option, map } = Parser;
 
-export interface Transform extends Equatable, Serializable {
-  readonly type: string;
-}
+export type Transform =
+  | Matrix
+  | Perspective
+  | Rotate
+  | Scale
+  | Skew
+  | Translate;
 
 export namespace Transform {
   export function matrix(...values: Matrix.Values<Number>): Matrix {

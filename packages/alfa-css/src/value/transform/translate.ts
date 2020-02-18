@@ -1,3 +1,5 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -13,7 +15,7 @@ export class Translate<
   X extends Length | Percentage = Length | Percentage,
   Y extends Length | Percentage = Length | Percentage,
   Z extends Length = Length
-> implements Transform {
+> implements Equatable, Serializable {
   public static of<
     X extends Length | Percentage,
     Y extends Length | Percentage,

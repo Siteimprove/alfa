@@ -1,14 +1,16 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
 import { Length } from "../length";
-import { Transform } from "../transform";
 
 const { map, left, right, filter, delimited, option } = Parser;
 
-export class Perspective<D extends Length = Length> implements Transform {
+export class Perspective<D extends Length = Length>
+  implements Equatable, Serializable {
   public static of<D extends Length>(depth: D): Perspective<D> {
     return new Perspective(depth);
   }

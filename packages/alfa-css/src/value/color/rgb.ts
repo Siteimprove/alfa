@@ -1,3 +1,5 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -5,14 +7,13 @@ import * as json from "@siteimprove/alfa-json";
 import { Token } from "../../syntax/token";
 import { Number } from "../number";
 import { Percentage } from "../percentage";
-import { Color } from "../color";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
 export class RGB<
   C extends Number | Percentage = Number | Percentage,
   A extends Number | Percentage = Number | Percentage
-> implements Color {
+> implements Equatable, Serializable {
   public static of<
     C extends Number | Percentage,
     A extends Number | Percentage

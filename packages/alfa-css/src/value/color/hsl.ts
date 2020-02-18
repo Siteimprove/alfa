@@ -1,3 +1,5 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { mod, clamp } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -7,14 +9,13 @@ import { Token } from "../../syntax/token";
 import { Angle } from "../angle";
 import { Number } from "../number";
 import { Percentage } from "../percentage";
-import { Color } from "../color";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
 export class HSL<
   H extends Number | Angle = Number | Angle,
   A extends Number | Percentage = Number | Percentage
-> implements Color {
+> implements Equatable, Serializable {
   public static of<H extends Number | Angle, A extends Number | Percentage>(
     hue: H,
     saturation: Percentage,

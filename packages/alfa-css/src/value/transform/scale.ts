@@ -1,14 +1,15 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
 import { Number } from "../number";
-import { Transform } from "../transform";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
-export class Scale implements Transform {
+export class Scale implements Equatable, Serializable {
   public static of(x: Number, y: Number): Scale {
     return new Scale(x, y);
   }
