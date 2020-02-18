@@ -32,7 +32,8 @@
     "src/style/rule/style.ts",
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
-    "src/tables/structure.ts"
+    "src/tables/structure.ts",
+    "test/tables/structure.spec.ts"
   ],
   "references": [
     {
