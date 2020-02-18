@@ -19,12 +19,14 @@ type Cell = {
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
 type RowGroup = {
+  // First row of the group
   anchor: {y: number};
   height: number;
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
 type ColGroup = {
+  // First column of the group
   anchor: {x: number};
   width: number;
 }
