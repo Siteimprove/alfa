@@ -12,6 +12,7 @@ export * from "./value/length";
 export * from "./value/list";
 export * from "./value/number";
 export * from "./value/percentage";
+export * from "./value/position";
 export * from "./value/string";
 export * from "./value/transform";
 export * from "./value/transform/matrix";

@@ -24,6 +24,7 @@
     "src/value/list.ts",
     "src/value/number.ts",
     "src/value/percentage.ts",
+    "src/value/position.ts",
     "src/value/string.ts",
     "src/value/transform.ts",
     "src/value/transform/matrix.ts",
