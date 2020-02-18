@@ -18,6 +18,8 @@
     "src/value/color/rgb.ts",
     "src/value/converter.ts",
     "src/value/function.ts",
+    "src/value/gradient.ts",
+    "src/value/gradient/linear.ts",
     "src/value/integer.ts",
     "src/value/keyword.ts",
     "src/value/length.ts",

@@ -6,6 +6,8 @@ export * from "./value/color/named";
 export * from "./value/color/rgb";
 export * from "./value/converter";
 export * from "./value/function";
+export * from "./value/gradient";
+export * from "./value/gradient/linear";
 export * from "./value/integer";
 export * from "./value/keyword";
 export * from "./value/length";
