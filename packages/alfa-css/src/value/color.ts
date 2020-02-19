@@ -5,17 +5,21 @@ import { Number } from "./number";
 import { Percentage } from "./percentage";
 import { Keyword } from "./keyword";
 
+import { Current } from "./color/current";
 import { Hex } from "./color/hex";
 import { HSL } from "./color/hsl";
 import { Named } from "./color/named";
 import { RGB } from "./color/rgb";
+import { System } from "./color/system";
 
 const { either } = Parser;
 
-export type Color = Hex | Named | HSL | RGB | Keyword<"current">;
+export type Color = Hex | Named | HSL | RGB | Current | System;
 
 export namespace Color {
   export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
+
+  export const current: Current = Keyword.of("currentcolor");
 
   export function hex(value: number): Hex {
     return Hex.of(value);
@@ -41,6 +45,10 @@ export namespace Color {
     return RGB.of(red, green, blue, alpha);
   }
 
+  export function system(keyword: System.Keyword): System {
+    return Keyword.of(keyword);
+  }
+
   /**
    * @see https://drafts.csswg.org/css-color/#typedef-color
    */
@@ -48,7 +56,7 @@ export namespace Color {
     Hex.parse,
     either(
       Named.parse,
-      either(either(RGB.parse, HSL.parse), Keyword.parse("current"))
+      either(either(RGB.parse, HSL.parse), either(Current.parse, System.parse))
     )
   );
 }
