@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -94,16 +95,28 @@ export namespace Parser {
     };
   }
 
+  export function peek<I, T, E>(parser: Parser<I, T, E>): Parser<I, T, E> {
+    return input => parser(input).map(([, value]) => [input, value]);
+  }
+
+  export function tee<I, T, E>(
+    parser: Parser<I, T, E>,
+    callback: Callback<T>
+  ): Parser<I, T, E> {
+    return map(parser, value => {
+      callback(value);
+      return value;
+    });
+  }
+
   export function option<I, T, E>(
     parser: Parser<I, T, E>
   ): Parser<I, Option<T>, E> {
     return input => {
-      const result = parser(input);
+      const result = map(parser, value => Option.of(value))(input);
 
       if (result.isOk()) {
-        return result.map(
-          ([remainder, value]) => [remainder, Option.of(value)] as const
-        );
+        return result;
       }
 
       return Ok.of([input, None] as const);
