@@ -60,6 +60,43 @@ export const isCoveredBy: Predicate<Slot, Slot, Array<Cell | RowGroup | ColGroup
   return true;
 };
 
+// micro syntaxes to move to alfa-parser
+// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
+export function parseInteger(str: string): Result<readonly [string, number], string> {
+  const raw = Number(str);
+  return isNaN(raw) ?
+    Err.of("The string does not represent a number") :
+    raw !== Math.floor(raw) ?
+      Err.of("The string does not represent an integer") :
+      Ok.of(["", raw] as const);
+}
+
+// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
+export function parseNonNegativeInteger(str: string): Result<readonly [string, number], string> {
+  const result = parseInteger(str);
+  if (result.isErr()) return result;
+  const [_, value] = result.get();
+  return value < 0 ?
+      Err.of("This is a negative number") :
+      result;
+}
+// end micro syntaxes
+
+// attribute helper should move to attribute
+export function parseAttribute<RESULT, ERROR>(parser: Parser<string, RESULT, ERROR>): Mapper<Attribute, Option<RESULT>> {
+  return (attribute) => {
+    const result = parser(attribute.value);
+    if (result.isErr()) return None;
+    const [_, value] = result.get();
+    return Some.of(value);
+  }
+}
+// end attribute helper
+
+export function parseSpan(element: Element, name: string, min: number, max: number, failed: number): number {
+  return element.attribute(name).flatMap(parseAttribute(parseNonNegativeInteger)).map(x => clamp(x, min, max)).getOr(failed);
+}
+
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
 function growingCell(cell: Cell, yCurrent: number):void {
   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
@@ -95,46 +132,6 @@ const isCell: Predicate<Node, Element> =
       or(hasName(equals("td")),
         hasName(equals("th"))
       )));
-
-
-// micro syntax to move to alfa-parser
-// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
-function parseInteger(str: string): Result<readonly [string, number], string> {
-  const raw = Number(str);
-  return isNaN(raw) ?
-    Err.of("The string does not represent a number") :
-    raw !== Math.floor(raw) ?
-      Err.of("The string does not represent an integer") :
-      Ok.of(["", raw] as const);
-}
-
-// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
-function parseNonNegativeInteger(str: string): Result<readonly [string, number], string> {
-  const result = parseInteger(str);
-  if (result.isErr()) return result;
-  const [_, value] = result.get();
-  return value < 0 ?
-      Err.of("This is a negative number") :
-      result;
-}
-// end micro syntaxes
-
-// attribute helper should move to attribute
-function parseAttribute<RESULT, ERROR>(parser: Parser<string, RESULT, ERROR>): Mapper<Attribute, Option<RESULT>> {
-  return (attribute) => {
-    const result = parser(attribute.value);
-    if (result.isErr()) return None;
-    const [_, value] = result.get();
-    return Some.of(value);
-  }
-}
-// end attribute helper
-
-function parseSpan(element: Element, name: string, min: number, max: number, failed: number): number {
-  const spanAttr = element.attribute(name);
-  const value = spanAttr.flatMap(parseAttribute(parseNonNegativeInteger)).map(x => clamp(x, min, max));
-  return value.isNone() ? failed : value.get();
-}
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
 function rowProcessing(tr: Element): void {
