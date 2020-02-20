@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -10,7 +11,7 @@ import { Number } from "../number";
 const { map } = Parser;
 
 export class Named<C extends Named.Color = Named.Color>
-  implements Equatable, Serializable {
+  implements Equatable, Hashable, Serializable {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
   }
@@ -57,6 +58,10 @@ export class Named<C extends Named.Color = Named.Color>
 
   public equals(value: unknown): value is this {
     return value instanceof Named && value._color === this._color;
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeString(hash, this._color);
   }
 
   public toJSON(): Named.JSON {

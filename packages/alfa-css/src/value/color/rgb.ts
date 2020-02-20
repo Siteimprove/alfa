@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -13,7 +14,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class RGB<
   C extends Number | Percentage = Number | Percentage,
   A extends Number | Percentage = Number | Percentage
-> implements Equatable, Serializable {
+> implements Equatable, Hashable, Serializable {
   public static of<
     C extends Number | Percentage,
     A extends Number | Percentage
@@ -65,6 +66,13 @@ export class RGB<
       value._blue.equals(this._blue) &&
       value._alpha.equals(this._alpha)
     );
+  }
+
+  public hash(hash: Hash): void {
+    this._red.hash(hash);
+    this._green.hash(hash);
+    this._blue.hash(hash);
+    this._alpha.hash(hash);
   }
 
   public toJSON(): RGB.JSON {

@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
@@ -28,7 +29,7 @@ export namespace Gradient {
   export class Stop<
     C extends Color = Color,
     P extends Length | Percentage = Length | Percentage
-  > implements Equatable, Serializable {
+  > implements Equatable, Hashable, Serializable {
     public static of<C extends Color, P extends Length | Percentage>(
       color: C,
       position: Option<P> = None
@@ -62,6 +63,11 @@ export namespace Gradient {
         value._color.equals(this._color) &&
         value._position.equals(this._position)
       );
+    }
+
+    public hash(hash: Hash): void {
+      this._color.hash(hash);
+      this._position.hash(hash);
     }
 
     public toJSON(): Stop.JSON {
@@ -121,7 +127,7 @@ export namespace Gradient {
    * @see https://drafts.csswg.org/css-images/#color-transition-hint
    */
   export class Hint<P extends Length | Percentage = Length | Percentage>
-    implements Equatable, Serializable {
+    implements Equatable, Hashable, Serializable {
     public static of<P extends Length | Percentage>(position: P): Hint<P> {
       return new Hint(position);
     }
@@ -142,6 +148,10 @@ export namespace Gradient {
 
     public equals(value: unknown): value is this {
       return value instanceof Hint && value._position.equals(this._position);
+    }
+
+    public hash(hash: Hash): void {
+      this._position.hash(hash);
     }
 
     public toJSON(): Hint.JSON {

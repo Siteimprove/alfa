@@ -1,5 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+import { round } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -12,7 +14,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#percentages
  */
-export class Percentage implements Equatable, Serializable {
+export class Percentage implements Equatable, Hashable, Serializable {
   public static of(value: number): Percentage {
     return new Percentage(value);
   }
@@ -35,8 +37,8 @@ export class Percentage implements Equatable, Serializable {
     return value instanceof Percentage && value._value === this._value;
   }
 
-  public toString(): string {
-    return `${this._value * 100}%`;
+  public hash(hash: Hash): void {
+    Hash.writeFloat64(hash, this._value);
   }
 
   public toJSON(): Percentage.JSON {
@@ -44,6 +46,10 @@ export class Percentage implements Equatable, Serializable {
       type: "percentage",
       value: this._value
     };
+  }
+
+  public toString(): string {
+    return `${round(this._value * 100, 2)}%`;
   }
 }
 

@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import * as json from "@siteimprove/alfa-json";
@@ -14,7 +15,11 @@ const { map } = Parser;
  * @see https://drafts.csswg.org/css-values/#lengths
  */
 export class Length<U extends Unit.Length = Unit.Length>
-  implements Convertible<Unit.Length.Absolute>, Equatable, Serializable {
+  implements
+    Convertible<Unit.Length.Absolute>,
+    Equatable,
+    Hashable,
+    Serializable {
   public static of<U extends Unit.Length>(value: number, unit: U): Length<U> {
     return new Length(value, unit);
   }
@@ -63,8 +68,9 @@ export class Length<U extends Unit.Length = Unit.Length>
     );
   }
 
-  public toString(): string {
-    return `${this._value}${this._unit}`;
+  public hash(hash: Hash): void {
+    Hash.writeFloat64(hash, this._value);
+    Hash.writeString(hash, this._unit);
   }
 
   public toJSON(): Length.JSON {
@@ -73,6 +79,10 @@ export class Length<U extends Unit.Length = Unit.Length>
       value: this._value,
       unit: this._unit
     };
+  }
+
+  public toString(): string {
+    return `${this._value}${this._unit}`;
   }
 }
 

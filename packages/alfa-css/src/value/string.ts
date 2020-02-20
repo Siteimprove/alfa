@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -11,7 +12,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#strings
  */
-export class String implements Equatable, Serializable {
+export class String implements Equatable, Hashable, Serializable {
   public static of(value: string): String {
     return new String(value);
   }
@@ -34,8 +35,8 @@ export class String implements Equatable, Serializable {
     return value instanceof String && value._value === this._value;
   }
 
-  public toString(): string {
-    return `${this._value}`;
+  public hash(hash: Hash): void {
+    Hash.writeString(hash, this._value);
   }
 
   public toJSON(): String.JSON {
@@ -43,6 +44,10 @@ export class String implements Equatable, Serializable {
       type: "string",
       value: this._value
     };
+  }
+
+  public toString(): string {
+    return `"${this._value.replace(/"/g, '\\"')}"`;
   }
 }
 

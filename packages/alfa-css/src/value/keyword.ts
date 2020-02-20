@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -14,7 +15,7 @@ const { equals } = Predicate;
  * @see https://drafts.csswg.org/css-values/#keywords
  */
 export class Keyword<T extends string = string>
-  implements Equatable, Serializable {
+  implements Equatable, Hashable, Serializable {
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }
@@ -37,8 +38,8 @@ export class Keyword<T extends string = string>
     return value instanceof Keyword && value._value === this._value;
   }
 
-  public toString(): string {
-    return this._value;
+  public hash(hash: Hash): void {
+    Hash.writeString(hash, this._value);
   }
 
   public toJSON(): Keyword.JSON {
@@ -46,6 +47,10 @@ export class Keyword<T extends string = string>
       type: "keyword",
       value: this._value
     };
+  }
+
+  public toString(): string {
+    return this._value;
   }
 }
 
