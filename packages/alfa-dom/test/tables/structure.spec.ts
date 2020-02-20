@@ -1,9 +1,10 @@
+import {None} from "@siteimprove/alfa-option";
 import {test} from "@siteimprove/alfa-test";
 
 import {Cell, ColGroup, isCoveredBy, RowGroup, Slot} from "../../src/tables/structure";
 
 function slot(x: number, y: number): Slot {
-  return {x: x, y: y, elements: []}
+  return {x: x, y: y, elements: [], cell: None}
 }
 
 function cell(x: number, y: number, w: number, h: number): Cell {

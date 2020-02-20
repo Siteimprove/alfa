@@ -55,6 +55,9 @@
       "path": "../alfa-mapper"
     },
     {
+      "path": "../alfa-math"
+    },
+    {
       "path": "../alfa-option"
     },
     {
