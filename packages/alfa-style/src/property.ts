@@ -92,6 +92,7 @@ export namespace Property {
   export type Longhand = typeof Longhand;
   export const Longhand = {
     "background-color": Background.Color,
+    "background-image": Background.Image,
     color: Color,
     display: Display,
     "font-family": Font.Family,
