@@ -87,18 +87,22 @@ export function parseNonNegativeInteger(str: string): Result<readonly [string, n
 // end micro syntaxes
 
 // attribute helper should move to attribute
-export function parseAttribute<RESULT, ERROR>(parser: Parser<string, RESULT, ERROR>): Mapper<Attribute, Option<RESULT>> {
+export function parseAttribute<RESULT, ERROR>(parser: Parser<string, RESULT, ERROR>): Mapper<Attribute, Result<RESULT, ERROR>> {
   return (attribute) => {
     const result = parser(attribute.value);
-    if (result.isErr()) return None;
+    if (result.isErr()) return result;
     const [_, value] = result.get();
-    return Some.of(value);
+    return Ok.of(value);
   }
 }
 // end attribute helper
 
 export function parseSpan(element: Element, name: string, min: number, max: number, failed: number): number {
-  return element.attribute(name).flatMap(parseAttribute(parseNonNegativeInteger)).map(x => clamp(x, min, max)).getOr(failed);
+  return element.attribute(name)
+    .map(parseAttribute(parseNonNegativeInteger))
+    .map(r => r.map(x => clamp(x, min, max)))
+    .getOr(Ok.of(failed))
+    .getOr(failed);
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
