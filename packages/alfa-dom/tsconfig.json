@@ -33,7 +33,7 @@
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
     "src/tables/structure.ts",
-    "test/tables/structure.spec.ts",
+    "test/tables/structure-helpers.spec.ts",
     "test/tables/microsyntaxes.spec.ts",
     "test/tables/parse-attribute.spec.ts"
   ],
