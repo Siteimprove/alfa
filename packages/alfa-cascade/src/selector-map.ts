@@ -59,10 +59,10 @@ export enum Origin {
  * @internal
  */
 export class SelectorMap {
-  private readonly ids = SelectorMap.Bucket.empty();
-  private readonly classes = SelectorMap.Bucket.empty();
-  private readonly types = SelectorMap.Bucket.empty();
-  private readonly other: Array<SelectorMap.Node> = [];
+  private readonly _ids = SelectorMap.Bucket.empty();
+  private readonly _classes = SelectorMap.Bucket.empty();
+  private readonly _types = SelectorMap.Bucket.empty();
+  private readonly _other: Array<SelectorMap.Node> = [];
 
   public constructor(sheets: Iterable<Sheet>, device: Device) {
     // Every rule encountered in style sheets is assigned an increasing number
@@ -116,16 +116,16 @@ export class SelectorMap {
     const id = element.id;
 
     if (id.isSome()) {
-      collect(this.ids.get(id.get()));
+      collect(this._ids.get(id.get()));
     }
 
-    collect(this.types.get(element.name));
+    collect(this._types.get(element.name));
 
     for (const className of element.classes) {
-      collect(this.classes.get(className));
+      collect(this._classes.get(className));
     }
 
-    collect(this.other);
+    collect(this._other);
 
     return nodes;
 
@@ -159,21 +159,21 @@ export class SelectorMap {
 
     for (const selector of keySelector) {
       if (selector instanceof Selector.Id) {
-        this.ids.add(selector.name, node);
+        this._ids.add(selector.name, node);
       }
 
       if (selector instanceof Selector.Class) {
-        this.classes.add(selector.name, node);
+        this._classes.add(selector.name, node);
       }
 
       if (selector instanceof Selector.Type) {
-        this.types.add(selector.name, node);
+        this._types.add(selector.name, node);
       }
 
       return;
     }
 
-    this.other.push(node);
+    this._other.push(node);
   }
 }
 
