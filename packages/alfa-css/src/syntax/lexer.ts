@@ -351,6 +351,23 @@ const consumeIdentifierLike: Parser<
   const code = input.get(0);
 
   if (string.toLowerCase() === "url" && code.includes(0x28)) {
+    input = input.slice(1);
+
+    while (input.get(0).some(isWhitespace) && input.get(1).some(isWhitespace)) {
+      input = input.slice(1);
+    }
+
+    if (
+      input.get(0).some(
+        or(
+          equals(0x22, 0x27),
+          and(isWhitespace, () => input.get(1).some(equals(0x22, 0x27)))
+        )
+      )
+    ) {
+      return Ok.of([input, Token.Function.of(string)] as const);
+    }
+
     return consumeURL(input.slice(1));
   }
 
@@ -413,6 +430,7 @@ const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = input => {
       }
 
       if (input.get(0).every(equals(0x29))) {
+        input = input.slice(1);
         break;
       } else {
         return consumeBadURL(input);
