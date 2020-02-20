@@ -33,6 +33,10 @@ export namespace Iterable {
     return true;
   }
 
+  export function size<T>(iterable: Iterable<T>): number {
+    return reduce(iterable, size => size + 1, 0);
+  }
+
   export function* map<T, U = T>(
     iterable: Iterable<T>,
     mapper: Mapper<T, U>
