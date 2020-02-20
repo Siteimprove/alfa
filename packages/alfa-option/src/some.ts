@@ -95,7 +95,7 @@ export class Some<T> implements Option<T> {
   }
 
   public hash(hash: Hash): void {
-    Hashable.hash(this._value, hash);
+    Hashable.hash(hash, this._value);
   }
 
   public *[Symbol.iterator](): Iterator<T> {
