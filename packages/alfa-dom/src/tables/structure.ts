@@ -68,7 +68,8 @@ export function parseInteger(str: string): Result<readonly [string, number], str
     Err.of("The string does not represent a number") :
     raw !== Math.floor(raw) ?
       Err.of("The string does not represent an integer") :
-      Ok.of(["", raw] as const);
+      // 0 and -0 are different (but equal…) floats. Normalising.
+      Ok.of(["", raw === -0 ? 0 : raw] as const);
 }
 
 // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers

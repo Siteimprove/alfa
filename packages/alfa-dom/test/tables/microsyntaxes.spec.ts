@@ -11,9 +11,15 @@ test("parse integers", t=> {
   t.deepEqual(parseInteger("2"), result(2));
   t.deepEqual(parseInteger("1234"), result(1234));
   t.deepEqual(parseInteger("-5678"), result(-5678));
-  t.deepEqual(parseInteger("-0"), result(-0));
+  t.deepEqual(parseInteger("-0"), result(0));
 
   t.deepEqual(parseInteger("touan"), notNumber);
   t.deepEqual(parseInteger("12snr"), notNumber);
   t.deepEqual(parseInteger("1.2"), notInteger);
+});
+
+test("parse non-negative integers", t => {
+  t.deepEqual(parseNonNegativeInteger("42"), result(42));
+  t.deepEqual(parseNonNegativeInteger("-0"), result(0));
+  t.deepEqual(parseNonNegativeInteger("-42"), negative);
 });
