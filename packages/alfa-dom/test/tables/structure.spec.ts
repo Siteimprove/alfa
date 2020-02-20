@@ -1,5 +1,5 @@
-import {None} from "@siteimprove/alfa-option";
 import {test} from "@siteimprove/alfa-test";
+import {None} from "@siteimprove/alfa-option";
 
 import {Cell, ColGroup, isCoveredBy, RowGroup, Slot} from "../../src/tables/structure";
 

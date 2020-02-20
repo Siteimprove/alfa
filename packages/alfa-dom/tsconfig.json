@@ -34,7 +34,8 @@
     "src/style/sheet.ts",
     "src/tables/structure.ts",
     "test/tables/structure.spec.ts",
-    "test/tables/microsyntaxes.spec.ts"
+    "test/tables/microsyntaxes.spec.ts",
+    "test/tables/parseAttribute.spec.ts"
   ],
   "references": [
     {
