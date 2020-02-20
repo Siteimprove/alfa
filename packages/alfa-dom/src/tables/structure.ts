@@ -1,8 +1,11 @@
+import {Mapper} from "@siteimprove/alfa-mapper";
 import {clamp} from "@siteimprove/alfa-math";
-import {Option, Some} from "@siteimprove/alfa-option";
+import {None, Option, Some} from "@siteimprove/alfa-option";
+import {Parser} from "@siteimprove/alfa-parser";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Iterable} from "@siteimprove/alfa-iterable";
-import {Element, Namespace, Node} from "..";
+import {Err, Ok, Result} from "@siteimprove/alfa-result";
+import {Attribute, Element, Namespace, Node} from "..";
 
 const { and, equals, or, property } = Predicate;
 
@@ -84,6 +87,7 @@ export function hasName<T extends { readonly name: string }>(
 ): Predicate<T> {
   return property("name", predicate);
 }
+// end copied from rule
 
 const isCell: Predicate<Node, Element> =
   and(Element.isElement,
@@ -92,17 +96,44 @@ const isCell: Predicate<Node, Element> =
         hasName(equals("th"))
       )));
 
-function parsePositiveInt(str: string, failed: number): number {
+
+// micro syntax to move to alfa-parser
+// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
+function parseInteger(str: string): Result<readonly [string, number], string> {
   const raw = Number(str);
-  return isNaN(raw) || raw < 0 ? failed : Math.floor(raw)
+  return isNaN(raw) ?
+    Err.of("The string does not represent a number") :
+    raw !== Math.floor(raw) ?
+      Err.of("The string does not represent an integer") :
+      Ok.of(["", raw] as const);
 }
 
-// Not exactly https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
-// But should have the same effect for what is needed here.
-// Should we have an Attribute helper for these parsing? Typing attribute values?
+// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
+function parseNonNegativeInteger(str: string): Result<readonly [string, number], string> {
+  const result = parseInteger(str);
+  if (result.isErr()) return result;
+  const [_, value] = result.get();
+  return value < 0 ?
+      Err.of("This is a negative number") :
+      result;
+}
+// end micro syntaxes
+
+// attribute helper should move to attribute
+function parseAttribute<RESULT, ERROR>(parser: Parser<string, RESULT, ERROR>): Mapper<Attribute, Option<RESULT>> {
+  return (attribute) => {
+    const result = parser(attribute.value);
+    if (result.isErr()) return None;
+    const [_, value] = result.get();
+    return Some.of(value);
+  }
+}
+// end attribute helper
+
 function parseSpan(element: Element, name: string, min: number, max: number, failed: number): number {
   const spanAttr = element.attribute(name);
-  return spanAttr.isNone() ? failed : clamp(parsePositiveInt(spanAttr.get().value, failed), min, max);
+  const value = spanAttr.flatMap(parseAttribute(parseNonNegativeInteger)).map(x => clamp(x, min, max));
+  return value.isNone() ? failed : value.get();
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
