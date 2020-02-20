@@ -2,6 +2,7 @@ import {Err, Ok} from "@siteimprove/alfa-result";
 import {test} from "@siteimprove/alfa-test";
 import {parseInteger, parseNonNegativeInteger} from "../../src";
 
+const empty = Err.of("The string is empty");
 const notNumber = Err.of("The string does not represent a number");
 const notInteger = Err.of("The string does not represent an integer");
 const negative = Err.of("This is a negative number");
@@ -17,6 +18,9 @@ test("parse integers", t=> {
   t.deepEqual(parseInteger("touan"), notNumber);
   t.deepEqual(parseInteger("12snr"), notNumber);
   t.deepEqual(parseInteger("1.2"), notInteger);
+
+  t.deepEqual(parseInteger(""), empty);
+  t.deepEqual(parseInteger("    "), empty);
 });
 
 test("parse non-negative integers", t => {

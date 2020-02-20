@@ -63,6 +63,9 @@ export const isCoveredBy: Predicate<Slot, Slot, Array<Cell | RowGroup | ColGroup
 // micro syntaxes to move to alfa-parser
 // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
 export function parseInteger(str: string): Result<readonly [string, number], string> {
+  // empty/whitespace string are errors for specs, not for Number…
+  // \s seems to be close enough to "ASCII whitespace".
+  if (str.match(/^\s*$/)) return Err.of("The string is empty");
   const raw = Number(str);
   return isNaN(raw) ?
     Err.of("The string does not represent a number") :
