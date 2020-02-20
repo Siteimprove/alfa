@@ -22,9 +22,12 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-callback": "^0.0.0",
     "@siteimprove/alfa-mapper": "^0.0.0",
     "@siteimprove/alfa-option": "^0.0.0",
-    "@siteimprove/alfa-result": "^0.0.0"
+    "@siteimprove/alfa-predicate": "^0.0.0",
+    "@siteimprove/alfa-result": "^0.0.0",
+    "@siteimprove/alfa-thunk": "^0.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.0"

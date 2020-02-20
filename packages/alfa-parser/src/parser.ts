@@ -1,6 +1,9 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Ok, Result } from "@siteimprove/alfa-result";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Ok, Result, Err } from "@siteimprove/alfa-result";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 export type Parser<I, T, E = never> = (input: I) => Result<readonly [I, T], E>;
 
@@ -21,6 +24,20 @@ export namespace Parser {
   ): Parser<I, U, E> {
     return input =>
       parser(input).flatMap(([remainder, value]) => mapper(value)(remainder));
+  }
+
+  export function filter<I, T, U extends T, E>(
+    parser: Parser<I, T, E>,
+    predicate: Predicate<T, U>,
+    ifError: Thunk<E>
+  ): Parser<I, U, E> {
+    return flatMap(parser, value => input => {
+      const result: Result<readonly [I, U], E> = predicate(value)
+        ? Ok.of([input, value] as const)
+        : Err.of(ifError());
+
+      return result;
+    });
   }
 
   export function zeroOrMore<I, T, E>(
@@ -78,16 +95,28 @@ export namespace Parser {
     };
   }
 
+  export function peek<I, T, E>(parser: Parser<I, T, E>): Parser<I, T, E> {
+    return input => parser(input).map(([, value]) => [input, value]);
+  }
+
+  export function tee<I, T, E>(
+    parser: Parser<I, T, E>,
+    callback: Callback<T>
+  ): Parser<I, T, E> {
+    return map(parser, value => {
+      callback(value);
+      return value;
+    });
+  }
+
   export function option<I, T, E>(
     parser: Parser<I, T, E>
   ): Parser<I, Option<T>, E> {
     return input => {
-      const result = parser(input);
+      const result = map(parser, value => Option.of(value))(input);
 
       if (result.isOk()) {
-        return result.map(
-          ([remainder, value]) => [remainder, Option.of(value)] as const
-        );
+        return result;
       }
 
       return Ok.of([input, None] as const);

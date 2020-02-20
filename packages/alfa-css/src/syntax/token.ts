@@ -193,7 +193,7 @@ export namespace Token {
     return value instanceof URL;
   }
 
-  export const parseURL = (predicate: Predicate<URL>) =>
+  export const parseURL = (predicate: Predicate<URL> = () => true) =>
     parseToken(and(isURL, predicate));
 
   export class BadURL extends Token {

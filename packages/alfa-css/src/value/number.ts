@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
@@ -57,6 +57,17 @@ export namespace Number {
     return value instanceof Number;
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-values/#zero-value
+   */
+  export const parseZero = map(
+    Token.parseNumber(number => number.value === 0),
+    number => Number.of(number.value)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-values/#number-value
+   */
   export const parse = map(Token.parseNumber(), number =>
     Number.of(number.value)
   );

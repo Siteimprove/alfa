@@ -57,7 +57,7 @@ export namespace Integer {
     return value instanceof Integer;
   }
 
-  export const parse: Parser<Slice<Token>, Integer, string> = map(
+  export const parse = map(
     Token.parseNumber(number => number.isInteger),
     integer => Integer.of(integer.value)
   );
