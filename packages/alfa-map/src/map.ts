@@ -39,7 +39,7 @@ export class Map<K, V>
   private hash(key: K): number {
     const hash = FNV.empty();
 
-    Hashable.hash(key, hash);
+    Hashable.hash(hash, key);
 
     return hash.finish();
   }

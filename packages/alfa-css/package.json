@@ -24,7 +24,9 @@
   "dependencies": {
     "@siteimprove/alfa-device": "^0.0.0",
     "@siteimprove/alfa-equatable": "^0.0.0",
+    "@siteimprove/alfa-hash": "^0.0.0",
     "@siteimprove/alfa-iterable": "^0.0.0",
+    "@siteimprove/alfa-math": "^0.0.0",
     "@siteimprove/alfa-option": "^0.0.0",
     "@siteimprove/alfa-parser": "^0.0.0",
     "@siteimprove/alfa-predicate": "^0.0.0",

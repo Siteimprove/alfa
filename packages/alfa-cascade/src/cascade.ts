@@ -51,7 +51,7 @@ export namespace Cascade {
 
       function* visit(node: Node): Iterable<[Element, RuleTree.Node]> {
         if (Element.isElement(node)) {
-          const rules = selectorMap.get(node);
+          const rules = selectorMap.get(node, filter);
 
           const entry = ruleTree.add(sort(rules));
 

@@ -10,9 +10,21 @@ import {
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Selector } from "@siteimprove/alfa-selector";
 
 import { UserAgent } from "./user-agent";
+import { AncestorFilter } from "./ancestor-filter";
+
+const { and, equals, property } = Predicate;
+
+const isDescendantSelector = and(
+  Selector.isComplex,
+  property(
+    "combinator",
+    equals(Selector.Combinator.Descendant, Selector.Combinator.DirectDescendant)
+  )
+);
 
 /**
  * Cascading origins defined in ascending order; origins defined first have
@@ -59,10 +71,10 @@ export enum Origin {
  * @internal
  */
 export class SelectorMap {
-  private readonly ids = SelectorMap.Bucket.empty();
-  private readonly classes = SelectorMap.Bucket.empty();
-  private readonly types = SelectorMap.Bucket.empty();
-  private readonly other: Array<SelectorMap.Node> = [];
+  private readonly _ids = SelectorMap.Bucket.empty();
+  private readonly _classes = SelectorMap.Bucket.empty();
+  private readonly _types = SelectorMap.Bucket.empty();
+  private readonly _other: Array<SelectorMap.Node> = [];
 
   public constructor(sheets: Iterable<Sheet>, device: Device) {
     // Every rule encountered in style sheets is assigned an increasing number
@@ -110,32 +122,47 @@ export class SelectorMap {
     }
   }
 
-  public get(element: Element): Array<SelectorMap.Node> {
+  public get(
+    element: Element,
+    filter?: AncestorFilter
+  ): Array<SelectorMap.Node> {
     const nodes: Array<SelectorMap.Node> = [];
 
-    const id = element.id;
-
-    if (id.isSome()) {
-      collect(this.ids.get(id.get()));
-    }
-
-    collect(this.types.get(element.name));
-
-    for (const className of element.classes) {
-      collect(this.classes.get(className));
-    }
-
-    collect(this.other);
-
-    return nodes;
-
-    function collect(candidates: Array<SelectorMap.Node>) {
+    const collect = (candidates: Array<SelectorMap.Node>) => {
       for (const node of candidates) {
+        if (
+          filter !== undefined &&
+          Iterable.every(
+            node.selector,
+            and(isDescendantSelector, selector =>
+              canReject(selector.left, filter)
+            )
+          )
+        ) {
+          continue;
+        }
+
         if (node.selector.matches(element)) {
           nodes.push(node);
         }
       }
+    };
+
+    const id = element.id;
+
+    if (id.isSome()) {
+      collect(this._ids.get(id.get()));
     }
+
+    collect(this._types.get(element.name));
+
+    for (const className of element.classes) {
+      collect(this._classes.get(className));
+    }
+
+    collect(this._other);
+
+    return nodes;
   }
 
   private add(
@@ -159,21 +186,21 @@ export class SelectorMap {
 
     for (const selector of keySelector) {
       if (selector instanceof Selector.Id) {
-        this.ids.add(selector.name, node);
+        this._ids.add(selector.name, node);
       }
 
       if (selector instanceof Selector.Class) {
-        this.classes.add(selector.name, node);
+        this._classes.add(selector.name, node);
       }
 
       if (selector instanceof Selector.Type) {
-        this.types.add(selector.name, node);
+        this._types.add(selector.name, node);
       }
 
       return;
     }
 
-    this.other.push(node);
+    this._other.push(node);
   }
 }
 
@@ -266,8 +293,6 @@ const componentMax = (1 << componentBits) - 1;
 
 /**
  * @see https://www.w3.org/TR/selectors/#specificity
- *
- * @internal
  */
 function getSpecificity(selector: Selector): Specificity {
   let a = 0;
@@ -312,4 +337,42 @@ function getSpecificity(selector: Selector): Specificity {
     (Math.min(b, componentMax) << (componentBits * 1)) |
     Math.min(c, componentMax)
   );
+}
+
+/**
+ * Check if a selector can be rejected based on an ancestor filter.
+ */
+function canReject(selector: Selector, filter: AncestorFilter): boolean {
+  if (
+    selector instanceof Selector.Id ||
+    selector instanceof Selector.Class ||
+    selector instanceof Selector.Type
+  ) {
+    return !filter.matches(selector);
+  }
+
+  if (selector instanceof Selector.Compound) {
+    // Compound selectors are right-leaning, so recurse to the left first as it
+    // is likely the shortest branch.
+    return (
+      canReject(selector.left, filter) || canReject(selector.right, filter)
+    );
+  }
+
+  if (selector instanceof Selector.Complex) {
+    const { combinator } = selector;
+
+    if (
+      combinator === Selector.Combinator.Descendant ||
+      combinator === Selector.Combinator.DirectDescendant
+    ) {
+      // Complex selectors are left-leaning, so recurse to the right first as it
+      // is likely the shortest branch.
+      return (
+        canReject(selector.right, filter) || canReject(selector.left, filter)
+      );
+    }
+  }
+
+  return false;
 }

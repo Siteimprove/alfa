@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -9,7 +10,7 @@ import { Number } from "../number";
 
 const { map } = Parser;
 
-export class Hex implements Equatable, Serializable {
+export class Hex implements Equatable, Hashable, Serializable {
   public static of(value: number): Hex {
     return new Hex(value);
   }
@@ -51,6 +52,10 @@ export class Hex implements Equatable, Serializable {
 
   public equals(value: unknown): value is this {
     return value instanceof Hex && value._value === this._value;
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeUint32(hash, this._value);
   }
 
   public toJSON(): Hex.JSON {

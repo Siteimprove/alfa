@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { mod, clamp } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -15,7 +16,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class HSL<
   H extends Number | Angle = Number | Angle,
   A extends Number | Percentage = Number | Percentage
-> implements Equatable, Serializable {
+> implements Equatable, Hashable, Serializable {
   public static of<H extends Number | Angle, A extends Number | Percentage>(
     hue: H,
     saturation: Percentage,
@@ -101,6 +102,13 @@ export class HSL<
       value._lightness.equals(this._lightness) &&
       value._alpha.equals(this._alpha)
     );
+  }
+
+  public hash(hash: Hash): void {
+    this._hue.hash(hash);
+    this._saturation.hash(hash);
+    this._lightness.hash(hash);
+    this._alpha.hash(hash);
   }
 
   public toJSON(): HSL.JSON {

@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -18,7 +19,7 @@ const { map, either, pair, option, left, right, delimited } = Parser;
 export class Linear<
   I extends Gradient.Item = Gradient.Item,
   D extends Linear.Direction = Linear.Direction
-> implements Equatable, Serializable {
+> implements Equatable, Hashable, Serializable {
   public static of<I extends Gradient.Item, D extends Linear.Direction>(
     direction: D,
     items: Iterable<I>,
@@ -66,6 +67,17 @@ export class Linear<
     );
   }
 
+  public hash(hash: Hash): void {
+    this._direction.hash(hash);
+
+    for (const item of this._items) {
+      item.hash(hash);
+    }
+
+    Hash.writeUint32(hash, this._items.length);
+    Hash.writeUint8(hash, +this._repeats);
+  }
+
   public toJSON(): Linear.JSON {
     return {
       type: "gradient",
@@ -99,7 +111,7 @@ export namespace Linear {
     export type JSON = Angle.JSON | Side.JSON | Corner.JSON;
   }
 
-  export class Side implements Equatable, Serializable {
+  export class Side implements Equatable, Hashable, Serializable {
     public static of(side: Position.Vertical | Position.Horizontal): Side {
       return new Side(side);
     }
@@ -120,6 +132,10 @@ export namespace Linear {
 
     public equals(value: unknown): value is this {
       return value instanceof Side && value._side === this._side;
+    }
+
+    public hash(hash: Hash): void {
+      Hash.writeString(hash, this._side);
     }
 
     public toJSON(): Side.JSON {
@@ -161,12 +177,29 @@ export namespace Linear {
       this._horizontal = horizontal;
     }
 
+    public get type(): "corner" {
+      return "corner";
+    }
+
+    public get vertical(): Position.Vertical {
+      return this._vertical;
+    }
+
+    public get horizontal(): Position.Horizontal {
+      return this._horizontal;
+    }
+
     public equals(value: unknown): value is this {
       return (
         value instanceof Corner &&
         value._vertical === this._vertical &&
         value._horizontal === this._horizontal
       );
+    }
+
+    public hash(hash: Hash): void {
+      Hash.writeString(hash, this._vertical);
+      Hash.writeString(hash, this._horizontal);
     }
 
     public toJSON(): Corner.JSON {

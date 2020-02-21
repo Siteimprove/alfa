@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
@@ -9,7 +10,7 @@ import * as json from "@siteimprove/alfa-json";
  * implementing the `equals()` and `toJSON()` methods. It also provides a means
  * of configuring the value separator used in the `toString()` method.
  */
-export class List<T> implements Iterable<T>, Equatable, Serializable {
+export class List<T> implements Iterable<T>, Equatable, Hashable, Serializable {
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
     return new List(values, separator);
   }
@@ -38,6 +39,15 @@ export class List<T> implements Iterable<T>, Equatable, Serializable {
         Equatable.equals(value, this._values[i])
       )
     );
+  }
+
+  public hash(hash: Hash): void {
+    for (const value of this._values) {
+      Hashable.hash(hash, value);
+    }
+
+    Hash.writeUint32(hash, this._values.length);
+    Hash.writeString(hash, this._separator);
   }
 
   public *[Symbol.iterator](): Iterator<T> {

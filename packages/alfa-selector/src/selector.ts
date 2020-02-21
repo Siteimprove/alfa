@@ -1197,6 +1197,10 @@ export namespace Selector {
     }
   }
 
+  export function isComplex(value: unknown): value is Complex {
+    return value instanceof Complex;
+  }
+
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-complex-selector
    */

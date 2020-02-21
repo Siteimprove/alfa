@@ -10,10 +10,10 @@ exports.tester = {
           nodeOptions: [
             ...process.execArgv,
             ...["--require", require.resolve("source-map-support/register")]
-          ]
+          ],
+          stdio: "inherit"
         })
         .catch(err => {
-          system.write(err.stderr.trim() + "\n");
           system.exit(1);
         });
     }

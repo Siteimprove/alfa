@@ -1,7 +1,8 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
@@ -11,7 +12,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#integers
  */
-export class Integer implements Equatable, Serializable {
+export class Integer implements Equatable, Hashable, Serializable {
   public static of(value: number): Integer {
     return new Integer(value);
   }
@@ -34,8 +35,8 @@ export class Integer implements Equatable, Serializable {
     return value instanceof Integer && value._value === this._value;
   }
 
-  public toString(): string {
-    return `${this._value}`;
+  public hash(hash: Hash): void {
+    Hash.writeInt32(hash, this._value);
   }
 
   public toJSON(): Integer.JSON {
@@ -43,6 +44,10 @@ export class Integer implements Equatable, Serializable {
       type: "integer",
       value: this._value
     };
+  }
+
+  public toString(): string {
+    return `${this._value}`;
   }
 }
 
