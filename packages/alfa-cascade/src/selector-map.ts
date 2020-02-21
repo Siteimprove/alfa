@@ -10,9 +10,21 @@ import {
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Selector } from "@siteimprove/alfa-selector";
 
 import { UserAgent } from "./user-agent";
+import { AncestorFilter } from "./ancestor-filter";
+
+const { and, equals, property } = Predicate;
+
+const isDescendantSelector = and(
+  Selector.isComplex,
+  property(
+    "combinator",
+    equals(Selector.Combinator.Descendant, Selector.Combinator.DirectDescendant)
+  )
+);
 
 /**
  * Cascading origins defined in ascending order; origins defined first have
@@ -110,8 +122,31 @@ export class SelectorMap {
     }
   }
 
-  public get(element: Element): Array<SelectorMap.Node> {
+  public get(
+    element: Element,
+    filter?: AncestorFilter
+  ): Array<SelectorMap.Node> {
     const nodes: Array<SelectorMap.Node> = [];
+
+    const collect = (candidates: Array<SelectorMap.Node>) => {
+      for (const node of candidates) {
+        if (
+          filter !== undefined &&
+          Iterable.every(
+            node.selector,
+            and(isDescendantSelector, selector =>
+              canReject(selector.left, filter)
+            )
+          )
+        ) {
+          continue;
+        }
+
+        if (node.selector.matches(element)) {
+          nodes.push(node);
+        }
+      }
+    };
 
     const id = element.id;
 
@@ -128,14 +163,6 @@ export class SelectorMap {
     collect(this._other);
 
     return nodes;
-
-    function collect(candidates: Array<SelectorMap.Node>) {
-      for (const node of candidates) {
-        if (node.selector.matches(element)) {
-          nodes.push(node);
-        }
-      }
-    }
   }
 
   private add(
@@ -266,8 +293,6 @@ const componentMax = (1 << componentBits) - 1;
 
 /**
  * @see https://www.w3.org/TR/selectors/#specificity
- *
- * @internal
  */
 function getSpecificity(selector: Selector): Specificity {
   let a = 0;
@@ -312,4 +337,42 @@ function getSpecificity(selector: Selector): Specificity {
     (Math.min(b, componentMax) << (componentBits * 1)) |
     Math.min(c, componentMax)
   );
+}
+
+/**
+ * Check if a selector can be rejected based on an ancestor filter.
+ */
+function canReject(selector: Selector, filter: AncestorFilter): boolean {
+  if (
+    selector instanceof Selector.Id ||
+    selector instanceof Selector.Class ||
+    selector instanceof Selector.Type
+  ) {
+    return !filter.matches(selector);
+  }
+
+  if (selector instanceof Selector.Compound) {
+    // Compound selectors are right-leaning, so recurse to the left first as it
+    // is likely the shortest branch.
+    return (
+      canReject(selector.left, filter) || canReject(selector.right, filter)
+    );
+  }
+
+  if (selector instanceof Selector.Complex) {
+    const { combinator } = selector;
+
+    if (
+      combinator === Selector.Combinator.Descendant ||
+      combinator === Selector.Combinator.DirectDescendant
+    ) {
+      // Complex selectors are left-leaning, so recurse to the right first as it
+      // is likely the shortest branch.
+      return (
+        canReject(selector.right, filter) || canReject(selector.left, filter)
+      );
+    }
+  }
+
+  return false;
 }
