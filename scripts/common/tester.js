@@ -1,9 +1,9 @@
 const execa = require("execa");
 
-const { system } = require("./system");
+const {system} = require("./system");
 
 exports.tester = {
-  test(root = "packages") {
+  test(root = "packages/alfa-rules") {
     for (const fileName of system.readDirectory(root, [".spec.js"])) {
       execa
         .node(fileName, [], {
@@ -12,8 +12,12 @@ exports.tester = {
             ...["--require", require.resolve("source-map-support/register")]
           ]
         })
+        .then(result => result.stdout === "" ?
+          null :
+          process.stdout.write(result.stdout.trim() + "\n"))
         .catch(err => {
-          system.write(err.stderr.trim() + "\n");
+          process.stdout.write(err.stdout.trim() + "\n");
+          process.stderr.write(err.stderr.trim() + "\n");
           system.exit(1);
         });
     }
