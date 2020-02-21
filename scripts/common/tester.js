@@ -1,9 +1,9 @@
 const execa = require("execa");
 
-const {system} = require("./system");
+const { system } = require("./system");
 
 exports.tester = {
-  test(root = "packages/alfa-rules") {
+  test(root = "packages") {
     for (const fileName of system.readDirectory(root, [".spec.js"])) {
       execa
         .node(fileName, [], {
