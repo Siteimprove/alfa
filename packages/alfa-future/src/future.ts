@@ -135,7 +135,7 @@ class Defer<T> extends Future<T> {
   }
 
   public then(callback: Callback<T>): void {
-    this._continuation(callback);
+    this._continuation(value => defer(() => callback(value)));
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -169,7 +169,9 @@ namespace Defer {
     }
 
     public then(callback: Callback<T>): void {
-      this._continuation(value => this._mapper(value).then(callback));
+      this._continuation(value =>
+	defer(() => this._mapper(value).then(callback))
+      );
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -233,4 +235,8 @@ namespace Suspend {
       );
     }
   }
+}
+
+async function defer<T>(thunk: Thunk<T>): Promise<T> {
+  return Promise.resolve().then(thunk);
 }
