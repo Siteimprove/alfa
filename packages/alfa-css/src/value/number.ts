@@ -1,7 +1,9 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+import { round } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
@@ -11,7 +13,7 @@ const { map } = Parser;
 /**
  * @see https://drafts.csswg.org/css-values/#numbers
  */
-export class Number implements Equatable, Serializable {
+export class Number implements Equatable, Hashable, Serializable {
   public static of(value: number): Number {
     return new Number(value);
   }
@@ -34,8 +36,8 @@ export class Number implements Equatable, Serializable {
     return value instanceof Number && value._value === this._value;
   }
 
-  public toString(): string {
-    return `${this._value}`;
+  public hash(hash: Hash): void {
+    Hash.writeFloat64(hash, this._value);
   }
 
   public toJSON(): Number.JSON {
@@ -43,6 +45,10 @@ export class Number implements Equatable, Serializable {
       type: "number",
       value: this._value
     };
+  }
+
+  public toString(): string {
+    return `${round(this._value, 2)}`;
   }
 }
 
@@ -57,6 +63,17 @@ export namespace Number {
     return value instanceof Number;
   }
 
+  /**
+   * @see https://drafts.csswg.org/css-values/#zero-value
+   */
+  export const parseZero = map(
+    Token.parseNumber(number => number.value === 0),
+    number => Number.of(number.value)
+  );
+
+  /**
+   * @see https://drafts.csswg.org/css-values/#number-value
+   */
   export const parse = map(Token.parseNumber(), number =>
     Number.of(number.value)
   );

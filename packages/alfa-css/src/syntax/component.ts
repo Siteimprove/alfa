@@ -17,8 +17,6 @@ export namespace Component {
   export const consume: Parser<Slice<Token>, Component> = input => {
     const next = input.get(0).get();
 
-    input = input.slice(1);
-
     const component = [next];
 
     if (
@@ -30,6 +28,8 @@ export namespace Component {
 
       input = remainder;
       component.push(...block.value);
+    } else {
+      input = input.slice(1);
     }
 
     return Ok.of([input, component] as const);

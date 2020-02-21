@@ -11,15 +11,35 @@
     "src/syntax/token.ts",
     "src/value.ts",
     "src/value/angle.ts",
+    "src/value/color.ts",
+    "src/value/color/current.ts",
+    "src/value/color/hex.ts",
+    "src/value/color/hsl.ts",
+    "src/value/color/named.ts",
+    "src/value/color/rgb.ts",
+    "src/value/color/system.ts",
     "src/value/converter.ts",
     "src/value/function.ts",
+    "src/value/gradient.ts",
+    "src/value/gradient/linear.ts",
+    "src/value/image.ts",
     "src/value/integer.ts",
     "src/value/keyword.ts",
     "src/value/length.ts",
+    "src/value/list.ts",
     "src/value/number.ts",
     "src/value/percentage.ts",
+    "src/value/position.ts",
     "src/value/string.ts",
-    "src/value/unit.ts"
+    "src/value/transform.ts",
+    "src/value/transform/matrix.ts",
+    "src/value/transform/perspective.ts",
+    "src/value/transform/rotate.ts",
+    "src/value/transform/scale.ts",
+    "src/value/transform/skew.ts",
+    "src/value/transform/translate.ts",
+    "src/value/unit.ts",
+    "src/value/url.ts"
   ],
   "references": [
     {
@@ -29,7 +49,13 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-math"
     },
     {
       "path": "../alfa-option"

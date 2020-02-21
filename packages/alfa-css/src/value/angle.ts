@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -14,7 +15,7 @@ const { map } = Parser;
  * @see https://drafts.csswg.org/css-values/#angles
  */
 export class Angle<U extends Unit.Angle = Unit.Angle>
-  implements Convertible<Unit.Angle>, Equatable, Serializable {
+  implements Convertible<Unit.Angle>, Equatable, Hashable, Serializable {
   public static of<U extends Unit.Angle>(value: number, unit: U): Angle<U> {
     return new Angle(value, unit);
   }
@@ -59,8 +60,9 @@ export class Angle<U extends Unit.Angle = Unit.Angle>
     );
   }
 
-  public toString(): string {
-    return `${this._value}${this._unit}`;
+  public hash(hash: Hash): void {
+    Hash.writeFloat64(hash, this._value);
+    Hash.writeString(hash, this._unit);
   }
 
   public toJSON(): Angle.JSON {
@@ -69,6 +71,10 @@ export class Angle<U extends Unit.Angle = Unit.Angle>
       value: this._value,
       unit: this._unit
     };
+  }
+
+  public toString(): string {
+    return `${this._value}${this._unit}`;
   }
 }
 
