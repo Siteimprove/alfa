@@ -10,14 +10,10 @@ exports.tester = {
           nodeOptions: [
             ...process.execArgv,
             ...["--require", require.resolve("source-map-support/register")]
-          ]
+          ],
+          stdio: "inherit"
         })
-        .then(result => result.stdout === "" ?
-          null :
-          process.stdout.write(result.stdout.trim() + "\n"))
         .catch(err => {
-          process.stdout.write(err.stdout.trim() + "\n");
-          process.stderr.write(err.stderr.trim() + "\n");
           system.exit(1);
         });
     }
