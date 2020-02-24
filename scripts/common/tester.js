@@ -3,7 +3,7 @@ const execa = require("execa");
 const { system } = require("./system");
 
 exports.tester = {
-  test(root = "packages") {
+  test(root = "packages/alfa-dom/") {
     for (const fileName of system.readDirectory(root, [".spec.js"])) {
       execa
         .node(fileName, [], {
@@ -13,7 +13,7 @@ exports.tester = {
           ],
           stdio: "inherit"
         })
-        .catch(err => {
+        .catch(_ => {
           system.exit(1);
         });
     }
