@@ -12,12 +12,14 @@ function cell(x: number, y: number, w: number, h: number): Cell {
   return {kind: "data", anchor: {x: x, y: y}, width: w, height: h}
 }
 
+const dummy = Element.of(None, None, "foo");
+
 function rowGroup(y: number, h: number): RowGroup {
-  return {anchor: {y: y}, height: h}
+  return {anchor: {y: y}, height: h, element: dummy}
 }
 
 function colGroup(x: number, w: number): ColGroup {
-  return {anchor: {x: x}, width: w}
+  return {anchor: {x: x}, width: w, element: dummy}
 }
 
 test("isCoveredBy ̤correctly computes cell coverage", t => {

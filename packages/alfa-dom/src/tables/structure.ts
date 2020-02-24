@@ -5,14 +5,16 @@ import {Parser} from "@siteimprove/alfa-parser";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Iterable} from "@siteimprove/alfa-iterable";
 import {Err, Ok, Result} from "@siteimprove/alfa-result";
+import {test} from "@siteimprove/alfa-test";
 import {Attribute, Element, Namespace, Node} from "..";
+import isElement = Element.isElement;
 
-const { and, equals, or, property } = Predicate;
+const { and, equals, property } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 
-export type Slot = { x: number; y: number; elements: Iterable<Element>, cell: Option<Cell> };
-type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Iterable<Cell> };
+export type Slot = { x: number; y: number; elements: Array<Element>, cell: Option<Cell> };
+type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 export type Cell = {
@@ -29,6 +31,7 @@ export type RowGroup = {
   // First row of the group
   anchor: { y: number };
   height: number;
+  element: Element;
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
@@ -36,6 +39,7 @@ export type ColGroup = {
   // First column of the group
   anchor: { x: number };
   width: number;
+  element: Element;
 }
 
 export const isCoveredBy: Predicate<Slot, Slot, Array<Cell | RowGroup | ColGroup>> = (slot, cover) => {
@@ -115,11 +119,6 @@ function growingCells(cells: Array<Cell>, yCurrent: number):void {
   cells.forEach(cell => growingCell(cell, yCurrent));
 }
 
-// Bad global variables! Bad!
-let xCurrent=0, yCurrent=0, xWidth=0, yHeight=0;
-let growingCellsList: Array<Cell>;
-let theTable: Table;
-
 // Bad copy from rule helpers. Move to DOM helpers?
 function hasNamespace(
   predicate: Predicate<Namespace> = () => true
@@ -137,12 +136,21 @@ function hasName<T extends { readonly name: string }>(
 const isCell: Predicate<Node, Element> =
   and(Element.isElement,
     and(hasNamespace(equals(Namespace.HTML)),
-      or(hasName(equals("td")),
-        hasName(equals("th"))
-      )));
+      hasName(equals("th", "td"))
+      ));
+
+const isRow: Predicate<Node, Element> =
+  and(Element.isElement,
+    and(hasNamespace(equals(Namespace.HTML)),
+      hasName(equals("tr"))
+    ));
+
+// Bad global variables! Bad!
+export const global = {xCurrent:0, yCurrent:0, xWidth:0, yHeight:0, growingCellsList: [] as Array<Cell>,
+  theTable: { slots: [[]] as Array<Array<Slot>>, width: 0, height: 0, cells: [] as Array<Cell>, rowGroups: [] as Array<RowGroup>, colGroups: [] as Array<ColGroup> } as Table};
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-function rowProcessing(tr: Element): void {
+export function rowProcessing(tr: Element): void {
   let step = "";
   let children = tr.children().filter(isCell);
   let currentCell: Element;
@@ -150,14 +158,14 @@ function rowProcessing(tr: Element): void {
   while (true) {
     if (step !== "cells") {
       // 1
-      if (yHeight === yCurrent) { yHeight++ }
+      if (global.yHeight === global.yCurrent) { global.yHeight++ }
       // 2
-      xCurrent = 0;
+      global.xCurrent = 0;
       // 3
-      growingCells(growingCellsList, yCurrent);
+      growingCells(global.growingCellsList, global.yCurrent);
       // 4
       if (children.isEmpty()) {
-        yCurrent++;
+        global.yCurrent++;
         return;
       }
       // 5
@@ -165,12 +173,12 @@ function rowProcessing(tr: Element): void {
       children = children.rest();
     }
     // 6 (Cells)
-    while (xCurrent < xWidth && theTable.slots[xCurrent][yCurrent].cell.isSome()) {
-      xCurrent++
+    while (global.xCurrent < global.xWidth && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
+      global.xCurrent++
     }
     // 7
-    if (xCurrent === xWidth) {
-      xCurrent++
+    if (global.xCurrent === global.xWidth) {
+      global.xWidth++
     }
     // 8 (need non-null assertion because can't tell that 5 is always run at least once. Bad!)
     const colspan = parseSpan(currentCell!, "colspan",1, 1000, 1);
@@ -184,38 +192,41 @@ function rowProcessing(tr: Element): void {
       grow = false;
     }
     // 11
-    if (xWidth <= xCurrent + colspan ) {
-      xWidth = xCurrent + colspan
+    if (global.xWidth <= global.xCurrent + colspan ) {
+      global.xWidth = global.xCurrent + colspan
     }
     // 12
-    if (yHeight <= yCurrent + rowspan) {
-      yHeight = yCurrent + rowspan
+    if (global.yHeight <= global.yCurrent + rowspan) {
+      global.yHeight = global.yCurrent + rowspan
     }
     // 13
     const cell: Cell = {
       kind: hasName(equals("th"))(currentCell!) ? "header" : "data",
-      anchor : {x: xCurrent, y: yCurrent},
+      anchor : {x: global.xCurrent, y: global.yCurrent},
       width: colspan,
       height: rowspan
     };
-    for(let x=xCurrent; x<xCurrent+colspan; x++) {
-      for(let y=yCurrent; y<yCurrent+rowspan; y++) {
-        const slot =theTable.slots[x][y];
+    for(let x=global.xCurrent; x<global.xCurrent+colspan; x++) {
+      for(let y=global.yCurrent; y<global.yCurrent+rowspan; y++) {
+        const slot = global.theTable.slots[x][y];
         if (slot.cell.isSome()) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
         slot.cell = Some.of(cell);
       }
     }
+    // Storing the element in the anchor slot only.
+    global.theTable.slots[global.xCurrent][global.yCurrent].elements.push(currentCell!);
+    global.theTable.cells.push(cell);
     // 14
     if (grow) {
-      growingCellsList.push(cell);
+      global.growingCellsList.push(cell);
     }
     // 15
-    xCurrent = xCurrent + colspan;
+    global.xCurrent = global.xCurrent + colspan;
     // 16
     if (children.isEmpty()) {
-      yCurrent++;
+      global.yCurrent++;
       return;
     }
     // 17
@@ -224,4 +235,34 @@ function rowProcessing(tr: Element): void {
     // 18
     step = "cells"
   }
+}
+
+// https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
+export function endRowGroup() {
+  // 1
+  while (global.yCurrent < global.yHeight) {
+    // 1.1
+    growingCells(global.theTable.cells, global.yCurrent);
+    // 1.2
+    global.yCurrent ++;
+  }
+  // 2
+  global.growingCellsList = [];
+}
+
+// https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
+export function processRowGroup(group: Element) {
+  // 1
+  const yStart = global.yHeight;
+  // 2
+  for (const row of group.children().filter(isRow)) {
+    rowProcessing(row);
+  }
+  // 3
+  if (global.yHeight > yStart) {
+    const rowGroup = { anchor: {y: yStart}, height: global.yHeight - yStart, element: group};
+    global.theTable.rowGroups.push(rowGroup);
+  }
+  // 4
+  endRowGroup();
 }
