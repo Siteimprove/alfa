@@ -50,7 +50,7 @@ export namespace Assert {
 
     export function isAccessible(
       page: web.Page,
-      scope: Iterable<Rule<web.Page, Target>> = Rules.values()
+      scope: Iterable<Rule<web.Page, Target, any>> = Rules.values()
     ): Future<Option<Error<Target>>> {
       const audit = reduce(
         scope,
