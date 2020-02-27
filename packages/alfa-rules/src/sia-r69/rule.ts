@@ -270,13 +270,22 @@ function resolveColor(
   color: RGB<Percentage, Percentage> | Current | System,
   style: Style
 ): Option<RGB<Percentage, Percentage>> {
+  const opacity = style.computed("opacity").value;
+
   switch (color.type) {
     case "keyword":
       if (color.value === "currentcolor") {
         const color = style.computed("color").value;
 
         if (color.type === "color") {
-          return Option.of(color);
+          return Option.of(
+            RGB.of(
+              color.red,
+              color.green,
+              color.blue,
+              Percentage.of(color.alpha.value * opacity.value)
+            )
+          );
         }
       }
 
@@ -286,7 +295,7 @@ function resolveColor(
             Percentage.of(0),
             Percentage.of(0),
             Percentage.of(0),
-            Percentage.of(1)
+            Percentage.of(opacity.value)
           )
         );
       }
@@ -294,7 +303,14 @@ function resolveColor(
       return None;
 
     case "color":
-      return Option.of(color);
+      return Option.of(
+        RGB.of(
+          color.red,
+          color.green,
+          color.blue,
+          Percentage.of(color.alpha.value * opacity.value)
+        )
+      );
   }
 }
 
