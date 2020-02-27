@@ -4,7 +4,7 @@ import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { mod, round } from "@siteimprove/alfa-math";
+import { Matrix, mod, round } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -97,7 +97,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
   }
 
   for (const transform of value) {
-    switch (transform.name) {
+    switch (transform.type) {
       case "rotate":
       case "matrix":
         return true;
@@ -167,13 +167,13 @@ function getRotation(element: Element, device: Device): Option<number> {
     }
 
     for (const fn of transform) {
-      switch (fn.name) {
+      switch (fn.type) {
         case "rotate": {
-          const [x, y, z, angle] = fn.args;
+          const { x, y, z, angle } = fn;
 
           z;
 
-          if (x !== 0 || y !== 0) {
+          if (x.value !== 0 || y.value !== 0) {
             return None;
           }
 
@@ -183,7 +183,12 @@ function getRotation(element: Element, device: Device): Option<number> {
         }
 
         case "matrix": {
-          const decomposed = Transformation.decompose(fn.args);
+          const decomposed = Transformation.decompose(
+            fn.values.map(row => row.map(number => number.value)) as Matrix<
+              4,
+              4
+            >
+          );
 
           if (decomposed.isNone()) {
             continue;
