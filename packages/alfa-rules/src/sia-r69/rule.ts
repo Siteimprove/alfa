@@ -69,8 +69,10 @@ export default Rule.Atomic.of<Page, Text, Question>({
               0
             );
 
+            const threshold = isLargeText(device)(target) ? 3 : 4.5;
+
             return expectation(
-              highest >= 4.5,
+              highest >= threshold,
               Outcomes.HasSufficientContrast,
               Outcomes.HasInsufficientContrast
             );
@@ -102,6 +104,31 @@ export namespace Outcomes {
   export const HasInsufficientContrast = Err.of(
     "The highest possible contrast of the text is insufficient"
   );
+}
+
+/**
+ * @see https://w3c.github.io/wcag/guidelines/#dfn-large-scale
+ */
+function isLargeText(device: Device): Predicate<Text> {
+  return text => {
+    const parent = text.parent({ flattened: true }).filter(Element.isElement);
+
+    if (parent.isNone()) {
+      return false;
+    }
+
+    const style = Style.from(parent.get(), device);
+
+    const size = style.computed("font-size").value.withUnit("pt");
+
+    if (size.value >= 18) {
+      return true;
+    }
+
+    const weight = style.computed("font-weight").value;
+
+    return size.value >= 14 && weight.value >= 700;
+  };
 }
 
 /**
@@ -246,11 +273,22 @@ function resolveColor(
   switch (color.type) {
     case "keyword":
       if (color.value === "currentcolor") {
-        color = style.computed("color").value;
+        const color = style.computed("color").value;
 
         if (color.type === "color") {
           return Option.of(color);
         }
+      }
+
+      if (color.value === "canvastext") {
+        return Option.of(
+          RGB.of(
+            Percentage.of(0),
+            Percentage.of(0),
+            Percentage.of(0),
+            Percentage.of(1)
+          )
+        );
       }
 
       return None;
