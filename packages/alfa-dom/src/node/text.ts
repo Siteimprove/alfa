@@ -1,6 +1,7 @@
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
+import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
@@ -23,6 +24,20 @@ export class Text extends Node implements Slotable {
 
   public get data(): string {
     return this._data;
+  }
+
+  public parent(options: Node.Traversal = {}): Option<Node> {
+    if (options.flattened === true) {
+      return this._parent.flatMap(parent => {
+        if (Shadow.isShadow(parent)) {
+          return this.assignedSlot().flatMap(slot => slot.parent(options));
+        }
+
+        return Option.of(parent);
+      });
+    }
+
+    return this._parent;
   }
 
   public assignedSlot(): Option<Slot> {
