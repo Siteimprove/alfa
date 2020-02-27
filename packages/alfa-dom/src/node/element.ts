@@ -127,7 +127,11 @@ export class Element extends Node implements Slot, Slotable {
   public parent(options: Node.Traversal = {}): Option<Node> {
     if (options.flattened === true) {
       return this._parent.flatMap(parent => {
-        if (Element.isElement(parent) && parent._shadow.isSome()) {
+        if (Shadow.isShadow(parent)) {
+          return Option.of(parent.host);
+        }
+
+        if (Element.isElement(parent) && parent.shadow.isSome()) {
           return this.assignedSlot().flatMap(slot => slot.parent(options));
         }
 

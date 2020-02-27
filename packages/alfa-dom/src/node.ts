@@ -3,6 +3,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
