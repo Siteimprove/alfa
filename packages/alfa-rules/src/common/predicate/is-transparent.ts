@@ -8,7 +8,7 @@ export function isTransparent(device: Device): Predicate<Node> {
     if (Element.isElement(node)) {
       const opacity = Style.from(node, device).computed("opacity").value;
 
-      if (opacity.value !== 1) {
+      if (opacity.value === 0) {
         return true;
       }
     }
