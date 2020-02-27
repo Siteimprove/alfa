@@ -131,7 +131,11 @@ function hasOrientationCondition(
   if (Media.isFeature(condition)) {
     if (
       condition.name === "orientation" &&
-      condition.value.some(equals("landscape", "portrait"))
+      condition.value.some(
+        value =>
+          value.type === "string" &&
+          (value.value === "landscape" || value.value === "portrait")
+      )
     ) {
       return true;
     }
@@ -140,7 +144,7 @@ function hasOrientationCondition(
   if (Media.isCondition(condition)) {
     return (
       hasOrientationCondition(condition.left) ||
-      hasOrientationCondition(condition.left)
+      hasOrientationCondition(condition.right)
     );
   }
 
@@ -152,12 +156,11 @@ function hasOrientationCondition(
 }
 
 function getRotation(element: Element, device: Device): Option<number> {
-  const rotation = element.parent().isNone()
+  const parent = element.parent({ flattened: true }).filter(Element.isElement);
+
+  const rotation = parent.isNone()
     ? Option.of(0)
-    : element
-        .parent()
-        .filter(Element.isElement)
-        .flatMap(parent => getRotation(parent, device));
+    : parent.flatMap(parent => getRotation(parent, device));
 
   return rotation.flatMap(rotation => {
     const transform = Style.from(element, device).computed("transform").value;
