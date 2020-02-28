@@ -180,11 +180,28 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public equals(value: unknown): value is this {
-    return (
-      value instanceof Cons &&
-      Equatable.equals(value._head, this._head) &&
-      value._tail.force().equals(this._tail.force())
-    );
+    if (!Cons.isCons<T>(value)) {
+      return false;
+    }
+
+    let a: Cons<T> = this;
+    let b: Cons<T> = value;
+
+    while (true) {
+      if (!Equatable.equals(a._head, b._head)) {
+        return false;
+      }
+
+      const ta = a._tail.force();
+      const tb = b._tail.force();
+
+      if (Cons.isCons<T>(ta) && Cons.isCons<T>(tb)) {
+        a = ta;
+        b = tb;
+      } else {
+        return ta === Nil && tb === Nil;
+      }
+    }
   }
 
   public *iterator(): Iterator<T> {
