@@ -71,12 +71,16 @@ export enum Origin {
  * @internal
  */
 export class SelectorMap {
-  private readonly _ids = SelectorMap.Bucket.empty();
-  private readonly _classes = SelectorMap.Bucket.empty();
-  private readonly _types = SelectorMap.Bucket.empty();
+  public static of(sheets: Iterable<Sheet>, device: Device): SelectorMap {
+    return new SelectorMap(sheets, device);
+  }
+
+  private readonly _ids = Bucket.empty();
+  private readonly _classes = Bucket.empty();
+  private readonly _types = Bucket.empty();
   private readonly _other: Array<SelectorMap.Node> = [];
 
-  public constructor(sheets: Iterable<Sheet>, device: Device) {
+  private constructor(sheets: Iterable<Sheet>, device: Device) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -128,7 +132,7 @@ export class SelectorMap {
   ): Array<SelectorMap.Node> {
     const nodes: Array<SelectorMap.Node> = [];
 
-    const collect = (candidates: Array<SelectorMap.Node>) => {
+    const collect = (candidates: Iterable<SelectorMap.Node>) => {
       for (const node of candidates) {
         if (
           filter !== undefined &&
@@ -148,10 +152,8 @@ export class SelectorMap {
       }
     };
 
-    const id = element.id;
-
-    if (id.isSome()) {
-      collect(this._ids.get(id.get()));
+    for (const id of element.id) {
+      collect(this._ids.get(id));
     }
 
     collect(this._types.get(element.name));
@@ -173,16 +175,14 @@ export class SelectorMap {
     order: number
   ): void {
     const keySelector = getKeySelector(selector);
-    const specificity = getSpecificity(selector);
 
-    const node: SelectorMap.Node = {
+    const node = SelectorMap.Node.of(
       rule,
       selector,
       declarations,
       origin,
-      order,
-      specificity
-    };
+      order
+    );
 
     for (const selector of keySelector) {
       if (selector instanceof Selector.Id) {
@@ -208,45 +208,94 @@ export class SelectorMap {
  * @internal
  */
 export namespace SelectorMap {
-  export interface Node {
-    readonly rule: Rule;
-    readonly selector: Selector;
-    readonly declarations: Iterable<Declaration>;
-    readonly origin: Origin;
-    readonly order: number;
-    readonly specificity: number;
+  export class Node {
+    public static of(
+      rule: Rule,
+      selector: Selector,
+      declarations: Iterable<Declaration>,
+      origin: Origin,
+      order: number
+    ): Node {
+      return new Node(rule, selector, declarations, origin, order);
+    }
+
+    private readonly _rule: Rule;
+    private readonly _selector: Selector;
+    private readonly _declarations: Iterable<Declaration>;
+    private readonly _origin: Origin;
+    private readonly _order: number;
+    private readonly _specificity: number;
+
+    private constructor(
+      rule: Rule,
+      selector: Selector,
+      declarations: Iterable<Declaration>,
+      origin: Origin,
+      order: number
+    ) {
+      this._rule = rule;
+      this._selector = selector;
+      this._declarations = declarations;
+      this._origin = origin;
+      this._order = order;
+      this._specificity = getSpecificity(selector);
+    }
+
+    public get rule(): Rule {
+      return this._rule;
+    }
+
+    public get selector(): Selector {
+      return this._selector;
+    }
+
+    public get declarations(): Iterable<Declaration> {
+      return this._declarations;
+    }
+
+    public get origin(): Origin {
+      return this._origin;
+    }
+
+    public get order(): number {
+      return this._order;
+    }
+
+    public get specificity(): number {
+      return this._specificity;
+    }
+  }
+}
+
+class Bucket {
+  public static empty(): Bucket {
+    return new Bucket(new Map());
   }
 
-  export class Bucket {
-    public static empty(): Bucket {
-      return new Bucket(new Map());
+  private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
+
+  private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
+    this._nodes = nodes;
+  }
+
+  public add(key: string, node: SelectorMap.Node): void {
+    const nodes = this._nodes.get(key);
+
+    if (nodes === undefined) {
+      this._nodes.set(key, [node]);
+    } else {
+      nodes.push(node);
+    }
+  }
+
+  public get(key: string): Array<SelectorMap.Node> {
+    const nodes = this._nodes.get(key);
+
+    if (nodes === undefined) {
+      return [];
     }
 
-    public readonly nodes: Map<string, Array<Node>>;
-
-    private constructor(nodes: Map<string, Array<Node>>) {
-      this.nodes = nodes;
-    }
-
-    public add(key: string, node: SelectorMap.Node): void {
-      const nodes = this.nodes.get(key);
-
-      if (nodes === undefined) {
-        this.nodes.set(key, [node]);
-      } else {
-        nodes.push(node);
-      }
-    }
-
-    public get(key: string): Array<SelectorMap.Node> {
-      const nodes = this.nodes.get(key);
-
-      if (nodes === undefined) {
-        return [];
-      }
-
-      return nodes;
-    }
+    return nodes;
   }
 }
 
