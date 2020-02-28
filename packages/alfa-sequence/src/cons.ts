@@ -51,18 +51,28 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public flatMap<U>(mapper: Mapper<T, Sequence<U>>): Sequence<U> {
-    const sequence = mapper(this._head);
+    let next: Cons<T> = this;
 
-    if (Cons.isCons<U>(sequence)) {
-      return new Cons(
-        sequence._head,
-        sequence._tail.flatMap(left =>
-          this._tail.map(right => left.concat(right.flatMap(mapper)))
-        )
-      );
+    while (true) {
+      const head = mapper(next._head);
+
+      if (Cons.isCons<U>(head)) {
+        return new Cons(
+          head._head,
+          head._tail.flatMap(left =>
+            this._tail.map(right => left.concat(right.flatMap(mapper)))
+          )
+        );
+      }
+
+      const tail = next._tail.force();
+
+      if (Cons.isCons<T>(tail)) {
+        next = tail;
+      } else {
+        return Nil;
+      }
     }
-
-    return this._tail.map(tail => tail.flatMap(mapper)).force();
   }
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
@@ -177,7 +187,7 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
-  public *[Symbol.iterator](): Iterator<T> {
+  public *iterator(): Iterator<T> {
     let next: Cons<T> = this;
 
     while (true) {
@@ -191,6 +201,10 @@ export class Cons<T> implements Sequence<T> {
         break;
       }
     }
+  }
+
+  public [Symbol.iterator](): Iterator<T> {
+    return this.iterator();
   }
 
   public toJSON(): Array<JSON> {
