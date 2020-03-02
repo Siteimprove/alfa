@@ -499,9 +499,11 @@ const consumeComments: Parser<Slice<number>, void> = input => {
         }
 
         if (input.get(0).includes(0x2a) && input.get(1).includes(0x2f)) {
-          input = input.slice(1);
+          input = input.slice(2);
           break;
         }
+
+        input = input.slice(1);
       }
     } else {
       break;
