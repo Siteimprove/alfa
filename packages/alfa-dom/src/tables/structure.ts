@@ -146,7 +146,7 @@ const isRow: Predicate<Node, Element> =
     ));
 
 // Bad global variables! Bad!
-export const global = {xCurrent:0, yCurrent:0, xWidth:0, yHeight:0, growingCellsList: [] as Array<Cell>,
+export const global = {xCurrent:0, yCurrent:0, growingCellsList: [] as Array<Cell>,
   theTable: { slots: [[]] as Array<Array<Slot>>, width: 0, height: 0, cells: [] as Array<Cell>, rowGroups: [] as Array<RowGroup>, colGroups: [] as Array<ColGroup> } as Table};
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
@@ -157,8 +157,8 @@ export function rowProcessing(tr: Element): void {
   let grow: boolean;
 
   // 1
-  if (global.yHeight === global.yCurrent) {
-    global.yHeight++
+  if (global.theTable.height === global.yCurrent) {
+    global.theTable.height++
   }
   // 2
   global.xCurrent = 0;
@@ -175,12 +175,12 @@ export function rowProcessing(tr: Element): void {
 
   while (true) {
     // 6 (Cells)
-    while (global.xCurrent < global.xWidth && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
+    while (global.xCurrent < global.theTable.width && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
       global.xCurrent++
     }
     // 7
-    if (global.xCurrent === global.xWidth) {
-      global.xWidth++
+    if (global.xCurrent === global.theTable.width) {
+      global.theTable.width++
     }
     // 8 (need non-null assertion because can't tell that 5 is always run at least once. Bad!)
     const colspan = parseSpan(currentCell!, "colspan", 1, 1000, 1);
@@ -194,12 +194,12 @@ export function rowProcessing(tr: Element): void {
       grow = false;
     }
     // 11
-    if (global.xWidth <= global.xCurrent + colspan) {
-      global.xWidth = global.xCurrent + colspan
+    if (global.theTable.width <= global.xCurrent + colspan) {
+      global.theTable.width = global.xCurrent + colspan
     }
     // 12
-    if (global.yHeight <= global.yCurrent + rowspan) {
-      global.yHeight = global.yCurrent + rowspan
+    if (global.theTable.height <= global.yCurrent + rowspan) {
+      global.theTable.height = global.yCurrent + rowspan
     }
     // 13
     const cell: Cell = {
@@ -242,7 +242,7 @@ export function rowProcessing(tr: Element): void {
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
 export function endRowGroup() {
   // 1
-  while (global.yCurrent < global.yHeight) {
+  while (global.yCurrent < global.theTable.height) {
     // 1.1
     growingCells(global.theTable.cells, global.yCurrent);
     // 1.2
@@ -255,14 +255,14 @@ export function endRowGroup() {
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
 export function processRowGroup(group: Element) {
   // 1
-  const yStart = global.yHeight;
+  const yStart = global.theTable.height;
   // 2
   for (const row of group.children().filter(isRow)) {
     rowProcessing(row);
   }
   // 3
-  if (global.yHeight > yStart) {
-    const rowGroup = { anchor: {y: yStart}, height: global.yHeight - yStart, element: group};
+  if (global.theTable.height > yStart) {
+    const rowGroup = { anchor: {y: yStart}, height: global.theTable.height - yStart, element: group};
     global.theTable.rowGroups.push(rowGroup);
   }
   // 4
@@ -288,14 +288,14 @@ export function processColGroup(colgroup: Element) { // 9
     // 1
     const span = parseSpan(colgroup, "span", 1, 1000, 1);
     // 2
-    global.xWidth += span;
+    global.theTable.width += span;
     // 3
-    const colGroup: ColGroup = { anchor: {x: global.xWidth - span}, width: span, element: colgroup}; // need better name!
+    const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: colgroup}; // need better name!
     global.theTable.colGroups.push(colGroup);
   } else {
     //first case
     //1
-    const xStart = global.xWidth;
+    const xStart = global.theTable.width;
     // 2
     let currentCol = children.first().get();
     children = children.rest();
@@ -303,9 +303,9 @@ export function processColGroup(colgroup: Element) { // 9
       // 3 (Columns)
       const span = parseSpan(currentCol, "span", 1, 1000, 1);
       // 4
-      global.xWidth += span;
+      global.theTable.width += span;
       // 5
-      const colGroup: ColGroup = { anchor: {x: global.xWidth - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
+      const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
       global.theTable.colGroups.push(colGroup);
       // 6
       if (children.isEmpty()) break;
@@ -314,16 +314,16 @@ export function processColGroup(colgroup: Element) { // 9
       // loop back to "3 (Columns)"
     }
     // 7
-    const colGroup: ColGroup = { anchor: {x:xStart}, width: global.xWidth-xStart, element: colgroup}; // need better name!
+    const colGroup: ColGroup = { anchor: {x:xStart}, width: global.theTable.width-xStart, element: colgroup}; // need better name!
     global.theTable.colGroups.push(colGroup)
   }
 }
 
 export function formingTable(table: Element) {
   // 1
-  global.xWidth = 0;
+  global.theTable.width = 0;
   // 2
-  global.yHeight = 0;
+  global.theTable.height = 0;
   // 3
   let pendingTfoot: Array<Element> = [];
   // 4
