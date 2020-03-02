@@ -12,9 +12,6 @@ import { Sequence } from "./sequence";
 
 const { not } = Predicate;
 
-/**
- * @internal
- */
 export class Cons<T> implements Sequence<T> {
   public static of<T>(
     head: T,

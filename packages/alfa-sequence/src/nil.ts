@@ -3,14 +3,8 @@ import { None } from "@siteimprove/alfa-option";
 
 import { Sequence } from "./sequence";
 
-/**
- * @internal
- */
 export interface Nil extends Sequence<never> {}
 
-/**
- * @internal
- */
 export const Nil: Nil = new (class Nil {
   public get size(): number {
     return 0;
