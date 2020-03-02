@@ -14,7 +14,6 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { filter } = Iterable;
 const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -22,8 +21,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
+        return document.descendants({ flattened: true, nested: true }).filter(
           and(
             Element.isElement,
             and(

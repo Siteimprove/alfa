@@ -17,17 +17,17 @@ import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
 
-const { filter, map, isEmpty } = Iterable;
-const { and, or, nor, not, equals, test } = Predicate;
+const { isEmpty } = Iterable;
+const { and, or, nor, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r49.html",
   evaluate({ document, device }) {
     return {
       applicability() {
-        return map(
-          filter(
-            document.descendants({ composed: true, nested: true }),
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(
             and(
               Element.isElement,
               and(
@@ -49,8 +49,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 )
               )
             )
-          ),
-          element =>
+          )
+          .map(element =>
             Question.of(
               "has-audio",
               "boolean",
@@ -68,7 +68,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   )
                 : None
             )
-        );
+          );
       },
 
       expectations(target) {

@@ -13,7 +13,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -21,35 +21,36 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML)),
+              Element.isElement,
               and(
-                hasRole(
-                  hasName(
-                    equals(
-                      "checkbox",
-                      "combobox",
-                      "listbox",
-                      "menuitemcheckbox",
-                      "menuitemradio",
-                      "radio",
-                      "searchbox",
-                      "slider",
-                      "spinbutton",
-                      "switch",
-                      "textbox"
+                hasNamespace(equals(Namespace.HTML)),
+                and(
+                  hasRole(
+                    hasName(
+                      equals(
+                        "checkbox",
+                        "combobox",
+                        "listbox",
+                        "menuitemcheckbox",
+                        "menuitemradio",
+                        "radio",
+                        "searchbox",
+                        "slider",
+                        "spinbutton",
+                        "switch",
+                        "textbox"
+                      )
                     )
-                  )
-                ),
-                not(isIgnored(device))
+                  ),
+                  not(isIgnored(device))
+                )
               )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {

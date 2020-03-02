@@ -1,6 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { clamp } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -13,7 +12,6 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 
-const { filter } = Iterable;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -21,22 +19,23 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants(),
-          and(
-            Element.isElement,
+        return document
+          .descendants()
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML)),
+              Element.isElement,
               and(
-                hasName(equals("meta")),
+                hasNamespace(equals(Namespace.HTML)),
                 and(
-                  hasAttribute("name", equals("viewport")),
-                  hasAttribute("content")
+                  hasName(equals("meta")),
+                  and(
+                    hasAttribute("name", equals("viewport")),
+                    hasAttribute("content")
+                  )
                 )
               )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {

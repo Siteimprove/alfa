@@ -11,7 +11,7 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -19,10 +19,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document }) {
     return {
       applicability() {
-        return filter(
-          document.children(),
-          and(Element.isElement, isDocumentElement())
-        );
+        return document
+          .children()
+          .filter(and(Element.isElement, isDocumentElement()));
       },
 
       expectations(target) {

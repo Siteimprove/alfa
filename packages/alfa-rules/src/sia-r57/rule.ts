@@ -12,7 +12,7 @@ import { expectation } from "../common/expectation";
 import { hasName } from "../common/predicate/has-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Text>({
@@ -20,13 +20,14 @@ export default Rule.Atomic.of<Page, Text>({
   evaluate({ document, device }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Text.isText,
-            and(property("data", not(isEmpty)), not(isIgnored(device)))
-          )
-        );
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
+            and(
+              Text.isText,
+              and(property("data", not(isEmpty)), not(isIgnored(device)))
+            )
+          );
       },
 
       expectations(target) {

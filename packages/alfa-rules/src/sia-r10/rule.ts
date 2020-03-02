@@ -1,7 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -18,17 +17,16 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { isTabbable } from "../common/predicate/is-tabbable";
 import { isVisible } from "../common/predicate/is-visible";
 
-const { filter, map } = Iterable;
-const { and, or, not, equals, test } = Predicate;
+const { and, or, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r10.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        return map(
-          filter(
-            document.descendants({ flattened: true, nested: true }),
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
               Element.isElement,
               and(
@@ -61,9 +59,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                 )
               )
             )
-          ),
-          element => element.attribute("autocomplete").get()
-        );
+          )
+          .map(element => element.attribute("autocomplete").get());
       },
 
       expectations(target) {

@@ -1,6 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
@@ -15,7 +14,6 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 
 import { Question } from "../common/question";
 
-const { filter, map } = Iterable;
 const { and, or, nor, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -23,9 +21,9 @@ export default Rule.Atomic.of<Page, Element, Question>({
   evaluate({ document }) {
     return {
       applicability() {
-        return map(
-          filter(
-            document.descendants({ composed: true, nested: true }),
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(
             and(
               Element.isElement,
               and(
@@ -47,8 +45,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 )
               )
             )
-          ),
-          element =>
+          )
+          .map(element =>
             Question.of(
               "has-audio",
               "boolean",
@@ -66,7 +64,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   )
                 : None
             )
-        );
+          );
       },
 
       expectations(target) {

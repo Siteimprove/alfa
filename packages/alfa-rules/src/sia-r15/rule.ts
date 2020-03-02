@@ -19,7 +19,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { filter, map, flatMap, reduce, groupBy, isEmpty } = Iterable;
+const { map, flatMap, isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -27,29 +27,29 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        const iframes = filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        const iframes = document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasName(equals("iframe")),
+              Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
+                hasName(equals("iframe")),
                 and(
-                  not(isIgnored(device)),
-                  hasAccessibleName(device, not(isEmpty))
+                  hasNamespace(equals(Namespace.HTML)),
+                  and(
+                    not(isIgnored(device)),
+                    hasAccessibleName(device, not(isEmpty))
+                  )
                 )
               )
             )
-          )
-        );
+          );
 
-        const roots = groupBy(iframes, iframe => iframe.root());
+        const roots = iframes.groupBy(iframe => iframe.root());
 
-        return flatMap(roots, ([root, iframes]) =>
-          reduce(
-            iframes,
-            (groups, iframe) => {
+        return flatMap(roots.values(), iframes =>
+          iframes
+            .reduce((groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
                 groups = groups.set(
                   node.name(),
@@ -61,9 +61,8 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
               }
 
               return groups;
-            },
-            Map.empty<Option<string>, List<Element>>()
-          ).values()
+            }, Map.empty<Option<string>, List<Element>>())
+            .values()
         );
       },
 

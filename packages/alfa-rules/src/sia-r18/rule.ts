@@ -1,9 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -15,7 +15,6 @@ import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, flatMap } = Iterable;
 const { and, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -27,16 +26,14 @@ export default Rule.Atomic.of<Page, Attribute>({
 
     return {
       applicability() {
-        return flatMap(
-          filter(
-            document.descendants({ flattened: true, nested: true }),
-            and(Element.isElement, not(isIgnored(device)))
-          ),
-          element =>
-            filter(element.attributes, attribute =>
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(and(Element.isElement, not(isIgnored(device))))
+          .flatMap(element =>
+            Sequence.from(element.attributes).filter(attribute =>
               aria.Attribute.lookup(attribute.name).isSome()
             )
-        );
+          );
       },
 
       expectations(target) {

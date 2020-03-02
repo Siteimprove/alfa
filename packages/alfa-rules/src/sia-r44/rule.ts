@@ -17,8 +17,8 @@ import { expectation } from "../common/expectation";
 import { isVisible } from "../common/predicate/is-visible";
 
 const { abs, acos, PI } = Math;
-const { filter, some } = Iterable;
-const { and, not, equals } = Predicate;
+const { some } = Iterable;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r44.html",
@@ -52,8 +52,7 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
+        return document.descendants({ flattened: true, nested: true }).filter(
           and(
             Element.isElement,
             and(
