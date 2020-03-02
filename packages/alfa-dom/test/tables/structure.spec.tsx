@@ -47,4 +47,5 @@ test("Process row group", t => {
 });
 
 test("Process table", t => {
+  initTable(6, 5);
 });

@@ -4,11 +4,11 @@ import {Cell, Element, Slot, Table} from "../../src";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import and = Predicate.and;
 
-export function makeSlot(x: number, y: number): Slot {
-  return {x: x, y:y, elements: [], cell: None};
+export function makeSlot(x: number, y: number, element: Element | null = null, cell: Cell | null = null): Slot {
+  return {x: x, y:y, elements: element === null ? [] : [element], cell: Option.from(cell)};
 }
 
-function makeCell(kind: "header" | "data", x: number, y: number, w: number, h: number): Cell {
+function makeCell(kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell {
   return {kind: kind, anchor: {x:x, y:y}, width: w, height: h}
 }
 
@@ -30,20 +30,10 @@ export namespace simpleRow {
   </tr>);
   export const expected: Table = {
     slots: [
-      [{
-        x: 0,
-        y: 0,
-        elements: [getById(element, "first")],
-        cell: Some.of(makeCell("header", 0, 0, 1, 1))
-      }],
-      [{
-        x: 1,
-        y: 0,
-        elements: [getById(element, "second")],
-        cell: Some.of(makeCell("data", 1, 0, 1, 1))
-      }]
+      [ makeSlot(0,0, getById(element, "first"), makeCell("header", 0, 0)) ],
+      [ makeSlot(1, 0, getById(element, "second"), makeCell("data", 1, 0)) ]
     ],
-    cells: [makeCell("header", 0, 0, 1, 1), makeCell("data", 1, 0, 1, 1)],
+    cells: [makeCell("header", 0, 0), makeCell("data", 1, 0)],
     width: 2, height: 1, rowGroups: [], colGroups: []
   };
 }
@@ -61,18 +51,18 @@ export namespace complexRow {
   </tr>);
   export const expected: Table = {
     slots: [
-      [{x: 0, y: 0, elements: [getById(element, "grade")], cell: Some.of(makeCell("header", 0, 0, 1, 2))},
-        {x: 0, y: 1, elements: [], cell: Some.of(makeCell("header", 0, 0, 1, 2))}],
-      [{x: 1, y: 0, elements: [getById(element, "yield")], cell: Some.of(makeCell("header", 1, 0, 1, 2))},
-        {x: 1, y: 1, elements: [], cell: Some.of(makeCell("header", 1, 0, 1, 2))}],
-      [{x: 2, y: 0, elements: [getById(element, "strength")], cell: Some.of(makeCell("header", 2, 0, 2, 1))},
+      [ makeSlot(0, 0, getById(element, "grade"), makeCell("header", 0, 0, 1, 2)),
+        makeSlot(0, 1, null, makeCell("header", 0, 0, 1, 2))],
+      [ makeSlot(1, 0, getById(element, "yield"), makeCell("header", 1, 0, 1, 2)),
+        makeSlot(1, 1, null, makeCell("header", 1, 0, 1, 2))],
+      [ makeSlot(2, 0, getById(element, "strength"), makeCell("header", 2, 0, 2, 1)),
         makeSlot(2, 1)],
-      [{x: 3, y: 0, elements: [], cell: Some.of(makeCell("header", 2, 0, 2, 1))},
+      [ makeSlot(3, 0, null, makeCell("header", 2, 0, 2, 1)),
         makeSlot(3, 1)],
-      [{x: 4, y: 0, elements: [getById(element, "elong")], cell: Some.of(makeCell("header", 4, 0, 1, 2))},
-        {x: 4, y: 1, elements: [], cell: Some.of(makeCell("header", 4, 0, 1, 2))}],
-      [{x: 5, y: 0, elements: [getById(element, "reduct")], cell: Some.of(makeCell("header", 5, 0, 1, 2))},
-        {x: 5, y: 1, elements: [], cell: Some.of(makeCell("header", 5, 0, 1, 2))}],
+      [ makeSlot(4,0, getById(element, "elong"), makeCell("header", 4, 0, 1, 2)),
+        makeSlot(4, 1, null, makeCell("header", 4, 0, 1, 2))],
+      [ makeSlot(5, 0, getById(element, "reduct"), makeCell("header", 5, 0, 1, 2)),
+        makeSlot(5, 1, null, makeCell("header", 5, 0, 1, 2))]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
       makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2)],
@@ -97,22 +87,22 @@ export namespace rowGroup {
   </thead>);
   export const expected: Table = {
     slots: [
-      [{x: 0, y: 0, elements: [getById(element, "grade")], cell: Some.of(makeCell("header", 0, 0, 1, 2))},
-        {x: 0, y: 1, elements: [], cell: Some.of(makeCell("header", 0, 0, 1, 2))}],
-      [{x: 1, y: 0, elements: [getById(element, "yield")], cell: Some.of(makeCell("header", 1, 0, 1, 2))},
-        {x: 1, y: 1, elements: [], cell: Some.of(makeCell("header", 1, 0, 1, 2))}],
-      [{x: 2, y: 0, elements: [getById(element, "strength")], cell: Some.of(makeCell("header", 2, 0, 2, 1))},
-        {x: 2, y: 1, elements: [getById(element, "kg-mm")], cell: Some.of(makeCell("header", 2, 1, 1, 1))}],
-      [{x: 3, y: 0, elements: [], cell: Some.of(makeCell("header", 2, 0, 2, 1))},
-        {x: 3, y: 1, elements: [getById(element, "lb-in")], cell: Some.of(makeCell("header", 3, 1, 1, 1))}],
-      [{x: 4, y: 0, elements: [getById(element, "elong")], cell: Some.of(makeCell("header", 4, 0, 1, 2))},
-        {x: 4, y: 1, elements: [], cell: Some.of(makeCell("header", 4, 0, 1, 2))}],
-      [{x: 5, y: 0, elements: [getById(element, "reduct")], cell: Some.of(makeCell("header", 5, 0, 1, 2))},
-        {x: 5, y: 1, elements: [], cell: Some.of(makeCell("header", 5, 0, 1, 2))}],
+      [ makeSlot(0, 0, getById(element, "grade"), makeCell("header", 0, 0, 1, 2)),
+        makeSlot(0, 1, null, makeCell("header", 0, 0, 1, 2))],
+      [ makeSlot(1, 0, getById(element, "yield"), makeCell("header", 1, 0, 1, 2)),
+        makeSlot(1, 1, null, makeCell("header", 1, 0, 1, 2))],
+      [ makeSlot(2, 0, getById(element, "strength"), makeCell("header", 2, 0, 2, 1)),
+        makeSlot(2, 1, getById(element, "kg-mm"), makeCell("header", 2, 1))],
+      [ makeSlot(3, 0, null, makeCell("header", 2, 0, 2, 1)),
+        makeSlot(3, 1, getById(element, "lb-in"), makeCell("header", 3, 1))],
+      [ makeSlot(4,0, getById(element, "elong"), makeCell("header", 4, 0, 1, 2)),
+        makeSlot(4, 1, null, makeCell("header", 4, 0, 1, 2))],
+      [ makeSlot(5, 0, getById(element, "reduct"), makeCell("header", 5, 0, 1, 2)),
+        makeSlot(5, 1, null, makeCell("header", 5, 0, 1, 2))]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
-      makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2), makeCell("header", 2, 1, 1, 1),
-      makeCell("header", 3, 1, 1, 1)],
+      makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2), makeCell("header", 2, 1),
+      makeCell("header", 3, 1)],
     width: 6, height: 2, rowGroups: [{anchor: {y: 0}, height: 2, element: element}], colGroups: []
   };
 }
@@ -166,7 +156,9 @@ export namespace smithonian {
   export const expected: Table = {
     slots: [
       [{x: 0, y: 0, elements: [getById(element, "grade")], cell: Some.of(makeCell("header", 0, 0, 1, 2))},
-        {x: 0, y: 1, elements: [], cell: Some.of(makeCell("header", 0, 0, 1, 2))}],
+        {x: 0, y: 1, elements: [], cell: Some.of(makeCell("header", 0, 0, 1, 2))},
+        {x:0, y:2, elements: [getById(element, "hard")], cell: Some.of(makeCell("data", 0, 2, 1 ,1))}
+      ],
       [{x: 1, y: 0, elements: [getById(element, "yield")], cell: Some.of(makeCell("header", 1, 0, 1, 2))},
         {x: 1, y: 1, elements: [], cell: Some.of(makeCell("header", 1, 0, 1, 2))}],
       [{x: 2, y: 0, elements: [getById(element, "strength")], cell: Some.of(makeCell("header", 2, 0, 2, 1))},
