@@ -60,7 +60,7 @@ export class Cons<T> implements Sequence<T> {
         return new Cons(
           head._head,
           head._tail.flatMap(left =>
-            this._tail.map(right => left.concat(right.flatMap(mapper)))
+            next._tail.map(right => left.concat(right.flatMap(mapper)))
           )
         );
       }
