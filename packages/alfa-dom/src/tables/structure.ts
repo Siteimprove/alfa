@@ -14,7 +14,7 @@ const { and, equals, property } = Predicate;
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 
 export type Slot = { x: number; y: number; elements: Array<Element>, cell: Option<Cell> };
-type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
+export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 export type Cell = {
@@ -155,23 +155,25 @@ export function rowProcessing(tr: Element): void {
   let children = tr.children().filter(isCell);
   let currentCell: Element;
   let grow: boolean;
+
+  // 1
+  if (global.yHeight === global.yCurrent) {
+    global.yHeight++
+  }
+  // 2
+  global.xCurrent = 0;
+  // 3
+  growingCells(global.growingCellsList, global.yCurrent);
+  // 4
+  if (children.isEmpty()) {
+    global.yCurrent++;
+    return;
+  }
+  // 5
+  currentCell = children.first().get();
+  children = children.rest();
+
   while (true) {
-    if (step !== "cells") {
-      // 1
-      if (global.yHeight === global.yCurrent) { global.yHeight++ }
-      // 2
-      global.xCurrent = 0;
-      // 3
-      growingCells(global.growingCellsList, global.yCurrent);
-      // 4
-      if (children.isEmpty()) {
-        global.yCurrent++;
-        return;
-      }
-      // 5
-      currentCell = children.first().get();
-      children = children.rest();
-    }
     // 6 (Cells)
     while (global.xCurrent < global.xWidth && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
       global.xCurrent++
@@ -181,9 +183,9 @@ export function rowProcessing(tr: Element): void {
       global.xWidth++
     }
     // 8 (need non-null assertion because can't tell that 5 is always run at least once. Bad!)
-    const colspan = parseSpan(currentCell!, "colspan",1, 1000, 1);
+    const colspan = parseSpan(currentCell!, "colspan", 1, 1000, 1);
     // 9 (need non-null assertion because can't tell that 5 is always run at least once. Bad!)
-    let rowspan = parseSpan(currentCell!, "rowspan",0, 65534, 1);
+    let rowspan = parseSpan(currentCell!, "rowspan", 0, 65534, 1);
     // 10 assuming we are not in quirks mode because I don't know if we test that yet…
     if (rowspan === 0) {
       grow = true;
@@ -192,7 +194,7 @@ export function rowProcessing(tr: Element): void {
       grow = false;
     }
     // 11
-    if (global.xWidth <= global.xCurrent + colspan ) {
+    if (global.xWidth <= global.xCurrent + colspan) {
       global.xWidth = global.xCurrent + colspan
     }
     // 12
@@ -202,12 +204,12 @@ export function rowProcessing(tr: Element): void {
     // 13
     const cell: Cell = {
       kind: hasName(equals("th"))(currentCell!) ? "header" : "data",
-      anchor : {x: global.xCurrent, y: global.yCurrent},
+      anchor: {x: global.xCurrent, y: global.yCurrent},
       width: colspan,
       height: rowspan
     };
-    for(let x=global.xCurrent; x<global.xCurrent+colspan; x++) {
-      for(let y=global.yCurrent; y<global.yCurrent+rowspan; y++) {
+    for (let x = global.xCurrent; x < global.xCurrent + colspan; x++) {
+      for (let y = global.yCurrent; y < global.yCurrent + rowspan; y++) {
         const slot = global.theTable.slots[x][y];
         if (slot.cell.isSome()) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
@@ -233,7 +235,7 @@ export function rowProcessing(tr: Element): void {
     currentCell = children.first().get();
     children = children.rest();
     // 18
-    step = "cells"
+    // loop back to "6 (Cells)"
   }
 }
 
@@ -265,4 +267,144 @@ export function processRowGroup(group: Element) {
   }
   // 4
   endRowGroup();
+}
+
+// https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
+export function endFormingTable(pendingTfoot: Iterable<Element>) {
+  // 19
+  for (const tfoot of pendingTfoot) {
+    processRowGroup(tfoot);
+  }
+  // 20
+  // skipping for now, need better row/col selectors
+  // 21
+  return;
+}
+
+export function processColGroup(colgroup: Element) { // 9
+  let children = colgroup.children().filter(and(Element.isElement, hasName(equals("col"))));
+  if (children.isEmpty()) {
+    // second case
+    // 1
+    const span = parseSpan(colgroup, "span", 1, 1000, 1);
+    // 2
+    global.xWidth += span;
+    // 3
+    const colGroup: ColGroup = { anchor: {x: global.xWidth - span}, width: span, element: colgroup}; // need better name!
+    global.theTable.colGroups.push(colGroup);
+  } else {
+    //first case
+    //1
+    const xStart = global.xWidth;
+    // 2
+    let currentCol = children.first().get();
+    children = children.rest();
+    while (true) {
+      // 3 (Columns)
+      const span = parseSpan(currentCol, "span", 1, 1000, 1);
+      // 4
+      global.xWidth += span;
+      // 5
+      const colGroup: ColGroup = { anchor: {x: global.xWidth - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
+      global.theTable.colGroups.push(colGroup);
+      // 6
+      if (children.isEmpty()) break;
+      currentCol = children.first().get();
+      children = children.rest();
+      // loop back to "3 (Columns)"
+    }
+    // 7
+    const colGroup: ColGroup = { anchor: {x:xStart}, width: global.xWidth-xStart, element: colgroup}; // need better name!
+    global.theTable.colGroups.push(colGroup)
+  }
+}
+
+export function formingTable(table: Element) {
+  // 1
+  global.xWidth = 0;
+  // 2
+  global.yHeight = 0;
+  // 3
+  let pendingTfoot: Array<Element> = [];
+  // 4
+  // the table is global.theTable
+  // 5
+  let children = table.children().filter(Element.isElement);
+  if (children.isEmpty()) return;
+  // 6
+  // skipping caption for now
+  // 7
+  let currentElement = children.first().get();
+  // 8
+  while (!hasName(equals("colgroup", "thead", "tbody", "tfoot", "tr"))(currentElement)) {
+    if (children.isEmpty()) return endFormingTable(pendingTfoot);
+    currentElement = children.first().get();
+    children = children.rest();
+  }
+  while (true) {
+    // 9
+    if (currentElement.name === "colgroup") {
+      // 9.1 (Columns group)
+      processColGroup(currentElement);
+    } else {
+      // 9.4
+      break;
+    }
+    // 9.2
+    if (children.isEmpty()) return endFormingTable(pendingTfoot);
+    currentElement = children.first().get();
+    children = children.rest();
+    // 9.3
+    while (!hasName(equals("colgroup", "thead", "tbody", "tfoot", "tr"))(currentElement)) {
+      if (children.isEmpty()) return endFormingTable(pendingTfoot);
+      currentElement = children.first().get();
+      children = children.rest();
+    }
+    // 9.4
+    // loop back to the 9.1/9.4 test
+  }
+  // 10
+  let yCurrent = 0;
+  // 11
+  global.growingCellsList = [];
+  while (true) {
+    // 12 (Rows)
+    while (!hasName(equals("thead", "tbody", "tfoot", "tr"))(currentElement)) {
+      if (children.isEmpty()) return endFormingTable(pendingTfoot);
+      currentElement = children.first().get();
+      children = children.rest();
+    }
+    // 13
+    if (currentElement.name === "tr") {
+      // run the row processing
+      rowProcessing(currentElement);
+      // advance
+      if (children.isEmpty()) return endFormingTable(pendingTfoot);
+      currentElement = children.first().get();
+      children = children.rest();
+      // loop back to "12 (Rows)"
+      continue;
+    }
+    // 14
+    endRowGroup();
+    // 15
+    if (currentElement.name === "tfoot") {
+      // add to list
+      pendingTfoot.push(currentElement);
+      // advance
+      if (children.isEmpty()) return endFormingTable(pendingTfoot);
+      currentElement = children.first().get();
+      children = children.rest();
+      // loop back to "12 (Rows)"
+      continue;
+    }
+    // 16
+    processRowGroup(currentElement);
+    // 17
+    if (children.isEmpty()) return endFormingTable(pendingTfoot);
+    currentElement = children.first().get();
+    children = children.rest();
+    // 18
+    // loop back to "12 (Rows)"
+  }
 }
