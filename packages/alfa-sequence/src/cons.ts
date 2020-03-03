@@ -294,6 +294,7 @@ export class Cons<T> implements Sequence<T> {
 
       if (Cons.isCons<T>(tail)) {
         result += `${separator}${tail._head}`;
+        next = tail;
       } else {
         return result;
       }
