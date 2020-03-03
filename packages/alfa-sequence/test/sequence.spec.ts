@@ -39,6 +39,20 @@ test("map() does not force the tail of a sequence", t => {
   ).map(n => n + 1);
 });
 
+test("flatMap() applies a function to each value of a sequence and flattens the result", t => {
+  const seq = Sequence.from([1, 2, 3, 4]).flatMap(n =>
+    n % 2 === 0 ? Sequence.from([n, n]) : Sequence.empty()
+  );
+
+  t.deepEqual([...seq], [2, 2, 4, 4]);
+});
+
+test("filter() filters the values of a sequence according to a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]).filter(n => n % 2 === 0);
+
+  t.deepEqual([...seq], [2, 4]);
+});
+
 test("equals() checks if two sequences are equal", t => {
   const a = Sequence.from([1, 2, 3, 4]);
   const b = Sequence.from([1, 2, 3, 4]);
