@@ -1,9 +1,9 @@
-import {None, Option} from "@siteimprove/alfa-option";
-import {Predicate} from "@siteimprove/alfa-predicate";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
-import {Namespace} from "../namespace";
-import {Node} from "../node";
-import {Element} from "./element";
+import { Namespace } from "../namespace";
+import { Node } from "../node";
+import { Element } from "./element";
 
 const { equals } = Predicate;
 
@@ -35,7 +35,8 @@ export class Attribute extends Node {
 
     this._namespace = namespace;
     this._prefix = prefix;
-    this._name = name;
+    // HTML attributes are case insensitive. Other, e.g. SVG, are case sensitive.
+    this._name = owner.some(element => element.namespace.some(equals(Namespace.HTML))) ? name.toLowerCase() : name;
     this._value = value;
     this._owner = owner;
   }
@@ -49,8 +50,7 @@ export class Attribute extends Node {
   }
 
   public get name(): string {
-    // HTML attributes are case insensitive. Other, e.g. SVG, are case sensitive.
-    return this._isHTML() ? this._name.toLowerCase() : this._name;
+        return this._name;
   }
 
   public get value(): string {
@@ -61,13 +61,9 @@ export class Attribute extends Node {
     return this._owner;
   }
 
-  private _isHTML(): boolean {
-    return this.owner.some(element => element.namespace.some(equals(Namespace.HTML)))
-  }
-
   public hasName(name: string): boolean {
     // HTML attributes are case insensitive. Other, e.g. SVG, are case sensitive.
-    return this._isHTML() ?
+    return this.owner.some(element => element.namespace.some(equals(Namespace.HTML))) ?
       this._name.toLowerCase() === name.toLowerCase() :
       this._name === name;
   }
@@ -76,7 +72,7 @@ export class Attribute extends Node {
    * @see https://html.spec.whatwg.org/#boolean-attribute
    */
   public isBoolean(): boolean {
-    switch (this.name) {
+    switch (this._name) {
       case "allowfullscreen":
       case "allowpaymentrequest":
       case "async":
@@ -96,7 +92,7 @@ export class Attribute extends Node {
     let path = this.owner.map(owner => owner.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
-    path += `@${this.name}`;
+    path += `@${this._name}`;
 
     return path;
   }
@@ -106,17 +102,17 @@ export class Attribute extends Node {
       type: "attribute",
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
-      name: this.name,
+      name: this._name,
       value: this._value
     };
   }
 
   public toString(): string {
     if (this.isBoolean()) {
-      return this.name;
+      return this._name;
     }
 
-    return `${this.name}="${this._value.replace(/"/g, "&quot;")}"`;
+    return `${this._name}="${this._value.replace(/"/g, "&quot;")}"`;
   }
 }
 
