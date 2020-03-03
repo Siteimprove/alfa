@@ -4,7 +4,8 @@ import {Predicate} from "@siteimprove/alfa-predicate";
 import { Namespace } from "../namespace";
 import { Node } from "../node";
 import { Element } from "./element";
-import equals = Predicate.equals;
+
+const { equals } = Predicate;
 
 export class Attribute extends Node {
   public static of(
