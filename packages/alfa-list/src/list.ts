@@ -9,6 +9,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Branch, Empty, Leaf, Node } from "./node";
@@ -34,7 +35,7 @@ export class List<T>
   private readonly _head: Empty<T> | Branch<T> | Leaf<T>;
   private readonly _tail: Empty<T> | Leaf<T>;
   private readonly _shift: number;
-  public readonly size: number;
+  private readonly _size: number;
 
   private constructor(
     head: Empty<T> | Branch<T> | Leaf<T>,
@@ -45,7 +46,11 @@ export class List<T>
     this._head = head;
     this._tail = tail;
     this._shift = shift;
-    this.size = size;
+    this._size = size;
+  }
+
+  public get size(): number {
+    return this._size;
   }
 
   public map<U>(mapper: Mapper<T, U>): List<U> {
@@ -57,7 +62,7 @@ export class List<T>
         : this._head.map(mapper),
       this._tail.map(mapper),
       this._shift,
-      this.size
+      this._size
     );
   }
 
@@ -119,11 +124,11 @@ export class List<T>
   }
 
   public get(index: number): Option<T> {
-    if (index < 0 || index >= this.size) {
+    if (index < 0 || index >= this._size) {
       return None;
     }
 
-    const offset = this.size - this._tail.size;
+    const offset = this._size - this._tail.size;
 
     let value: Option<T>;
 
@@ -137,11 +142,11 @@ export class List<T>
   }
 
   public set(index: number, value: T): List<T> {
-    if (index < 0 || index >= this.size) {
+    if (index < 0 || index >= this._size) {
       return this;
     }
 
-    const offset = this.size - this._tail.size;
+    const offset = this._size - this._tail.size;
 
     let head = this._head;
     let tail = this._tail;
@@ -152,7 +157,7 @@ export class List<T>
       tail = tail.set(index - offset, this._shift, value);
     }
 
-    return new List(head, tail, this._shift, this.size);
+    return new List(head, tail, this._shift, this._size);
   }
 
   public push(value: T): List<T> {
@@ -179,7 +184,7 @@ export class List<T>
         this._head,
         Leaf.of([...this._tail.values, value]),
         this._shift,
-        this.size + 1
+        this._size + 1
       );
     }
 
@@ -196,11 +201,11 @@ export class List<T>
         this._tail,
         Leaf.of([value]),
         this._shift + Node.Bits,
-        this.size + 1
+        this._size + 1
       );
     }
 
-    const index = this.size - Node.Capacity;
+    const index = this._size - Node.Capacity;
 
     let head = this._head;
     let shift = this._shift;
@@ -244,7 +249,7 @@ export class List<T>
     // In:  List { head, tail }
     // Out: List { head: Branch(...head, ...tail), tail: Leaf(value) }
     //
-    return new List(head, Leaf.of([value]), shift, this.size + 1);
+    return new List(head, Leaf.of([value]), shift, this._size + 1);
   }
 
   public pop(): List<T> {
@@ -260,7 +265,7 @@ export class List<T>
     // In:  List { head: Empty, tail: Leaf(value) }
     // Out: List { head: Empty, tail: Empty }
     //
-    if (this.size === 1) {
+    if (this._size === 1) {
       return List.empty();
     }
 
@@ -276,7 +281,7 @@ export class List<T>
         this._head,
         Leaf.of(this._tail.values.slice(0, this._tail.size - 1)),
         this._shift,
-        this.size - 1
+        this._size - 1
       );
     }
 
@@ -285,7 +290,7 @@ export class List<T>
         Empty.of(),
         this._head,
         this._shift - Node.Bits,
-        this.size - 1
+        this._size - 1
       );
     }
 
@@ -293,7 +298,7 @@ export class List<T>
     let tail = this._tail;
     let shift = this._shift;
 
-    const index = this.size - Node.Capacity - 1;
+    const index = this._size - Node.Capacity - 1;
 
     let prev = head as Branch<T>;
     let level = shift - Node.Bits;
@@ -333,13 +338,13 @@ export class List<T>
     // In:  List { head: Branch(...head, tail), tail: Leaf(value) }
     // Out: List { head, tail }
     //
-    return new List(head, tail, shift, this.size - 1);
+    return new List(head, tail, shift, this._size - 1);
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof List &&
-      value.size === this.size &&
+      value._size === this._size &&
       value._head.equals(this._head) &&
       value._tail.equals(this._tail)
     );

@@ -143,7 +143,7 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   public children(options: Node.Traversal = {}): Sequence<Node> {
-    let children: Sequence<Node>;
+    const children: Array<Node> = [];
 
     if (options.flattened === true) {
       if (this._shadow.isSome()) {
@@ -154,27 +154,26 @@ export class Element extends Node implements Slot, Slotable {
         return Sequence.from(this.assignedNodes());
       }
 
-      children = super
-        .children()
-        .flatMap(child =>
-          Slot.isSlot(child) ? child.children(options) : Sequence.of(child)
-        );
+      for (const child of this._children) {
+        if (Slot.isSlot(child)) {
+          children.push(...child.children(options));
+        } else {
+          children.push(child);
+        }
+      }
     } else {
       if (options.composed === true && this._shadow.isSome()) {
-        children = Sequence.of(
-          this._shadow.get(),
-          Lazy.force(super.children())
-        );
-      } else {
-        children = super.children();
+        children.push(this._shadow.get());
       }
+
+      children.push(...this._children);
     }
 
     if (options.nested === true && this._content.isSome()) {
-      children = children.concat(Sequence.of(this._content.get()));
+      children.push(this._content.get());
     }
 
-    return children;
+    return Sequence.from(children);
   }
 
   public attribute(
