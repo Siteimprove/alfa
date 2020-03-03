@@ -181,7 +181,7 @@ export class Element extends Node implements Slot, Slotable {
     return find(
       this._attributes,
       typeof predicate === "string"
-        ? attribute => attribute.matchName(predicate)
+        ? attribute => attribute.hasName(predicate)
         : predicate
     );
   }
