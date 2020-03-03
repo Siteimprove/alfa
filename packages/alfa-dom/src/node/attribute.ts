@@ -1,8 +1,10 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import {None, Option, Some} from "@siteimprove/alfa-option";
+import {Predicate} from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
 import { Element } from "./element";
+import equals = Predicate.equals;
 
 export class Attribute extends Node {
   public static of(
@@ -46,7 +48,15 @@ export class Attribute extends Node {
   }
 
   public get name(): string {
-    return this._name;
+    // HTML attributes are case insensitive. Other, e.g. SVG, are case sensitive.
+    return this._namespace.some(equals(Namespace.HTML)) ? this._name.toLowerCase() : this._name;
+  }
+
+  public matchName(name: string): boolean {
+    // HTML attributes are case insensitive. Other, e.g. SVG, are case sensitive.
+    return this._namespace.some(equals(Namespace.HTML)) ?
+      this._name.toLowerCase() === name.toLowerCase() :
+      this._name === name;
   }
 
   public get value(): string {

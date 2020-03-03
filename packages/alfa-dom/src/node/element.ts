@@ -13,6 +13,7 @@ import { Document } from "./document";
 import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
+import equals = Predicate.equals;
 
 const { map, filter, concat, join, find, isEmpty } = Iterable;
 const { and, not } = Predicate;
@@ -182,7 +183,7 @@ export class Element extends Node implements Slot, Slotable {
     return find(
       this._attributes,
       typeof predicate === "string"
-        ? element => element.name === predicate
+        ? attribute => attribute.matchName(predicate)
         : predicate
     );
   }
