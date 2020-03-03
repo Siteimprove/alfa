@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import {Slot, global, rowProcessing, processRowGroup} from "../../src";
-import {complexRow, makeSlot, rowGroup, simpleRow} from "./testcases";
+import {Slot, global, rowProcessing, processRowGroup, formingTable} from "../../src";
+import {complexRow, makeSlot, rowGroup, simpleRow, smithonian} from "./testcases";
 
 // JS array are row by row (first coord is row number). HTML table are col by col (x is col, y is row).
 // table is transposed so that table[x][y] is indeed cell at position (x,y).
@@ -48,4 +48,8 @@ test("Process row group", t => {
 
 test("Process table", t => {
   initTable(6, 5);
+
+  formingTable(smithonian.element);
+
+  t.deepEqual(global.theTable.slots, smithonian.expected.slots);
 });

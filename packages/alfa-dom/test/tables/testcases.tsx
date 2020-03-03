@@ -1,15 +1,15 @@
 import {None, Option, Some} from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Cell, Element, Slot, Table} from "../../src";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
+import {jsx} from "@siteimprove/alfa-dom/jsx";
 import and = Predicate.and;
 
 export function makeSlot(x: number, y: number, element: Element | null = null, cell: Cell | null = null): Slot {
-  return {x: x, y:y, elements: element === null ? [] : [element], cell: Option.from(cell)};
+  return {x: x, y: y, elements: element === null ? [] : [element], cell: Option.from(cell)};
 }
 
 function makeCell(kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell {
-  return {kind: kind, anchor: {x:x, y:y}, width: w, height: h}
+  return {kind: kind, anchor: {x: x, y: y}, width: w, height: h}
 }
 
 function hasID(id: string): Predicate<Element> {
@@ -20,7 +20,7 @@ function hasID(id: string): Predicate<Element> {
 }
 
 const dummy = Element.of(None, None, "dummy");
-const getById = (element: Element, id: string) => element.descendants().filter(and(Element.isElement, hasID(id))).first().getOr(dummy);
+const getDescendantById = (element: Element) => (id: string) => element.descendants().filter(and(Element.isElement, hasID(id))).first().getOr(dummy);
 
 // processing simple row
 export namespace simpleRow {
@@ -28,10 +28,12 @@ export namespace simpleRow {
     <th id="first">1</th>
     <td id="second">2</td>
   </tr>);
+  const getById = getDescendantById(element);
+
   export const expected: Table = {
     slots: [
-      [ makeSlot(0,0, getById(element, "first"), makeCell("header", 0, 0)) ],
-      [ makeSlot(1, 0, getById(element, "second"), makeCell("data", 1, 0)) ]
+      [makeSlot(0, 0, getById("first"), makeCell("header", 0, 0))],
+      [makeSlot(1, 0, getById("second"), makeCell("data", 1, 0))]
     ],
     cells: [makeCell("header", 0, 0), makeCell("data", 1, 0)],
     width: 2, height: 1, rowGroups: [], colGroups: []
@@ -49,19 +51,21 @@ export namespace complexRow {
     <th id="elong" rowspan={2}>Per cent elong. 50.8mm or 2 in.</th>
     <th id="reduct" rowspan={2}>Per cent reduct. area.</th>
   </tr>);
+  const getById = getDescendantById(element);
+
   export const expected: Table = {
     slots: [
-      [ makeSlot(0, 0, getById(element, "grade"), makeCell("header", 0, 0, 1, 2)),
+      [makeSlot(0, 0, getById("grade"), makeCell("header", 0, 0, 1, 2)),
         makeSlot(0, 1, null, makeCell("header", 0, 0, 1, 2))],
-      [ makeSlot(1, 0, getById(element, "yield"), makeCell("header", 1, 0, 1, 2)),
+      [makeSlot(1, 0, getById("yield"), makeCell("header", 1, 0, 1, 2)),
         makeSlot(1, 1, null, makeCell("header", 1, 0, 1, 2))],
-      [ makeSlot(2, 0, getById(element, "strength"), makeCell("header", 2, 0, 2, 1)),
+      [makeSlot(2, 0, getById("strength"), makeCell("header", 2, 0, 2, 1)),
         makeSlot(2, 1)],
-      [ makeSlot(3, 0, null, makeCell("header", 2, 0, 2, 1)),
+      [makeSlot(3, 0, null, makeCell("header", 2, 0, 2, 1)),
         makeSlot(3, 1)],
-      [ makeSlot(4,0, getById(element, "elong"), makeCell("header", 4, 0, 1, 2)),
+      [makeSlot(4, 0, getById("elong"), makeCell("header", 4, 0, 1, 2)),
         makeSlot(4, 1, null, makeCell("header", 4, 0, 1, 2))],
-      [ makeSlot(5, 0, getById(element, "reduct"), makeCell("header", 5, 0, 1, 2)),
+      [makeSlot(5, 0, getById("reduct"), makeCell("header", 5, 0, 1, 2)),
         makeSlot(5, 1, null, makeCell("header", 5, 0, 1, 2))]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
@@ -85,19 +89,21 @@ export namespace rowGroup {
     <th id="lb-in">lb/in<sup>2</sup></th>
   </tr>
   </thead>);
+  const getById = getDescendantById(element);
+
   export const expected: Table = {
     slots: [
-      [ makeSlot(0, 0, getById(element, "grade"), makeCell("header", 0, 0, 1, 2)),
+      [makeSlot(0, 0, getById("grade"), makeCell("header", 0, 0, 1, 2)),
         makeSlot(0, 1, null, makeCell("header", 0, 0, 1, 2))],
-      [ makeSlot(1, 0, getById(element, "yield"), makeCell("header", 1, 0, 1, 2)),
+      [makeSlot(1, 0, getById("yield"), makeCell("header", 1, 0, 1, 2)),
         makeSlot(1, 1, null, makeCell("header", 1, 0, 1, 2))],
-      [ makeSlot(2, 0, getById(element, "strength"), makeCell("header", 2, 0, 2, 1)),
-        makeSlot(2, 1, getById(element, "kg-mm"), makeCell("header", 2, 1))],
-      [ makeSlot(3, 0, null, makeCell("header", 2, 0, 2, 1)),
-        makeSlot(3, 1, getById(element, "lb-in"), makeCell("header", 3, 1))],
-      [ makeSlot(4,0, getById(element, "elong"), makeCell("header", 4, 0, 1, 2)),
+      [makeSlot(2, 0, getById("strength"), makeCell("header", 2, 0, 2, 1)),
+        makeSlot(2, 1, getById("kg-mm"), makeCell("header", 2, 1))],
+      [makeSlot(3, 0, null, makeCell("header", 2, 0, 2, 1)),
+        makeSlot(3, 1, getById("lb-in"), makeCell("header", 3, 1))],
+      [makeSlot(4, 0, getById("elong"), makeCell("header", 4, 0, 1, 2)),
         makeSlot(4, 1, null, makeCell("header", 4, 0, 1, 2))],
-      [ makeSlot(5, 0, getById(element, "reduct"), makeCell("header", 5, 0, 1, 2)),
+      [makeSlot(5, 0, getById("reduct"), makeCell("header", 5, 0, 1, 2)),
         makeSlot(5, 1, null, makeCell("header", 5, 0, 1, 2))]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
@@ -152,23 +158,46 @@ export namespace smithonian {
     </tr>
     </tbody>
   </table>);
+  const getById = getDescendantById(element);
 
   export const expected: Table = {
     slots: [
-      [{x: 0, y: 0, elements: [getById(element, "grade")], cell: Some.of(makeCell("header", 0, 0, 1, 2))},
-        {x: 0, y: 1, elements: [], cell: Some.of(makeCell("header", 0, 0, 1, 2))},
-        {x:0, y:2, elements: [getById(element, "hard")], cell: Some.of(makeCell("data", 0, 2, 1 ,1))}
+      [ makeSlot(0, 0, getById("grade"), makeCell("header", 0, 0, 1, 2)),
+        makeSlot(0, 1, null, makeCell("header", 0, 0, 1, 2)),
+        makeSlot(0, 2, getById("hard"), makeCell("data", 0, 2)),
+        makeSlot(0, 3, getById("medium"), makeCell("data", 0, 3)),
+        makeSlot(0, 4, getById("soft"), makeCell("data", 0, 4))
       ],
-      [{x: 1, y: 0, elements: [getById(element, "yield")], cell: Some.of(makeCell("header", 1, 0, 1, 2))},
-        {x: 1, y: 1, elements: [], cell: Some.of(makeCell("header", 1, 0, 1, 2))}],
-      [{x: 2, y: 0, elements: [getById(element, "strength")], cell: Some.of(makeCell("header", 2, 0, 2, 1))},
-        {x: 2, y: 1, elements: [getById(element, "kg-mm")], cell: Some.of(makeCell("header", 2, 1, 1, 1))}],
-      [{x: 3, y: 0, elements: [], cell: Some.of(makeCell("header", 2, 0, 2, 1))},
-        {x: 3, y: 1, elements: [getById(element, "lb-in")], cell: Some.of(makeCell("header", 3, 1, 1, 1))}],
-      [{x: 4, y: 0, elements: [getById(element, "elong")], cell: Some.of(makeCell("header", 4, 0, 1, 2))},
-        {x: 4, y: 1, elements: [], cell: Some.of(makeCell("header", 4, 0, 1, 2))}],
-      [{x: 5, y: 0, elements: [getById(element, "reduct")], cell: Some.of(makeCell("header", 5, 0, 1, 2))},
-        {x: 5, y: 1, elements: [], cell: Some.of(makeCell("header", 5, 0, 1, 2))}]
+      [ makeSlot(1, 0, getById("yield"), makeCell("header", 1, 0, 1, 2)),
+        makeSlot(1, 1, null, makeCell("header", 1, 0, 1, 2)),
+        makeSlot(1, 2, getById("hard-yield"), makeCell("data", 1, 2)),
+        makeSlot(1, 3, getById("medium-yield"), makeCell("data", 1, 3)),
+        makeSlot(1, 4, getById("soft-yield"), makeCell("data", 1, 4))
+      ],
+      [ makeSlot(2, 0, getById("strength"), makeCell("header", 2, 0, 2, 1)),
+        makeSlot(2, 1, getById("kg-mm"), makeCell("header", 2, 1)),
+        makeSlot(2, 2, getById("hard-kg"), makeCell("data", 2, 2)),
+        makeSlot(2, 3, getById("medium-kg"), makeCell("data", 2, 3)),
+        makeSlot(2, 4, getById("soft-kg"), makeCell("data", 2, 4))
+      ],
+      [ makeSlot(3, 0, null, makeCell("header", 2, 0, 2, 1)),
+        makeSlot(3, 1, getById("lb-in"), makeCell("header", 3, 1)),
+        makeSlot(3, 2, getById("hard-lb"), makeCell("data", 3, 2)),
+        makeSlot(3, 3, getById("medium-lb"), makeCell("data", 3, 3)),
+        makeSlot(3, 4, getById("soft-lb"), makeCell("data", 3, 4)),
+      ],
+      [ makeSlot(4, 0, getById("elong"), makeCell("header", 4, 0, 1, 2)),
+        makeSlot(4, 1, null, makeCell("header", 4, 0, 1, 2)),
+        makeSlot(4, 2, getById("hard-elong"), makeCell("data", 4, 2)),
+        makeSlot(4, 3, getById("medium-elong"), makeCell("data", 4, 3)),
+        makeSlot(4, 4, getById("soft-elong"), makeCell("data", 4, 4)),
+      ],
+      [ makeSlot(5, 0, getById("reduct"), makeCell("header", 5, 0, 1, 2)),
+        makeSlot(5, 1, null, makeCell("header", 5, 0, 1, 2)),
+        makeSlot(5, 2, getById("hard-reduct"), makeCell("data", 5, 2)),
+        makeSlot(5, 3, getById("medium-reduct"), makeCell("data", 5, 3)),
+        makeSlot(5, 4, getById("soft-reduct"), makeCell("data", 5, 4)),
+      ]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
       makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2), makeCell("header", 2, 1, 1, 1),
