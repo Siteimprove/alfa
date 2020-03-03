@@ -127,6 +127,125 @@ test("#filter() behaves when a singleton sequence does not satisfy a predicate",
   t.deepEqual([...seq], []);
 });
 
+test("#find() finds the first value of a sequence that satisfies a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.equal(seq.find(n => n % 2 === 0).get(), 2);
+});
+
+test("#find() returns none when no value of a sequence satisfies a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t(seq.find(n => n > 4).isNone());
+});
+
+test("#count() counts the number of values of a sequence that satisfy a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.equal(
+    seq.count(n => n % 2 === 0),
+    2
+  );
+});
+
+test("#get() returns the value at a given index of a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.equal(seq.get(0).get(), 1);
+  t.equal(seq.get(3).get(), 4);
+});
+
+test("#get() returns none when an index is out of bounds", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t(seq.get(5).isNone());
+  t(seq.get(-1).isNone());
+});
+
+test("#first() returns the first value of a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.equal(seq.first().get(), 1);
+});
+
+test("#first() returns none when a sequence is empty", t => {
+  const seq = Sequence.empty<number>();
+
+  t(seq.first().isNone());
+});
+
+test("#last() returns the last value of a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.equal(seq.last().get(), 4);
+});
+
+test("#last() returns none when a sequence is empty", t => {
+  const seq = Sequence.empty<number>();
+
+  t(seq.last().isNone());
+});
+
+test("#take() takes a given number of values from a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.take(2)], [1, 2]);
+});
+
+test("#takeWhile() takes values from a sequence while they satisfy a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.takeWhile(n => n < 4)], [1, 2, 3]);
+});
+
+test("#takeUntil() takes values from a sequence until they satisfy a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.takeUntil(n => n === 4)], [1, 2, 3]);
+});
+
+test("#skip() skips a number of values from a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.skip(2)], [3, 4]);
+});
+
+test("#skipWhile() skips values from a sequence while they satisfy a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.skipWhile(n => n < 4)], [4]);
+});
+
+test("#skipUntil() skips values from a sequence until they satisfy a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.skipUntil(n => n === 4)], [4]);
+});
+
+test("#rest() returns a sequence with all but the first value of a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.rest()], [2, 3, 4]);
+});
+
+test("#slice() returns a slice of a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]);
+
+  t.deepEqual([...seq.slice(1, 3)], [2, 3]);
+});
+
+test("#reverse() reverses the values of a sequence", t => {
+  const seq = Sequence.from([1, 2, 3, 4]).reverse();
+
+  t.deepEqual([...seq], [4, 3, 2, 1]);
+});
+
+test("#join() joins the values of a sequence to a string", t => {
+  const seq = Sequence.from(["foo", "bar", "baz"]);
+
+  t.equal(seq.join("-"), "foo-bar-baz");
+});
+
 test("#equals() checks if two sequences are equal", t => {
   const a = Sequence.from([1, 2, 3, 4]);
   const b = Sequence.from([1, 2, 3, 4]);
@@ -142,18 +261,6 @@ test("#equals() does not overflow for long sequences", t => {
   const b = Sequence.from(zeroes(100000));
 
   t(a.equals(b));
-});
-
-test("#reverse() reverses the values of a sequence", t => {
-  const seq = Sequence.from([1, 2, 3, 4]).reverse();
-
-  t.deepEqual([...seq], [4, 3, 2, 1]);
-});
-
-test("#join() joins the values of a sequence to a string", t => {
-  const seq = Sequence.from(["foo", "bar", "baz"]);
-
-  t.equal(seq.join("-"), "foo-bar-baz");
 });
 
 test("#toArray() constructs an array representation of a sequence", t => {

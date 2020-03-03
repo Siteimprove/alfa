@@ -1,10 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/slice.ts"],
+  "files": ["src/index.ts", "src/slice.ts", "test/slice.spec.ts"],
   "references": [
     {
-      "path": "../alfa-iterable"
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-json"
