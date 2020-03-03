@@ -12,7 +12,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, map, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -20,9 +20,9 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return map(
-          filter(
-            document.descendants({ flattened: true, nested: true }),
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
               Element.isElement,
               and(
@@ -30,9 +30,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                 and(hasAttribute("role", not(isEmpty)), not(isIgnored(device)))
               )
             )
-          ),
-          element => element.attribute("role").get()
-        );
+          )
+          .map(element => element.attribute("role").get());
       },
 
       expectations(target) {

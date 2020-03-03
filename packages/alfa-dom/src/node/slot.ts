@@ -14,6 +14,10 @@ export interface Slot extends Element {
 }
 
 export namespace Slot {
+  export function isSlot(element: Element): boolean;
+
+  export function isSlot(value: unknown): value is Slot;
+
   export function isSlot(value: unknown): value is Slot {
     return Element.isElement(value) && value.name === "slot";
   }

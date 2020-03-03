@@ -30,7 +30,7 @@ export namespace Predicate {
     ifTrue: Mapper<U, V>,
     ifFalse: Mapper<T, W>
   ): V | W {
-    return is<T, U>(value, predicate(value)) ? ifTrue(value) : ifFalse(value);
+    return predicate(value) ? ifTrue(value) : ifFalse(value);
   }
 
   export function not<T, U extends T>(
@@ -138,10 +138,6 @@ export namespace Predicate {
       or(isBigInt, or(isBoolean, or(isNull, or(isUndefined, isSymbol))))
     )
   );
-}
-
-function is<T, U extends T>(value: T, ok: boolean): value is U {
-  return ok;
 }
 
 function tautology(): true {

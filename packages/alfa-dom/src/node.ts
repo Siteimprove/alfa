@@ -1,15 +1,17 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
 const { equals } = Predicate;
 
 export abstract class Node
-  implements Iterable<Node>, json.Serializable, earl.Serializable {
+  implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
   protected readonly _children: Array<Node>;
   protected readonly _parent: Option<Node>;
 
@@ -162,6 +164,10 @@ export abstract class Node
 
   public *[Symbol.iterator](): Iterator<Node> {
     yield* this.descendants();
+  }
+
+  public equals(value: unknown): value is this {
+    return value === this;
   }
 
   public abstract toJSON(): Node.JSON;

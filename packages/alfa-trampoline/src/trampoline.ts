@@ -1,5 +1,6 @@
-import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Functor } from "@siteimprove/alfa-functor";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -8,19 +9,20 @@ import { Thunk } from "@siteimprove/alfa-thunk";
  * @see http://blog.higher-order.com/assets/trampolines.pdf
  */
 export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
-  /**
-   * @internal
-   */
-  public abstract step(): Either<Trampoline<T>, T>;
+  protected abstract step(): Trampoline<T>;
 
   public run(): T {
-    let result = this.step();
+    let step: Trampoline<T> = this;
 
-    while (result.isLeft()) {
-      result = result.get().step();
+    while (true) {
+      const next = step.step();
+
+      if (step !== next) {
+        step = next;
+      } else {
+        return next.run();
+      }
     }
-
-    return result.get() as T;
   }
 
   public isDone(): boolean {
@@ -28,7 +30,7 @@ export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
   }
 
   public isSuspended(): boolean {
-    return this instanceof Suspend || this instanceof Suspend.Bind;
+    return this instanceof Suspend || this instanceof Bind;
   }
 
   public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
@@ -54,6 +56,26 @@ export namespace Trampoline {
   export function delay<T>(thunk: Thunk<T>): Trampoline<T> {
     return suspend(() => done(thunk()));
   }
+
+  export function traverse<T, U>(
+    values: Iterable<T>,
+    mapper: Mapper<T, Trampoline<U>>
+  ): Trampoline<Iterable<U>> {
+    return Iterable.reduce(
+      values,
+      (values, value) =>
+        mapper(value).flatMap(value =>
+          values.map(values => values.push(value))
+        ),
+      done(List.empty())
+    );
+  }
+
+  export function sequence<T>(
+    futures: Iterable<Trampoline<T>>
+  ): Trampoline<Iterable<T>> {
+    return traverse(futures, value => value);
+  }
 }
 
 class Done<T> extends Trampoline<T> {
@@ -68,12 +90,16 @@ class Done<T> extends Trampoline<T> {
     this._value = value;
   }
 
-  public step(): Right<T> {
-    return Right.of(this._value);
+  protected step(): Trampoline<T> {
+    return this;
   }
 
   public run(): T {
     return this._value;
+  }
+
+  public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
+    return new Done(mapper(this._value));
   }
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
@@ -93,46 +119,42 @@ class Suspend<T> extends Trampoline<T> {
     this._thunk = thunk;
   }
 
-  public step(): Left<Trampoline<T>> {
-    return Left.of(this._thunk());
+  protected step(): Trampoline<T> {
+    return this._thunk();
   }
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
-    return Suspend.Bind.of(this._thunk, mapper);
+    return Bind.of(this._thunk, mapper);
   }
 }
 
-namespace Suspend {
-  export class Bind<S, T> extends Trampoline<T> {
-    public static of<S, T>(
-      thunk: Thunk<Trampoline<S>>,
-      mapper: Mapper<S, Trampoline<T>>
-    ): Bind<S, T> {
-      return new Bind(thunk, mapper);
-    }
+class Bind<S, T> extends Trampoline<T> {
+  public static of<S, T>(
+    thunk: Thunk<Trampoline<S>>,
+    mapper: Mapper<S, Trampoline<T>>
+  ): Bind<S, T> {
+    return new Bind(thunk, mapper);
+  }
 
-    private readonly _thunk: Thunk<Trampoline<S>>;
-    private readonly _mapper: Mapper<S, Trampoline<T>>;
+  private readonly _thunk: Thunk<Trampoline<S>>;
+  private readonly _mapper: Mapper<S, Trampoline<T>>;
 
-    private constructor(
-      thunk: Thunk<Trampoline<S>>,
-      mapper: Mapper<S, Trampoline<T>>
-    ) {
-      super();
-      this._thunk = thunk;
-      this._mapper = mapper;
-    }
+  private constructor(
+    thunk: Thunk<Trampoline<S>>,
+    mapper: Mapper<S, Trampoline<T>>
+  ) {
+    super();
+    this._thunk = thunk;
+    this._mapper = mapper;
+  }
 
-    public step(): Either<Trampoline<T>, T> {
-      return this._thunk()
-        .flatMap(this._mapper)
-        .step();
-    }
+  protected step(): Trampoline<T> {
+    return this._thunk().flatMap(this._mapper);
+  }
 
-    public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
-      return Suspend.of(() =>
-        Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
-      );
-    }
+  public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
+    return Suspend.of(() =>
+      Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
+    );
   }
 }

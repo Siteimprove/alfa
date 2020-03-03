@@ -11,35 +11,31 @@ import { UserAgent } from "./user-agent";
 
 /**
  * @see https://drafts.csswg.org/css-cascade/
- * @internal
  */
 export class Cascade {
   public static of(entries: WeakMap<Element, RuleTree.Node>): Cascade {
     return new Cascade(entries);
   }
 
-  private readonly entries: WeakMap<Element, RuleTree.Node>;
+  private readonly _entries: WeakMap<Element, RuleTree.Node>;
 
   private constructor(entries: WeakMap<Element, RuleTree.Node>) {
-    this.entries = entries;
+    this._entries = entries;
   }
 
   public get(element: Element): Option<RuleTree.Node> {
-    return Option.from(this.entries.get(element));
+    return Option.from(this._entries.get(element));
   }
 }
 
-/**
- * @internal
- */
 export namespace Cascade {
   const cache = Cache.empty<Device, Cache<Document | Shadow, Cascade>>();
 
   export function from(node: Document | Shadow, device: Device): Cascade {
     return cache.get(device, Cache.empty).get(node, () => {
-      const filter = new AncestorFilter();
-      const ruleTree = new RuleTree();
-      const selectorMap = new SelectorMap([UserAgent, ...node.style], device);
+      const filter = AncestorFilter.empty();
+      const ruleTree = RuleTree.empty();
+      const selectorMap = SelectorMap.of([UserAgent, ...node.style], device);
 
       return Cascade.of(
         Iterable.reduce(

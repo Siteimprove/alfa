@@ -47,6 +47,9 @@
       "path": "../alfa-earl"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {

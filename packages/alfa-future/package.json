@@ -24,7 +24,6 @@
   "dependencies": {
     "@siteimprove/alfa-callback": "^0.0.0",
     "@siteimprove/alfa-continuation": "^0.0.0",
-    "@siteimprove/alfa-either": "^0.0.0",
     "@siteimprove/alfa-functor": "^0.0.0",
     "@siteimprove/alfa-iterable": "^0.0.0",
     "@siteimprove/alfa-list": "^0.0.0",

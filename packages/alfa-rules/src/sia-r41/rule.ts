@@ -20,7 +20,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { filter, map, flatMap, reduce, groupBy, isEmpty } = Iterable;
+const { map, flatMap, isEmpty } = Iterable;
 const { and, or, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
@@ -28,33 +28,33 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        const elements = filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        const elements = document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              Element.isElement,
               and(
-                hasRole(
-                  or(hasName(equals("link")), role =>
-                    role.inheritsFrom(hasName(equals("link")))
-                  )
-                ),
+                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
                 and(
-                  not(isIgnored(device)),
-                  hasAccessibleName(device, not(isEmpty))
+                  hasRole(
+                    or(hasName(equals("link")), role =>
+                      role.inheritsFrom(hasName(equals("link")))
+                    )
+                  ),
+                  and(
+                    not(isIgnored(device)),
+                    hasAccessibleName(device, not(isEmpty))
+                  )
                 )
               )
             )
-          )
-        );
+          );
 
-        const roots = groupBy(elements, element => element.root());
+        const roots = elements.groupBy(element => element.root());
 
-        return flatMap(roots, ([root, elements]) =>
-          reduce(
-            elements,
-            (groups, element) => {
+        return flatMap(roots.values(), elements =>
+          elements
+            .reduce((groups, element) => {
               for (const [node] of Node.from(element, device)) {
                 groups = groups.set(
                   node.name(),
@@ -66,9 +66,8 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
               }
 
               return groups;
-            },
-            Map.empty<Option<string>, List<Element>>()
-          ).values()
+            }, Map.empty<Option<string>, List<Element>>())
+            .values()
         );
       },
 

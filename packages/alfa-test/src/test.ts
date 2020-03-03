@@ -1,4 +1,7 @@
+/// <reference types="node" />
+
 import * as assert from "assert";
+
 import { format } from "./format";
 import { Assertions } from "./types";
 
@@ -43,12 +46,6 @@ export async function test(
   } catch (err) {
     const error = err as Error;
 
-    let message = `${error.stack}`;
-
-    if (error instanceof assert.AssertionError) {
-      message = format(name, error);
-    }
-
-    notifier.error(`${message}\n`);
+    notifier.error(`${format(name, error)}\n`);
   }
 }

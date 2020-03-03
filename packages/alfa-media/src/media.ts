@@ -1,13 +1,24 @@
-import { Length, Lexer, Percentage, Token } from "@siteimprove/alfa-css";
+import {
+  Angle,
+  Length,
+  Lexer,
+  Number,
+  Percentage,
+  String,
+  Token
+} from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-const { some, isEmpty } = Iterable;
+import * as json from "@siteimprove/alfa-json";
+
 const {
   map,
   either,
@@ -16,8 +27,10 @@ const {
   left,
   right,
   delimited,
-  zeroOrMore
+  zeroOrMore,
+  separatedList
 } = Parser;
+const { equals } = Predicate;
 
 export namespace Media {
   /**
@@ -48,23 +61,59 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-type
    */
-  export class Type {
+  export class Type implements Equatable, Serializable {
     public static of(name: string): Type {
       return new Type(name);
     }
 
-    public readonly name: string;
+    private readonly _name: string;
 
     private constructor(name: string) {
-      this.name = name;
+      this._name = name;
+    }
+
+    public get name(): string {
+      return this._name;
     }
 
     public matches(device: Device): boolean {
-      return false;
+      switch (this._name) {
+        case "screen":
+          return device.type === Device.Type.Screen;
+
+        case "print":
+          return device.type === Device.Type.Print;
+
+        case "speech":
+          return device.type === Device.Type.Speech;
+
+        case "all":
+          return true;
+
+        default:
+          return false;
+      }
+    }
+
+    public equals(value: unknown): value is this {
+      return value instanceof Type && value._name === this._name;
+    }
+
+    public toJSON(): Type.JSON {
+      return {
+        name: this._name
+      };
     }
 
     public toString(): string {
-      return this.name;
+      return this._name;
+    }
+  }
+
+  export namespace Type {
+    export interface JSON {
+      [key: string]: json.JSON;
+      name: string;
     }
   }
 
@@ -76,51 +125,117 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
    */
-  export class Feature {
+  export class Feature implements Equatable, Serializable {
     public static of(
       name: string,
-      value: Option<Feature.Value> = None,
-      comparator: Option<Comparator> = None
+      value: Option<Feature.Value> = None
     ): Feature {
-      return new Feature(name, value, comparator);
+      return new Feature(name, value);
     }
-    public readonly name: string;
-    public readonly value: Option<Feature.Value>;
-    public readonly comparator: Option<Comparator>;
 
-    private constructor(
-      name: string,
-      value: Option<Feature.Value>,
-      comparator: Option<Comparator>
-    ) {
-      this.name = name;
-      this.value = value;
-      this.comparator = comparator;
+    private readonly _name: string;
+    private readonly _value: Option<Feature.Value>;
+
+    private constructor(name: string, value: Option<Feature.Value>) {
+      this._name = name;
+      this._value = value;
+    }
+
+    public get name(): string {
+      return this._name;
+    }
+
+    public get value(): Option<Feature.Value> {
+      return this._value;
     }
 
     public matches(device: Device): boolean {
+      switch (this._name) {
+        case "orientation":
+          return this._value.some(
+            value =>
+              value.type === "string" &&
+              value.value === device.viewport.orientation
+          );
+      }
+
       return false;
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof Feature &&
+        value._name === this._name &&
+        value._value.equals(this._value)
+      );
+    }
+
+    public toJSON(): Feature.JSON {
+      return {
+        type: "feature",
+        name: this._name,
+        value: this._value.map(value => value.toJSON()).getOr(null)
+      };
+    }
+
+    public toString(): string {
+      return `${this._name}${this._value.map(value => `: ${value}`).getOr("")}`;
     }
   }
 
   export namespace Feature {
-    export type Value = number | string | Percentage | Length;
+    export interface JSON {
+      [key: string]: json.JSON;
+      type: "feature";
+      name: string;
+      value: Value.JSON | null;
+    }
+
+    export type Value = Number | String | Length | Angle | Percentage;
+
+    export namespace Value {
+      export type JSON =
+        | Number.JSON
+        | String.JSON
+        | Length.JSON
+        | Angle.JSON
+        | Percentage.JSON;
+    }
   }
 
-  export const isFeature: Predicate<unknown, Feature> = value =>
-    value instanceof Feature;
+  export function isFeature(value: unknown): value is Feature {
+    return value instanceof Feature;
+  }
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-name
    */
-  const parseFeatureName = map(Token.parseIdent(), ident => ident.value);
+  const parseFeatureName = map(Token.parseIdent(), ident =>
+    ident.value.toLowerCase()
+  );
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-value
    */
-  const parseFeatureValue = map(
-    either(Token.parseNumber(), Token.parseString()),
-    number => number.value
+  const parseFeatureValue = either(
+    map(Token.parseNumber(), number => Number.of(number.value)),
+    either(
+      map(Token.parseIdent(), ident => String.of(ident.value.toLowerCase())),
+      map(
+        pair(
+          Token.parseNumber(number => number.isInteger),
+          right(
+            delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+            Token.parseNumber(number => number.isInteger)
+          )
+        ),
+        result => {
+          const [left, right] = result;
+
+          return Percentage.of(left.value / right.value);
+        }
+      )
+    )
   );
 
   /**
@@ -161,7 +276,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-condition
    */
-  export class Condition {
+  export class Condition implements Equatable, Serializable {
     public static of(
       combinator: Combinator,
       left: Feature | Condition | Negation,
@@ -170,42 +285,127 @@ export namespace Media {
       return new Condition(combinator, left, right);
     }
 
-    public readonly combinator: Combinator;
-    public readonly left: Feature | Condition | Negation;
-    public readonly right: Feature | Condition | Negation;
+    private readonly _combinator: Combinator;
+    private readonly _left: Feature | Condition | Negation;
+    private readonly _right: Feature | Condition | Negation;
 
     private constructor(
       operator: Combinator,
       left: Feature | Condition | Negation,
       right: Feature | Condition | Negation
     ) {
-      this.combinator = operator;
-      this.left = left;
-      this.right = right;
+      this._combinator = operator;
+      this._left = left;
+      this._right = right;
+    }
+
+    public get combinator(): Combinator {
+      return this._combinator;
+    }
+
+    public get left(): Feature | Condition | Negation {
+      return this._left;
+    }
+
+    public get right(): Feature | Condition | Negation {
+      return this._right;
     }
 
     public matches(device: Device): boolean {
-      return false;
+      switch (this._combinator) {
+        case Combinator.And:
+          return this._left.matches(device) && this._right.matches(device);
+
+        case Combinator.Or:
+          return this._left.matches(device) || this._right.matches(device);
+      }
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof Condition &&
+        value._combinator === this._combinator &&
+        value._left.equals(this._left) &&
+        value._right.equals(this._right)
+      );
+    }
+
+    public toJSON(): Condition.JSON {
+      return {
+        type: "condition",
+        combinator: this._combinator,
+        left: this._left.toJSON(),
+        right: this._right.toJSON()
+      };
+    }
+
+    public toString(): string {
+      return `(${this._left}) ${this._combinator} (${this._right})`;
     }
   }
 
-  export const isCondition: Predicate<unknown, Condition> = value =>
-    value instanceof Condition;
+  export namespace Condition {
+    export interface JSON {
+      [key: string]: json.JSON;
+      type: "condition";
+      combinator: string;
+      left: Feature.JSON | Condition.JSON | Negation.JSON;
+      right: Feature.JSON | Condition.JSON | Negation.JSON;
+    }
+  }
 
-  export class Negation {
+  export function isCondition(value: unknown): value is Condition {
+    return value instanceof Condition;
+  }
+
+  export class Negation implements Equatable, Serializable {
     public static of(condition: Feature | Condition | Negation): Negation {
       return new Negation(condition);
     }
 
-    public readonly condition: Feature | Condition | Negation;
+    private readonly _condition: Feature | Condition | Negation;
 
     private constructor(condition: Feature | Condition | Negation) {
-      this.condition = condition;
+      this._condition = condition;
+    }
+
+    public get condition(): Feature | Condition | Negation {
+      return this._condition;
+    }
+
+    public matches(device: Device): boolean {
+      return !this._condition.matches(device);
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof Negation && value._condition.equals(this._condition)
+      );
+    }
+
+    public toJSON(): Negation.JSON {
+      return {
+        type: "negation",
+        condition: this._condition.toJSON()
+      };
+    }
+
+    public toString(): string {
+      return `not (${this._condition})`;
     }
   }
 
-  export const isNegation: Predicate<unknown, Negation> = value =>
-    value instanceof Negation;
+  export namespace Negation {
+    export interface JSON {
+      [key: string]: json.JSON;
+      type: "negation";
+      condition: Feature.JSON | Condition.JSON | Negation.JSON;
+    }
+  }
+
+  export function isNegation(value: unknown): value is Negation {
+    return value instanceof Negation;
+  }
 
   // Hoist the condition parser to break the recursive initialisation between
   // its different subparsers.
@@ -288,7 +488,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query
    */
-  export class Query {
+  export class Query implements Equatable, Serializable {
     public static of(
       modifier: Option<Modifier>,
       type: Option<Type>,
@@ -297,22 +497,84 @@ export namespace Media {
       return new Query(modifier, type, condition);
     }
 
-    public readonly modifier: Option<Modifier>;
-    public readonly type: Option<Type>;
-    public readonly condition: Option<Feature | Condition | Negation>;
+    private readonly _modifier: Option<Modifier>;
+    private readonly _type: Option<Type>;
+    private readonly _condition: Option<Feature | Condition | Negation>;
 
     private constructor(
       modifier: Option<Modifier>,
       type: Option<Type>,
       condition: Option<Feature | Condition | Negation>
     ) {
-      this.modifier = modifier;
-      this.type = type;
-      this.condition = condition;
+      this._modifier = modifier;
+      this._type = type;
+      this._condition = condition;
+    }
+
+    public get modifier(): Option<Modifier> {
+      return this._modifier;
+    }
+
+    public get type(): Option<Type> {
+      return this._type;
+    }
+
+    public get condition(): Option<Feature | Condition | Negation> {
+      return this._condition;
     }
 
     public matches(device: Device): boolean {
-      return false;
+      const negated = this._modifier.some(equals(Modifier.Not));
+
+      return (
+        !this._type.some(type => !type.matches(device) || negated) &&
+        !this._condition.some(
+          condition => !condition.matches(device) || negated
+        ) &&
+        !negated
+      );
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof Query &&
+        value._modifier.equals(this._modifier) &&
+        value._type.equals(this._type) &&
+        value._condition.equals(this._condition)
+      );
+    }
+
+    public toJSON(): Query.JSON {
+      return {
+        modifier: this._modifier.getOr(null),
+        type: this._type.map(type => type.toJSON()).getOr(null),
+        condition: this._condition
+          .map(condition => condition.toJSON())
+          .getOr(null)
+      };
+    }
+
+    public toString(): string {
+      const modifier = this._modifier.getOr("");
+
+      const type = this._type
+        .map(type => (modifier === "" ? `${type}` : `${modifier} ${type}`))
+        .getOr("");
+
+      return this._condition
+        .map(condition =>
+          type === "" ? `${condition}` : `${type} and ${condition}`
+        )
+        .getOr(type);
+    }
+  }
+
+  export namespace Query {
+    export interface JSON {
+      [key: string]: json.JSON;
+      modifier: string | null;
+      type: Type.JSON | null;
+      condition: Feature.JSON | Condition.JSON | Negation.JSON | null;
     }
   }
 
@@ -343,30 +605,60 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-query-list
    */
-  export class List implements Iterable<Query> {
+  export class List implements Iterable<Query>, Equatable, Serializable {
     public static of(queries: Iterable<Query>): List {
       return new List(queries);
     }
 
-    public readonly queries: Iterable<Query>;
+    private readonly _queries: Array<Query>;
 
     private constructor(queries: Iterable<Query>) {
-      this.queries = Array.from(queries);
+      this._queries = Array.from(queries);
+    }
+
+    public get queries(): Iterable<Query> {
+      return this._queries;
     }
 
     public matches(device: Device): boolean {
       return (
-        isEmpty(this.queries) ||
-        some(this.queries, query => query.matches(device))
+        this._queries.length === 0 ||
+        this._queries.some(query => query.matches(device))
+      );
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof List &&
+        value._queries.length === this._queries.length &&
+        value._queries.every((query, i) => query.equals(this._queries[i]))
       );
     }
 
     public *[Symbol.iterator](): Iterator<Query> {
-      yield* this.queries;
+      yield* this._queries;
+    }
+
+    public toJSON(): List.JSON {
+      return this._queries.map(query => query.toJSON());
+    }
+
+    public toString(): string {
+      return this._queries.join(", ");
     }
   }
 
-  const parseList = map(zeroOrMore(parseQuery), queries => List.of(queries));
+  export namespace List {
+    export type JSON = Array<Query.JSON>;
+  }
+
+  const parseList = map(
+    separatedList(
+      parseQuery,
+      delimited(option(Token.parseWhitespace), Token.parseComma)
+    ),
+    queries => List.of(queries)
+  );
 
   export function parse(input: string) {
     return parseList(Slice.of([...Lexer.lex(input)]))

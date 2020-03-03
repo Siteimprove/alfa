@@ -2,7 +2,6 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -20,7 +19,6 @@ import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 
-const { filter, map, join } = Iterable;
 const { and, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -28,33 +26,34 @@ export default Rule.Atomic.of<Page, Element, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              Element.isElement,
               and(
-                hasRole(
-                  and(
-                    hasCategory(equals(Role.Category.Widget)),
-                    hasNameFrom(equals("content"))
-                  )
-                ),
+                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
                 and(
-                  hasDescendant(
+                  hasRole(
                     and(
-                      Text.isText,
-                      and(isVisible(device), not(isIgnored(device)))
-                    ),
-                    { flattened: true }
+                      hasCategory(equals(Role.Category.Widget)),
+                      hasNameFrom(equals("content"))
+                    )
                   ),
-                  hasAccessibleName(device)
+                  and(
+                    hasDescendant(
+                      and(
+                        Text.isText,
+                        and(isVisible(device), not(isIgnored(device)))
+                      ),
+                      { flattened: true }
+                    ),
+                    hasAccessibleName(device)
+                  )
                 )
               )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
@@ -99,16 +98,11 @@ function normalize(input: string): string {
 
 function getVisibleTextContent(element: Element, device: Device): string {
   return normalize(
-    join(
-      map(
-        filter(
-          element.descendants({ flattened: true }),
-          and(Text.isText, isVisible(device))
-        ),
-        text => text.data
-      ),
-      ""
-    )
+    element
+      .descendants({ flattened: true })
+      .filter(and(Text.isText, isVisible(device)))
+      .map(text => text.data)
+      .join("")
   );
 }
 

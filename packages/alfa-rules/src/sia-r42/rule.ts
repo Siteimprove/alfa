@@ -13,7 +13,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter } = Iterable;
+const { some } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -21,16 +21,17 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-              and(not(isIgnored(device)), hasRole(hasContext()))
+              Element.isElement,
+              and(
+                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+                and(not(isIgnored(device)), hasRole(hasContext()))
+              )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
@@ -61,7 +62,7 @@ function hasContext(
 ): Predicate<Role> {
   return function hasContext(role) {
     return (
-      Iterable.some(role.characteristics.context, predicate) ||
+      some(role.characteristics.context, predicate) ||
       role.inheritsFrom(hasContext)
     );
   };

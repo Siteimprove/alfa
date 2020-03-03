@@ -13,8 +13,8 @@ export namespace Parser {
     mapper: Mapper<T, U>
   ): Parser<I, U, E> {
     return input =>
-      parser(input).flatMap(([remainder, value]) =>
-        Ok.of([remainder, mapper(value)] as const)
+      parser(input).map(
+        ([remainder, value]) => [remainder, mapper(value)] as const
       );
   }
 

@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
-const { filter, some } = Iterable;
+const { some } = Iterable;
 const { and, nor, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -19,10 +19,11 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(Element.isElement, hasAttribute("aria-hidden", equals("true")))
-        );
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
+            and(Element.isElement, hasAttribute("aria-hidden", equals("true")))
+          );
       },
 
       expectations(target) {

@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 import { hasId } from "../common/predicate/has-id";
 import { hasUniqueId } from "../common/predicate/has-unique-id";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -18,10 +18,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ composed: true, nested: true }),
-          and(Element.isElement, hasId(not(isEmpty)))
-        );
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(and(Element.isElement, hasId(not(isEmpty))));
       },
 
       expectations(target) {

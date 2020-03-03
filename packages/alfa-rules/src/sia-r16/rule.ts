@@ -11,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 
-const { filter, find, isEmpty } = Iterable;
+const { find, isEmpty } = Iterable;
 const { and, equals, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -19,13 +19,17 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ composed: true, nested: true }),
-          and(
-            Element.isElement,
-            and(hasNamespace(equals(Namespace.HTML, Namespace.SVG)), hasRole())
-          )
-        );
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(
+            and(
+              Element.isElement,
+              and(
+                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+                hasRole()
+              )
+            )
+          );
       },
 
       expectations(target) {

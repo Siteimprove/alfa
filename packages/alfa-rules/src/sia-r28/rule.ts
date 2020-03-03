@@ -12,7 +12,7 @@ import { hasInputType } from "../common/predicate/has-input-type";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -20,16 +20,17 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML)),
-              and(hasInputType(equals("image")), not(isIgnored(device)))
+              Element.isElement,
+              and(
+                hasNamespace(equals(Namespace.HTML)),
+                and(hasInputType(equals("image")), not(isIgnored(device)))
+              )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {

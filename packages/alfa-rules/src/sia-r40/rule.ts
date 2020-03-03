@@ -12,7 +12,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -20,13 +20,14 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
-            and(hasRole(hasName(equals("region"))), not(isIgnored(device)))
-          )
-        );
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
+            and(
+              Element.isElement,
+              and(hasRole(hasName(equals("region"))), not(isIgnored(device)))
+            )
+          );
       },
 
       expectations(target) {

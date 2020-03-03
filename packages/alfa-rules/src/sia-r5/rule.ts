@@ -12,7 +12,7 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
-const { filter, map, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -20,9 +20,9 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ document }) {
     return {
       applicability() {
-        return map(
-          filter(
-            document.children(),
+        return document
+          .children()
+          .filter(
             and(
               Element.isElement,
               and(
@@ -30,9 +30,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                 hasAttribute("lang", nor(isEmpty, isWhitespace))
               )
             )
-          ),
-          element => element.attribute("lang").get()
-        );
+          )
+          .map(element => element.attribute("lang").get());
       },
 
       expectations(target) {

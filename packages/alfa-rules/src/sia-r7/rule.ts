@@ -13,7 +13,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
-const { filter, first, map, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, nor, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -21,28 +21,25 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ document }) {
     return {
       applicability() {
-        return first(
-          filter(
-            document.descendants(),
+        return document
+          .descendants()
+          .filter(
             and(
               Element.isElement,
               and(hasNamespace(equals(Namespace.HTML)), hasName(equals("body")))
             )
           )
-        )
-          .map(body =>
-            map(
-              filter(
-                body.descendants(),
+          .flatMap(body =>
+            body
+              .descendants()
+              .filter(
                 and(
                   Element.isElement,
                   hasAttribute("lang", nor(isEmpty, isWhitespace))
                 )
-              ),
-              element => element.attribute("lang").get()
-            )
-          )
-          .getOr([]);
+              )
+              .map(element => element.attribute("lang").get())
+          );
       },
 
       expectations(target) {

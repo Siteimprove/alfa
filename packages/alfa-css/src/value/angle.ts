@@ -1,39 +1,31 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-
-import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
 import { Converter, Convertible } from "./converter";
 import { Unit } from "./unit";
+import { Numeric } from "./numeric";
 
 const { map } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#angles
  */
-export class Angle<U extends Unit.Angle = Unit.Angle>
-  implements Convertible<Unit.Angle>, Equatable, Hashable, Serializable {
+export class Angle<U extends Unit.Angle = Unit.Angle> extends Numeric
+  implements Convertible<Unit.Angle> {
   public static of<U extends Unit.Angle>(value: number, unit: U): Angle<U> {
     return new Angle(value, unit);
   }
 
-  private readonly _value: number;
   private readonly _unit: U;
 
   private constructor(value: number, unit: U) {
-    this._value = value;
+    super(value);
     this._unit = unit;
   }
 
   public get type(): "angle" {
     return "angle";
-  }
-
-  public get value(): number {
-    return this._value;
   }
 
   public get unit(): U {
@@ -55,13 +47,13 @@ export class Angle<U extends Unit.Angle = Unit.Angle>
   public equals(value: unknown): value is this {
     return (
       value instanceof Angle &&
-      value._value === this._value &&
+      super.equals(value) &&
       value._unit === this._unit
     );
   }
 
   public hash(hash: Hash): void {
-    Hash.writeFloat64(hash, this._value);
+    super.hash(hash);
     Hash.writeString(hash, this._unit);
   }
 
@@ -79,10 +71,8 @@ export class Angle<U extends Unit.Angle = Unit.Angle>
 }
 
 export namespace Angle {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Numeric.JSON {
     type: "angle";
-    value: number;
     unit: string;
   }
 

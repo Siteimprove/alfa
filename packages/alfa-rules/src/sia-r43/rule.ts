@@ -13,7 +13,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -21,24 +21,25 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document, device }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.SVG)),
+              Element.isElement,
               and(
-                hasRole(
-                  hasName(
-                    equals("img", "graphics-document", "graphics-symbol")
+                hasNamespace(equals(Namespace.SVG)),
+                and(
+                  hasRole(
+                    hasName(
+                      equals("img", "graphics-document", "graphics-symbol")
+                    ),
+                    { implicit: false }
                   ),
-                  { implicit: false }
-                ),
-                not(isIgnored(device))
+                  not(isIgnored(device))
+                )
               )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {

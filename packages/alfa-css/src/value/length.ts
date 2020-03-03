@@ -1,43 +1,32 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
 
 import { Converter, Convertible } from "./converter";
 import { Unit } from "./unit";
+import { Numeric } from "./numeric";
 
 const { map } = Parser;
 
 /**
  * @see https://drafts.csswg.org/css-values/#lengths
  */
-export class Length<U extends Unit.Length = Unit.Length>
-  implements
-    Convertible<Unit.Length.Absolute>,
-    Equatable,
-    Hashable,
-    Serializable {
+export class Length<U extends Unit.Length = Unit.Length> extends Numeric
+  implements Convertible<Unit.Length.Absolute> {
   public static of<U extends Unit.Length>(value: number, unit: U): Length<U> {
     return new Length(value, unit);
   }
 
-  private readonly _value: number;
   private readonly _unit: U;
 
   private constructor(value: number, unit: U) {
-    this._value = value;
+    super(value);
     this._unit = unit;
   }
 
   public get type(): "length" {
     return "length";
-  }
-
-  public get value(): number {
-    return this._value;
   }
 
   public get unit(): U {
@@ -63,13 +52,13 @@ export class Length<U extends Unit.Length = Unit.Length>
   public equals(value: unknown): value is this {
     return (
       value instanceof Length &&
-      value._value === this._value &&
+      super.equals(value) &&
       value._unit === this._unit
     );
   }
 
   public hash(hash: Hash): void {
-    Hash.writeFloat64(hash, this._value);
+    super.hash(hash);
     Hash.writeString(hash, this._unit);
   }
 
@@ -87,10 +76,8 @@ export class Length<U extends Unit.Length = Unit.Length>
 }
 
 export namespace Length {
-  export interface JSON {
-    [key: string]: json.JSON;
+  export interface JSON extends Numeric.JSON {
     type: "length";
-    value: number;
     unit: string;
   }
 

@@ -14,17 +14,20 @@ test("map() applies a function to each value of a sequence", t => {
 test("map() does not overflow for long chains", t => {
   let seq = Sequence.from([0]);
 
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 100000; i++) {
     seq = seq.map(n => n + 1);
   }
 
-  t.deepEqual([...seq], [10000]);
+  t.deepEqual([...seq], [100000]);
 });
 
 test("map() does not overflow for long sequences", t => {
-  const seq = Sequence.from(zeroes(10000)).map(n => n + 1);
+  const seq = Sequence.from(zeroes(100000)).map(n => n + 1);
 
-  t.deepEqual([...seq], zeroes(10000).map(n => n + 1));
+  t.deepEqual(
+    [...seq],
+    zeroes(100000).map(n => n + 1)
+  );
 });
 
 test("map() does not force the tail of a sequence", t => {
@@ -34,4 +37,34 @@ test("map() does not force the tail of a sequence", t => {
       throw new Error("The tail was forced");
     })
   ).map(n => n + 1);
+});
+
+test("flatMap() applies a function to each value of a sequence and flattens the result", t => {
+  const seq = Sequence.from([1, 2, 3, 4]).flatMap(n =>
+    n % 2 === 0 ? Sequence.from([n, n]) : Sequence.empty()
+  );
+
+  t.deepEqual([...seq], [2, 2, 4, 4]);
+});
+
+test("filter() filters the values of a sequence according to a predicate", t => {
+  const seq = Sequence.from([1, 2, 3, 4]).filter(n => n % 2 === 0);
+
+  t.deepEqual([...seq], [2, 4]);
+});
+
+test("equals() checks if two sequences are equal", t => {
+  const a = Sequence.from([1, 2, 3, 4]);
+  const b = Sequence.from([1, 2, 3, 4]);
+  const c = Sequence.from([2, 3, 4, 5]);
+
+  t(a.equals(b));
+  t(!a.equals(c));
+});
+
+test("equals() does not overflow for long sequences", t => {
+  const a = Sequence.from(zeroes(100000));
+  const b = Sequence.from(zeroes(100000));
+
+  t(a.equals(b));
 });

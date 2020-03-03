@@ -12,9 +12,13 @@ const { and, or, not, equals } = Predicate;
 
 export namespace Lexer {
   export function* lex(input: string): Iterable<Token> {
-    let characters = Slice.of([
-      ...map(input.trim(), char => char.charCodeAt(0))
-    ]);
+    const points = new Array(input.length);
+
+    for (let i = 0, n = input.length; i < n; i++) {
+      points[i] = input.charCodeAt(i);
+    }
+
+    let characters = Slice.of(points);
 
     while (true) {
       const result = consumeToken(characters);
@@ -495,9 +499,11 @@ const consumeComments: Parser<Slice<number>, void> = input => {
         }
 
         if (input.get(0).includes(0x2a) && input.get(1).includes(0x2f)) {
-          input = input.slice(1);
+          input = input.slice(2);
           break;
         }
+
+        input = input.slice(1);
       }
     } else {
       break;
@@ -507,6 +513,8 @@ const consumeComments: Parser<Slice<number>, void> = input => {
   return Ok.of([input, undefined] as const);
 };
 
+const delims = new Map<string, Token.Delim>();
+
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-token
  */
@@ -515,9 +523,13 @@ const consumeToken: Parser<Slice<number>, Token, string> = input => {
     input = remainder;
   }
 
-  const code = input.get(0);
+  if (input.length === 0) {
+    return Err.of("Unexpected end of input");
+  }
 
-  if (code.some(isWhitespace)) {
+  const code = input.get(0).get();
+
+  if (isWhitespace(code)) {
     input = input.slice(1);
 
     while (input.get(0).some(isWhitespace)) {
@@ -527,140 +539,120 @@ const consumeToken: Parser<Slice<number>, Token, string> = input => {
     return Ok.of([input, Token.Whitespace.of()] as const);
   }
 
-  if (code.includes(0x22)) {
-    return consumeString(input);
+  switch (code) {
+    case 0x22:
+      return consumeString(input);
+
+    case 0x23:
+      input = input.slice(1);
+
+      if (input.get(0).some(isName) || startsValidEscape(input)) {
+        const isIdentifier = startsIdentifier(input);
+
+        const [remainder, name] = consumeName(input).get();
+        input = remainder;
+
+        return Ok.of([input, Token.Hash.of(name, isIdentifier)] as const);
+      }
+
+    case 0x27:
+      return consumeString(input);
+
+    case 0x28:
+      return Ok.of([input.slice(1), Token.OpenParenthesis.of()] as const);
+
+    case 0x29:
+      return Ok.of([input.slice(1), Token.CloseParenthesis.of()] as const);
+
+    case 0x2b:
+      if (startsNumber(input)) {
+        return consumeNumeric(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x2c:
+      return Ok.of([input.slice(1), Token.Comma.of()] as const);
+
+    case 0x2d:
+      if (startsNumber(input)) {
+        return consumeNumeric(input);
+      }
+
+      if (input.get(1).includes(0x2d) && input.get(2).includes(0x3e)) {
+        return Ok.of([input.slice(3), Token.CloseComment.of()] as const);
+      }
+
+      if (startsIdentifier(input)) {
+        return consumeIdentifierLike(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x2e:
+      if (startsNumber(input)) {
+        return consumeNumeric(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x3a:
+      return Ok.of([input.slice(1), Token.Colon.of()] as const);
+
+    case 0x3b:
+      return Ok.of([input.slice(1), Token.Semicolon.of()] as const);
+
+    case 0x3c:
+      if (
+        input.get(1).includes(0x21) &&
+        input.get(2).includes(0x2d) &&
+        input.get(3).includes(0x2d)
+      ) {
+        return Ok.of([input.slice(4), Token.OpenComment.of()] as const);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x40:
+      input = input.slice(1);
+
+      if (startsIdentifier(input)) {
+        const [remainder, name] = consumeName(input).get();
+
+        return Ok.of([remainder, Token.AtKeyword.of(name)] as const);
+      }
+
+      return Ok.of([input, Token.Delim.of(code)] as const);
+
+    case 0x5b:
+      return Ok.of([input.slice(1), Token.OpenSquareBracket.of()] as const);
+
+    case 0x5c:
+      if (startsValidEscape(input)) {
+        return consumeIdentifierLike(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x5d:
+      return Ok.of([input.slice(1), Token.CloseSquareBracket.of()] as const);
+
+    case 0x7b:
+      return Ok.of([input.slice(1), Token.OpenCurlyBracket.of()] as const);
+
+    case 0x7d:
+      return Ok.of([input.slice(1), Token.CloseCurlyBracket.of()] as const);
   }
 
-  if (code.includes(0x23)) {
-    input = input.slice(1);
-
-    if (input.get(0).some(isName) || startsValidEscape(input)) {
-      const isIdentifier = startsIdentifier(input);
-
-      const [remainder, name] = consumeName(input).get();
-      input = remainder;
-
-      return Ok.of([input, Token.Hash.of(name, isIdentifier)] as const);
-    }
-  }
-
-  if (code.includes(0x27)) {
-    return consumeString(input);
-  }
-
-  if (code.includes(0x28)) {
-    return Ok.of([input.slice(1), Token.OpenParenthesis.of()] as const);
-  }
-
-  if (code.includes(0x29)) {
-    return Ok.of([input.slice(1), Token.CloseParenthesis.of()] as const);
-  }
-
-  if (code.includes(0x2b)) {
-    if (startsNumber(input)) {
-      return consumeNumeric(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x2c)) {
-    return Ok.of([input.slice(1), Token.Comma.of()] as const);
-  }
-
-  if (code.includes(0x2d)) {
-    if (startsNumber(input)) {
-      return consumeNumeric(input);
-    }
-
-    if (input.get(1).includes(0x2d) && input.get(2).includes(0x3e)) {
-      return Ok.of([input.slice(3), Token.CloseComment.of()] as const);
-    }
-
-    if (startsIdentifier(input)) {
-      return consumeIdentifierLike(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x2e)) {
-    if (startsNumber(input)) {
-      return consumeNumeric(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x3a)) {
-    return Ok.of([input.slice(1), Token.Colon.of()] as const);
-  }
-
-  if (code.includes(0x3b)) {
-    return Ok.of([input.slice(1), Token.Semicolon.of()] as const);
-  }
-
-  if (code.includes(0x3c)) {
-    if (
-      input.get(1).includes(0x21) &&
-      input.get(2).includes(0x2d) &&
-      input.get(3).includes(0x2d)
-    ) {
-      return Ok.of([input.slice(4), Token.OpenComment.of()] as const);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x40)) {
-    input = input.slice(1);
-
-    if (startsIdentifier(input)) {
-      const [remainder, name] = consumeName(input).get();
-
-      return Ok.of([remainder, Token.AtKeyword.of(name)] as const);
-    }
-
-    return Ok.of([input, Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x5b)) {
-    return Ok.of([input.slice(1), Token.OpenSquareBracket.of()] as const);
-  }
-
-  if (code.includes(0x5c)) {
-    if (startsValidEscape(input)) {
-      return consumeIdentifierLike(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x5d)) {
-    return Ok.of([input.slice(1), Token.CloseSquareBracket.of()] as const);
-  }
-
-  if (code.includes(0x7b)) {
-    return Ok.of([input.slice(1), Token.OpenCurlyBracket.of()] as const);
-  }
-
-  if (code.includes(0x7d)) {
-    return Ok.of([input.slice(1), Token.CloseCurlyBracket.of()] as const);
-  }
-
-  if (code.some(isDigit)) {
+  if (isDigit(code)) {
     return consumeNumeric(input);
   }
 
-  if (code.some(isNameStart)) {
+  if (isNameStart(code)) {
     return consumeIdentifierLike(input);
   }
 
-  if (code.isNone()) {
-    return Err.of("Unexpected end of input");
-  }
-
-  return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
+  return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
 };
 
 /**
