@@ -13,7 +13,9 @@ const { and, equals, property } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 
-export type Slot = { x: number; y: number; elements: Array<Element>, cell: Option<Cell> };
+export type Slot<CELL = Cell> = { x: number; y: number; elements: Array<Element>, cell: Option<CELL> };
+
+// number in Slot is pointer to cells array.
 export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -42,7 +44,7 @@ export type ColGroup = {
   element: Element;
 }
 
-export const isCoveredBy: Predicate<Slot, Slot, Array<Cell | RowGroup | ColGroup>> = (slot, cover) => {
+export function isCoveredBy<CELL>(slot: Slot<CELL>, cover: Cell | RowGroup | ColGroup): boolean {
   if ("width" in cover) { // Cell or Col
     if (slot.x < cover.anchor.x) { // slot is left of cover
       return false;
