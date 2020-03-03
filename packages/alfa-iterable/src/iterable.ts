@@ -143,7 +143,7 @@ export namespace Iterable {
   }
 
   export function get<T>(iterable: Iterable<T>, index: number): Option<T> {
-    return first(skip(iterable, index));
+    return index < 0 ? None : first(skip(iterable, index));
   }
 
   export function first<T>(iterable: Iterable<T>): Option<T> {
