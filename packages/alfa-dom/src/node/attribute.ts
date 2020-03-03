@@ -50,7 +50,7 @@ export class Attribute extends Node {
   }
 
   public get name(): string {
-        return this._name;
+    return this._name;
   }
 
   public get value(): string {
