@@ -76,7 +76,7 @@ export namespace complexRow {
 
 // processing row group
 export namespace rowGroup {
-  export const element = Element.fromElement(<thead>
+  export const element = Element.fromElement(<thead id="thead">
   <tr>
     <th id="grade" rowspan={2}>Grade.</th>
     <th id="yield" rowspan={2}>Yield Point.</th>
@@ -120,11 +120,11 @@ export namespace smithonian {
     </caption>
     <thead id="thead">
     <tr>
-      <th id="grade" rowSpan={2}>Grade.</th>
-      <th id="yield" rowSpan={2}>Yield Point.</th>
-      <th id="strength" colSpan={2}>Ultimate tensile strength</th>
-      <th id="elong" rowSpan={2}>Per cent elong. 50.8mm or 2 in.</th>
-      <th id="reduct" rowSpan={2}>Per cent reduct. area.</th>
+      <th id="grade" rowspan={2}>Grade.</th>
+      <th id="yield" rowspan={2}>Yield Point.</th>
+      <th id="strength" colspan={2}>Ultimate tensile strength</th>
+      <th id="elong" rowspan={2}>Per cent elong. 50.8mm or 2 in.</th>
+      <th id="reduct" rowspan={2}>Per cent reduct. area.</th>
     </tr>
     <tr>
       <th id="kg-mm">kg/mm<sup>2</sup></th>
@@ -159,6 +159,8 @@ export namespace smithonian {
     </tbody>
   </table>);
   const getById = getDescendantById(element);
+
+  export const thead = getById("thead");
 
   export const expected: Table = {
     slots: [
