@@ -1,4 +1,3 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -7,7 +6,6 @@ import { Element } from "./element";
 import { Slot } from "./slot";
 import { Text } from "./text";
 
-const { find } = Iterable;
 const { and } = Predicate;
 
 export interface Slotable extends Node {
@@ -47,7 +45,9 @@ export namespace Slotable {
       .filter(Element.isElement)
       .flatMap(parent =>
         parent.shadow.flatMap(shadow =>
-          find(shadow, and(Slot.isSlot, slot => Slot.name(slot) === name))
+          shadow
+            .descendants()
+            .find(and(Slot.isSlot, slot => Slot.name(slot) === name))
         )
       );
   }
