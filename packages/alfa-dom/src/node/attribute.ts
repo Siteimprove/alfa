@@ -1,4 +1,4 @@
-import {None, Option, Some} from "@siteimprove/alfa-option";
+import {None, Option} from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "../namespace";

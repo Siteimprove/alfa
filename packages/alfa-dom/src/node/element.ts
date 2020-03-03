@@ -1,5 +1,4 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Lazy } from "@siteimprove/alfa-lazy";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -13,7 +12,6 @@ import { Document } from "./document";
 import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
-import equals = Predicate.equals;
 
 const { map, filter, concat, join, find, isEmpty } = Iterable;
 const { and, not } = Predicate;
