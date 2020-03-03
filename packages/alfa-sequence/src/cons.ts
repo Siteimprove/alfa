@@ -383,9 +383,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public toString(): string {
-    const values = this.join(", ");
-
-    return `Sequence [${values === "" ? "" : ` ${values} `}]`;
+    return `Sequence [ ${this.join(", ")} ]`;
   }
 }
 
