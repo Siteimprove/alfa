@@ -34,6 +34,8 @@ export function format(name: string, error: Error): string {
         "Input A expected to strictly deep-equal input B:\n",
         ""
       );
+
+    message += error.message;
   } else {
     message = error.stack ?? error.message;
   }
