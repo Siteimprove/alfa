@@ -130,22 +130,22 @@ const isSurrogate: Predicate<number> = code => code >= 0xd800 && code <= 0xdfff;
 const startsValidEscape: Predicate<Slice<number>> = input =>
   input
     .get(0)
-    .every(and(equals(0x5c), () => input.get(1).every(not(isNewline))));
+    .some(and(equals(0x5c), () => input.get(1).every(not(isNewline))));
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#starts-with-a-number
  */
 const startsNumber: Predicate<Slice<number>> = input =>
-  input.get(0).every(
+  input.get(0).some(
     or(
       isDigit,
       or(
-        and(equals(0x2e), () => input.get(1).every(isDigit)),
+        and(equals(0x2e), () => input.get(1).some(isDigit)),
         and(equals(0x2b, 0x2d), () =>
-          input.get(1).every(
+          input.get(1).some(
             or(
               isDigit,
-              and(equals(0x2e), () => input.get(2).every(isDigit))
+              and(equals(0x2e), () => input.get(2).some(isDigit))
             )
           )
         )

@@ -185,7 +185,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public get(index: number): Option<T> {
-    return this.skip(index).first();
+    return index < 0 ? None : this.skip(index).first();
   }
 
   public first(): Option<T> {
@@ -383,9 +383,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public toString(): string {
-    const values = this.join(", ");
-
-    return `Sequence [${values === "" ? "" : ` ${values} `}]`;
+    return `Sequence [ ${this.join(", ")} ]`;
   }
 }
 
