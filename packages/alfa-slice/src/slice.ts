@@ -1,10 +1,10 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
-export class Slice<T> implements Iterable<T>, Serializable {
+export class Slice<T> implements Iterable<T>, Equatable, Serializable {
   public static of<T>(
     array: Readonly<Array<T>>,
     start: number = 0,
@@ -13,6 +13,12 @@ export class Slice<T> implements Iterable<T>, Serializable {
     start = clamp(start, array.length);
 
     return new Slice(array, start, clamp(end, array.length) - start);
+  }
+
+  private static _empty = new Slice([], 0, 0);
+
+  public static empty<T>(): Slice<T> {
+    return this._empty;
   }
 
   private readonly _array: Readonly<Array<T>>;
@@ -65,12 +71,35 @@ export class Slice<T> implements Iterable<T>, Serializable {
     }
   }
 
+  public equals(value: unknown): value is this {
+    if (value instanceof Slice && value._length === this._length) {
+      for (let i = 0, n = value._length; i < n; i++) {
+        if (
+          !Equatable.equals(
+            value._array[value._offset + i],
+            this._array[this._offset + i]
+          )
+        ) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    return false;
+  }
+
+  public toArray(): Array<T> {
+    return this._array.slice(this._offset, this._offset + this._length);
+  }
+
   public toJSON(): Slice.JSON {
-    return [...Iterable.map(this, Serializable.toJSON)];
+    return this.toArray().map(Serializable.toJSON);
   }
 
   public toString(): string {
-    const values = [...this].join(", ");
+    const values = this.toArray().join(", ");
 
     return `Slice [${values === "" ? "" : ` ${values} `}]`;
   }

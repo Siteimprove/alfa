@@ -3,8 +3,9 @@ const execa = require("execa");
 const { system } = require("./system");
 
 exports.tester = {
-  test(root = "packages/alfa-dom/") {
-    for (const fileName of system.readDirectory(root, [".spec.js"])) {
+  test(root = "packages") {
+    for (let fileName of system.readDirectory(root, [".spec.ts", ".spec.tsx"])) {
+      fileName = fileName.replace(/\.tsx?$/, ".js");
       execa
         .node(fileName, [], {
           nodeOptions: [
@@ -13,7 +14,7 @@ exports.tester = {
           ],
           stdio: "inherit"
         })
-        .catch(_ => {
+        .catch(err => {
           system.exit(1);
         });
     }

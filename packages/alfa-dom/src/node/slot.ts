@@ -1,5 +1,3 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-
 import { Element } from "./element";
 import { Shadow } from "./shadow";
 import { Slotable } from "./slotable";
