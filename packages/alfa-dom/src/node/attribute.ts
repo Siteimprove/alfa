@@ -7,6 +7,11 @@ import { Element } from "./element";
 
 const { equals } = Predicate;
 
+// HTML attributes are case insensitive while attributes in other namespaces aren't.
+function nameCasing(elt: Option<Element>, name: string): string {
+  return elt.some(element => element.namespace.some(equals(Namespace.HTML))) ? name.toLowerCase() : name;
+}
+
 export class Attribute extends Node {
   public static of(
     namespace: Option<Namespace>,
@@ -35,8 +40,7 @@ export class Attribute extends Node {
 
     this._namespace = namespace;
     this._prefix = prefix;
-    // HTML attributes are case insensitive. Other, e.g. SVG, are case sensitive.
-    this._name = owner.some(element => element.namespace.some(equals(Namespace.HTML))) ? name.toLowerCase() : name;
+    this._name = nameCasing(owner, name);
     this._value = value;
     this._owner = owner;
   }
@@ -62,11 +66,7 @@ export class Attribute extends Node {
   }
 
   public hasName(name: string): boolean {
-    // HTML attributes are case insensitive while attributes in other namespaces aren't.
-    return this._name ===
-      this._owner.some(element => element.namespace.some(equals(Namespace.HTML)))
-      ? name.toLowerCase()
-      : name;
+    return this._name === nameCasing(this._owner, name);
   }
 
   /**
