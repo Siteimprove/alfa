@@ -39,7 +39,8 @@
     "src/value/transform/skew.ts",
     "src/value/transform/translate.ts",
     "src/value/unit.ts",
-    "src/value/url.ts"
+    "src/value/url.ts",
+    "test/syntax/lexer.spec.ts"
   ],
   "references": [
     {

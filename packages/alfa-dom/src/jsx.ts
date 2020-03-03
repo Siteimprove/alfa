@@ -43,7 +43,7 @@ export function jsx(
       json.attributes.find(attribute => attribute.name === "style")
     )
       .flatMap(attribute =>
-        css.Declaration.parseList(Slice.of([...css.Lexer.lex(attribute.value)]))
+        css.Declaration.parseList(Slice.of(css.Lexer.lex(attribute.value)))
           .map(result => result[1])
           .map(declarations =>
             Iterable.map(declarations, declaration =>
