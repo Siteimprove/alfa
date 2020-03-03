@@ -1,7 +1,8 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { Role } from "@siteimprove/alfa-aria";
 import { RGB, Percentage, Current, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -11,15 +12,18 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
+import { hasCategory } from "../common/predicate/has-category";
+import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { hasParent } from "../common/predicate/has-parent";
+import { hasRole } from "../common/predicate/has-role";
+import { isDisabled } from "../common/predicate/is-disabled";
 import { isIgnored } from "../common/predicate/is-ignored";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 
-const { reduce, some, flatMap, map, filter, concat } = Iterable;
-const { and, not, equals } = Predicate;
+const { reduce, some, flatMap, map, concat } = Iterable;
+const { and, not, equals, test } = Predicate;
 const { min, max } = Math;
 
 export default Rule.Atomic.of<Page, Text, Question>({
@@ -27,19 +31,31 @@ export default Rule.Atomic.of<Page, Text, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Text.isText,
-            and(
-              hasParent(
-                and(Element.isElement, hasNamespace(equals(Namespace.HTML))),
-                { flattened: true }
-              ),
-              and(isVisible(device), not(isIgnored(device)))
-            )
-          )
-        );
+        return visit(document);
+
+        function* visit(node: Node): Iterable<Text> {
+          if (Element.isElement(node)) {
+            if (
+              test(hasNamespace(not(equals(Namespace.HTML))), node) ||
+              test(hasRole(hasCategory(equals(Role.Category.Widget))), node) ||
+              test(and(hasRole(hasName(equals("group"))), isDisabled), node)
+            ) {
+              return;
+            }
+          }
+
+          if (Text.isText(node)) {
+            if (test(and(isVisible(device), not(isIgnored(device))), node)) {
+              yield node;
+            }
+          }
+
+          const children = node.children({ flattened: true, nested: true });
+
+          for (const child of children) {
+            yield* visit(child);
+          }
+        }
       },
 
       expectations(target) {
