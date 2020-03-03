@@ -62,10 +62,11 @@ export class Attribute extends Node {
   }
 
   public hasName(name: string): boolean {
-    // HTML attributes are case insensitive. Other, e.g. SVG, are case sensitive.
-    return this.owner.some(element => element.namespace.some(equals(Namespace.HTML))) ?
-      this._name.toLowerCase() === name.toLowerCase() :
-      this._name === name;
+    // HTML attributes are case insensitive while attributes in other namespaces aren't.
+    return this._name ===
+      this._owner.some(element => element.namespace.some(equals(Namespace.HTML)))
+      ? name.toLowerCase()
+      : name;
   }
 
   /**
