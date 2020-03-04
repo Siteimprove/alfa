@@ -217,9 +217,9 @@ export namespace smithonian {
       makeSlot(makeCell("data", 5, 4), getById("soft-reduct")),
     ]
   ];
-  export const expected: Table = {
+  export const expected: Table =  {
     slots: slots,
     cells: getCells(slots).sort((c1, c2) => c1.anchor.y - c2.anchor.y),
-    width: 6, height: 5, rowGroups: [], colGroups: []
+    width: 6, height: 5, rowGroups: [{anchor: {y: 0}, height: 2, element: getById("thead")}, {anchor: {y: 2}, height: 3, element: getById("tbody")}], colGroups: []
   }
 }

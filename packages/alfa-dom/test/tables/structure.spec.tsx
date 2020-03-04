@@ -51,6 +51,5 @@ test("Process table", t => {
 
   formingTable(smithonian.element);
 
-  t.deepEqual(global.theTable.slots, smithonian.expected.slots);
-  t.deepEqual(global.theTable.cells, smithonian.expected.cells);
+  t.deepEqual(global.theTable, smithonian.expected);
 });
