@@ -13,6 +13,9 @@
       "path": "../alfa-http"
     },
     {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-test"
     },
     {
