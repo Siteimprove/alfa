@@ -10,7 +10,7 @@ function makeSlotsArray(w: number, h: number): Array<Array<Slot>> {
     .fill(0)
     .map((_, x) => new Array(h) // filling column n° x (JS line)
       .fill(0)
-      .map((_, y) => makeSlot(x,y)) // filling cell n° x,y
+      .map((_, y) => makeSlot()) // filling cell n° x,y
   );
 }
 

@@ -13,7 +13,7 @@ const { and, equals, property } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 
-export type Slot = { x: number; y: number; elements: Array<Element>, cell: Option<Cell> };
+export type Slot = { elements: Array<Element>, cell: Option<Cell> };
 
 export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 
@@ -43,27 +43,27 @@ export type ColGroup = {
   element: Element;
 }
 
-export const isCoveredBy: Predicate<Slot, Slot, Array<Cell | RowGroup | ColGroup>> = (slot, cover) => {
-  if ("width" in cover) { // Cell or Col
-    if (slot.x < cover.anchor.x) { // slot is left of cover
-      return false;
-    }
-    if (cover.anchor.x + cover.width - 1 < slot.x) { // slot is right of cover
-      return false;
-    }
-  }
-
-  if ("height" in cover) { // Cell or Row
-    if (slot.y < cover.anchor.y) { // slot is above cover
-      return false;
-    }
-    if (cover.anchor.y + cover.height - 1 < slot.y) { // slot is below cover
-      return false;
-    }
-  }
-
-  return true;
-};
+// export const isCoveredBy: Predicate<Slot, Slot, Array<Cell | RowGroup | ColGroup>> = (slot, cover) => {
+//   if ("width" in cover) { // Cell or Col
+//     if (slot.x < cover.anchor.x) { // slot is left of cover
+//       return false;
+//     }
+//     if (cover.anchor.x + cover.width - 1 < slot.x) { // slot is right of cover
+//       return false;
+//     }
+//   }
+//
+//   if ("height" in cover) { // Cell or Row
+//     if (slot.y < cover.anchor.y) { // slot is above cover
+//       return false;
+//     }
+//     if (cover.anchor.y + cover.height - 1 < slot.y) { // slot is below cover
+//       return false;
+//     }
+//   }
+//
+//   return true;
+// };
 
 // micro syntaxes to move to alfa-parser
 // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
