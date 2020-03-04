@@ -38,8 +38,10 @@ export namespace Node {
  * @internal
  */
 export class Empty<K, V> implements Node<K, V> {
-  public static of<K, V>(): Empty<K, V> {
-    return new Empty();
+  private static _empty = new Empty<never, never>();
+
+  public static empty<K, V>(): Empty<K, V> {
+    return this._empty;
   }
 
   private constructor() {}
@@ -60,12 +62,12 @@ export class Empty<K, V> implements Node<K, V> {
     return Leaf.of(hash, key, value);
   }
 
-  public delete(): this {
+  public delete(): Empty<K, V> {
     return this;
   }
 
   public map<U>(): Empty<K, U> {
-    return new Empty();
+    return Empty.empty();
   }
 
   public equals(value: unknown): value is this {
@@ -83,14 +85,26 @@ export class Leaf<K, V> implements Node<K, V> {
     return new Leaf(hash, key, value);
   }
 
-  public readonly hash: number;
-  public readonly key: K;
-  public readonly value: V;
+  private readonly _hash: number;
+  private readonly _key: K;
+  private readonly _value: V;
 
   private constructor(hash: number, key: K, value: V) {
-    this.hash = hash;
-    this.key = key;
-    this.value = value;
+    this._hash = hash;
+    this._key = key;
+    this._value = value;
+  }
+
+  public get hash(): number {
+    return this._hash;
+  }
+
+  public get key(): K {
+    return this._key;
+  }
+
+  public get value(): V {
+    return this._value;
   }
 
   public isEmpty(): this is Empty<K, V> {
@@ -102,8 +116,8 @@ export class Leaf<K, V> implements Node<K, V> {
   }
 
   public get(key: K, hash: number, shift: number): Option<V> {
-    return hash === this.hash && Equatable.equals(key, this.key)
-      ? Option.of(this.value)
+    return hash === this._hash && Equatable.equals(key, this._key)
+      ? Option.of(this._value)
       : None;
   }
 
@@ -113,40 +127,40 @@ export class Leaf<K, V> implements Node<K, V> {
     shift: number,
     value: V
   ): Leaf<K, V> | Collision<K, V> | Sparse<K, V> {
-    if (hash === this.hash) {
+    if (hash === this._hash) {
       const leaf = Leaf.of(hash, key, value);
 
-      return Equatable.equals(key, this.key)
+      return Equatable.equals(key, this._key)
         ? leaf
         : Collision.of(hash, [this, leaf]);
     }
 
-    const fragment = Node.fragment(this.hash, shift);
+    const fragment = Node.fragment(this._hash, shift);
 
     return Sparse.of(bit(fragment), [this]).set(key, hash, shift, value);
   }
 
   public delete(key: K, hash: number, shift: number): Leaf<K, V> | Empty<K, V> {
-    return hash === this.hash && Equatable.equals(key, this.key)
-      ? Empty.of()
+    return hash === this._hash && Equatable.equals(key, this._key)
+      ? Empty.empty()
       : this;
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Leaf<K, U> {
-    return Leaf.of(this.hash, this.key, mapper(this.value, this.key));
+    return Leaf.of(this._hash, this._key, mapper(this._value, this._key));
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof Leaf &&
-      value.hash === this.hash &&
-      Equatable.equals(value.key, this.key) &&
-      Equatable.equals(value.value, this.value)
+      value._hash === this._hash &&
+      Equatable.equals(value._key, this._key) &&
+      Equatable.equals(value._value, this._value)
     );
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
-    yield [this.key, this.value];
+    yield [this._key, this._value];
   }
 }
 
@@ -161,12 +175,20 @@ export class Collision<K, V> implements Node<K, V> {
     return new Collision(hash, nodes);
   }
 
-  public readonly hash: number;
-  public readonly nodes: Array<Leaf<K, V>>;
+  private readonly _hash: number;
+  private readonly _nodes: Array<Leaf<K, V>>;
 
   private constructor(hash: number, nodes: Array<Leaf<K, V>>) {
-    this.hash = hash;
-    this.nodes = nodes;
+    this._hash = hash;
+    this._nodes = nodes;
+  }
+
+  public get hash(): number {
+    return this._hash;
+  }
+
+  public get nodes(): Iterable<Leaf<K, V>> {
+    return this._nodes;
   }
 
   public isEmpty(): this is Empty<K, V> {
@@ -178,7 +200,11 @@ export class Collision<K, V> implements Node<K, V> {
   }
 
   public get(key: K, hash: number, shift: number): Option<V> {
-    for (const node of this.nodes) {
+    if (hash !== this._hash) {
+      return None;
+    }
+
+    for (const node of this._nodes) {
       const value = node.get(key, hash, shift);
 
       if (value.isSome()) {
@@ -189,21 +215,32 @@ export class Collision<K, V> implements Node<K, V> {
     return None;
   }
 
-  public set(key: K, hash: number, shift: number, value: V): Collision<K, V> {
-    const leaf = Leaf.of(hash, key, value);
+  public set(
+    key: K,
+    hash: number,
+    shift: number,
+    value: V
+  ): Collision<K, V> | Sparse<K, V> {
+    if (hash === this._hash) {
+      const leaf = Leaf.of(hash, key, value);
 
-    for (let i = 0, n = this.nodes.length; i < n; i++) {
-      const node = this.nodes[i];
+      for (let i = 0, n = this._nodes.length; i < n; i++) {
+        const node = this._nodes[i];
 
-      if (Equatable.equals(key, node.key)) {
-        return Collision.of(this.hash, replace(this.nodes, i, leaf));
+        if (Equatable.equals(key, node.key)) {
+          return Collision.of(this._hash, replace(this._nodes, i, leaf));
+        }
       }
+
+      return Collision.of(
+        this._hash,
+        this._nodes.concat(Leaf.of(hash, key, value))
+      );
     }
 
-    return Collision.of(
-      this.hash,
-      this.nodes.concat(Leaf.of(hash, key, value))
-    );
+    const fragment = Node.fragment(this._hash, shift);
+
+    return Sparse.of(bit(fragment), [this]).set(key, hash, shift, value);
   }
 
   public delete(
@@ -211,15 +248,19 @@ export class Collision<K, V> implements Node<K, V> {
     hash: number,
     shift: number
   ): Collision<K, V> | Empty<K, V> {
-    for (let i = 0, n = this.nodes.length; i < n; i++) {
-      const node = this.nodes[i];
+    if (hash !== this._hash) {
+      return this;
+    }
+
+    for (let i = 0, n = this._nodes.length; i < n; i++) {
+      const node = this._nodes[i];
 
       if (Equatable.equals(key, node.key)) {
-        if (this.nodes.length === 1) {
-          return Empty.of();
+        if (this._nodes.length === 1) {
+          return Empty.empty();
         }
 
-        return Collision.of(this.hash, remove(this.nodes, i));
+        return Collision.of(this._hash, remove(this._nodes, i));
       }
     }
 
@@ -228,22 +269,22 @@ export class Collision<K, V> implements Node<K, V> {
 
   public map<U>(mapper: Mapper<V, U, [K]>): Collision<K, U> {
     return Collision.of(
-      this.hash,
-      this.nodes.map(node => node.map(mapper))
+      this._hash,
+      this._nodes.map(node => node.map(mapper))
     );
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof Collision &&
-      value.hash === this.hash &&
-      value.nodes.length === this.nodes.length &&
-      value.nodes.every((node, i) => node.equals(this.nodes[i]))
+      value._hash === this._hash &&
+      value._nodes.length === this._nodes.length &&
+      value._nodes.every((node, i) => node.equals(this._nodes[i]))
     );
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
-    for (const node of this.nodes) {
+    for (const node of this._nodes) {
       yield* node;
     }
   }
@@ -257,12 +298,20 @@ export class Sparse<K, V> implements Node<K, V> {
     return new Sparse(mask, nodes);
   }
 
-  public readonly mask: number;
-  public readonly nodes: Array<Node<K, V>>;
+  private readonly _mask: number;
+  private readonly _nodes: Array<Node<K, V>>;
 
   private constructor(mask: number, nodes: Array<Node<K, V>>) {
-    this.mask = mask;
-    this.nodes = nodes;
+    this._mask = mask;
+    this._nodes = nodes;
+  }
+
+  public get mask(): number {
+    return this._mask;
+  }
+
+  public get nodes(): Iterable<Node<K, V>> {
+    return this._nodes;
   }
 
   public isEmpty(): this is Empty<K, V> {
@@ -276,10 +325,10 @@ export class Sparse<K, V> implements Node<K, V> {
   public get(key: K, hash: number, shift: number): Option<V> {
     const fragment = Node.fragment(hash, shift);
 
-    if (test(this.mask, fragment)) {
-      const index = Node.index(fragment, this.mask);
+    if (test(this._mask, fragment)) {
+      const index = Node.index(fragment, this._mask);
 
-      return this.nodes[index].get(key, hash, shift + Node.Bits);
+      return this._nodes[index].get(key, hash, shift + Node.Bits);
     }
 
     return None;
@@ -287,22 +336,22 @@ export class Sparse<K, V> implements Node<K, V> {
 
   public set(key: K, hash: number, shift: number, value: V): Sparse<K, V> {
     const fragment = Node.fragment(hash, shift);
-    const index = Node.index(fragment, this.mask);
+    const index = Node.index(fragment, this._mask);
 
-    if (test(this.mask, fragment)) {
+    if (test(this._mask, fragment)) {
       return Sparse.of(
-        this.mask,
+        this._mask,
         replace(
-          this.nodes,
+          this._nodes,
           index,
-          this.nodes[index].set(key, hash, shift + Node.Bits, value)
+          this._nodes[index].set(key, hash, shift + Node.Bits, value)
         )
       );
     }
 
     return Sparse.of(
-      set(this.mask, fragment),
-      insert(this.nodes, index, Leaf.of(hash, key, value))
+      set(this._mask, fragment),
+      insert(this._nodes, index, Leaf.of(hash, key, value))
     );
   }
 
@@ -313,26 +362,29 @@ export class Sparse<K, V> implements Node<K, V> {
   ): Sparse<K, V> | Leaf<K, V> | Empty<K, V> {
     const fragment = Node.fragment(hash, shift);
 
-    if (test(this.mask, fragment)) {
-      const index = Node.index(fragment, this.mask);
+    if (test(this._mask, fragment)) {
+      const index = Node.index(fragment, this._mask);
 
-      const node = this.nodes[index].delete(key, hash, shift + Node.Bits);
+      const node = this._nodes[index].delete(key, hash, shift + Node.Bits);
 
       if (node.isEmpty()) {
-        if (this.nodes.length === 1) {
-          return Empty.of();
+        if (this._nodes.length === 1) {
+          return Empty.empty();
         }
 
-        return Sparse.of(clear(this.mask, fragment), remove(this.nodes, index));
+        return Sparse.of(
+          clear(this._mask, fragment),
+          remove(this._nodes, index)
+        );
       }
 
       if (node.isLeaf()) {
-        if (this.nodes.length === 1) {
+        if (this._nodes.length === 1) {
           return node;
         }
       }
 
-      return Sparse.of(this.mask, replace(this.nodes, index, node));
+      return Sparse.of(this._mask, replace(this._nodes, index, node));
     }
 
     return this;
@@ -340,22 +392,22 @@ export class Sparse<K, V> implements Node<K, V> {
 
   public map<U>(mapper: Mapper<V, U, [K]>): Sparse<K, U> {
     return Sparse.of(
-      this.mask,
-      this.nodes.map(node => node.map(mapper))
+      this._mask,
+      this._nodes.map(node => node.map(mapper))
     );
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof Sparse &&
-      value.mask === this.mask &&
-      value.nodes.length === this.nodes.length &&
-      value.nodes.every((node, i) => node.equals(this.nodes[i]))
+      value._mask === this._mask &&
+      value._nodes.length === this._nodes.length &&
+      value._nodes.every((node, i) => node.equals(this._nodes[i]))
     );
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
-    for (const node of this.nodes) {
+    for (const node of this._nodes) {
       yield* node;
     }
   }

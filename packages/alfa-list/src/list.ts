@@ -14,8 +14,6 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Branch, Empty, Leaf, Node } from "./node";
 
-const { filter, reduce, join, find, includes, subtract, intersect } = Iterable;
-
 export class List<T>
   implements
     Monad<T>,
@@ -28,18 +26,20 @@ export class List<T>
     return values.reduce((list, value) => list.push(value), List.empty<T>());
   }
 
+  private static _empty = new List<never>(Empty.empty(), Empty.empty(), 0, 0);
+
   public static empty<T>(): List<T> {
-    return new List(Empty.of(), Empty.of(), 0, 0);
+    return this._empty;
   }
 
-  private readonly _head: Empty<T> | Branch<T> | Leaf<T>;
+  private readonly _head: Empty<T> | Leaf<T> | Branch<T>;
   private readonly _tail: Empty<T> | Leaf<T>;
   private readonly _shift: number;
   private readonly _size: number;
 
   private constructor(
-    head: Empty<T> | Branch<T> | Leaf<T>,
-    tail: Leaf<T> | Empty<T>,
+    head: Empty<T> | Leaf<T> | Branch<T>,
+    tail: Empty<T> | Leaf<T>,
     shift: number,
     size: number
   ) {
@@ -55,12 +55,8 @@ export class List<T>
 
   public map<U>(mapper: Mapper<T, U>): List<U> {
     return new List<U>(
-      this._head instanceof Empty
-        ? this._head
-        : this._head instanceof Branch
-        ? this._head.map(mapper)
-        : this._head.map(mapper),
-      this._tail.map(mapper),
+      (this._head as Node<T>).map(mapper) as Empty<U> | Leaf<U> | Branch<U>,
+      (this._tail as Node<T>).map(mapper) as Empty<U> | Leaf<U>,
       this._shift,
       this._size
     );
@@ -74,11 +70,11 @@ export class List<T>
   }
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
-    return reduce(this, reducer, accumulator);
+    return Iterable.reduce(this, reducer, accumulator);
   }
 
   public concat(iterable: Iterable<T>): List<T> {
-    return reduce<T, List<T>>(
+    return Iterable.reduce<T, List<T>>(
       iterable,
       (list, value) => list.push(value),
       this
@@ -86,23 +82,23 @@ export class List<T>
   }
 
   public includes(value: T): boolean {
-    return includes(this, value);
+    return Iterable.includes(this, value);
   }
 
   public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
-    return find(this, predicate);
+    return Iterable.find(this, predicate);
   }
 
   public filter<U extends T>(predicate: Predicate<T, U>): List<T> {
-    return List.from(filter(this, predicate));
+    return List.from(Iterable.filter(this, predicate));
   }
 
   public subtract(list: List<T>): List<T> {
-    return List.from(subtract(this, list));
+    return List.from(Iterable.subtract(this, list));
   }
 
   public intersect(list: List<T>): List<T> {
-    return List.from(intersect(this, list));
+    return List.from(Iterable.intersect(this, list));
   }
 
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
@@ -120,7 +116,7 @@ export class List<T>
   }
 
   public join(separator: string): string {
-    return join(this, separator);
+    return Iterable.join(this, separator);
   }
 
   public get(index: number): Option<T> {
@@ -169,7 +165,7 @@ export class List<T>
     // Out: List { head: Empty, tail: Leaf(value) }
     //
     if (this._tail.isEmpty()) {
-      return new List(Empty.of(), Leaf.of([value]), 0, 1);
+      return new List(Empty.empty(), Leaf.of([value]), 0, 1);
     }
 
     // If the tail has capacity for another value, we concatenate the pushed
@@ -287,14 +283,14 @@ export class List<T>
 
     if (this._head instanceof Leaf) {
       return new List(
-        Empty.of(),
+        Empty.empty(),
         this._head,
         this._shift - Node.Bits,
         this._size - 1
       );
     }
 
-    let head = this._head.clone() as Empty<T> | Branch<T> | Leaf<T>;
+    let head = this._head.clone() as Empty<T> | Leaf<T> | Branch<T>;
     let tail = this._tail;
     let shift = this._shift;
 
@@ -326,7 +322,8 @@ export class List<T>
     // new head which in turn decreases the depth of the list. If the head is a
     // leaf node, we instead set the new head to null.
     if (index === Node.underflow(shift)) {
-      head = head instanceof Leaf ? Empty.of() : (head as Branch<T>).nodes[0];
+      head =
+        head instanceof Leaf ? Empty.empty() : (head as Branch<T>).nodes[0];
       shift -= Node.Bits;
     }
 
@@ -355,8 +352,12 @@ export class List<T>
     yield* this._tail;
   }
 
+  public toArray(): Array<T> {
+    return [...this];
+  }
+
   public toJSON(): List.JSON {
-    return [...Iterable.map(this, Serializable.toJSON)];
+    return this.toArray().map(Serializable.toJSON);
   }
 
   public toString(): string {
@@ -367,13 +368,13 @@ export class List<T>
 }
 
 export namespace List {
-  export function from<T>(iterable: Iterable<T>): List<T> {
-    return isList<T>(iterable) ? iterable : List.of(...iterable);
-  }
+  export interface JSON extends Array<json.JSON> {}
 
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
   }
 
-  export interface JSON extends Array<json.JSON> {}
+  export function from<T>(iterable: Iterable<T>): List<T> {
+    return isList<T>(iterable) ? iterable : List.of(...iterable);
+  }
 }
