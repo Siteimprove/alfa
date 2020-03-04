@@ -611,3 +611,12 @@ test(".lex() lexes a column selector", t => {
     }
   ]);
 });
+
+test(".lex() lexes a hash delimiter", t => {
+  lex(t, "#", [
+    {
+      type: "delim",
+      value: 0x23
+    }
+  ]);
+});
