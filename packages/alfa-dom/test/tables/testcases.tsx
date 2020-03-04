@@ -4,7 +4,7 @@ import {Cell, Element, Slot, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
 import and = Predicate.and;
 
-export function makeSlot(element: Element | null = null, cell: Cell | null = null): Slot {
+export function makeSlot(cell: Cell | null = null, element: Element | null = null): Slot {
   return { elements: element === null ? [] : [element], cell: Option.from(cell)};
 }
 
@@ -32,8 +32,8 @@ export namespace simpleRow {
 
   export const expected: Table = {
     slots: [
-      [makeSlot(getById("first"), makeCell("header", 0, 0))],
-      [makeSlot(getById("second"), makeCell("data", 1, 0))]
+      [makeSlot(makeCell("header", 0, 0), getById("first"))],
+      [makeSlot(makeCell("data", 1, 0), getById("second"))]
     ],
     cells: [makeCell("header", 0, 0), makeCell("data", 1, 0)],
     width: 2, height: 1, rowGroups: [], colGroups: []
@@ -55,18 +55,18 @@ export namespace complexRow {
 
   export const expected: Table = {
     slots: [
-      [makeSlot(getById("grade"), makeCell("header", 0, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 0, 0, 1, 2))],
-      [makeSlot(getById("yield"), makeCell("header", 1, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 1, 0, 1, 2))],
-      [makeSlot(getById("strength"), makeCell("header", 2, 0, 2, 1)),
+      [makeSlot(makeCell("header", 0, 0, 1, 2), getById("grade")),
+        makeSlot(makeCell("header", 0, 0, 1, 2))],
+      [makeSlot(makeCell("header", 1, 0, 1, 2), getById("yield")),
+        makeSlot(makeCell("header", 1, 0, 1, 2))],
+      [makeSlot(makeCell("header", 2, 0, 2, 1), getById("strength")),
         makeSlot()],
-      [makeSlot(null, makeCell("header", 2, 0, 2, 1)),
+      [makeSlot(makeCell("header", 2, 0, 2, 1)),
         makeSlot()],
-      [makeSlot(getById("elong"), makeCell("header", 4, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 4, 0, 1, 2))],
-      [makeSlot(getById("reduct"), makeCell("header", 5, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 5, 0, 1, 2))]
+      [makeSlot(makeCell("header", 4, 0, 1, 2), getById("elong")),
+        makeSlot(makeCell("header", 4, 0, 1, 2))],
+      [makeSlot(makeCell("header", 5, 0, 1, 2), getById("reduct")),
+        makeSlot(makeCell("header", 5, 0, 1, 2))]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
       makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2)],
@@ -93,18 +93,18 @@ export namespace rowGroup {
 
   export const expected: Table = {
     slots: [
-      [makeSlot(getById("grade"), makeCell("header", 0, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 0, 0, 1, 2))],
-      [makeSlot(getById("yield"), makeCell("header", 1, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 1, 0, 1, 2))],
-      [makeSlot(getById("strength"), makeCell("header", 2, 0, 2, 1)),
-        makeSlot(getById("kg-mm"), makeCell("header", 2, 1))],
-      [makeSlot(null, makeCell("header", 2, 0, 2, 1)),
-        makeSlot(getById("lb-in"), makeCell("header", 3, 1))],
-      [makeSlot(getById("elong"), makeCell("header", 4, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 4, 0, 1, 2))],
-      [makeSlot(getById("reduct"), makeCell("header", 5, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 5, 0, 1, 2))]
+      [makeSlot(makeCell("header", 0, 0, 1, 2), getById("grade")),
+        makeSlot(makeCell("header", 0, 0, 1, 2))],
+      [makeSlot(makeCell("header", 1, 0, 1, 2), getById("yield")),
+        makeSlot(makeCell("header", 1, 0, 1, 2))],
+      [makeSlot(makeCell("header", 2, 0, 2, 1), getById("strength")),
+        makeSlot(makeCell("header", 2, 1), getById("kg-mm"))],
+      [makeSlot(makeCell("header", 2, 0, 2, 1)),
+        makeSlot(makeCell("header", 3, 1), getById("lb-in"))],
+      [makeSlot(makeCell("header", 4, 0, 1, 2), getById("elong")),
+        makeSlot(makeCell("header", 4, 0, 1, 2))],
+      [makeSlot(makeCell("header", 5, 0, 1, 2), getById("reduct")),
+        makeSlot(makeCell("header", 5, 0, 1, 2))]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
       makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2), makeCell("header", 2, 1),
@@ -164,41 +164,41 @@ export namespace smithonian {
 
   export const expected: Table = {
     slots: [
-      [ makeSlot(getById("grade"), makeCell("header", 0, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 0, 0, 1, 2)),
-        makeSlot(getById("hard"), makeCell("data", 0, 2)),
-        makeSlot(getById("medium"), makeCell("data", 0, 3)),
-        makeSlot(getById("soft"), makeCell("data", 0, 4))
+      [ makeSlot(makeCell("header", 0, 0, 1, 2), getById("grade")),
+        makeSlot(makeCell("header", 0, 0, 1, 2)),
+        makeSlot(makeCell("data", 0, 2), getById("hard")),
+        makeSlot(makeCell("data", 0, 3), getById("medium")),
+        makeSlot(makeCell("data", 0, 4), getById("soft"))
       ],
-      [ makeSlot(getById("yield"), makeCell("header", 1, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 1, 0, 1, 2)),
-        makeSlot(getById("hard-yield"), makeCell("data", 1, 2)),
-        makeSlot(getById("medium-yield"), makeCell("data", 1, 3)),
-        makeSlot(getById("soft-yield"), makeCell("data", 1, 4))
+      [ makeSlot(makeCell("header", 1, 0, 1, 2), getById("yield")),
+        makeSlot(makeCell("header", 1, 0, 1, 2)),
+        makeSlot(makeCell("data", 1, 2), getById("hard-yield")),
+        makeSlot(makeCell("data", 1, 3), getById("medium-yield")),
+        makeSlot(makeCell("data", 1, 4), getById("soft-yield"))
       ],
-      [ makeSlot(getById("strength"), makeCell("header", 2, 0, 2, 1)),
-        makeSlot(getById("kg-mm"), makeCell("header", 2, 1)),
-        makeSlot(getById("hard-kg"), makeCell("data", 2, 2)),
-        makeSlot(getById("medium-kg"), makeCell("data", 2, 3)),
-        makeSlot(getById("soft-kg"), makeCell("data", 2, 4))
+      [ makeSlot(makeCell("header", 2, 0, 2, 1), getById("strength")),
+        makeSlot(makeCell("header", 2, 1), getById("kg-mm")),
+        makeSlot(makeCell("data", 2, 2), getById("hard-kg")),
+        makeSlot(makeCell("data", 2, 3), getById("medium-kg")),
+        makeSlot(makeCell("data", 2, 4), getById("soft-kg"))
       ],
-      [ makeSlot(null, makeCell("header", 2, 0, 2, 1)),
-        makeSlot(getById("lb-in"), makeCell("header", 3, 1)),
-        makeSlot(getById("hard-lb"), makeCell("data", 3, 2)),
-        makeSlot(getById("medium-lb"), makeCell("data", 3, 3)),
-        makeSlot(getById("soft-lb"), makeCell("data", 3, 4)),
+      [ makeSlot(makeCell("header", 2, 0, 2, 1)),
+        makeSlot(makeCell("header", 3, 1), getById("lb-in")),
+        makeSlot(makeCell("data", 3, 2), getById("hard-lb")),
+        makeSlot(makeCell("data", 3, 3), getById("medium-lb")),
+        makeSlot(makeCell("data", 3, 4), getById("soft-lb")),
       ],
-      [ makeSlot(getById("elong"), makeCell("header", 4, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 4, 0, 1, 2)),
-        makeSlot(getById("hard-elong"), makeCell("data", 4, 2)),
-        makeSlot(getById("medium-elong"), makeCell("data", 4, 3)),
-        makeSlot(getById("soft-elong"), makeCell("data", 4, 4)),
+      [ makeSlot(makeCell("header", 4, 0, 1, 2), getById("elong")),
+        makeSlot(makeCell("header", 4, 0, 1, 2)),
+        makeSlot(makeCell("data", 4, 2), getById("hard-elong")),
+        makeSlot(makeCell("data", 4, 3), getById("medium-elong")),
+        makeSlot(makeCell("data", 4, 4), getById("soft-elong")),
       ],
-      [ makeSlot(getById("reduct"), makeCell("header", 5, 0, 1, 2)),
-        makeSlot(null, makeCell("header", 5, 0, 1, 2)),
-        makeSlot(getById("hard-reduct"), makeCell("data", 5, 2)),
-        makeSlot(getById("medium-reduct"), makeCell("data", 5, 3)),
-        makeSlot(getById("soft-reduct"), makeCell("data", 5, 4)),
+      [ makeSlot(makeCell("header", 5, 0, 1, 2), getById("reduct")),
+        makeSlot(makeCell("header", 5, 0, 1, 2)),
+        makeSlot(makeCell("data", 5, 2), getById("hard-reduct")),
+        makeSlot(makeCell("data", 5, 3), getById("medium-reduct")),
+        makeSlot(makeCell("data", 5, 4), getById("soft-reduct")),
       ]
     ],
     cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1),
