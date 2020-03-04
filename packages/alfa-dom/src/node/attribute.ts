@@ -7,11 +7,6 @@ import { Element } from "./element";
 
 const { equals } = Predicate;
 
-// HTML attributes are case insensitive while attributes in other namespaces aren't.
-function nameCasing(elt: Option<Element>, name: string): string {
-  return elt.some(element => element.namespace.some(equals(Namespace.HTML))) ? name.toLowerCase() : name;
-}
-
 export class Attribute extends Node {
   public static of(
     namespace: Option<Namespace>,
@@ -40,7 +35,7 @@ export class Attribute extends Node {
 
     this._namespace = namespace;
     this._prefix = prefix;
-    this._name = nameCasing(owner, name);
+    this._name = foldCase(name, owner);
     this._value = value;
     this._owner = owner;
   }
@@ -66,7 +61,7 @@ export class Attribute extends Node {
   }
 
   public hasName(name: string): boolean {
-    return this._name === nameCasing(this._owner, name);
+    return this._name === foldCase(name, this._owner);
   }
 
   /**
@@ -142,4 +137,14 @@ export namespace Attribute {
       owner
     );
   }
+}
+
+/**
+ * Conditionally fold the case of an attribute name based on its owner; HTML
+ * attributes are case insensitive while attributes in other namespaces aren't.
+ */
+function foldCase(name: string, owner: Option<Element>): string {
+  return owner.some(owner => owner.namespace.some(equals(Namespace.HTML)))
+    ? name.toLowerCase()
+    : name;
 }
