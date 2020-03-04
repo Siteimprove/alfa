@@ -131,6 +131,17 @@ test(".lex() lexes a single quoted string", t => {
   ]);
 });
 
+test(".lex() lexes a really large string", t => {
+  const value = "a".repeat(1000000);
+
+  lex(t, `"${value}"`, [
+    {
+      type: "string",
+      value
+    }
+  ]);
+});
+
 test(".lex() lexes an integer", t => {
   lex(t, "123", [
     {

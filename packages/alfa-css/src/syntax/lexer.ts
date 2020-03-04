@@ -401,7 +401,7 @@ const consumeString: Parser<Slice<number>, Token.String> = input => {
 
   input = input.slice(1);
 
-  let string: Array<number> = [];
+  let string = "";
 
   while (true) {
     const code = input.get(0);
@@ -412,13 +412,10 @@ const consumeString: Parser<Slice<number>, Token.String> = input => {
       break;
     }
 
-    string.push(code.get());
+    string += String.fromCharCode(code.get());
   }
 
-  return Ok.of([
-    input,
-    Token.String.of(String.fromCharCode(...string))
-  ] as const);
+  return Ok.of([input, Token.String.of(string)] as const);
 };
 
 /**
