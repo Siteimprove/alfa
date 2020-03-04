@@ -1,8 +1,16 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
 import { Element } from "./element";
+
+const { equals } = Predicate;
+
+// HTML attributes are case insensitive while attributes in other namespaces aren't.
+function nameCasing(elt: Option<Element>, name: string): string {
+  return elt.some(element => element.namespace.some(equals(Namespace.HTML))) ? name.toLowerCase() : name;
+}
 
 export class Attribute extends Node {
   public static of(
@@ -32,7 +40,7 @@ export class Attribute extends Node {
 
     this._namespace = namespace;
     this._prefix = prefix;
-    this._name = name;
+    this._name = nameCasing(owner, name);
     this._value = value;
     this._owner = owner;
   }
@@ -55,6 +63,10 @@ export class Attribute extends Node {
 
   public get owner(): Option<Element> {
     return this._owner;
+  }
+
+  public hasName(name: string): boolean {
+    return this._name === nameCasing(this._owner, name);
   }
 
   /**
