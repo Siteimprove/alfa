@@ -96,6 +96,10 @@ export class Record<T>
     }
   }
 
+  public toArray(): Array<Record.Entry<T>> {
+    return [...this];
+  }
+
   public toJSON(): Record.JSON {
     const json: { [key: string]: json.JSON } = {};
 
@@ -104,6 +108,14 @@ export class Record<T>
     }
 
     return json;
+  }
+
+  public toString(): string {
+    const entries = this.toArray()
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+
+    return `Record {${entries === "" ? "" : ` ${entries} `}}`;
   }
 }
 

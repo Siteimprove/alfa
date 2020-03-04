@@ -260,10 +260,10 @@ export namespace Selector {
     }
 
     public matches(element: Element): boolean {
-      if (this._namespace.isSome()) {
+      for (const namespace of this._namespace) {
         let predicate: Predicate<dom.Attribute>;
 
-        switch (this._namespace.get()) {
+        switch (namespace) {
           case "*":
             predicate = property("name", equals(this._name));
             break;
@@ -278,7 +278,7 @@ export namespace Selector {
           default:
             predicate = and(
               property("name", equals(this._name)),
-              property("namespace", equals(this._namespace.get()))
+              property("namespace", equals(namespace))
             );
         }
 
@@ -294,35 +294,32 @@ export namespace Selector {
     }
 
     private matchesValue(value: string): boolean {
-      if (this._modifier.isSome()) {
-        switch (this._modifier.get()) {
+      for (const modifier of this._modifier) {
+        switch (modifier) {
           case Attribute.Modifier.CaseInsensitive:
             value = value.toLowerCase();
         }
       }
 
-      if (this._value.isSome()) {
+      for (const match of this._value) {
         switch (this._matcher.getOr(Attribute.Matcher.Equal)) {
           case Attribute.Matcher.Equal:
-            return value === this._value.get();
+            return value === match;
 
           case Attribute.Matcher.Prefix:
-            return value.startsWith(this._value.get());
+            return value.startsWith(match);
 
           case Attribute.Matcher.Suffix:
-            return value.endsWith(this._value.get());
+            return value.endsWith(match);
 
           case Attribute.Matcher.Substring:
-            return value.includes(this._value.get());
+            return value.includes(match);
 
           case Attribute.Matcher.DashMatch:
-            return (
-              value === this._value.get() ||
-              value.startsWith(`${this._value.get()}-`)
-            );
+            return value === match || value.startsWith(`${match}-`);
 
           case Attribute.Matcher.Includes:
-            return value.split(/\s+/).some(equals(this._value.get()));
+            return value.split(/\s+/).some(equals(match));
         }
       }
 
@@ -1401,7 +1398,7 @@ export namespace Selector {
   );
 
   export function parse(input: string) {
-    return parseList(Slice.of([...Lexer.lex(input)]))
+    return parseList(Slice.of(Lexer.lex(input)))
       .flatMap(([tokens, selector]) => {
         const result: Result<typeof selector, string> =
           tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token");

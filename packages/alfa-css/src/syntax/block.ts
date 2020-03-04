@@ -41,7 +41,7 @@ export namespace Block {
     while (true) {
       const next = input.get(0);
 
-      if (next.isNone() || isEndingToken!(next)) {
+      if (next.isNone() || isEndingToken!(next.get())) {
         return Ok.of([input.slice(1), { token, value }] as const);
       }
 

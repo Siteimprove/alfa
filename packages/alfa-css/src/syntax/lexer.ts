@@ -1,4 +1,3 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -6,17 +5,18 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "./token";
 
-const { map } = Iterable;
-const { zeroOrMore, take } = Parser;
+const { zeroOrMore } = Parser;
 const { and, or, not, equals } = Predicate;
 
 export namespace Lexer {
-  export function* lex(input: string): Iterable<Token> {
+  export function lex(input: string): Array<Token> {
     const points = new Array(input.length);
 
     for (let i = 0, n = input.length; i < n; i++) {
       points[i] = input.charCodeAt(i);
     }
+
+    const tokens: Array<Token> = [];
 
     let characters = Slice.of(points);
 
@@ -28,11 +28,13 @@ export namespace Lexer {
 
         characters = remainder;
 
-        yield token;
+        tokens.push(token);
       } else {
         break;
       }
     }
+
+    return tokens;
   }
 }
 
@@ -210,12 +212,22 @@ const consumeEscapedCodePoint: Parser<Slice<number>, number> = input => {
     return Ok.of([input, 0xfffd] as const);
   }
 
+  input = input.slice(1);
+
   if (isHexDigit(byte)) {
     const bytes = [byte];
 
-    for (const [remainder, byte] of take(hexDigit, 5)(input.slice(1))) {
+    for (let i = 0; i < 5; i++) {
+      const result = hexDigit(input);
+
+      if (result.isErr()) {
+        break;
+      }
+
+      const [remainder, byte] = result.get();
+
       input = remainder;
-      bytes.push(...byte);
+      bytes.push(byte);
     }
 
     let code = 0;
@@ -245,7 +257,7 @@ const consumeEscapedCodePoint: Parser<Slice<number>, number> = input => {
     return Ok.of([input, code] as const);
   }
 
-  return Ok.of([input.slice(1), byte] as const);
+  return Ok.of([input, byte] as const);
 };
 
 /**
@@ -290,12 +302,11 @@ const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
 
     if (input.get(1).some(equals(0x2b, 0x2d))) {
       offset = 2;
-      isSigned = true;
     }
 
     if (input.get(offset).some(isDigit)) {
       number.push(...input.slice(0, offset + 1));
-      input = input.slice(offset);
+      input = input.slice(offset + 1);
       code = input.get(0);
       isInteger = false;
 
@@ -372,7 +383,7 @@ const consumeIdentifierLike: Parser<
       return Ok.of([input, Token.Function.of(string)] as const);
     }
 
-    return consumeURL(input.slice(1));
+    return consumeURL(input);
   }
 
   if (code.includes(0x28)) {
@@ -512,8 +523,6 @@ const consumeComments: Parser<Slice<number>, void> = input => {
 
   return Ok.of([input, undefined] as const);
 };
-
-const delims = new Map<string, Token.Delim>();
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-token

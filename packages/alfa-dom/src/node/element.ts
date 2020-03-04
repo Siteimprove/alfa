@@ -1,5 +1,4 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Lazy } from "@siteimprove/alfa-lazy";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -182,7 +181,7 @@ export class Element extends Node implements Slot, Slotable {
     return find(
       this._attributes,
       typeof predicate === "string"
-        ? element => element.name === predicate
+        ? attribute => attribute.hasName(predicate)
         : predicate
     );
   }

@@ -661,7 +661,7 @@ export namespace Media {
   );
 
   export function parse(input: string) {
-    return parseList(Slice.of([...Lexer.lex(input)]))
+    return parseList(Slice.of(Lexer.lex(input)))
       .flatMap(([tokens, selector]) => {
         const result: Result<typeof selector, string> =
           tokens.length === 0 ? Ok.of(selector) : Err.of("Unexpected token");
