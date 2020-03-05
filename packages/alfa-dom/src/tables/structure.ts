@@ -294,83 +294,100 @@ export function formingTable(table: Element) {
   // 6
   // skipping caption for now
   // 7
-  let currentElement = children.first().get();
-  children = children.rest();
+  let currentElement;
+    // = children.first().get();
+  // children = children.rest();
 
   // 10
   global.yCurrent = 0;
   // 11
   global.growingCellsList = [];
 
-  while (true) {
+  let processCG = true;
+  for (currentElement of children) {
     // 9
-    if (currentElement.name === "colgroup") {
-      // 9.1 (Columns group)
-      const colGroup = processColGroup(currentElement, global.theTable.width);
-      // 9.1 (1).4 (cumulative) and (2).2
-      global.theTable.width += colGroup.width;
-      // 9.1 (1).7 and (2).3
-      global.theTable.colGroups.push(colGroup);
-    } else {
-      // 9.4
-      break;
-    }
+    // if (currentElement.name === "colgroup") {
+    //   // 9.1 (Columns group)
+    //   const colGroup = processColGroup(currentElement, global.theTable.width);
+    //   // 9.1 (1).4 (cumulative) and (2).2
+    //   global.theTable.width += colGroup.width;
+    //   // 9.1 (1).7 and (2).3
+    //   global.theTable.colGroups.push(colGroup);
+    // } else {
+    //   // 9.4
+    //   break;
+    // }
     // 9.2
-    if (children.isEmpty()) return endFormingTable(pendingTfoot);
-    currentElement = children.first().get();
-    children = children.rest();
+    // if (children.isEmpty()) return endFormingTable(pendingTfoot);
+    // currentElement = children.first().get();
+    // children = children.rest();
     // 9.4
     // loop back to the 9.1/9.4 test
-  }
 
-  while (true) {
+
     // 12 (Rows)
-    while (!hasName(equals("thead", "tbody", "tfoot", "tr"))(currentElement)) {
-      if (children.isEmpty()) return endFormingTable(pendingTfoot);
-      currentElement = children.first().get();
-      children = children.rest();
-    }
+    // while (!hasName(equals("thead", "tbody", "tfoot", "tr"))(currentElement)) {
+    //   if (children.isEmpty()) return endFormingTable(pendingTfoot);
+    //   currentElement = children.first().get();
+    //   children = children.rest();
+    // }
 
     switch (currentElement.name) {
+      case "colgroup":
+        // 9.1 (Columns group)
+        if (processCG) {
+          const colGroup = processColGroup(currentElement, global.theTable.width);
+          // 9.1 (1).4 (cumulative) and (2).2
+          global.theTable.width += colGroup.width;
+          // 9.1 (1).7 and (2).3
+          global.theTable.colGroups.push(colGroup);
+        }
+        break;
       case "tr":
+        processCG = false;
         // 13
         // run the row processing
         rowProcessing(currentElement);
         // advance
-        if (children.isEmpty()) return endFormingTable(pendingTfoot);
-        currentElement = children.first().get();
-        children = children.rest();
+        // if (children.isEmpty()) return endFormingTable(pendingTfoot);
+        // currentElement = children.first().get();
+        // children = children.rest();
         // loop back to "12 (Rows)"
         break;
       case "tfoot":
+        processCG = false;
         // 14
         endRowGroup();
         // 15
         // add to list
         pendingTfoot.push(currentElement);
         // advance
-        if (children.isEmpty()) return endFormingTable(pendingTfoot);
-        currentElement = children.first().get();
-        children = children.rest();
+        // if (children.isEmpty()) return endFormingTable(pendingTfoot);
+        // currentElement = children.first().get();
+        // children = children.rest();
         // loop back to "12 (Rows)"
         break;
 
       case "thead":
       case "tbody":
+        processCG = false;
         // 14
         endRowGroup();
         // 16
         processRowGroup(currentElement);
         // 17
-        if (children.isEmpty()) return endFormingTable(pendingTfoot);
-        currentElement = children.first().get();
-        children = children.rest();
+        // if (children.isEmpty()) return endFormingTable(pendingTfoot);
+        // currentElement = children.first().get();
+        // children = children.rest();
         break;
       default: throw new Error("Impossible")
     }
+
+
 
     // 18
     // loop back to "12 (Rows)"
 
   }
+  return endFormingTable(pendingTfoot);
 }
