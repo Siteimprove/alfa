@@ -120,11 +120,11 @@ export class List<T>
   }
 
   public get(index: number): Option<T> {
-    if (index < 0 || index >= this._size) {
+    if (index < 0 || index >= this._size || this._tail.isEmpty()) {
       return None;
     }
 
-    const offset = this._size - this._tail.size;
+    const offset = this._size - this._tail.values.length;
 
     let value: Option<T>;
 
@@ -138,11 +138,11 @@ export class List<T>
   }
 
   public set(index: number, value: T): List<T> {
-    if (index < 0 || index >= this._size) {
+    if (index < 0 || index >= this._size || this._tail.isEmpty()) {
       return this;
     }
 
-    const offset = this._size - this._tail.size;
+    const offset = this._size - this._tail.values.length;
 
     let head = this._head;
     let tail = this._tail;
@@ -280,10 +280,10 @@ export class List<T>
     // In:  List { head, tail: Leaf(...tail, value) }
     // Out: List { head, tail }
     //
-    if (this._tail.size > 1) {
+    if (this._tail.values.length > 1) {
       return new List(
         this._head,
-        Leaf.of(this._tail.values.slice(0, this._tail.size - 1)),
+        Leaf.of(this._tail.values.slice(0, this._tail.values.length - 1)),
         this._shift,
         this._size - 1
       );
