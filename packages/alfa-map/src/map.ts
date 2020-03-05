@@ -25,7 +25,7 @@ export class Map<K, V>
 
   private static _empty = new Map<never, never>(Empty.empty(), 0);
 
-  public static empty<K, V>(): Map<K, V> {
+  public static empty<K = never, V = never>(): Map<K, V> {
     return this._empty;
   }
 
@@ -58,18 +58,28 @@ export class Map<K, V>
   }
 
   public set(key: K, value: V): Map<K, V> {
-    return new Map(
-      this._root.set(key, this.hash(key), 0, value),
-      this._size + (this.has(key) ? 0 : 1)
+    const { result: root, status } = this._root.set(
+      key,
+      value,
+      this.hash(key),
+      0
     );
+
+    if (status === "unchanged") {
+      return this;
+    }
+
+    return new Map(root, this._size + (status === "updated" ? 0 : 1));
   }
 
   public delete(key: K): Map<K, V> {
-    if (this.has(key)) {
-      return new Map(this._root.delete(key, this.hash(key), 0), this._size - 1);
+    const { result: root, status } = this._root.delete(key, this.hash(key), 0);
+
+    if (status === "unchanged") {
+      return this;
     }
 
-    return this;
+    return new Map(root, this._size - 1);
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Map<K, U> {

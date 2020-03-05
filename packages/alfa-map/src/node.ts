@@ -5,6 +5,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
+import { Status } from "./status";
+
 const { bit, take, skip, test, set, clear, popCount } = Bits;
 
 /**
@@ -14,8 +16,8 @@ export interface Node<K, V> extends Functor<V>, Iterable<[K, V]>, Equatable {
   isEmpty(): this is Empty<K, V>;
   isLeaf(): this is Leaf<K, V>;
   get(key: K, hash: number, shift: number): Option<V>;
-  set(key: K, hash: number, shift: number, value: V): Node<K, V>;
-  delete(key: K, hash: number, shift: number): Node<K, V>;
+  set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
+  delete(key: K, hash: number, shift: number): Status<Node<K, V>>;
   map<U>(mapper: Mapper<V, U, [K]>): Node<K, U>;
 }
 
@@ -58,12 +60,12 @@ export class Empty<K, V> implements Node<K, V> {
     return None;
   }
 
-  public set(key: K, hash: number, shift: number, value: V): Leaf<K, V> {
-    return Leaf.of(hash, key, value);
+  public set(key: K, value: V, hash: number): Status<Node<K, V>> {
+    return Status.created(Leaf.of(hash, key, value));
   }
 
-  public delete(): Empty<K, V> {
-    return this;
+  public delete(): Status<Node<K, V>> {
+    return Status.unchanged(this);
   }
 
   public map<U>(): Empty<K, U> {
@@ -95,10 +97,6 @@ export class Leaf<K, V> implements Node<K, V> {
     this._value = value;
   }
 
-  public get hash(): number {
-    return this._hash;
-  }
-
   public get key(): K {
     return this._key;
   }
@@ -123,27 +121,33 @@ export class Leaf<K, V> implements Node<K, V> {
 
   public set(
     key: K,
+    value: V,
     hash: number,
-    shift: number,
-    value: V
-  ): Leaf<K, V> | Collision<K, V> | Sparse<K, V> {
+    shift: number
+  ): Status<Node<K, V>> {
     if (hash === this._hash) {
-      const leaf = Leaf.of(hash, key, value);
+      if (Equatable.equals(key, this._key)) {
+        if (Equatable.equals(value, this._value)) {
+          return Status.unchanged(this);
+        }
 
-      return Equatable.equals(key, this._key)
-        ? leaf
-        : Collision.of(hash, [this, leaf]);
+        return Status.updated(Leaf.of(hash, key, value));
+      }
+
+      return Status.created(
+        Collision.of(hash, [this, Leaf.of(hash, key, value)])
+      );
     }
 
     const fragment = Node.fragment(this._hash, shift);
 
-    return Sparse.of(bit(fragment), [this]).set(key, hash, shift, value);
+    return Sparse.of(bit(fragment), [this]).set(key, value, hash, shift);
   }
 
-  public delete(key: K, hash: number, shift: number): Leaf<K, V> | Empty<K, V> {
+  public delete(key: K, hash: number): Status<Node<K, V>> {
     return hash === this._hash && Equatable.equals(key, this._key)
-      ? Empty.empty()
-      : this;
+      ? Status.deleted(Empty.empty())
+      : Status.unchanged(this);
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Leaf<K, U> {
@@ -183,14 +187,6 @@ export class Collision<K, V> implements Node<K, V> {
     this._nodes = nodes;
   }
 
-  public get hash(): number {
-    return this._hash;
-  }
-
-  public get nodes(): Iterable<Leaf<K, V>> {
-    return this._nodes;
-  }
-
   public isEmpty(): this is Empty<K, V> {
     return false;
   }
@@ -200,15 +196,13 @@ export class Collision<K, V> implements Node<K, V> {
   }
 
   public get(key: K, hash: number, shift: number): Option<V> {
-    if (hash !== this._hash) {
-      return None;
-    }
+    if (hash === this._hash) {
+      for (const node of this._nodes) {
+        const value = node.get(key, hash, shift);
 
-    for (const node of this._nodes) {
-      const value = node.get(key, hash, shift);
-
-      if (value.isSome()) {
-        return value;
+        if (value.isSome()) {
+          return value;
+        }
       }
     }
 
@@ -217,54 +211,56 @@ export class Collision<K, V> implements Node<K, V> {
 
   public set(
     key: K,
+    value: V,
     hash: number,
-    shift: number,
-    value: V
-  ): Collision<K, V> | Sparse<K, V> {
+    shift: number
+  ): Status<Node<K, V>> {
     if (hash === this._hash) {
-      const leaf = Leaf.of(hash, key, value);
-
       for (let i = 0, n = this._nodes.length; i < n; i++) {
         const node = this._nodes[i];
 
         if (Equatable.equals(key, node.key)) {
-          return Collision.of(this._hash, replace(this._nodes, i, leaf));
+          if (Equatable.equals(value, node.value)) {
+            return Status.unchanged(this);
+          }
+
+          return Status.updated(
+            Collision.of(
+              this._hash,
+              replace(this._nodes, i, Leaf.of(hash, key, value))
+            )
+          );
         }
       }
 
-      return Collision.of(
-        this._hash,
-        this._nodes.concat(Leaf.of(hash, key, value))
+      return Status.created(
+        Collision.of(this._hash, this._nodes.concat(Leaf.of(hash, key, value)))
       );
     }
 
     const fragment = Node.fragment(this._hash, shift);
 
-    return Sparse.of(bit(fragment), [this]).set(key, hash, shift, value);
+    return Sparse.of(bit(fragment), [this]).set(key, value, hash, shift);
   }
 
-  public delete(
-    key: K,
-    hash: number,
-    shift: number
-  ): Collision<K, V> | Empty<K, V> {
-    if (hash !== this._hash) {
-      return this;
-    }
+  public delete(key: K, hash: number): Status<Node<K, V>> {
+    if (hash === this._hash) {
+      for (let i = 0, n = this._nodes.length; i < n; i++) {
+        const node = this._nodes[i];
 
-    for (let i = 0, n = this._nodes.length; i < n; i++) {
-      const node = this._nodes[i];
+        if (Equatable.equals(key, node.key)) {
+          const nodes = remove(this._nodes, i);
 
-      if (Equatable.equals(key, node.key)) {
-        if (this._nodes.length === 1) {
-          return Empty.empty();
+          if (nodes.length === 1) {
+            return Status.deleted(nodes[0]);
+          }
+
+          return Status.deleted(Collision.of(this._hash, nodes));
         }
-
-        return Collision.of(this._hash, remove(this._nodes, i));
       }
     }
 
-    return this;
+    return Status.unchanged(this);
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Collision<K, U> {
@@ -306,14 +302,6 @@ export class Sparse<K, V> implements Node<K, V> {
     this._nodes = nodes;
   }
 
-  public get mask(): number {
-    return this._mask;
-  }
-
-  public get nodes(): Iterable<Node<K, V>> {
-    return this._nodes;
-  }
-
   public isEmpty(): this is Empty<K, V> {
     return false;
   }
@@ -334,60 +322,72 @@ export class Sparse<K, V> implements Node<K, V> {
     return None;
   }
 
-  public set(key: K, hash: number, shift: number, value: V): Sparse<K, V> {
+  public set(
+    key: K,
+    value: V,
+    hash: number,
+    shift: number
+  ): Status<Node<K, V>> {
     const fragment = Node.fragment(hash, shift);
     const index = Node.index(fragment, this._mask);
 
     if (test(this._mask, fragment)) {
-      return Sparse.of(
-        this._mask,
-        replace(
-          this._nodes,
-          index,
-          this._nodes[index].set(key, hash, shift + Node.Bits, value)
-        )
+      const { result: node, status } = this._nodes[index].set(
+        key,
+        value,
+        hash,
+        shift + Node.Bits
+      );
+
+      if (status === "unchanged") {
+        return Status.unchanged(this);
+      }
+
+      return Status.updated(
+        Sparse.of(this._mask, replace(this._nodes, index, node))
       );
     }
 
-    return Sparse.of(
-      set(this._mask, fragment),
-      insert(this._nodes, index, Leaf.of(hash, key, value))
+    return Status.created(
+      Sparse.of(
+        set(this._mask, fragment),
+        insert(this._nodes, index, Leaf.of(hash, key, value))
+      )
     );
   }
 
-  public delete(
-    key: K,
-    hash: number,
-    shift: number
-  ): Sparse<K, V> | Leaf<K, V> | Empty<K, V> {
+  public delete(key: K, hash: number, shift: number): Status<Node<K, V>> {
     const fragment = Node.fragment(hash, shift);
 
     if (test(this._mask, fragment)) {
       const index = Node.index(fragment, this._mask);
 
-      const node = this._nodes[index].delete(key, hash, shift + Node.Bits);
+      const { result: node, status } = this._nodes[index].delete(
+        key,
+        hash,
+        shift + Node.Bits
+      );
+
+      if (status === "unchanged") {
+        return Status.unchanged(this);
+      }
 
       if (node.isEmpty()) {
-        if (this._nodes.length === 1) {
-          return Empty.empty();
+        const nodes = remove(this._nodes, index);
+
+        if (nodes.length === 1) {
+          return Status.deleted(nodes[0]);
         }
 
-        return Sparse.of(
-          clear(this._mask, fragment),
-          remove(this._nodes, index)
-        );
+        return Status.deleted(Sparse.of(clear(this._mask, fragment), nodes));
       }
 
-      if (node.isLeaf()) {
-        if (this._nodes.length === 1) {
-          return node;
-        }
-      }
-
-      return Sparse.of(this._mask, replace(this._nodes, index, node));
+      return Status.deleted(
+        Sparse.of(this._mask, replace(this._nodes, index, node))
+      );
     }
 
-    return this;
+    return Status.unchanged(this);
   }
 
   public map<U>(mapper: Mapper<V, U, [K]>): Sparse<K, U> {

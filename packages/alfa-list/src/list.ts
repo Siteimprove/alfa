@@ -28,7 +28,7 @@ export class List<T>
 
   private static _empty = new List<never>(Empty.empty(), Empty.empty(), 0, 0);
 
-  public static empty<T>(): List<T> {
+  public static empty<T = never>(): List<T> {
     return this._empty;
   }
 
@@ -131,7 +131,7 @@ export class List<T>
     if (index < offset) {
       value = this._head.get(index, this._shift - Node.Bits);
     } else {
-      value = this._tail.get(index - offset, this._shift);
+      value = this._tail.get(index - offset);
     }
 
     return value;
@@ -148,9 +148,17 @@ export class List<T>
     let tail = this._tail;
 
     if (index < offset) {
-      head = head.set(index, this._shift, value);
+      head = head.set(index, value, this._shift);
+
+      if (head === this._head) {
+        return this;
+      }
     } else {
-      tail = tail.set(index - offset, this._shift, value);
+      tail = tail.set(index - offset, value);
+
+      if (tail === this._tail) {
+        return this;
+      }
     }
 
     return new List(head, tail, this._shift, this._size);
@@ -208,7 +216,7 @@ export class List<T>
 
     // If the head has overflown, we need to split it which in turn increases
     // the depth of the list.
-    if (head instanceof Leaf || index === Node.overflow(shift)) {
+    if (head.isLeaf() || index === Node.overflow(shift)) {
       head = Branch.of([head]);
       shift += Node.Bits;
     } else {
@@ -281,7 +289,7 @@ export class List<T>
       );
     }
 
-    if (this._head instanceof Leaf) {
+    if (this._head.isLeaf() || this._head.isEmpty()) {
       return new List(
         Empty.empty(),
         this._head,
@@ -290,13 +298,13 @@ export class List<T>
       );
     }
 
-    let head = this._head.clone() as Empty<T> | Leaf<T> | Branch<T>;
+    let head: Leaf<T> | Branch<T> = this._head.clone();
     let tail = this._tail;
     let shift = this._shift;
 
     const index = this._size - Node.Capacity - 1;
 
-    let prev = head as Branch<T>;
+    let prev = head;
     let level = shift - Node.Bits;
 
     // We now remove the rightmost leaf of the head as this will be used as the
@@ -310,7 +318,7 @@ export class List<T>
 
       // Once we reach the rightmost leaf node, remove it as it will be used as
       // the new tail.
-      if (next instanceof Leaf) {
+      if (next.isLeaf()) {
         prev.nodes.pop();
         tail = next;
       } else {
@@ -322,8 +330,7 @@ export class List<T>
     // new head which in turn decreases the depth of the list. If the head is a
     // leaf node, we instead set the new head to null.
     if (index === Node.underflow(shift)) {
-      head =
-        head instanceof Leaf ? Empty.empty() : (head as Branch<T>).nodes[0];
+      head = head.nodes[0];
       shift -= Node.Bits;
     }
 

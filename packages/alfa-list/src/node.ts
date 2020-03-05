@@ -13,9 +13,9 @@ const { bit, take, skip } = Bits;
 export interface Node<T> extends Functor<T>, Iterable<T>, Equatable {
   readonly size: number;
   isEmpty(): this is Empty<T>;
-  clone(): Node<T>;
+  isLeaf(): this is Leaf<T>;
   get(index: number, shift: number): Option<T>;
-  set(index: number, shift: number, value: T): Node<T>;
+  set(index: number, value: T, shift: number): Node<T>;
   map<U>(mapper: Mapper<T, U>): Node<U>;
 }
 
@@ -60,8 +60,8 @@ export class Empty<T> implements Node<T> {
     return true;
   }
 
-  public clone(): Empty<T> {
-    return this;
+  public isLeaf(): this is Leaf<T> {
+    return false;
   }
 
   public get(): None {
@@ -109,22 +109,30 @@ export class Leaf<T> implements Node<T> {
     return false;
   }
 
-  public clone(): Leaf<T> {
-    return Leaf.of(this._values.slice(0));
+  public isLeaf(): this is Leaf<T> {
+    return true;
   }
 
   public hasCapacity(): boolean {
     return this._values.length < Node.Capacity;
   }
 
-  public get(index: number, shift: number): Option<T> {
-    return Option.of(this._values[take(index, Node.Bits)]);
+  public get(index: number): Option<T> {
+    const fragment = take(index, Node.Bits);
+
+    return Option.of(this._values[fragment]);
   }
 
-  public set(index: number, shift: number, value: T): Leaf<T> {
+  public set(index: number, value: T): Leaf<T> {
+    const fragment = take(index, Node.Bits);
+
+    if (Equatable.equals(value, this._values[fragment])) {
+      return this;
+    }
+
     const values = this._values.slice(0);
 
-    values[take(index, Node.Bits)] = value;
+    values[fragment] = value;
 
     return Leaf.of(values);
   }
@@ -178,6 +186,10 @@ export class Branch<T> implements Node<T> {
     return false;
   }
 
+  public isLeaf(): this is Leaf<T> {
+    return false;
+  }
+
   public clone(): Branch<T> {
     return Branch.of(this._nodes.slice(0));
   }
@@ -188,16 +200,18 @@ export class Branch<T> implements Node<T> {
     return this._nodes[fragment].get(index, shift - Node.Bits);
   }
 
-  public set(index: number, shift: number, value: T): Branch<T> {
+  public set(index: number, value: T, shift: number): Branch<T> {
     const fragment = Node.fragment(index, shift);
+
+    const node = this._nodes[fragment].set(index, value, shift - Node.Bits);
+
+    if (node === this._nodes[fragment]) {
+      return this;
+    }
 
     const nodes = this._nodes.slice(0);
 
-    nodes[fragment] = this._nodes[fragment].set(
-      index,
-      shift - Node.Bits,
-      value
-    );
+    nodes[fragment] = node;
 
     return Branch.of(nodes);
   }
