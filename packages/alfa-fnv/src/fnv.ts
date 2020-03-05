@@ -5,12 +5,12 @@ export class FNV implements Hash {
     return new FNV();
   }
 
-  private hash = 2166136261;
+  private _hash = 2166136261;
 
   private constructor() {}
 
   public write(data: Uint8Array): this {
-    let hash = this.hash;
+    let hash = this._hash;
 
     for (const octet of data) {
       hash ^= octet;
@@ -18,12 +18,12 @@ export class FNV implements Hash {
         (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
     }
 
-    this.hash = hash;
+    this._hash = hash;
 
     return this;
   }
 
   public finish(): number {
-    return this.hash >>> 0; // Convert to unsigned 32-bit integer
+    return this._hash >>> 0; // Convert to unsigned 32-bit integer
   }
 }
