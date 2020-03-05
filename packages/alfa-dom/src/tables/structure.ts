@@ -158,7 +158,7 @@ export function rowProcessing(tr: Element): void {
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
-    let grow: boolean;
+    // let grow: boolean;
     // 6 (Cells)
     while (global.xCurrent < global.theTable.width && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
       global.xCurrent++
@@ -172,12 +172,13 @@ export function rowProcessing(tr: Element): void {
     // 9 (need non-null assertion because can't tell that 5 is always run at least once. Bad!)
     let rowspan = parseSpan(currentCell!, "rowspan", 0, 65534, 1);
     // 10 assuming we are not in quirks mode because I don't know if we test that yet…
+    const grow = rowspan === 0;
     if (rowspan === 0) {
-      grow = true;
-      rowspan = 1;
-    } else {
-      grow = false;
-    }
+      // grow = true;
+      rowspan = 1;}
+    // } else {
+    //   // grow = false;
+    // }
     // 11
     if (global.theTable.width <= global.xCurrent + colspan) {
       global.theTable.width = global.xCurrent + colspan
