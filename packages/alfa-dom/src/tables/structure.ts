@@ -288,20 +288,20 @@ export function formingTable(table: Element) {
   let pendingTfoot: Array<Element> = [];
   // 4
   // the table is global.theTable
-  // 5
-  let children = table.children().filter(Element.isElement);
+  // 5 + 8 + 9.3
+  let children = table.children().filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
   if (children.isEmpty()) return;
   // 6
   // skipping caption for now
   // 7
   let currentElement = children.first().get();
   children = children.rest();
-  // 8
-  while (!hasName(equals("colgroup", "thead", "tbody", "tfoot", "tr"))(currentElement)) {
-    if (children.isEmpty()) return endFormingTable(pendingTfoot);
-    currentElement = children.first().get();
-    children = children.rest();
-  }
+
+  // 10
+  global.yCurrent = 0;
+  // 11
+  global.growingCellsList = [];
+
   while (true) {
     // 9
     if (currentElement.name === "colgroup") {
@@ -319,19 +319,10 @@ export function formingTable(table: Element) {
     if (children.isEmpty()) return endFormingTable(pendingTfoot);
     currentElement = children.first().get();
     children = children.rest();
-    // 9.3
-    while (!hasName(equals("colgroup", "thead", "tbody", "tfoot", "tr"))(currentElement)) {
-      if (children.isEmpty()) return endFormingTable(pendingTfoot);
-      currentElement = children.first().get();
-      children = children.rest();
-    }
     // 9.4
     // loop back to the 9.1/9.4 test
   }
-  // 10
-  global.yCurrent = 0;
-  // 11
-  global.growingCellsList = [];
+
   while (true) {
     // 12 (Rows)
     while (!hasName(equals("thead", "tbody", "tfoot", "tr"))(currentElement)) {
