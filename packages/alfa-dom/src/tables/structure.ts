@@ -377,37 +377,47 @@ export function formingTable(table: Element) {
       currentElement = children.first().get();
       children = children.rest();
     }
-    // 13
-    if (currentElement.name === "tr") {
-      // run the row processing
-      rowProcessing(currentElement);
-      // advance
-      if (children.isEmpty()) return endFormingTable(pendingTfoot);
-      currentElement = children.first().get();
-      children = children.rest();
-      // loop back to "12 (Rows)"
-      continue;
+
+    switch (currentElement.name) {
+      case "tr":
+        // 13
+        // run the row processing
+        rowProcessing(currentElement);
+        // advance
+        if (children.isEmpty()) return endFormingTable(pendingTfoot);
+        currentElement = children.first().get();
+        children = children.rest();
+        // loop back to "12 (Rows)"
+        break;
+      case "tfoot":
+        // 14
+        endRowGroup();
+        // 15
+        // add to list
+        pendingTfoot.push(currentElement);
+        // advance
+        if (children.isEmpty()) return endFormingTable(pendingTfoot);
+        currentElement = children.first().get();
+        children = children.rest();
+        // loop back to "12 (Rows)"
+        break;
+
+      case "thead":
+      case "tbody":
+        // 14
+        endRowGroup();
+        // 16
+        processRowGroup(currentElement);
+        // 17
+        if (children.isEmpty()) return endFormingTable(pendingTfoot);
+        currentElement = children.first().get();
+        children = children.rest();
+        break;
+      default: throw new Error("Impossible")
     }
-    // 14
-    endRowGroup();
-    // 15
-    if (currentElement.name === "tfoot") {
-      // add to list
-      pendingTfoot.push(currentElement);
-      // advance
-      if (children.isEmpty()) return endFormingTable(pendingTfoot);
-      currentElement = children.first().get();
-      children = children.rest();
-      // loop back to "12 (Rows)"
-      continue;
-    }
-    // 16
-    processRowGroup(currentElement);
-    // 17
-    if (children.isEmpty()) return endFormingTable(pendingTfoot);
-    currentElement = children.first().get();
-    children = children.rest();
+
     // 18
     // loop back to "12 (Rows)"
+
   }
 }
