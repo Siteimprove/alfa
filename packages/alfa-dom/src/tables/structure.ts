@@ -255,34 +255,27 @@ export function endFormingTable(pendingTfoot: Iterable<Element>) {
   return;
 }
 
-export function processColGroup(colgroup: Element) { // 9
+export function processColGroup(colgroup: Element, xStart: number): ColGroup { // global step 9.1
   let children = colgroup.children().filter(isElementByName("col"));
-  if (children.isEmpty()) {
-    // second case
+  if (children.isEmpty()) { // second case
     // 1
     const span = parseSpan(colgroup, "span", 1, 1000, 1);
-    // 2
-    global.theTable.width += span;
-    // 3
-    const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: colgroup}; // need better name!
-    global.theTable.colGroups.push(colGroup);
-  } else {
-    //first case
-    //1
-    const xStart = global.theTable.width;
+    // 2 and 3 done in main function
+    return { anchor: { x: xStart }, width: span, element: colgroup }
+  } else { // first case
+    // 1
+    let totalSpan = 0;
     for (const currentCol of children) { // loop control is 2 and 6
       // 3 (Columns)
       const span = parseSpan(currentCol, "span", 1, 1000, 1);
-      // 4
-      global.theTable.width += span;
+      totalSpan += span;
       // 5
-      // The col element represent column within the colgroup but is not a colgroup itself. The rest of the algorithm seems to never use that again…
+      // The col element represents column within the colgroup but is not a colgroup itself. The rest of the algorithm seems to never use that again…
       // const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
       // global.theTable.colGroups.push(colGroup);
     }
-    // 7
-    const colGroup: ColGroup = { anchor: {x:xStart}, width: global.theTable.width-xStart, element: colgroup}; // need better name!
-    global.theTable.colGroups.push(colGroup)
+    // 4 and 7 done in main function
+    return { anchor: { x: xStart }, width: totalSpan, element: colgroup };
   }
 }
 
@@ -313,7 +306,11 @@ export function formingTable(table: Element) {
     // 9
     if (currentElement.name === "colgroup") {
       // 9.1 (Columns group)
-      processColGroup(currentElement);
+      const colGroup = processColGroup(currentElement, global.theTable.width);
+      // 9.1 (1).4 (cumulative) and (2).2
+      global.theTable.width += colGroup.width;
+      // 9.1 (1).7 and (2).3
+      global.theTable.colGroups.push(colGroup);
     } else {
       // 9.4
       break;
