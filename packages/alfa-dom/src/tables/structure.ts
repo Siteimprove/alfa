@@ -158,7 +158,6 @@ export function rowProcessing(tr: Element): void {
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
-    // let grow: boolean;
     // 6 (Cells)
     while (global.xCurrent < global.theTable.width && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
       global.xCurrent++
@@ -167,18 +166,15 @@ export function rowProcessing(tr: Element): void {
     if (global.xCurrent === global.theTable.width) {
       global.theTable.width++
     }
-    // 8 (need non-null assertion because can't tell that 5 is always run at least once. Bad!)
-    const colspan = parseSpan(currentCell!, "colspan", 1, 1000, 1);
-    // 9 (need non-null assertion because can't tell that 5 is always run at least once. Bad!)
-    let rowspan = parseSpan(currentCell!, "rowspan", 0, 65534, 1);
+    // 8
+    const colspan = parseSpan(currentCell, "colspan", 1, 1000, 1);
+    // 9
+    let rowspan = parseSpan(currentCell, "rowspan", 0, 65534, 1);
     // 10 assuming we are not in quirks mode because I don't know if we test that yet…
-    const grow = rowspan === 0;
+    const grow = (rowspan === 0);
     if (rowspan === 0) {
-      // grow = true;
-      rowspan = 1;}
-    // } else {
-    //   // grow = false;
-    // }
+      rowspan = 1
+    }
     // 11
     if (global.theTable.width <= global.xCurrent + colspan) {
       global.theTable.width = global.xCurrent + colspan
@@ -189,7 +185,7 @@ export function rowProcessing(tr: Element): void {
     }
     // 13
     const cell: Cell = {
-      kind: hasName(equals("th"))(currentCell!) ? "header" : "data",
+      kind: hasName(equals("th"))(currentCell) ? "header" : "data",
       anchor: {x: global.xCurrent, y: global.yCurrent},
       width: colspan,
       height: rowspan
@@ -204,7 +200,7 @@ export function rowProcessing(tr: Element): void {
       }
     }
     // Storing the element in the anchor slot only.
-    global.theTable.slots[global.xCurrent][global.yCurrent].elements.push(currentCell!);
+    global.theTable.slots[global.xCurrent][global.yCurrent].elements.push(currentCell);
     global.theTable.cells.push(cell);
     // 14
     if (grow) {
