@@ -306,8 +306,9 @@ export function processColGroup(colgroup: Element) { // 9
       // 4
       global.theTable.width += span;
       // 5
-      const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
-      global.theTable.colGroups.push(colGroup);
+      // The col element represent column within the colgroup but is not a colgroup itself. The rest of the algorithm seems to never use that again…
+      // const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
+      // global.theTable.colGroups.push(colGroup);
       // 6
       if (children.isEmpty()) break;
       currentCol = children.first().get();
@@ -336,6 +337,7 @@ export function formingTable(table: Element) {
   // skipping caption for now
   // 7
   let currentElement = children.first().get();
+  children = children.rest();
   // 8
   while (!hasName(equals("colgroup", "thead", "tbody", "tfoot", "tr"))(currentElement)) {
     if (children.isEmpty()) return endFormingTable(pendingTfoot);
@@ -365,7 +367,7 @@ export function formingTable(table: Element) {
     // loop back to the 9.1/9.4 test
   }
   // 10
-  let yCurrent = 0;
+  global.yCurrent = 0;
   // 11
   global.growingCellsList = [];
   while (true) {
