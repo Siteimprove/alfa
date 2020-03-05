@@ -6,7 +6,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "./token";
 
 const { zeroOrMore } = Parser;
-const { and, or, not, equals } = Predicate;
+const { and, or, not, equals, test } = Predicate;
 
 export namespace Lexer {
   export function lex(input: string): Array<Token> {
@@ -82,7 +82,7 @@ const isLowercaseLetter: Predicate<number> = code =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#letter
  */
-const isLetter: Predicate<number> = or(isUppercaseLetter, isLowercaseLetter);
+const isLetter = or(isUppercaseLetter, isLowercaseLetter);
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-ascii-code-point
@@ -92,12 +92,12 @@ const isNonAscii: Predicate<number> = code => code >= 0x80;
 /**
  * @see https://drafts.csswg.org/css-syntax/#newline
  */
-const isNewline: Predicate<number> = equals(0xa);
+const isNewline = equals(0xa);
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#whitespace
  */
-const isWhitespace: Predicate<number> = or(isNewline, equals(0x9, 0x20));
+const isWhitespace = or(isNewline, equals(0x9, 0x20));
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-printable-code-point
@@ -111,15 +111,12 @@ const isNonPrintable: Predicate<number> = code =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#name-start-code-point
  */
-const isNameStart: Predicate<number> = or(
-  isLetter,
-  or(isNonAscii, equals(0x5f))
-);
+const isNameStart = or(isLetter, or(isNonAscii, equals(0x5f)));
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#name-code-point
  */
-const isName: Predicate<number> = or(isNameStart, or(isDigit, equals(0x2d)));
+const isName = or(isNameStart, or(isDigit, equals(0x2d)));
 
 /**
  * @see https://infra.spec.whatwg.org/#surrogate
@@ -401,7 +398,7 @@ const consumeString: Parser<Slice<number>, Token.String> = input => {
 
   input = input.slice(1);
 
-  let string: Array<number> = [];
+  let string = "";
 
   while (true) {
     const code = input.get(0);
@@ -412,13 +409,10 @@ const consumeString: Parser<Slice<number>, Token.String> = input => {
       break;
     }
 
-    string.push(code.get());
+    string += String.fromCharCode(code.get());
   }
 
-  return Ok.of([
-    input,
-    Token.String.of(String.fromCharCode(...string))
-  ] as const);
+  return Ok.of([input, Token.String.of(string)] as const);
 };
 
 /**
@@ -538,16 +532,6 @@ const consumeToken: Parser<Slice<number>, Token, string> = input => {
 
   const code = input.get(0).get();
 
-  if (isWhitespace(code)) {
-    input = input.slice(1);
-
-    while (input.get(0).some(isWhitespace)) {
-      input = input.slice(1);
-    }
-
-    return Ok.of([input, Token.Whitespace.of()] as const);
-  }
-
   switch (code) {
     case 0x22:
       return consumeString(input);
@@ -563,6 +547,8 @@ const consumeToken: Parser<Slice<number>, Token, string> = input => {
 
         return Ok.of([input, Token.Hash.of(name, isIdentifier)] as const);
       }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
 
     case 0x27:
       return consumeString(input);
@@ -653,11 +639,21 @@ const consumeToken: Parser<Slice<number>, Token, string> = input => {
       return Ok.of([input.slice(1), Token.CloseCurlyBracket.of()] as const);
   }
 
-  if (isDigit(code)) {
+  if (test<number>(isWhitespace, code)) {
+    input = input.slice(1);
+
+    while (input.get(0).some(isWhitespace)) {
+      input = input.slice(1);
+    }
+
+    return Ok.of([input, Token.Whitespace.of()] as const);
+  }
+
+  if (test<number>(isDigit, code)) {
     return consumeNumeric(input);
   }
 
-  if (isNameStart(code)) {
+  if (test<number>(isNameStart, code)) {
     return consumeIdentifierLike(input);
   }
 

@@ -86,7 +86,7 @@ export class Style implements Serializable {
         either(
           Keyword.parse("initial", "inherit"),
           property.parse
-        )(Slice.of([...Lexer.lex(declaration.value)]))
+        )(Slice.of(Lexer.lex(declaration.value)))
           .map(([remainder, value]) =>
             isEmpty(remainder)
               ? Option.of(Value.of(value, Option.of(declaration)))
