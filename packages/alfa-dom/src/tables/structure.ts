@@ -134,17 +134,12 @@ function hasName<T extends { readonly name: string }>(
 }
 // end copied from rule
 
-const isCell: Predicate<Node, Element> =
-  and(Element.isElement,
+function isElementByName(...names: Array<string>): Predicate<Node, Element> {
+  return and(Element.isElement,
     and(hasNamespace(equals(Namespace.HTML)),
-      hasName(equals("th", "td"))
-      ));
-
-const isRow: Predicate<Node, Element> =
-  and(Element.isElement,
-    and(hasNamespace(equals(Namespace.HTML)),
-      hasName(equals("tr"))
+      hasName(equals(...names))
     ));
+}
 
 // Bad global variables! Bad!
 export const global = {xCurrent:0, yCurrent:0, growingCellsList: [] as Array<Cell>,
@@ -152,11 +147,6 @@ export const global = {xCurrent:0, yCurrent:0, growingCellsList: [] as Array<Cel
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
 export function rowProcessing(tr: Element): void {
-  let step = "";
-  let children = tr.children().filter(isCell);
-  let currentCell: Element;
-  let grow: boolean;
-
   // 1
   if (global.theTable.height === global.yCurrent) {
     global.theTable.height++
@@ -165,16 +155,10 @@ export function rowProcessing(tr: Element): void {
   global.xCurrent = 0;
   // 3
   growingCells(global.growingCellsList, global.yCurrent);
-  // 4
-  if (children.isEmpty()) {
-    global.yCurrent++;
-    return;
-  }
-  // 5
-  currentCell = children.first().get();
-  children = children.rest();
 
-  while (true) {
+  let children = tr.children().filter(isElementByName("th", "td"));
+  for (const currentCell of children) { // loop control between 4-5, and 16-17-18
+    let grow: boolean;
     // 6 (Cells)
     while (global.xCurrent < global.theTable.width && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
       global.xCurrent++
@@ -227,17 +211,9 @@ export function rowProcessing(tr: Element): void {
     }
     // 15
     global.xCurrent = global.xCurrent + colspan;
-    // 16
-    if (children.isEmpty()) {
-      global.yCurrent++;
-      return;
-    }
-    // 17
-    currentCell = children.first().get();
-    children = children.rest();
-    // 18
-    // loop back to "6 (Cells)"
   }
+  // 4 and 16
+  global.yCurrent++;
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
@@ -258,7 +234,7 @@ export function processRowGroup(group: Element) {
   // 1
   const yStart = global.theTable.height;
   // 2
-  for (const row of group.children().filter(isRow)) {
+  for (const row of group.children().filter(isElementByName("tr"))) {
     rowProcessing(row);
   }
   // 3
