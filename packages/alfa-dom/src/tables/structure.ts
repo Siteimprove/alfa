@@ -256,7 +256,7 @@ export function endFormingTable(pendingTfoot: Iterable<Element>) {
 }
 
 export function processColGroup(colgroup: Element) { // 9
-  let children = colgroup.children().filter(and(Element.isElement, hasName(equals("col"))));
+  let children = colgroup.children().filter(isElementByName("col"));
   if (children.isEmpty()) {
     // second case
     // 1
@@ -270,10 +270,7 @@ export function processColGroup(colgroup: Element) { // 9
     //first case
     //1
     const xStart = global.theTable.width;
-    // 2
-    let currentCol = children.first().get();
-    children = children.rest();
-    while (true) {
+    for (const currentCol of children) { // loop control is 2 and 6
       // 3 (Columns)
       const span = parseSpan(currentCol, "span", 1, 1000, 1);
       // 4
@@ -282,11 +279,6 @@ export function processColGroup(colgroup: Element) { // 9
       // The col element represent column within the colgroup but is not a colgroup itself. The rest of the algorithm seems to never use that again…
       // const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
       // global.theTable.colGroups.push(colGroup);
-      // 6
-      if (children.isEmpty()) break;
-      currentCol = children.first().get();
-      children = children.rest();
-      // loop back to "3 (Columns)"
     }
     // 7
     const colGroup: ColGroup = { anchor: {x:xStart}, width: global.theTable.width-xStart, element: colgroup}; // need better name!
