@@ -401,6 +401,7 @@ export namespace expensesNum {
       <td id="rd-percent-2008">3.4%</td> <td id="rd-percent-2007">3.3%</td> <td id="rd-percent-2006">3.7%</td>
     </tr>
     </tbody>
+    <colgroup id="ignored" span={4}></colgroup>
     <tbody id="body-2">
     <tr> <th id="sales" scope="rowgroup"> Selling, general, and administrative</th>
       <td id="sales-2008">$ 3,761</td> <td id="sales-2007">$ 2,963</td> <td id="sales-2006">$ 2,433</td>
