@@ -132,13 +132,13 @@ export function parseSpan(element: Element, name: string, min: number, max: numb
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-function growingCell(cell: Cell, yCurrent: number, keep: boolean = false): Cell {
+function growingCell(yCurrent: number, keep: boolean = false): ((cell: Cell) => Cell) {
   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-  return {...cell, height: cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height, growing: cell.growing && keep}
-}
-
-function growingCells(cells: Array<Cell>, yCurrent: number, keep: boolean = false): Array<Cell> {
-  return cells.map(cell => growingCell(cell, yCurrent, keep));
+  return cell => ({
+    ...cell,
+    height: cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height,
+    growing: cell.growing && keep
+  })
 }
 
 // Bad copy from rule helpers. Move to DOM helpers?
@@ -171,7 +171,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
   // 2
    let xCurrent = 0;
   // 3
-  table.cells = growingCells(table.cells, yCurrent, true);
+  table.cells = table.cells.map(growingCell(yCurrent, true));
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
@@ -229,10 +229,6 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
     // Storing the element in the anchor slot only.
     table.slots[xCurrent][yCurrent].elements.push(currentCell);
     table.cells.push(cell);
-    // 14
-    // if (grow) {
-    //   global.growingCellsList.push(cell);
-    // }
     // 15
     xCurrent = xCurrent + colspan;
   }
@@ -242,9 +238,8 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
 export function endRowGroup(table: Table, height: number) {
   // 1, growingCells can grow by more than 1 at a time.
-  table.cells = growingCells(table.cells, height);
+  table.cells = table.cells.map(growingCell(height));
   // 2
-  // global.growingCellsList = [];
   global.yCurrent = height;
 }
 
@@ -293,7 +288,7 @@ export function processColGroup(colgroup: Element, xStart: number): ColGroup { /
 }
 
 export function formingTable(element: Element): Table {
-  // 1, 2, 4
+  // 1, 2, 4, 11
   const table = newTable();
   // 3
   let pendingTfoot: Array<Element> = [];
@@ -304,8 +299,6 @@ export function formingTable(element: Element): Table {
 
   // 10
   global.yCurrent = 0;
-  // 11
-  // global.growingCellsList = [];
 
   let processCG = true;
   for (const currentElement of children) { // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
@@ -350,9 +343,7 @@ export function formingTable(element: Element): Table {
       default: throw new Error("Impossible")
     }
   }
-  // 19-21
-  // endFormingTable(table, pendingTfoot);
-// 19
+  // 19
   for (const tfoot of pendingTfoot) {
     processRowGroup(table, tfoot);
   }

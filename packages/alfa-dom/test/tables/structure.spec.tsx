@@ -41,12 +41,12 @@ test("Process row group", t => {
   t.deepEqual(table, rowGroup.expected);
 });
 
-// test("Process table", t => {
-//   t.deepEqual(formingTable(smithonian.element), smithonian.expected);
-//
-//   t.deepEqual(formingTable(apple.element), apple.expected);
-//
-//   t.deepEqual(formingTable(expenses.element), expenses.expected);
-//
-//   t.deepEqual(formingTable(expensesNum.element), expensesNum.expected);
-// });
+test("Process table", t => {
+  t.deepEqual(formingTable(smithonian.element), smithonian.expected);
+
+  t.deepEqual(formingTable(apple.element), apple.expected);
+
+  t.deepEqual(formingTable(expenses.element), expenses.expected);
+
+  t.deepEqual(formingTable(expensesNum.element), expensesNum.expected);
+});
