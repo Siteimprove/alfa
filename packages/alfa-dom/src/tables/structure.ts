@@ -148,7 +148,7 @@ function isElementByName(...names: Array<string>): Predicate<Node, Element> {
 }
 
 // Bad global variables! Bad!
-export const global = {xCurrent:0, yCurrent:0, growingCellsList: [] as Array<Cell>,
+export const global = { yCurrent:0, growingCellsList: [] as Array<Cell>,
   theTable: { slots: [[]] as Array<Array<Slot>>, width: 0, height: 0, cells: [] as Array<Cell>, rowGroups: [] as Array<RowGroup>, colGroups: [] as Array<ColGroup> } as Table};
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
@@ -158,22 +158,22 @@ export function rowProcessing(tr: Element): void {
     global.theTable.height++
   }
   // 2
-  global.xCurrent = 0;
+   let xCurrent = 0;
   // 3
   growingCells(global.growingCellsList, global.yCurrent);
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
-    while (global.xCurrent < global.theTable.width &&
-      getSlot(global.theTable, global.xCurrent, global.yCurrent)
+    while (xCurrent < global.theTable.width &&
+      getSlot(global.theTable, xCurrent, global.yCurrent)
         .flatMap(slot => slot.cell)
         .isSome()
     ) {
-      global.xCurrent++
+      xCurrent++
     }
     // 7
-    if (global.xCurrent === global.theTable.width) {
+    if (xCurrent === global.theTable.width) {
       global.theTable.width++
     }
     // 8
@@ -186,8 +186,8 @@ export function rowProcessing(tr: Element): void {
       rowspan = 1
     }
     // 11
-    if (global.theTable.width <= global.xCurrent + colspan) {
-      global.theTable.width = global.xCurrent + colspan
+    if (global.theTable.width <= xCurrent + colspan) {
+      global.theTable.width = xCurrent + colspan
     }
     // 12
     if (global.theTable.height <= global.yCurrent + rowspan) {
@@ -196,11 +196,11 @@ export function rowProcessing(tr: Element): void {
     // 13
     const cell: Cell = {
       kind: hasName(equals("th"))(currentCell) ? "header" : "data",
-      anchor: {x: global.xCurrent, y: global.yCurrent},
+      anchor: {x: xCurrent, y: global.yCurrent},
       width: colspan,
       height: rowspan
     };
-    for (let x = global.xCurrent; x < global.xCurrent + colspan; x++) {
+    for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = global.yCurrent; y < global.yCurrent + rowspan; y++) {
         const slot = getSlot(global.theTable, x, y);
         if (slot.flatMap(s => s.cell).isSome()) {
@@ -217,14 +217,14 @@ export function rowProcessing(tr: Element): void {
       }
     }
     // Storing the element in the anchor slot only.
-    global.theTable.slots[global.xCurrent][global.yCurrent].elements.push(currentCell);
+    global.theTable.slots[xCurrent][global.yCurrent].elements.push(currentCell);
     global.theTable.cells.push(cell);
     // 14
     if (grow) {
       global.growingCellsList.push(cell);
     }
     // 15
-    global.xCurrent = global.xCurrent + colspan;
+    xCurrent = xCurrent + colspan;
   }
   // 4 and 16
   global.yCurrent++;
