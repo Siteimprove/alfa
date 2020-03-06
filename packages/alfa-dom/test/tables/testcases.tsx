@@ -9,7 +9,7 @@ export function makeSlot(cell: Cell | null = null, element: Element | null = nul
 }
 
 function makeCell(kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell {
-  return {kind: kind, anchor: {x: x, y: y}, width: w, height: h}
+  return {kind: kind, anchor: {x: x, y: y}, width: w, height: h, growing: false};
 }
 
 function hasID(id: string): Predicate<Element> {
