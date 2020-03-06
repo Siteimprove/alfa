@@ -234,7 +234,7 @@ export function endRowGroup() {
   // 1
   while (global.yCurrent < global.theTable.height) {
     // 1.1
-    growingCells(global.theTable.cells, global.yCurrent);
+    growingCells(global.growingCellsList, global.yCurrent);
     // 1.2
     global.yCurrent ++;
   }
