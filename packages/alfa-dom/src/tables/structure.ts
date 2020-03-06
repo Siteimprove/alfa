@@ -37,7 +37,6 @@ export function newTable(): Table {
 
 // Bad global variables! Bad!
 export const global = { yCurrent:0, growingCellsList: [] as Array<Cell>};
-  // theTable: { slots: [[]] as Array<Array<Slot>>, width: 0, height: 0, cells: [] as Array<Cell>, rowGroups: [] as Array<RowGroup>, colGroups: [] as Array<ColGroup> } as Table};
 
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -266,17 +265,6 @@ export function processRowGroup(table: Table, group: Element) {
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
-export function endFormingTable(table: Table, pendingTfoot: Iterable<Element>) {
-  // 19
-  for (const tfoot of pendingTfoot) {
-    processRowGroup(table, tfoot);
-  }
-  // 20
-  // skipping for now, need better row/col selectors
-  // 21
-  return;
-}
-
 export function processColGroup(colgroup: Element, xStart: number): ColGroup { // global step 9.1
   let children = colgroup.children().filter(isElementByName("col"));
   if (children.isEmpty()) { // second case
@@ -302,15 +290,10 @@ export function processColGroup(colgroup: Element, xStart: number): ColGroup { /
 }
 
 export function formingTable(element: Element): Table {
+  // 1, 2, 4
   const table = newTable();
-  // 1
-  // global.theTable.width = 0;
-  // 2
-  // global.theTable.height = 0;
   // 3
   let pendingTfoot: Array<Element> = [];
-  // 4
-  // the table is global.theTable
   // 5 + 8 + 9.3
   let children = element.children().filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
   // 6
@@ -365,6 +348,13 @@ export function formingTable(element: Element): Table {
     }
   }
   // 19-21
-  endFormingTable(table, pendingTfoot);
+  // endFormingTable(table, pendingTfoot);
+// 19
+  for (const tfoot of pendingTfoot) {
+    processRowGroup(table, tfoot);
+  }
+  // 20
+  // skipping for now, need better row/col selectors
+  // 21
   return table;
 }
