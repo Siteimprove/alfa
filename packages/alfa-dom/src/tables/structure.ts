@@ -14,8 +14,22 @@ const { and, equals, property } = Predicate;
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 
 export type Slot = { elements: Array<Element>, cell: Option<Cell> };
+function newSlot(cell: Cell | null = null): Slot {
+  return { elements: [], cell: Option.from(cell) }
+}
 
 export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
+function getSlot(table: Table, x: number, y: number): Option<Slot> {
+  // console.log(`x: ${x}, y: ${y}`);
+  // console.log(table.slots);
+  // console.dir(table.slots[x]);
+  // console.dir(Option.from(table.slots[x]));
+  // console.dir(Option.from(table.slots[x]).flatMap(sLine => Option.from(sLine[y])));
+
+  return Option
+    .from(table.slots[x])
+    .flatMap(sLine => Option.from(sLine[y]))
+}
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 export type Cell = {
@@ -159,7 +173,11 @@ export function rowProcessing(tr: Element): void {
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
-    while (global.xCurrent < global.theTable.width && global.theTable.slots[global.xCurrent][global.yCurrent].cell.isSome()) {
+    while (global.xCurrent < global.theTable.width &&
+      getSlot(global.theTable, global.xCurrent, global.yCurrent)
+        .flatMap(slot => slot.cell)
+        .isSome()
+    ) {
       global.xCurrent++
     }
     // 7
@@ -192,11 +210,18 @@ export function rowProcessing(tr: Element): void {
     };
     for (let x = global.xCurrent; x < global.xCurrent + colspan; x++) {
       for (let y = global.yCurrent; y < global.yCurrent + rowspan; y++) {
-        const slot = global.theTable.slots[x][y];
-        if (slot.cell.isSome()) {
+        const slot = getSlot(global.theTable, x, y);
+        if (slot.flatMap(s => s.cell).isSome()) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
-        slot.cell = Some.of(cell);
+        if (slot.isNone() ) {
+          if (global.theTable.slots[x] === undefined) {
+            global.theTable.slots[x] = [];
+          }
+          global.theTable.slots[x][y] = newSlot(cell)
+        } else {
+          slot.get().cell = Some.of(cell)
+        }
       }
     }
     // Storing the element in the anchor slot only.
@@ -299,7 +324,7 @@ export function formingTable(table: Element) {
   global.growingCellsList = [];
 
   let processCG = true;
-  for (const currentElement of children) { // 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
+  for (const currentElement of children) { // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
 
     switch (currentElement.name) {
       case "colgroup":
