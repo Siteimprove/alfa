@@ -1,18 +1,8 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import {Slot, global, rowProcessing, processRowGroup, formingTable, Element} from "../../src";
+import {Slot, global, rowProcessing, processRowGroup, formingTable, Element, newTable} from "../../src";
 import {apple, complexRow, expenses, expensesNum, makeSlot, rowGroup, simpleRow, smithonian} from "./testcases";
 import element = simpleRow.element;
-
-// JS array are row by row (first coord is row number). HTML table are col by col (x is col, y is row).
-// table is transposed so that table[x][y] is indeed cell at position (x,y).
-function initTable(): void {
-  global.yCurrent = 0;
-  global.growingCellsList = [];
-
-  global.theTable = { slots: [[]], width: 0, height: 0, cells: [], rowGroups: [], colGroups: []};
-}
-
 
 const cleanElement = (element: Element) =>
   element
@@ -31,48 +21,32 @@ const cleanSlot = (slot: Slot) => (
 
 
 test("Process simple row", t => {
-  initTable();
+  const table = newTable();
 
-  rowProcessing(simpleRow.element, 0);
-  t.deepEqual(global.theTable, simpleRow.expected);
+  rowProcessing(table, simpleRow.element, 0);
+  t.deepEqual(table, simpleRow.expected);
 });
 
 test("Process complex row", t => {
-  initTable();
+  const table = newTable();
 
-  rowProcessing(complexRow.element, 0);
-  t.deepEqual(global.theTable, complexRow.expected);
+  rowProcessing(table, complexRow.element, 0);
+  t.deepEqual(table, complexRow.expected);
 });
 
 test("Process row group", t => {
-  initTable();
+  const table = newTable();
 
-  processRowGroup(rowGroup.element);
-  t.deepEqual(global.theTable, rowGroup.expected);
+  processRowGroup(table, rowGroup.element);
+  t.deepEqual(table, rowGroup.expected);
 });
 
 test("Process table", t => {
-  initTable();
+  t.deepEqual(formingTable(smithonian.element), smithonian.expected);
 
-  formingTable(smithonian.element);
-  t.deepEqual(global.theTable, smithonian.expected);
+  t.deepEqual(formingTable(apple.element), apple.expected);
 
+  t.deepEqual(formingTable(expenses.element), expenses.expected);
 
-
-  initTable();
-
-  formingTable(apple.element);
-  t.deepEqual(global.theTable, apple.expected);
-
-
-  initTable();
-
-  formingTable(expenses.element);
-  t.deepEqual(global.theTable, expenses.expected);
-
-
-  initTable();
-
-  formingTable(expensesNum.element);
-  t.deepEqual(global.theTable, expensesNum.expected);
+  t.deepEqual(formingTable(expensesNum.element), expensesNum.expected);
 });

@@ -19,11 +19,26 @@ function newSlot(cell: Cell | null = null): Slot {
 }
 
 export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
-function getSlot(table: Table, x: number, y: number): Option<Slot> {
+
+function getSlot(table: Table, col: number, row: number): Option<Slot> {
   return Option
-    .from(table.slots[x])
-    .flatMap(sLine => Option.from(sLine[y]))
+    .from(table.slots[col])
+    .flatMap(sLine => Option.from(sLine[row]))
 }
+
+function setSlot(table: Table, col: number, row: number, slot: Slot) {
+  if (table.slots[col] === undefined) table.slots[col] = [];
+  table.slots[col][row] = slot;
+}
+
+export function newTable(): Table {
+  return { slots: [[]], width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
+}
+
+// Bad global variables! Bad!
+export const global = { yCurrent:0, growingCellsList: [] as Array<Cell>};
+  // theTable: { slots: [[]] as Array<Array<Slot>>, width: 0, height: 0, cells: [] as Array<Cell>, rowGroups: [] as Array<RowGroup>, colGroups: [] as Array<ColGroup> } as Table};
+
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 export type Cell = {
@@ -147,15 +162,11 @@ function isElementByName(...names: Array<string>): Predicate<Node, Element> {
     ));
 }
 
-// Bad global variables! Bad!
-export const global = { yCurrent:0, growingCellsList: [] as Array<Cell>,
-  theTable: { slots: [[]] as Array<Array<Slot>>, width: 0, height: 0, cells: [] as Array<Cell>, rowGroups: [] as Array<RowGroup>, colGroups: [] as Array<ColGroup> } as Table};
-
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-export function rowProcessing(tr: Element, yCurrent: number): void {
+export function rowProcessing(table: Table, tr: Element, yCurrent: number): void {
   // 1
-  if (global.theTable.height === yCurrent) {
-    global.theTable.height++
+  if (table.height === yCurrent) {
+    table.height++
   }
   // 2
    let xCurrent = 0;
@@ -165,16 +176,16 @@ export function rowProcessing(tr: Element, yCurrent: number): void {
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
-    while (xCurrent < global.theTable.width &&
-      getSlot(global.theTable, xCurrent, yCurrent)
+    while (xCurrent < table.width &&
+      getSlot(table, xCurrent, yCurrent)
         .flatMap(slot => slot.cell)
         .isSome()
     ) {
       xCurrent++
     }
     // 7
-    if (xCurrent === global.theTable.width) {
-      global.theTable.width++
+    if (xCurrent === table.width) {
+      table.width++
     }
     // 8
     const colspan = parseSpan(currentCell, "colspan", 1, 1000, 1);
@@ -186,12 +197,12 @@ export function rowProcessing(tr: Element, yCurrent: number): void {
       rowspan = 1
     }
     // 11
-    if (global.theTable.width <= xCurrent + colspan) {
-      global.theTable.width = xCurrent + colspan
+    if (table.width <= xCurrent + colspan) {
+      table.width = xCurrent + colspan
     }
     // 12
-    if (global.theTable.height <= yCurrent + rowspan) {
-      global.theTable.height = yCurrent + rowspan
+    if (table.height <= yCurrent + rowspan) {
+      table.height = yCurrent + rowspan
     }
     // 13
     const cell: Cell = {
@@ -202,23 +213,20 @@ export function rowProcessing(tr: Element, yCurrent: number): void {
     };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
-        const slot = getSlot(global.theTable, x, y);
+        const slot = getSlot(table, x, y);
         if (slot.flatMap(s => s.cell).isSome()) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
         if (slot.isNone() ) {
-          if (global.theTable.slots[x] === undefined) {
-            global.theTable.slots[x] = [];
-          }
-          global.theTable.slots[x][y] = newSlot(cell)
+          setSlot(table, x, y, newSlot(cell));
         } else {
           slot.get().cell = Some.of(cell)
         }
       }
     }
     // Storing the element in the anchor slot only.
-    global.theTable.slots[xCurrent][yCurrent].elements.push(currentCell);
-    global.theTable.cells.push(cell);
+    table.slots[xCurrent][yCurrent].elements.push(currentCell);
+    table.cells.push(cell);
     // 14
     if (grow) {
       global.growingCellsList.push(cell);
@@ -239,29 +247,29 @@ export function endRowGroup(height: number) {
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
-export function processRowGroup(group: Element) {
+export function processRowGroup(table: Table, group: Element) {
   // 1
-  const yStart = global.theTable.height;
+  const yStart = table.height;
   // 2
   for (const row of group.children().filter(isElementByName("tr"))) {
-    rowProcessing(row, global.yCurrent);
+    rowProcessing(table, row, global.yCurrent);
     // row processing steps 4/16
     global.yCurrent++;
   }
   // 3
-  if (global.theTable.height > yStart) {
-    const rowGroup = { anchor: {y: yStart}, height: global.theTable.height - yStart, element: group};
-    global.theTable.rowGroups.push(rowGroup);
+  if (table.height > yStart) {
+    const rowGroup = { anchor: {y: yStart}, height: table.height - yStart, element: group};
+    table.rowGroups.push(rowGroup);
   }
   // 4
-  endRowGroup(global.theTable.height);
+  endRowGroup(table.height);
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
-export function endFormingTable(pendingTfoot: Iterable<Element>) {
+export function endFormingTable(table: Table, pendingTfoot: Iterable<Element>) {
   // 19
   for (const tfoot of pendingTfoot) {
-    processRowGroup(tfoot);
+    processRowGroup(table, tfoot);
   }
   // 20
   // skipping for now, need better row/col selectors
@@ -293,17 +301,18 @@ export function processColGroup(colgroup: Element, xStart: number): ColGroup { /
   }
 }
 
-export function formingTable(table: Element) {
+export function formingTable(element: Element): Table {
+  const table = newTable();
   // 1
-  global.theTable.width = 0;
+  // global.theTable.width = 0;
   // 2
-  global.theTable.height = 0;
+  // global.theTable.height = 0;
   // 3
   let pendingTfoot: Array<Element> = [];
   // 4
   // the table is global.theTable
   // 5 + 8 + 9.3
-  let children = table.children().filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
+  let children = element.children().filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
   // 6
   // skipping caption for now
 
@@ -319,18 +328,18 @@ export function formingTable(table: Element) {
       case "colgroup":
         // 9.1 (Columns group)
         if (processCG) {
-          const colGroup = processColGroup(currentElement, global.theTable.width);
+          const colGroup = processColGroup(currentElement, table.width);
           // 9.1 (1).4 (cumulative) and (2).2
-          global.theTable.width += colGroup.width;
+          table.width += colGroup.width;
           // 9.1 (1).7 and (2).3
-          global.theTable.colGroups.push(colGroup);
+          table.colGroups.push(colGroup);
         }
         break;
       case "tr":
         // 12
         processCG = false;
         // 13 (process)
-        rowProcessing(currentElement, global.yCurrent);
+        rowProcessing(table, currentElement, global.yCurrent);
         // row processing steps 4/16
         global.yCurrent++;
         break;
@@ -338,7 +347,7 @@ export function formingTable(table: Element) {
         // 12
         processCG = false;
         // 14
-        endRowGroup(global.theTable.height);
+        endRowGroup(table.height);
         // 15 (add to list)
         pendingTfoot.push(currentElement);
         break;
@@ -348,13 +357,14 @@ export function formingTable(table: Element) {
         // 12
         processCG = false;
         // 14
-        endRowGroup(global.theTable.height);
+        endRowGroup(table.height);
         // 16
-        processRowGroup(currentElement);
+        processRowGroup(table, currentElement);
         break;
       default: throw new Error("Impossible")
     }
   }
   // 19-21
-  return endFormingTable(pendingTfoot);
+  endFormingTable(table, pendingTfoot);
+  return table;
 }
