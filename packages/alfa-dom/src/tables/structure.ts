@@ -152,21 +152,21 @@ export const global = { yCurrent:0, growingCellsList: [] as Array<Cell>,
   theTable: { slots: [[]] as Array<Array<Slot>>, width: 0, height: 0, cells: [] as Array<Cell>, rowGroups: [] as Array<RowGroup>, colGroups: [] as Array<ColGroup> } as Table};
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-export function rowProcessing(tr: Element): void {
+export function rowProcessing(tr: Element, yCurrent: number): void {
   // 1
-  if (global.theTable.height === global.yCurrent) {
+  if (global.theTable.height === yCurrent) {
     global.theTable.height++
   }
   // 2
    let xCurrent = 0;
   // 3
-  growingCells(global.growingCellsList, global.yCurrent);
+  growingCells(global.growingCellsList, yCurrent);
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
     while (xCurrent < global.theTable.width &&
-      getSlot(global.theTable, xCurrent, global.yCurrent)
+      getSlot(global.theTable, xCurrent, yCurrent)
         .flatMap(slot => slot.cell)
         .isSome()
     ) {
@@ -190,18 +190,18 @@ export function rowProcessing(tr: Element): void {
       global.theTable.width = xCurrent + colspan
     }
     // 12
-    if (global.theTable.height <= global.yCurrent + rowspan) {
-      global.theTable.height = global.yCurrent + rowspan
+    if (global.theTable.height <= yCurrent + rowspan) {
+      global.theTable.height = yCurrent + rowspan
     }
     // 13
     const cell: Cell = {
       kind: hasName(equals("th"))(currentCell) ? "header" : "data",
-      anchor: {x: xCurrent, y: global.yCurrent},
+      anchor: {x: xCurrent, y: yCurrent},
       width: colspan,
       height: rowspan
     };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
-      for (let y = global.yCurrent; y < global.yCurrent + rowspan; y++) {
+      for (let y = yCurrent; y < yCurrent + rowspan; y++) {
         const slot = getSlot(global.theTable, x, y);
         if (slot.flatMap(s => s.cell).isSome()) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
@@ -217,7 +217,7 @@ export function rowProcessing(tr: Element): void {
       }
     }
     // Storing the element in the anchor slot only.
-    global.theTable.slots[xCurrent][global.yCurrent].elements.push(currentCell);
+    global.theTable.slots[xCurrent][yCurrent].elements.push(currentCell);
     global.theTable.cells.push(cell);
     // 14
     if (grow) {
@@ -226,8 +226,7 @@ export function rowProcessing(tr: Element): void {
     // 15
     xCurrent = xCurrent + colspan;
   }
-  // 4 and 16
-  global.yCurrent++;
+  // 4 and 16 done after the calls.
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
@@ -249,7 +248,9 @@ export function processRowGroup(group: Element) {
   const yStart = global.theTable.height;
   // 2
   for (const row of group.children().filter(isElementByName("tr"))) {
-    rowProcessing(row);
+    rowProcessing(row, global.yCurrent);
+    // row processing steps 4/16
+    global.yCurrent++;
   }
   // 3
   if (global.theTable.height > yStart) {
@@ -333,7 +334,9 @@ export function formingTable(table: Element) {
         // 12
         processCG = false;
         // 13 (process)
-        rowProcessing(currentElement);
+        rowProcessing(currentElement, global.yCurrent);
+        // row processing steps 4/16
+        global.yCurrent++;
         break;
       case "tfoot":
         // 12

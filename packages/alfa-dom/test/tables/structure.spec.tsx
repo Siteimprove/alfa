@@ -33,14 +33,14 @@ const cleanSlot = (slot: Slot) => (
 test("Process simple row", t => {
   initTable();
 
-  rowProcessing(simpleRow.element);
+  rowProcessing(simpleRow.element, 0);
   t.deepEqual(global.theTable, simpleRow.expected);
 });
 
 test("Process complex row", t => {
   initTable();
 
-  rowProcessing(complexRow.element);
+  rowProcessing(complexRow.element, 0);
   t.deepEqual(global.theTable, complexRow.expected);
 });
 
