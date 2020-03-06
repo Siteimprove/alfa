@@ -20,12 +20,6 @@ function newSlot(cell: Cell | null = null): Slot {
 
 export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 function getSlot(table: Table, x: number, y: number): Option<Slot> {
-  // console.log(`x: ${x}, y: ${y}`);
-  // console.log(table.slots);
-  // console.dir(table.slots[x]);
-  // console.dir(Option.from(table.slots[x]));
-  // console.dir(Option.from(table.slots[x]).flatMap(sLine => Option.from(sLine[y])));
-
   return Option
     .from(table.slots[x])
     .flatMap(sLine => Option.from(sLine[y]))
@@ -84,7 +78,9 @@ export type ColGroup = {
 export function parseInteger(str: string): Result<readonly [string, number], string> {
   // empty/whitespace string are errors for specs, not for Number…
   // \s seems to be close enough to "ASCII whitespace".
-  if (str.match(/^\s*$/)) return Err.of("The string is empty");
+  if (str.match(/^\s*$/)) {
+    return Err.of("The string is empty");
+  }
   const raw = Number(str);
   return isNaN(raw) ?
     Err.of("The string does not represent a number") :
@@ -97,22 +93,18 @@ export function parseInteger(str: string): Result<readonly [string, number], str
 // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
 export function parseNonNegativeInteger(str: string): Result<readonly [string, number], string> {
   const result = parseInteger(str);
-  if (result.isErr()) return result;
-  const [_, value] = result.get();
-  return value < 0 ?
+  return result.andThen(([_, value]) =>
+    value < 0 ?
       Err.of("This is a negative number") :
-      result;
+      result)
 }
 // end micro syntaxes
 
 // attribute helper should move to attribute
 export function parseAttribute<RESULT, ERROR>(parser: Parser<string, RESULT, ERROR>): Mapper<Attribute, Result<RESULT, ERROR>> {
-  return (attribute) => {
-    const result = parser(attribute.value);
-    if (result.isErr()) return result;
-    const [_, value] = result.get();
-    return Ok.of(value);
-  }
+  return (attribute) =>
+    parser(attribute.value)
+      .andThen(([_, value]) => Ok.of(value));
 }
 // end attribute helper
 
