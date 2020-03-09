@@ -36,7 +36,7 @@ export function newTable(): Table {
 }
 
 // Bad global variables! Bad!
-export const global = { yCurrent:0};
+const global = { yCurrent:0};
 
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -132,13 +132,12 @@ export function parseSpan(element: Element, name: string, min: number, max: numb
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-function growingCell(yCurrent: number, keep: boolean = false): ((cell: Cell) => Cell) {
+function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Cell) => void) {
   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-  return cell => ({
-    ...cell,
-    height: cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height,
-    growing: cell.growing && keep
-  })
+  return cell => {
+    cell.height= cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height;
+    cell.growing= cell.growing && keepGrowing;
+  }
 }
 
 // Bad copy from rule helpers. Move to DOM helpers?
@@ -171,7 +170,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
   // 2
    let xCurrent = 0;
   // 3
-  table.cells = table.cells.map(growingCell(yCurrent, true));
+  table.cells.forEach(growingCell(yCurrent, true));
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
@@ -236,11 +235,11 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
-export function endRowGroup(table: Table, height: number) {
-  // 1, growingCells can grow by more than 1 at a time.
-  table.cells = table.cells.map(growingCell(height));
-  // 2
-  global.yCurrent = height;
+export function endRowGroup(table: Table) {
+  // 1.1, growingCells can grow by more than 1 at a time.
+  table.cells.forEach(growingCell(table.height, /* 2 */ false));
+  // 1.2
+  global.yCurrent = table.height;
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
@@ -259,7 +258,7 @@ export function processRowGroup(table: Table, group: Element) {
     table.rowGroups.push(rowGroup);
   }
   // 4
-  endRowGroup(table, table.height);
+  endRowGroup(table);
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
@@ -326,7 +325,7 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        endRowGroup(table, table.height);
+        endRowGroup(table);
         // 15 (add to list)
         pendingTfoot.push(currentElement);
         break;
@@ -336,7 +335,7 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        endRowGroup(table, table.height);
+        endRowGroup(table);
         // 16
         processRowGroup(table, currentElement);
         break;

@@ -1,8 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import {Slot, global, rowProcessing, processRowGroup, formingTable, Element, newTable} from "../../src";
-import {apple, complexRow, expenses, expensesNum, makeSlot, rowGroup, simpleRow, smithonian} from "./testcases";
-import element = simpleRow.element;
+import {Slot, rowProcessing, processRowGroup, formingTable, Element, newTable} from "../../src";
+import {apple, complexRow, expenses, expensesNum, rowGroup, simpleRow, smithonian} from "./testcases";
 
 const cleanElement = (element: Element) =>
   element
