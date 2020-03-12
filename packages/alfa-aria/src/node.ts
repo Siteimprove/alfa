@@ -4,10 +4,8 @@ import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -15,9 +13,6 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { Role } from "./role";
 import { getName } from "./get-name";
-
-const { isEmpty } = Iterable;
-const { not } = Predicate;
 
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
@@ -112,6 +107,8 @@ export abstract class Node {
 
   public abstract role(): Option<Role>;
 
+  public abstract attribute(name: string): Option<string>;
+
   public abstract clone(parent?: Option<Node>): Node;
 
   public abstract isIgnored(): boolean;
@@ -129,6 +126,11 @@ export abstract class Node {
     return this;
   }
 }
+
+import { Container } from "./node/container";
+import { Element } from "./node/element";
+import { Inert } from "./node/inert";
+import { Text } from "./node/text";
 
 export namespace Node {
   export interface Traversal {
@@ -176,6 +178,15 @@ export namespace Node {
 
       // Element nodes are _sometimes_ exposed in the accessibility tree.
       else if (dom.Element.isElement(node)) {
+        // Elements that are explicitly excluded from the accessibility tree by
+        // means are `aria-hidden=true` are never exposed in the accessibility
+        // tree, nor are their descendants.
+        //
+        // This behaviour is unfortunately not consistent across browsers, which
+        // we may or may not want to deal with. For now, we pretend that all
+        // browsers act consistently.
+        //
+        // https://github.com/Siteimprove/alfa/issues/184#issuecomment-593878009
         if (
           node
             .attribute("aria-hidden")
@@ -186,10 +197,19 @@ export namespace Node {
 
         const style = Style.from(node, device);
 
+        // Elements that are not rendered at all by means of `display: none` are
+        // never exposed in the accessibility tree, nor are their descendants.
+        //
+        // As we're building the accessibility tree top-down, we only need to
+        // check the element itself for `display: none` and can safely disregard
+        // its ancestors as they will already have been checked.
         if (style.computed("display").value[0].value === "none") {
           return Branched.of(Inert.of(node));
         }
 
+        // Elements that are not visible by means of `visibility: hidden` or
+        // `visibility: collapse`, are exposed in the accessibility tree as
+        // containers as they may contain visible descendants.
         if (style.computed("visibility").value.value !== "visible") {
           accessibleNode = Branched.of(Container.of(node));
         } else {
@@ -222,190 +242,4 @@ export namespace Node {
       });
     });
   }
-}
-
-class Element extends Node {
-  public static of(
-    owner: dom.Node,
-    role: Option<Role> = None,
-    name: Option<string> = None,
-    attributes: Map<string, string> = Map.empty(),
-    children: Mapper<Node, Iterable<Node>> = () => [],
-    parent: Option<Node> = None
-  ): Element {
-    return new Element(owner, role, name, attributes, children, parent);
-  }
-
-  private readonly _role: Option<Role>;
-  private readonly _name: Option<string>;
-  private readonly _attributes: Map<string, string>;
-
-  private constructor(
-    owner: dom.Node,
-    role: Option<Role>,
-    name: Option<string>,
-    attributes: Map<string, string>,
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node>
-  ) {
-    super(owner, children, parent);
-
-    this._role = role;
-    this._name = name.map(name => name.trim()).filter(not(isEmpty));
-    this._attributes = attributes;
-  }
-
-  public attribute(name: string): Option<string> {
-    return this._attributes.get(name);
-  }
-
-  public name(): Option<string> {
-    return this._name;
-  }
-
-  public role(): Option<Role> {
-    return this._role;
-  }
-
-  public clone(parent: Option<Node> = None): Element {
-    return new Element(
-      this._node,
-      this._role,
-      this._name,
-      this._attributes,
-      self => this._children.map(child => child.clone(Option.of(self))),
-      parent
-    );
-  }
-
-  public isIgnored(): boolean {
-    return false;
-  }
-
-  public toString(): string {
-    return [
-      [
-        this._role.map(role => role.name).getOr("element"),
-        ...this._name.map(name => `"${name}"`)
-      ].join(" "),
-      ...this._children.map(child => indent(child.toString()))
-    ].join("\n");
-  }
-}
-
-class Text extends Node {
-  public static of(
-    owner: dom.Node,
-    name: string,
-    parent: Option<Node> = None
-  ): Text {
-    return new Text(owner, name, parent);
-  }
-
-  private readonly _name: string;
-
-  private constructor(owner: dom.Node, name: string, parent: Option<Node>) {
-    super(owner, () => [], parent);
-
-    this._name = name;
-  }
-
-  public name(): Option<string> {
-    return Option.of(this._name);
-  }
-
-  public role(): Option<Role> {
-    return None;
-  }
-
-  public clone(parent: Option<Node> = None): Text {
-    return new Text(this._node, this._name, parent);
-  }
-
-  public isIgnored(): boolean {
-    return false;
-  }
-
-  public toString(): string {
-    return `text "${this._name}"`;
-  }
-}
-
-class Container extends Node {
-  public static of(
-    owner: dom.Node,
-    children: Mapper<Node, Iterable<Node>> = () => [],
-    parent: Option<Node> = None
-  ): Container {
-    return new Container(owner, children, parent);
-  }
-
-  private constructor(
-    owner: dom.Node,
-    children: Mapper<Node, Iterable<Node>>,
-    parent: Option<Node>
-  ) {
-    super(owner, children, parent);
-  }
-
-  public name(): Option<string> {
-    return None;
-  }
-
-  public role(): Option<Role> {
-    return None;
-  }
-
-  public clone(parent: Option<Node> = None): Container {
-    return new Container(
-      this._node,
-      self => this._children.map(child => child.clone(Option.of(self))),
-      parent
-    );
-  }
-
-  public isIgnored(): boolean {
-    return true;
-  }
-
-  public toString(): string {
-    return [
-      "container",
-      ...this._children.map(child => indent(child.toString()))
-    ].join("\n");
-  }
-}
-
-class Inert extends Node {
-  public static of(owner: dom.Node): Inert {
-    return new Inert(owner);
-  }
-
-  private constructor(owner: dom.Node) {
-    super(owner, () => [], None);
-  }
-
-  public name(): Option<string> {
-    return None;
-  }
-
-  public role(): Option<Role> {
-    return None;
-  }
-
-  public clone(): Inert {
-    return new Inert(this._node);
-  }
-
-  public isIgnored(): boolean {
-    return true;
-  }
-
-  public toString(): string {
-    return "ignored";
-  }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }
