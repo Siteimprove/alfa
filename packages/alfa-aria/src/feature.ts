@@ -1,5 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,23 +14,43 @@ export class Feature<N extends string = string> {
   public static of<N extends string>(
     name: N,
     role: Feature.Aspect<Option<string>> = () => None,
+    attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
     status: Feature.Status = { obsolete: false }
   ): Feature<N> {
-    return new Feature(name, role, status);
+    return new Feature(name, role, attributes, status);
   }
 
-  public readonly name: N;
-  public readonly role: Feature.Aspect<Option<string>>;
-  public readonly status: Feature.Status;
+  private readonly _name: N;
+  private readonly _role: Feature.Aspect<Option<string>>;
+  private readonly _attributes: Feature.Aspect<Map<string, string>>;
+  private readonly _status: Feature.Status;
 
   private constructor(
     name: N,
     role: Feature.Aspect<Option<string>>,
+    attributes: Feature.Aspect<Map<string, string>>,
     status: Feature.Status
   ) {
-    this.name = name;
-    this.role = role;
-    this.status = status;
+    this._name = name;
+    this._role = role;
+    this._attributes = attributes;
+    this._status = status;
+  }
+
+  public get name(): N {
+    return this._name;
+  }
+
+  public get role(): Feature.Aspect<Option<string>> {
+    return this._role;
+  }
+
+  public get attributes(): Feature.Aspect<Map<string, string>> {
+    return this._attributes;
+  }
+
+  public get status(): Feature.Status {
+    return this._status;
   }
 }
 
@@ -212,45 +234,83 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("input", element =>
-    element
-      .attribute("type")
-      .andThen(type => {
-	switch (type.value.toLowerCase()) {
-	  case "button":
-	  case "image":
-	  case "reset":
-	  case "submit":
-	    return Option.of("button");
+  Feature.of(
+    "input",
+    element =>
+      element
+        .attribute("type")
+        .andThen(type => {
+          switch (type.value.toLowerCase()) {
+            case "button":
+            case "image":
+            case "reset":
+            case "submit":
+              return Option.of("button");
 
-	  case "checkbox":
-	    return Option.of("checkbox");
+            case "checkbox":
+              return Option.of("checkbox");
 
-	  case "number":
-	    return Option.of("spinbutton");
+            case "number":
+              return Option.of("spinbutton");
 
-	  case "radio":
-	    return Option.of("radio");
+            case "radio":
+              return Option.of("radio");
 
-	  case "range":
-	    return Option.of("slider");
+            case "range":
+              return Option.of("slider");
 
-	  case "search":
-	    return Option.of(
-	      element.attribute("list").isSome() ? "combobox" : "searchbox"
-	    );
+            case "search":
+              return Option.of(
+                element.attribute("list").isSome() ? "combobox" : "searchbox"
+              );
 
-	  case "email":
-	  case "tel":
-	  case "text":
-	  case "url":
-	  default:
-	    return Option.of(
-	      element.attribute("list").isSome() ? "combobox" : "textbox"
-	    );
-	}
-      })
-      .orElse(() => Option.of("textbox"))
+            case "email":
+            case "tel":
+            case "text":
+            case "url":
+            default:
+              return Option.of(
+                element.attribute("list").isSome() ? "combobox" : "textbox"
+              );
+          }
+        })
+        .orElse(() => Option.of("textbox")),
+    element => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-checked
+      attributes = attributes.set(
+        "aria-checked",
+        element.attribute("checked").isSome() ? "true" : "false"
+      );
+
+      // https://w3c.github.io/html-aam/#att-list
+      for (const { value } of element.attribute("list")) {
+        attributes = attributes.set("aria-controls", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-max-input
+      for (const { value } of element.attribute("max")) {
+        attributes = attributes.set("aria-valuemax", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-min-input
+      for (const { value } of element.attribute("min")) {
+        attributes = attributes.set("aria-valuemin", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-readonly
+      if (element.attribute("readonly").isSome()) {
+        attributes = attributes.set("aria-readonly", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-required
+      if (element.attribute("required").isSome()) {
+        attributes = attributes.set("aria-required", "true");
+      }
+
+      return attributes;
+    }
   )
 );
 

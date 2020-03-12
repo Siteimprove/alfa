@@ -48,11 +48,25 @@ export class Container extends Node {
     return true;
   }
 
+  public toJSON(): Container.JSON {
+    return {
+      type: "container",
+      node: this._node.toJSON(),
+      children: this._children.map(child => child.toJSON())
+    };
+  }
+
   public toString(): string {
     return [
       "container",
       ...this._children.map(child => indent(child.toString()))
     ].join("\n");
+  }
+}
+
+export namespace Container {
+  export interface JSON extends Node.JSON {
+    type: "container";
   }
 }
 
