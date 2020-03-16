@@ -75,6 +75,7 @@ function hasRequiredOwnedElements(device: Device): Predicate<Element> {
     Node.from(element, device).every(node =>
       node
         .children()
+        .filter(node => Element.isElement(node.node))
         .every(child =>
           child
             .role()
