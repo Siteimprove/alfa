@@ -15,7 +15,10 @@ test("getName() computes the text alternative of a button with text", t => {
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Button" },
+        value: {
+          type: "some",
+          value: "Button"
+        },
         branches: null
       }
     ]
@@ -28,7 +31,10 @@ test("getName() correctly resolves explicit roles", t => {
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Button" },
+        value: {
+          type: "some",
+          value: "Button"
+        },
         branches: null
       }
     ]
@@ -45,7 +51,10 @@ test("getName() computes the text alternative of a button with text within a spa
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Button" },
+        value: {
+          type: "some",
+          value: "Button"
+        },
         branches: null
       }
     ]
@@ -62,7 +71,10 @@ test("getName() ignores non-visible nodes", t => {
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Button" },
+        value: {
+          type: "some",
+          value: "Button"
+        },
         branches: null
       }
     ]
@@ -75,7 +87,10 @@ test("getName() computes the text alternative of a button with a title and no te
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -90,7 +105,10 @@ test("getName() computes the text alternative of a button with an aria-label", t
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -103,7 +121,10 @@ test("getName() falls through when aria-label is the empty string", t => {
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Button" },
+        value: {
+          type: "some",
+          value: "Button"
+        },
         branches: null
       }
     ]
@@ -127,7 +148,10 @@ test("getName() computes the text alternative of a button with an aria-labelledb
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -142,7 +166,10 @@ test("getName() falls through when no text alternative is found in aria-labelled
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Button" },
+        value: {
+          type: "some",
+          value: "Button"
+        },
         branches: null
       }
     ]
@@ -159,7 +186,10 @@ test("getName() does not infitely recurse when recursive aria-labelledby referen
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -172,7 +202,9 @@ test("getName() returns none when a button has no text alternative", t => {
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: {},
+        value: {
+          type: "none"
+        },
         branches: null
       }
     ]
@@ -185,7 +217,10 @@ test("getName() computes the text alternative of an image with an alt", t => {
   t.deepEqual(getName(img, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -198,7 +233,10 @@ test("getName() computes the text alternative of an image with a title", t => {
   t.deepEqual(getName(img, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -211,7 +249,9 @@ test("getName() returns none when an image has no text alternative", t => {
   t.deepEqual(getName(img, device).toJSON(), {
     values: [
       {
-        value: {},
+        value: {
+          type: "none"
+        },
         branches: null
       }
     ]
@@ -224,7 +264,10 @@ test("getName() computes the text alternative of a paragraph with a title", t =>
   t.deepEqual(getName(p, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -237,7 +280,10 @@ test("getName() computes the text alternative of a paragraph with an aria-label"
   t.deepEqual(getName(p, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -250,7 +296,9 @@ test("getName() returns none when a paragraph has no text alternative", t => {
   t.deepEqual(getName(p, device).toJSON(), {
     values: [
       {
-        value: {},
+        value: {
+          type: "none"
+        },
         branches: null
       }
     ]
@@ -263,7 +311,10 @@ test("getName() computes the text alternative of an anchor with an href", t => {
   t.deepEqual(getName(a, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -276,7 +327,10 @@ test("getName() computes the text alternative of an anchor without an href", t =
   t.deepEqual(getName(a, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -298,7 +352,10 @@ test("getName() computes the text alternative of a table with a caption", t => {
   t.deepEqual(getName(table, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -316,7 +373,10 @@ test("getName() computes the text alternative of a figure with a figcaption", t 
   t.deepEqual(getName(figure, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -334,7 +394,10 @@ test("getName() computes the text alternative of a fieldset with a legend", t =>
   t.deepEqual(getName(fieldset, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -358,7 +421,10 @@ test("getName() computes the text alternative of an input with an explicit label
   t.deepEqual(getName(input, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -381,7 +447,10 @@ test("getName() computes the text alternative of an input with an implicit label
   t.deepEqual(getName(input, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -407,7 +476,10 @@ test("getName() computes the text alternative of an input with an explicit label
   t.deepEqual(getName(input, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -427,7 +499,10 @@ test("getName() computes the text alternative of an SVG with a title element", t
   t.deepEqual(getName(svg, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -453,7 +528,10 @@ test("getName() computes the text alternative of an element with content in Shad
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]
@@ -466,12 +544,22 @@ test("getName() correctly handles browser specific case sensitivity of roles", t
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Button" },
+        value: {
+          type: "some",
+          value: "Button"
+        },
         branches: null
       },
       {
-        value: {},
-        branches: [{ browser: "firefox", version: "68" }]
+        value: {
+          type: "none"
+        },
+        branches: [
+          {
+            browser: "firefox",
+            version: "68"
+          }
+        ]
       }
     ]
   });
@@ -489,7 +577,10 @@ test("getName() correctly handles aria-labelledby that points to aria-hidden=tru
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
-        value: { value: "Hello world" },
+        value: {
+          type: "some",
+          value: "Hello world"
+        },
         branches: null
       }
     ]

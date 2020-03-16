@@ -104,6 +104,7 @@ export class Some<T> implements Option<T> {
 
   public toJSON(): Some.JSON {
     return {
+      type: "some",
       value: Serializable.toJSON(this._value)
     };
   }
@@ -114,12 +115,13 @@ export class Some<T> implements Option<T> {
 }
 
 export namespace Some {
-  export function isSome<T>(value: unknown): value is Some<T> {
-    return value instanceof Some;
-  }
-
   export interface JSON {
     [key: string]: json.JSON;
+    type: "some";
     value: json.JSON;
+  }
+
+  export function isSome<T>(value: unknown): value is Some<T> {
+    return value instanceof Some;
   }
 }
