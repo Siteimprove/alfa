@@ -32,7 +32,7 @@ export abstract class Node {
     this._parent = parent;
   }
 
-  public node(): dom.Node {
+  public get node(): dom.Node {
     return this._node;
   }
 
