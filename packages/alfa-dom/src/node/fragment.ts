@@ -1,10 +1,7 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
-
-const { map, join } = Iterable;
 
 export class Fragment extends Node {
   public static of(
@@ -37,23 +34,22 @@ export class Fragment extends Node {
   }
 
   public toString(): string {
-    const children = join(
-      map(this._children, child => indent(child.toString())),
-      "\n"
-    );
+    const children = this._children
+      .map(child => indent(child.toString()))
+      .join("\n");
 
     return `#document-fragment${children === "" ? "" : `\n${children}`}`;
   }
 }
 
 export namespace Fragment {
-  export function isFragment(value: unknown): value is Fragment {
-    return value instanceof Fragment;
-  }
-
   export interface JSON extends Node.JSON {
     type: "fragment";
     children: Array<Node.JSON>;
+  }
+
+  export function isFragment(value: unknown): value is Fragment {
+    return value instanceof Fragment;
   }
 
   export function fromFragment(

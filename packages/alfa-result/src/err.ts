@@ -91,6 +91,7 @@ export class Err<E> implements Result<never, E> {
 
   public toJSON(): Err.JSON {
     return {
+      type: "err",
       error: Serializable.toJSON(this._error)
     };
   }
@@ -107,6 +108,7 @@ export namespace Err {
 
   export interface JSON {
     [key: string]: json.JSON;
+    type: "err";
     error: json.JSON;
   }
 }

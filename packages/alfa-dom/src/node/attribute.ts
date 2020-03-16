@@ -31,7 +31,7 @@ export class Attribute extends Node {
     value: string,
     owner: Option<Element>
   ) {
-    super(self => [], None);
+    super(() => [], None);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -113,16 +113,16 @@ export class Attribute extends Node {
 }
 
 export namespace Attribute {
-  export function isAttribute(value: unknown): value is Attribute {
-    return value instanceof Attribute;
-  }
-
   export interface JSON extends Node.JSON {
     type: "attribute";
     namespace: string | null;
     prefix: string | null;
     name: string;
     value: string;
+  }
+
+  export function isAttribute(value: unknown): value is Attribute {
+    return value instanceof Attribute;
   }
 
   export function fromAttribute(

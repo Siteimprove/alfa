@@ -2,6 +2,7 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Question<Q, A, S, T = A>

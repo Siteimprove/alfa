@@ -18,7 +18,7 @@ export class Text extends Node implements Slotable {
   private readonly _data: string;
 
   private constructor(data: string, parent: Option<Node>) {
-    super(self => [], parent);
+    super(() => [], parent);
 
     this._data = data;
   }
@@ -75,13 +75,13 @@ export class Text extends Node implements Slotable {
 }
 
 export namespace Text {
-  export function isText(value: unknown): value is Text {
-    return value instanceof Text;
-  }
-
   export interface JSON extends Node.JSON {
     type: "text";
     data: string;
+  }
+
+  export function isText(value: unknown): value is Text {
+    return value instanceof Text;
   }
 
   export function fromText(text: JSON, parent: Option<Node> = None): Text {

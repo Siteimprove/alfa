@@ -28,6 +28,7 @@ export interface Result<T, E>
   or<F>(result: Result<T, F>): Result<T, F>;
   orElse<F>(result: Thunk<Result<T, F>>): Result<T, F>;
   get(): T;
+  getErr(): E;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
   ok(): Option<T>;
