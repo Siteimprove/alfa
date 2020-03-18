@@ -238,11 +238,11 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
-export function endRowGroup(table: Table): void {
-  // 1.1, growingCells can grow by more than 1 at a time.
-  table.cells.forEach(growingCell(table.height,false));
-  // 1.2 done after call
-}
+// export function endRowGroup(table: Table): void {
+//   // 1.1, growingCells can grow by more than 1 at a time.
+//   table.cells.forEach(growingCell(table.height,false));
+//   // 1.2 done after call
+// }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
 export function processRowGroup(table: Table, group: Element) {
@@ -260,7 +260,8 @@ export function processRowGroup(table: Table, group: Element) {
     table.rowGroups.push(rowGroup);
   }
   // 4
-  endRowGroup(table);
+  // endRowGroup(table);
+  table.cells.forEach(growingCell(table.height,false));
   global.yCurrent = table.height;
 }
 
@@ -328,7 +329,8 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        endRowGroup(table);
+        // endRowGroup(table);
+        table.cells.forEach(growingCell(table.height,false));
         global.yCurrent = table.height;
         // 15 (add to list)
         pendingTfoot.push(currentElement);
@@ -339,7 +341,8 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        endRowGroup(table);
+        // endRowGroup(table);
+        table.cells.forEach(growingCell(table.height,false));
         global.yCurrent = table.height;
         // 16
         processRowGroup(table, currentElement);
