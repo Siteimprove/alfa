@@ -71,7 +71,6 @@
     { "path": "alfa-thunk" },
     { "path": "alfa-trampoline" },
     { "path": "alfa-unexpected" },
-    { "path": "alfa-unicode" },
     { "path": "alfa-vue" },
     { "path": "alfa-web" },
     { "path": "alfa-webdriver" },
