@@ -35,13 +35,6 @@ export function newTable(): Table {
   return { slots: [[]], width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
-const global = { yCurrent: 0};
-
-type BuildingArgs = {
-  yCurrent: number,
-  // downwardGrowingCells: Iterable<Cell>
-}
-
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 export type Cell = {
   kind: "data" | "header";
@@ -302,7 +295,7 @@ export function formingTable(element: Element): Table {
   // skipping caption for now
 
   // 10
-  global.yCurrent = 0;
+  let yCurrent = 0;
 
   let processCG = true;
   for (const currentElement of children) { // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
@@ -322,9 +315,9 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 13 (process)
-        rowProcessing(table, currentElement, global.yCurrent);
+        rowProcessing(table, currentElement, yCurrent);
         // row processing steps 4/16
-        global.yCurrent++;
+        yCurrent++;
         break;
       case "tfoot":
         // 12
@@ -332,7 +325,7 @@ export function formingTable(element: Element): Table {
         // 14
         // endRowGroup(table);
         table.cells.forEach(growingCell(table.height,false));
-        global.yCurrent = table.height;
+        yCurrent = table.height;
         // 15 (add to list)
         pendingTfoot.push(currentElement);
         break;
@@ -344,16 +337,16 @@ export function formingTable(element: Element): Table {
         // 14
         // endRowGroup(table);
         table.cells.forEach(growingCell(table.height,false));
-        global.yCurrent = table.height;
+        yCurrent = table.height;
         // 16
-        global.yCurrent = processRowGroup(table, currentElement, global.yCurrent);
+        yCurrent = processRowGroup(table, currentElement, yCurrent);
         break;
       default: throw new Error("Impossible")
     }
   }
   // 19
   for (const tfoot of pendingTfoot) {
-    global.yCurrent = processRowGroup(table, tfoot, global.yCurrent);
+    yCurrent = processRowGroup(table, tfoot, yCurrent);
   }
   // 20
   // skipping for now, need better row/col selectors
