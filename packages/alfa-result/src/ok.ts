@@ -63,6 +63,10 @@ export class Ok<T> implements Result<T, never> {
     return this._value;
   }
 
+  public getErr(): never {
+    throw new Error("Attempted to .getErr() from Ok");
+  }
+
   public getOr(): T {
     return this._value;
   }
@@ -89,6 +93,7 @@ export class Ok<T> implements Result<T, never> {
 
   public toJSON(): Ok.JSON {
     return {
+      type: "ok",
       value: Serializable.toJSON(this._value)
     };
   }
@@ -99,12 +104,13 @@ export class Ok<T> implements Result<T, never> {
 }
 
 export namespace Ok {
-  export function isOk<T>(value: unknown): value is Ok<T> {
-    return value instanceof Ok;
-  }
-
   export interface JSON {
     [key: string]: json.JSON;
+    type: "ok";
     value: json.JSON;
+  }
+
+  export function isOk<T>(value: unknown): value is Ok<T> {
+    return value instanceof Ok;
   }
 }

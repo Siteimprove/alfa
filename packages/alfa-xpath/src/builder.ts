@@ -1,174 +1,182 @@
-import { isAxisExpression, isFilterExpression } from "./guards";
-import { serialize } from "./serialize";
-import {
-  Axis,
-  AxisExpression,
-  ContextItemExpression,
-  FilterExpression,
-  IntegerLiteralExpression,
-  PathExpression,
-  StepExpression
-} from "./types";
-import { Expression, ExpressionType } from "./types";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Option, None } from "@siteimprove/alfa-option";
 
-export class ExpressionBuilder<T extends Expression = Expression> {
-  public readonly expression: T;
+import * as json from "@siteimprove/alfa-json";
+
+import { Expression } from "./expression";
+
+export class Builder<T extends Expression = Expression>
+  implements Equatable, Serializable {
+  protected readonly _expression: T;
 
   public constructor(expression: T) {
-    this.expression = expression;
+    this._expression = expression;
+  }
+
+  public get expression(): T {
+    return this._expression;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Builder && value._expression.equals(this._expression)
+    );
+  }
+
+  public toJSON(): Builder.JSON {
+    return {
+      expression: this._expression.toJSON()
+    };
   }
 
   public toString(): string {
-    return serialize(this.expression);
+    return `${this._expression}`;
   }
 }
 
-function PathOperand<T extends StepExpression | PathExpression>(
-  Base: new (...args: Array<any>) => ExpressionBuilder<T>
-) {
-  return class PathOperand extends Base {
-    public child(name?: string): PathExpressionBuilder {
-      return step(this, axis.child(name));
-    }
-
-    public parent(name?: string): PathExpressionBuilder {
-      return step(this, axis.parent(name));
-    }
-
-    public descendant(name?: string): PathExpressionBuilder {
-      return step(this, axis.descendant(name));
-    }
-
-    public ancestor(name?: string): PathExpressionBuilder {
-      return step(this, axis.ancestor(name));
-    }
-
-    public attribute(name?: string): PathExpressionBuilder {
-      return step(this, axis.attribute(name));
-    }
-  };
-}
-
-export class ContextItemExpressionBuilder extends PathOperand<
-  ContextItemExpression
->(ExpressionBuilder) {
-  public where(predicate: ExpressionBuilder): FilterExpressionBuilder {
-    return new FilterExpressionBuilder({
-      type: ExpressionType.Filter,
-      base: this.expression,
-      predicates: [predicate.expression]
-    });
+export namespace Builder {
+  export interface JSON {
+    [key: string]: json.JSON;
+    expression: Expression.JSON;
   }
-}
 
-export class FilterExpressionBuilder extends PathOperand<FilterExpression>(
-  ExpressionBuilder
-) {
-  public where(predicate: ExpressionBuilder): FilterExpressionBuilder {
-    return new FilterExpressionBuilder({
-      ...this.expression,
-      predicates: [...this.expression.predicates, predicate.expression]
-    });
-  }
-}
-
-export class AxisExpressionBuilder extends PathOperand<AxisExpression>(
-  ExpressionBuilder
-) {
-  public where(predicate: ExpressionBuilder): AxisExpressionBuilder {
-    return new AxisExpressionBuilder({
-      ...this.expression,
-      predicates: [...this.expression.predicates, predicate.expression]
-    });
-  }
-}
-
-export class PathExpressionBuilder extends PathOperand<PathExpression>(
-  ExpressionBuilder
-) {
-  public where(predicate: ExpressionBuilder): PathExpressionBuilder {
-    if (
-      isFilterExpression(this.expression.right) ||
-      isAxisExpression(this.expression.right)
-    ) {
-      return new PathExpressionBuilder({
-        ...this.expression,
-        right: {
-          ...this.expression.right,
-          predicates: [
-            ...this.expression.right.predicates,
-            predicate.expression
-          ]
-        }
-      });
-    }
-
-    return new PathExpressionBuilder({
-      ...this.expression,
-      right: {
-        type: ExpressionType.Filter,
-        base: this.expression.right,
-        predicates: [predicate.expression]
+  function PathOperand<T extends Expression.Step | Expression.Path>(
+    Base: new (expression: T) => Builder<T>
+  ) {
+    return class PathOperand extends Base {
+      public child(name?: string): Path {
+        return step(this, axis.child(name));
       }
-    });
+
+      public parent(name?: string): Path {
+        return step(this, axis.parent(name));
+      }
+
+      public descendant(name?: string): Path {
+        return step(this, axis.descendant(name));
+      }
+
+      public ancestor(name?: string): Path {
+        return step(this, axis.ancestor(name));
+      }
+
+      public attribute(name?: string): Path {
+        return step(this, axis.attribute(name));
+      }
+    };
+  }
+
+  export class ContextItem extends PathOperand<Expression.ContextItem>(
+    Builder
+  ) {
+    public where(predicate: Builder): Filter {
+      return new Filter(
+        Expression.Filter.of(this.expression, [predicate.expression])
+      );
+    }
+  }
+
+  export class Filter extends PathOperand<Expression.Filter>(Builder) {
+    public where(predicate: Builder): Filter {
+      return new Filter(
+        Expression.Filter.of(this.expression.base, [
+          ...this.expression.predicates,
+          predicate.expression
+        ])
+      );
+    }
+  }
+
+  export class Axis extends PathOperand<Expression.Axis>(Builder) {
+    public where(predicate: Builder): Axis {
+      return new Axis(
+        Expression.Axis.of(this.expression.axis, this.expression.test, [
+          ...this.expression.predicates,
+          predicate.expression
+        ])
+      );
+    }
+  }
+
+  export class Path extends PathOperand<Expression.Path>(Builder) {
+    public where(predicate: Builder): Path {
+      if (
+        this.expression.right.type === "filter" ||
+        this.expression.right.type === "axis"
+      ) {
+        return new Path(
+          Expression.Path.of(
+            this.expression.left,
+            Expression.Filter.of(this.expression.right, [
+              ...this.expression.right.predicates,
+              predicate.expression
+            ])
+          )
+        );
+      }
+
+      return new Path(
+        Expression.Path.of(
+          this.expression.left,
+          Expression.Filter.of(this.expression.right, [predicate.expression])
+        )
+      );
+    }
   }
 }
 
-export function context(): ContextItemExpressionBuilder {
-  return new ContextItemExpressionBuilder({
-    type: ExpressionType.ContextItem
-  });
+export function context(): Builder.ContextItem {
+  return new Builder.ContextItem(Expression.ContextItem.of());
 }
 
-export function axis(axis: Axis, name?: string): AxisExpressionBuilder {
-  return new AxisExpressionBuilder({
-    type: ExpressionType.Axis,
-    axis,
-    test: name === undefined ? null : { name },
-    predicates: []
-  });
+export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis {
+  return new Builder.Axis(
+    Expression.Axis.of(
+      axis,
+      name === undefined
+        ? None
+        : Option.of(Expression.Test.Name.of(None, name)),
+      []
+    )
+  );
 }
 
 export namespace axis {
-  export function self(name?: string): AxisExpressionBuilder {
+  export function self(name?: string): Builder.Axis {
     return axis("self", name);
   }
 
-  export function child(name?: string): AxisExpressionBuilder {
+  export function child(name?: string): Builder.Axis {
     return axis("child", name);
   }
 
-  export function parent(name?: string): AxisExpressionBuilder {
+  export function parent(name?: string): Builder.Axis {
     return axis("parent", name);
   }
 
-  export function descendant(name?: string): AxisExpressionBuilder {
+  export function descendant(name?: string): Builder.Axis {
     return axis("descendant", name);
   }
 
-  export function ancestor(name?: string): AxisExpressionBuilder {
+  export function ancestor(name?: string): Builder.Axis {
     return axis("ancestor", name);
   }
 
-  export function attribute(name?: string): AxisExpressionBuilder {
+  export function attribute(name?: string): Builder.Axis {
     return axis("attribute", name);
   }
 }
 
 export function step(
-  left: ExpressionBuilder<StepExpression | PathExpression>,
-  right: ExpressionBuilder<StepExpression>
-): PathExpressionBuilder {
-  return new PathExpressionBuilder({
-    type: ExpressionType.Path,
-    left: left.expression,
-    right: right.expression
-  });
+  left: Builder<Expression.Step | Expression.Path>,
+  right: Builder<Expression.Step>
+): Builder.Path {
+  return new Builder.Path(
+    Expression.Path.of(left.expression, right.expression)
+  );
 }
 
-export function nth(i: number): ExpressionBuilder<IntegerLiteralExpression> {
-  return new ExpressionBuilder({
-    type: ExpressionType.IntegerLiteral,
-    value: i
-  });
+export function nth(i: number): Builder<Expression.Integer> {
+  return new Builder(Expression.Integer.of(i));
 }

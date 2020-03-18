@@ -10,6 +10,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Branched<T, B = never>

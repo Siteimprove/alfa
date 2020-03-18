@@ -1,12 +1,9 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
-
-const { map, join } = Iterable;
 
 export class Shadow extends Node {
   public static of(
@@ -73,10 +70,9 @@ export class Shadow extends Node {
   }
 
   public toString(): string {
-    const children = join(
-      map(this._children, child => indent(child.toString())),
-      "\n"
-    );
+    const children = this._children
+      .map(child => indent(child.toString()))
+      .join("\n");
 
     return `#shadow-root (${this._mode})${
       children === "" ? "" : `\n${children}`
@@ -90,15 +86,15 @@ export namespace Shadow {
     Closed = "closed"
   }
 
-  export function isShadow(value: unknown): value is Shadow {
-    return value instanceof Shadow;
-  }
-
   export interface JSON extends Node.JSON {
     type: "shadow";
     children: Array<Node.JSON>;
     mode: string;
     style: Array<Sheet.JSON>;
+  }
+
+  export function isShadow(value: unknown): value is Shadow {
+    return value instanceof Shadow;
   }
 
   export function fromShadow(shadow: JSON, host: Element): Shadow {

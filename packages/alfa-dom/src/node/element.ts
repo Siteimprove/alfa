@@ -13,7 +13,7 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
-const { map, filter, concat, join, find, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
@@ -21,8 +21,8 @@ export class Element extends Node implements Slot, Slotable {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: string,
-    attributes: Mapper<Element, Iterable<Attribute>> = self => [],
-    children: Mapper<Node, Iterable<Node>> = self => [],
+    attributes: Mapper<Element, Iterable<Attribute>> = () => [],
+    children: Mapper<Node, Iterable<Node>> = () => [],
     style: Option<Block> = None,
     parent: Option<Node> = None,
     shadow: Option<Mapper<Element, Shadow>> = None,
@@ -178,7 +178,7 @@ export class Element extends Node implements Slot, Slotable {
   public attribute(
     predicate: string | Predicate<Attribute>
   ): Option<Attribute> {
-    return find(
+    return Iterable.find(
       this._attributes,
       typeof predicate === "string"
         ? attribute => attribute.hasName(predicate)
@@ -282,27 +282,19 @@ export class Element extends Node implements Slot, Slotable {
       this._name
     );
 
-    const attributes = join(
-      map(this._attributes, attribute => ` ${attribute.toString()}`),
-      ""
-    );
+    const attributes = this._attributes
+      .map(attribute => ` ${attribute.toString()}`)
+      .join("");
 
     if (this.isVoid()) {
       return `<${name}${attributes}>`;
     }
 
-    const children = join(
-      map(
-        filter(
-          map(concat(this._shadow, this._children, this._content), child =>
-            child.toString().trim()
-          ),
-          not(isEmpty)
-        ),
-        child => indent(child)
-      ),
-      "\n"
-    );
+    const children = [...this._shadow, ...this._children, ...this._content]
+      .map(child => child.toString().trim())
+      .filter(not(isEmpty))
+      .map(indent)
+      .join("\n");
 
     return `<${name}${attributes}>${
       children === "" ? "" : `\n${children}\n`
@@ -311,10 +303,6 @@ export class Element extends Node implements Slot, Slotable {
 }
 
 export namespace Element {
-  export function isElement(value: unknown): value is Element {
-    return value instanceof Element;
-  }
-
   export interface JSON extends Node.JSON {
     type: "element";
     namespace: string | null;
@@ -325,6 +313,10 @@ export namespace Element {
     children: Array<Node.JSON>;
     shadow: Shadow.JSON | null;
     content: Document.JSON | null;
+  }
+
+  export function isElement(value: unknown): value is Element {
+    return value instanceof Element;
   }
 
   export function fromElement(
