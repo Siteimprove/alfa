@@ -134,15 +134,6 @@ export function parseSpan(element: Element, name: string, min: number, max: numb
     .getOr(failed);
 }
 
-// https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Cell) => void) {
-  // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-  return cell => {
-    cell.height= cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height;
-    cell.growing= cell.growing && keepGrowing;
-  }
-}
-
 // Bad copy from rule helpers. Move to DOM helpers?
 function hasNamespace(
   predicate: Predicate<Namespace> = () => true
@@ -162,6 +153,15 @@ function isElementByName(...names: Array<string>): Predicate<Node, Element> {
     and(hasNamespace(equals(Namespace.HTML)),
       hasName(equals(...names))
     ));
+}
+
+// https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
+function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Cell) => void) {
+  // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
+  return cell => {
+    cell.height= cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height;
+    cell.growing= cell.growing && keepGrowing;
+  }
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
