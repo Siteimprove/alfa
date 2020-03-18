@@ -245,14 +245,14 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
 // }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
-export function processRowGroup(table: Table, group: Element) {
+export function processRowGroup(table: Table, group: Element, yCurrent: number): number {
   // 1
   const yStart = table.height;
   // 2
   for (const row of group.children().filter(isElementByName("tr"))) {
-    rowProcessing(table, row, global.yCurrent);
+    rowProcessing(table, row, yCurrent);
     // row processing steps 4/16
-    global.yCurrent++;
+    yCurrent++;
   }
   // 3
   if (table.height > yStart) {
@@ -262,7 +262,8 @@ export function processRowGroup(table: Table, group: Element) {
   // 4
   // endRowGroup(table);
   table.cells.forEach(growingCell(table.height,false));
-  global.yCurrent = table.height;
+  yCurrent = table.height;
+  return yCurrent;
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
@@ -345,14 +346,14 @@ export function formingTable(element: Element): Table {
         table.cells.forEach(growingCell(table.height,false));
         global.yCurrent = table.height;
         // 16
-        processRowGroup(table, currentElement);
+        global.yCurrent = processRowGroup(table, currentElement, global.yCurrent);
         break;
       default: throw new Error("Impossible")
     }
   }
   // 19
   for (const tfoot of pendingTfoot) {
-    processRowGroup(table, tfoot);
+    global.yCurrent = processRowGroup(table, tfoot, global.yCurrent);
   }
   // 20
   // skipping for now, need better row/col selectors

@@ -36,7 +36,8 @@ test("Process complex row", t => {
 test("Process row group", t => {
   const table = newTable();
 
-  processRowGroup(table, rowGroup.element);
+  const y = processRowGroup(table, rowGroup.element, 0);
+  t.equal(y, 2);
   t.deepEqual(table, rowGroup.expected);
 });
 
