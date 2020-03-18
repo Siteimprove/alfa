@@ -35,9 +35,12 @@ export function newTable(): Table {
   return { slots: [[]], width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
-// Bad global variables! Bad!
-const global = { yCurrent:0};
+const global = { yCurrent: 0};
 
+type BuildingArgs = {
+  yCurrent: number,
+  // downwardGrowingCells: Iterable<Cell>
+}
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 export type Cell = {
@@ -235,11 +238,11 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
-export function endRowGroup(table: Table) {
+export function endRowGroup(table: Table): number {
   // 1.1, growingCells can grow by more than 1 at a time.
-  table.cells.forEach(growingCell(table.height, /* 2 */ false));
+  table.cells.forEach(growingCell(table.height,false));
   // 1.2
-  global.yCurrent = table.height;
+  return table.height;
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
@@ -258,7 +261,7 @@ export function processRowGroup(table: Table, group: Element) {
     table.rowGroups.push(rowGroup);
   }
   // 4
-  endRowGroup(table);
+  global.yCurrent = endRowGroup(table);
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
@@ -325,7 +328,7 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        endRowGroup(table);
+        global.yCurrent = endRowGroup(table);
         // 15 (add to list)
         pendingTfoot.push(currentElement);
         break;
@@ -335,7 +338,7 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        endRowGroup(table);
+        global.yCurrent = endRowGroup(table);
         // 16
         processRowGroup(table, currentElement);
         break;
