@@ -3,14 +3,15 @@ import {clamp} from "@siteimprove/alfa-math";
 import {Parser} from "@siteimprove/alfa-parser";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Err, Ok, Result} from "@siteimprove/alfa-result";
+import {Set} from "@siteimprove/alfa-set";
 import {Attribute, Element, Namespace, Node} from "..";
 
 const { and, equals, property } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
-export type Table = { width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
+export type Table = { width: number, height: number, cells: Set<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 export function newTable(): Table {
-  return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
+  return { width: 0, height: 0, cells: Set.empty(), rowGroups: [], colGroups: []}
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -149,13 +150,13 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
   // 2
    let xCurrent = 0;
   // 3
-  table.cells.forEach(growingCell(yCurrent, true));
+  table.cells = table.cells.map(growingCell(yCurrent, true));
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
     while (xCurrent < table.width &&
-      table.cells.some(isCovering(xCurrent, yCurrent))
+      table.cells.find(isCovering(xCurrent, yCurrent)).isSome()
     ) {
       xCurrent++
     }
@@ -192,12 +193,12 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
     };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
-        if (table.cells.some(isCovering(x, y))) {
+        if (table.cells.find(isCovering(x, y)).isSome()) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
       }
     }
-    table.cells.push(cell);
+    table.cells = table.cells.add(cell);
     // 15
     xCurrent = xCurrent + colspan;
   }

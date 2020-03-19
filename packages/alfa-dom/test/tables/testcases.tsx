@@ -1,5 +1,6 @@
 import {None, Option, Some} from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
+import {Set} from "@siteimprove/alfa-set";
 import {Cell, Element, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
 import and = Predicate.and;
@@ -30,7 +31,7 @@ export namespace simpleRow {
   const makeCell = makeCellWithGetter(getById);
 
   export const expected: Table = {
-    cells: [ makeCell("first","header", 0, 0), makeCell("second","data", 1, 0) ],
+    cells: Set.of(makeCell("first","header", 0, 0), makeCell("second","data", 1, 0)),
     width: 2, height: 1, rowGroups: [], colGroups: []
   };
 }
@@ -50,13 +51,13 @@ export namespace complexRow {
   const makeCell = makeCellWithGetter(getById);
 
   export const expected: Table = {
-    cells: [
+    cells: Set.of(
       makeCell("grade", "header", 0, 0,1, 2),
       makeCell("yield", "header", 1, 0, 1, 2),
       makeCell("strength", "header", 2, 0, 2, 1),
       makeCell("elong", "header", 4, 0, 1, 2),
       makeCell("reduct", "header", 5, 0, 1, 2)
-    ],
+    ),
     width: 6, height: 2, rowGroups: [], colGroups: []
   };
 }
@@ -80,7 +81,7 @@ export namespace rowGroup {
   const makeCell = makeCellWithGetter(getById);
 
   export const expected: Table = {
-    cells: [
+    cells: Set.of(
       makeCell("grade", "header", 0, 0, 1, 2),
       makeCell("yield", "header", 1, 0, 1, 2),
       makeCell("strength", "header", 2, 0, 2, 1),
@@ -88,7 +89,7 @@ export namespace rowGroup {
       makeCell("reduct", "header", 5, 0, 1, 2),
       makeCell("kg-mm", "header", 2, 1),
       makeCell("lb-in", "header", 3, 1)
-    ],
+    ),
     width: 6, height: 2, colGroups: [],
     rowGroups: [{anchor: {y: 0}, height: 2, element: element}]
   };
@@ -144,7 +145,7 @@ export namespace smithonian {
   const makeCell = makeCellWithGetter(getById);
 
   export const expected: Table =  {
-    cells: [
+    cells: Set.of(
       makeCell("grade", "header", 0, 0, 1, 2), makeCell("yield", "header", 1, 0, 1, 2), makeCell("strength", "header", 2, 0, 2, 1),
       makeCell("elong", "header", 4, 0, 1, 2), makeCell("reduct", "header", 5, 0, 1, 2),
       makeCell("kg-mm", "header", 2, 1), makeCell("lb-in", "header", 3, 1),
@@ -154,7 +155,7 @@ export namespace smithonian {
       makeCell("medium-lb", "data", 3, 3), makeCell("medium-elong", "data", 4, 3), makeCell("medium-reduct", "data", 5, 3),
       makeCell("soft", "data", 0, 4), makeCell("soft-yield", "data", 1, 4), makeCell("soft-kg", "data", 2, 4),
       makeCell("soft-lb", "data", 3, 4), makeCell("soft-elong", "data", 4, 4), makeCell("soft-reduct", "data", 5, 4)
-    ],
+    ),
     width: 6, height: 5, colGroups: [] ,
     rowGroups: [{anchor: {y: 0}, height: 2, element: getById("thead")}, {anchor: {y: 2}, height: 3, element: getById("tbody")}]
   }
@@ -206,7 +207,7 @@ export namespace apple {
   const makeCell = makeCellWithGetter(getById);
 
   export const expected: Table =  {
-    cells: [
+    cells: Set.of(
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
       makeCell("net", "header", 0, 1), makeCell("net-2008", "data", 1, 1),
@@ -217,7 +218,7 @@ export namespace apple {
       makeCell("margin-2007", "data", 2, 3), makeCell("margin-2006", "data", 3, 3),
       makeCell("percent", "header", 0, 4), makeCell("percent-2008", "data", 1, 4),
       makeCell("percent-2007", "data", 2, 4), makeCell("percent-2006", "data", 3, 4)
-    ],
+    ),
     width: 4, height: 5, colGroups: [],
     rowGroups: [
       {anchor: {y: 0}, height: 1, element: getById("thead")},
@@ -260,7 +261,7 @@ export namespace expenses {
   const makeCell = makeCellWithGetter(getById);
 
   export const expected: Table =  {
-    cells: [
+    cells: Set.of(
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
       makeCell("rd", "header", 0, 1), makeCell("rd-2008", "data", 1, 1),
@@ -271,7 +272,7 @@ export namespace expenses {
       makeCell("sales-2007", "data", 2, 3), makeCell("sales-2006", "data", 3, 3),
       makeCell("sales-percent", "header", 0, 4), makeCell("sales-percent-2008", "data", 1, 4),
       makeCell("sales-percent-2007", "data", 2, 4), makeCell("sales-percent-2006", "data", 3, 4),
-    ],
+    ),
     width: 4, height: 5,
     colGroups: [
       {anchor: {x:0}, width: 1, element: getById("group-head")},
@@ -318,7 +319,7 @@ export namespace expensesNum {
   const makeCell = makeCellWithGetter(getById);
 
   export const expected: Table =  {
-    cells: [
+    cells: Set.of(
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
       makeCell("rd", "header", 0, 1), makeCell("rd-2008", "data", 1, 1),
@@ -329,7 +330,7 @@ export namespace expensesNum {
       makeCell("sales-2007", "data", 2, 3), makeCell("sales-2006", "data", 3, 3),
       makeCell("sales-percent", "header", 0, 4), makeCell("sales-percent-2008", "data", 1, 4),
       makeCell("sales-percent-2007", "data", 2, 4), makeCell("sales-percent-2006", "data", 3, 4),
-    ],
+    ),
     width: 4, height: 5,
     colGroups: [
       {anchor: {x:0}, width: 1, element: getById("group-head")},
