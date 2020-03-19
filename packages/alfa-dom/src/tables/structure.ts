@@ -133,7 +133,7 @@ function isElementByName(...names: Array<string>): Predicate<Node, Element> {
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Cell) => Cell) {
+function growingCell(yCurrent: number): ((cell: Cell) => Cell) {
   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
   return cell => ({
     ...cell,
@@ -141,13 +141,13 @@ function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Ce
   })
 }
 
-function growCellInSet(yCurrent: number, keepGrowing: boolean=false): Reducer<Cell, Set<Cell>> {
+function growCellInSet(yCurrent: number): Reducer<Cell, Set<Cell>> {
   return (set: Set<Cell>, cell: Cell) =>
-    set.delete(cell).add(growingCell(yCurrent, keepGrowing)(cell));
+    set.delete(cell).add(growingCell(yCurrent)(cell));
 }
 
-const growCellList = (yCurrent: number, keepGrowing: boolean=false) => (cells: Iterable<Cell>, set: Set<Cell>) =>
-  Iterable.reduce<Cell, Set<Cell>>(cells, growCellInSet(yCurrent, keepGrowing), set);
+const growCellList = (yCurrent: number) => (cells: Iterable<Cell>, set: Set<Cell>) =>
+  Iterable.reduce<Cell, Set<Cell>>(cells, growCellInSet(yCurrent), set);
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
 export function rowProcessing(table: Table, tr: Element, yCurrent: number, growingCellsList: Array<Cell>): Array<Cell> {
@@ -158,8 +158,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
   // 2
    let xCurrent = 0;
   // 3
-  table.cells = growCellList(yCurrent, true)(growingCellsList, table.cells);
-    // table.cells.map(growingCell(yCurrent, true));
+  table.cells = growCellList(yCurrent)(growingCellsList, table.cells);
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
