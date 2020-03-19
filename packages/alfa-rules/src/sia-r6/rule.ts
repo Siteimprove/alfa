@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               isDocumentElement(),
               and(
-                hasAttribute("lang", value => Language.from(value).isSome()),
+                hasAttribute("lang", value => Language.parse(value).isSome()),
                 hasAttribute("xml:lang", not(isEmpty))
               )
             )
@@ -34,8 +34,10 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const lang = Language.from(target.attribute("lang").get().value).get();
-        const xmlLang = Language.from(target.attribute("xml:lang").get().value);
+        const lang = Language.parse(target.attribute("lang").get().value).get();
+        const xmlLang = Language.parse(
+          target.attribute("xml:lang").get().value
+        );
 
         return {
           1: expectation(

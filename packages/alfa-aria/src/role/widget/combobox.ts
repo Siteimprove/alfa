@@ -13,7 +13,7 @@ Role.register(
       "aria-required",
 
       // This property is only required when the combobox is expanded so we list
-      // is as supported instead.
+      // it as supported instead.
       "aria-controls"
     ],
     owns: ["textbox"],
