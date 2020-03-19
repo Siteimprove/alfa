@@ -43,6 +43,7 @@ export type Cell = {
   // size of the cell
   width: number;
   height: number;
+  element: Element;
   growing: boolean; // true if part of the growing cells list.
 }
 
@@ -206,6 +207,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
       anchor: {x: xCurrent, y: yCurrent},
       width: colspan,
       height: rowspan,
+      element: currentCell,
       // 14
       growing: grow
     };

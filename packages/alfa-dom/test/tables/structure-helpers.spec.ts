@@ -8,11 +8,11 @@ function slot(x: number, y: number): {x:number, y: number} {
   return {x: x, y: y}
 }
 
-function cell(x: number, y: number, w: number, h: number): Cell {
-  return {kind: "data", anchor: {x: x, y: y}, width: w, height: h, growing: false}
-}
-
 const dummy = Element.of(None, None, "foo");
+
+function cell(x: number, y: number, w: number, h: number): Cell {
+  return {kind: "data", anchor: {x: x, y: y}, width: w, height: h, element: dummy, growing: false}
+}
 
 function rowGroup(y: number, h: number): RowGroup {
   return {anchor: {y: y}, height: h, element: dummy}

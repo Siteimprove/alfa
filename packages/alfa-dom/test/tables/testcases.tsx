@@ -8,9 +8,11 @@ export function makeSlot(element: Element | null = null): Slot {
   return { elements: element === null ? [] : [element] };
 }
 
-function makeCell(kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell {
-  return {kind: kind, anchor: {x: x, y: y}, width: w, height: h, growing: false};
-}
+const makeCellWithGetter = (getElt: (elt: string) => Element) =>
+  (elt: string, kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell =>
+    ({
+      kind: kind, anchor: {x: x, y: y}, width: w, height: h, element: getElt(elt), growing: false
+    });
 
 function hasID(id: string): Predicate<Element> {
   return (element) => {
@@ -29,6 +31,7 @@ export namespace simpleRow {
     <td id="second">2</td>
   </tr>);
   const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
 
   const slots = [
     [makeSlot(getById("first"))],
@@ -38,7 +41,7 @@ export namespace simpleRow {
   export const expected: Table = {
     slots: slots,
     // cells: getCells(slots),
-    cells: [ makeCell("header", 0, 0), makeCell("data", 1, 0) ],
+    cells: [ makeCell("first","header", 0, 0), makeCell("second","data", 1, 0) ],
     width: 2, height: 1, rowGroups: [], colGroups: []
   };
 }
@@ -55,6 +58,7 @@ export namespace complexRow {
     <th id="reduct" rowSpan={2}>Per cent reduct. area.</th>
   </tr>);
   const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
 
   const slots = [
     [makeSlot(getById("grade")),
@@ -72,7 +76,11 @@ export namespace complexRow {
     slots: slots,
     // cells: getCells(slots),
     cells: [
-      makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2)
+      makeCell("grade", "header", 0, 0,1, 2),
+      makeCell("yield", "header", 1, 0, 1, 2),
+      makeCell("strength", "header", 2, 0, 2, 1),
+      makeCell("elong", "header", 4, 0, 1, 2),
+      makeCell("reduct", "header", 5, 0, 1, 2)
     ],
     width: 6, height: 2, rowGroups: [], colGroups: []
   };
@@ -94,6 +102,7 @@ export namespace rowGroup {
   </tr>
   </thead>);
   const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
 
   const slots = [
     [makeSlot(getById("grade")),
@@ -113,8 +122,13 @@ export namespace rowGroup {
     slots: slots,
     // cells: getCells(slots),
     cells: [
-      makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2),
-      makeCell("header", 2, 1), makeCell("header", 3, 1)
+      makeCell("grade", "header", 0, 0, 1, 2),
+      makeCell("yield", "header", 1, 0, 1, 2),
+      makeCell("strength", "header", 2, 0, 2, 1),
+      makeCell("elong", "header", 4, 0, 1, 2),
+      makeCell("reduct", "header", 5, 0, 1, 2),
+      makeCell("kg-mm", "header", 2, 1),
+      makeCell("lb-in", "header", 3, 1)
     ],
     width: 6, height: 2, colGroups: [],
     rowGroups: [{anchor: {y: 0}, height: 2, element: element}]
@@ -168,6 +182,7 @@ export namespace smithonian {
     </tbody>
   </table>);
   const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
 
   const slots = [
     [ makeSlot(getById("grade")),
@@ -211,11 +226,15 @@ export namespace smithonian {
     slots: slots,
     // cells: getCells(slots),
     cells: [
-      makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2),
-      makeCell("header", 2, 1), makeCell("header", 3, 1),
-      makeCell("data", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2), makeCell("data", 4, 2), makeCell("data", 5, 2),
-      makeCell("data", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3), makeCell("data", 4, 3), makeCell("data", 5, 3),
-      makeCell("data", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4), makeCell("data", 4, 4), makeCell("data", 5, 4)
+      makeCell("grade", "header", 0, 0, 1, 2), makeCell("yield", "header", 1, 0, 1, 2), makeCell("strength", "header", 2, 0, 2, 1),
+      makeCell("elong", "header", 4, 0, 1, 2), makeCell("reduct", "header", 5, 0, 1, 2),
+      makeCell("kg-mm", "header", 2, 1), makeCell("lb-in", "header", 3, 1),
+      makeCell("hard", "data", 0, 2), makeCell("hard-yield", "data", 1, 2), makeCell("hard-kg", "data", 2, 2),
+      makeCell("hard-lb", "data", 3, 2), makeCell("hard-elong", "data", 4, 2), makeCell("hard-reduct", "data", 5, 2),
+      makeCell("medium", "data", 0, 3), makeCell("medium-yield", "data", 1, 3), makeCell("medium-kg", "data", 2, 3),
+      makeCell("medium-lb", "data", 3, 3), makeCell("medium-elong", "data", 4, 3), makeCell("medium-reduct", "data", 5, 3),
+      makeCell("soft", "data", 0, 4), makeCell("soft-yield", "data", 1, 4), makeCell("soft-kg", "data", 2, 4),
+      makeCell("soft-lb", "data", 3, 4), makeCell("soft-elong", "data", 4, 4), makeCell("soft-reduct", "data", 5, 4)
     ],
     width: 6, height: 5, colGroups: [] ,
     rowGroups: [{anchor: {y: 0}, height: 2, element: getById("thead")}, {anchor: {y: 2}, height: 3, element: getById("tbody")}]
@@ -265,6 +284,7 @@ export namespace apple {
     </tbody>
   </table>);
   const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
 
   const slots = [
     [ makeSlot(getById("empty")),
@@ -296,11 +316,16 @@ export namespace apple {
     slots: slots,
     // cells: getCells(slots),
     cells: [
-      makeCell("header", 0, 0), makeCell("header", 1, 0), makeCell("header", 2, 0), makeCell("header", 3, 0),
-      makeCell("header", 0, 1), makeCell("data", 1, 1), makeCell("data", 2, 1), makeCell("data", 3, 1),
-      makeCell("header", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2),
-      makeCell("header", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3),
-      makeCell("header", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4)
+      makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
+      makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
+      makeCell("net", "header", 0, 1), makeCell("net-2008", "data", 1, 1),
+      makeCell("net-2007", "data", 2, 1), makeCell("net-2006", "data", 3, 1),
+      makeCell("cost", "header", 0, 2), makeCell("cost-2008", "data", 1, 2),
+      makeCell("cost-2007", "data", 2, 2), makeCell("cost-2006", "data", 3, 2),
+      makeCell("margin", "header", 0, 3), makeCell("margin-2008", "data", 1, 3),
+      makeCell("margin-2007", "data", 2, 3), makeCell("margin-2006", "data", 3, 3),
+      makeCell("percent", "header", 0, 4), makeCell("percent-2008", "data", 1, 4),
+      makeCell("percent-2007", "data", 2, 4), makeCell("percent-2006", "data", 3, 4)
     ],
     width: 4, height: 5, colGroups: [],
     rowGroups: [
@@ -341,6 +366,7 @@ export namespace expenses {
     </tbody>
   </table>);
   const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
 
   const slots = [
     [ makeSlot(getById("empty")),
@@ -372,11 +398,16 @@ export namespace expenses {
     slots: slots,
     // cells: getCells(slots),
     cells: [
-      makeCell("header", 0, 0), makeCell("header", 1, 0), makeCell("header", 2, 0), makeCell("header", 3, 0),
-      makeCell("header", 0, 1), makeCell("data", 1, 1), makeCell("data", 2, 1), makeCell("data", 3, 1),
-      makeCell("header", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2),
-      makeCell("header", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3),
-      makeCell("header", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4)
+      makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
+      makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
+      makeCell("rd", "header", 0, 1), makeCell("rd-2008", "data", 1, 1),
+      makeCell("rd-2007", "data", 2, 1), makeCell("rd-2006", "data", 3, 1),
+      makeCell("rd-percent", "header", 0, 2), makeCell("rd-percent-2008", "data", 1, 2),
+      makeCell("rd-percent-2007", "data", 2, 2), makeCell("rd-percent-2006", "data", 3, 2),
+      makeCell("sales", "header", 0, 3), makeCell("sales-2008", "data", 1, 3),
+      makeCell("sales-2007", "data", 2, 3), makeCell("sales-2006", "data", 3, 3),
+      makeCell("sales-percent", "header", 0, 4), makeCell("sales-percent-2008", "data", 1, 4),
+      makeCell("sales-percent-2007", "data", 2, 4), makeCell("sales-percent-2006", "data", 3, 4),
     ],
     width: 4, height: 5,
     colGroups: [
@@ -421,6 +452,7 @@ export namespace expensesNum {
     </tbody>
   </table>);
   const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
 
   const slots = [
     [ makeSlot(getById("empty")),
@@ -452,13 +484,17 @@ export namespace expensesNum {
     slots: slots,
     // cells: getCells(slots),
     cells: [
-      makeCell("header", 0, 0), makeCell("header", 1, 0), makeCell("header", 2, 0), makeCell("header", 3, 0),
-      makeCell("header", 0, 1), makeCell("data", 1, 1), makeCell("data", 2, 1), makeCell("data", 3, 1),
-      makeCell("header", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2),
-      makeCell("header", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3),
-      makeCell("header", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4)
+      makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
+      makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
+      makeCell("rd", "header", 0, 1), makeCell("rd-2008", "data", 1, 1),
+      makeCell("rd-2007", "data", 2, 1), makeCell("rd-2006", "data", 3, 1),
+      makeCell("rd-percent", "header", 0, 2), makeCell("rd-percent-2008", "data", 1, 2),
+      makeCell("rd-percent-2007", "data", 2, 2), makeCell("rd-percent-2006", "data", 3, 2),
+      makeCell("sales", "header", 0, 3), makeCell("sales-2008", "data", 1, 3),
+      makeCell("sales-2007", "data", 2, 3), makeCell("sales-2006", "data", 3, 3),
+      makeCell("sales-percent", "header", 0, 4), makeCell("sales-percent-2008", "data", 1, 4),
+      makeCell("sales-percent-2007", "data", 2, 4), makeCell("sales-percent-2006", "data", 3, 4),
     ],
-
     width: 4, height: 5,
     colGroups: [
       {anchor: {x:0}, width: 1, element: getById("group-head")},
