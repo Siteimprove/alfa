@@ -39,7 +39,7 @@ export namespace simpleRow {
   ];
 
   export const expected: Table = {
-    slots: slots,
+    // slots: slots,
     // cells: getCells(slots),
     cells: [ makeCell("first","header", 0, 0), makeCell("second","data", 1, 0) ],
     width: 2, height: 1, rowGroups: [], colGroups: []
@@ -73,7 +73,7 @@ export namespace complexRow {
       makeSlot()]
   ];
   export const expected: Table = {
-    slots: slots,
+    // slots: slots,
     // cells: getCells(slots),
     cells: [
       makeCell("grade", "header", 0, 0,1, 2),
@@ -119,7 +119,7 @@ export namespace rowGroup {
       makeSlot()]
   ];
   export const expected: Table = {
-    slots: slots,
+    // slots: slots,
     // cells: getCells(slots),
     cells: [
       makeCell("grade", "header", 0, 0, 1, 2),
@@ -223,7 +223,7 @@ export namespace smithonian {
     ]
   ];
   export const expected: Table =  {
-    slots: slots,
+    // slots: slots,
     // cells: getCells(slots),
     cells: [
       makeCell("grade", "header", 0, 0, 1, 2), makeCell("yield", "header", 1, 0, 1, 2), makeCell("strength", "header", 2, 0, 2, 1),
@@ -313,7 +313,7 @@ export namespace apple {
     ],
   ];
   export const expected: Table =  {
-    slots: slots,
+    // slots: slots,
     // cells: getCells(slots),
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
@@ -395,7 +395,7 @@ export namespace expenses {
     ],
   ];
   export const expected: Table =  {
-    slots: slots,
+    // slots: slots,
     // cells: getCells(slots),
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
@@ -481,7 +481,7 @@ export namespace expensesNum {
     ],
   ];
   export const expected: Table =  {
-    slots: slots,
+    // slots: slots,
     // cells: getCells(slots),
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),

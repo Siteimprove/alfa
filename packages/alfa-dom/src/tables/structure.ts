@@ -18,21 +18,21 @@ function newSlot(): Slot {
   return { elements: [] }
 }
 
-export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
+export type Table = { /*slots: Array<Array<Slot>>,*/ width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 
-function getSlot(table: Table, col: number, row: number): Option<Slot> {
-  return Option
-    .from(table.slots[col])
-    .flatMap(sLine => Option.from(sLine[row]))
-}
-
-function setSlot(table: Table, col: number, row: number, slot: Slot) {
-  if (table.slots[col] === undefined) table.slots[col] = [];
-  table.slots[col][row] = slot;
-}
+// function getSlot(table: Table, col: number, row: number): Option<Slot> {
+//   return Option
+//     .from(table.slots[col])
+//     .flatMap(sLine => Option.from(sLine[row]))
+// }
+//
+// function setSlot(table: Table, col: number, row: number, slot: Slot) {
+//   if (table.slots[col] === undefined) table.slots[col] = [];
+//   table.slots[col][row] = slot;
+// }
 
 export function newTable(): Table {
-  return { slots: [[]], width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
+  return { /*slots: [[]], */width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -213,17 +213,17 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
     };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
-        const slot = getSlot(table, x, y);
+        // const slot = getSlot(table, x, y);
         if (table.cells.some(cell => isCoveredBy({x, y}, cell))) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
-        if (slot.isNone() ) {
-          setSlot(table, x, y, newSlot());
-        }
+        // if (slot.isNone() ) {
+        //   setSlot(table, x, y, newSlot());
+        // }
       }
     }
     // Storing the element in the anchor slot only.
-    table.slots[xCurrent][yCurrent].elements.push(currentCell);
+    // table.slots[xCurrent][yCurrent].elements.push(currentCell);
     table.cells.push(cell);
     // 15
     xCurrent = xCurrent + colspan;
