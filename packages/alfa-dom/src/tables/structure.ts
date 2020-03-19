@@ -288,54 +288,47 @@ export function formingTable(element: Element): Table {
   let processCG = true;
   for (const currentElement of children) { // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
 
-    switch (currentElement.name) {
-      case "colgroup":
-        // 9.1 (Columns group)
-        if (processCG) {
-          const colGroup = processColGroup(currentElement, table.width);
-          // 9.1 (1).4 (cumulative) and (2).2
-          table.width += colGroup.width;
-          // 9.1 (1).7 and (2).3
-          table.colGroups.push(colGroup);
-        }
-        break;
-      case "tr":
-        // 12
-        processCG = false;
-        // 13 (process)
-        growingCellsList = rowProcessing(table, currentElement, yCurrent, growingCellsList);
-        // row processing steps 4/16
-        yCurrent++;
-        break;
-      case "tfoot":
-        // 12
-        processCG = false;
-        // 14
-        // Ending row group 1
-        table.cells = growCellList(table.height)(growingCellsList, table.cells);
-        yCurrent = table.height;
-        // Ending row group 2
-        growingCellsList = [];
-        // 15 (add to list)
-        pendingTfoot.push(currentElement);
-        break;
+    if (currentElement.name === "colgroup") {
+      // 9.1 (Columns group)
+      if (processCG) {
+        const colGroup = processColGroup(currentElement, table.width);
+        // 9.1 (1).4 (cumulative) and (2).2
+        table.width += colGroup.width;
+        // 9.1 (1).7 and (2).3
+        table.colGroups.push(colGroup);
+      }
+      continue;
+    }
 
-      case "thead":
-      case "tbody":
-        // 12
-        processCG = false;
-        // 14
-        // Ending row group 1
-        table.cells = growCellList(table.height)(growingCellsList, table.cells);
-        yCurrent = table.height;
-        // Ending row group 2
-        growingCellsList = [];
-        // 16
-        yCurrent = processRowGroup(table, currentElement, yCurrent);
-        break;
-      default: throw new Error("Impossible")
+    // 12
+    processCG = false;
+
+    if (currentElement.name === "tr") {
+      // 13 (process)
+      growingCellsList = rowProcessing(table, currentElement, yCurrent, growingCellsList);
+      // row processing steps 4/16
+      yCurrent++;
+      continue;
+    }
+
+    // 14
+    // Ending row group 1
+    table.cells = growCellList(table.height)(growingCellsList, table.cells);
+    yCurrent = table.height;
+    // Ending row group 2
+    growingCellsList = [];
+
+    if (currentElement.name === "tfoot") {
+      // 15 (add to list)
+      pendingTfoot.push(currentElement);
+    }
+
+    if (currentElement.name === "thead" || currentElement.name === "tbody") {
+      // 16
+      yCurrent = processRowGroup(table, currentElement, yCurrent);
     }
   }
+
   // 19
   for (const tfoot of pendingTfoot) {
     yCurrent = processRowGroup(table, tfoot, yCurrent);
