@@ -131,12 +131,13 @@ function isElementByName(...names: Array<string>): Predicate<Node, Element> {
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Cell) => void) {
+function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Cell) => Cell) {
   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-  return cell => {
-    cell.height= cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height;
-    cell.growing= cell.growing && keepGrowing;
-  }
+  return cell => ({
+    ...cell,
+    height: cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height,
+    growing: cell.growing && keepGrowing
+  })
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
@@ -227,7 +228,7 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   }
   // 4
   // endRowGroup(table);
-  table.cells.forEach(growingCell(table.height,false));
+  table.cells = table.cells.map(growingCell(table.height,false));
   yCurrent = table.height;
   return yCurrent;
 }
@@ -297,7 +298,7 @@ export function formingTable(element: Element): Table {
         processCG = false;
         // 14
         // endRowGroup(table);
-        table.cells.forEach(growingCell(table.height,false));
+        table.cells = table.cells.map(growingCell(table.height,false));
         yCurrent = table.height;
         // 15 (add to list)
         pendingTfoot.push(currentElement);
@@ -309,7 +310,7 @@ export function formingTable(element: Element): Table {
         processCG = false;
         // 14
         // endRowGroup(table);
-        table.cells.forEach(growingCell(table.height,false));
+        table.cells = table.cells.map(growingCell(table.height,false));
         yCurrent = table.height;
         // 16
         yCurrent = processRowGroup(table, currentElement, yCurrent);
