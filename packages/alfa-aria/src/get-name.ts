@@ -159,22 +159,30 @@ function getAriaLabelledbyTextAlternative(
     return Branched.of(None);
   }
 
+  const references = resolveReferences(element.root(), labelledBy.get());
+
+  if (references.length === 0) {
+    return Branched.of(None);
+  }
+
   return Branched.sequence(
-    Iterable.map(resolveReferences(element.root(), labelledBy.get()), element =>
+    Iterable.map(references, element =>
       getName(element, device, visited, {
         recursing: true,
         referencing: true
       })
     )
   ).map(alts =>
-    Iterable.reduce<Option<string>>(
-      alts,
-      (alt, text) =>
-        alt
-          .map(alt => text.reduce((alt, text) => `${alt} ${text}`, alt))
-          .or(text),
-      None
-    ).map(alt => flatten(alt, options))
+    Option.of(
+      flatten(
+        Iterable.reduce(
+          alts,
+          (alt, text) => text.reduce((alt, text) => `${alt} ${text}`, alt),
+          ""
+        ),
+        options
+      )
+    )
   );
 }
 

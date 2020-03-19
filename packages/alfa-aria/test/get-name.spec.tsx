@@ -158,7 +158,7 @@ test("getName() computes the text alternative of a button with an aria-labelledb
   });
 });
 
-test("getName() falls through when no text alternative is found in aria-labelledby", t => {
+test("getName() falls through when no valid ID is found in aria-labelledby", t => {
   const button = Element.fromElement(
     <button aria-labelledby="h w">Button</button>
   );
