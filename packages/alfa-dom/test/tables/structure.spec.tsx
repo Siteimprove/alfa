@@ -1,6 +1,6 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-import {Slot, rowProcessing, processRowGroup, formingTable, Element, newTable} from "../../src";
+import { rowProcessing, processRowGroup, formingTable, Element, newTable} from "../../src";
 import {apple, complexRow, expenses, expensesNum, rowGroup, simpleRow, smithonian} from "./testcases";
 
 const cleanElement = (element: Element) =>
@@ -10,13 +10,13 @@ const cleanElement = (element: Element) =>
     .getOr("");
 
 
-const cleanSlot = (slot: Slot) => (
-  {...slot,
-    elements: slot
-      .elements
-      .map(cleanElement)
-  }
-);
+// const cleanSlot = (slot: Slot) => (
+//   {...slot,
+//     elements: slot
+//       .elements
+//       .map(cleanElement)
+//   }
+// );
 
 
 test("Process simple row", t => {

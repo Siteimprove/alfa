@@ -1,12 +1,8 @@
 import {None, Option, Some} from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
-import {Cell, Element, Slot, Table} from "../../src";
+import {Cell, Element, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
 import and = Predicate.and;
-
-export function makeSlot(element: Element | null = null): Slot {
-  return { elements: element === null ? [] : [element] };
-}
 
 const makeCellWithGetter = (getElt: (elt: string) => Element) =>
   (elt: string, kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell =>
@@ -33,14 +29,7 @@ export namespace simpleRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  const slots = [
-    [makeSlot(getById("first"))],
-    [makeSlot(getById("second"))]
-  ];
-
   export const expected: Table = {
-    // slots: slots,
-    // cells: getCells(slots),
     cells: [ makeCell("first","header", 0, 0), makeCell("second","data", 1, 0) ],
     width: 2, height: 1, rowGroups: [], colGroups: []
   };
@@ -60,21 +49,7 @@ export namespace complexRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  const slots = [
-    [makeSlot(getById("grade")),
-      makeSlot()],
-    [makeSlot(getById("yield")),
-      makeSlot()],
-    [makeSlot(getById("strength"))],
-    [makeSlot()],
-    [makeSlot(getById("elong")),
-      makeSlot()],
-    [makeSlot(getById("reduct")),
-      makeSlot()]
-  ];
   export const expected: Table = {
-    // slots: slots,
-    // cells: getCells(slots),
     cells: [
       makeCell("grade", "header", 0, 0,1, 2),
       makeCell("yield", "header", 1, 0, 1, 2),
@@ -104,23 +79,7 @@ export namespace rowGroup {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  const slots = [
-    [makeSlot(getById("grade")),
-      makeSlot()],
-    [makeSlot(getById("yield")),
-      makeSlot()],
-    [makeSlot(getById("strength")),
-      makeSlot(getById("kg-mm"))],
-    [makeSlot(),
-      makeSlot(getById("lb-in"))],
-    [makeSlot(getById("elong")),
-      makeSlot()],
-    [makeSlot(getById("reduct")),
-      makeSlot()]
-  ];
   export const expected: Table = {
-    // slots: slots,
-    // cells: getCells(slots),
     cells: [
       makeCell("grade", "header", 0, 0, 1, 2),
       makeCell("yield", "header", 1, 0, 1, 2),
@@ -184,47 +143,7 @@ export namespace smithonian {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  const slots = [
-    [ makeSlot(getById("grade")),
-      makeSlot(),
-      makeSlot(getById("hard")),
-      makeSlot(getById("medium")),
-      makeSlot(getById("soft"))
-    ],
-    [ makeSlot(getById("yield")),
-      makeSlot(),
-      makeSlot(getById("hard-yield")),
-      makeSlot(getById("medium-yield")),
-      makeSlot(getById("soft-yield"))
-    ],
-    [ makeSlot(getById("strength")),
-      makeSlot(getById("kg-mm")),
-      makeSlot(getById("hard-kg")),
-      makeSlot(getById("medium-kg")),
-      makeSlot(getById("soft-kg"))
-    ],
-    [ makeSlot(),
-      makeSlot(getById("lb-in")),
-      makeSlot(getById("hard-lb")),
-      makeSlot(getById("medium-lb")),
-      makeSlot(getById("soft-lb")),
-    ],
-    [ makeSlot(getById("elong")),
-      makeSlot(),
-      makeSlot(getById("hard-elong")),
-      makeSlot(getById("medium-elong")),
-      makeSlot(getById("soft-elong")),
-    ],
-    [ makeSlot(getById("reduct")),
-      makeSlot(),
-      makeSlot(getById("hard-reduct")),
-      makeSlot(getById("medium-reduct")),
-      makeSlot(getById("soft-reduct")),
-    ]
-  ];
   export const expected: Table =  {
-    // slots: slots,
-    // cells: getCells(slots),
     cells: [
       makeCell("grade", "header", 0, 0, 1, 2), makeCell("yield", "header", 1, 0, 1, 2), makeCell("strength", "header", 2, 0, 2, 1),
       makeCell("elong", "header", 4, 0, 1, 2), makeCell("reduct", "header", 5, 0, 1, 2),
@@ -286,35 +205,7 @@ export namespace apple {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  const slots = [
-    [ makeSlot(getById("empty")),
-      makeSlot(getById("net")),
-      makeSlot(getById("cost")),
-      makeSlot(getById("margin")),
-      makeSlot(getById("percent"))
-    ],
-    [ makeSlot(getById("2008")),
-      makeSlot(getById("net-2008")),
-      makeSlot(getById("cost-2008")),
-      makeSlot(getById("margin-2008")),
-      makeSlot(getById("percent-2008"))
-    ],
-    [ makeSlot(getById("2007")),
-      makeSlot(getById("net-2007")),
-      makeSlot(getById("cost-2007")),
-      makeSlot(getById("margin-2007")),
-      makeSlot(getById("percent-2007"))
-    ],
-    [ makeSlot(getById("2006")),
-      makeSlot(getById("net-2006")),
-      makeSlot(getById("cost-2006")),
-      makeSlot(getById("margin-2006")),
-      makeSlot(getById("percent-2006"))
-    ],
-  ];
   export const expected: Table =  {
-    // slots: slots,
-    // cells: getCells(slots),
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
@@ -368,35 +259,7 @@ export namespace expenses {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  const slots = [
-    [ makeSlot(getById("empty")),
-      makeSlot(getById("rd")),
-      makeSlot(getById("rd-percent")),
-      makeSlot(getById("sales")),
-      makeSlot(getById("sales-percent")),
-    ],
-    [ makeSlot(getById("2008")),
-      makeSlot(getById("rd-2008")),
-      makeSlot(getById("rd-percent-2008")),
-      makeSlot(getById("sales-2008")),
-      makeSlot(getById("sales-percent-2008")),
-    ],
-    [ makeSlot(getById("2007")),
-      makeSlot(getById("rd-2007")),
-      makeSlot(getById("rd-percent-2007")),
-      makeSlot(getById("sales-2007")),
-      makeSlot(getById("sales-percent-2007")),
-    ],
-    [ makeSlot(getById("2006")),
-      makeSlot(getById("rd-2006")),
-      makeSlot(getById("rd-percent-2006")),
-      makeSlot(getById("sales-2006")),
-      makeSlot(getById("sales-percent-2006")),
-    ],
-  ];
   export const expected: Table =  {
-    // slots: slots,
-    // cells: getCells(slots),
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
@@ -454,35 +317,7 @@ export namespace expensesNum {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  const slots = [
-    [ makeSlot(getById("empty")),
-      makeSlot(getById("rd")),
-      makeSlot(getById("rd-percent")),
-      makeSlot(getById("sales")),
-      makeSlot(getById("sales-percent")),
-    ],
-    [ makeSlot(getById("2008")),
-      makeSlot(getById("rd-2008")),
-      makeSlot(getById("rd-percent-2008")),
-      makeSlot(getById("sales-2008")),
-      makeSlot(getById("sales-percent-2008")),
-    ],
-    [ makeSlot(getById("2007")),
-      makeSlot(getById("rd-2007")),
-      makeSlot(getById("rd-percent-2007")),
-      makeSlot(getById("sales-2007")),
-      makeSlot(getById("sales-percent-2007")),
-    ],
-    [ makeSlot(getById("2006")),
-      makeSlot(getById("rd-2006")),
-      makeSlot(getById("rd-percent-2006")),
-      makeSlot(getById("sales-2006")),
-      makeSlot(getById("sales-percent-2006")),
-    ],
-  ];
   export const expected: Table =  {
-    // slots: slots,
-    // cells: getCells(slots),
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),

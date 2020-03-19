@@ -2,7 +2,7 @@ import {test} from "@siteimprove/alfa-test";
 import {None} from "@siteimprove/alfa-option";
 import {Attribute, Element, parseSpan} from "../../src";
 
-import {Cell, ColGroup, isCoveredBy, RowGroup, Slot} from "../../src/tables/structure";
+import { Cell, ColGroup, isCoveredBy, RowGroup } from "../../src/tables/structure";
 
 function slot(x: number, y: number): {x:number, y: number} {
   return {x: x, y: y}

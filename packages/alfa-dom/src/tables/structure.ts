@@ -1,38 +1,16 @@
 import {Mapper} from "@siteimprove/alfa-mapper";
 import {clamp} from "@siteimprove/alfa-math";
-import {None, Option, Some} from "@siteimprove/alfa-option";
 import {Parser} from "@siteimprove/alfa-parser";
 import {Predicate} from "@siteimprove/alfa-predicate";
-import {Iterable} from "@siteimprove/alfa-iterable";
 import {Err, Ok, Result} from "@siteimprove/alfa-result";
-import {test} from "@siteimprove/alfa-test";
 import {Attribute, Element, Namespace, Node} from "..";
-import isElement = Element.isElement;
 
 const { and, equals, property } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
-
-export type Slot = { elements: Array<Element> };
-function newSlot(): Slot {
-  return { elements: [] }
-}
-
-export type Table = { /*slots: Array<Array<Slot>>,*/ width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
-
-// function getSlot(table: Table, col: number, row: number): Option<Slot> {
-//   return Option
-//     .from(table.slots[col])
-//     .flatMap(sLine => Option.from(sLine[row]))
-// }
-//
-// function setSlot(table: Table, col: number, row: number, slot: Slot) {
-//   if (table.slots[col] === undefined) table.slots[col] = [];
-//   table.slots[col][row] = slot;
-// }
-
+export type Table = { width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 export function newTable(): Table {
-  return { /*slots: [[]], */width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
+  return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -174,9 +152,6 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
     // 6 (Cells)
     while (xCurrent < table.width &&
       table.cells.some(cell => isCoveredBy({x: xCurrent, y: yCurrent}, cell))
-      // getSlot(table, xCurrent, yCurrent)
-      //   .flatMap(slot => slot.cell)
-      //   .isSome()
     ) {
       xCurrent++
     }
@@ -213,17 +188,11 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
     };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
-        // const slot = getSlot(table, x, y);
         if (table.cells.some(cell => isCoveredBy({x, y}, cell))) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
-        // if (slot.isNone() ) {
-        //   setSlot(table, x, y, newSlot());
-        // }
       }
     }
-    // Storing the element in the anchor slot only.
-    // table.slots[xCurrent][yCurrent].elements.push(currentCell);
     table.cells.push(cell);
     // 15
     xCurrent = xCurrent + colspan;
