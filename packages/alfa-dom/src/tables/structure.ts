@@ -15,7 +15,7 @@ const { and, equals, property } = Predicate;
 
 export type Slot = { elements: Array<Element>, cell: Option<Cell> };
 function newSlot(cell: Cell | null = null): Slot {
-  return { elements: [], cell: Option.from(cell) }
+  return { elements: [], cell: None }
 }
 
 export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
@@ -172,9 +172,10 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
     while (xCurrent < table.width &&
-      getSlot(table, xCurrent, yCurrent)
-        .flatMap(slot => slot.cell)
-        .isSome()
+      table.cells.some(cell => isCoveredBy({x: xCurrent, y: yCurrent}, cell))
+      // getSlot(table, xCurrent, yCurrent)
+      //   .flatMap(slot => slot.cell)
+      //   .isSome()
     ) {
       xCurrent++
     }

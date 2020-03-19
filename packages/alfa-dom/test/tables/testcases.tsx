@@ -5,7 +5,7 @@ import {jsx} from "@siteimprove/alfa-dom/jsx";
 import and = Predicate.and;
 
 export function makeSlot(cell: Cell | null = null, element: Element | null = null): Slot {
-  return { elements: element === null ? [] : [element], cell: Option.from(cell)};
+  return { elements: element === null ? [] : [element], cell: None};
 }
 
 function makeCell(kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell {
@@ -23,22 +23,22 @@ const dummy = Element.of(None, None, "dummy");
 const getDescendantById = (element: Element) => (id: string) => element.descendants().filter(and(Element.isElement, hasID(id))).first().getOr(dummy);
 
 
-function eqCells(c1: Cell, c2: Cell): boolean {
-  return c1.kind === c2.kind &&
-    c1.anchor.x === c2.anchor.x &&
-    c1.anchor.y === c2.anchor.y &&
-    c1.width === c2.width &&
-    c1.height === c2.height
-}
-function getCells(slots: Array<Array<Slot>>): Array<Cell> {
-  const cells: Array<Cell> = [];
-  for (const sLine of slots) {
-    for (const slot of sLine) {
-      slot.cell.map(cell => cells.find(c2 => eqCells(cell, c2)) ? null : cells.push(cell))
-    }
-  }
-  return cells.sort((c1, c2) => c1.anchor.y - c2.anchor.y);
-}
+// function eqCells(c1: Cell, c2: Cell): boolean {
+//   return c1.kind === c2.kind &&
+//     c1.anchor.x === c2.anchor.x &&
+//     c1.anchor.y === c2.anchor.y &&
+//     c1.width === c2.width &&
+//     c1.height === c2.height
+// }
+// function getCells(slots: Array<Array<Slot>>): Array<Cell> {
+//   const cells: Array<Cell> = [];
+//   for (const sLine of slots) {
+//     for (const slot of sLine) {
+//       slot.cell.map(cell => cells.find(c2 => eqCells(cell, c2)) ? null : cells.push(cell))
+//     }
+//   }
+//   return cells.sort((c1, c2) => c1.anchor.y - c2.anchor.y);
+// }
 
 // processing simple row
 export namespace simpleRow {
@@ -55,8 +55,8 @@ export namespace simpleRow {
 
   export const expected: Table = {
     slots: slots,
-    cells: getCells(slots),
-    // cells: [makeCell("header", 0, 0), makeCell("data", 1, 0)],
+    // cells: getCells(slots),
+    cells: [ makeCell("header", 0, 0), makeCell("data", 1, 0) ],
     width: 2, height: 1, rowGroups: [], colGroups: []
   };
 }
@@ -88,8 +88,10 @@ export namespace complexRow {
   ];
   export const expected: Table = {
     slots: slots,
-    cells: getCells(slots),
-    // cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2)],
+    // cells: getCells(slots),
+    cells: [
+      makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2)
+    ],
     width: 6, height: 2, rowGroups: [], colGroups: []
   };
 }
@@ -127,8 +129,11 @@ export namespace rowGroup {
   ];
   export const expected: Table = {
     slots: slots,
-    cells: getCells(slots),
-    // cells: [],
+    // cells: getCells(slots),
+    cells: [
+      makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2),
+      makeCell("header", 2, 1), makeCell("header", 3, 1)
+    ],
     width: 6, height: 2, colGroups: [],
     rowGroups: [{anchor: {y: 0}, height: 2, element: element}]
   };
@@ -222,8 +227,14 @@ export namespace smithonian {
   ];
   export const expected: Table =  {
     slots: slots,
-    cells: getCells(slots),
-    // cells: [],
+    // cells: getCells(slots),
+    cells: [
+      makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2),
+      makeCell("header", 2, 1), makeCell("header", 3, 1),
+      makeCell("data", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2), makeCell("data", 4, 2), makeCell("data", 5, 2),
+      makeCell("data", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3), makeCell("data", 4, 3), makeCell("data", 5, 3),
+      makeCell("data", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4), makeCell("data", 4, 4), makeCell("data", 5, 4)
+    ],
     width: 6, height: 5, colGroups: [] ,
     rowGroups: [{anchor: {y: 0}, height: 2, element: getById("thead")}, {anchor: {y: 2}, height: 3, element: getById("tbody")}]
   }
@@ -301,8 +312,14 @@ export namespace apple {
   ];
   export const expected: Table =  {
     slots: slots,
-    cells: getCells(slots),
-    // cells: [],
+    // cells: getCells(slots),
+    cells: [
+      makeCell("header", 0, 0), makeCell("header", 1, 0), makeCell("header", 2, 0), makeCell("header", 3, 0),
+      makeCell("header", 0, 1), makeCell("data", 1, 1), makeCell("data", 2, 1), makeCell("data", 3, 1),
+      makeCell("header", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2),
+      makeCell("header", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3),
+      makeCell("header", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4)
+    ],
     width: 4, height: 5, colGroups: [],
     rowGroups: [
       {anchor: {y: 0}, height: 1, element: getById("thead")},
@@ -371,8 +388,14 @@ export namespace expenses {
   ];
   export const expected: Table =  {
     slots: slots,
-    cells: getCells(slots),
-    // cells: [],
+    // cells: getCells(slots),
+    cells: [
+      makeCell("header", 0, 0), makeCell("header", 1, 0), makeCell("header", 2, 0), makeCell("header", 3, 0),
+      makeCell("header", 0, 1), makeCell("data", 1, 1), makeCell("data", 2, 1), makeCell("data", 3, 1),
+      makeCell("header", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2),
+      makeCell("header", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3),
+      makeCell("header", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4)
+    ],
     width: 4, height: 5,
     colGroups: [
       {anchor: {x:0}, width: 1, element: getById("group-head")},
@@ -445,8 +468,15 @@ export namespace expensesNum {
   ];
   export const expected: Table =  {
     slots: slots,
-    cells: getCells(slots),
-    // cells: [],
+    // cells: getCells(slots),
+    cells: [
+      makeCell("header", 0, 0), makeCell("header", 1, 0), makeCell("header", 2, 0), makeCell("header", 3, 0),
+      makeCell("header", 0, 1), makeCell("data", 1, 1), makeCell("data", 2, 1), makeCell("data", 3, 1),
+      makeCell("header", 0, 2), makeCell("data", 1, 2), makeCell("data", 2, 2), makeCell("data", 3, 2),
+      makeCell("header", 0, 3), makeCell("data", 1, 3), makeCell("data", 2, 3), makeCell("data", 3, 3),
+      makeCell("header", 0, 4), makeCell("data", 1, 4), makeCell("data", 2, 4), makeCell("data", 3, 4)
+    ],
+
     width: 4, height: 5,
     colGroups: [
       {anchor: {x:0}, width: 1, element: getById("group-head")},
