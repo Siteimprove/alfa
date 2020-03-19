@@ -30,14 +30,14 @@ function equalTables(t: Assertions, actual: Table, expected: Table){
 test("Process simple row", t => {
   const table = newTable();
 
-  rowProcessing(table, simpleRow.element, 0);
+  rowProcessing(table, simpleRow.element, 0, []);
   equalTables(t, table, simpleRow.expected);
 });
 
 test("Process complex row", t => {
   const table = newTable();
 
-  rowProcessing(table, complexRow.element, 0);
+  rowProcessing(table, complexRow.element, 0, []);
   equalTables(t, table, complexRow.expected);
 });
 

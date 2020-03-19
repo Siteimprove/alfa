@@ -1,7 +1,9 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
 import {Mapper} from "@siteimprove/alfa-mapper";
 import {clamp} from "@siteimprove/alfa-math";
 import {Parser} from "@siteimprove/alfa-parser";
 import {Predicate} from "@siteimprove/alfa-predicate";
+import {Reducer} from "@siteimprove/alfa-reducer";
 import {Err, Ok, Result} from "@siteimprove/alfa-result";
 import {Set} from "@siteimprove/alfa-set";
 import {Attribute, Element, Namespace, Node} from "..";
@@ -141,8 +143,16 @@ function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Ce
   })
 }
 
+function growCellInSet(yCurrent: number, keepGrowing: boolean=false): Reducer<Cell, Set<Cell>> {
+  return (set: Set<Cell>, cell: Cell) =>
+    set.delete(cell).add(growingCell(yCurrent, keepGrowing)(cell));
+}
+
+const growCellList = (yCurrent: number, keepGrowing: boolean=false) => (cells: Iterable<Cell>, set: Set<Cell>) =>
+  Iterable.reduce<Cell, Set<Cell>>(cells, growCellInSet(yCurrent, keepGrowing), set);
+
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-export function rowProcessing(table: Table, tr: Element, yCurrent: number): void {
+export function rowProcessing(table: Table, tr: Element, yCurrent: number, growingCellsList: Array<Cell>): Array<Cell> {
   // 1
   if (table.height === yCurrent) {
     table.height++
@@ -150,7 +160,8 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
   // 2
    let xCurrent = 0;
   // 3
-  table.cells = table.cells.map(growingCell(yCurrent, true));
+  table.cells = growCellList(yCurrent, true)(growingCellsList, table.cells);
+    // table.cells.map(growingCell(yCurrent, true));
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
@@ -199,9 +210,11 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
       }
     }
     table.cells = table.cells.add(cell);
+    if (grow) growingCellsList.push(cell);
     // 15
     xCurrent = xCurrent + colspan;
   }
+  return growingCellsList;
   // 4 and 16 done after the calls.
 }
 
@@ -214,11 +227,12 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
 export function processRowGroup(table: Table, group: Element, yCurrent: number): number {
+  let growingCellsList: Array<Cell> = [];
   // 1
   const yStart = table.height;
   // 2
   for (const row of group.children().filter(isElementByName("tr"))) {
-    rowProcessing(table, row, yCurrent); // uses yCurrent to modify table.height ! Modify table.width !
+    growingCellsList = rowProcessing(table, row, yCurrent, growingCellsList); // uses yCurrent to modify table.height ! Modify table.width !
     // row processing steps 4/16
     yCurrent++;
   }
@@ -229,7 +243,8 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   }
   // 4
   // endRowGroup(table);
-  table.cells = table.cells.map(growingCell(table.height,false));
+  table.cells = growCellList(table.height)(growingCellsList, table.cells);
+    // table.cells.map(growingCell(table.height,false));
   yCurrent = table.height;
   return yCurrent;
 }
@@ -272,6 +287,9 @@ export function formingTable(element: Element): Table {
   // 10
   let yCurrent = 0;
 
+  // 11
+  let growingCellsList: Array<Cell> = [];
+
   let processCG = true;
   for (const currentElement of children) { // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
 
@@ -290,7 +308,7 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 13 (process)
-        rowProcessing(table, currentElement, yCurrent);
+        growingCellsList = rowProcessing(table, currentElement, yCurrent, growingCellsList);
         // row processing steps 4/16
         yCurrent++;
         break;
@@ -299,7 +317,9 @@ export function formingTable(element: Element): Table {
         processCG = false;
         // 14
         // endRowGroup(table);
-        table.cells = table.cells.map(growingCell(table.height,false));
+        table.cells = growCellList(table.height)(growingCellsList, table.cells);
+        growingCellsList = [];
+        // table.cells = table.cells.map(growingCell(table.height,false));
         yCurrent = table.height;
         // 15 (add to list)
         pendingTfoot.push(currentElement);
@@ -311,7 +331,9 @@ export function formingTable(element: Element): Table {
         processCG = false;
         // 14
         // endRowGroup(table);
-        table.cells = table.cells.map(growingCell(table.height,false));
+        table.cells = growCellList(table.height)(growingCellsList, table.cells);
+        growingCellsList = [];
+        // table.cells = table.cells.map(growingCell(table.height,false));
         yCurrent = table.height;
         // 16
         yCurrent = processRowGroup(table, currentElement, yCurrent);
