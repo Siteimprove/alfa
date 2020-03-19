@@ -14,7 +14,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
-const { and, nor, equals } = Predicate;
+const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
@@ -33,10 +33,7 @@ export default Rule.Atomic.of<Page, Attribute>({
             body
               .descendants()
               .filter(
-                and(
-                  Element.isElement,
-                  hasAttribute("lang", nor(isEmpty, isWhitespace))
-                )
+                and(Element.isElement, hasAttribute("lang", not(isEmpty)))
               )
               .map(element => element.attribute("lang").get())
           );
