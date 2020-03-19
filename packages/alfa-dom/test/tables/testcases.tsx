@@ -56,6 +56,7 @@ export namespace simpleRow {
   export const expected: Table = {
     slots: slots,
     cells: getCells(slots),
+    // cells: [makeCell("header", 0, 0), makeCell("data", 1, 0)],
     width: 2, height: 1, rowGroups: [], colGroups: []
   };
 }
@@ -88,6 +89,7 @@ export namespace complexRow {
   export const expected: Table = {
     slots: slots,
     cells: getCells(slots),
+    // cells: [makeCell("header", 0, 0, 1, 2), makeCell("header", 1, 0, 1, 2), makeCell("header", 2, 0, 2, 1), makeCell("header", 4, 0, 1, 2), makeCell("header", 5, 0, 1, 2)],
     width: 6, height: 2, rowGroups: [], colGroups: []
   };
 }
@@ -126,6 +128,7 @@ export namespace rowGroup {
   export const expected: Table = {
     slots: slots,
     cells: getCells(slots),
+    // cells: [],
     width: 6, height: 2, colGroups: [],
     rowGroups: [{anchor: {y: 0}, height: 2, element: element}]
   };
@@ -220,6 +223,7 @@ export namespace smithonian {
   export const expected: Table =  {
     slots: slots,
     cells: getCells(slots),
+    // cells: [],
     width: 6, height: 5, colGroups: [] ,
     rowGroups: [{anchor: {y: 0}, height: 2, element: getById("thead")}, {anchor: {y: 2}, height: 3, element: getById("tbody")}]
   }
@@ -298,6 +302,7 @@ export namespace apple {
   export const expected: Table =  {
     slots: slots,
     cells: getCells(slots),
+    // cells: [],
     width: 4, height: 5, colGroups: [],
     rowGroups: [
       {anchor: {y: 0}, height: 1, element: getById("thead")},
@@ -367,6 +372,7 @@ export namespace expenses {
   export const expected: Table =  {
     slots: slots,
     cells: getCells(slots),
+    // cells: [],
     width: 4, height: 5,
     colGroups: [
       {anchor: {x:0}, width: 1, element: getById("group-head")},
@@ -440,6 +446,7 @@ export namespace expensesNum {
   export const expected: Table =  {
     slots: slots,
     cells: getCells(slots),
+    // cells: [],
     width: 4, height: 5,
     colGroups: [
       {anchor: {x:0}, width: 1, element: getById("group-head")},
