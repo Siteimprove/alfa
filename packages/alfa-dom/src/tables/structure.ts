@@ -13,9 +13,9 @@ const { and, equals, property } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 
-export type Slot = { elements: Array<Element>, cell: Option<Cell> };
-function newSlot(cell: Cell | null = null): Slot {
-  return { elements: [], cell: None }
+export type Slot = { elements: Array<Element> };
+function newSlot(): Slot {
+  return { elements: [] }
 }
 
 export type Table = { slots: Array<Array<Slot>>, width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
@@ -209,22 +209,14 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
       // 14
       growing: grow
     };
-    // console.log("New cell:");
-    // console.dir(cell);
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
         const slot = getSlot(table, x, y);
-        // if (slot.flatMap(s => s.cell).isSome()) {
         if (table.cells.some(cell => isCoveredBy({x, y}, cell))) {
-          // console.log("Testing cell:");
-          // console.dir(cell);
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
         if (slot.isNone() ) {
-          setSlot(table, x, y, newSlot(cell));
-        } else {
-          console.log("Yep");
-          // slot.get().cell = Some.of(cell)
+          setSlot(table, x, y, newSlot());
         }
       }
     }
