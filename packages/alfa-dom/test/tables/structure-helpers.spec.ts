@@ -7,7 +7,7 @@ import { Cell, ColGroup, isCovering, RowGroup } from "../../src";
 const dummy = Element.of(None, None, "foo");
 
 function cell(x: number, y: number, w: number, h: number): Cell {
-  return {kind: "data", anchor: {x: x, y: y}, width: w, height: h, element: dummy, growing: false}
+  return {kind: "data", anchor: {x: x, y: y}, width: w, height: h, element: dummy}
 }
 
 function rowGroup(y: number, h: number): RowGroup {

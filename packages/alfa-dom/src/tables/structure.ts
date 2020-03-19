@@ -25,7 +25,6 @@ export type Cell = {
   width: number;
   height: number;
   element: Element;
-  growing: boolean; // true if part of the growing cells list.
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
@@ -138,8 +137,7 @@ function growingCell(yCurrent: number, keepGrowing: boolean = false): ((cell: Ce
   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
   return cell => ({
     ...cell,
-    height: cell.growing ? Math.max(cell.height, yCurrent - cell.anchor.y + 1) : cell.height,
-    growing: cell.growing && keepGrowing
+    height: Math.max(cell.height, yCurrent - cell.anchor.y + 1)
   })
 }
 
@@ -198,9 +196,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
       anchor: {x: xCurrent, y: yCurrent},
       width: colspan,
       height: rowspan,
-      element: currentCell,
-      // 14
-      growing: grow
+      element: currentCell
     };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
@@ -210,12 +206,13 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
       }
     }
     table.cells = table.cells.add(cell);
+    // 14
     if (grow) growingCellsList.push(cell);
     // 15
     xCurrent = xCurrent + colspan;
   }
   return growingCellsList;
-  // 4 and 16 done after the calls.
+  // 4 and 16 done after the calls to avoid side effects.
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-ending-a-row-group
@@ -242,11 +239,10 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
     table.rowGroups.push(rowGroup);
   }
   // 4
-  // endRowGroup(table);
+  // ending row group 1
   table.cells = growCellList(table.height)(growingCellsList, table.cells);
-    // table.cells.map(growingCell(table.height,false));
-  yCurrent = table.height;
-  return yCurrent;
+  // ending row group 2 is needless because growing cell list is local.
+  return table.height;
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
@@ -316,11 +312,11 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        // endRowGroup(table);
+        // Ending row group 1
         table.cells = growCellList(table.height)(growingCellsList, table.cells);
-        growingCellsList = [];
-        // table.cells = table.cells.map(growingCell(table.height,false));
         yCurrent = table.height;
+        // Ending row group 2
+        growingCellsList = [];
         // 15 (add to list)
         pendingTfoot.push(currentElement);
         break;
@@ -330,11 +326,11 @@ export function formingTable(element: Element): Table {
         // 12
         processCG = false;
         // 14
-        // endRowGroup(table);
+        // Ending row group 1
         table.cells = growCellList(table.height)(growingCellsList, table.cells);
-        growingCellsList = [];
-        // table.cells = table.cells.map(growingCell(table.height,false));
         yCurrent = table.height;
+        // Ending row group 2
+        growingCellsList = [];
         // 16
         yCurrent = processRowGroup(table, currentElement, yCurrent);
         break;
