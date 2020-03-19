@@ -41,26 +41,29 @@ export type ColGroup = {
   element: Element;
 }
 
-export const isCoveredBy: Predicate<{x: number, y: number}, {x: number, y: number}, Array<Cell | RowGroup | ColGroup>> = (slot, cover) => {
-  if ("width" in cover) { // Cell or Col
-    if (slot.x < cover.anchor.x) { // slot is left of cover
-      return false;
+export function isCovering(x: number, y: number): Predicate<RowGroup | ColGroup> {
+  function covering(cover: RowGroup | ColGroup) {
+    if ("width" in cover) { // Cell or Col
+      if (x < cover.anchor.x) { // slot is left of cover
+        return false;
+      }
+      if (cover.anchor.x + cover.width - 1 < x) { // slot is right of cover
+        return false;
+      }
     }
-    if (cover.anchor.x + cover.width - 1 < slot.x) { // slot is right of cover
-      return false;
-    }
-  }
 
-  if ("height" in cover) { // Cell or Row
-    if (slot.y < cover.anchor.y) { // slot is above cover
-      return false;
+    if ("height" in cover) { // Cell or Row
+      if (y < cover.anchor.y) { // slot is above cover
+        return false;
+      }
+      if (cover.anchor.y + cover.height - 1 < y) { // slot is below cover
+        return false;
+      }
     }
-    if (cover.anchor.y + cover.height - 1 < slot.y) { // slot is below cover
-      return false;
-    }
-  }
 
-  return true;
+    return true;
+  }
+  return covering;
 };
 
 // micro syntaxes to move to alfa-parser
@@ -151,7 +154,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
     while (xCurrent < table.width &&
-      table.cells.some(cell => isCoveredBy({x: xCurrent, y: yCurrent}, cell))
+      table.cells.some(isCovering(xCurrent, yCurrent))
     ) {
       xCurrent++
     }
@@ -188,7 +191,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number): void
     };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
-        if (table.cells.some(cell => isCoveredBy({x, y}, cell))) {
+        if (table.cells.some(isCovering(x, y))) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
       }
