@@ -2,18 +2,26 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
-    "src/get-language.ts",
     "src/index.ts",
-    "src/subtags.ts",
-    "src/types.ts",
-    "test/get-language.spec.ts"
+    "src/language.ts",
+    "src/language/subtags.ts",
+    "test/language.spec.ts"
   ],
   "references": [
     {
-      "path": "../alfa-lang"
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-map"
     },
     {
       "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-slice"
     },
     {
       "path": "../alfa-test"

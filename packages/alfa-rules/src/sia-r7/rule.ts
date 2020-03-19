@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         return {
           1: expectation(
-            Language.from(target.value).isSome(),
+            Language.parse(target.value).isSome(),
             Outcomes.HasValidLanguage,
             Outcomes.HasNoValidLanguage
           )
