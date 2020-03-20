@@ -18,15 +18,6 @@ export function newTable(): Table {
   return { width: 0, height: 0, cells: Set.empty(), rowGroups: [], colGroups: []}
 }
 
-// // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-// function growingCell(yCurrent: number): ((cell: Cell) => Cell) {
-//   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-//   return cell => ({
-//     ...cell,
-//     height: Math.max(cell.height, yCurrent - cell.anchor.y + 1)
-//   })
-// }
-
 function growCellInSet(yCurrent: number): Reducer<Cell, Set<Cell>> {
   return (set: Set<Cell>, cell: Cell) =>
     set.delete(cell).add(cell.growDownward(yCurrent));
@@ -123,31 +114,6 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   return table.height;
 }
 
-// https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
-export function processColGroup(colgroup: Element, xStart: number): ColGroup { // global step 9.1
-  let children = colgroup.children().filter(isElementByName("col"));
-  if (children.isEmpty()) { // second case
-    // 1
-    const span = parseSpan(colgroup, "span", 1, 1000, 1);
-    // 2 and 3 done in main function
-    return new ColGroup(xStart, span, colgroup);
-  } else { // first case
-    // 1
-    let totalSpan = 0;
-    for (const currentCol of children) { // loop control is 2 and 6
-      // 3 (Columns)
-      const span = parseSpan(currentCol, "span", 1, 1000, 1);
-      totalSpan += span;
-      // 5
-      // The col element represents column within the colgroup but is not a colgroup itself. The rest of the algorithm seems to never use that again…
-      // const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
-      // global.theTable.colGroups.push(colGroup);
-    }
-    // 4 and 7 done in main function
-    return new ColGroup(xStart, totalSpan, colgroup);
-  }
-}
-
 export function formingTable(element: Element): Table {
   // 1, 2, 4, 11
   const table = newTable();
@@ -170,7 +136,7 @@ export function formingTable(element: Element): Table {
     if (currentElement.name === "colgroup") {
       // 9.1 (Columns group)
       if (processCG) {
-        const colGroup = processColGroup(currentElement, table.width);
+        const colGroup = ColGroup.of(currentElement).anchorAt(table.width);
         // 9.1 (1).4 (cumulative) and (2).2
         table.width += colGroup.width;
         // 9.1 (1).7 and (2).3
