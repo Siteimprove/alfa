@@ -82,6 +82,10 @@ export class Set<T>
     return Iterable.find(this, predicate);
   }
 
+  public some<U extends T>(predicate: Predicate<T, U>): boolean {
+    return Iterable.some(this, predicate);
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Set && value._values.equals(this._values);
   }
