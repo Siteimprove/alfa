@@ -1,8 +1,9 @@
 import {test} from "@siteimprove/alfa-test";
 import {None} from "@siteimprove/alfa-option";
-import {Attribute, ColGroup, Element, isCoveringClass, parseSpan, RowGroup} from "../../src";
+import {Attribute, Element } from "../../src";
 
-import { Cell, isCovering } from "../../src";
+import {Cell, ColGroup, isCovering, isCoveringClass, RowGroup} from "../../src/tables/groups";
+import {parseSpan} from "../../src/tables/helpers";
 
 const dummy = Element.of(None, None, "foo");
 

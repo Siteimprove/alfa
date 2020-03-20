@@ -1,7 +1,9 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import {Assertions, test} from "@siteimprove/alfa-test";
-import {rowProcessing, processRowGroup, formingTable, Element, newTable, Table, Cell} from "../../src";
+import {rowProcessing, processRowGroup, formingTable, Element, newTable, Table} from "../../src";
 import {apple, complexRow, expenses, expensesNum, rowGroup, simpleRow, smithonian} from "./testcases";
+
+import{Cell} from "../../src/tables/groups";
 
 const cleanElement = (element: Element) =>
   element

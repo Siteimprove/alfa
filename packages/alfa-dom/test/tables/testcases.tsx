@@ -1,8 +1,9 @@
 import {None } from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Set} from "@siteimprove/alfa-set";
-import {Cell, ColGroup, Element, RowGroup, Table} from "../../src";
+import {Element, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
+import {Cell, ColGroup, RowGroup} from "../../src/tables/groups";
 import and = Predicate.and;
 
 const makeCellWithGetter = (getElt: (elt: string) => Element) =>

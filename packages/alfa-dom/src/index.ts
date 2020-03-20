@@ -12,4 +12,4 @@ export * from "./style/block";
 export * from "./style/declaration";
 export * from "./style/rule";
 export * from "./style/sheet";
-export * from "./tables/structure";
+export * from "./tables/table";

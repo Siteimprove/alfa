@@ -1,7 +1,8 @@
 import {Err, Ok} from "@siteimprove/alfa-result";
 import {test} from "@siteimprove/alfa-test";
-import {None, Some} from "@siteimprove/alfa-option";
-import {Attribute, parseAttribute, parseInteger, parseNonNegativeInteger} from "../../src";
+import {None } from "@siteimprove/alfa-option";
+import {Attribute } from "../../src";
+import { parseAttribute, parseInteger, parseNonNegativeInteger} from "../../src/tables/helpers";
 
 const makeAttribute = (str: string) => Attribute.of(None, None, "foo", str);
 

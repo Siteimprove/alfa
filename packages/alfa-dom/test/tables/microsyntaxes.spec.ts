@@ -1,6 +1,6 @@
 import {Err, Ok} from "@siteimprove/alfa-result";
 import {test} from "@siteimprove/alfa-test";
-import {parseInteger, parseNonNegativeInteger} from "../../src";
+import {parseInteger, parseNonNegativeInteger} from "../../src/tables/helpers";
 
 const empty = Err.of("The string is empty");
 const notNumber = Err.of("The string does not represent a number");
