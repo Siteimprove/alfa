@@ -46,14 +46,14 @@ export default Rule.Atomic.of<Page, Document>({
         return {
           1: expectation(
             title.isSome(),
-            Outcomes.HasTitle,
-            Outcomes.HasNoTitle
+            () => Outcomes.HasTitle,
+            () => Outcomes.HasNoTitle
           ),
 
           2: expectation(
             title.some(hasTextContent()),
-            Outcomes.HasNonEmptyTitle,
-            Outcomes.HasEmptyTitle
+            () => Outcomes.HasNonEmptyTitle,
+            () => Outcomes.HasEmptyTitle
           )
         };
       }

@@ -15,8 +15,8 @@ export function videoDescriptionTrackAccurate(target: Element) {
     ).map(trackDescribesVideo =>
       expectation(
         trackDescribesVideo,
-        Outcomes.HasDescriptionTrack,
-        Outcomes.HasNoDescriptionTrack
+        () => Outcomes.HasDescriptionTrack,
+        () => Outcomes.HasNoDescriptionTrack
       )
     )
   };

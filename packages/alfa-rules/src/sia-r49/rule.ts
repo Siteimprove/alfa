@@ -81,18 +81,19 @@ export default Rule.Atomic.of<Page, Element, Question>({
           ).map(mechanism =>
             expectation(
               mechanism.isSome(),
-              expectation(
-                and(
-                  Element.isElement,
+              () =>
+                expectation(
                   and(
-                    isPerceivable(device),
-                    hasAccessibleName(device, not(isEmpty))
-                  )
-                )(mechanism.get()),
-                Outcomes.HasPerceivablePauseMechanism(target.name),
-                Outcomes.HasNonPerceivablePauseMechanism(target.name)
-              ),
-              Outcomes.HasNoPauseMechanism(target.name)
+                    Element.isElement,
+                    and(
+                      isPerceivable(device),
+                      hasAccessibleName(device, not(isEmpty))
+                    )
+                  )(mechanism.get()),
+                  () => Outcomes.HasPerceivablePauseMechanism(target.name),
+                  () => Outcomes.HasNonPerceivablePauseMechanism(target.name)
+                ),
+              () => Outcomes.HasNoPauseMechanism(target.name)
             )
           )
         };

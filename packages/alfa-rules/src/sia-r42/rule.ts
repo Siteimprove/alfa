@@ -38,8 +38,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasRequiredContext(device)(target),
-            Outcomes.IsOwnedByContextRole,
-            Outcomes.IsNotOwnedByContextRole
+            () => Outcomes.IsOwnedByContextRole,
+            () => Outcomes.IsNotOwnedByContextRole
           )
         };
       }

@@ -1,6 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
@@ -28,7 +27,11 @@ export default Rule.Atomic.of<Page, Attribute>({
         const exists = aria.Attribute.lookup(target.name).isSome();
 
         return {
-          1: expectation(exists, Outcomes.IsDefined, Outcomes.IsNotDefined)
+          1: expectation(
+            exists,
+            () => Outcomes.IsDefined,
+            () => Outcomes.IsNotDefined
+          )
         };
       }
     };

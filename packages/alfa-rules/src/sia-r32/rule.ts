@@ -27,8 +27,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
           ).map(hasAudioTrack =>
             expectation(
               hasAudioTrack,
-              Outcomes.HasDescriptiveAudio,
-              Outcomes.HasNoDescriptiveAudio
+              () => Outcomes.HasDescriptiveAudio,
+              () => Outcomes.HasNoDescriptiveAudio
             )
           )
         };

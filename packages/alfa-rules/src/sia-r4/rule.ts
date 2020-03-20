@@ -28,8 +28,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
-            Outcomes.HasLanguage,
-            Outcomes.HasNoLanguage
+            () => Outcomes.HasLanguage,
+            () => Outcomes.HasNoLanguage
           )
         };
       }

@@ -58,19 +58,17 @@ export default Rule.Atomic.of<Page, Element, Question>({
                 ).map(isPerceivable =>
                   expectation(
                     isPerceivable,
-                    Outcomes.HasPerceivableTranscript,
-                    Outcomes.HasNonPerceivableTranscript
+                    () => Outcomes.HasPerceivableTranscript,
+                    () => Outcomes.HasNonPerceivableTranscript
                   )
                 );
               });
             }
 
             return expectation(
-              transcript
-                .filter(and(Element.isElement, isPerceivable(device)))
-                .isSome(),
-              Outcomes.HasPerceivableTranscript,
-              Outcomes.HasNonPerceivableTranscript
+              transcript.some(and(Element.isElement, isPerceivable(device))),
+              () => Outcomes.HasPerceivableTranscript,
+              () => Outcomes.HasNonPerceivableTranscript
             );
           })
         };

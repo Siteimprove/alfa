@@ -81,19 +81,20 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
         return {
           1: expectation(
             sources.size === 1,
-            Outcomes.ResolveSameResource,
-            Question.of(
-              "reference-equivalent-resources",
-              "boolean",
-              target,
-              "Do the links resolve to equivalent resources?"
-            ).map(embedEquivalentResources =>
-              expectation(
-                embedEquivalentResources,
-                Outcomes.ResolveEquivalentResource,
-                Outcomes.ResolveDifferentResource
+            () => Outcomes.ResolveSameResource,
+            () =>
+              Question.of(
+                "reference-equivalent-resources",
+                "boolean",
+                target,
+                "Do the links resolve to equivalent resources?"
+              ).map(embedEquivalentResources =>
+                expectation(
+                  embedEquivalentResources,
+                  () => Outcomes.ResolveEquivalentResource,
+                  () => Outcomes.ResolveDifferentResource
+                )
               )
-            )
           )
         };
       }

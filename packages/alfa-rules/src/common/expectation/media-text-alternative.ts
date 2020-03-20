@@ -20,23 +20,25 @@ function mediaTextAlternative(
     1: alt.map(alt =>
       expectation(
         alt.isSome(),
-        expectation(
-          alt.filter(isPerceivable(device)).isSome(),
-          Outcomes.HasPerceivableAlternative(kind),
-          Outcomes.HasNonPerceivableAlternative(kind)
-        ),
-        Outcomes.HasNoAlternative(kind)
+        () =>
+          expectation(
+            alt.some(isPerceivable(device)),
+            () => Outcomes.HasPerceivableAlternative(kind),
+            () => Outcomes.HasNonPerceivableAlternative(kind)
+          ),
+        () => Outcomes.HasNoAlternative(kind)
       )
     ),
     2: label.map(label =>
       expectation(
         label.isSome(),
-        expectation(
-          label.filter(isPerceivable(device)).isSome(),
-          Outcomes.HasPerceivableLabel(kind),
-          Outcomes.HasNonPerceivableLabel(kind)
-        ),
-        Outcomes.HasNoLabel(kind)
+        () =>
+          expectation(
+            label.some(isPerceivable(device)),
+            () => Outcomes.HasPerceivableLabel(kind),
+            () => Outcomes.HasNonPerceivableLabel(kind)
+          ),
+        () => Outcomes.HasNoLabel(kind)
       )
     )
   };

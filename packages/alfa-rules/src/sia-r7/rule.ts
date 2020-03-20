@@ -43,8 +43,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         return {
           1: expectation(
             Language.parse(target.value).isSome(),
-            Outcomes.HasValidLanguage,
-            Outcomes.HasNoValidLanguage
+            () => Outcomes.HasValidLanguage,
+            () => Outcomes.HasNoValidLanguage
           )
         };
       }

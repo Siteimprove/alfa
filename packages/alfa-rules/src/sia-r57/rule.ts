@@ -44,8 +44,8 @@ export default Rule.Atomic.of<Page, Text>({
                     )
                 )
             ),
-            Outcomes.IsIncludedInLandmark,
-            Outcomes.IsNotIncludedInLandmark
+            () => Outcomes.IsIncludedInLandmark,
+            () => Outcomes.IsNotIncludedInLandmark
           )
         };
       }

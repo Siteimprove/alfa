@@ -38,8 +38,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasRequiredOwnedElements(device)(target),
-            Outcomes.HasCorrectOwnedElements,
-            Outcomes.HasIncorrectOwnedElements
+            () => Outcomes.HasCorrectOwnedElements,
+            () => Outcomes.HasIncorrectOwnedElements
           )
         };
       }

@@ -74,19 +74,20 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
         return {
           1: expectation(
             sources.size === 1,
-            Outcomes.EmbedSameResources,
-            Question.of(
-              "reference-equivalent-resources",
-              "boolean",
-              target,
-              "Do the <iframe> elements embed equivalent resources?"
-            ).map(embedEquivalentResources =>
-              expectation(
-                embedEquivalentResources,
-                Outcomes.EmbedEquivalentResources,
-                Outcomes.EmbedDifferentResources
+            () => Outcomes.EmbedSameResources,
+            () =>
+              Question.of(
+                "reference-equivalent-resources",
+                "boolean",
+                target,
+                "Do the <iframe> elements embed equivalent resources?"
+              ).map(embedEquivalentResources =>
+                expectation(
+                  embedEquivalentResources,
+                  () => Outcomes.EmbedEquivalentResources,
+                  () => Outcomes.EmbedDifferentResources
+                )
               )
-            )
           )
         };
       }

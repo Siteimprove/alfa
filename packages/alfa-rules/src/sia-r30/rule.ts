@@ -22,9 +22,8 @@ export default Rule.Composite.of<Page, Element, Question>({
         return {
           1: expectation(
             some(outcomeToTrilean)(outcomes),
-            Outcomes.HasTextAlternative,
-            Outcomes.HasNoTextAlternative,
-            None
+            () => Outcomes.HasTextAlternative,
+            () => Outcomes.HasNoTextAlternative
           )
         };
       }

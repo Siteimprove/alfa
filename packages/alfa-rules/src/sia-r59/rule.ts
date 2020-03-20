@@ -44,8 +44,8 @@ export default Rule.Atomic.of<Page, Document>({
         return {
           1: expectation(
             hasHeadings,
-            Outcomes.HasOneHeading,
-            Outcomes.HasNoHeadings
+            () => Outcomes.HasOneHeading,
+            () => Outcomes.HasNoHeadings
           )
         };
       }

@@ -46,8 +46,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasAccessibleName(device, not(isEmpty))(target),
-            Outcomes.HasName(target.name),
-            Outcomes.HasNoName(target.name)
+            () => Outcomes.HasName(target.name),
+            () => Outcomes.HasNoName(target.name)
           )
         };
       }

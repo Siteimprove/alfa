@@ -44,8 +44,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                 hasRole(role => role.isAllowed(hasName(equals(target.name)))),
                 target.owner.get()
               ),
-            Outcomes.IsAllowed,
-            Outcomes.IsNotAllowed
+            () => Outcomes.IsAllowed,
+            () => Outcomes.IsNotAllowed
           )
         };
       }

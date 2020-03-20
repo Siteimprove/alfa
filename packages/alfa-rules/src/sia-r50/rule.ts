@@ -22,9 +22,8 @@ export default Rule.Composite.of<Page, Element, Question>({
         return {
           1: expectation(
             some(outcomeToTrilean)(outcomes),
-            Outcomes.AutoplayGood,
-            Outcomes.AutoplayBad,
-            None
+            () => Outcomes.AutoplayGood,
+            () => Outcomes.AutoplayBad
           )
         };
       }

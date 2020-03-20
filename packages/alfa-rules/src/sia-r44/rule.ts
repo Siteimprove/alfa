@@ -75,8 +75,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             rotation.every(rotation => rotation !== 90 && rotation !== 270),
-            Outcomes.RotationNotLocked,
-            Outcomes.RotationLocked
+            () => Outcomes.RotationNotLocked,
+            () => Outcomes.RotationLocked
           )
         };
       }

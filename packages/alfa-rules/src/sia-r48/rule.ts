@@ -77,8 +77,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
           ).map(isBelowAudioDurationThreshold =>
             expectation(
               isBelowAudioDurationThreshold,
-              Outcomes.DurationBelowThreshold(target.name),
-              Outcomes.DurationAboveThreshold(target.name)
+              () => Outcomes.DurationBelowThreshold(target.name),
+              () => Outcomes.DurationAboveThreshold(target.name)
             )
           )
         };

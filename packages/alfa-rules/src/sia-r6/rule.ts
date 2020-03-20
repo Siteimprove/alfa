@@ -45,8 +45,8 @@ export default Rule.Atomic.of<Page, Element>({
               xmlLang
                 .filter(xmlLang => xmlLang.primary === lang.primary)
                 .isSome(),
-            Outcomes.HasMatchingLanguages,
-            Outcomes.HasNonMatchingLanguages
+            () => Outcomes.HasMatchingLanguages,
+            () => Outcomes.HasNonMatchingLanguages
           )
         };
       }

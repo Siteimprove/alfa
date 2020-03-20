@@ -53,8 +53,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             refreshTime === 0 || refreshTime! > 72000,
-            Outcomes.HasImmediateRefresh,
-            Outcomes.HasDelayedRefresh
+            () => Outcomes.HasImmediateRefresh,
+            () => Outcomes.HasDelayedRefresh
           )
         };
       }

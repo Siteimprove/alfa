@@ -27,8 +27,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
           ).map(hasAudio =>
             expectation(
               hasAudio,
-              Outcomes.HasInformativeAudio,
-              Outcomes.HasNoInformativeAudio
+              () => Outcomes.HasInformativeAudio,
+              () => Outcomes.HasNoInformativeAudio
             )
           )
         };

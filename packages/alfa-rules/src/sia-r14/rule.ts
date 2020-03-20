@@ -69,19 +69,20 @@ export default Rule.Atomic.of<Page, Element, Question>({
         return {
           1: expectation(
             accessibleNameIncludesTextContent,
-            Outcomes.VisibleIsInName,
-            Question.of(
-              "is-human-language",
-              "boolean",
-              target,
-              "Does the accessible name of the element express anything in human language?"
-            ).map(isHumanLanguage =>
-              expectation(
-                !isHumanLanguage,
-                Outcomes.NameIsNotLanguage,
-                Outcomes.VisibleIsNotInName
+            () => Outcomes.VisibleIsInName,
+            () =>
+              Question.of(
+                "is-human-language",
+                "boolean",
+                target,
+                "Does the accessible name of the element express anything in human language?"
+              ).map(isHumanLanguage =>
+                expectation(
+                  !isHumanLanguage,
+                  () => Outcomes.NameIsNotLanguage,
+                  () => Outcomes.VisibleIsNotInName
+                )
               )
-            )
           )
         };
       }

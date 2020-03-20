@@ -36,8 +36,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasRequiredValues(target),
-            Outcomes.HasAllStates,
-            Outcomes.HasNotAllStates
+            () => Outcomes.HasAllStates,
+            () => Outcomes.HasNotAllStates
           )
         };
       }

@@ -44,8 +44,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         return {
           1: expectation(
             attribute.isValid(target.value),
-            Outcomes.HasValidValue,
-            Outcomes.HasNoValidValue
+            () => Outcomes.HasValidValue,
+            () => Outcomes.HasNoValidValue
           )
         };
       }

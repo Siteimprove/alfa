@@ -27,8 +27,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
           ).map(hasCaptions =>
             expectation(
               hasCaptions,
-              Outcomes.HasCaptions,
-              Outcomes.HasNoCaptions
+              () => Outcomes.HasCaptions,
+              () => Outcomes.HasNoCaptions
             )
           )
         };

@@ -67,8 +67,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         return {
           1: expectation(
             isValidAutocomplete(target),
-            Outcomes.HasValidValue,
-            Outcomes.HasNoValidValue
+            () => Outcomes.HasValidValue,
+            () => Outcomes.HasNoValidValue
           )
         };
       }
