@@ -1,14 +1,14 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import {Predicate} from "@siteimprove/alfa-predicate";
-import {Reducer} from "@siteimprove/alfa-reducer";
-import {Set} from "@siteimprove/alfa-set";
-import {Attribute, Element, Namespace, Node} from "..";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Reducer } from "@siteimprove/alfa-reducer";
+import { Set } from "@siteimprove/alfa-set";
+import { Element } from "..";
 
 
 import {Cell, ColGroup, RowGroup, isCovering} from "./groups";
-import {hasName, isElementByName, parseSpan} from "./helpers";
+import { hasName, isElementByName, parseSpan } from "./helpers";
 
-const { and, equals, property } = Predicate;
+const { equals } = Predicate;
 
 
 
@@ -18,18 +18,18 @@ export function newTable(): Table {
   return { width: 0, height: 0, cells: Set.empty(), rowGroups: [], colGroups: []}
 }
 
-// https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-function growingCell(yCurrent: number): ((cell: Cell) => Cell) {
-  // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-  return cell => ({
-    ...cell,
-    height: Math.max(cell.height, yCurrent - cell.anchor.y + 1)
-  })
-}
+// // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
+// function growingCell(yCurrent: number): ((cell: Cell) => Cell) {
+//   // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
+//   return cell => ({
+//     ...cell,
+//     height: Math.max(cell.height, yCurrent - cell.anchor.y + 1)
+//   })
+// }
 
 function growCellInSet(yCurrent: number): Reducer<Cell, Set<Cell>> {
   return (set: Set<Cell>, cell: Cell) =>
-    set.delete(cell).add(growingCell(yCurrent)(cell));
+    set.delete(cell).add(cell.growDownward(yCurrent));
 }
 
 const growCellList = (yCurrent: number) => (cells: Iterable<Cell>, set: Set<Cell>) =>
@@ -76,20 +76,14 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
       table.height = yCurrent + rowspan
     }
     // 13
-    const cell: Cell = {
-      kind: hasName(equals("th"))(currentCell) ? "header" : "data",
-      anchor: {x: xCurrent, y: yCurrent},
-      width: colspan,
-      height: rowspan,
-      element: currentCell
-    };
     for (let x = xCurrent; x < xCurrent + colspan; x++) {
       for (let y = yCurrent; y < yCurrent + rowspan; y++) {
-        if (table.cells.find(isCovering(x, y)).isSome()) {
+        if (table.cells.some(isCovering(x, y))) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
       }
     }
+    const cell = new Cell(hasName(equals("th"))(currentCell) ? "header" : "data", xCurrent, yCurrent, colspan, rowspan, currentCell);
     table.cells = table.cells.add(cell);
     // 14
     if (grow) growingCellsList.push(cell);

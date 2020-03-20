@@ -8,9 +8,8 @@ import and = Predicate.and;
 
 const makeCellWithGetter = (getElt: (elt: string) => Element) =>
   (elt: string, kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell =>
-    ({
-      kind: kind, anchor: {x: x, y: y}, width: w, height: h, element: getElt(elt)
-    });
+    ( new Cell(kind, x, y, w, h, getElt(elt))
+    );
 
 function hasID(id: string): Predicate<Element> {
   return (element) => {

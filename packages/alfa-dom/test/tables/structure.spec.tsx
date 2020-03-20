@@ -3,7 +3,7 @@ import {Assertions, test} from "@siteimprove/alfa-test";
 import {rowProcessing, processRowGroup, formingTable, Element, newTable, Table} from "../../src";
 import {apple, complexRow, expenses, expensesNum, rowGroup, simpleRow, smithonian} from "./testcases";
 
-import{Cell} from "../../src/tables/groups";
+import{ Cell } from "../../src/tables/groups";
 
 const cleanElement = (element: Element) =>
   element
@@ -11,11 +11,11 @@ const cleanElement = (element: Element) =>
     .map(attribute => attribute.value)
     .getOr("");
 
-const cleanCell = (cell: Cell) => (
-  {...cell,
-    element: cleanElement(cell.element)
-  }
-);
+// const cleanCell = (cell: Cell) => (
+//   {...cell,
+//     element: cleanElement(cell.element)
+//   }
+// );
 
 function compareCell(c1: Cell, c2: Cell): number {
   if (c1.anchor.y < c2.anchor.y) return -1;
