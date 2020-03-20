@@ -164,7 +164,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
     // 6 (Cells)
     while (xCurrent < table.width &&
-      table.cells.find(isCovering(xCurrent, yCurrent)).isSome()
+      table.cells.some(isCovering(xCurrent, yCurrent))
     ) {
       xCurrent++
     }
@@ -228,7 +228,7 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   const yStart = table.height;
   // 2
   for (const row of group.children().filter(isElementByName("tr"))) {
-    growingCellsList = rowProcessing(table, row, yCurrent, growingCellsList); // uses yCurrent to modify table.height ! Modify table.width !
+    growingCellsList = rowProcessing(table, row, yCurrent, growingCellsList); // Modify table.
     // row processing steps 4/16
     yCurrent++;
   }
@@ -334,7 +334,22 @@ export function formingTable(element: Element): Table {
     yCurrent = processRowGroup(table, tfoot, yCurrent);
   }
   // 20
-  // skipping for now, need better row/col selectors
+  // checking for rows
+  for (let row=0; row<table.height; row++) {
+    let rowCovered = false;
+    for (let col=0; !rowCovered && col<table.width; col++) {
+      rowCovered = rowCovered || table.cells.some(isCovering(col, row));
+    }
+    if (!rowCovered) throw new Error(`row ${row} is not covered`)
+  }
+  // checking for cols
+  for (let col=0; col<table.width; col++) {
+    let colCovered = false;
+    for (let row=0; !colCovered && row<table.height; row++) {
+      colCovered = colCovered || table.cells.some(isCovering(col, row));
+    }
+    if (!colCovered) throw new Error(`col ${col} is not covered`)
+  }
   // 21
   return table;
 }
