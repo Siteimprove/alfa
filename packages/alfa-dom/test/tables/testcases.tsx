@@ -1,7 +1,7 @@
-import {None, Option, Some} from "@siteimprove/alfa-option";
+import {None } from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Set} from "@siteimprove/alfa-set";
-import {Cell, Element, Table} from "../../src";
+import {Cell, ColGroup, Element, RowGroup, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
 import and = Predicate.and;
 
@@ -91,7 +91,7 @@ export namespace rowGroup {
       makeCell("lb-in", "header", 3, 1)
     ),
     width: 6, height: 2, colGroups: [],
-    rowGroups: [{anchor: {y: 0}, height: 2, element: element}]
+    rowGroups: [new RowGroup(0, 2, element)]
   };
 }
 
@@ -157,7 +157,7 @@ export namespace smithonian {
       makeCell("soft-lb", "data", 3, 4), makeCell("soft-elong", "data", 4, 4), makeCell("soft-reduct", "data", 5, 4)
     ),
     width: 6, height: 5, colGroups: [] ,
-    rowGroups: [{anchor: {y: 0}, height: 2, element: getById("thead")}, {anchor: {y: 2}, height: 3, element: getById("tbody")}]
+    rowGroups: [new RowGroup(0, 2, getById("thead")), new RowGroup(2, 3, getById("tbody"))]
   }
 }
 
@@ -221,10 +221,10 @@ export namespace apple {
     ),
     width: 4, height: 5, colGroups: [],
     rowGroups: [
-      {anchor: {y: 0}, height: 1, element: getById("thead")},
-      {anchor: {y: 1}, height: 2, element: getById("body-1")},
-      {anchor: {y: 3}, height: 1, element: getById("body-2")},
-      {anchor: {y: 4}, height: 1, element: getById("tfoot")}
+      new RowGroup(0, 1, getById("thead")),
+      new RowGroup(1, 2, getById("body-1")),
+      new RowGroup(3, 1, getById("body-2")),
+      new RowGroup(4, 1, getById("tfoot"))
       ]
   }
 }
@@ -275,13 +275,13 @@ export namespace expenses {
     ),
     width: 4, height: 5,
     colGroups: [
-      {anchor: {x:0}, width: 1, element: getById("group-head")},
-      {anchor: {x:1}, width: 3, element: getById("group-body")}
+      new ColGroup(0, 1, getById("group-head")),
+      new ColGroup(1, 3, getById("group-body"))
     ],
     rowGroups: [
-      {anchor: {y: 0}, height: 1, element: getById("thead")},
-      {anchor: {y: 1}, height: 2, element: getById("body-1")},
-      {anchor: {y: 3}, height: 2, element: getById("body-2")}
+      new RowGroup(0, 1, getById("thead")),
+      new RowGroup(1, 2, getById("body-1")),
+      new RowGroup(3, 2, getById("body-2"))
     ]
   }
 }
@@ -333,13 +333,13 @@ export namespace expensesNum {
     ),
     width: 4, height: 5,
     colGroups: [
-      {anchor: {x:0}, width: 1, element: getById("group-head")},
-      {anchor: {x:1}, width: 3, element: getById("group-body")}
+      new ColGroup(0, 1, getById("group-head")),
+      new ColGroup(1, 3, getById("group-body"))
     ],
     rowGroups: [
-      {anchor: {y: 0}, height: 1, element: getById("thead")},
-      {anchor: {y: 1}, height: 2, element: getById("body-1")},
-      {anchor: {y: 3}, height: 2, element: getById("body-2")}
+      new RowGroup(0, 1, getById("thead")),
+      new RowGroup(1, 2, getById("body-1")),
+      new RowGroup(3, 2, getById("body-2"))
     ]
   }
 }

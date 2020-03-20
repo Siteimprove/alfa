@@ -1,8 +1,8 @@
 import {test} from "@siteimprove/alfa-test";
 import {None} from "@siteimprove/alfa-option";
-import {Attribute, Element, parseSpan} from "../../src";
+import {Attribute, ColGroup, Element, isCoveringClass, parseSpan, RowGroup} from "../../src";
 
-import { Cell, CG, isCovering, RG } from "../../src";
+import { Cell, isCovering } from "../../src";
 
 const dummy = Element.of(None, None, "foo");
 
@@ -10,12 +10,12 @@ function cell(x: number, y: number, w: number, h: number): Cell {
   return {kind: "data", anchor: {x: x, y: y}, width: w, height: h, element: dummy}
 }
 
-function rowGroup(y: number, h: number): RG {
-  return {anchor: {y: y}, height: h, element: dummy}
+function rowGroup(y: number, h: number): RowGroup {
+  return new RowGroup(y, h, dummy);
 }
 
-function colGroup(x: number, w: number): CG {
-  return {anchor: {x: x}, width: w, element: dummy}
+function colGroup(x: number, w: number): ColGroup {
+  return new ColGroup(x, w, dummy);
 }
 
 test("isCovering ̤correctly computes cell coverage", t => {
@@ -37,21 +37,21 @@ test("isCovering ̤correctly computes cell coverage", t => {
 
 test("isCovering ̤correctly computes group coverage", t => {
     // in small groups
-    t.equal(isCovering(2, 6)(rowGroup(6, 1)), true);
-    t.equal(isCovering(2, 6)(colGroup(2, 1)), true);
+    t.equal(isCoveringClass(2, 6)(rowGroup(6, 1)), true);
+    t.equal(isCoveringClass(2, 6)(colGroup(2, 1)), true);
 
 
     // out of small groups (left, right, above, below)
-    t.equal(isCovering(1, 6)(colGroup(2, 1)), false);
-    t.equal(isCovering(4, 6)(colGroup(2, 1)), false);
-    t.equal(isCovering(2, 4)(rowGroup(6, 1)), false);
-    t.equal(isCovering(2, 9)(rowGroup(6, 1)), false);
+    t.equal(isCoveringClass(1, 6)(colGroup(2, 1)), false);
+    t.equal(isCoveringClass(4, 6)(colGroup(2, 1)), false);
+    t.equal(isCoveringClass(2, 4)(rowGroup(6, 1)), false);
+    t.equal(isCoveringClass(2, 9)(rowGroup(6, 1)), false);
 
     // in/out big groups, just at the limit
-    t.equal(isCovering(5, 7)(colGroup(2, 4)), true);
-    t.equal(isCovering(6, 7)(colGroup(2, 4)), false);
-    t.equal(isCovering(5, 7)(rowGroup(6, 2)), true);
-    t.equal(isCovering(5, 8)(rowGroup(6, 2)), false);
+    t.equal(isCoveringClass(5, 7)(colGroup(2, 4)), true);
+    t.equal(isCoveringClass(6, 7)(colGroup(2, 4)), false);
+    t.equal(isCoveringClass(5, 7)(rowGroup(6, 2)), true);
+    t.equal(isCoveringClass(5, 8)(rowGroup(6, 2)), false);
   }
 );
 

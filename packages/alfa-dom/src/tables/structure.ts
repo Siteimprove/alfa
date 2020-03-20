@@ -10,64 +10,6 @@ import {Attribute, Element, Namespace, Node} from "..";
 
 const { and, equals, property } = Predicate;
 
-// https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
-export type Table = { width: number, height: number, cells: Set<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
-export function newTable(): Table {
-  return { width: 0, height: 0, cells: Set.empty(), rowGroups: [], colGroups: []}
-}
-
-// https://html.spec.whatwg.org/multipage/tables.html#concept-cell
-export type Cell = {
-  kind: "data" | "header";
-  // "top left" corner of the cell
-  anchor: { x: number; y: number };
-  // size of the cell
-  width: number;
-  height: number;
-  element: Element;
-}
-
-// https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
-export type RowGroup = {
-  // First row of the group
-  anchor: { y: number };
-  height: number;
-  element: Element;
-}
-
-// https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
-export type ColGroup = {
-  // First column of the group
-  anchor: { x: number };
-  width: number;
-  element: Element;
-}
-
-export function isCovering(x: number, y: number): Predicate<RowGroup | ColGroup> {
-  function covering(cover: RowGroup | ColGroup) {
-    if ("width" in cover) { // Cell or Col
-      if (x < cover.anchor.x) { // slot is left of cover
-        return false;
-      }
-      if (cover.anchor.x + cover.width - 1 < x) { // slot is right of cover
-        return false;
-      }
-    }
-
-    if ("height" in cover) { // Cell or Row
-      if (y < cover.anchor.y) { // slot is above cover
-        return false;
-      }
-      if (cover.anchor.y + cover.height - 1 < y) { // slot is below cover
-        return false;
-      }
-    }
-
-    return true;
-  }
-  return covering;
-};
-
 // micro syntaxes to move to alfa-parser
 // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
 export function parseInteger(str: string): Result<readonly [string, number], string> {
@@ -130,6 +72,136 @@ function isElementByName(...names: Array<string>): Predicate<Node, Element> {
     and(hasNamespace(equals(Namespace.HTML)),
       hasName(equals(...names))
     ));
+}
+
+
+
+// https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
+export class RowGroup {
+  private readonly _anchor: {y: number};
+  private readonly _height: number;
+  private readonly _element: Element;
+
+  constructor(y: number, height: number, element: Element) {
+    this._anchor = { y };
+    this._height = height;
+    this._element = element;
+  }
+
+  get anchor() {
+    return this._anchor;
+  }
+  get height() {
+    return this._height;
+  }
+  get element() {
+    return this._element;
+  }
+
+  public isRowGroup(): this is RowGroup {
+    return true;
+  }
+  public isColGroup(): this is ColGroup {
+    return false;
+  }
+}
+
+
+// https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
+export class ColGroup {
+  private readonly _anchor: {x: number};
+  private readonly _width: number;
+  private readonly _element: Element;
+
+  constructor(x: number, width: number, element: Element) {
+    this._anchor = { x };
+    this._width = width;
+    this._element = element;
+  }
+
+  get anchor() {
+    return this._anchor;
+  }
+  get width() {
+    return this._width;
+  }
+  get element() {
+    return this._element;
+  }
+
+  public isRowGroup(): this is RowGroup {
+    return false;
+  }
+  public isColGroup(): this is ColGroup {
+    return true;
+  }
+}
+
+export function isCoveringClass(x: number, y: number): Predicate<RowGroup | ColGroup> {
+  function covering(cover: RowGroup | ColGroup) {
+    if (cover.isColGroup()) { // Cell or Col
+      if (x < cover.anchor.x) { // slot is left of cover
+        return false;
+      }
+      if (cover.anchor.x + cover.width - 1 < x) { // slot is right of cover
+        return false;
+      }
+    }
+
+    if (cover.isRowGroup()) { // Cell or Row
+      if (y < cover.anchor.y) { // slot is above cover
+        return false;
+      }
+      if (cover.anchor.y + cover.height - 1 < y) { // slot is below cover
+        return false;
+      }
+    }
+
+    return true;
+  }
+  return covering;
+}
+
+export function isCovering(x: number, y: number): Predicate<Cell> {
+  function covering(cover: Cell) {
+    if ("width" in cover) { // Cell or Col
+      if (x < cover.anchor.x) { // slot is left of cover
+        return false;
+      }
+      if (cover.anchor.x + cover.width - 1 < x) { // slot is right of cover
+        return false;
+      }
+    }
+
+    if ("height" in cover) { // Cell or Row
+      if (y < cover.anchor.y) { // slot is above cover
+        return false;
+      }
+      if (cover.anchor.y + cover.height - 1 < y) { // slot is below cover
+        return false;
+      }
+    }
+
+    return true;
+  }
+  return covering;
+}
+
+// https://html.spec.whatwg.org/multipage/tables.html#concept-cell
+export type Cell = {
+  kind: "data" | "header";
+  // "top left" corner of the cell
+  anchor: { x: number; y: number };
+  // size of the cell
+  width: number;
+  height: number;
+  element: Element;
+}
+
+// https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
+export type Table = { width: number, height: number, cells: Set<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
+export function newTable(): Table {
+  return { width: 0, height: 0, cells: Set.empty(), rowGroups: [], colGroups: []}
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
@@ -234,8 +306,7 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   }
   // 3
   if (table.height > yStart) {
-    const rowGroup = { anchor: {y: yStart}, height: table.height - yStart, element: group};
-    table.rowGroups.push(rowGroup);
+    table.rowGroups.push(new RowGroup(yStart, table.height - yStart, group));
   }
   // 4
   // ending row group 1
@@ -251,7 +322,7 @@ export function processColGroup(colgroup: Element, xStart: number): ColGroup { /
     // 1
     const span = parseSpan(colgroup, "span", 1, 1000, 1);
     // 2 and 3 done in main function
-    return { anchor: { x: xStart }, width: span, element: colgroup }
+    return new ColGroup(xStart, span, colgroup);
   } else { // first case
     // 1
     let totalSpan = 0;
@@ -265,7 +336,7 @@ export function processColGroup(colgroup: Element, xStart: number): ColGroup { /
       // global.theTable.colGroups.push(colGroup);
     }
     // 4 and 7 done in main function
-    return { anchor: { x: xStart }, width: totalSpan, element: colgroup };
+    return new ColGroup(xStart, totalSpan, colgroup);
   }
 }
 
