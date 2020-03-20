@@ -1,6 +1,8 @@
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Element} from "..";
-import {isElementByName, parseSpan} from "./helpers";
+import {hasName, isElementByName, parseSpan} from "./helpers";
+
+const { equals } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
 export class RowGroup {
@@ -126,12 +128,32 @@ export class Cell {
     return true;
   }
 
+  public anchorAt(x: number, y: number): Cell {
+    return new Cell(this._kind, x, y, this._width, this._height, this._element);
+  }
+
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
   public growDownward(yCurrent: number): Cell {
     // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
     return new Cell(this._kind, this._anchor.x, this._anchor.y, this._width, Math.max(this._height, yCurrent - this._anchor.y + 1), this._element);
   }
 
+  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+  public static of(cell: Element): ({cell: Cell, downwardGrowing: boolean}) {
+    const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
+    // 9
+    let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
+    // 10 assuming we are not in quirks mode because I don't know if we test that yet…
+    const grow = (rowspan === 0);
+    if (rowspan === 0) {
+      rowspan = 1
+    }
+    // 11
+    return ({
+      cell: new Cell(hasName(equals("th"))(cell) ? "header" : "data", -1, -1, colspan, rowspan, cell),
+      downwardGrowing: grow
+    });
+  }
 }
 
 export function isCovering(x: number, y: number): Predicate<Cell | RowGroup | ColGroup> {

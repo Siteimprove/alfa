@@ -49,37 +49,30 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
     if (xCurrent === table.width) {
       table.width++
     }
-    // 8
-    const colspan = parseSpan(currentCell, "colspan", 1, 1000, 1);
-    // 9
-    let rowspan = parseSpan(currentCell, "rowspan", 0, 65534, 1);
-    // 10 assuming we are not in quirks mode because I don't know if we test that yet…
-    const grow = (rowspan === 0);
-    if (rowspan === 0) {
-      rowspan = 1
-    }
+    // 8, 9, 10, 13
+    const { cell: floatingCell, downwardGrowing } = Cell.of(currentCell);
+    const cell = floatingCell.anchorAt(xCurrent, yCurrent);
     // 11
-    if (table.width <= xCurrent + colspan) {
-      table.width = xCurrent + colspan
+    if (table.width <= xCurrent + cell.width) {
+      table.width = xCurrent + cell.width
     }
     // 12
-    if (table.height <= yCurrent + rowspan) {
-      table.height = yCurrent + rowspan
+    if (table.height <= yCurrent + cell.height) {
+      table.height = yCurrent + cell.height
     }
     // 13
-    for (let x = xCurrent; x < xCurrent + colspan; x++) {
-      for (let y = yCurrent; y < yCurrent + rowspan; y++) {
+    for (let x = xCurrent; x < xCurrent + cell.width; x++) {
+      for (let y = yCurrent; y < yCurrent + cell.height; y++) {
         if (table.cells.some(isCovering(x, y))) {
           throw new Error(`Slot (${x}, ${y}) is covered twice`)
         }
       }
     }
-    const cell = new Cell(hasName(equals("th"))(currentCell) ? "header" : "data", xCurrent, yCurrent, colspan, rowspan, currentCell);
     table.cells = table.cells.add(cell);
     // 14
-    if (grow) growingCellsList.push(cell);
+    if (downwardGrowing) growingCellsList.push(cell);
     // 15
-    xCurrent = xCurrent + colspan;
+    xCurrent = xCurrent + cell.width;
   }
   return growingCellsList;
   // 4 and 16 done after the calls to avoid side effects.
