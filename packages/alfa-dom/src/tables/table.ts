@@ -61,8 +61,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
       }
     }
     table.cells = table.cells.add(cell);
-    // 14
-    if (downwardGrowing) growingCellsList.push(cell);
+    // 14 not need to grow cells line by line because they will be grown to correct size by caller
     // 15
     xCurrent = xCurrent + cell.width;
   }
@@ -84,7 +83,7 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   const yStart = table.height;
   // 2
   for (const row of group.children().filter(isElementByName("tr"))) {
-    growingCellsList = rowProcessing(table, row, yCurrent, growingCellsList); // Modify table.
+    growingCellsList.push(...rowProcessing(table, row, yCurrent, growingCellsList)); // Modify table.
     // row processing steps 4/16
     yCurrent++;
   }
@@ -134,8 +133,8 @@ export function formingTable(element: Element): Table {
     processCG = false;
 
     if (currentElement.name === "tr") {
-      // 13 (process)
-      growingCellsList = rowProcessing(table, currentElement, yCurrent, growingCellsList);
+      // 13 (process) can detect new downward growing cells
+      growingCellsList.push(...rowProcessing(table, currentElement, yCurrent, growingCellsList));
       // row processing steps 4/16
       yCurrent++;
       continue;
