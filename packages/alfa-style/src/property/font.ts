@@ -4,7 +4,7 @@ import {
   Length,
   Percentage,
   String,
-  Number
+  Number,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -43,11 +43,11 @@ export namespace Font {
         ),
         delimited(option(Token.parseWhitespace), Token.parseComma)
       ),
-      families => [...families]
+      (families) => [...families]
     ),
-    style => style.specified("font-family"),
+    (style) => style.specified("font-family"),
     {
-      inherits: true
+      inherits: true,
     }
   );
 
@@ -82,7 +82,7 @@ export namespace Font {
     "sans-serif": 16,
     monospace: 13,
     cursive: 16,
-    fantasy: 16
+    fantasy: 16,
   };
 
   /**
@@ -103,7 +103,7 @@ export namespace Font {
     large: 6 / 5,
     "x-large": 3 / 2,
     "xx-large": 2 / 1,
-    "xxx-large": 3 / 1
+    "xxx-large": 3 / 1,
   };
 
   /**
@@ -127,8 +127,8 @@ export namespace Font {
       ),
       either(Percentage.parse, Length.parse)
     ),
-    style =>
-      style.specified("font-size").map(size => {
+    (style) =>
+      style.specified("font-size").map((size) => {
         switch (size.type) {
           case "length":
             return Resolver.length(size, style.parent);
@@ -164,7 +164,7 @@ export namespace Font {
         }
       }),
     {
-      inherits: true
+      inherits: true,
     }
   );
 
@@ -195,8 +195,8 @@ export namespace Font {
         Keyword.parse("bolder", "lighter")
       )
     ),
-    style =>
-      style.specified("font-weight").map(weight => {
+    (style) =>
+      style.specified("font-weight").map((weight) => {
         switch (weight.type) {
           case "number":
             return weight;
@@ -240,7 +240,7 @@ export namespace Font {
         }
       }),
     {
-      inherits: true
+      inherits: true,
     }
   );
 }

@@ -8,7 +8,7 @@ Role.register(
     inherits: ["list"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

@@ -38,13 +38,13 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasAccessibleName(device, not(isEmpty))(target),
-            Outcomes.HasAccessibleName,
-            Outcomes.HasNoAccessibleName
-          )
+            () => Outcomes.HasAccessibleName,
+            () => Outcomes.HasNoAccessibleName
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

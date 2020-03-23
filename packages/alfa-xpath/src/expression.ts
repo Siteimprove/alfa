@@ -63,7 +63,7 @@ export namespace Expression {
     public toJSON(): Integer.JSON {
       return {
         type: "integer",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -106,7 +106,7 @@ export namespace Expression {
     public toJSON(): Decimal.JSON {
       return {
         type: "decimal",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -149,7 +149,7 @@ export namespace Expression {
     public toJSON(): Double.JSON {
       return {
         type: "double",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -192,7 +192,7 @@ export namespace Expression {
     public toJSON(): String.JSON {
       return {
         type: "string",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -246,7 +246,7 @@ export namespace Expression {
       return {
         type: "path",
         left: this._left.toJSON(),
-        right: this._right.toJSON()
+        right: this._right.toJSON(),
       };
     }
 
@@ -319,8 +319,8 @@ export namespace Expression {
       return {
         type: "axis",
         axis: this._axis,
-        test: this._test.map(test => test.toJSON()).getOr(null),
-        predicates: this._predicates.map(predicate => predicate.toJSON())
+        test: this._test.map((test) => test.toJSON()).getOr(null),
+        predicates: this._predicates.map((predicate) => predicate.toJSON()),
       };
     }
   }
@@ -390,7 +390,7 @@ export namespace Expression {
       public toJSON(): Node.JSON {
         return {
           type: "kind",
-          kind: "node"
+          kind: "node",
         };
       }
 
@@ -431,7 +431,7 @@ export namespace Expression {
       public toJSON(): Document.JSON {
         return {
           type: "kind",
-          kind: "document"
+          kind: "document",
         };
       }
 
@@ -479,7 +479,7 @@ export namespace Expression {
         return {
           type: "kind",
           kind: "element",
-          name: this._name.getOr(null)
+          name: this._name.getOr(null),
         };
       }
 
@@ -528,7 +528,7 @@ export namespace Expression {
         return {
           type: "kind",
           kind: "attribute",
-          name: this._name.getOr(null)
+          name: this._name.getOr(null),
         };
       }
 
@@ -570,7 +570,7 @@ export namespace Expression {
       public toJSON(): Comment.JSON {
         return {
           type: "kind",
-          kind: "comment"
+          kind: "comment",
         };
       }
 
@@ -611,7 +611,7 @@ export namespace Expression {
       public toJSON(): Text.JSON {
         return {
           type: "kind",
-          kind: "text"
+          kind: "text",
         };
       }
 
@@ -665,12 +665,12 @@ export namespace Expression {
         return {
           type: "name",
           prefix: this._prefix.getOr(null),
-          name: this._name
+          name: this._name,
         };
       }
 
       public toString(): string {
-        const prefix = this._prefix.map(prefix => `${prefix}:`).getOr("");
+        const prefix = this._prefix.map((prefix) => `${prefix}:`).getOr("");
 
         return `${prefix}${this._name}`;
       }
@@ -726,13 +726,13 @@ export namespace Expression {
       return {
         type: "filter",
         base: this._base.toJSON(),
-        predicates: this._predicates.map(predicate => predicate.toJSON())
+        predicates: this._predicates.map((predicate) => predicate.toJSON()),
       };
     }
 
     public toString(): string {
       return `${this._base}${this._predicates.map(
-        predicate => `[${predicate}]`
+        (predicate) => `[${predicate}]`
       )}`;
     }
   }
@@ -765,7 +765,7 @@ export namespace Expression {
 
     public toJSON(): ContextItem.JSON {
       return {
-        type: "context-item"
+        type: "context-item",
       };
     }
 
@@ -847,12 +847,12 @@ export namespace Expression {
         prefix: this._prefix.getOr(null),
         name: this._name,
         arity: this._arity,
-        parameters: this._parameters.map(parameter => parameter.toJSON())
+        parameters: this._parameters.map((parameter) => parameter.toJSON()),
       };
     }
 
     public toString(): string {
-      const prefix = this._prefix.map(prefix => `${prefix}:`).getOr("");
+      const prefix = this._prefix.map((prefix) => `${prefix}:`).getOr("");
 
       return `${prefix}${this._name}(${this._parameters.join(", ")})`;
     }

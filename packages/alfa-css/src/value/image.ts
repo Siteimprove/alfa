@@ -44,7 +44,7 @@ export class Image<I extends URL | Gradient = URL | Gradient>
   public toJSON(): Image.JSON {
     return {
       type: "image",
-      image: this._image.toJSON()
+      image: this._image.toJSON(),
     };
   }
 
@@ -69,7 +69,7 @@ export namespace Image {
   /**
    * @see https://drafts.csswg.org/css-images/#typedef-image
    */
-  export const parse = map(either(URL.parse, Gradient.parse), image =>
+  export const parse = map(either(URL.parse, Gradient.parse), (image) =>
     Image.of(image)
   );
 }

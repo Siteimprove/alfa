@@ -38,13 +38,13 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasRequiredOwnedElements(device)(target),
-            Outcomes.HasCorrectOwnedElements,
-            Outcomes.HasIncorrectOwnedElements
-          )
+            () => Outcomes.HasCorrectOwnedElements,
+            () => Outcomes.HasIncorrectOwnedElements
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {
@@ -71,16 +71,16 @@ function hasOwnedElements(
 }
 
 function hasRequiredOwnedElements(device: Device): Predicate<Element> {
-  return element =>
-    Node.from(element, device).every(node =>
+  return (element) =>
+    Node.from(element, device).every((node) =>
       node
         .children()
-        .filter(node => Element.isElement(node.node))
-        .every(child =>
+        .filter((node) => Element.isElement(node.node))
+        .every((child) =>
           child
             .role()
-            .some(role =>
-              hasOwnedElements(roles =>
+            .some((role) =>
+              hasOwnedElements((roles) =>
                 isString(roles) ? roles === role.name : owns([...roles])(child)
               )(node.role().get())
             )
@@ -89,10 +89,10 @@ function hasRequiredOwnedElements(device: Device): Predicate<Element> {
 }
 
 function owns(roles: Array<string>): Predicate<Node> {
-  return node => {
+  return (node) => {
     const [next, ...remaining] = roles;
 
-    if (node.role().some(role => next === role.name)) {
+    if (node.role().some((role) => next === role.name)) {
       return remaining.length === 0 || node.children().every(owns(remaining));
     }
 

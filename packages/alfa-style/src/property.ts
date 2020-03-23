@@ -95,7 +95,7 @@ export namespace Property {
     "font-weight": Font.Weight,
     opacity: Opacity,
     transform: Transform,
-    visibility: Visibility
+    visibility: Visibility,
   };
 
   export type Shorthand = typeof Shorthand;

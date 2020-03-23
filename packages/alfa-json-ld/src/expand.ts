@@ -2,13 +2,14 @@
 
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+
 import {
   isDictionary,
   isKeyword,
   isList,
   isListObject,
   isScalar,
-  isValueObject
+  isValueObject,
 } from "./guards";
 import { Context, Dictionary, Keyword, List, Scalar } from "./types";
 
@@ -20,7 +21,7 @@ const { keys } = Object;
 export function expand(
   element: Scalar | List | Dictionary
 ): Result<List, string> {
-  return expandElement({}, null, element).map(element => {
+  return expandElement({}, null, element).map((element) => {
     if (element === null) {
       return [];
     }
@@ -123,7 +124,7 @@ function expandElement(
 
     // 7.2
     const expandedProperty = expandIdentifier(activeContext, key, {
-      vocab: true
+      vocab: true,
     });
 
     if (expandedProperty.isErr()) {
@@ -161,7 +162,7 @@ function expandElement(
             }
 
             const expandedIdentifier = expandIdentifier(activeContext, value, {
-              documentRelative: true
+              documentRelative: true,
             });
 
             if (expandedIdentifier.isErr()) {
@@ -182,7 +183,7 @@ function expandElement(
                 value,
                 {
                   vocab: true,
-                  documentRelative: true
+                  documentRelative: true,
                 }
               );
 
@@ -207,7 +208,7 @@ function expandElement(
                   item,
                   {
                     vocab: true,
-                    documentRelative: true
+                    documentRelative: true,
                   }
                 );
 
@@ -448,7 +449,7 @@ function expandElement(
             // 7.5.2.2.2
             expandedValue.push({
               "@value": item,
-              "@language": language.toLowerCase()
+              "@language": language.toLowerCase(),
             });
           }
         }
@@ -525,7 +526,7 @@ function expandElement(
         !isListObject(expandedValue)
       ) {
         expandedValue = {
-          "@list": isList(expandedValue) ? expandedValue : [expandedValue]
+          "@list": isList(expandedValue) ? expandedValue : [expandedValue],
         };
       }
 
@@ -686,8 +687,8 @@ function expandValue(
   // 1
   if (type === "@id") {
     return expandIdentifier(activeContext, value as string, {
-      documentRelative: true
-    }).map(id => {
+      documentRelative: true,
+    }).map((id) => {
       return { "@id": id };
     });
   }
@@ -696,15 +697,15 @@ function expandValue(
   if (type === "@vocab") {
     return expandIdentifier(activeContext, value as string, {
       documentRelative: true,
-      vocab: true
-    }).map(id => {
+      vocab: true,
+    }).map((id) => {
       return { "@id": id };
     });
   }
 
   // 3
   const result: Dictionary = {
-    "@value": value
+    "@value": value,
   };
 
   // 4
@@ -746,7 +747,7 @@ function expandIdentifier(
     // documentRelative = false,
     vocab = false,
     localContext = null,
-    defined = null
+    defined = null,
   } = options;
 
   // 1
@@ -1098,7 +1099,7 @@ function createTermDefinition(
     const expandedIdentifier = expandIdentifier(activeContext, type, {
       vocab: true,
       localContext,
-      defined
+      defined,
     });
 
     if (expandedIdentifier.isErr()) {
@@ -1141,7 +1142,7 @@ function createTermDefinition(
       vocab: true,
       documentRelative: false,
       localContext,
-      defined
+      defined,
     });
 
     if (expandedIdentifier.isErr()) {
@@ -1197,7 +1198,7 @@ function createTermDefinition(
       vocab: true,
       documentRelative: true,
       localContext,
-      defined
+      defined,
     });
 
     if (expandedIdentifier.isErr()) {

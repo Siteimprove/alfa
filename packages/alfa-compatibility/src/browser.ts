@@ -47,7 +47,7 @@ export namespace Browser {
     public toJSON(): Release.JSON {
       return {
         browser: this.browser,
-        version: this.version
+        version: this.version,
       };
     }
 
@@ -109,11 +109,11 @@ export namespace Browser {
 
             return {
               ...support,
-              [version]: Release.of(browser, version, date)
+              [version]: Release.of(browser, version, date),
             };
           },
           {} as Versions<N>
-        )
+        ),
       };
     },
     {} as Releases
@@ -218,7 +218,7 @@ export namespace Browser {
   }
 
   const defaultScope: Scope = browserslist()
-    .map(entry => {
+    .map((entry) => {
       const [browser, version] = entry.split(/\s+/);
 
       if (!Browser.isBrowser(browser) || !Browser.isVersion(browser, version)) {

@@ -24,14 +24,13 @@ export default Rule.Composite.of<Page, Element, Question>({
         return {
           1: expectation(
             some(outcomeToTrilean)(outcomes),
-            Outcomes.HasAlternative,
-            Outcomes.HasNoAlternative,
-            None
-          )
+            () => Outcomes.HasAlternative,
+            () => Outcomes.HasNoAlternative
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

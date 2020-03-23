@@ -42,7 +42,7 @@ export class String implements Equatable, Hashable, Serializable {
   public toJSON(): String.JSON {
     return {
       type: "string",
-      value: this._value
+      value: this._value,
     };
   }
 
@@ -66,5 +66,5 @@ export namespace String {
     Slice<Token>,
     String,
     string
-  > = map(Token.parseString(), string => String.of(string.value));
+  > = map(Token.parseString(), (string) => String.of(string.value));
 }

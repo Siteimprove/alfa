@@ -74,13 +74,15 @@ export namespace Gradient {
       return {
         type: "stop",
         color: this._color.toJSON(),
-        position: this._position.map(position => position.toJSON()).getOr(null)
+        position: this._position
+          .map((position) => position.toJSON())
+          .getOr(null),
       };
     }
 
     public toString(): string {
       return `${this._color}${this._position
-        .map(position => ` ${position}`)
+        .map((position) => ` ${position}`)
         .getOr("")}`;
     }
   }
@@ -104,7 +106,7 @@ export namespace Gradient {
           left(Color.parse, Token.parseWhitespace),
           either(Length.parse, Percentage.parse)
         ),
-        result => {
+        (result) => {
           const [color, position] = result;
           return Stop.of(color, Option.of(position));
         }
@@ -114,13 +116,13 @@ export namespace Gradient {
           either(Length.parse, Percentage.parse),
           right(Token.parseWhitespace, Color.parse)
         ),
-        result => {
+        (result) => {
           const [position, color] = result;
           return Stop.of(color, Option.of(position));
         }
       )
     ),
-    map(Color.parse, color => Stop.of(color))
+    map(Color.parse, (color) => Stop.of(color))
   );
 
   /**
@@ -157,7 +159,7 @@ export namespace Gradient {
     public toJSON(): Hint.JSON {
       return {
         type: "hint",
-        position: this._position.toJSON()
+        position: this._position.toJSON(),
       };
     }
 
@@ -179,7 +181,7 @@ export namespace Gradient {
    */
   export const parseHint = map(
     either(Length.parse, Percentage.parse),
-    position => Hint.of(position)
+    (position) => Hint.of(position)
   );
 
   export type Item = Stop | Hint;
@@ -211,7 +213,7 @@ export namespace Gradient {
         )
       )
     ),
-    result => {
+    (result) => {
       const [first, rest] = result;
 
       return Iterable.concat(

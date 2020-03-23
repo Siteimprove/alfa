@@ -8,7 +8,7 @@ Role.register(
     inherits: ["section"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

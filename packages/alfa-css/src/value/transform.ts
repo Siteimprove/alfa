@@ -81,6 +81,6 @@ export namespace Transform {
    */
   export const parseList = map(
     oneOrMore(delimited(option(Token.parseWhitespace), parse)),
-    transforms => List.of([...transforms], " ")
+    (transforms) => List.of([...transforms], " ")
   );
 }

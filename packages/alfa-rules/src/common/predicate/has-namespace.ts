@@ -4,5 +4,5 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 export function hasNamespace(
   predicate: Predicate<Namespace> = () => true
 ): Predicate<Element> {
-  return element => element.namespace.some(predicate);
+  return (element) => element.namespace.some(predicate);
 }

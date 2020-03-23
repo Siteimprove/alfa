@@ -44,8 +44,8 @@ export class Sheet {
 
   public toJSON(): Sheet.JSON {
     return {
-      rules: [...this._rules].map(rule => rule.toJSON()),
-      disabled: this._disabled
+      rules: [...this._rules].map((rule) => rule.toJSON()),
+      disabled: this._disabled,
     };
   }
 }
@@ -58,8 +58,8 @@ export namespace Sheet {
   }
 
   export function fromSheet(sheet: JSON): Sheet {
-    return Sheet.of(self => {
-      return sheet.rules.map(rule => Rule.fromRule(rule, self));
+    return Sheet.of((self) => {
+      return sheet.rules.map((rule) => Rule.fromRule(rule, self));
     }, sheet.disabled);
   }
 }

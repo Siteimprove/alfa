@@ -266,7 +266,7 @@ export class Collision<K, V> implements Node<K, V> {
   public map<U>(mapper: Mapper<V, U, [K]>): Collision<K, U> {
     return Collision.of(
       this._hash,
-      this._nodes.map(node => node.map(mapper))
+      this._nodes.map((node) => node.map(mapper))
     );
   }
 
@@ -393,7 +393,7 @@ export class Sparse<K, V> implements Node<K, V> {
   public map<U>(mapper: Mapper<V, U, [K]>): Sparse<K, U> {
     return Sparse.of(
       this._mask,
-      this._nodes.map(node => node.map(mapper))
+      this._nodes.map((node) => node.map(mapper))
     );
   }
 

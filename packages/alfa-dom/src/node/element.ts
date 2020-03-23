@@ -74,10 +74,10 @@ export class Element extends Node implements Slot, Slotable {
     this._shadow = self.apply(shadow);
     this._content = content;
 
-    this._id = this.attribute("id").map(attr => attr.value);
+    this._id = this.attribute("id").map((attr) => attr.value);
 
     this._classes = this.attribute("class")
-      .map(attr => attr.value.trim().split(/\s+/))
+      .map((attr) => attr.value.trim().split(/\s+/))
       .getOr([]);
   }
 
@@ -125,13 +125,13 @@ export class Element extends Node implements Slot, Slotable {
 
   public parent(options: Node.Traversal = {}): Option<Node> {
     if (options.flattened === true) {
-      return this._parent.flatMap(parent => {
+      return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
           return Option.of(parent.host);
         }
 
         if (Element.isElement(parent) && parent.shadow.isSome()) {
-          return this.assignedSlot().flatMap(slot => slot.parent(options));
+          return this.assignedSlot().flatMap((slot) => slot.parent(options));
         }
 
         return Option.of(parent);
@@ -181,7 +181,7 @@ export class Element extends Node implements Slot, Slotable {
     return Iterable.find(
       this._attributes,
       typeof predicate === "string"
-        ? attribute => attribute.hasName(predicate)
+        ? (attribute) => attribute.hasName(predicate)
         : predicate
     );
   }
@@ -248,13 +248,13 @@ export class Element extends Node implements Slot, Slotable {
   }
 
   public path(): string {
-    let path = this._parent.map(parent => parent.path()).getOr("/");
+    let path = this._parent.map((parent) => parent.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += this._name;
 
     const index = this.preceding().count(
-      and(Element.isElement, element => element._name === this._name)
+      and(Element.isElement, (element) => element._name === this._name)
     );
 
     path += `[${index + 1}]`;
@@ -268,11 +268,11 @@ export class Element extends Node implements Slot, Slotable {
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
-      attributes: this._attributes.map(attribute => attribute.toJSON()),
-      style: this._style.map(style => style.toJSON()).getOr(null),
-      children: this._children.map(child => child.toJSON()),
-      shadow: this._shadow.map(shadow => shadow.toJSON()).getOr(null),
-      content: this._content.map(content => content.toJSON()).getOr(null)
+      attributes: this._attributes.map((attribute) => attribute.toJSON()),
+      style: this._style.map((style) => style.toJSON()).getOr(null),
+      children: this._children.map((child) => child.toJSON()),
+      shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
+      content: this._content.map((content) => content.toJSON()).getOr(null),
     };
   }
 
@@ -283,7 +283,7 @@ export class Element extends Node implements Slot, Slotable {
     );
 
     const attributes = this._attributes
-      .map(attribute => ` ${attribute.toString()}`)
+      .map((attribute) => ` ${attribute.toString()}`)
       .join("");
 
     if (this.isVoid()) {
@@ -291,7 +291,7 @@ export class Element extends Node implements Slot, Slotable {
     }
 
     const children = [...this._shadow, ...this._children, ...this._content]
-      .map(child => child.toString().trim())
+      .map((child) => child.toString().trim())
       .filter(not(isEmpty))
       .map(indent)
       .join("\n");
@@ -327,22 +327,22 @@ export namespace Element {
       Option.from(element.namespace as Namespace | null),
       Option.from(element.prefix),
       element.name,
-      self => {
+      (self) => {
         const owner = Option.of(self);
-        return element.attributes.map(attribute =>
+        return element.attributes.map((attribute) =>
           Attribute.fromAttribute(attribute, owner)
         );
       },
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return element.children.map(child => Node.fromNode(child, parent));
+        return element.children.map((child) => Node.fromNode(child, parent));
       },
-      Option.from(element.style).map(style => Block.fromBlock(style)),
+      Option.from(element.style).map((style) => Block.fromBlock(style)),
       parent,
-      Option.from(element.shadow).map(shadow => self =>
+      Option.from(element.shadow).map((shadow) => (self) =>
         Shadow.fromShadow(shadow, self)
       ),
-      Option.from(element.content).map(content =>
+      Option.from(element.content).map((content) =>
         Document.fromDocument(content)
       )
     );
@@ -360,7 +360,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element.attribute("href").isSome();
 
     case "input":
-      return element.attribute("type").every(attr => attr.value !== "hidden");
+      return element.attribute("type").every((attr) => attr.value !== "hidden");
 
     case "audio":
     case "video":
@@ -375,7 +375,7 @@ function isSuggestedFocusableElement(element: Element): boolean {
       return element
         .parent()
         .filter(Element.isElement)
-        .some(parent => {
+        .some((parent) => {
           if (parent.name === "details") {
             for (const child of parent.children()) {
               if (Element.isElement(child) && child.name === "summary") {

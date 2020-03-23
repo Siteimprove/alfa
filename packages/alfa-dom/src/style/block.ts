@@ -28,7 +28,7 @@ export class Block implements Iterable<Declaration> {
     return find(
       this._declarations,
       typeof predicate === "string"
-        ? declaration => declaration.name === predicate
+        ? (declaration) => declaration.name === predicate
         : predicate
     );
   }
@@ -38,12 +38,12 @@ export class Block implements Iterable<Declaration> {
   }
 
   public toJSON(): Block.JSON {
-    return this._declarations.map(declaration => declaration.toJSON());
+    return this._declarations.map((declaration) => declaration.toJSON());
   }
 
   public toString(): string {
     return join(
-      map(this._declarations, declaration => declaration.toString()),
+      map(this._declarations, (declaration) => declaration.toString()),
       ";\n"
     );
   }
@@ -54,7 +54,7 @@ export namespace Block {
 
   export function fromBlock(block: JSON, parent: Option<Rule> = None): Block {
     return Block.of(
-      [...block].map(json => Declaration.fromDeclaration(json, parent))
+      [...block].map((json) => Declaration.fromDeclaration(json, parent))
     );
   }
 }

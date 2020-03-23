@@ -14,7 +14,7 @@ const { and, not } = Predicate;
  */
 export function isTabbable(device: Device): Predicate<Element> {
   return and(
-    hasTabIndex(tabIndex => tabIndex >= 0),
+    hasTabIndex((tabIndex) => tabIndex >= 0),
     and(
       not(redirectsFocus),
       and(not(isDisabled), and(not(isInert(device)), isRendered(device)))
@@ -22,7 +22,7 @@ export function isTabbable(device: Device): Predicate<Element> {
   );
 }
 
-const redirectsFocus: Predicate<Element> = element => {
+const redirectsFocus: Predicate<Element> = (element) => {
   if (element.namespace.includes(Namespace.HTML)) {
     switch (element.name) {
       // Per the sequential navigation search algorithm, browsing context

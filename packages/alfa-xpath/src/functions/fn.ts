@@ -13,6 +13,6 @@ export namespace fn {
     result: node(),
     apply(environment, options, node) {
       return node.root(options);
-    }
+    },
   };
 }

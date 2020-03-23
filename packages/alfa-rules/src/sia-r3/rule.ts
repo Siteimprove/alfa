@@ -27,13 +27,13 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasUniqueId()(target),
-            Outcomes.HasUniqueId,
-            Outcomes.HasNonUniqueId
-          )
+            () => Outcomes.HasUniqueId,
+            () => Outcomes.HasNonUniqueId
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

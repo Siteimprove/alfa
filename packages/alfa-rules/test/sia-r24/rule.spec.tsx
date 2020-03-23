@@ -13,8 +13,8 @@ import { evaluate } from "../common/evaluate";
 import { makeOracle } from "../common/make-oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
-test("Passes when non-streaming video elements have all audio and visual information available in a transcript", async t => {
-  const document = Document.of(self => [
+test("Passes when non-streaming video elements have all audio and visual information available in a transcript", async (t) => {
+  const document = Document.of((self) => [
     Element.fromElement(
       <div>
         <video controls>
@@ -24,7 +24,7 @@ test("Passes when non-streaming video elements have all audio and visual informa
         <span id="transcript">Transcript</span>
       </div>,
       Option.of(self)
-    )
+    ),
   ]);
 
   const video = document
@@ -41,23 +41,23 @@ test("Passes when non-streaming video elements have all audio and visual informa
   const oracle = makeOracle({
     "is-streaming": false,
     "has-audio": true,
-    transcript: Option.of(transcript)
+    transcript: Option.of(transcript),
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
-    passed(R24, video, [["1", Outcomes.HasTranscript]])
+    passed(R24, video, [["1", Outcomes.HasTranscript]]),
   ]);
 });
 
-test("Fails when non-streaming video elements have no audio and visual information available in a transcript", async t => {
-  const document = Document.of(self => [
+test("Fails when non-streaming video elements have no audio and visual information available in a transcript", async (t) => {
+  const document = Document.of((self) => [
     Element.fromElement(
       <video controls>
         <source src="foo.mp4" type="video/mp4" />
         <source src="foo.webm" type="video/webm" />
       </video>,
       Option.of(self)
-    )
+    ),
   ]);
 
   const video = document
@@ -70,23 +70,23 @@ test("Fails when non-streaming video elements have no audio and visual informati
     "is-streaming": false,
     "has-audio": true,
     transcript: None,
-    "transcript-link": None
+    "transcript-link": None,
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
-    failed(R24, video, [["1", Outcomes.HasNoTranscript]])
+    failed(R24, video, [["1", Outcomes.HasNoTranscript]]),
   ]);
 });
 
-test("Can't tell when some questions are left unanswered", async t => {
-  const document = Document.of(self => [
+test("Can't tell when some questions are left unanswered", async (t) => {
+  const document = Document.of((self) => [
     Element.fromElement(
       <video controls>
         <source src="foo.mp4" type="video/mp4" />
         <source src="foo.webm" type="video/webm" />
       </video>,
       Option.of(self)
-    )
+    ),
   ]);
 
   const video = document
@@ -98,17 +98,17 @@ test("Can't tell when some questions are left unanswered", async t => {
   const oracle = makeOracle({
     "is-streaming": false,
     "has-audio": true,
-    transcript: None
+    transcript: None,
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
-    cantTell(R24, video)
+    cantTell(R24, video),
   ]);
 });
 
-test("Is inapplicable when element is not a video element", async t => {
-  const document = Document.of(self => [
-    Element.fromElement(<img src="foo.mp4" />, Option.of(self))
+test("Is inapplicable when element is not a video element", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(<img src="foo.mp4" />, Option.of(self)),
   ]);
 
   const img = document
@@ -120,15 +120,15 @@ test("Is inapplicable when element is not a video element", async t => {
   t.deepEqual(await evaluate(R24, { document }), [inapplicable(R24)]);
 });
 
-test("Is inapplicable when applicability questions are unanswered", async t => {
-  const document = Document.of(self => [
+test("Is inapplicable when applicability questions are unanswered", async (t) => {
+  const document = Document.of((self) => [
     Element.fromElement(
       <video controls>
         <source src="foo.mp4" type="video/mp4" />
         <source src="foo.webm" type="video/webm" />
       </video>,
       Option.of(self)
-    )
+    ),
   ]);
 
   t.deepEqual(await evaluate(R24, { document }), [inapplicable(R24)]);

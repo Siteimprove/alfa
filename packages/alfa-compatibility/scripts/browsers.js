@@ -32,7 +32,7 @@ for (const name of include) {
 
     releases.push({
       version,
-      date: new Date(release_date).getTime()
+      date: new Date(release_date).getTime(),
     });
   }
 
@@ -40,7 +40,7 @@ for (const name of include) {
 
   browsers.push({
     key: name,
-    releases
+    releases,
   });
 }
 
@@ -55,12 +55,12 @@ export type Data = typeof Data;
 export const Data = {
   ${browsers
     .map(
-      browser => `
+      (browser) => `
         "${browser.key}": {
           releases: {
             ${browser.releases
               .map(
-                release => `
+                (release) => `
                   "${release.version}": { date: ${release.date} }
                 `
               )
@@ -74,7 +74,7 @@ export const Data = {
 `;
 
 code = prettier.format(code, {
-  parser: "typescript"
+  parser: "typescript",
 });
 
 fs.writeFileSync("src/browser/data.ts", code);

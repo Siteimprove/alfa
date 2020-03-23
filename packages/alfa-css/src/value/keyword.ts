@@ -45,7 +45,7 @@ export class Keyword<T extends string = string>
   public toJSON(): Keyword.JSON {
     return {
       type: "keyword",
-      value: this._value
+      value: this._value,
     };
   }
 
@@ -67,10 +67,10 @@ export namespace Keyword {
 
   export function parse<T extends string>(...keywords: Array<T>) {
     return map(
-      Token.parseIdent(ident =>
+      Token.parseIdent((ident) =>
         keywords.some(equals(ident.value.toLowerCase()))
       ),
-      ident => Keyword.of(ident.value.toLowerCase() as T)
+      (ident) => Keyword.of(ident.value.toLowerCase() as T)
     );
   }
 }

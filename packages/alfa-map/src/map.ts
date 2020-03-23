@@ -118,11 +118,11 @@ export class Map<K, V>
   }
 
   public keys(): Iterable<K> {
-    return Iterable.map(this._root, entry => entry[0]);
+    return Iterable.map(this._root, (entry) => entry[0]);
   }
 
   public values(): Iterable<V> {
-    return Iterable.map(this._root, entry => entry[1]);
+    return Iterable.map(this._root, (entry) => entry[1]);
   }
 
   public *[Symbol.iterator](): Iterator<[K, V]> {
@@ -136,7 +136,7 @@ export class Map<K, V>
   public toJSON(): Map.JSON {
     return this.toArray().map(([key, value]) => [
       Serializable.toJSON(key),
-      Serializable.toJSON(value)
+      Serializable.toJSON(value),
     ]);
   }
 

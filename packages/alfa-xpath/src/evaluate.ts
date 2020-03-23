@@ -4,7 +4,7 @@ import {
   Document,
   Element,
   Text,
-  Node
+  Node,
 } from "@siteimprove/alfa-dom";
 
 import { Builder } from "./builder";
@@ -42,9 +42,9 @@ export function* evaluate(
     focus: {
       type: d.node(),
       value: scope,
-      position: 1
+      position: 1,
     },
-    functions
+    functions,
   };
 
   const items = evaluateExpression(expression, environment, options);
@@ -111,7 +111,7 @@ function* evaluatePathExpression<T extends Item.Value>(
     const focus: Focus<Item.Value> = {
       type,
       value,
-      position: position++
+      position: position++,
     };
 
     result.push(
@@ -123,7 +123,7 @@ function* evaluatePathExpression<T extends Item.Value>(
     );
   }
 
-  const hasNode = result.some(item => matches(item, d.node()));
+  const hasNode = result.some((item) => matches(item, d.node()));
 
   if (hasNode) {
     const seen = new Set<Node>();

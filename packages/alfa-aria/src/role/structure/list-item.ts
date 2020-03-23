@@ -10,7 +10,7 @@ Role.register(
     context: ["group", "list"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

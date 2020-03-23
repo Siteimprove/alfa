@@ -30,9 +30,9 @@ export default Rule.Atomic.of<Page, Element>({
                   and(
                     hasAttribute(
                       "http-equiv",
-                      value => value.toLowerCase() === "refresh"
+                      (value) => value.toLowerCase() === "refresh"
                     ),
-                    hasAttribute("content", value =>
+                    hasAttribute("content", (value) =>
                       getRefreshTime(value).isSome()
                     )
                   )
@@ -41,7 +41,7 @@ export default Rule.Atomic.of<Page, Element>({
             )
           )
           .first()
-          .map(meta => [meta])
+          .map((meta) => [meta])
           .getOr([]);
       },
 
@@ -53,13 +53,13 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             refreshTime === 0 || refreshTime! > 72000,
-            Outcomes.HasImmediateRefresh,
-            Outcomes.HasDelayedRefresh
-          )
+            () => Outcomes.HasImmediateRefresh,
+            () => Outcomes.HasDelayedRefresh
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 const whitespace = /\s/;

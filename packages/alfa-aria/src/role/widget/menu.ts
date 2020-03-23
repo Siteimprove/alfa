@@ -10,12 +10,12 @@ Role.register(
       "menuitem",
       "menuitemcheckbox",
       "menuitemradio",
-      ["group", "menuitemradio"]
+      ["group", "menuitemradio"],
     ],
     name: {
       from: ["author"],
-      required: false
+      required: false,
     },
-    implicits: [["aria-orientation", "vertical"]]
+    implicits: [["aria-orientation", "vertical"]],
   })
 );

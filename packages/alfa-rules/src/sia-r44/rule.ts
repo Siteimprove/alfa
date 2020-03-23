@@ -57,7 +57,7 @@ export default Rule.Atomic.of<Page, Element>({
             Element.isElement,
             and(
               isVisible(device),
-              element =>
+              (element) =>
                 hasConditionalRotation(element, landscape) ||
                 hasConditionalRotation(element, portrait)
             )
@@ -70,18 +70,18 @@ export default Rule.Atomic.of<Page, Element>({
           target,
           landscape,
           portrait
-        ).map(rotation => round(rotation));
+        ).map((rotation) => round(rotation));
 
         return {
           1: expectation(
-            rotation.every(rotation => rotation !== 90 && rotation !== 270),
-            Outcomes.RotationNotLocked,
-            Outcomes.RotationLocked
-          )
+            rotation.every((rotation) => rotation !== 90 && rotation !== 270),
+            () => Outcomes.RotationNotLocked,
+            () => Outcomes.RotationLocked
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 function hasConditionalRotation(element: Element, device: Device): boolean {
@@ -107,7 +107,7 @@ function hasConditionalRotation(element: Element, device: Device): boolean {
 }
 
 function isOrientationConditional(declaration: Declaration): boolean {
-  return some(declaration.ancestors(), rule => {
+  return some(declaration.ancestors(), (rule) => {
     if (MediaRule.isMedia(rule)) {
       for (const media of Media.parse(rule.condition)) {
         for (const { condition } of media) {
@@ -131,7 +131,7 @@ function hasOrientationCondition(
     if (
       condition.name === "orientation" &&
       condition.value.some(
-        value =>
+        (value) =>
           value.type === "string" &&
           (value.value === "landscape" || value.value === "portrait")
       )
@@ -159,9 +159,9 @@ function getRotation(element: Element, device: Device): Option<number> {
 
   const rotation = parent.isNone()
     ? Option.of(0)
-    : parent.flatMap(parent => getRotation(parent, device));
+    : parent.flatMap((parent) => getRotation(parent, device));
 
-  return rotation.flatMap(rotation => {
+  return rotation.flatMap((rotation) => {
     const transform = Style.from(element, device).computed("transform").value;
 
     if (Keyword.isKeyword(transform)) {
@@ -186,7 +186,7 @@ function getRotation(element: Element, device: Device): Option<number> {
 
         case "matrix": {
           const decomposed = Transformation.decompose(
-            fn.values.map(row => row.map(number => number.value)) as Matrix<
+            fn.values.map((row) => row.map((number) => number.value)) as Matrix<
               4,
               4
             >
@@ -218,8 +218,8 @@ function getRelativeRotation(
   left: Device,
   right: Device
 ): Option<number> {
-  return getRotation(element, left).flatMap(left =>
-    getRotation(element, right).map(right => mod(abs(left - right), 360))
+  return getRotation(element, left).flatMap((left) =>
+    getRotation(element, right).map((right) => mod(abs(left - right), 360))
   );
 }
 

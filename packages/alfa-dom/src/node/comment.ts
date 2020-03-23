@@ -24,7 +24,7 @@ export class Comment extends Node {
   }
 
   public path(): string {
-    let path = this._parent.map(parent => parent.path()).getOr("/");
+    let path = this._parent.map((parent) => parent.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "comment()";
@@ -39,7 +39,7 @@ export class Comment extends Node {
   public toJSON(): Comment.JSON {
     return {
       type: "comment",
-      data: this._data
+      data: this._data,
     };
   }
 

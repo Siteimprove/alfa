@@ -84,7 +84,7 @@ export class Branched<T, B = never>
   }
 
   public apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B> {
-    return this.flatMap(value => mapper.map(mapper => mapper(value)));
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public reduce<U>(reducer: Reducer<T, U, [Iterable<B>]>, accumulator: U): U {
@@ -133,10 +133,10 @@ export class Branched<T, B = never>
         ...Iterable.map(this._values, ({ value, branches }) => {
           return {
             value: Serializable.toJSON(value),
-            branches: branches.map(branches => branches.toJSON()).getOr(null)
+            branches: branches.map((branches) => branches.toJSON()).getOr(null),
           };
-        })
-      ]
+        }),
+      ],
     };
   }
 }
@@ -163,8 +163,8 @@ export namespace Branched {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap(value =>
-          values.map(values => values.push(value))
+        mapper(value).flatMap((value) =>
+          values.map((values) => values.push(value))
         ),
       Branched.of(List.empty())
     );
@@ -173,7 +173,7 @@ export namespace Branched {
   export function sequence<T, B>(
     values: Iterable<Branched<T, B>>
   ): Branched<Iterable<T>, B> {
-    return traverse(values, value => value);
+    return traverse(values, (value) => value);
   }
 }
 
@@ -208,10 +208,10 @@ function merge<T, B>(
   branches: Option<List<B>>
 ): List<Value<T, B>> {
   branches = values
-    .find(existing => Equatable.equals(existing.value, value))
-    .map(existing =>
-      existing.branches.flatMap(left =>
-        branches.map(right => left.concat(right))
+    .find((existing) => Equatable.equals(existing.value, value))
+    .map((existing) =>
+      existing.branches.flatMap((left) =>
+        branches.map((right) => left.concat(right))
       )
     )
     .getOr(branches);
@@ -252,7 +252,7 @@ function narrow<T, B>(
   branches: Option<List<B>>,
   scope: Option<List<B>>
 ): Option<List<B>> {
-  return scope.map(scope =>
+  return scope.map((scope) =>
     branches.reduce((scope, branches) => scope.intersect(branches), scope)
   );
 }
@@ -264,8 +264,8 @@ function unused<T, B>(
   return values.reduce(
     (branches, value) =>
       value.branches
-        .flatMap(existing =>
-          branches.map(branches => branches.subtract(existing))
+        .flatMap((existing) =>
+          branches.map((branches) => branches.subtract(existing))
         )
         .or(branches),
     branches

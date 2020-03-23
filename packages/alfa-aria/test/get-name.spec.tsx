@@ -9,7 +9,7 @@ import { getName } from "../src/get-name";
 
 const device = Device.standard();
 
-test("getName() computes the text alternative of a button with text", t => {
+test("getName() computes the text alternative of a button with text", (t) => {
   const button = Element.fromElement(<button>Button</button>);
 
   t.deepEqual(getName(button, device).toJSON(), {
@@ -17,15 +17,15 @@ test("getName() computes the text alternative of a button with text", t => {
       {
         value: {
           type: "some",
-          value: "Button"
+          value: "Button",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() correctly resolves explicit roles", t => {
+test("getName() correctly resolves explicit roles", (t) => {
   const button = Element.fromElement(<div role="button">Button</div>);
 
   t.deepEqual(getName(button, device).toJSON(), {
@@ -33,15 +33,15 @@ test("getName() correctly resolves explicit roles", t => {
       {
         value: {
           type: "some",
-          value: "Button"
+          value: "Button",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a button with text within a span", t => {
+test("getName() computes the text alternative of a button with text within a span", (t) => {
   const button = Element.fromElement(
     <button>
       <span>Button</span>
@@ -53,15 +53,15 @@ test("getName() computes the text alternative of a button with text within a spa
       {
         value: {
           type: "some",
-          value: "Button"
+          value: "Button",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() ignores non-visible nodes", t => {
+test("getName() ignores non-visible nodes", (t) => {
   const button = Element.fromElement(
     <button>
       Button <span style="display: none">Hidden</span>
@@ -73,15 +73,15 @@ test("getName() ignores non-visible nodes", t => {
       {
         value: {
           type: "some",
-          value: "Button"
+          value: "Button",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a button with a title and no text", t => {
+test("getName() computes the text alternative of a button with a title and no text", (t) => {
   const button = Element.fromElement(<button title="Hello world" />);
 
   t.deepEqual(getName(button, device).toJSON(), {
@@ -89,15 +89,15 @@ test("getName() computes the text alternative of a button with a title and no te
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a button with an aria-label", t => {
+test("getName() computes the text alternative of a button with an aria-label", (t) => {
   const button = Element.fromElement(
     <button aria-label="Hello world">Button</button>
   );
@@ -107,15 +107,15 @@ test("getName() computes the text alternative of a button with an aria-label", t
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() falls through when aria-label is the empty string", t => {
+test("getName() falls through when aria-label is the empty string", (t) => {
   const button = Element.fromElement(<button aria-label="">Button</button>);
 
   t.deepEqual(getName(button, device).toJSON(), {
@@ -123,15 +123,15 @@ test("getName() falls through when aria-label is the empty string", t => {
       {
         value: {
           type: "some",
-          value: "Button"
+          value: "Button",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a button with an aria-labelledby", t => {
+test("getName() computes the text alternative of a button with an aria-labelledby", (t) => {
   const div = Element.fromElement(
     <div>
       <button aria-labelledby="h w">Button</button>
@@ -140,25 +140,22 @@ test("getName() computes the text alternative of a button with an aria-labelledb
     </div>
   );
 
-  const button = div
-    .children()
-    .find(Element.isElement)
-    .get();
+  const button = div.children().find(Element.isElement).get();
 
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() falls through when no text alternative is found in aria-labelledby", t => {
+test("getName() falls through when no valid ID is found in aria-labelledby", (t) => {
   const button = Element.fromElement(
     <button aria-labelledby="h w">Button</button>
   );
@@ -168,15 +165,15 @@ test("getName() falls through when no text alternative is found in aria-labelled
       {
         value: {
           type: "some",
-          value: "Button"
+          value: "Button",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() does not infitely recurse when recursive aria-labelledby references are encountered", t => {
+test("getName() does not infitely recurse when recursive aria-labelledby references are encountered", (t) => {
   const button = Element.fromElement(
     <button id="button">
       Hello <span aria-labelledby="button">world</span>
@@ -188,30 +185,30 @@ test("getName() does not infitely recurse when recursive aria-labelledby referen
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() returns none when a button has no text alternative", t => {
+test("getName() returns none when a button has no text alternative", (t) => {
   const button = Element.fromElement(<button />);
 
   t.deepEqual(getName(button, device).toJSON(), {
     values: [
       {
         value: {
-          type: "none"
+          type: "none",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an image with an alt", t => {
+test("getName() computes the text alternative of an image with an alt", (t) => {
   const img = Element.fromElement(<img src="foo.png" alt="Hello world" />);
 
   t.deepEqual(getName(img, device).toJSON(), {
@@ -219,15 +216,15 @@ test("getName() computes the text alternative of an image with an alt", t => {
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an image with a title", t => {
+test("getName() computes the text alternative of an image with a title", (t) => {
   const img = Element.fromElement(<img src="foo.png" title="Hello world" />);
 
   t.deepEqual(getName(img, device).toJSON(), {
@@ -235,30 +232,30 @@ test("getName() computes the text alternative of an image with a title", t => {
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() returns none when an image has no text alternative", t => {
+test("getName() returns none when an image has no text alternative", (t) => {
   const img = Element.fromElement(<img src="foo.png" />);
 
   t.deepEqual(getName(img, device).toJSON(), {
     values: [
       {
         value: {
-          type: "none"
+          type: "none",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a paragraph with a title", t => {
+test("getName() computes the text alternative of a paragraph with a title", (t) => {
   const p = Element.fromElement(<p title="Hello world">Paragraph</p>);
 
   t.deepEqual(getName(p, device).toJSON(), {
@@ -266,15 +263,15 @@ test("getName() computes the text alternative of a paragraph with a title", t =>
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a paragraph with an aria-label", t => {
+test("getName() computes the text alternative of a paragraph with an aria-label", (t) => {
   const p = Element.fromElement(<p aria-label="Hello world">Paragraph</p>);
 
   t.deepEqual(getName(p, device).toJSON(), {
@@ -282,30 +279,30 @@ test("getName() computes the text alternative of a paragraph with an aria-label"
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() returns none when a paragraph has no text alternative", t => {
+test("getName() returns none when a paragraph has no text alternative", (t) => {
   const p = Element.fromElement(<p>Paragraph</p>);
 
   t.deepEqual(getName(p, device).toJSON(), {
     values: [
       {
         value: {
-          type: "none"
+          type: "none",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an anchor with an href", t => {
+test("getName() computes the text alternative of an anchor with an href", (t) => {
   const a = Element.fromElement(<a href="http://foo.com">Hello world</a>);
 
   t.deepEqual(getName(a, device).toJSON(), {
@@ -313,15 +310,15 @@ test("getName() computes the text alternative of an anchor with an href", t => {
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an anchor without an href", t => {
+test("getName() computes the text alternative of an anchor without an href", (t) => {
   const a = Element.fromElement(<a>Hello world</a>);
 
   t.deepEqual(getName(a, device).toJSON(), {
@@ -329,15 +326,15 @@ test("getName() computes the text alternative of an anchor without an href", t =
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a table with a caption", t => {
+test("getName() computes the text alternative of a table with a caption", (t) => {
   const table = Element.fromElement(
     <table>
       <caption>Hello world</caption>
@@ -354,15 +351,15 @@ test("getName() computes the text alternative of a table with a caption", t => {
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a figure with a figcaption", t => {
+test("getName() computes the text alternative of a figure with a figcaption", (t) => {
   const figure = Element.fromElement(
     <figure>
       <img src="foo.png" alt="Foo" />
@@ -375,15 +372,15 @@ test("getName() computes the text alternative of a figure with a figcaption", t 
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of a fieldset with a legend", t => {
+test("getName() computes the text alternative of a fieldset with a legend", (t) => {
   const fieldset = Element.fromElement(
     <fieldset>
       <legend>Hello world</legend>
@@ -396,15 +393,15 @@ test("getName() computes the text alternative of a fieldset with a legend", t =>
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an input with an explicit label", t => {
+test("getName() computes the text alternative of an input with an explicit label", (t) => {
   const div = Element.fromElement(
     <div>
       <label for="test">Hello world</label>
@@ -415,7 +412,7 @@ test("getName() computes the text alternative of an input with an explicit label
   const input = div
     .children()
     .filter(Element.isElement)
-    .find(element => element.name === "input")
+    .find((element) => element.name === "input")
     .get();
 
   t.deepEqual(getName(input, device).toJSON(), {
@@ -423,15 +420,15 @@ test("getName() computes the text alternative of an input with an explicit label
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an input with an implicit label", t => {
+test("getName() computes the text alternative of an input with an implicit label", (t) => {
   const label = Element.fromElement(
     <label>
       Hello world
@@ -439,25 +436,22 @@ test("getName() computes the text alternative of an input with an implicit label
     </label>
   );
 
-  const input = label
-    .children()
-    .find(Element.isElement)
-    .get();
+  const input = label.children().find(Element.isElement).get();
 
   t.deepEqual(getName(input, device).toJSON(), {
     values: [
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an input with an explicit label that includes an embedded control", t => {
+test("getName() computes the text alternative of an input with an explicit label that includes an embedded control", (t) => {
   const div = Element.fromElement(
     <div>
       <label for="test">
@@ -470,7 +464,7 @@ test("getName() computes the text alternative of an input with an explicit label
   const input = div
     .children()
     .filter(Element.isElement)
-    .find(element => element.name === "input")
+    .find((element) => element.name === "input")
     .get();
 
   t.deepEqual(getName(input, device).toJSON(), {
@@ -478,15 +472,15 @@ test("getName() computes the text alternative of an input with an explicit label
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an SVG with a title element", t => {
+test("getName() computes the text alternative of an SVG with a title element", (t) => {
   const svg = Element.fromElement(
     <svg>
       <title>Hello world</title>
@@ -501,15 +495,15 @@ test("getName() computes the text alternative of an SVG with a title element", t
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() computes the text alternative of an element with content in Shadow DOM", t => {
+test("getName() computes the text alternative of an element with content in Shadow DOM", (t) => {
   const div = Element.fromElement(
     <div>
       <p id="foo">
@@ -522,7 +516,7 @@ test("getName() computes the text alternative of an element with content in Shad
   const button = div
     .children()
     .filter(Element.isElement)
-    .find(element => element.name === "button")
+    .find((element) => element.name === "button")
     .get();
 
   t.deepEqual(getName(button, device).toJSON(), {
@@ -530,15 +524,15 @@ test("getName() computes the text alternative of an element with content in Shad
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });
 
-test("getName() correctly handles browser specific case sensitivity of roles", t => {
+test("getName() correctly handles browser specific case sensitivity of roles", (t) => {
   const button = Element.fromElement(<div role="Button">Button</div>);
 
   t.deepEqual(getName(button, device).toJSON(), {
@@ -546,26 +540,26 @@ test("getName() correctly handles browser specific case sensitivity of roles", t
       {
         value: {
           type: "some",
-          value: "Button"
+          value: "Button",
         },
-        branches: null
+        branches: null,
       },
       {
         value: {
-          type: "none"
+          type: "none",
         },
         branches: [
           {
             browser: "firefox",
-            version: "68"
-          }
-        ]
-      }
-    ]
+            version: "68",
+          },
+        ],
+      },
+    ],
   });
 });
 
-test("getName() correctly handles aria-labelledby that points to aria-hidden=true", t => {
+test("getName() correctly handles aria-labelledby that points to aria-hidden=true", (t) => {
   const button = Element.fromElement(
     <button aria-labelledby="foo">
       <span id="foo" aria-hidden="true">
@@ -579,10 +573,10 @@ test("getName() correctly handles aria-labelledby that points to aria-hidden=tru
       {
         value: {
           type: "some",
-          value: "Hello world"
+          value: "Hello world",
         },
-        branches: null
-      }
-    ]
+        branches: null,
+      },
+    ],
   });
 });

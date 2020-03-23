@@ -16,9 +16,9 @@ export namespace Interview {
     oracle: Oracle<Q>
   ): Future<Option<A>> {
     if (interview instanceof Question) {
-      return oracle(rule, interview).flatMap(answer =>
+      return oracle(rule, interview).flatMap((answer) =>
         answer
-          .map(answer => conduct(answer, rule, oracle))
+          .map((answer) => conduct(answer, rule, oracle))
           .getOrElse(() => Future.now(None))
       );
     }

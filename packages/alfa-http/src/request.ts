@@ -72,14 +72,14 @@ export class Request implements Body, json.Serializable, earl.Serializable {
       method: this._method,
       url: this._url,
       headers: this._headers.toJSON(),
-      body: Decoder.decode(new Uint8Array(this._body))
+      body: Decoder.decode(new Uint8Array(this._body)),
     };
   }
 
   public toEARL(): Request.EARL {
     return {
       "@context": {
-        http: "http://www.w3.org/2011/http#"
+        http: "http://www.w3.org/2011/http#",
       },
       "@type": ["http:Message", "http:Request"],
       "http:methodName": this._method,
@@ -87,12 +87,12 @@ export class Request implements Body, json.Serializable, earl.Serializable {
       "http:headers": this._headers.toEARL(),
       "http:body": {
         "@context": {
-          cnt: "http://www.w3.org/2011/content#"
+          cnt: "http://www.w3.org/2011/content#",
         },
         "@type": ["cnt:Content", "cnt:ContentAsText"],
         "cnt:characterEncoding": "utf-8",
-        "cnt:chars": Decoder.decode(new Uint8Array(this._body))
-      }
+        "cnt:chars": Decoder.decode(new Uint8Array(this._body)),
+      },
     };
   }
 }

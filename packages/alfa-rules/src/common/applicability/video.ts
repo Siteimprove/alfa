@@ -33,7 +33,7 @@ export function video(
             hasName(equals("video")),
             and(
               isVisible(device),
-              element =>
+              (element) =>
                 track === undefined ||
                 track.has ===
                   some(
@@ -51,13 +51,13 @@ export function video(
         )
       )
     ),
-    element =>
+    (element) =>
       Question.of(
         "is-streaming",
         "boolean",
         element,
         "Is the <video> element streaming?"
-      ).map(isStreaming => {
+      ).map((isStreaming) => {
         if (isStreaming) {
           return None;
         }
@@ -68,7 +68,7 @@ export function video(
             "boolean",
             element,
             "Does the <video> element have audio?"
-          ).map(hasAudio =>
+          ).map((hasAudio) =>
             audio.has === hasAudio ? Option.of(element) : None
           );
         }

@@ -41,7 +41,7 @@ export namespace Predicate {
     right: Predicate<T>
   ): Predicate<T> {
     return function and(value) {
-      return fold(left, value, right, contradiction, value =>
+      return fold(left, value, right, contradiction, (value) =>
         fold(right, value, unknown, contradiction, unknown)
       );
     };
@@ -49,7 +49,7 @@ export namespace Predicate {
 
   export function or<T>(left: Predicate<T>, right: Predicate<T>): Predicate<T> {
     return function or(value) {
-      return fold(left, value, tautology, right, value =>
+      return fold(left, value, tautology, right, (value) =>
         fold(right, value, tautology, unknown, unknown)
       );
     };
@@ -78,7 +78,7 @@ export namespace Predicate {
 
   export function equals<T>(...values: Array<T>): Predicate<T> {
     return function equals(other) {
-      return values.some(value => Equatable.equals(other, value));
+      return values.some((value) => Equatable.equals(other, value));
     };
   }
 
@@ -86,7 +86,7 @@ export namespace Predicate {
     property: K,
     predicate: Predicate<T[K]>
   ): Predicate<T> {
-    return value => predicate(value[property]);
+    return (value) => predicate(value[property]);
   }
 }
 

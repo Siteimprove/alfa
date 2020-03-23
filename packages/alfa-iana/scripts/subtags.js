@@ -100,8 +100,8 @@ function expand(query) {
     }
 
     return generate(rest(from), rest(to))
-      .map(result => {
-        return range(from, to).map(c => c + result);
+      .map((result) => {
+        return range(from, to).map((c) => c + result);
       })
       .reduce(concat, []);
   }
@@ -114,15 +114,15 @@ function expand(query) {
  * @return {Array<Record>}
  */
 function parseRecords(input) {
-  return input.split(/\n+%%\n+/).map(record =>
+  return input.split(/\n+%%\n+/).map((record) =>
     record
       .replace(/\n\s+/g, " ")
       .split(/\n+/)
-      .map(field => {
+      .map((field) => {
         const separator = field.indexOf(":");
         return {
           name: field.substring(0, separator).trim(),
-          value: field.substring(separator + 1).trim()
+          value: field.substring(separator + 1).trim(),
         };
       })
   );
@@ -136,17 +136,17 @@ axios.get(registry).then(({ data }) => {
 
   for (const record of records) {
     const tag = record.find(
-      field => field.name === "Tag" || field.name === "Subtag"
+      (field) => field.name === "Tag" || field.name === "Subtag"
     );
 
-    const type = record.find(field => field.name === "Type");
+    const type = record.find((field) => field.name === "Type");
 
     if (tag === undefined || type === undefined) {
       continue;
     }
 
-    const prefixes = record.filter(field => field.name === "Prefix");
-    const scope = record.find(field => field.name === "Scope");
+    const prefixes = record.filter((field) => field.name === "Prefix");
+    const scope = record.find((field) => field.name === "Scope");
 
     for (const name of expand(tag.value)) {
       /** @type {Array<string>} */
@@ -168,14 +168,14 @@ axios.get(registry).then(({ data }) => {
           break;
 
         case "variant":
-          args.push(`[${prefixes.map(prefix => `"${prefix.value}"`)}]`);
+          args.push(`[${prefixes.map((prefix) => `"${prefix.value}"`)}]`);
       }
 
       /** @type {Subtag} */
       const subtag = {
         type: type.value,
         name: name.toLowerCase(),
-        args
+        args,
       };
 
       if (getType(subtag) !== null) {
@@ -210,14 +210,14 @@ axios.get(registry).then(({ data }) => {
     import { Option } from "@siteimprove/alfa-option";
 
     import { Language } from "../language";
-    `
+    `,
   ];
 
   for (const [group, subtags] of groups) {
     lines.push(`
       export const ${group} = Map.from([
         ${subtags
-          .map(subtag => {
+          .map((subtag) => {
             const type = getType(subtag);
 
             return `["${subtag.name}", Language.${type}.of(${subtag.args.join(
@@ -230,7 +230,7 @@ axios.get(registry).then(({ data }) => {
   }
 
   const code = prettier.format(lines.join("\n\n"), {
-    parser: "typescript"
+    parser: "typescript",
   });
 
   fs.writeFileSync(path.join(__dirname, "../src/language/subtags.ts"), code);

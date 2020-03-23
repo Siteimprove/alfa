@@ -8,6 +8,6 @@ Role.register(
     inherits: ["radio", "menuitemcheckbox"],
     context: ["group", "menu", "menubar"],
     name: { from: ["contents", "author"], required: true },
-    implicits: [["aria-checked", "false"]]
+    implicits: [["aria-checked", "false"]],
   })
 );

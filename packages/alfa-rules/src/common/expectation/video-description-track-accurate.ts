@@ -12,13 +12,13 @@ export function videoDescriptionTrackAccurate(target: Element) {
       `Does at least 1 track describe the visual information of the
             <video> element, either in the language of the <video> element or
             the language of the page?`
-    ).map(trackDescribesVideo =>
+    ).map((trackDescribesVideo) =>
       expectation(
         trackDescribesVideo,
-        Outcomes.HasDescriptionTrack,
-        Outcomes.HasNoDescriptionTrack
+        () => Outcomes.HasDescriptionTrack,
+        () => Outcomes.HasNoDescriptionTrack
       )
-    )
+    ),
   };
 }
 

@@ -73,7 +73,7 @@ export namespace Token {
     public toJSON(): Integer.JSON {
       return {
         type: "integer",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -122,7 +122,7 @@ export namespace Token {
     public toJSON(): Decimal.JSON {
       return {
         type: "decimal",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -171,7 +171,7 @@ export namespace Token {
     public toJSON(): Double.JSON {
       return {
         type: "double",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -220,7 +220,7 @@ export namespace Token {
     public toJSON(): String.JSON {
       return {
         type: "string",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -269,7 +269,7 @@ export namespace Token {
     public toJSON(): Comment.JSON {
       return {
         type: "comment",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -329,12 +329,12 @@ export namespace Token {
       return {
         type: "name",
         prefix: this._prefix.getOr(null),
-        value: this._value
+        value: this._value,
       };
     }
 
     public toString(): string {
-      const prefix = this._prefix.map(prefix => `${prefix}:`).getOr("");
+      const prefix = this._prefix.map((prefix) => `${prefix}:`).getOr("");
 
       return `${prefix}${this._value}`;
     }
@@ -360,7 +360,7 @@ export namespace Token {
     } else {
       const value = query;
 
-      predicate = name => name.value === value;
+      predicate = (name) => name.value === value;
     }
 
     return parseToken(and(isName, predicate));
@@ -393,7 +393,7 @@ export namespace Token {
     public toJSON(): Character.JSON {
       return {
         type: "character",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -423,7 +423,7 @@ export namespace Token {
     } else {
       const value = query.charCodeAt(0);
 
-      predicate = character => character.value === value;
+      predicate = (character) => character.value === value;
     }
 
     return parseToken(and(isCharacter, predicate));
@@ -433,10 +433,10 @@ export namespace Token {
 function parseToken<T extends Token>(
   predicate: Predicate<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return input =>
+  return (input) =>
     input
       .get(0)
       .filter(predicate)
-      .map(token => Ok.of([input.slice(1), token] as const))
+      .map((token) => Ok.of([input.slice(1), token] as const))
       .getOrElse(() => Err.of("Expected token"));
 }

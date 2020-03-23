@@ -60,31 +60,28 @@ export default Rule.Atomic.of<Page, Attribute>({
               )
             )
           )
-          .map(element => element.attribute("autocomplete").get());
+          .map((element) => element.attribute("autocomplete").get());
       },
 
       expectations(target) {
         return {
           1: expectation(
             isValidAutocomplete(target),
-            Outcomes.HasValidValue,
-            Outcomes.HasNoValidValue
-          )
+            () => Outcomes.HasValidValue,
+            () => Outcomes.HasNoValidValue
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 function hasTokens(input: string): boolean {
   return input.trim() !== "" && input.split(/\s+/).length > 0;
 }
 
-const isValidAutocomplete: Predicate<Attribute> = autocomplete => {
-  const tokens = autocomplete.value
-    .toLowerCase()
-    .trim()
-    .split(/\s+/);
+const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
+  const tokens = autocomplete.value.toLowerCase().trim().split(/\s+/);
 
   let i = 0;
   let next = tokens[i++];
@@ -189,14 +186,14 @@ const isValidAutocomplete: Predicate<Attribute> = autocomplete => {
 };
 
 function isAppropriateField(field: string): Predicate<Element> {
-  return element => {
+  return (element) => {
     if (element.name === "textarea" || element.name === "select") {
       return true;
     }
 
     const type = element
       .attribute("type")
-      .map(attr => attr.value.toLowerCase())
+      .map((attr) => attr.value.toLowerCase())
       .getOr("text");
 
     // If "street-address" is specified on an <input> element, it must be

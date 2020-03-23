@@ -50,20 +50,20 @@ export default Rule.Atomic.of<Page, Element, Question>({
               )
             )
           )
-          .map(element =>
+          .map((element) =>
             Question.of(
               "has-audio",
               "boolean",
               element,
               `Does the <${element.name}> element contain audio?`
-            ).map(hasAudio =>
+            ).map((hasAudio) =>
               hasAudio
                 ? Question.of(
                     "is-above-duration-threshold",
                     "boolean",
                     element,
                     `Does the <${element.name}> element have a duration of more than 3 seconds?`
-                  ).map(isAboveDurationThreshold =>
+                  ).map((isAboveDurationThreshold) =>
                     isAboveDurationThreshold ? Option.of(element) : None
                   )
                 : None
@@ -78,27 +78,28 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             `Where is the mechanism that can pause or stop the audio of the <${target.name}> element?`
-          ).map(mechanism =>
+          ).map((mechanism) =>
             expectation(
               mechanism.isSome(),
-              expectation(
-                and(
-                  Element.isElement,
+              () =>
+                expectation(
                   and(
-                    isPerceivable(device),
-                    hasAccessibleName(device, not(isEmpty))
-                  )
-                )(mechanism.get()),
-                Outcomes.HasPerceivablePauseMechanism(target.name),
-                Outcomes.HasNonPerceivablePauseMechanism(target.name)
-              ),
-              Outcomes.HasNoPauseMechanism(target.name)
+                    Element.isElement,
+                    and(
+                      isPerceivable(device),
+                      hasAccessibleName(device, not(isEmpty))
+                    )
+                  )(mechanism.get()),
+                  () => Outcomes.HasPerceivablePauseMechanism(target.name),
+                  () => Outcomes.HasNonPerceivablePauseMechanism(target.name)
+                ),
+              () => Outcomes.HasNoPauseMechanism(target.name)
             )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

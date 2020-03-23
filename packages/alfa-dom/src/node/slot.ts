@@ -26,7 +26,7 @@ export namespace Slot {
   export function name(slot: Slot): string {
     return slot
       .attribute("name")
-      .map(name => name.value)
+      .map((name) => name.value)
       .getOr("");
   }
 

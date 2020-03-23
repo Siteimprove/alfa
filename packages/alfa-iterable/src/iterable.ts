@@ -4,7 +4,7 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-const { not, equals } = Predicate;
+const { not } = Predicate;
 
 export interface Iterable<T> {
   [Symbol.iterator](): Iterator<T>;
@@ -34,7 +34,7 @@ export namespace Iterable {
   }
 
   export function size<T>(iterable: Iterable<T>): number {
-    return reduce(iterable, size => size + 1, 0);
+    return reduce(iterable, (size) => size + 1, 0);
   }
 
   export function* map<T, U = T>(
@@ -56,7 +56,7 @@ export namespace Iterable {
   }
 
   export function flatten<T>(iterable: Iterable<Iterable<T>>): Iterable<T> {
-    return flatMap(iterable, iterable => iterable);
+    return flatMap(iterable, (iterable) => iterable);
   }
 
   export function reduce<T, U = T>(
@@ -71,6 +71,26 @@ export namespace Iterable {
     return accumulator;
   }
 
+  export function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean {
+    const ita = a[Symbol.iterator]();
+    const itb = b[Symbol.iterator]();
+
+    while (true) {
+      const a = ita.next();
+      const b = itb.next();
+
+      switch (a.done) {
+        case true:
+          return b.done === true;
+
+        default:
+          if (b.done === true || !Equatable.equals(a.value, b.value)) {
+            return false;
+          }
+      }
+    }
+  }
+
   export function* concat<T>(...iterables: Array<Iterable<T>>): Iterable<T> {
     for (const iterable of iterables) {
       yield* iterable;
@@ -78,7 +98,7 @@ export namespace Iterable {
   }
 
   export function includes<T>(iterable: Iterable<T>, value: T): boolean {
-    return some(iterable, equals(value));
+    return some(iterable, Predicate.equals(value));
   }
 
   export function some<T>(
@@ -288,13 +308,13 @@ export namespace Iterable {
     left: Iterable<T>,
     right: Iterable<T>
   ): Iterable<T> {
-    return filter(left, left => !includes(right, left));
+    return filter(left, (left) => !includes(right, left));
   }
 
   export function intersect<T>(
     left: Iterable<T>,
     right: Iterable<T>
   ): Iterable<T> {
-    return filter(left, left => includes(right, left));
+    return filter(left, (left) => includes(right, left));
   }
 }

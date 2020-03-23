@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               isDocumentElement(),
               and(
-                hasAttribute("lang", value => Language.parse(value).isSome()),
+                hasAttribute("lang", (value) => Language.parse(value).isSome()),
                 hasAttribute("xml:lang", not(isEmpty))
               )
             )
@@ -43,15 +43,15 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             xmlLang.isNone() ||
               xmlLang
-                .filter(xmlLang => xmlLang.primary === lang.primary)
+                .filter((xmlLang) => xmlLang.primary === lang.primary)
                 .isSome(),
-            Outcomes.HasMatchingLanguages,
-            Outcomes.HasNonMatchingLanguages
-          )
+            () => Outcomes.HasMatchingLanguages,
+            () => Outcomes.HasNonMatchingLanguages
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

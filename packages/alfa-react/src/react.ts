@@ -5,7 +5,7 @@ import {
   Element,
   Node,
   Text,
-  Namespace
+  Namespace,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -35,8 +35,8 @@ export namespace React {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of(self => [
-        Element.fromElement(toElement(tree), Option.of(self))
+      Document.of((self) => [
+        Element.fromElement(toElement(tree), Option.of(self)),
       ]),
       Device.standard()
     );
@@ -74,7 +74,7 @@ function toElement(element: TestElement): Element.JSON {
     style: null,
     children: children?.map(toNode) ?? [],
     shadow: null,
-    content: null
+    content: null,
   };
 }
 
@@ -88,13 +88,13 @@ function toAttribute(name: string, value: unknown): Option<Attribute.JSON> {
 
   name = toAttributeName(name);
 
-  return toAttributeValue(name, value).map(value => {
+  return toAttributeValue(name, value).map((value) => {
     return {
       type: "attribute",
       namespace: null,
       prefix: null,
       name,
-      value
+      value,
     };
   });
 }
@@ -137,7 +137,7 @@ function toAttributeValue(name: string, value: unknown): Option<string> {
 function toText(data: string): Text.JSON {
   return {
     type: "text",
-    data
+    data,
   };
 }
 

@@ -10,9 +10,9 @@ Role.register(
       "aria-colindex",
       "aria-colspan",
       "aria-rowindex",
-      "aria-rowspan"
+      "aria-rowspan",
     ],
     context: ["row"],
-    name: { from: ["contents", "author"], required: false }
+    name: { from: ["contents", "author"], required: false },
   })
 );

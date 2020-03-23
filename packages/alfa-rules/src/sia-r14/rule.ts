@@ -60,7 +60,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
         const textContent = getVisibleTextContent(target, device);
 
         const accessibleNameIncludesTextContent = test(
-          hasAccessibleName(device, accessibleName =>
+          hasAccessibleName(device, (accessibleName) =>
             normalize(accessibleName).includes(textContent)
           ),
           target
@@ -69,31 +69,29 @@ export default Rule.Atomic.of<Page, Element, Question>({
         return {
           1: expectation(
             accessibleNameIncludesTextContent,
-            Outcomes.VisibleIsInName,
-            Question.of(
-              "is-human-language",
-              "boolean",
-              target,
-              "Does the accessible name of the element express anything in human language?"
-            ).map(isHumanLanguage =>
-              expectation(
-                !isHumanLanguage,
-                Outcomes.NameIsNotLanguage,
-                Outcomes.VisibleIsNotInName
+            () => Outcomes.VisibleIsInName,
+            () =>
+              Question.of(
+                "is-human-language",
+                "boolean",
+                target,
+                "Does the accessible name of the element express anything in human language?"
+              ).map((isHumanLanguage) =>
+                expectation(
+                  !isHumanLanguage,
+                  () => Outcomes.NameIsNotLanguage,
+                  () => Outcomes.VisibleIsNotInName
+                )
               )
-            )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 function normalize(input: string): string {
-  return input
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
+  return input.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
 function getVisibleTextContent(element: Element, device: Device): string {
@@ -101,7 +99,7 @@ function getVisibleTextContent(element: Element, device: Device): string {
     element
       .descendants({ flattened: true })
       .filter(and(Text.isText, isVisible(device)))
-      .map(text => text.data)
+      .map((text) => text.data)
       .join("")
   );
 }

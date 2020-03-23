@@ -118,7 +118,7 @@ export class HSL<
       hue: this._hue.toJSON(),
       saturation: this._saturation.toJSON(),
       lightness: this._lightness.toJSON(),
-      alpha: this._alpha.toJSON()
+      alpha: this._alpha.toJSON(),
     };
   }
 
@@ -162,7 +162,7 @@ export namespace HSL {
    */
   export const parse = map(
     right(
-      Token.parseFunction(fn => fn.value === "hsl" || fn.value === "hsla"),
+      Token.parseFunction((fn) => fn.value === "hsl" || fn.value === "hsla"),
       left(
         delimited(
           option(Token.parseWhitespace),
@@ -205,7 +205,7 @@ export namespace HSL {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [[hue, [saturation, lightness]], alpha] = result;
 
       return HSL.of(
@@ -236,7 +236,7 @@ function hslToRgb(
   return [
     hueToRgb(t1, t2, mod(hue + 2, 6)),
     hueToRgb(t1, t2, hue),
-    hueToRgb(t1, t2, mod(hue - 2, 6))
+    hueToRgb(t1, t2, mod(hue - 2, 6)),
   ];
 }
 

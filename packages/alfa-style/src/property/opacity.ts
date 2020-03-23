@@ -18,11 +18,11 @@ export namespace Opacity {
 export const Opacity: Property<Opacity> = Property.of(
   Number.of(1),
   either(Number.parse, Percentage.parse),
-  style =>
+  (style) =>
     style
       .specified("opacity")
-      .map(opacity => Number.of(clamp(opacity.value, 0, 1))),
+      .map((opacity) => Number.of(clamp(opacity.value, 0, 1))),
   {
-    inherits: true
+    inherits: true,
   }
 );

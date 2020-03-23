@@ -121,6 +121,9 @@
       "path": "../alfa-iterable"
     },
     {
+      "path": "../alfa-json"
+    },
+    {
       "path": "../alfa-lazy"
     },
     {

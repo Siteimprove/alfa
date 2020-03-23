@@ -10,7 +10,7 @@ const data = require("mdn-browser-compat-data");
 const include = [
   "css.properties.border-radius",
   "css.properties.color",
-  "css.properties.font-weight"
+  "css.properties.font-weight",
 ];
 
 const { isArray } = Array;
@@ -33,7 +33,7 @@ const { keys } = Object;
  * @param {string} key
  * @return {import("mdn-browser-compat-data/types").Identifier}
  */
-const get = key => {
+const get = (key) => {
   const [entry, ...keys] = key.split(".");
 
   switch (entry) {
@@ -56,7 +56,7 @@ const get = key => {
  * @param {string | boolean | null | undefined} version
  * @return {string | boolean}
  */
-const version = version =>
+const version = (version) =>
   typeof version === "string"
     ? `"${version}"`
     : version === undefined || version === null
@@ -108,7 +108,7 @@ function parse(key) {
     }
 
     const mapped = statements
-      .filter(statement => {
+      .filter((statement) => {
         return (
           statement.version_added !== null &&
           statement.version_added !== false &&
@@ -117,11 +117,11 @@ function parse(key) {
           (statement.flags === undefined || statement.flags.length === 0)
         );
       })
-      .map(statement => {
+      .map((statement) => {
         const { version_added: added, version_removed: removed } = statement;
         return {
           added: version(added),
-          removed: version(removed)
+          removed: version(removed),
         };
       });
 
@@ -134,7 +134,7 @@ function parse(key) {
 
   features.push({
     key,
-    support
+    support,
   });
 
   for (const subkey of keys(feature)) {
@@ -161,12 +161,12 @@ export type Data = typeof Data;
 export const Data = {
   ${features
     .map(
-      feature => `
+      (feature) => `
         "${feature.key}": {
           support: {
             ${feature.support
               .map(
-                support => `
+                (support) => `
                   "${support.browser}": {
                     added: ${support.added} as const
                     ${
@@ -187,7 +187,7 @@ export const Data = {
 `;
 
 code = prettier.format(code, {
-  parser: "typescript"
+  parser: "typescript",
 });
 
 fs.writeFileSync("src/feature/data.ts", code);

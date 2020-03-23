@@ -33,24 +33,24 @@ export default Rule.Atomic.of<Page, Text>({
       expectations(target) {
         return {
           1: expectation(
-            aria.Node.from(target, device).every(node =>
+            aria.Node.from(target, device).every((node) =>
               node
                 .ancestors()
-                .some(ancestor =>
+                .some((ancestor) =>
                   ancestor
                     .role()
-                    .some(role =>
+                    .some((role) =>
                       role.inheritsFrom(hasName(equals("landmark")))
                     )
                 )
             ),
-            Outcomes.IsIncludedInLandmark,
-            Outcomes.IsNotIncludedInLandmark
-          )
+            () => Outcomes.IsIncludedInLandmark,
+            () => Outcomes.IsNotIncludedInLandmark
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

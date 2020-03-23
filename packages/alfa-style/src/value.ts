@@ -52,7 +52,7 @@ export class Value<T = unknown>
   public toJSON(): Value.JSON {
     return {
       value: Serializable.toJSON(this._value),
-      source: this._source.map(source => source.toJSON()).getOr(null)
+      source: this._source.map((source) => source.toJSON()).getOr(null),
     };
   }
 

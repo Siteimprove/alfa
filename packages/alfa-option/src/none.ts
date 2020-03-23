@@ -85,7 +85,7 @@ export const None: None = new (class None {
 
   public toJSON(): None.JSON {
     return {
-      type: "none"
+      type: "none",
     };
   }
 

@@ -66,7 +66,7 @@ export class Length<U extends Unit.Length = Unit.Length> extends Numeric
     return {
       type: "length",
       value: this._value,
-      unit: this._unit
+      unit: this._unit,
     };
   }
 
@@ -86,7 +86,7 @@ export namespace Length {
   }
 
   export const parse = map(
-    Token.parseDimension(dimension => Unit.isLength(dimension.unit)),
-    dimension => Length.of(dimension.value, dimension.unit as Unit.Length)
+    Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
+    (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length)
   );
 }

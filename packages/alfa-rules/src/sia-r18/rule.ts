@@ -29,8 +29,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants({ flattened: true, nested: true })
           .filter(and(Element.isElement, not(isIgnored(device))))
-          .flatMap(element =>
-            Sequence.from(element.attributes).filter(attribute =>
+          .flatMap((element) =>
+            Sequence.from(element.attributes).filter((attribute) =>
               aria.Attribute.lookup(attribute.name).isSome()
             )
           );
@@ -41,16 +41,16 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             global.has(target.name) ||
               test(
-                hasRole(role => role.isAllowed(hasName(equals(target.name)))),
+                hasRole((role) => role.isAllowed(hasName(equals(target.name)))),
                 target.owner.get()
               ),
-            Outcomes.IsAllowed,
-            Outcomes.IsNotAllowed
-          )
+            () => Outcomes.IsAllowed,
+            () => Outcomes.IsNotAllowed
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

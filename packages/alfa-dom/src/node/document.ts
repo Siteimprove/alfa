@@ -38,14 +38,14 @@ export class Document extends Node {
   public toJSON(): Document.JSON {
     return {
       type: "document",
-      children: this._children.map(child => child.toJSON()),
-      style: this._style.map(sheet => sheet.toJSON())
+      children: this._children.map((child) => child.toJSON()),
+      style: this._style.map((sheet) => sheet.toJSON()),
     };
   }
 
   public toString(): string {
     const children = this._children
-      .map(child => indent(child.toString()))
+      .map((child) => indent(child.toString()))
       .join("\n");
 
     return `#document${children === "" ? "" : `\n${children}`}`;
@@ -65,11 +65,11 @@ export namespace Document {
 
   export function fromDocument(document: JSON): Document {
     return Document.of(
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return document.children.map(child => Node.fromNode(child, parent));
+        return document.children.map((child) => Node.fromNode(child, parent));
       },
-      document.style.map(style => Sheet.fromSheet(style))
+      document.style.map((style) => Sheet.fromSheet(style))
     );
   }
 }

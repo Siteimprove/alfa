@@ -6,6 +6,6 @@ import { Role } from "../../role";
 Role.register(
   Role.of("contentinfo", Role.Category.Landmark, {
     inherits: ["landmark"],
-    name: { from: ["author"], required: false }
+    name: { from: ["author"], required: false },
   })
 );

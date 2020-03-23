@@ -50,7 +50,7 @@ export class Type extends Node {
       type: "type",
       name: this._name,
       publicId: this._publicId.getOr(null),
-      systemId: this._systemId.getOr(null)
+      systemId: this._systemId.getOr(null),
     };
   }
 

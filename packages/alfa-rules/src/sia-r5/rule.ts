@@ -31,20 +31,20 @@ export default Rule.Atomic.of<Page, Attribute>({
               )
             )
           )
-          .map(element => element.attribute("lang").get());
+          .map((element) => element.attribute("lang").get());
       },
 
       expectations(target) {
         return {
           1: expectation(
             Language.parse(target.value).isSome(),
-            Outcomes.HasValidLanguage,
-            Outcomes.HasNoValidLanguage
-          )
+            () => Outcomes.HasValidLanguage,
+            () => Outcomes.HasNoValidLanguage
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

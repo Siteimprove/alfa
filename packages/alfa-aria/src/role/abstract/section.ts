@@ -6,6 +6,6 @@ import { Role } from "../../role";
 Role.register(
   Role.of("section", Role.Category.Abstract, {
     inherits: ["structure"],
-    supports: ["aria-expanded"]
+    supports: ["aria-expanded"],
   })
 );

@@ -39,7 +39,7 @@ export class Device implements Serializable {
     return {
       type: this._type,
       viewport: this._viewport.toJSON(),
-      display: this._display.toJSON()
+      display: this._display.toJSON(),
     };
   }
 }
@@ -48,7 +48,7 @@ export namespace Device {
   export enum Type {
     Print = "print",
     Screen = "screen",
-    Speech = "speech"
+    Speech = "speech",
   }
 
   export interface JSON {

@@ -23,7 +23,7 @@ export namespace Matrix {
   export function clone<M extends number, N extends number>(
     matrix: Matrix<M, N>
   ): Matrix<M, N> {
-    return matrix.map(vector => Vector.clone(vector)) as Matrix<M, N>;
+    return matrix.map((vector) => Vector.clone(vector)) as Matrix<M, N>;
   }
 
   export function multiply<M extends number, N extends number>(

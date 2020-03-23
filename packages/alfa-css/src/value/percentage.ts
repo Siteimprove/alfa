@@ -28,7 +28,7 @@ export class Percentage extends Numeric {
   public toJSON(): Percentage.JSON {
     return {
       type: "percentage",
-      value: this._value
+      value: this._value,
     };
   }
 
@@ -46,7 +46,7 @@ export namespace Percentage {
     return value instanceof Percentage;
   }
 
-  export const parse = map(Token.parsePercentage(), percentage =>
+  export const parse = map(Token.parsePercentage(), (percentage) =>
     Percentage.of(percentage.value)
   );
 }

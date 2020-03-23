@@ -5,7 +5,7 @@ import {
   Number,
   Percentage,
   String,
-  Token
+  Token,
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -28,7 +28,7 @@ const {
   right,
   delimited,
   zeroOrMore,
-  separatedList
+  separatedList,
 } = Parser;
 const { equals } = Predicate;
 
@@ -38,7 +38,7 @@ export namespace Media {
    */
   export enum Modifier {
     Only = "only",
-    Not = "not"
+    Not = "not",
   }
 
   const parseModifier = either(
@@ -48,14 +48,14 @@ export namespace Media {
 
   export enum Combinator {
     And = "and",
-    Or = "or"
+    Or = "or",
   }
 
   export enum Comparator {
     GreaterThan = ">",
     GreaterThanEqual = ">=",
     LessThan = "<",
-    LessThanEqual = "<="
+    LessThanEqual = "<=",
   }
 
   /**
@@ -101,7 +101,7 @@ export namespace Media {
 
     public toJSON(): Type.JSON {
       return {
-        name: this._name
+        name: this._name,
       };
     }
 
@@ -120,7 +120,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-type
    */
-  const parseType = map(Token.parseIdent(), ident => Type.of(ident.value));
+  const parseType = map(Token.parseIdent(), (ident) => Type.of(ident.value));
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#media-feature
@@ -153,7 +153,7 @@ export namespace Media {
       switch (this._name) {
         case "orientation":
           return this._value.some(
-            value =>
+            (value) =>
               value.type === "string" &&
               value.value === device.viewport.orientation
           );
@@ -174,12 +174,14 @@ export namespace Media {
       return {
         type: "feature",
         name: this._name,
-        value: this._value.map(value => value.toJSON()).getOr(null)
+        value: this._value.map((value) => value.toJSON()).getOr(null),
       };
     }
 
     public toString(): string {
-      return `${this._name}${this._value.map(value => `: ${value}`).getOr("")}`;
+      return `${this._name}${this._value
+        .map((value) => `: ${value}`)
+        .getOr("")}`;
     }
   }
 
@@ -210,7 +212,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-name
    */
-  const parseFeatureName = map(Token.parseIdent(), ident =>
+  const parseFeatureName = map(Token.parseIdent(), (ident) =>
     ident.value.toLowerCase()
   );
 
@@ -218,18 +220,18 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-value
    */
   const parseFeatureValue = either(
-    map(Token.parseNumber(), number => Number.of(number.value)),
+    map(Token.parseNumber(), (number) => Number.of(number.value)),
     either(
-      map(Token.parseIdent(), ident => String.of(ident.value.toLowerCase())),
+      map(Token.parseIdent(), (ident) => String.of(ident.value.toLowerCase())),
       map(
         pair(
-          Token.parseNumber(number => number.isInteger),
+          Token.parseNumber((number) => number.isInteger),
           right(
             delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-            Token.parseNumber(number => number.isInteger)
+            Token.parseNumber((number) => number.isInteger)
           )
         ),
-        result => {
+        (result) => {
           const [left, right] = result;
 
           return Percentage.of(left.value / right.value);
@@ -249,7 +251,7 @@ export namespace Media {
         parseFeatureValue
       )
     ),
-    result => {
+    (result) => {
       const [name, value] = result;
 
       return Feature.of(name, Option.of(value));
@@ -259,7 +261,7 @@ export namespace Media {
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean
    */
-  const parseFeatureBoolean = map(parseFeatureName, name => Feature.of(name));
+  const parseFeatureBoolean = map(parseFeatureName, (name) => Feature.of(name));
 
   /**
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-feature
@@ -335,7 +337,7 @@ export namespace Media {
         type: "condition",
         combinator: this._combinator,
         left: this._left.toJSON(),
-        right: this._right.toJSON()
+        right: this._right.toJSON(),
       };
     }
 
@@ -386,7 +388,7 @@ export namespace Media {
     public toJSON(): Negation.JSON {
       return {
         type: "negation",
-        condition: this._condition.toJSON()
+        condition: this._condition.toJSON(),
       };
     }
 
@@ -421,7 +423,9 @@ export namespace Media {
   const parseInParens = either(
     delimited(
       Token.parseOpenParenthesis,
-      delimited(option(Token.parseWhitespace), input => parseCondition(input)),
+      delimited(option(Token.parseWhitespace), (input) =>
+        parseCondition(input)
+      ),
       Token.parseCloseParenthesis
     ),
     parseFeature
@@ -432,7 +436,7 @@ export namespace Media {
    */
   const parseNot = map(
     right(left(Token.parseIdent("not"), Token.parseWhitespace), parseInParens),
-    condition => Negation.of(condition)
+    (condition) => Negation.of(condition)
   );
 
   /**
@@ -456,13 +460,13 @@ export namespace Media {
     either(
       parseInParens,
       either(
-        map(pair(parseInParens, zeroOrMore(parseAnd)), result => {
+        map(pair(parseInParens, zeroOrMore(parseAnd)), (result) => {
           const [left, right] = result;
           return [left, ...right].reduce((left, right) =>
             Condition.of(Combinator.And, left, right)
           );
         }),
-        map(pair(parseInParens, zeroOrMore(parseOr)), result => {
+        map(pair(parseInParens, zeroOrMore(parseOr)), (result) => {
           const [left, right] = result;
           return [left, ...right].reduce((left, right) =>
             Condition.of(Combinator.Or, left, right)
@@ -477,7 +481,7 @@ export namespace Media {
    */
   const parseConditionWithoutOr = either(
     parseNot,
-    map(pair(parseInParens, zeroOrMore(parseAnd)), result => {
+    map(pair(parseInParens, zeroOrMore(parseAnd)), (result) => {
       const [left, right] = result;
       return [left, ...right].reduce((left, right) =>
         Condition.of(Combinator.And, left, right)
@@ -527,9 +531,9 @@ export namespace Media {
       const negated = this._modifier.some(equals(Modifier.Not));
 
       return (
-        !this._type.some(type => !type.matches(device) || negated) &&
+        !this._type.some((type) => !type.matches(device) || negated) &&
         !this._condition.some(
-          condition => !condition.matches(device) || negated
+          (condition) => !condition.matches(device) || negated
         ) &&
         !negated
       );
@@ -547,10 +551,10 @@ export namespace Media {
     public toJSON(): Query.JSON {
       return {
         modifier: this._modifier.getOr(null),
-        type: this._type.map(type => type.toJSON()).getOr(null),
+        type: this._type.map((type) => type.toJSON()).getOr(null),
         condition: this._condition
-          .map(condition => condition.toJSON())
-          .getOr(null)
+          .map((condition) => condition.toJSON())
+          .getOr(null),
       };
     }
 
@@ -558,11 +562,11 @@ export namespace Media {
       const modifier = this._modifier.getOr("");
 
       const type = this._type
-        .map(type => (modifier === "" ? `${type}` : `${modifier} ${type}`))
+        .map((type) => (modifier === "" ? `${type}` : `${modifier} ${type}`))
         .getOr("");
 
       return this._condition
-        .map(condition =>
+        .map((condition) =>
           type === "" ? `${condition}` : `${type} and ${condition}`
         )
         .getOr(type);
@@ -582,7 +586,7 @@ export namespace Media {
    * @see https://drafts.csswg.org/mediaqueries/#typedef-media-query
    */
   const parseQuery = either(
-    map(parseCondition, condition =>
+    map(parseCondition, (condition) =>
       Query.of(None, None, Option.of(condition))
     ),
     map(
@@ -595,7 +599,7 @@ export namespace Media {
           )
         )
       ),
-      result => {
+      (result) => {
         const [[modifier, type], condition] = result;
         return Query.of(modifier, Option.of(type), condition);
       }
@@ -623,7 +627,7 @@ export namespace Media {
     public matches(device: Device): boolean {
       return (
         this._queries.length === 0 ||
-        this._queries.some(query => query.matches(device))
+        this._queries.some((query) => query.matches(device))
       );
     }
 
@@ -640,7 +644,7 @@ export namespace Media {
     }
 
     public toJSON(): List.JSON {
-      return this._queries.map(query => query.toJSON());
+      return this._queries.map((query) => query.toJSON());
     }
 
     public toString(): string {
@@ -657,7 +661,7 @@ export namespace Media {
       parseQuery,
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
-    queries => List.of(queries)
+    (queries) => List.of(queries)
   );
 
   export function parse(input: string) {

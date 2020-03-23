@@ -29,13 +29,13 @@ export class Text extends Node implements Slotable {
 
   public parent(options: Node.Traversal = {}): Option<Node> {
     if (options.flattened === true) {
-      return this._parent.flatMap(parent => {
+      return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
           return Option.of(parent.host);
         }
 
         if (Element.isElement(parent) && parent.shadow.isSome()) {
-          return this.assignedSlot().flatMap(slot => slot.parent(options));
+          return this.assignedSlot().flatMap((slot) => slot.parent(options));
         }
 
         return Option.of(parent);
@@ -50,7 +50,7 @@ export class Text extends Node implements Slotable {
   }
 
   public path(): string {
-    let path = this._parent.map(parent => parent.path()).getOr("/");
+    let path = this._parent.map((parent) => parent.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "text()";
@@ -65,7 +65,7 @@ export class Text extends Node implements Slotable {
   public toJSON(): Text.JSON {
     return {
       type: "text",
-      data: this.data
+      data: this.data,
     };
   }
 

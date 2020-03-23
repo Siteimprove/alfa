@@ -28,10 +28,12 @@ export default Rule.Atomic.of<Page, Attribute>({
               hasNamespace(equals(Namespace.HTML, Namespace.SVG))
             )
           )
-          .flatMap(element =>
+          .flatMap((element) =>
             Sequence.from(element.attributes).filter(
               and(
-                property("name", name => aria.Attribute.lookup(name).isSome()),
+                property("name", (name) =>
+                  aria.Attribute.lookup(name).isSome()
+                ),
                 property("value", not(isEmpty))
               )
             )
@@ -44,13 +46,13 @@ export default Rule.Atomic.of<Page, Attribute>({
         return {
           1: expectation(
             attribute.isValid(target.value),
-            Outcomes.HasValidValue,
-            Outcomes.HasNoValidValue
-          )
+            () => Outcomes.HasValidValue,
+            () => Outcomes.HasNoValidValue
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

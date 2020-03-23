@@ -63,15 +63,15 @@ export class Shadow extends Node {
   public toJSON(): Shadow.JSON {
     return {
       type: "shadow",
-      children: this._children.map(child => child.toJSON()),
+      children: this._children.map((child) => child.toJSON()),
       mode: this._mode,
-      style: this._style.map(sheet => sheet.toJSON())
+      style: this._style.map((sheet) => sheet.toJSON()),
     };
   }
 
   public toString(): string {
     const children = this._children
-      .map(child => indent(child.toString()))
+      .map((child) => indent(child.toString()))
       .join("\n");
 
     return `#shadow-root (${this._mode})${
@@ -83,7 +83,7 @@ export class Shadow extends Node {
 export namespace Shadow {
   export enum Mode {
     Open = "open",
-    Closed = "closed"
+    Closed = "closed",
   }
 
   export interface JSON extends Node.JSON {
@@ -101,11 +101,11 @@ export namespace Shadow {
     return Shadow.of(
       shadow.mode as Mode,
       host,
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return shadow.children.map(json => Node.fromNode(json, parent));
+        return shadow.children.map((json) => Node.fromNode(json, parent));
       },
-      shadow.style.map(sheet => Sheet.fromSheet(sheet))
+      shadow.style.map((sheet) => Sheet.fromSheet(sheet))
     );
   }
 }

@@ -13,7 +13,7 @@ export class Question<Q, A, S, T = A>
     subject: S,
     message: string
   ): Question<Q, A, S> {
-    return new Question(uri, type, subject, message, answer => answer);
+    return new Question(uri, type, subject, message, (answer) => answer);
   }
 
   private readonly _uri: string;
@@ -58,7 +58,7 @@ export class Question<Q, A, S, T = A>
       this._type,
       this._subject,
       this._message,
-      answer => mapper(this._quester(answer))
+      (answer) => mapper(this._quester(answer))
     );
   }
 
@@ -70,7 +70,7 @@ export class Question<Q, A, S, T = A>
       this._type,
       this._subject,
       this._message,
-      answer => mapper(this._quester(answer))._quester(answer)
+      (answer) => mapper(this._quester(answer))._quester(answer)
     );
   }
 
@@ -83,7 +83,7 @@ export class Question<Q, A, S, T = A>
       uri: this._uri,
       type: Serializable.toJSON(this._type),
       subject: Serializable.toJSON(this._subject),
-      message: this._message
+      message: this._message,
     };
   }
 }

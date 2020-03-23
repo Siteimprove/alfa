@@ -15,10 +15,10 @@ export function evaluate<T, Q>(
     request = Request.empty(),
     response = Response.empty(),
     document = Document.empty(),
-    device = Device.standard()
+    device = Device.standard(),
   } = page;
 
   return rule
     .evaluate(Page.of(request, response, document, device), oracle)
-    .map(outcomes => [...outcomes]);
+    .map((outcomes) => [...outcomes]);
 }

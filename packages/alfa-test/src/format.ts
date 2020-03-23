@@ -24,7 +24,7 @@ export function format(name: string, error: Error): string {
     error = new assert.AssertionError({
       actual: error.actual,
       expected: error.expected,
-      operator: error.operator
+      operator: error.operator,
     });
 
     error.message =

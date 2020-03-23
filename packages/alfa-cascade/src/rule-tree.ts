@@ -138,7 +138,7 @@ export namespace RuleTree {
       children: Array<RuleTree.Node>,
       parent: Option<Node>
     ): RuleTree.Node {
-      if (parent.some(parent => parent._selector.equals(selector))) {
+      if (parent.some((parent) => parent._selector.equals(selector))) {
         return parent.get();
       }
 

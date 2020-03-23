@@ -1,9 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Record } from "@siteimprove/alfa-record";
+import { Result } from "@siteimprove/alfa-result";
+import { Predicate, Trilean, every } from "@siteimprove/alfa-trilean";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
-
-import { Predicate, Trilean, every } from "@siteimprove/alfa-trilean";
 
 import { Rule } from "./rule";
 
@@ -23,12 +24,12 @@ export abstract class Outcome<I, T, Q = unknown>
   public toEARL(): Outcome.EARL {
     return {
       "@context": {
-        earl: "http://www.w3.org/ns/earl#"
+        earl: "http://www.w3.org/ns/earl#",
       },
       "@type": "earl:Assertion",
       "earl:test": {
-        "@id": this.rule.uri
-      }
+        "@id": this.rule.uri,
+      },
     };
   }
 }
@@ -84,7 +85,12 @@ export namespace Outcome {
         outcome: "passed",
         rule: this.rule.toJSON(),
         target: json.Serializable.toJSON(this.target),
-        expectations: this.expectations.toJSON()
+        expectations: this.expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map((expectation) => expectation.toJSON()).getOr(null),
+          ]),
       };
     }
 
@@ -94,9 +100,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:passed"
-          }
-        }
+            "@id": "earl:passed",
+          },
+        },
       };
 
       for (const pointer of earl.Serializable.toEARL(this.target)) {
@@ -112,7 +118,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "passed";
       target: json.JSON;
-      expectations: Record.JSON;
+      expectations: Array<[string, Result.JSON | null]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -163,7 +169,12 @@ export namespace Outcome {
         outcome: "failed",
         rule: this.rule.toJSON(),
         target: json.Serializable.toJSON(this.target),
-        expectations: this.expectations.toJSON()
+        expectations: this.expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map((expectation) => expectation.toJSON()).getOr(null),
+          ]),
       };
     }
 
@@ -173,9 +184,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:failed"
-          }
-        }
+            "@id": "earl:failed",
+          },
+        },
       };
 
       for (const pointer of earl.Serializable.toEARL(this.target)) {
@@ -191,7 +202,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "failed";
       target: json.JSON;
-      expectations: Record.JSON;
+      expectations: Array<[string, Result.JSON | null]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -233,7 +244,7 @@ export namespace Outcome {
       return {
         outcome: "cantTell",
         rule: this.rule.toJSON(),
-        target: json.Serializable.toJSON(this.target)
+        target: json.Serializable.toJSON(this.target),
       };
     }
 
@@ -243,9 +254,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:cantTell"
-          }
-        }
+            "@id": "earl:cantTell",
+          },
+        },
       };
     }
   }
@@ -290,7 +301,7 @@ export namespace Outcome {
     public toJSON(): Inapplicable.JSON {
       return {
         outcome: "inapplicable",
-        rule: this.rule.toJSON()
+        rule: this.rule.toJSON(),
       };
     }
 
@@ -300,9 +311,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:inapplicable"
-          }
-        }
+            "@id": "earl:inapplicable",
+          },
+        },
       };
     }
   }

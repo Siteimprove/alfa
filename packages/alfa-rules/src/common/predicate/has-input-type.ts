@@ -4,14 +4,14 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 export function hasInputType(
   predicate: Predicate<string> = () => true
 ): Predicate<Element> {
-  return element => {
+  return (element) => {
     if (element.name !== "input") {
       return false;
     }
 
     const type = element
       .attribute("type")
-      .map(attr =>
+      .map((attr) =>
         // The `type` attribute of is an enumerated attribute and is therefore
         // case-insensitive.
         // https://html.spec.whatwg.org/#enumerated-attribute

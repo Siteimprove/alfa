@@ -39,7 +39,7 @@ export class Some<T> implements Option<T> {
   }
 
   public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
-    return mapper.map(mapper => mapper(this._value));
+    return mapper.map((mapper) => mapper(this._value));
   }
 
   public reduce<U>(reducer: Reducer<T, U>, accumulator: U): U {
@@ -105,7 +105,7 @@ export class Some<T> implements Option<T> {
   public toJSON(): Some.JSON {
     return {
       type: "some",
-      value: Serializable.toJSON(this._value)
+      value: Serializable.toJSON(this._value),
     };
   }
 
