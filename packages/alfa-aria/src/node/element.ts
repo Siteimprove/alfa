@@ -70,6 +70,17 @@ export class Element extends Node {
     return false;
   }
 
+  public toJSON(): Element.JSON {
+    return {
+      type: "element",
+      node: this._node.toJSON(),
+      role: this._role.map(role => role.name).getOr(null),
+      name: this._name.getOr(null),
+      attributes: this._attributes.toArray(),
+      children: this._children.map(child => child.toJSON())
+    };
+  }
+
   public toString(): string {
     return [
       [
@@ -78,6 +89,15 @@ export class Element extends Node {
       ].join(" "),
       ...this._children.map(child => indent(child.toString()))
     ].join("\n");
+  }
+}
+
+export namespace Element {
+  export interface JSON extends Node.JSON {
+    type: "element";
+    role: string | null;
+    name: string | null;
+    attributes: Array<[string, string]>;
   }
 }
 

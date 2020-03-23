@@ -3,21 +3,28 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as dom from "@siteimprove/alfa-dom";
+import * as json from "@siteimprove/alfa-json";
 
 import { Role } from "./role";
+import { Feature } from "./feature";
 import { getName } from "./get-name";
+
+const { property, equals } = Predicate;
 
 /**
  * @see https://w3c.github.io/aria/#accessibility_tree
  */
-export abstract class Node {
+export abstract class Node implements Serializable {
   protected readonly _node: dom.Node;
   protected _children: Array<Node>;
   protected _parent: Option<Node>;
@@ -113,6 +120,8 @@ export abstract class Node {
 
   public abstract isIgnored(): boolean;
 
+  public abstract toJSON(): Node.JSON;
+
   /**
    * @internal
    */
@@ -133,6 +142,13 @@ import { Inert } from "./node/inert";
 import { Text } from "./node/text";
 
 export namespace Node {
+  export interface JSON {
+    [key: string]: json.JSON;
+    type: string;
+    node: dom.Node.JSON;
+    children: Array<JSON>;
+  }
+
   export interface Traversal {
     /**
      * When `true`, traverse both exposed and ignored nodes.
@@ -213,13 +229,62 @@ export namespace Node {
         if (style.computed("visibility").value.value !== "visible") {
           accessibleNode = Branched.of(Container.of(node));
         } else {
-          accessibleNode = Role.from(node).flatMap(role =>
-            role.some(
-              role => role.name === "none" || role.name === "presentation"
-            )
-              ? Branched.of(Container.of(node))
-              : getName(node, device).map(name => Element.of(node, role, name))
-          );
+          accessibleNode = Role.from(node).flatMap<Node>(role => {
+            if (
+              role.some(
+                role => role.name === "none" || role.name === "presentation"
+              )
+            ) {
+              return Branched.of(Container.of(node));
+            }
+
+            let attributes = Map.empty<string, string>();
+
+            // First pass: Look up implicit attributes on the role.
+            if (role.isSome()) {
+              const queue = [role.get()];
+
+              while (queue.length > 0) {
+                const role = queue.pop()!;
+
+                for (const [name, value] of role.characteristics.implicits) {
+                  attributes = attributes.set(name, value);
+                }
+
+                for (const name of role.characteristics.inherits) {
+                  for (const role of Role.lookup(name)) {
+                    queue.push(role);
+                  }
+                }
+              }
+            }
+
+            // Second pass: Look up implicit attributes on the feature mapping.
+            for (const namespace of node.namespace) {
+              for (const feature of Feature.lookup(namespace, node.name)) {
+                attributes = attributes.concat(feature.attributes(node));
+              }
+            }
+
+            // Third pass: Look up explicit `aria-*` attributes and set the
+            // ones that are allowed by the role.
+            for (const attribute of node.attributes) {
+              if (
+                attribute.name.startsWith("aria-") &&
+                role
+                  .orElse(() => Role.lookup("roletype"))
+                  .some(role =>
+                    role.isAllowed(property("name", equals(attribute.name)))
+                  )
+              ) {
+                attributes = attributes.set(attribute.name, attribute.value);
+              }
+            }
+
+            return getName(node, device).map(name =>
+              Element.of(node, role, name, attributes)
+            );
+          });
         }
       }
 
