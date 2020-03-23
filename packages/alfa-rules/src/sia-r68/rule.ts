@@ -79,10 +79,16 @@ function hasRequiredOwnedElements(device: Device): Predicate<Element> {
         .every((child) =>
           child
             .role()
-            .some((role) =>
-              hasOwnedElements((roles) =>
-                isString(roles) ? roles === role.name : owns([...roles])(child)
-              )(node.role().get())
+            .some((childRole) =>
+              node
+                .role()
+                .some((role) =>
+                  hasOwnedElements((roles) =>
+                    isString(roles)
+                      ? roles === childRole.name
+                      : owns([...roles])(child)
+                  )(role)
+                )
             )
         )
     );

@@ -76,8 +76,12 @@ function hasRequiredContext(device: Device): Predicate<Element> {
         .some((parent) =>
           parent
             .role()
-            .some((role) =>
-              hasContext((context) => context === role.name)(node.role().get())
+            .some((parentRole) =>
+              node
+                .role()
+                .some((role) =>
+                  hasContext((context) => context === parentRole.name)(role)
+                )
             )
         )
     );
