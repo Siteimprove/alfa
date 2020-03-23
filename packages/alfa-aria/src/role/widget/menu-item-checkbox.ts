@@ -9,8 +9,8 @@ Role.register(
     context: ["menu", "menubar"],
     name: {
       from: ["contents", "author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-checked", "false"]]
+    implicits: [["aria-checked", "false"]],
   })
 );

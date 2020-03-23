@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             "Where is the transcript of the <video> element?"
-          ).map(transcript => {
+          ).map((transcript) => {
             return expectation(
               transcript.isSome(),
               () => Outcomes.HasTranscript,
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   "node",
                   target,
                   "Where is the link pointing to the transcript of the <video> element?"
-                ).map(transcriptLink =>
+                ).map((transcriptLink) =>
                   expectation(
                     transcriptLink.isSome(),
                     () => Outcomes.HasTranscript,
@@ -42,11 +42,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   )
                 )
             );
-          })
+          }),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

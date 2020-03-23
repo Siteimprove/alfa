@@ -39,7 +39,7 @@ export class Element extends Node {
     super(owner, children, parent);
 
     this._role = role;
-    this._name = name.map(name => name.trim()).filter(not(isEmpty));
+    this._name = name.map((name) => name.trim()).filter(not(isEmpty));
     this._attributes = attributes;
   }
 
@@ -61,7 +61,7 @@ export class Element extends Node {
       this._role,
       this._name,
       this._attributes,
-      self => this._children.map(child => child.clone(Option.of(self))),
+      (self) => this._children.map((child) => child.clone(Option.of(self))),
       parent
     );
   }
@@ -74,20 +74,20 @@ export class Element extends Node {
     return {
       type: "element",
       node: this._node.toJSON(),
-      role: this._role.map(role => role.name).getOr(null),
+      role: this._role.map((role) => role.name).getOr(null),
       name: this._name.getOr(null),
       attributes: this._attributes.toArray(),
-      children: this._children.map(child => child.toJSON())
+      children: this._children.map((child) => child.toJSON()),
     };
   }
 
   public toString(): string {
     return [
       [
-        this._role.map(role => role.name).getOr("element"),
-        ...this._name.map(name => `"${name}"`)
+        this._role.map((role) => role.name).getOr("element"),
+        ...this._name.map((name) => `"${name}"`),
       ].join(" "),
-      ...this._children.map(child => indent(child.toString()))
+      ...this._children.map((child) => indent(child.toString())),
     ].join("\n");
   }
 }

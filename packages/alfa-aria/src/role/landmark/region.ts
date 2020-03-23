@@ -8,7 +8,7 @@ Role.register(
     inherits: ["landmark"],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

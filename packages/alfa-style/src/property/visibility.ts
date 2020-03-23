@@ -10,8 +10,8 @@ export type Visibility = Keyword<"visible" | "hidden" | "collapse">;
 export const Visibility: Property<Visibility> = Property.of(
   Keyword.of("visible"),
   Keyword.parse("visible", "hidden", "collapse"),
-  style => style.specified("visibility"),
+  (style) => style.specified("visibility"),
   {
-    inherits: true
+    inherits: true,
   }
 );

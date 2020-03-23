@@ -64,7 +64,7 @@ export class Style implements Serializable {
   }
 
   public root(): Style {
-    return this._parent.map(parent => parent.root()).getOr(this);
+    return this._parent.map((parent) => parent.root()).getOr(this);
   }
 
   public initial<N extends Name>(name: N): Style.Initial<N>;
@@ -81,8 +81,8 @@ export class Style implements Serializable {
 
       return find(
         this._declarations,
-        declaration => declaration.name === name
-      ).flatMap(declaration =>
+        (declaration) => declaration.name === name
+      ).flatMap((declaration) =>
         either(
           Keyword.parse("initial", "inherit"),
           property.parse
@@ -100,7 +100,7 @@ export class Style implements Serializable {
   public specified<N extends Name>(name: N): Style.Specified<N>;
   public specified<N extends Name>(name: N): Value {
     return this.cascaded(name)
-      .map(cascaded => {
+      .map((cascaded) => {
         if (Keyword.isKeyword(cascaded.value)) {
           switch (cascaded.value.value) {
             case "initial":
@@ -121,7 +121,7 @@ export class Style implements Serializable {
         }
 
         return this._parent
-          .map(parent => parent.computed(name))
+          .map((parent) => parent.computed(name))
           .getOrElse(() => this.initial(name));
       });
   }
@@ -141,7 +141,9 @@ export class Style implements Serializable {
 
   public toJSON(): Style.JSON {
     return {
-      declarations: this._declarations.map(declaration => declaration.toJSON())
+      declarations: this._declarations.map((declaration) =>
+        declaration.toJSON()
+      ),
     };
   }
 }
@@ -181,7 +183,7 @@ export namespace Style {
         element
           .parent({ flattened: true })
           .filter(Element.isElement)
-          .map(parent => from(parent, device))
+          .map((parent) => from(parent, device))
       );
     });
   }

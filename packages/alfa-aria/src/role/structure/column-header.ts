@@ -10,7 +10,7 @@ Role.register(
     context: ["row"],
     name: {
       from: ["contents", "author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

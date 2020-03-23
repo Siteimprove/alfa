@@ -92,7 +92,7 @@ export class Err<E> implements Result<never, E> {
   public toJSON(): Err.JSON {
     return {
       type: "err",
-      error: Serializable.toJSON(this._error)
+      error: Serializable.toJSON(this._error),
     };
   }
 

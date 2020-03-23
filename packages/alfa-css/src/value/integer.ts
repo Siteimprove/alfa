@@ -42,7 +42,7 @@ export class Integer implements Equatable, Hashable, Serializable {
   public toJSON(): Integer.JSON {
     return {
       type: "integer",
-      value: this._value
+      value: this._value,
     };
   }
 
@@ -63,7 +63,7 @@ export namespace Integer {
   }
 
   export const parse = map(
-    Token.parseNumber(number => number.isInteger),
-    integer => Integer.of(integer.value)
+    Token.parseNumber((number) => number.isInteger),
+    (integer) => Integer.of(integer.value)
   );
 }

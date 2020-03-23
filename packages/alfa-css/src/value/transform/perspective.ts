@@ -36,7 +36,7 @@ export class Perspective<D extends Length = Length>
   public toJSON(): Perspective.JSON {
     return {
       type: "perspective",
-      depth: this._depth.toJSON()
+      depth: this._depth.toJSON(),
     };
   }
 
@@ -69,13 +69,13 @@ export namespace Perspective {
           option(Token.parseWhitespace),
           filter(
             Length.parse,
-            length => length.value >= 0,
+            (length) => length.value >= 0,
             () => "Depth cannot be less than 0"
           )
         ),
         Token.parseCloseParenthesis
       )
     ),
-    depth => Perspective.of(depth)
+    (depth) => Perspective.of(depth)
   );
 }

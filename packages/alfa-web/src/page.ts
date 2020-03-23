@@ -1,6 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Response, Request } from "@siteimprove/alfa-http";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
@@ -57,7 +58,7 @@ export class Page implements Resource, json.Serializable, earl.Serializable {
       request: this._request.toJSON(),
       response: this._response.toJSON(),
       document: this._document.toJSON(),
-      device: this._device.toJSON()
+      device: this._device.toJSON(),
     };
   }
 
@@ -65,12 +66,12 @@ export class Page implements Resource, json.Serializable, earl.Serializable {
     return {
       "@context": {
         earl: "http://www.w3.org/ns/earl#",
-        dct: "http://purl.org/dc/terms/"
+        dct: "http://purl.org/dc/terms/",
       },
       "@type": ["earl:TestSubject"],
       "@id": this.response.url,
       "dct:source": this.response.url,
-      "dct:hasPart": [this._request.toEARL(), this._response.toEARL()]
+      "dct:hasPart": [this._request.toEARL(), this._response.toEARL()],
     };
   }
 }

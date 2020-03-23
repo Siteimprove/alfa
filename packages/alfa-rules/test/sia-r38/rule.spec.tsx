@@ -3,7 +3,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 
-import {Document, Element} from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { hasName } from "../../src/common/predicate/has-name";
 const { and, equals } = Predicate;
 
@@ -13,8 +13,8 @@ import { passed, failed, inapplicable, cantTell } from "../common/outcome";
 
 import R38, { Outcomes } from "../../src/sia-r38/rule";
 
-test("Passes when some atomic rules are passing", async t => {
-  const document = Document.of(self => [
+test("Passes when some atomic rules are passing", async (t) => {
+  const document = Document.of((self) => [
     Element.fromElement(
       <div>
         <video controls>
@@ -23,7 +23,7 @@ test("Passes when some atomic rules are passing", async t => {
         </video>
       </div>,
       Option.of(self)
-    )
+    ),
   ]);
 
   const video = document
@@ -40,16 +40,16 @@ test("Passes when some atomic rules are passing", async t => {
     "has-description": true,
     "text-alternative": false,
     label: false,
-    "track-describes-video": true
+    "track-describes-video": true,
   });
 
   t.deepEqual(await evaluate(R38, { document }, oracle), [
-    passed(R38, video, [["1", Outcomes.HasAlternative]])
+    passed(R38, video, [["1", Outcomes.HasAlternative]]),
   ]);
 });
 
-test("Can't tell when there are not enough answers to expectation", async t => {
-  const document = Document.of(self => [
+test("Can't tell when there are not enough answers to expectation", async (t) => {
+  const document = Document.of((self) => [
     Element.fromElement(
       <div>
         <video controls>
@@ -58,7 +58,7 @@ test("Can't tell when there are not enough answers to expectation", async t => {
         </video>
       </div>,
       Option.of(self)
-    )
+    ),
   ]);
 
   const video = document
@@ -70,6 +70,6 @@ test("Can't tell when there are not enough answers to expectation", async t => {
   const oracle = makeOracle({ "is-streaming": false, "has-audio": true });
 
   t.deepEqual(await evaluate(R38, { document }, oracle), [
-    cantTell(R38, video)
+    cantTell(R38, video),
   ]);
 });

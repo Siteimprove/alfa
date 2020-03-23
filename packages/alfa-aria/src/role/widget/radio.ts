@@ -10,8 +10,8 @@ Role.register(
     supports: ["aria-posinset", "aria-setsize"],
     name: {
       from: ["contents", "author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-checked", "false"]]
+    implicits: [["aria-checked", "false"]],
   })
 );

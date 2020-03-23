@@ -5,7 +5,7 @@ import {
   Node,
   Text,
   Document,
-  Namespace
+  Namespace,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Option } from "@siteimprove/alfa-option";
@@ -30,7 +30,7 @@ export namespace Cheerio {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of(self => [Node.fromNode(toNode(value[0]), Option.of(self))]),
+      Document.of((self) => [Node.fromNode(toNode(value[0]), Option.of(self))]),
       Device.standard()
     );
   }
@@ -49,7 +49,7 @@ function toNode(cheerioNode: CheerioElement): Node.JSON {
 function toElement(cheerioElement: CheerioElement): Element.JSON {
   const { name, attribs, childNodes } = cheerioElement;
 
-  const attributes = keys(attribs).map(localName => {
+  const attributes = keys(attribs).map((localName) => {
     return toAttribute(localName, attribs[localName]);
   });
 
@@ -64,7 +64,7 @@ function toElement(cheerioElement: CheerioElement): Element.JSON {
     style: null,
     children,
     shadow: null,
-    content: null
+    content: null,
   };
 }
 
@@ -74,13 +74,13 @@ function toAttribute(name: string, value: string): Attribute.JSON {
     namespace: null,
     prefix: null,
     name,
-    value
+    value,
   };
 }
 
 function toText(cheerioElement: CheerioElement): Text.JSON {
   return {
     type: "text",
-    data: cheerioElement.nodeValue
+    data: cheerioElement.nodeValue,
   };
 }

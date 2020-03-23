@@ -26,7 +26,7 @@ Role.register(
       "aria-live",
       "aria-owns",
       "aria-relevant",
-      "aria-roledescription"
-    ]
+      "aria-roledescription",
+    ],
   })
 );

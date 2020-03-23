@@ -9,7 +9,7 @@ Role.register(
     supports: ["aria-posinset", "aria-setsize"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

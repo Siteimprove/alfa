@@ -8678,7 +8678,7 @@ export const Primary = Map.from([
   ["zyn", Language.Primary.of("zyn")],
   ["zyp", Language.Primary.of("zyp")],
   ["zza", Language.Primary.of("zza", Option.of("macrolanguage"))],
-  ["zzj", Language.Primary.of("zzj")]
+  ["zzj", Language.Primary.of("zzj")],
 ]);
 
 export const Extended = Map.from([
@@ -8918,7 +8918,7 @@ export const Extended = Map.from([
   ["zlm", Language.Extended.of("zlm", "ms")],
   ["zmi", Language.Extended.of("zmi", "ms")],
   ["zsl", Language.Extended.of("zsl", "sgn")],
-  ["zsm", Language.Extended.of("zsm", "ms")]
+  ["zsm", Language.Extended.of("zsm", "ms")],
 ]);
 
 export const Script = Map.from([
@@ -9169,7 +9169,7 @@ export const Script = Map.from([
   ["zsym", Language.Script.of("zsym")],
   ["zxxx", Language.Script.of("zxxx")],
   ["zyyy", Language.Script.of("zyyy")],
-  ["zzzz", Language.Script.of("zzzz")]
+  ["zzzz", Language.Script.of("zzzz")],
 ]);
 
 export const Region = Map.from([
@@ -9514,7 +9514,7 @@ export const Region = Map.from([
   ["154", Language.Region.of("154")],
   ["155", Language.Region.of("155")],
   ["202", Language.Region.of("202")],
-  ["419", Language.Region.of("419")]
+  ["419", Language.Region.of("419")],
 ]);
 
 export const Variant = Map.from([
@@ -9529,8 +9529,8 @@ export const Variant = Map.from([
       "sl-rozaj-biske",
       "sl-rozaj-njiva",
       "sl-rozaj-osojs",
-      "sl-rozaj-solba"
-    ])
+      "sl-rozaj-solba",
+    ]),
   ],
   ["1996", Language.Variant.of("1996", ["de"])],
   ["abl1943", Language.Variant.of("abl1943", ["pt-BR"])],
@@ -9555,8 +9555,8 @@ export const Variant = Map.from([
       "sah",
       "tk",
       "tt",
-      "uz"
-    ])
+      "uz",
+    ]),
   ],
   ["balanka", Language.Variant.of("balanka", ["blo"])],
   ["barla", Language.Variant.of("barla", ["kea"])],
@@ -9642,5 +9642,5 @@ export const Variant = Map.from([
   ["vallader", Language.Variant.of("vallader", ["rm"])],
   ["vivaraup", Language.Variant.of("vivaraup", ["oc"])],
   ["wadegile", Language.Variant.of("wadegile", ["zh-Latn"])],
-  ["xsistemo", Language.Variant.of("xsistemo", ["eo"])]
+  ["xsistemo", Language.Variant.of("xsistemo", ["eo"])],
 ]);

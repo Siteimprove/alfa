@@ -8,7 +8,7 @@ Role.register(
     inherits: ["img"],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

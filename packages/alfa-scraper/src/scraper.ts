@@ -17,8 +17,8 @@ export class Scraper {
 
         // In order to be able to access external style sheets through CSSOM, we
         // have to disable CORS restrictions in Chromium.
-        "--disable-web-security"
-      ]
+        "--disable-web-security",
+      ],
     })
   ): Promise<Scraper> {
     return new Scraper(await browser);
@@ -39,7 +39,7 @@ export class Scraper {
       timeout = 10000,
       viewport = Viewport.standard(),
       display = Display.standard(),
-      credentials = null
+      credentials = null,
     } = options;
 
     const device = Device.of(Device.Type.Screen, viewport, display);
@@ -50,7 +50,7 @@ export class Scraper {
       width: viewport.width,
       height: viewport.width,
       deviceScaleFactor: display.resolution,
-      isLandscape: viewport.orientation === Viewport.Orientation.Landscape
+      isLandscape: viewport.orientation === Viewport.Orientation.Landscape,
     });
 
     await page.authenticate(credentials);
@@ -63,7 +63,7 @@ export class Scraper {
     // change if the resource in question performs certain redirects.
     let origin = typeof url === "string" ? new URL(url) : url;
 
-    page.on("response", res => {
+    page.on("response", (res) => {
       if (res.request().resourceType() !== "document") {
         return;
       }
@@ -85,7 +85,7 @@ export class Scraper {
           // As response handlers are not async, we have to assign the parsed
           // response as a promise and immediately register an error handler to
           // avoid an uncaugt exception if parsing the response fails.
-          response = parseResponse(res).catch(err => null);
+          response = parseResponse(res).catch((err) => null);
         }
       }
     });
@@ -98,7 +98,7 @@ export class Scraper {
       while (request === null || response === null) {
         await page.goto(origin.href, {
           timeout: timeout - (Date.now() - start),
-          waitUntil: wait
+          waitUntil: wait,
         });
 
         // Await parsing of the response, which may fail and result in a null
@@ -149,7 +149,7 @@ export namespace Scraper {
   export enum Wait {
     Ready = "domcontentloaded",
     Loaded = "load",
-    Idle = "networkidle0"
+    Idle = "networkidle0",
   }
 
   export namespace scrape {

@@ -69,7 +69,7 @@ export class Right<R> implements Either<never, R> {
   public toJSON(): Right.JSON {
     return {
       type: "right",
-      value: Serializable.toJSON(this._value)
+      value: Serializable.toJSON(this._value),
     };
   }
 

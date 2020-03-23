@@ -31,14 +31,14 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   hasName(equals("img")),
                   and(hasName(equals("input")), hasInputType(equals("image")))
                 ),
-                and(not(isIgnored(device)), element =>
+                and(not(isIgnored(device)), (element) =>
                   test(
-                    hasAccessibleName(device, accessibleName =>
+                    hasAccessibleName(device, (accessibleName) =>
                       element
                         .attribute("src")
-                        .map(attr => getFilename(attr.value))
+                        .map((attr) => getFilename(attr.value))
                         .some(
-                          filename =>
+                          (filename) =>
                             filename === accessibleName.toLowerCase().trim()
                         )
                     ),
@@ -60,11 +60,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
             `Does the accessible name of the <${target.name}> element describe its purpose?`
           )
             ? Some.of(Outcomes.NameIsDescriptive(target.name))
-            : Some.of(Outcomes.NameIsNotDescriptive(target.name))
+            : Some.of(Outcomes.NameIsNotDescriptive(target.name)),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 function getFilename(path: string): string {

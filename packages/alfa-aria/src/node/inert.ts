@@ -38,7 +38,7 @@ export class Inert extends Node {
     return {
       type: "inert",
       node: this._node.toJSON(),
-      children: this._children.map(child => child.toJSON())
+      children: this._children.map((child) => child.toJSON()),
     };
   }
 

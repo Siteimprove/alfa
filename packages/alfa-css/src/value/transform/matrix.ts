@@ -40,9 +40,9 @@ export class Matrix implements Equatable, Serializable {
   public toJSON(): Matrix.JSON {
     return {
       type: "matrix",
-      values: this._values.map(row =>
-        row.map(value => value.toJSON())
-      ) as Matrix.Values<Number.JSON>
+      values: this._values.map((row) =>
+        row.map((value) => value.toJSON())
+      ) as Matrix.Values<Number.JSON>,
     };
   }
 
@@ -51,7 +51,7 @@ export class Matrix implements Equatable, Serializable {
       [a, e, i, m],
       [b, f, j, n],
       [c, g, k, o],
-      [d, h, l, p]
+      [d, h, l, p],
     ] = this._values;
 
     if (
@@ -116,7 +116,7 @@ export namespace Matrix {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const _0 = Number.of(0);
       const _1 = Number.of(1);
 
@@ -154,10 +154,10 @@ export namespace Matrix {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [
         _a,
-        [_b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p]
+        [_b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p],
       ] = result;
 
       return Matrix.of(

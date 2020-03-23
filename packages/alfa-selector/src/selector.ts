@@ -21,7 +21,7 @@ const {
   right,
   pair,
   delimited,
-  option
+  option,
 } = Parser;
 
 const { and, property, equals } = Predicate;
@@ -98,7 +98,7 @@ export namespace Selector {
     public toJSON(): Id.JSON {
       return {
         type: "id",
-        name: this._name
+        name: this._name,
       };
     }
 
@@ -122,8 +122,8 @@ export namespace Selector {
    * @see https://drafts.csswg.org/selectors/#typedef-id-selector
    */
   const parseId = map(
-    Token.parseHash(hash => hash.isIdentifier),
-    hash => Id.of(hash.value)
+    Token.parseHash((hash) => hash.isIdentifier),
+    (hash) => Id.of(hash.value)
   );
 
   /**
@@ -160,7 +160,7 @@ export namespace Selector {
     public toJSON(): Class.JSON {
       return {
         type: "class",
-        name: this._name
+        name: this._name,
       };
     }
 
@@ -182,7 +182,7 @@ export namespace Selector {
 
   const parseClass = map(
     right(Token.parseDelim("."), Token.parseIdent()),
-    ident => Class.of(ident.value)
+    (ident) => Class.of(ident.value)
   );
 
   /**
@@ -193,7 +193,7 @@ export namespace Selector {
       option(either(Token.parseIdent(), Token.parseDelim("*"))),
       Token.parseDelim("|")
     ),
-    token => token.map(token => token.toString()).getOr("")
+    (token) => token.map((token) => token.toString()).getOr("")
   );
 
   /**
@@ -201,7 +201,7 @@ export namespace Selector {
    */
   const parseName = pair(
     option(parseNamespace),
-    map(Token.parseIdent(), ident => ident.value)
+    map(Token.parseIdent(), (ident) => ident.value)
   );
 
   /**
@@ -284,13 +284,13 @@ export namespace Selector {
 
         return Iterable.some(
           element.attributes,
-          and(predicate, attribute => this.matchesValue(attribute.value))
+          and(predicate, (attribute) => this.matchesValue(attribute.value))
         );
       }
 
       return element
         .attribute(this._name)
-        .some(attribute => this.matchesValue(attribute.value));
+        .some((attribute) => this.matchesValue(attribute.value));
     }
 
     private matchesValue(value: string): boolean {
@@ -348,22 +348,24 @@ export namespace Selector {
         name: this._name,
         value: this._value.getOr(null),
         matcher: this._matcher.getOr(null),
-        modifier: this._modifier.getOr(null)
+        modifier: this._modifier.getOr(null),
       };
     }
 
     public toString(): string {
       const namespace = this._namespace
-        .map(namespace => `${namespace}|`)
+        .map((namespace) => `${namespace}|`)
         .getOr("");
 
       const value = this._value
-        .map(value => `"${JSON.stringify(value)}"`)
+        .map((value) => `"${JSON.stringify(value)}"`)
         .get();
 
       const matcher = this._matcher.getOr("");
 
-      const modifier = this._modifier.map(modifier => ` ${modifier}`).getOr("");
+      const modifier = this._modifier
+        .map((modifier) => ` ${modifier}`)
+        .getOr("");
 
       return `[${namespace}${this._name}${matcher}${value}${modifier}]`;
     }
@@ -408,7 +410,7 @@ export namespace Selector {
       /**
        * @example [foo*=bar]
        */
-      Substring = "*="
+      Substring = "*=",
     }
 
     export enum Modifier {
@@ -420,7 +422,7 @@ export namespace Selector {
       /**
        * @example [foo=Bar s]
        */
-      CaseSensitive = "s"
+      CaseSensitive = "s",
     }
   }
 
@@ -447,7 +449,7 @@ export namespace Selector {
       ),
       Token.parseDelim("=")
     ),
-    delim =>
+    (delim) =>
       delim.isNone()
         ? Attribute.Matcher.Equal
         : (`${delim.get()}=` as Attribute.Matcher)
@@ -478,7 +480,7 @@ export namespace Selector {
       ),
       Token.parseCloseSquareBracket
     ),
-    result => {
+    (result) => {
       const [[namespace, name], rest] = result;
 
       if (rest.isNone()) {
@@ -550,13 +552,13 @@ export namespace Selector {
       return {
         type: "type",
         namespace: this._namespace.getOr(null),
-        name: this._name
+        name: this._name,
       };
     }
 
     public toString(): string {
       const namespace = this._namespace
-        .map(namespace => `${namespace}|`)
+        .map((namespace) => `${namespace}|`)
         .getOr("");
 
       return `${namespace}${this._name}`;
@@ -624,13 +626,13 @@ export namespace Selector {
     public toJSON(): Universal.JSON {
       return {
         type: "universal",
-        namespace: this._namespace.getOr(null)
+        namespace: this._namespace.getOr(null),
       };
     }
 
     public toString(): string {
       const namespace = this._namespace
-        .map(namespace => `${namespace}|`)
+        .map((namespace) => `${namespace}|`)
         .getOr("");
 
       return `${namespace}*`;
@@ -649,7 +651,7 @@ export namespace Selector {
    */
   const parseUniversal = map(
     left(option(parseNamespace), Token.parseDelim("*")),
-    namespace => Universal.of(namespace)
+    (namespace) => Universal.of(namespace)
   );
 
   export namespace Pseudo {
@@ -685,7 +687,7 @@ export namespace Selector {
       public toJSON(): Class.JSON {
         return {
           type: "pseudo-class",
-          name: this._name
+          name: this._name,
         };
       }
 
@@ -731,7 +733,7 @@ export namespace Selector {
       public toJSON(): Element.JSON {
         return {
           type: "pseudo-element",
-          name: this._name
+          name: this._name,
         };
       }
 
@@ -792,7 +794,7 @@ export namespace Selector {
     public toJSON(): Is.JSON {
       return {
         ...super.toJSON(),
-        selector: this._selector.toJSON()
+        selector: this._selector.toJSON(),
       };
     }
 
@@ -849,7 +851,7 @@ export namespace Selector {
     public toJSON(): Not.JSON {
       return {
         ...super.toJSON(),
-        selector: this._selector.toJSON()
+        selector: this._selector.toJSON(),
       };
     }
 
@@ -902,7 +904,7 @@ export namespace Selector {
     public toJSON(): Has.JSON {
       return {
         ...super.toJSON(),
-        selector: this._selector.toJSON()
+        selector: this._selector.toJSON(),
       };
     }
 
@@ -1003,7 +1005,7 @@ export namespace Selector {
       return {
         type: "compound",
         left: this._left.toJSON(),
-        right: this._right.toJSON()
+        right: this._right.toJSON(),
       };
     }
 
@@ -1023,7 +1025,7 @@ export namespace Selector {
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-compound-selector
    */
-  const parseCompound = map(oneOrMore(parseSimple), result => {
+  const parseCompound = map(oneOrMore(parseSimple), (result) => {
     const [left, ...selectors] = Iterable.reverse(result);
 
     return Iterable.reduce(
@@ -1055,7 +1057,7 @@ export namespace Selector {
     /**
      * @example div + span
      */
-    DirectSibling = "+"
+    DirectSibling = "+",
   }
 
   /**
@@ -1126,27 +1128,27 @@ export namespace Selector {
             return element
               .ancestors()
               .some(
-                and(Element.isElement, element => this._left.matches(element))
+                and(Element.isElement, (element) => this._left.matches(element))
               );
 
           case Combinator.DirectDescendant:
             return element
               .parent()
               .some(
-                and(Element.isElement, element => this._left.matches(element))
+                and(Element.isElement, (element) => this._left.matches(element))
               );
 
           case Combinator.Sibling:
             return element
               .preceding()
               .some(
-                and(Element.isElement, element => this._left.matches(element))
+                and(Element.isElement, (element) => this._left.matches(element))
               );
 
           case Combinator.DirectSibling:
             return element
               .previous(Element.isElement)
-              .some(element => this._left.matches(element));
+              .some((element) => this._left.matches(element));
         }
       }
 
@@ -1171,7 +1173,7 @@ export namespace Selector {
         type: "complex",
         combinator: this._combinator,
         left: this._left.toJSON(),
-        right: this._right.toJSON()
+        right: this._right.toJSON(),
       };
     }
 
@@ -1203,7 +1205,7 @@ export namespace Selector {
    */
   const parseComplex = map(
     pair(parseCompound, zeroOrMore(pair(parseCombinator, parseCompound))),
-    result => {
+    (result) => {
       const [left, selectors] = result;
 
       return Iterable.reduce(
@@ -1265,7 +1267,7 @@ export namespace Selector {
       return {
         type: "relative",
         combinator: this._combinator,
-        selector: this._selector.toJSON()
+        selector: this._selector.toJSON(),
       };
     }
 
@@ -1290,7 +1292,7 @@ export namespace Selector {
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-relative-selector
    */
-  const parseRelative = map(pair(parseCombinator, parseComplex), result => {
+  const parseRelative = map(pair(parseCombinator, parseComplex), (result) => {
     const [combinator, selector] = result;
 
     return Relative.of(combinator, selector);
@@ -1353,7 +1355,7 @@ export namespace Selector {
       return {
         type: "list",
         left: this._left.toJSON(),
-        right: this._right.toJSON()
+        right: this._right.toJSON(),
       };
     }
 
@@ -1384,7 +1386,7 @@ export namespace Selector {
         )
       )
     ),
-    result => {
+    (result) => {
       let [left, selectors] = result;
 
       [left, ...selectors] = [...Iterable.reverse(selectors), left];

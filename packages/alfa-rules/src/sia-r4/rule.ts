@@ -30,11 +30,11 @@ export default Rule.Atomic.of<Page, Element>({
             hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
             () => Outcomes.HasLanguage,
             () => Outcomes.HasNoLanguage
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

@@ -67,7 +67,7 @@ export class Left<L> implements Either<L, never> {
   public toJSON(): Left.JSON {
     return {
       type: "left",
-      value: Serializable.toJSON(this._value)
+      value: Serializable.toJSON(this._value),
     };
   }
 

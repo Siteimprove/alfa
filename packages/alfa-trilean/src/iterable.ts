@@ -2,7 +2,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "./predicate";
 
 export function some<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
-  return iterable =>
+  return (iterable) =>
     Iterable.reduce(
       iterable,
       (pred: Predicate<void>, val) => Predicate.or(pred, () => predicate(val)),
@@ -11,7 +11,7 @@ export function some<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
 }
 
 export function every<T>(predicate: Predicate<T>): Predicate<Iterable<T>> {
-  return iterable =>
+  return (iterable) =>
     Iterable.reduce(
       iterable,
       (pred: Predicate<void>, val) => Predicate.and(pred, () => predicate(val)),

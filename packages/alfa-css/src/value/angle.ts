@@ -61,7 +61,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Numeric
     return {
       type: "angle",
       value: this._value,
-      unit: this._unit
+      unit: this._unit,
     };
   }
 
@@ -81,7 +81,7 @@ export namespace Angle {
   }
 
   export const parse = map(
-    Token.parseDimension(dimension => Unit.isAngle(dimension.unit)),
-    dimension => Angle.of(dimension.value, dimension.unit as Unit.Angle)
+    Token.parseDimension((dimension) => Unit.isAngle(dimension.unit)),
+    (dimension) => Angle.of(dimension.value, dimension.unit as Unit.Angle)
   );
 }

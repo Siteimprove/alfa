@@ -29,7 +29,7 @@ export namespace Slotable {
     return Element.isElement(slotable)
       ? slotable
           .attribute("slot")
-          .map(slot => slot.value)
+          .map((slot) => slot.value)
           .getOr("")
       : "";
   }
@@ -43,11 +43,11 @@ export namespace Slotable {
     return slotable
       .parent()
       .filter(Element.isElement)
-      .flatMap(parent =>
-        parent.shadow.flatMap(shadow =>
+      .flatMap((parent) =>
+        parent.shadow.flatMap((shadow) =>
           shadow
             .descendants()
-            .find(and(Slot.isSlot, slot => Slot.name(slot) === name))
+            .find(and(Slot.isSlot, (slot) => Slot.name(slot) === name))
         )
       );
   }

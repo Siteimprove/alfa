@@ -25,11 +25,11 @@ export default Rule.Composite.of<Page, Element, Question>({
             some(outcomeToTrilean)(outcomes),
             () => Outcomes.HasAudioDescription,
             () => Outcomes.HasNoAudioDescription
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

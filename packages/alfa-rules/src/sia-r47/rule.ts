@@ -54,15 +54,15 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            scale.every(scale => scale >= 2) &&
-              scalable.every(scalable => scalable !== "fixed"),
+            scale.every((scale) => scale >= 2) &&
+              scalable.every((scalable) => scalable !== "fixed"),
             () => Outcomes.MetaDoesNotPreventZoom,
             () => Outcomes.MedatDoesPreventZoom
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 /*

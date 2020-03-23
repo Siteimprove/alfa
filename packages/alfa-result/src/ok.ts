@@ -94,7 +94,7 @@ export class Ok<T> implements Result<T, never> {
   public toJSON(): Ok.JSON {
     return {
       type: "ok",
-      value: Serializable.toJSON(this._value)
+      value: Serializable.toJSON(this._value),
     };
   }
 

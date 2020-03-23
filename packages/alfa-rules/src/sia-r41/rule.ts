@@ -37,7 +37,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
                 and(
                   hasRole(
-                    or(hasName(equals("link")), role =>
+                    or(hasName(equals("link")), (role) =>
                       role.inheritsFrom(hasName(equals("link")))
                     )
                   ),
@@ -50,9 +50,9 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             )
           );
 
-        const roots = elements.groupBy(element => element.root());
+        const roots = elements.groupBy((element) => element.root());
 
-        return flatMap(roots.values(), elements =>
+        return flatMap(roots.values(), (elements) =>
           elements
             .reduce((groups, element) => {
               for (const [node] of Node.from(element, device)) {
@@ -73,8 +73,8 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
       expectations(target) {
         const sources = Set.from(
-          map(target, element =>
-            element.attribute("href").map(attr => attr.value)
+          map(target, (element) =>
+            element.attribute("href").map((attr) => attr.value)
           )
         );
 
@@ -88,18 +88,18 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 "boolean",
                 target,
                 "Do the links resolve to equivalent resources?"
-              ).map(embedEquivalentResources =>
+              ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
                   () => Outcomes.ResolveEquivalentResource,
                   () => Outcomes.ResolveDifferentResource
                 )
               )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

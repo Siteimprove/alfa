@@ -13,10 +13,10 @@ export interface Notifier {
 }
 
 const defaultNotifier: Notifier = {
-  error: message => {
+  error: (message) => {
     process.stderr.write(`${message}\n`);
     process.exit(1);
-  }
+  },
 };
 
 export async function test(

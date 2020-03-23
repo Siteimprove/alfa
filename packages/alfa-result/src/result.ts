@@ -60,7 +60,9 @@ export namespace Result {
     }
 
     if (value instanceof Promise) {
-      return value.then(value => Ok.of(value)).catch(error => Err.of(error));
+      return value
+        .then((value) => Ok.of(value))
+        .catch((error) => Err.of(error));
     }
 
     return Ok.of(value);

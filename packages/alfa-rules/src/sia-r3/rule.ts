@@ -29,11 +29,11 @@ export default Rule.Atomic.of<Page, Element>({
             hasUniqueId()(target),
             () => Outcomes.HasUniqueId,
             () => Outcomes.HasNonUniqueId
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

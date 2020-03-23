@@ -5,7 +5,7 @@ import {
   Rule,
   StyleRule,
   Sheet,
-  MediaRule
+  MediaRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
@@ -43,7 +43,7 @@ export enum Origin {
   /**
    * @see https://www.w3.org/TR/css-cascade/#cascade-origin-author
    */
-  Author = 2
+  Author = 2,
 }
 
 /**
@@ -138,7 +138,7 @@ export class SelectorMap {
           filter !== undefined &&
           Iterable.every(
             node.selector,
-            and(isDescendantSelector, selector =>
+            and(isDescendantSelector, (selector) =>
               canReject(selector.left, filter)
             )
           )

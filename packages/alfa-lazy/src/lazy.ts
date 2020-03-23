@@ -34,7 +34,7 @@ export class Lazy<T> implements Monad<T>, Functor<T>, Equatable, Serializable {
   }
 
   public flatMap<U>(mapper: Mapper<T, Lazy<U>>): Lazy<U> {
-    return new Lazy(this._value.flatMap(value => mapper(value)._value));
+    return new Lazy(this._value.flatMap((value) => mapper(value)._value));
   }
 
   public equals(value: unknown): value is this {

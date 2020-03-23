@@ -29,13 +29,13 @@ export default Rule.Atomic.of<Page, Attribute>({
               and(hasNamespace(equals(Namespace.HTML)), hasName(equals("body")))
             )
           )
-          .flatMap(body =>
+          .flatMap((body) =>
             body
               .descendants()
               .filter(
                 and(Element.isElement, hasAttribute("lang", not(isEmpty)))
               )
-              .map(element => element.attribute("lang").get())
+              .map((element) => element.attribute("lang").get())
           );
       },
 
@@ -45,11 +45,11 @@ export default Rule.Atomic.of<Page, Attribute>({
             Language.parse(target.value).isSome(),
             () => Outcomes.HasValidLanguage,
             () => Outcomes.HasNoValidLanguage
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

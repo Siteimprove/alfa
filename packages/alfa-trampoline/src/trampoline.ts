@@ -34,7 +34,7 @@ export abstract class Trampoline<T> implements Monad<T>, Functor<T> {
   }
 
   public map<U>(mapper: Mapper<T, U>): Trampoline<U> {
-    return this.flatMap(value => Done.of(mapper(value)));
+    return this.flatMap((value) => Done.of(mapper(value)));
   }
 
   public abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
@@ -64,8 +64,8 @@ export namespace Trampoline {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap(value =>
-          values.map(values => values.push(value))
+        mapper(value).flatMap((value) =>
+          values.map((values) => values.push(value))
         ),
       done(List.empty())
     );
@@ -74,7 +74,7 @@ export namespace Trampoline {
   export function sequence<T>(
     futures: Iterable<Trampoline<T>>
   ): Trampoline<Iterable<T>> {
-    return traverse(futures, value => value);
+    return traverse(futures, (value) => value);
   }
 }
 
@@ -154,7 +154,7 @@ class Bind<S, T> extends Trampoline<T> {
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
     return Suspend.of(() =>
-      Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
+      Bind.of(this._thunk, (value) => this._mapper(value).flatMap(mapper))
     );
   }
 }

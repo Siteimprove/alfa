@@ -72,10 +72,10 @@ export class Language implements Equatable, Serializable {
     return {
       type: "language",
       primary: this._primary.toJSON(),
-      extended: this._extended.map(extended => extended.toJSON()).getOr(null),
-      script: this._script.map(script => script.toJSON()).getOr(null),
-      region: this._region.map(region => region.toJSON()).getOr(null),
-      variants: this._variants.map(variant => variant.toJSON())
+      extended: this._extended.map((extended) => extended.toJSON()).getOr(null),
+      script: this._script.map((script) => script.toJSON()).getOr(null),
+      region: this._region.map((region) => region.toJSON()).getOr(null),
+      variants: this._variants.map((variant) => variant.toJSON()),
     };
   }
 
@@ -85,7 +85,7 @@ export class Language implements Equatable, Serializable {
       ...this._extended,
       ...this._script,
       ...this._region,
-      ...this._variants
+      ...this._variants,
     ].join("-");
   }
 }
@@ -184,7 +184,7 @@ export namespace Language {
       return {
         type: "primary",
         name: this._name,
-        scope: this._scope.getOr(null)
+        scope: this._scope.getOr(null),
       };
     }
   }
@@ -249,7 +249,7 @@ export namespace Language {
         type: "extended",
         name: this._name,
         prefix: this._prefix,
-        scope: this._scope.getOr(null)
+        scope: this._scope.getOr(null),
       };
     }
   }
@@ -285,7 +285,7 @@ export namespace Language {
     public toJSON(): Script.JSON {
       return {
         type: "script",
-        name: this._name
+        name: this._name,
       };
     }
   }
@@ -319,7 +319,7 @@ export namespace Language {
     public toJSON(): Region.JSON {
       return {
         type: "region",
-        name: this._name
+        name: this._name,
       };
     }
   }
@@ -369,7 +369,7 @@ export namespace Language {
       return {
         type: "variant",
         name: this._name,
-        prefixes: [...this._prefixes]
+        prefixes: [...this._prefixes],
       };
     }
   }
@@ -390,25 +390,25 @@ export namespace Language {
 
     return parts
       .get(0)
-      .flatMap(name => subtags.Primary.get(name))
-      .map(primary => {
+      .flatMap((name) => subtags.Primary.get(name))
+      .map((primary) => {
         parts = parts.slice(1);
 
         const extended = parts
           .get(0)
-          .flatMap(name => subtags.Extended.get(name));
+          .flatMap((name) => subtags.Extended.get(name));
 
         if (extended.isSome()) {
           parts = parts.slice(1);
         }
 
-        const script = parts.get(0).flatMap(name => subtags.Script.get(name));
+        const script = parts.get(0).flatMap((name) => subtags.Script.get(name));
 
         if (script.isSome()) {
           parts = parts.slice(1);
         }
 
-        const region = parts.get(0).flatMap(name => subtags.Region.get(name));
+        const region = parts.get(0).flatMap((name) => subtags.Region.get(name));
 
         if (region.isSome()) {
           parts = parts.slice(1);
@@ -419,7 +419,7 @@ export namespace Language {
         while (true) {
           const variant = parts
             .get(0)
-            .flatMap(name => subtags.Variant.get(name));
+            .flatMap((name) => subtags.Variant.get(name));
 
           if (variant.isSome()) {
             parts = parts.slice(1);

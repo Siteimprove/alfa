@@ -42,7 +42,7 @@ export class URL implements Equatable, Hashable, Serializable {
   public toJSON(): URL.JSON {
     return {
       type: "url",
-      url: this._url
+      url: this._url,
     };
   }
 
@@ -76,6 +76,6 @@ export namespace URL {
         )
       )
     ),
-    url => URL.of(url.value)
+    (url) => URL.of(url.value)
   );
 }

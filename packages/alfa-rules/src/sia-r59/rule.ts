@@ -46,11 +46,11 @@ export default Rule.Atomic.of<Page, Document>({
             hasHeadings,
             () => Outcomes.HasOneHeading,
             () => Outcomes.HasNoHeadings
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

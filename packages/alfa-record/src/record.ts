@@ -15,7 +15,7 @@ export class Record<T>
     Serializable {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
-    const values = List.from(keys.map(key => properties[key]));
+    const values = List.from(keys.map((key) => properties[key]));
 
     return new Record(Indices.from(keys), keys, values);
   }

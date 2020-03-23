@@ -24,17 +24,17 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "boolean",
             target,
             "Does the <video> element have captions?"
-          ).map(hasCaptions =>
+          ).map((hasCaptions) =>
             expectation(
               hasCaptions,
               () => Outcomes.HasCaptions,
               () => Outcomes.HasNoCaptions
             )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

@@ -82,7 +82,7 @@ export class RGB<
       red: this._red.toJSON(),
       green: this._green.toJSON(),
       blue: this._blue.toJSON(),
-      alpha: this._alpha.toJSON()
+      alpha: this._alpha.toJSON(),
     };
   }
 
@@ -121,7 +121,7 @@ export namespace RGB {
    */
   export const parse = map(
     right(
-      Token.parseFunction(fn => fn.value === "rgb" || fn.value === "rgba"),
+      Token.parseFunction((fn) => fn.value === "rgb" || fn.value === "rgba"),
       left(
         delimited(
           option(Token.parseWhitespace),
@@ -191,7 +191,7 @@ export namespace RGB {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [[red, [green, blue]], alpha] = result;
 
       return RGB.of(

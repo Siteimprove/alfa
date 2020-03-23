@@ -39,7 +39,7 @@ export class Container extends Node {
   public clone(parent: Option<Node> = None): Container {
     return new Container(
       this._node,
-      self => this._children.map(child => child.clone(Option.of(self))),
+      (self) => this._children.map((child) => child.clone(Option.of(self))),
       parent
     );
   }
@@ -52,14 +52,14 @@ export class Container extends Node {
     return {
       type: "container",
       node: this._node.toJSON(),
-      children: this._children.map(child => child.toJSON())
+      children: this._children.map((child) => child.toJSON()),
     };
   }
 
   public toString(): string {
     return [
       "container",
-      ...this._children.map(child => indent(child.toString()))
+      ...this._children.map((child) => indent(child.toString())),
     ].join("\n");
   }
 }

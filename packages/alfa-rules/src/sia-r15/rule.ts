@@ -45,9 +45,9 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             )
           );
 
-        const roots = iframes.groupBy(iframe => iframe.root());
+        const roots = iframes.groupBy((iframe) => iframe.root());
 
-        return flatMap(roots.values(), iframes =>
+        return flatMap(roots.values(), (iframes) =>
           iframes
             .reduce((groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
@@ -68,7 +68,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
 
       expectations(target) {
         const sources = Set.from(
-          map(target, iframe => iframe.attribute("src"))
+          map(target, (iframe) => iframe.attribute("src"))
         );
 
         return {
@@ -81,18 +81,18 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                 "boolean",
                 target,
                 "Do the <iframe> elements embed equivalent resources?"
-              ).map(embedEquivalentResources =>
+              ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
                   () => Outcomes.EmbedEquivalentResources,
                   () => Outcomes.EmbedDifferentResources
                 )
               )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

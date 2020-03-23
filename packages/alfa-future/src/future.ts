@@ -40,13 +40,13 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
   }
 
   public map<U>(mapper: Mapper<T, U>): Future<U> {
-    return this.flatMap(value => Now.of(mapper(value)));
+    return this.flatMap((value) => Now.of(mapper(value)));
   }
 
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
 
   public toPromise(): Promise<T> {
-    return new Promise(resolve => this.then(resolve));
+    return new Promise((resolve) => this.then(resolve));
   }
 }
 
@@ -72,7 +72,7 @@ export namespace Future {
   }
 
   export function from<T>(promise: Promise<T>): Future<T> {
-    return Future.defer(callback => promise.then(callback));
+    return Future.defer((callback) => promise.then(callback));
   }
 
   export function traverse<T, U>(
@@ -82,8 +82,8 @@ export namespace Future {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap(value =>
-          values.map(values => values.push(value))
+        mapper(value).flatMap((value) =>
+          values.map((values) => values.push(value))
         ),
       now(List.empty())
     );
@@ -92,7 +92,7 @@ export namespace Future {
   export function sequence<T>(
     futures: Iterable<Future<T>>
   ): Future<Iterable<T>> {
-    return traverse(futures, value => value);
+    return traverse(futures, (value) => value);
   }
 }
 
@@ -142,7 +142,7 @@ class Defer<T> extends Future<T> {
   }
 
   public then(callback: Callback<T>): void {
-    this._continuation(value => defer(() => callback(value)));
+    this._continuation((value) => defer(() => callback(value)));
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -176,14 +176,14 @@ namespace Defer {
     }
 
     public then(callback: Callback<T>): void {
-      this._continuation(value =>
+      this._continuation((value) =>
         defer(() => this._mapper(value).then(callback))
       );
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
       return Suspend.of(() =>
-        Bind.of(this._continuation, value =>
+        Bind.of(this._continuation, (value) =>
           this._mapper(value).flatMap(mapper)
         )
       );
@@ -236,7 +236,7 @@ namespace Suspend {
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
       return Suspend.of(() =>
-        Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
+        Bind.of(this._thunk, (value) => this._mapper(value).flatMap(mapper))
       );
     }
   }

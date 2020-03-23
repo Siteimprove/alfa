@@ -85,7 +85,7 @@ export class Attribute extends Node {
   }
 
   public path(): string {
-    let path = this.owner.map(owner => owner.path()).getOr("/");
+    let path = this.owner.map((owner) => owner.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += `@${this._name}`;
@@ -99,7 +99,7 @@ export class Attribute extends Node {
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
-      value: this._value
+      value: this._value,
     };
   }
 
@@ -144,7 +144,7 @@ export namespace Attribute {
  * attributes are case insensitive while attributes in other namespaces aren't.
  */
 function foldCase(name: string, owner: Option<Element>): string {
-  return owner.some(owner => owner.namespace.some(equals(Namespace.HTML)))
+  return owner.some((owner) => owner.namespace.some(equals(Namespace.HTML)))
     ? name.toLowerCase()
     : name;
 }

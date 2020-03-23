@@ -10,13 +10,13 @@ Role.register(
     supports: ["aria-orientation", "aria-readonly"],
     name: {
       from: ["author"],
-      required: true
+      required: true,
     },
     implicits: [
       ["aria-orientation", "horizontal"],
       ["aria-valuemin", "0"],
       ["aria-valuemax", "100"],
-      ["aria-valuenow", "50"]
-    ]
+      ["aria-valuenow", "50"],
+    ],
   })
 );

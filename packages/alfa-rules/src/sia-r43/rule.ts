@@ -48,11 +48,11 @@ export default Rule.Atomic.of<Page, Element>({
             hasAccessibleName(device, not(isEmpty))(target),
             () => Outcomes.HasName(target.name),
             () => Outcomes.HasNoName(target.name)
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

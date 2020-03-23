@@ -62,7 +62,7 @@ export class Hex implements Equatable, Hashable, Serializable {
     return {
       type: "color",
       format: "hex",
-      value: this._value
+      value: this._value,
     };
   }
 
@@ -88,7 +88,7 @@ export namespace Hex {
    */
   export const parse = map(
     map(
-      Token.parseHash(hash => {
+      Token.parseHash((hash) => {
         switch (hash.value.length) {
           case 3:
           case 4:
@@ -101,7 +101,7 @@ export namespace Hex {
             return false;
         }
       }),
-      hash => {
+      (hash) => {
         switch (hash.value.length) {
           case 3: {
             const [r, g, b] = hash.value;
@@ -121,6 +121,6 @@ export namespace Hex {
         }
       }
     ),
-    hash => Hex.of(parseInt(hash, 16))
+    (hash) => Hex.of(parseInt(hash, 16))
   );
 }

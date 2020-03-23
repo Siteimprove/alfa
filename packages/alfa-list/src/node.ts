@@ -205,7 +205,7 @@ export class Branch<T> implements Node<T> {
 
   public map<U>(mapper: Mapper<T, U>): Branch<U> {
     return Branch.of(
-      this._nodes.map(node =>
+      this._nodes.map((node) =>
         node instanceof Branch ? node.map(mapper) : node.map(mapper)
       )
     );

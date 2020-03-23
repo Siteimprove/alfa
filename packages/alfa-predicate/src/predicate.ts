@@ -82,7 +82,7 @@ export namespace Predicate {
 
   export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
     return function equals(other) {
-      return values.some(value => Equatable.equals(other, value));
+      return values.some((value) => Equatable.equals(other, value));
     };
   }
 
@@ -90,7 +90,7 @@ export namespace Predicate {
     property: K,
     predicate: Predicate<T[K]>
   ): Predicate<T> {
-    return value => predicate(value[property]);
+    return (value) => predicate(value[property]);
   }
 
   export function isString(value: unknown): value is string {

@@ -6,6 +6,6 @@ export function hasRole(
   predicate: Predicate<Role> = () => true,
   options: Role.from.Options = {}
 ): Predicate<Element> {
-  return element =>
-    Role.from(element, options).some(role => role.some(predicate));
+  return (element) =>
+    Role.from(element, options).some((role) => role.some(predicate));
 }

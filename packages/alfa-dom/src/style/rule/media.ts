@@ -31,14 +31,14 @@ export class Media extends Condition {
   public toJSON(): Media.JSON {
     return {
       type: "media",
-      rules: [...this._rules].map(rule => rule.toJSON()),
-      condition: this._condition
+      rules: [...this._rules].map((rule) => rule.toJSON()),
+      condition: this._condition,
     };
   }
 
   public toString(): string {
     const rules = join(
-      map(this._rules, rule => indent(rule.toString())),
+      map(this._rules, (rule) => indent(rule.toString())),
       "\n\n"
     );
 
@@ -62,9 +62,9 @@ export namespace Media {
   ): Media {
     return Media.of(
       json.condition,
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return json.rules.map(rule => Rule.fromRule(rule, owner, parent));
+        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
       },
       owner,
       parent

@@ -9,7 +9,7 @@ import {
   Rotate,
   Scale,
   Skew,
-  Translate
+  Translate,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -52,15 +52,15 @@ export const Transform: Property<
 > = Property.of(
   Keyword.of("none"),
   either(Keyword.parse("none"), css.Transform.parseList),
-  style =>
-    style.specified("transform").map(transform => {
+  (style) =>
+    style.specified("transform").map((transform) => {
       switch (transform.type) {
         case "keyword":
           return transform;
 
         case "list":
           return List.of([
-            ...Iterable.map(transform, transform => {
+            ...Iterable.map(transform, (transform) => {
               switch (transform.type) {
                 case "matrix":
                   return transform;
@@ -98,7 +98,7 @@ export const Transform: Property<
                     Resolver.length(transform.z, style)
                   );
               }
-            })
+            }),
           ]);
       }
     })

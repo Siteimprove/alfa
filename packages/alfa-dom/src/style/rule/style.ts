@@ -43,7 +43,7 @@ export class Style extends Rule {
     return {
       type: "style",
       selector: this._selector,
-      style: this._style.toJSON()
+      style: this._style.toJSON(),
     };
   }
 
@@ -72,9 +72,9 @@ export namespace Style {
   ): Style {
     return Style.of(
       json.selector,
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return json.style.map(declaration =>
+        return json.style.map((declaration) =>
           Declaration.fromDeclaration(declaration, parent)
         );
       },

@@ -34,7 +34,7 @@ export namespace Iterable {
   }
 
   export function size<T>(iterable: Iterable<T>): number {
-    return reduce(iterable, size => size + 1, 0);
+    return reduce(iterable, (size) => size + 1, 0);
   }
 
   export function* map<T, U = T>(
@@ -56,7 +56,7 @@ export namespace Iterable {
   }
 
   export function flatten<T>(iterable: Iterable<Iterable<T>>): Iterable<T> {
-    return flatMap(iterable, iterable => iterable);
+    return flatMap(iterable, (iterable) => iterable);
   }
 
   export function reduce<T, U = T>(
@@ -308,13 +308,13 @@ export namespace Iterable {
     left: Iterable<T>,
     right: Iterable<T>
   ): Iterable<T> {
-    return filter(left, left => !includes(right, left));
+    return filter(left, (left) => !includes(right, left));
   }
 
   export function intersect<T>(
     left: Iterable<T>,
     right: Iterable<T>
   ): Iterable<T> {
-    return filter(left, left => includes(right, left));
+    return filter(left, (left) => includes(right, left));
   }
 }

@@ -44,7 +44,7 @@ export class Cons<T> implements Sequence<T> {
   public map<U>(mapper: Mapper<T, U>): Sequence<U> {
     return new Cons(
       mapper(this._head),
-      this._tail.map(tail => tail.map(mapper))
+      this._tail.map((tail) => tail.map(mapper))
     );
   }
 
@@ -57,8 +57,8 @@ export class Cons<T> implements Sequence<T> {
       if (Cons.isCons<U>(head)) {
         return new Cons(
           head._head,
-          head._tail.flatMap(left =>
-            next._tail.map(right => left.concat(right.flatMap(mapper)))
+          head._tail.flatMap((left) =>
+            next._tail.map((right) => left.concat(right.flatMap(mapper)))
           )
         );
       }
@@ -132,7 +132,7 @@ export class Cons<T> implements Sequence<T> {
 
     return new Cons(
       this._head,
-      this._tail.map(tail => tail.concat(iterable))
+      this._tail.map((tail) => tail.concat(iterable))
     );
   }
 
@@ -143,7 +143,7 @@ export class Cons<T> implements Sequence<T> {
       if (predicate(next._head)) {
         return new Cons(
           next._head,
-          next._tail.map(tail => tail.filter(predicate))
+          next._tail.map((tail) => tail.filter(predicate))
         );
       }
 
@@ -221,7 +221,7 @@ export class Cons<T> implements Sequence<T> {
 
     return new Cons(
       this._head,
-      this._tail.map(tail => tail.takeUntil(predicate))
+      this._tail.map((tail) => tail.takeUntil(predicate))
     );
   }
 

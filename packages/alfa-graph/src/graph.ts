@@ -63,7 +63,7 @@ export class Graph<T>
         to,
         nodes
           .get(to)
-          .map(to => to.delete(node))
+          .map((to) => to.delete(node))
           .get()
       );
     }
@@ -87,7 +87,7 @@ export class Graph<T>
         from,
         nodes
           .get(from)
-          .map(from => from.add(to))
+          .map((from) => from.add(to))
           .get()
       )
     );
@@ -105,7 +105,7 @@ export class Graph<T>
         from,
         nodes
           .get(from)
-          .map(from => from.delete(to))
+          .map((from) => from.delete(to))
           .get()
       )
     );
@@ -127,8 +127,8 @@ export class Graph<T>
     return {
       nodes: this.toArray().map(([node, neighbors]) => [
         Serializable.toJSON(node),
-        neighbors.map(Serializable.toJSON)
-      ])
+        neighbors.map(Serializable.toJSON),
+      ]),
     };
   }
 
@@ -164,7 +164,7 @@ export namespace Graph {
       Map.from(
         Iterable.map(iterable, ([node, neighbours]) => [
           node,
-          Set.from(neighbours)
+          Set.from(neighbours),
         ])
       )
     );

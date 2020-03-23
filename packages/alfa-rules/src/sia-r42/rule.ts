@@ -40,11 +40,11 @@ export default Rule.Atomic.of<Page, Element>({
             hasRequiredContext(device)(target),
             () => Outcomes.IsOwnedByContextRole,
             () => Outcomes.IsNotOwnedByContextRole
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {
@@ -69,15 +69,15 @@ function hasContext(
 }
 
 function hasRequiredContext(device: Device): Predicate<Element> {
-  return element =>
-    Node.from(element, device).every(node =>
+  return (element) =>
+    Node.from(element, device).some((node) =>
       node
         .parent()
-        .some(parent =>
+        .some((parent) =>
           parent
             .role()
-            .some(role =>
-              hasContext(context => context === role.name)(node.role().get())
+            .some((role) =>
+              hasContext((context) => context === role.name)(node.role().get())
             )
         )
     );

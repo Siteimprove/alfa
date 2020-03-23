@@ -5,10 +5,10 @@ export const Person: Context = {
   name: "schema:name",
   image: {
     "@id": "schema:image",
-    "@type": "@id"
+    "@type": "@id",
   },
   homepage: {
     "@id": "schema:url",
-    "@type": "@id"
-  }
+    "@type": "@id",
+  },
 };

@@ -14,6 +14,8 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Branch, Empty, Leaf, Node } from "./node";
 
+const { not } = Predicate;
+
 export class List<T>
   implements
     Monad<T>,
@@ -53,6 +55,10 @@ export class List<T>
     return this._size;
   }
 
+  public isEmpty(): this is List<never> {
+    return this._tail.isEmpty();
+  }
+
   public map<U>(mapper: Mapper<T, U>): List<U> {
     return new List<U>(
       (this._head as Node<T>).map(mapper) as Empty<U> | Leaf<U> | Branch<U>,
@@ -85,20 +91,72 @@ export class List<T>
     return Iterable.includes(this, value);
   }
 
+  public some(predicate: Predicate<T>): boolean {
+    return Iterable.some(this, predicate);
+  }
+
+  public every(predicate: Predicate<T>): boolean {
+    return Iterable.every(this, predicate);
+  }
+
+  public filter<U extends T>(predicate: Predicate<T, U>): List<U> {
+    return List.from(Iterable.filter(this, predicate));
+  }
+
   public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
     return Iterable.find(this, predicate);
   }
 
-  public filter<U extends T>(predicate: Predicate<T, U>): List<T> {
-    return List.from(Iterable.filter(this, predicate));
+  public count(predicate: Predicate<T>): number {
+    return Iterable.count(this, predicate);
   }
 
-  public subtract(list: List<T>): List<T> {
-    return List.from(Iterable.subtract(this, list));
+  public first(): Option<T> {
+    return this._tail.isEmpty() ? None : Option.of(this._tail.values[0]);
   }
 
-  public intersect(list: List<T>): List<T> {
-    return List.from(Iterable.intersect(this, list));
+  public last(): Option<T> {
+    return Iterable.last(this);
+  }
+
+  public take(count: number): List<T> {
+    return this.takeWhile(() => count-- > 0);
+  }
+
+  public takeWhile(predicate: Predicate<T>): List<T> {
+    return List.from(Iterable.takeWhile(this, predicate));
+  }
+
+  public takeUntil(predicate: Predicate<T>): List<T> {
+    return this.takeWhile(not(predicate));
+  }
+
+  public skip(count: number): List<T> {
+    return this.skipWhile(() => count-- > 0);
+  }
+
+  public skipWhile(predicate: Predicate<T>): List<T> {
+    return List.from(Iterable.skipWhile(this, predicate));
+  }
+
+  public skipUntil(predicate: Predicate<T>): List<T> {
+    return this.skipWhile(not(predicate));
+  }
+
+  public rest(): List<T> {
+    return this.skip(1);
+  }
+
+  public slice(start: number, end?: number): List<T> {
+    return List.from(Iterable.slice(this, start, end));
+  }
+
+  public reverse(): List<T> {
+    return List.from(Iterable.reverse(this));
+  }
+
+  public join(separator: string): string {
+    return Iterable.join(this, separator);
   }
 
   public groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>> {
@@ -115,8 +173,12 @@ export class List<T>
     }, Map.empty<K, List<T>>());
   }
 
-  public join(separator: string): string {
-    return Iterable.join(this, separator);
+  public subtract(list: List<T>): List<T> {
+    return List.from(Iterable.subtract(this, list));
+  }
+
+  public intersect(list: List<T>): List<T> {
+    return List.from(Iterable.intersect(this, list));
   }
 
   public get(index: number): Option<T> {

@@ -26,7 +26,7 @@ export class Builder<T extends Expression = Expression>
 
   public toJSON(): Builder.JSON {
     return {
-      expression: this._expression.toJSON()
+      expression: this._expression.toJSON(),
     };
   }
 
@@ -82,7 +82,7 @@ export namespace Builder {
       return new Filter(
         Expression.Filter.of(this.expression.base, [
           ...this.expression.predicates,
-          predicate.expression
+          predicate.expression,
         ])
       );
     }
@@ -93,7 +93,7 @@ export namespace Builder {
       return new Axis(
         Expression.Axis.of(this.expression.axis, this.expression.test, [
           ...this.expression.predicates,
-          predicate.expression
+          predicate.expression,
         ])
       );
     }
@@ -110,7 +110,7 @@ export namespace Builder {
             this.expression.left,
             Expression.Filter.of(this.expression.right, [
               ...this.expression.right.predicates,
-              predicate.expression
+              predicate.expression,
             ])
           )
         );

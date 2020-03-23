@@ -10,8 +10,8 @@ Role.register(
     owns: ["option"],
     name: {
       from: ["author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-orientation", "vertical"]]
+    implicits: [["aria-orientation", "vertical"]],
   })
 );

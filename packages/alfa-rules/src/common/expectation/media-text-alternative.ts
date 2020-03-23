@@ -17,7 +17,7 @@ function mediaTextAlternative(
   kind: "<audio>" | "<video>"
 ) {
   return {
-    1: alt.map(alt =>
+    1: alt.map((alt) =>
       expectation(
         alt.isSome(),
         () =>
@@ -29,7 +29,7 @@ function mediaTextAlternative(
         () => Outcomes.HasNoAlternative(kind)
       )
     ),
-    2: label.map(label =>
+    2: label.map((label) =>
       expectation(
         label.isSome(),
         () =>
@@ -40,7 +40,7 @@ function mediaTextAlternative(
           ),
         () => Outcomes.HasNoLabel(kind)
       )
-    )
+    ),
   };
 }
 

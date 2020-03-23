@@ -24,12 +24,12 @@ export abstract class Outcome<I, T, Q = unknown>
   public toEARL(): Outcome.EARL {
     return {
       "@context": {
-        earl: "http://www.w3.org/ns/earl#"
+        earl: "http://www.w3.org/ns/earl#",
       },
       "@type": "earl:Assertion",
       "earl:test": {
-        "@id": this.rule.uri
-      }
+        "@id": this.rule.uri,
+      },
     };
   }
 }
@@ -89,8 +89,8 @@ export namespace Outcome {
           .toArray()
           .map(([id, expectation]) => [
             id,
-            expectation.map(expectation => expectation.toJSON()).getOr(null)
-          ])
+            expectation.map((expectation) => expectation.toJSON()).getOr(null),
+          ]),
       };
     }
 
@@ -100,9 +100,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:passed"
-          }
-        }
+            "@id": "earl:passed",
+          },
+        },
       };
 
       for (const pointer of earl.Serializable.toEARL(this.target)) {
@@ -173,8 +173,8 @@ export namespace Outcome {
           .toArray()
           .map(([id, expectation]) => [
             id,
-            expectation.map(expectation => expectation.toJSON()).getOr(null)
-          ])
+            expectation.map((expectation) => expectation.toJSON()).getOr(null),
+          ]),
       };
     }
 
@@ -184,9 +184,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:failed"
-          }
-        }
+            "@id": "earl:failed",
+          },
+        },
       };
 
       for (const pointer of earl.Serializable.toEARL(this.target)) {
@@ -244,7 +244,7 @@ export namespace Outcome {
       return {
         outcome: "cantTell",
         rule: this.rule.toJSON(),
-        target: json.Serializable.toJSON(this.target)
+        target: json.Serializable.toJSON(this.target),
       };
     }
 
@@ -254,9 +254,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:cantTell"
-          }
-        }
+            "@id": "earl:cantTell",
+          },
+        },
       };
     }
   }
@@ -301,7 +301,7 @@ export namespace Outcome {
     public toJSON(): Inapplicable.JSON {
       return {
         outcome: "inapplicable",
-        rule: this.rule.toJSON()
+        rule: this.rule.toJSON(),
       };
     }
 
@@ -311,9 +311,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:inapplicable"
-          }
-        }
+            "@id": "earl:inapplicable",
+          },
+        },
       };
     }
   }

@@ -101,7 +101,7 @@ export namespace Token {
     public toJSON(): Ident.JSON {
       return {
         type: "ident",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -129,7 +129,7 @@ export namespace Token {
     } else {
       const value = query;
 
-      predicate = ident => ident.value === value;
+      predicate = (ident) => ident.value === value;
     }
 
     return parseToken(and(isIdent, predicate));
@@ -162,7 +162,7 @@ export namespace Token {
     public toJSON(): Function.JSON {
       return {
         type: "function",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -192,7 +192,7 @@ export namespace Token {
     } else {
       const value = query;
 
-      predicate = ident => ident.value === value;
+      predicate = (ident) => ident.value === value;
     }
 
     return parseToken(and(isFunction, predicate));
@@ -225,7 +225,7 @@ export namespace Token {
     public toJSON(): AtKeyword.JSON {
       return {
         type: "at-keyword",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -279,7 +279,7 @@ export namespace Token {
       return {
         type: "hash",
         value: this._value,
-        isIdentifier: this._isIdentifier
+        isIdentifier: this._isIdentifier,
       };
     }
 
@@ -331,7 +331,7 @@ export namespace Token {
     public toJSON(): String.JSON {
       return {
         type: "string",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -382,7 +382,7 @@ export namespace Token {
     public toJSON(): URL.JSON {
       return {
         type: "url",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -425,7 +425,7 @@ export namespace Token {
 
     public toJSON(): BadURL.JSON {
       return {
-        type: "bad-url"
+        type: "bad-url",
       };
     }
 
@@ -467,7 +467,7 @@ export namespace Token {
     public toJSON(): Delim.JSON {
       return {
         type: "delim",
-        value: this._value
+        value: this._value,
       };
     }
 
@@ -497,7 +497,7 @@ export namespace Token {
     } else {
       const value = typeof query === "number" ? query : query.charCodeAt(0);
 
-      predicate = delim => delim.value === value;
+      predicate = (delim) => delim.value === value;
     }
 
     return parseToken(and(isDelim, predicate));
@@ -553,7 +553,7 @@ export namespace Token {
         type: "number",
         value: this._value,
         isInteger: this._isInteger,
-        isSigned: this._isSigned
+        isSigned: this._isSigned,
       };
     }
 
@@ -617,7 +617,7 @@ export namespace Token {
       return {
         type: "percentage",
         value: this._value,
-        isInteger: this._isInteger
+        isInteger: this._isInteger,
       };
     }
 
@@ -708,7 +708,7 @@ export namespace Token {
         value: this._value,
         unit: this._unit,
         isInteger: this._isInteger,
-        isSigned: this._isSigned
+        isSigned: this._isSigned,
       };
     }
 
@@ -754,7 +754,7 @@ export namespace Token {
 
     public toJSON(): Whitespace.JSON {
       return {
-        type: "whitespace"
+        type: "whitespace",
       };
     }
 
@@ -794,7 +794,7 @@ export namespace Token {
 
     public toJSON(): Colon.JSON {
       return {
-        type: "colon"
+        type: "colon",
       };
     }
 
@@ -834,7 +834,7 @@ export namespace Token {
 
     public toJSON(): Semicolon.JSON {
       return {
-        type: "semicolon"
+        type: "semicolon",
       };
     }
 
@@ -874,7 +874,7 @@ export namespace Token {
 
     public toJSON(): Comma.JSON {
       return {
-        type: "comma"
+        type: "comma",
       };
     }
 
@@ -914,7 +914,7 @@ export namespace Token {
 
     public toJSON(): OpenParenthesis.JSON {
       return {
-        type: "open-parenthesis"
+        type: "open-parenthesis",
       };
     }
 
@@ -954,7 +954,7 @@ export namespace Token {
 
     public toJSON(): CloseParenthesis.JSON {
       return {
-        type: "close-parenthesis"
+        type: "close-parenthesis",
       };
     }
 
@@ -996,7 +996,7 @@ export namespace Token {
 
     public toJSON(): OpenSquareBracket.JSON {
       return {
-        type: "open-square-bracket"
+        type: "open-square-bracket",
       };
     }
 
@@ -1038,7 +1038,7 @@ export namespace Token {
 
     public toJSON(): CloseSquareBracket.JSON {
       return {
-        type: "close-square-bracket"
+        type: "close-square-bracket",
       };
     }
 
@@ -1080,7 +1080,7 @@ export namespace Token {
 
     public toJSON(): OpenCurlyBracket.JSON {
       return {
-        type: "open-curly-bracket"
+        type: "open-curly-bracket",
       };
     }
 
@@ -1122,7 +1122,7 @@ export namespace Token {
 
     public toJSON(): CloseCurlyBracket.JSON {
       return {
-        type: "close-curly-bracket"
+        type: "close-curly-bracket",
       };
     }
 
@@ -1164,7 +1164,7 @@ export namespace Token {
 
     public toJSON(): OpenComment.JSON {
       return {
-        type: "open-comment"
+        type: "open-comment",
       };
     }
 
@@ -1204,7 +1204,7 @@ export namespace Token {
 
     public toJSON(): CloseComment.JSON {
       return {
-        type: "close-comment"
+        type: "close-comment",
       };
     }
 
@@ -1229,10 +1229,10 @@ export namespace Token {
 function parseToken<T extends Token>(
   predicate: Predicate<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return input =>
+  return (input) =>
     input
       .get(0)
       .filter(predicate)
-      .map(token => Ok.of([input.slice(1), token] as const))
+      .map((token) => Ok.of([input.slice(1), token] as const))
       .getOrElse(() => Err.of("Expected token"));
 }

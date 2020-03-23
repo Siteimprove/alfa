@@ -4,7 +4,7 @@ import {
   List,
   ListObject,
   Scalar,
-  ValueObject
+  ValueObject,
 } from "./types";
 
 const { isArray } = Array;

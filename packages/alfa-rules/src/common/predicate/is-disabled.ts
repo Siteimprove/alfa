@@ -10,7 +10,7 @@ const { and, not, equals } = Predicate;
 /**
  * @see https://html.spec.whatwg.org/#concept-fe-disabled
  */
-export const isDisabled: Predicate<Element> = element => {
+export const isDisabled: Predicate<Element> = (element) => {
   switch (element.name) {
     // https://html.spec.whatwg.org/#attr-fe-disabled
     case "button":
@@ -25,17 +25,17 @@ export const isDisabled: Predicate<Element> = element => {
 
       return element
         .parent()
-        .flatMap(parent =>
+        .flatMap((parent) =>
           parent.closest(and(Element.isElement, hasName(equals("fieldset"))))
         )
         .filter(not(isDisabled))
-        .flatMap(fieldset =>
+        .flatMap((fieldset) =>
           find(
             fieldset.descendants(),
             and(Element.isElement, hasName(equals("legend")))
           )
         )
-        .some(legend => some(legend.descendants(), equals(element)));
+        .some((legend) => some(legend.descendants(), equals(element)));
 
     // https://html.spec.whatwg.org/#attr-option-disabled
     case "option":
@@ -54,5 +54,5 @@ export const isDisabled: Predicate<Element> = element => {
 
   return element
     .attribute("aria-disabled")
-    .some(disabled => disabled.value === "true");
+    .some((disabled) => disabled.value === "true");
 };

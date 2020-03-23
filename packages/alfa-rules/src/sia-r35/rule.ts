@@ -26,11 +26,11 @@ export default Rule.Composite.of<Page, Element, Question>({
             some(outcomeToTrilean)(outcomes),
             () => Outcomes.HasAlternative,
             () => Outcomes.HasNoAlternative
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

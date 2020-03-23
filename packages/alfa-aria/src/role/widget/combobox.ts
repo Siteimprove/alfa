@@ -14,16 +14,16 @@ Role.register(
 
       // This property is only required when the combobox is expanded so we list
       // it as supported instead.
-      "aria-controls"
+      "aria-controls",
     ],
     owns: ["textbox"],
     name: {
       from: ["author"],
-      required: true
+      required: true,
     },
     implicits: [
       ["aria-expanded", "false"],
-      ["aria-haspopup", "listbox"]
-    ]
+      ["aria-haspopup", "listbox"],
+    ],
   })
 );

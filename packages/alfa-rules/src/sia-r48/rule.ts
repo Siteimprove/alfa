@@ -46,20 +46,20 @@ export default Rule.Atomic.of<Page, Element, Question>({
               )
             )
           )
-          .map(element =>
+          .map((element) =>
             Question.of(
               "has-audio",
               "boolean",
               element,
               `Does the <${element.name}> element contain audio?`
-            ).map(hasAudio =>
+            ).map((hasAudio) =>
               hasAudio
                 ? Question.of(
                     "is-above-duration-threshold",
                     "boolean",
                     element,
                     `Does the <${element.name}> element have a duration of more than 3 seconds?`
-                  ).map(isAboveDurationThreshold =>
+                  ).map((isAboveDurationThreshold) =>
                     isAboveDurationThreshold ? Option.of(element) : None
                   )
                 : None
@@ -74,17 +74,17 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "boolean",
             target,
             `Does the <${target.name}> element have a total audio duration of less than 3 seconds?`
-          ).map(isBelowAudioDurationThreshold =>
+          ).map((isBelowAudioDurationThreshold) =>
             expectation(
               isBelowAudioDurationThreshold,
               () => Outcomes.DurationBelowThreshold(target.name),
               () => Outcomes.DurationAboveThreshold(target.name)
             )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

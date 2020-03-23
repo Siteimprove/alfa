@@ -16,8 +16,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants({ composed: true, nested: true })
           .filter(Element.isElement)
-          .flatMap(element =>
-            Sequence.from(element.attributes).filter(attribute =>
+          .flatMap((element) =>
+            Sequence.from(element.attributes).filter((attribute) =>
               attribute.name.startsWith("aria-")
             )
           );
@@ -31,11 +31,11 @@ export default Rule.Atomic.of<Page, Attribute>({
             exists,
             () => Outcomes.IsDefined,
             () => Outcomes.IsNotDefined
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

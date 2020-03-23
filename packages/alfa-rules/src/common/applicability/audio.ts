@@ -31,13 +31,13 @@ export function audio(
         )
       )
     ),
-    element =>
+    (element) =>
       Question.of(
         "is-streaming",
         "boolean",
         element,
         "Is the <audio> element streaming?"
-      ).map(isStreaming =>
+      ).map((isStreaming) =>
         isStreaming
           ? None
           : Question.of(
@@ -45,7 +45,7 @@ export function audio(
               "boolean",
               element,
               "Is the <audio> element currently playing?"
-            ).map(isPlaying =>
+            ).map((isPlaying) =>
               isPlaying
                 ? Option.of(element)
                 : Question.of(
@@ -53,7 +53,7 @@ export function audio(
                     "node",
                     element,
                     "Where is the button that controls playback of the <audio> element?"
-                  ).map(playButton =>
+                  ).map((playButton) =>
                     playButton.some(
                       and(Element.isElement, isPerceivable(device))
                     )

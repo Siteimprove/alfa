@@ -38,20 +38,20 @@ export default Rule.Atomic.of<Page, Element>({
             hasRequiredValues(target),
             () => Outcomes.HasAllStates,
             () => Outcomes.HasNotAllStates
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
-const hasRequiredValues: Predicate<Element> = element => {
+const hasRequiredValues: Predicate<Element> = (element) => {
   for (const [role] of Role.from(element)) {
     if (role.isSome()) {
       const { requires, implicits } = role.get().characteristics;
 
       for (const attribute of requires) {
-        if (find(implicits, implicit => implicit[0] === attribute).isSome()) {
+        if (find(implicits, (implicit) => implicit[0] === attribute).isSome()) {
           continue;
         }
 

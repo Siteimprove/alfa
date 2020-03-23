@@ -43,10 +43,10 @@ export abstract class Rule<I, T, Q>
   public toEARL(): Rule.EARL {
     return {
       "@context": {
-        earl: "http://www.w3.org/ns/earl#"
+        earl: "http://www.w3.org/ns/earl#",
       },
       "@type": ["earl:TestCriterion", "earl:TestCase"],
-      "@id": this._uri
+      "@id": this._uri,
     };
   }
 }
@@ -109,20 +109,20 @@ export namespace Rule {
         return outcomes.get(this, () => {
           const { applicability, expectations } = evaluate(input);
 
-          return Future.traverse(applicability(), interview =>
-            Interview.conduct(interview, this, oracle).map(target =>
-              target.flatMap(target =>
+          return Future.traverse(applicability(), (interview) =>
+            Interview.conduct(interview, this, oracle).map((target) =>
+              target.flatMap((target) =>
                 Option.isOption(target) ? target : Option.of(target)
               )
             )
           )
-            .map(targets => Sequence.from(flatten<T>(targets)))
-            .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
+            .map((targets) => Sequence.from(flatten<T>(targets)))
+            .flatMap<Iterable<Outcome<I, T, Q>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
 
-              return Future.traverse(targets, target =>
+              return Future.traverse(targets, (target) =>
                 resolve(target, Record.of(expectations(target)), this, oracle)
               );
             });
@@ -133,7 +133,7 @@ export namespace Rule {
     public toJSON(): Atomic.JSON {
       return {
         type: "atomic",
-        uri: this._uri
+        uri: this._uri,
       };
     }
   }
@@ -179,12 +179,12 @@ export namespace Rule {
     ) {
       super(uri, (input, oracle, outcomes) => {
         return outcomes.get(this, () => {
-          return Future.traverse(composes, rule =>
+          return Future.traverse(composes, (rule) =>
             rule.evaluate(input, oracle, outcomes)
           )
-            .map(outcomes =>
+            .map((outcomes) =>
               Sequence.from(
-                flatMap(outcomes, function*(outcomes) {
+                flatMap(outcomes, function* (outcomes) {
                   for (const outcome of outcomes) {
                     if (Outcome.isApplicable(outcome)) {
                       yield outcome;
@@ -193,7 +193,7 @@ export namespace Rule {
                 })
               )
             )
-            .flatMap<Iterable<Outcome<I, T, Q>>>(targets => {
+            .flatMap<Iterable<Outcome<I, T, Q>>>((targets) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
@@ -201,7 +201,7 @@ export namespace Rule {
               const { expectations } = evaluate(input);
 
               return Future.traverse(
-                targets.groupBy(outcome => outcome.target),
+                targets.groupBy((outcome) => outcome.target),
                 ([target, outcomes]) =>
                   resolve(
                     target,
@@ -225,7 +225,7 @@ export namespace Rule {
       return {
         type: "composite",
         uri: this._uri,
-        composes: this._composes.map(rule => rule.toJSON())
+        composes: this._composes.map((rule) => rule.toJSON()),
       };
     }
   }
@@ -261,23 +261,25 @@ function resolve<I, T, Q>(
 ): Future<Outcome.Applicable<I, T, Q>> {
   return Future.traverse(expectations, ([id, interview]) =>
     Interview.conduct(interview, rule, oracle).map(
-      expectation => [id, expectation] as const
+      (expectation) => [id, expectation] as const
     )
-  ).map(expectations =>
+  ).map((expectations) =>
     reduce(
       expectations,
       (expectations, [id, expectation]) =>
-        expectations.flatMap(expectations =>
-          expectation.map(expectation =>
+        expectations.flatMap((expectations) =>
+          expectation.map((expectation) =>
             expectations.push([
               id,
-              expectation.map(value => value.map(normalize).mapErr(normalize))
+              expectation.map((value) =>
+                value.map(normalize).mapErr(normalize)
+              ),
             ])
           )
         ),
       Option.of(List.empty<[string, Rule.Expectation]>())
     )
-      .map(expectations => {
+      .map((expectations) => {
         return Outcome.from(rule, target, Record.from(expectations));
       })
       .getOrElse(() => {

@@ -54,11 +54,11 @@ export default Rule.Atomic.of<Page, Document>({
             title.some(hasTextContent()),
             () => Outcomes.HasNonEmptyTitle,
             () => Outcomes.HasEmptyTitle
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

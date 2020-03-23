@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
 export function isRendered(device: Device): Predicate<Node> {
-  return node => {
+  return (node) => {
     if (Element.isElement(node)) {
       const display = Style.from(node, device).computed("display").value;
 

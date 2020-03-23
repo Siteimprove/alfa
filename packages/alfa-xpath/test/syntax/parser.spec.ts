@@ -4,32 +4,26 @@ import { Expression } from "../../src/expression";
 import { Parser } from "../../src/syntax/parser";
 
 function parse(t: Assertions, input: string, expected: Expression.JSON) {
-  t.deepEqual(
-    Parser.parse(input)
-      .get()
-      .toJSON(),
-    expected,
-    input
-  );
+  t.deepEqual(Parser.parse(input).get().toJSON(), expected, input);
 }
 
-test(".parse() parses an integer literal", t => {
+test(".parse() parses an integer literal", (t) => {
   parse(t, `123`, {
     type: "integer",
-    value: 123
+    value: 123,
   });
 });
 
-test(".parse() parses an axis expression", t => {
+test(".parse() parses an axis expression", (t) => {
   parse(t, `foo`, {
     type: "axis",
     axis: "child",
     test: {
       type: "name",
       prefix: null,
-      name: "foo"
+      name: "foo",
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `foo:bar`, {
@@ -38,9 +32,9 @@ test(".parse() parses an axis expression", t => {
     test: {
       type: "name",
       prefix: "foo",
-      name: "bar"
+      name: "bar",
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `child::foo`, {
@@ -49,9 +43,9 @@ test(".parse() parses an axis expression", t => {
     test: {
       type: "name",
       prefix: null,
-      name: "foo"
+      name: "foo",
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `self::foo`, {
@@ -60,9 +54,9 @@ test(".parse() parses an axis expression", t => {
     test: {
       type: "name",
       prefix: null,
-      name: "foo"
+      name: "foo",
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `self::node()`, {
@@ -70,9 +64,9 @@ test(".parse() parses an axis expression", t => {
     axis: "self",
     test: {
       type: "kind",
-      kind: "node"
+      kind: "node",
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `self::element()`, {
@@ -81,9 +75,9 @@ test(".parse() parses an axis expression", t => {
     test: {
       type: "kind",
       kind: "element",
-      name: null
+      name: null,
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `self::element(foo)`, {
@@ -92,9 +86,9 @@ test(".parse() parses an axis expression", t => {
     test: {
       type: "kind",
       kind: "element",
-      name: "foo"
+      name: "foo",
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `self::attribute(foo)`, {
@@ -103,34 +97,34 @@ test(".parse() parses an axis expression", t => {
     test: {
       type: "kind",
       kind: "attribute",
-      name: "foo"
+      name: "foo",
     },
-    predicates: []
+    predicates: [],
   });
 });
 
-test(".parse() parses a wildcard axis expression", t => {
+test(".parse() parses a wildcard axis expression", (t) => {
   parse(t, `self::*`, {
     type: "axis",
     axis: "self",
     test: null,
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `*`, {
     type: "axis",
     axis: "child",
     test: null,
-    predicates: []
+    predicates: [],
   });
 });
 
-test(".parse() parses an abbreviated axis expression", t => {
+test(".parse() parses an abbreviated axis expression", (t) => {
   parse(t, `@*`, {
     type: "axis",
     axis: "attribute",
     test: null,
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `@foo`, {
@@ -139,9 +133,9 @@ test(".parse() parses an abbreviated axis expression", t => {
     test: {
       type: "name",
       prefix: null,
-      name: "foo"
+      name: "foo",
     },
-    predicates: []
+    predicates: [],
   });
 
   parse(t, `..`, {
@@ -149,20 +143,20 @@ test(".parse() parses an abbreviated axis expression", t => {
     axis: "parent",
     test: {
       type: "kind",
-      kind: "node"
+      kind: "node",
     },
-    predicates: []
+    predicates: [],
   });
 });
 
-test(".parse() parses an axis expression with a predicate", t => {
+test(".parse() parses an axis expression with a predicate", (t) => {
   parse(t, `foo[bar]`, {
     type: "axis",
     axis: "child",
     test: {
       type: "name",
       prefix: null,
-      name: "foo"
+      name: "foo",
     },
     predicates: [
       {
@@ -171,11 +165,11 @@ test(".parse() parses an axis expression with a predicate", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "bar"
+          name: "bar",
         },
-        predicates: []
-      }
-    ]
+        predicates: [],
+      },
+    ],
   });
 
   parse(t, `foo[123]`, {
@@ -184,18 +178,18 @@ test(".parse() parses an axis expression with a predicate", t => {
     test: {
       type: "name",
       prefix: null,
-      name: "foo"
+      name: "foo",
     },
     predicates: [
       {
         type: "integer",
-        value: 123
-      }
-    ]
+        value: 123,
+      },
+    ],
   });
 });
 
-test(".parse() parses a path expression", t => {
+test(".parse() parses a path expression", (t) => {
   parse(t, `foo/bar`, {
     type: "path",
     left: {
@@ -204,9 +198,9 @@ test(".parse() parses a path expression", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "foo"
+        name: "foo",
       },
-      predicates: []
+      predicates: [],
     },
     right: {
       type: "axis",
@@ -214,10 +208,10 @@ test(".parse() parses a path expression", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "bar"
+        name: "bar",
       },
-      predicates: []
-    }
+      predicates: [],
+    },
   });
 
   parse(t, `foo/bar/baz`, {
@@ -230,9 +224,9 @@ test(".parse() parses a path expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "foo"
+          name: "foo",
         },
-        predicates: []
+        predicates: [],
       },
       right: {
         type: "axis",
@@ -240,10 +234,10 @@ test(".parse() parses a path expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "bar"
+          name: "bar",
         },
-        predicates: []
-      }
+        predicates: [],
+      },
     },
     right: {
       type: "axis",
@@ -251,14 +245,14 @@ test(".parse() parses a path expression", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "baz"
+        name: "baz",
       },
-      predicates: []
-    }
+      predicates: [],
+    },
   });
 });
 
-test(".parse() parses an absolute path expression", t => {
+test(".parse() parses an absolute path expression", (t) => {
   parse(t, `/`, {
     type: "function-call",
     prefix: "fn",
@@ -270,11 +264,11 @@ test(".parse() parses an absolute path expression", t => {
         axis: "self",
         test: {
           type: "kind",
-          kind: "node"
+          kind: "node",
         },
-        predicates: []
-      }
-    ]
+        predicates: [],
+      },
+    ],
   });
 
   parse(t, `/foo`, {
@@ -290,11 +284,11 @@ test(".parse() parses an absolute path expression", t => {
           axis: "self",
           test: {
             type: "kind",
-            kind: "node"
+            kind: "node",
           },
-          predicates: []
-        }
-      ]
+          predicates: [],
+        },
+      ],
     },
     right: {
       type: "axis",
@@ -302,10 +296,10 @@ test(".parse() parses an absolute path expression", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "foo"
+        name: "foo",
       },
-      predicates: []
-    }
+      predicates: [],
+    },
   });
 
   parse(t, `/foo/bar`, {
@@ -321,11 +315,11 @@ test(".parse() parses an absolute path expression", t => {
           axis: "self",
           test: {
             type: "kind",
-            kind: "node"
+            kind: "node",
           },
-          predicates: []
-        }
-      ]
+          predicates: [],
+        },
+      ],
     },
     right: {
       type: "path",
@@ -335,9 +329,9 @@ test(".parse() parses an absolute path expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "foo"
+          name: "foo",
         },
-        predicates: []
+        predicates: [],
       },
       right: {
         type: "axis",
@@ -345,11 +339,11 @@ test(".parse() parses an absolute path expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "bar"
+          name: "bar",
         },
-        predicates: []
-      }
-    }
+        predicates: [],
+      },
+    },
   });
 
   parse(t, `//foo`, {
@@ -365,11 +359,11 @@ test(".parse() parses an absolute path expression", t => {
           axis: "self",
           test: {
             type: "kind",
-            kind: "node"
+            kind: "node",
           },
-          predicates: []
-        }
-      ]
+          predicates: [],
+        },
+      ],
     },
     right: {
       type: "path",
@@ -378,9 +372,9 @@ test(".parse() parses an absolute path expression", t => {
         axis: "descendant-or-self",
         test: {
           type: "kind",
-          kind: "node"
+          kind: "node",
         },
-        predicates: []
+        predicates: [],
       },
       right: {
         type: "axis",
@@ -388,11 +382,11 @@ test(".parse() parses an absolute path expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "foo"
+          name: "foo",
         },
-        predicates: []
-      }
-    }
+        predicates: [],
+      },
+    },
   });
 
   parse(t, `//foo/bar`, {
@@ -408,11 +402,11 @@ test(".parse() parses an absolute path expression", t => {
           axis: "self",
           test: {
             type: "kind",
-            kind: "node"
+            kind: "node",
           },
-          predicates: []
-        }
-      ]
+          predicates: [],
+        },
+      ],
     },
     right: {
       type: "path",
@@ -421,9 +415,9 @@ test(".parse() parses an absolute path expression", t => {
         axis: "descendant-or-self",
         test: {
           type: "kind",
-          kind: "node"
+          kind: "node",
         },
-        predicates: []
+        predicates: [],
       },
       right: {
         type: "path",
@@ -433,9 +427,9 @@ test(".parse() parses an absolute path expression", t => {
           test: {
             type: "name",
             prefix: null,
-            name: "foo"
+            name: "foo",
           },
-          predicates: []
+          predicates: [],
         },
         right: {
           type: "axis",
@@ -443,12 +437,12 @@ test(".parse() parses an absolute path expression", t => {
           test: {
             type: "name",
             prefix: null,
-            name: "bar"
+            name: "bar",
           },
-          predicates: []
-        }
-      }
-    }
+          predicates: [],
+        },
+      },
+    },
   });
 
   parse(t, `//foo//bar`, {
@@ -464,11 +458,11 @@ test(".parse() parses an absolute path expression", t => {
           axis: "self",
           test: {
             type: "kind",
-            kind: "node"
+            kind: "node",
           },
-          predicates: []
-        }
-      ]
+          predicates: [],
+        },
+      ],
     },
     right: {
       type: "path",
@@ -477,9 +471,9 @@ test(".parse() parses an absolute path expression", t => {
         axis: "descendant-or-self",
         test: {
           type: "kind",
-          kind: "node"
+          kind: "node",
         },
-        predicates: []
+        predicates: [],
       },
       right: {
         type: "path",
@@ -489,9 +483,9 @@ test(".parse() parses an absolute path expression", t => {
           test: {
             type: "name",
             prefix: null,
-            name: "foo"
+            name: "foo",
           },
-          predicates: []
+          predicates: [],
         },
         right: {
           type: "path",
@@ -500,9 +494,9 @@ test(".parse() parses an absolute path expression", t => {
             axis: "descendant-or-self",
             test: {
               type: "kind",
-              kind: "node"
+              kind: "node",
             },
-            predicates: []
+            predicates: [],
           },
           right: {
             type: "axis",
@@ -510,17 +504,17 @@ test(".parse() parses an absolute path expression", t => {
             test: {
               type: "name",
               prefix: null,
-              name: "bar"
+              name: "bar",
             },
-            predicates: []
-          }
-        }
-      }
-    }
+            predicates: [],
+          },
+        },
+      },
+    },
   });
 });
 
-test(".parse() parses a path expression with a predicate", t => {
+test(".parse() parses a path expression with a predicate", (t) => {
   parse(t, `foo/bar[baz]`, {
     type: "path",
     left: {
@@ -529,9 +523,9 @@ test(".parse() parses a path expression with a predicate", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "foo"
+        name: "foo",
       },
-      predicates: []
+      predicates: [],
     },
     right: {
       type: "axis",
@@ -539,7 +533,7 @@ test(".parse() parses a path expression with a predicate", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "bar"
+        name: "bar",
       },
       predicates: [
         {
@@ -548,12 +542,12 @@ test(".parse() parses a path expression with a predicate", t => {
           test: {
             type: "name",
             prefix: null,
-            name: "baz"
+            name: "baz",
           },
-          predicates: []
-        }
-      ]
-    }
+          predicates: [],
+        },
+      ],
+    },
   });
 
   parse(t, `foo/bar[123]`, {
@@ -564,9 +558,9 @@ test(".parse() parses a path expression with a predicate", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "foo"
+        name: "foo",
       },
-      predicates: []
+      predicates: [],
     },
     right: {
       type: "axis",
@@ -574,29 +568,29 @@ test(".parse() parses a path expression with a predicate", t => {
       test: {
         type: "name",
         prefix: null,
-        name: "bar"
+        name: "bar",
       },
       predicates: [
         {
           type: "integer",
-          value: 123
-        }
-      ]
-    }
+          value: 123,
+        },
+      ],
+    },
   });
 });
 
-test(".parse() parses a context item expression", t => {
+test(".parse() parses a context item expression", (t) => {
   parse(t, `.`, {
-    type: "context-item"
+    type: "context-item",
   });
 });
 
-test(".parse() parses a filter expression", t => {
+test(".parse() parses a filter expression", (t) => {
   parse(t, `.[foo]`, {
     type: "filter",
     base: {
-      type: "context-item"
+      type: "context-item",
     },
     predicates: [
       {
@@ -605,17 +599,17 @@ test(".parse() parses a filter expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "foo"
+          name: "foo",
         },
-        predicates: []
-      }
-    ]
+        predicates: [],
+      },
+    ],
   });
 
   parse(t, `.[foo][bar]`, {
     type: "filter",
     base: {
-      type: "context-item"
+      type: "context-item",
     },
     predicates: [
       {
@@ -624,9 +618,9 @@ test(".parse() parses a filter expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "foo"
+          name: "foo",
         },
-        predicates: []
+        predicates: [],
       },
       {
         type: "axis",
@@ -634,10 +628,10 @@ test(".parse() parses a filter expression", t => {
         test: {
           type: "name",
           prefix: null,
-          name: "bar"
+          name: "bar",
         },
-        predicates: []
-      }
-    ]
+        predicates: [],
+      },
+    ],
   });
 });

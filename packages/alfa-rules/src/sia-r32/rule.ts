@@ -24,17 +24,17 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "boolean",
             target,
             "Does the <video> element have an audio track that describes its visual information?"
-          ).map(hasAudioTrack =>
+          ).map((hasAudioTrack) =>
             expectation(
               hasAudioTrack,
               () => Outcomes.HasDescriptiveAudio,
               () => Outcomes.HasNoDescriptiveAudio
             )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

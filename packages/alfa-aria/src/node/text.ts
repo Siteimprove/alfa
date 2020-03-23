@@ -47,7 +47,7 @@ export class Text extends Node {
       type: "text",
       node: this._node.toJSON(),
       name: this._name,
-      children: this._children.map(child => child.toJSON())
+      children: this._children.map((child) => child.toJSON()),
     };
   }
 

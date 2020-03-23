@@ -41,7 +41,7 @@ export namespace Lexer {
   }
 }
 
-const lexToken: Parser<Slice<number>, Token, string> = input => {
+const lexToken: Parser<Slice<number>, Token, string> = (input) => {
   if (input.length === 0) {
     return Err.of("Unexpected end of input");
   }
@@ -81,7 +81,7 @@ const lexToken: Parser<Slice<number>, Token, string> = input => {
   return Err.of("Unexpected character");
 };
 
-const isBetween = (lower: number, upper: number): Predicate<number> => char =>
+const isBetween = (lower: number, upper: number): Predicate<number> => (char) =>
   char >= lower && char <= upper;
 
 const isAlpha = or(isBetween(0x61, 0x7a), isBetween(0x41, 0x5a));
@@ -159,7 +159,7 @@ const isCharacter = or(
   )
 );
 
-const lexNumeric: Parser<Slice<number>, Token, string> = input => {
+const lexNumeric: Parser<Slice<number>, Token, string> = (input) => {
   let value = 0;
   let next = input.get(0);
 
@@ -221,7 +221,7 @@ const lexNumeric: Parser<Slice<number>, Token, string> = input => {
   return Ok.of([input, token] as const);
 };
 
-const lexString: Parser<Slice<number>, Token> = input => {
+const lexString: Parser<Slice<number>, Token> = (input) => {
   const mark = input.get(0).get();
 
   input = input.slice(1);
@@ -255,7 +255,7 @@ const lexString: Parser<Slice<number>, Token> = input => {
   return Ok.of([input, Token.String.of(value)] as const);
 };
 
-const lexCommentContents: Parser<Slice<number>, string> = input => {
+const lexCommentContents: Parser<Slice<number>, string> = (input) => {
   let value = "";
   let next = input.get(0);
 
@@ -300,7 +300,7 @@ const lexCommentContents: Parser<Slice<number>, string> = input => {
   return Ok.of([input, value] as const);
 };
 
-const lexComment = map(lexCommentContents, value => {
+const lexComment = map(lexCommentContents, (value) => {
   const n = value.length;
 
   if (value.charCodeAt(n - 2) === 0x3a && value.charCodeAt(n - 1) === 0x29) {
@@ -310,7 +310,7 @@ const lexComment = map(lexCommentContents, value => {
   return Token.Comment.of(value);
 });
 
-const lexName: Parser<Slice<number>, Token> = input => {
+const lexName: Parser<Slice<number>, Token> = (input) => {
   let value = "";
   let next = input.get(0);
 

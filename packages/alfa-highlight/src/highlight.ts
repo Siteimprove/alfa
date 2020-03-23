@@ -1,6 +1,7 @@
 /// <reference path="../types/emphasize.d.ts" />
 
 import * as emphasize from "emphasize";
+
 import { mark } from "./markers";
 
 const sheet: emphasize.Sheet = {
@@ -45,7 +46,7 @@ const sheet: emphasize.Sheet = {
 
   emphasis: mark.italic,
   strong: mark.bold,
-  formula: mark.inverse
+  formula: mark.inverse,
 };
 
 export function highlight(language: string, value: string): string {

@@ -29,13 +29,13 @@ export class Fragment extends Node {
   public toJSON(): Fragment.JSON {
     return {
       type: "fragment",
-      children: this._children.map(child => child.toJSON())
+      children: this._children.map((child) => child.toJSON()),
     };
   }
 
   public toString(): string {
     const children = this._children
-      .map(child => indent(child.toString()))
+      .map((child) => indent(child.toString()))
       .join("\n");
 
     return `#document-fragment${children === "" ? "" : `\n${children}`}`;
@@ -56,9 +56,9 @@ export namespace Fragment {
     fragment: JSON,
     parent: Option<Node> = None
   ): Fragment {
-    return Fragment.of(self => {
+    return Fragment.of((self) => {
       const parent = Option.of(self);
-      return fragment.children.map(child => Node.fromNode(child, parent));
+      return fragment.children.map((child) => Node.fromNode(child, parent));
     }, parent);
   }
 }

@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               )
             )
           )
-          .map(element => element.attribute("lang").get());
+          .map((element) => element.attribute("lang").get());
       },
 
       expectations(target) {
@@ -40,11 +40,11 @@ export default Rule.Atomic.of<Page, Attribute>({
             Language.parse(target.value).isSome(),
             () => Outcomes.HasValidLanguage,
             () => Outcomes.HasNoValidLanguage
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

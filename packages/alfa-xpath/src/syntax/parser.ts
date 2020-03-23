@@ -18,7 +18,7 @@ const {
   left,
   right,
   take,
-  zeroOrMore
+  zeroOrMore,
 } = parser.Parser;
 const { equals, property } = Predicate;
 
@@ -37,28 +37,28 @@ let parseExpression: parser.Parser<Slice<Token>, Expression, string>;
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-IntegerLiteral
  */
-const parseIntegerLiteral = map(Token.parseInteger, integer =>
+const parseIntegerLiteral = map(Token.parseInteger, (integer) =>
   Expression.Integer.of(integer.value)
 );
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-DecimalLiteral
  */
-const parseDecimalLiteral = map(Token.parseDecimal, decimal =>
+const parseDecimalLiteral = map(Token.parseDecimal, (decimal) =>
   Expression.Decimal.of(decimal.value)
 );
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-DoubleLiteral
  */
-const parseDoubleLiteral = map(Token.parseDouble, double =>
+const parseDoubleLiteral = map(Token.parseDouble, (double) =>
   Expression.Double.of(double.value)
 );
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-StringLiteral
  */
-const parseStringLiteral = map(Token.parseString, string =>
+const parseStringLiteral = map(Token.parseString, (string) =>
   Expression.String.of(string.value)
 );
 
@@ -80,7 +80,7 @@ const parseLiteral = either(parseNumericLiteral, parseStringLiteral);
  */
 const parseParenthesizedExpression = delimited(
   Token.parseCharacter("("),
-  input => parseExpression(input),
+  (input) => parseExpression(input),
   Token.parseCharacter(")")
 );
 
@@ -102,33 +102,33 @@ const parsePrimaryExpression = either(
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementName
  */
-const parseElementName = map(Token.parseName(), name => name.value);
+const parseElementName = map(Token.parseName(), (name) => name.value);
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ElementNameOrWildcard
  */
 const parseElementNameOrWildcard = either(
   parseElementName,
-  map(Token.parseCharacter("*"), character => fromCharCode(character.value))
+  map(Token.parseCharacter("*"), (character) => fromCharCode(character.value))
 );
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-AttributeName
  */
-const parseAttributeName = map(Token.parseName(), name => name.value);
+const parseAttributeName = map(Token.parseName(), (name) => name.value);
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#prod-xpath31-AttribNameOrWildcard
  */
 const parseAttributeNameOrWildcard = either(
   parseAttributeName,
-  map(Token.parseCharacter("*"), character => fromCharCode(character.value))
+  map(Token.parseCharacter("*"), (character) => fromCharCode(character.value))
 );
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-TypeName
  */
-const parseTypeName = map(Token.parseName(), name => name.value);
+const parseTypeName = map(Token.parseName(), (name) => name.value);
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-DocumentTest
@@ -152,7 +152,7 @@ const parseElementTest = map(
       left(option(parseElementNameOrWildcard), Token.parseCharacter(")"))
     )
   ),
-  name => Expression.Test.Element.of(name)
+  (name) => Expression.Test.Element.of(name)
 );
 
 /**
@@ -166,7 +166,7 @@ const parseAttributeTest = map(
       left(option(parseAttributeNameOrWildcard), Token.parseCharacter(")"))
     )
   ),
-  name => Expression.Test.Attribute.of(name)
+  (name) => Expression.Test.Attribute.of(name)
 );
 
 /**
@@ -216,14 +216,14 @@ const parseKindTest = map(
       )
     )
   ),
-  test => Option.of(test)
+  (test) => Option.of(test)
 );
 
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-NameTest
  */
 const parseNameTest = either(
-  map(Token.parseName(), name =>
+  map(Token.parseName(), (name) =>
     Option.of(Expression.Test.Name.of(name.prefix, name.value))
   ),
   map(Token.parseCharacter("*"), () => None as Option<Expression.Test.Name>)
@@ -232,7 +232,7 @@ const parseNameTest = either(
 /**
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-NodeTest
  */
-const parseNodeTest = map(either(parseKindTest, parseNameTest), test =>
+const parseNodeTest = map(either(parseKindTest, parseNameTest), (test) =>
   test.isSome() ? Option.of(test.get()) : None
 );
 
@@ -253,7 +253,7 @@ const parseReverseAxis = left(
         )
       )
     ),
-    name => name.value as Expression.Axis.Type
+    (name) => name.value as Expression.Axis.Type
   ),
   take(Token.parseCharacter(":"), 2)
 );
@@ -270,7 +270,7 @@ const parseAbbreviatedReverseStep = map(
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ReverseStep
  */
 const parseReverseStep = either(
-  map(pair(parseReverseAxis, parseNodeTest), result => {
+  map(pair(parseReverseAxis, parseNodeTest), (result) => {
     const [axis, test] = result;
     return Expression.Axis.of(axis, test);
   }),
@@ -297,7 +297,7 @@ const parseForwardAxis = left(
         )
       )
     ),
-    name => name.value as Expression.Axis.Type
+    (name) => name.value as Expression.Axis.Type
   ),
   take(Token.parseCharacter(":"), 2)
 );
@@ -307,14 +307,16 @@ const parseForwardAxis = left(
  */
 const parseAbbreviatedForwardStep = map(
   pair(option(Token.parseCharacter("@")), parseNodeTest),
-  result => {
+  (result) => {
     const [attribute, test] = result;
 
     if (attribute.isSome()) {
       return Expression.Axis.of("attribute", test);
     }
 
-    if (test.some(test => test.type === "kind" && test.kind === "attribute")) {
+    if (
+      test.some((test) => test.type === "kind" && test.kind === "attribute")
+    ) {
       return Expression.Axis.of("attribute", test);
     }
 
@@ -326,7 +328,7 @@ const parseAbbreviatedForwardStep = map(
  * @see https://www.w3.org/TR/xpath-31/#doc-xpath31-ForwardStep
  */
 const parseForwardStep = either(
-  map(pair(parseForwardAxis, parseNodeTest), result => {
+  map(pair(parseForwardAxis, parseNodeTest), (result) => {
     const [axis, test] = result;
     return Expression.Axis.of(axis, test);
   }),
@@ -338,7 +340,7 @@ const parseForwardStep = either(
  */
 const parsePredicate = delimited(
   Token.parseCharacter("["),
-  input => parseExpression(input),
+  (input) => parseExpression(input),
   Token.parseCharacter("]")
 );
 
@@ -352,7 +354,7 @@ const parsePredicateList = zeroOrMore(parsePredicate);
  */
 const parseAxisStep = map(
   pair(either(parseReverseStep, parseForwardStep), parsePredicateList),
-  result => {
+  (result) => {
     const [axis, predicates] = result;
     return Expression.Axis.of(axis.axis, axis.test, Array.from(predicates));
   }
@@ -363,7 +365,7 @@ const parseAxisStep = map(
  */
 const parsePostfixExpression = map(
   pair(parsePrimaryExpression, zeroOrMore(parsePredicate)),
-  result => {
+  (result) => {
     const [base, [...predicates]] = result;
 
     if (predicates.length === 0) {
@@ -395,7 +397,7 @@ const parseRelativePathExpression = map(
       )
     )
   ),
-  result => {
+  (result) => {
     const [left, right] = result;
     return [...right].reduce((left, [expand, right]) => {
       if (expand) {
@@ -420,10 +422,10 @@ const parsePathExpression = either(
   either(
     map(
       right(take(Token.parseCharacter("/"), 2), parseRelativePathExpression),
-      right =>
+      (right) =>
         Expression.Path.of(
           Expression.FunctionCall.of(Option.of("fn"), "root", 1, [
-            Expression.Axis.of("self", Option.of(Expression.Test.Node.of()))
+            Expression.Axis.of("self", Option.of(Expression.Test.Node.of())),
           ]),
           Expression.Path.of(
             Expression.Axis.of(
@@ -436,9 +438,9 @@ const parsePathExpression = either(
     ),
     map(
       right(Token.parseCharacter("/"), option(parseRelativePathExpression)),
-      right => {
+      (right) => {
         const left = Expression.FunctionCall.of(Option.of("fn"), "root", 1, [
-          Expression.Axis.of("self", Option.of(Expression.Test.Node.of()))
+          Expression.Axis.of("self", Option.of(Expression.Test.Node.of())),
         ]);
 
         if (right.isSome()) {

@@ -32,15 +32,15 @@ export default Rule.Atomic.of<Page, Element>({
             nor(isTabbable(device), hasTabbableDescendants(device))(target),
             () => Outcomes.IsNotTabbable,
             () => Outcomes.IsTabbable
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 function hasTabbableDescendants(device: Device): Predicate<Element> {
-  return element =>
+  return (element) =>
     some(
       element.descendants({ flattened: true }),
       and(Element.isElement, isTabbable(device))

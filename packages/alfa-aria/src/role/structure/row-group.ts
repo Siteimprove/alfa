@@ -10,7 +10,7 @@ Role.register(
     owns: ["row"],
     name: {
       from: ["contents", "author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

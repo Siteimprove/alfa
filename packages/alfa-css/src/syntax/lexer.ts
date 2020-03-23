@@ -41,9 +41,9 @@ export namespace Lexer {
 /**
  * @see https://drafts.csswg.org/css-syntax/#digit
  */
-const isDigit: Predicate<number> = code => code >= 0x30 && code <= 0x39;
+const isDigit: Predicate<number> = (code) => code >= 0x30 && code <= 0x39;
 
-const digit: Parser<Slice<number>, number, string> = input => {
+const digit: Parser<Slice<number>, number, string> = (input) => {
   const code = input.get(0).getOr(-1);
 
   return isDigit(code)
@@ -54,12 +54,12 @@ const digit: Parser<Slice<number>, number, string> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#hex-digit
  */
-const isHexDigit: Predicate<number> = code =>
+const isHexDigit: Predicate<number> = (code) =>
   isDigit(code) ||
   (code >= 0x41 && code <= 0x46) ||
   (code >= 0x61 && code <= 0x66);
 
-const hexDigit: Parser<Slice<number>, number, string> = input => {
+const hexDigit: Parser<Slice<number>, number, string> = (input) => {
   const code = input.get(0).getOr(-1);
 
   return isHexDigit(code)
@@ -70,13 +70,13 @@ const hexDigit: Parser<Slice<number>, number, string> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#uppercase-letter
  */
-const isUppercaseLetter: Predicate<number> = code =>
+const isUppercaseLetter: Predicate<number> = (code) =>
   code >= 0x41 && code <= 0x5a;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#lowercase-letter
  */
-const isLowercaseLetter: Predicate<number> = code =>
+const isLowercaseLetter: Predicate<number> = (code) =>
   code >= 0x61 && code <= 0x7a;
 
 /**
@@ -87,7 +87,7 @@ const isLetter = or(isUppercaseLetter, isLowercaseLetter);
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-ascii-code-point
  */
-const isNonAscii: Predicate<number> = code => code >= 0x80;
+const isNonAscii: Predicate<number> = (code) => code >= 0x80;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#newline
@@ -102,7 +102,7 @@ const isWhitespace = or(isNewline, equals(0x9, 0x20));
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-printable-code-point
  */
-const isNonPrintable: Predicate<number> = code =>
+const isNonPrintable: Predicate<number> = (code) =>
   (code >= 0 && code <= 0x8) ||
   code === 0xb ||
   (code >= 0xe && code <= 0x1f) ||
@@ -121,12 +121,13 @@ const isName = or(isNameStart, or(isDigit, equals(0x2d)));
 /**
  * @see https://infra.spec.whatwg.org/#surrogate
  */
-const isSurrogate: Predicate<number> = code => code >= 0xd800 && code <= 0xdfff;
+const isSurrogate: Predicate<number> = (code) =>
+  code >= 0xd800 && code <= 0xdfff;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#starts-with-a-valid-escape
  */
-const startsValidEscape: Predicate<Slice<number>> = input =>
+const startsValidEscape: Predicate<Slice<number>> = (input) =>
   input
     .get(0)
     .some(and(equals(0x5c), () => input.get(1).every(not(isNewline))));
@@ -134,7 +135,7 @@ const startsValidEscape: Predicate<Slice<number>> = input =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#starts-with-a-number
  */
-const startsNumber: Predicate<Slice<number>> = input =>
+const startsNumber: Predicate<Slice<number>> = (input) =>
   input.get(0).some(
     or(
       isDigit,
@@ -155,7 +156,7 @@ const startsNumber: Predicate<Slice<number>> = input =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#would-start-an-identifier
  */
-const startsIdentifier: Predicate<Slice<number>> = input =>
+const startsIdentifier: Predicate<Slice<number>> = (input) =>
   input.get(0).some(
     or(
       isNameStart,
@@ -177,7 +178,7 @@ const startsIdentifier: Predicate<Slice<number>> = input =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-name
  */
-const consumeName: Parser<Slice<number>, string> = input => {
+const consumeName: Parser<Slice<number>, string> = (input) => {
   let name: Array<number> = [];
 
   while (input.length > 0) {
@@ -202,7 +203,7 @@ const consumeName: Parser<Slice<number>, string> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-an-escaped-code-point
  */
-const consumeEscapedCodePoint: Parser<Slice<number>, number> = input => {
+const consumeEscapedCodePoint: Parser<Slice<number>, number> = (input) => {
   const byte = input.get(0).getOr(-1);
 
   if (byte === -1) {
@@ -260,7 +261,7 @@ const consumeEscapedCodePoint: Parser<Slice<number>, number> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-number
  */
-const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
+const consumeNumber: Parser<Slice<number>, Token.Number> = (input) => {
   const number: Array<number> = [];
 
   let code = input.get(0);
@@ -317,7 +318,7 @@ const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
 
   return Ok.of([
     input,
-    Token.Number.of(convert(Slice.of(number)), isInteger, isSigned)
+    Token.Number.of(convert(Slice.of(number)), isInteger, isSigned),
   ] as const);
 };
 
@@ -327,7 +328,7 @@ const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
 const consumeNumeric: Parser<
   Slice<number>,
   Token.Number | Token.Dimension | Token.Percentage
-> = input => {
+> = (input) => {
   const [remainder, number] = consumeNumber(input).get();
   input = remainder;
 
@@ -336,14 +337,14 @@ const consumeNumeric: Parser<
 
     return Ok.of([
       remainder,
-      Token.Dimension.of(number.value, name, number.isInteger, number.isSigned)
+      Token.Dimension.of(number.value, name, number.isInteger, number.isSigned),
     ] as const);
   }
 
   if (input.get(0).includes(0x25)) {
     return Ok.of([
       input.slice(1),
-      Token.Percentage.of(number.value / 100, number.isInteger)
+      Token.Percentage.of(number.value / 100, number.isInteger),
     ] as const);
   }
 
@@ -356,7 +357,7 @@ const consumeNumeric: Parser<
 const consumeIdentifierLike: Parser<
   Slice<number>,
   Token.Ident | Token.Function | Token.URL | Token.BadURL
-> = input => {
+> = (input) => {
   const [remainder, string] = consumeName(input).get();
   input = remainder;
 
@@ -393,7 +394,7 @@ const consumeIdentifierLike: Parser<
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-string-token
  */
-const consumeString: Parser<Slice<number>, Token.String> = input => {
+const consumeString: Parser<Slice<number>, Token.String> = (input) => {
   const end = input.get(0).get();
 
   input = input.slice(1);
@@ -418,7 +419,7 @@ const consumeString: Parser<Slice<number>, Token.String> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-url-token
  */
-const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = input => {
+const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = (input) => {
   while (input.get(0).some(isWhitespace)) {
     input = input.slice(1);
   }
@@ -471,7 +472,7 @@ const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-remnants-of-bad-url
  */
-const consumeBadURL: Parser<Slice<number>, Token.BadURL> = input => {
+const consumeBadURL: Parser<Slice<number>, Token.BadURL> = (input) => {
   while (true) {
     if (startsValidEscape(input)) {
       const [remainder] = consumeEscapedCodePoint(input).get();
@@ -493,7 +494,7 @@ const consumeBadURL: Parser<Slice<number>, Token.BadURL> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-comments
  */
-const consumeComments: Parser<Slice<number>, void> = input => {
+const consumeComments: Parser<Slice<number>, void> = (input) => {
   while (true) {
     if (input.get(0).includes(0x2f) && input.get(1).includes(0x2a)) {
       input = input.slice(2);
@@ -521,7 +522,7 @@ const consumeComments: Parser<Slice<number>, void> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-token
  */
-const consumeToken: Parser<Slice<number>, Token, string> = input => {
+const consumeToken: Parser<Slice<number>, Token, string> = (input) => {
   for (const [remainder] of consumeComments(input)) {
     input = remainder;
   }
@@ -667,7 +668,7 @@ function convert(input: Slice<number>): number {
   const sign = input
     .get(0)
     .filter(equals(0x2b, 0x2d))
-    .map(sign => (sign === 0x2d ? -1 : 1));
+    .map((sign) => (sign === 0x2d ? -1 : 1));
 
   if (sign.isSome()) {
     input = input.slice(1);
@@ -683,7 +684,7 @@ function convert(input: Slice<number>): number {
   }
 
   const i = integer
-    .map(code => code - 0x30)
+    .map((code) => code - 0x30)
     .reduce((i, code) => 10 * i + code, 0);
 
   if (input.get(0).includes(0x2e)) {
@@ -698,7 +699,7 @@ function convert(input: Slice<number>): number {
   }
 
   const f = fraction
-    .map(code => code - 0x30)
+    .map((code) => code - 0x30)
     .reduce((i, code) => 10 * i + code, 0);
 
   const d = fraction.length;
@@ -710,7 +711,7 @@ function convert(input: Slice<number>): number {
   const exponentSign = input
     .get(0)
     .filter(equals(0x2b, 0x2d))
-    .map(sign => (sign === 0x2d ? -1 : 1));
+    .map((sign) => (sign === 0x2d ? -1 : 1));
 
   if (exponentSign.isSome()) {
     input = input.slice(1);
@@ -726,7 +727,7 @@ function convert(input: Slice<number>): number {
   }
 
   const e = exponent
-    .map(code => code - 0x30)
+    .map((code) => code - 0x30)
     .reduce((i, code) => 10 * i + code, 0);
 
   // To account for floating point precision errors, we flip the sign of the

@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               )
             )
           )
-          .map(element => element.attribute("role").get());
+          .map((element) => element.attribute("role").get());
       },
 
       expectations(target) {
@@ -42,11 +42,11 @@ export default Rule.Atomic.of<Page, Attribute>({
             hasRole(() => true, { implicit: false })(owner),
             () => Outcomes.HasValidRole,
             () => Outcomes.HasNoValidRole
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

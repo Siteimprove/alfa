@@ -38,14 +38,14 @@ export class Keyframes extends Grouping {
   public toJSON(): Keyframes.JSON {
     return {
       type: "keyframes",
-      rules: [...this.rules].map(rule => rule.toJSON()),
-      name: this._name
+      rules: [...this.rules].map((rule) => rule.toJSON()),
+      name: this._name,
     };
   }
 
   public toString(): string {
     const rules = join(
-      map(this.rules, rule => indent(rule.toString())),
+      map(this.rules, (rule) => indent(rule.toString())),
       "\n\n"
     );
 
@@ -70,9 +70,9 @@ export namespace Keyframes {
   ): Keyframes {
     return Keyframes.of(
       json.name,
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return json.rules.map(rule => Rule.fromRule(rule, owner, parent));
+        return json.rules.map((rule) => Rule.fromRule(rule, owner, parent));
       },
       owner,
       parent

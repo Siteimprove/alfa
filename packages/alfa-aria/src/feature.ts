@@ -76,20 +76,20 @@ export namespace Feature {
   ): Option<Feature<N>> {
     return features
       .get(namespace)
-      .flatMap(features => features.get(name) as Option<Feature<N>>);
+      .flatMap((features) => features.get(name) as Option<Feature<N>>);
   }
 }
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("a", element =>
+  Feature.of("a", (element) =>
     element.attribute("href").isSome() ? Option.of("link") : None
   )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("area", element =>
+  Feature.of("area", (element) =>
     element.attribute("href").isSome() ? Option.of("link") : None
   )
 );
@@ -109,7 +109,7 @@ Feature.register(
   Feature.of(
     "button",
     () => Option.of("button"),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-disabled
@@ -142,7 +142,7 @@ Feature.register(
   Feature.of(
     "dialog",
     () => Option.of("dialog"),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-open-dialog
@@ -161,7 +161,7 @@ Feature.register(
   Feature.of(
     "details",
     () => None,
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-open-details
@@ -185,7 +185,7 @@ Feature.register(
   Feature.of(
     "fieldset",
     () => Option.of("group"),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-disabled
@@ -205,10 +205,10 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("footer", element =>
+  Feature.of("footer", (element) =>
     element
       .closest(
-        and(Element.isElement, element =>
+        and(Element.isElement, (element) =>
           test(
             equals("article", "aside", "main", "nav", "section"),
             element.name
@@ -258,10 +258,10 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("header", element =>
+  Feature.of("header", (element) =>
     element
       .closest(
-        and(Element.isElement, element =>
+        and(Element.isElement, (element) =>
           test(
             equals("article", "aside", "main", "nav", "section"),
             element.name
@@ -281,9 +281,9 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", element =>
+  Feature.of("img", (element) =>
     Option.of(
-      element.attribute("alt").some(alt => alt.value === "")
+      element.attribute("alt").some((alt) => alt.value === "")
         ? "presentation"
         : "img"
     )
@@ -294,10 +294,10 @@ Feature.register(
   Namespace.HTML,
   Feature.of(
     "input",
-    element =>
+    (element) =>
       element
         .attribute("type")
-        .andThen(type => {
+        .andThen((type) => {
           switch (type.value.toLowerCase()) {
             case "button":
             case "image":
@@ -333,7 +333,7 @@ Feature.register(
           }
         })
         .orElse(() => Option.of("textbox")),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-checked
@@ -384,11 +384,11 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("li", element =>
+  Feature.of("li", (element) =>
     element
       .parent()
       .filter(Element.isElement)
-      .flatMap(parent => {
+      .flatMap((parent) => {
         switch (parent.name) {
           case "ol":
           case "ul":
@@ -431,7 +431,7 @@ Feature.register(
   Feature.of(
     "optgroup",
     () => Option.of("group"),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-disabled
@@ -448,17 +448,17 @@ Feature.register(
   Namespace.HTML,
   Feature.of(
     "option",
-    element =>
+    (element) =>
       element
         .closest(
-          and(Element.isElement, element =>
+          and(Element.isElement, (element) =>
             test(equals("select", "optgroup", "datalist"), element.name)
           )
         )
         .isSome()
         ? Option.of("option")
         : None,
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-disabled
@@ -503,7 +503,7 @@ Feature.register(
       // options, we will always end up mapping <select> elements to an invalid
       // combobox widget.
       Option.of("listbox"),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-disabled
@@ -540,10 +540,10 @@ Feature.register(
   Namespace.HTML,
   Feature.of(
     "td",
-    element =>
+    (element) =>
       element
-        .closest(and(Element.isElement, element => element.name === "table"))
-        .flatMap(table => {
+        .closest(and(Element.isElement, (element) => element.name === "table"))
+        .flatMap((table) => {
           for (const [role] of Role.from(table)) {
             if (role.isSome()) {
               switch (role.get().name) {
@@ -557,7 +557,7 @@ Feature.register(
 
           return None;
         }),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-colspan
@@ -580,7 +580,7 @@ Feature.register(
   Feature.of(
     "textarea",
     () => Option.of("textbox"),
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-disabled
@@ -617,8 +617,8 @@ Feature.register(
   Namespace.HTML,
   Feature.of(
     "th",
-    element =>
-      element.attribute("scope").flatMap(scope => {
+    (element) =>
+      element.attribute("scope").flatMap((scope) => {
         switch (scope.value.toLowerCase()) {
           case "row":
           case "rowgroup":
@@ -631,7 +631,7 @@ Feature.register(
         }
       }),
 
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-colspan
@@ -669,7 +669,7 @@ Feature.register(
   Feature.of(
     "meter",
     () => None,
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-max
@@ -697,7 +697,7 @@ Feature.register(
   Feature.of(
     "progress",
     () => None,
-    element => {
+    (element) => {
       let attributes = Map.empty<string, string>();
 
       // https://w3c.github.io/html-aam/#att-max
@@ -717,7 +717,7 @@ Feature.register(
 
 Feature.register(
   Namespace.SVG,
-  Feature.of("a", element =>
+  Feature.of("a", (element) =>
     Option.of(element.attribute("href").isSome() ? "link" : "group")
   )
 );

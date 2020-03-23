@@ -60,7 +60,7 @@ export {
   Namespace as NamespaceRule,
   Page as PageRule,
   Style as StyleRule,
-  Supports as SupportsRule
+  Supports as SupportsRule,
 };
 
 export namespace Rule {

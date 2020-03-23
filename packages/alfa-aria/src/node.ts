@@ -53,7 +53,7 @@ export abstract class Node implements Serializable {
       return parent;
     }
 
-    return parent.flatMap(parent =>
+    return parent.flatMap((parent) =>
       parent.isIgnored() ? parent.parent(options) : Option.of(parent)
     );
   }
@@ -79,7 +79,7 @@ export abstract class Node implements Serializable {
       return children;
     }
 
-    return children.flatMap(child =>
+    return children.flatMap((child) =>
       child.isIgnored() ? child.children(options) : Sequence.of(child)
     );
   }
@@ -88,7 +88,7 @@ export abstract class Node implements Serializable {
    * @see https://dom.spec.whatwg.org/#concept-tree-descendant
    */
   public descendants(options: Node.Traversal = {}): Sequence<Node> {
-    return this.children(options).flatMap(child =>
+    return this.children(options).flatMap((child) =>
       Sequence.of(
         child,
         Lazy.of(() => child.descendants(options))
@@ -101,7 +101,7 @@ export abstract class Node implements Serializable {
    */
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
     return this.parent(options)
-      .map(parent =>
+      .map((parent) =>
         Sequence.of(
           parent,
           Lazy.of(() => parent.ancestors(options))
@@ -206,7 +206,7 @@ export namespace Node {
         if (
           node
             .attribute("aria-hidden")
-            .some(attr => attr.value.toLowerCase() === "true")
+            .some((attr) => attr.value.toLowerCase() === "true")
         ) {
           return Branched.of(Inert.of(node));
         }
@@ -229,10 +229,10 @@ export namespace Node {
         if (style.computed("visibility").value.value !== "visible") {
           accessibleNode = Branched.of(Container.of(node));
         } else {
-          accessibleNode = Role.from(node).flatMap<Node>(role => {
+          accessibleNode = Role.from(node).flatMap<Node>((role) => {
             if (
               role.some(
-                role => role.name === "none" || role.name === "presentation"
+                (role) => role.name === "none" || role.name === "presentation"
               )
             ) {
               return Branched.of(Container.of(node));
@@ -273,7 +273,7 @@ export namespace Node {
                 attribute.name.startsWith("aria-") &&
                 role
                   .orElse(() => Role.lookup("roletype"))
-                  .some(role =>
+                  .some((role) =>
                     role.isAllowed(property("name", equals(attribute.name)))
                   )
               ) {
@@ -281,7 +281,7 @@ export namespace Node {
               }
             }
 
-            return getName(node, device).map(name =>
+            return getName(node, device).map((name) =>
               Element.of(node, role, name, attributes)
             );
           });
@@ -293,15 +293,15 @@ export namespace Node {
         accessibleNode = Branched.of(Container.of(node));
       }
 
-      return accessibleNode.flatMap(accessibleNode => {
+      return accessibleNode.flatMap((accessibleNode) => {
         const children = Branched.traverse(
           node.children({ flattened: true }),
-          child => {
+          (child) => {
             return build(child, device);
           }
         );
 
-        return children.map(children =>
+        return children.map((children) =>
           accessibleNode.clone(parent).adopt(children)
         );
       });
