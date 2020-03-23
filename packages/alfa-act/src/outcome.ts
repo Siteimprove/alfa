@@ -1,9 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Record } from "@siteimprove/alfa-record";
+import { Result } from "@siteimprove/alfa-result";
+import { Predicate, Trilean, every } from "@siteimprove/alfa-trilean";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
-
-import { Predicate, Trilean, every } from "@siteimprove/alfa-trilean";
 
 import { Rule } from "./rule";
 
@@ -84,7 +85,12 @@ export namespace Outcome {
         outcome: "passed",
         rule: this.rule.toJSON(),
         target: json.Serializable.toJSON(this.target),
-        expectations: this.expectations.toJSON()
+        expectations: this.expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map(expectation => expectation.toJSON()).getOr(null)
+          ])
       };
     }
 
@@ -112,7 +118,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "passed";
       target: json.JSON;
-      expectations: Record.JSON;
+      expectations: Array<[string, Result.JSON | null]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -163,7 +169,12 @@ export namespace Outcome {
         outcome: "failed",
         rule: this.rule.toJSON(),
         target: json.Serializable.toJSON(this.target),
-        expectations: this.expectations.toJSON()
+        expectations: this.expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map(expectation => expectation.toJSON()).getOr(null)
+          ])
       };
     }
 
@@ -191,7 +202,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "failed";
       target: json.JSON;
-      expectations: Record.JSON;
+      expectations: Array<[string, Result.JSON | null]>;
     }
 
     export interface EARL extends Outcome.EARL {
