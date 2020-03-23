@@ -1,6 +1,9 @@
 import {Predicate} from "@siteimprove/alfa-predicate";
+import { Set } from "@siteimprove/alfa-set";
 import {Element} from "..";
 import {hasName, isElementByName, parseSpan} from "./helpers";
+
+import assert = require("assert");
 
 const { equals } = Predicate;
 
@@ -70,7 +73,7 @@ export class ColGroup {
   // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
   // global step 9.1
   public static of(colgroup: Element): ColGroup {
-    console.assert(colgroup.name === "colgroup");
+    assert(colgroup.name === "colgroup");
     let children = colgroup.children().filter(isElementByName("col"));
     let totalSpan = 0;
     if (children.isEmpty()) { // second case
@@ -179,4 +182,28 @@ export function isCovering(x: number, y: number): Predicate<Cell | RowGroup | Co
     return true;
   }
   return covering;
+}
+
+// Build artefact, corresponds to a single <tr> element
+export class Row {
+  private readonly _width: number;
+  private readonly _height: number;
+  private readonly _element: Element;
+  private readonly _cells: Set<Cell>;
+  private readonly _downwardGrowingCells: Set<Cell>;
+
+  constructor(w: number, h: number, element: Element, cells: Set<Cell> = Set.empty(), growing: Set<Cell> = Set.empty()) {
+    this._width = w;
+    this._height = h;
+    this._element = element;
+    this._cells = cells;
+    this._downwardGrowingCells = growing;
+  }
+
+  public addCell(cell: Cell): Row {
+    return new Row(this._width, this._height, this._element, this._cells.add(cell), this._downwardGrowingCells);
+  }
+  public addGrowingCell(cell: Cell): Row {
+    return new Row(this._width, this._height, this._element, this._cells.add(cell), this._downwardGrowingCells.add(cell));
+  }
 }

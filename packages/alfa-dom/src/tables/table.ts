@@ -1,16 +1,11 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Set } from "@siteimprove/alfa-set";
 import { Element } from "..";
 
-
 import {Cell, ColGroup, RowGroup, isCovering} from "./groups";
-import { hasName, isElementByName, parseSpan } from "./helpers";
-
-const { equals } = Predicate;
-
-
+import { isElementByName } from "./helpers";
+import assert = require("assert");
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 export type Table = { width: number, height: number, cells: Set<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
@@ -29,6 +24,7 @@ const growCellList = (yCurrent: number) => (cells: Iterable<Cell>, set: Set<Cell
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
 export function rowProcessing(table: Table, tr: Element, yCurrent: number, growingCellsList: Array<Cell>): Array<Cell> {
   // 1
+  assert(yCurrent <= table.height);
   if (table.height === yCurrent) {
     table.height++
   }
@@ -53,13 +49,9 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
     const { cell: floatingCell, downwardGrowing } = Cell.of(currentCell);
     const cell = floatingCell.anchorAt(xCurrent, yCurrent);
     // 11
-    if (table.width <= xCurrent + cell.width) {
-      table.width = xCurrent + cell.width
-    }
+    table.width = Math.max(table.width, xCurrent + cell.width);
     // 12
-    if (table.height <= yCurrent + cell.height) {
-      table.height = yCurrent + cell.height
-    }
+    table.height = Math.max(table.height, yCurrent + cell.height);
     // 13
     for (let x = xCurrent; x < xCurrent + cell.width; x++) {
       for (let y = yCurrent; y < yCurrent + cell.height; y++) {
