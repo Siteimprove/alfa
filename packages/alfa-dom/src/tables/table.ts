@@ -30,8 +30,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
   }
   // 2
    let xCurrent = 0;
-  // 3
-  table.cells = growCellList(yCurrent)(growingCellsList, table.cells);
+  // 3 no need to grow the cells by one line. They will anyway all be adjusted to correct height later.
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
@@ -61,7 +60,8 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
       }
     }
     table.cells = table.cells.add(cell);
-    // 14 not need to grow cells line by line because they will be grown to correct size by caller
+    // 14
+    if (downwardGrowing) growingCellsList.push(cell);
     // 15
     xCurrent = xCurrent + cell.width;
   }
