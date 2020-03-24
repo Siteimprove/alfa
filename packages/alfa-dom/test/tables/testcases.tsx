@@ -95,6 +95,45 @@ export namespace rowGroup {
   };
 }
 
+// row group with downward growing cells
+export namespace downwardGrowing {
+  export const element = Element.fromElement(<thead id="thead">
+  <tr id="first">
+    <th id="grade" rowSpan={3}>Grade.</th>
+    <th id="yield" rowSpan={2}>Yield Point.</th>
+    <th id="strength" colSpan={2}>Ultimate tensile strength</th>
+    <th id="elong" rowSpan={2}>Per cent elong. 50.8mm or 2 in.</th>
+    <th id="reduct" rowSpan={0}>Per cent reduct. area.</th>
+  </tr>
+  <tr id="second">
+    <th id="kg-mm" rowSpan={0}>kg/mm<sup>2</sup></th>
+    <th id="lb-in">lb/in<sup>2</sup></th>
+  </tr>
+  <tr id="third">
+    <th id="foo">foo</th>
+    <th id="bar">bar</th>
+  </tr>
+  </thead>);
+  const getById = getDescendantById(element);
+  const makeCell = makeCellWithGetter(getById);
+
+  export const expected: Table = {
+    cells: Set.of(
+      makeCell("grade", "header", 0, 0, 1, 3),
+      makeCell("yield", "header", 1, 0, 1, 2),
+      makeCell("strength", "header", 2, 0, 2, 1),
+      makeCell("elong", "header", 4, 0, 1, 2),
+      makeCell("reduct", "header", 5, 0, 1, 3),
+      makeCell("kg-mm", "header", 2, 1, 1, 3),
+      makeCell("lb-in", "header", 3, 1),
+      makeCell("foo", "header", 1, 2, 1, 1),
+      makeCell("bar", "header", 3, 2, 1, 1)
+    ),
+    width: 6, height: 3, colGroups: [],
+    rowGroups: [new RowGroup(0, 2, element)]
+  };
+}
+
 // table with row group, colspan and rowspan
 export namespace smithonian {
   export const element = Element.fromElement(<table>
