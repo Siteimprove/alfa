@@ -79,7 +79,7 @@ export class Set<T>
   }
   // name alias to set theoretic vocabulary :-D
   // sadly the eta-contracted "public union = this.concat" does not build :-(
-  public union(set: Set<T>): Set<T> {
+  public union(set: Iterable<T>): Set<T> {
     return this.concat(set);
   }
 
