@@ -1,4 +1,5 @@
 import {Predicate} from "@siteimprove/alfa-predicate";
+import {notDeepEqual} from "assert";
 import {Element, Table} from "..";
 import {hasName, isElementByName, parseSpan} from "./helpers";
 
@@ -231,11 +232,14 @@ export class Row {
     return this._downwardGrowingCells;
   }
 
-  public addCell(cell: Cell): Row {
+  _addNonGrowingCell(cell: Cell): Row {
     return new Row(this._anchor.y, this._width, this._height, this._element, this._cells.concat(cell), this._downwardGrowingCells);
   }
-  public addGrowingCell(cell: Cell): Row {
+  _addGrowingCell(cell: Cell): Row {
     return new Row(this._anchor.y, this._width, this._height, this._element, this._cells, this._downwardGrowingCells.concat(cell));
+  }
+  public addCell({ cell, downwardGrowing }: { cell: Cell, downwardGrowing: boolean}): Row {
+    return downwardGrowing ? this._addGrowingCell(cell) : this._addNonGrowingCell(cell);
   }
 
   public adjustWidth(w: number): Row {
@@ -245,54 +249,67 @@ export class Row {
     return new Row(this._anchor.y, this._width, Math.max(this._height, h), this._element, this._cells);
   }
 
-  // // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-  // public of(cells: Array<Cell>, growingCells: Array<Cell>, yCurrent: number, tr: Element): Row {
-  //   // cells and growingCells must be disjoint (a cell is either growing or not)
-  //   assert
-  //   // table: Table, tr: Element, yCurrent: number, growingCellsList: Array<Cell>): Array<Cell> {
-  //   // 1
-  //   assert(yCurrent <= table.height);
-  //   if (table.height === yCurrent) {
-  //     table.height++
-  //   }
-  //   // 2
-  //   let xCurrent = 0;
-  //   // 3
-  //   growingCellsList = growingCellsList.map(cell => cell.growDownward(yCurrent));
-  //
-  //   let children = tr.children().filter(isElementByName("th", "td"));
-  //   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
-  //     // 6 (Cells)
-  //     while (xCurrent < table.width &&
-  //       table.cells.concat(growingCellsList).some(isCovering(xCurrent, yCurrent))
-  //       ) {
-  //       xCurrent++
-  //     }
-  //     // 7
-  //     if (xCurrent === table.width) {
-  //       table.width++
-  //     }
-  //     // 8, 9, 10, 13
-  //     const { cell: floatingCell, downwardGrowing } = Cell.of(currentCell, xCurrent, yCurrent);
-  //     // const cell = floatingCell.anchorAt(xCurrent, yCurrent);
-  //     // 11
-  //     table.width = Math.max(table.width, xCurrent + cell.width);
-  //     // 12
-  //     table.height = Math.max(table.height, yCurrent + cell.height);
-  //     // 13
-  //     // Double coverage check made at the end of table building to de-entangle code
-  //     // 14
-  //     if (downwardGrowing) {
-  //       growingCellsList.push(cell);
-  //     } else {
-  //       // 13 only non-growing cells are stored for now to avoid storing the same cell in two places.
-  //       table.cells.push(cell);
-  //     }
-  //     // 15
-  //     xCurrent = xCurrent + cell.width;
-  //   }
-  //   return growingCellsList;
-  //   // 4 and 16 done after the calls to avoid side effects.
-  // }
+  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+  public static of(cells: Array<Cell>, growingCells: Array<Cell>, yCurrent: number, tr: Element, w: number = 0): Row {
+    // cells and growingCells must be disjoint (a cell is either growing or not)
+    cells.forEach(cell => growingCells.forEach(growingCell => notDeepEqual(cell, growingCell)));
+
+    let width = w;
+    let height = 1;
+    let newCells: Array<Cell> = [];
+    let newGrowingCells: Array<Cell> = [];
+
+    // 1
+    // global table height adjusted after building row
+    // 2
+    let xCurrent = 0;
+    // 3
+    growingCells = growingCells.map(cell => cell.growDownward(yCurrent));
+
+    let children = tr.children().filter(isElementByName("th", "td"));
+    for (const currentCell of children) { // loop control between 4-5, and 16-17-18
+      const debug = false; // tr.attribute("id").get().value === "second";
+      if (debug) {
+        console.log(`Processing ${currentCell.attribute("id").get()}`);
+      }
+      // 6 (Cells)
+      while (true
+        ) {
+        const cont = (xCurrent < width &&
+          cells.concat(growingCells, newCells, newGrowingCells).some(isCovering(xCurrent, yCurrent))
+        );
+        if (debug) {
+          console.log(`xCurrent: ${xCurrent}, width: ${width}`);
+          console.log(`coverage: ${cells.concat(growingCells, newCells, newGrowingCells).some(isCovering(xCurrent, yCurrent))}`);
+          console.log(`cont: ${cont}`);
+        }
+        if (!cont) { break; }
+        xCurrent++
+      }
+      // 7
+      if (xCurrent === width) {
+        width++
+      }
+      // 8, 9, 10, 13
+      const { cell, downwardGrowing } = Cell.of(currentCell, xCurrent, yCurrent);
+      // 11
+      width = Math.max(width, xCurrent + cell.width);
+      // 12
+      height = Math.max(height, yCurrent + cell.height);
+      // 13
+      // Double coverage check made at the end of table building to de-entangle code
+      // 14
+      if (downwardGrowing) {
+        newGrowingCells.push(cell);
+      } else {
+        // 13 only non-growing cells are stored for now to avoid storing the same cell in two places.
+        newCells.push(cell);
+      }
+      // 15
+      xCurrent = xCurrent + cell.width;
+    }
+    return new Row(yCurrent, width, height, tr, newCells, growingCells.concat(newGrowingCells));
+    // 4 and 16 done after the calls to avoid side effects.
+  }
 
 }

@@ -1,6 +1,6 @@
 import { Element } from "..";
 
-import {Cell, ColGroup, RowGroup, isCovering} from "./groups";
+import {Cell, ColGroup, RowGroup, isCovering, Row} from "./groups";
 import { isElementByName } from "./helpers";
 import assert = require("assert");
 
@@ -63,8 +63,12 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   // 1
   const yStart = table.height;
   // 2
-  for (const row of group.children().filter(isElementByName("tr"))) {
-    growingCellsList = rowProcessing(table, row, yCurrent, growingCellsList); // Modify table.
+  for (const tr of group.children().filter(isElementByName("tr"))) {
+    const row = Row.of(table.cells, growingCellsList, yCurrent, tr, table.width);
+    table.cells = table.cells.concat(row.cells);
+    growingCellsList = row.downwardGrowingCells;
+    table.height = Math.max(table.height, yCurrent+1);
+    table.width = Math.max(table.width, row.width);
     // row processing steps 4/16
     yCurrent++;
   }

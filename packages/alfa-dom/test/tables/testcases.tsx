@@ -65,14 +65,14 @@ export namespace complexRow {
 // processing row group
 export namespace rowGroup {
   export const element = Element.fromElement(<thead id="thead">
-  <tr>
+  <tr id="first">
     <th id="grade" rowSpan={2}>Grade.</th>
     <th id="yield" rowSpan={2}>Yield Point.</th>
     <th id="strength" colSpan={2}>Ultimate tensile strength</th>
     <th id="elong" rowSpan={2}>Per cent elong. 50.8mm or 2 in.</th>
     <th id="reduct" rowSpan={2}>Per cent reduct. area.</th>
   </tr>
-  <tr>
+  <tr id="second">
     <th id="kg-mm">kg/mm<sup>2</sup></th>
     <th id="lb-in">lb/in<sup>2</sup></th>
   </tr>
