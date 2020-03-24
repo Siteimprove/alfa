@@ -268,22 +268,10 @@ export class Row {
 
     let children = tr.children().filter(isElementByName("th", "td"));
     for (const currentCell of children) { // loop control between 4-5, and 16-17-18
-      const debug = false; // tr.attribute("id").get().value === "second";
-      if (debug) {
-        console.log(`Processing ${currentCell.attribute("id").get()}`);
-      }
       // 6 (Cells)
-      while (true
+      while (xCurrent < width &&
+        cells.concat(growingCells, newCells, newGrowingCells).some(isCovering(xCurrent, yCurrent))
         ) {
-        const cont = (xCurrent < width &&
-          cells.concat(growingCells, newCells, newGrowingCells).some(isCovering(xCurrent, yCurrent))
-        );
-        if (debug) {
-          console.log(`xCurrent: ${xCurrent}, width: ${width}`);
-          console.log(`coverage: ${cells.concat(growingCells, newCells, newGrowingCells).some(isCovering(xCurrent, yCurrent))}`);
-          console.log(`cont: ${cont}`);
-        }
-        if (!cont) { break; }
         xCurrent++
       }
       // 7
