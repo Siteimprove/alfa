@@ -1,6 +1,5 @@
 import {None } from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
-import {Set} from "@siteimprove/alfa-set";
 import {Element, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
 import {Cell, ColGroup, Row, RowGroup} from "../../src/tables/groups";

@@ -1,6 +1,6 @@
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {notDeepEqual} from "assert";
-import {Element, Table} from "..";
+import { Element } from "..";
 import {hasName, isElementByName, parseSpan} from "./helpers";
 
 import assert = require("assert");

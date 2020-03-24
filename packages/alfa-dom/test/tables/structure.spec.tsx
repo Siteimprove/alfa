@@ -1,6 +1,6 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import {Assertions, test} from "@siteimprove/alfa-test";
-import {rowProcessing, processRowGroup, formingTable, Element, newTable, Table} from "../../src";
+import { processRowGroup, formingTable, Element, newTable, Table} from "../../src";
 import {
   apple,
   complexRow,
