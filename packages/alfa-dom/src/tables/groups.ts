@@ -1,5 +1,4 @@
 import {Predicate} from "@siteimprove/alfa-predicate";
-import { Set } from "@siteimprove/alfa-set";
 import {Element} from "..";
 import {hasName, isElementByName, parseSpan} from "./helpers";
 

@@ -1,4 +1,3 @@
-import { Set } from "@siteimprove/alfa-set";
 import { Element } from "..";
 
 import {Cell, ColGroup, RowGroup, isCovering} from "./groups";
@@ -6,9 +5,9 @@ import { isElementByName } from "./helpers";
 import assert = require("assert");
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
-export type Table = { width: number, height: number, cells: Set<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
+export type Table = { width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 export function newTable(): Table {
-  return { width: 0, height: 0, cells: Set.empty(), rowGroups: [], colGroups: []}
+  return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
@@ -49,7 +48,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
       growingCellsList.push(cell);
     } else {
       // 13 only non-growing cells are stored for now to avoid storing the same cell in two places.
-      table.cells = table.cells.add(cell);
+      table.cells.push(cell);
     }
     // 15
     xCurrent = xCurrent + cell.width;
@@ -129,7 +128,7 @@ export function formingTable(element: Element): Table {
     growingCellsList = growingCellsList.map(cell => cell.growDownward(table.height-1));
     yCurrent = table.height;
     // Ending row group 2
-    table.cells = table.cells.union(growingCellsList);
+    table.cells = table.cells.concat(growingCellsList);
     growingCellsList = [];
 
     if (currentElement.name === "tfoot") {
@@ -167,7 +166,7 @@ export function formingTable(element: Element): Table {
   // Checking for row forming algorithm step 13 (slot covered twice)
   for (let x = 0; x < table.width; x++) {
     for (let y = 0; y < table.height; y++) {
-      if (table.cells.filter(isCovering(x, y)).size > 1) {
+      if (table.cells.filter(isCovering(x, y)).length > 1) {
         throw new Error(`Slot (${x}, ${y}) is covered twice`)
       }
     }
