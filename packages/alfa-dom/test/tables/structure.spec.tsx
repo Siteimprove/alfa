@@ -1,7 +1,17 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import {Assertions, test} from "@siteimprove/alfa-test";
 import {rowProcessing, processRowGroup, formingTable, Element, newTable, Table} from "../../src";
-import {apple, complexRow, downwardGrowing, expenses, expensesNum, rowGroup, simpleRow, smithonian} from "./testcases";
+import {
+  apple,
+  complexRow,
+  downwardGrowing,
+  errors,
+  expenses,
+  expensesNum,
+  rowGroup,
+  simpleRow,
+  smithonian
+} from "./testcases";
 
 import{ Cell } from "../../src/tables/groups";
 
@@ -76,3 +86,9 @@ test("Process table", t => {
 
   equalTables(t, formingTable(expensesNum.element), expensesNum.expected);
 });
+
+// test("Table model errors", t => {
+//   // formingTable(errors.emptyCol);
+//   // formingTable(errors.emptyRow);
+//   formingTable(errors.coveredTwice);
+// });

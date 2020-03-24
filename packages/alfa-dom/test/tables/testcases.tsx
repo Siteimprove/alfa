@@ -382,3 +382,23 @@ export namespace expensesNum {
     ]
   }
 }
+
+export namespace errors {
+  // second column (column 1) has no cell anchored in it.
+  export const emptyCol = Element.fromElement(<table>
+    <tr><td id="one-two" colSpan={2}>2 columns</td><td id="three">third column</td></tr>
+  </table>);
+
+  // second row (row 1) has no cell anchored in it.
+  export const emptyRow = Element.fromElement(<table>
+    <tr><td rowSpan={2}>2 rows</td></tr>
+    <tr></tr>
+    <tr><td>third row</td></tr>
+  </table>)
+
+  // cell (1, 1) is covered twice
+  export const coveredTwice = Element.fromElement(<table>
+    <tr><td>1 row, 1 col</td><td rowSpan={2}>2 rows</td></tr>
+    <tr><td colSpan={2}>2 cols</td></tr>
+  </table>)
+}
