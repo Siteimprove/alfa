@@ -151,7 +151,7 @@ export function formingTable(element: Element): Table {
   for (let row=0; row<table.height; row++) {
     let rowCovered = false;
     for (let col=0; !rowCovered && col<table.width; col++) {
-      rowCovered = rowCovered || table.cells.some(isCovering(col, row));
+      rowCovered = rowCovered || table.cells.some(cell => cell.anchor.x === col && cell.anchor.y === row);
     }
     if (!rowCovered) throw new Error(`row ${row} is not covered`)
   }
@@ -159,7 +159,7 @@ export function formingTable(element: Element): Table {
   for (let col=0; col<table.width; col++) {
     let colCovered = false;
     for (let row=0; !colCovered && row<table.height; row++) {
-      colCovered = colCovered || table.cells.some(isCovering(col, row));
+      colCovered = colCovered || table.cells.some(cell => cell.anchor.x === col && cell.anchor.y === row);
     }
     if (!colCovered) throw new Error(`col ${col} is not covered`)
   }
