@@ -78,7 +78,10 @@ export class Set<T>
     );
   }
   // name alias to set theoretic vocabulary :-D
-  public union = this.concat;
+  // sadly the eta-contracted "public union = this.concat" does not build :-(
+  public union(set: Set<T>): Set<T> {
+    return this.concat(set);
+  }
 
   public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
     return Iterable.find(this, predicate);
