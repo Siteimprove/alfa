@@ -35,8 +35,8 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
       table.width++
     }
     // 8, 9, 10, 13
-    const { cell: floatingCell, downwardGrowing } = Cell.of(currentCell);
-    const cell = floatingCell.anchorAt(xCurrent, yCurrent);
+    const { cell, downwardGrowing } = Cell.of(currentCell, xCurrent, yCurrent);
+    // const cell = floatingCell.anchorAt(xCurrent, yCurrent);
     // 11
     table.width = Math.max(table.width, xCurrent + cell.width);
     // 12
@@ -147,13 +147,15 @@ export function formingTable(element: Element): Table {
     yCurrent = processRowGroup(table, tfoot, yCurrent);
   }
   // 20
+  // Of course, errors are more or less caught and repaired by browsers.
+  // Note that having a rowspan that extends out of the row group is not a table error per se!
   // checking for rows
   for (let row=0; row<table.height; row++) {
     let rowCovered = false;
     for (let col=0; !rowCovered && col<table.width; col++) {
       rowCovered = rowCovered || table.cells.some(cell => cell.anchor.x === col && cell.anchor.y === row);
     }
-    if (!rowCovered) throw new Error(`row ${row} is not covered`)
+    if (!rowCovered) throw new Error(`row ${row} has no cell anchored in it`)
   }
   // checking for cols
   for (let col=0; col<table.width; col++) {
@@ -161,7 +163,7 @@ export function formingTable(element: Element): Table {
     for (let row=0; !colCovered && row<table.height; row++) {
       colCovered = colCovered || table.cells.some(cell => cell.anchor.x === col && cell.anchor.y === row);
     }
-    if (!colCovered) throw new Error(`col ${col} is not covered`)
+    if (!colCovered) throw new Error(`col ${col} has no cell anchored in it`)
   }
   // Checking for row forming algorithm step 13 (slot covered twice)
   for (let x = 0; x < table.width; x++) {
