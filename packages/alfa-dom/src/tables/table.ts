@@ -17,12 +17,19 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   // 2
   for (const tr of group.children().filter(isElementByName("tr"))) {
     const row = Row.of(tr, table.cells, growingCellsList, yCurrent, table.width);
+    // console.log(`Processing row ${tr.attribute("id").get()}`);
+    // console.dir({...row, _element: row.element.attribute("id").get(),
+    //   _cells: row.cells.map(cell => ({...cell, _element: cell.element.attribute("id").get().value})),
+    //   _downwardGrowingCells: row.downwardGrowingCells.map(cell => ({...cell, _element: cell.element.attribute("id").get().value}))
+    // });
     table.cells = table.cells.concat(row.cells);
     growingCellsList = row.downwardGrowingCells;
     table.height = Math.max(table.height, yCurrent+1);
     table.width = Math.max(table.width, row.width);
     // row processing steps 4/16
     yCurrent++;
+    // console.log(`Done processing ${tr.attribute("id").get()}`);
+    // console.log(`growingCellsList: ${growingCellsList.map(cell => cell.element.attribute("id").get().value)}`);
   }
   // 3
   if (table.height > yStart) {

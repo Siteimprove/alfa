@@ -23,7 +23,7 @@ const cleanElement = (element: Element) =>
 
 const cleanCell = (cell: Cell) => (
   {...cell,
-    element: cleanElement(cell.element)
+    _element: cleanElement(cell.element)
   }
 );
 
