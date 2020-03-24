@@ -77,6 +77,8 @@ export class Set<T>
       this
     );
   }
+  // name alias to set theoretic vocabulary :-D
+  public union = this.concat;
 
   public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
     return Iterable.find(this, predicate);
@@ -84,6 +86,10 @@ export class Set<T>
 
   public some<U extends T>(predicate: Predicate<T, U>): boolean {
     return Iterable.some(this, predicate);
+  }
+
+  public filter<U extends T>(predicate: Predicate<T, U>): Set<U> {
+    return Set.of(...Iterable.filter(this, predicate));
   }
 
   public equals(value: unknown): value is this {
