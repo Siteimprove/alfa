@@ -2,59 +2,11 @@ import { Element } from "..";
 
 import {Cell, ColGroup, RowGroup, isCovering, Row} from "./groups";
 import { isElementByName } from "./helpers";
-import assert = require("assert");
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
 export type Table = { width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
 export function newTable(): Table {
   return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
-}
-
-// https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-export function rowProcessing(table: Table, tr: Element, yCurrent: number, growingCellsList: Array<Cell>): Array<Cell> {
-  // 1
-  assert(yCurrent <= table.height);
-  if (table.height === yCurrent) {
-    table.height++
-  }
-  // 2
-   let xCurrent = 0;
-  // 3
-  growingCellsList = growingCellsList.map(cell => cell.growDownward(yCurrent));
-
-  let children = tr.children().filter(isElementByName("th", "td"));
-  for (const currentCell of children) { // loop control between 4-5, and 16-17-18
-    // 6 (Cells)
-    while (xCurrent < table.width &&
-      table.cells.concat(growingCellsList).some(isCovering(xCurrent, yCurrent))
-    ) {
-      xCurrent++
-    }
-    // 7
-    if (xCurrent === table.width) {
-      table.width++
-    }
-    // 8, 9, 10, 13
-    const { cell, downwardGrowing } = Cell.of(currentCell, xCurrent, yCurrent);
-    // const cell = floatingCell.anchorAt(xCurrent, yCurrent);
-    // 11
-    table.width = Math.max(table.width, xCurrent + cell.width);
-    // 12
-    table.height = Math.max(table.height, yCurrent + cell.height);
-    // 13
-    // Double coverage check made at the end of table building to de-entangle code
-    // 14
-    if (downwardGrowing) {
-      growingCellsList.push(cell);
-    } else {
-      // 13 only non-growing cells are stored for now to avoid storing the same cell in two places.
-      table.cells.push(cell);
-    }
-    // 15
-    xCurrent = xCurrent + cell.width;
-  }
-  return growingCellsList;
-  // 4 and 16 done after the calls to avoid side effects.
 }
 
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
@@ -121,9 +73,18 @@ export function formingTable(element: Element): Table {
 
     if (currentElement.name === "tr") {
       // 13 (process) can detect new downward growing cells
-      growingCellsList = rowProcessing(table, currentElement, yCurrent, growingCellsList);
+
+      const row = Row.of(currentElement, table.cells, growingCellsList, yCurrent, table.width);
+      table.cells = table.cells.concat(row.cells);
+      growingCellsList = row.downwardGrowingCells;
+      table.height = Math.max(table.height, yCurrent+1);
+      table.width = Math.max(table.width, row.width);
       // row processing steps 4/16
       yCurrent++;
+
+      // growingCellsList = rowProcessing(table, currentElement, yCurrent, growingCellsList);
+      // // row processing steps 4/16
+      // yCurrent++;
       continue;
     }
 
