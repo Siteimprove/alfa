@@ -1,5 +1,3 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Reducer } from "@siteimprove/alfa-reducer";
 import { Set } from "@siteimprove/alfa-set";
 import { Element } from "..";
 
@@ -13,31 +11,8 @@ export function newTable(): Table {
   return { width: 0, height: 0, cells: Set.empty(), rowGroups: [], colGroups: []}
 }
 
-function growCellInSet(yCurrent: number): Reducer<Cell, Set<Cell>> {
-  return (set: Set<Cell>, cell: Cell) => {
-    console.log(`  Now growing ${cell.element.attribute("id").get()}`);
-    console.log(`  cells before:`);
-    console.dir([...set].map(cell => ({name: cell.element.attribute("id").get().value})));
-    const setdel = set.delete(cell);
-    console.log(`  cells middle:`);
-    console.dir([...setdel].map(cell => ({name: cell.element.attribute("id").get().value})));
-    const setfin = setdel.add(cell.growDownward(yCurrent));
-    console.log(`  cells after:`);
-    console.dir([...setfin].map(cell => ({name: cell.element.attribute("id").get().value})));
-    return setfin;
-    // return set.delete(cell).add(cell.growDownward(yCurrent));
-}}
-
-const growCellList = (yCurrent: number) => (cells: Iterable<Cell>, set: Set<Cell>) =>
-  // { console.log(`  Need to grow ${[...Iterable.map(cells, cell => cell.element.attribute("id").get())]}`);
-{return Iterable.reduce<Cell, Set<Cell>>(cells, growCellInSet(yCurrent), set);};
-
 // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
 export function rowProcessing(table: Table, tr: Element, yCurrent: number, growingCellsList: Array<Cell>): Array<Cell> {
-  // console.log(`starting ${tr.attribute("id").get()} with height ${table.height}`);
-  // console.log(`cells: ${table.cells.map(cell => cell.element.attribute("id").get())}`);
-  // console.log(`growing cells: ${growingCellsList.map(cell => cell.element.attribute("id").get())}`);
-  // const newGrowingCells: Array<Cell> = [];
   // 1
   assert(yCurrent <= table.height);
   if (table.height === yCurrent) {
@@ -46,13 +21,7 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
   // 2
    let xCurrent = 0;
   // 3
-  // console.log(`-----  from rowProcessing ----`);
-  // console.log(`cells before:`);
-  // console.dir([...table.cells].map(cell => ({name: cell.element.attribute("id").get().value})));
-  // table.cells = growCellList(table.height-1)(growingCellsList, table.cells);
   growingCellsList = growingCellsList.map(cell => cell.growDownward(yCurrent));
-  // console.log(`cells after:`);
-  // console.dir([...table.cells].map(cell => ({name: cell.element.attribute("id").get().value})));
 
   let children = tr.children().filter(isElementByName("th", "td"));
   for (const currentCell of children) { // loop control between 4-5, and 16-17-18
@@ -68,7 +37,6 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
     }
     // 8, 9, 10, 13
     const { cell: floatingCell, downwardGrowing } = Cell.of(currentCell);
-    // console.log(`   Processed ${floatingCell.element.attribute("id").get()}, grow: ${downwardGrowing}`);
     const cell = floatingCell.anchorAt(xCurrent, yCurrent);
     // 11
     table.width = Math.max(table.width, xCurrent + cell.width);
@@ -76,12 +44,11 @@ export function rowProcessing(table: Table, tr: Element, yCurrent: number, growi
     table.height = Math.max(table.height, yCurrent + cell.height);
     // 13
     // Double coverage check made at the end of table building to de-entangle code
-    // table.cells = table.cells.add(cell);
     // 14
     if (downwardGrowing) {
       growingCellsList.push(cell);
     } else {
-      // 13
+      // 13 only non-growing cells are stored for now to avoid storing the same cell in two places.
       table.cells = table.cells.add(cell);
     }
     // 15
@@ -108,14 +75,9 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   }
   // 4
   // ending row group 1
-  // console.log(`-----  from processRowGroup (ending) ----`);
-  // console.log(`cells before:`);
-  // console.dir([...table.cells].map(cell => ({name: cell.element.attribute("id").get().value})));
-  // table.cells = growCellList(table.height-1)(growingCellsList, table.cells);
   growingCellsList = growingCellsList.map(cell => cell.growDownward(table.height-1));
-  // console.log(`cells after:`);
-  // console.dir([...table.cells].map(cell => ({name: cell.element.attribute("id").get().value})));
   // ending row group 2
+  // When emptying the growing cells list, we need to finally add them to the table.
   table.cells = table.cells.concat(growingCellsList);
   return table.height;
 }
@@ -165,7 +127,6 @@ export function formingTable(element: Element): Table {
     // 14
     // Ending row group 1
     growingCellsList = growingCellsList.map(cell => cell.growDownward(table.height-1));
-    // table.cells = growCellList(table.height-1)(growingCellsList, table.cells);
     yCurrent = table.height;
     // Ending row group 2
     table.cells = table.cells.union(growingCellsList);

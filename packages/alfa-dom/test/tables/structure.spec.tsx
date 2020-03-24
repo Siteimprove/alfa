@@ -63,22 +63,7 @@ test("Process downward growing cells", t => {
   const table = newTable();
 
   const y = processRowGroup(table, downwardGrowing.element, 0);
-  // console.log(`cells final:`);
-  // console.dir([...table.cells].map(cell => ({name: cell.element.attribute("id").get().value})));
-  // console.dir(cleanTable(table));
   t.equal(y, 3);
-  // const actual = {...table, cells: [...table.cells].sort(compareCell)};
-  // const expected = {...downwardGrowing.expected, cells: [...downwardGrowing.expected.cells].sort(compareCell)};
-  // // console.log(`actual: ${actual.map(cellName)}`);
-  // console.log(`expected: ${expected.map(cellName)}`);
-  // for(let i=0; i< actual.length; i++) {
-  //   console.log(`Comparing ${cellName(actual[i])}`);
-  //   // console.dir(actual[i]);
-  //   // console.dir(expected[i]);
-  //   t.deepEqual(actual[i], expected[i]);
-  // }
-
-  // t.deepEqual(actual, expected);
   equalTables(t, table, downwardGrowing.expected);
 });
 
