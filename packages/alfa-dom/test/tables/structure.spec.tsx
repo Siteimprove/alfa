@@ -37,27 +37,27 @@ function equalTables(t: Assertions, actual: Table, expected: Table){
   t.deepEqual({...actual, cells: [...actual.cells].sort(compareCell)}, {...expected, cells: [...expected.cells].sort(compareCell)})
 }
 
-// test("Process simple row", t => {
-//   const table = newTable();
-//
-//   rowProcessing(table, simpleRow.element, 0, []);
-//   equalTables(t, table, simpleRow.expected);
-// });
-//
-// test("Process complex row", t => {
-//   const table = newTable();
-//
-//   rowProcessing(table, complexRow.element, 0, []);
-//   equalTables(t, table, complexRow.expected);
-// });
-//
-// test("Process row group", t => {
-//   const table = newTable();
-//
-//   const y = processRowGroup(table, rowGroup.element, 0);
-//   t.equal(y, 2);
-//   equalTables(t, table, rowGroup.expected);
-// });
+test("Process simple row", t => {
+  const table = newTable();
+
+  rowProcessing(table, simpleRow.element, 0, []);
+  equalTables(t, table, simpleRow.expected);
+});
+
+test("Process complex row", t => {
+  const table = newTable();
+
+  rowProcessing(table, complexRow.element, 0, []);
+  equalTables(t, table, complexRow.expected);
+});
+
+test("Process row group", t => {
+  const table = newTable();
+
+  const y = processRowGroup(table, rowGroup.element, 0);
+  t.equal(y, 2);
+  equalTables(t, table, rowGroup.expected);
+});
 
 test("Process downward growing cells", t => {
   const table = newTable();
@@ -82,12 +82,12 @@ test("Process downward growing cells", t => {
   equalTables(t, table, downwardGrowing.expected);
 });
 
-// test("Process table", t => {
-//   equalTables(t, formingTable(smithonian.element), smithonian.expected);
-//
-//   equalTables(t, formingTable(apple.element), apple.expected);
-//
-//   equalTables(t, formingTable(expenses.element), expenses.expected);
-//
-//   equalTables(t, formingTable(expensesNum.element), expensesNum.expected);
-// });
+test("Process table", t => {
+  equalTables(t, formingTable(smithonian.element), smithonian.expected);
+
+  equalTables(t, formingTable(apple.element), apple.expected);
+
+  equalTables(t, formingTable(expenses.element), expenses.expected);
+
+  equalTables(t, formingTable(expensesNum.element), expensesNum.expected);
+});
