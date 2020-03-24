@@ -64,7 +64,7 @@ export function processRowGroup(table: Table, group: Element, yCurrent: number):
   const yStart = table.height;
   // 2
   for (const tr of group.children().filter(isElementByName("tr"))) {
-    const row = Row.of(table.cells, growingCellsList, yCurrent, tr, table.width);
+    const row = Row.of(tr, table.cells, growingCellsList, yCurrent, table.width);
     table.cells = table.cells.concat(row.cells);
     growingCellsList = row.downwardGrowingCells;
     table.height = Math.max(table.height, yCurrent+1);

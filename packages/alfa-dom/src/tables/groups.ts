@@ -250,7 +250,7 @@ export class Row {
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-  public static of(cells: Array<Cell>, growingCells: Array<Cell>, yCurrent: number, tr: Element, w: number = 0): Row {
+  public static of(tr: Element, cells: Array<Cell> = [], growingCells: Array<Cell> = [], yCurrent: number = 0, w: number = 0): Row {
     // cells and growingCells must be disjoint (a cell is either growing or not)
     cells.forEach(cell => growingCells.forEach(growingCell => notDeepEqual(cell, growingCell)));
 

@@ -3,7 +3,7 @@ import {Predicate} from "@siteimprove/alfa-predicate";
 import {Set} from "@siteimprove/alfa-set";
 import {Element, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
-import {Cell, ColGroup, RowGroup} from "../../src/tables/groups";
+import {Cell, ColGroup, Row, RowGroup} from "../../src/tables/groups";
 import and = Predicate.and;
 
 const makeCellWithGetter = (getElt: (elt: string) => Element) =>
@@ -30,10 +30,8 @@ export namespace simpleRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table = {
-    cells: [makeCell("first","header", 0, 0), makeCell("second","data", 1, 0)],
-    width: 2, height: 1, rowGroups: [], colGroups: []
-  };
+  export const expected = new Row(0, 2, 1, element,
+    [makeCell("first","header", 0, 0), makeCell("second","data", 1, 0)]);
 }
 
 // Examples taken from https://html.spec.whatwg.org/multipage/tables.html#table-examples
@@ -50,16 +48,14 @@ export namespace complexRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table = {
-    cells: [
+  export const expected = new Row(0, 6, 2, element,
+    [
       makeCell("grade", "header", 0, 0,1, 2),
       makeCell("yield", "header", 1, 0, 1, 2),
       makeCell("strength", "header", 2, 0, 2, 1),
       makeCell("elong", "header", 4, 0, 1, 2),
       makeCell("reduct", "header", 5, 0, 1, 2)
-    ],
-    width: 6, height: 2, rowGroups: [], colGroups: []
-  };
+    ]);
 }
 
 // processing row group

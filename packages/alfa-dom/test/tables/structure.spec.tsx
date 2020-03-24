@@ -13,7 +13,7 @@ import {
   smithonian
 } from "./testcases";
 
-import{ Cell } from "../../src/tables/groups";
+import {Cell, Row} from "../../src/tables/groups";
 
 const cleanElement = (element: Element) =>
   element
@@ -47,18 +47,9 @@ function equalTables(t: Assertions, actual: Table, expected: Table){
   t.deepEqual({...actual, cells: [...actual.cells].sort(compareCell)}, {...expected, cells: [...expected.cells].sort(compareCell)})
 }
 
-test("Process simple row", t => {
-  const table = newTable();
-
-  rowProcessing(table, simpleRow.element, 0, []);
-  equalTables(t, table, simpleRow.expected);
-});
-
-test("Process complex row", t => {
-  const table = newTable();
-
-  rowProcessing(table, complexRow.element, 0, []);
-  equalTables(t, table, complexRow.expected);
+test("Process individual rows", t => {
+  t.deepEqual(Row.of(simpleRow.element), simpleRow.expected);
+  t.deepEqual(Row.of(complexRow.element), complexRow.expected);
 });
 
 test("Process row group", t => {
