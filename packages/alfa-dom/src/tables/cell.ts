@@ -1,13 +1,16 @@
 // https://html.spec.whatwg.org/multipage/tables.html#concept-cell
+import {Equatable} from "@siteimprove/alfa-equatable";
+import {Serializable} from "@siteimprove/alfa-json";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Element} from "..";
-import {ColGroup} from "./colgroup";
+import {ColGroup, RowGroup} from "./groups";
 import {hasName, parseSpan} from "./helpers";
-import {RowGroup} from "./rowgroup";
+
+import * as json from "@siteimprove/alfa-json";
 
 const { equals } = Predicate;
 
-export class Cell {
+export class Cell implements Equatable, Serializable {
   private readonly _kind: "data" | "header";
   private readonly _anchor: { x: number, y: number };
   private readonly _width: number;
@@ -76,5 +79,52 @@ export class Cell {
       cell: new Cell(hasName(equals("th"))(cell) ? "header" : "data", x, y, colspan, rowspan, cell),
       downwardGrowing: grow
     });
+  }
+
+  // compare cell according to their anchor
+  // in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
+  public compare(cell: Cell): number {
+    if (this._anchor.y < cell.anchor.y) return -1;
+    if (this._anchor.y > cell.anchor.y) return 1;
+    if (this._anchor.x < cell.anchor.x) return -1;
+    if (this._anchor.x > cell.anchor.x) return 1;
+    return 0;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Cell &&
+      this._kind === value._kind &&
+      this._width === value._width &&
+      this._height === value._height &&
+      this._anchor.x === value._anchor.x &&
+      this._anchor.y === value._anchor.y &&
+      this._element.equals(value._element)
+    )
+  }
+
+  public toJSON(): Cell.JSON {
+    return {
+      kind: this._kind,
+      anchor: this._anchor,
+      width: this._width,
+      height: this._height,
+      element: this._element.toJSON()
+    }
+  }
+
+  public toString(): string {
+    return `Cell (${this._kind}) anchor: (${this._anchor.x}, ${this._anchor.y}), width: ${this._width}, height: ${this._height}, element: ${this._element.toString()}`
+  }
+}
+
+export namespace Cell {
+  export interface JSON {
+    [key: string]: json.JSON,
+    kind: "header" | "data",
+    anchor: { x: number, y: number },
+    width: number,
+    height: number,
+    element: Element.JSON
   }
 }

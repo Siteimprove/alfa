@@ -1,11 +1,14 @@
 // https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
+import {Equatable} from "@siteimprove/alfa-equatable";
+import {Serializable} from "@siteimprove/alfa-json";
 import {Element} from "..";
 import {isElementByName, parseSpan} from "./helpers";
-import { RowGroup } from "./groups";
+import {Cell, RowGroup} from "./groups";
 
 import assert = require("assert");
+import * as json from "@siteimprove/alfa-json";
 
-export class ColGroup {
+export class ColGroup implements Equatable, Serializable {
   private readonly _anchor: {x: number};
   private readonly _width: number;
   private readonly _element: Element;
@@ -62,4 +65,41 @@ export class ColGroup {
     return new ColGroup(-1, totalSpan, colgroup);
   }
 
+  // compare colgroups according to their anchor
+  // in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
+  public compare(colgroup: ColGroup): number {
+    if (this._anchor.x < colgroup.anchor.x) return -1;
+    if (this._anchor.x > colgroup.anchor.x) return 1;
+    return 0;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof ColGroup &&
+      this._width === value._width &&
+      this._anchor.x === value._anchor.x &&
+      this._element.equals(value._element)
+    )
+  }
+
+  public toJSON(): ColGroup.JSON {
+    return {
+      anchor: this._anchor,
+      width: this._width,
+      element: this._element.toJSON()
+    }
+  }
+
+  public toString(): string {
+    return `ColGroup anchor: ${this._anchor.x}, width: ${this._width}, element: ${this._element.toString()}`
+  }
+}
+
+export namespace ColGroup {
+  export interface JSON {
+    [key: string]: json.JSON,
+    anchor: { x: number },
+    width: number,
+    element: Element.JSON
+  }
 }
