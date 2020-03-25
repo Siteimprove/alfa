@@ -8,15 +8,15 @@ import {parseSpan} from "../../src/tables/helpers";
 const dummy = Element.of(None, None, "foo");
 
 function cell(x: number, y: number, w: number, h: number): Cell {
-  return new Cell("data", x, y, w, h, dummy);
+  return Cell.of("data", x, y, w, h, dummy);
 }
 
 function rowGroup(y: number, h: number): RowGroup {
-  return new RowGroup(y, h, dummy);
+  return RowGroup.of(y, h, dummy);
 }
 
 function colGroup(x: number, w: number): ColGroup {
-  return new ColGroup(x, w, dummy);
+  return ColGroup.of(x, w, dummy);
 }
 
 test("isCovering ̤correctly computes cell coverage", t => {

@@ -1,14 +1,13 @@
 import {None } from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
-import {Element, Table} from "../../src";
+import {Element, TableBasic} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
 import {BuildingRowGroup, Cell, ColGroup, Row, RowGroup} from "../../src/tables/groups";
 import and = Predicate.and;
 
 const makeCellWithGetter = (getElt: (elt: string) => Element) =>
   (elt: string, kind: "header" | "data", x: number, y: number, w: number = 1, h: number = 1): Cell =>
-    ( new Cell(kind, x, y, w, h, getElt(elt))
-    );
+    Cell.of(kind, x, y, w, h, getElt(elt));
 
 function hasID(id: string): Predicate<Element> {
   return (element) => {
@@ -29,7 +28,7 @@ export namespace simpleRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected = new Row(0, 2, 1, element,
+  export const expected = Row.of(0, 2, 1, element,
     [makeCell("first","header", 0, 0), makeCell("second","data", 1, 0)]);
 }
 
@@ -47,7 +46,7 @@ export namespace complexRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected = new Row(0, 6, 2, element,
+  export const expected = Row.of(0, 6, 2, element,
     [
       makeCell("grade", "header", 0, 0,1, 2),
       makeCell("yield", "header", 1, 0, 1, 2),
@@ -75,7 +74,7 @@ export namespace rowGroup {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected = new BuildingRowGroup(-1, 2, element, 6, [
+  export const expected = BuildingRowGroup.of(-1, 2, element, 6, [
     makeCell("grade", "header", 0, 0, 1, 2),
     makeCell("yield", "header", 1, 0, 1, 2),
     makeCell("strength", "header", 2, 0, 2, 1),
@@ -108,7 +107,7 @@ export namespace downwardGrowing {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected = new BuildingRowGroup(-1, 3, element, 6, [
+  export const expected = BuildingRowGroup.of(-1, 3, element, 6, [
       makeCell("grade", "header", 0, 0, 1, 3),
       makeCell("yield", "header", 1, 0, 1, 2),
       makeCell("strength", "header", 2, 0, 2, 1),
@@ -170,7 +169,7 @@ export namespace smithonian {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table =  {
+  export const expected: TableBasic =  {
     cells: [
       makeCell("grade", "header", 0, 0, 1, 2), makeCell("yield", "header", 1, 0, 1, 2), makeCell("strength", "header", 2, 0, 2, 1),
       makeCell("elong", "header", 4, 0, 1, 2), makeCell("reduct", "header", 5, 0, 1, 2),
@@ -183,7 +182,7 @@ export namespace smithonian {
       makeCell("soft-lb", "data", 3, 4), makeCell("soft-elong", "data", 4, 4), makeCell("soft-reduct", "data", 5, 4)
     ],
     width: 6, height: 5, colGroups: [] ,
-    rowGroups: [new RowGroup(0, 2, getById("thead")), new RowGroup(2, 3, getById("tbody"))]
+    rowGroups: [RowGroup.of(0, 2, getById("thead")), RowGroup.of(2, 3, getById("tbody"))]
   }
 }
 
@@ -232,7 +231,7 @@ export namespace apple {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table =  {
+  export const expected: TableBasic =  {
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
@@ -247,10 +246,10 @@ export namespace apple {
     ],
     width: 4, height: 5, colGroups: [],
     rowGroups: [
-      new RowGroup(0, 1, getById("thead")),
-      new RowGroup(1, 2, getById("body-1")),
-      new RowGroup(3, 1, getById("body-2")),
-      new RowGroup(4, 1, getById("tfoot"))
+      RowGroup.of(0, 1, getById("thead")),
+      RowGroup.of(1, 2, getById("body-1")),
+      RowGroup.of(3, 1, getById("body-2")),
+      RowGroup.of(4, 1, getById("tfoot"))
       ]
   }
 }
@@ -286,7 +285,7 @@ export namespace expenses {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table =  {
+  export const expected: TableBasic =  {
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
@@ -301,13 +300,13 @@ export namespace expenses {
     ],
     width: 4, height: 5,
     colGroups: [
-      new ColGroup(0, 1, getById("group-head")),
-      new ColGroup(1, 3, getById("group-body"))
+      ColGroup.of(0, 1, getById("group-head")),
+      ColGroup.of(1, 3, getById("group-body"))
     ],
     rowGroups: [
-      new RowGroup(0, 1, getById("thead")),
-      new RowGroup(1, 2, getById("body-1")),
-      new RowGroup(3, 2, getById("body-2"))
+      RowGroup.of(0, 1, getById("thead")),
+      RowGroup.of(1, 2, getById("body-1")),
+      RowGroup.of(3, 2, getById("body-2"))
     ]
   }
 }
@@ -344,7 +343,7 @@ export namespace expensesNum {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table =  {
+  export const expected: TableBasic =  {
     cells: [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
@@ -359,13 +358,13 @@ export namespace expensesNum {
     ],
     width: 4, height: 5,
     colGroups: [
-      new ColGroup(0, 1, getById("group-head")),
-      new ColGroup(1, 3, getById("group-body"))
+      ColGroup.of(0, 1, getById("group-head")),
+      ColGroup.of(1, 3, getById("group-body"))
     ],
     rowGroups: [
-      new RowGroup(0, 1, getById("thead")),
-      new RowGroup(1, 2, getById("body-1")),
-      new RowGroup(3, 2, getById("body-2"))
+      RowGroup.of(0, 1, getById("thead")),
+      RowGroup.of(1, 2, getById("body-1")),
+      RowGroup.of(3, 2, getById("body-2"))
     ]
   }
 }

@@ -1,7 +1,7 @@
 // https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
 import {Equatable} from "@siteimprove/alfa-equatable";
 import {Serializable} from "@siteimprove/alfa-json";
-import {Element, Table} from "..";
+import {Element, TableBasic} from "..";
 import {Cell, ColGroup, Row} from "./groups";
 
 import * as json from "@siteimprove/alfa-json";
@@ -14,10 +14,14 @@ export class RowGroup implements Equatable, Serializable {
   protected readonly _height: number;
   protected readonly _element: Element;
 
-  constructor(y: number, height: number, element: Element) {
+  protected constructor(y: number, h: number, element: Element) {
     this._anchor = { y };
-    this._height = height;
+    this._height = h;
     this._element = element;
+  }
+
+  public static of(y: number, h: number, element: Element) {
+    return new RowGroup(y, h, element)
   }
 
   public get anchor() {
@@ -81,18 +85,22 @@ export class BuildingRowGroup extends RowGroup {
   private readonly _width: number;
   private readonly _cells: Array<Cell>;
 
-  constructor(y: number, height: number, element: Element, width: number = 0, cells: Array<Cell> = []) {
-    super(y, height, element);
-    this._width = width;
+  constructor(y: number, h: number, element: Element, w: number, cells: Array<Cell>) {
+    super(y, h, element);
+    this._width = w;
     this._cells = cells;
   }
 
-  public toRowGroup(): RowGroup {
-    return new RowGroup(this._anchor.y, this._height, this._element);
+  public static of(y: number, h: number, element: Element, w: number = 0, cells: Array<Cell> = []) {
+    return new BuildingRowGroup(y, h, element, w, cells);
   }
 
-  _update(update: {y?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>}): BuildingRowGroup {
-    return new BuildingRowGroup(
+  public toRowGroup(): RowGroup {
+    return RowGroup.of(this._anchor.y, this._height, this._element);
+  }
+
+  private _update(update: {y?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>}): BuildingRowGroup {
+    return BuildingRowGroup.of(
       update.y !== undefined ? update.y : this._anchor.y,
       update.height !== undefined ? update.height : this._height,
       update.element !== undefined ? update.element : this._element,
@@ -108,10 +116,10 @@ export class BuildingRowGroup extends RowGroup {
     return this._cells;
   }
 
-  _adjustWidth(w: number): BuildingRowGroup {
+  private _adjustWidth(w: number): BuildingRowGroup {
     return this._update({width: Math.max(this._width, w)})
   }
-  _adjustHeight(h: number): BuildingRowGroup {
+  private _adjustHeight(h: number): BuildingRowGroup {
     return this._update({height: Math.max(this._height, h)})
   }
 
@@ -124,17 +132,17 @@ export class BuildingRowGroup extends RowGroup {
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
-  public static of(group: Element): BuildingRowGroup {
+  public static from(group: Element): BuildingRowGroup {
     assert(group.name === "tfoot" || group.name ==="tbody" || group.name === "thead");
 
     let growingCellsList: Array<Cell> = [];
-    let rowgroup = new BuildingRowGroup(-1, 0, group);
+    let rowgroup = BuildingRowGroup.of(-1, 0, group);
     let yCurrent = 0; // y position inside the rowgroup
     // 1
     // Useless, the height of the group is computed and used instead.
     // 2
     for (const tr of group.children().filter(isElementByName("tr"))) {
-      const row = Row.of(tr, rowgroup._cells, growingCellsList, yCurrent, rowgroup._width);
+      const row = Row.from(tr, rowgroup._cells, growingCellsList, yCurrent, rowgroup._width);
       growingCellsList = row.downwardGrowingCells;
       rowgroup = rowgroup
         ._update({cells: rowgroup._cells.concat(row.cells)})

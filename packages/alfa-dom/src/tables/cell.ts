@@ -17,12 +17,16 @@ export class Cell implements Equatable, Serializable {
   private readonly _height: number;
   private readonly _element: Element;
 
-  constructor(kind: "data" | "header", x: number, y: number, w: number, h: number, element: Element) {
+  private constructor(kind: "data" | "header", x: number, y: number, w: number, h: number, element: Element) {
     this._kind = kind;
     this._anchor = { x, y };
     this._width = w;
     this._height = h;
     this._element = element;
+  }
+
+  public static of(kind: "data" | "header", x: number, y: number, w: number, h: number, element: Element) {
+    return new Cell(kind, x, y, w, h, element);
   }
 
   // debug
@@ -54,31 +58,13 @@ export class Cell implements Equatable, Serializable {
   }
 
   public anchorAt(x: number, y: number): Cell {
-    return new Cell(this._kind, x, y, this._width, this._height, this._element);
+    return Cell.of(this._kind, x, y, this._width, this._height, this._element);
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
   public growDownward(yCurrent: number): Cell {
     // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-    return new Cell(this._kind, this._anchor.x, this._anchor.y, this._width, Math.max(this._height, yCurrent - this._anchor.y + 1), this._element);
-  }
-
-  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-  public static of(cell: Element, x: number = -1, y: number = -1): ({cell: Cell, downwardGrowing: boolean}) {
-    const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
-    // 9
-    let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
-    // 10 assuming we are not in quirks mode because I don't know if we test that yet…
-    // Unsurprisingly, "rowspan=0" is not universally supported (that is, not by Edge…)
-    const grow = (rowspan === 0);
-    if (rowspan === 0) {
-      rowspan = 1
-    }
-    // 11
-    return ({
-      cell: new Cell(hasName(equals("th"))(cell) ? "header" : "data", x, y, colspan, rowspan, cell),
-      downwardGrowing: grow
-    });
+    return Cell.of(this._kind, this._anchor.x, this._anchor.y, this._width, Math.max(this._height, yCurrent - this._anchor.y + 1), this._element);
   }
 
   // compare cell according to their anchor
@@ -126,5 +112,23 @@ export namespace Cell {
     width: number,
     height: number,
     element: Element.JSON
+  }
+
+  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+  export function from(cell: Element, x: number = -1, y: number = -1): ({cell: Cell, downwardGrowing: boolean}) {
+    const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
+    // 9
+    let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
+    // 10 assuming we are not in quirks mode because I don't know if we test that yet…
+    // Unsurprisingly, "rowspan=0" is not universally supported (that is, not by Edge…)
+    const grow = (rowspan === 0);
+    if (rowspan === 0) {
+      rowspan = 1
+    }
+    // 11
+    return ({
+      cell: Cell.of(hasName(equals("th"))(cell) ? "header" : "data", x, y, colspan, rowspan, cell),
+      downwardGrowing: grow
+    });
   }
 }

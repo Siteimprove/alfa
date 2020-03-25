@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import {Err} from "@siteimprove/alfa-result";
 import {Assertions, test} from "@siteimprove/alfa-test";
-import { formingTable, Element, Table} from "../../src";
+import { formingTable, Element, TableBasic} from "../../src";
 import {
   apple,
   complexRow,
@@ -28,7 +28,7 @@ const cleanCell = (cell: Cell) => (
   }
 );
 
-const cleanTable = (table: Table) => (
+const cleanTable = (table: TableBasic) => (
   { ...table,
     cells: [...table.cells.map(cleanCell)]
   }
@@ -44,20 +44,20 @@ function compareCell(c1: Cell, c2: Cell): number {
   return 0;
 }
 
-function equalTables(t: Assertions, actual: Table, expected: Table){
+function equalTables(t: Assertions, actual: TableBasic, expected: TableBasic){
   t.deepEqual({...actual, cells: [...actual.cells].sort(compareCell)}, {...expected, cells: [...expected.cells].sort(compareCell)})
 }
 
 test("Process individual rows", t => {
-  t.deepEqual(Row.of(simpleRow.element).toJSON(), simpleRow.expected.toJSON());
+  t.deepEqual(Row.from(simpleRow.element).toJSON(), simpleRow.expected.toJSON());
 
-  t.deepEqual(Row.of(complexRow.element).toJSON(), (complexRow.expected).toJSON());
+  t.deepEqual(Row.from(complexRow.element).toJSON(), (complexRow.expected).toJSON());
 });
 
 test("Process row groups", t => {
-  t.deepEqual(BuildingRowGroup.of(rowGroup.element).toJSON(), rowGroup.expected.toJSON());
+  t.deepEqual(BuildingRowGroup.from(rowGroup.element).toJSON(), rowGroup.expected.toJSON());
 
-  t.deepEqual(BuildingRowGroup.of(downwardGrowing.element).toJSON(), downwardGrowing.expected.toJSON());
+  t.deepEqual(BuildingRowGroup.from(downwardGrowing.element).toJSON(), downwardGrowing.expected.toJSON());
 });
 
 test("Process table", t => {

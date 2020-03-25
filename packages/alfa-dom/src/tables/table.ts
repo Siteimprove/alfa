@@ -1,3 +1,5 @@
+import {Equatable} from "@siteimprove/alfa-equatable";
+import {Serializable} from "@siteimprove/alfa-json";
 import {Err, Ok, Result} from "@siteimprove/alfa-result";
 import { Element } from "..";
 
@@ -5,13 +7,31 @@ import {Cell, ColGroup, RowGroup, isCovering, Row, BuildingRowGroup} from "./gro
 import { isElementByName } from "./helpers";
 import assert = require("assert");
 
-// https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
-export type Table = { width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
-export function newTable(): Table {
+// // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
+// export class Table implements Equatable, Serializable {
+//   private readonly _width: number;
+//   private readonly _height: number;
+//   private readonly _cells: Array<Cell>;
+//   private readonly _rowGroups: Array<RowGroup>;
+//   private readonly _colGroups: Array<ColGroup>;
+//
+//   constructor(w: number = 0, h: number = 0, cells: Array<Cell> = [], rowGroups: Array<RowGroup> = [], colGroups: Array<ColGroup> = []) {
+//     this._width = w;
+//     this._height = h;
+//     this._cells = cells;
+//     this._rowGroups = rowGroups;
+//     this._colGroups = colGroups;
+//   }
+//
+//   _update
+// }
+
+export type TableBasic = { width: number, height: number, cells: Array<Cell>, rowGroups: Array<RowGroup>, colGroups: Array<ColGroup> };
+export function newTable(): TableBasic {
   return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
-export function formingTable(element: Element): Result<Table, string> {
+export function formingTable(element: Element): Result<TableBasic, string> {
   assert(element.name === "table");
 
   // 1, 2, 4, 11
@@ -35,7 +55,7 @@ export function formingTable(element: Element): Result<Table, string> {
     if (currentElement.name === "colgroup") {
       // 9.1 (Columns group)
       if (processCG) {
-        const colGroup = ColGroup.of(currentElement).anchorAt(table.width);
+        const colGroup = ColGroup.from(currentElement).anchorAt(table.width);
         // 9.1 (1).4 (cumulative) and (2).2
         table.width += colGroup.width;
         // 9.1 (1).7 and (2).3
@@ -50,7 +70,7 @@ export function formingTable(element: Element): Result<Table, string> {
     if (currentElement.name === "tr") {
       // 13 (process) can detect new downward growing cells
 
-      const row = Row.of(currentElement, table.cells, growingCellsList, yCurrent, table.width);
+      const row = Row.from(currentElement, table.cells, growingCellsList, yCurrent, table.width);
       table.cells = table.cells.concat(row.cells);
       growingCellsList = row.downwardGrowingCells;
       table.height = Math.max(table.height, yCurrent+1);
@@ -81,7 +101,7 @@ export function formingTable(element: Element): Result<Table, string> {
       // 16
       // process row group and anchor cells
       // console.log(`Processing ${currentElement.attribute("id").get().value} with yCurrent=${yCurrent}`);
-      const rowgroup = BuildingRowGroup.of(currentElement).anchorAt(yCurrent);
+      const rowgroup = BuildingRowGroup.from(currentElement).anchorAt(yCurrent);
       // console.log(`    Got rowgroup anchored at ${rowgroup.anchor.y}`);
       if (rowgroup.height > 0) {
         // adjust table height and width
@@ -98,7 +118,7 @@ export function formingTable(element: Element): Result<Table, string> {
 
   // 19
   for (const tfoot of pendingTfoot) {
-    const rowgroup = BuildingRowGroup.of(tfoot).anchorAt(yCurrent);
+    const rowgroup = BuildingRowGroup.from(tfoot).anchorAt(yCurrent);
     if (rowgroup.height > 0) {
       // adjust table height and width
       table.height += rowgroup.height;

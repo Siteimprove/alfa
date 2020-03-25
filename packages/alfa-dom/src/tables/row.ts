@@ -27,7 +27,7 @@ export class Row implements Equatable, Serializable {
   private readonly _cells: Array<Cell>;
   private readonly _downwardGrowingCells: Array<Cell>;
 
-  constructor(y: number, w: number, h: number, element: Element, cells: Array<Cell> = [], growing: Array<Cell> = [], xCurrent: number = 0) {
+  private constructor(y: number, w: number, h: number, element: Element, cells: Array<Cell> = [], growing: Array<Cell> = [], xCurrent: number = 0) {
     this._anchor = { y };
     this._xCurrent = xCurrent;
     this._width = w;
@@ -37,8 +37,12 @@ export class Row implements Equatable, Serializable {
     this._downwardGrowingCells = growing;
   }
 
-  _update(update: {y?: number, xCurrent?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>, downwardGrowingCells?: Array<Cell>}): Row {
-    return new Row(
+  public static of(y: number, w: number, h: number, element: Element, cells: Array<Cell> = [], growing: Array<Cell> = [], xCurrent: number = 0) {
+    return new Row(y, w, h, element, cells, growing, xCurrent);
+  }
+
+  private _update(update: {y?: number, xCurrent?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>, downwardGrowingCells?: Array<Cell>}): Row {
+    return Row.of(
       update.y !== undefined ? update.y : this._anchor.y,
       update.width !== undefined ? update.width : this._width,
       update.height !== undefined ? update.height : this._height,
@@ -68,22 +72,22 @@ export class Row implements Equatable, Serializable {
     return this._downwardGrowingCells;
   }
 
-  _growCells(y: number): Row {
+  private _growCells(y: number): Row {
     return this._update({downwardGrowingCells: this._downwardGrowingCells.map(cell => cell.growDownward(y))});
   }
 
-  _addNonGrowingCell(cell: Cell): Row {
+  private _addNonGrowingCell(cell: Cell): Row {
     return this._update({cells: this._cells.concat(cell)});
   }
-  _addGrowingCell(cell: Cell): Row {
+  private _addGrowingCell(cell: Cell): Row {
     return this._update({downwardGrowingCells: this._downwardGrowingCells.concat(cell)})
   }
-  _addCell(cell: Cell, downwardGrowing: boolean): Row {
+  private _addCell(cell: Cell, downwardGrowing: boolean): Row {
     return downwardGrowing ? this._addGrowingCell(cell) : this._addNonGrowingCell(cell);
   }
-  _addCellFromElement(currentCell: Element, yCurrent: number): Row {
+  private _addCellFromElement(currentCell: Element, yCurrent: number): Row {
     // 8, 9, 10, 13
-    const { cell, downwardGrowing } = Cell.of(currentCell, this._xCurrent, yCurrent);
+    const { cell, downwardGrowing } = Cell.from(currentCell, this._xCurrent, yCurrent);
     return this
       // 11
       ._adjustWidth(this._xCurrent + cell.width)
@@ -95,16 +99,16 @@ export class Row implements Equatable, Serializable {
       ._addCell(cell, downwardGrowing);
   }
 
-  _adjustWidth(w: number): Row {
+  private _adjustWidth(w: number): Row {
     return this._update({width: Math.max(this._width, w)})
   }
-  _adjustHeight(h: number): Row {
+  private _adjustHeight(h: number): Row {
     return this._update({height: Math.max(this._height, h)})
   }
 
   // moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
   // step 6
-  _skipIfCovered(cells: Array<Cell>, yCurrent: number): Row {
+  private _skipIfCovered(cells: Array<Cell>, yCurrent: number): Row {
     if (this._xCurrent < this._width &&
       cells.concat(this._cells, this._downwardGrowingCells).some(isCovering(this._xCurrent, yCurrent))
       ) {
@@ -116,14 +120,14 @@ export class Row implements Equatable, Serializable {
     }
   }
 
-  _enlargeIfNeeded(): Row {
+  private _enlargeIfNeeded(): Row {
     return this._xCurrent === this.width ?
       this._adjustWidth(this.width + 1)
       : this
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-  public static of(tr: Element, cells: Array<Cell> = [], growingCells: Array<Cell> = [], yCurrent: number = 0, w: number = 0): Row {
+  public static from(tr: Element, cells: Array<Cell> = [], growingCells: Array<Cell> = [], yCurrent: number = 0, w: number = 0): Row {
     // cells and growingCells must be disjoint (a cell is either growing or not)
     cells.forEach(cell => growingCells.forEach(growingCell => notDeepEqual(cell, growingCell)));
     assert(tr.name === "tr");
@@ -134,17 +138,17 @@ export class Row implements Equatable, Serializable {
     // global table height adjusted after building row
 
     // loop control between 4-5, and 16-17-18
-    return children.reduce((r, elt) =>
-      r
-        // 6 (Cells)
-        ._skipIfCovered(cells, yCurrent)
-        // 7
-        ._enlargeIfNeeded()
-        // 8-14
-        // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
-        ._addCellFromElement(elt, yCurrent),
+    return children.reduce((row, currentCell) =>
+        row
+          // 6 (Cells)
+          ._skipIfCovered(cells, yCurrent)
+          // 7
+          ._enlargeIfNeeded()
+          // 8-14
+          // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
+          ._addCellFromElement(currentCell, yCurrent),
       // 2 is done when creating the row, default value for xCurrent is 0.
-      new Row(yCurrent, w, 1, tr, [], growingCells)
+      Row.of(yCurrent, w, 1, tr, [], growingCells)
         // 3
         ._growCells(yCurrent)
     );
