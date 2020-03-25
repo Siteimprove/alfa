@@ -99,12 +99,12 @@ export class BuildingRowGroup extends RowGroup {
     return RowGroup.of(this._anchor.y, this._height, this._element);
   }
 
-  private _update(update: {y?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>}): BuildingRowGroup {
+  private _update(update: {y?: number, w?: number, h?: number, element?: Element, cells?: Array<Cell>}): BuildingRowGroup {
     return BuildingRowGroup.of(
       update.y !== undefined ? update.y : this._anchor.y,
-      update.height !== undefined ? update.height : this._height,
+      update.h !== undefined ? update.h : this._height,
       update.element !== undefined ? update.element : this._element,
-      update.width !== undefined ? update.width : this._width,
+      update.w !== undefined ? update.w : this._width,
       update.cells !== undefined ? update.cells : this._cells,
     )
   }
@@ -117,10 +117,10 @@ export class BuildingRowGroup extends RowGroup {
   }
 
   private _adjustWidth(w: number): BuildingRowGroup {
-    return this._update({width: Math.max(this._width, w)})
+    return this._update({w: Math.max(this._width, w)})
   }
   private _adjustHeight(h: number): BuildingRowGroup {
-    return this._update({height: Math.max(this._height, h)})
+    return this._update({h: Math.max(this._height, h)})
   }
 
   // anchoring a row group needs to move all cells accordingly

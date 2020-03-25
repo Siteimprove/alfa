@@ -58,11 +58,44 @@ export class Table implements Equatable, Serializable {
     return this._rowGroups;
   }
 
+  private _adjustWidth(w: number): Table {
+    return this._update({w: Math.max(this._width, w)})
+  }
+  private _adjustHeight(h: number): Table {
+    return this._update({h: Math.max(this._height, h)})
+  }
+
+  private _addColGroup(colGroup: ColGroup): Table {
+    return this._update({colGroups: this._colGroups.concat(colGroup)});
+  }
+  private _addRowGroup(rowGroup: RowGroup): Table {
+    return this._update({rowGroups: this._rowGroups.concat(rowGroup)});
+  }
+
+  private _addCells(cells: Array<Cell>): Table {
+    return this._update({cells: this._cells.concat(cells)})
+  }
+
+  private _addRowGroupFromElement(rowgroup: Element, yCurrent: number): Table {
+    const rowGroup = BuildingRowGroup.from(rowgroup).anchorAt(yCurrent);
+    if (rowGroup.height > 0) {
+      return this
+        // adjust table height and width
+        ._adjustHeight(this._height + rowGroup.height)
+        ._adjustWidth(rowGroup.width)
+        // merge in new cells
+        ._addCells(rowGroup.cells)
+        // add new group
+        ._addRowGroup(rowGroup.toRowGroup());
+    } else {
+      return this;
+    }
+  }
+
   public static from(element: Element): Result<Table, string> {
     assert(element.name === "table");
 
     // 1, 2, 4, 11
-    // let table = newTable();
     let table = Table.of(element);
     // 3
     let pendingTfoot: Array<Element> = [];
@@ -84,12 +117,11 @@ export class Table implements Equatable, Serializable {
         // 9.1 (Columns group)
         if (processCG) {
           const colGroup = ColGroup.from(currentElement).anchorAt(table.width);
-          // 9.1 (1).4 (cumulative) and (2).2
-          // table.width += colGroup.width;
-          table = table._update({w: table._width + colGroup.width});
-          // 9.1 (1).7 and (2).3
-          // table.colGroups.push(colGroup);
-          table = table._update({colGroups: table._colGroups.concat(colGroup)});
+          table = table
+            // 9.1 (1).4 (cumulative) and (2).2
+            ._adjustWidth(table._width + colGroup.width)
+            // 9.1 (1).7 and (2).3
+            ._addColGroup(colGroup);
         }
         continue;
       }
@@ -101,19 +133,14 @@ export class Table implements Equatable, Serializable {
         // 13 (process) can detect new downward growing cells
 
         const row = Row.from(currentElement, table.cells, growingCellsList, yCurrent, table.width);
-        // table.cells = table.cells.concat(row.cells);
-        table = table._update({cells: table._cells.concat(row.cells)});
         growingCellsList = row.downwardGrowingCells;
-        // table.height = Math.max(table.height, yCurrent+1);
-        table = table._update({h: Math.max(table._height, yCurrent+1)});
-        // table.width = Math.max(table.width, row.width);
-        table = table._update({w: Math.max(table._width, row.width)});
+        table = table
+          ._addCells(row.cells)
+          ._adjustHeight(yCurrent+1)
+          ._adjustWidth(row.width);
         // row processing steps 4/16
         yCurrent++;
 
-        // growingCellsList = rowProcessing(table, currentElement, yCurrent, growingCellsList);
-        // // row processing steps 4/16
-        // yCurrent++;
         continue;
       }
 
@@ -122,8 +149,7 @@ export class Table implements Equatable, Serializable {
       growingCellsList = growingCellsList.map(cell => cell.growDownward(table.height-1));
       yCurrent = table._height;
       // Ending row group 2
-      // table.cells = table.cells.concat(growingCellsList);
-      table = table._update({cells: table._cells.concat(growingCellsList)});
+      table = table._addCells(growingCellsList);
       growingCellsList = [];
 
       if (currentElement.name === "tfoot") {
@@ -134,42 +160,15 @@ export class Table implements Equatable, Serializable {
       if (currentElement.name === "thead" || currentElement.name === "tbody") {
         // 16
         // process row group and anchor cells
-        const rowgroup = BuildingRowGroup.from(currentElement).anchorAt(yCurrent);
-        if (rowgroup.height > 0) {
-          // adjust table height and width
-          // table.height += rowgroup.height;
-          table = table._update({h: table._height + rowgroup.height});
-          // table.width = Math.max(table.width, rowgroup.width);
-          table = table._update({w: Math.max(table._width, rowgroup.width)});
-          // merge in new cells
-          // table.cells = table.cells.concat(rowgroup.cells);
-          table = table._update({cells: table._cells.concat(rowgroup.cells)});
-          // add new group
-          // table.rowGroups = table.rowGroups.concat(rowgroup.toRowGroup())
-          table = table._update({rowGroups: table._rowGroups.concat(rowgroup.toRowGroup())})
-        }
+        table = table._addRowGroupFromElement(currentElement, yCurrent);
         yCurrent = table._height;
       }
     }
 
     // 19
     for (const tfoot of pendingTfoot) {
-      const rowgroup = BuildingRowGroup.from(tfoot).anchorAt(yCurrent);
-      if (rowgroup.height > 0) {
-        // adjust table height and width
-        // table.height += rowgroup.height;
-        table = table._update({h: table._height + rowgroup.height});
-        // table.width = Math.max(table.width, rowgroup.width);
-        table = table._update({w: Math.max(table._width, rowgroup.width)});
-        // merge in new cells
-        // table.cells = table.cells.concat(rowgroup.cells);
-        table = table._update({cells: table._cells.concat(rowgroup.cells)});
-        // add new group
-        // table.rowGroups = table.rowGroups.concat(rowgroup.toRowGroup())
-        table = table._update({rowGroups: table._rowGroups.concat(rowgroup.toRowGroup())})
-      }
+      table = table._addRowGroupFromElement(tfoot, yCurrent);
       yCurrent = table._height;
-      // yCurrent = processRowGroup(table, tfoot, yCurrent);
     }
     // 20
     // Of course, errors are more or less caught and repaired by browsers.
