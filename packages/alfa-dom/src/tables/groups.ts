@@ -1,14 +1,18 @@
+import {Equatable} from "@siteimprove/alfa-equatable";
+import {Serializable} from "@siteimprove/alfa-json";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {notDeepEqual} from "assert";
 import { Element } from "..";
 import {hasName, isElementByName, parseSpan} from "./helpers";
+
+import * as json from "@siteimprove/alfa-json";
 
 import assert = require("assert");
 
 const { equals } = Predicate;
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
-export class RowGroup {
+export class RowGroup implements Equatable, Serializable {
   private readonly _anchor: {y: number};
   private readonly _height: number;
   private readonly _element: Element;
@@ -35,8 +39,37 @@ export class RowGroup {
   public isColGroup(): this is ColGroup {
     return false;
   }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof RowGroup &&
+      this._height === value._height &&
+      this._anchor.y === value._anchor.y &&
+      this._element.equals(value._element)
+    )
+  }
+
+  public toJSON(): RowGroup.JSON {
+    return {
+      anchor: this._anchor,
+      height: this._height,
+      element: this._element.toJSON()
+    }
+  }
+
+  public toString(): string {
+    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, element: ${this._element.toString()}`
+  }
 }
 
+export namespace RowGroup {
+  export interface JSON {
+    [key: string]: json.JSON,
+    anchor: { y: number },
+    height: number,
+    element: Element.JSON
+}
+}
 
 // https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
 export class ColGroup {
