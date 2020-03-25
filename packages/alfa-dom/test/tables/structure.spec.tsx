@@ -1,4 +1,5 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
+import {Err} from "@siteimprove/alfa-result";
 import {Assertions, test} from "@siteimprove/alfa-test";
 import { formingTable, Element, Table} from "../../src";
 import {
@@ -62,17 +63,17 @@ test("Process row groups", t => {
 test("Process table", t => {
   const actual = formingTable(smithonian.element);
   // console.dir(cleanTable(actual), {depth: 4});
-  equalTables(t, actual, smithonian.expected);
+  equalTables(t, actual.get(), smithonian.expected);
 
-  equalTables(t, formingTable(apple.element), apple.expected);
+  equalTables(t, formingTable(apple.element).get(), apple.expected);
 
-  equalTables(t, formingTable(expenses.element), expenses.expected);
+  equalTables(t, formingTable(expenses.element).get(), expenses.expected);
 
-  equalTables(t, formingTable(expensesNum.element), expensesNum.expected);
+  equalTables(t, formingTable(expensesNum.element).get(), expensesNum.expected);
 });
 
-// test("Table model errors", t => {
-//   // formingTable(errors.emptyCol);
-//   // formingTable(errors.emptyRow);
-//   formingTable(errors.coveredTwice);
-// });
+test("Table model errors", t => {
+  t.deepEqual(formingTable(errors.emptyCol), Err.of("col 1 has no cell anchored in it"));
+  t.deepEqual(formingTable(errors.emptyRow), Err.of("row 1 has no cell anchored in it"));
+  t.deepEqual(formingTable(errors.coveredTwice), Err.of("Slot (1, 1) is covered twice"));
+});

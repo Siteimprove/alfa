@@ -383,7 +383,7 @@ export namespace errors {
     <tr><td>third row</td></tr>
   </table>)
 
-  // cell (1, 1) is covered twice
+  // slot (1, 1) is covered twice
   export const coveredTwice = Element.fromElement(<table>
     <tr><td>1 row, 1 col</td><td rowSpan={2}>2 rows</td></tr>
     <tr><td colSpan={2}>2 cols</td></tr>

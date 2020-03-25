@@ -1,3 +1,4 @@
+import {Err, Ok, Result} from "@siteimprove/alfa-result";
 import { Element } from "..";
 
 import {Cell, ColGroup, RowGroup, isCovering, Row, BuildingRowGroup} from "./groups";
@@ -10,7 +11,7 @@ export function newTable(): Table {
   return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
-export function formingTable(element: Element): Table {
+export function formingTable(element: Element): Result<Table, string> {
   assert(element.name === "table");
 
   // 1, 2, 4, 11
@@ -119,7 +120,7 @@ export function formingTable(element: Element): Table {
     for (let col=0; !rowCovered && col<table.width; col++) {
       rowCovered = rowCovered || table.cells.some(cell => cell.anchor.x === col && cell.anchor.y === row);
     }
-    if (!rowCovered) throw new Error(`row ${row} has no cell anchored in it`)
+    if (!rowCovered) return Err.of(`row ${row} has no cell anchored in it`)
   }
   // checking for cols
   for (let col=0; col<table.width; col++) {
@@ -127,17 +128,17 @@ export function formingTable(element: Element): Table {
     for (let row=0; !colCovered && row<table.height; row++) {
       colCovered = colCovered || table.cells.some(cell => cell.anchor.x === col && cell.anchor.y === row);
     }
-    if (!colCovered) throw new Error(`col ${col} has no cell anchored in it`)
+    if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`)
   }
   // Checking for row forming algorithm step 13 (slot covered twice)
   for (let x = 0; x < table.width; x++) {
     for (let y = 0; y < table.height; y++) {
       if (table.cells.filter(isCovering(x, y)).length > 1) {
-        throw new Error(`Slot (${x}, ${y}) is covered twice`)
+        return Err.of(`Slot (${x}, ${y}) is covered twice`)
       }
     }
   }
 
   // 21
-  return table;
+  return Ok.of(table);
 }
