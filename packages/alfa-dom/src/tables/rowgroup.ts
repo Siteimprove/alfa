@@ -87,13 +87,17 @@ export class BuildingRowGroup extends RowGroup {
     this._cells = cells;
   }
 
+  public toRowGroup(): RowGroup {
+    return new RowGroup(this._anchor.y, this._height, this._element);
+  }
+
   _update(update: {y?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>}): BuildingRowGroup {
     return new BuildingRowGroup(
-      update.y || this._anchor.y,
-      update.height || this._height,
-      update.element || this._element,
-      update.width || this._width,
-      update.cells || this._cells,
+      update.y !== undefined ? update.y : this._anchor.y,
+      update.height !== undefined ? update.height : this._height,
+      update.element !== undefined ? update.element : this._element,
+      update.width !== undefined ? update.width : this._width,
+      update.cells !== undefined ? update.cells : this._cells,
     )
   }
 
@@ -111,27 +115,36 @@ export class BuildingRowGroup extends RowGroup {
     return this._update({height: Math.max(this._height, h)})
   }
 
+  // anchoring a row group needs to move all cells accordingly
+  public anchorAt(y: number): BuildingRowGroup {
+    return this._update({
+      y,
+      cells: this._cells.map(cell => cell.anchorAt(cell.anchor.x, y+cell.anchor.y))
+    })
+  }
+
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
   public static of(group: Element): BuildingRowGroup {
     assert(group.name === "tfoot" || group.name ==="tbody" || group.name === "thead");
 
-    let yCurrent = 0; // y position inside the rowgroup
     let growingCellsList: Array<Cell> = [];
-    let rowgroup = new BuildingRowGroup(yCurrent, 0, group);
+    let rowgroup = new BuildingRowGroup(-1, 0, group);
+    let yCurrent = 0; // y position inside the rowgroup
     // 1
     // When the row group  start, yCurrent is always equal to the height of the table.
-    const yStart = yCurrent;
+    // const yStart = yCurrent;
     // 2
     for (const tr of group.children().filter(isElementByName("tr"))) {
       // const row = Row.of(tr, table.cells, growingCellsList, yCurrent, table.width);
       const row = Row.of(tr, rowgroup._cells, growingCellsList, yCurrent, rowgroup._width);
       // table.cells = table.cells.concat(row.cells);
-      rowgroup = rowgroup._update({cells: rowgroup._cells.concat(row.cells)});
       growingCellsList = row.downwardGrowingCells;
+      rowgroup = rowgroup
+        ._update({cells: rowgroup._cells.concat(row.cells)})
       // table.height = Math.max(table.height, yCurrent+1);
-      rowgroup = rowgroup._adjustHeight(yCurrent+1);
+        ._adjustHeight(yCurrent+row.height)
       // table.width = Math.max(table.width, row.width);
-      rowgroup = rowgroup._adjustWidth(row.width);
+        ._adjustWidth(row.width);
       // row processing steps 4/16
       yCurrent++;
     }
@@ -151,7 +164,6 @@ export class BuildingRowGroup extends RowGroup {
     // return table.height;
     return rowgroup;
   }
-
 
   public equals(value: unknown): value is this {
     if (!(value instanceof BuildingRowGroup)) return false;

@@ -36,13 +36,13 @@ export class Row implements Equatable, Serializable {
 
   _update(update: {y?: number, xCurrent?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>, downwardGrowingCells?: Array<Cell>}): Row {
     return new Row(
-      update.y || this._anchor.y,
-      update.width || this._width,
-      update.height || this._height,
-      update.element || this._element,
-      update.cells || this._cells,
-      update.downwardGrowingCells || this._downwardGrowingCells,
-      update.xCurrent || this._xCurrent
+      update.y !== undefined ? update.y : this._anchor.y,
+      update.width !== undefined ? update.width : this._width,
+      update.height !== undefined ? update.height : this._height,
+      update.element !== undefined ? update.element : this._element,
+      update.cells !== undefined ? update.cells : this._cells,
+      update.downwardGrowingCells !== undefined ? update.downwardGrowingCells : this._downwardGrowingCells,
+      update.xCurrent !== undefined ? update.xCurrent : this._xCurrent
     )
   }
 
@@ -85,7 +85,7 @@ export class Row implements Equatable, Serializable {
       // 11
       ._adjustWidth(this._xCurrent + cell.width)
       // 12
-      ._adjustHeight(yCurrent + cell.height)
+      ._adjustHeight(cell.height)
       // 13
       // Double coverage check made at the end of table building to de-entangle code
       // 14

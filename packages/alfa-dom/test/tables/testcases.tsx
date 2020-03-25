@@ -75,7 +75,7 @@ export namespace rowGroup {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected = new BuildingRowGroup(0, 2, element, 6, [
+  export const expected = new BuildingRowGroup(-1, 2, element, 6, [
     makeCell("grade", "header", 0, 0, 1, 2),
     makeCell("yield", "header", 1, 0, 1, 2),
     makeCell("strength", "header", 2, 0, 2, 1),
@@ -122,7 +122,7 @@ export namespace downwardGrowing {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected = new BuildingRowGroup(0, 3, element, 6, [
+  export const expected = new BuildingRowGroup(-1, 3, element, 6, [
       makeCell("grade", "header", 0, 0, 1, 3),
       makeCell("yield", "header", 1, 0, 1, 2),
       makeCell("strength", "header", 2, 0, 2, 1),

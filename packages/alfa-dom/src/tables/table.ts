@@ -1,6 +1,6 @@
 import { Element } from "..";
 
-import { Cell, ColGroup, RowGroup, isCovering, Row } from "./groups";
+import {Cell, ColGroup, RowGroup, isCovering, Row, BuildingRowGroup} from "./groups";
 import { isElementByName } from "./helpers";
 import assert = require("assert");
 
@@ -10,34 +10,34 @@ export function newTable(): Table {
   return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
-// https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
-export function processRowGroup(table: Table, group: Element, yCurrent: number): number {
-  assert(yCurrent === table.height);
-  let growingCellsList: Array<Cell> = [];
-  // 1
-  const yStart = table.height;
-  // 2
-  for (const tr of group.children().filter(isElementByName("tr"))) {
-    const row = Row.of(tr, table.cells, growingCellsList, yCurrent, table.width);
-    table.cells = table.cells.concat(row.cells);
-    growingCellsList = row.downwardGrowingCells;
-    table.height = Math.max(table.height, yCurrent+1);
-    table.width = Math.max(table.width, row.width);
-    // row processing steps 4/16
-    yCurrent++;
-  }
-  // 3
-  if (table.height > yStart) {
-    table.rowGroups.push(new RowGroup(yStart, table.height - yStart, group));
-  }
-  // 4
-  // ending row group 1
-  growingCellsList = growingCellsList.map(cell => cell.growDownward(table.height-1));
-  // ending row group 2
-  // When emptying the growing cells list, we need to finally add them to the table.
-  table.cells = table.cells.concat(growingCellsList);
-  return table.height;
-}
+// // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
+// export function processRowGroup(table: Table, group: Element, yCurrent: number): number {
+//   assert(yCurrent === table.height);
+//   let growingCellsList: Array<Cell> = [];
+//   // 1
+//   const yStart = table.height;
+//   // 2
+//   for (const tr of group.children().filter(isElementByName("tr"))) {
+//     const row = Row.of(tr, table.cells, growingCellsList, yCurrent, table.width);
+//     table.cells = table.cells.concat(row.cells);
+//     growingCellsList = row.downwardGrowingCells;
+//     table.height = Math.max(table.height, yCurrent+row.height);
+//     table.width = Math.max(table.width, row.width);
+//     // row processing steps 4/16
+//     yCurrent++;
+//   }
+//   // 3
+//   if (table.height > yStart) {
+//     table.rowGroups.push(new RowGroup(yStart, table.height - yStart, group));
+//   }
+//   // 4
+//   // ending row group 1
+//   growingCellsList = growingCellsList.map(cell => cell.growDownward(table.height-1));
+//   // ending row group 2
+//   // When emptying the growing cells list, we need to finally add them to the table.
+//   table.cells = table.cells.concat(growingCellsList);
+//   return table.height;
+// }
 
 export function formingTable(element: Element): Table {
   // 1, 2, 4, 11
@@ -105,13 +105,37 @@ export function formingTable(element: Element): Table {
 
     if (currentElement.name === "thead" || currentElement.name === "tbody") {
       // 16
-      yCurrent = processRowGroup(table, currentElement, yCurrent);
+      // process row group and anchor cells
+      // console.log(`Processing ${currentElement.attribute("id").get().value} with yCurrent=${yCurrent}`);
+      const rowgroup = BuildingRowGroup.of(currentElement).anchorAt(yCurrent);
+      // console.log(`    Got rowgroup anchored at ${rowgroup.anchor.y}`);
+      if (rowgroup.height > 0) {
+        // adjust table height and width
+        table.height += rowgroup.height;
+        table.width = Math.max(table.width, rowgroup.width);
+        // merge in new cells
+        table.cells = table.cells.concat(rowgroup.cells);
+        // add new group
+        table.rowGroups = table.rowGroups.concat(rowgroup.toRowGroup())
+      }
+      yCurrent = table.height;
     }
   }
 
   // 19
   for (const tfoot of pendingTfoot) {
-    yCurrent = processRowGroup(table, tfoot, yCurrent);
+    const rowgroup = BuildingRowGroup.of(tfoot).anchorAt(yCurrent);
+    if (rowgroup.height > 0) {
+      // adjust table height and width
+      table.height += rowgroup.height;
+      table.width = Math.max(table.width, rowgroup.width);
+      // merge in new cells
+      table.cells = table.cells.concat(rowgroup.cells);
+      // add new group
+      table.rowGroups = table.rowGroups.concat(rowgroup.toRowGroup())
+    }
+    yCurrent = table.height;
+    // yCurrent = processRowGroup(table, tfoot, yCurrent);
   }
   // 20
   // Of course, errors are more or less caught and repaired by browsers.

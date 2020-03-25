@@ -1,6 +1,6 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import {Assertions, test} from "@siteimprove/alfa-test";
-import { processRowGroup, formingTable, Element, newTable, Table} from "../../src";
+import { formingTable, Element, Table} from "../../src";
 import {
   apple,
   complexRow,
@@ -49,29 +49,20 @@ function equalTables(t: Assertions, actual: Table, expected: Table){
 
 test("Process individual rows", t => {
   t.deepEqual(Row.of(simpleRow.element).toJSON(), simpleRow.expected.toJSON());
+
   t.deepEqual(Row.of(complexRow.element).toJSON(), (complexRow.expected).toJSON());
 });
 
-test("Process row group", t => {
-  // const table = newTable();
-  //
-  // const y = processRowGroup(table, rowGroup.element, 0);
-  // t.equal(y, 2);
-  // equalTables(t, table, rowGroup.expected);
+test("Process row groups", t => {
   t.deepEqual(BuildingRowGroup.of(rowGroup.element).toJSON(), rowGroup.expected.toJSON());
-});
 
-test("Process downward growing cells", t => {
-  // const table = newTable();
-  //
-  // const y = processRowGroup(table, downwardGrowing.element, 0);
-  // t.equal(y, 3);
-  // equalTables(t, table, downwardGrowing.expected);
   t.deepEqual(BuildingRowGroup.of(downwardGrowing.element).toJSON(), downwardGrowing.expected.toJSON());
 });
 
 test("Process table", t => {
-  equalTables(t, formingTable(smithonian.element), smithonian.expected);
+  const actual = formingTable(smithonian.element);
+  // console.dir(cleanTable(actual), {depth: 4});
+  equalTables(t, actual, smithonian.expected);
 
   equalTables(t, formingTable(apple.element), apple.expected);
 
