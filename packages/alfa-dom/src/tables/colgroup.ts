@@ -91,7 +91,7 @@ export class ColGroup implements Equatable, Serializable {
   }
 
   public toString(): string {
-    return `ColGroup anchor: ${this._anchor.x}, width: ${this._width}, element: ${this._element.toString()}`
+    return `ColGroup anchor: ${this._anchor.x}, width: ${this._width}, element: ${this._element}`
   }
 }
 

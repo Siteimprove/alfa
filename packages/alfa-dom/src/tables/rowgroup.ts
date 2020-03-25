@@ -60,7 +60,7 @@ export class RowGroup implements Equatable, Serializable {
   }
 
   public toString(): string {
-    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, element: ${this._element.toString()}`
+    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, element: ${this._element}`
   }
 }
 

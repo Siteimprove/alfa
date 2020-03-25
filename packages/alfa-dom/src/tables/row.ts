@@ -1,15 +1,20 @@
-import {notDeepEqual} from "assert";
+import {Equatable} from "@siteimprove/alfa-equatable";
+import {Serializable} from "@siteimprove/alfa-json";
+import { notDeepEqual} from "assert";
 import {Element} from "..";
-import {Cell} from "./cell";
+import { Cell } from "./groups";
 import {isElementByName} from "./helpers";
 import {isCovering} from "./is-covering";
+
+import * as json from "@siteimprove/alfa-json";
+
 
 // Build artefact, corresponds to a single <tr> element
 // A row needs context to exists:
 // * a list of cells that can potentially cover slots in it (rowspan > 1)
 // * a list of downward growing cells that will grow into it
 // * the y position of the row.
-export class Row {
+export class Row implements Equatable, Serializable {
   private readonly _anchor: {y: number};
   private readonly _width: number;
   private readonly _height: number;
@@ -115,4 +120,48 @@ export class Row {
     // 4 and 16 done after the calls to avoid side effects.
   }
 
+  public equals(value: unknown): value is this {
+    if (!(value instanceof Row)) return false;
+    const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
+    const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
+    const sortedThisDGCells = this._downwardGrowingCells.sort((a, b) => a.compare(b));
+    const sortedValueDGCells = value._downwardGrowingCells.sort((a, b) => a.compare(b));
+    return (
+      this._width === value._width &&
+      this._height === value._height &&
+      this._anchor.y === value._anchor.y &&
+      this._element.equals(value._element) &&
+      this._cells.length === value._cells.length &&
+      sortedThisCells.every((cell, idx) => cell.equals(sortedValueCells[idx])) &&
+      this._downwardGrowingCells.length === value._downwardGrowingCells.length &&
+      sortedThisDGCells.every((cell, idx) => cell.equals(sortedValueDGCells[idx]))
+    )
+  }
+
+  public toJSON(): Row.JSON {
+    return {
+      anchor: this._anchor,
+      width: this._width,
+      height: this._height,
+      element: this._element.toJSON(),
+      cells: this._cells.map(cell => cell.toJSON()),
+      downwardGrowingCells: this._downwardGrowingCells.map(cell => cell.toJSON())
+    }
+  }
+
+  public toString(): string {
+    return `Row anchor: ${this._anchor.y}, width: ${this._width}, height: ${this._height}, element: ${this._element}, cells: ${this._cells}, downward growing cells: ${this._downwardGrowingCells}`
+  }
+}
+
+export namespace Row {
+  export interface JSON {
+    [key: string]: json.JSON,
+    anchor: { y: number },
+    width: number,
+    height: number,
+    element: Element.JSON,
+    cells: Cell.JSON[],
+    downwardGrowingCells: Cell.JSON[]
+  }
 }

@@ -114,7 +114,7 @@ export class Cell implements Equatable, Serializable {
   }
 
   public toString(): string {
-    return `Cell (${this._kind}) anchor: (${this._anchor.x}, ${this._anchor.y}), width: ${this._width}, height: ${this._height}, element: ${this._element.toString()}`
+    return `Cell (${this._kind}) anchor: (${this._anchor.x}, ${this._anchor.y}), width: ${this._width}, height: ${this._height}, element: ${this._element}`
   }
 }
 
