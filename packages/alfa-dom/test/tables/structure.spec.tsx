@@ -48,8 +48,8 @@ function equalTables(t: Assertions, actual: Table, expected: Table){
 }
 
 test("Process individual rows", t => {
-  t(Row.of(simpleRow.element).equals(simpleRow.expected));
-  t(Row.of(complexRow.element).equals(complexRow.expected));
+  t.deepEqual(Row.of(simpleRow.element).toJSON(), simpleRow.expected.toJSON());
+  t.deepEqual(Row.of(complexRow.element).toJSON(), (complexRow.expected).toJSON());
 });
 
 test("Process row group", t => {
