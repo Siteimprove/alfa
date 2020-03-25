@@ -9,26 +9,40 @@ import {isCovering} from "./is-covering";
 import * as json from "@siteimprove/alfa-json";
 
 
-// Build artefact, corresponds to a single <tr> element
+// Build artifact, corresponds to a single <tr> element
 // A row needs context to exists:
 // * a list of cells that can potentially cover slots in it (rowspan > 1)
 // * a list of downward growing cells that will grow into it
 // * the y position of the row.
 export class Row implements Equatable, Serializable {
   private readonly _anchor: {y: number};
+  private readonly _xCurrent: number; // current x position in processing the row
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
   private readonly _cells: Array<Cell>;
   private readonly _downwardGrowingCells: Array<Cell>;
 
-  constructor(y: number, w: number, h: number, element: Element, cells: Array<Cell> = [], growing: Array<Cell> = []) {
+  constructor(y: number, w: number, h: number, element: Element, cells: Array<Cell> = [], growing: Array<Cell> = [], xCurrent: number = 0) {
     this._anchor = { y };
+    this._xCurrent = xCurrent;
     this._width = w;
     this._height = h;
     this._element = element;
     this._cells = cells;
     this._downwardGrowingCells = growing;
+  }
+
+  _update(update: {y?: number, xCurrent?: number, width?: number, height?: number, element?: Element, cells?: Array<Cell>, downwardGrowingCells?: Array<Cell>}): Row {
+    return new Row(
+      update.y || this._anchor.y,
+      update.width || this._width,
+      update.height || this._height,
+      update.element || this._element,
+      update.cells || this._cells,
+      update.downwardGrowingCells || this._downwardGrowingCells,
+      update.xCurrent || this._xCurrent
+    )
   }
 
   public get anchor() {
@@ -51,29 +65,44 @@ export class Row implements Equatable, Serializable {
   }
 
   _growCells(y: number): Row {
-    return new Row(this._anchor.y, this._width, this._height, this._element,
-      this._cells, this._downwardGrowingCells.map(cell => cell.growDownward(y)));
+    return this._update({downwardGrowingCells: this._downwardGrowingCells.map(cell => cell.growDownward(y))});
   }
 
   _addNonGrowingCell(cell: Cell): Row {
-    // console.log(`      Adding non growing ${cell.name}`);
-    return new Row(this._anchor.y, this._width, this._height, this._element, this._cells.concat(cell), this._downwardGrowingCells);
+    return this._update({cells: this._cells.concat(cell)});
   }
   _addGrowingCell(cell: Cell): Row {
-    // console.log(`      Adding growing ${cell.name}`);
-    // console.log(`      Currently growing: ${this._downwardGrowingCells.map(cell => cell.name)}`);
-    // console.log(`      Expected growing: ${this._downwardGrowingCells.concat(cell).map(cell => cell.name)}`);
-    return new Row(this._anchor.y, this._width, this._height, this._element, this._cells, this._downwardGrowingCells.concat(cell));
+    return this._update({downwardGrowingCells: this._downwardGrowingCells.concat(cell)})
   }
-  public addCell(cell: Cell, downwardGrowing: boolean): Row {
+  _addCell(cell: Cell, downwardGrowing: boolean): Row {
     return downwardGrowing ? this._addGrowingCell(cell) : this._addNonGrowingCell(cell);
   }
 
   _adjustWidth(w: number): Row {
-    return new Row(this._anchor.y, Math.max(this._width, w), this._height, this._element, this._cells, this._downwardGrowingCells);
+    return this._update({width: Math.max(this._width, w)})
   }
   _adjustHeight(h: number): Row {
-    return new Row(this._anchor.y, this._width, Math.max(this._height, h), this._element, this._cells, this._downwardGrowingCells);
+    return this._update({height: Math.max(this._height, h)})
+  }
+
+  // moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
+  // step 6
+  _skipIfCovered(cells: Array<Cell>, yCurrent: number): Row {
+    if (this._xCurrent < this._width &&
+      cells.concat(this._cells, this._downwardGrowingCells).some(isCovering(this._xCurrent, yCurrent))
+      ) {
+      return this
+        ._update({xCurrent: this._xCurrent + 1})
+        ._skipIfCovered(cells, yCurrent)
+    } else {
+      return this
+    }
+  }
+
+  _enlargeIfNeeded(): Row {
+    return this._xCurrent === this.width ?
+      this._adjustWidth(this.width + 1)
+      : this
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
@@ -81,40 +110,36 @@ export class Row implements Equatable, Serializable {
     // cells and growingCells must be disjoint (a cell is either growing or not)
     cells.forEach(cell => growingCells.forEach(growingCell => notDeepEqual(cell, growingCell)));
 
-    let row = new Row(yCurrent, w, 1, tr, [], growingCells);
-
     // 1
     // global table height adjusted after building row
     // 2
-    let xCurrent = 0;
+    // Done when creating the row, default value for xCurrent is 0.
+
+    let row = new Row(yCurrent, w, 1, tr, [], growingCells)
     // 3
-    row = row._growCells(yCurrent);
+      ._growCells(yCurrent);
 
     let children = tr.children().filter(isElementByName("th", "td"));
     for (const currentCell of children) { // loop control between 4-5, and 16-17-18
-      // 6 (Cells)
-      while (xCurrent < row.width &&
-        cells.concat(row._cells, row._downwardGrowingCells).some(isCovering(xCurrent, yCurrent))
-        ) {
-        xCurrent++
-      }
-      // 7
-      if (xCurrent === row.width) {
-        row = row._adjustWidth(row.width + 1);
-      }
+      row = row
+        // 6 (Cells)
+        ._skipIfCovered(cells, yCurrent)
+        // 7
+        ._enlargeIfNeeded();
 
       // 8, 9, 10, 13
-      const { cell, downwardGrowing } = Cell.of(currentCell, xCurrent, yCurrent);
-      // 11
-      row = row._adjustWidth(xCurrent + cell.width);
-      // 12
-      row = row._adjustHeight(yCurrent + cell.height);
-      // 13
-      // Double coverage check made at the end of table building to de-entangle code
-      // 14
-      row = row.addCell(cell, downwardGrowing);
+      const { cell, downwardGrowing } = Cell.of(currentCell, row._xCurrent, yCurrent);
+      row = row
+        // 11
+        ._adjustWidth(row._xCurrent + cell.width)
+        // 12
+        ._adjustHeight(yCurrent + cell.height)
+        // 13
+        // Double coverage check made at the end of table building to de-entangle code
+        // 14
+        ._addCell(cell, downwardGrowing);
       // 15
-      xCurrent = xCurrent + cell.width;
+      // Actually not needed because it will be done as part of step 6 (skipIfCovered) on next loop, and is useless on last element.
     }
     return row;
     // 4 and 16 done after the calls to avoid side effects.
