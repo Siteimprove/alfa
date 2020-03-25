@@ -2,7 +2,7 @@ import {None } from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Element, Table} from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
-import {Cell, ColGroup, Row, RowGroup} from "../../src/tables/groups";
+import {BuildingRowGroup, Cell, ColGroup, Row, RowGroup} from "../../src/tables/groups";
 import and = Predicate.and;
 
 const makeCellWithGetter = (getElt: (elt: string) => Element) =>
@@ -75,19 +75,29 @@ export namespace rowGroup {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table = {
-    cells: [
-      makeCell("grade", "header", 0, 0, 1, 2),
-      makeCell("yield", "header", 1, 0, 1, 2),
-      makeCell("strength", "header", 2, 0, 2, 1),
-      makeCell("elong", "header", 4, 0, 1, 2),
-      makeCell("reduct", "header", 5, 0, 1, 2),
-      makeCell("kg-mm", "header", 2, 1),
-      makeCell("lb-in", "header", 3, 1)
-    ],
-    width: 6, height: 2, colGroups: [],
-    rowGroups: [new RowGroup(0, 2, element)]
-  };
+  export const expected = new BuildingRowGroup(0, 2, element, 6, [
+    makeCell("grade", "header", 0, 0, 1, 2),
+    makeCell("yield", "header", 1, 0, 1, 2),
+    makeCell("strength", "header", 2, 0, 2, 1),
+    makeCell("elong", "header", 4, 0, 1, 2),
+    makeCell("reduct", "header", 5, 0, 1, 2),
+    makeCell("kg-mm", "header", 2, 1),
+    makeCell("lb-in", "header", 3, 1)
+  ]);
+
+  // export const expected: Table = {
+  //   cells: [
+  //     makeCell("grade", "header", 0, 0, 1, 2),
+  //     makeCell("yield", "header", 1, 0, 1, 2),
+  //     makeCell("strength", "header", 2, 0, 2, 1),
+  //     makeCell("elong", "header", 4, 0, 1, 2),
+  //     makeCell("reduct", "header", 5, 0, 1, 2),
+  //     makeCell("kg-mm", "header", 2, 1),
+  //     makeCell("lb-in", "header", 3, 1)
+  //   ],
+  //   width: 6, height: 2, colGroups: [],
+  //   rowGroups: [new RowGroup(0, 2, element)]
+  // };
 }
 
 // row group with downward growing cells
@@ -112,8 +122,7 @@ export namespace downwardGrowing {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: Table = {
-    cells: [
+  export const expected = new BuildingRowGroup(0, 3, element, 6, [
       makeCell("grade", "header", 0, 0, 1, 3),
       makeCell("yield", "header", 1, 0, 1, 2),
       makeCell("strength", "header", 2, 0, 2, 1),
@@ -124,10 +133,24 @@ export namespace downwardGrowing {
       makeCell("reduct", "header", 5, 0, 1, 3),
       makeCell("kg-mm", "header", 2, 1, 1, 2),
 
-    ],
-    width: 6, height: 3, colGroups: [],
-    rowGroups: [new RowGroup(0, 3, element)]
-  };
+    ])
+
+  //   : Table = {
+  //   cells: [
+  //     makeCell("grade", "header", 0, 0, 1, 3),
+  //     makeCell("yield", "header", 1, 0, 1, 2),
+  //     makeCell("strength", "header", 2, 0, 2, 1),
+  //     makeCell("elong", "header", 4, 0, 1, 2),
+  //     makeCell("lb-in", "header", 3, 1),
+  //     makeCell("foo", "header", 1, 2, 1, 1),
+  //     makeCell("bar", "header", 3, 2, 1, 1),
+  //     makeCell("reduct", "header", 5, 0, 1, 3),
+  //     makeCell("kg-mm", "header", 2, 1, 1, 2),
+  //
+  //   ],
+  //   width: 6, height: 3, colGroups: [],
+  //   rowGroups: [new RowGroup(0, 3, element)]
+  // };
 }
 
 // table with row group, colspan and rowspan

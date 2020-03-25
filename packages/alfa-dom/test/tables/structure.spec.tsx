@@ -13,7 +13,7 @@ import {
   smithonian
 } from "./testcases";
 
-import {Cell, Row} from "../../src/tables/groups";
+import {BuildingRowGroup, Cell, Row} from "../../src/tables/groups";
 
 const cleanElement = (element: Element) =>
   element
@@ -53,19 +53,21 @@ test("Process individual rows", t => {
 });
 
 test("Process row group", t => {
-  const table = newTable();
-
-  const y = processRowGroup(table, rowGroup.element, 0);
-  t.equal(y, 2);
-  equalTables(t, table, rowGroup.expected);
+  // const table = newTable();
+  //
+  // const y = processRowGroup(table, rowGroup.element, 0);
+  // t.equal(y, 2);
+  // equalTables(t, table, rowGroup.expected);
+  t.deepEqual(BuildingRowGroup.of(rowGroup.element).toJSON(), rowGroup.expected.toJSON());
 });
 
 test("Process downward growing cells", t => {
-  const table = newTable();
-
-  const y = processRowGroup(table, downwardGrowing.element, 0);
-  t.equal(y, 3);
-  equalTables(t, table, downwardGrowing.expected);
+  // const table = newTable();
+  //
+  // const y = processRowGroup(table, downwardGrowing.element, 0);
+  // t.equal(y, 3);
+  // equalTables(t, table, downwardGrowing.expected);
+  t.deepEqual(BuildingRowGroup.of(downwardGrowing.element).toJSON(), downwardGrowing.expected.toJSON());
 });
 
 test("Process table", t => {
