@@ -1,7 +1,7 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import {Err} from "@siteimprove/alfa-result";
-import {Assertions, test} from "@siteimprove/alfa-test";
-import { formingTable, Element, TableBasic} from "../../src";
+import { test } from "@siteimprove/alfa-test";
+import { Element, Table } from "../../src";
 import {
   apple,
   complexRow,
@@ -28,25 +28,7 @@ const cleanCell = (cell: Cell) => (
   }
 );
 
-const cleanTable = (table: TableBasic) => (
-  { ...table,
-    cells: [...table.cells.map(cleanCell)]
-  }
-);
-
 const cellName = (cell: Cell) => cell.element.attribute("id").get();
-
-function compareCell(c1: Cell, c2: Cell): number {
-  if (c1.anchor.y < c2.anchor.y) return -1;
-  if (c1.anchor.y > c2.anchor.y) return 1;
-  if (c1.anchor.x < c2.anchor.x) return -1;
-  if (c1.anchor.x > c2.anchor.x) return 1;
-  return 0;
-}
-
-function equalTables(t: Assertions, actual: TableBasic, expected: TableBasic){
-  t.deepEqual({...actual, cells: [...actual.cells].sort(compareCell)}, {...expected, cells: [...expected.cells].sort(compareCell)})
-}
 
 test("Process individual rows", t => {
   t.deepEqual(Row.from(simpleRow.element).toJSON(), simpleRow.expected.toJSON());
@@ -61,19 +43,17 @@ test("Process row groups", t => {
 });
 
 test("Process table", t => {
-  const actual = formingTable(smithonian.element);
-  // console.dir(cleanTable(actual), {depth: 4});
-  equalTables(t, actual.get(), smithonian.expected);
+  t.deepEqual(Table.from(smithonian.element).get().toJSON(), smithonian.expected.toJSON());
 
-  equalTables(t, formingTable(apple.element).get(), apple.expected);
+  t.deepEqual(Table.from(apple.element).get().toJSON(), apple.expected.toJSON());
 
-  equalTables(t, formingTable(expenses.element).get(), expenses.expected);
+  t.deepEqual(Table.from(expenses.element).get().toJSON(), expenses.expected.toJSON());
 
-  equalTables(t, formingTable(expensesNum.element).get(), expensesNum.expected);
+  t.deepEqual(Table.from(expensesNum.element).get().toJSON(), expensesNum.expected.toJSON());
 });
 
 test("Table model errors", t => {
-  t.deepEqual(formingTable(errors.emptyCol), Err.of("col 1 has no cell anchored in it"));
-  t.deepEqual(formingTable(errors.emptyRow), Err.of("row 1 has no cell anchored in it"));
-  t.deepEqual(formingTable(errors.coveredTwice), Err.of("Slot (1, 1) is covered twice"));
+  t.deepEqual(Table.from(errors.emptyCol), Err.of("col 1 has no cell anchored in it"));
+  t.deepEqual(Table.from(errors.emptyRow), Err.of("row 1 has no cell anchored in it"));
+  t.deepEqual(Table.from(errors.coveredTwice), Err.of("Slot (1, 1) is covered twice"));
 });

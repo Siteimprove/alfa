@@ -1,6 +1,6 @@
 import {None } from "@siteimprove/alfa-option";
 import {Predicate} from "@siteimprove/alfa-predicate";
-import {Element, TableBasic} from "../../src";
+import {Element, Table } from "../../src";
 import {jsx} from "@siteimprove/alfa-dom/jsx";
 import {BuildingRowGroup, Cell, ColGroup, Row, RowGroup} from "../../src/tables/groups";
 import and = Predicate.and;
@@ -169,8 +169,9 @@ export namespace smithonian {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: TableBasic =  {
-    cells: [
+  export const expected = Table.of(
+    element, 6, 5,
+    [
       makeCell("grade", "header", 0, 0, 1, 2), makeCell("yield", "header", 1, 0, 1, 2), makeCell("strength", "header", 2, 0, 2, 1),
       makeCell("elong", "header", 4, 0, 1, 2), makeCell("reduct", "header", 5, 0, 1, 2),
       makeCell("kg-mm", "header", 2, 1), makeCell("lb-in", "header", 3, 1),
@@ -181,9 +182,8 @@ export namespace smithonian {
       makeCell("soft", "data", 0, 4), makeCell("soft-yield", "data", 1, 4), makeCell("soft-kg", "data", 2, 4),
       makeCell("soft-lb", "data", 3, 4), makeCell("soft-elong", "data", 4, 4), makeCell("soft-reduct", "data", 5, 4)
     ],
-    width: 6, height: 5, colGroups: [] ,
-    rowGroups: [RowGroup.of(0, 2, getById("thead")), RowGroup.of(2, 3, getById("tbody"))]
-  }
+    [RowGroup.of(0, 2, getById("thead")), RowGroup.of(2, 3, getById("tbody"))],
+  )
 }
 
 // table with a tfoot in the middle
@@ -231,8 +231,9 @@ export namespace apple {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: TableBasic =  {
-    cells: [
+  export const expected = Table.of(
+    element, 4, 5,
+    [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
       makeCell("net", "header", 0, 1), makeCell("net-2008", "data", 1, 1),
@@ -244,14 +245,13 @@ export namespace apple {
       makeCell("percent", "header", 0, 4), makeCell("percent-2008", "data", 1, 4),
       makeCell("percent-2007", "data", 2, 4), makeCell("percent-2006", "data", 3, 4)
     ],
-    width: 4, height: 5, colGroups: [],
-    rowGroups: [
+    [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
       RowGroup.of(3, 1, getById("body-2")),
       RowGroup.of(4, 1, getById("tfoot"))
       ]
-  }
+  );
 }
 
 // example with colgroup
@@ -285,8 +285,9 @@ export namespace expenses {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: TableBasic =  {
-    cells: [
+  export const expected = Table.of(
+    element, 4, 5,
+    [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
       makeCell("rd", "header", 0, 1), makeCell("rd-2008", "data", 1, 1),
@@ -298,17 +299,16 @@ export namespace expenses {
       makeCell("sales-percent", "header", 0, 4), makeCell("sales-percent-2008", "data", 1, 4),
       makeCell("sales-percent-2007", "data", 2, 4), makeCell("sales-percent-2006", "data", 3, 4),
     ],
-    width: 4, height: 5,
-    colGroups: [
-      ColGroup.of(0, 1, getById("group-head")),
-      ColGroup.of(1, 3, getById("group-body"))
-    ],
-    rowGroups: [
+    [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
       RowGroup.of(3, 2, getById("body-2"))
+    ],
+    [
+      ColGroup.of(0, 1, getById("group-head")),
+      ColGroup.of(1, 3, getById("group-body"))
     ]
-  }
+  );
 }
 
 // same with colgroup defined by spans
@@ -343,8 +343,9 @@ export namespace expensesNum {
   const getById = getDescendantById(element);
   const makeCell = makeCellWithGetter(getById);
 
-  export const expected: TableBasic =  {
-    cells: [
+  export const expected = Table.of(
+    element, 4, 5,
+    [
       makeCell("empty", "header", 0, 0), makeCell("2008", "header", 1, 0),
       makeCell("2007", "header", 2, 0), makeCell("2006", "header", 3, 0),
       makeCell("rd", "header", 0, 1), makeCell("rd-2008", "data", 1, 1),
@@ -356,17 +357,16 @@ export namespace expensesNum {
       makeCell("sales-percent", "header", 0, 4), makeCell("sales-percent-2008", "data", 1, 4),
       makeCell("sales-percent-2007", "data", 2, 4), makeCell("sales-percent-2006", "data", 3, 4),
     ],
-    width: 4, height: 5,
-    colGroups: [
-      ColGroup.of(0, 1, getById("group-head")),
-      ColGroup.of(1, 3, getById("group-body"))
-    ],
-    rowGroups: [
+    [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
       RowGroup.of(3, 2, getById("body-2"))
+    ],
+    [
+      ColGroup.of(0, 1, getById("group-head")),
+      ColGroup.of(1, 3, getById("group-body"))
     ]
-  }
+  );
 }
 
 export namespace errors {

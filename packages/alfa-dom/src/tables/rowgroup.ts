@@ -1,7 +1,7 @@
 // https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
 import {Equatable} from "@siteimprove/alfa-equatable";
 import {Serializable} from "@siteimprove/alfa-json";
-import {Element, TableBasic} from "..";
+import {Element } from "..";
 import {Cell, ColGroup, Row} from "./groups";
 
 import * as json from "@siteimprove/alfa-json";
