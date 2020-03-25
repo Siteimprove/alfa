@@ -10,36 +10,9 @@ export function newTable(): Table {
   return { width: 0, height: 0, cells: [], rowGroups: [], colGroups: []}
 }
 
-// // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
-// export function processRowGroup(table: Table, group: Element, yCurrent: number): number {
-//   assert(yCurrent === table.height);
-//   let growingCellsList: Array<Cell> = [];
-//   // 1
-//   const yStart = table.height;
-//   // 2
-//   for (const tr of group.children().filter(isElementByName("tr"))) {
-//     const row = Row.of(tr, table.cells, growingCellsList, yCurrent, table.width);
-//     table.cells = table.cells.concat(row.cells);
-//     growingCellsList = row.downwardGrowingCells;
-//     table.height = Math.max(table.height, yCurrent+row.height);
-//     table.width = Math.max(table.width, row.width);
-//     // row processing steps 4/16
-//     yCurrent++;
-//   }
-//   // 3
-//   if (table.height > yStart) {
-//     table.rowGroups.push(new RowGroup(yStart, table.height - yStart, group));
-//   }
-//   // 4
-//   // ending row group 1
-//   growingCellsList = growingCellsList.map(cell => cell.growDownward(table.height-1));
-//   // ending row group 2
-//   // When emptying the growing cells list, we need to finally add them to the table.
-//   table.cells = table.cells.concat(growingCellsList);
-//   return table.height;
-// }
-
 export function formingTable(element: Element): Table {
+  assert(element.name === "table");
+
   // 1, 2, 4, 11
   const table = newTable();
   // 3

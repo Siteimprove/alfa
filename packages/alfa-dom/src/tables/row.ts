@@ -15,6 +15,9 @@ import assert = require("assert");
 // * a list of cells that can potentially cover slots in it (rowspan > 1)
 // * a list of downward growing cells that will grow into it
 // * the y position of the row.
+//
+// y position (of the row and cells) can be relative to the group they are in or absolute in the table
+// as long as they are all based in the same way…
 export class Row implements Equatable, Serializable {
   private readonly _anchor: {y: number};
   private readonly _xCurrent: number; // current x position in processing the row
@@ -140,7 +143,7 @@ export class Row implements Equatable, Serializable {
         // 8-14
         // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
         ._addCellFromElement(elt, yCurrent),
-      // 2 us done when creating the row, default value for xCurrent is 0.
+      // 2 is done when creating the row, default value for xCurrent is 0.
       new Row(yCurrent, w, 1, tr, [], growingCells)
         // 3
         ._growCells(yCurrent)
