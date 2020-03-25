@@ -1,6 +1,6 @@
 import { Element } from "..";
 
-import {Cell, ColGroup, RowGroup, isCovering, Row} from "./groups";
+import { Cell, ColGroup, RowGroup, isCovering, Row } from "./groups";
 import { isElementByName } from "./helpers";
 
 // https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
