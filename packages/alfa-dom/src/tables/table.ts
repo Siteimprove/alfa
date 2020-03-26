@@ -5,13 +5,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
-import {
-  Cell,
-  ColGroup,
-  RowGroup,
-  Row,
-  BuildingRowGroup,
-} from "./groups";
+import { Cell, ColGroup, RowGroup, Row, BuildingRowGroup } from "./groups";
 import { isElementByName } from "./helpers";
 
 /**
@@ -249,7 +243,7 @@ export class Table implements Equatable, Serializable {
     // Checking for row forming algorithm step 13 (slot covered twice)
     for (let x = 0; x < table._width; x++) {
       for (let y = 0; y < table._height; y++) {
-        if (table._cells.filter(cell => cell.isCovering(x, y)).length > 1) {
+        if (table._cells.filter((cell) => cell.isCovering(x, y)).length > 1) {
           return Err.of(`Slot (${x}, ${y}) is covered twice`);
         }
       }

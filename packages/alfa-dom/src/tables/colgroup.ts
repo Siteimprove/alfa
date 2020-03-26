@@ -37,9 +37,9 @@ export class ColGroup implements Equatable, Serializable {
   }
 
   public isCovering(x: number, y: number): boolean {
-    return !( // colgroup is *not* covering if either
-      (x < this._anchorX) || // slot is left of colgroup
-      (this._anchorX + this._width - 1 < x) // slot is right of colgroup
+    return !(
+      // colgroup is *not* covering if either
+      (x < this._anchorX || this._anchorX + this._width - 1 < x) // slot is left of colgroup // slot is right of colgroup
     );
   }
 

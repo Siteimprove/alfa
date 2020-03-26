@@ -38,9 +38,9 @@ export class RowGroup implements Equatable, Serializable {
   }
 
   public isCovering(x: number, y: number): boolean {
-    return !( // rowgroup is *not* covering if either
-      (y < this._anchorY) || // slot is above rowgroup
-      (this._anchorY + this._height - 1 < y) // slot is below rowgroup
+    return !(
+      // rowgroup is *not* covering if either
+      (y < this._anchorY || this._anchorY + this._height - 1 < y) // slot is above rowgroup // slot is below rowgroup
     );
   }
 

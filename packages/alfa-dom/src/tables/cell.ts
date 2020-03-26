@@ -103,11 +103,14 @@ export class Cell implements Equatable, Serializable {
   }
 
   public isCovering(x: number, y: number): boolean {
-    return !( // cell is *not* covering if either
-      (x < this._anchorX) || // slot is left of cell
-      (this._anchorX + this._width - 1 < x) || // slot is right of cell
-      (y < this._anchorY) || // slot is above cell
-      (this._anchorY + this._height - 1 < y) // slot is below cell
+    return !(
+      // cell is *not* covering if either
+      (
+        x < this._anchorX || // slot is left of cell
+        this._anchorX + this._width - 1 < x || // slot is right of cell
+        y < this._anchorY || // slot is above cell
+        this._anchorY + this._height - 1 < y
+      ) // slot is below cell
     );
   }
 

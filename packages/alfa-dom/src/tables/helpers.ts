@@ -66,7 +66,6 @@ export function parseEnumeratedValue<RESULT>(
 }
 // end micro syntaxes
 
-
 // attribute helper should move to attribute
 export function parseAttribute<RESULT, ERROR>(
   parser: Parser<string, RESULT, ERROR>

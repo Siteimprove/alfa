@@ -22,36 +22,36 @@ function colGroup(x: number, w: number): ColGroup {
 
 test("isCovering ̤correctly computes cell coverage", (t) => {
   // in small cell
-  t.equal((cell(2, 6, 1, 1).isCovering(2, 6)), true);
+  t.equal(cell(2, 6, 1, 1).isCovering(2, 6), true);
 
   // out of small cell (left, right, above, below)
-  t.equal((cell(2, 6, 1, 1).isCovering(1, 6)), false);
-  t.equal((cell(2, 6, 1, 1).isCovering(4, 6)), false);
-  t.equal((cell(2, 6, 1, 1).isCovering(2, 4)), false);
-  t.equal((cell(2, 6, 1, 1).isCovering(2, 9)), false);
+  t.equal(cell(2, 6, 1, 1).isCovering(1, 6), false);
+  t.equal(cell(2, 6, 1, 1).isCovering(4, 6), false);
+  t.equal(cell(2, 6, 1, 1).isCovering(2, 4), false);
+  t.equal(cell(2, 6, 1, 1).isCovering(2, 9), false);
 
   // in/out big cell, just at the limit
-  t.equal((cell(2, 6, 4, 2).isCovering(5, 7)), true);
-  t.equal((cell(2, 6, 4, 2).isCovering(6, 7)), false);
-  t.equal((cell(2, 6, 4, 2).isCovering(5, 8)), false);
+  t.equal(cell(2, 6, 4, 2).isCovering(5, 7), true);
+  t.equal(cell(2, 6, 4, 2).isCovering(6, 7), false);
+  t.equal(cell(2, 6, 4, 2).isCovering(5, 8), false);
 });
 
 test("isCovering ̤correctly computes group coverage", (t) => {
   // in small groups
-  t.equal((rowGroup(6, 1).isCovering(2, 6)), true);
-  t.equal((colGroup(2, 1).isCovering(2, 6)), true);
+  t.equal(rowGroup(6, 1).isCovering(2, 6), true);
+  t.equal(colGroup(2, 1).isCovering(2, 6), true);
 
   // out of small groups (left, right, above, below)
-  t.equal((colGroup(2, 1).isCovering(1, 6)), false);
-  t.equal((colGroup(2, 1).isCovering(4, 6)), false);
-  t.equal((rowGroup(6, 1).isCovering(2, 4)), false);
-  t.equal((rowGroup(6, 1).isCovering(2, 9)), false);
+  t.equal(colGroup(2, 1).isCovering(1, 6), false);
+  t.equal(colGroup(2, 1).isCovering(4, 6), false);
+  t.equal(rowGroup(6, 1).isCovering(2, 4), false);
+  t.equal(rowGroup(6, 1).isCovering(2, 9), false);
 
   // in/out big groups, just at the limit
-  t.equal((colGroup(2, 4).isCovering(5, 7)), true);
-  t.equal((colGroup(2, 4).isCovering(6, 7)), false);
-  t.equal((rowGroup(6, 2).isCovering(5, 7)), true);
-  t.equal((rowGroup(6, 2).isCovering(5, 8)), false);
+  t.equal(colGroup(2, 4).isCovering(5, 7), true);
+  t.equal(colGroup(2, 4).isCovering(6, 7), false);
+  t.equal(rowGroup(6, 2).isCovering(5, 7), true);
+  t.equal(rowGroup(6, 2).isCovering(5, 8), false);
 });
 
 test("parse span attribute according to specs", (t) => {

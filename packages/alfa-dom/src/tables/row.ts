@@ -80,7 +80,7 @@ export class Row implements Equatable, Serializable {
   }
 
   public get anchor(): { y: number } {
-    return {y: this._anchorY};
+    return { y: this._anchorY };
   }
   public get width(): number {
     return this._width;
@@ -156,7 +156,7 @@ export class Row implements Equatable, Serializable {
       this._xCurrent < this._width &&
       cells
         .concat(this._cells, this._downwardGrowingCells)
-        .some(cell => cell.isCovering(this._xCurrent, yCurrent))
+        .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
     ) {
       return this._update({ xCurrent: this._xCurrent + 1 })._skipIfCovered(
         cells,
