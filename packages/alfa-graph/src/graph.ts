@@ -58,17 +58,9 @@ export class Graph<T>
       return this;
     }
 
-    for (const to of nodes.get(node).get()) {
-      nodes = nodes.set(
-        to,
-        nodes
-          .get(to)
-          .map((to) => to.delete(node))
-          .get()
-      );
-    }
-
-    return new Graph(nodes.delete(node));
+    return new Graph(
+      nodes.delete(node).map((neighbors) => neighbors.delete(node))
+    );
   }
 
   public connect(from: T, to: T): Graph<T> {
