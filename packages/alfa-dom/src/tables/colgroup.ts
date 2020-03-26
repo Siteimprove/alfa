@@ -1,15 +1,15 @@
 // https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
-import {Equatable} from "@siteimprove/alfa-equatable";
-import {Serializable} from "@siteimprove/alfa-json";
-import {Element} from "..";
-import {isElementByName, parseSpan} from "./helpers";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Element } from "..";
+import { isElementByName, parseSpan } from "./helpers";
 import { RowGroup } from "./groups";
 
 import assert = require("assert");
 import * as json from "@siteimprove/alfa-json";
 
 export class ColGroup implements Equatable, Serializable {
-  private readonly _anchor: {x: number};
+  private readonly _anchor: { x: number };
   private readonly _width: number;
   private readonly _element: Element;
 
@@ -57,28 +57,28 @@ export class ColGroup implements Equatable, Serializable {
       this._width === value._width &&
       this._anchor.x === value._anchor.x &&
       this._element.equals(value._element)
-    )
+    );
   }
 
   public toJSON(): ColGroup.JSON {
     return {
       anchor: this._anchor,
       width: this._width,
-      element: this._element.toJSON()
-    }
+      element: this._element.toJSON(),
+    };
   }
 
   public toString(): string {
-    return `ColGroup anchor: ${this._anchor.x}, width: ${this._width}, element: ${this._element}`
+    return `ColGroup anchor: ${this._anchor.x}, width: ${this._width}, element: ${this._element}`;
   }
 }
 
 export namespace ColGroup {
   export interface JSON {
-    [key: string]: json.JSON,
-    anchor: { x: number },
-    width: number,
-    element: Element.JSON
+    [key: string]: json.JSON;
+    anchor: { x: number };
+    width: number;
+    element: Element.JSON;
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
@@ -87,12 +87,15 @@ export namespace ColGroup {
     assert(colgroup.name === "colgroup");
     let children = colgroup.children().filter(isElementByName("col"));
     let totalSpan = 0;
-    if (children.isEmpty()) { // second case
+    if (children.isEmpty()) {
+      // second case
       // 1
       totalSpan = parseSpan(colgroup, "span", 1, 1000, 1);
-    } else { // first case
+    } else {
+      // first case
       // 1
-      for (const currentCol of children) { // loop control is 2 and 6
+      for (const currentCol of children) {
+        // loop control is 2 and 6
         // 3 (Columns)
         const span = parseSpan(currentCol, "span", 1, 1000, 1);
         totalSpan += span;

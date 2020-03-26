@@ -4,7 +4,3 @@ export * from "./cell";
 export * from "./is-covering";
 export * from "./row";
 export * from "./rowgroup";
-
-
-
-

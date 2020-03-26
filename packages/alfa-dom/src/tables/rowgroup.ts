@@ -1,16 +1,16 @@
 // https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
-import {Equatable} from "@siteimprove/alfa-equatable";
-import {Serializable} from "@siteimprove/alfa-json";
-import {Element } from "..";
-import {Cell, ColGroup, Row} from "./groups";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
+import { Element } from "..";
+import { Cell, ColGroup, Row } from "./groups";
 
 import * as json from "@siteimprove/alfa-json";
 import assert = require("assert");
-import {isElementByName} from "./helpers";
+import { isElementByName } from "./helpers";
 
 // This is a row group as part of the table. It shouldn't duplicate width and cells list.
 export class RowGroup implements Equatable, Serializable {
-  protected readonly _anchor: {y: number};
+  protected readonly _anchor: { y: number };
   protected readonly _height: number;
   protected readonly _element: Element;
 
@@ -21,7 +21,7 @@ export class RowGroup implements Equatable, Serializable {
   }
 
   public static of(y: number, h: number, element: Element) {
-    return new RowGroup(y, h, element)
+    return new RowGroup(y, h, element);
   }
 
   public get anchor() {
@@ -55,28 +55,28 @@ export class RowGroup implements Equatable, Serializable {
       this._height === value._height &&
       this._anchor.y === value._anchor.y &&
       this._element.equals(value._element)
-    )
+    );
   }
 
   public toJSON(): RowGroup.JSON {
     return {
       anchor: this._anchor,
       height: this._height,
-      element: this._element.toJSON()
-    }
+      element: this._element.toJSON(),
+    };
   }
 
   public toString(): string {
-    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, element: ${this._element}`
+    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, element: ${this._element}`;
   }
 }
 
 export namespace RowGroup {
   export interface JSON {
-    [key: string]: json.JSON,
-    anchor: { y: number },
-    height: number,
-    element: Element.JSON
+    [key: string]: json.JSON;
+    anchor: { y: number };
+    height: number;
+    element: Element.JSON;
   }
 }
 
@@ -85,13 +85,25 @@ export class BuildingRowGroup extends RowGroup {
   private readonly _width: number;
   private readonly _cells: Array<Cell>;
 
-  constructor(y: number, h: number, element: Element, w: number, cells: Array<Cell>) {
+  constructor(
+    y: number,
+    h: number,
+    element: Element,
+    w: number,
+    cells: Array<Cell>
+  ) {
     super(y, h, element);
     this._width = w;
     this._cells = cells;
   }
 
-  public static of(y: number, h: number, element: Element, w: number = 0, cells: Array<Cell> = []) {
+  public static of(
+    y: number,
+    h: number,
+    element: Element,
+    w: number = 0,
+    cells: Array<Cell> = []
+  ) {
     return new BuildingRowGroup(y, h, element, w, cells);
   }
 
@@ -99,14 +111,20 @@ export class BuildingRowGroup extends RowGroup {
     return RowGroup.of(this._anchor.y, this._height, this._element);
   }
 
-  private _update(update: {y?: number, w?: number, h?: number, element?: Element, cells?: Array<Cell>}): BuildingRowGroup {
+  private _update(update: {
+    y?: number;
+    w?: number;
+    h?: number;
+    element?: Element;
+    cells?: Array<Cell>;
+  }): BuildingRowGroup {
     return BuildingRowGroup.of(
       update.y !== undefined ? update.y : this._anchor.y,
       update.h !== undefined ? update.h : this._height,
       update.element !== undefined ? update.element : this._element,
       update.w !== undefined ? update.w : this._width,
-      update.cells !== undefined ? update.cells : this._cells,
-    )
+      update.cells !== undefined ? update.cells : this._cells
+    );
   }
 
   public get width() {
@@ -117,23 +135,27 @@ export class BuildingRowGroup extends RowGroup {
   }
 
   private _adjustWidth(w: number): BuildingRowGroup {
-    return this._update({w: Math.max(this._width, w)})
+    return this._update({ w: Math.max(this._width, w) });
   }
   private _adjustHeight(h: number): BuildingRowGroup {
-    return this._update({h: Math.max(this._height, h)})
+    return this._update({ h: Math.max(this._height, h) });
   }
 
   // anchoring a row group needs to move all cells accordingly
   public anchorAt(y: number): BuildingRowGroup {
     return this._update({
       y,
-      cells: this._cells.map(cell => cell.anchorAt(cell.anchor.x, y+cell.anchor.y))
-    })
+      cells: this._cells.map((cell) =>
+        cell.anchorAt(cell.anchor.x, y + cell.anchor.y)
+      ),
+    });
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
   public static from(group: Element): BuildingRowGroup {
-    assert(group.name === "tfoot" || group.name ==="tbody" || group.name === "thead");
+    assert(
+      group.name === "tfoot" || group.name === "tbody" || group.name === "thead"
+    );
 
     let growingCellsList: Array<Cell> = [];
     let rowgroup = BuildingRowGroup.of(-1, 0, group);
@@ -142,21 +164,31 @@ export class BuildingRowGroup extends RowGroup {
     // Useless, the height of the group is computed and used instead.
     // 2
     for (const tr of group.children().filter(isElementByName("tr"))) {
-      const row = Row.from(tr, rowgroup._cells, growingCellsList, yCurrent, rowgroup._width);
+      const row = Row.from(
+        tr,
+        rowgroup._cells,
+        growingCellsList,
+        yCurrent,
+        rowgroup._width
+      );
       growingCellsList = row.downwardGrowingCells;
       rowgroup = rowgroup
-        ._update({cells: rowgroup._cells.concat(row.cells)})
-        ._adjustHeight(yCurrent+row.height)
+        ._update({ cells: rowgroup._cells.concat(row.cells) })
+        ._adjustHeight(yCurrent + row.height)
         ._adjustWidth(row.width);
       // row processing steps 4/16
       yCurrent++;
     }
     // 4, ending the row group
     // ending row group 1
-    growingCellsList = growingCellsList.map(cell => cell.growDownward(rowgroup._height-1));
+    growingCellsList = growingCellsList.map((cell) =>
+      cell.growDownward(rowgroup._height - 1)
+    );
     // ending row group 2
     // When emptying the growing cells list, we need to finally add them to the table.
-    rowgroup = rowgroup._update({cells: rowgroup._cells.concat(growingCellsList)});
+    rowgroup = rowgroup._update({
+      cells: rowgroup._cells.concat(growingCellsList),
+    });
     // 3, returning the row group for the table to handle
     // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
     return rowgroup;
@@ -173,7 +205,7 @@ export class BuildingRowGroup extends RowGroup {
       this._element.equals(value._element) &&
       sortedThisCells.length === sortedValueCells.length &&
       sortedThisCells.every((cell, idx) => cell.equals(sortedValueCells[idx]))
-    )
+    );
   }
 
   public toJSON(): BuildingRowGroup.JSON {
@@ -182,22 +214,22 @@ export class BuildingRowGroup extends RowGroup {
       height: this._height,
       width: this._width,
       element: this._element.toJSON(),
-      cells: this._cells.map(cell => cell.toJSON())
-    }
+      cells: this._cells.map((cell) => cell.toJSON()),
+    };
   }
 
   public toString(): string {
-    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, width: ${this._width}, element: ${this._element}, cells: ${this._cells}`
+    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, width: ${this._width}, element: ${this._element}, cells: ${this._cells}`;
   }
 }
 
 export namespace BuildingRowGroup {
   export interface JSON {
-    [key: string]: json.JSON,
-    anchor: { y: number },
-    height: number,
-    width: number,
-    element: Element.JSON,
-    cells: Cell.JSON[]
+    [key: string]: json.JSON;
+    anchor: { y: number };
+    height: number;
+    width: number;
+    element: Element.JSON;
+    cells: Cell.JSON[];
   }
 }

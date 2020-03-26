@@ -1,10 +1,10 @@
 import { Map } from "@siteimprove/alfa-map";
 import { test } from "@siteimprove/alfa-test";
-import {None, Some} from "@siteimprove/alfa-option";
+import { None, Some } from "@siteimprove/alfa-option";
 import { Attribute, Element } from "../../src";
 
-import {Cell, ColGroup, isCovering, RowGroup} from "../../src/tables/groups";
-import {parseEnumeratedAttribute, parseSpan} from "../../src/tables/helpers";
+import { Cell, ColGroup, isCovering, RowGroup } from "../../src/tables/groups";
+import { parseEnumeratedAttribute, parseSpan } from "../../src/tables/helpers";
 
 const dummy = Element.of(None, None, "foo");
 
@@ -20,46 +20,45 @@ function colGroup(x: number, w: number): ColGroup {
   return ColGroup.of(x, w, dummy);
 }
 
-test("isCovering ̤correctly computes cell coverage", t => {
-    // in small cell
-    t.equal(isCovering(2, 6)(cell(2, 6, 1, 1)), true);
+test("isCovering ̤correctly computes cell coverage", (t) => {
+  // in small cell
+  t.equal(isCovering(2, 6)(cell(2, 6, 1, 1)), true);
 
-    // out of small cell (left, right, above, below)
-    t.equal(isCovering(1, 6)(cell(2, 6, 1, 1)), false);
-    t.equal(isCovering(4, 6)(cell(2, 6, 1, 1)), false);
-    t.equal(isCovering(2, 4)(cell(2, 6, 1, 1)), false);
-    t.equal(isCovering(2, 9)(cell(2, 6, 1, 1)), false);
+  // out of small cell (left, right, above, below)
+  t.equal(isCovering(1, 6)(cell(2, 6, 1, 1)), false);
+  t.equal(isCovering(4, 6)(cell(2, 6, 1, 1)), false);
+  t.equal(isCovering(2, 4)(cell(2, 6, 1, 1)), false);
+  t.equal(isCovering(2, 9)(cell(2, 6, 1, 1)), false);
 
-    // in/out big cell, just at the limit
-    t.equal(isCovering(5, 7)(cell(2, 6, 4, 2)), true);
-    t.equal(isCovering(6, 7)(cell(2, 6, 4, 2)), false);
-    t.equal(isCovering(5, 8)(cell(2, 6, 4, 2)), false);
-  }
-);
+  // in/out big cell, just at the limit
+  t.equal(isCovering(5, 7)(cell(2, 6, 4, 2)), true);
+  t.equal(isCovering(6, 7)(cell(2, 6, 4, 2)), false);
+  t.equal(isCovering(5, 8)(cell(2, 6, 4, 2)), false);
+});
 
-test("isCovering ̤correctly computes group coverage", t => {
-    // in small groups
-    t.equal(isCovering(2, 6)(rowGroup(6, 1)), true);
-    t.equal(isCovering(2, 6)(colGroup(2, 1)), true);
+test("isCovering ̤correctly computes group coverage", (t) => {
+  // in small groups
+  t.equal(isCovering(2, 6)(rowGroup(6, 1)), true);
+  t.equal(isCovering(2, 6)(colGroup(2, 1)), true);
 
+  // out of small groups (left, right, above, below)
+  t.equal(isCovering(1, 6)(colGroup(2, 1)), false);
+  t.equal(isCovering(4, 6)(colGroup(2, 1)), false);
+  t.equal(isCovering(2, 4)(rowGroup(6, 1)), false);
+  t.equal(isCovering(2, 9)(rowGroup(6, 1)), false);
 
-    // out of small groups (left, right, above, below)
-    t.equal(isCovering(1, 6)(colGroup(2, 1)), false);
-    t.equal(isCovering(4, 6)(colGroup(2, 1)), false);
-    t.equal(isCovering(2, 4)(rowGroup(6, 1)), false);
-    t.equal(isCovering(2, 9)(rowGroup(6, 1)), false);
+  // in/out big groups, just at the limit
+  t.equal(isCovering(5, 7)(colGroup(2, 4)), true);
+  t.equal(isCovering(6, 7)(colGroup(2, 4)), false);
+  t.equal(isCovering(5, 7)(rowGroup(6, 2)), true);
+  t.equal(isCovering(5, 8)(rowGroup(6, 2)), false);
+});
 
-    // in/out big groups, just at the limit
-    t.equal(isCovering(5, 7)(colGroup(2, 4)), true);
-    t.equal(isCovering(6, 7)(colGroup(2, 4)), false);
-    t.equal(isCovering(5, 7)(rowGroup(6, 2)), true);
-    t.equal(isCovering(5, 8)(rowGroup(6, 2)), false);
-  }
-);
-
-test("parse span attribute according to specs", t => {
-  function span(name: string, value:string): Element {
-    return Element.of(None, None, "foo", (elt)=> [Attribute.of(None, None, `${name}span`, value)])
+test("parse span attribute according to specs", (t) => {
+  function span(name: string, value: string): Element {
+    return Element.of(None, None, "foo", (elt) => [
+      Attribute.of(None, None, `${name}span`, value),
+    ]);
   }
   const nospan = Element.of(None, None, "foo");
 
@@ -80,13 +79,23 @@ test("parse span attribute according to specs", t => {
   t.equal(parseSpan(nospan, "rowspan", 0, 65534, 1), 1);
 });
 
-test("parse enumerated attribute according to specs", t => {
-  function enumerated(value: string): Element {
-    return Element.of(None, None, "dummy", (elt) => [Attribute.of(None, None, "enumerated", value)])
+test("parse enumerated attribute according to specs", (t) => {
+  function enumerated(value: string): Element {
+    return Element.of(None, None, "dummy", (elt) => [
+      Attribute.of(None, None, "enumerated", value),
+    ]);
   }
   const noenum = Element.of(None, None, "dummy");
-  const noDefault = Map.from([["foo", 1], ["bar", 2]]);
-  const withDefault = Map.from([["foo", 1], ["bar", 2], ["missing", 0], ["invalid", 42]]);
+  const noDefault = Map.from([
+    ["foo", 1],
+    ["bar", 2],
+  ]);
+  const withDefault = Map.from([
+    ["foo", 1],
+    ["bar", 2],
+    ["missing", 0],
+    ["invalid", 42],
+  ]);
 
   const parserNoDefault = parseEnumeratedAttribute("enumerated", noDefault);
   const parserWithDefault = parseEnumeratedAttribute("enumerated", withDefault);
