@@ -34,7 +34,6 @@
     "src/style/sheet.ts",
     "src/tables/cell.ts",
     "src/tables/colgroup.ts",
-    "src/tables/is-covering.ts",
     "src/tables/row.ts",
     "src/tables/rowgroup.ts",
     "src/tables/groups.ts",

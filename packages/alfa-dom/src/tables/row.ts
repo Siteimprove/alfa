@@ -7,7 +7,6 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Element } from "..";
 import { Cell } from "./groups";
 import { isElementByName } from "./helpers";
-import { isCovering } from "./is-covering";
 
 /**
  * Build artifact, corresponds to a single <tr> element
@@ -20,7 +19,7 @@ import { isCovering } from "./is-covering";
  * as long as they are all based in the same way…
  */
 export class Row implements Equatable, Serializable {
-  private readonly _anchor: { y: number };
+  private readonly _anchorY: number;
   private readonly _xCurrent: number; // current x position in processing the row
   private readonly _width: number;
   private readonly _height: number;
@@ -49,7 +48,7 @@ export class Row implements Equatable, Serializable {
     growing: Array<Cell>,
     xCurrent: number
   ) {
-    this._anchor = { y };
+    this._anchorY = y;
     this._xCurrent = xCurrent;
     this._width = w;
     this._height = h;
@@ -68,7 +67,7 @@ export class Row implements Equatable, Serializable {
     downwardGrowingCells?: Array<Cell>;
   }): Row {
     return Row.of(
-      update.y !== undefined ? update.y : this._anchor.y,
+      update.y !== undefined ? update.y : this._anchorY,
       update.width !== undefined ? update.width : this._width,
       update.height !== undefined ? update.height : this._height,
       update.element !== undefined ? update.element : this._element,
@@ -81,7 +80,7 @@ export class Row implements Equatable, Serializable {
   }
 
   public get anchor(): { y: number } {
-    return this._anchor;
+    return {y: this._anchorY};
   }
   public get width(): number {
     return this._width;
@@ -157,7 +156,7 @@ export class Row implements Equatable, Serializable {
       this._xCurrent < this._width &&
       cells
         .concat(this._cells, this._downwardGrowingCells)
-        .some(isCovering(this._xCurrent, yCurrent))
+        .some(cell => cell.isCovering(this._xCurrent, yCurrent))
     ) {
       return this._update({ xCurrent: this._xCurrent + 1 })._skipIfCovered(
         cells,
@@ -234,7 +233,7 @@ export class Row implements Equatable, Serializable {
     return (
       this._width === value._width &&
       this._height === value._height &&
-      this._anchor.y === value._anchor.y &&
+      this._anchorY === value._anchorY &&
       this._element.equals(value._element) &&
       this._cells.length === value._cells.length &&
       sortedThisCells.every((cell, idx) =>
@@ -250,7 +249,7 @@ export class Row implements Equatable, Serializable {
 
   public toJSON(): Row.JSON {
     return {
-      anchor: this._anchor,
+      anchor: this.anchor,
       width: this._width,
       height: this._height,
       element: this._element.toJSON(),

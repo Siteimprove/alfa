@@ -13,7 +13,7 @@ import { isElementByName } from "./helpers";
  * This is a row group as part of the table. It shouldn't duplicate width and cells list.
  */
 export class RowGroup implements Equatable, Serializable {
-  protected readonly _anchor: { y: number };
+  protected readonly _anchorY: number;
   protected readonly _height: number;
   protected readonly _element: Element;
 
@@ -22,13 +22,13 @@ export class RowGroup implements Equatable, Serializable {
   }
 
   protected constructor(y: number, h: number, element: Element) {
-    this._anchor = { y };
+    this._anchorY = y;
     this._height = h;
     this._element = element;
   }
 
   public get anchor(): { y: number } {
-    return this._anchor;
+    return { y: this._anchorY };
   }
   public get height(): number {
     return this._height;
@@ -49,8 +49,8 @@ export class RowGroup implements Equatable, Serializable {
    * in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
    */
   public compare(rowgroup: RowGroup): number {
-    if (this._anchor.y < rowgroup._anchor.y) return -1;
-    if (this._anchor.y > rowgroup._anchor.y) return 1;
+    if (this._anchorY < rowgroup._anchorY) return -1;
+    if (this._anchorY > rowgroup._anchorY) return 1;
     return 0;
   }
 
@@ -58,14 +58,14 @@ export class RowGroup implements Equatable, Serializable {
     return (
       value instanceof RowGroup &&
       this._height === value._height &&
-      this._anchor.y === value._anchor.y &&
+      this._anchorY === value._anchorY &&
       this._element.equals(value._element)
     );
   }
 
   public toJSON(): RowGroup.JSON {
     return {
-      anchor: this._anchor,
+      anchor: this.anchor,
       height: this._height,
       element: this._element.toJSON(),
     };
@@ -109,7 +109,7 @@ export class BuildingRowGroup extends RowGroup {
   }
 
   public toRowGroup(): RowGroup {
-    return RowGroup.of(this._anchor.y, this._height, this._element);
+    return RowGroup.of(this._anchorY, this._height, this._element);
   }
 
   private _update(update: {
@@ -120,7 +120,7 @@ export class BuildingRowGroup extends RowGroup {
     cells?: Array<Cell>;
   }): BuildingRowGroup {
     return BuildingRowGroup.of(
-      update.y !== undefined ? update.y : this._anchor.y,
+      update.y !== undefined ? update.y : this._anchorY,
       update.h !== undefined ? update.h : this._height,
       update.element !== undefined ? update.element : this._element,
       update.w !== undefined ? update.w : this._width,
@@ -207,7 +207,7 @@ export class BuildingRowGroup extends RowGroup {
     return (
       this._height === value._height &&
       this._width === value._width &&
-      this._anchor.y === value._anchor.y &&
+      this._anchorY === value._anchorY &&
       this._element.equals(value._element) &&
       sortedThisCells.length === sortedValueCells.length &&
       sortedThisCells.every((cell, idx) => cell.equals(sortedValueCells[idx]))
@@ -216,7 +216,7 @@ export class BuildingRowGroup extends RowGroup {
 
   public toJSON(): BuildingRowGroup.JSON {
     return {
-      anchor: this._anchor,
+      anchor: this.anchor,
       height: this._height,
       width: this._width,
       element: this._element.toJSON(),

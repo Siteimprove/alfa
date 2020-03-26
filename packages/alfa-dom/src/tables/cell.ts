@@ -4,7 +4,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import * as json from "@siteimprove/alfa-json";
-import {Err, Ok, Result} from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
 import { ColGroup, RowGroup } from "./groups";
@@ -17,7 +17,8 @@ const { equals } = Predicate;
  */
 export class Cell implements Equatable, Serializable {
   private readonly _kind: Cell.Kind;
-  private readonly _anchor: { x: number; y: number };
+  private readonly _anchorX: number;
+  private readonly _anchorY: number;
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
@@ -68,7 +69,8 @@ export class Cell implements Equatable, Serializable {
     ]);
 
     this._kind = kind;
-    this._anchor = { x, y };
+    this._anchorX = x;
+    this._anchorY = y;
     this._width = w;
     this._height = h;
     this._element = element;
@@ -84,8 +86,8 @@ export class Cell implements Equatable, Serializable {
     return this._element.attribute("id").get().value;
   }
 
-  public get anchor(): {x: number, y: number} {
-    return this._anchor;
+  public get anchor(): { x: number; y: number } {
+    return { x: this._anchorX, y: this._anchorY };
   }
   public get width(): number {
     return this._width;
@@ -100,10 +102,25 @@ export class Cell implements Equatable, Serializable {
     return this._element;
   }
 
-  public isRowGroup(): this is RowGroup {
-    return true;
-  }
-  public isColGroup(): this is ColGroup {
+  public isCovering(x: number, y: number): boolean {
+    if (x < this._anchorX) {
+      // slot is left of cell
+      return false;
+    }
+    if (this._anchorX + this._width - 1 < x) {
+      // slot is right of cell
+      return false;
+    }
+
+    if (y < this._anchorY) {
+      // slot is above cell
+      return false;
+    }
+    if (this._anchorY + this._height - 1 < y) {
+      // slot is below cell
+      return false;
+    }
+
     return true;
   }
 
@@ -118,10 +135,10 @@ export class Cell implements Equatable, Serializable {
     // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
     return Cell.of(
       this._kind,
-      this._anchor.x,
-      this._anchor.y,
+      this._anchorX,
+      this._anchorY,
       this._width,
-      Math.max(this._height, yCurrent - this._anchor.y + 1),
+      Math.max(this._height, yCurrent - this._anchorY + 1),
       this._element
     );
   }
@@ -131,10 +148,10 @@ export class Cell implements Equatable, Serializable {
    * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
    */
   public compare(cell: Cell): number {
-    if (this._anchor.y < cell._anchor.y) return -1;
-    if (this._anchor.y > cell._anchor.y) return 1;
-    if (this._anchor.x < cell._anchor.x) return -1;
-    if (this._anchor.x > cell._anchor.x) return 1;
+    if (this._anchorY < cell._anchorY) return -1;
+    if (this._anchorY > cell._anchorY) return 1;
+    if (this._anchorX < cell._anchorX) return -1;
+    if (this._anchorX > cell._anchorX) return 1;
     return 0;
   }
 
@@ -144,8 +161,8 @@ export class Cell implements Equatable, Serializable {
       this._kind === value._kind &&
       this._width === value._width &&
       this._height === value._height &&
-      this._anchor.x === value._anchor.x &&
-      this._anchor.y === value._anchor.y &&
+      this._anchorX === value._anchorX &&
+      this._anchorY === value._anchorY &&
       this._element.equals(value._element)
     );
   }
@@ -153,7 +170,7 @@ export class Cell implements Equatable, Serializable {
   public toJSON(): Cell.JSON {
     return {
       kind: this._kind,
-      anchor: this._anchor,
+      anchor: this.anchor,
       width: this._width,
       height: this._height,
       element: this._element.toJSON(),
@@ -189,7 +206,8 @@ export namespace Cell {
     x: number = -1,
     y: number = -1
   ): Result<{ cell: Cell; downwardGrowing: boolean }, string> {
-    if (cell.name !== "th" && cell.name !== "td") return Err.of("This element is not a table cell");
+    if (cell.name !== "th" && cell.name !== "td")
+      return Err.of("This element is not a table cell");
 
     const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
     // 9

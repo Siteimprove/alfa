@@ -12,7 +12,7 @@ import { RowGroup } from "./groups";
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
  */
 export class ColGroup implements Equatable, Serializable {
-  private readonly _anchor: { x: number };
+  private readonly _anchorX: number;
   private readonly _width: number;
   private readonly _element: Element;
 
@@ -21,13 +21,13 @@ export class ColGroup implements Equatable, Serializable {
   }
 
   private constructor(x: number, width: number, element: Element) {
-    this._anchor = { x };
+    this._anchorX = x;
     this._width = width;
     this._element = element;
   }
 
   public get anchor(): { x: number } {
-    return this._anchor;
+    return { x: this._anchorX };
   }
   public get width(): number {
     return this._width;
@@ -51,8 +51,8 @@ export class ColGroup implements Equatable, Serializable {
    * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
    */
   public compare(colgroup: ColGroup): number {
-    if (this._anchor.x < colgroup._anchor.x) return -1;
-    if (this._anchor.x > colgroup._anchor.x) return 1;
+    if (this._anchorX < colgroup._anchorX) return -1;
+    if (this._anchorX > colgroup._anchorX) return 1;
     return 0;
   }
 
@@ -60,14 +60,14 @@ export class ColGroup implements Equatable, Serializable {
     return (
       value instanceof ColGroup &&
       this._width === value._width &&
-      this._anchor.x === value._anchor.x &&
+      this._anchorX === value._anchorX &&
       this._element.equals(value._element)
     );
   }
 
   public toJSON(): ColGroup.JSON {
     return {
-      anchor: this._anchor,
+      anchor: this.anchor,
       width: this._width,
       element: this._element.toJSON(),
     };
