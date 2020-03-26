@@ -158,10 +158,6 @@ export class Cell implements Equatable, Serializable {
       element: this._element.toJSON(),
     };
   }
-
-  public toString(): string {
-    return `Cell (${this._kind}) anchor: (${this._anchor.x}, ${this._anchor.y}), width: ${this._width}, height: ${this._height}, element: ${this._element}`;
-  }
 }
 
 export namespace Cell {

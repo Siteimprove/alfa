@@ -290,10 +290,6 @@ export class Table implements Equatable, Serializable {
       colGroups: this._colGroups.map((cg) => cg.toJSON()),
     };
   }
-
-  public toString(): string {
-    return `Table width: ${this._width}, height: ${this._height}, element: ${this._element}, cells: ${this._cells}, row groups: ${this._rowGroups}, column groups: ${this._colGroups}`;
-  }
 }
 
 export namespace Table {

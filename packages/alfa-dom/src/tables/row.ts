@@ -257,10 +257,6 @@ export class Row implements Equatable, Serializable {
       ),
     };
   }
-
-  public toString(): string {
-    return `Row anchor: ${this._anchor.y}, width: ${this._width}, height: ${this._height}, element: ${this._element}, cells: ${this._cells}, downward growing cells: ${this._downwardGrowingCells}`;
-  }
 }
 
 export namespace Row {

@@ -73,10 +73,6 @@ export class ColGroup implements Equatable, Serializable {
       element: this._element.toJSON(),
     };
   }
-
-  public toString(): string {
-    return `ColGroup anchor: ${this._anchor.x}, width: ${this._width}, element: ${this._element}`;
-  }
 }
 
 export namespace ColGroup {

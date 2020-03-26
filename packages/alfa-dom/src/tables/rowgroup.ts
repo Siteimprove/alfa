@@ -72,10 +72,6 @@ export class RowGroup implements Equatable, Serializable {
       element: this._element.toJSON(),
     };
   }
-
-  public toString(): string {
-    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, element: ${this._element}`;
-  }
 }
 
 export namespace RowGroup {
@@ -225,10 +221,6 @@ export class BuildingRowGroup extends RowGroup {
       element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.toJSON()),
     };
-  }
-
-  public toString(): string {
-    return `RowGroup anchor: ${this._anchor.y}, height: ${this._height}, width: ${this._width}, element: ${this._element}, cells: ${this._cells}`;
   }
 }
 
