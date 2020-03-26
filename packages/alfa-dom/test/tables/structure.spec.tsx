@@ -1,7 +1,8 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { Element, Table } from "../../src";
+
+import { Table } from "../../src";
 import {
   apple,
   complexRow,

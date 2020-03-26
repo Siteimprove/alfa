@@ -1,8 +1,8 @@
 import { Map } from "@siteimprove/alfa-map";
 import { test } from "@siteimprove/alfa-test";
 import { None, Some } from "@siteimprove/alfa-option";
-import { Attribute, Element } from "../../src";
 
+import { Attribute, Element } from "../../src";
 import { Cell, ColGroup, isCovering, RowGroup } from "../../src/tables/groups";
 import { parseEnumeratedAttribute, parseSpan } from "../../src/tables/helpers";
 

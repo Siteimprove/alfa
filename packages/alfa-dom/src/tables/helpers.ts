@@ -5,13 +5,16 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+
 import { Attribute, Element, Namespace, Node } from "..";
 
 const { and, equals, property } = Predicate;
 
 // micro syntaxes to move to alfa-parser
-// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
 
+/**
+ * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
+ */
 export function parseInteger(
   str: string
 ): Result<readonly [string, number], string> {
@@ -29,7 +32,9 @@ export function parseInteger(
       Ok.of(["", raw === -0 ? 0 : raw] as const);
 }
 
-// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
+/**
+ * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
+ */
 export function parseNonNegativeInteger(
   str: string
 ): Result<readonly [string, number], string> {
@@ -39,7 +44,9 @@ export function parseNonNegativeInteger(
   );
 }
 
-// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+/**
+ * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+ */
 export function parseEnumeratedValue<RESULT>(
   mapping: Map<string, RESULT>
 ): Parser<string, Option<RESULT>, never> {
@@ -58,6 +65,7 @@ export function parseEnumeratedValue<RESULT>(
   return parser;
 }
 // end micro syntaxes
+
 
 // attribute helper should move to attribute
 export function parseAttribute<RESULT, ERROR>(

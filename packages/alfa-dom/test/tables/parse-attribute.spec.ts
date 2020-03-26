@@ -1,6 +1,7 @@
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 import { None } from "@siteimprove/alfa-option";
+
 import { Attribute } from "../../src";
 import {
   parseAttribute,

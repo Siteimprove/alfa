@@ -1,14 +1,19 @@
-// https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Element } from "..";
-import { Cell, ColGroup, Row } from "./groups";
 
 import * as json from "@siteimprove/alfa-json";
-import assert = require("assert");
+
+import { Element } from "..";
+import { Cell, ColGroup, Row } from "./groups";
 import { isElementByName } from "./helpers";
 
-// This is a row group as part of the table. It shouldn't duplicate width and cells list.
+import assert = require("assert");
+
+
+/**
+ * @see/ https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
+ * This is a row group as part of the table. It shouldn't duplicate width and cells list.
+ */
 export class RowGroup implements Equatable, Serializable {
   protected readonly _anchor: { y: number };
   protected readonly _height: number;
@@ -41,8 +46,10 @@ export class RowGroup implements Equatable, Serializable {
     return false;
   }
 
-  // compare rowgroups according to their anchor
-  // in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
+  /**
+   * compare rowgroups according to their anchor
+   * in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
+   */
   public compare(rowgroup: RowGroup): number {
     if (this._anchor.y < rowgroup._anchor.y) return -1;
     if (this._anchor.y > rowgroup._anchor.y) return 1;
@@ -151,7 +158,9 @@ export class BuildingRowGroup extends RowGroup {
     });
   }
 
-  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
+   */
   public static from(group: Element): BuildingRowGroup {
     assert(
       group.name === "tfoot" || group.name === "tbody" || group.name === "thead"

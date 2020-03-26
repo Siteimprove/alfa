@@ -2,15 +2,18 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
+
+import * as json from "@siteimprove/alfa-json";
+
 import { Element } from "..";
 import { ColGroup, RowGroup } from "./groups";
 import { hasName, parseEnumeratedAttribute, parseSpan } from "./helpers";
 
-import * as json from "@siteimprove/alfa-json";
-
 const { equals } = Predicate;
 
-// https://html.spec.whatwg.org/multipage/tables.html#concept-cell
+/**
+ * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
+ */
 export class Cell implements Equatable, Serializable {
   private readonly _kind: "data" | "header";
   private readonly _anchor: { x: number; y: number };
@@ -38,7 +41,9 @@ export class Cell implements Equatable, Serializable {
     eHeaders: Array<Element>,
     iHeaders: Array<Element>
   ) {
-    // https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+     */
     const scopeMapping = Map.from([
       ["row", Cell.HeaderState.Row],
       ["col", Cell.HeaderState.Column],
@@ -105,7 +110,9 @@ export class Cell implements Equatable, Serializable {
     return Cell.of(this._kind, x, y, this._width, this._height, this._element);
   }
 
-  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
+   */
   public growDownward(yCurrent: number): Cell {
     // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
     return Cell.of(
@@ -118,8 +125,10 @@ export class Cell implements Equatable, Serializable {
     );
   }
 
-  // compare cell according to their anchor
-  // in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
+  /**
+   * compare cell according to their anchor
+   * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
+   */
   public compare(cell: Cell): number {
     if (this._anchor.y < cell._anchor.y) return -1;
     if (this._anchor.y > cell._anchor.y) return 1;
@@ -173,7 +182,9 @@ export namespace Cell {
     ColGroup,
   }
 
-  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+   */
   export function from(
     cell: Element,
     x: number = -1,

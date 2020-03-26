@@ -2,6 +2,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { None, Some } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
+
 import {
   parseEnumeratedValue,
   parseInteger,

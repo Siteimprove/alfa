@@ -1,4 +1,5 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
+
 import { ColGroup, Cell, RowGroup } from "./groups";
 
 export function isCovering(

@@ -1,13 +1,17 @@
-// https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
+
+import * as json from "@siteimprove/alfa-json";
+
 import { Element } from "..";
 import { isElementByName, parseSpan } from "./helpers";
 import { RowGroup } from "./groups";
 
 import assert = require("assert");
-import * as json from "@siteimprove/alfa-json";
 
+/**
+ * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
+ */
 export class ColGroup implements Equatable, Serializable {
   private readonly _anchor: { x: number };
   private readonly _width: number;
@@ -81,8 +85,10 @@ export namespace ColGroup {
     element: Element.JSON;
   }
 
-  // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
-  // global step 9.1
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
+   * global step 9.1
+   */
   export function from(colgroup: Element, x: number = -1): ColGroup {
     assert(colgroup.name === "colgroup");
     let children = colgroup.children().filter(isElementByName("col"));

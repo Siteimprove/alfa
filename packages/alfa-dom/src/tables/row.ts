@@ -1,22 +1,27 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { notDeepEqual } from "assert";
+
+import * as json from "@siteimprove/alfa-json";
+
+
 import { Element } from "..";
 import { Cell } from "./groups";
 import { isElementByName } from "./helpers";
 import { isCovering } from "./is-covering";
 
-import * as json from "@siteimprove/alfa-json";
+import { notDeepEqual } from "assert";
 import assert = require("assert");
 
-// Build artifact, corresponds to a single <tr> element
-// A row needs context to exists:
-// * a list of cells that can potentially cover slots in it (rowspan > 1)
-// * a list of downward growing cells that will grow into it
-// * the y position of the row.
-//
-// y position (of the row and cells) can be relative to the group they are in or absolute in the table
-// as long as they are all based in the same way…
+/**
+ * Build artifact, corresponds to a single <tr> element
+ * A row needs context to exists:
+ * * a list of cells that can potentially cover slots in it (rowspan > 1)
+ * * a list of downward growing cells that will grow into it
+ * * the y position of the row.
+ *
+ * y position (of the row and cells) can be relative to the group they are in or absolute in the table
+ * as long as they are all based in the same way…
+ */
 export class Row implements Equatable, Serializable {
   private readonly _anchor: { y: number };
   private readonly _xCurrent: number; // current x position in processing the row
@@ -145,8 +150,10 @@ export class Row implements Equatable, Serializable {
     return this._update({ height: Math.max(this._height, h) });
   }
 
-  // moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
-  // step 6
+  /**
+   * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
+   * step 6
+   */
   private _skipIfCovered(cells: Array<Cell>, yCurrent: number): Row {
     if (
       this._xCurrent < this._width &&
@@ -169,7 +176,9 @@ export class Row implements Equatable, Serializable {
       : this;
   }
 
-  // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+  /**
+   * @see/ https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+   */
   public static from(
     tr: Element,
     cells: Array<Cell> = [],
