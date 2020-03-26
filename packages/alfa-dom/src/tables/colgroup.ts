@@ -36,12 +36,13 @@ export class ColGroup implements Equatable, Serializable {
     return this._element;
   }
 
-  public isRowGroup(): this is RowGroup {
-    return false;
+  public isCovering(x: number, y: number): boolean {
+    return !( // colgroup is *not* covering if either
+      (x < this._anchorX) || // slot is left of colgroup
+      (this._anchorX + this._width - 1 < x) // slot is right of colgroup
+    );
   }
-  public isColGroup(): this is ColGroup {
-    return true;
-  }
+
   public anchorAt(x: number): ColGroup {
     return ColGroup.of(x, this._width, this._element);
   }
