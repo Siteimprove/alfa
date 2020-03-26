@@ -74,28 +74,28 @@ export class Cell implements Equatable, Serializable {
     element: Element,
     eHeaders: Array<Element> = [],
     iHeaders: Array<Element> = []
-  ) {
+  ): Cell {
     return new Cell(kind, x, y, w, h, element, eHeaders, iHeaders);
   }
 
   // debug
-  public get name() {
+  public get name(): string {
     return this._element.attribute("id").get().value;
   }
 
-  public get anchor() {
+  public get anchor(): {x: number, y: number} {
     return this._anchor;
   }
-  public get width() {
+  public get width(): number {
     return this._width;
   }
-  public get height() {
+  public get height(): number {
     return this._height;
   }
-  public get kind() {
+  public get kind(): "header" | "data" {
     return this._kind;
   }
-  public get element() {
+  public get element(): Element {
     return this._element;
   }
 

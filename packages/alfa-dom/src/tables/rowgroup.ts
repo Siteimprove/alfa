@@ -25,17 +25,17 @@ export class RowGroup implements Equatable, Serializable {
     this._element = element;
   }
 
-  public static of(y: number, h: number, element: Element) {
+  public static of(y: number, h: number, element: Element): RowGroup {
     return new RowGroup(y, h, element);
   }
 
-  public get anchor() {
+  public get anchor(): {y: number} {
     return this._anchor;
   }
-  public get height() {
+  public get height(): number {
     return this._height;
   }
-  public get element() {
+  public get element(): Element {
     return this._element;
   }
 
@@ -110,7 +110,7 @@ export class BuildingRowGroup extends RowGroup {
     element: Element,
     w: number = 0,
     cells: Array<Cell> = []
-  ) {
+  ): BuildingRowGroup {
     return new BuildingRowGroup(y, h, element, w, cells);
   }
 
@@ -134,10 +134,10 @@ export class BuildingRowGroup extends RowGroup {
     );
   }
 
-  public get width() {
+  public get width(): number {
     return this._width;
   }
-  public get cells() {
+  public get cells(): Iterable<Cell> {
     return this._cells;
   }
 
@@ -180,9 +180,9 @@ export class BuildingRowGroup extends RowGroup {
         yCurrent,
         rowgroup._width
       );
-      growingCellsList = row.downwardGrowingCells;
+      growingCellsList = [...row.downwardGrowingCells];
       rowgroup = rowgroup
-        ._update({ cells: rowgroup._cells.concat(row.cells) })
+        ._update({ cells: rowgroup._cells.concat(...row.cells) })
         ._adjustHeight(yCurrent + row.height)
         ._adjustWidth(row.width);
       // row processing steps 4/16

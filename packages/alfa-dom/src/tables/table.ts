@@ -51,7 +51,7 @@ export class Table implements Equatable, Serializable {
     cells: Array<Cell> = [],
     rowGroups: Array<RowGroup> = [],
     colGroups: Array<ColGroup> = []
-  ) {
+  ): Table {
     return new Table(element, w, h, cells, rowGroups, colGroups);
   }
 
@@ -62,7 +62,7 @@ export class Table implements Equatable, Serializable {
     cells?: Array<Cell>;
     rowGroups?: Array<RowGroup>;
     colGroups?: Array<ColGroup>;
-  }) {
+  }): Table {
     return Table.of(
       update.element !== undefined ? update.element : this._element,
       update.w !== undefined ? update.w : this._width,
@@ -73,19 +73,19 @@ export class Table implements Equatable, Serializable {
     );
   }
 
-  public get width() {
+  public get width(): number {
     return this._width;
   }
-  public get height() {
+  public get height(): number {
     return this._height;
   }
-  public get cells() {
+  public get cells(): Iterable<Cell> {
     return this._cells;
   }
-  public get colGroups() {
+  public get colGroups(): Iterable<ColGroup> {
     return this._colGroups;
   }
-  public get rowGroups() {
+  public get rowGroups(): Iterable<RowGroup> {
     return this._rowGroups;
   }
 
@@ -103,8 +103,8 @@ export class Table implements Equatable, Serializable {
     return this._update({ rowGroups: this._rowGroups.concat(rowGroup) });
   }
 
-  private _addCells(cells: Array<Cell>): Table {
-    return this._update({ cells: this._cells.concat(cells) });
+  private _addCells(cells: Iterable<Cell>): Table {
+    return this._update({ cells: this._cells.concat(...cells) });
   }
 
   private _addRowGroupFromElement(rowgroup: Element, yCurrent: number): Table {
@@ -170,12 +170,12 @@ export class Table implements Equatable, Serializable {
 
         const row = Row.from(
           currentElement,
-          table.cells,
+          table._cells,
           growingCellsList,
           yCurrent,
-          table.width
+          table._width
         );
-        growingCellsList = row.downwardGrowingCells;
+        growingCellsList = [...row.downwardGrowingCells];
         table = table
           ._addCells(row.cells)
           ._adjustHeight(yCurrent + 1)

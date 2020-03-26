@@ -57,7 +57,7 @@ export class Row implements Equatable, Serializable {
     cells: Array<Cell> = [],
     growing: Array<Cell> = [],
     xCurrent: number = 0
-  ) {
+  ): Row {
     return new Row(y, w, h, element, cells, growing, xCurrent);
   }
 
@@ -83,22 +83,22 @@ export class Row implements Equatable, Serializable {
     );
   }
 
-  public get anchor() {
+  public get anchor(): {y: number} {
     return this._anchor;
   }
-  public get width() {
+  public get width(): number {
     return this._width;
   }
-  public get height() {
+  public get height(): number {
     return this._height;
   }
-  public get element() {
+  public get element(): Element {
     return this._element;
   }
-  public get cells() {
+  public get cells(): Iterable<Cell> {
     return this._cells;
   }
-  public get downwardGrowingCells() {
+  public get downwardGrowingCells(): Iterable<Cell> {
     return this._downwardGrowingCells;
   }
 

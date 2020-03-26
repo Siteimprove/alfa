@@ -23,17 +23,17 @@ export class ColGroup implements Equatable, Serializable {
     this._element = element;
   }
 
-  public static of(x: number, width: number, element: Element) {
+  public static of(x: number, width: number, element: Element): ColGroup {
     return new ColGroup(x, width, element);
   }
 
-  public get anchor() {
+  public get anchor(): {x: number} {
     return this._anchor;
   }
-  public get width() {
+  public get width(): number {
     return this._width;
   }
-  public get element() {
+  public get element(): Element {
     return this._element;
   }
 
@@ -47,8 +47,10 @@ export class ColGroup implements Equatable, Serializable {
     return ColGroup.of(x, this._width, this._element);
   }
 
-  // compare colgroups according to their anchor
-  // in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
+  /**
+   * compare colgroups according to their anchor
+   * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
+   */
   public compare(colgroup: ColGroup): number {
     if (this._anchor.x < colgroup._anchor.x) return -1;
     if (this._anchor.x > colgroup._anchor.x) return 1;
