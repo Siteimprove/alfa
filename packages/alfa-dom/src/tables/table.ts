@@ -28,6 +28,17 @@ export class Table implements Equatable, Serializable {
   private readonly _rowGroups: Array<RowGroup>;
   private readonly _colGroups: Array<ColGroup>;
 
+  public static of(
+    element: Element,
+    w: number = 0,
+    h: number = 0,
+    cells: Array<Cell> = [],
+    rowGroups: Array<RowGroup> = [],
+    colGroups: Array<ColGroup> = []
+  ): Table {
+    return new Table(element, w, h, cells, rowGroups, colGroups);
+  }
+
   private constructor(
     element: Element,
     w: number,
@@ -42,17 +53,6 @@ export class Table implements Equatable, Serializable {
     this._cells = cells;
     this._rowGroups = rowGroups;
     this._colGroups = colGroups;
-  }
-
-  public static of(
-    element: Element,
-    w: number = 0,
-    h: number = 0,
-    cells: Array<Cell> = [],
-    rowGroups: Array<RowGroup> = [],
-    colGroups: Array<ColGroup> = []
-  ): Table {
-    return new Table(element, w, h, cells, rowGroups, colGroups);
   }
 
   private _update(update: {

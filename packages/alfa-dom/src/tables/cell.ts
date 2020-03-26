@@ -31,6 +31,19 @@ export class Cell implements Equatable, Serializable {
     implicit: Array<Element>;
   };
 
+  public static of(
+    kind: "data" | "header",
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    element: Element,
+    eHeaders: Array<Element> = [],
+    iHeaders: Array<Element> = []
+  ): Cell {
+    return new Cell(kind, x, y, w, h, element, eHeaders, iHeaders);
+  }
+
   private constructor(
     kind: "data" | "header",
     x: number,
@@ -63,19 +76,6 @@ export class Cell implements Equatable, Serializable {
       scopeMapping
     )(element).get();
     this._headers = { explicit: eHeaders, implicit: iHeaders };
-  }
-
-  public static of(
-    kind: "data" | "header",
-    x: number,
-    y: number,
-    w: number,
-    h: number,
-    element: Element,
-    eHeaders: Array<Element> = [],
-    iHeaders: Array<Element> = []
-  ): Cell {
-    return new Cell(kind, x, y, w, h, element, eHeaders, iHeaders);
   }
 
   // debug

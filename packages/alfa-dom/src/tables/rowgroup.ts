@@ -19,14 +19,14 @@ export class RowGroup implements Equatable, Serializable {
   protected readonly _height: number;
   protected readonly _element: Element;
 
+  public static of(y: number, h: number, element: Element): RowGroup {
+    return new RowGroup(y, h, element);
+  }
+
   protected constructor(y: number, h: number, element: Element) {
     this._anchor = { y };
     this._height = h;
     this._element = element;
-  }
-
-  public static of(y: number, h: number, element: Element): RowGroup {
-    return new RowGroup(y, h, element);
   }
 
   public get anchor(): {y: number} {
@@ -92,6 +92,16 @@ export class BuildingRowGroup extends RowGroup {
   private readonly _width: number;
   private readonly _cells: Array<Cell>;
 
+  public static of(
+    y: number,
+    h: number,
+    element: Element,
+    w: number = 0,
+    cells: Array<Cell> = []
+  ): BuildingRowGroup {
+    return new BuildingRowGroup(y, h, element, w, cells);
+  }
+
   constructor(
     y: number,
     h: number,
@@ -102,16 +112,6 @@ export class BuildingRowGroup extends RowGroup {
     super(y, h, element);
     this._width = w;
     this._cells = cells;
-  }
-
-  public static of(
-    y: number,
-    h: number,
-    element: Element,
-    w: number = 0,
-    cells: Array<Cell> = []
-  ): BuildingRowGroup {
-    return new BuildingRowGroup(y, h, element, w, cells);
   }
 
   public toRowGroup(): RowGroup {

@@ -17,14 +17,14 @@ export class ColGroup implements Equatable, Serializable {
   private readonly _width: number;
   private readonly _element: Element;
 
+  public static of(x: number, width: number, element: Element): ColGroup {
+    return new ColGroup(x, width, element);
+  }
+
   private constructor(x: number, width: number, element: Element) {
     this._anchor = { x };
     this._width = width;
     this._element = element;
-  }
-
-  public static of(x: number, width: number, element: Element): ColGroup {
-    return new ColGroup(x, width, element);
   }
 
   public get anchor(): {x: number} {

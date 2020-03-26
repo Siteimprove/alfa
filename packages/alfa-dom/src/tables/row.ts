@@ -31,24 +31,6 @@ export class Row implements Equatable, Serializable {
   private readonly _cells: Array<Cell>;
   private readonly _downwardGrowingCells: Array<Cell>;
 
-  private constructor(
-    y: number,
-    w: number,
-    h: number,
-    element: Element,
-    cells: Array<Cell> = [],
-    growing: Array<Cell> = [],
-    xCurrent: number = 0
-  ) {
-    this._anchor = { y };
-    this._xCurrent = xCurrent;
-    this._width = w;
-    this._height = h;
-    this._element = element;
-    this._cells = cells;
-    this._downwardGrowingCells = growing;
-  }
-
   public static of(
     y: number,
     w: number,
@@ -59,6 +41,24 @@ export class Row implements Equatable, Serializable {
     xCurrent: number = 0
   ): Row {
     return new Row(y, w, h, element, cells, growing, xCurrent);
+  }
+
+  private constructor(
+    y: number,
+    w: number,
+    h: number,
+    element: Element,
+    cells: Array<Cell>,
+    growing: Array<Cell>,
+    xCurrent: number
+  ) {
+    this._anchor = { y };
+    this._xCurrent = xCurrent;
+    this._width = w;
+    this._height = h;
+    this._element = element;
+    this._cells = cells;
+    this._downwardGrowingCells = growing;
   }
 
   private _update(update: {
