@@ -1,9 +1,10 @@
-import {test} from "@siteimprove/alfa-test";
-import {None} from "@siteimprove/alfa-option";
-import {Attribute, Element } from "../../src";
+import { Map } from "@siteimprove/alfa-map";
+import { test } from "@siteimprove/alfa-test";
+import {None, Some} from "@siteimprove/alfa-option";
+import { Attribute, Element } from "../../src";
 
 import {Cell, ColGroup, isCovering, RowGroup} from "../../src/tables/groups";
-import {parseSpan} from "../../src/tables/helpers";
+import {parseEnumeratedAttribute, parseSpan} from "../../src/tables/helpers";
 
 const dummy = Element.of(None, None, "foo");
 
@@ -77,4 +78,24 @@ test("parse span attribute according to specs", t => {
   t.equal(parseSpan(span("row", "-2"), "rowspan", 0, 65534, 1), 1);
   t.equal(parseSpan(span("row", "abc"), "rowspan", 0, 65534, 1), 1);
   t.equal(parseSpan(nospan, "rowspan", 0, 65534, 1), 1);
+});
+
+test("parse enumerated attribute according to specs", t => {
+  function enumerated(value: string): Element {
+    return Element.of(None, None, "dummy", (elt) => [Attribute.of(None, None, "enumerated", value)])
+  }
+  const noenum = Element.of(None, None, "dummy");
+  const noDefault = Map.from([["foo", 1], ["bar", 2]]);
+  const withDefault = Map.from([["foo", 1], ["bar", 2], ["missing", 0], ["invalid", 42]]);
+
+  const parserNoDefault = parseEnumeratedAttribute("enumerated", noDefault);
+  const parserWithDefault = parseEnumeratedAttribute("enumerated", withDefault);
+
+  t.deepEqual(parserNoDefault(enumerated("Foo")), Some.of(1));
+  t.deepEqual(parserNoDefault(enumerated("invalid")), None);
+  t.deepEqual(parserNoDefault(noenum), None);
+
+  t.deepEqual(parserWithDefault(enumerated("bAR")), Some.of(2));
+  t.deepEqual(parserWithDefault(enumerated("invalid")), Some.of(42));
+  t.deepEqual(parserWithDefault(noenum), Some.of(0));
 });

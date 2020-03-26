@@ -37,7 +37,7 @@ export function parseNonNegativeInteger(str: string): Result<readonly [string, n
 }
 
 // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
-export function parseEnumeratedAttribute<RESULT>(mapping: Map<string, RESULT>): Parser<string, Option<RESULT>, never> {
+export function parseEnumeratedValue<RESULT>(mapping: Map<string, RESULT>): Parser<string, Option<RESULT>, never> {
   function parser(str: string): Result<readonly [string, Option<RESULT>], never> {
     const result = mapping.get(str.toLowerCase());
 
@@ -66,6 +66,16 @@ export function parseSpan(element: Element, name: string, min: number, max: numb
     .map(r => r.map(x => clamp(x, min, max)))
     .getOr(Ok.of(failed))
     .getOr(failed);
+}
+
+export function parseEnumeratedAttribute<RESULT>(name: string, mapping: Map<string, RESULT>): ((element: Element) => Option<RESULT>) {
+  function parser(element: Element): Option<RESULT> {
+    const attribute = element.attribute(name);
+
+    return attribute.isNone() ? mapping.get("missing") : parseAttribute(parseEnumeratedValue(mapping))(attribute.get()).get()
+  }
+
+  return parser;
 }
 
 // Bad copy from rule helpers. Move to DOM helpers?

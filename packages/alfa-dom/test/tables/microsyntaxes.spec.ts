@@ -2,7 +2,7 @@ import {Map} from "@siteimprove/alfa-map";
 import {None, Some} from "@siteimprove/alfa-option";
 import {Err, Ok} from "@siteimprove/alfa-result";
 import {test} from "@siteimprove/alfa-test";
-import {parseEnumeratedAttribute, parseInteger, parseNonNegativeInteger} from "../../src/tables/helpers";
+import {parseEnumeratedValue, parseInteger, parseNonNegativeInteger} from "../../src/tables/helpers";
 
 const empty = Err.of("The string is empty");
 const notNumber = Err.of("The string does not represent a number");
@@ -33,7 +33,7 @@ test("parse non-negative integers", t => {
 
 test("parse enumerated attribute", t => {
   const mapping = Map.from([["foo", 1], ["bar", 2]]);
-  const parser = parseEnumeratedAttribute(mapping);
+  const parser = parseEnumeratedValue(mapping);
 
   t.deepEqual(parser("foo"), result(Some.of(1)));
   t.deepEqual(parser("BaR"), result(Some.of(2)));
@@ -43,7 +43,7 @@ test("parse enumerated attribute", t => {
 
 test("parse enumerated attribute (with default)", t => {
   const mapping = Map.from([["foo", 1], ["bar", 2], ["missing", 0], ["invalid", 42]]);
-  const parser = parseEnumeratedAttribute(mapping);
+  const parser = parseEnumeratedValue(mapping);
 
   t.deepEqual(parser("FOO"), result(Some.of(1)));
   t.deepEqual(parser("bAr"), result(Some.of(2)));
