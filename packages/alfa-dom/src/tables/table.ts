@@ -1,8 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { Element } from "..";
 
+import * as json from "@siteimprove/alfa-json";
+
+import { Element } from "..";
 import {
   Cell,
   ColGroup,
@@ -13,10 +15,11 @@ import {
 } from "./groups";
 import { isElementByName } from "./helpers";
 
-import * as json from "@siteimprove/alfa-json";
 import assert = require("assert");
 
-// https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
+/**
+ * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
+ */
 export class Table implements Equatable, Serializable {
   private readonly _width: number;
   private readonly _height: number;
