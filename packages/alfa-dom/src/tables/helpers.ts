@@ -1,5 +1,7 @@
+import {Map} from "@siteimprove/alfa-map";
 import {Mapper} from "@siteimprove/alfa-mapper";
 import {clamp} from "@siteimprove/alfa-math";
+import {Option} from "@siteimprove/alfa-option";
 import {Parser} from "@siteimprove/alfa-parser";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Err, Ok, Result} from "@siteimprove/alfa-result";
@@ -32,6 +34,21 @@ export function parseNonNegativeInteger(str: string): Result<readonly [string, n
     value < 0 ?
       Err.of("This is a negative number") :
       result)
+}
+
+// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+export function parseEnumeratedAttribute<RESULT>(mapping: Map<string, RESULT>): Parser<string, Option<RESULT>, never> {
+  function parser(str: string): Result<readonly [string, Option<RESULT>], never> {
+    const result = mapping.get(str.toLowerCase());
+
+    return (str === "") ?
+      Ok.of(["", mapping.get("missing")] as const) // can be None if no "missing" is provided
+      : (result.isNone()) ?
+        Ok.of(["", mapping.get("invalid")] as const) // can be None if no "invalid" is provided
+        : Ok.of(["", result] as const);
+  }
+
+  return parser;
 }
 // end micro syntaxes
 
