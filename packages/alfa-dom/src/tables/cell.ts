@@ -1,32 +1,48 @@
-// https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 import {Equatable} from "@siteimprove/alfa-equatable";
 import {Serializable} from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import {Predicate} from "@siteimprove/alfa-predicate";
 import {Element} from "..";
 import {ColGroup, RowGroup} from "./groups";
-import {hasName, parseSpan} from "./helpers";
+import {hasName, parseEnumeratedAttribute, parseSpan} from "./helpers";
 
 import * as json from "@siteimprove/alfa-json";
 
 const { equals } = Predicate;
 
+// https://html.spec.whatwg.org/multipage/tables.html#concept-cell
 export class Cell implements Equatable, Serializable {
   private readonly _kind: "data" | "header";
   private readonly _anchor: { x: number, y: number };
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
+  private readonly _scope: Cell.HeaderState;
+  // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
+  //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
+  //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
+  // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
+  //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
+  private readonly _headers: { explicit: Array<Element>, implicit: Array<Element> };
 
-  private constructor(kind: "data" | "header", x: number, y: number, w: number, h: number, element: Element) {
+  private constructor(kind: "data" | "header", x: number, y: number, w: number, h: number, element: Element, eHeaders: Array<Element>, iHeaders: Array<Element>) {
+    // https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+    const scopeMapping = Map.from([
+      ["row", Cell.HeaderState.Row], ["col", Cell.HeaderState.Column], ["rowgroup", Cell.HeaderState.RowGroup],
+      ["colgroup", Cell.HeaderState.ColGroup], ["missing", Cell.HeaderState.Auto], ["invalid", Cell.HeaderState.Auto]
+    ]);
+
     this._kind = kind;
     this._anchor = { x, y };
     this._width = w;
     this._height = h;
     this._element = element;
+    this._scope = parseEnumeratedAttribute("scope", scopeMapping)(element).get();
+    this._headers = { explicit: eHeaders, implicit: iHeaders };
   }
 
-  public static of(kind: "data" | "header", x: number, y: number, w: number, h: number, element: Element) {
-    return new Cell(kind, x, y, w, h, element);
+  public static of(kind: "data" | "header", x: number, y: number, w: number, h: number, element: Element, eHeaders: Array<Element> = [], iHeaders: Array<Element> = []) {
+    return new Cell(kind, x, y, w, h, element, eHeaders, iHeaders);
   }
 
   // debug
@@ -112,6 +128,14 @@ export namespace Cell {
     width: number,
     height: number,
     element: Element.JSON
+  }
+
+  export enum HeaderState {
+    Auto,
+    Row,
+    Column,
+    RowGroup,
+    ColGroup,
   }
 
   // https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
