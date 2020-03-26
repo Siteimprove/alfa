@@ -44,8 +44,8 @@ export class RowGroup implements Equatable, Serializable {
   // compare rowgroups according to their anchor
   // in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
   public compare(rowgroup: RowGroup): number {
-    if (this._anchor.y < rowgroup.anchor.y) return -1;
-    if (this._anchor.y > rowgroup.anchor.y) return 1;
+    if (this._anchor.y < rowgroup._anchor.y) return -1;
+    if (this._anchor.y > rowgroup._anchor.y) return 1;
     return 0;
   }
 

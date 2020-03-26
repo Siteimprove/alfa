@@ -46,8 +46,8 @@ export class ColGroup implements Equatable, Serializable {
   // compare colgroups according to their anchor
   // in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
   public compare(colgroup: ColGroup): number {
-    if (this._anchor.x < colgroup.anchor.x) return -1;
-    if (this._anchor.x > colgroup.anchor.x) return 1;
+    if (this._anchor.x < colgroup._anchor.x) return -1;
+    if (this._anchor.x > colgroup._anchor.x) return 1;
     return 0;
   }
 
@@ -83,7 +83,7 @@ export namespace ColGroup {
 
   // https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
   // global step 9.1
-  export function from(colgroup: Element): ColGroup {
+  export function from(colgroup: Element, x: number = -1): ColGroup {
     assert(colgroup.name === "colgroup");
     let children = colgroup.children().filter(isElementByName("col"));
     let totalSpan = 0;
@@ -104,6 +104,6 @@ export namespace ColGroup {
     }
     // 1.4 and 1.7 done in main function
     // 2.2 and 2.3 done in main function
-    return ColGroup.of(-1, totalSpan, colgroup);
+    return ColGroup.of(x, totalSpan, colgroup);
   }
 }

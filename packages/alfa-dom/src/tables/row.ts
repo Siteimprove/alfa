@@ -145,10 +145,10 @@ export class Row implements Equatable, Serializable {
           // 7
           ._enlargeIfNeeded()
           // 8-14
-          // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
           ._addCellFromElement(currentCell, yCurrent),
-      // 2 is done when creating the row, default value for xCurrent is 0.
-      Row.of(yCurrent, w, 1, tr, [], growingCells)
+          // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
+        // 2 is done when creating the row, default value for xCurrent is 0.
+        Row.of(yCurrent, w, 1, tr, [], growingCells)
         // 3
         ._growCells(yCurrent)
     );

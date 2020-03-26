@@ -70,10 +70,10 @@ export class Cell implements Equatable, Serializable {
   // compare cell according to their anchor
   // in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
   public compare(cell: Cell): number {
-    if (this._anchor.y < cell.anchor.y) return -1;
-    if (this._anchor.y > cell.anchor.y) return 1;
-    if (this._anchor.x < cell.anchor.x) return -1;
-    if (this._anchor.x > cell.anchor.x) return 1;
+    if (this._anchor.y < cell._anchor.y) return -1;
+    if (this._anchor.y > cell._anchor.y) return 1;
+    if (this._anchor.x < cell._anchor.x) return -1;
+    if (this._anchor.x > cell._anchor.x) return 1;
     return 0;
   }
 

@@ -16,20 +16,6 @@ import {
 
 import {BuildingRowGroup, Cell, Row} from "../../src/tables/groups";
 
-const cleanElement = (element: Element) =>
-  element
-    .attribute("id")
-    .map(attribute => attribute.value)
-    .getOr("N/A");
-
-const cleanCell = (cell: Cell) => (
-  {...cell,
-    _element: cleanElement(cell.element)
-  }
-);
-
-const cellName = (cell: Cell) => cell.element.attribute("id").get();
-
 test("Process individual rows", t => {
   t.deepEqual(Row.from(simpleRow.element).toJSON(), simpleRow.expected.toJSON());
 
