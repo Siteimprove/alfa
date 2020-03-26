@@ -15,7 +15,7 @@ const { equals } = Predicate;
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
  */
 export class Cell implements Equatable, Serializable {
-  private readonly _kind: "data" | "header";
+  private readonly _kind: Cell.Kind;
   private readonly _anchor: { x: number; y: number };
   private readonly _width: number;
   private readonly _height: number;
@@ -32,7 +32,7 @@ export class Cell implements Equatable, Serializable {
   };
 
   public static of(
-    kind: "data" | "header",
+    kind: Cell.Kind,
     x: number,
     y: number,
     w: number,
@@ -45,7 +45,7 @@ export class Cell implements Equatable, Serializable {
   }
 
   private constructor(
-    kind: "data" | "header",
+    kind: Cell.Kind,
     x: number,
     y: number,
     w: number,
@@ -92,7 +92,7 @@ export class Cell implements Equatable, Serializable {
   public get height(): number {
     return this._height;
   }
-  public get kind(): "header" | "data" {
+  public get kind(): Cell.Kind {
     return this._kind;
   }
   public get element(): Element {
@@ -167,12 +167,14 @@ export class Cell implements Equatable, Serializable {
 export namespace Cell {
   export interface JSON {
     [key: string]: json.JSON;
-    kind: "header" | "data";
+    kind: Kind;
     anchor: { x: number; y: number };
     width: number;
     height: number;
     element: Element.JSON;
   }
+
+  export type Kind = "header" | "data";
 
   export enum HeaderState {
     Auto,

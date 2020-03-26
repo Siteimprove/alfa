@@ -13,9 +13,9 @@ import {
 
 const { and } = Predicate;
 
-const makeCellWithGetter = (getElt: (elt: string) => Element) => (
+const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   elt: string,
-  kind: "header" | "data",
+  kind: Cell.Kind,
   x: number,
   y: number,
   w: number = 1,
@@ -46,7 +46,7 @@ export namespace simpleRow {
     </tr>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = Row.of(0, 2, 1, element, [
     makeCell("first", "header", 0, 0),
@@ -78,7 +78,7 @@ export namespace complexRow {
     </tr>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = Row.of(0, 6, 2, element, [
     makeCell("grade", "header", 0, 0, 1, 2),
@@ -121,7 +121,7 @@ export namespace rowGroup {
     </thead>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = BuildingRowGroup.of(-1, 2, element, 6, [
     makeCell("grade", "header", 0, 0, 1, 2),
@@ -170,7 +170,7 @@ export namespace downwardGrowing {
     </thead>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = BuildingRowGroup.of(-1, 3, element, 6, [
     makeCell("grade", "header", 0, 0, 1, 3),
@@ -249,7 +249,7 @@ export namespace smithonian {
     </table>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = Table.of(
     element,
@@ -331,7 +331,7 @@ export namespace apple {
     </table>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = Table.of(
     element,
@@ -433,7 +433,7 @@ export namespace expenses {
     </table>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = Table.of(
     element,
@@ -536,7 +536,7 @@ export namespace expensesNum {
     </table>
   );
   const getById = getDescendantById(element);
-  const makeCell = makeCellWithGetter(getById);
+  const makeCell = makeCellFromGetter(getById);
 
   export const expected = Table.of(
     element,
