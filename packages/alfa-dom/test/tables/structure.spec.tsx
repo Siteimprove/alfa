@@ -15,28 +15,28 @@ import {
   smithonian,
 } from "./testcases";
 
-import { BuildingRowGroup, Cell, Row } from "../../src/tables/groups";
+import { BuildingRowGroup, Row } from "../../src/tables/groups";
 
 test("Process individual rows", (t) => {
   t.deepEqual(
-    Row.from(simpleRow.element).toJSON(),
+    Row.from(simpleRow.element).get().toJSON(),
     simpleRow.expected.toJSON()
   );
 
   t.deepEqual(
-    Row.from(complexRow.element).toJSON(),
+    Row.from(complexRow.element).get().toJSON(),
     complexRow.expected.toJSON()
   );
 });
 
 test("Process row groups", (t) => {
   t.deepEqual(
-    BuildingRowGroup.from(rowGroup.element).toJSON(),
+    BuildingRowGroup.from(rowGroup.element).get().toJSON(),
     rowGroup.expected.toJSON()
   );
 
   t.deepEqual(
-    BuildingRowGroup.from(downwardGrowing.element).toJSON(),
+    BuildingRowGroup.from(downwardGrowing.element).get().toJSON(),
     downwardGrowing.expected.toJSON()
   );
 });

@@ -15,8 +15,6 @@ import {
 } from "./groups";
 import { isElementByName } from "./helpers";
 
-import assert = require("assert");
-
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
  */
@@ -107,26 +105,32 @@ export class Table implements Equatable, Serializable {
     return this._update({ cells: this._cells.concat(...cells) });
   }
 
-  private _addRowGroupFromElement(rowgroup: Element, yCurrent: number): Table {
-    const rowGroup = BuildingRowGroup.from(rowgroup).anchorAt(yCurrent);
-    if (rowGroup.height > 0) {
-      return (
-        this
-          // adjust table height and width
-          ._adjustHeight(this._height + rowGroup.height)
-          ._adjustWidth(rowGroup.width)
-          // merge in new cells
-          ._addCells(rowGroup.cells)
-          // add new group
-          ._addRowGroup(rowGroup.toRowGroup())
-      );
-    } else {
-      return this;
-    }
+  private _addRowGroupFromElement(
+    rowgroup: Element,
+    yCurrent: number
+  ): Result<Table, string> {
+    return BuildingRowGroup.from(rowgroup)
+      .andThen((rowGroup) => Ok.of(rowGroup.anchorAt(yCurrent)))
+      .andThen((rowGroup) => {
+        if (rowGroup.height > 0) {
+          return Ok.of(
+            this
+              // adjust table height and width
+              ._adjustHeight(this._height + rowGroup.height)
+              ._adjustWidth(rowGroup.width)
+              // merge in new cells
+              ._addCells(rowGroup.cells)
+              // add new group
+              ._addRowGroup(rowGroup.toRowGroup())
+          );
+        } else {
+          return Ok.of(this);
+        }
+      });
   }
 
   public static from(element: Element): Result<Table, string> {
-    assert(element.name === "table");
+    if (element.name !== "table") return Err.of("This element is not a table");
 
     // 1, 2, 4, 11
     let table = Table.of(element);
@@ -152,7 +156,9 @@ export class Table implements Equatable, Serializable {
       if (currentElement.name === "colgroup") {
         // 9.1 (Columns group)
         if (processCG) {
-          const colGroup = ColGroup.from(currentElement).anchorAt(table.width);
+          const colGroup = ColGroup.from(currentElement)
+            .get()
+            .anchorAt(table.width);
           table = table
             // 9.1 (1).4 (cumulative) and (2).2
             ._adjustWidth(table._width + colGroup.width)
@@ -174,7 +180,7 @@ export class Table implements Equatable, Serializable {
           growingCellsList,
           yCurrent,
           table._width
-        );
+        ).get();
         growingCellsList = [...row.downwardGrowingCells];
         table = table
           ._addCells(row.cells)
@@ -204,14 +210,14 @@ export class Table implements Equatable, Serializable {
       if (currentElement.name === "thead" || currentElement.name === "tbody") {
         // 16
         // process row group and anchor cells
-        table = table._addRowGroupFromElement(currentElement, yCurrent);
+        table = table._addRowGroupFromElement(currentElement, yCurrent).get();
         yCurrent = table._height;
       }
     }
 
     // 19
     for (const tfoot of pendingTfoot) {
-      table = table._addRowGroupFromElement(tfoot, yCurrent);
+      table = table._addRowGroupFromElement(tfoot, yCurrent).get();
       yCurrent = table._height;
     }
     // 20

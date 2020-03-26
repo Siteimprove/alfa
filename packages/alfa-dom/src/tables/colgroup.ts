@@ -2,12 +2,11 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
 import { isElementByName, parseSpan } from "./helpers";
 import { RowGroup } from "./groups";
-
-import assert = require("assert");
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
@@ -27,7 +26,7 @@ export class ColGroup implements Equatable, Serializable {
     this._element = element;
   }
 
-  public get anchor(): {x: number} {
+  public get anchor(): { x: number } {
     return this._anchor;
   }
   public get width(): number {
@@ -87,8 +86,13 @@ export namespace ColGroup {
    * @see https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
    * global step 9.1
    */
-  export function from(colgroup: Element, x: number = -1): ColGroup {
-    assert(colgroup.name === "colgroup");
+  export function from(
+    colgroup: Element,
+    x: number = -1
+  ): Result<ColGroup, string> {
+    if (colgroup.name !== "colgroup")
+      return Err.of("This element is not a colgroup");
+
     let children = colgroup.children().filter(isElementByName("col"));
     let totalSpan = 0;
     if (children.isEmpty()) {
@@ -111,6 +115,6 @@ export namespace ColGroup {
     }
     // 1.4 and 1.7 done in main function
     // 2.2 and 2.3 done in main function
-    return ColGroup.of(x, totalSpan, colgroup);
+    return Ok.of(ColGroup.of(x, totalSpan, colgroup));
   }
 }

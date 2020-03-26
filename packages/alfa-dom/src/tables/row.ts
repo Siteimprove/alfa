@@ -2,15 +2,12 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
-
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
 import { Cell } from "./groups";
 import { isElementByName } from "./helpers";
 import { isCovering } from "./is-covering";
-
-import { notDeepEqual } from "assert";
-import assert = require("assert");
 
 /**
  * Build artifact, corresponds to a single <tr> element
@@ -83,7 +80,7 @@ export class Row implements Equatable, Serializable {
     );
   }
 
-  public get anchor(): {y: number} {
+  public get anchor(): { y: number } {
     return this._anchor;
   }
   public get width(): number {
@@ -123,23 +120,24 @@ export class Row implements Equatable, Serializable {
       ? this._addGrowingCell(cell)
       : this._addNonGrowingCell(cell);
   }
-  private _addCellFromElement(currentCell: Element, yCurrent: number): Row {
+  private _addCellFromElement(
+    currentCell: Element,
+    yCurrent: number
+  ): Result<Row, string> {
     // 8, 9, 10, 13
-    const { cell, downwardGrowing } = Cell.from(
-      currentCell,
-      this._xCurrent,
-      yCurrent
-    );
-    return (
-      this
-        // 11
-        ._adjustWidth(this._xCurrent + cell.width)
-        // 12
-        ._adjustHeight(cell.height)
-        // 13
-        // Double coverage check made at the end of table building to de-entangle code
-        // 14
-        ._addCell(cell, downwardGrowing)
+    return Cell.from(currentCell, this._xCurrent, yCurrent).andThen(
+      ({ cell, downwardGrowing }) =>
+        Ok.of(
+          this
+            // 11
+            ._adjustWidth(this._xCurrent + cell.width)
+            // 12
+            ._adjustHeight(cell.height)
+            // 13
+            // Double coverage check made at the end of table building to de-entangle code
+            // 14
+            ._addCell(cell, downwardGrowing)
+        )
     );
   }
 
@@ -185,12 +183,14 @@ export class Row implements Equatable, Serializable {
     growingCells: Array<Cell> = [],
     yCurrent: number = 0,
     w: number = 0
-  ): Row {
-    // cells and growingCells must be disjoint (a cell is either growing or not)
-    cells.forEach((cell) =>
-      growingCells.forEach((growingCell) => notDeepEqual(cell, growingCell))
-    );
-    assert(tr.name === "tr");
+  ): Result<Row, string> {
+    if (
+      cells.some((cell) =>
+        growingCells.some((growingCell) => cell.equals(growingCell))
+      )
+    )
+      return Err.of("Cells and growing cells must be disjoints");
+    if (tr.name !== "tr") return Err.of("This element is not a table row");
 
     let children = tr.children().filter(isElementByName("th", "td"));
 
@@ -198,20 +198,23 @@ export class Row implements Equatable, Serializable {
     // global table height adjusted after building row
 
     // loop control between 4-5, and 16-17-18
-    return children.reduce(
-      (row, currentCell) =>
-        row
-          // 6 (Cells)
-          ._skipIfCovered(cells, yCurrent)
-          // 7
-          ._enlargeIfNeeded()
-          // 8-14
-          ._addCellFromElement(currentCell, yCurrent),
-      // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
-      // 2 is done when creating the row, default value for xCurrent is 0.
-      Row.of(yCurrent, w, 1, tr, [], growingCells)
-        // 3
-        ._growCells(yCurrent)
+    return Ok.of(
+      children.reduce(
+        (row, currentCell) =>
+          row
+            // 6 (Cells)
+            ._skipIfCovered(cells, yCurrent)
+            // 7
+            ._enlargeIfNeeded()
+            // 8-14
+            ._addCellFromElement(currentCell, yCurrent)
+            .get(), // can't be an error because children have been filtered
+        // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
+        // 2 is done when creating the row, default value for xCurrent is 0.
+        Row.of(yCurrent, w, 1, tr, [], growingCells)
+          // 3
+          ._growCells(yCurrent)
+      )
     );
 
     // return row;

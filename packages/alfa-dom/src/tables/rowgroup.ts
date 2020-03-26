@@ -2,13 +2,11 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
 import { Cell, ColGroup, Row } from "./groups";
 import { isElementByName } from "./helpers";
-
-import assert = require("assert");
-
 
 /**
  * @see/ https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
@@ -29,7 +27,7 @@ export class RowGroup implements Equatable, Serializable {
     this._element = element;
   }
 
-  public get anchor(): {y: number} {
+  public get anchor(): { y: number } {
     return this._anchor;
   }
   public get height(): number {
@@ -157,10 +155,13 @@ export class BuildingRowGroup extends RowGroup {
   /**
    * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
    */
-  public static from(group: Element): BuildingRowGroup {
-    assert(
-      group.name === "tfoot" || group.name === "tbody" || group.name === "thead"
-    );
+  public static from(group: Element): Result<BuildingRowGroup, string> {
+    if (
+      group.name !== "tfoot" &&
+      group.name !== "tbody" &&
+      group.name !== "thead"
+    )
+      return Err.of("This element is not a row group");
 
     let growingCellsList: Array<Cell> = [];
     let rowgroup = BuildingRowGroup.of(-1, 0, group);
@@ -175,7 +176,7 @@ export class BuildingRowGroup extends RowGroup {
         growingCellsList,
         yCurrent,
         rowgroup._width
-      );
+      ).get();
       growingCellsList = [...row.downwardGrowingCells];
       rowgroup = rowgroup
         ._update({ cells: rowgroup._cells.concat(...row.cells) })
@@ -196,7 +197,7 @@ export class BuildingRowGroup extends RowGroup {
     });
     // 3, returning the row group for the table to handle
     // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
-    return rowgroup;
+    return Ok.of(rowgroup);
   }
 
   public equals(value: unknown): value is this {

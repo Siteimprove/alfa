@@ -4,6 +4,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import * as json from "@siteimprove/alfa-json";
+import {Err, Ok, Result} from "@siteimprove/alfa-result";
 
 import { Element } from "..";
 import { ColGroup, RowGroup } from "./groups";
@@ -187,7 +188,9 @@ export namespace Cell {
     cell: Element,
     x: number = -1,
     y: number = -1
-  ): { cell: Cell; downwardGrowing: boolean } {
+  ): Result<{ cell: Cell; downwardGrowing: boolean }, string> {
+    if (cell.name !== "th" && cell.name !== "td") return Err.of("This element is not a table cell");
+
     const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
     // 9
     let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
@@ -198,7 +201,7 @@ export namespace Cell {
       rowspan = 1;
     }
     // 11
-    return {
+    return Ok.of({
       cell: Cell.of(
         hasName(equals("th"))(cell) ? "header" : "data",
         x,
@@ -208,6 +211,6 @@ export namespace Cell {
         cell
       ),
       downwardGrowing: grow,
-    };
+    });
   }
 }
