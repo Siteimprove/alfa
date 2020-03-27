@@ -114,25 +114,6 @@ export class Cell implements Equatable, Serializable {
     );
   }
 
-  public anchorAt(x: number, y: number): Cell {
-    return Cell.of(this._kind, x, y, this._width, this._height, this._element);
-  }
-
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-   */
-  public growDownward(yCurrent: number): Cell {
-    // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-    return Cell.of(
-      this._kind,
-      this._anchorX,
-      this._anchorY,
-      this._width,
-      Math.max(this._height, yCurrent - this._anchorY + 1),
-      this._element
-    );
-  }
-
   /**
    * compare cell according to their anchor
    * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
@@ -171,6 +152,7 @@ export class Cell implements Equatable, Serializable {
 export namespace Cell {
   export interface JSON {
     [key: string]: json.JSON;
+
     kind: Kind;
     anchor: { x: number; y: number };
     width: number;
@@ -187,15 +169,79 @@ export namespace Cell {
     RowGroup,
     ColGroup,
   }
+}
+
+export class BuildingCell implements Equatable, Serializable {
+  private readonly _cell: Cell;
+
+  public static of(
+    kind: Cell.Kind,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    element: Element,
+    eHeaders: Array<Element> = [],
+    iHeaders: Array<Element> = []
+  ): BuildingCell {
+    return new BuildingCell(kind, x, y, w, h, element, eHeaders, iHeaders);
+  }
+
+  private constructor(
+    kind: Cell.Kind,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    element: Element,
+    eHeaders: Array<Element>,
+    iHeaders: Array<Element>
+  ) {
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+     */
+    this._cell = Cell.of(kind, x, y, w, h, element, eHeaders, iHeaders);
+  }
+
+  public get cell(): Cell {
+    return this._cell;
+  }
+  // debug
+  public get name(): string {
+    return this._cell.element.attribute("id").get().value;
+  }
+
+  public get anchor(): { x: number; y: number } {
+    return { x: this._cell.anchor.x, y: this._cell.anchor.y };
+  }
+  public get width(): number {
+    return this._cell.width;
+  }
+  public get height(): number {
+    return this._cell.height;
+  }
+  public get kind(): Cell.Kind {
+    return this._cell.kind;
+  }
+  public get element(): Element {
+    return this._cell.element;
+  }
+
+  public isCovering(x: number, y: number): boolean {
+    return this._cell.isCovering(x, y);
+  }
+  public compare(cell: BuildingCell): number {
+    return this._cell.compare(cell.cell);
+  }
 
   /**
    * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
    */
-  export function from(
+  public static from(
     cell: Element,
     x: number = -1,
     y: number = -1
-  ): Result<{ cell: Cell; downwardGrowing: boolean }, string> {
+  ): Result<{ cell: BuildingCell; downwardGrowing: boolean }, string> {
     if (cell.name !== "th" && cell.name !== "td")
       return Err.of("This element is not a table cell");
 
@@ -210,7 +256,7 @@ export namespace Cell {
     }
     // 11
     return Ok.of({
-      cell: Cell.of(
+      cell: BuildingCell.of(
         hasName(equals("th"))(cell) ? "header" : "data",
         x,
         y,
@@ -220,5 +266,41 @@ export namespace Cell {
       ),
       downwardGrowing: grow,
     });
+  }
+
+  public anchorAt(x: number, y: number): BuildingCell {
+    return BuildingCell.of(this.kind, x, y, this.width, this.height, this.element);
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
+   */
+  public growDownward(yCurrent: number): BuildingCell {
+    // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
+    return BuildingCell.of(
+      this.kind,
+      this.anchor.x,
+      this.anchor.y,
+      this.width,
+      Math.max(this.height, yCurrent - this.anchor.y + 1),
+      this.element
+    );
+  }
+
+  public equals(value: unknown): value is this {
+    return value instanceof BuildingCell && this._cell.equals(value._cell);
+  }
+
+  public toJSON(): BuildingCell.JSON {
+    return {
+      cell: this._cell.toJSON(),
+    };
+  }
+}
+
+namespace BuildingCell {
+  export interface JSON {
+    [key: string]: json.JSON;
+    cell: Cell.JSON;
   }
 }

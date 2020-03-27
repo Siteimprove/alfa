@@ -5,7 +5,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
-import { Cell, ColGroup, Row } from "./groups";
+import {BuildingCell, Cell, ColGroup, Row} from "./groups";
 import { isElementByName } from "./helpers";
 
 /**
@@ -84,7 +84,7 @@ export namespace RowGroup {
 // This is a row group while building the table. It contains width and cells list that will be merged with parent table once done.
 export class BuildingRowGroup implements Equatable, Serializable {
   private readonly _width: number;
-  private readonly _cells: Array<Cell>;
+  private readonly _cells: Array<BuildingCell>;
   private readonly _rowgroup: RowGroup;
 
   public static of(
@@ -92,7 +92,7 @@ export class BuildingRowGroup implements Equatable, Serializable {
     h: number,
     element: Element,
     w: number = 0,
-    cells: Array<Cell> = []
+    cells: Array<BuildingCell> = []
   ): BuildingRowGroup {
     return new BuildingRowGroup(y, h, element, w, cells);
   }
@@ -102,7 +102,7 @@ export class BuildingRowGroup implements Equatable, Serializable {
     h: number,
     element: Element,
     w: number,
-    cells: Array<Cell>
+    cells: Array<BuildingCell>
   ) {
     this._rowgroup = RowGroup.of(y, h, element);
     this._width = w;
@@ -114,7 +114,7 @@ export class BuildingRowGroup implements Equatable, Serializable {
     w?: number;
     h?: number;
     element?: Element;
-    cells?: Array<Cell>;
+    cells?: Array<BuildingCell>;
   }): BuildingRowGroup {
     return BuildingRowGroup.of(
       update.y !== undefined ? update.y : this._rowgroup.anchor.y,
@@ -131,7 +131,7 @@ export class BuildingRowGroup implements Equatable, Serializable {
   public get width(): number {
     return this._width;
   }
-  public get cells(): Iterable<Cell> {
+  public get cells(): Iterable<BuildingCell> {
     return this._cells;
   }
   public get anchor(): { y: number } {
@@ -172,7 +172,7 @@ export class BuildingRowGroup implements Equatable, Serializable {
     )
       return Err.of("This element is not a row group");
 
-    let growingCellsList: Array<Cell> = [];
+    let growingCellsList: Array<BuildingCell> = [];
     let rowgroup = BuildingRowGroup.of(-1, 0, group);
     let yCurrent = 0; // y position inside the rowgroup
     // 1
@@ -225,7 +225,7 @@ export class BuildingRowGroup implements Equatable, Serializable {
     return {
       rowgroup: this._rowgroup.toJSON(),
       width: this._width,
-      cells: this._cells.map((cell) => cell.toJSON()),
+      cells: this._cells.map((cell) => cell.cell.toJSON()),
     };
   }
 }

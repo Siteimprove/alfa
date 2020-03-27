@@ -5,7 +5,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
-import { Cell } from "./groups";
+import { BuildingCell, Cell } from "./groups";
 import { isElementByName } from "./helpers";
 
 /**
@@ -24,16 +24,16 @@ export class Row implements Equatable, Serializable {
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
-  private readonly _cells: Array<Cell>;
-  private readonly _downwardGrowingCells: Array<Cell>;
+  private readonly _cells: Array<BuildingCell>;
+  private readonly _downwardGrowingCells: Array<BuildingCell>;
 
   public static of(
     y: number,
     w: number,
     h: number,
     element: Element,
-    cells: Array<Cell> = [],
-    growing: Array<Cell> = [],
+    cells: Array<BuildingCell> = [],
+    growing: Array<BuildingCell> = [],
     xCurrent: number = 0
   ): Row {
     return new Row(y, w, h, element, cells, growing, xCurrent);
@@ -44,8 +44,8 @@ export class Row implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
-    cells: Array<Cell>,
-    growing: Array<Cell>,
+    cells: Array<BuildingCell>,
+    growing: Array<BuildingCell>,
     xCurrent: number
   ) {
     this._anchorY = y;
@@ -63,8 +63,8 @@ export class Row implements Equatable, Serializable {
     width?: number;
     height?: number;
     element?: Element;
-    cells?: Array<Cell>;
-    downwardGrowingCells?: Array<Cell>;
+    cells?: Array<BuildingCell>;
+    downwardGrowingCells?: Array<BuildingCell>;
   }): Row {
     return Row.of(
       update.y !== undefined ? update.y : this._anchorY,
@@ -91,10 +91,10 @@ export class Row implements Equatable, Serializable {
   public get element(): Element {
     return this._element;
   }
-  public get cells(): Iterable<Cell> {
+  public get cells(): Iterable<BuildingCell> {
     return this._cells;
   }
-  public get downwardGrowingCells(): Iterable<Cell> {
+  public get downwardGrowingCells(): Iterable<BuildingCell> {
     return this._downwardGrowingCells;
   }
 
@@ -106,15 +106,15 @@ export class Row implements Equatable, Serializable {
     });
   }
 
-  private _addNonGrowingCell(cell: Cell): Row {
+  private _addNonGrowingCell(cell: BuildingCell): Row {
     return this._update({ cells: this._cells.concat(cell) });
   }
-  private _addGrowingCell(cell: Cell): Row {
+  private _addGrowingCell(cell: BuildingCell): Row {
     return this._update({
       downwardGrowingCells: this._downwardGrowingCells.concat(cell),
     });
   }
-  private _addCell(cell: Cell, downwardGrowing: boolean): Row {
+  private _addCell(cell: BuildingCell, downwardGrowing: boolean): Row {
     return downwardGrowing
       ? this._addGrowingCell(cell)
       : this._addNonGrowingCell(cell);
@@ -124,7 +124,7 @@ export class Row implements Equatable, Serializable {
     yCurrent: number
   ): Result<Row, string> {
     // 8, 9, 10, 13
-    return Cell.from(currentCell, this._xCurrent, yCurrent).andThen(
+    return BuildingCell.from(currentCell, this._xCurrent, yCurrent).andThen(
       ({ cell, downwardGrowing }) =>
         Ok.of(
           this
@@ -151,7 +151,7 @@ export class Row implements Equatable, Serializable {
    * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
    * step 6
    */
-  private _skipIfCovered(cells: Array<Cell>, yCurrent: number): Row {
+  private _skipIfCovered(cells: Array<BuildingCell>, yCurrent: number): Row {
     if (
       this._xCurrent < this._width &&
       cells
@@ -178,8 +178,8 @@ export class Row implements Equatable, Serializable {
    */
   public static from(
     tr: Element,
-    cells: Array<Cell> = [],
-    growingCells: Array<Cell> = [],
+    cells: Array<BuildingCell> = [],
+    growingCells: Array<BuildingCell> = [],
     yCurrent: number = 0,
     w: number = 0
   ): Result<Row, string> {
@@ -253,9 +253,9 @@ export class Row implements Equatable, Serializable {
       width: this._width,
       height: this._height,
       element: this._element.toJSON(),
-      cells: this._cells.map((cell) => cell.toJSON()),
-      downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
-        cell.toJSON()
+      cells: this._cells.map((cell) => cell.cell.toJSON()),
+      downwardGrowingCells: this._downwardGrowingCells.map(
+        (cell) => cell.cell.toJSON()
       ),
     };
   }

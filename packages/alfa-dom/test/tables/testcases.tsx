@@ -4,6 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element, Table } from "../../src";
 import {
+  BuildingCell,
   BuildingRowGroup,
   Cell,
   ColGroup,
@@ -21,6 +22,17 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   w: number = 1,
   h: number = 1
 ): Cell => Cell.of(kind, x, y, w, h, getElt(elt));
+
+function toBuildingCell(cell: Cell) {
+  return BuildingCell.of(
+    cell.kind,
+    cell.anchor.x,
+    cell.anchor.y,
+    cell.width,
+    cell.height,
+    cell.element
+  );
+}
 
 function hasID(id: string): Predicate<Element> {
   return (element) => {
@@ -48,10 +60,15 @@ export namespace simpleRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Row.of(0, 2, 1, element, [
-    makeCell("first", "header", 0, 0),
-    makeCell("second", "data", 1, 0),
-  ]);
+  export const expected = Row.of(
+    0,
+    2,
+    1,
+    element,
+    [makeCell("first", "header", 0, 0), makeCell("second", "data", 1, 0)].map(
+      toBuildingCell
+    )
+  );
 }
 
 // Examples taken from https://html.spec.whatwg.org/multipage/tables.html#table-examples
@@ -80,13 +97,19 @@ export namespace complexRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Row.of(0, 6, 2, element, [
-    makeCell("grade", "header", 0, 0, 1, 2),
-    makeCell("yield", "header", 1, 0, 1, 2),
-    makeCell("strength", "header", 2, 0, 2, 1),
-    makeCell("elong", "header", 4, 0, 1, 2),
-    makeCell("reduct", "header", 5, 0, 1, 2),
-  ]);
+  export const expected = Row.of(
+    0,
+    6,
+    2,
+    element,
+    [
+      makeCell("grade", "header", 0, 0, 1, 2),
+      makeCell("yield", "header", 1, 0, 1, 2),
+      makeCell("strength", "header", 2, 0, 2, 1),
+      makeCell("elong", "header", 4, 0, 1, 2),
+      makeCell("reduct", "header", 5, 0, 1, 2),
+    ].map(toBuildingCell)
+  );
 }
 
 // processing row group
@@ -123,15 +146,21 @@ export namespace rowGroup {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = BuildingRowGroup.of(-1, 2, element, 6, [
-    makeCell("grade", "header", 0, 0, 1, 2),
-    makeCell("yield", "header", 1, 0, 1, 2),
-    makeCell("strength", "header", 2, 0, 2, 1),
-    makeCell("elong", "header", 4, 0, 1, 2),
-    makeCell("reduct", "header", 5, 0, 1, 2),
-    makeCell("kg-mm", "header", 2, 1),
-    makeCell("lb-in", "header", 3, 1),
-  ]);
+  export const expected = BuildingRowGroup.of(
+    -1,
+    2,
+    element,
+    6,
+    [
+      makeCell("grade", "header", 0, 0, 1, 2),
+      makeCell("yield", "header", 1, 0, 1, 2),
+      makeCell("strength", "header", 2, 0, 2, 1),
+      makeCell("elong", "header", 4, 0, 1, 2),
+      makeCell("reduct", "header", 5, 0, 1, 2),
+      makeCell("kg-mm", "header", 2, 1),
+      makeCell("lb-in", "header", 3, 1),
+    ].map(toBuildingCell)
+  );
 }
 
 // row group with downward growing cells
@@ -172,17 +201,23 @@ export namespace downwardGrowing {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = BuildingRowGroup.of(-1, 3, element, 6, [
-    makeCell("grade", "header", 0, 0, 1, 3),
-    makeCell("yield", "header", 1, 0, 1, 2),
-    makeCell("strength", "header", 2, 0, 2, 1),
-    makeCell("elong", "header", 4, 0, 1, 2),
-    makeCell("lb-in", "header", 3, 1),
-    makeCell("foo", "header", 1, 2, 1, 1),
-    makeCell("bar", "header", 3, 2, 1, 1),
-    makeCell("reduct", "header", 5, 0, 1, 3),
-    makeCell("kg-mm", "header", 2, 1, 1, 2),
-  ]);
+  export const expected = BuildingRowGroup.of(
+    -1,
+    3,
+    element,
+    6,
+    [
+      makeCell("grade", "header", 0, 0, 1, 3),
+      makeCell("yield", "header", 1, 0, 1, 2),
+      makeCell("strength", "header", 2, 0, 2, 1),
+      makeCell("elong", "header", 4, 0, 1, 2),
+      makeCell("lb-in", "header", 3, 1),
+      makeCell("foo", "header", 1, 2, 1, 1),
+      makeCell("bar", "header", 3, 2, 1, 1),
+      makeCell("reduct", "header", 5, 0, 1, 3),
+      makeCell("kg-mm", "header", 2, 1, 1, 2),
+    ].map(toBuildingCell)
+  );
 }
 
 // table with row group, colspan and rowspan

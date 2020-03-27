@@ -1,11 +1,12 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import {Iterable} from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
-import {Cell, ColGroup, RowGroup, Row, BuildingRowGroup, BuildingColGroup} from "./groups";
+import {Cell, ColGroup, RowGroup, Row, BuildingRowGroup, BuildingColGroup, BuildingCell} from "./groups";
 import { isElementByName } from "./helpers";
 
 /**
@@ -112,7 +113,7 @@ export class Table implements Equatable, Serializable {
               ._adjustHeight(this._height + rowGroup.height)
               ._adjustWidth(rowGroup.width)
               // merge in new cells
-              ._addCells(rowGroup.cells)
+              ._addCells(Iterable.map(rowGroup.cells, cell => cell.cell))
               // add new group
               ._addRowGroup(rowGroup.rowgroup)
           );
@@ -140,7 +141,7 @@ export class Table implements Equatable, Serializable {
     let yCurrent = 0;
 
     // 11
-    let growingCellsList: Array<Cell> = [];
+    let growingCellsList: Array<BuildingCell> = [];
 
     let processCG = true;
     for (const currentElement of children) {
@@ -170,14 +171,14 @@ export class Table implements Equatable, Serializable {
 
         const row = Row.from(
           currentElement,
-          table._cells,
-          growingCellsList,
+          table._cells.map(cell => BuildingCell.of(cell.kind, cell.anchor.x, cell.anchor.y, cell.width, cell.height, cell.element)),
+          growingCellsList.map(cell => BuildingCell.of(cell.kind, cell.anchor.x, cell.anchor.y, cell.width, cell.height, cell.element)),
           yCurrent,
           table._width
         ).get();
         growingCellsList = [...row.downwardGrowingCells];
         table = table
-          ._addCells(row.cells)
+          ._addCells(Iterable.map(row.cells, cell => cell.cell))
           ._adjustHeight(yCurrent + 1)
           ._adjustWidth(row.width);
         // row processing steps 4/16
@@ -193,7 +194,7 @@ export class Table implements Equatable, Serializable {
       );
       yCurrent = table._height;
       // Ending row group 2
-      table = table._addCells(growingCellsList);
+      table = table._addCells(growingCellsList.map(cell => cell.cell));
       growingCellsList = [];
 
       if (currentElement.name === "tfoot") {
