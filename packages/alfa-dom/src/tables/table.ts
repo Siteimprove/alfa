@@ -5,7 +5,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
-import { Cell, ColGroup, RowGroup, Row, BuildingRowGroup } from "./groups";
+import {Cell, ColGroup, RowGroup, Row, BuildingRowGroup, BuildingColGroup} from "./groups";
 import { isElementByName } from "./helpers";
 
 /**
@@ -149,9 +149,10 @@ export class Table implements Equatable, Serializable {
       if (currentElement.name === "colgroup") {
         // 9.1 (Columns group)
         if (processCG) {
-          const colGroup = ColGroup.from(currentElement)
+          const colGroup = BuildingColGroup.from(currentElement)
             .get()
-            .anchorAt(table.width);
+            .anchorAt(table.width)
+            .colgroup;
           table = table
             // 9.1 (1).4 (cumulative) and (2).2
             ._adjustWidth(table._width + colGroup.width)

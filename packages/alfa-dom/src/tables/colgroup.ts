@@ -16,13 +16,13 @@ export class ColGroup implements Equatable, Serializable {
   private readonly _width: number;
   private readonly _element: Element;
 
-  public static of(x: number, width: number, element: Element): ColGroup {
-    return new ColGroup(x, width, element);
+  public static of(x: number, w: number, element: Element): ColGroup {
+    return new ColGroup(x, w, element);
   }
 
-  private constructor(x: number, width: number, element: Element) {
+  private constructor(x: number, w: number, element: Element) {
     this._anchorX = x;
-    this._width = width;
+    this._width = w;
     this._element = element;
   }
 
@@ -39,12 +39,8 @@ export class ColGroup implements Equatable, Serializable {
   public isCovering(x: number, y: number): boolean {
     return !(
       // colgroup is *not* covering if either
-      (x < this._anchorX || this._anchorX + this._width - 1 < x) // slot is left of colgroup // slot is right of colgroup
+      (x < this._anchorX || this._anchorX + this._width - 1 < x) // slot is left of colgroup or slot is right of colgroup
     );
-  }
-
-  public anchorAt(x: number): ColGroup {
-    return ColGroup.of(x, this._width, this._element);
   }
 
   /**
@@ -82,15 +78,35 @@ export namespace ColGroup {
     width: number;
     element: Element.JSON;
   }
+}
+
+export class BuildingColGroup implements Equatable, Serializable {
+  private readonly _colgroup: ColGroup;
+
+  public static of(x: number, w: number, element: Element) {
+    return new BuildingColGroup(x, w, element);
+  }
+
+  private constructor(x: number, w: number, element: Element) {
+    this._colgroup = ColGroup.of(x, w, element);
+  }
+
+  public get colgroup(): ColGroup {
+    return this._colgroup;
+  }
+
+  public anchorAt(x: number): BuildingColGroup {
+    return BuildingColGroup.of(x, this._colgroup.width, this._colgroup.element);
+  }
 
   /**
    * @see https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
    * global step 9.1
    */
-  export function from(
+  public static from(
     colgroup: Element,
     x: number = -1
-  ): Result<ColGroup, string> {
+  ): Result<BuildingColGroup, string> {
     if (colgroup.name !== "colgroup")
       return Err.of("This element is not a colgroup");
 
@@ -116,6 +132,26 @@ export namespace ColGroup {
     }
     // 1.4 and 1.7 done in main function
     // 2.2 and 2.3 done in main function
-    return Ok.of(ColGroup.of(x, totalSpan, colgroup));
+    return Ok.of(BuildingColGroup.of(x, totalSpan, colgroup));
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof BuildingColGroup &&
+      this._colgroup.equals(value._colgroup)
+    );
+  }
+
+  public toJSON(): BuildingColGroup.JSON {
+    return {
+      colgroup: this._colgroup.toJSON()
+    }
+  }
+}
+
+namespace BuildingColGroup {
+  export interface JSON {
+    [key: string]: json.JSON;
+    colgroup: ColGroup.JSON;
   }
 }
