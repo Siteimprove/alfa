@@ -298,7 +298,7 @@ export class BuildingCell implements Equatable, Serializable {
   }
 }
 
-namespace BuildingCell {
+export namespace BuildingCell {
   export interface JSON {
     [key: string]: json.JSON;
     cell: Cell.JSON;
