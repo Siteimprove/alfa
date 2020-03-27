@@ -214,9 +214,9 @@ export class BuildingRowGroup implements Equatable, Serializable {
 
   public toJSON(): BuildingRowGroup.JSON {
     return {
-      rowgroup: this._rowgroup.toJSON(),
+      rowgroup: this._rowgroup.toJSON(),
       width: this._width,
-      cells: this._cells.map(cell => cell.toJSON())
+      cells: this._cells.map((cell) => cell.toJSON()),
     };
   }
 }
@@ -226,6 +226,6 @@ export namespace BuildingRowGroup {
     [key: string]: json.JSON;
     rowgroup: RowGroup.JSON;
     width: number;
-    cells: Cell.JSON[]
+    cells: Cell.JSON[];
   }
 }
