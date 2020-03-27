@@ -94,9 +94,18 @@ export class BuildingColGroup implements Equatable, Serializable {
   public get colgroup(): ColGroup {
     return this._colgroup;
   }
+  public get anchor(): { x: number } {
+    return { x: this._colgroup.anchor.x };
+  }
+  public get width(): number {
+    return this._colgroup.width;
+  }
+  public get element(): Element {
+    return this._colgroup.element;
+  }
 
   public anchorAt(x: number): BuildingColGroup {
-    return BuildingColGroup.of(x, this._colgroup.width, this._colgroup.element);
+    return BuildingColGroup.of(x, this.width, this.element);
   }
 
   /**

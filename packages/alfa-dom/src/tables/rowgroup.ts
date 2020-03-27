@@ -134,12 +134,21 @@ export class BuildingRowGroup implements Equatable, Serializable {
   public get cells(): Iterable<Cell> {
     return this._cells;
   }
+  public get anchor(): { y: number } {
+    return { y: this._rowgroup.anchor.y };
+  }
+  public get height(): number {
+    return this._rowgroup.height;
+  }
+  public get element(): Element {
+    return this._rowgroup.element;
+  }
 
   private _adjustWidth(w: number): BuildingRowGroup {
     return this._update({ w: Math.max(this._width, w) });
   }
   private _adjustHeight(h: number): BuildingRowGroup {
-    return this._update({ h: Math.max(this._rowgroup.height, h) });
+    return this._update({ h: Math.max(this.height, h) });
   }
 
   // anchoring a row group needs to move all cells accordingly
