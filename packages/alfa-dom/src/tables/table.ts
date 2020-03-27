@@ -77,7 +77,7 @@ export class Table implements Equatable, Serializable {
   }
 
   public static from(element: Element) {
-    return BuildingTable.from(element).map(table => table.table);
+    return BuildingTable.from(element).map((table) => table.table);
   }
 
   public equals(value: unknown): value is this {
@@ -393,7 +393,7 @@ export class BuildingTable implements Equatable, Serializable {
   public toJSON(): BuildingTable.JSON {
     return {
       table: this._table.toJSON(),
-      cells: this._cells.map((cell) => cell.toJSON())
+      cells: this._cells.map((cell) => cell.toJSON()),
     };
   }
 }

@@ -153,8 +153,8 @@ export class BuildingColGroup implements Equatable, Serializable {
 
   public toJSON(): BuildingColGroup.JSON {
     return {
-      colgroup: this._colgroup.toJSON()
-    }
+      colgroup: this._colgroup.toJSON(),
+    };
   }
 }
 

@@ -269,7 +269,14 @@ export class BuildingCell implements Equatable, Serializable {
   }
 
   public anchorAt(x: number, y: number): BuildingCell {
-    return BuildingCell.of(this.kind, x, y, this.width, this.height, this.element);
+    return BuildingCell.of(
+      this.kind,
+      x,
+      y,
+      this.width,
+      this.height,
+      this.element
+    );
   }
 
   /**

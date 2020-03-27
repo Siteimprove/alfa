@@ -5,7 +5,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
-import {BuildingCell, Cell, ColGroup, BuildingRow} from "./groups";
+import { BuildingCell, Cell, ColGroup, BuildingRow } from "./groups";
 import { isElementByName } from "./helpers";
 
 /**

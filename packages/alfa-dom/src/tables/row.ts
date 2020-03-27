@@ -151,7 +151,10 @@ export class BuildingRow implements Equatable, Serializable {
    * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
    * step 6
    */
-  private _skipIfCovered(cells: Array<BuildingCell>, yCurrent: number): BuildingRow {
+  private _skipIfCovered(
+    cells: Array<BuildingCell>,
+    yCurrent: number
+  ): BuildingRow {
     if (
       this._xCurrent < this._width &&
       cells
@@ -254,8 +257,8 @@ export class BuildingRow implements Equatable, Serializable {
       height: this._height,
       element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.cell.toJSON()),
-      downwardGrowingCells: this._downwardGrowingCells.map(
-        (cell) => cell.cell.toJSON()
+      downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
+        cell.cell.toJSON()
       ),
     };
   }
