@@ -5,7 +5,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
-import {BuildingCell, Cell, ColGroup, Row} from "./groups";
+import {BuildingCell, Cell, ColGroup, BuildingRow} from "./groups";
 import { isElementByName } from "./helpers";
 
 /**
@@ -179,7 +179,7 @@ export class BuildingRowGroup implements Equatable, Serializable {
     // Useless, the height of the group is computed and used instead.
     // 2
     for (const tr of group.children().filter(isElementByName("tr"))) {
-      const row = Row.from(
+      const row = BuildingRow.from(
         tr,
         rowgroup._cells,
         growingCellsList,

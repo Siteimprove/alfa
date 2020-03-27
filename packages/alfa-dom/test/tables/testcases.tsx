@@ -8,7 +8,7 @@ import {
   BuildingRowGroup,
   Cell,
   ColGroup,
-  Row,
+  BuildingRow,
   RowGroup,
 } from "../../src/tables/groups";
 
@@ -60,7 +60,7 @@ export namespace simpleRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Row.of(
+  export const expected = BuildingRow.of(
     0,
     2,
     1,
@@ -97,7 +97,7 @@ export namespace complexRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Row.of(
+  export const expected = BuildingRow.of(
     0,
     6,
     2,

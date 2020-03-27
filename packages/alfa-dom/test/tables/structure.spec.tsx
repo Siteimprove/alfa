@@ -15,16 +15,16 @@ import {
   smithonian,
 } from "./testcases";
 
-import { BuildingRowGroup, Row } from "../../src/tables/groups";
+import { BuildingRowGroup, BuildingRow } from "../../src/tables/groups";
 
 test("Process individual rows", (t) => {
   t.deepEqual(
-    Row.from(simpleRow.element).get().toJSON(),
+    BuildingRow.from(simpleRow.element).get().toJSON(),
     simpleRow.expected.toJSON()
   );
 
   t.deepEqual(
-    Row.from(complexRow.element).get().toJSON(),
+    BuildingRow.from(complexRow.element).get().toJSON(),
     complexRow.expected.toJSON()
   );
 });

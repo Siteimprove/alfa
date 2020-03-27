@@ -18,7 +18,7 @@ import { isElementByName } from "./helpers";
  * y position (of the row and cells) can be relative to the group they are in or absolute in the table
  * as long as they are all based in the same way…
  */
-export class Row implements Equatable, Serializable {
+export class BuildingRow implements Equatable, Serializable {
   private readonly _anchorY: number;
   private readonly _xCurrent: number; // current x position in processing the row
   private readonly _width: number;
@@ -35,8 +35,8 @@ export class Row implements Equatable, Serializable {
     cells: Array<BuildingCell> = [],
     growing: Array<BuildingCell> = [],
     xCurrent: number = 0
-  ): Row {
-    return new Row(y, w, h, element, cells, growing, xCurrent);
+  ): BuildingRow {
+    return new BuildingRow(y, w, h, element, cells, growing, xCurrent);
   }
 
   private constructor(
@@ -65,8 +65,8 @@ export class Row implements Equatable, Serializable {
     element?: Element;
     cells?: Array<BuildingCell>;
     downwardGrowingCells?: Array<BuildingCell>;
-  }): Row {
-    return Row.of(
+  }): BuildingRow {
+    return BuildingRow.of(
       update.y !== undefined ? update.y : this._anchorY,
       update.width !== undefined ? update.width : this._width,
       update.height !== undefined ? update.height : this._height,
@@ -98,7 +98,7 @@ export class Row implements Equatable, Serializable {
     return this._downwardGrowingCells;
   }
 
-  private _growCells(y: number): Row {
+  private _growCells(y: number): BuildingRow {
     return this._update({
       downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
         cell.growDownward(y)
@@ -106,15 +106,15 @@ export class Row implements Equatable, Serializable {
     });
   }
 
-  private _addNonGrowingCell(cell: BuildingCell): Row {
+  private _addNonGrowingCell(cell: BuildingCell): BuildingRow {
     return this._update({ cells: this._cells.concat(cell) });
   }
-  private _addGrowingCell(cell: BuildingCell): Row {
+  private _addGrowingCell(cell: BuildingCell): BuildingRow {
     return this._update({
       downwardGrowingCells: this._downwardGrowingCells.concat(cell),
     });
   }
-  private _addCell(cell: BuildingCell, downwardGrowing: boolean): Row {
+  private _addCell(cell: BuildingCell, downwardGrowing: boolean): BuildingRow {
     return downwardGrowing
       ? this._addGrowingCell(cell)
       : this._addNonGrowingCell(cell);
@@ -122,7 +122,7 @@ export class Row implements Equatable, Serializable {
   private _addCellFromElement(
     currentCell: Element,
     yCurrent: number
-  ): Result<Row, string> {
+  ): Result<BuildingRow, string> {
     // 8, 9, 10, 13
     return BuildingCell.from(currentCell, this._xCurrent, yCurrent).andThen(
       ({ cell, downwardGrowing }) =>
@@ -140,10 +140,10 @@ export class Row implements Equatable, Serializable {
     );
   }
 
-  private _adjustWidth(w: number): Row {
+  private _adjustWidth(w: number): BuildingRow {
     return this._update({ width: Math.max(this._width, w) });
   }
-  private _adjustHeight(h: number): Row {
+  private _adjustHeight(h: number): BuildingRow {
     return this._update({ height: Math.max(this._height, h) });
   }
 
@@ -151,7 +151,7 @@ export class Row implements Equatable, Serializable {
    * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
    * step 6
    */
-  private _skipIfCovered(cells: Array<BuildingCell>, yCurrent: number): Row {
+  private _skipIfCovered(cells: Array<BuildingCell>, yCurrent: number): BuildingRow {
     if (
       this._xCurrent < this._width &&
       cells
@@ -167,7 +167,7 @@ export class Row implements Equatable, Serializable {
     }
   }
 
-  private _enlargeIfNeeded(): Row {
+  private _enlargeIfNeeded(): BuildingRow {
     return this._xCurrent === this.width
       ? this._adjustWidth(this.width + 1)
       : this;
@@ -182,7 +182,7 @@ export class Row implements Equatable, Serializable {
     growingCells: Array<BuildingCell> = [],
     yCurrent: number = 0,
     w: number = 0
-  ): Result<Row, string> {
+  ): Result<BuildingRow, string> {
     if (
       cells.some((cell) =>
         growingCells.some((growingCell) => cell.equals(growingCell))
@@ -210,7 +210,7 @@ export class Row implements Equatable, Serializable {
             .get(), // can't be an error because children have been filtered
         // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
         // 2 is done when creating the row, default value for xCurrent is 0.
-        Row.of(yCurrent, w, 1, tr, [], growingCells)
+        BuildingRow.of(yCurrent, w, 1, tr, [], growingCells)
           // 3
           ._growCells(yCurrent)
       )
@@ -221,7 +221,7 @@ export class Row implements Equatable, Serializable {
   }
 
   public equals(value: unknown): value is this {
-    if (!(value instanceof Row)) return false;
+    if (!(value instanceof BuildingRow)) return false;
     const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
     const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
     const sortedThisDGCells = this._downwardGrowingCells.sort((a, b) =>
@@ -247,7 +247,7 @@ export class Row implements Equatable, Serializable {
     );
   }
 
-  public toJSON(): Row.JSON {
+  public toJSON(): BuildingRow.JSON {
     return {
       anchor: this.anchor,
       width: this._width,
@@ -261,7 +261,7 @@ export class Row implements Equatable, Serializable {
   }
 }
 
-export namespace Row {
+export namespace BuildingRow {
   export interface JSON {
     [key: string]: json.JSON;
     anchor: { y: number };

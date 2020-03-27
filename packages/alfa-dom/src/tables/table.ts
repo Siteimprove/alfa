@@ -6,7 +6,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
-import {Cell, ColGroup, RowGroup, Row, BuildingRowGroup, BuildingColGroup, BuildingCell} from "./groups";
+import {Cell, ColGroup, RowGroup, BuildingRow, BuildingRowGroup, BuildingColGroup, BuildingCell} from "./groups";
 import { isElementByName } from "./helpers";
 
 /**
@@ -169,7 +169,7 @@ export class Table implements Equatable, Serializable {
       if (currentElement.name === "tr") {
         // 13 (process) can detect new downward growing cells
 
-        const row = Row.from(
+        const row = BuildingRow.from(
           currentElement,
           table._cells.map(cell => BuildingCell.of(cell.kind, cell.anchor.x, cell.anchor.y, cell.width, cell.height, cell.element)),
           growingCellsList.map(cell => BuildingCell.of(cell.kind, cell.anchor.x, cell.anchor.y, cell.width, cell.height, cell.element)),
