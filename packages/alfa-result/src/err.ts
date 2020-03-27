@@ -35,6 +35,10 @@ export class Err<E> implements Result<never, E> {
     return new Err(mapper(this._error));
   }
 
+  public mapOrElse<T, U>(_: Mapper<T, U>, mapErr: Mapper<E, U>): U {
+    return mapErr(this._error);
+  }
+
   public flatMap(): this {
     return this;
   }

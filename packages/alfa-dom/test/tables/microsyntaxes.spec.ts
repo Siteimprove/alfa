@@ -4,6 +4,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
 import {
+  enumError,
   parseEnumeratedValue,
   parseInteger,
   parseNonNegativeInteger,
@@ -43,23 +44,8 @@ test("parse enumerated attribute", (t) => {
   ]);
   const parser = parseEnumeratedValue(mapping);
 
-  t.deepEqual(parser("foo"), result(Some.of(1)));
-  t.deepEqual(parser("BaR"), result(Some.of(2)));
-  t.deepEqual(parser("foobar"), result(None)); // invalid
-  t.deepEqual(parser(""), result(None)); //missing
-});
-
-test("parse enumerated attribute (with default)", (t) => {
-  const mapping = Map.from([
-    ["foo", 1],
-    ["bar", 2],
-    ["missing", 0],
-    ["invalid", 42],
-  ]);
-  const parser = parseEnumeratedValue(mapping);
-
-  t.deepEqual(parser("FOO"), result(Some.of(1)));
-  t.deepEqual(parser("bAr"), result(Some.of(2)));
-  t.deepEqual(parser("foobar"), result(Some.of(42))); // invalid
-  t.deepEqual(parser(""), result(Some.of(0))); //missing
+  t.deepEqual(parser("foo"), result(1));
+  t.deepEqual(parser("BaR"), result(2));
+  t.deepEqual(parser("foobar"), Err.of<enumError>("invalid"));
+  t.deepEqual(parser(""), Err.of<enumError>("missing"));
 });

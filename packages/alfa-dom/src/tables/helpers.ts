@@ -1,7 +1,7 @@
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { clamp } from "@siteimprove/alfa-math";
-import { Option } from "@siteimprove/alfa-option";
+import {Option, Some} from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -47,19 +47,19 @@ export function parseNonNegativeInteger(
 /**
  * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
  */
+export type enumError = "missing" | "invalid"
+
 export function parseEnumeratedValue<RESULT>(
   mapping: Map<string, RESULT>
-): Parser<string, Option<RESULT>, never> {
-  function parser(
-    str: string
-  ): Result<readonly [string, Option<RESULT>], never> {
+): Parser<string, RESULT, enumError> {
+  function parser(str: string): Result<readonly [string, RESULT], enumError> {
     const result = mapping.get(str.toLowerCase());
 
     return str === ""
-      ? Ok.of(["", mapping.get("missing")] as const) // can be None if no "missing" is provided
+      ? Err.of("missing")
       : result.isNone()
-      ? Ok.of(["", mapping.get("invalid")] as const) // can be None if no "invalid" is provided
-      : Ok.of(["", result] as const);
+      ? Err.of("invalid")
+      : Ok.of(["", result.get()] as const);
   }
 
   return parser;
@@ -95,11 +95,12 @@ export function parseEnumeratedAttribute<RESULT>(
   mapping: Map<string, RESULT>
 ): (element: Element) => Option<RESULT> {
   function parser(element: Element): Option<RESULT> {
-    const attribute = element.attribute(name);
-
-    return attribute.isNone()
-      ? mapping.get("missing")
-      : parseAttribute(parseEnumeratedValue(mapping))(attribute.get()).get();
+    return element
+      .attribute(name)
+      .map(attribute => attribute.value)
+      .map(parseEnumeratedValue(mapping))
+      .getOr<Result<readonly [string, RESULT], enumError>>(Err.of("missing"))
+      .mapOrElse(([_, result]) => Some.of(result), err => mapping.get(err));
   }
 
   return parser;
