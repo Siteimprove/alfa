@@ -105,16 +105,16 @@ export class Table implements Equatable, Serializable {
     return BuildingRowGroup.from(rowgroup)
       .andThen((rowGroup) => Ok.of(rowGroup.anchorAt(yCurrent)))
       .andThen((rowGroup) => {
-        if (rowGroup.height > 0) {
+        if (rowGroup.rowgroup.height > 0) {
           return Ok.of(
             this
               // adjust table height and width
-              ._adjustHeight(this._height + rowGroup.height)
+              ._adjustHeight(this._height + rowGroup.rowgroup.height)
               ._adjustWidth(rowGroup.width)
               // merge in new cells
               ._addCells(rowGroup.cells)
               // add new group
-              ._addRowGroup(rowGroup.toRowGroup())
+              ._addRowGroup(rowGroup.rowgroup)
           );
         } else {
           return Ok.of(this);

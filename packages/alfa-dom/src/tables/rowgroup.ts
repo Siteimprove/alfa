@@ -82,9 +82,10 @@ export namespace RowGroup {
 }
 
 // This is a row group while building the table. It contains width and cells list that will be merged with parent table once done.
-export class BuildingRowGroup extends RowGroup {
+export class BuildingRowGroup implements Equatable, Serializable {
   private readonly _width: number;
   private readonly _cells: Array<Cell>;
+  private readonly _rowgroup: RowGroup;
 
   public static of(
     y: number,
@@ -103,13 +104,9 @@ export class BuildingRowGroup extends RowGroup {
     w: number,
     cells: Array<Cell>
   ) {
-    super(y, h, element);
+    this._rowgroup = RowGroup.of(y, h, element);
     this._width = w;
     this._cells = cells;
-  }
-
-  public toRowGroup(): RowGroup {
-    return RowGroup.of(this._anchorY, this._height, this._element);
   }
 
   private _update(update: {
@@ -120,14 +117,17 @@ export class BuildingRowGroup extends RowGroup {
     cells?: Array<Cell>;
   }): BuildingRowGroup {
     return BuildingRowGroup.of(
-      update.y !== undefined ? update.y : this._anchorY,
-      update.h !== undefined ? update.h : this._height,
-      update.element !== undefined ? update.element : this._element,
+      update.y !== undefined ? update.y : this._rowgroup.anchor.y,
+      update.h !== undefined ? update.h : this._rowgroup.height,
+      update.element !== undefined ? update.element : this._rowgroup.element,
       update.w !== undefined ? update.w : this._width,
       update.cells !== undefined ? update.cells : this._cells
     );
   }
 
+  public get rowgroup(): RowGroup {
+    return this._rowgroup;
+  }
   public get width(): number {
     return this._width;
   }
@@ -139,7 +139,7 @@ export class BuildingRowGroup extends RowGroup {
     return this._update({ w: Math.max(this._width, w) });
   }
   private _adjustHeight(h: number): BuildingRowGroup {
-    return this._update({ h: Math.max(this._height, h) });
+    return this._update({ h: Math.max(this._rowgroup.height, h) });
   }
 
   // anchoring a row group needs to move all cells accordingly
@@ -188,10 +188,10 @@ export class BuildingRowGroup extends RowGroup {
     // 4, ending the row group
     // ending row group 1
     growingCellsList = growingCellsList.map((cell) =>
-      cell.growDownward(rowgroup._height - 1)
+      cell.growDownward(rowgroup._rowgroup.height - 1)
     );
     // ending row group 2
-    // When emptying the growing cells list, we need to finally add them to the table.
+    // When emptying the growing cells list, we need to finally add them to the group.
     rowgroup = rowgroup._update({
       cells: rowgroup._cells.concat(growingCellsList),
     });
@@ -205,10 +205,8 @@ export class BuildingRowGroup extends RowGroup {
     const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
     const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
     return (
-      this._height === value._height &&
+      this._rowgroup.equals(value._rowgroup) &&
       this._width === value._width &&
-      this._anchorY === value._anchorY &&
-      this._element.equals(value._element) &&
       sortedThisCells.length === sortedValueCells.length &&
       sortedThisCells.every((cell, idx) => cell.equals(sortedValueCells[idx]))
     );
@@ -216,11 +214,9 @@ export class BuildingRowGroup extends RowGroup {
 
   public toJSON(): BuildingRowGroup.JSON {
     return {
-      anchor: this.anchor,
-      height: this._height,
+      rowgroup: this._rowgroup.toJSON(),
       width: this._width,
-      element: this._element.toJSON(),
-      cells: this._cells.map((cell) => cell.toJSON()),
+      cells: this._cells.map(cell => cell.toJSON())
     };
   }
 }
@@ -228,10 +224,8 @@ export class BuildingRowGroup extends RowGroup {
 export namespace BuildingRowGroup {
   export interface JSON {
     [key: string]: json.JSON;
-    anchor: { y: number };
-    height: number;
+    rowgroup: RowGroup.JSON;
     width: number;
-    element: Element.JSON;
-    cells: Cell.JSON[];
+    cells: Cell.JSON[]
   }
 }
