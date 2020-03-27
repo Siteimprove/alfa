@@ -36,6 +36,10 @@ export class ColGroup implements Equatable, Serializable {
     return this._element;
   }
 
+  public static from(element: Element): Result<ColGroup, string> {
+    return BuildingColGroup.from(element).map(colgroup => colgroup.colgroup);
+  }
+
   public isCovering(x: number, y: number): boolean {
     return !(
       // colgroup is *not* covering if either

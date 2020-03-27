@@ -76,7 +76,7 @@ export class Table implements Equatable, Serializable {
     return this._rowGroups;
   }
 
-  public static from(element: Element) {
+  public static from(element: Element): Result<Table, string> {
     return BuildingTable.from(element).map((table) => table.table);
   }
 

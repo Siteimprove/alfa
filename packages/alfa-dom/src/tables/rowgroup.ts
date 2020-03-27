@@ -37,6 +37,10 @@ export class RowGroup implements Equatable, Serializable {
     return this._element;
   }
 
+  public static from(element: Element): Result<RowGroup, string> {
+    return BuildingRowGroup.from(element).map(rowgroup => rowgroup.rowgroup);
+  }
+
   public isCovering(x: number, y: number): boolean {
     return !(
       // rowgroup is *not* covering if either
