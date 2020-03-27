@@ -9,7 +9,7 @@ import { parseEnumeratedAttribute, parseSpan } from "../../src/tables/helpers";
 const dummy = Element.of(None, None, "foo");
 
 function cell(x: number, y: number, w: number, h: number): Cell {
-  return Cell.of("data", x, y, w, h, dummy);
+  return Cell.of(Cell.Kind.Data, x, y, w, h, dummy);
 }
 
 function rowGroup(y: number, h: number): RowGroup {

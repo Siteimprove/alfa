@@ -160,7 +160,10 @@ export namespace Cell {
     element: Element.JSON;
   }
 
-  export type Kind = "header" | "data";
+  export enum Kind {
+    Header,
+    Data
+  }
 
   export enum HeaderState {
     Auto,
@@ -257,7 +260,7 @@ export class BuildingCell implements Equatable, Serializable {
     // 11
     return Ok.of({
       cell: BuildingCell.of(
-        hasName(equals("th"))(cell) ? "header" : "data",
+        hasName(equals("th"))(cell) ? Cell.Kind.Header : Cell.Kind.Data,
         x,
         y,
         colspan,
