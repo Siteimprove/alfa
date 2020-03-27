@@ -269,13 +269,6 @@ export class BuildingCell implements Equatable, Serializable {
     return this._implicitHeaders;
   }
 
-  public isCovering(x: number, y: number): boolean {
-    return this._cell.isCovering(x, y);
-  }
-  public compare(cell: BuildingCell): number {
-    return this._cell.compare(cell.cell);
-  }
-
   /**
    * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
    */
@@ -324,6 +317,13 @@ export class BuildingCell implements Equatable, Serializable {
     });
   }
 
+  public isCovering(x: number, y: number): boolean {
+    return this._cell.isCovering(x, y);
+  }
+  public compare(cell: BuildingCell): number {
+    return this._cell.compare(cell.cell);
+  }
+
   public anchorAt(x: number, y: number): BuildingCell {
     return this._update({ x, y });
   }
@@ -336,6 +336,17 @@ export class BuildingCell implements Equatable, Serializable {
     return this._update({
       h: Math.max(this.height, yCurrent - this.anchor.y + 1),
     });
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#empty-cell
+   */
+  public isEmpty(): boolean {
+    return (
+      this.element.children().isEmpty() &&
+      // \s seems to be close enough to "ASCII whitespace".
+      !!this.element.textContent().match(/^\s*$/)
+    )
   }
 
   public equals(value: unknown): value is this {
