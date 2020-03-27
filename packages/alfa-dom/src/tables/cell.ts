@@ -1,12 +1,13 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
-import { Element } from "..";
+import { BuildingTable, Element } from "..";
 import { ColGroup, RowGroup } from "./groups";
 import { hasName, parseEnumeratedAttribute, parseSpan } from "./helpers";
 
@@ -22,16 +23,7 @@ export class Cell implements Equatable, Serializable {
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
-  private readonly _scope: Cell.HeaderState;
-  // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
-  //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
-  //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
-  // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
-  //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
-  private readonly _headers: {
-    explicit: Array<Element>;
-    implicit: Array<Element>;
-  };
+  private readonly _headers: Array<Element>;
 
   public static of(
     kind: Cell.Kind,
@@ -40,10 +32,9 @@ export class Cell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
-    eHeaders: Array<Element> = [],
-    iHeaders: Array<Element> = []
+    headers: Array<Element> = []
   ): Cell {
-    return new Cell(kind, x, y, w, h, element, eHeaders, iHeaders);
+    return new Cell(kind, x, y, w, h, element, headers);
   }
 
   private constructor(
@@ -53,32 +44,15 @@ export class Cell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
-    eHeaders: Array<Element>,
-    iHeaders: Array<Element>
+    headers: Array<Element>
   ) {
-    /**
-     * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
-     */
-    const scopeMapping = Map.from([
-      ["row", Cell.HeaderState.Row],
-      ["col", Cell.HeaderState.Column],
-      ["rowgroup", Cell.HeaderState.RowGroup],
-      ["colgroup", Cell.HeaderState.ColGroup],
-      ["missing", Cell.HeaderState.Auto],
-      ["invalid", Cell.HeaderState.Auto],
-    ]);
-
     this._kind = kind;
     this._anchorX = x;
     this._anchorY = y;
     this._width = w;
     this._height = h;
     this._element = element;
-    this._scope = parseEnumeratedAttribute(
-      "scope",
-      scopeMapping
-    )(element).get();
-    this._headers = { explicit: eHeaders, implicit: iHeaders };
+    this._headers = headers;
   }
 
   // debug
@@ -100,6 +74,9 @@ export class Cell implements Equatable, Serializable {
   }
   public get element(): Element {
     return this._element;
+  }
+  public get headers(): Iterable<Element> {
+    return this._headers;
   }
 
   public isCovering(x: number, y: number): boolean {
@@ -145,6 +122,7 @@ export class Cell implements Equatable, Serializable {
       width: this._width,
       height: this._height,
       element: this._element.toJSON(),
+      headers: this._headers.map(header => header.toJSON())
     };
   }
 }
@@ -158,24 +136,27 @@ export namespace Cell {
     width: number;
     height: number;
     element: Element.JSON;
+    headers: Element.JSON[];
   }
 
   export enum Kind {
     Header,
-    Data
-  }
-
-  export enum HeaderState {
-    Auto,
-    Row,
-    Column,
-    RowGroup,
-    ColGroup,
+    Data,
   }
 }
 
 export class BuildingCell implements Equatable, Serializable {
+  // headers are always empty in the cell, filled in when exporting
   private readonly _cell: Cell;
+  private readonly _state: Option<BuildingCell.HeaderState>;
+  // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
+  //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
+  //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
+  // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
+  //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
+  //         Currently not exposing both to final cell, but easy to do if needed.
+  private readonly _explicitHeaders: Array<Element>;
+  private readonly _implicitHeaders: Array<Element>;
 
   public static of(
     kind: Cell.Kind,
@@ -184,10 +165,21 @@ export class BuildingCell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
+    state: Option<BuildingCell.HeaderState> = None,
     eHeaders: Array<Element> = [],
     iHeaders: Array<Element> = []
   ): BuildingCell {
-    return new BuildingCell(kind, x, y, w, h, element, eHeaders, iHeaders);
+    return new BuildingCell(
+      kind,
+      x,
+      y,
+      w,
+      h,
+      element,
+      state,
+      eHeaders,
+      iHeaders
+    );
   }
 
   private constructor(
@@ -197,17 +189,58 @@ export class BuildingCell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
+    state: Option<BuildingCell.HeaderState>,
     eHeaders: Array<Element>,
     iHeaders: Array<Element>
   ) {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
      */
-    this._cell = Cell.of(kind, x, y, w, h, element, eHeaders, iHeaders);
+    this._cell = Cell.of(kind, x, y, w, h, element, []);
+    this._state = state;
+    this._explicitHeaders = eHeaders;
+    this._implicitHeaders = iHeaders;
+  }
+
+  private _update(update: {
+    kind?: Cell.Kind;
+    x?: number;
+    y?: number;
+    w?: number;
+    h?: number;
+    element?: Element;
+    state?: Option<BuildingCell.HeaderState>;
+    eHeaders?: Array<Element>;
+    iHeaders?: Array<Element>;
+  }): BuildingCell {
+    return BuildingCell.of(
+      update.kind !== undefined ? update.kind : this.kind,
+      update.x !== undefined ? update.x : this.anchor.x,
+      update.y !== undefined ? update.y : this.anchor.y,
+      update.w !== undefined ? update.w : this.width,
+      update.h !== undefined ? update.h : this.height,
+      update.element !== undefined ? update.element : this.element,
+      update.state !== undefined ? update.state : this.state,
+      update.eHeaders !== undefined ? update.eHeaders : this._explicitHeaders,
+      update.iHeaders !== undefined ? update.iHeaders : this._implicitHeaders
+    );
   }
 
   public get cell(): Cell {
-    return this._cell;
+    return Cell.of(
+      this.kind,
+      this.anchor.x,
+      this.anchor.y,
+      this.width,
+      this.height,
+      this.element,
+      this._explicitHeaders === []
+        ? this._implicitHeaders
+        : this._explicitHeaders
+    );
+  }
+  public get state(): Option<BuildingCell.HeaderState> {
+    return this._state;
   }
   // debug
   public get name(): string {
@@ -228,6 +261,12 @@ export class BuildingCell implements Equatable, Serializable {
   }
   public get element(): Element {
     return this._cell.element;
+  }
+  public get explicitHeaders(): Array<Element> {
+    return this._explicitHeaders;
+  }
+  public get implicitHeaders(): Array<Element> {
+    return this._implicitHeaders;
   }
 
   public isCovering(x: number, y: number): boolean {
@@ -257,29 +296,36 @@ export class BuildingCell implements Equatable, Serializable {
     if (rowspan === 0) {
       rowspan = 1;
     }
+
     // 11
+    const kind = hasName(equals("th"))(cell)
+      ? Cell.Kind.Header
+      : Cell.Kind.Data;
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+     */
+    const scopeMapping = Map.from([
+      ["row", BuildingCell.HeaderState.Row],
+      ["col", BuildingCell.HeaderState.Column],
+      ["rowgroup", BuildingCell.HeaderState.RowGroup],
+      ["colgroup", BuildingCell.HeaderState.ColGroup],
+      ["missing", BuildingCell.HeaderState.Auto],
+      ["invalid", BuildingCell.HeaderState.Auto],
+    ]);
+    const state =
+      kind === Cell.Kind.Data
+        ? None
+        : Some.of(parseEnumeratedAttribute("scope", scopeMapping)(cell).get());
+
     return Ok.of({
-      cell: BuildingCell.of(
-        hasName(equals("th"))(cell) ? Cell.Kind.Header : Cell.Kind.Data,
-        x,
-        y,
-        colspan,
-        rowspan,
-        cell
-      ),
+      cell: BuildingCell.of(kind, x, y, colspan, rowspan, cell, state),
       downwardGrowing: grow,
     });
   }
 
   public anchorAt(x: number, y: number): BuildingCell {
-    return BuildingCell.of(
-      this.kind,
-      x,
-      y,
-      this.width,
-      this.height,
-      this.element
-    );
+    return this._update({ x, y });
   }
 
   /**
@@ -287,14 +333,9 @@ export class BuildingCell implements Equatable, Serializable {
    */
   public growDownward(yCurrent: number): BuildingCell {
     // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-    return BuildingCell.of(
-      this.kind,
-      this.anchor.x,
-      this.anchor.y,
-      this.width,
-      Math.max(this.height, yCurrent - this.anchor.y + 1),
-      this.element
-    );
+    return this._update({
+      h: Math.max(this.height, yCurrent - this.anchor.y + 1),
+    });
   }
 
   public equals(value: unknown): value is this {
@@ -304,6 +345,9 @@ export class BuildingCell implements Equatable, Serializable {
   public toJSON(): BuildingCell.JSON {
     return {
       cell: this._cell.toJSON(),
+      state: this._state.toJSON(),
+      explicitHeaders: this._explicitHeaders.map(header => header.toJSON()),
+      implicitHeaders: this._implicitHeaders.map(header => header.toJSON())
     };
   }
 }
@@ -312,5 +356,16 @@ export namespace BuildingCell {
   export interface JSON {
     [key: string]: json.JSON;
     cell: Cell.JSON;
+    state: Option.JSON;
+    explicitHeaders: Element.JSON[];
+    implicitHeaders: Element.JSON[];
+  }
+
+  export enum HeaderState {
+    Auto,
+    Row,
+    Column,
+    RowGroup,
+    ColGroup,
   }
 }
