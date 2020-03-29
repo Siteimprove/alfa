@@ -17,8 +17,6 @@ import {
 } from "./groups";
 import { isElementByName } from "./helpers";
 
-const { concat, map } = Iterable;
-
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
  */

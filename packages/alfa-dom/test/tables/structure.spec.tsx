@@ -1,8 +1,9 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
+import {Iterable} from "@siteimprove/alfa-iterable";
 import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Table } from "../../src";
+import {BuildingTable, Table} from "../../src";
 import {
   apple,
   complexRow,
@@ -15,7 +16,7 @@ import {
   smithonian,
 } from "./testcases";
 
-import { BuildingRowGroup, BuildingRow } from "../../src/tables/groups";
+import {BuildingRowGroup, BuildingRow, Header, Cell} from "../../src/tables/groups";
 
 test("Process individual rows", (t) => {
   t.deepEqual(
@@ -76,4 +77,17 @@ test("Table model errors", (t) => {
     Table.from(errors.coveredTwice),
     Err.of("Slot (1, 1) is covered twice")
   );
+});
+
+test("Header scope and state", t => {
+  const table = BuildingTable.from(expenses.element).get();
+  t.deepEqual(
+    [...table.cells]
+      .filter(cell => cell.kind === Cell.Kind.Header)
+      .map(cell => cell.headerState(table).get()),
+    [
+      Header.State.Column, Header.State.Column, Header.State.Column, Header.State.Column, // first row, auto => column
+      Header.State.RowGroup, Header.State.Row, Header.State.RowGroup, Header.State.Row // explicitly set
+    ]
+  )
 });

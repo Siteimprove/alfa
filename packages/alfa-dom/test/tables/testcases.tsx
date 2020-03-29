@@ -650,3 +650,15 @@ export namespace errors {
     </table>
   );
 }
+
+export namespace headersState {
+  export const element = Element.fromElement(
+    <table>
+      <thead id="thead">
+      <tr id="row1">
+        <th id="c11"></th>
+      </tr>
+      </thead>
+    </table>
+  )
+}

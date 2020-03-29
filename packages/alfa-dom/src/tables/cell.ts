@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
@@ -7,10 +8,10 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
-import { BuildingTable, Element } from "..";
-import { ColGroup, RowGroup } from "./groups";
+import {BuildingTable, Element } from "..";
 import { hasName, parseEnumeratedAttribute, parseSpan } from "./helpers";
 
+const {some} = Iterable;
 const { equals } = Predicate;
 
 /**
@@ -122,7 +123,7 @@ export class Cell implements Equatable, Serializable {
       width: this._width,
       height: this._height,
       element: this._element.toJSON(),
-      headers: this._headers.map(header => header.toJSON())
+      headers: this._headers.map((header) => header.toJSON()),
     };
   }
 }
@@ -148,7 +149,7 @@ export namespace Cell {
 export class BuildingCell implements Equatable, Serializable {
   // headers are always empty in the cell, filled in when exporting
   private readonly _cell: Cell;
-  private readonly _state: Option<BuildingCell.HeaderState>;
+  private readonly _scope: Option<Header.Scope>;
   // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
   //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
   //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
@@ -165,7 +166,7 @@ export class BuildingCell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
-    state: Option<BuildingCell.HeaderState> = None,
+    state: Option<Header.Scope> = None,
     eHeaders: Array<Element> = [],
     iHeaders: Array<Element> = []
   ): BuildingCell {
@@ -189,7 +190,7 @@ export class BuildingCell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
-    state: Option<BuildingCell.HeaderState>,
+    state: Option<Header.Scope>,
     eHeaders: Array<Element>,
     iHeaders: Array<Element>
   ) {
@@ -197,7 +198,7 @@ export class BuildingCell implements Equatable, Serializable {
      * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
      */
     this._cell = Cell.of(kind, x, y, w, h, element, []);
-    this._state = state;
+    this._scope = state;
     this._explicitHeaders = eHeaders;
     this._implicitHeaders = iHeaders;
   }
@@ -209,7 +210,7 @@ export class BuildingCell implements Equatable, Serializable {
     w?: number;
     h?: number;
     element?: Element;
-    state?: Option<BuildingCell.HeaderState>;
+    scope?: Option<Header.Scope>;
     eHeaders?: Array<Element>;
     iHeaders?: Array<Element>;
   }): BuildingCell {
@@ -220,7 +221,7 @@ export class BuildingCell implements Equatable, Serializable {
       update.w !== undefined ? update.w : this.width,
       update.h !== undefined ? update.h : this.height,
       update.element !== undefined ? update.element : this.element,
-      update.state !== undefined ? update.state : this.state,
+      update.scope !== undefined ? update.scope : this.scope,
       update.eHeaders !== undefined ? update.eHeaders : this._explicitHeaders,
       update.iHeaders !== undefined ? update.iHeaders : this._implicitHeaders
     );
@@ -239,8 +240,8 @@ export class BuildingCell implements Equatable, Serializable {
         : this._explicitHeaders
     );
   }
-  public get state(): Option<BuildingCell.HeaderState> {
-    return this._state;
+  public get scope(): Option<Header.Scope> {
+    return this._scope;
   }
   // debug
   public get name(): string {
@@ -299,12 +300,12 @@ export class BuildingCell implements Equatable, Serializable {
      * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
      */
     const scopeMapping = Map.from([
-      ["row", BuildingCell.HeaderState.Row],
-      ["col", BuildingCell.HeaderState.Column],
-      ["rowgroup", BuildingCell.HeaderState.RowGroup],
-      ["colgroup", BuildingCell.HeaderState.ColGroup],
-      ["missing", BuildingCell.HeaderState.Auto],
-      ["invalid", BuildingCell.HeaderState.Auto],
+      ["row", Header.Scope.Row],
+      ["col", Header.Scope.Column],
+      ["rowgroup", Header.Scope.RowGroup],
+      ["colgroup", Header.Scope.ColGroup],
+      ["missing", Header.Scope.Auto],
+      ["invalid", Header.Scope.Auto],
     ]);
     const state =
       kind === Cell.Kind.Data
@@ -320,6 +321,7 @@ export class BuildingCell implements Equatable, Serializable {
   public isCovering(x: number, y: number): boolean {
     return this._cell.isCovering(x, y);
   }
+
   public compare(cell: BuildingCell): number {
     return this._cell.compare(cell.cell);
   }
@@ -346,7 +348,60 @@ export class BuildingCell implements Equatable, Serializable {
       this.element.children().isEmpty() &&
       // \s seems to be close enough to "ASCII whitespace".
       !!this.element.textContent().match(/^\s*$/)
-    )
+    );
+  }
+
+  /**
+   * see @https://html.spec.whatwg.org/multipage/tables.html#column-header
+   * and following
+   */
+  private _isCoveringArea(x: number, y: number, w: number, h: number): boolean {
+    for (let col=x; col < x+w; col++) {
+      for (let row=y; row < y+h; row++) {
+        if (this.isCovering(col, row)) return true;
+      }
+    }
+    return false;
+  }
+  private _isDataCoveringArea(x: number, y: number, w: number, h: number): boolean {
+    return this.kind === Cell.Kind.Data && this._isCoveringArea(x, y, w, h);
+  }
+  private _scopeToState(scope: Header.Scope, table: BuildingTable): Header.State | undefined {
+    switch (scope) {
+      // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
+      case Header.Scope.ColGroup:
+        return Header.State.ColGroup;
+      // https://html.spec.whatwg.org/multipage/tables.html#row-group-header
+      case Header.Scope.RowGroup:
+        return Header.State.RowGroup;
+      // https://html.spec.whatwg.org/multipage/tables.html#column-header
+      case Header.Scope.Column:
+        return Header.State.Column;
+      // https://html.spec.whatwg.org/multipage/tables.html#row-header
+      case Header.Scope.Row:
+        return Header.State.Row;
+      // https://html.spec.whatwg.org/multipage/tables.html#column-header
+      // https://html.spec.whatwg.org/multipage/tables.html#row-header
+      case Header.Scope.Auto:
+        // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
+        // means "for any x" or just for the x of the cell. Using "for all x"
+        if (some(table.cells, cell => cell._isDataCoveringArea(0, this.anchor.y, table.width, this.height))) {
+          // there are *some* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
+          // Hence the cell is *not* a column header
+          if (some(table.cells, cell => cell._isDataCoveringArea(this.anchor.x, 0, this.width, table.height))) {
+            // there are *some* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
+            return undefined;
+          } else { // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
+            return Header.State.Row
+          }
+        } else {
+          // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
+          return Header.State.Column
+        }
+    }
+  }
+  public headerState(table: BuildingTable): Option<Header.State> {
+    return this._scope.flatMap((scope) => Option.from(this._scopeToState(scope, table)));
   }
 
   public equals(value: unknown): value is this {
@@ -356,9 +411,9 @@ export class BuildingCell implements Equatable, Serializable {
   public toJSON(): BuildingCell.JSON {
     return {
       cell: this._cell.toJSON(),
-      state: this._state.toJSON(),
-      explicitHeaders: this._explicitHeaders.map(header => header.toJSON()),
-      implicitHeaders: this._implicitHeaders.map(header => header.toJSON())
+      state: this._scope.toJSON(),
+      explicitHeaders: this._explicitHeaders.map((header) => header.toJSON()),
+      implicitHeaders: this._implicitHeaders.map((header) => header.toJSON()),
     };
   }
 }
@@ -371,9 +426,18 @@ export namespace BuildingCell {
     explicitHeaders: Element.JSON[];
     implicitHeaders: Element.JSON[];
   }
+}
 
-  export enum HeaderState {
+export namespace Header {
+  export enum Scope { // state of the scope attribute
     Auto,
+    Row,
+    Column,
+    RowGroup,
+    ColGroup,
+  }
+
+  export enum State { // https://html.spec.whatwg.org/multipage/tables.html#column-header and friends
     Row,
     Column,
     RowGroup,
