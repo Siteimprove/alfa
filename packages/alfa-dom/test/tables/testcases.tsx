@@ -1,4 +1,4 @@
-import { None } from "@siteimprove/alfa-option";
+import {None, Option} from "@siteimprove/alfa-option";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -9,7 +9,7 @@ import {
   Cell,
   ColGroup,
   BuildingRow,
-  RowGroup,
+  RowGroup, Header,
 } from "../../src/tables/groups";
 
 const { and } = Predicate;
@@ -506,6 +506,11 @@ export namespace expenses {
       ColGroup.of(1, 3, getById("group-body")),
     ]
   );
+
+  export const headerStates = [
+    Header.State.Column, Header.State.Column, Header.State.Column, Header.State.Column, // first row, auto => column
+    Header.State.RowGroup, Header.State.Row, Header.State.RowGroup, Header.State.Row // explicitly set
+  ]
 }
 
 // same with colgroup defined by spans
@@ -652,13 +657,51 @@ export namespace errors {
 }
 
 export namespace headersState {
+  /*
+  C | R |
+  N |   | D
+  C | C | C | C
+  C
+  D | R
+  C | C
+   */
   export const element = Element.fromElement(
     <table>
       <thead id="thead">
       <tr id="row1">
-        <th id="c11"></th>
+        <th id="c11">column</th>
+        <th id="c21" rowspan={2}>row because of 32</th>
+      </tr>
+      <tr id="row2">
+        <th id="c12">nothing because of 32 and 15</th>
+        <td id="c32">prevents 21 and 12 from being column</td>
+      </tr>
+      <tr id="row3">
+        <th id="c13">column</th>
+        <th id="c23">column</th>
+        <th id="c33">column</th>
+        <th id="c43">column</th>
       </tr>
       </thead>
+      <tbody id="tbody">
+      <tr id="row4">
+        <th id="c14">column</th>
+      </tr>
+      <tr id="row5">
+        <td id="c15">prevent 12 from being row and 25 from being column</td>
+        <th id="c25">row</th>
+      </tr>
+      <tr id="row6">
+        <th id="c16">column</th>
+        <th id="c26">column</th>
+      </tr>
+      </tbody>
     </table>
   )
+
+  export const headerStates = [
+    Header.State.Column, Header.State.Row, undefined,
+    Header.State.Column, Header.State.Column, Header.State.Column, Header.State.Column,
+    Header.State.Column, Header.State.Row, Header.State.Column, Header.State.Column
+  ].map(Option.from)
 }

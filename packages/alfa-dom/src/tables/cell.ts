@@ -11,7 +11,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import {BuildingTable, Element } from "..";
 import { hasName, parseEnumeratedAttribute, parseSpan } from "./helpers";
 
-const {some} = Iterable;
+const { some} = Iterable;
 const { equals } = Predicate;
 
 /**
@@ -141,8 +141,8 @@ export namespace Cell {
   }
 
   export enum Kind {
-    Header,
-    Data,
+    Header = "HEADER",
+    Data = "DATA",
   }
 }
 
@@ -387,7 +387,6 @@ export class BuildingCell implements Equatable, Serializable {
         // means "for any x" or just for the x of the cell. Using "for all x"
         if (some(table.cells, cell => cell._isDataCoveringArea(0, this.anchor.y, table.width, this.height))) {
           // there are *some* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-          // Hence the cell is *not* a column header
           if (some(table.cells, cell => cell._isDataCoveringArea(this.anchor.x, 0, this.width, table.height))) {
             // there are *some* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
             return undefined;
@@ -430,17 +429,17 @@ export namespace BuildingCell {
 
 export namespace Header {
   export enum Scope { // state of the scope attribute
-    Auto,
-    Row,
-    Column,
-    RowGroup,
-    ColGroup,
+    Auto = "AUTO",
+    Row = "ROW",
+    Column = "COLUMN",
+    RowGroup = "ROW_GROUP",
+    ColGroup = "COL_GROUP",
   }
 
   export enum State { // https://html.spec.whatwg.org/multipage/tables.html#column-header and friends
-    Row,
-    Column,
-    RowGroup,
-    ColGroup,
+    Row = "ROW",
+    Column = "COLUMN",
+    RowGroup = "ROW_GROUP",
+    ColGroup = "COL_GROUP",
   }
 }

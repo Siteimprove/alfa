@@ -10,13 +10,14 @@ import {
   downwardGrowing,
   errors,
   expenses,
-  expensesNum,
+  expensesNum, headersState,
   rowGroup,
   simpleRow,
   smithonian,
 } from "./testcases";
 
 import {BuildingRowGroup, BuildingRow, Header, Cell} from "../../src/tables/groups";
+import headerStates = expenses.headerStates;
 
 test("Process individual rows", (t) => {
   t.deepEqual(
@@ -80,14 +81,19 @@ test("Table model errors", (t) => {
 });
 
 test("Header scope and state", t => {
-  const table = BuildingTable.from(expenses.element).get();
+  const expensesTable = BuildingTable.from(expenses.element).get();
   t.deepEqual(
-    [...table.cells]
+    [...expensesTable.cells]
       .filter(cell => cell.kind === Cell.Kind.Header)
-      .map(cell => cell.headerState(table).get()),
-    [
-      Header.State.Column, Header.State.Column, Header.State.Column, Header.State.Column, // first row, auto => column
-      Header.State.RowGroup, Header.State.Row, Header.State.RowGroup, Header.State.Row // explicitly set
-    ]
-  )
+      .map(cell => cell.headerState(expensesTable).get()),
+    expenses.headerStates
+  );
+
+  const headersTable = BuildingTable.from(headersState.element).get();
+  t.deepEqual(
+    [...headersTable.cells]
+      .filter(cell => cell.kind === Cell.Kind.Header)
+      .map(cell => cell.headerState(headersTable)),
+    headersState.headerStates
+  );
 });
