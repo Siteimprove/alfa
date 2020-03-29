@@ -8,10 +8,10 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
-import {BuildingTable, Element } from "..";
+import { BuildingTable, Element } from "..";
 import { hasName, parseEnumeratedAttribute, parseSpan } from "./helpers";
 
-const { some} = Iterable;
+const { some } = Iterable;
 const { equals } = Predicate;
 
 /**
@@ -235,7 +235,9 @@ export class BuildingCell implements Equatable, Serializable {
       this.width,
       this.height,
       this.element,
-      this._explicitHeaders === []
+      // the presence of a "headers" attribute is enough to use explicit headers, even if this is an empty list
+      // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
+      this.element.attribute("headers") === None
         ? this._implicitHeaders
         : this._explicitHeaders
     );
@@ -307,13 +309,13 @@ export class BuildingCell implements Equatable, Serializable {
       ["missing", Header.Scope.Auto],
       ["invalid", Header.Scope.Auto],
     ]);
-    const state =
+    const scope =
       kind === Cell.Kind.Data
         ? None
         : Some.of(parseEnumeratedAttribute("scope", scopeMapping)(cell).get());
 
     return Ok.of({
-      cell: BuildingCell.of(kind, x, y, colspan, rowspan, cell, state),
+      cell: BuildingCell.of(kind, x, y, colspan, rowspan, cell, scope),
       downwardGrowing: grow,
     });
   }
@@ -356,17 +358,25 @@ export class BuildingCell implements Equatable, Serializable {
    * and following
    */
   private _isCoveringArea(x: number, y: number, w: number, h: number): boolean {
-    for (let col=x; col < x+w; col++) {
-      for (let row=y; row < y+h; row++) {
+    for (let col = x; col < x + w; col++) {
+      for (let row = y; row < y + h; row++) {
         if (this.isCovering(col, row)) return true;
       }
     }
     return false;
   }
-  private _isDataCoveringArea(x: number, y: number, w: number, h: number): boolean {
+  private _isDataCoveringArea(
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ): boolean {
     return this.kind === Cell.Kind.Data && this._isCoveringArea(x, y, w, h);
   }
-  private _scopeToState(scope: Header.Scope, table: BuildingTable): Header.State | undefined {
+  private _scopeToState(
+    scope: Header.Scope,
+    table: BuildingTable
+  ): Header.State | undefined {
     switch (scope) {
       // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
       case Header.Scope.ColGroup:
@@ -385,23 +395,122 @@ export class BuildingCell implements Equatable, Serializable {
       case Header.Scope.Auto:
         // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
         // means "for any x" or just for the x of the cell. Using "for all x"
-        if (some(table.cells, cell => cell._isDataCoveringArea(0, this.anchor.y, table.width, this.height))) {
+        if (
+          some(table.cells, (cell) =>
+            cell._isDataCoveringArea(0, this.anchor.y, table.width, this.height)
+          )
+        ) {
           // there are *some* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-          if (some(table.cells, cell => cell._isDataCoveringArea(this.anchor.x, 0, this.width, table.height))) {
+          if (
+            some(table.cells, (cell) =>
+              cell._isDataCoveringArea(
+                this.anchor.x,
+                0,
+                this.width,
+                table.height
+              )
+            )
+          ) {
             // there are *some* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
             return undefined;
-          } else { // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
-            return Header.State.Row
+          } else {
+            // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
+            return Header.State.Row;
           }
         } else {
           // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-          return Header.State.Column
+          return Header.State.Column;
         }
     }
   }
   public headerState(table: BuildingTable): Option<Header.State> {
-    return this._scope.flatMap((scope) => Option.from(this._scopeToState(scope, table)));
+    return this._scope.flatMap((scope) =>
+      Option.from(this._scopeToState(scope, table))
+    );
   }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
+   */
+  public internalHeaderScanning(
+    table: BuildingTable,
+    initialX: number,
+    initialY: number,
+    decreaseX: boolean
+  ): Array<BuildingCell> {
+    // The principal cell is this.
+    const deltaX = decreaseX ? -1 : 0;
+    const deltaY = decreaseX ? 0 : -1;
+    let headersList: Array<BuildingCell> = []; // new headers found by the algo
+
+    // 3
+    let opaqueHeaders: Array<BuildingCell> = [];
+    // 4
+    let inHeaderBlock = false;
+    let headersFromCurrentBlock: Array<BuildingCell> = [];
+    if (this.kind === Cell.Kind.Header) {
+      inHeaderBlock = true;
+      headersFromCurrentBlock.push(this);
+    }
+
+    // 1, 2, 5, 6, 10
+    for (
+      let x = initialX + deltaX, y = initialY + deltaY;
+      (x += deltaX), (y += deltaY);
+      x >= 0 && y >= 0
+    ) {
+      // 7
+      const covering = [...table.cells].filter(cell => cell.isCovering(x, y));
+      if (covering.length !== 1) {
+        // More than one cell covering a slot is a table model error. Not sure why the test is in the algo…
+        // (0 cell is possible, more than one is not)
+        continue;
+      }
+      // 8
+      const currentCell = covering[0];
+      // 9
+      if (currentCell.kind === Cell.Kind.Header) {
+        // 9.1
+        inHeaderBlock = true;
+        // 9.2
+        headersFromCurrentBlock.push(currentCell);
+        // 9.3
+        let blocked = false;
+        // 9.4
+        const state = currentCell.headerState(table);
+        if (deltaX === 0) {
+          if (opaqueHeaders.some(cell => cell.anchor.x === currentCell.anchor.x && cell.width === currentCell.width)) {
+            blocked = true;
+          }
+          if (state !== Some.of(Header.State.Column)) {
+            blocked = true;
+          }
+        } else { // deltaY === 0
+          if (opaqueHeaders.some(cell => cell.anchor.y === currentCell.anchor.y && cell.height === currentCell.height)) {
+            blocked = true;
+          }
+          if (state !== Some.of(Header.State.Row)) {
+            blocked = true;
+          }
+        }
+        // 9.5
+        if (!blocked) headersList.push(currentCell);
+      } else {
+        inHeaderBlock = false;
+        opaqueHeaders.push(...headersFromCurrentBlock);
+        headersFromCurrentBlock = [];
+      }
+    }
+
+    return headersList;
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
+   */
+  // public assignHeaders(table: BuildingTable): BuildingCell {
+  //
+  // }
 
   public equals(value: unknown): value is this {
     return value instanceof BuildingCell && this._cell.equals(value._cell);
