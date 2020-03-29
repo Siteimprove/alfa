@@ -149,6 +149,7 @@ export namespace Cell {
 export class BuildingCell implements Equatable, Serializable {
   // headers are always empty in the cell, filled in when exporting
   private readonly _cell: Cell;
+  private readonly _downwardGrowing: boolean;
   private readonly _scope: Option<Header.Scope>;
   // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
   //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
@@ -166,6 +167,7 @@ export class BuildingCell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
+    downwardGrowing: boolean = false,
     state: Option<Header.Scope> = None,
     eHeaders: Array<Element> = [],
     iHeaders: Array<Element> = []
@@ -177,6 +179,7 @@ export class BuildingCell implements Equatable, Serializable {
       w,
       h,
       element,
+      downwardGrowing,
       state,
       eHeaders,
       iHeaders
@@ -190,6 +193,7 @@ export class BuildingCell implements Equatable, Serializable {
     w: number,
     h: number,
     element: Element,
+    downwardGrowing: boolean,
     state: Option<Header.Scope>,
     eHeaders: Array<Element>,
     iHeaders: Array<Element>
@@ -198,6 +202,7 @@ export class BuildingCell implements Equatable, Serializable {
      * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
      */
     this._cell = Cell.of(kind, x, y, w, h, element, []);
+    this._downwardGrowing = downwardGrowing;
     this._scope = state;
     this._explicitHeaders = eHeaders;
     this._implicitHeaders = iHeaders;
@@ -210,6 +215,7 @@ export class BuildingCell implements Equatable, Serializable {
     w?: number;
     h?: number;
     element?: Element;
+    downwardGrowing?: boolean;
     scope?: Option<Header.Scope>;
     eHeaders?: Array<Element>;
     iHeaders?: Array<Element>;
@@ -221,6 +227,7 @@ export class BuildingCell implements Equatable, Serializable {
       update.w !== undefined ? update.w : this.width,
       update.h !== undefined ? update.h : this.height,
       update.element !== undefined ? update.element : this.element,
+      update.downwardGrowing !== undefined ? update.downwardGrowing : this._downwardGrowing,
       update.scope !== undefined ? update.scope : this.scope,
       update.eHeaders !== undefined ? update.eHeaders : this._explicitHeaders,
       update.iHeaders !== undefined ? update.iHeaders : this._implicitHeaders
@@ -265,6 +272,9 @@ export class BuildingCell implements Equatable, Serializable {
   public get element(): Element {
     return this._cell.element;
   }
+  public get downwardGrowing(): boolean {
+    return  this._downwardGrowing;
+  }
   public get explicitHeaders(): Array<Element> {
     return this._explicitHeaders;
   }
@@ -279,7 +289,7 @@ export class BuildingCell implements Equatable, Serializable {
     cell: Element,
     x: number = -1,
     y: number = -1
-  ): Result<{ cell: BuildingCell; downwardGrowing: boolean }, string> {
+  ): Result<BuildingCell, string> {
     if (cell.name !== "th" && cell.name !== "td")
       return Err.of("This element is not a table cell");
 
@@ -314,10 +324,7 @@ export class BuildingCell implements Equatable, Serializable {
         ? None
         : Some.of(parseEnumeratedAttribute("scope", scopeMapping)(cell).get());
 
-    return Ok.of({
-      cell: BuildingCell.of(kind, x, y, colspan, rowspan, cell, scope),
-      downwardGrowing: grow,
-    });
+    return Ok.of(BuildingCell.of(kind, x, y, colspan, rowspan, cell, grow, scope));
   }
 
   public isCovering(x: number, y: number): boolean {

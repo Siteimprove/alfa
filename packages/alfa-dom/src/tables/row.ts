@@ -114,8 +114,8 @@ export class BuildingRow implements Equatable, Serializable {
       downwardGrowingCells: this._downwardGrowingCells.concat(cell),
     });
   }
-  private _addCell(cell: BuildingCell, downwardGrowing: boolean): BuildingRow {
-    return downwardGrowing
+  private _addCell(cell: BuildingCell): BuildingRow {
+    return cell.downwardGrowing
       ? this._addGrowingCell(cell)
       : this._addNonGrowingCell(cell);
   }
@@ -125,7 +125,7 @@ export class BuildingRow implements Equatable, Serializable {
   ): Result<BuildingRow, string> {
     // 8, 9, 10, 13
     return BuildingCell.from(currentCell, this._xCurrent, yCurrent).andThen(
-      ({ cell, downwardGrowing }) =>
+      cell =>
         Ok.of(
           this
             // 11
@@ -135,7 +135,7 @@ export class BuildingRow implements Equatable, Serializable {
             // 13
             // Double coverage check made at the end of table building to de-entangle code
             // 14
-            ._addCell(cell, downwardGrowing)
+            ._addCell(cell)
         )
     );
   }
