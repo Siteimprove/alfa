@@ -78,8 +78,24 @@ export class Set<T>
     );
   }
 
+  public intersection(iterable: Iterable<T>): Set<T> {
+    // Start with empty set, add elements from the iterable iff they are also in this.
+    return Iterable.reduce(
+      iterable,
+      (set, value) => this.has(value) ? set.add(value) : set,
+      Set.empty()
+    )
+  }
+
   public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
     return Iterable.find(this, predicate);
+  }
+
+  public filter<U extends T>(predicate: Predicate<T, U>): Set<U> {
+    return this.reduce(
+      (set, value) => predicate(value) ? set.add(value) : set,
+      Set.empty()
+      );
   }
 
   public equals(value: unknown): value is this {
