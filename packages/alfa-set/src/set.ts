@@ -91,6 +91,13 @@ export class Set<T>
     return Iterable.find(this, predicate);
   }
 
+  public filter<U extends T>(predicate: Predicate<T, U>): Set<U> {
+    return this.reduce(
+      (set, value) => predicate(value) ? set.add(value) : set,
+      Set.empty()
+    )
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Set && value._values.equals(this._values);
   }
