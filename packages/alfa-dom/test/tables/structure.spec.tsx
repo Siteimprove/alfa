@@ -9,8 +9,8 @@ import {
   downwardGrowing,
   errors,
   expenses,
-  expensesNum, headers, headersState,
-  rowGroup,
+  expensesNum, explicitHeaders, headersState,
+  rowGroup, simpleImplicitHeaders,
   simpleRow,
   smithonian,
 } from "./testcases";
@@ -96,9 +96,19 @@ test("Header scope and state", t => {
   );
 });
 
-test("Compute explicit headers", t => {
-  const table = BuildingTable.from(headers.element).get();
-  const cell = ([...table.cells].find(cell => cell.name === "foo") as BuildingCell).assignHeaders(table);
+// test("Compute explicit headers", t => {
+//   const table = BuildingTable.from(explicitHeaders.element).get();
+//   const cell = ([...table.cells].find(cell => cell.name === "foo") as BuildingCell).assignHeaders(table);
+//
+//   t.deepEqual(cell.explicitHeaders, explicitHeaders.expected);
+// });
 
-  t.deepEqual(cell.explicitHeaders, headers.expected);
+test("Compute simple implicit headers", t => {
+  const table = BuildingTable.from(simpleImplicitHeaders.element).get();
+  const cells = ["cell11", "cell12", "cell21", "cell22"]
+    .map(id => ([...table.cells].find(cell => cell.name === id) as BuildingCell).assignHeaders(table));
+
+  for (let i=0; i<4 ; i++) {
+    t.deepEqual(cells[i].implicitHeaders, simpleImplicitHeaders.expected[i]);
+  }
 });

@@ -12,7 +12,8 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { BuildingTable, Document, Element } from "..";
 import {
   hasName,
-  isElementByName, isEmpty,
+  isElementByName,
+  isEmpty,
   parseAttribute,
   parseEnumeratedAttribute,
   parseSpan,
@@ -450,7 +451,7 @@ export class BuildingCell implements Equatable, Serializable {
     // The principal cell is this.
     const deltaX = decreaseX ? -1 : 0;
     const deltaY = decreaseX ? 0 : -1;
-    let headersList: Array<BuildingCell> = []; // new headers found by the algo
+    let headersList: Array<BuildingCell> = []; // new headers found by this algorithm
 
     // 3
     let opaqueHeaders: Array<BuildingCell> = [];
@@ -465,8 +466,8 @@ export class BuildingCell implements Equatable, Serializable {
     // 1, 2, 5, 6, 10
     for (
       let x = initialX + deltaX, y = initialY + deltaY;
-      (x += deltaX), (y += deltaY);
-      x >= 0 && y >= 0
+      x >= 0 && y >= 0;
+      x += deltaX, y += deltaY
     ) {
       // 7
       const covering = [...table.cells].filter((cell) => cell.isCovering(x, y));
@@ -497,7 +498,7 @@ export class BuildingCell implements Equatable, Serializable {
           ) {
             blocked = true;
           }
-          if (state !== Some.of(Header.State.Column)) {
+          if (!state.equals(Some.of(Header.State.Column))) {
             blocked = true;
           }
         } else {
@@ -511,7 +512,7 @@ export class BuildingCell implements Equatable, Serializable {
           ) {
             blocked = true;
           }
-          if (state !== Some.of(Header.State.Row)) {
+          if (!state.equals(Some.of(Header.State.Row))) {
             blocked = true;
           }
         }
@@ -551,10 +552,14 @@ export class BuildingCell implements Equatable, Serializable {
         // remove the principal cell if its in there
         .delete(this.element)
         // only keep whatever is a th/td in the table
-        .intersection(table.element.descendants()
-          .filter(and(isElementByName("th", "td"),
-          // Step 4: remove empty cells
-          not(isEmpty)))
+        .intersection(
+          table.element.descendants().filter(
+            and(
+              isElementByName("th", "td"),
+              // Step 4: remove empty cells
+              not(isEmpty)
+            )
+          )
         );
 
     return this._update({ eHeaders: [...elements] });
@@ -565,54 +570,75 @@ export class BuildingCell implements Equatable, Serializable {
    */
   private _assignImplicitHeaders(table: BuildingTable): BuildingCell {
     // 1
-    let headersList : Array<BuildingCell> = [];
+    let headersList: Array<BuildingCell> = [];
     // 2 principal cell = this, nothing to do.
     // 3 / no header attribute (3.1, 3.2: use this)
     // 3.3
-    for (let y=this.anchor.y; y<this.anchor.y+this.height; y++) {
-      headersList = headersList.concat(this._internalHeaderScanning(table, this.anchor.x, y, true));
+    for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
+      headersList = headersList.concat(
+        this._internalHeaderScanning(table, this.anchor.x, y, true)
+      );
     }
     // 3.4
-    for (let x=this.anchor.x; x<this.anchor.x+this.width; x++) {
-      headersList = headersList.concat(this._internalHeaderScanning(table, x, this.anchor.y, false));
+    for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
+      headersList = headersList.concat(
+        this._internalHeaderScanning(table, x, this.anchor.y, false)
+      );
     }
     // 3.5
-    const rowgroup = Iterable.find(table.rowGroups, rg => rg.isCovering(this.anchor.y));
+    const rowgroup = Iterable.find(table.rowGroups, (rg) =>
+      rg.isCovering(this.anchor.y)
+    );
     if (rowgroup.isSome()) {
-      const rowGroupHeaders = [...table.cells].filter(cell => cell.headerState(table) === Some.of(Header.State.RowGroup));
-      const anchored = rowGroupHeaders.filter(cell => rowgroup.get().isCovering(cell.anchor.y));
-      const leftAndUp = anchored.filter(cell => cell.anchor.x < this.anchor.x + this.width && cell.anchor.y < this.anchor.y + this.height);
+      const rowGroupHeaders = [...table.cells].filter(
+        (cell) => cell.headerState(table) === Some.of(Header.State.RowGroup)
+      );
+      const anchored = rowGroupHeaders.filter((cell) =>
+        rowgroup.get().isCovering(cell.anchor.y)
+      );
+      const leftAndUp = anchored.filter(
+        (cell) =>
+          cell.anchor.x < this.anchor.x + this.width &&
+          cell.anchor.y < this.anchor.y + this.height
+      );
 
       headersList = headersList.concat(leftAndUp);
     }
     // 3.6
-    const colgroup = Iterable.find(table.colGroups, cg => cg.isCovering(this.anchor.x));
+    const colgroup = Iterable.find(table.colGroups, (cg) =>
+      cg.isCovering(this.anchor.x)
+    );
     if (colgroup.isSome()) {
-      const colGroupHeaders = [...table.cells].filter(cell => cell.headerState(table) === Some.of(Header.State.ColGroup));
-      const anchored = colGroupHeaders.filter(cell => colgroup.get().isCovering(cell.anchor.x));
-      const leftAndUp = anchored.filter(cell => cell.anchor.x < this.anchor.x + this.width && cell.anchor.y < this.anchor.y + this.height);
+      const colGroupHeaders = [...table.cells].filter(
+        (cell) => cell.headerState(table) === Some.of(Header.State.ColGroup)
+      );
+      const anchored = colGroupHeaders.filter((cell) =>
+        colgroup.get().isCovering(cell.anchor.x)
+      );
+      const leftAndUp = anchored.filter(
+        (cell) =>
+          cell.anchor.x < this.anchor.x + this.width &&
+          cell.anchor.y < this.anchor.y + this.height
+      );
 
       headersList = headersList.concat(leftAndUp);
     }
     // 5 (remove duplicates)
-    headersList = [...Set.of(...headersList)
-      // 4 (remove empty cells)
-      .filter(cell => isEmpty(cell.element))
-      // 6 remove principal cell
-      .delete(this)
+    headersList = [
+      ...Set.of(...headersList)
+        // 4 (remove empty cells)
+        .filter((cell) => !isEmpty(cell.element))
+        // 6 remove principal cell
+        .delete(this),
     ];
 
-    return this._update({iHeaders: headersList.map(cell => cell.element)});
+    return this._update({ iHeaders: headersList.map((cell) => cell.element) });
   }
 
   /**
    * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
    */
   public assignHeaders(table: BuildingTable): BuildingCell {
-
-
-
-
     return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
   }
 

@@ -706,7 +706,7 @@ export namespace headersState {
   ].map(Option.from)
 }
 
-export namespace headers {
+export namespace explicitHeaders {
   export const element = Element.fromElement(
     <table>
       <tr>
@@ -719,8 +719,36 @@ export namespace headers {
         <td id="foo" headers="text-content child empty data">Foo</td>
       </tr>
     </table>
-  )
+  );
   const getById = getDescendantById(element);
 
   export const expected = [getById("text-content"), getById("data"), getById("child")];
+}
+
+export namespace simpleImplicitHeaders {
+  export const element = Element.fromElement(
+    <table>
+      <tr>
+        <th id={"empty"}></th>
+        <th id="col1">First column</th>
+        <th id="col2">Second Column</th>
+      </tr>
+      <tr>
+        <th id="row1">First row</th>
+        <td id="cell11">Foo</td>
+        <td id="cell12">Bar</td>
+      </tr>
+      <tr>
+        <th id="row2">Second row</th>
+        <td id="cell21">Foo</td>
+        <td id="cell22">Bar</td>
+      </tr>
+    </table>
+  );
+  const getById = getDescendantById(element);
+
+  export const expected = [
+    ["col1", "row1"].map(getById), ["col2", "row1"].map(getById),
+    ["col1", "row2"].map(getById), ["col2", "row2"].map(getById)
+  ];
 }
