@@ -5,7 +5,11 @@ import { None, Some } from "@siteimprove/alfa-option";
 
 import { Attribute, Element } from "../../src";
 import { Cell, ColGroup, RowGroup } from "../../src/tables/groups";
-import {isEmpty, parseEnumeratedAttribute, parseSpan} from "../../src/tables/helpers";
+import {
+  isEmpty,
+  parseEnumeratedAttribute,
+  parseSpan,
+} from "../../src/tables/helpers";
 
 const dummy = Element.of(None, None, "foo");
 
@@ -110,8 +114,16 @@ test("parse enumerated attribute according to specs", (t) => {
   t.deepEqual(parserWithDefault(noenum), Some.of(0));
 });
 
-test("Detect empty cells (element)", t => {
+test("Detect empty cells (element)", (t) => {
   t(isEmpty(Element.fromElement(<span></span>)));
   t(!isEmpty(Element.fromElement(<span>Foo</span>))); // has text content
-  t(!isEmpty(Element.fromElement(<div><span></span></div>))); // has child
+  t(
+    !isEmpty(
+      Element.fromElement(
+        <div>
+          <span></span>
+        </div>
+      )
+    )
+  ); // has child
 });
