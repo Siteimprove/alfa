@@ -1,23 +1,22 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
-import {Iterable} from "@siteimprove/alfa-iterable";
 import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
 import {BuildingTable, Table} from "../../src";
+import {isElementByName, isEmpty} from "../../src/tables/helpers";
 import {
   apple,
   complexRow,
   downwardGrowing,
   errors,
   expenses,
-  expensesNum, headersState,
+  expensesNum, headers, headersState,
   rowGroup,
   simpleRow,
   smithonian,
 } from "./testcases";
 
-import {BuildingRowGroup, BuildingRow, Header, Cell} from "../../src/tables/groups";
-import headerStates = expenses.headerStates;
+import {BuildingRowGroup, BuildingRow, Cell, BuildingCell} from "../../src/tables/groups";
 
 test("Process individual rows", (t) => {
   t.deepEqual(
@@ -96,4 +95,11 @@ test("Header scope and state", t => {
       .map(cell => cell.headerState(headersTable)),
     headersState.headerStates
   );
+});
+
+test("Compute explicit headers", t => {
+  const table = BuildingTable.from(headers.element).get();
+  const cell = ([...table.cells].find(cell => cell.name === "foo") as BuildingCell).assignHeaders(table);
+
+  t.deepEqual(cell.explicitHeaders, headers.expected);
 });

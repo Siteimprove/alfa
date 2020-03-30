@@ -4,15 +4,24 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
-import { BuildingTable, Element } from "..";
-import { hasName, parseEnumeratedAttribute, parseSpan } from "./helpers";
+import { BuildingTable, Document, Element } from "..";
+import {
+  hasName,
+  isElementByName, isEmpty,
+  parseAttribute,
+  parseEnumeratedAttribute,
+  parseSpan,
+  parseTokensList,
+  resolveReferences,
+} from "./helpers";
 
 const { some } = Iterable;
-const { equals } = Predicate;
+const { and, equals, not } = Predicate;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -227,7 +236,9 @@ export class BuildingCell implements Equatable, Serializable {
       update.w !== undefined ? update.w : this.width,
       update.h !== undefined ? update.h : this.height,
       update.element !== undefined ? update.element : this.element,
-      update.downwardGrowing !== undefined ? update.downwardGrowing : this._downwardGrowing,
+      update.downwardGrowing !== undefined
+        ? update.downwardGrowing
+        : this._downwardGrowing,
       update.scope !== undefined ? update.scope : this.scope,
       update.eHeaders !== undefined ? update.eHeaders : this._explicitHeaders,
       update.iHeaders !== undefined ? update.iHeaders : this._implicitHeaders
@@ -273,7 +284,7 @@ export class BuildingCell implements Equatable, Serializable {
     return this._cell.element;
   }
   public get downwardGrowing(): boolean {
-    return  this._downwardGrowing;
+    return this._downwardGrowing;
   }
   public get explicitHeaders(): Array<Element> {
     return this._explicitHeaders;
@@ -324,7 +335,9 @@ export class BuildingCell implements Equatable, Serializable {
         ? None
         : Some.of(parseEnumeratedAttribute("scope", scopeMapping)(cell).get());
 
-    return Ok.of(BuildingCell.of(kind, x, y, colspan, rowspan, cell, grow, scope));
+    return Ok.of(
+      BuildingCell.of(kind, x, y, colspan, rowspan, cell, grow, scope)
+    );
   }
 
   public isCovering(x: number, y: number): boolean {
@@ -347,17 +360,6 @@ export class BuildingCell implements Equatable, Serializable {
     return this._update({
       h: Math.max(this.height, yCurrent - this.anchor.y + 1),
     });
-  }
-
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#empty-cell
-   */
-  public isEmpty(): boolean {
-    return (
-      this.element.children().isEmpty() &&
-      // \s seems to be close enough to "ASCII whitespace".
-      !!this.element.textContent().match(/^\s*$/)
-    );
   }
 
   /**
@@ -439,7 +441,7 @@ export class BuildingCell implements Equatable, Serializable {
   /**
    * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
    */
-  public internalHeaderScanning(
+  private _internalHeaderScanning(
     table: BuildingTable,
     initialX: number,
     initialY: number,
@@ -467,7 +469,7 @@ export class BuildingCell implements Equatable, Serializable {
       x >= 0 && y >= 0
     ) {
       // 7
-      const covering = [...table.cells].filter(cell => cell.isCovering(x, y));
+      const covering = [...table.cells].filter((cell) => cell.isCovering(x, y));
       if (covering.length !== 1) {
         // More than one cell covering a slot is a table model error. Not sure why the test is in the algo…
         // (0 cell is possible, more than one is not)
@@ -486,14 +488,27 @@ export class BuildingCell implements Equatable, Serializable {
         // 9.4
         const state = currentCell.headerState(table);
         if (deltaX === 0) {
-          if (opaqueHeaders.some(cell => cell.anchor.x === currentCell.anchor.x && cell.width === currentCell.width)) {
+          if (
+            opaqueHeaders.some(
+              (cell) =>
+                cell.anchor.x === currentCell.anchor.x &&
+                cell.width === currentCell.width
+            )
+          ) {
             blocked = true;
           }
           if (state !== Some.of(Header.State.Column)) {
             blocked = true;
           }
-        } else { // deltaY === 0
-          if (opaqueHeaders.some(cell => cell.anchor.y === currentCell.anchor.y && cell.height === currentCell.height)) {
+        } else {
+          // deltaY === 0
+          if (
+            opaqueHeaders.some(
+              (cell) =>
+                cell.anchor.y === currentCell.anchor.y &&
+                cell.height === currentCell.height
+            )
+          ) {
             blocked = true;
           }
           if (state !== Some.of(Header.State.Row)) {
@@ -515,9 +530,46 @@ export class BuildingCell implements Equatable, Serializable {
   /**
    * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
    */
-  // public assignHeaders(table: BuildingTable): BuildingCell {
-  //
-  // }
+  private _assignExplicitHeaders(
+    table: BuildingTable,
+    document: Document | undefined = undefined
+  ): BuildingCell {
+    // "no document" is allowed for easier unit test (better isolation).
+    // 3 / headers attribute / 1
+    const idsList: Array<string> = this.element
+      .attribute("headers")
+      .map(parseAttribute(parseTokensList))
+      .map((r) => r.get())
+      .getOr([]);
+
+    // 3 / headers attribute / 2
+    const topNode = document === undefined ? table.element : document;
+
+    const elements =
+      // Take the first element in topNode with the correct ID.
+      Set.of(...resolveReferences(topNode, idsList))
+        // remove the principal cell if its in there
+        .delete(this.element)
+        // only keep whatever is a th/td in the table
+        .intersection(table.element.descendants()
+          .filter(and(isElementByName("th", "td"),
+          // Step 4: remove empty cells
+          not(isEmpty)))
+        );
+
+    return this._update({ eHeaders: [...elements] });
+  }
+
+  public assignHeaders(table: BuildingTable): BuildingCell {
+    // 1
+    let headersList: Array<BuildingCell> = [];
+    // 2 principal cell = this, nothing to do.
+    // 3
+
+
+
+    return this._assignExplicitHeaders(table);
+  }
 
   public equals(value: unknown): value is this {
     return value instanceof BuildingCell && this._cell.equals(value._cell);

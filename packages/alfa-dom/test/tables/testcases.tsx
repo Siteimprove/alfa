@@ -705,3 +705,21 @@ export namespace headersState {
     Header.State.Column, Header.State.Row, Header.State.Column, Header.State.Column
   ].map(Option.from)
 }
+
+export namespace headers {
+  export const element = Element.fromElement(
+    <table>
+      <tr>
+        <th id="text-content">not empty</th>
+        <th id="child"><span id="not-empty"></span></th>
+        <th id="empty"></th>
+      </tr>
+      <tr>
+        <td id="foo" headers="text-content child empty">Foo</td>
+      </tr>
+    </table>
+  )
+  const getById = getDescendantById(element);
+
+  export const expected = [getById("text-content"), getById("child")];
+}
