@@ -41,7 +41,7 @@ export class RowGroup implements Equatable, Serializable {
     return BuildingRowGroup.from(element).map(rowgroup => rowgroup.rowgroup);
   }
 
-  public isCovering(x: number, y: number): boolean {
+  public isCovering(y: number): boolean {
     return !(
       // rowgroup is *not* covering if either
       (y < this._anchorY || this._anchorY + this._height - 1 < y) // slot is above rowgroup // slot is below rowgroup

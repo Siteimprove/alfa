@@ -40,7 +40,7 @@ export class ColGroup implements Equatable, Serializable {
     return BuildingColGroup.from(element).map(colgroup => colgroup.colgroup);
   }
 
-  public isCovering(x: number, y: number): boolean {
+  public isCovering(x: number): boolean {
     return !(
       // colgroup is *not* covering if either
       (x < this._anchorX || this._anchorX + this._width - 1 < x) // slot is left of colgroup or slot is right of colgroup
