@@ -3,7 +3,6 @@ import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
 import {BuildingTable, Table} from "../../src";
-import {isElementByName, isEmpty} from "../../src/tables/helpers";
 import {
   apple,
   complexRow,
