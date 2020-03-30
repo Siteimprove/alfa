@@ -569,7 +569,8 @@ export class BuildingCell implements Equatable, Serializable {
    * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
    */
   private _assignImplicitHeaders(table: BuildingTable): BuildingCell {
-    // console.log(`Implicit headers of ${this.name}`);
+    // const debug = this.name === "en";
+    // if (debug) console.log(`Implicit headers of ${this.name}`);
     // 1
     let headersList: Array<BuildingCell> = [];
     // 2 principal cell = this, nothing to do.
@@ -580,24 +581,22 @@ export class BuildingCell implements Equatable, Serializable {
         this._internalHeaderScanning(table, this.anchor.x, y, true)
       );
     }
-    // console.log(`   After first loop: ${headersList.map(cell => cell.name)}`);
+    // if (debug)  console.log(`   After first loop: ${headersList.map(cell => cell.name)}`);
     // 3.4
     for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
       headersList = headersList.concat(
         this._internalHeaderScanning(table, x, this.anchor.y, false)
       );
     }
-    // console.log(`   After second loop: ${headersList.map(cell => cell.name)}`);
+    // if (debug)  console.log(`   After second loop: ${headersList.map(cell => cell.name)}`);
     // 3.5
     const rowgroup = Iterable.find(table.rowGroups, (rg) =>
       rg.isCovering(this.anchor.y)
     );
     if (rowgroup.isSome()) {
-      // console.log(`   found ${rowgroup.get().element.attribute("id").get().value}`);
       const rowGroupHeaders = [...table.cells].filter(
         (cell) => cell.headerState(table).equals(Some.of(Header.State.RowGroup))
       );
-      // console.log(`   found row group headers: ${rowGroupHeaders.map(cell => cell.name)}`);
       const anchored = rowGroupHeaders.filter((cell) =>
         rowgroup.get().isCovering(cell.anchor.y)
       );
@@ -609,7 +608,7 @@ export class BuildingCell implements Equatable, Serializable {
 
       headersList = headersList.concat(leftAndUp);
     }
-    // console.log(`   After row groups: ${headersList.map(cell => cell.name)}`);
+    // if (debug)  console.log(`   After row groups: ${headersList.map(cell => cell.name)}`);
     // 3.6
     const colgroup = Iterable.find(table.colGroups, (cg) =>
       cg.isCovering(this.anchor.x)
@@ -629,15 +628,14 @@ export class BuildingCell implements Equatable, Serializable {
 
       headersList = headersList.concat(leftAndUp);
     }
-    // console.log(`   After col groups: ${headersList.map(cell => cell.name)}`);
-    // 5 (remove duplicates)
-    headersList = [
-      ...Set.of(...headersList)
-        // 4 (remove empty cells)
-        .filter((cell) => !isEmpty(cell.element))
-        // 6 remove principal cell
-        .delete(this),
-    ];
+    // if (debug)  console.log(`   After col groups: ${headersList.map(cell => cell.name)}`);
+
+    headersList = headersList
+      // 5 (remove duplicates)
+      .filter((cell, idx) => headersList.indexOf(cell) === idx)
+      // 4 (remove empty cells) & 6 remove principal cell
+      .filter((cell) => !isEmpty(cell.element) && !cell.equals(this));
+    // if (debug)  console.log(`   After clean up: ${headersList.map(cell => cell.name)}`);
 
     return this._update({ iHeaders: headersList.map((cell) => cell.element) });
   }
