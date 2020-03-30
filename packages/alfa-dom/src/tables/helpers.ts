@@ -153,3 +153,14 @@ export function resolveReferences(node: Node, references: Iterable<string>): Arr
   return elements;
 }
 // End copied from accessible name computation.
+
+/**
+ * @see https://html.spec.whatwg.org/multipage/tables.html#empty-cell
+ */
+export function isEmpty(element: Element): boolean {
+  return (
+    element.children().isEmpty() &&
+    // \s seems to be close enough to "ASCII whitespace".
+    !!element.textContent().match(/^\s*$/)
+  );
+}
