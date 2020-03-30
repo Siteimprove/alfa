@@ -7,7 +7,7 @@ import {
   enumError,
   parseEnumeratedValue,
   parseInteger,
-  parseNonNegativeInteger,
+  parseNonNegativeInteger, parseTokensList,
 } from "../../src/tables/helpers";
 
 const empty = Err.of("The string is empty");
@@ -37,7 +37,7 @@ test("parse non-negative integers", (t) => {
   t.deepEqual(parseNonNegativeInteger("-42"), negative);
 });
 
-test("parse enumerated attribute", (t) => {
+test("parse enumerated value", (t) => {
   const mapping = Map.from([
     ["foo", 1],
     ["bar", 2],
@@ -48,4 +48,12 @@ test("parse enumerated attribute", (t) => {
   t.deepEqual(parser("BaR"), result(2));
   t.deepEqual(parser("foobar"), Err.of<enumError>("invalid"));
   t.deepEqual(parser(""), Err.of<enumError>("missing"));
+});
+
+test("parse space separated token list", t => {
+  t.deepEqual(parseTokensList("foo"), result(["foo"]));
+  t.deepEqual(parseTokensList("foo bar"), result(["foo", "bar"]));
+  // t.deepEqual(parseTokensList(""), result([]));
+  t.deepEqual(parseTokensList("  \t"), result([]));
+  t.deepEqual(parseTokensList("foo  bar\tbaz"), result(["foo", "bar", "baz"]));
 });

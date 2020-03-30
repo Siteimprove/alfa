@@ -64,6 +64,13 @@ export function parseEnumeratedValue<RESULT>(
 
   return parser;
 }
+
+/**
+ * @see https://infra.spec.whatwg.org/#split-on-ascii-whitespace
+ */
+export function parseTokensList(str: string): Result<readonly [string, Array<string>], string> {
+  return Ok.of(["", str.trim().split(/\s+/).filter(s => s !== "")] as const)
+};
 // end micro syntaxes
 
 // attribute helper should move to attribute
@@ -128,3 +135,21 @@ export function isElementByName(
     and(hasNamespace(equals(Namespace.HTML)), hasName(equals(...names)))
   );
 }
+
+// Bad copied form alfa-aria accessible name computation (aria-labelledby). Move to DOM helpers?
+export function resolveReferences(node: Node, references: Iterable<string>): Array<Element> {
+  const elements: Array<Element> = [];
+
+  for (const id of references) {
+    const element = node
+      .descendants()
+      .find(and(Element.isElement, (element) => element.id.includes(id)));
+
+    if (element.isSome()) {
+      elements.push(element.get());
+    }
+  }
+
+  return elements;
+}
+// End copied from accessible name computation.
