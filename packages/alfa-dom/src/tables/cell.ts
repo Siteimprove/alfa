@@ -132,8 +132,8 @@ export class Cell implements Equatable, Serializable {
       anchor: this.anchor,
       width: this._width,
       height: this._height,
-      element: this._element.toJSON(),
-      headers: this._headers.map((header) => header.toJSON()),
+      element: this.name, // this._element.toJSON(),
+      headers: this._headers.map((header) => header.attribute("id").get().value)// this._headers.map((header) => header.toJSON()),
     };
   }
 }
@@ -146,8 +146,8 @@ export namespace Cell {
     anchor: { x: number; y: number };
     width: number;
     height: number;
-    element: Element.JSON;
-    headers: Element.JSON[];
+    element: string; //Element.JSON;
+    headers: string[]; //Element.JSON[];
   }
 
   export enum Kind {
@@ -569,6 +569,7 @@ export class BuildingCell implements Equatable, Serializable {
    * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
    */
   private _assignImplicitHeaders(table: BuildingTable): BuildingCell {
+    // console.log(`Implicit headers of ${this.name}`);
     // 1
     let headersList: Array<BuildingCell> = [];
     // 2 principal cell = this, nothing to do.
@@ -579,20 +580,24 @@ export class BuildingCell implements Equatable, Serializable {
         this._internalHeaderScanning(table, this.anchor.x, y, true)
       );
     }
+    // console.log(`   After first loop: ${headersList.map(cell => cell.name)}`);
     // 3.4
     for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
       headersList = headersList.concat(
         this._internalHeaderScanning(table, x, this.anchor.y, false)
       );
     }
+    // console.log(`   After second loop: ${headersList.map(cell => cell.name)}`);
     // 3.5
     const rowgroup = Iterable.find(table.rowGroups, (rg) =>
       rg.isCovering(this.anchor.y)
     );
     if (rowgroup.isSome()) {
+      // console.log(`   found ${rowgroup.get().element.attribute("id").get().value}`);
       const rowGroupHeaders = [...table.cells].filter(
-        (cell) => cell.headerState(table) === Some.of(Header.State.RowGroup)
+        (cell) => cell.headerState(table).equals(Some.of(Header.State.RowGroup))
       );
+      // console.log(`   found row group headers: ${rowGroupHeaders.map(cell => cell.name)}`);
       const anchored = rowGroupHeaders.filter((cell) =>
         rowgroup.get().isCovering(cell.anchor.y)
       );
@@ -604,13 +609,14 @@ export class BuildingCell implements Equatable, Serializable {
 
       headersList = headersList.concat(leftAndUp);
     }
+    // console.log(`   After row groups: ${headersList.map(cell => cell.name)}`);
     // 3.6
     const colgroup = Iterable.find(table.colGroups, (cg) =>
       cg.isCovering(this.anchor.x)
     );
     if (colgroup.isSome()) {
       const colGroupHeaders = [...table.cells].filter(
-        (cell) => cell.headerState(table) === Some.of(Header.State.ColGroup)
+        (cell) => cell.headerState(table).equals(Some.of(Header.State.ColGroup))
       );
       const anchored = colGroupHeaders.filter((cell) =>
         colgroup.get().isCovering(cell.anchor.x)
@@ -623,6 +629,7 @@ export class BuildingCell implements Equatable, Serializable {
 
       headersList = headersList.concat(leftAndUp);
     }
+    // console.log(`   After col groups: ${headersList.map(cell => cell.name)}`);
     // 5 (remove duplicates)
     headersList = [
       ...Set.of(...headersList)

@@ -108,9 +108,9 @@ export class Table implements Equatable, Serializable {
     return {
       height: this._height,
       width: this._width,
-      element: this._element.toJSON(),
+      // element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.toJSON()),
-      rowGroups: this._rowGroups.map((rg) => rg.toJSON()),
+      rowGroups: this._rowGroups.map((rg) => rg.element.attribute("id").get().value), // this._rowGroups.map((rg) => rg.toJSON()),
       colGroups: this._colGroups.map((cg) => cg.toJSON()),
     };
   }
@@ -121,9 +121,9 @@ export namespace Table {
     [key: string]: json.JSON;
     height: number;
     width: number;
-    element: Element.JSON;
+    // element: Element.JSON;
     cells: Cell.JSON[];
-    rowGroups: RowGroup.JSON[];
+    rowGroups: string[]; // RowGroup.JSON[];
     colGroups: ColGroup.JSON[];
   }
 }
@@ -372,7 +372,7 @@ export class BuildingTable implements Equatable, Serializable {
     }
 
     // 21
-    return Ok.of(table);
+    return Ok.of(table._update({cells: [...table.cells].map(cell => cell.assignHeaders(table))}));
   }
 
   public equals(value: unknown): value is this {

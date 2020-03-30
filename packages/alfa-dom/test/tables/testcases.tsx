@@ -1,4 +1,4 @@
-import {None, Option} from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -9,7 +9,8 @@ import {
   Cell,
   ColGroup,
   BuildingRow,
-  RowGroup, Header,
+  RowGroup,
+  Header,
 } from "../../src/tables/groups";
 
 const { and } = Predicate;
@@ -20,8 +21,9 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   x: number,
   y: number,
   w: number = 1,
-  h: number = 1
-): Cell => Cell.of(kind, x, y, w, h, getElt(elt));
+  h: number = 1,
+  headers: Array<string> = []
+): Cell => Cell.of(kind, x, y, w, h, getElt(elt), headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
   return BuildingCell.of(
@@ -65,9 +67,10 @@ export namespace simpleRow {
     2,
     1,
     element,
-    [makeCell("first", Cell.Kind.Header, 0, 0), makeCell("second", Cell.Kind.Data, 1, 0)].map(
-      toBuildingCell
-    )
+    [
+      makeCell("first", Cell.Kind.Header, 0, 0),
+      makeCell("second", Cell.Kind.Data, 1, 0),
+    ].map(toBuildingCell)
   );
 }
 
@@ -408,60 +411,47 @@ export namespace expenses {
   export const element = Element.fromElement(
     <table>
       <colgroup id="group-head">
-        {" "}
         <col />
       </colgroup>
       <colgroup id="group-body">
-        {" "}
         <col /> <col /> <col />
       </colgroup>
       <thead id="thead">
         <tr>
-          {" "}
-          <th id="empty" /> <th id="2008">2008</th> <th id="2007">2007</th>{" "}
+          <th id="empty" /> <th id="2008">2008</th> <th id="2007">2007</th>
           <th id="2006">2006</th>
         </tr>
       </thead>
       <tbody id="body-1">
         <tr>
-          {" "}
           <th id="rd" scope="rowgroup">
-            {" "}
             Research and development
           </th>
-          <td id="rd-2008">$ 1,109</td> <td id="rd-2007">$ 782</td>{" "}
+          <td id="rd-2008">$ 1,109</td> <td id="rd-2007">$ 782</td>
           <td id="rd-2006">$ 712</td>
         </tr>
         <tr>
-          {" "}
           <th id="rd-percent" scope="row">
-            {" "}
             Percentage of net sales
           </th>
-          <td id="rd-percent-2008">
-            3.4%
-          </td> <td id="rd-percent-2007">3.3%</td>{" "}
+          <td id="rd-percent-2008">3.4%</td> <td id="rd-percent-2007">3.3%</td>
           <td id="rd-percent-2006">3.7%</td>
         </tr>
       </tbody>
       <tbody id="body-2">
         <tr>
-          {" "}
           <th id="sales" scope="rowgroup">
-            {" "}
             Selling, general, and administrative
           </th>
-          <td id="sales-2008">$ 3,761</td> <td id="sales-2007">$ 2,963</td>{" "}
+          <td id="sales-2008">$ 3,761</td> <td id="sales-2007">$ 2,963</td>
           <td id="sales-2006">$ 2,433</td>
         </tr>
         <tr>
-          {" "}
           <th id="sales-percent" scope="row">
-            {" "}
             Percentage of net sales
           </th>
-          <td id="sales-percent-2008">11.6%</td>{" "}
-          <td id="sales-percent-2007">12.3%</td>{" "}
+          <td id="sales-percent-2008">11.6%</td>
+          <td id="sales-percent-2007">12.3%</td>
           <td id="sales-percent-2006">12.6%</td>
         </tr>
       </tbody>
@@ -508,9 +498,15 @@ export namespace expenses {
   );
 
   export const headerStates = [
-    Header.State.Column, Header.State.Column, Header.State.Column, Header.State.Column, // first row, auto => column
-    Header.State.RowGroup, Header.State.Row, Header.State.RowGroup, Header.State.Row // explicitly set
-  ]
+    Header.State.Column,
+    Header.State.Column,
+    Header.State.Column,
+    Header.State.Column, // first row, auto => column
+    Header.State.RowGroup,
+    Header.State.Row,
+    Header.State.RowGroup,
+    Header.State.Row, // explicitly set
+  ];
 }
 
 // same with colgroup defined by spans
@@ -519,57 +515,45 @@ export namespace expensesNum {
     <table>
       <colgroup id="group-head" span={1}></colgroup>
       <colgroup id="group-body">
-        {" "}
         <col span={2} /> <col />
       </colgroup>
       <thead id="thead">
         <tr>
-          {" "}
-          <th id="empty" /> <th id="2008">2008</th> <th id="2007">2007</th>{" "}
+          <th id="empty" /> <th id="2008">2008</th> <th id="2007">2007</th>
           <th id="2006">2006</th>
         </tr>
       </thead>
       <tbody id="body-1">
         <tr>
-          {" "}
           <th id="rd" scope="rowgroup">
-            {" "}
             Research and development
           </th>
-          <td id="rd-2008">$ 1,109</td> <td id="rd-2007">$ 782</td>{" "}
+          <td id="rd-2008">$ 1,109</td> <td id="rd-2007">$ 782</td>
           <td id="rd-2006">$ 712</td>
         </tr>
         <tr>
-          {" "}
           <th id="rd-percent" scope="row">
-            {" "}
             Percentage of net sales
           </th>
-          <td id="rd-percent-2008">
-            3.4%
-          </td> <td id="rd-percent-2007">3.3%</td>{" "}
+          <td id="rd-percent-2008">3.4%</td> <td id="rd-percent-2007">3.3%</td>
           <td id="rd-percent-2006">3.7%</td>
         </tr>
       </tbody>
       <colgroup id="ignored" span={4}></colgroup>
       <tbody id="body-2">
         <tr>
-          {" "}
           <th id="sales" scope="rowgroup">
-            {" "}
             Selling, general, and administrative
           </th>
-          <td id="sales-2008">$ 3,761</td> <td id="sales-2007">$ 2,963</td>{" "}
+          <td id="sales-2008">$ 3,761</td> <td id="sales-2007">$ 2,963</td>
           <td id="sales-2006">$ 2,433</td>
         </tr>
         <tr>
-          {" "}
           <th id="sales-percent" scope="row">
-            {" "}
             Percentage of net sales
           </th>
-          <td id="sales-percent-2008">11.6%</td>{" "}
-          <td id="sales-percent-2007">12.3%</td>{" "}
+          <td id="sales-percent-2008">11.6%</td>
+          <td id="sales-percent-2007">12.3%</td>
           <td id="sales-percent-2006">12.6%</td>
         </tr>
       </tbody>
@@ -668,42 +652,52 @@ export namespace headersState {
   export const element = Element.fromElement(
     <table>
       <thead id="thead">
-      <tr id="row1">
-        <th id="c11">column</th>
-        <th id="c21" rowspan={2}>row because of 32</th>
-      </tr>
-      <tr id="row2">
-        <th id="c12">nothing because of 32 and 15</th>
-        <td id="c32">prevents 21 and 12 from being column</td>
-      </tr>
-      <tr id="row3">
-        <th id="c13">column</th>
-        <th id="c23">column</th>
-        <th id="c33">column</th>
-        <th id="c43">column</th>
-      </tr>
+        <tr id="row1">
+          <th id="c11">column</th>
+          <th id="c21" rowspan={2}>
+            row because of 32
+          </th>
+        </tr>
+        <tr id="row2">
+          <th id="c12">nothing because of 32 and 15</th>
+          <td id="c32">prevents 21 and 12 from being column</td>
+        </tr>
+        <tr id="row3">
+          <th id="c13">column</th>
+          <th id="c23">column</th>
+          <th id="c33">column</th>
+          <th id="c43">column</th>
+        </tr>
       </thead>
       <tbody id="tbody">
-      <tr id="row4">
-        <th id="c14">column</th>
-      </tr>
-      <tr id="row5">
-        <td id="c15">prevent 12 from being row and 25 from being column</td>
-        <th id="c25">row</th>
-      </tr>
-      <tr id="row6">
-        <th id="c16">column</th>
-        <th id="c26">column</th>
-      </tr>
+        <tr id="row4">
+          <th id="c14">column</th>
+        </tr>
+        <tr id="row5">
+          <td id="c15">prevent 12 from being row and 25 from being column</td>
+          <th id="c25">row</th>
+        </tr>
+        <tr id="row6">
+          <th id="c16">column</th>
+          <th id="c26">column</th>
+        </tr>
       </tbody>
     </table>
-  )
+  );
 
   export const headerStates = [
-    Header.State.Column, Header.State.Row, undefined,
-    Header.State.Column, Header.State.Column, Header.State.Column, Header.State.Column,
-    Header.State.Column, Header.State.Row, Header.State.Column, Header.State.Column
-  ].map(Option.from)
+    Header.State.Column,
+    Header.State.Row,
+    undefined,
+    Header.State.Column,
+    Header.State.Column,
+    Header.State.Column,
+    Header.State.Column,
+    Header.State.Column,
+    Header.State.Row,
+    Header.State.Column,
+    Header.State.Column,
+  ].map(Option.from);
 }
 
 export namespace explicitHeaders {
@@ -711,18 +705,26 @@ export namespace explicitHeaders {
     <table>
       <tr>
         <th id="text-content">not empty</th>
-        <th id="child"><span id="not-empty"></span></th>
+        <th id="child">
+          <span id="not-empty"></span>
+        </th>
         <th id="empty"></th>
         <td id="data">Data cell can actually be header</td>
       </tr>
       <tr>
-        <td id="foo" headers="text-content child empty data">Foo</td>
+        <td id="foo" headers="text-content child empty data">
+          Foo
+        </td>
       </tr>
     </table>
   );
   const getById = getDescendantById(element);
 
-  export const expected = [getById("text-content"), getById("data"), getById("child")];
+  export const expected = [
+    getById("text-content"),
+    getById("data"),
+    getById("child"),
+  ];
 }
 
 export namespace simpleImplicitHeaders {
@@ -748,7 +750,114 @@ export namespace simpleImplicitHeaders {
   const getById = getDescendantById(element);
 
   export const expected = [
-    ["col1", "row1"].map(getById), ["col2", "row1"].map(getById),
-    ["col1", "row2"].map(getById), ["col2", "row2"].map(getById)
+    ["col1", "row1"].map(getById),
+    ["col2", "row1"].map(getById),
+    ["col1", "row2"].map(getById),
+    ["col2", "row2"].map(getById),
   ];
+}
+
+//
+export namespace rowGroupImplicitHeaders {
+  export const element = Element.fromElement(
+    <table>
+      <thead id="thead">
+        <tr>
+          <th id="ID">ID</th> <th id="measurement">Measurement</th>{" "}
+          <th id="average">Average</th> <th id="maximum">Maximum</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-1">
+        <tr>
+          <td id="empty-cat-id"></td>
+          <th id="cat" scope="rowgroup">
+            Cats
+          </th>
+          <td id="empty-cat-av"></td> <td id="empty-cat-max"></td>
+        </tr>
+        <tr>
+          <td id="id93">93</td>
+          <th id="cat-legs" scope="row">
+            Legs
+          </th>
+          <td id="cat-legs-av">3.5</td> <td id="cat-legs-max">4</td>
+        </tr>
+        <tr>
+          <td id="id10">10</td>
+          <th id="cat-tails" scope="row">
+            Tails
+          </th>
+          <td id="cat-tails-av">1</td> <td id="cat-tails-max">1</td>
+        </tr>
+      </tbody>
+      <tbody id="tbody-2">
+        <tr>
+          <td id="empty-en-id"></td>
+          <th id="en" scope="rowgroup">
+            English speakers
+          </th>
+          <td id="empty-en-av"></td>
+          <td id="empty-en-max"></td>
+        </tr>
+        <tr>
+          <td id="id32">32</td>
+          <th id="en-legs" scope="row">
+            Legs
+          </th>
+          <td id="en-legs-av">2.67</td> <td id="en-legs-max">4</td>
+        </tr>
+        <tr>
+          <td id="id35">35</td>
+          <th id="en-tails" scope="row">
+            Tails
+          </th>
+          <td id="en-tails-av">0.33</td> <td id="en-tails-max">1</td>
+        </tr>
+      </tbody>
+    </table>
+  );
+  const getById = getDescendantById(element);
+  const makeCell = makeCellFromGetter(getById);
+
+  export const expected = Table.of(
+    element,
+    4,
+    7,
+    [
+      makeCell("ID", Cell.Kind.Header, 0, 0),
+      makeCell("measurement", Cell.Kind.Header, 1, 0),
+      makeCell("average", Cell.Kind.Header, 2, 0),
+      makeCell("maximum", Cell.Kind.Header, 3, 0),
+      makeCell("empty-cat-id", Cell.Kind.Data, 0, 1, 1, 1, ["ID"]),
+      makeCell("cat", Cell.Kind.Header, 1, 1, 1, 1, ["measurement", "cat"]),
+      makeCell("empty-cat-av", Cell.Kind.Data, 2, 1, 1, 1, ["average", "cat"]),
+      makeCell("empty-cat-max", Cell.Kind.Data, 3, 1, 1, 1, ["maximum", "cat"]),
+      makeCell("id93", Cell.Kind.Data, 0, 2, 1, 1, ["ID"]),
+      makeCell("cat-legs", Cell.Kind.Header, 1, 2, 1, 1, ["measurement", "cat"]),
+      makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, 1, 1, ["average", "cat", "cat-legs"]),
+      makeCell("cat-legs-max", Cell.Kind.Data, 3, 2, 1, 1, ["maximum", "cat", "cat-legs"]),
+      makeCell("id10", Cell.Kind.Data, 0, 3, 1, 1, ["ID"]),
+      makeCell("cat-tails", Cell.Kind.Header, 1, 3, 1, 1, ["measurement", "cat"]),
+      makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, 1, 1, ["average", "cat", "cat-tails"]),
+      makeCell("cat-tails-max", Cell.Kind.Data, 3, 3, 1, 1, ["maximum", "cat", "cat-tails"]),
+      makeCell("empty-en-id", Cell.Kind.Data, 0, 4, 1, 1, ["ID"]),
+      makeCell("en", Cell.Kind.Header, 1, 4, 1, 1, ["measurement", "en"]),
+      makeCell("empty-en-av", Cell.Kind.Data, 2, 4, 1, 1, ["en", "average"]),
+      makeCell("empty-en-max", Cell.Kind.Data, 3, 4, 1, 1, ["en", "maximum"]),
+      makeCell("id32", Cell.Kind.Data, 0, 5, 1, 1, ["ID"]),
+      makeCell("en-legs", Cell.Kind.Header, 1, 5, 1, 1, ["measurement", "en"]),
+      makeCell("en-legs-av", Cell.Kind.Data, 2, 5, 1, 1, ["en-legs", "en", "average"]),
+      makeCell("en-legs-max", Cell.Kind.Data, 3, 5, 1, 1, ["en-legs", "en", "maximum"]),
+      makeCell("id35", Cell.Kind.Data, 0, 6, 1, 1, ["ID"]),
+      makeCell("en-tails", Cell.Kind.Header, 1, 6, 1, 1, ["measurement", "en"]),
+      makeCell("en-tails-av", Cell.Kind.Data, 2, 6, 1, 1, ["en", "average", "en-tails"]),
+      makeCell("en-tails-max", Cell.Kind.Data, 3, 6, 1, 1, ["en", "en-tails", "maximum"])
+    ],
+    [
+      RowGroup.of(0, 1, getById("thead")),
+      RowGroup.of(1, 3, getById("tbody-1")),
+      RowGroup.of(4, 3, getById("tbody-2")),
+    ],
+    []
+  );
 }
