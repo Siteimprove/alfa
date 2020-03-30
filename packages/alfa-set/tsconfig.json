@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/set.ts"],
+  "files": ["src/index.ts", "src/set.ts", "test/set.spec.ts"],
   "references": [
     {
       "path": "../alfa-equatable"
