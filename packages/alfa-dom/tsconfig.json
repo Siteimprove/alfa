@@ -39,7 +39,7 @@
     "src/tables/groups.ts",
     "src/tables/helpers.ts",
     "src/tables/table.ts",
-    "test/tables/structure-helpers.spec.ts",
+    "test/tables/structure-helpers.spec.tsx",
     "test/tables/testcases.tsx",
     "test/tables/structure.spec.tsx",
     "test/tables/microsyntaxes.spec.ts",
