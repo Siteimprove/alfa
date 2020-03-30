@@ -68,7 +68,7 @@ export function parseEnumeratedValue<RESULT>(
 /**
  * @see https://infra.spec.whatwg.org/#split-on-ascii-whitespace
  */
-export function parseTokensList(str: string): Result<readonly [string, Array<string>], string> {
+export function parseTokensList(str: string): Ok<readonly [string, Array<string>]> {
   return Ok.of(["", str.trim().split(/\s+/).filter(s => s !== "")] as const)
 };
 // end micro syntaxes
