@@ -713,13 +713,14 @@ export namespace headers {
         <th id="text-content">not empty</th>
         <th id="child"><span id="not-empty"></span></th>
         <th id="empty"></th>
+        <td id="data">Data cell can actually be header</td>
       </tr>
       <tr>
-        <td id="foo" headers="text-content child empty">Foo</td>
+        <td id="foo" headers="text-content child empty data">Foo</td>
       </tr>
     </table>
   )
   const getById = getDescendantById(element);
 
-  export const expected = [getById("text-content"), getById("child")];
+  export const expected = [getById("text-content"), getById("data"), getById("child")];
 }
