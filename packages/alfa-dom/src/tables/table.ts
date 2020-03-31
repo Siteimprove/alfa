@@ -139,14 +139,7 @@ export namespace Table {
       rowGroups: Array<RowGroup> = [],
       colGroups: Array<ColGroup> = []
     ): Building {
-      return new Building(
-        element,
-        width,
-        height,
-        cells,
-        rowGroups,
-        colGroups
-      );
+      return new Building(element, width, height, cells, rowGroups, colGroups);
     }
 
     private constructor(

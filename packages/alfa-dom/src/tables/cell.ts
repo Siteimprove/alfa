@@ -10,7 +10,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Document, Element, Table } from "..";
-import {simpleRow} from "../../test/tables/testcases";
+import { simpleRow } from "../../test/tables/testcases";
 import {
   hasName,
   isDescendantOf,
@@ -577,11 +577,14 @@ export namespace Cell {
     ): Building {
       const debug = false;
       if (debug) console.log("Parsing foo");
-      function showAndTell<T, U extends T = T>(predicate: Predicate<T, U>, name: string): Predicate<T, U> {
+      function showAndTell<T, U extends T = T>(
+        predicate: Predicate<T, U>,
+        name: string
+      ): Predicate<T, U> {
         function allezTuture(x: T): x is U {
           const result = predicate(x);
           if (debug) console.log(`Showing ${name} is ${result}`);
-          return result
+          return result;
         }
         return allezTuture;
       }
@@ -615,7 +618,10 @@ export namespace Cell {
         )
       );
 
-      if (debug) console.log(`elements: ${elements.map(elt => elt.attribute("id").get().value)}`);
+      if (debug)
+        console.log(
+          `elements: ${elements.map((elt) => elt.attribute("id").get().value)}`
+        );
       if (debug) console.log(`emptyness: ${elements.map(isEmpty)}`);
 
       return this._update({ eHeaders: elements });

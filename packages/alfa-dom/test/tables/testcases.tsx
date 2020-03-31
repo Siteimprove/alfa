@@ -466,17 +466,41 @@ export namespace expenses {
       makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
       makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
       makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"]),
-      makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, ["rd-percent", "2008", "rd"]),
-      makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, ["rd-percent", "2007", "rd"]),
-      makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, ["rd-percent", "2006", "rd"]),
+      makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
+        "rd-percent",
+        "2008",
+        "rd",
+      ]),
+      makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, [
+        "rd-percent",
+        "2007",
+        "rd",
+      ]),
+      makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, [
+        "rd-percent",
+        "2006",
+        "rd",
+      ]),
       makeCell("sales", Cell.Kind.Header, 0, 3),
       makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
       makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
       makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
       makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"]),
-      makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, ["sales-percent", "2008", "sales"]),
-      makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, ["sales-percent", "2007", "sales"]),
-      makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, ["sales-percent", "2006", "sales"]),
+      makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
+        "sales-percent",
+        "2008",
+        "sales",
+      ]),
+      makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, [
+        "sales-percent",
+        "2007",
+        "sales",
+      ]),
+      makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, [
+        "sales-percent",
+        "2006",
+        "sales",
+      ]),
     ],
     [
       RowGroup.of(0, 1, getById("thead")),
@@ -568,17 +592,41 @@ export namespace expensesNum {
       makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
       makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
       makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"]),
-      makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, ["rd-percent", "2008", "rd"]),
-      makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, ["rd-percent", "2007", "rd"]),
-      makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, ["rd-percent", "2006", "rd"]),
+      makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
+        "rd-percent",
+        "2008",
+        "rd",
+      ]),
+      makeCell("rd-percent-2007", Cell.Kind.Data, 2, 2, [
+        "rd-percent",
+        "2007",
+        "rd",
+      ]),
+      makeCell("rd-percent-2006", Cell.Kind.Data, 3, 2, [
+        "rd-percent",
+        "2006",
+        "rd",
+      ]),
       makeCell("sales", Cell.Kind.Header, 0, 3),
       makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
       makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
       makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
       makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"]),
-      makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, ["sales-percent", "2008", "sales"]),
-      makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, ["sales-percent", "2007", "sales"]),
-      makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, ["sales-percent", "2006", "sales"]),
+      makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
+        "sales-percent",
+        "2008",
+        "sales",
+      ]),
+      makeCell("sales-percent-2007", Cell.Kind.Data, 2, 4, [
+        "sales-percent",
+        "2007",
+        "sales",
+      ]),
+      makeCell("sales-percent-2006", Cell.Kind.Data, 3, 4, [
+        "sales-percent",
+        "2006",
+        "sales",
+      ]),
     ],
     [
       RowGroup.of(0, 1, getById("thead")),
@@ -713,14 +761,13 @@ export namespace explicitHeaders {
   export const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Table.of(element, 4, 2,
-    [
-      makeCell("text-content", Cell.Kind.Header, 0, 0),
-      makeCell("child", Cell.Kind.Header, 1, 0),
-      makeCell("empty", Cell.Kind.Header, 2, 0, ["child"]),
-      makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
-      makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"])
-    ])
+  export const expected = Table.of(element, 4, 2, [
+    makeCell("text-content", Cell.Kind.Header, 0, 0),
+    makeCell("child", Cell.Kind.Header, 1, 0),
+    makeCell("empty", Cell.Kind.Header, 2, 0, ["child"]),
+    makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
+    makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"]),
+  ]);
 }
 
 export namespace simpleImplicitHeaders {
@@ -746,18 +793,17 @@ export namespace simpleImplicitHeaders {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Table.of(element, 3, 3,
-    [
-      makeCell("empty", Cell.Kind.Header, 0, 0),
-      makeCell("col1", Cell.Kind.Header, 1, 0),
-      makeCell("col2", Cell.Kind.Header, 2, 0),
-      makeCell("row1", Cell.Kind.Header, 0, 1),
-      makeCell("cell11", Cell.Kind.Data, 1, 1, ["row1", "col1"]),
-      makeCell("cell12", Cell.Kind.Data, 2, 1, ["row1", "col2"]),
-      makeCell("row2", Cell.Kind.Header, 0, 2),
-      makeCell("cell21", Cell.Kind.Data, 1, 2, ["row2", "col1"]),
-      makeCell("cell22", Cell.Kind.Data, 2, 2, ["row2", "col2"])
-    ])
+  export const expected = Table.of(element, 3, 3, [
+    makeCell("empty", Cell.Kind.Header, 0, 0),
+    makeCell("col1", Cell.Kind.Header, 1, 0),
+    makeCell("col2", Cell.Kind.Header, 2, 0),
+    makeCell("row1", Cell.Kind.Header, 0, 1),
+    makeCell("cell11", Cell.Kind.Data, 1, 1, ["row1", "col1"]),
+    makeCell("cell12", Cell.Kind.Data, 2, 1, ["row1", "col2"]),
+    makeCell("row2", Cell.Kind.Header, 0, 2),
+    makeCell("cell21", Cell.Kind.Data, 1, 2, ["row2", "col1"]),
+    makeCell("cell22", Cell.Kind.Data, 2, 2, ["row2", "col2"]),
+  ]);
 }
 
 //

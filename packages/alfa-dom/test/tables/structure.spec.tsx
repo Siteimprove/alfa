@@ -2,22 +2,25 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Table} from "../../src";
+import { Table } from "../../src";
 import {
-  apple, colGroupImplicitHeaders,
+  apple,
+  colGroupImplicitHeaders,
   complexRow,
   downwardGrowing,
   errors,
   expenses,
-  expensesNum, explicitHeaders, headersState,
-  rowGroup, rowGroupImplicitHeaders, simpleImplicitHeaders,
+  expensesNum,
+  explicitHeaders,
+  headersState,
+  rowGroup,
+  rowGroupImplicitHeaders,
+  simpleImplicitHeaders,
   simpleRow,
   smithonian,
 } from "./testcases";
 
-import {isEmpty} from "../../src/tables/helpers";
-
-import {Row, Cell, ColGroup, RowGroup, Header} from "../../src/tables/groups";
+import { Row, Cell, RowGroup } from "../../src/tables/groups";
 
 test("Process individual rows", (t) => {
   t.deepEqual(
@@ -80,41 +83,44 @@ test("Table model errors", (t) => {
   );
 });
 
-test("Header scope and state", t => {
+test("Header scope and state", (t) => {
   const expensesTable = Table.Building.from(expenses.element).get();
   t.deepEqual(
     [...expensesTable.cells]
-      .filter(cell => cell.kind === Cell.Kind.Header)
-      .map(cell => cell.headerState(expensesTable).get()),
+      .filter((cell) => cell.kind === Cell.Kind.Header)
+      .map((cell) => cell.headerState(expensesTable).get()),
     expenses.headerStates
   );
 
   const headersTable = Table.Building.from(headersState.element).get();
   t.deepEqual(
     [...headersTable.cells]
-      .filter(cell => cell.kind === Cell.Kind.Header)
-      .map(cell => cell.headerState(headersTable)),
+      .filter((cell) => cell.kind === Cell.Kind.Header)
+      .map((cell) => cell.headerState(headersTable)),
     headersState.headerStates
   );
 });
 
-test("Compute explicit headers", t => {
-  t.deepEqual(Table.from(explicitHeaders.element).get().toJSON(), explicitHeaders.expected.toJSON());
+test("Compute simple headers", (t) => {
+  t.deepEqual(
+    Table.from(explicitHeaders.element).get().toJSON(),
+    explicitHeaders.expected.toJSON()
+  );
+
+  t.deepEqual(
+    Table.from(simpleImplicitHeaders.element).get().toJSON(),
+    simpleImplicitHeaders.expected.toJSON()
+  );
 });
 
-test("Compute simple implicit headers", t => {
-  // const table = Table.Building.from(simpleImplicitHeaders.element).get();
-  // const cells = ["cell11", "cell12", "cell21", "cell22"]
-  //   .map(id => ([...table.cells].find(cell => cell.name === id) as Cell.Building).assignHeaders(table));
-  //
-  // for (let i=0; i<4 ; i++) {
-  //   t.deepEqual(cells[i].implicitHeaders, simpleImplicitHeaders.expected[i]);
-  // }
-  t.deepEqual(Table.from(simpleImplicitHeaders.element).get().toJSON(), simpleImplicitHeaders.expected.toJSON());
-});
+test("Tables with groups headers", (t) => {
+  t.deepEqual(
+    Table.from(rowGroupImplicitHeaders.element).get().toJSON(),
+    rowGroupImplicitHeaders.expected.toJSON()
+  );
 
-test("Tables with groups headers", t => {
-  t.deepEqual(Table.from(rowGroupImplicitHeaders.element).get().toJSON(), rowGroupImplicitHeaders.expected.toJSON());
-
-  t.deepEqual(Table.from(colGroupImplicitHeaders.element).get().toJSON(), colGroupImplicitHeaders.expected.toJSON());
+  t.deepEqual(
+    Table.from(colGroupImplicitHeaders.element).get().toJSON(),
+    colGroupImplicitHeaders.expected.toJSON()
+  );
 });
