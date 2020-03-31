@@ -744,13 +744,20 @@ export namespace simpleImplicitHeaders {
     </table>
   );
   const getById = getDescendantById(element);
+  const makeCell = makeCellFromGetter(getById);
 
-  export const expected = [
-    ["col1", "row1"].map(getById),
-    ["col2", "row1"].map(getById),
-    ["col1", "row2"].map(getById),
-    ["col2", "row2"].map(getById),
-  ];
+  export const expected = Table.of(element, 3, 3,
+    [
+      makeCell("empty", Cell.Kind.Header, 0, 0),
+      makeCell("col1", Cell.Kind.Header, 1, 0),
+      makeCell("col2", Cell.Kind.Header, 2, 0),
+      makeCell("row1", Cell.Kind.Header, 0, 1),
+      makeCell("cell11", Cell.Kind.Data, 1, 1, ["row1", "col1"]),
+      makeCell("cell12", Cell.Kind.Data, 2, 1, ["row1", "col2"]),
+      makeCell("row2", Cell.Kind.Header, 0, 2),
+      makeCell("cell21", Cell.Kind.Data, 1, 2, ["row2", "col1"]),
+      makeCell("cell22", Cell.Kind.Data, 2, 2, ["row2", "col2"])
+    ])
 }
 
 //

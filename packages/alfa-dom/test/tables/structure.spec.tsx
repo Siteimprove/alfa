@@ -102,15 +102,16 @@ test("Compute explicit headers", t => {
   t.deepEqual(Table.from(explicitHeaders.element).get().toJSON(), explicitHeaders.expected.toJSON());
 });
 
-// test("Compute simple implicit headers", t => {
-//   const table = Table.Building.from(simpleImplicitHeaders.element).get();
-//   const cells = ["cell11", "cell12", "cell21", "cell22"]
-//     .map(id => ([...table.cells].find(cell => cell.name === id) as Cell.Building).assignHeaders(table));
-//
-//   for (let i=0; i<4 ; i++) {
-//     t.deepEqual(cells[i].implicitHeaders, simpleImplicitHeaders.expected[i]);
-//   }
-// });
+test("Compute simple implicit headers", t => {
+  // const table = Table.Building.from(simpleImplicitHeaders.element).get();
+  // const cells = ["cell11", "cell12", "cell21", "cell22"]
+  //   .map(id => ([...table.cells].find(cell => cell.name === id) as Cell.Building).assignHeaders(table));
+  //
+  // for (let i=0; i<4 ; i++) {
+  //   t.deepEqual(cells[i].implicitHeaders, simpleImplicitHeaders.expected[i]);
+  // }
+  t.deepEqual(Table.from(simpleImplicitHeaders.element).get().toJSON(), simpleImplicitHeaders.expected.toJSON());
+});
 
 test("Tables with groups headers", t => {
   t.deepEqual(Table.from(rowGroupImplicitHeaders.element).get().toJSON(), rowGroupImplicitHeaders.expected.toJSON());
