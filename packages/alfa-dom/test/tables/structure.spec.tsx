@@ -15,6 +15,8 @@ import {
   smithonian,
 } from "./testcases";
 
+import {isEmpty} from "../../src/tables/helpers";
+
 import {Row, Cell, ColGroup, RowGroup, Header} from "../../src/tables/groups";
 
 test("Process individual rows", (t) => {
@@ -96,14 +98,9 @@ test("Header scope and state", t => {
   );
 });
 
-// test("Compute explicit headers", t => {
-//   const table = Table.Building.from(explicitHeaders.element).get();
-//   const cell = ([...table.cells].find(cell => cell.name === "foo") as Cell.Building).assignHeaders(table);
-//
-//   console.dir(cell.explicitHeaders.map(elt => elt.attribute("id").get().value));
-//
-//   t.deepEqual(cell.explicitHeaders, explicitHeaders.expected);
-// });
+test("Compute explicit headers", t => {
+  t.deepEqual(Table.from(explicitHeaders.element).get().toJSON(), explicitHeaders.expected.toJSON());
+});
 
 // test("Compute simple implicit headers", t => {
 //   const table = Table.Building.from(simpleImplicitHeaders.element).get();

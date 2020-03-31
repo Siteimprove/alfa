@@ -710,20 +710,24 @@ export namespace explicitHeaders {
       </tr>
     </table>
   );
-  const getById = getDescendantById(element);
+  export const getById = getDescendantById(element);
+  const makeCell = makeCellFromGetter(getById);
 
-  export const expected = [
-    getById("text-content"),
-    getById("data"),
-    getById("child"),
-  ];
+  export const expected = Table.of(element, 4, 2,
+    [
+      makeCell("text-content", Cell.Kind.Header, 0, 0),
+      makeCell("child", Cell.Kind.Header, 1, 0),
+      makeCell("empty", Cell.Kind.Header, 2, 0, ["child"]),
+      makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
+      makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"])
+    ])
 }
 
 export namespace simpleImplicitHeaders {
   export const element = Element.fromElement(
     <table>
       <tr>
-        <th id={"empty"}></th>
+        <th id="empty"></th>
         <th id="col1">First column</th>
         <th id="col2">Second Column</th>
       </tr>

@@ -10,6 +10,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Document, Element, Table } from "..";
+import {simpleRow} from "../../test/tables/testcases";
 import {
   hasName,
   isDescendantOf,
@@ -148,6 +149,8 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
 }
 
 export namespace Cell {
+  import element = simpleRow.element;
+
   export interface JSON {
     [key: string]: json.JSON;
 
@@ -572,6 +575,17 @@ export namespace Cell {
       table: Table.Building,
       document: Document | undefined = undefined
     ): Building {
+      const debug = false;
+      if (debug) console.log("Parsing foo");
+      function showAndTell<T, U extends T = T>(predicate: Predicate<T, U>, name: string): Predicate<T, U> {
+        function allezTuture(x: T): x is U {
+          const result = predicate(x);
+          if (debug) console.log(`Showing ${name} is ${result}`);
+          return result
+        }
+        return allezTuture;
+      }
+
       // "no document" is allowed for easier unit test (better isolation).
       // 3 / headers attribute / 1
       const idsList: Array<string> = this.element
@@ -583,21 +597,26 @@ export namespace Cell {
       // 3 / headers attribute / 2
       const topNode = document === undefined ? table.element : document;
 
-      const elements = resolveReferences(topNode, idsList).filter((element) =>
+      if (debug) console.log(`id list: ${idsList}`);
+
+      const elements = resolveReferences(topNode, idsList).filter(
         and(
           and(
             // only keep cells in the table
-            isElementByName("th", "td"),
-            isDescendantOf(table.element)
+            showAndTell(isElementByName("th", "td"), "th/td"),
+            showAndTell(isDescendantOf(table.element), "descendant")
           ),
           and(
             // remove principal cell
-            not(isEqual(this.element)),
+            showAndTell(not(isEqual(this.element)), "not equal"),
             // Step 4: remove empty cells
-            not(isEmpty)
+            showAndTell(not(isEmpty), "not empty")
           )
         )
       );
+
+      if (debug) console.log(`elements: ${elements.map(elt => elt.attribute("id").get().value)}`);
+      if (debug) console.log(`emptyness: ${elements.map(isEmpty)}`);
 
       return this._update({ eHeaders: elements });
     }
