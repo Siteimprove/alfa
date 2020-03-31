@@ -1,12 +1,13 @@
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { BuildingTable, Document, Element } from "..";
 import {
@@ -28,10 +29,10 @@ const { and, equals, not } = Predicate;
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
  */
-export class Cell implements Equatable, Serializable {
+export class Cell implements Comparable<Cell>, Equatable, Serializable {
   private readonly _kind: Cell.Kind;
-  private readonly _anchorX: number;
-  private readonly _anchorY: number;
+  private readonly _x: number;
+  private readonly _y: number;
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
@@ -41,28 +42,28 @@ export class Cell implements Equatable, Serializable {
     kind: Cell.Kind,
     x: number,
     y: number,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     element: Element,
     headers: Array<Element> = []
   ): Cell {
-    return new Cell(kind, x, y, w, h, element, headers);
+    return new Cell(kind, x, y, width, height, element, headers);
   }
 
   private constructor(
     kind: Cell.Kind,
     x: number,
     y: number,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     element: Element,
     headers: Array<Element>
   ) {
     this._kind = kind;
-    this._anchorX = x;
-    this._anchorY = y;
-    this._width = w;
-    this._height = h;
+    this._x = x;
+    this._y = y;
+    this._width = width;
+    this._height = height;
     this._element = element;
     this._headers = headers;
   }
@@ -73,20 +74,25 @@ export class Cell implements Equatable, Serializable {
   }
 
   public get anchor(): { x: number; y: number } {
-    return { x: this._anchorX, y: this._anchorY };
+    return { x: this._x, y: this._y };
   }
+
   public get width(): number {
     return this._width;
   }
+
   public get height(): number {
     return this._height;
   }
+
   public get kind(): Cell.Kind {
     return this._kind;
   }
+
   public get element(): Element {
     return this._element;
   }
+
   public get headers(): Iterable<Element> {
     return this._headers;
   }
@@ -95,10 +101,10 @@ export class Cell implements Equatable, Serializable {
     return !(
       // cell is *not* covering if either
       (
-        x < this._anchorX || // slot is left of cell
-        this._anchorX + this._width - 1 < x || // slot is right of cell
-        y < this._anchorY || // slot is above cell
-        this._anchorY + this._height - 1 < y
+        x < this._x || // slot is left of cell
+        this._x + this._width - 1 < x || // slot is right of cell
+        y < this._y || // slot is above cell
+        this._y + this._height - 1 < y
       ) // slot is below cell
     );
   }
@@ -107,12 +113,12 @@ export class Cell implements Equatable, Serializable {
    * compare cell according to their anchor
    * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
    */
-  public compare(cell: Cell): number {
-    if (this._anchorY < cell._anchorY) return -1;
-    if (this._anchorY > cell._anchorY) return 1;
-    if (this._anchorX < cell._anchorX) return -1;
-    if (this._anchorX > cell._anchorX) return 1;
-    return 0;
+  public compare(cell: Cell): Comparison {
+    if (this._y < cell._y) return Comparison.Smaller;
+    if (this._y > cell._y) return Comparison.Greater;
+    if (this._x < cell._x) return Comparison.Smaller;
+    if (this._x > cell._x) return Comparison.Greater;
+    return Comparison.Equal;
   }
 
   public equals(value: unknown): value is this {
@@ -121,8 +127,8 @@ export class Cell implements Equatable, Serializable {
       this._kind === value._kind &&
       this._width === value._width &&
       this._height === value._height &&
-      this._anchorX === value._anchorX &&
-      this._anchorY === value._anchorY &&
+      this._x === value._x &&
+      this._y === value._y &&
       this._element.equals(value._element)
     );
   }
@@ -154,12 +160,13 @@ export namespace Cell {
   }
 
   export enum Kind {
-    Header = "HEADER",
-    Data = "DATA",
+    Header = "header",
+    Data = "data",
   }
 }
 
-export class BuildingCell implements Equatable, Serializable {
+export class BuildingCell
+  implements Comparable<BuildingCell>, Equatable, Serializable {
   // headers are always empty in the cell, filled in when exporting
   private readonly _cell: Cell;
   private readonly _downwardGrowing: boolean;
@@ -177,8 +184,8 @@ export class BuildingCell implements Equatable, Serializable {
     kind: Cell.Kind,
     x: number,
     y: number,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     element: Element,
     downwardGrowing: boolean = false,
     state: Option<Header.Scope> = None,
@@ -189,8 +196,8 @@ export class BuildingCell implements Equatable, Serializable {
       kind,
       x,
       y,
-      w,
-      h,
+      width,
+      height,
       element,
       downwardGrowing,
       state,
@@ -203,8 +210,8 @@ export class BuildingCell implements Equatable, Serializable {
     kind: Cell.Kind,
     x: number,
     y: number,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     element: Element,
     downwardGrowing: boolean,
     state: Option<Header.Scope>,
@@ -214,7 +221,7 @@ export class BuildingCell implements Equatable, Serializable {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
      */
-    this._cell = Cell.of(kind, x, y, w, h, element, []);
+    this._cell = Cell.of(kind, x, y, width, height, element, []);
     this._downwardGrowing = downwardGrowing;
     this._scope = state;
     this._explicitHeaders = eHeaders;
@@ -225,8 +232,8 @@ export class BuildingCell implements Equatable, Serializable {
     kind?: Cell.Kind;
     x?: number;
     y?: number;
-    w?: number;
-    h?: number;
+    width?: number;
+    height?: number;
     element?: Element;
     downwardGrowing?: boolean;
     scope?: Option<Header.Scope>;
@@ -237,8 +244,8 @@ export class BuildingCell implements Equatable, Serializable {
       update.kind !== undefined ? update.kind : this.kind,
       update.x !== undefined ? update.x : this.anchor.x,
       update.y !== undefined ? update.y : this.anchor.y,
-      update.w !== undefined ? update.w : this.width,
-      update.h !== undefined ? update.h : this.height,
+      update.width !== undefined ? update.width : this.width,
+      update.height !== undefined ? update.height : this.height,
       update.element !== undefined ? update.element : this.element,
       update.downwardGrowing !== undefined
         ? update.downwardGrowing
@@ -267,32 +274,41 @@ export class BuildingCell implements Equatable, Serializable {
   public get scope(): Option<Header.Scope> {
     return this._scope;
   }
-  // debug
+
+  // debug only
   public get name(): string {
     return this._cell.element.attribute("id").get().value;
   }
+  // end debug
 
   public get anchor(): { x: number; y: number } {
     return { x: this._cell.anchor.x, y: this._cell.anchor.y };
   }
+
   public get width(): number {
     return this._cell.width;
   }
+
   public get height(): number {
     return this._cell.height;
   }
+
   public get kind(): Cell.Kind {
     return this._cell.kind;
   }
+
   public get element(): Element {
     return this._cell.element;
   }
+
   public get downwardGrowing(): boolean {
     return this._downwardGrowing;
   }
+
   public get explicitHeaders(): Array<Element> {
     return this._explicitHeaders;
   }
+
   public get implicitHeaders(): Array<Element> {
     return this._implicitHeaders;
   }
@@ -348,8 +364,8 @@ export class BuildingCell implements Equatable, Serializable {
     return this._cell.isCovering(x, y);
   }
 
-  public compare(cell: BuildingCell): number {
-    return this._cell.compare(cell.cell);
+  public compare(cell: BuildingCell): Comparison {
+    return this._cell.compare(cell._cell);
   }
 
   public anchorAt(x: number, y: number): BuildingCell {
@@ -362,7 +378,7 @@ export class BuildingCell implements Equatable, Serializable {
   public growDownward(yCurrent: number): BuildingCell {
     // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
     return this._update({
-      h: Math.max(this.height, yCurrent - this.anchor.y + 1),
+      height: Math.max(this.height, yCurrent - this.anchor.y + 1),
     });
   }
 
@@ -378,6 +394,7 @@ export class BuildingCell implements Equatable, Serializable {
     }
     return false;
   }
+
   private _isDataCoveringArea(
     x: number,
     y: number,
@@ -386,6 +403,7 @@ export class BuildingCell implements Equatable, Serializable {
   ): boolean {
     return this.kind === Cell.Kind.Data && this._isCoveringArea(x, y, w, h);
   }
+
   private _scopeToState(
     scope: Header.Scope,
     table: BuildingTable
@@ -436,6 +454,7 @@ export class BuildingCell implements Equatable, Serializable {
         }
     }
   }
+
   public headerState(table: BuildingTable): Option<Header.State> {
     return this._scope.flatMap((scope) =>
       Option.from(this._scopeToState(scope, table))
@@ -676,17 +695,17 @@ export namespace BuildingCell {
 
 export namespace Header {
   export enum Scope { // state of the scope attribute
-    Auto = "AUTO",
-    Row = "ROW",
-    Column = "COLUMN",
-    RowGroup = "ROW_GROUP",
-    ColGroup = "COL_GROUP",
+    Auto = "auto",
+    Row = "row",
+    Column = "column",
+    RowGroup = "row-group",
+    ColGroup = "col-group",
   }
 
   export enum State { // https://html.spec.whatwg.org/multipage/tables.html#column-header and friends
-    Row = "ROW",
-    Column = "COLUMN",
-    RowGroup = "ROW_GROUP",
-    ColGroup = "COL_GROUP",
+    Row = "row",
+    Column = "column",
+    RowGroup = "row-group",
+    ColGroup = "col-group",
   }
 }

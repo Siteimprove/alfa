@@ -9,7 +9,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Attribute, Element, Namespace, Node } from "..";
 
-const { and, equals, not, property } = Predicate;
+const { and, equals, property } = Predicate;
 
 // micro syntaxes to move to alfa-parser
 

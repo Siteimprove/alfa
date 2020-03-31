@@ -30,25 +30,25 @@ export class Table implements Equatable, Serializable {
 
   public static of(
     element: Element,
-    w: number = 0,
-    h: number = 0,
+    width: number = 0,
+    height: number = 0,
     cells: Array<Cell> = [],
     rowGroups: Array<RowGroup> = [],
     colGroups: Array<ColGroup> = []
   ): Table {
-    return new Table(element, w, h, cells, rowGroups, colGroups);
+    return new Table(element, width, height, cells, rowGroups, colGroups);
   }
 
   private constructor(
     element: Element,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     cells: Array<Cell>,
     rowGroups: Array<RowGroup>,
     colGroups: Array<ColGroup>
   ) {
-    this._width = w;
-    this._height = h;
+    this._width = width;
+    this._height = height;
     this._element = element;
     this._cells = cells;
     this._rowGroups = rowGroups;
@@ -58,18 +58,23 @@ export class Table implements Equatable, Serializable {
   public get width(): number {
     return this._width;
   }
+
   public get height(): number {
     return this._height;
   }
+
   public get element(): Element {
     return this._element;
   }
+
   public get cells(): Iterable<Cell> {
     return this._cells;
   }
+
   public get colGroups(): Iterable<ColGroup> {
     return this._colGroups;
   }
+
   public get rowGroups(): Iterable<RowGroup> {
     return this._rowGroups;
   }
@@ -134,39 +139,39 @@ export class BuildingTable implements Equatable, Serializable {
 
   public static of(
     element: Element,
-    w: number = 0,
-    h: number = 0,
+    width: number = 0,
+    height: number = 0,
     cells: Array<BuildingCell> = [],
     rowGroups: Array<RowGroup> = [],
     colGroups: Array<ColGroup> = []
   ): BuildingTable {
-    return new BuildingTable(element, w, h, cells, rowGroups, colGroups);
+    return new BuildingTable(element, width, height, cells, rowGroups, colGroups);
   }
 
   private constructor(
     element: Element,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     cells: Array<BuildingCell>,
     rowGroups: Array<RowGroup>,
     colGroups: Array<ColGroup>
   ) {
-    this._table = Table.of(element, w, h, [], rowGroups, colGroups);
+    this._table = Table.of(element, width, height, [], rowGroups, colGroups);
     this._cells = cells;
   }
 
   private _update(update: {
     element?: Element;
-    w?: number;
-    h?: number;
+    width?: number;
+    height?: number;
     cells?: Array<BuildingCell>;
     rowGroups?: Array<RowGroup>;
     colGroups?: Array<ColGroup>;
   }): BuildingTable {
     return BuildingTable.of(
       update.element !== undefined ? update.element : this.element,
-      update.w !== undefined ? update.w : this.width,
-      update.h !== undefined ? update.h : this.height,
+      update.width !== undefined ? update.width : this.width,
+      update.height !== undefined ? update.height : this.height,
       update.cells !== undefined ? update.cells : this._cells,
       update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
       update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
@@ -176,21 +181,27 @@ export class BuildingTable implements Equatable, Serializable {
   public get cells(): Iterable<BuildingCell> {
     return this._cells;
   }
+
   public get width(): number {
     return this._table.width;
   }
+
   public get height(): number {
     return this._table.height;
   }
+
   public get element(): Element {
     return this._table.element;
   }
+
   public get colGroups(): Iterable<ColGroup> {
     return this._table.colGroups;
   }
+
   public get rowGroups(): Iterable<RowGroup> {
     return this._table.rowGroups;
   }
+
   public get table(): Table {
     return Table.of(
       this.element,
@@ -202,16 +213,18 @@ export class BuildingTable implements Equatable, Serializable {
     );
   }
 
-  private _adjustWidth(w: number): BuildingTable {
-    return this._update({ w: Math.max(this.width, w) });
+  private _adjustWidth(width: number): BuildingTable {
+    return this._update({ width: Math.max(this.width, width) });
   }
-  private _adjustHeight(h: number): BuildingTable {
-    return this._update({ h: Math.max(this.height, h) });
+
+  private _adjustHeight(height: number): BuildingTable {
+    return this._update({ height: Math.max(this.height, height) });
   }
 
   private _addColGroup(colGroup: ColGroup): BuildingTable {
     return this._update({ colGroups: [...this.colGroups].concat(colGroup) });
   }
+
   private _addRowGroup(rowGroup: RowGroup): BuildingTable {
     return this._update({ rowGroups: [...this.rowGroups].concat(rowGroup) });
   }

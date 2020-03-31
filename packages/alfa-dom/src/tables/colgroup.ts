@@ -1,49 +1,50 @@
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
-
 import * as json from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
 import { isElementByName, parseSpan } from "./helpers";
-import { RowGroup } from "./groups";
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
  */
-export class ColGroup implements Equatable, Serializable {
-  private readonly _anchorX: number;
+export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
+  private readonly _x: number;
   private readonly _width: number;
   private readonly _element: Element;
 
-  public static of(x: number, w: number, element: Element): ColGroup {
-    return new ColGroup(x, w, element);
+  public static of(x: number, width: number, element: Element): ColGroup {
+    return new ColGroup(x, width, element);
   }
 
-  private constructor(x: number, w: number, element: Element) {
-    this._anchorX = x;
-    this._width = w;
+  private constructor(x: number, width: number, element: Element) {
+    this._x = x;
+    this._width = width;
     this._element = element;
   }
 
   public get anchor(): { x: number } {
-    return { x: this._anchorX };
+    return { x: this._x };
   }
+
   public get width(): number {
     return this._width;
   }
+
   public get element(): Element {
     return this._element;
   }
 
   public static from(element: Element): Result<ColGroup, string> {
-    return BuildingColGroup.from(element).map(colgroup => colgroup.colgroup);
+    return BuildingColGroup.from(element).map((colgroup) => colgroup.colgroup);
   }
 
   public isCovering(x: number): boolean {
     return !(
       // colgroup is *not* covering if either
-      (x < this._anchorX || this._anchorX + this._width - 1 < x) // slot is left of colgroup or slot is right of colgroup
+      (x < this._x || this._x + this._width - 1 < x) // slot is left of colgroup or slot is right of colgroup
     );
   }
 
@@ -51,17 +52,17 @@ export class ColGroup implements Equatable, Serializable {
    * compare colgroups according to their anchor
    * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
    */
-  public compare(colgroup: ColGroup): number {
-    if (this._anchorX < colgroup._anchorX) return -1;
-    if (this._anchorX > colgroup._anchorX) return 1;
-    return 0;
+  public compare(colgroup: ColGroup): Comparison {
+    if (this._x < colgroup._x) return Comparison.Smaller;
+    if (this._x > colgroup._x) return Comparison.Greater;
+    return Comparison.Equal;
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof ColGroup &&
       this._width === value._width &&
-      this._anchorX === value._anchorX &&
+      this._x === value._x &&
       this._element.equals(value._element)
     );
   }
@@ -87,23 +88,26 @@ export namespace ColGroup {
 export class BuildingColGroup implements Equatable, Serializable {
   private readonly _colgroup: ColGroup;
 
-  public static of(x: number, w: number, element: Element) {
-    return new BuildingColGroup(x, w, element);
+  public static of(x: number, width: number, element: Element) {
+    return new BuildingColGroup(x, width, element);
   }
 
-  private constructor(x: number, w: number, element: Element) {
-    this._colgroup = ColGroup.of(x, w, element);
+  private constructor(x: number, width: number, element: Element) {
+    this._colgroup = ColGroup.of(x, width, element);
   }
 
   public get colgroup(): ColGroup {
     return this._colgroup;
   }
+
   public get anchor(): { x: number } {
-    return { x: this._colgroup.anchor.x };
+    return this._colgroup.anchor;
   }
+
   public get width(): number {
     return this._colgroup.width;
   }
+
   public get element(): Element {
     return this._colgroup.element;
   }

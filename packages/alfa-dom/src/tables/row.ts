@@ -1,8 +1,8 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Element } from "..";
 import { BuildingCell, Cell } from "./groups";
@@ -19,7 +19,7 @@ import { isElementByName } from "./helpers";
  * as long as they are all based in the same way…
  */
 export class BuildingRow implements Equatable, Serializable {
-  private readonly _anchorY: number;
+  private readonly _y: number;
   private readonly _xCurrent: number; // current x position in processing the row
   private readonly _width: number;
   private readonly _height: number;
@@ -29,29 +29,29 @@ export class BuildingRow implements Equatable, Serializable {
 
   public static of(
     y: number,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     element: Element,
     cells: Array<BuildingCell> = [],
     growing: Array<BuildingCell> = [],
     xCurrent: number = 0
   ): BuildingRow {
-    return new BuildingRow(y, w, h, element, cells, growing, xCurrent);
+    return new BuildingRow(y, width, height, element, cells, growing, xCurrent);
   }
 
   private constructor(
     y: number,
-    w: number,
-    h: number,
+    width: number,
+    height: number,
     element: Element,
     cells: Array<BuildingCell>,
     growing: Array<BuildingCell>,
     xCurrent: number
   ) {
-    this._anchorY = y;
+    this._y = y;
     this._xCurrent = xCurrent;
-    this._width = w;
-    this._height = h;
+    this._width = width;
+    this._height = height;
     this._element = element;
     this._cells = cells;
     this._downwardGrowingCells = growing;
@@ -67,7 +67,7 @@ export class BuildingRow implements Equatable, Serializable {
     downwardGrowingCells?: Array<BuildingCell>;
   }): BuildingRow {
     return BuildingRow.of(
-      update.y !== undefined ? update.y : this._anchorY,
+      update.y !== undefined ? update.y : this._y,
       update.width !== undefined ? update.width : this._width,
       update.height !== undefined ? update.height : this._height,
       update.element !== undefined ? update.element : this._element,
@@ -80,20 +80,25 @@ export class BuildingRow implements Equatable, Serializable {
   }
 
   public get anchor(): { y: number } {
-    return { y: this._anchorY };
+    return { y: this._y };
   }
+
   public get width(): number {
     return this._width;
   }
+
   public get height(): number {
     return this._height;
   }
+
   public get element(): Element {
     return this._element;
   }
+
   public get cells(): Iterable<BuildingCell> {
     return this._cells;
   }
+
   public get downwardGrowingCells(): Iterable<BuildingCell> {
     return this._downwardGrowingCells;
   }
@@ -109,23 +114,26 @@ export class BuildingRow implements Equatable, Serializable {
   private _addNonGrowingCell(cell: BuildingCell): BuildingRow {
     return this._update({ cells: this._cells.concat(cell) });
   }
+
   private _addGrowingCell(cell: BuildingCell): BuildingRow {
     return this._update({
       downwardGrowingCells: this._downwardGrowingCells.concat(cell),
     });
   }
+
   private _addCell(cell: BuildingCell): BuildingRow {
     return cell.downwardGrowing
       ? this._addGrowingCell(cell)
       : this._addNonGrowingCell(cell);
   }
+
   private _addCellFromElement(
     currentCell: Element,
     yCurrent: number
   ): Result<BuildingRow, string> {
     // 8, 9, 10, 13
     return BuildingCell.from(currentCell, this._xCurrent, yCurrent).andThen(
-      cell =>
+      (cell) =>
         Ok.of(
           this
             // 11
@@ -140,11 +148,12 @@ export class BuildingRow implements Equatable, Serializable {
     );
   }
 
-  private _adjustWidth(w: number): BuildingRow {
-    return this._update({ width: Math.max(this._width, w) });
+  private _adjustWidth(width: number): BuildingRow {
+    return this._update({ width: Math.max(this._width, width) });
   }
-  private _adjustHeight(h: number): BuildingRow {
-    return this._update({ height: Math.max(this._height, h) });
+
+  private _adjustHeight(height: number): BuildingRow {
+    return this._update({ height: Math.max(this._height, height) });
   }
 
   /**
@@ -236,7 +245,7 @@ export class BuildingRow implements Equatable, Serializable {
     return (
       this._width === value._width &&
       this._height === value._height &&
-      this._anchorY === value._anchorY &&
+      this._y === value._y &&
       this._element.equals(value._element) &&
       this._cells.length === value._cells.length &&
       sortedThisCells.every((cell, idx) =>

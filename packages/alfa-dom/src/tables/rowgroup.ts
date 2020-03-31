@@ -1,19 +1,19 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
-
+import {Comparable, Comparison} from "@siteimprove/alfa-comparable";
+import {Equatable} from "@siteimprove/alfa-equatable";
 import * as json from "@siteimprove/alfa-json";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import {Serializable} from "@siteimprove/alfa-json";
+import {Err, Ok, Result} from "@siteimprove/alfa-result";
 
-import { Element } from "..";
-import { BuildingCell, Cell, ColGroup, BuildingRow } from "./groups";
-import { isElementByName } from "./helpers";
+import {Element} from "..";
+import {BuildingCell, BuildingRow, Cell} from "./groups";
+import {isElementByName} from "./helpers";
 
 /**
  * @see/ https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
  * This is a row group as part of the table. It shouldn't duplicate width and cells list.
  */
-export class RowGroup implements Equatable, Serializable {
-  protected readonly _anchorY: number;
+export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
+  protected readonly _y: number;
   protected readonly _height: number;
   protected readonly _element: Element;
 
@@ -22,29 +22,31 @@ export class RowGroup implements Equatable, Serializable {
   }
 
   protected constructor(y: number, h: number, element: Element) {
-    this._anchorY = y;
+    this._y = y;
     this._height = h;
     this._element = element;
   }
 
   public get anchor(): { y: number } {
-    return { y: this._anchorY };
+    return { y: this._y };
   }
+
   public get height(): number {
     return this._height;
   }
+
   public get element(): Element {
     return this._element;
   }
 
   public static from(element: Element): Result<RowGroup, string> {
-    return BuildingRowGroup.from(element).map(rowgroup => rowgroup.rowgroup);
+    return BuildingRowGroup.from(element).map((rowgroup) => rowgroup.rowgroup);
   }
 
   public isCovering(y: number): boolean {
     return !(
       // rowgroup is *not* covering if either
-      (y < this._anchorY || this._anchorY + this._height - 1 < y) // slot is above rowgroup // slot is below rowgroup
+      (y < this._y || this._y + this._height - 1 < y) // slot is above rowgroup // slot is below rowgroup
     );
   }
 
@@ -52,17 +54,17 @@ export class RowGroup implements Equatable, Serializable {
    * compare rowgroups according to their anchor
    * in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
    */
-  public compare(rowgroup: RowGroup): number {
-    if (this._anchorY < rowgroup._anchorY) return -1;
-    if (this._anchorY > rowgroup._anchorY) return 1;
-    return 0;
+  public compare(rowgroup: RowGroup): Comparison {
+    if (this._y < rowgroup._y) return Comparison.Smaller;
+    if (this._y > rowgroup._y) return Comparison.Greater;
+    return Comparison.Equal;
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof RowGroup &&
       this._height === value._height &&
-      this._anchorY === value._anchorY &&
+      this._y === value._y &&
       this._element.equals(value._element)
     );
   }
@@ -93,38 +95,38 @@ export class BuildingRowGroup implements Equatable, Serializable {
 
   public static of(
     y: number,
-    h: number,
+    height: number,
     element: Element,
-    w: number = 0,
+    width: number = 0,
     cells: Array<BuildingCell> = []
   ): BuildingRowGroup {
-    return new BuildingRowGroup(y, h, element, w, cells);
+    return new BuildingRowGroup(y, height, element, width, cells);
   }
 
   constructor(
     y: number,
-    h: number,
+    height: number,
     element: Element,
-    w: number,
+    width: number,
     cells: Array<BuildingCell>
   ) {
-    this._rowgroup = RowGroup.of(y, h, element);
-    this._width = w;
+    this._rowgroup = RowGroup.of(y, height, element);
+    this._width = width;
     this._cells = cells;
   }
 
   private _update(update: {
     y?: number;
-    w?: number;
-    h?: number;
+    width?: number;
+    height?: number;
     element?: Element;
     cells?: Array<BuildingCell>;
   }): BuildingRowGroup {
     return BuildingRowGroup.of(
       update.y !== undefined ? update.y : this._rowgroup.anchor.y,
-      update.h !== undefined ? update.h : this._rowgroup.height,
+      update.height !== undefined ? update.height : this._rowgroup.height,
       update.element !== undefined ? update.element : this._rowgroup.element,
-      update.w !== undefined ? update.w : this._width,
+      update.width !== undefined ? update.width : this._width,
       update.cells !== undefined ? update.cells : this._cells
     );
   }
@@ -132,27 +134,33 @@ export class BuildingRowGroup implements Equatable, Serializable {
   public get rowgroup(): RowGroup {
     return this._rowgroup;
   }
+
   public get width(): number {
     return this._width;
   }
+
   public get cells(): Iterable<BuildingCell> {
     return this._cells;
   }
+
   public get anchor(): { y: number } {
-    return { y: this._rowgroup.anchor.y };
+    return this._rowgroup.anchor;
   }
+
   public get height(): number {
     return this._rowgroup.height;
   }
+
   public get element(): Element {
     return this._rowgroup.element;
   }
 
-  private _adjustWidth(w: number): BuildingRowGroup {
-    return this._update({ w: Math.max(this._width, w) });
+  private _adjustWidth(width: number): BuildingRowGroup {
+    return this._update({ width: Math.max(this._width, width) });
   }
-  private _adjustHeight(h: number): BuildingRowGroup {
-    return this._update({ h: Math.max(this.height, h) });
+
+  private _adjustHeight(height: number): BuildingRowGroup {
+    return this._update({ height: Math.max(this.height, height) });
   }
 
   // anchoring a row group needs to move all cells accordingly

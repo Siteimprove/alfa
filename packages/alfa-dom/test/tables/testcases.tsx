@@ -20,10 +20,10 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   kind: Cell.Kind,
   x: number,
   y: number,
-  w: number = 1,
-  h: number = 1,
+  width: number = 1,
+  height: number = 1,
   headers: Array<string> = []
-): Cell => Cell.of(kind, x, y, w, h, getElt(elt), headers.map(getElt));
+): Cell => Cell.of(kind, x, y, width, height, getElt(elt), headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
   return BuildingCell.of(

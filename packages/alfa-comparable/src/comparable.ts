@@ -1,3 +1,9 @@
+export enum Comparison {
+  Smaller = -1,
+  Equal,
+  Greater
+}
+
 export interface Comparable<T> {
   /**
    * @remarks
@@ -5,5 +11,5 @@ export interface Comparable<T> {
    * potential of over-/underflows when comparisons are implemented naïvely
    * using subtractions, such `a - b`; this would not be allowed.
    */
-  compare(value: T): 1 | 0 | -1;
+  compare(value: T): Comparison;
 }
