@@ -12,9 +12,9 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   kind: Cell.Kind,
   x: number,
   y: number,
+  headers: Array<string> = [],
   width: number = 1,
-  height: number = 1,
-  headers: Array<string> = []
+  height: number = 1
 ): Cell => Cell.of(kind, x, y, width, height, getElt(elt), headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
@@ -98,11 +98,11 @@ export namespace complexRow {
     2,
     element,
     [
-      makeCell("grade", Cell.Kind.Header, 0, 0, 1, 2),
-      makeCell("yield", Cell.Kind.Header, 1, 0, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, 1, 2),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, 1, 2),
+      makeCell("grade", Cell.Kind.Header, 0, 0, [], 1, 2),
+      makeCell("yield", Cell.Kind.Header, 1, 0, [], 1, 2),
+      makeCell("strength", Cell.Kind.Header, 2, 0, [], 2, 1),
+      makeCell("elong", Cell.Kind.Header, 4, 0, [], 1, 2),
+      makeCell("reduct", Cell.Kind.Header, 5, 0, [], 1, 2),
     ].map(toBuildingCell)
   );
 }
@@ -147,11 +147,11 @@ export namespace rowGroup {
     element,
     6,
     [
-      makeCell("grade", Cell.Kind.Header, 0, 0, 1, 2),
-      makeCell("yield", Cell.Kind.Header, 1, 0, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, 1, 2),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, 1, 2),
+      makeCell("grade", Cell.Kind.Header, 0, 0, [], 1, 2),
+      makeCell("yield", Cell.Kind.Header, 1, 0, [], 1, 2),
+      makeCell("strength", Cell.Kind.Header, 2, 0, [], 2, 1),
+      makeCell("elong", Cell.Kind.Header, 4, 0, [], 1, 2),
+      makeCell("reduct", Cell.Kind.Header, 5, 0, [], 1, 2),
       makeCell("kg-mm", Cell.Kind.Header, 2, 1),
       makeCell("lb-in", Cell.Kind.Header, 3, 1),
     ].map(toBuildingCell)
@@ -202,15 +202,15 @@ export namespace downwardGrowing {
     element,
     6,
     [
-      makeCell("grade", Cell.Kind.Header, 0, 0, 1, 3),
-      makeCell("yield", Cell.Kind.Header, 1, 0, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, 1, 2),
+      makeCell("grade", Cell.Kind.Header, 0, 0, [], 1, 3),
+      makeCell("yield", Cell.Kind.Header, 1, 0, [], 1, 2),
+      makeCell("strength", Cell.Kind.Header, 2, 0, [], 2, 1),
+      makeCell("elong", Cell.Kind.Header, 4, 0, [], 1, 2),
       makeCell("lb-in", Cell.Kind.Header, 3, 1),
-      makeCell("foo", Cell.Kind.Header, 1, 2, 1, 1),
-      makeCell("bar", Cell.Kind.Header, 3, 2, 1, 1),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, 1, 3),
-      makeCell("kg-mm", Cell.Kind.Header, 2, 1, 1, 2),
+      makeCell("foo", Cell.Kind.Header, 1, 2, [], 1, 1),
+      makeCell("bar", Cell.Kind.Header, 3, 2, [], 1, 1),
+      makeCell("reduct", Cell.Kind.Header, 5, 0, [], 1, 3),
+      makeCell("kg-mm", Cell.Kind.Header, 2, 1, [], 1, 2),
     ].map(toBuildingCell)
   );
 }
@@ -286,11 +286,11 @@ export namespace smithonian {
     6,
     5,
     [
-      makeCell("grade", Cell.Kind.Header, 0, 0, 1, 2),
-      makeCell("yield", Cell.Kind.Header, 1, 0, 1, 2),
-      makeCell("strength", Cell.Kind.Header, 2, 0, 2, 1),
-      makeCell("elong", Cell.Kind.Header, 4, 0, 1, 2),
-      makeCell("reduct", Cell.Kind.Header, 5, 0, 1, 2),
+      makeCell("grade", Cell.Kind.Header, 0, 0, [], 1, 2),
+      makeCell("yield", Cell.Kind.Header, 1, 0, [], 1, 2),
+      makeCell("strength", Cell.Kind.Header, 2, 0, [], 2, 1),
+      makeCell("elong", Cell.Kind.Header, 4, 0, [], 1, 2),
+      makeCell("reduct", Cell.Kind.Header, 5, 0, [], 1, 2),
       makeCell("kg-mm", Cell.Kind.Header, 2, 1),
       makeCell("lb-in", Cell.Kind.Header, 3, 1),
       makeCell("hard", Cell.Kind.Data, 0, 2),
@@ -820,64 +820,58 @@ export namespace rowGroupImplicitHeaders {
       makeCell("measurement", Cell.Kind.Header, 1, 0),
       makeCell("average", Cell.Kind.Header, 2, 0),
       makeCell("maximum", Cell.Kind.Header, 3, 0),
-      makeCell("empty-cat-id", Cell.Kind.Data, 0, 1, 1, 1, ["ID"]),
-      makeCell("cat", Cell.Kind.Header, 1, 1, 1, 1, ["measurement"]),
-      makeCell("empty-cat-av", Cell.Kind.Data, 2, 1, 1, 1, ["average", "cat"]),
-      makeCell("empty-cat-max", Cell.Kind.Data, 3, 1, 1, 1, ["maximum", "cat"]),
-      makeCell("id93", Cell.Kind.Data, 0, 2, 1, 1, ["ID"]),
-      makeCell("cat-legs", Cell.Kind.Header, 1, 2, 1, 1, [
-        "measurement",
-        "cat",
-      ]),
-      makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, 1, 1, [
+      makeCell("empty-cat-id", Cell.Kind.Data, 0, 1, ["ID"]),
+      makeCell("cat", Cell.Kind.Header, 1, 1, ["measurement"]),
+      makeCell("empty-cat-av", Cell.Kind.Data, 2, 1, ["average", "cat"]),
+      makeCell("empty-cat-max", Cell.Kind.Data, 3, 1, ["maximum", "cat"]),
+      makeCell("id93", Cell.Kind.Data, 0, 2, ["ID"]),
+      makeCell("cat-legs", Cell.Kind.Header, 1, 2, ["measurement", "cat"]),
+      makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, [
         "cat-legs",
         "average",
         "cat",
       ]),
-      makeCell("cat-legs-max", Cell.Kind.Data, 3, 2, 1, 1, [
+      makeCell("cat-legs-max", Cell.Kind.Data, 3, 2, [
         "cat-legs",
         "maximum",
         "cat",
       ]),
-      makeCell("id10", Cell.Kind.Data, 0, 3, 1, 1, ["ID"]),
-      makeCell("cat-tails", Cell.Kind.Header, 1, 3, 1, 1, [
-        "measurement",
-        "cat",
-      ]),
-      makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, 1, 1, [
+      makeCell("id10", Cell.Kind.Data, 0, 3, ["ID"]),
+      makeCell("cat-tails", Cell.Kind.Header, 1, 3, ["measurement", "cat"]),
+      makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, [
         "cat-tails",
         "average",
         "cat",
       ]),
-      makeCell("cat-tails-max", Cell.Kind.Data, 3, 3, 1, 1, [
+      makeCell("cat-tails-max", Cell.Kind.Data, 3, 3, [
         "cat-tails",
         "maximum",
         "cat",
       ]),
-      makeCell("empty-en-id", Cell.Kind.Data, 0, 4, 1, 1, ["ID"]),
-      makeCell("en", Cell.Kind.Header, 1, 4, 1, 1, ["measurement"]),
-      makeCell("empty-en-av", Cell.Kind.Data, 2, 4, 1, 1, ["average", "en"]),
-      makeCell("empty-en-max", Cell.Kind.Data, 3, 4, 1, 1, ["maximum", "en"]),
-      makeCell("id32", Cell.Kind.Data, 0, 5, 1, 1, ["ID"]),
-      makeCell("en-legs", Cell.Kind.Header, 1, 5, 1, 1, ["measurement", "en"]),
-      makeCell("en-legs-av", Cell.Kind.Data, 2, 5, 1, 1, [
+      makeCell("empty-en-id", Cell.Kind.Data, 0, 4, ["ID"]),
+      makeCell("en", Cell.Kind.Header, 1, 4, ["measurement"]),
+      makeCell("empty-en-av", Cell.Kind.Data, 2, 4, ["average", "en"]),
+      makeCell("empty-en-max", Cell.Kind.Data, 3, 4, ["maximum", "en"]),
+      makeCell("id32", Cell.Kind.Data, 0, 5, ["ID"]),
+      makeCell("en-legs", Cell.Kind.Header, 1, 5, ["measurement", "en"]),
+      makeCell("en-legs-av", Cell.Kind.Data, 2, 5, [
         "en-legs",
         "average",
         "en",
       ]),
-      makeCell("en-legs-max", Cell.Kind.Data, 3, 5, 1, 1, [
+      makeCell("en-legs-max", Cell.Kind.Data, 3, 5, [
         "en-legs",
         "maximum",
         "en",
       ]),
-      makeCell("id35", Cell.Kind.Data, 0, 6, 1, 1, ["ID"]),
-      makeCell("en-tails", Cell.Kind.Header, 1, 6, 1, 1, ["measurement", "en"]),
-      makeCell("en-tails-av", Cell.Kind.Data, 2, 6, 1, 1, [
+      makeCell("id35", Cell.Kind.Data, 0, 6, ["ID"]),
+      makeCell("en-tails", Cell.Kind.Header, 1, 6, ["measurement", "en"]),
+      makeCell("en-tails-av", Cell.Kind.Data, 2, 6, [
         "en-tails",
         "average",
         "en",
       ]),
-      makeCell("en-tails-max", Cell.Kind.Data, 3, 6, 1, 1, [
+      makeCell("en-tails-max", Cell.Kind.Data, 3, 6, [
         "en-tails",
         "maximum",
         "en",
@@ -950,51 +944,51 @@ export namespace colGroupImplicitHeaders {
     5,
     4,
     [
-      makeCell("empty", Cell.Kind.Data, 0, 0, 1, 2),
-      makeCell("mars", Cell.Kind.Header, 1, 0, 2, 1),
-      makeCell("venus", Cell.Kind.Header, 3, 0, 2, 1),
-      makeCell("mars-produced", Cell.Kind.Header, 1, 1, 1, 1, ["mars"]),
-      makeCell("mars-sold", Cell.Kind.Header, 2, 1, 1, 1, ["mars"]),
-      makeCell("venus-produced", Cell.Kind.Header, 3, 1, 1, 1, ["venus"]),
-      makeCell("venus-sold", Cell.Kind.Header, 4, 1, 1, 1, ["venus"]),
+      makeCell("empty", Cell.Kind.Data, 0, 0, [], 1, 2),
+      makeCell("mars", Cell.Kind.Header, 1, 0, [], 2, 1),
+      makeCell("venus", Cell.Kind.Header, 3, 0, [], 2, 1),
+      makeCell("mars-produced", Cell.Kind.Header, 1, 1, ["mars"]),
+      makeCell("mars-sold", Cell.Kind.Header, 2, 1, ["mars"]),
+      makeCell("venus-produced", Cell.Kind.Header, 3, 1, ["venus"]),
+      makeCell("venus-sold", Cell.Kind.Header, 4, 1, ["venus"]),
       makeCell("bears", Cell.Kind.Header, 0, 2),
-      makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, 1, 1, [
+      makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, [
         "bears",
         "mars-produced",
         "mars",
       ]),
-      makeCell("mars-sold-bears", Cell.Kind.Data, 2, 2, 1, 1, [
+      makeCell("mars-sold-bears", Cell.Kind.Data, 2, 2, [
         "bears",
         "mars-sold",
         "mars",
       ]),
-      makeCell("venus-produced-bears", Cell.Kind.Data, 3, 2, 1, 1, [
+      makeCell("venus-produced-bears", Cell.Kind.Data, 3, 2, [
         "bears",
         "venus-produced",
         "venus",
       ]),
-      makeCell("venus-sold-bears", Cell.Kind.Data, 4, 2, 1, 1, [
+      makeCell("venus-sold-bears", Cell.Kind.Data, 4, 2, [
         "bears",
         "venus-sold",
         "venus",
       ]),
       makeCell("games", Cell.Kind.Header, 0, 3),
-      makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, 1, 1, [
+      makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, [
         "games",
         "mars-produced",
         "mars",
       ]),
-      makeCell("mars-sold-games", Cell.Kind.Data, 2, 3, 1, 1, [
+      makeCell("mars-sold-games", Cell.Kind.Data, 2, 3, [
         "games",
         "mars-sold",
         "mars",
       ]),
-      makeCell("venus-produced-games", Cell.Kind.Data, 3, 3, 1, 1, [
+      makeCell("venus-produced-games", Cell.Kind.Data, 3, 3, [
         "games",
         "venus-produced",
         "venus",
       ]),
-      makeCell("venus-sold-games", Cell.Kind.Data, 4, 3, 1, 1, [
+      makeCell("venus-sold-games", Cell.Kind.Data, 4, 3, [
         "games",
         "venus-sold",
         "venus",
