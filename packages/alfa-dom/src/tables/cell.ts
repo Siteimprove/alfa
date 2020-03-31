@@ -4,7 +4,6 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -12,8 +11,10 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { BuildingTable, Document, Element } from "..";
 import {
   hasName,
+  isDescendantOf,
   isElementByName,
   isEmpty,
+  isEqual,
   parseAttribute,
   parseEnumeratedAttribute,
   parseSpan,
@@ -133,7 +134,9 @@ export class Cell implements Equatable, Serializable {
       width: this._width,
       height: this._height,
       element: this.name, // this._element.toJSON(),
-      headers: this._headers.map((header) => header.attribute("id").get().value)// this._headers.map((header) => header.toJSON()),
+      headers: this._headers.map(
+        (header) => header.attribute("id").get().value
+      ), // this._headers.map((header) => header.toJSON()),
     };
   }
 }
@@ -546,23 +549,34 @@ export class BuildingCell implements Equatable, Serializable {
     // 3 / headers attribute / 2
     const topNode = document === undefined ? table.element : document;
 
-    const elements =
-      // Take the first element in topNode with the correct ID.
-      Set.of(...resolveReferences(topNode, idsList))
-        // remove the principal cell if its in there
-        .delete(this.element)
-        // only keep whatever is a th/td in the table
-        .intersection(
-          table.element.descendants().filter(
-            and(
-              isElementByName("th", "td"),
-              // Step 4: remove empty cells
-              not(isEmpty)
-            )
+    const elements = resolveReferences(topNode, idsList).filter(
+      (element) =>
+        and(
+          and(
+            // only keep cells in the table
+            isElementByName("th", "td"),
+            isDescendantOf(table.element)
+          ),
+          and(
+            // remove principal cell
+            not(isEqual(this.element)),
+            // Step 4: remove empty cell
+            not(isEmpty)
           )
-        );
+        )
 
-    return this._update({ eHeaders: [...elements] });
+      // table.element
+      //   .descendants()
+      //   .find((elt) => element.equals(elt))
+      //   .isSome() &&
+      // isElementByName("th", "td")(element) &&
+      // // remove principal cell
+      // isNotEqual(this.element)(element) &&
+      // // Step 4: remove empty cell
+      // not(isEmpty)(element)
+    );
+
+    return this._update({ eHeaders: elements });
   }
 
   /**
@@ -594,8 +608,8 @@ export class BuildingCell implements Equatable, Serializable {
       rg.isCovering(this.anchor.y)
     );
     if (rowgroup.isSome()) {
-      const rowGroupHeaders = [...table.cells].filter(
-        (cell) => cell.headerState(table).equals(Some.of(Header.State.RowGroup))
+      const rowGroupHeaders = [...table.cells].filter((cell) =>
+        cell.headerState(table).equals(Some.of(Header.State.RowGroup))
       );
       const anchored = rowGroupHeaders.filter((cell) =>
         rowgroup.get().isCovering(cell.anchor.y)
@@ -614,8 +628,8 @@ export class BuildingCell implements Equatable, Serializable {
       cg.isCovering(this.anchor.x)
     );
     if (colgroup.isSome()) {
-      const colGroupHeaders = [...table.cells].filter(
-        (cell) => cell.headerState(table).equals(Some.of(Header.State.ColGroup))
+      const colGroupHeaders = [...table.cells].filter((cell) =>
+        cell.headerState(table).equals(Some.of(Header.State.ColGroup))
       );
       const anchored = colGroupHeaders.filter((cell) =>
         colgroup.get().isCovering(cell.anchor.x)

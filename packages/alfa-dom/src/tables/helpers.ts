@@ -1,3 +1,4 @@
+import {Equatable} from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { clamp } from "@siteimprove/alfa-math";
@@ -8,7 +9,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Attribute, Element, Namespace, Node } from "..";
 
-const { and, equals, property } = Predicate;
+const { and, equals, not, property } = Predicate;
 
 // micro syntaxes to move to alfa-parser
 
@@ -134,6 +135,14 @@ export function isElementByName(
     Element.isElement,
     and(hasNamespace(equals(Namespace.HTML)), hasName(equals(...names)))
   );
+}
+
+export function isEqual<T extends Equatable>(value1: T): Predicate<unknown, T> {
+  return value2 => value1.equals(value2);
+}
+
+export function isDescendantOf(node: Node, options?: Node.Traversal): Predicate<Node> {
+  return desc => node.descendants(options).find(isEqual(desc)).isSome()
 }
 
 // Bad copied form alfa-aria accessible name computation (aria-labelledby). Move to DOM helpers?
