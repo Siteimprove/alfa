@@ -115,10 +115,10 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
    * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
    */
   public compare(cell: Cell): Comparison {
-    if (this._y < cell._y) return Comparison.Smaller;
-    if (this._y > cell._y) return Comparison.Greater;
-    if (this._x < cell._x) return Comparison.Smaller;
-    if (this._x > cell._x) return Comparison.Greater;
+    if (this._y < cell._y) return Comparison.Less;
+    if (this._y > cell._y) return Comparison.More;
+    if (this._x < cell._x) return Comparison.Less;
+    if (this._x > cell._x) return Comparison.More;
     return Comparison.Equal;
   }
 
@@ -167,8 +167,7 @@ export namespace Cell {
     Data = "data",
   }
 
-  export class Building
-    implements Comparable<Building>, Equatable, Serializable {
+  export class Builder implements Comparable<Builder>, Equatable, Serializable {
     // headers are always empty in the cell, filled in when exporting
     private readonly _cell: Cell;
     private readonly _downwardGrowing: boolean;
@@ -193,8 +192,8 @@ export namespace Cell {
       state: Option<Header.Scope> = None,
       eHeaders: Array<Element> = [],
       iHeaders: Array<Element> = []
-    ): Building {
-      return new Building(
+    ): Builder {
+      return new Builder(
         kind,
         x,
         y,
@@ -241,8 +240,8 @@ export namespace Cell {
       scope?: Option<Header.Scope>;
       eHeaders?: Array<Element>;
       iHeaders?: Array<Element>;
-    }): Building {
-      return Building.of(
+    }): Builder {
+      return Builder.of(
         update.kind !== undefined ? update.kind : this.kind,
         update.x !== undefined ? update.x : this.anchor.x,
         update.y !== undefined ? update.y : this.anchor.y,
@@ -286,7 +285,7 @@ export namespace Cell {
     // end debug
 
     public get anchor(): { x: number; y: number } {
-      return { x: this._cell.anchor.x, y: this._cell.anchor.y };
+      return this._cell.anchor;
     }
 
     public get width(): number {
@@ -317,71 +316,22 @@ export namespace Cell {
       return this._implicitHeaders;
     }
 
-    /**
-     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-     */
-    public static from(
-      cell: Element,
-      x: number = -1,
-      y: number = -1
-    ): Result<Building, string> {
-      if (cell.name !== "th" && cell.name !== "td")
-        return Err.of("This element is not a table cell");
-
-      const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
-      // 9
-      let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
-      // 10 assuming we are not in quirks mode because I don't know if we test that yet…
-      // Unsurprisingly, "rowspan=0" is not universally supported (that is, not by Edge…)
-      const grow = rowspan === 0;
-      if (rowspan === 0) {
-        rowspan = 1;
-      }
-
-      // 11
-      const kind = hasName(equals("th"))(cell)
-        ? Cell.Kind.Header
-        : Cell.Kind.Data;
-
-      /**
-       * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
-       */
-      const scopeMapping = Map.from([
-        ["row", Header.Scope.Row],
-        ["col", Header.Scope.Column],
-        ["rowgroup", Header.Scope.RowGroup],
-        ["colgroup", Header.Scope.ColGroup],
-        ["missing", Header.Scope.Auto],
-        ["invalid", Header.Scope.Auto],
-      ]);
-      const scope =
-        kind === Cell.Kind.Data
-          ? None
-          : Some.of(
-              parseEnumeratedAttribute("scope", scopeMapping)(cell).get()
-            );
-
-      return Ok.of(
-        Building.of(kind, x, y, colspan, rowspan, cell, grow, scope)
-      );
-    }
-
     public isCovering(x: number, y: number): boolean {
       return this._cell.isCovering(x, y);
     }
 
-    public compare(cell: Building): Comparison {
+    public compare(cell: Builder): Comparison {
       return this._cell.compare(cell._cell);
     }
 
-    public anchorAt(x: number, y: number): Building {
+    public anchorAt(x: number, y: number): Builder {
       return this._update({ x, y });
     }
 
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
      */
-    public growDownward(yCurrent: number): Building {
+    public growDownward(yCurrent: number): Builder {
       // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
       return this._update({
         height: Math.max(this.height, yCurrent - this.anchor.y + 1),
@@ -417,7 +367,7 @@ export namespace Cell {
 
     private _scopeToState(
       scope: Header.Scope,
-      table: Table.Building
+      table: Table.Builder
     ): Header.State | undefined {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
@@ -471,7 +421,7 @@ export namespace Cell {
       }
     }
 
-    public headerState(table: Table.Building): Option<Header.State> {
+    public headerState(table: Table.Builder): Option<Header.State> {
       return this._scope.flatMap((scope) =>
         Option.from(this._scopeToState(scope, table))
       );
@@ -481,21 +431,21 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
      */
     private _internalHeaderScanning(
-      table: Table.Building,
+      table: Table.Builder,
       initialX: number,
       initialY: number,
       decreaseX: boolean
-    ): Array<Building> {
+    ): Array<Builder> {
       // The principal cell is this.
       const deltaX = decreaseX ? -1 : 0;
       const deltaY = decreaseX ? 0 : -1;
-      let headersList: Array<Building> = []; // new headers found by this algorithm
+      let headersList: Array<Builder> = []; // new headers found by this algorithm
 
       // 3
-      let opaqueHeaders: Array<Building> = [];
+      let opaqueHeaders: Array<Builder> = [];
       // 4
       let inHeaderBlock = false;
-      let headersFromCurrentBlock: Array<Building> = [];
+      let headersFromCurrentBlock: Array<Builder> = [];
       if (this.kind === Cell.Kind.Header) {
         inHeaderBlock = true;
         headersFromCurrentBlock.push(this);
@@ -572,9 +522,9 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignExplicitHeaders(
-      table: Table.Building,
+      table: Table.Builder,
       document: Document | undefined = undefined
-    ): Building {
+    ): Builder {
       const debug = false;
       if (debug) console.log("Parsing foo");
       function showAndTell<T, U extends T = T>(
@@ -630,11 +580,11 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    private _assignImplicitHeaders(table: Table.Building): Building {
+    private _assignImplicitHeaders(table: Table.Builder): Builder {
       // const debug = this.name === "en";
       // if (debug) console.log(`Implicit headers of ${this.name}`);
       // 1
-      let headersList: Array<Building> = [];
+      let headersList: Array<Builder> = [];
       // 2 principal cell = this, nothing to do.
       // 3 / no header attribute (3.1, 3.2: use this)
       // 3.3
@@ -707,15 +657,15 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    public assignHeaders(table: Table.Building): Building {
+    public assignHeaders(table: Table.Builder): Builder {
       return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
     }
 
     public equals(value: unknown): value is this {
-      return value instanceof Building && this._cell.equals(value._cell);
+      return value instanceof Builder && this._cell.equals(value._cell);
     }
 
-    public toJSON(): Cell.Building.JSON {
+    public toJSON(): Cell.Builder.JSON {
       return {
         cell: this._cell.toJSON(),
         state: this._scope.toJSON(),
@@ -725,7 +675,54 @@ export namespace Cell {
     }
   }
 
-  export namespace Building {
+  export namespace Builder {
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+     */
+    export function from(
+      cell: Element,
+      x: number = -1,
+      y: number = -1
+    ): Result<Builder, string> {
+      if (cell.name !== "th" && cell.name !== "td")
+        return Err.of("This element is not a table cell");
+
+      const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
+      // 9
+      let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
+      // 10 assuming we are not in quirks mode because I don't know if we test that yet…
+      // Unsurprisingly, "rowspan=0" is not universally supported (that is, not by Edge…)
+      const grow = rowspan === 0;
+      if (rowspan === 0) {
+        rowspan = 1;
+      }
+
+      // 11
+      const kind = hasName(equals("th"))(cell)
+        ? Cell.Kind.Header
+        : Cell.Kind.Data;
+
+      /**
+       * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+       */
+      const scopeMapping = Map.from([
+        ["row", Header.Scope.Row],
+        ["col", Header.Scope.Column],
+        ["rowgroup", Header.Scope.RowGroup],
+        ["colgroup", Header.Scope.ColGroup],
+        ["missing", Header.Scope.Auto],
+        ["invalid", Header.Scope.Auto],
+      ]);
+      const scope =
+        kind === Cell.Kind.Data
+          ? None
+          : Some.of(
+              parseEnumeratedAttribute("scope", scopeMapping)(cell).get()
+            );
+
+      return Ok.of(Builder.of(kind, x, y, colspan, rowspan, cell, grow, scope));
+    }
+
     export interface JSON {
       [key: string]: json.JSON;
 

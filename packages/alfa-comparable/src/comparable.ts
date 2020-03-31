@@ -1,7 +1,7 @@
 export enum Comparison {
-  Smaller = -1,
+  Less = -1,
   Equal,
-  Greater
+  More
 }
 
 export interface Comparable<T> {

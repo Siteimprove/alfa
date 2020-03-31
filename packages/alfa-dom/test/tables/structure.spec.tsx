@@ -24,24 +24,24 @@ import { Row, Cell, RowGroup } from "../../src/tables/groups";
 
 test("Process individual rows", (t) => {
   t.deepEqual(
-    Row.Building.from(simpleRow.element).get().toJSON(),
+    Row.Builder.from(simpleRow.element).get().toJSON(),
     simpleRow.expected.toJSON()
   );
 
   t.deepEqual(
-    Row.Building.from(complexRow.element).get().toJSON(),
+    Row.Builder.from(complexRow.element).get().toJSON(),
     complexRow.expected.toJSON()
   );
 });
 
 test("Process row groups", (t) => {
   t.deepEqual(
-    RowGroup.Building.from(rowGroup.element).get().toJSON(),
+    RowGroup.Builder.from(rowGroup.element).get().toJSON(),
     rowGroup.expected.toJSON()
   );
 
   t.deepEqual(
-    RowGroup.Building.from(downwardGrowing.element).get().toJSON(),
+    RowGroup.Builder.from(downwardGrowing.element).get().toJSON(),
     downwardGrowing.expected.toJSON()
   );
 });
@@ -84,7 +84,7 @@ test("Table model errors", (t) => {
 });
 
 test("Header scope and state", (t) => {
-  const expensesTable = Table.Building.from(expenses.element).get();
+  const expensesTable = Table.Builder.from(expenses.element).get();
   t.deepEqual(
     [...expensesTable.cells]
       .filter((cell) => cell.kind === Cell.Kind.Header)
@@ -92,7 +92,7 @@ test("Header scope and state", (t) => {
     expenses.headerStates
   );
 
-  const headersTable = Table.Building.from(headersState.element).get();
+  const headersTable = Table.Builder.from(headersState.element).get();
   t.deepEqual(
     [...headersTable.cells]
       .filter((cell) => cell.kind === Cell.Kind.Header)

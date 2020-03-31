@@ -1,8 +1,9 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
 import { Row, Cell } from "./groups";
@@ -40,7 +41,7 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
   }
 
   public static from(element: Element): Result<RowGroup, string> {
-    return RowGroup.Building.from(element).map((rowgroup) => rowgroup.rowgroup);
+    return RowGroup.Builder.from(element).map((rowgroup) => rowgroup.rowgroup);
   }
 
   public isCovering(y: number): boolean {
@@ -55,8 +56,8 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
    * in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
    */
   public compare(rowgroup: RowGroup): Comparison {
-    if (this._y < rowgroup._y) return Comparison.Smaller;
-    if (this._y > rowgroup._y) return Comparison.Greater;
+    if (this._y < rowgroup._y) return Comparison.Less;
+    if (this._y > rowgroup._y) return Comparison.More;
     return Comparison.Equal;
   }
 
@@ -88,9 +89,9 @@ export namespace RowGroup {
   }
 
   // This is a row group while building the table. It contains width and cells list that will be merged with parent table once done.
-  export class Building implements Equatable, Serializable {
+  export class Builder implements Equatable, Serializable {
     private readonly _width: number;
-    private readonly _cells: Array<Cell.Building>;
+    private readonly _cells: Array<Cell.Builder>;
     private readonly _rowgroup: RowGroup;
 
     public static of(
@@ -98,9 +99,9 @@ export namespace RowGroup {
       height: number,
       element: Element,
       width: number = 0,
-      cells: Array<Cell.Building> = []
-    ): Building {
-      return new Building(y, height, element, width, cells);
+      cells: Array<Cell.Builder> = []
+    ): Builder {
+      return new Builder(y, height, element, width, cells);
     }
 
     constructor(
@@ -108,21 +109,21 @@ export namespace RowGroup {
       height: number,
       element: Element,
       width: number,
-      cells: Array<Cell.Building>
+      cells: Array<Cell.Builder>
     ) {
       this._rowgroup = RowGroup.of(y, height, element);
       this._width = width;
       this._cells = cells;
     }
 
-    private _update(update: {
+    public update(update: {
       y?: number;
       width?: number;
       height?: number;
       element?: Element;
-      cells?: Array<Cell.Building>;
-    }): Building {
-      return Building.of(
+      cells?: Array<Cell.Builder>;
+    }): Builder {
+      return Builder.of(
         update.y !== undefined ? update.y : this._rowgroup.anchor.y,
         update.height !== undefined ? update.height : this._rowgroup.height,
         update.element !== undefined ? update.element : this._rowgroup.element,
@@ -139,7 +140,7 @@ export namespace RowGroup {
       return this._width;
     }
 
-    public get cells(): Iterable<Cell.Building> {
+    public get cells(): Array<Cell.Builder> {
       return this._cells;
     }
 
@@ -155,17 +156,17 @@ export namespace RowGroup {
       return this._rowgroup.element;
     }
 
-    private _adjustWidth(width: number): Building {
-      return this._update({ width: Math.max(this._width, width) });
+    public adjustWidth(width: number): Builder {
+      return this.update({ width: Math.max(this._width, width) });
     }
 
-    private _adjustHeight(height: number): Building {
-      return this._update({ height: Math.max(this.height, height) });
+    public adjustHeight(height: number): Builder {
+      return this.update({ height: Math.max(this.height, height) });
     }
 
     // anchoring a row group needs to move all cells accordingly
-    public anchorAt(y: number): Building {
-      return this._update({
+    public anchorAt(y: number): Builder {
+      return this.update({
         y,
         cells: this._cells.map((cell) =>
           cell.anchorAt(cell.anchor.x, y + cell.anchor.y)
@@ -173,56 +174,8 @@ export namespace RowGroup {
       });
     }
 
-    /**
-     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
-     */
-    public static from(group: Element): Result<Building, string> {
-      if (
-        group.name !== "tfoot" &&
-        group.name !== "tbody" &&
-        group.name !== "thead"
-      )
-        return Err.of("This element is not a row group");
-
-      let growingCellsList: Array<Cell.Building> = [];
-      let rowgroup = Building.of(-1, 0, group);
-      let yCurrent = 0; // y position inside the rowgroup
-      // 1
-      // Useless, the height of the group is computed and used instead.
-      // 2
-      for (const tr of group.children().filter(isElementByName("tr"))) {
-        const row = Row.Building.from(
-          tr,
-          rowgroup._cells,
-          growingCellsList,
-          yCurrent,
-          rowgroup._width
-        ).get();
-        growingCellsList = [...row.downwardGrowingCells];
-        rowgroup = rowgroup
-          ._update({ cells: rowgroup._cells.concat(...row.cells) })
-          ._adjustHeight(yCurrent + row.height)
-          ._adjustWidth(row.width);
-        // row processing steps 4/16
-        yCurrent++;
-      }
-      // 4, ending the row group
-      // ending row group 1
-      growingCellsList = growingCellsList.map((cell) =>
-        cell.growDownward(rowgroup._rowgroup.height - 1)
-      );
-      // ending row group 2
-      // When emptying the growing cells list, we need to finally add them to the group.
-      rowgroup = rowgroup._update({
-        cells: rowgroup._cells.concat(growingCellsList),
-      });
-      // 3, returning the row group for the table to handle
-      // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
-      return Ok.of(rowgroup);
-    }
-
     public equals(value: unknown): value is this {
-      if (!(value instanceof Building)) return false;
+      if (!(value instanceof Builder)) return false;
       const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
       const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
       return (
@@ -233,7 +186,7 @@ export namespace RowGroup {
       );
     }
 
-    public toJSON(): Building.JSON {
+    public toJSON(): Builder.JSON {
       return {
         rowgroup: this._rowgroup.toJSON(),
         width: this._width,
@@ -242,7 +195,55 @@ export namespace RowGroup {
     }
   }
 
-  export namespace Building {
+  export namespace Builder {
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
+     */
+  export function from(group: Element): Result<Builder, string> {
+      if (
+        group.name !== "tfoot" &&
+        group.name !== "tbody" &&
+        group.name !== "thead"
+  )
+    return Err.of("This element is not a row group");
+
+    let growingCellsList: Array<Cell.Builder> = [];
+    let rowgroup = Builder.of(-1, 0, group);
+    let yCurrent = 0; // y position inside the rowgroup
+    // 1
+    // Useless, the height of the group is computed and used instead.
+    // 2
+    for (const tr of group.children().filter(isElementByName("tr"))) {
+      const row = Row.Builder.from(
+        tr,
+        rowgroup.cells,
+        growingCellsList,
+        yCurrent,
+        rowgroup.width
+      ).get();
+      growingCellsList = [...row.downwardGrowingCells];
+      rowgroup = rowgroup
+        .update({ cells: rowgroup.cells.concat(...row.cells) })
+        .adjustHeight(yCurrent + row.height)
+        .adjustWidth(row.width);
+      // row processing steps 4/16
+      yCurrent++;
+    }
+    // 4, ending the row group
+    // ending row group 1
+    growingCellsList = growingCellsList.map((cell) =>
+      cell.growDownward(rowgroup.rowgroup.height - 1)
+    );
+    // ending row group 2
+    // When emptying the growing cells list, we need to finally add them to the group.
+    rowgroup = rowgroup.update({
+      cells: rowgroup.cells.concat(growingCellsList),
+    });
+    // 3, returning the row group for the table to handle
+    // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
+    return Ok.of(rowgroup);
+  }
+
     export interface JSON {
       [key: string]: json.JSON;
 

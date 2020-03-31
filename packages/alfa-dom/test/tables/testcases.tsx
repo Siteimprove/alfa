@@ -18,7 +18,7 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
 ): Cell => Cell.of(kind, x, y, width, height, getElt(elt), headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
-  return Cell.Building.of(
+  return Cell.Builder.of(
     cell.kind,
     cell.anchor.x,
     cell.anchor.y,
@@ -54,7 +54,7 @@ export namespace simpleRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Row.Building.of(
+  export const expected = Row.Builder.of(
     0,
     2,
     1,
@@ -92,7 +92,7 @@ export namespace complexRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Row.Building.of(
+  export const expected = Row.Builder.of(
     0,
     6,
     2,
@@ -141,7 +141,7 @@ export namespace rowGroup {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = RowGroup.Building.of(
+  export const expected = RowGroup.Builder.of(
     -1,
     2,
     element,
@@ -196,7 +196,7 @@ export namespace downwardGrowing {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = RowGroup.Building.of(
+  export const expected = RowGroup.Builder.of(
     -1,
     3,
     element,

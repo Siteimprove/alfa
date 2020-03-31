@@ -19,25 +19,25 @@ import { isElementByName } from "./helpers";
  * as long as they are all based in the same way…
  */
 export namespace Row {
-  export class Building implements Equatable, Serializable {
+  export class Builder implements Equatable, Serializable {
     private readonly _y: number;
     private readonly _xCurrent: number; // current x position in processing the row
     private readonly _width: number;
     private readonly _height: number;
     private readonly _element: Element;
-    private readonly _cells: Array<Cell.Building>;
-    private readonly _downwardGrowingCells: Array<Cell.Building>;
+    private readonly _cells: Array<Cell.Builder>;
+    private readonly _downwardGrowingCells: Array<Cell.Builder>;
 
     public static of(
       y: number,
       width: number,
       height: number,
       element: Element,
-      cells: Array<Cell.Building> = [],
-      growing: Array<Cell.Building> = [],
+      cells: Array<Cell.Builder> = [],
+      growing: Array<Cell.Builder> = [],
       xCurrent: number = 0
-    ): Building {
-      return new Building(y, width, height, element, cells, growing, xCurrent);
+    ): Builder {
+      return new Builder(y, width, height, element, cells, growing, xCurrent);
     }
 
     private constructor(
@@ -45,8 +45,8 @@ export namespace Row {
       width: number,
       height: number,
       element: Element,
-      cells: Array<Cell.Building>,
-      growing: Array<Cell.Building>,
+      cells: Array<Cell.Builder>,
+      growing: Array<Cell.Builder>,
       xCurrent: number
     ) {
       this._y = y;
@@ -58,16 +58,16 @@ export namespace Row {
       this._downwardGrowingCells = growing;
     }
 
-    private _update(update: {
+    public update(update: {
       y?: number;
       xCurrent?: number;
       width?: number;
       height?: number;
       element?: Element;
-      cells?: Array<Cell.Building>;
-      downwardGrowingCells?: Array<Cell.Building>;
-    }): Building {
-      return Building.of(
+      cells?: Array<Cell.Builder>;
+      downwardGrowingCells?: Array<Cell.Builder>;
+    }): Builder {
+      return Builder.of(
         update.y !== undefined ? update.y : this._y,
         update.width !== undefined ? update.width : this._width,
         update.height !== undefined ? update.height : this._height,
@@ -96,82 +96,82 @@ export namespace Row {
       return this._element;
     }
 
-    public get cells(): Iterable<Cell.Building> {
+    public get cells(): Iterable<Cell.Builder> {
       return this._cells;
     }
 
-    public get downwardGrowingCells(): Iterable<Cell.Building> {
+    public get downwardGrowingCells(): Iterable<Cell.Builder> {
       return this._downwardGrowingCells;
     }
 
-    private _growCells(y: number): Building {
-      return this._update({
+    public growCells(y: number): Builder {
+      return this.update({
         downwardGrowingCells: this._downwardGrowingCells.map((cell) =>
           cell.growDownward(y)
         ),
       });
     }
 
-    private _addNonGrowingCell(cell: Cell.Building): Building {
-      return this._update({ cells: this._cells.concat(cell) });
+    public addNonGrowingCell(cell: Cell.Builder): Builder {
+      return this.update({ cells: this._cells.concat(cell) });
     }
 
-    private _addGrowingCell(cell: Cell.Building): Building {
-      return this._update({
+    public addGrowingCell(cell: Cell.Builder): Builder {
+      return this.update({
         downwardGrowingCells: this._downwardGrowingCells.concat(cell),
       });
     }
 
-    private _addCell(cell: Cell.Building): Building {
+    public addCell(cell: Cell.Builder): Builder {
       return cell.downwardGrowing
-        ? this._addGrowingCell(cell)
-        : this._addNonGrowingCell(cell);
+        ? this.addGrowingCell(cell)
+        : this.addNonGrowingCell(cell);
     }
 
-    private _addCellFromElement(
+    public addCellFromElement(
       currentCell: Element,
       yCurrent: number
-    ): Result<Building, string> {
+    ): Result<Builder, string> {
       // 8, 9, 10, 13
-      return Cell.Building.from(currentCell, this._xCurrent, yCurrent).andThen(
+      return Cell.Builder.from(currentCell, this._xCurrent, yCurrent).andThen(
         (cell) =>
           Ok.of(
             this
               // 11
-              ._adjustWidth(this._xCurrent + cell.width)
+              .adjustWidth(this._xCurrent + cell.width)
               // 12
-              ._adjustHeight(cell.height)
+              .adjustHeight(cell.height)
               // 13
               // Double coverage check made at the end of table building to de-entangle code
               // 14
-              ._addCell(cell)
+              .addCell(cell)
           )
       );
     }
 
-    private _adjustWidth(width: number): Building {
-      return this._update({ width: Math.max(this._width, width) });
+    public adjustWidth(width: number): Builder {
+      return this.update({ width: Math.max(this._width, width) });
     }
 
-    private _adjustHeight(height: number): Building {
-      return this._update({ height: Math.max(this._height, height) });
+    public adjustHeight(height: number): Builder {
+      return this.update({ height: Math.max(this._height, height) });
     }
 
     /**
      * moves xCurrent to the first slot which is not already covered by one of the cells from the row or its context
      * step 6
      */
-    private _skipIfCovered(
-      cells: Array<Cell.Building>,
+    public skipIfCovered(
+      cells: Array<Cell.Builder>,
       yCurrent: number
-    ): Building {
+    ): Builder {
       if (
         this._xCurrent < this._width &&
         cells
           .concat(this._cells, this._downwardGrowingCells)
           .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
       ) {
-        return this._update({ xCurrent: this._xCurrent + 1 })._skipIfCovered(
+        return this.update({ xCurrent: this._xCurrent + 1 }).skipIfCovered(
           cells,
           yCurrent
         );
@@ -180,61 +180,14 @@ export namespace Row {
       }
     }
 
-    private _enlargeIfNeeded(): Building {
+    public enlargeIfNeeded(): Builder {
       return this._xCurrent === this.width
-        ? this._adjustWidth(this.width + 1)
+        ? this.adjustWidth(this.width + 1)
         : this;
     }
 
-    /**
-     * @see/ https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-     */
-    public static from(
-      tr: Element,
-      cells: Array<Cell.Building> = [],
-      growingCells: Array<Cell.Building> = [],
-      yCurrent: number = 0,
-      w: number = 0
-    ): Result<Building, string> {
-      if (
-        cells.some((cell) =>
-          growingCells.some((growingCell) => cell.equals(growingCell))
-        )
-      )
-        return Err.of("Cells and growing cells must be disjoints");
-      if (tr.name !== "tr") return Err.of("This element is not a table row");
-
-      let children = tr.children().filter(isElementByName("th", "td"));
-
-      // 1
-      // global table height adjusted after building row
-
-      // loop control between 4-5, and 16-17-18
-      return Ok.of(
-        children.reduce(
-          (row, currentCell) =>
-            row
-              // 6 (Cells)
-              ._skipIfCovered(cells, yCurrent)
-              // 7
-              ._enlargeIfNeeded()
-              // 8-14
-              ._addCellFromElement(currentCell, yCurrent)
-              .get(), // can't be an error because children have been filtered
-          // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
-          // 2 is done when creating the row, default value for xCurrent is 0.
-          Building.of(yCurrent, w, 1, tr, [], growingCells)
-            // 3
-            ._growCells(yCurrent)
-        )
-      );
-
-      // return row;
-      // 4 and 16 done after the calls to avoid side effects.
-    }
-
     public equals(value: unknown): value is this {
-      if (!(value instanceof Building)) return false;
+      if (!(value instanceof Builder)) return false;
       const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
       const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
       const sortedThisDGCells = this._downwardGrowingCells.sort((a, b) =>
@@ -260,7 +213,7 @@ export namespace Row {
       );
     }
 
-    public toJSON(): Building.JSON {
+    public toJSON(): Builder.JSON {
       return {
         anchor: this.anchor,
         width: this._width,
@@ -274,7 +227,54 @@ export namespace Row {
     }
   }
 
-  export namespace Building {
+  export namespace Builder {
+    /**
+     * @see/ https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+     */
+  export function from(
+      tr: Element,
+      cells: Array<Cell.Builder> = [],
+      growingCells: Array<Cell.Builder> = [],
+      yCurrent: number = 0,
+      w: number = 0
+  ): Result<Builder, string> {
+      if (
+        cells.some((cell) =>
+        growingCells.some((growingCell) => cell.equals(growingCell))
+      )
+  )
+    return Err.of("Cells and growing cells must be disjoints");
+    if (tr.name !== "tr") return Err.of("This element is not a table row");
+
+    let children = tr.children().filter(isElementByName("th", "td"));
+
+    // 1
+    // global table height adjusted after building row
+
+    // loop control between 4-5, and 16-17-18
+    return Ok.of(
+      children.reduce(
+        (row, currentCell) =>
+          row
+            // 6 (Cells)
+            .skipIfCovered(cells, yCurrent)
+            // 7
+            .enlargeIfNeeded()
+            // 8-14
+            .addCellFromElement(currentCell, yCurrent)
+            .get(), // can't be an error because children have been filtered
+        // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
+        // 2 is done when creating the row, default value for xCurrent is 0.
+        Builder.of(yCurrent, w, 1, tr, [], growingCells)
+          // 3
+          .growCells(yCurrent)
+      )
+    );
+
+    // return row;
+    // 4 and 16 done after the calls to avoid side effects.
+  }
+
     export interface JSON {
       [key: string]: json.JSON;
 

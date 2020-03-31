@@ -1,8 +1,9 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
 import { isElementByName, parseSpan } from "./helpers";
@@ -38,7 +39,7 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
   }
 
   public static from(element: Element): Result<ColGroup, string> {
-    return ColGroup.Building.from(element).map((colgroup) => colgroup.colgroup);
+    return ColGroup.Builder.from(element).map((colgroup) => colgroup.colgroup);
   }
 
   public isCovering(x: number): boolean {
@@ -53,8 +54,8 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
    * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
    */
   public compare(colgroup: ColGroup): Comparison {
-    if (this._x < colgroup._x) return Comparison.Smaller;
-    if (this._x > colgroup._x) return Comparison.Greater;
+    if (this._x < colgroup._x) return Comparison.Less;
+    if (this._x > colgroup._x) return Comparison.More;
     return Comparison.Equal;
   }
 
@@ -85,11 +86,11 @@ export namespace ColGroup {
     element: Element.JSON;
   }
 
-  export class Building implements Equatable, Serializable {
+  export class Builder implements Equatable, Serializable {
     private readonly _colgroup: ColGroup;
 
     public static of(x: number, width: number, element: Element) {
-      return new Building(x, width, element);
+      return new Builder(x, width, element);
     }
 
     private constructor(x: number, width: number, element: Element) {
@@ -112,18 +113,30 @@ export namespace ColGroup {
       return this._colgroup.element;
     }
 
-    public anchorAt(x: number): Building {
-      return Building.of(x, this.width, this.element);
+    public anchorAt(x: number): Builder {
+      return Builder.of(x, this.width, this.element);
     }
 
+    public equals(value: unknown): value is this {
+      return value instanceof Builder && this._colgroup.equals(value._colgroup);
+    }
+
+    public toJSON(): Builder.JSON {
+      return {
+        colgroup: this._colgroup.toJSON(),
+      };
+    }
+  }
+
+  export namespace Builder {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
      * global step 9.1
      */
-    public static from(
+    export function from(
       colgroup: Element,
       x: number = -1
-    ): Result<Building, string> {
+    ): Result<Builder, string> {
       if (colgroup.name !== "colgroup")
         return Err.of("This element is not a colgroup");
 
@@ -149,23 +162,9 @@ export namespace ColGroup {
       }
       // 1.4 and 1.7 done in main function
       // 2.2 and 2.3 done in main function
-      return Ok.of(Building.of(x, totalSpan, colgroup));
+      return Ok.of(Builder.of(x, totalSpan, colgroup));
     }
 
-    public equals(value: unknown): value is this {
-      return (
-        value instanceof Building && this._colgroup.equals(value._colgroup)
-      );
-    }
-
-    public toJSON(): Building.JSON {
-      return {
-        colgroup: this._colgroup.toJSON(),
-      };
-    }
-  }
-
-  namespace Building {
     export interface JSON {
       [key: string]: json.JSON;
 
