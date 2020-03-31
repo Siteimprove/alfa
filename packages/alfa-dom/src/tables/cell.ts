@@ -9,7 +9,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { BuildingTable, Document, Element } from "..";
+import { Document, Element, Table } from "..";
 import {
   hasName,
   isDescendantOf,
@@ -414,7 +414,7 @@ export namespace Cell {
 
     private _scopeToState(
       scope: Header.Scope,
-      table: BuildingTable
+      table: Table.Building
     ): Header.State | undefined {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
@@ -468,7 +468,7 @@ export namespace Cell {
       }
     }
 
-    public headerState(table: BuildingTable): Option<Header.State> {
+    public headerState(table: Table.Building): Option<Header.State> {
       return this._scope.flatMap((scope) =>
         Option.from(this._scopeToState(scope, table))
       );
@@ -478,7 +478,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
      */
     private _internalHeaderScanning(
-      table: BuildingTable,
+      table: Table.Building,
       initialX: number,
       initialY: number,
       decreaseX: boolean
@@ -569,7 +569,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignExplicitHeaders(
-      table: BuildingTable,
+      table: Table.Building,
       document: Document | undefined = undefined
     ): Building {
       // "no document" is allowed for easier unit test (better isolation).
@@ -605,7 +605,7 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    private _assignImplicitHeaders(table: BuildingTable): Building {
+    private _assignImplicitHeaders(table: Table.Building): Building {
       // const debug = this.name === "en";
       // if (debug) console.log(`Implicit headers of ${this.name}`);
       // 1
@@ -682,7 +682,7 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    public assignHeaders(table: BuildingTable): Building {
+    public assignHeaders(table: Table.Building): Building {
       return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
     }
 

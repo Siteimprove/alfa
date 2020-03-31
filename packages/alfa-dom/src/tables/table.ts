@@ -72,7 +72,7 @@ export class Table implements Equatable, Serializable {
   }
 
   public static from(element: Element): Result<Table, string> {
-    return BuildingTable.from(element).map((table) => table.table);
+    return Table.Building.from(element).map((table) => table.table);
   }
 
   public equals(value: unknown): value is this {
@@ -118,6 +118,7 @@ export class Table implements Equatable, Serializable {
 export namespace Table {
   export interface JSON {
     [key: string]: json.JSON;
+
     height: number;
     width: number;
     // element: Element.JSON;
@@ -125,299 +126,304 @@ export namespace Table {
     rowGroups: string[]; // RowGroup.JSON[];
     colGroups: ColGroup.JSON[];
   }
-}
 
-export class BuildingTable implements Equatable, Serializable {
-  private readonly _table: Table; // will always have empty cells list as its stored here
-  private readonly _cells: Array<Cell.Building>;
+  export class Building implements Equatable, Serializable {
+    private readonly _table: Table; // will always have empty cells list as its stored here
+    private readonly _cells: Array<Cell.Building>;
 
-  public static of(
-    element: Element,
-    width: number = 0,
-    height: number = 0,
-    cells: Array<Cell.Building> = [],
-    rowGroups: Array<RowGroup> = [],
-    colGroups: Array<ColGroup> = []
-  ): BuildingTable {
-    return new BuildingTable(
-      element,
-      width,
-      height,
-      cells,
-      rowGroups,
-      colGroups
-    );
-  }
-
-  private constructor(
-    element: Element,
-    width: number,
-    height: number,
-    cells: Array<Cell.Building>,
-    rowGroups: Array<RowGroup>,
-    colGroups: Array<ColGroup>
-  ) {
-    this._table = Table.of(element, width, height, [], rowGroups, colGroups);
-    this._cells = cells;
-  }
-
-  private _update(update: {
-    element?: Element;
-    width?: number;
-    height?: number;
-    cells?: Array<Cell.Building>;
-    rowGroups?: Array<RowGroup>;
-    colGroups?: Array<ColGroup>;
-  }): BuildingTable {
-    return BuildingTable.of(
-      update.element !== undefined ? update.element : this.element,
-      update.width !== undefined ? update.width : this.width,
-      update.height !== undefined ? update.height : this.height,
-      update.cells !== undefined ? update.cells : this._cells,
-      update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
-      update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
-    );
-  }
-
-  public get cells(): Iterable<Cell.Building> {
-    return this._cells;
-  }
-
-  public get width(): number {
-    return this._table.width;
-  }
-
-  public get height(): number {
-    return this._table.height;
-  }
-
-  public get element(): Element {
-    return this._table.element;
-  }
-
-  public get colGroups(): Iterable<ColGroup> {
-    return this._table.colGroups;
-  }
-
-  public get rowGroups(): Iterable<RowGroup> {
-    return this._table.rowGroups;
-  }
-
-  public get table(): Table {
-    return Table.of(
-      this.element,
-      this.width,
-      this.height,
-      this._cells.map((cell) => cell.cell),
-      [...this.rowGroups],
-      [...this.colGroups]
-    );
-  }
-
-  private _adjustWidth(width: number): BuildingTable {
-    return this._update({ width: Math.max(this.width, width) });
-  }
-
-  private _adjustHeight(height: number): BuildingTable {
-    return this._update({ height: Math.max(this.height, height) });
-  }
-
-  private _addColGroup(colGroup: ColGroup): BuildingTable {
-    return this._update({ colGroups: [...this.colGroups].concat(colGroup) });
-  }
-
-  private _addRowGroup(rowGroup: RowGroup): BuildingTable {
-    return this._update({ rowGroups: [...this.rowGroups].concat(rowGroup) });
-  }
-
-  private _addCells(cells: Iterable<Cell.Building>): BuildingTable {
-    return this._update({ cells: this._cells.concat(...cells) });
-  }
-
-  private _addRowGroupFromElement(
-    rowgroup: Element,
-    yCurrent: number
-  ): Result<BuildingTable, string> {
-    return RowGroup.Building.from(rowgroup)
-      .andThen((rowGroup) => Ok.of(rowGroup.anchorAt(yCurrent)))
-      .andThen((rowGroup) => {
-        if (rowGroup.height > 0) {
-          return Ok.of(
-            this
-              // adjust table height and width
-              ._adjustHeight(this.height + rowGroup.height)
-              ._adjustWidth(rowGroup.width)
-              // merge in new cells
-              ._addCells(rowGroup.cells)
-              // add new group
-              ._addRowGroup(rowGroup.rowgroup)
-          );
-        } else {
-          return Ok.of(this);
-        }
-      });
-  }
-
-  public static from(element: Element): Result<BuildingTable, string> {
-    if (element.name !== "table") return Err.of("This element is not a table");
-
-    // 1, 2, 4, 11
-    let table = BuildingTable.of(element);
-    // 3
-    let pendingTfoot: Array<Element> = [];
-    // 5 + 8 + 9.3
-    let children = element
-      .children()
-      .filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
-    // 6
-    // skipping caption for now
-
-    // 10
-    let yCurrent = 0;
-
-    // 11
-    let growingCellsList: Array<Cell.Building> = [];
-
-    let processCG = true;
-    for (const currentElement of children) {
-      // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
-
-      if (currentElement.name === "colgroup") {
-        // 9.1 (Columns group)
-        if (processCG) {
-          const colGroup = ColGroup.Building.from(currentElement)
-            .get()
-            .anchorAt(table.width).colgroup;
-          table = table
-            // 9.1 (1).4 (cumulative) and (2).2
-            ._adjustWidth(table.width + colGroup.width)
-            // 9.1 (1).7 and (2).3
-            ._addColGroup(colGroup);
-        }
-        continue;
-      }
-
-      // 12
-      processCG = false;
-
-      if (currentElement.name === "tr") {
-        // 13 (process) can detect new downward growing cells
-
-        const row = Row.Building.from(
-          currentElement,
-          table._cells,
-          growingCellsList,
-          yCurrent,
-          table.width
-        ).get();
-        growingCellsList = [...row.downwardGrowingCells];
-        table = table
-          ._addCells(row.cells)
-          ._adjustHeight(yCurrent + 1)
-          ._adjustWidth(row.width);
-        // row processing steps 4/16
-        yCurrent++;
-
-        continue;
-      }
-
-      // 14
-      // Ending row group 1
-      growingCellsList = growingCellsList.map((cell) =>
-        cell.growDownward(table.height - 1)
+    public static of(
+      element: Element,
+      width: number = 0,
+      height: number = 0,
+      cells: Array<Cell.Building> = [],
+      rowGroups: Array<RowGroup> = [],
+      colGroups: Array<ColGroup> = []
+    ): Building {
+      return new Building(
+        element,
+        width,
+        height,
+        cells,
+        rowGroups,
+        colGroups
       );
-      yCurrent = table.height;
-      // Ending row group 2
-      table = table._addCells(growingCellsList);
-      growingCellsList = [];
+    }
 
-      if (currentElement.name === "tfoot") {
-        // 15 (add to list)
-        pendingTfoot.push(currentElement);
+    private constructor(
+      element: Element,
+      width: number,
+      height: number,
+      cells: Array<Cell.Building>,
+      rowGroups: Array<RowGroup>,
+      colGroups: Array<ColGroup>
+    ) {
+      this._table = Table.of(element, width, height, [], rowGroups, colGroups);
+      this._cells = cells;
+    }
+
+    private _update(update: {
+      element?: Element;
+      width?: number;
+      height?: number;
+      cells?: Array<Cell.Building>;
+      rowGroups?: Array<RowGroup>;
+      colGroups?: Array<ColGroup>;
+    }): Building {
+      return Building.of(
+        update.element !== undefined ? update.element : this.element,
+        update.width !== undefined ? update.width : this.width,
+        update.height !== undefined ? update.height : this.height,
+        update.cells !== undefined ? update.cells : this._cells,
+        update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
+        update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
+      );
+    }
+
+    public get cells(): Iterable<Cell.Building> {
+      return this._cells;
+    }
+
+    public get width(): number {
+      return this._table.width;
+    }
+
+    public get height(): number {
+      return this._table.height;
+    }
+
+    public get element(): Element {
+      return this._table.element;
+    }
+
+    public get colGroups(): Iterable<ColGroup> {
+      return this._table.colGroups;
+    }
+
+    public get rowGroups(): Iterable<RowGroup> {
+      return this._table.rowGroups;
+    }
+
+    public get table(): Table {
+      return Table.of(
+        this.element,
+        this.width,
+        this.height,
+        this._cells.map((cell) => cell.cell),
+        [...this.rowGroups],
+        [...this.colGroups]
+      );
+    }
+
+    private _adjustWidth(width: number): Building {
+      return this._update({ width: Math.max(this.width, width) });
+    }
+
+    private _adjustHeight(height: number): Building {
+      return this._update({ height: Math.max(this.height, height) });
+    }
+
+    private _addColGroup(colGroup: ColGroup): Building {
+      return this._update({ colGroups: [...this.colGroups].concat(colGroup) });
+    }
+
+    private _addRowGroup(rowGroup: RowGroup): Building {
+      return this._update({ rowGroups: [...this.rowGroups].concat(rowGroup) });
+    }
+
+    private _addCells(cells: Iterable<Cell.Building>): Building {
+      return this._update({ cells: this._cells.concat(...cells) });
+    }
+
+    private _addRowGroupFromElement(
+      rowgroup: Element,
+      yCurrent: number
+    ): Result<Building, string> {
+      return RowGroup.Building.from(rowgroup)
+        .andThen((rowGroup) => Ok.of(rowGroup.anchorAt(yCurrent)))
+        .andThen((rowGroup) => {
+          if (rowGroup.height > 0) {
+            return Ok.of(
+              this
+                // adjust table height and width
+                ._adjustHeight(this.height + rowGroup.height)
+                ._adjustWidth(rowGroup.width)
+                // merge in new cells
+                ._addCells(rowGroup.cells)
+                // add new group
+                ._addRowGroup(rowGroup.rowgroup)
+            );
+          } else {
+            return Ok.of(this);
+          }
+        });
+    }
+
+    public static from(element: Element): Result<Building, string> {
+      if (element.name !== "table")
+        return Err.of("This element is not a table");
+
+      // 1, 2, 4, 11
+      let table = Building.of(element);
+      // 3
+      let pendingTfoot: Array<Element> = [];
+      // 5 + 8 + 9.3
+      let children = element
+        .children()
+        .filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
+      // 6
+      // skipping caption for now
+
+      // 10
+      let yCurrent = 0;
+
+      // 11
+      let growingCellsList: Array<Cell.Building> = [];
+
+      let processCG = true;
+      for (const currentElement of children) {
+        // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
+
+        if (currentElement.name === "colgroup") {
+          // 9.1 (Columns group)
+          if (processCG) {
+            const colGroup = ColGroup.Building.from(currentElement)
+              .get()
+              .anchorAt(table.width).colgroup;
+            table = table
+              // 9.1 (1).4 (cumulative) and (2).2
+              ._adjustWidth(table.width + colGroup.width)
+              // 9.1 (1).7 and (2).3
+              ._addColGroup(colGroup);
+          }
+          continue;
+        }
+
+        // 12
+        processCG = false;
+
+        if (currentElement.name === "tr") {
+          // 13 (process) can detect new downward growing cells
+
+          const row = Row.Building.from(
+            currentElement,
+            table._cells,
+            growingCellsList,
+            yCurrent,
+            table.width
+          ).get();
+          growingCellsList = [...row.downwardGrowingCells];
+          table = table
+            ._addCells(row.cells)
+            ._adjustHeight(yCurrent + 1)
+            ._adjustWidth(row.width);
+          // row processing steps 4/16
+          yCurrent++;
+
+          continue;
+        }
+
+        // 14
+        // Ending row group 1
+        growingCellsList = growingCellsList.map((cell) =>
+          cell.growDownward(table.height - 1)
+        );
+        yCurrent = table.height;
+        // Ending row group 2
+        table = table._addCells(growingCellsList);
+        growingCellsList = [];
+
+        if (currentElement.name === "tfoot") {
+          // 15 (add to list)
+          pendingTfoot.push(currentElement);
+        }
+
+        if (
+          currentElement.name === "thead" ||
+          currentElement.name === "tbody"
+        ) {
+          // 16
+          // process row group and anchor cells
+          table = table._addRowGroupFromElement(currentElement, yCurrent).get();
+          yCurrent = table.height;
+        }
       }
 
-      if (currentElement.name === "thead" || currentElement.name === "tbody") {
-        // 16
-        // process row group and anchor cells
-        table = table._addRowGroupFromElement(currentElement, yCurrent).get();
+      // 19
+      for (const tfoot of pendingTfoot) {
+        table = table._addRowGroupFromElement(tfoot, yCurrent).get();
         yCurrent = table.height;
       }
-    }
-
-    // 19
-    for (const tfoot of pendingTfoot) {
-      table = table._addRowGroupFromElement(tfoot, yCurrent).get();
-      yCurrent = table.height;
-    }
-    // 20
-    // Of course, errors are more or less caught and repaired by browsers.
-    // Note that having a rowspan that extends out of the row group is not a table error per se!
-    // checking for rows
-    for (let row = 0; row < table.height; row++) {
-      let rowCovered = false;
-      for (let col = 0; !rowCovered && col < table.width; col++) {
-        rowCovered =
-          rowCovered ||
-          table._cells.some(
-            (cell) => cell.anchor.x === col && cell.anchor.y === row
-          );
+      // 20
+      // Of course, errors are more or less caught and repaired by browsers.
+      // Note that having a rowspan that extends out of the row group is not a table error per se!
+      // checking for rows
+      for (let row = 0; row < table.height; row++) {
+        let rowCovered = false;
+        for (let col = 0; !rowCovered && col < table.width; col++) {
+          rowCovered =
+            rowCovered ||
+            table._cells.some(
+              (cell) => cell.anchor.x === col && cell.anchor.y === row
+            );
+        }
+        if (!rowCovered) return Err.of(`row ${row} has no cell anchored in it`);
       }
-      if (!rowCovered) return Err.of(`row ${row} has no cell anchored in it`);
-    }
-    // checking for cols
-    for (let col = 0; col < table.width; col++) {
-      let colCovered = false;
-      for (let row = 0; !colCovered && row < table.height; row++) {
-        colCovered =
-          colCovered ||
-          table._cells.some(
-            (cell) => cell.anchor.x === col && cell.anchor.y === row
-          );
+      // checking for cols
+      for (let col = 0; col < table.width; col++) {
+        let colCovered = false;
+        for (let row = 0; !colCovered && row < table.height; row++) {
+          colCovered =
+            colCovered ||
+            table._cells.some(
+              (cell) => cell.anchor.x === col && cell.anchor.y === row
+            );
+        }
+        if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`);
       }
-      if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`);
-    }
-    // Checking for row forming algorithm step 13 (slot covered twice)
-    for (let x = 0; x < table.width; x++) {
-      for (let y = 0; y < table.height; y++) {
-        if (table._cells.filter((cell) => cell.isCovering(x, y)).length > 1) {
-          return Err.of(`Slot (${x}, ${y}) is covered twice`);
+      // Checking for row forming algorithm step 13 (slot covered twice)
+      for (let x = 0; x < table.width; x++) {
+        for (let y = 0; y < table.height; y++) {
+          if (table._cells.filter((cell) => cell.isCovering(x, y)).length > 1) {
+            return Err.of(`Slot (${x}, ${y}) is covered twice`);
+          }
         }
       }
+
+      // 21
+      return Ok.of(
+        table._update({
+          cells: [...table.cells].map((cell) => cell.assignHeaders(table)),
+        })
+      );
     }
 
-    // 21
-    return Ok.of(
-      table._update({
-        cells: [...table.cells].map((cell) => cell.assignHeaders(table)),
-      })
-    );
+    public equals(value: unknown): value is this {
+      if (!(value instanceof Building)) return false;
+      const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
+      const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
+      return (
+        sortedThisCells.length === sortedValueCells.length &&
+        sortedThisCells.every((cell, idx) =>
+          cell.equals(sortedValueCells[idx])
+        ) &&
+        this._table.equals(value._table)
+      );
+    }
+
+    public toJSON(): Building.JSON {
+      return {
+        table: this._table.toJSON(),
+        cells: this._cells.map((cell) => cell.toJSON()),
+      };
+    }
   }
 
-  public equals(value: unknown): value is this {
-    if (!(value instanceof BuildingTable)) return false;
-    const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
-    const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
-    return (
-      sortedThisCells.length === sortedValueCells.length &&
-      sortedThisCells.every((cell, idx) =>
-        cell.equals(sortedValueCells[idx])
-      ) &&
-      this._table.equals(value._table)
-    );
-  }
+  export namespace Building {
+    export interface JSON {
+      [key: string]: json.JSON;
 
-  public toJSON(): BuildingTable.JSON {
-    return {
-      table: this._table.toJSON(),
-      cells: this._cells.map((cell) => cell.toJSON()),
-    };
-  }
-}
-
-export namespace BuildingTable {
-  export interface JSON {
-    [key: string]: json.JSON;
-    table: Table.JSON;
-    cells: Cell.Building.JSON[];
+      table: Table.JSON;
+      cells: Cell.Building.JSON[];
+    }
   }
 }
