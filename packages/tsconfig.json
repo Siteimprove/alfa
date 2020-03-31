@@ -17,6 +17,8 @@
     { "path": "alfa-chai" },
     { "path": "alfa-cheerio" },
     { "path": "alfa-cli" },
+    { "path": "alfa-clone" },
+    { "path": "alfa-comparable" },
     { "path": "alfa-compatibility" },
     { "path": "alfa-continuation" },
     { "path": "alfa-css" },
