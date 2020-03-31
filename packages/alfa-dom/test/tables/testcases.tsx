@@ -4,11 +4,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element, Table } from "../../src";
 import {
-  BuildingCell,
-  BuildingRowGroup,
   Cell,
   ColGroup,
-  BuildingRow,
+  Row,
   RowGroup,
   Header,
 } from "../../src/tables/groups";
@@ -26,7 +24,7 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
 ): Cell => Cell.of(kind, x, y, width, height, getElt(elt), headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
-  return BuildingCell.of(
+  return Cell.Building.of(
     cell.kind,
     cell.anchor.x,
     cell.anchor.y,
@@ -62,7 +60,7 @@ export namespace simpleRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = BuildingRow.of(
+  export const expected = Row.Building.of(
     0,
     2,
     1,
@@ -100,7 +98,7 @@ export namespace complexRow {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = BuildingRow.of(
+  export const expected = Row.Building.of(
     0,
     6,
     2,
@@ -149,7 +147,7 @@ export namespace rowGroup {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = BuildingRowGroup.of(
+  export const expected = RowGroup.Building.of(
     -1,
     2,
     element,
@@ -204,7 +202,7 @@ export namespace downwardGrowing {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = BuildingRowGroup.of(
+  export const expected = RowGroup.Building.of(
     -1,
     3,
     element,

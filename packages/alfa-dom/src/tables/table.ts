@@ -10,10 +10,7 @@ import {
   Cell,
   ColGroup,
   RowGroup,
-  BuildingRow,
-  BuildingRowGroup,
-  BuildingColGroup,
-  BuildingCell,
+  Row
 } from "./groups";
 import { isElementByName } from "./helpers";
 
@@ -115,7 +112,9 @@ export class Table implements Equatable, Serializable {
       width: this._width,
       // element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.toJSON()),
-      rowGroups: this._rowGroups.map((rg) => rg.element.attribute("id").get().value), // this._rowGroups.map((rg) => rg.toJSON()),
+      rowGroups: this._rowGroups.map(
+        (rg) => rg.element.attribute("id").get().value
+      ), // this._rowGroups.map((rg) => rg.toJSON()),
       colGroups: this._colGroups.map((cg) => cg.toJSON()),
     };
   }
@@ -135,24 +134,31 @@ export namespace Table {
 
 export class BuildingTable implements Equatable, Serializable {
   private readonly _table: Table; // will always have empty cells list as its stored here
-  private readonly _cells: Array<BuildingCell>;
+  private readonly _cells: Array<Cell.Building>;
 
   public static of(
     element: Element,
     width: number = 0,
     height: number = 0,
-    cells: Array<BuildingCell> = [],
+    cells: Array<Cell.Building> = [],
     rowGroups: Array<RowGroup> = [],
     colGroups: Array<ColGroup> = []
   ): BuildingTable {
-    return new BuildingTable(element, width, height, cells, rowGroups, colGroups);
+    return new BuildingTable(
+      element,
+      width,
+      height,
+      cells,
+      rowGroups,
+      colGroups
+    );
   }
 
   private constructor(
     element: Element,
     width: number,
     height: number,
-    cells: Array<BuildingCell>,
+    cells: Array<Cell.Building>,
     rowGroups: Array<RowGroup>,
     colGroups: Array<ColGroup>
   ) {
@@ -164,7 +170,7 @@ export class BuildingTable implements Equatable, Serializable {
     element?: Element;
     width?: number;
     height?: number;
-    cells?: Array<BuildingCell>;
+    cells?: Array<Cell.Building>;
     rowGroups?: Array<RowGroup>;
     colGroups?: Array<ColGroup>;
   }): BuildingTable {
@@ -178,7 +184,7 @@ export class BuildingTable implements Equatable, Serializable {
     );
   }
 
-  public get cells(): Iterable<BuildingCell> {
+  public get cells(): Iterable<Cell.Building> {
     return this._cells;
   }
 
@@ -229,7 +235,7 @@ export class BuildingTable implements Equatable, Serializable {
     return this._update({ rowGroups: [...this.rowGroups].concat(rowGroup) });
   }
 
-  private _addCells(cells: Iterable<BuildingCell>): BuildingTable {
+  private _addCells(cells: Iterable<Cell.Building>): BuildingTable {
     return this._update({ cells: this._cells.concat(...cells) });
   }
 
@@ -237,7 +243,7 @@ export class BuildingTable implements Equatable, Serializable {
     rowgroup: Element,
     yCurrent: number
   ): Result<BuildingTable, string> {
-    return BuildingRowGroup.from(rowgroup)
+    return RowGroup.Building.from(rowgroup)
       .andThen((rowGroup) => Ok.of(rowGroup.anchorAt(yCurrent)))
       .andThen((rowGroup) => {
         if (rowGroup.height > 0) {
@@ -275,7 +281,7 @@ export class BuildingTable implements Equatable, Serializable {
     let yCurrent = 0;
 
     // 11
-    let growingCellsList: Array<BuildingCell> = [];
+    let growingCellsList: Array<Cell.Building> = [];
 
     let processCG = true;
     for (const currentElement of children) {
@@ -284,7 +290,7 @@ export class BuildingTable implements Equatable, Serializable {
       if (currentElement.name === "colgroup") {
         // 9.1 (Columns group)
         if (processCG) {
-          const colGroup = BuildingColGroup.from(currentElement)
+          const colGroup = ColGroup.Building.from(currentElement)
             .get()
             .anchorAt(table.width).colgroup;
           table = table
@@ -302,7 +308,7 @@ export class BuildingTable implements Equatable, Serializable {
       if (currentElement.name === "tr") {
         // 13 (process) can detect new downward growing cells
 
-        const row = BuildingRow.from(
+        const row = Row.Building.from(
           currentElement,
           table._cells,
           growingCellsList,
@@ -385,7 +391,11 @@ export class BuildingTable implements Equatable, Serializable {
     }
 
     // 21
-    return Ok.of(table._update({cells: [...table.cells].map(cell => cell.assignHeaders(table))}));
+    return Ok.of(
+      table._update({
+        cells: [...table.cells].map((cell) => cell.assignHeaders(table)),
+      })
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -413,6 +423,6 @@ export namespace BuildingTable {
   export interface JSON {
     [key: string]: json.JSON;
     table: Table.JSON;
-    cells: BuildingCell.JSON[];
+    cells: Cell.Building.JSON[];
   }
 }

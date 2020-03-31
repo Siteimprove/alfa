@@ -163,533 +163,552 @@ export namespace Cell {
     Header = "header",
     Data = "data",
   }
-}
 
-export class BuildingCell
-  implements Comparable<BuildingCell>, Equatable, Serializable {
-  // headers are always empty in the cell, filled in when exporting
-  private readonly _cell: Cell;
-  private readonly _downwardGrowing: boolean;
-  private readonly _scope: Option<Header.Scope>;
-  // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
-  //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
-  //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
-  // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
-  //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
-  //         Currently not exposing both to final cell, but easy to do if needed.
-  private readonly _explicitHeaders: Array<Element>;
-  private readonly _implicitHeaders: Array<Element>;
+  export class Building
+    implements Comparable<Building>, Equatable, Serializable {
+    // headers are always empty in the cell, filled in when exporting
+    private readonly _cell: Cell;
+    private readonly _downwardGrowing: boolean;
+    private readonly _scope: Option<Header.Scope>;
+    // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
+    //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
+    //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
+    // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
+    //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
+    //         Currently not exposing both to final cell, but easy to do if needed.
+    private readonly _explicitHeaders: Array<Element>;
+    private readonly _implicitHeaders: Array<Element>;
 
-  public static of(
-    kind: Cell.Kind,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    element: Element,
-    downwardGrowing: boolean = false,
-    state: Option<Header.Scope> = None,
-    eHeaders: Array<Element> = [],
-    iHeaders: Array<Element> = []
-  ): BuildingCell {
-    return new BuildingCell(
-      kind,
-      x,
-      y,
-      width,
-      height,
-      element,
-      downwardGrowing,
-      state,
-      eHeaders,
-      iHeaders
-    );
-  }
-
-  private constructor(
-    kind: Cell.Kind,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    element: Element,
-    downwardGrowing: boolean,
-    state: Option<Header.Scope>,
-    eHeaders: Array<Element>,
-    iHeaders: Array<Element>
-  ) {
-    /**
-     * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
-     */
-    this._cell = Cell.of(kind, x, y, width, height, element, []);
-    this._downwardGrowing = downwardGrowing;
-    this._scope = state;
-    this._explicitHeaders = eHeaders;
-    this._implicitHeaders = iHeaders;
-  }
-
-  private _update(update: {
-    kind?: Cell.Kind;
-    x?: number;
-    y?: number;
-    width?: number;
-    height?: number;
-    element?: Element;
-    downwardGrowing?: boolean;
-    scope?: Option<Header.Scope>;
-    eHeaders?: Array<Element>;
-    iHeaders?: Array<Element>;
-  }): BuildingCell {
-    return BuildingCell.of(
-      update.kind !== undefined ? update.kind : this.kind,
-      update.x !== undefined ? update.x : this.anchor.x,
-      update.y !== undefined ? update.y : this.anchor.y,
-      update.width !== undefined ? update.width : this.width,
-      update.height !== undefined ? update.height : this.height,
-      update.element !== undefined ? update.element : this.element,
-      update.downwardGrowing !== undefined
-        ? update.downwardGrowing
-        : this._downwardGrowing,
-      update.scope !== undefined ? update.scope : this.scope,
-      update.eHeaders !== undefined ? update.eHeaders : this._explicitHeaders,
-      update.iHeaders !== undefined ? update.iHeaders : this._implicitHeaders
-    );
-  }
-
-  public get cell(): Cell {
-    return Cell.of(
-      this.kind,
-      this.anchor.x,
-      this.anchor.y,
-      this.width,
-      this.height,
-      this.element,
-      // the presence of a "headers" attribute is enough to use explicit headers, even if this is an empty list
-      // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
-      this.element.attribute("headers") === None
-        ? this._implicitHeaders
-        : this._explicitHeaders
-    );
-  }
-  public get scope(): Option<Header.Scope> {
-    return this._scope;
-  }
-
-  // debug only
-  public get name(): string {
-    return this._cell.element.attribute("id").get().value;
-  }
-  // end debug
-
-  public get anchor(): { x: number; y: number } {
-    return { x: this._cell.anchor.x, y: this._cell.anchor.y };
-  }
-
-  public get width(): number {
-    return this._cell.width;
-  }
-
-  public get height(): number {
-    return this._cell.height;
-  }
-
-  public get kind(): Cell.Kind {
-    return this._cell.kind;
-  }
-
-  public get element(): Element {
-    return this._cell.element;
-  }
-
-  public get downwardGrowing(): boolean {
-    return this._downwardGrowing;
-  }
-
-  public get explicitHeaders(): Array<Element> {
-    return this._explicitHeaders;
-  }
-
-  public get implicitHeaders(): Array<Element> {
-    return this._implicitHeaders;
-  }
-
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
-   */
-  public static from(
-    cell: Element,
-    x: number = -1,
-    y: number = -1
-  ): Result<BuildingCell, string> {
-    if (cell.name !== "th" && cell.name !== "td")
-      return Err.of("This element is not a table cell");
-
-    const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
-    // 9
-    let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
-    // 10 assuming we are not in quirks mode because I don't know if we test that yet…
-    // Unsurprisingly, "rowspan=0" is not universally supported (that is, not by Edge…)
-    const grow = rowspan === 0;
-    if (rowspan === 0) {
-      rowspan = 1;
+    public static of(
+      kind: Cell.Kind,
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      element: Element,
+      downwardGrowing: boolean = false,
+      state: Option<Header.Scope> = None,
+      eHeaders: Array<Element> = [],
+      iHeaders: Array<Element> = []
+    ): Building {
+      return new Building(
+        kind,
+        x,
+        y,
+        width,
+        height,
+        element,
+        downwardGrowing,
+        state,
+        eHeaders,
+        iHeaders
+      );
     }
 
-    // 11
-    const kind = hasName(equals("th"))(cell)
-      ? Cell.Kind.Header
-      : Cell.Kind.Data;
+    private constructor(
+      kind: Cell.Kind,
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      element: Element,
+      downwardGrowing: boolean,
+      state: Option<Header.Scope>,
+      eHeaders: Array<Element>,
+      iHeaders: Array<Element>
+    ) {
+      /**
+       * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+       */
+      this._cell = Cell.of(kind, x, y, width, height, element, []);
+      this._downwardGrowing = downwardGrowing;
+      this._scope = state;
+      this._explicitHeaders = eHeaders;
+      this._implicitHeaders = iHeaders;
+    }
+
+    private _update(update: {
+      kind?: Cell.Kind;
+      x?: number;
+      y?: number;
+      width?: number;
+      height?: number;
+      element?: Element;
+      downwardGrowing?: boolean;
+      scope?: Option<Header.Scope>;
+      eHeaders?: Array<Element>;
+      iHeaders?: Array<Element>;
+    }): Building {
+      return Building.of(
+        update.kind !== undefined ? update.kind : this.kind,
+        update.x !== undefined ? update.x : this.anchor.x,
+        update.y !== undefined ? update.y : this.anchor.y,
+        update.width !== undefined ? update.width : this.width,
+        update.height !== undefined ? update.height : this.height,
+        update.element !== undefined ? update.element : this.element,
+        update.downwardGrowing !== undefined
+          ? update.downwardGrowing
+          : this._downwardGrowing,
+        update.scope !== undefined ? update.scope : this.scope,
+        update.eHeaders !== undefined ? update.eHeaders : this._explicitHeaders,
+        update.iHeaders !== undefined ? update.iHeaders : this._implicitHeaders
+      );
+    }
+
+    public get cell(): Cell {
+      return Cell.of(
+        this.kind,
+        this.anchor.x,
+        this.anchor.y,
+        this.width,
+        this.height,
+        this.element,
+        // the presence of a "headers" attribute is enough to use explicit headers, even if this is an empty list
+        // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
+        this.element.attribute("headers") === None
+          ? this._implicitHeaders
+          : this._explicitHeaders
+      );
+    }
+
+    public get scope(): Option<Header.Scope> {
+      return this._scope;
+    }
+
+    // debug only
+    public get name(): string {
+      return this._cell.element.attribute("id").get().value;
+    }
+
+    // end debug
+
+    public get anchor(): { x: number; y: number } {
+      return { x: this._cell.anchor.x, y: this._cell.anchor.y };
+    }
+
+    public get width(): number {
+      return this._cell.width;
+    }
+
+    public get height(): number {
+      return this._cell.height;
+    }
+
+    public get kind(): Cell.Kind {
+      return this._cell.kind;
+    }
+
+    public get element(): Element {
+      return this._cell.element;
+    }
+
+    public get downwardGrowing(): boolean {
+      return this._downwardGrowing;
+    }
+
+    public get explicitHeaders(): Array<Element> {
+      return this._explicitHeaders;
+    }
+
+    public get implicitHeaders(): Array<Element> {
+      return this._implicitHeaders;
+    }
 
     /**
-     * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
      */
-    const scopeMapping = Map.from([
-      ["row", Header.Scope.Row],
-      ["col", Header.Scope.Column],
-      ["rowgroup", Header.Scope.RowGroup],
-      ["colgroup", Header.Scope.ColGroup],
-      ["missing", Header.Scope.Auto],
-      ["invalid", Header.Scope.Auto],
-    ]);
-    const scope =
-      kind === Cell.Kind.Data
-        ? None
-        : Some.of(parseEnumeratedAttribute("scope", scopeMapping)(cell).get());
+    public static from(
+      cell: Element,
+      x: number = -1,
+      y: number = -1
+    ): Result<Building, string> {
+      if (cell.name !== "th" && cell.name !== "td")
+        return Err.of("This element is not a table cell");
 
-    return Ok.of(
-      BuildingCell.of(kind, x, y, colspan, rowspan, cell, grow, scope)
-    );
-  }
-
-  public isCovering(x: number, y: number): boolean {
-    return this._cell.isCovering(x, y);
-  }
-
-  public compare(cell: BuildingCell): Comparison {
-    return this._cell.compare(cell._cell);
-  }
-
-  public anchorAt(x: number, y: number): BuildingCell {
-    return this._update({ x, y });
-  }
-
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
-   */
-  public growDownward(yCurrent: number): BuildingCell {
-    // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
-    return this._update({
-      height: Math.max(this.height, yCurrent - this.anchor.y + 1),
-    });
-  }
-
-  /**
-   * see @https://html.spec.whatwg.org/multipage/tables.html#column-header
-   * and following
-   */
-  private _isCoveringArea(x: number, y: number, w: number, h: number): boolean {
-    for (let col = x; col < x + w; col++) {
-      for (let row = y; row < y + h; row++) {
-        if (this.isCovering(col, row)) return true;
+      const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
+      // 9
+      let rowspan = parseSpan(cell, "rowspan", 0, 65534, 1);
+      // 10 assuming we are not in quirks mode because I don't know if we test that yet…
+      // Unsurprisingly, "rowspan=0" is not universally supported (that is, not by Edge…)
+      const grow = rowspan === 0;
+      if (rowspan === 0) {
+        rowspan = 1;
       }
+
+      // 11
+      const kind = hasName(equals("th"))(cell)
+        ? Cell.Kind.Header
+        : Cell.Kind.Data;
+
+      /**
+       * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
+       */
+      const scopeMapping = Map.from([
+        ["row", Header.Scope.Row],
+        ["col", Header.Scope.Column],
+        ["rowgroup", Header.Scope.RowGroup],
+        ["colgroup", Header.Scope.ColGroup],
+        ["missing", Header.Scope.Auto],
+        ["invalid", Header.Scope.Auto],
+      ]);
+      const scope =
+        kind === Cell.Kind.Data
+          ? None
+          : Some.of(
+              parseEnumeratedAttribute("scope", scopeMapping)(cell).get()
+            );
+
+      return Ok.of(
+        Building.of(kind, x, y, colspan, rowspan, cell, grow, scope)
+      );
     }
-    return false;
-  }
 
-  private _isDataCoveringArea(
-    x: number,
-    y: number,
-    w: number,
-    h: number
-  ): boolean {
-    return this.kind === Cell.Kind.Data && this._isCoveringArea(x, y, w, h);
-  }
+    public isCovering(x: number, y: number): boolean {
+      return this._cell.isCovering(x, y);
+    }
 
-  private _scopeToState(
-    scope: Header.Scope,
-    table: BuildingTable
-  ): Header.State | undefined {
-    switch (scope) {
-      // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
-      case Header.Scope.ColGroup:
-        return Header.State.ColGroup;
-      // https://html.spec.whatwg.org/multipage/tables.html#row-group-header
-      case Header.Scope.RowGroup:
-        return Header.State.RowGroup;
-      // https://html.spec.whatwg.org/multipage/tables.html#column-header
-      case Header.Scope.Column:
-        return Header.State.Column;
-      // https://html.spec.whatwg.org/multipage/tables.html#row-header
-      case Header.Scope.Row:
-        return Header.State.Row;
-      // https://html.spec.whatwg.org/multipage/tables.html#column-header
-      // https://html.spec.whatwg.org/multipage/tables.html#row-header
-      case Header.Scope.Auto:
-        // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
-        // means "for any x" or just for the x of the cell. Using "for all x"
-        if (
-          some(table.cells, (cell) =>
-            cell._isDataCoveringArea(0, this.anchor.y, table.width, this.height)
-          )
-        ) {
-          // there are *some* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
+    public compare(cell: Building): Comparison {
+      return this._cell.compare(cell._cell);
+    }
+
+    public anchorAt(x: number, y: number): Building {
+      return this._update({ x, y });
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
+     */
+    public growDownward(yCurrent: number): Building {
+      // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
+      return this._update({
+        height: Math.max(this.height, yCurrent - this.anchor.y + 1),
+      });
+    }
+
+    /**
+     * see @https://html.spec.whatwg.org/multipage/tables.html#column-header
+     * and following
+     */
+    private _isCoveringArea(
+      x: number,
+      y: number,
+      w: number,
+      h: number
+    ): boolean {
+      for (let col = x; col < x + w; col++) {
+        for (let row = y; row < y + h; row++) {
+          if (this.isCovering(col, row)) return true;
+        }
+      }
+      return false;
+    }
+
+    private _isDataCoveringArea(
+      x: number,
+      y: number,
+      w: number,
+      h: number
+    ): boolean {
+      return this.kind === Cell.Kind.Data && this._isCoveringArea(x, y, w, h);
+    }
+
+    private _scopeToState(
+      scope: Header.Scope,
+      table: BuildingTable
+    ): Header.State | undefined {
+      switch (scope) {
+        // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
+        case Header.Scope.ColGroup:
+          return Header.State.ColGroup;
+        // https://html.spec.whatwg.org/multipage/tables.html#row-group-header
+        case Header.Scope.RowGroup:
+          return Header.State.RowGroup;
+        // https://html.spec.whatwg.org/multipage/tables.html#column-header
+        case Header.Scope.Column:
+          return Header.State.Column;
+        // https://html.spec.whatwg.org/multipage/tables.html#row-header
+        case Header.Scope.Row:
+          return Header.State.Row;
+        // https://html.spec.whatwg.org/multipage/tables.html#column-header
+        // https://html.spec.whatwg.org/multipage/tables.html#row-header
+        case Header.Scope.Auto:
+          // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
+          // means "for any x" or just for the x of the cell. Using "for all x"
           if (
             some(table.cells, (cell) =>
               cell._isDataCoveringArea(
-                this.anchor.x,
                 0,
-                this.width,
-                table.height
+                this.anchor.y,
+                table.width,
+                this.height
               )
             )
           ) {
-            // there are *some* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
-            return undefined;
+            // there are *some* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
+            if (
+              some(table.cells, (cell) =>
+                cell._isDataCoveringArea(
+                  this.anchor.x,
+                  0,
+                  this.width,
+                  table.height
+                )
+              )
+            ) {
+              // there are *some* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
+              return undefined;
+            } else {
+              // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
+              return Header.State.Row;
+            }
           } else {
-            // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
-            return Header.State.Row;
+            // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
+            return Header.State.Column;
           }
-        } else {
-          // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-          return Header.State.Column;
-        }
-    }
-  }
-
-  public headerState(table: BuildingTable): Option<Header.State> {
-    return this._scope.flatMap((scope) =>
-      Option.from(this._scopeToState(scope, table))
-    );
-  }
-
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
-   */
-  private _internalHeaderScanning(
-    table: BuildingTable,
-    initialX: number,
-    initialY: number,
-    decreaseX: boolean
-  ): Array<BuildingCell> {
-    // The principal cell is this.
-    const deltaX = decreaseX ? -1 : 0;
-    const deltaY = decreaseX ? 0 : -1;
-    let headersList: Array<BuildingCell> = []; // new headers found by this algorithm
-
-    // 3
-    let opaqueHeaders: Array<BuildingCell> = [];
-    // 4
-    let inHeaderBlock = false;
-    let headersFromCurrentBlock: Array<BuildingCell> = [];
-    if (this.kind === Cell.Kind.Header) {
-      inHeaderBlock = true;
-      headersFromCurrentBlock.push(this);
-    }
-
-    // 1, 2, 5, 6, 10
-    for (
-      let x = initialX + deltaX, y = initialY + deltaY;
-      x >= 0 && y >= 0;
-      x += deltaX, y += deltaY
-    ) {
-      // 7
-      const covering = [...table.cells].filter((cell) => cell.isCovering(x, y));
-      if (covering.length !== 1) {
-        // More than one cell covering a slot is a table model error. Not sure why the test is in the algo…
-        // (0 cell is possible, more than one is not)
-        continue;
       }
-      // 8
-      const currentCell = covering[0];
-      // 9
-      if (currentCell.kind === Cell.Kind.Header) {
-        // 9.1
+    }
+
+    public headerState(table: BuildingTable): Option<Header.State> {
+      return this._scope.flatMap((scope) =>
+        Option.from(this._scopeToState(scope, table))
+      );
+    }
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#internal-algorithm-for-scanning-and-assigning-header-cells
+     */
+    private _internalHeaderScanning(
+      table: BuildingTable,
+      initialX: number,
+      initialY: number,
+      decreaseX: boolean
+    ): Array<Building> {
+      // The principal cell is this.
+      const deltaX = decreaseX ? -1 : 0;
+      const deltaY = decreaseX ? 0 : -1;
+      let headersList: Array<Building> = []; // new headers found by this algorithm
+
+      // 3
+      let opaqueHeaders: Array<Building> = [];
+      // 4
+      let inHeaderBlock = false;
+      let headersFromCurrentBlock: Array<Building> = [];
+      if (this.kind === Cell.Kind.Header) {
         inHeaderBlock = true;
-        // 9.2
-        headersFromCurrentBlock.push(currentCell);
-        // 9.3
-        let blocked = false;
-        // 9.4
-        const state = currentCell.headerState(table);
-        if (deltaX === 0) {
-          if (
-            opaqueHeaders.some(
-              (cell) =>
-                cell.anchor.x === currentCell.anchor.x &&
-                cell.width === currentCell.width
-            )
-          ) {
-            blocked = true;
-          }
-          if (!state.equals(Some.of(Header.State.Column))) {
-            blocked = true;
-          }
-        } else {
-          // deltaY === 0
-          if (
-            opaqueHeaders.some(
-              (cell) =>
-                cell.anchor.y === currentCell.anchor.y &&
-                cell.height === currentCell.height
-            )
-          ) {
-            blocked = true;
-          }
-          if (!state.equals(Some.of(Header.State.Row))) {
-            blocked = true;
-          }
-        }
-        // 9.5
-        if (!blocked) headersList.push(currentCell);
-      } else {
-        inHeaderBlock = false;
-        opaqueHeaders.push(...headersFromCurrentBlock);
-        headersFromCurrentBlock = [];
+        headersFromCurrentBlock.push(this);
       }
+
+      // 1, 2, 5, 6, 10
+      for (
+        let x = initialX + deltaX, y = initialY + deltaY;
+        x >= 0 && y >= 0;
+        x += deltaX, y += deltaY
+      ) {
+        // 7
+        const covering = [...table.cells].filter((cell) =>
+          cell.isCovering(x, y)
+        );
+        if (covering.length !== 1) {
+          // More than one cell covering a slot is a table model error. Not sure why the test is in the algo…
+          // (0 cell is possible, more than one is not)
+          continue;
+        }
+        // 8
+        const currentCell = covering[0];
+        // 9
+        if (currentCell.kind === Cell.Kind.Header) {
+          // 9.1
+          inHeaderBlock = true;
+          // 9.2
+          headersFromCurrentBlock.push(currentCell);
+          // 9.3
+          let blocked = false;
+          // 9.4
+          const state = currentCell.headerState(table);
+          if (deltaX === 0) {
+            if (
+              opaqueHeaders.some(
+                (cell) =>
+                  cell.anchor.x === currentCell.anchor.x &&
+                  cell.width === currentCell.width
+              )
+            ) {
+              blocked = true;
+            }
+            if (!state.equals(Some.of(Header.State.Column))) {
+              blocked = true;
+            }
+          } else {
+            // deltaY === 0
+            if (
+              opaqueHeaders.some(
+                (cell) =>
+                  cell.anchor.y === currentCell.anchor.y &&
+                  cell.height === currentCell.height
+              )
+            ) {
+              blocked = true;
+            }
+            if (!state.equals(Some.of(Header.State.Row))) {
+              blocked = true;
+            }
+          }
+          // 9.5
+          if (!blocked) headersList.push(currentCell);
+        } else {
+          inHeaderBlock = false;
+          opaqueHeaders.push(...headersFromCurrentBlock);
+          headersFromCurrentBlock = [];
+        }
+      }
+
+      return headersList;
     }
 
-    return headersList;
-  }
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
+     */
+    private _assignExplicitHeaders(
+      table: BuildingTable,
+      document: Document | undefined = undefined
+    ): Building {
+      // "no document" is allowed for easier unit test (better isolation).
+      // 3 / headers attribute / 1
+      const idsList: Array<string> = this.element
+        .attribute("headers")
+        .map(parseAttribute(parseTokensList))
+        .map((r) => r.get())
+        .getOr([]);
 
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
-   */
-  private _assignExplicitHeaders(
-    table: BuildingTable,
-    document: Document | undefined = undefined
-  ): BuildingCell {
-    // "no document" is allowed for easier unit test (better isolation).
-    // 3 / headers attribute / 1
-    const idsList: Array<string> = this.element
-      .attribute("headers")
-      .map(parseAttribute(parseTokensList))
-      .map((r) => r.get())
-      .getOr([]);
+      // 3 / headers attribute / 2
+      const topNode = document === undefined ? table.element : document;
 
-    // 3 / headers attribute / 2
-    const topNode = document === undefined ? table.element : document;
-
-    const elements = resolveReferences(topNode, idsList).filter((element) =>
-      and(
+      const elements = resolveReferences(topNode, idsList).filter((element) =>
         and(
-          // only keep cells in the table
-          isElementByName("th", "td"),
-          isDescendantOf(table.element)
-        ),
-        and(
-          // remove principal cell
-          not(isEqual(this.element)),
-          // Step 4: remove empty cells
-          not(isEmpty)
+          and(
+            // only keep cells in the table
+            isElementByName("th", "td"),
+            isDescendantOf(table.element)
+          ),
+          and(
+            // remove principal cell
+            not(isEqual(this.element)),
+            // Step 4: remove empty cells
+            not(isEmpty)
+          )
         )
-      )
-    );
-
-    return this._update({ eHeaders: elements });
-  }
-
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
-   */
-  private _assignImplicitHeaders(table: BuildingTable): BuildingCell {
-    // const debug = this.name === "en";
-    // if (debug) console.log(`Implicit headers of ${this.name}`);
-    // 1
-    let headersList: Array<BuildingCell> = [];
-    // 2 principal cell = this, nothing to do.
-    // 3 / no header attribute (3.1, 3.2: use this)
-    // 3.3
-    for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
-      headersList = headersList.concat(
-        this._internalHeaderScanning(table, this.anchor.x, y, true)
       );
+
+      return this._update({ eHeaders: elements });
     }
-    // if (debug)  console.log(`   After first loop: ${headersList.map(cell => cell.name)}`);
-    // 3.4
-    for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
-      headersList = headersList.concat(
-        this._internalHeaderScanning(table, x, this.anchor.y, false)
+
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
+     */
+    private _assignImplicitHeaders(table: BuildingTable): Building {
+      // const debug = this.name === "en";
+      // if (debug) console.log(`Implicit headers of ${this.name}`);
+      // 1
+      let headersList: Array<Building> = [];
+      // 2 principal cell = this, nothing to do.
+      // 3 / no header attribute (3.1, 3.2: use this)
+      // 3.3
+      for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
+        headersList = headersList.concat(
+          this._internalHeaderScanning(table, this.anchor.x, y, true)
+        );
+      }
+      // if (debug)  console.log(`   After first loop: ${headersList.map(cell => cell.name)}`);
+      // 3.4
+      for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
+        headersList = headersList.concat(
+          this._internalHeaderScanning(table, x, this.anchor.y, false)
+        );
+      }
+      // if (debug)  console.log(`   After second loop: ${headersList.map(cell => cell.name)}`);
+      // 3.5
+      const rowgroup = Iterable.find(table.rowGroups, (rg) =>
+        rg.isCovering(this.anchor.y)
       );
+      if (rowgroup.isSome()) {
+        const rowGroupHeaders = [...table.cells].filter((cell) =>
+          cell.headerState(table).equals(Some.of(Header.State.RowGroup))
+        );
+        const anchored = rowGroupHeaders.filter((cell) =>
+          rowgroup.get().isCovering(cell.anchor.y)
+        );
+        const leftAndUp = anchored.filter(
+          (cell) =>
+            cell.anchor.x < this.anchor.x + this.width &&
+            cell.anchor.y < this.anchor.y + this.height
+        );
+
+        headersList = headersList.concat(leftAndUp);
+      }
+      // if (debug)  console.log(`   After row groups: ${headersList.map(cell => cell.name)}`);
+      // 3.6
+      const colgroup = Iterable.find(table.colGroups, (cg) =>
+        cg.isCovering(this.anchor.x)
+      );
+      if (colgroup.isSome()) {
+        const colGroupHeaders = [...table.cells].filter((cell) =>
+          cell.headerState(table).equals(Some.of(Header.State.ColGroup))
+        );
+        const anchored = colGroupHeaders.filter((cell) =>
+          colgroup.get().isCovering(cell.anchor.x)
+        );
+        const leftAndUp = anchored.filter(
+          (cell) =>
+            cell.anchor.x < this.anchor.x + this.width &&
+            cell.anchor.y < this.anchor.y + this.height
+        );
+
+        headersList = headersList.concat(leftAndUp);
+      }
+      // if (debug)  console.log(`   After col groups: ${headersList.map(cell => cell.name)}`);
+
+      headersList = headersList
+        // 5 (remove duplicates)
+        .filter((cell, idx) => headersList.indexOf(cell) === idx)
+        // 4 (remove empty cells) & 6 remove principal cell
+        .filter((cell) => !isEmpty(cell.element) && !cell.equals(this));
+      // if (debug)  console.log(`   After clean up: ${headersList.map(cell => cell.name)}`);
+
+      return this._update({
+        iHeaders: headersList.map((cell) => cell.element),
+      });
     }
-    // if (debug)  console.log(`   After second loop: ${headersList.map(cell => cell.name)}`);
-    // 3.5
-    const rowgroup = Iterable.find(table.rowGroups, (rg) =>
-      rg.isCovering(this.anchor.y)
-    );
-    if (rowgroup.isSome()) {
-      const rowGroupHeaders = [...table.cells].filter((cell) =>
-        cell.headerState(table).equals(Some.of(Header.State.RowGroup))
-      );
-      const anchored = rowGroupHeaders.filter((cell) =>
-        rowgroup.get().isCovering(cell.anchor.y)
-      );
-      const leftAndUp = anchored.filter(
-        (cell) =>
-          cell.anchor.x < this.anchor.x + this.width &&
-          cell.anchor.y < this.anchor.y + this.height
-      );
 
-      headersList = headersList.concat(leftAndUp);
+    /**
+     * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
+     */
+    public assignHeaders(table: BuildingTable): Building {
+      return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
     }
-    // if (debug)  console.log(`   After row groups: ${headersList.map(cell => cell.name)}`);
-    // 3.6
-    const colgroup = Iterable.find(table.colGroups, (cg) =>
-      cg.isCovering(this.anchor.x)
-    );
-    if (colgroup.isSome()) {
-      const colGroupHeaders = [...table.cells].filter((cell) =>
-        cell.headerState(table).equals(Some.of(Header.State.ColGroup))
-      );
-      const anchored = colGroupHeaders.filter((cell) =>
-        colgroup.get().isCovering(cell.anchor.x)
-      );
-      const leftAndUp = anchored.filter(
-        (cell) =>
-          cell.anchor.x < this.anchor.x + this.width &&
-          cell.anchor.y < this.anchor.y + this.height
-      );
 
-      headersList = headersList.concat(leftAndUp);
+    public equals(value: unknown): value is this {
+      return value instanceof Building && this._cell.equals(value._cell);
     }
-    // if (debug)  console.log(`   After col groups: ${headersList.map(cell => cell.name)}`);
 
-    headersList = headersList
-      // 5 (remove duplicates)
-      .filter((cell, idx) => headersList.indexOf(cell) === idx)
-      // 4 (remove empty cells) & 6 remove principal cell
-      .filter((cell) => !isEmpty(cell.element) && !cell.equals(this));
-    // if (debug)  console.log(`   After clean up: ${headersList.map(cell => cell.name)}`);
-
-    return this._update({ iHeaders: headersList.map((cell) => cell.element) });
+    public toJSON(): Cell.Building.JSON {
+      return {
+        cell: this._cell.toJSON(),
+        state: this._scope.toJSON(),
+        explicitHeaders: this._explicitHeaders.map((header) => header.toJSON()),
+        implicitHeaders: this._implicitHeaders.map((header) => header.toJSON()),
+      };
+    }
   }
 
-  /**
-   * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
-   */
-  public assignHeaders(table: BuildingTable): BuildingCell {
-    return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
-  }
+  export namespace Building {
+    export interface JSON {
+      [key: string]: json.JSON;
 
-  public equals(value: unknown): value is this {
-    return value instanceof BuildingCell && this._cell.equals(value._cell);
-  }
-
-  public toJSON(): BuildingCell.JSON {
-    return {
-      cell: this._cell.toJSON(),
-      state: this._scope.toJSON(),
-      explicitHeaders: this._explicitHeaders.map((header) => header.toJSON()),
-      implicitHeaders: this._implicitHeaders.map((header) => header.toJSON()),
-    };
-  }
-}
-
-export namespace BuildingCell {
-  export interface JSON {
-    [key: string]: json.JSON;
-    cell: Cell.JSON;
-    state: Option.JSON;
-    explicitHeaders: Element.JSON[];
-    implicitHeaders: Element.JSON[];
+      cell: Cell.JSON;
+      state: Option.JSON;
+      explicitHeaders: Element.JSON[];
+      implicitHeaders: Element.JSON[];
+    }
   }
 }
 
