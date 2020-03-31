@@ -549,31 +549,20 @@ export class BuildingCell implements Equatable, Serializable {
     // 3 / headers attribute / 2
     const topNode = document === undefined ? table.element : document;
 
-    const elements = resolveReferences(topNode, idsList).filter(
-      (element) =>
+    const elements = resolveReferences(topNode, idsList).filter((element) =>
+      and(
         and(
-          and(
-            // only keep cells in the table
-            isElementByName("th", "td"),
-            isDescendantOf(table.element)
-          ),
-          and(
-            // remove principal cell
-            not(isEqual(this.element)),
-            // Step 4: remove empty cell
-            not(isEmpty)
-          )
+          // only keep cells in the table
+          isElementByName("th", "td"),
+          isDescendantOf(table.element)
+        ),
+        and(
+          // remove principal cell
+          not(isEqual(this.element)),
+          // Step 4: remove empty cells
+          not(isEmpty)
         )
-
-      // table.element
-      //   .descendants()
-      //   .find((elt) => element.equals(elt))
-      //   .isSome() &&
-      // isElementByName("th", "td")(element) &&
-      // // remove principal cell
-      // isNotEqual(this.element)(element) &&
-      // // Step 4: remove empty cell
-      // not(isEmpty)(element)
+      )
     );
 
     return this._update({ eHeaders: elements });

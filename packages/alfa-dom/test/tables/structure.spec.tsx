@@ -5,7 +5,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import {BuildingTable, Table} from "../../src";
 import {
-  apple,
+  apple, colGroupImplicitHeaders,
   complexRow,
   downwardGrowing,
   errors,
@@ -114,8 +114,8 @@ import {BuildingRowGroup, BuildingRow, Cell, BuildingCell, Header} from "../../s
 //   }
 // });
 
-test("Table with row groups headers", t => {
-  const table = Table.from(rowGroupImplicitHeaders.element).get();
+test("Tables with groups headers", t => {
+  t.deepEqual(Table.from(rowGroupImplicitHeaders.element).get().toJSON(), rowGroupImplicitHeaders.expected.toJSON());
 
-  t.deepEqual(table.toJSON(), rowGroupImplicitHeaders.expected.toJSON());
+  t.deepEqual(Table.from(colGroupImplicitHeaders.element).get().toJSON(), colGroupImplicitHeaders.expected.toJSON());
 });

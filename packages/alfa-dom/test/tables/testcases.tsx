@@ -833,25 +833,63 @@ export namespace rowGroupImplicitHeaders {
       makeCell("empty-cat-av", Cell.Kind.Data, 2, 1, 1, 1, ["average", "cat"]),
       makeCell("empty-cat-max", Cell.Kind.Data, 3, 1, 1, 1, ["maximum", "cat"]),
       makeCell("id93", Cell.Kind.Data, 0, 2, 1, 1, ["ID"]),
-      makeCell("cat-legs", Cell.Kind.Header, 1, 2, 1, 1, ["measurement", "cat"]),
-      makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, 1, 1, ["cat-legs", "average", "cat"]),
-      makeCell("cat-legs-max", Cell.Kind.Data, 3, 2, 1, 1, ["cat-legs", "maximum", "cat"]),
+      makeCell("cat-legs", Cell.Kind.Header, 1, 2, 1, 1, [
+        "measurement",
+        "cat",
+      ]),
+      makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, 1, 1, [
+        "cat-legs",
+        "average",
+        "cat",
+      ]),
+      makeCell("cat-legs-max", Cell.Kind.Data, 3, 2, 1, 1, [
+        "cat-legs",
+        "maximum",
+        "cat",
+      ]),
       makeCell("id10", Cell.Kind.Data, 0, 3, 1, 1, ["ID"]),
-      makeCell("cat-tails", Cell.Kind.Header, 1, 3, 1, 1, ["measurement", "cat"]),
-      makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, 1, 1, ["cat-tails", "average", "cat"]),
-      makeCell("cat-tails-max", Cell.Kind.Data, 3, 3, 1, 1, ["cat-tails", "maximum", "cat"]),
+      makeCell("cat-tails", Cell.Kind.Header, 1, 3, 1, 1, [
+        "measurement",
+        "cat",
+      ]),
+      makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, 1, 1, [
+        "cat-tails",
+        "average",
+        "cat",
+      ]),
+      makeCell("cat-tails-max", Cell.Kind.Data, 3, 3, 1, 1, [
+        "cat-tails",
+        "maximum",
+        "cat",
+      ]),
       makeCell("empty-en-id", Cell.Kind.Data, 0, 4, 1, 1, ["ID"]),
       makeCell("en", Cell.Kind.Header, 1, 4, 1, 1, ["measurement"]),
       makeCell("empty-en-av", Cell.Kind.Data, 2, 4, 1, 1, ["average", "en"]),
       makeCell("empty-en-max", Cell.Kind.Data, 3, 4, 1, 1, ["maximum", "en"]),
       makeCell("id32", Cell.Kind.Data, 0, 5, 1, 1, ["ID"]),
       makeCell("en-legs", Cell.Kind.Header, 1, 5, 1, 1, ["measurement", "en"]),
-      makeCell("en-legs-av", Cell.Kind.Data, 2, 5, 1, 1, ["en-legs", "average", "en"]),
-      makeCell("en-legs-max", Cell.Kind.Data, 3, 5, 1, 1, ["en-legs", "maximum", "en"]),
+      makeCell("en-legs-av", Cell.Kind.Data, 2, 5, 1, 1, [
+        "en-legs",
+        "average",
+        "en",
+      ]),
+      makeCell("en-legs-max", Cell.Kind.Data, 3, 5, 1, 1, [
+        "en-legs",
+        "maximum",
+        "en",
+      ]),
       makeCell("id35", Cell.Kind.Data, 0, 6, 1, 1, ["ID"]),
       makeCell("en-tails", Cell.Kind.Header, 1, 6, 1, 1, ["measurement", "en"]),
-      makeCell("en-tails-av", Cell.Kind.Data, 2, 6, 1, 1, ["en-tails", "average", "en"]),
-      makeCell("en-tails-max", Cell.Kind.Data, 3, 6, 1, 1, ["en-tails", "maximum", "en"])
+      makeCell("en-tails-av", Cell.Kind.Data, 2, 6, 1, 1, [
+        "en-tails",
+        "average",
+        "en",
+      ]),
+      makeCell("en-tails-max", Cell.Kind.Data, 3, 6, 1, 1, [
+        "en-tails",
+        "maximum",
+        "en",
+      ]),
     ],
     [
       RowGroup.of(0, 1, getById("thead")),
@@ -859,5 +897,122 @@ export namespace rowGroupImplicitHeaders {
       RowGroup.of(4, 3, getById("tbody-2")),
     ],
     []
+  );
+}
+
+// https://www.w3.org/WAI/tutorials/tables/irregular/
+export namespace colGroupImplicitHeaders {
+  export const element = Element.fromElement(
+    <table>
+      <colgroup id="group-empty" />
+      <colgroup id="group-mars" span={2} />
+      <colgroup id="group-venus" span={2} />
+      <tr>
+        <td id="empty" rowSpan={2}></td>
+        <th id="mars" colSpan={2} scope="colgroup">
+          Mars
+        </th>
+        <th id="venus" colSpan={2} scope="colgroup">
+          Venus
+        </th>
+      </tr>
+      <tr>
+        <th id="mars-produced" scope="col">
+          Produced
+        </th>
+        <th id="mars-sold" scope="col">
+          Sold
+        </th>
+        <th id="venus-produced" scope="col">
+          Produced
+        </th>
+        <th id="venus-sold" scope="col">
+          Sold
+        </th>
+      </tr>
+      <tr>
+        <th id="bears" scope="row">
+          Teddy Bears
+        </th>
+        <td id="mars-produced-bears">50,000</td>
+        <td id="mars-sold-bears">30,000</td>
+        <td id="venus-produced-bears">100,000</td>
+        <td id="venus-sold-bears">80,000</td>
+      </tr>
+      <tr>
+        <th id="games" scope="row">
+          Board Games
+        </th>
+        <td id="mars-produced-games">10,000</td>
+        <td id="mars-sold-games">5,000</td>
+        <td id="venus-produced-games">12,000</td>
+        <td id="venus-sold-games">9,000</td>
+      </tr>
+    </table>
+  );
+  const getById = getDescendantById(element);
+  const makeCell = makeCellFromGetter(getById);
+
+  export const expected = Table.of(
+    element,
+    5,
+    4,
+    [
+      makeCell("empty", Cell.Kind.Data, 0, 0, 1, 2),
+      makeCell("mars", Cell.Kind.Header, 1, 0, 2, 1),
+      makeCell("venus", Cell.Kind.Header, 3, 0, 2, 1),
+      makeCell("mars-produced", Cell.Kind.Header, 1, 1, 1, 1, ["mars"]),
+      makeCell("mars-sold", Cell.Kind.Header, 2, 1, 1, 1, ["mars"]),
+      makeCell("venus-produced", Cell.Kind.Header, 3, 1, 1, 1, ["venus"]),
+      makeCell("venus-sold", Cell.Kind.Header, 4, 1, 1, 1, ["venus"]),
+      makeCell("bears", Cell.Kind.Header, 0, 2),
+      makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, 1, 1, [
+        "bears",
+        "mars-produced",
+        "mars",
+      ]),
+      makeCell("mars-sold-bears", Cell.Kind.Data, 2, 2, 1, 1, [
+        "bears",
+        "mars-sold",
+        "mars",
+      ]),
+      makeCell("venus-produced-bears", Cell.Kind.Data, 3, 2, 1, 1, [
+        "bears",
+        "venus-produced",
+        "venus",
+      ]),
+      makeCell("venus-sold-bears", Cell.Kind.Data, 4, 2, 1, 1, [
+        "bears",
+        "venus-sold",
+        "venus",
+      ]),
+      makeCell("games", Cell.Kind.Header, 0, 3),
+      makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, 1, 1, [
+        "games",
+        "mars-produced",
+        "mars",
+      ]),
+      makeCell("mars-sold-games", Cell.Kind.Data, 2, 3, 1, 1, [
+        "games",
+        "mars-sold",
+        "mars",
+      ]),
+      makeCell("venus-produced-games", Cell.Kind.Data, 3, 3, 1, 1, [
+        "games",
+        "venus-produced",
+        "venus",
+      ]),
+      makeCell("venus-sold-games", Cell.Kind.Data, 4, 3, 1, 1, [
+        "games",
+        "venus-sold",
+        "venus",
+      ]),
+    ],
+    [],
+    [
+      ColGroup.of(0, 1, getById("group-empty")),
+      ColGroup.of(1, 2, getById("group-mars")),
+      ColGroup.of(3, 2, getById("group-venus")),
+    ]
   );
 }
