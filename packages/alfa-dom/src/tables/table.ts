@@ -280,143 +280,143 @@ export namespace Table {
       cells: Cell.Builder.JSON[];
     }
 
-  export function from(element: Element): Result<Builder, string> {
+    export function from(element: Element): Result<Builder, string> {
       if (element.name !== "table")
-    return Err.of("This element is not a table");
+        return Err.of("This element is not a table");
 
-    // 1, 2, 4, 11
-    let table = Builder.of(element);
-    // 3
-    let pendingTfoot: Array<Element> = [];
-    // 5 + 8 + 9.3
-    let children = element
-      .children()
-      .filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
-    // 6
-    // skipping caption for now
+      // 1, 2, 4, 11
+      let table = Builder.of(element);
+      // 3
+      let pendingTfoot: Array<Element> = [];
+      // 5 + 8 + 9.3
+      let children = element
+        .children()
+        .filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
+      // 6
+      // skipping caption for now
 
-    // 10
-    let yCurrent = 0;
+      // 10
+      let yCurrent = 0;
 
-    // 11
-    let growingCellsList: Array<Cell.Builder> = [];
+      // 11
+      let growingCellsList: Array<Cell.Builder> = [];
 
-    let processCG = true;
-    for (const currentElement of children) {
-      // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
+      let processCG = true;
+      for (const currentElement of children) {
+        // loop control is 7 + 9.2 + 13 (advance) + 15 (advance) + 17 + 18
 
-      if (currentElement.name === "colgroup") {
-        // 9.1 (Columns group)
-        if (processCG) {
-          const colGroup = ColGroup.Builder.from(currentElement)
-            .get()
-            .anchorAt(table.width).colgroup;
-          table = table
-            // 9.1 (1).4 (cumulative) and (2).2
-            .adjustWidth(table.width + colGroup.width)
-            // 9.1 (1).7 and (2).3
-            .addColGroup(colGroup);
+        if (currentElement.name === "colgroup") {
+          // 9.1 (Columns group)
+          if (processCG) {
+            const colGroup = ColGroup.Builder.from(currentElement)
+              .get()
+              .anchorAt(table.width).colgroup;
+            table = table
+              // 9.1 (1).4 (cumulative) and (2).2
+              .adjustWidth(table.width + colGroup.width)
+              // 9.1 (1).7 and (2).3
+              .addColGroup(colGroup);
+          }
+          continue;
         }
-        continue;
+
+        // 12
+        processCG = false;
+
+        if (currentElement.name === "tr") {
+          // 13 (process) can detect new downward growing cells
+
+          const row = Row.Builder.from(
+            currentElement,
+            table.cells,
+            growingCellsList,
+            yCurrent,
+            table.width
+          ).get();
+          growingCellsList = [...row.downwardGrowingCells];
+          table = table
+            .addCells(row.cells)
+            .adjustHeight(yCurrent + 1)
+            .adjustWidth(row.width);
+          // row processing steps 4/16
+          yCurrent++;
+
+          continue;
+        }
+
+        // 14
+        // Ending row group 1
+        growingCellsList = growingCellsList.map((cell) =>
+          cell.growDownward(table.height - 1)
+        );
+        yCurrent = table.height;
+        // Ending row group 2
+        table = table.addCells(growingCellsList);
+        growingCellsList = [];
+
+        if (currentElement.name === "tfoot") {
+          // 15 (add to list)
+          pendingTfoot.push(currentElement);
+        }
+
+        if (
+          currentElement.name === "thead" ||
+          currentElement.name === "tbody"
+        ) {
+          // 16
+          // process row group and anchor cells
+          table = table.addRowGroupFromElement(currentElement, yCurrent).get();
+          yCurrent = table.height;
+        }
       }
 
-      // 12
-      processCG = false;
-
-      if (currentElement.name === "tr") {
-        // 13 (process) can detect new downward growing cells
-
-        const row = Row.Builder.from(
-          currentElement,
-          table.cells,
-          growingCellsList,
-          yCurrent,
-          table.width
-        ).get();
-        growingCellsList = [...row.downwardGrowingCells];
-        table = table
-          .addCells(row.cells)
-          .adjustHeight(yCurrent + 1)
-          .adjustWidth(row.width);
-        // row processing steps 4/16
-        yCurrent++;
-
-        continue;
-      }
-
-      // 14
-      // Ending row group 1
-      growingCellsList = growingCellsList.map((cell) =>
-        cell.growDownward(table.height - 1)
-      );
-      yCurrent = table.height;
-      // Ending row group 2
-      table = table.addCells(growingCellsList);
-      growingCellsList = [];
-
-      if (currentElement.name === "tfoot") {
-        // 15 (add to list)
-        pendingTfoot.push(currentElement);
-      }
-
-      if (
-        currentElement.name === "thead" ||
-        currentElement.name === "tbody"
-      ) {
-        // 16
-        // process row group and anchor cells
-        table = table.addRowGroupFromElement(currentElement, yCurrent).get();
+      // 19
+      for (const tfoot of pendingTfoot) {
+        table = table.addRowGroupFromElement(tfoot, yCurrent).get();
         yCurrent = table.height;
       }
-    }
-
-    // 19
-    for (const tfoot of pendingTfoot) {
-      table = table.addRowGroupFromElement(tfoot, yCurrent).get();
-      yCurrent = table.height;
-    }
-    // 20
-    // Of course, errors are more or less caught and repaired by browsers.
-    // Note that having a rowspan that extends out of the row group is not a table error per se!
-    // checking for rows
-    for (let row = 0; row < table.height; row++) {
-      let rowCovered = false;
-      for (let col = 0; !rowCovered && col < table.width; col++) {
-        rowCovered =
-          rowCovered ||
-          table.cells.some(
-            (cell) => cell.anchor.x === col && cell.anchor.y === row
-          );
+      // 20
+      // Of course, errors are more or less caught and repaired by browsers.
+      // Note that having a rowspan that extends out of the row group is not a table error per se!
+      // checking for rows
+      for (let row = 0; row < table.height; row++) {
+        let rowCovered = false;
+        for (let col = 0; !rowCovered && col < table.width; col++) {
+          rowCovered =
+            rowCovered ||
+            table.cells.some(
+              (cell) => cell.anchor.x === col && cell.anchor.y === row
+            );
+        }
+        if (!rowCovered) return Err.of(`row ${row} has no cell anchored in it`);
       }
-      if (!rowCovered) return Err.of(`row ${row} has no cell anchored in it`);
-    }
-    // checking for cols
-    for (let col = 0; col < table.width; col++) {
-      let colCovered = false;
-      for (let row = 0; !colCovered && row < table.height; row++) {
-        colCovered =
-          colCovered ||
-          table.cells.some(
-            (cell) => cell.anchor.x === col && cell.anchor.y === row
-          );
+      // checking for cols
+      for (let col = 0; col < table.width; col++) {
+        let colCovered = false;
+        for (let row = 0; !colCovered && row < table.height; row++) {
+          colCovered =
+            colCovered ||
+            table.cells.some(
+              (cell) => cell.anchor.x === col && cell.anchor.y === row
+            );
+        }
+        if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`);
       }
-      if (!colCovered) return Err.of(`col ${col} has no cell anchored in it`);
-    }
-    // Checking for row forming algorithm step 13 (slot covered twice)
-    for (let x = 0; x < table.width; x++) {
-      for (let y = 0; y < table.height; y++) {
-        if (table.cells.filter((cell) => cell.isCovering(x, y)).length > 1) {
-          return Err.of(`Slot (${x}, ${y}) is covered twice`);
+      // Checking for row forming algorithm step 13 (slot covered twice)
+      for (let x = 0; x < table.width; x++) {
+        for (let y = 0; y < table.height; y++) {
+          if (table.cells.filter((cell) => cell.isCovering(x, y)).length > 1) {
+            return Err.of(`Slot (${x}, ${y}) is covered twice`);
+          }
         }
       }
-    }
 
-    // 21
-    return Ok.of(
-      table.update({
-        cells: [...table.cells].map((cell) => cell.assignHeaders(table)),
-      })
-    );
-  }
+      // 21
+      return Ok.of(
+        table.update({
+          cells: [...table.cells].map((cell) => cell.assignHeaders(table)),
+        })
+      );
+    }
   }
 }

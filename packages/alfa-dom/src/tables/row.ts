@@ -231,49 +231,49 @@ export namespace Row {
     /**
      * @see/ https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
      */
-  export function from(
+    export function from(
       tr: Element,
       cells: Array<Cell.Builder> = [],
       growingCells: Array<Cell.Builder> = [],
       yCurrent: number = 0,
       w: number = 0
-  ): Result<Builder, string> {
+    ): Result<Builder, string> {
       if (
         cells.some((cell) =>
-        growingCells.some((growingCell) => cell.equals(growingCell))
+          growingCells.some((growingCell) => cell.equals(growingCell))
+        )
       )
-  )
-    return Err.of("Cells and growing cells must be disjoints");
-    if (tr.name !== "tr") return Err.of("This element is not a table row");
+        return Err.of("Cells and growing cells must be disjoints");
+      if (tr.name !== "tr") return Err.of("This element is not a table row");
 
-    let children = tr.children().filter(isElementByName("th", "td"));
+      let children = tr.children().filter(isElementByName("th", "td"));
 
-    // 1
-    // global table height adjusted after building row
+      // 1
+      // global table height adjusted after building row
 
-    // loop control between 4-5, and 16-17-18
-    return Ok.of(
-      children.reduce(
-        (row, currentCell) =>
-          row
-            // 6 (Cells)
-            .skipIfCovered(cells, yCurrent)
-            // 7
-            .enlargeIfNeeded()
-            // 8-14
-            .addCellFromElement(currentCell, yCurrent)
-            .get(), // can't be an error because children have been filtered
-        // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
-        // 2 is done when creating the row, default value for xCurrent is 0.
-        Builder.of(yCurrent, w, 1, tr, [], growingCells)
-          // 3
-          .growCells(yCurrent)
-      )
-    );
+      // loop control between 4-5, and 16-17-18
+      return Ok.of(
+        children.reduce(
+          (row, currentCell) =>
+            row
+              // 6 (Cells)
+              .skipIfCovered(cells, yCurrent)
+              // 7
+              .enlargeIfNeeded()
+              // 8-14
+              .addCellFromElement(currentCell, yCurrent)
+              .get(), // can't be an error because children have been filtered
+          // 15 is actually not needed because it will be done as part of step 6 on next loop, and is useless on last element.
+          // 2 is done when creating the row, default value for xCurrent is 0.
+          Builder.of(yCurrent, w, 1, tr, [], growingCells)
+            // 3
+            .growCells(yCurrent)
+        )
+      );
 
-    // return row;
-    // 4 and 16 done after the calls to avoid side effects.
-  }
+      // return row;
+      // 4 and 16 done after the calls to avoid side effects.
+    }
 
     export interface JSON {
       [key: string]: json.JSON;

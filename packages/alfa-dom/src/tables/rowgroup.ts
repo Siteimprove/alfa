@@ -199,50 +199,50 @@ export namespace RowGroup {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
      */
-  export function from(group: Element): Result<Builder, string> {
+    export function from(group: Element): Result<Builder, string> {
       if (
         group.name !== "tfoot" &&
         group.name !== "tbody" &&
         group.name !== "thead"
-  )
-    return Err.of("This element is not a row group");
+      )
+        return Err.of("This element is not a row group");
 
-    let growingCellsList: Array<Cell.Builder> = [];
-    let rowgroup = Builder.of(-1, 0, group);
-    let yCurrent = 0; // y position inside the rowgroup
-    // 1
-    // Useless, the height of the group is computed and used instead.
-    // 2
-    for (const tr of group.children().filter(isElementByName("tr"))) {
-      const row = Row.Builder.from(
-        tr,
-        rowgroup.cells,
-        growingCellsList,
-        yCurrent,
-        rowgroup.width
-      ).get();
-      growingCellsList = [...row.downwardGrowingCells];
-      rowgroup = rowgroup
-        .update({ cells: rowgroup.cells.concat(...row.cells) })
-        .adjustHeight(yCurrent + row.height)
-        .adjustWidth(row.width);
-      // row processing steps 4/16
-      yCurrent++;
+      let growingCellsList: Array<Cell.Builder> = [];
+      let rowgroup = Builder.of(-1, 0, group);
+      let yCurrent = 0; // y position inside the rowgroup
+      // 1
+      // Useless, the height of the group is computed and used instead.
+      // 2
+      for (const tr of group.children().filter(isElementByName("tr"))) {
+        const row = Row.Builder.from(
+          tr,
+          rowgroup.cells,
+          growingCellsList,
+          yCurrent,
+          rowgroup.width
+        ).get();
+        growingCellsList = [...row.downwardGrowingCells];
+        rowgroup = rowgroup
+          .update({ cells: rowgroup.cells.concat(...row.cells) })
+          .adjustHeight(yCurrent + row.height)
+          .adjustWidth(row.width);
+        // row processing steps 4/16
+        yCurrent++;
+      }
+      // 4, ending the row group
+      // ending row group 1
+      growingCellsList = growingCellsList.map((cell) =>
+        cell.growDownward(rowgroup.rowgroup.height - 1)
+      );
+      // ending row group 2
+      // When emptying the growing cells list, we need to finally add them to the group.
+      rowgroup = rowgroup.update({
+        cells: rowgroup.cells.concat(growingCellsList),
+      });
+      // 3, returning the row group for the table to handle
+      // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
+      return Ok.of(rowgroup);
     }
-    // 4, ending the row group
-    // ending row group 1
-    growingCellsList = growingCellsList.map((cell) =>
-      cell.growDownward(rowgroup.rowgroup.height - 1)
-    );
-    // ending row group 2
-    // When emptying the growing cells list, we need to finally add them to the group.
-    rowgroup = rowgroup.update({
-      cells: rowgroup.cells.concat(growingCellsList),
-    });
-    // 3, returning the row group for the table to handle
-    // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
-    return Ok.of(rowgroup);
-  }
 
     export interface JSON {
       [key: string]: json.JSON;
