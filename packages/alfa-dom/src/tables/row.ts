@@ -81,7 +81,7 @@ export namespace Row {
     }
 
     public get anchor(): { y: number } {
-      return {y: this._y};
+      return { y: this._y };
     }
 
     public get width(): number {
@@ -113,7 +113,7 @@ export namespace Row {
     }
 
     private _addNonGrowingCell(cell: Cell.Building): Building {
-      return this._update({cells: this._cells.concat(cell)});
+      return this._update({ cells: this._cells.concat(cell) });
     }
 
     private _addGrowingCell(cell: Cell.Building): Building {
@@ -150,11 +150,11 @@ export namespace Row {
     }
 
     private _adjustWidth(width: number): Building {
-      return this._update({width: Math.max(this._width, width)});
+      return this._update({ width: Math.max(this._width, width) });
     }
 
     private _adjustHeight(height: number): Building {
-      return this._update({height: Math.max(this._height, height)});
+      return this._update({ height: Math.max(this._height, height) });
     }
 
     /**
@@ -171,7 +171,7 @@ export namespace Row {
           .concat(this._cells, this._downwardGrowingCells)
           .some((cell) => cell.isCovering(this._xCurrent, yCurrent))
       ) {
-        return this._update({xCurrent: this._xCurrent + 1})._skipIfCovered(
+        return this._update({ xCurrent: this._xCurrent + 1 })._skipIfCovered(
           cells,
           yCurrent
         );
@@ -253,7 +253,7 @@ export namespace Row {
           cell.equals(sortedValueCells[idx])
         ) &&
         this._downwardGrowingCells.length ===
-        value._downwardGrowingCells.length &&
+          value._downwardGrowingCells.length &&
         sortedThisDGCells.every((cell, idx) =>
           cell.equals(sortedValueDGCells[idx])
         )

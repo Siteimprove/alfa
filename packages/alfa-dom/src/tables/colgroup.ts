@@ -85,7 +85,6 @@ export namespace ColGroup {
     element: Element.JSON;
   }
 
-
   export class Building implements Equatable, Serializable {
     private readonly _colgroup: ColGroup;
 
@@ -155,8 +154,7 @@ export namespace ColGroup {
 
     public equals(value: unknown): value is this {
       return (
-        value instanceof Building &&
-        this._colgroup.equals(value._colgroup)
+        value instanceof Building && this._colgroup.equals(value._colgroup)
       );
     }
 

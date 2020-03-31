@@ -3,13 +3,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element, Table } from "../../src";
-import {
-  Cell,
-  ColGroup,
-  Row,
-  RowGroup,
-  Header,
-} from "../../src/tables/groups";
+import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
 
 const { and } = Predicate;
 

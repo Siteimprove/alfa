@@ -156,11 +156,11 @@ export namespace RowGroup {
     }
 
     private _adjustWidth(width: number): Building {
-      return this._update({width: Math.max(this._width, width)});
+      return this._update({ width: Math.max(this._width, width) });
     }
 
     private _adjustHeight(height: number): Building {
-      return this._update({height: Math.max(this.height, height)});
+      return this._update({ height: Math.max(this.height, height) });
     }
 
     // anchoring a row group needs to move all cells accordingly
@@ -200,7 +200,7 @@ export namespace RowGroup {
         ).get();
         growingCellsList = [...row.downwardGrowingCells];
         rowgroup = rowgroup
-          ._update({cells: rowgroup._cells.concat(...row.cells)})
+          ._update({ cells: rowgroup._cells.concat(...row.cells) })
           ._adjustHeight(yCurrent + row.height)
           ._adjustWidth(row.width);
         // row processing steps 4/16
