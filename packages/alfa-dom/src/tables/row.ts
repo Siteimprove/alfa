@@ -1,3 +1,4 @@
+import { compare } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -186,29 +187,26 @@ export namespace Row {
         : this;
     }
 
+    public sort(): Builder {
+      return this.update({
+        cells: this._cells.sort(compare),
+        downwardGrowingCells: this._downwardGrowingCells.sort(compare),
+      });
+    }
+
     public equals(value: unknown): value is this {
       if (!(value instanceof Builder)) return false;
-      const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
-      const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
-      const sortedThisDGCells = this._downwardGrowingCells.sort((a, b) =>
-        a.compare(b)
-      );
-      const sortedValueDGCells = value._downwardGrowingCells.sort((a, b) =>
-        a.compare(b)
-      );
       return (
         this._width === value._width &&
         this._height === value._height &&
         this._y === value._y &&
         this._element.equals(value._element) &&
         this._cells.length === value._cells.length &&
-        sortedThisCells.every((cell, idx) =>
-          cell.equals(sortedValueCells[idx])
-        ) &&
+        this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
         this._downwardGrowingCells.length ===
           value._downwardGrowingCells.length &&
-        sortedThisDGCells.every((cell, idx) =>
-          cell.equals(sortedValueDGCells[idx])
+        this._downwardGrowingCells.every((cell, idx) =>
+          cell.equals(value._downwardGrowingCells[idx])
         )
       );
     }
@@ -268,6 +266,7 @@ export namespace Row {
           Builder.of(yCurrent, w, 1, tr, [], growingCells)
             // 3
             .growCells(yCurrent)
+            .sort()
         )
       );
 

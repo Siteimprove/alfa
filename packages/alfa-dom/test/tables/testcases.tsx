@@ -1,5 +1,6 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { compare } from "@siteimprove/alfa-comparable";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element, Table } from "../../src";
@@ -62,7 +63,9 @@ export namespace simpleRow {
     [
       makeCell("first", Cell.Kind.Header, 0, 0),
       makeCell("second", Cell.Kind.Data, 1, 0),
-    ].map(toBuildingCell)
+    ]
+      .map(toBuildingCell)
+      .sort(compare)
   );
 }
 
@@ -103,7 +106,9 @@ export namespace complexRow {
       makeCell("strength", Cell.Kind.Header, 2, 0, [], 2, 1),
       makeCell("elong", Cell.Kind.Header, 4, 0, [], 1, 2),
       makeCell("reduct", Cell.Kind.Header, 5, 0, [], 1, 2),
-    ].map(toBuildingCell)
+    ]
+      .map(toBuildingCell)
+      .sort(compare)
   );
 }
 
@@ -154,7 +159,9 @@ export namespace rowGroup {
       makeCell("reduct", Cell.Kind.Header, 5, 0, [], 1, 2),
       makeCell("kg-mm", Cell.Kind.Header, 2, 1),
       makeCell("lb-in", Cell.Kind.Header, 3, 1),
-    ].map(toBuildingCell)
+    ]
+      .map(toBuildingCell)
+      .sort(compare)
   );
 }
 
@@ -211,7 +218,9 @@ export namespace downwardGrowing {
       makeCell("bar", Cell.Kind.Header, 3, 2, [], 1, 1),
       makeCell("reduct", Cell.Kind.Header, 5, 0, [], 1, 3),
       makeCell("kg-mm", Cell.Kind.Header, 2, 1, [], 1, 2),
-    ].map(toBuildingCell)
+    ]
+      .map(toBuildingCell)
+      .sort(compare)
   );
 }
 
@@ -311,8 +320,11 @@ export namespace smithonian {
       makeCell("soft-lb", Cell.Kind.Data, 3, 4, ["lb-in", "strength"]),
       makeCell("soft-elong", Cell.Kind.Data, 4, 4, ["elong"]),
       makeCell("soft-reduct", Cell.Kind.Data, 5, 4, ["reduct"]),
-    ],
-    [RowGroup.of(0, 2, getById("thead")), RowGroup.of(2, 3, getById("tbody"))]
+    ].sort(compare),
+    [
+      RowGroup.of(0, 2, getById("thead")),
+      RowGroup.of(2, 3, getById("tbody")),
+    ].sort(compare)
   );
 }
 
@@ -388,13 +400,13 @@ export namespace apple {
       makeCell("percent-2008", Cell.Kind.Data, 1, 4, ["percent", "2008"]),
       makeCell("percent-2007", Cell.Kind.Data, 2, 4, ["percent", "2007"]),
       makeCell("percent-2006", Cell.Kind.Data, 3, 4, ["percent", "2006"]),
-    ],
+    ].sort(compare),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
       RowGroup.of(3, 1, getById("body-2")),
       RowGroup.of(4, 1, getById("tfoot")),
-    ]
+    ].sort(compare)
   );
 }
 
@@ -501,16 +513,16 @@ export namespace expenses {
         "2006",
         "sales",
       ]),
-    ],
+    ].sort(compare),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
       RowGroup.of(3, 2, getById("body-2")),
-    ],
+    ].sort(compare),
     [
       ColGroup.of(0, 1, getById("group-head")),
       ColGroup.of(1, 3, getById("group-body")),
-    ]
+    ].sort(compare)
   );
 
   export const headerStates = [
@@ -627,16 +639,16 @@ export namespace expensesNum {
         "2006",
         "sales",
       ]),
-    ],
+    ].sort(compare),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
       RowGroup.of(3, 2, getById("body-2")),
-    ],
+    ].sort(compare),
     [
       ColGroup.of(0, 1, getById("group-head")),
       ColGroup.of(1, 3, getById("group-body")),
-    ]
+    ].sort(compare)
   );
 }
 
@@ -761,13 +773,18 @@ export namespace explicitHeaders {
   export const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Table.of(element, 4, 2, [
-    makeCell("text-content", Cell.Kind.Header, 0, 0),
-    makeCell("child", Cell.Kind.Header, 1, 0),
-    makeCell("empty", Cell.Kind.Header, 2, 0, ["child"]),
-    makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
-    makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"]),
-  ]);
+  export const expected = Table.of(
+    element,
+    4,
+    2,
+    [
+      makeCell("text-content", Cell.Kind.Header, 0, 0),
+      makeCell("child", Cell.Kind.Header, 1, 0),
+      makeCell("empty", Cell.Kind.Header, 2, 0, ["child"]),
+      makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
+      makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"]),
+    ].sort(compare)
+  );
 }
 
 export namespace simpleImplicitHeaders {
@@ -793,17 +810,22 @@ export namespace simpleImplicitHeaders {
   const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
-  export const expected = Table.of(element, 3, 3, [
-    makeCell("empty", Cell.Kind.Header, 0, 0),
-    makeCell("col1", Cell.Kind.Header, 1, 0),
-    makeCell("col2", Cell.Kind.Header, 2, 0),
-    makeCell("row1", Cell.Kind.Header, 0, 1),
-    makeCell("cell11", Cell.Kind.Data, 1, 1, ["row1", "col1"]),
-    makeCell("cell12", Cell.Kind.Data, 2, 1, ["row1", "col2"]),
-    makeCell("row2", Cell.Kind.Header, 0, 2),
-    makeCell("cell21", Cell.Kind.Data, 1, 2, ["row2", "col1"]),
-    makeCell("cell22", Cell.Kind.Data, 2, 2, ["row2", "col2"]),
-  ]);
+  export const expected = Table.of(
+    element,
+    3,
+    3,
+    [
+      makeCell("empty", Cell.Kind.Header, 0, 0),
+      makeCell("col1", Cell.Kind.Header, 1, 0),
+      makeCell("col2", Cell.Kind.Header, 2, 0),
+      makeCell("row1", Cell.Kind.Header, 0, 1),
+      makeCell("cell11", Cell.Kind.Data, 1, 1, ["row1", "col1"]),
+      makeCell("cell12", Cell.Kind.Data, 2, 1, ["row1", "col2"]),
+      makeCell("row2", Cell.Kind.Header, 0, 2),
+      makeCell("cell21", Cell.Kind.Data, 1, 2, ["row2", "col1"]),
+      makeCell("cell22", Cell.Kind.Data, 2, 2, ["row2", "col2"]),
+    ].sort(compare)
+  );
 }
 
 //
@@ -933,12 +955,12 @@ export namespace rowGroupImplicitHeaders {
         "maximum",
         "en",
       ]),
-    ],
+    ].sort(compare),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 3, getById("tbody-1")),
       RowGroup.of(4, 3, getById("tbody-2")),
-    ],
+    ].sort(compare),
     []
   );
 }
@@ -1050,12 +1072,12 @@ export namespace colGroupImplicitHeaders {
         "venus-sold",
         "venus",
       ]),
-    ],
+    ].sort(compare),
     [],
     [
       ColGroup.of(0, 1, getById("group-empty")),
       ColGroup.of(1, 2, getById("group-mars")),
       ColGroup.of(3, 2, getById("group-venus")),
-    ]
+    ].sort(compare)
   );
 }

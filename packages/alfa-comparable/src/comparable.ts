@@ -13,3 +13,10 @@ export interface Comparable<T> {
    */
   compare(value: T): Comparison;
 }
+
+/**
+ * Ready made generic function to use with Array.sort
+ */
+export function compare<T, U extends Comparable<T>>(a: U, b: T): Comparison {
+  return a.compare(b);
+}

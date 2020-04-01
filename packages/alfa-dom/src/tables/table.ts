@@ -1,3 +1,4 @@
+import { compare } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -77,26 +78,18 @@ export class Table implements Equatable, Serializable {
 
   public equals(value: unknown): value is this {
     if (!(value instanceof Table)) return false;
-    const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
-    const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
-    const sortedThisRowGroup = this._rowGroups.sort((a, b) => a.compare(b));
-    const sortedValueRowGroup = value._rowGroups.sort((a, b) => a.compare(b));
-    const sortedThisColGroup = this._colGroups.sort((a, b) => a.compare(b));
-    const sortedValueColGroup = value._colGroups.sort((a, b) => a.compare(b));
     return (
       this._width === value._width &&
       this._height === value._height &&
-      sortedThisCells.length === sortedValueCells.length &&
-      sortedThisCells.every((cell, idx) =>
-        cell.equals(sortedValueCells[idx])
+      this._cells.length === value._cells.length &&
+      this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
+      this._rowGroups.length === value._rowGroups.length &&
+      this._rowGroups.every((rowGroup, idx) =>
+        rowGroup.equals(value._rowGroups[idx])
       ) &&
-      sortedThisRowGroup.length === sortedValueRowGroup.length &&
-      sortedThisRowGroup.every((cell, idx) =>
-        cell.equals(sortedValueRowGroup[idx])
-      ) &&
-      sortedThisColGroup.length === sortedValueColGroup.length &&
-      sortedThisColGroup.every((cell, idx) =>
-        cell.equals(sortedValueColGroup[idx])
+      this._colGroups.length === value._colGroups.length &&
+      this._colGroups.every((colGroup, idx) =>
+        colGroup.equals(this._colGroups[idx])
       )
     );
   }
@@ -253,13 +246,9 @@ export namespace Table {
 
     public equals(value: unknown): value is this {
       if (!(value instanceof Builder)) return false;
-      const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
-      const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
       return (
-        sortedThisCells.length === sortedValueCells.length &&
-        sortedThisCells.every((cell, idx) =>
-          cell.equals(sortedValueCells[idx])
-        ) &&
+        this._cells.length === value._cells.length &&
+        this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
         this._table.equals(value._table)
       );
     }
@@ -414,7 +403,11 @@ export namespace Table {
       // 21
       return Ok.of(
         table.update({
-          cells: [...table.cells].map((cell) => cell.assignHeaders(table)),
+          cells: [...table.cells]
+            .map((cell) => cell.assignHeaders(table))
+            .sort(compare),
+          colGroups: [...table.colGroups].sort(compare),
+          rowGroups: [...table.rowGroups].sort(compare),
         })
       );
     }

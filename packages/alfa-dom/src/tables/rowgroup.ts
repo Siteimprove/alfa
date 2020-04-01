@@ -1,4 +1,4 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable, compare, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -176,13 +176,11 @@ export namespace RowGroup {
 
     public equals(value: unknown): value is this {
       if (!(value instanceof Builder)) return false;
-      const sortedThisCells = this._cells.sort((a, b) => a.compare(b));
-      const sortedValueCells = value._cells.sort((a, b) => a.compare(b));
       return (
         this._rowgroup.equals(value._rowgroup) &&
         this._width === value._width &&
-        sortedThisCells.length === sortedValueCells.length &&
-        sortedThisCells.every((cell, idx) => cell.equals(sortedValueCells[idx]))
+        this._cells.length === value._cells.length &&
+        this._cells.every((cell, idx) => cell.equals(value._cells[idx]))
       );
     }
 
@@ -241,7 +239,7 @@ export namespace RowGroup {
       });
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
-      return Ok.of(rowgroup);
+      return Ok.of(rowgroup.update({ cells: rowgroup.cells.sort(compare) }));
     }
 
     export interface JSON {
