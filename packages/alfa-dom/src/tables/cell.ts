@@ -436,6 +436,8 @@ export namespace Cell {
       initialY: number,
       decreaseX: boolean
     ): Array<Builder> {
+      // const debug = this.name === "venus-sold-bears" && decreaseX;
+      // if (debug) console.log("     Here we go");
       // The principal cell is this.
       const deltaX = decreaseX ? -1 : 0;
       const deltaY = decreaseX ? 0 : -1;
@@ -464,12 +466,15 @@ export namespace Cell {
         if (covering.length !== 1) {
           // More than one cell covering a slot is a table model error. Not sure why the test is in the algo…
           // (0 cell is possible, more than one is not)
+          // if (debug) console.log("     Houston…");
           continue;
         }
         // 8
         const currentCell = covering[0];
+        // if (debug) console.log(`     slot (${x}, ${y}) is covered by ${currentCell.name}`);
         // 9
         if (currentCell.kind === Cell.Kind.Header) {
+          // if (debug) console.log(`     and it is a header`);
           // 9.1
           inHeaderBlock = true;
           // 9.2
@@ -500,15 +505,18 @@ export namespace Cell {
                   cell.height === currentCell.height
               )
             ) {
+              // if (debug) console.log(`     and it has opaque stuff`);
               blocked = true;
             }
             if (!state.equals(Some.of(Header.State.Row))) {
+              // if (debug) console.log(`     and it is not a row header`);
               blocked = true;
             }
           }
           // 9.5
           if (!blocked) headersList.push(currentCell);
         } else {
+          // if (debug) console.log(`     and it is some data`);
           inHeaderBlock = false;
           opaqueHeaders.push(...headersFromCurrentBlock);
           headersFromCurrentBlock = [];
@@ -581,7 +589,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignImplicitHeaders(table: Table.Builder): Builder {
-      // const debug = this.name === "en";
+      // const debug = this.name === "venus-sold-bears";
       // if (debug) console.log(`Implicit headers of ${this.name}`);
       // 1
       let headersList: Array<Builder> = [];
@@ -658,6 +666,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     public assignHeaders(table: Table.Builder): Builder {
+      // console.log(`Assigning headers for ${this.name}`);
       return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
     }
 

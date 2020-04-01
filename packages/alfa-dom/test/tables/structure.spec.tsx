@@ -4,6 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Table } from "../../src";
 import {
+  allWeirdImplicitHeaders,
   apple,
   colGroupImplicitHeaders,
   complexRow,
@@ -123,4 +124,9 @@ test("Tables with groups headers", (t) => {
     Table.from(colGroupImplicitHeaders.element).get().toJSON(),
     colGroupImplicitHeaders.expected.toJSON()
   );
+
+  t.deepEqual(
+    Table.from(allWeirdImplicitHeaders.element).get().toJSON(),
+    allWeirdImplicitHeaders.expected.toJSON()
+  )
 });

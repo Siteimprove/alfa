@@ -1082,118 +1082,245 @@ export namespace colGroupImplicitHeaders {
   );
 }
 
-// export namespace allWeirdHeaders {
-//   export const element = Element.fromElement(
-//     <table>
-//       <colgroup id="group-empty"><col /><col /></colgroup>
-//       <colgroup id="group-mars" span={3} />
-//       <colgroup id="group-venus" span={2} />
-//       <tr>
-//         <td id="empty" rowSpan={2} colSpan={2}></td>
-//         <th id="mars" rowSpan={2} scope="colgroup">
-//           Mars
-//         </th>
-//         <th id="mars-produced" rowSpan={2} scope="col">
-//           Produced
-//         </th>
-//         <th id="mars-sold" rowSpan={2} scope="col">
-//           Sold
-//         </th>
-//         <th id="venus" colSpan={2} scope="colgroup">
-//           Venus
-//         </th>
-//       </tr>
-//       <tr>
-//         <th id="venus-produced" scope="col">
-//           Produced
-//         </th>
-//         <th id="venus-sold" scope="col">
-//           Sold
-//         </th>
-//       </tr>
-//       <tr>
-//         <th id="bears" scope="row">
-//           Teddy Bears
-//         </th>
-//         <td id="mars-produced-bears">50,000</td>
-//         <td id="mars-sold-bears">30,000</td>
-//         <td id="venus-produced-bears">100,000</td>
-//         <td id="venus-sold-bears">80,000</td>
-//       </tr>
-//       <tr>
-//         <th id="games" scope="row">
-//           Board Games
-//         </th>
-//         <td id="mars-produced-games">10,000</td>
-//         <td id="mars-sold-games">5,000</td>
-//         <td id="venus-produced-games">12,000</td>
-//         <td id="venus-sold-games">9,000</td>
-//       </tr>
-//     </table>
-//   );
-//   const getById = getDescendantById(element);
-//   const makeCell = makeCellFromGetter(getById);
-//
-//   export const expected = Table.of(
-//     element,
-//     5,
-//     4,
-//     [
-//       makeCell("empty", Cell.Kind.Data, 0, 0, [], 1, 2),
-//       makeCell("mars", Cell.Kind.Header, 1, 0, [], 2, 1),
-//       makeCell("venus", Cell.Kind.Header, 3, 0, [], 2, 1),
-//       makeCell("mars-produced", Cell.Kind.Header, 1, 1, ["mars"]),
-//       makeCell("mars-sold", Cell.Kind.Header, 2, 1, ["mars"]),
-//       makeCell("venus-produced", Cell.Kind.Header, 3, 1, ["venus"]),
-//       makeCell("venus-sold", Cell.Kind.Header, 4, 1, ["venus"]),
-//       makeCell("bears", Cell.Kind.Header, 0, 2),
-//       makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, [
-//         "bears",
-//         "mars-produced",
-//         "mars",
-//       ]),
-//       makeCell("mars-sold-bears", Cell.Kind.Data, 2, 2, [
-//         "bears",
-//         "mars-sold",
-//         "mars",
-//       ]),
-//       makeCell("venus-produced-bears", Cell.Kind.Data, 3, 2, [
-//         "bears",
-//         "venus-produced",
-//         "venus",
-//       ]),
-//       makeCell("venus-sold-bears", Cell.Kind.Data, 4, 2, [
-//         "bears",
-//         "venus-sold",
-//         "venus",
-//       ]),
-//       makeCell("games", Cell.Kind.Header, 0, 3),
-//       makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, [
-//         "games",
-//         "mars-produced",
-//         "mars",
-//       ]),
-//       makeCell("mars-sold-games", Cell.Kind.Data, 2, 3, [
-//         "games",
-//         "mars-sold",
-//         "mars",
-//       ]),
-//       makeCell("venus-produced-games", Cell.Kind.Data, 3, 3, [
-//         "games",
-//         "venus-produced",
-//         "venus",
-//       ]),
-//       makeCell("venus-sold-games", Cell.Kind.Data, 4, 3, [
-//         "games",
-//         "venus-sold",
-//         "venus",
-//       ]),
-//     ].sort(compare),
-//     [],
-//     [
-//       ColGroup.of(0, 1, getById("group-empty")),
-//       ColGroup.of(1, 2, getById("group-mars")),
-//       ColGroup.of(3, 2, getById("group-venus")),
-//     ].sort(compare)
-//   );
-// }
+// A crazy one with a bit of everything
+export namespace allWeirdImplicitHeaders {
+  export const element = Element.fromElement(
+    <table>
+      <colgroup id="group-empty"><col /><col /></colgroup>
+      <colgroup id="group-mars" span={3} />
+      <colgroup id="group-venus" span={2} />
+      <thead id="thead">
+      <tr>
+        <th id="empty" rowSpan={2} colSpan={2} />
+        <th id="mars" rowSpan={2} scope="colgroup">
+          Mars
+        </th>
+        <th id="mars-produced" rowSpan={2} scope="col">
+          Produced
+        </th>
+        <th id="mars-sold" rowSpan={2} scope="col">
+          Sold
+        </th>
+        <th id="venus" colSpan={2} scope="colgroup">
+          Venus
+        </th>
+      </tr>
+      <tr>
+        <th id="venus-produced" scope="col">
+          Produced
+        </th>
+        <th id="venus-sold" scope="col">
+          Sold
+        </th>
+      </tr>
+      </thead>
+      <tbody id="stuffed-animals">
+      <tr>
+        <th id="stuffed" rowSpan={2} scope="rowgroup">
+          Stuffed animals
+        </th>
+        <th id="bears">Bears</th>
+        <td id="mars-empty-bears" />
+        <td id="mars-produced-bears">50,000</td>
+        <td id="mars-sold-bears">30,000</td>
+        <td id="venus-produced-bears">100,000</td>
+        <td id="venus-sold-bears">80,000</td>
+      </tr>
+      <tr>
+        <th id="bunnies">Bunnies</th>
+        <td id="mars-empty-bunnies" />
+        <td id="mars-produced-bunnies">50,000</td>
+        <td id="mars-sold-bunnies">30,000</td>
+        <td id="venus-produced-bunnies">100,000</td>
+        <td id="venus-sold-bunnies">80,000</td>
+      </tr>
+      </tbody>
+      <tbody id="games-rg">
+      <tr>
+        <th id="games" colSpan={2} scope="rowgroup">
+          Games
+        </th>
+        <td id="mars-empty-games"/>
+        <td id="mars-produced-games" />
+        <td id="mars-sold-games" />
+        <td id="venus-produced-games" />
+        <td id="venus-sold-games" />
+      </tr>
+      <tr>
+        <th id="board" colSpan={2} scope="row">
+          Board Games
+        </th>
+        <td id="mars-empty-board"/>
+        <td id="mars-produced-board">10,000</td>
+        <td id="mars-sold-board">5,000</td>
+        <td id="venus-produced-board">12,000</td>
+        <td id="venus-sold-board">9,000</td>
+      </tr>
+      <tr>
+        <th id="cards" colSpan={2} scope="row">
+          Cards Games
+        </th>
+        <td id="mars-empty-cards"/>
+        <td id="mars-produced-cards">10,000</td>
+        <td id="mars-sold-cards">5,000</td>
+        <td id="venus-produced-cards">12,000</td>
+        <td id="venus-sold-cards">9,000</td>
+      </tr>
+      </tbody>
+    </table>
+  );
+  const getById = getDescendantById(element);
+  const makeCell = makeCellFromGetter(getById);
+
+  export const expected = Table.of(
+    element,
+    7,
+    7,
+    [
+      makeCell("empty", Cell.Kind.Header, 0, 0, [], 2, 2),
+      makeCell("mars", Cell.Kind.Header, 2, 0, [], 1, 2),
+      makeCell("mars-produced", Cell.Kind.Header, 3, 0, ["mars"], 1, 2),
+      makeCell("mars-sold", Cell.Kind.Header, 4, 0, ["mars"], 1, 2),
+      makeCell("venus", Cell.Kind.Header, 5, 0, [], 2, 1),
+      makeCell("venus-produced", Cell.Kind.Header, 5, 1, ["venus"]),
+      makeCell("venus-sold", Cell.Kind.Header, 6, 1, ["venus"]),
+      makeCell("stuffed", Cell.Kind.Header, 0, 2, [], 1, 2),
+      makeCell("bears", Cell.Kind.Header, 1, 2, ["stuffed"]),
+      makeCell("mars-empty-bears", Cell.Kind.Data, 2, 2, ["bears", "stuffed", "mars"]),
+      makeCell("mars-produced-bears", Cell.Kind.Data, 3, 2, [
+        "bears",
+        "mars-produced",
+        "stuffed",
+        "mars",
+      ]),
+      makeCell("mars-sold-bears", Cell.Kind.Data, 4, 2, [
+        "bears",
+        "mars-sold",
+        "stuffed",
+        "mars",
+      ]),
+      makeCell("venus-produced-bears", Cell.Kind.Data, 5, 2, [
+        "bears",
+        "venus-produced",
+        "stuffed",
+        "venus",
+      ]),
+      makeCell("venus-sold-bears", Cell.Kind.Data, 6, 2, [
+        "bears",
+        "venus-sold",
+        "stuffed",
+        "venus",
+      ]),
+      makeCell("bunnies", Cell.Kind.Header, 1, 3, ["stuffed"]),
+      makeCell("mars-empty-bunnies", Cell.Kind.Data, 2, 3, ["bunnies", "stuffed", "mars"]),
+      makeCell("mars-produced-bunnies", Cell.Kind.Data, 3, 3, [
+        "bunnies",
+        "mars-produced",
+        "stuffed",
+        "mars",
+      ]),
+      makeCell("mars-sold-bunnies", Cell.Kind.Data, 4, 3, [
+        "bunnies",
+        "mars-sold",
+        "stuffed",
+        "mars",
+      ]),
+      makeCell("venus-produced-bunnies", Cell.Kind.Data, 5, 3, [
+        "bunnies",
+        "venus-produced",
+        "stuffed",
+        "venus",
+      ]),
+      makeCell("venus-sold-bunnies", Cell.Kind.Data, 6, 3, [
+        "bunnies",
+        "venus-sold",
+        "stuffed",
+        "venus",
+      ]),
+      makeCell("games", Cell.Kind.Header, 0, 4, [], 2, 1),
+      makeCell("mars-empty-games", Cell.Kind.Data, 2, 4, ["games", "mars"]),
+      makeCell("mars-produced-games", Cell.Kind.Data, 3, 4, [
+        "mars-produced",
+        "games",
+        "mars",
+      ]),
+      makeCell("mars-sold-games", Cell.Kind.Data, 4, 4, [
+        "mars-sold",
+        "games",
+        "mars",
+      ]),
+      makeCell("venus-produced-games", Cell.Kind.Data, 5, 4, [
+        "venus-produced",
+        "games",
+        "venus",
+      ]),
+      makeCell("venus-sold-games", Cell.Kind.Data, 6, 4, [
+        "venus-sold",
+        "games",
+        "venus",
+      ]),
+      makeCell("board", Cell.Kind.Header, 0, 5, ["games"], 2, 1),
+      makeCell("mars-empty-board", Cell.Kind.Data, 2, 5, ["board", "games", "mars"]),
+      makeCell("mars-produced-board", Cell.Kind.Data, 3, 5, [
+        "board",
+        "mars-produced",
+        "games",
+        "mars",
+      ]),
+      makeCell("mars-sold-board", Cell.Kind.Data, 4, 5, [
+        "board",
+        "mars-sold",
+        "games",
+        "mars",
+      ]),
+      makeCell("venus-produced-board", Cell.Kind.Data, 5, 5, [
+        "board",
+        "venus-produced",
+        "games",
+        "venus",
+      ]),
+      makeCell("venus-sold-board", Cell.Kind.Data, 6, 5, [
+        "board",
+        "venus-sold",
+        "games",
+        "venus",
+      ]),
+      makeCell("cards", Cell.Kind.Header, 0, 6, ["games"], 2, 1),
+      makeCell("mars-empty-cards", Cell.Kind.Data, 2, 6, ["cards", "games", "mars"]),
+      makeCell("mars-produced-cards", Cell.Kind.Data, 3, 6, [
+        "cards",
+        "mars-produced",
+        "games",
+        "mars",
+      ]),
+      makeCell("mars-sold-cards", Cell.Kind.Data, 4, 6, [
+        "cards",
+        "mars-sold",
+        "games",
+        "mars",
+      ]),
+      makeCell("venus-produced-cards", Cell.Kind.Data, 5, 6, [
+        "cards",
+        "venus-produced",
+        "games",
+        "venus",
+      ]),
+      makeCell("venus-sold-cards", Cell.Kind.Data, 6, 6, [
+        "cards",
+        "venus-sold",
+        "games",
+        "venus",
+      ]),
+    ].sort(compare),
+    [
+      RowGroup.of(0, 2, getById("thead")),
+      RowGroup.of(2, 2, getById("stuffed-animals")),
+      RowGroup.of(4, 3, getById("games-rg"))
+    ].sort(compare),
+    [
+      ColGroup.of(0, 2, getById("group-empty")),
+      ColGroup.of(2, 3, getById("group-mars")),
+      ColGroup.of(5, 2, getById("group-venus")),
+    ].sort(compare)
+  );
+}
