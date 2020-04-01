@@ -1,16 +1,10 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
-import { Map } from "@siteimprove/alfa-map";
 import { test } from "@siteimprove/alfa-test";
-import { None, Some } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 
 import { Attribute, Element } from "../../src";
 import { Cell, ColGroup, RowGroup } from "../../src/tables/groups";
-import {
-  EnumeratedValueError,
-  isEmpty,
-  parseEnumeratedAttribute,
-  parseSpan,
-} from "../../src/tables/helpers";
+import { isEmpty, parseSpan } from "../../src/tables/helpers";
 
 const dummy = Element.of(None, None, "foo");
 
@@ -60,7 +54,7 @@ test("isCovering ̤correctly computes group coverage", (t) => {
   t.equal(rowGroup(6, 2).isCovering(8), false);
 });
 
-test("parse span attribute according to specs", (t) => {
+test("parse span attribute according to table specs", (t) => {
   function span(name: string, value: string): Element {
     return Element.of(None, None, "foo", (elt) => [
       Attribute.of(None, None, `${name}span`, value),
@@ -85,48 +79,15 @@ test("parse span attribute according to specs", (t) => {
   t.equal(parseSpan(nospan, "rowspan", 0, 65534, 1), 1);
 });
 
-test("parse enumerated attribute according to specs", (t) => {
-  function enumerated(value: string): Element {
-    return Element.of(None, None, "dummy", (elt) => [
-      Attribute.of(None, None, "enumerated", value),
-    ]);
-  }
-  const noenum = Element.of(None, None, "dummy");
-  const noDefault = Map.from([
-    ["foo", 1],
-    ["bar", 2],
-  ]);
-  const withDefault = Map.from([
-    ["foo", 1],
-    ["bar", 2],
-    [EnumeratedValueError.Missing, 0],
-    [EnumeratedValueError.Invalid, 42],
-  ]);
-
-  const parserNoDefault = parseEnumeratedAttribute("enumerated", noDefault);
-  const parserWithDefault = parseEnumeratedAttribute("enumerated", withDefault);
-
-  t.deepEqual(parserNoDefault(enumerated("Foo")), Some.of(1));
-  t.deepEqual(parserNoDefault(enumerated("this is totally invalid")), None);
-  t.deepEqual(parserNoDefault(noenum), None);
-
-  t.deepEqual(parserWithDefault(enumerated("bAR")), Some.of(2));
-  t.deepEqual(
-    parserWithDefault(enumerated("this is totally invalid")),
-    Some.of(42)
-  );
-  t.deepEqual(parserWithDefault(noenum), Some.of(0));
-});
-
 test("Detect empty cells (element)", (t) => {
-  t(isEmpty(Element.fromElement(<span/>)));
-  t(!isEmpty(Element.fromElement(<span>Foo</span>))); // has text content
+  t(isEmpty(Element.fromElement(<td />)));
+  t(!isEmpty(Element.fromElement(<td>Foo</td>))); // has text content
   t(
     !isEmpty(
       Element.fromElement(
-        <div>
+        <td>
           <span />
-        </div>
+        </td>
       )
     )
   ); // has child
