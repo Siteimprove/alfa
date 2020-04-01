@@ -525,17 +525,6 @@ export namespace Cell {
       table: Table.Builder,
       document: Document | undefined = undefined
     ): Builder {
-      function showAndTell<T, U extends T = T>(
-        predicate: Predicate<T, U>,
-        name: string
-      ): Predicate<T, U> {
-        function allezTuture(x: T): x is U {
-          const result = predicate(x);
-          return result;
-        }
-        return allezTuture;
-      }
-
       // "no document" is allowed for easier unit test (better isolation).
       // 3 / headers attribute / 1
       const idsList: Array<string> = this.element
@@ -551,14 +540,14 @@ export namespace Cell {
         and(
           and(
             // only keep cells in the table
-            showAndTell(isElementByName("th", "td"), "th/td"),
-            showAndTell(isDescendantOf(table.element), "descendant")
+            isElementByName("th", "td"),
+            isDescendantOf(table.element)
           ),
           and(
             // remove principal cell
-            showAndTell(not(isEqual(this.element)), "not equal"),
+            not(isEqual(this.element)),
             // Step 4: remove empty cells
-            showAndTell(not(isEmpty), "not empty")
+            not(isEmpty)
           )
         )
       );
