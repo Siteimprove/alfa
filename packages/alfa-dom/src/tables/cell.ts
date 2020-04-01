@@ -436,8 +436,6 @@ export namespace Cell {
       initialY: number,
       decreaseX: boolean
     ): Array<Builder> {
-      // const debug = this.name === "venus-sold-bears" && decreaseX;
-      // if (debug) console.log("     Here we go");
       // The principal cell is this.
       const deltaX = decreaseX ? -1 : 0;
       const deltaY = decreaseX ? 0 : -1;
@@ -466,15 +464,12 @@ export namespace Cell {
         if (covering.length !== 1) {
           // More than one cell covering a slot is a table model error. Not sure why the test is in the algo…
           // (0 cell is possible, more than one is not)
-          // if (debug) console.log("     Houston…");
           continue;
         }
         // 8
         const currentCell = covering[0];
-        // if (debug) console.log(`     slot (${x}, ${y}) is covered by ${currentCell.name}`);
         // 9
         if (currentCell.kind === Cell.Kind.Header) {
-          // if (debug) console.log(`     and it is a header`);
           // 9.1
           inHeaderBlock = true;
           // 9.2
@@ -505,18 +500,15 @@ export namespace Cell {
                   cell.height === currentCell.height
               )
             ) {
-              // if (debug) console.log(`     and it has opaque stuff`);
               blocked = true;
             }
             if (!state.equals(Some.of(Header.State.Row))) {
-              // if (debug) console.log(`     and it is not a row header`);
               blocked = true;
             }
           }
           // 9.5
           if (!blocked) headersList.push(currentCell);
         } else {
-          // if (debug) console.log(`     and it is some data`);
           inHeaderBlock = false;
           opaqueHeaders.push(...headersFromCurrentBlock);
           headersFromCurrentBlock = [];
@@ -533,15 +525,12 @@ export namespace Cell {
       table: Table.Builder,
       document: Document | undefined = undefined
     ): Builder {
-      const debug = false;
-      if (debug) console.log("Parsing foo");
       function showAndTell<T, U extends T = T>(
         predicate: Predicate<T, U>,
         name: string
       ): Predicate<T, U> {
         function allezTuture(x: T): x is U {
           const result = predicate(x);
-          if (debug) console.log(`Showing ${name} is ${result}`);
           return result;
         }
         return allezTuture;
@@ -557,8 +546,6 @@ export namespace Cell {
 
       // 3 / headers attribute / 2
       const topNode = document === undefined ? table.element : document;
-
-      if (debug) console.log(`id list: ${idsList}`);
 
       const elements = resolveReferences(topNode, idsList).filter(
         and(
@@ -576,12 +563,6 @@ export namespace Cell {
         )
       );
 
-      if (debug)
-        console.log(
-          `elements: ${elements.map((elt) => elt.attribute("id").get().value)}`
-        );
-      if (debug) console.log(`emptyness: ${elements.map(isEmpty)}`);
-
       return this._update({ eHeaders: elements });
     }
 
@@ -589,8 +570,6 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignImplicitHeaders(table: Table.Builder): Builder {
-      // const debug = this.name === "venus-sold-bears";
-      // if (debug) console.log(`Implicit headers of ${this.name}`);
       // 1
       let headersList: Array<Builder> = [];
       // 2 principal cell = this, nothing to do.
@@ -601,14 +580,12 @@ export namespace Cell {
           this._internalHeaderScanning(table, this.anchor.x, y, true)
         );
       }
-      // if (debug)  console.log(`   After first loop: ${headersList.map(cell => cell.name)}`);
       // 3.4
       for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
         headersList = headersList.concat(
           this._internalHeaderScanning(table, x, this.anchor.y, false)
         );
       }
-      // if (debug)  console.log(`   After second loop: ${headersList.map(cell => cell.name)}`);
       // 3.5
       const rowgroup = Iterable.find(table.rowGroups, (rg) =>
         rg.isCovering(this.anchor.y)
@@ -628,7 +605,6 @@ export namespace Cell {
 
         headersList = headersList.concat(leftAndUp);
       }
-      // if (debug)  console.log(`   After row groups: ${headersList.map(cell => cell.name)}`);
       // 3.6
       const colgroup = Iterable.find(table.colGroups, (cg) =>
         cg.isCovering(this.anchor.x)
@@ -648,14 +624,12 @@ export namespace Cell {
 
         headersList = headersList.concat(leftAndUp);
       }
-      // if (debug)  console.log(`   After col groups: ${headersList.map(cell => cell.name)}`);
 
       headersList = headersList
         // 5 (remove duplicates)
         .filter((cell, idx) => headersList.indexOf(cell) === idx)
         // 4 (remove empty cells) & 6 remove principal cell
         .filter((cell) => !isEmpty(cell.element) && !cell.equals(this));
-      // if (debug)  console.log(`   After clean up: ${headersList.map(cell => cell.name)}`);
 
       return this._update({
         iHeaders: headersList.map((cell) => cell.element),
@@ -666,7 +640,6 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     public assignHeaders(table: Table.Builder): Builder {
-      // console.log(`Assigning headers for ${this.name}`);
       return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
     }
 
