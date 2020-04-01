@@ -527,9 +527,9 @@ export namespace Cell {
     ): Builder {
       // "no document" is allowed for easier unit test (better isolation).
       const topNode = document === undefined ? table.element : document;
-      
+
       // 3 / headers attribute / 1
-      const idsList: Array<string> = this.element
+      const idsList = this.element
         .attribute("headers")
         .map(parseAttribute(parseTokensList))
         .map((r) => r.get())
@@ -563,62 +563,76 @@ export namespace Cell {
       let headersList: Array<Builder> = [];
       // 2 principal cell = this, nothing to do.
       // 3 / no header attribute (3.1, 3.2: use this)
-      // 3.3
+      // 3.3: find row headers in the row(s) covered by the principal cell
       for (let y = this.anchor.y; y < this.anchor.y + this.height; y++) {
-        headersList = headersList.concat(
-          this._internalHeaderScanning(table, this.anchor.x, y, true)
+        headersList.push(
+          ...this._internalHeaderScanning(table, this.anchor.x, y, true)
         );
       }
-      // 3.4
+      // 3.4: find column headers in the column(s) covered by the principal cell
       for (let x = this.anchor.x; x < this.anchor.x + this.width; x++) {
-        headersList = headersList.concat(
-          this._internalHeaderScanning(table, x, this.anchor.y, false)
+        headersList.push(
+          ...this._internalHeaderScanning(table, x, this.anchor.y, false)
         );
       }
-      // 3.5
-      const rowgroup = Iterable.find(table.rowGroups, (rg) =>
+      // 3.5: find row group headers for the rowgroup of the principal cell
+      const principalRowGroup = Iterable.find(table.rowGroups, (rg) =>
         rg.isCovering(this.anchor.y)
       );
-      if (rowgroup.isSome()) {
-        const rowGroupHeaders = [...table.cells].filter((cell) =>
-          cell.headerState(table).equals(Some.of(Header.State.RowGroup))
-        );
-        const anchored = rowGroupHeaders.filter((cell) =>
-          rowgroup.get().isCovering(cell.anchor.y)
-        );
-        const leftAndUp = anchored.filter(
-          (cell) =>
-            cell.anchor.x < this.anchor.x + this.width &&
-            cell.anchor.y < this.anchor.y + this.height
-        );
+      if (principalRowGroup.isSome()) {
+        // if the principal cell is in a rowgroup,
+        const headers = table.cells
+          // get all rowgroup headers
+          .filter((cell) =>
+            cell.headerState(table).equals(Some.of(Header.State.RowGroup))
+          )
+          // keep the ones inside the rowgroup of the principal cell
+          .filter((rowGroupHeader) =>
+            principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
+          )
+          // keep the ones that are top and left of the principal cell
+          .filter(
+            (cell) =>
+              cell.anchor.x < this.anchor.x + this.width &&
+              cell.anchor.y < this.anchor.y + this.height
+          );
 
-        headersList = headersList.concat(leftAndUp);
+        headersList.push(...headers);
       }
-      // 3.6
-      const colgroup = Iterable.find(table.colGroups, (cg) =>
+      // 3.6: find column group headers for the colgroup of the principal cell
+      const principalColGroup = Iterable.find(table.colGroups, (cg) =>
         cg.isCovering(this.anchor.x)
       );
-      if (colgroup.isSome()) {
-        const colGroupHeaders = [...table.cells].filter((cell) =>
-          cell.headerState(table).equals(Some.of(Header.State.ColGroup))
-        );
-        const anchored = colGroupHeaders.filter((cell) =>
-          colgroup.get().isCovering(cell.anchor.x)
-        );
-        const leftAndUp = anchored.filter(
-          (cell) =>
-            cell.anchor.x < this.anchor.x + this.width &&
-            cell.anchor.y < this.anchor.y + this.height
-        );
+      if (principalColGroup.isSome()) {
+        // if the principal cell is in a colgroup,
+        const headers = table.cells
+          // get all colgroup headers
+          .filter((cell) =>
+            cell.headerState(table).equals(Some.of(Header.State.ColGroup))
+          )
+          // keep the ones inside the colgroup of the principal cell
+          .filter((colGroupHeader) =>
+            principalColGroup.get().isCovering(colGroupHeader.anchor.x)
+          )
+          // keep the ones that are top and left of the principal cell
+          .filter(
+            (cell) =>
+              cell.anchor.x < this.anchor.x + this.width &&
+              cell.anchor.y < this.anchor.y + this.height
+          );
 
-        headersList = headersList.concat(leftAndUp);
+        headersList.push(...headers);
       }
 
-      headersList = headersList
-        // 5 (remove duplicates)
-        .filter((cell, idx) => headersList.indexOf(cell) === idx)
-        // 4 (remove empty cells) & 6 remove principal cell
-        .filter((cell) => !isEmpty(cell.element) && !cell.equals(this));
+      headersList = headersList.filter(
+        (cell, idx) =>
+          // 4 (remove empty cells)
+          !isEmpty(cell.element) &&
+          // 6 remove principal cell
+          !cell.equals(this) &&
+          // 5 (remove duplicates)
+          headersList.indexOf(cell) === idx
+      );
 
       return this._update({
         iHeaders: headersList.map((cell) => cell.element),
