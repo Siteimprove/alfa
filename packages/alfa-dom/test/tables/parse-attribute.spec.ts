@@ -1,34 +1,18 @@
+import { None } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { None } from "@siteimprove/alfa-option";
 
 import { Attribute } from "../../src";
-import {
-  parseAttribute,
-  parseInteger,
-  parseNonNegativeInteger,
-} from "../../src/tables/helpers";
+import { parseAttribute } from "../../src/tables/helpers";
 
-const makeAttribute = (str: string) => Attribute.of(None, None, "foo", str);
+const makeAttribute = (str: string) => Attribute.of(None, None, "dummy", str);
 
-const empty = Err.of("The string is empty");
-const notNumber = Err.of("The string does not represent a number");
-const notInteger = Err.of("The string does not represent an integer");
-const negative = Err.of("This is a negative number");
+const tooShort = Err.of("too short");
+const parser: Parser<string, number, string> = (str) =>
+  str.length < 3 ? tooShort : Ok.of(["", str.length] as const);
 
-test("parse integer attributes", (t) => {
-  t.deepEqual(parseAttribute(parseInteger)(makeAttribute("5")), Ok.of(5));
-  t.deepEqual(parseAttribute(parseInteger)(makeAttribute("-8")), Ok.of(-8));
-  t.deepEqual(
-    parseAttribute(parseNonNegativeInteger)(makeAttribute("5")),
-    Ok.of(5)
-  );
-
-  t.deepEqual(parseAttribute(parseInteger)(makeAttribute("")), empty);
-  t.deepEqual(parseAttribute(parseInteger)(makeAttribute("snnsr")), notNumber);
-  t.deepEqual(parseAttribute(parseInteger)(makeAttribute("5.2")), notInteger);
-  t.deepEqual(
-    parseAttribute(parseNonNegativeInteger)(makeAttribute("-8")),
-    negative
-  );
+test("parse attributes", (t) => {
+  t.deepEqual(parseAttribute(parser)(makeAttribute("12345")), Ok.of(5));
+  t.deepEqual(parseAttribute(parser)(makeAttribute("")), tooShort);
 });
