@@ -9,7 +9,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import {Document, Element, Node, Table} from "..";
+import { Document, Element, Node, Table } from "..";
 import { simpleRow } from "../../test/tables/testcases";
 import {
   EnumeratedValueError,
@@ -246,8 +246,12 @@ export namespace Cell {
           ? update.downwardGrowing
           : this._downwardGrowing,
         update.scope !== undefined ? update.scope : this.scope,
-        update.explicitHeaders !== undefined ? update.explicitHeaders : this._explicitHeaders,
-        update.implicitHeaders !== undefined ? update.implicitHeaders : this._implicitHeaders
+        update.explicitHeaders !== undefined
+          ? update.explicitHeaders
+          : this._explicitHeaders,
+        update.implicitHeaders !== undefined
+          ? update.implicitHeaders
+          : this._implicitHeaders
       );
     }
 
@@ -498,9 +502,9 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignExplicitHeaders(
-      table: Table.Builder,
-      topNode: Node
-    ): Builder {
+      node: Node,
+      table: Table.Builder
+    ): Cell.Builder {
       // 3 / headers attribute / 1
       const idsList = this.element
         .attribute("headers")
@@ -509,7 +513,7 @@ export namespace Cell {
         .getOr([]);
 
       // 3 / headers attribute / 2
-      const elements = resolveReferences(topNode, idsList).filter(
+      const elements = resolveReferences(node, idsList).filter(
         and(
           and(
             // only keep cells in the table
@@ -615,8 +619,10 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    public assignHeaders(table: Table.Builder, topNode: Node): Builder {
-      return this._assignExplicitHeaders(table, topNode)._assignImplicitHeaders(table);
+    public assignHeaders(node: Node, table: Table.Builder): Cell.Builder {
+      return this._assignExplicitHeaders(node, table)._assignImplicitHeaders(
+        table
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -674,9 +680,7 @@ export namespace Cell {
       const scope =
         kind === Cell.Kind.Data
           ? None
-          : Some.of(
-              parseEnumeratedAttribute("scope", scopeMapping)(cell).get()
-            );
+          : parseEnumeratedAttribute("scope", scopeMapping)(cell);
 
       return Ok.of(Builder.of(kind, x, y, colspan, rowspan, cell, grow, scope));
     }
@@ -693,7 +697,10 @@ export namespace Cell {
 }
 
 export namespace Header {
-  export enum Scope { // state of the scope attribute
+  /**
+   * State of the scope attribute
+   */
+  export enum Scope {
     Auto = "auto",
     Row = "row",
     Column = "column",
@@ -701,7 +708,12 @@ export namespace Header {
     ColGroup = "col-group",
   }
 
-  export enum State { // https://html.spec.whatwg.org/multipage/tables.html#column-header and friends
+  /**
+   * "header state" of the cell. Same as the scope except that "Auto" needs to be resolved.
+   * @see https://html.spec.whatwg.org/multipage/tables.html#column-header
+   * and following defs
+   */
+  export enum State {
     Row = "row",
     Column = "column",
     RowGroup = "row-group",

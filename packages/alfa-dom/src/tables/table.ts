@@ -6,7 +6,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import {Document, Element} from "..";
+import { Document, Element } from "..";
 import { Cell, ColGroup, RowGroup, Row } from "./groups";
 import { isElementByName } from "./helpers";
 
@@ -72,10 +72,6 @@ export class Table implements Equatable, Serializable {
     return this._rowGroups;
   }
 
-  public static from(element: Element, document: Document | undefined = undefined): Result<Table, string> {
-    return Table.Builder.from(element, document).map((table) => table.table);
-  }
-
   public equals(value: unknown): value is this {
     if (!(value instanceof Table)) return false;
     return (
@@ -107,6 +103,13 @@ export class Table implements Equatable, Serializable {
 }
 
 export namespace Table {
+  export function from(
+    element: Element,
+    document: Document | undefined = undefined
+  ): Result<Table, string> {
+    return Builder.from(element, document).map((table) => table.table);
+  }
+
   export interface JSON {
     [key: string]: json.JSON;
 
@@ -210,10 +213,6 @@ export namespace Table {
       return this.update({ colGroups: [...this.colGroups].concat(colGroup) });
     }
 
-    public addRowGroup(rowGroup: RowGroup): Builder {
-      return this.update({ rowGroups: [...this.rowGroups].concat(rowGroup) });
-    }
-
     public addCells(cells: Iterable<Cell.Builder>): Builder {
       return this.update({ cells: this._cells.concat(...cells) });
     }
@@ -223,21 +222,23 @@ export namespace Table {
       yCurrent: number
     ): Result<Builder, string> {
       return RowGroup.Builder.from(rowgroup)
-        .andThen((rowGroup) => Ok.of(rowGroup.anchorAt(yCurrent)))
-        .andThen((rowGroup) => {
+        .map((rowGroup) => rowGroup.anchorAt(yCurrent))
+        .map((rowGroup) => {
           if (rowGroup.height > 0) {
-            return Ok.of(
+            return (
               this
-                // adjust table height and width
-                .adjustHeight(this.height + rowGroup.height)
-                .adjustWidth(rowGroup.width)
-                // merge in new cells
-                .addCells(rowGroup.cells)
-                // add new group
-                .addRowGroup(rowGroup.rowgroup)
+                .update({
+                  // adjust table height and width
+                  height: Math.max(this.height, this.height + rowGroup.height),
+                  width: Math.max(this.width, rowGroup.width),
+                  // merge in new cells
+                  cells: this._cells.concat(...rowGroup.cells),
+                  // add new group
+                  rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup)
+                })
             );
           } else {
-            return Ok.of(this);
+            return this;
           }
         });
     }
@@ -267,7 +268,10 @@ export namespace Table {
       cells: Cell.Builder.JSON[];
     }
 
-    export function from(element: Element, document: Document | undefined = undefined): Result<Builder, string> {
+    export function from(
+      element: Element,
+      document: Document | undefined = undefined
+    ): Result<Builder, string> {
       // the document is needed for finding explicit headers. "no document" is allowed for easier unit test.
       if (element.name !== "table")
         return Err.of("This element is not a table");
@@ -401,12 +405,12 @@ export namespace Table {
 
       // 21
       // "no document" is allowed for easier unit test (better isolation).
-      const topNode = document === undefined ? table.element : document;
+      const node = document === undefined ? table.element : document;
 
       return Ok.of(
         table.update({
           cells: [...table.cells]
-            .map((cell) => cell.assignHeaders(table, topNode))
+            .map((cell) => cell.assignHeaders(node, table))
             .sort(compare),
           colGroups: [...table.colGroups].sort(compare),
           rowGroups: [...table.rowGroups].sort(compare),

@@ -134,19 +134,17 @@ export namespace Row {
       yCurrent: number
     ): Result<Builder, string> {
       // 8, 9, 10, 13
-      return Cell.Builder.from(currentCell, this._xCurrent, yCurrent).andThen(
+      return Cell.Builder.from(currentCell, this._xCurrent, yCurrent).map(
         (cell) =>
-          Ok.of(
-            this
-              // 11
-              .adjustWidth(this._xCurrent + cell.width)
-              // 12
-              .adjustHeight(cell.height)
-              // 13
-              // Double coverage check made at the end of table building to de-entangle code
-              // 14
-              .addCell(cell)
-          )
+          this
+            // 11
+            .adjustWidth(this._xCurrent + cell.width)
+            // 12
+            .adjustHeight(cell.height)
+            // 13
+            // Double coverage check made at the end of table building to de-entangle code
+            // 14
+            .addCell(cell)
       );
     }
 
@@ -236,13 +234,13 @@ export namespace Row {
       yCurrent: number = 0,
       w: number = 0
     ): Result<Builder, string> {
+      if (tr.name !== "tr") return Err.of("This element is not a table row");
       if (
         cells.some((cell) =>
           growingCells.some((growingCell) => cell.equals(growingCell))
         )
       )
         return Err.of("Cells and growing cells must be disjoints");
-      if (tr.name !== "tr") return Err.of("This element is not a table row");
 
       let children = tr.children().filter(isElementByName("th", "td"));
 

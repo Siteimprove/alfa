@@ -11,7 +11,7 @@ import { isElementByName } from "./helpers";
 
 /**
  * @see/ https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
- * This is a row group as part of the table. It shouldn't duplicate width and cells list.
+ * This is a row group as part of the table. Width and cells list are stored in the table, not here.
  */
 export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
   protected readonly _y: number;
@@ -38,10 +38,6 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
 
   public get element(): Element {
     return this._element;
-  }
-
-  public static from(element: Element): Result<RowGroup, string> {
-    return RowGroup.Builder.from(element).map((rowgroup) => rowgroup.rowgroup);
   }
 
   public isCovering(y: number): boolean {
@@ -80,6 +76,10 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
 }
 
 export namespace RowGroup {
+  export function from(element: Element): Result<RowGroup, string> {
+    return RowGroup.Builder.from(element).map((rowgroup) => rowgroup.rowgroup);
+  }
+
   export interface JSON {
     [key: string]: json.JSON;
 
@@ -88,7 +88,9 @@ export namespace RowGroup {
     element: Element.JSON;
   }
 
-  // This is a row group while building the table. It contains width and cells list that will be merged with parent table once done.
+  /**
+   * The row group builder contains width and cells list that will be merged with parent table once done.
+   */
   export class Builder implements Equatable, Serializable {
     private readonly _width: number;
     private readonly _cells: Array<Cell.Builder>;
@@ -164,7 +166,7 @@ export namespace RowGroup {
       return this.update({ height: Math.max(this.height, height) });
     }
 
-    // anchoring a row group needs to move all cells accordingly
+    // anchoring a row group needs to move down all cells accordingly
     public anchorAt(y: number): Builder {
       return this.update({
         y,

@@ -38,10 +38,6 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
     return this._element;
   }
 
-  public static from(element: Element): Result<ColGroup, string> {
-    return ColGroup.Builder.from(element).map((colgroup) => colgroup.colgroup);
-  }
-
   public isCovering(x: number): boolean {
     return !(
       // colgroup is *not* covering if either
@@ -78,6 +74,10 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
 }
 
 export namespace ColGroup {
+  export function from(element: Element): Result<ColGroup, string> {
+    return ColGroup.Builder.from(element).map((colgroup) => colgroup.colgroup);
+  }
+
   export interface JSON {
     [key: string]: json.JSON;
 
@@ -155,13 +155,11 @@ export namespace ColGroup {
           const span = parseSpan(currentCol, "span", 1, 1000, 1);
           totalSpan += span;
           // 5
-          // The col element represents column within the colgroup but is not a colgroup itself. The rest of the algorithm seems to never use that again…
-          // const colGroup: ColGroup = { anchor: {x: global.theTable.width - span}, width: span, element: currentCol}; // need better name! Technically not a "column group"…
-          // global.theTable.colGroups.push(colGroup);
+          // Seems to have no actual effect and build stuff not used elsewhere ?!?
         }
       }
-      // 1.4 and 1.7 done in main function
-      // 2.2 and 2.3 done in main function
+      // 1.4 and 1.7 done in table builder
+      // 2.2 and 2.3 done in table builder
       return Ok.of(Builder.of(x, totalSpan, colgroup));
     }
 
