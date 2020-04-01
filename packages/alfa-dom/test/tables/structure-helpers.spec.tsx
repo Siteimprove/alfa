@@ -6,6 +6,7 @@ import { None, Some } from "@siteimprove/alfa-option";
 import { Attribute, Element } from "../../src";
 import { Cell, ColGroup, RowGroup } from "../../src/tables/groups";
 import {
+  EnumeratedValueError,
   isEmpty,
   parseEnumeratedAttribute,
   parseSpan,
@@ -98,30 +99,33 @@ test("parse enumerated attribute according to specs", (t) => {
   const withDefault = Map.from([
     ["foo", 1],
     ["bar", 2],
-    ["missing", 0],
-    ["invalid", 42],
+    [EnumeratedValueError.Missing, 0],
+    [EnumeratedValueError.Invalid, 42],
   ]);
 
   const parserNoDefault = parseEnumeratedAttribute("enumerated", noDefault);
   const parserWithDefault = parseEnumeratedAttribute("enumerated", withDefault);
 
   t.deepEqual(parserNoDefault(enumerated("Foo")), Some.of(1));
-  t.deepEqual(parserNoDefault(enumerated("invalid")), None);
+  t.deepEqual(parserNoDefault(enumerated("this is totally invalid")), None);
   t.deepEqual(parserNoDefault(noenum), None);
 
   t.deepEqual(parserWithDefault(enumerated("bAR")), Some.of(2));
-  t.deepEqual(parserWithDefault(enumerated("invalid")), Some.of(42));
+  t.deepEqual(
+    parserWithDefault(enumerated("this is totally invalid")),
+    Some.of(42)
+  );
   t.deepEqual(parserWithDefault(noenum), Some.of(0));
 });
 
 test("Detect empty cells (element)", (t) => {
-  t(isEmpty(Element.fromElement(<span></span>)));
+  t(isEmpty(Element.fromElement(<span/>)));
   t(!isEmpty(Element.fromElement(<span>Foo</span>))); // has text content
   t(
     !isEmpty(
       Element.fromElement(
         <div>
-          <span></span>
+          <span />
         </div>
       )
     )

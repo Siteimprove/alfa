@@ -48,18 +48,21 @@ export function parseNonNegativeInteger(
 /**
  * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
  */
-export type enumError = "missing" | "invalid"
+export enum EnumeratedValueError {
+  Missing = "missing",
+  Invalid = "invalid"
+}
 
 export function parseEnumeratedValue<RESULT>(
   mapping: Map<string, RESULT>
-): Parser<string, RESULT, enumError> {
-  function parser(str: string): Result<readonly [string, RESULT], enumError> {
+): Parser<string, RESULT, EnumeratedValueError> {
+  function parser(str: string): Result<readonly [string, RESULT], EnumeratedValueError> {
     const result = mapping.get(str.toLowerCase());
 
     return str === ""
-      ? Err.of("missing")
+      ? Err.of(EnumeratedValueError.Missing)
       : result.isNone()
-      ? Err.of("invalid")
+      ? Err.of(EnumeratedValueError.Invalid)
       : Ok.of(["", result.get()] as const);
   }
 
@@ -71,7 +74,7 @@ export function parseEnumeratedValue<RESULT>(
  */
 export function parseTokensList(str: string): Ok<readonly [string, Array<string>]> {
   return Ok.of(["", str.trim().split(/\s+/).filter(s => s !== "")] as const)
-};
+}
 // end micro syntaxes
 
 // attribute helper should move to attribute
@@ -107,7 +110,7 @@ export function parseEnumeratedAttribute<RESULT>(
       .attribute(name)
       .map(attribute => attribute.value)
       .map(parseEnumeratedValue(mapping))
-      .getOr<Result<readonly [string, RESULT], enumError>>(Err.of("missing"))
+      .getOr<Result<readonly [string, RESULT], EnumeratedValueError>>(Err.of(EnumeratedValueError.Missing))
       .mapOrElse(([_, result]) => Some.of(result), err => mapping.get(err));
   }
 
