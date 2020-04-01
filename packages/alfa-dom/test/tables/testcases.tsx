@@ -334,7 +334,7 @@ export namespace apple {
     <table>
       <thead id="thead">
         <tr id="tr">
-          <th id="empty"></th>
+          <th id="empty" />
           <th id="2008">2008</th>
           <th id="2007">2007</th>
           <th id="2006">2006</th>
@@ -541,7 +541,7 @@ export namespace expenses {
 export namespace expensesNum {
   export const element = Element.fromElement(
     <table>
-      <colgroup id="group-head" span={1}></colgroup>
+      <colgroup id="group-head" span={1} />
       <colgroup id="group-body">
         <col span={2} /> <col />
       </colgroup>
@@ -567,7 +567,7 @@ export namespace expensesNum {
           <td id="rd-percent-2006">3.7%</td>
         </tr>
       </tbody>
-      <colgroup id="ignored" span={4}></colgroup>
+      <colgroup id="ignored" span={4} />
       <tbody id="body-2">
         <tr>
           <th id="sales" scope="rowgroup">
@@ -671,7 +671,7 @@ export namespace errors {
       <tr>
         <td rowSpan={2}>2 rows</td>
       </tr>
-      <tr></tr>
+      <tr />
       <tr>
         <td>third row</td>
       </tr>
@@ -758,9 +758,9 @@ export namespace explicitHeaders {
       <tr>
         <th id="text-content">not empty</th>
         <th id="child">
-          <span id="not-empty"></span>
+          <span id="not-empty" />
         </th>
-        <th id="empty"></th>
+        <th id="empty" />
         <td id="data">Data cell can actually be header</td>
       </tr>
       <tr>
@@ -791,7 +791,7 @@ export namespace simpleImplicitHeaders {
   export const element = Element.fromElement(
     <table>
       <tr>
-        <th id="empty"></th>
+        <th id="empty" />
         <th id="col1">First column</th>
         <th id="col2">Second Column</th>
       </tr>
@@ -840,11 +840,11 @@ export namespace rowGroupImplicitHeaders {
       </thead>
       <tbody id="tbody-1">
         <tr>
-          <td id="empty-cat-id"></td>
+          <td id="empty-cat-id" />
           <th id="cat" scope="rowgroup">
             Cats
           </th>
-          <td id="empty-cat-av"></td> <td id="empty-cat-max"></td>
+          <td id="empty-cat-av" /> <td id="empty-cat-max" />
         </tr>
         <tr>
           <td id="id93">93</td>
@@ -863,12 +863,12 @@ export namespace rowGroupImplicitHeaders {
       </tbody>
       <tbody id="tbody-2">
         <tr>
-          <td id="empty-en-id"></td>
+          <td id="empty-en-id" />
           <th id="en" scope="rowgroup">
             English speakers
           </th>
-          <td id="empty-en-av"></td>
-          <td id="empty-en-max"></td>
+          <td id="empty-en-av" />
+          <td id="empty-en-max" />
         </tr>
         <tr>
           <td id="id32">32</td>
@@ -973,7 +973,7 @@ export namespace colGroupImplicitHeaders {
       <colgroup id="group-mars" span={2} />
       <colgroup id="group-venus" span={2} />
       <tr>
-        <td id="empty" rowSpan={2}></td>
+        <td id="empty" rowSpan={2} />
         <th id="mars" colSpan={2} scope="colgroup">
           Mars
         </th>
@@ -1081,3 +1081,119 @@ export namespace colGroupImplicitHeaders {
     ].sort(compare)
   );
 }
+
+// export namespace allWeirdHeaders {
+//   export const element = Element.fromElement(
+//     <table>
+//       <colgroup id="group-empty"><col /><col /></colgroup>
+//       <colgroup id="group-mars" span={3} />
+//       <colgroup id="group-venus" span={2} />
+//       <tr>
+//         <td id="empty" rowSpan={2} colSpan={2}></td>
+//         <th id="mars" rowSpan={2} scope="colgroup">
+//           Mars
+//         </th>
+//         <th id="mars-produced" rowSpan={2} scope="col">
+//           Produced
+//         </th>
+//         <th id="mars-sold" rowSpan={2} scope="col">
+//           Sold
+//         </th>
+//         <th id="venus" colSpan={2} scope="colgroup">
+//           Venus
+//         </th>
+//       </tr>
+//       <tr>
+//         <th id="venus-produced" scope="col">
+//           Produced
+//         </th>
+//         <th id="venus-sold" scope="col">
+//           Sold
+//         </th>
+//       </tr>
+//       <tr>
+//         <th id="bears" scope="row">
+//           Teddy Bears
+//         </th>
+//         <td id="mars-produced-bears">50,000</td>
+//         <td id="mars-sold-bears">30,000</td>
+//         <td id="venus-produced-bears">100,000</td>
+//         <td id="venus-sold-bears">80,000</td>
+//       </tr>
+//       <tr>
+//         <th id="games" scope="row">
+//           Board Games
+//         </th>
+//         <td id="mars-produced-games">10,000</td>
+//         <td id="mars-sold-games">5,000</td>
+//         <td id="venus-produced-games">12,000</td>
+//         <td id="venus-sold-games">9,000</td>
+//       </tr>
+//     </table>
+//   );
+//   const getById = getDescendantById(element);
+//   const makeCell = makeCellFromGetter(getById);
+//
+//   export const expected = Table.of(
+//     element,
+//     5,
+//     4,
+//     [
+//       makeCell("empty", Cell.Kind.Data, 0, 0, [], 1, 2),
+//       makeCell("mars", Cell.Kind.Header, 1, 0, [], 2, 1),
+//       makeCell("venus", Cell.Kind.Header, 3, 0, [], 2, 1),
+//       makeCell("mars-produced", Cell.Kind.Header, 1, 1, ["mars"]),
+//       makeCell("mars-sold", Cell.Kind.Header, 2, 1, ["mars"]),
+//       makeCell("venus-produced", Cell.Kind.Header, 3, 1, ["venus"]),
+//       makeCell("venus-sold", Cell.Kind.Header, 4, 1, ["venus"]),
+//       makeCell("bears", Cell.Kind.Header, 0, 2),
+//       makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, [
+//         "bears",
+//         "mars-produced",
+//         "mars",
+//       ]),
+//       makeCell("mars-sold-bears", Cell.Kind.Data, 2, 2, [
+//         "bears",
+//         "mars-sold",
+//         "mars",
+//       ]),
+//       makeCell("venus-produced-bears", Cell.Kind.Data, 3, 2, [
+//         "bears",
+//         "venus-produced",
+//         "venus",
+//       ]),
+//       makeCell("venus-sold-bears", Cell.Kind.Data, 4, 2, [
+//         "bears",
+//         "venus-sold",
+//         "venus",
+//       ]),
+//       makeCell("games", Cell.Kind.Header, 0, 3),
+//       makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, [
+//         "games",
+//         "mars-produced",
+//         "mars",
+//       ]),
+//       makeCell("mars-sold-games", Cell.Kind.Data, 2, 3, [
+//         "games",
+//         "mars-sold",
+//         "mars",
+//       ]),
+//       makeCell("venus-produced-games", Cell.Kind.Data, 3, 3, [
+//         "games",
+//         "venus-produced",
+//         "venus",
+//       ]),
+//       makeCell("venus-sold-games", Cell.Kind.Data, 4, 3, [
+//         "games",
+//         "venus-sold",
+//         "venus",
+//       ]),
+//     ].sort(compare),
+//     [],
+//     [
+//       ColGroup.of(0, 1, getById("group-empty")),
+//       ColGroup.of(1, 2, getById("group-mars")),
+//       ColGroup.of(3, 2, getById("group-venus")),
+//     ].sort(compare)
+//   );
+// }
