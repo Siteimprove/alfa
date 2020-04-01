@@ -1,5 +1,4 @@
 import { Map } from "@siteimprove/alfa-map";
-import { None, Some } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
@@ -14,7 +13,7 @@ const empty = Err.of("The string is empty");
 const notNumber = Err.of("The string does not represent a number");
 const notInteger = Err.of("The string does not represent an integer");
 const negative = Err.of("This is a negative number");
-const result = (x: any) => Ok.of(["", x] as const);
+const result = <T>(x: T) => Ok.of(["", x] as const);
 
 test("parse integers", (t) => {
   t.deepEqual(parseInteger("2"), result(2));
@@ -53,7 +52,7 @@ test("parse enumerated value", (t) => {
 test("parse space separated token list", t => {
   t.deepEqual(parseTokensList("foo"), result(["foo"]));
   t.deepEqual(parseTokensList("foo bar"), result(["foo", "bar"]));
-  // t.deepEqual(parseTokensList(""), result([]));
+  t.deepEqual(parseTokensList(""), result([]));
   t.deepEqual(parseTokensList("  \t"), result([]));
   t.deepEqual(parseTokensList("foo  bar\tbaz"), result(["foo", "bar", "baz"]));
 });
