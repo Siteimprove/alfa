@@ -1,12 +1,10 @@
 import { compare } from "@siteimprove/alfa-comparable";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element, Table } from "../../src";
 import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
-
-const { and } = Predicate;
+import { resolveReferences } from "../../src/tables/helpers";
 
 const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   elt: string,
@@ -29,20 +27,9 @@ function toBuildingCell(cell: Cell) {
   );
 }
 
-function hasID(id: string): Predicate<Element> {
-  return (element) => {
-    const idAttr = element.attribute("id");
-    return idAttr.isSome() ? idAttr.get().value === id : false;
-  };
-}
-
 const dummy = Element.of(None, None, "dummy");
 const getDescendantById = (element: Element) => (id: string) =>
-  element
-    .descendants()
-    .filter(and(Element.isElement, hasID(id)))
-    .first()
-    .getOr(dummy);
+  resolveReferences(element, [id]).shift() || dummy;
 
 // processing simple row
 export namespace simpleRow {
@@ -1086,86 +1073,89 @@ export namespace colGroupImplicitHeaders {
 export namespace allWeirdImplicitHeaders {
   export const element = Element.fromElement(
     <table>
-      <colgroup id="group-empty"><col /><col /></colgroup>
+      <colgroup id="group-empty">
+        <col />
+        <col />
+      </colgroup>
       <colgroup id="group-mars" span={3} />
       <colgroup id="group-venus" span={2} />
       <thead id="thead">
-      <tr>
-        <th id="empty" rowSpan={2} colSpan={2} />
-        <th id="mars" rowSpan={2} scope="colgroup">
-          Mars
-        </th>
-        <th id="mars-produced" rowSpan={2} scope="col">
-          Produced
-        </th>
-        <th id="mars-sold" rowSpan={2} scope="col">
-          Sold
-        </th>
-        <th id="venus" colSpan={2} scope="colgroup">
-          Venus
-        </th>
-      </tr>
-      <tr>
-        <th id="venus-produced" scope="col">
-          Produced
-        </th>
-        <th id="venus-sold" scope="col">
-          Sold
-        </th>
-      </tr>
+        <tr>
+          <th id="empty" rowSpan={2} colSpan={2} />
+          <th id="mars" rowSpan={2} scope="colgroup">
+            Mars
+          </th>
+          <th id="mars-produced" rowSpan={2} scope="col">
+            Produced
+          </th>
+          <th id="mars-sold" rowSpan={2} scope="col">
+            Sold
+          </th>
+          <th id="venus" colSpan={2} scope="colgroup">
+            Venus
+          </th>
+        </tr>
+        <tr>
+          <th id="venus-produced" scope="col">
+            Produced
+          </th>
+          <th id="venus-sold" scope="col">
+            Sold
+          </th>
+        </tr>
       </thead>
       <tbody id="stuffed-animals">
-      <tr>
-        <th id="stuffed" rowSpan={2} scope="rowgroup">
-          Stuffed animals
-        </th>
-        <th id="bears">Bears</th>
-        <td id="mars-empty-bears" />
-        <td id="mars-produced-bears">50,000</td>
-        <td id="mars-sold-bears">30,000</td>
-        <td id="venus-produced-bears">100,000</td>
-        <td id="venus-sold-bears">80,000</td>
-      </tr>
-      <tr>
-        <th id="bunnies">Bunnies</th>
-        <td id="mars-empty-bunnies" />
-        <td id="mars-produced-bunnies">50,000</td>
-        <td id="mars-sold-bunnies">30,000</td>
-        <td id="venus-produced-bunnies">100,000</td>
-        <td id="venus-sold-bunnies">80,000</td>
-      </tr>
+        <tr>
+          <th id="stuffed" rowSpan={2} scope="rowgroup">
+            Stuffed animals
+          </th>
+          <th id="bears">Bears</th>
+          <td id="mars-empty-bears" />
+          <td id="mars-produced-bears">50,000</td>
+          <td id="mars-sold-bears">30,000</td>
+          <td id="venus-produced-bears">100,000</td>
+          <td id="venus-sold-bears">80,000</td>
+        </tr>
+        <tr>
+          <th id="bunnies">Bunnies</th>
+          <td id="mars-empty-bunnies" />
+          <td id="mars-produced-bunnies">50,000</td>
+          <td id="mars-sold-bunnies">30,000</td>
+          <td id="venus-produced-bunnies">100,000</td>
+          <td id="venus-sold-bunnies">80,000</td>
+        </tr>
       </tbody>
       <tbody id="games-rg">
-      <tr>
-        <th id="games" colSpan={2} scope="rowgroup">
-          Games
-        </th>
-        <td id="mars-empty-games"/>
-        <td id="mars-produced-games" />
-        <td id="mars-sold-games" />
-        <td id="venus-produced-games" />
-        <td id="venus-sold-games" />
-      </tr>
-      <tr>
-        <th id="board" colSpan={2} scope="row">
-          Board Games
-        </th>
-        <td id="mars-empty-board"/>
-        <td id="mars-produced-board">10,000</td>
-        <td id="mars-sold-board">5,000</td>
-        <td id="venus-produced-board">12,000</td>
-        <td id="venus-sold-board">9,000</td>
-      </tr>
-      <tr>
-        <th id="cards" colSpan={2} scope="row">
-          Cards Games
-        </th>
-        <td id="mars-empty-cards"/>
-        <td id="mars-produced-cards">10,000</td>
-        <td id="mars-sold-cards">5,000</td>
-        <td id="venus-produced-cards">12,000</td>
-        <td id="venus-sold-cards">9,000</td>
-      </tr>
+        <tr>
+          <th id="games" colSpan={2} scope="rowgroup">
+            Games
+          </th>
+          <td id="mars-empty-games" />
+          <td id="mars-produced-games" />
+          <td id="mars-sold-games" />
+          <td id="venus-produced-games" />
+          <td id="venus-sold-games" />
+        </tr>
+        <tr>
+          <th id="board" colSpan={2} scope="row">
+            Board Games
+          </th>
+          <td id="mars-empty-board" />
+          <td id="mars-produced-board">10,000</td>
+          <td id="mars-sold-board">5,000</td>
+          <td id="venus-produced-board">12,000</td>
+          <td id="venus-sold-board">9,000</td>
+        </tr>
+        <tr>
+          <th id="cards" colSpan={2} scope="row">
+            Cards Games
+          </th>
+          <td id="mars-empty-cards" />
+          <td id="mars-produced-cards">10,000</td>
+          <td id="mars-sold-cards">5,000</td>
+          <td id="venus-produced-cards">12,000</td>
+          <td id="venus-sold-cards">9,000</td>
+        </tr>
       </tbody>
     </table>
   );
@@ -1186,7 +1176,11 @@ export namespace allWeirdImplicitHeaders {
       makeCell("venus-sold", Cell.Kind.Header, 6, 1, ["venus"]),
       makeCell("stuffed", Cell.Kind.Header, 0, 2, [], 1, 2),
       makeCell("bears", Cell.Kind.Header, 1, 2, ["stuffed"]),
-      makeCell("mars-empty-bears", Cell.Kind.Data, 2, 2, ["bears", "stuffed", "mars"]),
+      makeCell("mars-empty-bears", Cell.Kind.Data, 2, 2, [
+        "bears",
+        "stuffed",
+        "mars",
+      ]),
       makeCell("mars-produced-bears", Cell.Kind.Data, 3, 2, [
         "bears",
         "mars-produced",
@@ -1212,7 +1206,11 @@ export namespace allWeirdImplicitHeaders {
         "venus",
       ]),
       makeCell("bunnies", Cell.Kind.Header, 1, 3, ["stuffed"]),
-      makeCell("mars-empty-bunnies", Cell.Kind.Data, 2, 3, ["bunnies", "stuffed", "mars"]),
+      makeCell("mars-empty-bunnies", Cell.Kind.Data, 2, 3, [
+        "bunnies",
+        "stuffed",
+        "mars",
+      ]),
       makeCell("mars-produced-bunnies", Cell.Kind.Data, 3, 3, [
         "bunnies",
         "mars-produced",
@@ -1260,7 +1258,11 @@ export namespace allWeirdImplicitHeaders {
         "venus",
       ]),
       makeCell("board", Cell.Kind.Header, 0, 5, ["games"], 2, 1),
-      makeCell("mars-empty-board", Cell.Kind.Data, 2, 5, ["board", "games", "mars"]),
+      makeCell("mars-empty-board", Cell.Kind.Data, 2, 5, [
+        "board",
+        "games",
+        "mars",
+      ]),
       makeCell("mars-produced-board", Cell.Kind.Data, 3, 5, [
         "board",
         "mars-produced",
@@ -1286,7 +1288,11 @@ export namespace allWeirdImplicitHeaders {
         "venus",
       ]),
       makeCell("cards", Cell.Kind.Header, 0, 6, ["games"], 2, 1),
-      makeCell("mars-empty-cards", Cell.Kind.Data, 2, 6, ["cards", "games", "mars"]),
+      makeCell("mars-empty-cards", Cell.Kind.Data, 2, 6, [
+        "cards",
+        "games",
+        "mars",
+      ]),
       makeCell("mars-produced-cards", Cell.Kind.Data, 3, 6, [
         "cards",
         "mars-produced",
@@ -1315,7 +1321,7 @@ export namespace allWeirdImplicitHeaders {
     [
       RowGroup.of(0, 2, getById("thead")),
       RowGroup.of(2, 2, getById("stuffed-animals")),
-      RowGroup.of(4, 3, getById("games-rg"))
+      RowGroup.of(4, 3, getById("games-rg")),
     ].sort(compare),
     [
       ColGroup.of(0, 2, getById("group-empty")),
