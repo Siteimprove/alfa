@@ -458,11 +458,9 @@ export namespace Cell {
         x += deltaX, y += deltaY
       ) {
         // 7
-        const covering = [...table.cells].filter((cell) =>
-          cell.isCovering(x, y)
-        );
+        const covering = table.cells.filter((cell) => cell.isCovering(x, y));
         if (covering.length !== 1) {
-          // More than one cell covering a slot is a table model error. Not sure why the test is in the algo…
+          // More than one cell covering a slot is a table model error. Not sure why the test is in the algorithm…
           // (0 cell is possible, more than one is not)
           continue;
         }
@@ -475,40 +473,29 @@ export namespace Cell {
           // 9.2
           headersFromCurrentBlock.push(currentCell);
           // 9.3
-          let blocked = false;
+          let blocked;
           // 9.4
           const state = currentCell.headerState(table);
           if (deltaX === 0) {
-            if (
+            blocked =
               opaqueHeaders.some(
                 (cell) =>
                   cell.anchor.x === currentCell.anchor.x &&
                   cell.width === currentCell.width
-              )
-            ) {
-              blocked = true;
-            }
-            if (!state.equals(Some.of(Header.State.Column))) {
-              blocked = true;
-            }
+              ) || !state.equals(Some.of(Header.State.Column));
           } else {
             // deltaY === 0
-            if (
+            blocked =
               opaqueHeaders.some(
                 (cell) =>
                   cell.anchor.y === currentCell.anchor.y &&
                   cell.height === currentCell.height
-              )
-            ) {
-              blocked = true;
-            }
-            if (!state.equals(Some.of(Header.State.Row))) {
-              blocked = true;
-            }
+              ) || !state.equals(Some.of(Header.State.Row));
           }
           // 9.5
           if (!blocked) headersList.push(currentCell);
-        } else {
+        }
+        if (currentCell.kind === Cell.Kind.Data && inHeaderBlock) {
           inHeaderBlock = false;
           opaqueHeaders.push(...headersFromCurrentBlock);
           headersFromCurrentBlock = [];
