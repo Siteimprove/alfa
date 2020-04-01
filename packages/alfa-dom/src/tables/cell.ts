@@ -9,7 +9,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Document, Element, Table } from "..";
+import {Document, Element, Node, Table} from "..";
 import { simpleRow } from "../../test/tables/testcases";
 import {
   EnumeratedValueError,
@@ -160,8 +160,7 @@ export namespace Cell {
   }
 
   export class Builder implements Comparable<Builder>, Equatable, Serializable {
-    // headers are always empty in the cell, they are filled in once the table is built because we need to know the
-    // full table in order to find both explicit and implicit headers.
+    // The product always has empty headers while building. Correct headers are filled in by the final export.
     private readonly _cell: Cell;
     private readonly _downwardGrowing: boolean;
     private readonly _scope: Option<Header.Scope>;
@@ -171,6 +170,8 @@ export namespace Cell {
     // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
     //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
     //         Currently not exposing both to final cell, but easy to do if needed.
+    // Note 3: Headers are empty when building the cell, they are filled in once the table is built because we need
+    //         to know the full table in order to find both explicit and implicit headers.
     private readonly _explicitHeaders: Array<Element>;
     private readonly _implicitHeaders: Array<Element>;
 
@@ -183,8 +184,8 @@ export namespace Cell {
       element: Element,
       downwardGrowing: boolean = false,
       state: Option<Header.Scope> = None,
-      eHeaders: Array<Element> = [],
-      iHeaders: Array<Element> = []
+      explicitHeaders: Array<Element> = [],
+      implicitHeaders: Array<Element> = []
     ): Builder {
       return new Builder(
         kind,
@@ -195,8 +196,8 @@ export namespace Cell {
         element,
         downwardGrowing,
         state,
-        eHeaders,
-        iHeaders
+        explicitHeaders,
+        implicitHeaders
       );
     }
 
@@ -209,8 +210,8 @@ export namespace Cell {
       element: Element,
       downwardGrowing: boolean,
       state: Option<Header.Scope>,
-      eHeaders: Array<Element>,
-      iHeaders: Array<Element>
+      explicitHeaders: Array<Element>,
+      implicitHeaders: Array<Element>
     ) {
       /**
        * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
@@ -218,8 +219,8 @@ export namespace Cell {
       this._cell = Cell.of(kind, x, y, width, height, element, []);
       this._downwardGrowing = downwardGrowing;
       this._scope = state;
-      this._explicitHeaders = eHeaders;
-      this._implicitHeaders = iHeaders;
+      this._explicitHeaders = explicitHeaders;
+      this._implicitHeaders = implicitHeaders;
     }
 
     private _update(update: {
@@ -231,8 +232,8 @@ export namespace Cell {
       element?: Element;
       downwardGrowing?: boolean;
       scope?: Option<Header.Scope>;
-      eHeaders?: Array<Element>;
-      iHeaders?: Array<Element>;
+      explicitHeaders?: Array<Element>;
+      implicitHeaders?: Array<Element>;
     }): Builder {
       return Builder.of(
         update.kind !== undefined ? update.kind : this.kind,
@@ -245,8 +246,8 @@ export namespace Cell {
           ? update.downwardGrowing
           : this._downwardGrowing,
         update.scope !== undefined ? update.scope : this.scope,
-        update.eHeaders !== undefined ? update.eHeaders : this._explicitHeaders,
-        update.iHeaders !== undefined ? update.iHeaders : this._implicitHeaders
+        update.explicitHeaders !== undefined ? update.explicitHeaders : this._explicitHeaders,
+        update.implicitHeaders !== undefined ? update.implicitHeaders : this._implicitHeaders
       );
     }
 
@@ -260,6 +261,8 @@ export namespace Cell {
         this.element,
         // the presence of a "headers" attribute is enough to use explicit headers, even if this is an empty list
         // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
+        // some browsers use fallback implicit headers when explicit resolve to nothing. We may want to do some
+        // and use some browser specific, either here or by exporting both list to the product and selecting later.
         this.element.attribute("headers") === None
           ? this._implicitHeaders
           : this._explicitHeaders
@@ -269,13 +272,6 @@ export namespace Cell {
     public get scope(): Option<Header.Scope> {
       return this._scope;
     }
-
-    // debug only
-    public get name(): string {
-      return this._cell.element.attribute("id").get().value;
-    }
-
-    // end debug
 
     public get anchor(): { x: number; y: number } {
       return this._cell.anchor;
@@ -325,7 +321,7 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-growing-downward-growing-cells
      */
     public growDownward(yCurrent: number): Builder {
-      // we need yCurrent to be covered, hence y+h-1>=yCurrent, hence h>=yCurrent-y+1
+      // we need yCurrent to be covered, hence y+h-1 >= yCurrent, hence h >= yCurrent-y+1
       return this._update({
         height: Math.max(this.height, yCurrent - this.anchor.y + 1),
       });
@@ -503,11 +499,8 @@ export namespace Cell {
      */
     private _assignExplicitHeaders(
       table: Table.Builder,
-      document: Document | undefined = undefined
+      topNode: Node
     ): Builder {
-      // "no document" is allowed for easier unit test (better isolation).
-      const topNode = document === undefined ? table.element : document;
-
       // 3 / headers attribute / 1
       const idsList = this.element
         .attribute("headers")
@@ -532,7 +525,7 @@ export namespace Cell {
         )
       );
 
-      return this._update({ eHeaders: elements });
+      return this._update({ explicitHeaders: elements });
     }
 
     /**
@@ -615,15 +608,15 @@ export namespace Cell {
       );
 
       return this._update({
-        iHeaders: headersList.map((cell) => cell.element),
+        implicitHeaders: headersList.map((cell) => cell.element),
       });
     }
 
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    public assignHeaders(table: Table.Builder): Builder {
-      return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
+    public assignHeaders(table: Table.Builder, topNode: Node): Builder {
+      return this._assignExplicitHeaders(table, topNode)._assignImplicitHeaders(table);
     }
 
     public equals(value: unknown): value is this {

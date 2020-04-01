@@ -1,8 +1,9 @@
 import { compare } from "@siteimprove/alfa-comparable";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Element, Table } from "../../src";
+import { Document, Element, Node, Table } from "../../src";
 import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
 import { resolveReferences } from "../../src/tables/helpers";
 
@@ -28,8 +29,8 @@ function toBuildingCell(cell: Cell) {
 }
 
 const dummy = Element.of(None, None, "dummy");
-const getDescendantById = (element: Element) => (id: string) =>
-  resolveReferences(element, [id]).shift() || dummy;
+const getDescendantById = (node: Node) => (id: string) =>
+  resolveReferences(node, [id]).shift() || dummy;
 
 // processing simple row
 export namespace simpleRow {
@@ -757,7 +758,7 @@ export namespace explicitHeaders {
       </tr>
     </table>
   );
-  export const getById = getDescendantById(element);
+  const getById = getDescendantById(element);
   const makeCell = makeCellFromGetter(getById);
 
   export const expected = Table.of(
@@ -771,6 +772,63 @@ export namespace explicitHeaders {
       makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
       makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"]),
     ].sort(compare)
+  );
+}
+
+// correctly selecting explicit header when multiple element have the same id.
+export namespace duplicateIDExplicitHeaders {
+  import and = Predicate.and;
+  import isElement = Element.isElement;
+  export const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <body>
+          <span id="dup-out" />
+          <table id="table">
+            <tr>
+              <th id="dup-out" /> <th id="dup-in">First</th>{" "}
+              <th id="dup-in">Second</th>
+            </tr>
+            <tr>
+              <td id="data-1" headers="dup-out" />{" "}
+              <td id="data-2" headers="dup-in" />
+            </tr>
+          </table>
+        </body>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+  export const table = getDescendantById(document)("table");
+  const getById = getDescendantById(table);
+  const makeCell = makeCellFromGetter(getById);
+  const lastHeader = table
+    .descendants()
+    .filter(
+      and(isElement, (element) =>
+        element
+          .attribute("id")
+          .map((attr) => attr.value === "dup-in")
+          .getOr(false)
+      )
+    )
+    .rest()
+    .first()
+    .get();
+
+  export const expected = Table.of(
+    table,
+    3,
+    2,
+    [
+      makeCell("dup-out", Cell.Kind.Header, 0, 0),
+      makeCell("dup-in", Cell.Kind.Header, 1, 0),
+      makeCellFromGetter((_) => lastHeader)("", Cell.Kind.Header, 2, 0),
+      makeCell("data-1", Cell.Kind.Data, 0, 1), // no header because first with correct id is out of table
+      makeCell("data-2", Cell.Kind.Data, 1, 1, ["dup-in"]),
+    ].sort(compare),
+    [],
+    []
   );
 }
 

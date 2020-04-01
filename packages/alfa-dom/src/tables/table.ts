@@ -6,7 +6,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element } from "..";
+import {Document, Element} from "..";
 import { Cell, ColGroup, RowGroup, Row } from "./groups";
 import { isElementByName } from "./helpers";
 
@@ -72,8 +72,8 @@ export class Table implements Equatable, Serializable {
     return this._rowGroups;
   }
 
-  public static from(element: Element): Result<Table, string> {
-    return Table.Builder.from(element).map((table) => table.table);
+  public static from(element: Element, document: Document | undefined = undefined): Result<Table, string> {
+    return Table.Builder.from(element, document).map((table) => table.table);
   }
 
   public equals(value: unknown): value is this {
@@ -267,7 +267,8 @@ export namespace Table {
       cells: Cell.Builder.JSON[];
     }
 
-    export function from(element: Element): Result<Builder, string> {
+    export function from(element: Element, document: Document | undefined = undefined): Result<Builder, string> {
+      // the document is needed for finding explicit headers. "no document" is allowed for easier unit test.
       if (element.name !== "table")
         return Err.of("This element is not a table");
 
@@ -399,10 +400,13 @@ export namespace Table {
       }
 
       // 21
+      // "no document" is allowed for easier unit test (better isolation).
+      const topNode = document === undefined ? table.element : document;
+
       return Ok.of(
         table.update({
           cells: [...table.cells]
-            .map((cell) => cell.assignHeaders(table))
+            .map((cell) => cell.assignHeaders(table, topNode))
             .sort(compare),
           colGroups: [...table.colGroups].sort(compare),
           rowGroups: [...table.rowGroups].sort(compare),

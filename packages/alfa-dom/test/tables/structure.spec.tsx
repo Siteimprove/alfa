@@ -9,6 +9,7 @@ import {
   colGroupImplicitHeaders,
   complexRow,
   downwardGrowing,
+  duplicateIDExplicitHeaders,
   errors,
   expenses,
   expensesNum,
@@ -112,6 +113,16 @@ test("Compute simple headers", (t) => {
     Table.from(simpleImplicitHeaders.element).get().toJSON(),
     simpleImplicitHeaders.expected.toJSON()
   );
+
+  t.deepEqual(
+    Table.from(
+      duplicateIDExplicitHeaders.table,
+      duplicateIDExplicitHeaders.document
+    )
+      .get()
+      .toJSON(),
+    duplicateIDExplicitHeaders.expected.toJSON()
+  );
 });
 
 test("Tables with groups headers", (t) => {
@@ -128,5 +139,5 @@ test("Tables with groups headers", (t) => {
   t.deepEqual(
     Table.from(allWeirdImplicitHeaders.element).get().toJSON(),
     allWeirdImplicitHeaders.expected.toJSON()
-  )
+  );
 });
