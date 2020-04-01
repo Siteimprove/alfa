@@ -12,6 +12,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Document, Element, Table } from "..";
 import { simpleRow } from "../../test/tables/testcases";
 import {
+  EnumeratedValueError,
   hasName,
   isDescendantOf,
   isElementByName,
@@ -67,11 +68,6 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     this._height = height;
     this._element = element;
     this._headers = headers;
-  }
-
-  // debug
-  public get name(): string {
-    return this._element.attribute("id").get().value;
   }
 
   public get anchor(): { x: number; y: number } {
@@ -140,17 +136,13 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
       anchor: this.anchor,
       width: this._width,
       height: this._height,
-      element: this.name, // this._element.toJSON(),
-      headers: this._headers.map(
-        (header) => header.attribute("id").get().value
-      ), // this._headers.map((header) => header.toJSON()),
+      element: this._element.toJSON(),
+      headers: this._headers.map((header) => header.toJSON()),
     };
   }
 }
 
 export namespace Cell {
-  import element = simpleRow.element;
-
   export interface JSON {
     [key: string]: json.JSON;
 
@@ -158,8 +150,8 @@ export namespace Cell {
     anchor: { x: number; y: number };
     width: number;
     height: number;
-    element: string; //Element.JSON;
-    headers: string[]; //Element.JSON[];
+    element: Element.JSON;
+    headers: Element.JSON[];
   }
 
   export enum Kind {
@@ -168,7 +160,8 @@ export namespace Cell {
   }
 
   export class Builder implements Comparable<Builder>, Equatable, Serializable {
-    // headers are always empty in the cell, filled in when exporting
+    // headers are always empty in the cell, they are filled in once the table is built because we need to know the
+    // full table in order to find both explicit and implicit headers.
     private readonly _cell: Cell;
     private readonly _downwardGrowing: boolean;
     private readonly _scope: Option<Header.Scope>;
@@ -682,8 +675,8 @@ export namespace Cell {
         ["col", Header.Scope.Column],
         ["rowgroup", Header.Scope.RowGroup],
         ["colgroup", Header.Scope.ColGroup],
-        ["missing", Header.Scope.Auto],
-        ["invalid", Header.Scope.Auto],
+        [EnumeratedValueError.Missing, Header.Scope.Auto],
+        [EnumeratedValueError.Invalid, Header.Scope.Auto],
       ]);
       const scope =
         kind === Cell.Kind.Data

@@ -98,11 +98,9 @@ export class Table implements Equatable, Serializable {
     return {
       height: this._height,
       width: this._width,
-      // element: this._element.toJSON(),
+      element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.toJSON()),
-      rowGroups: this._rowGroups.map(
-        (rg) => rg.element.attribute("id").get().value
-      ), // this._rowGroups.map((rg) => rg.toJSON()),
+      rowGroups: this._rowGroups.map((rg) => rg.toJSON()),
       colGroups: this._colGroups.map((cg) => cg.toJSON()),
     };
   }
@@ -114,9 +112,9 @@ export namespace Table {
 
     height: number;
     width: number;
-    // element: Element.JSON;
+    element: Element.JSON;
     cells: Cell.JSON[];
-    rowGroups: string[]; // RowGroup.JSON[];
+    rowGroups: RowGroup.JSON[];
     colGroups: ColGroup.JSON[];
   }
 
