@@ -526,6 +526,8 @@ export namespace Cell {
       document: Document | undefined = undefined
     ): Builder {
       // "no document" is allowed for easier unit test (better isolation).
+      const topNode = document === undefined ? table.element : document;
+      
       // 3 / headers attribute / 1
       const idsList: Array<string> = this.element
         .attribute("headers")
@@ -534,8 +536,6 @@ export namespace Cell {
         .getOr([]);
 
       // 3 / headers attribute / 2
-      const topNode = document === undefined ? table.element : document;
-
       const elements = resolveReferences(topNode, idsList).filter(
         and(
           and(
