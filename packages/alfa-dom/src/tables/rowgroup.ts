@@ -158,14 +158,6 @@ export namespace RowGroup {
       return this._rowgroup.element;
     }
 
-    public adjustWidth(width: number): Builder {
-      return this.update({ width: Math.max(this._width, width) });
-    }
-
-    public adjustHeight(height: number): Builder {
-      return this.update({ height: Math.max(this.height, height) });
-    }
-
     // anchoring a row group needs to move down all cells accordingly
     public anchorAt(y: number): Builder {
       return this.update({
@@ -223,9 +215,11 @@ export namespace RowGroup {
         ).get();
         growingCellsList = [...row.downwardGrowingCells];
         rowgroup = rowgroup
-          .update({ cells: rowgroup.cells.concat(...row.cells) })
-          .adjustHeight(yCurrent + row.height)
-          .adjustWidth(row.width);
+          .update({
+            cells: rowgroup.cells.concat(...row.cells),
+            height: Math.max(rowgroup.height, yCurrent + row.height),
+            width: Math.max(rowgroup.width, row.width)
+          });
         // row processing steps 4/16
         yCurrent++;
       }

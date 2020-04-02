@@ -136,16 +136,17 @@ export namespace Row {
       // 8, 9, 10, 13
       return Cell.Builder.from(currentCell, this._xCurrent, yCurrent).map(
         (cell) =>
-          this
+          this.update({
             // 11
-            .adjustWidth(this._xCurrent + cell.width)
+            width: Math.max(this.width, this._xCurrent + cell.width),
             // 12
-            .adjustHeight(cell.height)
-            // 13
-            // Double coverage check made at the end of table building to de-entangle code
+            height: Math.max(this.height, cell.height),
+          })
             // 14
             .addCell(cell)
       );
+      // 13
+      // Double coverage check made at the end of table building to de-entangle code
     }
 
     public adjustWidth(width: number): Builder {

@@ -201,18 +201,6 @@ export namespace Table {
       );
     }
 
-    public adjustWidth(width: number): Builder {
-      return this.update({ width: Math.max(this.width, width) });
-    }
-
-    public adjustHeight(height: number): Builder {
-      return this.update({ height: Math.max(this.height, height) });
-    }
-
-    public addColGroup(colGroup: ColGroup): Builder {
-      return this.update({ colGroups: [...this.colGroups].concat(colGroup) });
-    }
-
     public addCells(cells: Iterable<Cell.Builder>): Builder {
       return this.update({ cells: this._cells.concat(...cells) });
     }
@@ -304,10 +292,12 @@ export namespace Table {
               .get()
               .anchorAt(table.width).colgroup;
             table = table
+              .update({
               // 9.1 (1).4 (cumulative) and (2).2
-              .adjustWidth(table.width + colGroup.width)
+                width: Math.max(table.width, table.width + colGroup.width),
               // 9.1 (1).7 and (2).3
-              .addColGroup(colGroup);
+                colGroups: [...table.colGroups].concat(colGroup)
+              });
           }
           continue;
         }
@@ -327,9 +317,11 @@ export namespace Table {
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
           table = table
-            .addCells(row.cells)
-            .adjustHeight(yCurrent + 1)
-            .adjustWidth(row.width);
+            .update({
+              cells: table.cells.concat(...row.cells),
+              height: Math.max(table.height, yCurrent+1),
+              width: Math.max(table.width, row.width)
+            });
           // row processing steps 4/16
           yCurrent++;
 
