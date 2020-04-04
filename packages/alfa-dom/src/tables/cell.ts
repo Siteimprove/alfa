@@ -4,28 +4,23 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import {
-  EnumeratedValueError,
-  parseTokensList,
-} from "@siteimprove/alfa-parser";
+import { EnumeratedValueError } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
 import {
-  Attribute,
   Element,
   hasName,
   isDescendantOf,
   isElementByName,
   Node,
-  resolveReferences,
+  resolveAttributeReferences,
   Table,
 } from "..";
 import { isEmpty, parseSpan } from "./helpers";
 
-const { parseAttribute } = Attribute;
 const { parseEnumeratedAttribute } = Element;
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
@@ -508,14 +503,12 @@ export namespace Cell {
       table: Table.Builder
     ): Cell.Builder {
       // 3 / headers attribute / 1
-      const idsList = this.element
-        .attribute("headers")
-        .map(parseAttribute(parseTokensList))
-        .map((r) => r.get())
-        .getOr([]);
-
-      // 3 / headers attribute / 2
-      const elements = resolveReferences(node, idsList).filter(
+      const elements = resolveAttributeReferences(
+        this.element,
+        node,
+        "headers"
+      ).filter(
+        // 3 / headers attribute / 2
         and(
           and(
             // only keep cells in the table

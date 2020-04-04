@@ -1,19 +1,22 @@
 import { Branched } from "@siteimprove/alfa-branched";
 import { Browser } from "@siteimprove/alfa-compatibility";
 import { Device } from "@siteimprove/alfa-device";
-import {Attribute, Element, Namespace, Node, resolveReferences, Text} from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Namespace,
+  Node,
+  resolveAttributeReferences,
+  Text
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import {parseTokensList} from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
 import { Role } from "./role";
-import parseAttribute = Attribute.parseAttribute;
 
 const { isElement } = Element;
 const { isText } = Text;
-const { isEmpty } = Iterable;
 const { and, or, equals, test } = Predicate;
 
 /**
@@ -155,13 +158,7 @@ function getAriaLabelledbyTextAlternative(
   visited: Set<Element | Text>,
   options: getName.Options
 ): Branched<Option<string>, Browser> {
-  const idsList = element
-    .attribute("aria-labelledby")
-    .map(parseAttribute(parseTokensList))
-    .map((r) => r.get())
-    .getOr([]);
-
-  const references = resolveReferences(element.root(), idsList);
+  const references = resolveAttributeReferences(element, element.root(), "aria-labelledby");
 
   if (references.length === 0 || options.referencing === true) {
     return Branched.of(None);
