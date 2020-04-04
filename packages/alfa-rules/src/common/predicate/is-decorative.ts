@@ -1,7 +1,6 @@
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, hasName } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasName } from "./has-name";
 import { hasRole } from "./has-role";
 
 const { equals } = Predicate;

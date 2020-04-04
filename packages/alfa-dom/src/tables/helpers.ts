@@ -4,10 +4,10 @@ import { parseNonNegativeInteger } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok } from "@siteimprove/alfa-result";
 
-import { Element, Namespace, Node, Attribute } from "..";
+import { Element, Node, Attribute } from "..";
 
 const { parseAttribute } = Attribute;
-const { and, equals, property } = Predicate;
+const { and } = Predicate;
 
 /**
  * Parse a "span" (colspan/rowspan) attribute on table cell according to specs.

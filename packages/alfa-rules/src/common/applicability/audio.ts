@@ -1,12 +1,16 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import {
+  Document,
+  Element,
+  hasName,
+  hasNamespace,
+  Namespace,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasName } from "../predicate/has-name";
-import { hasNamespace } from "../predicate/has-namespace";
 import { isIgnored } from "../predicate/is-ignored";
 import { isPerceivable } from "../predicate/is-perceivable";
 

@@ -1,8 +1,10 @@
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  hasName,
+  hasNamespace,
+  Namespace,
+} from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-
-import { hasName } from "./has-name";
-import { hasNamespace } from "./has-namespace";
 
 const { and, equals } = Predicate;
 

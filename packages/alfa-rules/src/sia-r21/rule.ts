@@ -1,5 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import {
+  Attribute,
+  Element,
+  hasNamespace,
+  Namespace,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -8,7 +13,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 

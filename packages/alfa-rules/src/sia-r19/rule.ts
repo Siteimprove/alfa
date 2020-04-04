@@ -1,5 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import {
+  Attribute,
+  Element,
+  hasNamespace,
+  Namespace,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -9,8 +14,6 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
-
-import { hasNamespace } from "../common/predicate/has-namespace";
 
 const { isEmpty } = Iterable;
 const { and, not, equals, property } = Predicate;

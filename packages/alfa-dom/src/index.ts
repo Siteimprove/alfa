@@ -1,3 +1,4 @@
+export * from "./common";
 export * from "./namespace";
 export * from "./node";
 export * from "./node/attribute";

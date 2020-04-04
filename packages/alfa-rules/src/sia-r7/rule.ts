@@ -1,5 +1,11 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import {
+  Attribute,
+  Element,
+  hasName,
+  hasNamespace,
+  Namespace,
+} from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,9 +15,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
-import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;

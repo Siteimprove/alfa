@@ -1,10 +1,9 @@
-import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Document, Element, hasName } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 import { hasId } from "../../src/common/predicate/has-id";
-import { hasName } from "../../src/common/predicate/has-name";
 
 const { and, equals } = Predicate;
 

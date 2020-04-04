@@ -3,8 +3,7 @@ import {Element, Namespace, Node} from "..";
 
 const { and, equals, property } = Predicate;
 
-// Bad copy from rule helpers. Move to DOM helpers?
-function hasNamespace(
+export function hasNamespace(
   predicate: Predicate<Namespace> = () => true
 ): Predicate<Element> {
   return (element) => element.namespace.some(predicate);
@@ -15,7 +14,6 @@ export function hasName<T extends { readonly name: string }>(
 ): Predicate<T> {
   return property("name", predicate);
 }
-// end copied from rule
 
 export function isElementByName(
   ...names: Array<string>

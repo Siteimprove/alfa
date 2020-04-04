@@ -6,8 +6,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Document, Element } from "..";
-import { isElementByName } from "../common/predicate";
+import { Document, Element, isElementByName } from "..";
 import { Cell, ColGroup, RowGroup, Row } from "./groups";
 
 /**
@@ -213,18 +212,15 @@ export namespace Table {
         .map((rowGroup) => rowGroup.anchorAt(yCurrent))
         .map((rowGroup) => {
           if (rowGroup.height > 0) {
-            return (
-              this
-                .update({
-                  // adjust table height and width
-                  height: Math.max(this.height, this.height + rowGroup.height),
-                  width: Math.max(this.width, rowGroup.width),
-                  // merge in new cells
-                  cells: this._cells.concat(...rowGroup.cells),
-                  // add new group
-                  rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup)
-                })
-            );
+            return this.update({
+              // adjust table height and width
+              height: Math.max(this.height, this.height + rowGroup.height),
+              width: Math.max(this.width, rowGroup.width),
+              // merge in new cells
+              cells: this._cells.concat(...rowGroup.cells),
+              // add new group
+              rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup),
+            });
           } else {
             return this;
           }
@@ -291,13 +287,12 @@ export namespace Table {
             const colGroup = ColGroup.Builder.from(currentElement)
               .get()
               .anchorAt(table.width).colgroup;
-            table = table
-              .update({
+            table = table.update({
               // 9.1 (1).4 (cumulative) and (2).2
-                width: Math.max(table.width, table.width + colGroup.width),
+              width: Math.max(table.width, table.width + colGroup.width),
               // 9.1 (1).7 and (2).3
-                colGroups: [...table.colGroups].concat(colGroup)
-              });
+              colGroups: [...table.colGroups].concat(colGroup),
+            });
           }
           continue;
         }
@@ -316,12 +311,11 @@ export namespace Table {
             table.width
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
-          table = table
-            .update({
-              cells: table.cells.concat(...row.cells),
-              height: Math.max(table.height, yCurrent+1),
-              width: Math.max(table.width, row.width)
-            });
+          table = table.update({
+            cells: table.cells.concat(...row.cells),
+            height: Math.max(table.height, yCurrent + 1),
+            width: Math.max(table.width, row.width),
+          });
           // row processing steps 4/16
           yCurrent++;
 

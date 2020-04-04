@@ -5,8 +5,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element } from "..";
-import { isElementByName } from "../common/predicate";
+import { Element, isElementByName } from "..";
 import { Row, Cell } from "./groups";
 
 /**
