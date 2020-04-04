@@ -20,9 +20,10 @@ import {
   isDescendantOf,
   isElementByName,
   Node,
+  resolveReferences,
   Table,
 } from "..";
-import { isEmpty, parseSpan, resolveReferences } from "./helpers";
+import { isEmpty, parseSpan } from "./helpers";
 
 const { parseAttribute } = Attribute;
 const { parseEnumeratedAttribute } = Element;

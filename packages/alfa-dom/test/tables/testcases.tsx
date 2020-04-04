@@ -3,9 +3,8 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Document, Element, Node, Table } from "../../src";
+import { Document, Element, Node, resolveReferences, Table } from "../../src";
 import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
-import { resolveReferences } from "../../src/tables/helpers";
 
 const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   elt: string,

@@ -7,6 +7,7 @@
     "src/jsx.ts",
     "src/namespace.ts",
     "src/common/index.ts",
+    "src/common/helpers.ts",
     "src/common/predicate.ts",
     "src/node.ts",
     "src/node/attribute.ts",
