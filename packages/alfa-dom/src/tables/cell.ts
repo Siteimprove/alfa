@@ -4,15 +4,17 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
+import {
+  EnumeratedValueError,
+  parseTokensList,
+} from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Document, Element, Node, Table } from "..";
-import { simpleRow } from "../../test/tables/testcases";
+import { Element, Node, Table } from "..";
 import {
-  EnumeratedValueError,
   hasName,
   isDescendantOf,
   isElementByName,
@@ -21,7 +23,6 @@ import {
   parseAttribute,
   parseEnumeratedAttribute,
   parseSpan,
-  parseTokensList,
   resolveReferences,
 } from "./helpers";
 

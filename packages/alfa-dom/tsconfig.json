@@ -42,7 +42,6 @@
     "test/tables/structure-helpers.spec.tsx",
     "test/tables/testcases.tsx",
     "test/tables/structure.spec.tsx",
-    "test/tables/microsyntaxes.spec.ts",
     "test/tables/parse-attribute.spec.ts"
   ],
   "references": [

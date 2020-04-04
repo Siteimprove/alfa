@@ -1,6 +1,6 @@
-import {Map} from "@siteimprove/alfa-map";
-import {Err, Ok} from "@siteimprove/alfa-result";
-import {test} from "@siteimprove/alfa-test";
+import { Map } from "@siteimprove/alfa-map";
+import { Err, Ok } from "@siteimprove/alfa-result";
+import { test } from "@siteimprove/alfa-test";
 
 import {
   EnumeratedValueError,
@@ -8,7 +8,7 @@ import {
   parseInteger,
   parseNonNegativeInteger,
   parseTokensList,
-} from "../../src/tables/helpers";
+} from "../src";
 
 const empty = Err.of("The string is empty");
 const notNumber = Err.of("The string does not represent a number");
@@ -50,7 +50,7 @@ test("parse enumerated value", (t) => {
   t.deepEqual(parser(""), Err.of(EnumeratedValueError.Missing));
 });
 
-test("parse space separated token list", t => {
+test("parse space separated token list", (t) => {
   t.deepEqual(parseTokensList("foo"), result(["foo"]));
   t.deepEqual(parseTokensList("foo bar"), result(["foo", "bar"]));
   t.deepEqual(parseTokensList(""), result([]));

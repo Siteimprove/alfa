@@ -1,81 +1,20 @@
-import {Equatable} from "@siteimprove/alfa-equatable";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { clamp } from "@siteimprove/alfa-math";
-import {Option, Some} from "@siteimprove/alfa-option";
-import { Parser } from "@siteimprove/alfa-parser";
+import { Option, Some } from "@siteimprove/alfa-option";
+import {
+  EnumeratedValueError,
+  parseEnumeratedValue,
+  parseNonNegativeInteger,
+  Parser,
+} from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Attribute, Element, Namespace, Node } from "..";
 
 const { and, equals, property } = Predicate;
-
-// micro syntaxes to move to alfa-parser
-
-/**
- * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
- */
-export function parseInteger(
-  str: string
-): Result<readonly [string, number], string> {
-  // empty/whitespace string are errors for specs, not for Number…
-  // \s seems to be close enough to "ASCII whitespace".
-  if (str.match(/^\s*$/)) {
-    return Err.of("The string is empty");
-  }
-  const raw = Number(str);
-  return isNaN(raw)
-    ? Err.of("The string does not represent a number")
-    : raw !== Math.floor(raw)
-    ? Err.of("The string does not represent an integer")
-    : // 0 and -0 are different (but equal…) floats. Normalising.
-      Ok.of(["", raw === -0 ? 0 : raw] as const);
-}
-
-/**
- * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
- */
-export function parseNonNegativeInteger(
-  str: string
-): Result<readonly [string, number], string> {
-  const result = parseInteger(str);
-  return result.andThen(([_, value]) =>
-    value < 0 ? Err.of("This is a negative number") : result
-  );
-}
-
-/**
- * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
- */
-export enum EnumeratedValueError {
-  Missing = "missing",
-  Invalid = "invalid"
-}
-
-export function parseEnumeratedValue<RESULT>(
-  mapping: Map<string, RESULT>
-): Parser<string, RESULT, EnumeratedValueError> {
-  function parser(str: string): Result<readonly [string, RESULT], EnumeratedValueError> {
-    const result = mapping.get(str.toLowerCase());
-
-    return str === ""
-      ? Err.of(EnumeratedValueError.Missing)
-      : result.isNone()
-      ? Err.of(EnumeratedValueError.Invalid)
-      : Ok.of(["", result.get()] as const);
-  }
-
-  return parser;
-}
-
-/**
- * @see https://infra.spec.whatwg.org/#split-on-ascii-whitespace
- */
-export function parseTokensList(str: string): Ok<readonly [string, Array<string>]> {
-  return Ok.of(["", str.trim().split(/\s+/).filter(s => s !== "")] as const)
-}
-// end micro syntaxes
 
 // attribute helper should move to attribute
 export function parseAttribute<RESULT, ERROR>(
@@ -108,10 +47,15 @@ export function parseEnumeratedAttribute<RESULT>(
   function parser(element: Element): Option<RESULT> {
     return element
       .attribute(name)
-      .map(attribute => attribute.value)
+      .map((attribute) => attribute.value)
       .map(parseEnumeratedValue(mapping))
-      .getOr<Result<readonly [string, RESULT], EnumeratedValueError>>(Err.of(EnumeratedValueError.Missing))
-      .mapOrElse(([_, result]) => Some.of(result), err => mapping.get(err));
+      .getOr<Result<readonly [string, RESULT], EnumeratedValueError>>(
+        Err.of(EnumeratedValueError.Missing)
+      )
+      .mapOrElse(
+        ([_, result]) => Some.of(result),
+        (err) => mapping.get(err)
+      );
   }
 
   return parser;
@@ -141,15 +85,21 @@ export function isElementByName(
 }
 
 export function isEqual<T extends Equatable>(value1: T): Predicate<unknown, T> {
-  return value2 => value1.equals(value2);
+  return (value2) => value1.equals(value2);
 }
 
-export function isDescendantOf(node: Node, options?: Node.Traversal): Predicate<Node> {
-  return desc => node.descendants(options).find(isEqual(desc)).isSome()
+export function isDescendantOf(
+  node: Node,
+  options?: Node.Traversal
+): Predicate<Node> {
+  return (desc) => node.descendants(options).find(isEqual(desc)).isSome();
 }
 
 // Bad copied form alfa-aria accessible name computation (aria-labelledby). Move to DOM helpers?
-export function resolveReferences(node: Node, references: Iterable<string>): Array<Element> {
+export function resolveReferences(
+  node: Node,
+  references: Iterable<string>
+): Array<Element> {
   const elements: Array<Element> = [];
 
   for (const id of references) {

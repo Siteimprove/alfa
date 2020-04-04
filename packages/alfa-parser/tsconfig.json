@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/parser.ts"],
+  "files": ["src/index.ts", "src/microsyntaxes.ts", "src/parser.ts", "test/microsyntaxes.spec.ts"],
   "references": [
     {
       "path": "../alfa-callback"
