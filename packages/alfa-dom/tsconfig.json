@@ -39,10 +39,10 @@
     "src/tables/groups.ts",
     "src/tables/helpers.ts",
     "src/tables/table.ts",
+    "test/node/parse-attribute.spec.ts",
     "test/tables/structure-helpers.spec.tsx",
     "test/tables/testcases.tsx",
-    "test/tables/structure.spec.tsx",
-    "test/tables/parse-attribute.spec.ts"
+    "test/tables/structure.spec.tsx"
   ],
   "references": [
     {

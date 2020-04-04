@@ -1,29 +1,19 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { clamp } from "@siteimprove/alfa-math";
 import { Option, Some } from "@siteimprove/alfa-option";
 import {
   EnumeratedValueError,
   parseEnumeratedValue,
   parseNonNegativeInteger,
-  Parser,
 } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
-import { Attribute, Element, Namespace, Node } from "..";
+import { Element, Namespace, Node, Attribute } from "..";
 
+const { parseAttribute } = Attribute;
 const { and, equals, property } = Predicate;
-
-// attribute helper should move to attribute
-export function parseAttribute<RESULT, ERROR>(
-  parser: Parser<string, RESULT, ERROR>
-): Mapper<Attribute, Result<RESULT, ERROR>> {
-  return (attribute) =>
-    parser(attribute.value).andThen(([_, value]) => Ok.of(value));
-}
-// end attribute helper
 
 export function parseSpan(
   element: Element,

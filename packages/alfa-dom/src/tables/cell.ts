@@ -13,19 +13,19 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element, Node, Table } from "..";
+import { Attribute, Element, Node, Table } from "..";
 import {
   hasName,
   isDescendantOf,
   isElementByName,
   isEmpty,
   isEqual,
-  parseAttribute,
   parseEnumeratedAttribute,
   parseSpan,
   resolveReferences,
 } from "./helpers";
 
+const { parseAttribute } = Attribute;
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
 
