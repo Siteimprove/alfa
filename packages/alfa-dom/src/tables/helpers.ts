@@ -1,20 +1,19 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Map } from "@siteimprove/alfa-map";
 import { clamp } from "@siteimprove/alfa-math";
-import { Option, Some } from "@siteimprove/alfa-option";
-import {
-  EnumeratedValueError,
-  parseEnumeratedValue,
-  parseNonNegativeInteger,
-} from "@siteimprove/alfa-parser";
+import { parseNonNegativeInteger } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Ok } from "@siteimprove/alfa-result";
 
 import { Element, Namespace, Node, Attribute } from "..";
 
 const { parseAttribute } = Attribute;
 const { and, equals, property } = Predicate;
 
+/**
+ * Parse a "span" (colspan/rowspan) attribute on table cell according to specs.
+ * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
+ * Steps 8 and 9.
+ */
 export function parseSpan(
   element: Element,
   name: string,
@@ -28,27 +27,6 @@ export function parseSpan(
     .map((r) => r.map((x) => clamp(x, min, max)))
     .getOr(Ok.of(failed))
     .getOr(failed);
-}
-
-export function parseEnumeratedAttribute<RESULT>(
-  name: string,
-  mapping: Map<string, RESULT>
-): (element: Element) => Option<RESULT> {
-  function parser(element: Element): Option<RESULT> {
-    return element
-      .attribute(name)
-      .map((attribute) => attribute.value)
-      .map(parseEnumeratedValue(mapping))
-      .getOr<Result<readonly [string, RESULT], EnumeratedValueError>>(
-        Err.of(EnumeratedValueError.Missing)
-      )
-      .mapOrElse(
-        ([_, result]) => Some.of(result),
-        (err) => mapping.get(err)
-      );
-  }
-
-  return parser;
 }
 
 // Bad copy from rule helpers. Move to DOM helpers?

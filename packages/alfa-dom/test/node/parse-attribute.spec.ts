@@ -4,10 +4,10 @@ import { EnumeratedValueError, Parser } from "@siteimprove/alfa-parser";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Attribute, Element } from "../../src/index";
-import { parseEnumeratedAttribute } from "../../src/tables/helpers";
+import { Attribute, Element } from "../../src";
 
 const { parseAttribute } = Attribute;
+const { parseEnumeratedAttribute } = Element;
 
 const makeAttribute = (str: string) => Attribute.of(None, None, "dummy", str);
 

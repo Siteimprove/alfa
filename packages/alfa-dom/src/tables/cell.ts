@@ -20,12 +20,12 @@ import {
   isElementByName,
   isEmpty,
   isEqual,
-  parseEnumeratedAttribute,
   parseSpan,
   resolveReferences,
 } from "./helpers";
 
 const { parseAttribute } = Attribute;
+const { parseEnumeratedAttribute } = Element;
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
 
