@@ -14,14 +14,8 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Attribute, Element, Node, Table } from "..";
-import {
-  hasName,
-  isDescendantOf,
-  isElementByName,
-  isEmpty,
-  parseSpan,
-  resolveReferences,
-} from "./helpers";
+import { hasName, isDescendantOf, isElementByName } from "../common/predicate";
+import { isEmpty, parseSpan, resolveReferences } from "./helpers";
 
 const { parseAttribute } = Attribute;
 const { parseEnumeratedAttribute } = Element;

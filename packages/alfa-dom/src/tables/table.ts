@@ -7,8 +7,8 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Document, Element } from "..";
+import { isElementByName } from "../common/predicate";
 import { Cell, ColGroup, RowGroup, Row } from "./groups";
-import { isElementByName } from "./helpers";
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model

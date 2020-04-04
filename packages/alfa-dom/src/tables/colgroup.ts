@@ -6,7 +6,8 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
-import { isElementByName, parseSpan } from "./helpers";
+import { isElementByName } from "../common/predicate";
+import { parseSpan } from "./helpers";
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group

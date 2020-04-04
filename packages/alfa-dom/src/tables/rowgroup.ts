@@ -6,8 +6,8 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
+import { isElementByName } from "../common/predicate";
 import { Row, Cell } from "./groups";
-import { isElementByName } from "./helpers";
 
 /**
  * @see/ https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
@@ -214,12 +214,11 @@ export namespace RowGroup {
           rowgroup.width
         ).get();
         growingCellsList = [...row.downwardGrowingCells];
-        rowgroup = rowgroup
-          .update({
-            cells: rowgroup.cells.concat(...row.cells),
-            height: Math.max(rowgroup.height, yCurrent + row.height),
-            width: Math.max(rowgroup.width, row.width)
-          });
+        rowgroup = rowgroup.update({
+          cells: rowgroup.cells.concat(...row.cells),
+          height: Math.max(rowgroup.height, yCurrent + row.height),
+          width: Math.max(rowgroup.width, row.width),
+        });
         // row processing steps 4/16
         yCurrent++;
       }

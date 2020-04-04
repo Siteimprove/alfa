@@ -6,8 +6,8 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Element } from "..";
+import { isElementByName } from "../common/predicate";
 import { Cell } from "./groups";
-import { isElementByName } from "./helpers";
 
 /**
  * Build artifact, corresponds to a single <tr> element
