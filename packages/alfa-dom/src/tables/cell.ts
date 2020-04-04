@@ -19,7 +19,6 @@ import {
   isDescendantOf,
   isElementByName,
   isEmpty,
-  isEqual,
   parseSpan,
   resolveReferences,
 } from "./helpers";
@@ -523,7 +522,7 @@ export namespace Cell {
           ),
           and(
             // remove principal cell
-            not(isEqual(this.element)),
+            not(equals(this.element)),
             // Step 4: remove empty cells
             not(isEmpty)
           )

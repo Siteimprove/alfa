@@ -52,15 +52,11 @@ export function isElementByName(
   );
 }
 
-export function isEqual<T extends Equatable>(value1: T): Predicate<unknown, T> {
-  return (value2) => value1.equals(value2);
-}
-
 export function isDescendantOf(
   node: Node,
   options?: Node.Traversal
 ): Predicate<Node> {
-  return (desc) => node.descendants(options).find(isEqual(desc)).isSome();
+  return (desc) => node.descendants(options).find(equals(desc)).isSome();
 }
 
 // Bad copied form alfa-aria accessible name computation (aria-labelledby). Move to DOM helpers?
