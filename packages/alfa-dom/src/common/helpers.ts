@@ -8,7 +8,7 @@ const { and } = Predicate;
 
 export function resolveReferences(
   node: Node,
-  references: Iterable<string>
+  ...references: Array<string>
 ): Array<Element> {
   const elements: Array<Element> = [];
 
@@ -32,7 +32,7 @@ export function resolveAttributeReferences(
 ): Array<Element> {
   return resolveReferences(
     node,
-    element
+    ...element
       .attribute(name)
       .map(Attribute.parseAttribute(parseTokensList))
       .map((r) => r.get())

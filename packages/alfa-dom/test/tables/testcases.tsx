@@ -29,7 +29,7 @@ function toBuildingCell(cell: Cell) {
 
 const dummy = Element.of(None, None, "dummy");
 const getDescendantById = (node: Node) => (id: string) =>
-  resolveReferences(node, [id]).shift() || dummy;
+  resolveReferences(node, id).shift() || dummy;
 
 // processing simple row
 export namespace simpleRow {
