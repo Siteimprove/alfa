@@ -1,4 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
+import {Role} from "@siteimprove/alfa-aria";
 import {
   Attribute,
   Element,
@@ -39,12 +40,16 @@ export default Rule.Atomic.of<Page, Element>({
               // The table model only works if the element is a th.
               and(
                 isElementByName("th"),
-                hasRole(hasName(equals("rowheader", "columnheader")))
+                () => true
+                // getting correct role need to know the table model. Need help.
+                // hasRole(hasName(equals("rowheader", "columnheader")))
               ),
               and(isVisible(device), not(isIgnored(device)))
             )
           )
           .map((th) => {
+            // console.dir(th);
+            // console.dir(Role.from(th), {depth: 4});
             let result: Option<Element> = None;
             // get the table containing it: the first <table> ancestor
             const table = th.ancestors().find(isElementByName("table"));
