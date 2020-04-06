@@ -77,6 +77,7 @@
     "src/sia-r42/rule.ts",
     "src/sia-r43/rule.ts",
     "src/sia-r44/rule.ts",
+    "src/sia-r45/rule.ts",
     "src/sia-r47/rule.ts",
     "src/sia-r48/rule.ts",
     "src/sia-r49/rule.ts",
@@ -99,6 +100,7 @@
     "test/sia-r2/rule.spec.tsx",
     "test/sia-r24/rule.spec.tsx",
     "test/sia-r38/rule.spec.tsx",
+    "test/sia-r45/rule.spec.tsx",
     "test/sia-r57/rule.spec.tsx",
     "test/sia-r64/rule.spec.tsx",
     "test/sia-r68/rule.spec.tsx"
@@ -136,6 +138,9 @@
     },
     {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-map"
     },
     {
       "path": "../alfa-math"
