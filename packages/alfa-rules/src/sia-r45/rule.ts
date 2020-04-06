@@ -6,7 +6,8 @@ import {
   resolveReferences,
 } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
-import { parseTokensList } from "@siteimprove/alfa-parser";
+import {None, Option, Some} from "@siteimprove/alfa-option";
+import { parseTokensList} from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -16,7 +17,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { isVisible } from "../common/predicate/is-visible";
 
 const { parseAttribute } = Attribute;
-const { and, not } = Predicate;
+const { and, not, or } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
@@ -29,26 +30,27 @@ export default Rule.Atomic.of<Page, Attribute>({
         return (
           document
             .descendants()
-            // get all <table>
-            .filter(
-              and(
-                isElementByName("table"),
-                and(isVisible(device), not(isIgnored(device)))
-              )
-            )
-            // find all cells with headers, record the ownership in the map and return the headers attribute
-            .flatMap((table) =>
-              table
-                .descendants()
-                .filter(
-                  and(isElementByName("th", "td"), hasAttribute("headers"))
-                )
-                .map((cell) => cell.attribute("headers").get())
-                .map((headers) => {
-                  ownership = ownership.set(headers, table);
-                  return headers;
-                })
-            )
+            // get all cells with a headers attribute
+            .filter(and(isElementByName("td", "th"), hasAttribute("headers")))
+            // get the attributes themselves
+            .map(cell => {
+              let result: Option<Attribute> = None;
+              // get the table containing it: the first <table> ancestor
+              const table = cell
+                .ancestors()
+                .find(isElementByName("table"));
+
+              if (table.isNone()) return result;
+              if (or(not(isVisible(device)), isIgnored(device))(table.get())) return result;
+
+              // if the table is exposed, record the ownership and return the headers attribute
+              const headers = cell.attribute("headers").get();
+              ownership = ownership.set(headers, table.get());
+              result = Some.of(headers);
+              return result;
+            })
+            .filter(option => option.isSome())
+            .map((option) => option.get())
         );
       },
 
