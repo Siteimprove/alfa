@@ -1,11 +1,14 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace, Table } from "@siteimprove/alfa-dom";
+import {Header} from "@siteimprove/alfa-dom/src/tables/cell";
+import {Iterable} from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Role } from "./role";
+import isDocument = Document.isDocument;
 
 const { and, equals, test } = Predicate;
 
@@ -617,19 +620,37 @@ Feature.register(
   Namespace.HTML,
   Feature.of(
     "th",
-    (element) =>
-      element.attribute("scope").flatMap((scope) => {
-        switch (scope.value.toLowerCase()) {
-          case "row":
-          case "rowgroup":
-            return Option.of("RowHeader");
-          case "col":
-          case "colgroup":
-            return Option.of("ColumnHeader");
-          default:
-            return None;
-        }
-      }),
+    (element) => {
+      const table = element.closest(
+        and(Element.isElement, (element) => element.name === "table")
+      );
+      // If the <th> is not in a <table>, it doesn't really have a role…
+      if (table.isNone()) return None;
+
+      const node = table.get().root();
+      // Is this going to be memoized or re-computed every time?
+      const tableModel = Table.from(table.get(), node);
+      // If the <th> is within a <table> with errors, it doesn't really have a role.
+      if (tableModel.isErr()) return None;
+
+      const cell = Iterable.find(tableModel.get().cells, cell => cell.element.equals(element));
+      // If the current element is not a cell in the table, something weird happened and it doesn't have a role.
+      if (cell.isNone()) return None;
+
+      // This is not fully correct. If the header has no variant, its role should be computed as a <td>
+      // @see https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
+      //     "th (is neither column header nor row header, and ancestor table element has table role)"
+      // and "th (is neither column header nor row header, and ancestor table element has grid role)"
+      return  cell.get().variant.map(
+        variant => { switch (variant) {
+          case Header.Variant.Column:
+          case Header.Variant.ColGroup: return "ColumnHeader";
+          case Header.Variant.Row:
+          case Header.Variant.RowGroup: return "RowHeader"
+
+        }}
+      );
+    },
 
     (element) => {
       let attributes = Map.empty<string, string>();
