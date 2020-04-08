@@ -3,7 +3,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Document, Element, Node, resolveReferences, Table } from "../../src";
+import {Document, Element, getDescendantWithId, Node, resolveReferences, Table} from "../../src";
 import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
 
 const { and } = Predicate;
@@ -44,7 +44,7 @@ function toBuildingCell(cell: Cell) {
 
 const dummy = Element.of(None, None, "dummy");
 const getDescendantById = (node: Node) => (id: string) =>
-  resolveReferences(node, id).shift() || dummy;
+  getDescendantWithId(node, id).getOr(dummy);
 
 // processing simple row
 export namespace simpleRow {

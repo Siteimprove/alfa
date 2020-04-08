@@ -1,3 +1,4 @@
+import {Option} from "@siteimprove/alfa-option";
 import { parseTokensList } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -38,4 +39,8 @@ export function resolveAttributeReferences(
       .map((r) => r.get())
       .getOr([])
   );
+}
+
+export function getDescendantWithId(node: Node, id: string): Option<Element> {
+  return Option.from(resolveReferences(node, id).shift());
 }
