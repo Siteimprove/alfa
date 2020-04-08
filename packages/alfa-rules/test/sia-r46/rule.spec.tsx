@@ -14,8 +14,8 @@ import { failed, inapplicable, passed } from "../common/outcome";
 
 const device = Device.standard();
 
-test("Passes on explicit header", async t => {
-  const document = Document.of(self => [
+test("Passes on explicit header", async (t) => {
+  const document = Document.of((self) => [
     Element.fromElement(
       <table>
         <tr>
@@ -25,14 +25,15 @@ test("Passes on explicit header", async t => {
           <td>05:41</td>
         </tr>
       </table>
-    )
+    ),
   ]);
   const target = document
     .descendants()
     .find(and(isElement, hasId(equals("target"))))
     .get();
 
-  t.deepEqual(await evaluate(R46, {device, document}), [
-    passed(R46, target, [["1", Outcomes.IsAssignedToDataCell]])
+  t.deepEqual(await evaluate(R46, { device, document }), [
+    passed(R46, target, [["1", Outcomes.IsAssignedToDataCell]]),
   ]);
 });
+

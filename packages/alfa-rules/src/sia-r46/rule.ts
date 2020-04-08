@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {Role} from "@siteimprove/alfa-aria";
+import { Role } from "@siteimprove/alfa-aria";
 import {
   Attribute,
   Element,
@@ -71,10 +71,13 @@ export default Rule.Atomic.of<Page, Element>({
             () => Outcomes.TableHasError,
             () =>
               expectation(
-                Iterable.some(tableModel.get().cells, (cell) =>
-                  // does there exists a (grid)cell with the target as one of its headers?
-                  hasRole(hasName(equals("cell", "gridcell")))(cell.element) &&
-                  Iterable.find(cell.headers, equals(target)).isSome()
+                Iterable.some(
+                  tableModel.get().cells,
+                  (cell) =>
+                    // does there exists a (grid)cell with the target as one of its headers?
+                    hasRole(hasName(equals("cell", "gridcell")))(
+                      cell.element
+                    ) && Iterable.find(cell.headers, equals(target)).isSome()
                 ),
                 () => Outcomes.IsAssignedToDataCell,
                 () => Outcomes.IsNotAssignedToDataCell

@@ -6,8 +6,8 @@ import {
   resolveReferences,
 } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
-import {None, Option, Some} from "@siteimprove/alfa-option";
-import { parseTokensList} from "@siteimprove/alfa-parser";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { parseTokensList } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -33,15 +33,14 @@ export default Rule.Atomic.of<Page, Attribute>({
             // get all cells with a headers attribute
             .filter(and(isElementByName("td", "th"), hasAttribute("headers")))
             // get the attributes themselves
-            .map(cell => {
+            .map((cell) => {
               let result: Option<Attribute> = None;
               // get the table containing it: the first <table> ancestor
-              const table = cell
-                .ancestors()
-                .find(isElementByName("table"));
+              const table = cell.ancestors().find(isElementByName("table"));
 
               if (table.isNone()) return result;
-              if (or(not(isVisible(device)), isIgnored(device))(table.get())) return result;
+              if (or(not(isVisible(device)), isIgnored(device))(table.get()))
+                return result;
 
               // if the table is exposed, record the ownership and return the headers attribute
               const headers = cell.attribute("headers").get();
@@ -49,7 +48,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               result = Some.of(headers);
               return result;
             })
-            .filter(option => option.isSome())
+            .filter((option) => option.isSome())
             .map((option) => option.get())
         );
       },
