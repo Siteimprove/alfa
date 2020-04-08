@@ -14,7 +14,7 @@ import {
   expenses,
   expensesNum,
   explicitHeaders,
-  headersState,
+  headersVariant,
   rowGroup,
   rowGroupImplicitHeaders,
   simpleImplicitHeaders,
@@ -45,6 +45,24 @@ test("Process row groups", (t) => {
   t.deepEqual(
     RowGroup.Builder.from(downwardGrowing.element).get().toJSON(),
     downwardGrowing.expected.toJSON()
+  );
+});
+
+test("Header scope and variant", (t) => {
+  const expensesTable = Table.Builder.from(expenses.element).get();
+  t.deepEqual(
+    [...expensesTable.cells]
+      .filter((cell) => cell.kind === Cell.Kind.Header)
+      .map((cell) => cell.addHeaderVariant(expensesTable).variant.get()),
+    expenses.headerVariants
+  );
+
+  const headersTable = Table.Builder.from(headersVariant.element).get();
+  t.deepEqual(
+    [...headersTable.cells]
+      .filter((cell) => cell.kind === Cell.Kind.Header)
+      .map((cell) => cell.addHeaderVariant(headersTable).variant),
+    headersVariant.headerVariants
   );
 });
 
@@ -82,24 +100,6 @@ test("Table model errors", (t) => {
   t.deepEqual(
     Table.from(errors.coveredTwice),
     Err.of("Slot (1, 1) is covered twice")
-  );
-});
-
-test("Header scope and state", (t) => {
-  const expensesTable = Table.Builder.from(expenses.element).get();
-  t.deepEqual(
-    [...expensesTable.cells]
-      .filter((cell) => cell.kind === Cell.Kind.Header)
-      .map((cell) => cell.headerState(expensesTable).get()),
-    expenses.headerStates
-  );
-
-  const headersTable = Table.Builder.from(headersState.element).get();
-  t.deepEqual(
-    [...headersTable.cells]
-      .filter((cell) => cell.kind === Cell.Kind.Header)
-      .map((cell) => cell.headerState(headersTable)),
-    headersState.headerStates
   );
 });
 

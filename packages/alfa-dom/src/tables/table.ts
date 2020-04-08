@@ -6,7 +6,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Document, Element, isElementByName } from "..";
+import { Element, isElementByName, Node } from "..";
 import { Cell, ColGroup, RowGroup, Row } from "./groups";
 
 /**
@@ -104,9 +104,9 @@ export class Table implements Equatable, Serializable {
 export namespace Table {
   export function from(
     element: Element,
-    document: Document | undefined = undefined
+    node: Node | undefined = undefined
   ): Result<Table, string> {
-    return Builder.from(element, document).map((table) => table.table);
+    return Builder.from(element, node).map((table) => table.table);
   }
 
   export interface JSON {
@@ -254,7 +254,7 @@ export namespace Table {
 
     export function from(
       element: Element,
-      document: Document | undefined = undefined
+      node: Node | undefined = undefined
     ): Result<Builder, string> {
       // the document is needed for finding explicit headers. "no document" is allowed for easier unit test.
       if (element.name !== "table")
@@ -390,13 +390,19 @@ export namespace Table {
       }
 
       // 21
+
       // "no document" is allowed for easier unit test (better isolation).
-      const node = document === undefined ? table.element : document;
+      const topNode = node === undefined ? table.element : node;
+      // We need to compute all headers variant first and this need to be done separately
+      // so that the updated table is used in assignHeaders
+      table = table.update( {
+        cells: table.cells.map((cell) => cell.addHeaderVariant(table))
+      });
 
       return Ok.of(
         table.update({
-          cells: [...table.cells]
-            .map((cell) => cell.assignHeaders(node, table))
+          cells: table.cells
+            .map((cell) => cell.assignHeaders(topNode, table))
             .sort(compare),
           colGroups: [...table.colGroups].sort(compare),
           rowGroups: [...table.rowGroups].sort(compare),
