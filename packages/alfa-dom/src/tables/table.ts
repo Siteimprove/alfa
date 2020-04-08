@@ -390,12 +390,18 @@ export namespace Table {
       }
 
       // 21
+
       // "no document" is allowed for easier unit test (better isolation).
       const topNode = node === undefined ? table.element : node;
+      // We need to compute all headers variant first and this need to be done separately
+      // so that the updated table is used in assignHeaders
+      table = table.update( {
+        cells: table.cells.map((cell) => cell.addHeaderVariant(table))
+      });
 
       return Ok.of(
         table.update({
-          cells: [...table.cells]
+          cells: table.cells
             .map((cell) => cell.assignHeaders(topNode, table))
             .sort(compare),
           colGroups: [...table.colGroups].sort(compare),

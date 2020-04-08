@@ -142,6 +142,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
       width: this._width,
       height: this._height,
       element: this._element.toJSON(),
+      variant: this._variant.toJSON(),
       headers: this._headers.map((header) => header.toJSON()),
     };
   }
@@ -156,6 +157,7 @@ export namespace Cell {
     width: number;
     height: number;
     element: Element.JSON;
+    variant: Option.JSON;
     headers: Element.JSON[];
   }
 
@@ -223,7 +225,7 @@ export namespace Cell {
       explicitHeaders: Array<Element>,
       implicitHeaders: Array<Element>
     ) {
-      this._cell = Cell.of(kind, x, y, width, height, element, variant,[]);
+      this._cell = Cell.of(kind, x, y, width, height, element, variant, []);
       this._downwardGrowing = downwardGrowing;
       this._scope = scope;
       this._explicitHeaders = explicitHeaders;
@@ -308,7 +310,7 @@ export namespace Cell {
     }
 
     public get variant(): Option<Header.Variant> {
-      return this._cell.variant
+      return this._cell.variant;
     }
 
     public get downwardGrowing(): boolean {
@@ -428,10 +430,12 @@ export namespace Cell {
       }
     }
 
-    public headerVariant(table: Table.Builder): Option<Header.Variant> {
-      return this._scope.flatMap((scope) =>
-        Option.from(this._scopeToState(scope, table))
-      );
+    public addHeaderVariant(table: Table.Builder): Builder {
+      return this._update({
+        variant: this._scope.flatMap((scope) =>
+          Option.from(this._scopeToState(scope, table))
+        ),
+      });
     }
 
     /**
@@ -482,14 +486,14 @@ export namespace Cell {
           // 9.3
           let blocked;
           // 9.4
-          const state = currentCell.headerVariant(table);
+          const variant = currentCell.variant;
           if (deltaX === 0) {
             blocked =
               opaqueHeaders.some(
                 (cell) =>
                   cell.anchor.x === currentCell.anchor.x &&
                   cell.width === currentCell.width
-              ) || !state.equals(Some.of(Header.Variant.Column));
+              ) || !variant.equals(Some.of(Header.Variant.Column));
           } else {
             // deltaY === 0
             blocked =
@@ -497,7 +501,7 @@ export namespace Cell {
                 (cell) =>
                   cell.anchor.y === currentCell.anchor.y &&
                   cell.height === currentCell.height
-              ) || !state.equals(Some.of(Header.Variant.Row));
+              ) || !variant.equals(Some.of(Header.Variant.Row));
           }
           // 9.5
           if (!blocked) headersList.push(currentCell);
@@ -573,7 +577,7 @@ export namespace Cell {
         const headers = table.cells
           // get all rowgroup headers
           .filter((cell) =>
-            cell.headerVariant(table).equals(Some.of(Header.Variant.RowGroup))
+            cell.variant.equals(Some.of(Header.Variant.RowGroup))
           )
           // keep the ones inside the rowgroup of the principal cell
           .filter((rowGroupHeader) =>
@@ -597,7 +601,7 @@ export namespace Cell {
         const headers = table.cells
           // get all colgroup headers
           .filter((cell) =>
-            cell.headerVariant(table).equals(Some.of(Header.Variant.ColGroup))
+            cell.variant.equals(Some.of(Header.Variant.ColGroup))
           )
           // keep the ones inside the colgroup of the principal cell
           .filter((colGroupHeader) =>
@@ -694,7 +698,9 @@ export namespace Cell {
           ? None
           : parseEnumeratedAttribute("scope", scopeMapping)(cell);
 
-      return Ok.of(Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope));
+      return Ok.of(
+        Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)
+      );
     }
 
     export interface JSON {
