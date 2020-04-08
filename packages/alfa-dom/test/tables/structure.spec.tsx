@@ -90,7 +90,7 @@ test("Header scope and state", (t) => {
   t.deepEqual(
     [...expensesTable.cells]
       .filter((cell) => cell.kind === Cell.Kind.Header)
-      .map((cell) => cell.headerState(expensesTable).get()),
+      .map((cell) => cell.headerVariant(expensesTable).get()),
     expenses.headerStates
   );
 
@@ -98,7 +98,7 @@ test("Header scope and state", (t) => {
   t.deepEqual(
     [...headersTable.cells]
       .filter((cell) => cell.kind === Cell.Kind.Header)
-      .map((cell) => cell.headerState(headersTable)),
+      .map((cell) => cell.headerVariant(headersTable)),
     headersState.headerStates
   );
 });

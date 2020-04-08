@@ -35,6 +35,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
+  private readonly _variant: Option<Header.Variant>;
   private readonly _headers: Array<Element>;
 
   public static of(
@@ -44,9 +45,10 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     width: number,
     height: number,
     element: Element,
+    variant: Option<Header.Variant> = None,
     headers: Array<Element> = []
   ): Cell {
-    return new Cell(kind, x, y, width, height, element, headers);
+    return new Cell(kind, x, y, width, height, element, variant, headers);
   }
 
   private constructor(
@@ -56,6 +58,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     width: number,
     height: number,
     element: Element,
+    variant: Option<Header.Variant>,
     headers: Array<Element>
   ) {
     this._kind = kind;
@@ -64,6 +67,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     this._width = width;
     this._height = height;
     this._element = element;
+    this._variant = variant;
     this._headers = headers;
   }
 
@@ -89,6 +93,10 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
 
   public get headers(): Iterable<Element> {
     return this._headers;
+  }
+
+  public get variant(): Option<Header.Variant> {
+    return this._variant;
   }
 
   public isCovering(x: number, y: number): boolean {
@@ -160,6 +168,8 @@ export namespace Cell {
     // The product always has empty headers while building. Correct headers are filled in by the final export.
     private readonly _cell: Cell;
     private readonly _downwardGrowing: boolean;
+    // This is the scope attribute, once correctly parsed.
+    // The actual variant of the header is stored in the cell and can only be computed once the table is built.
     private readonly _scope: Option<Header.Scope>;
     // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
     //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
@@ -179,8 +189,9 @@ export namespace Cell {
       width: number,
       height: number,
       element: Element,
+      variant: Option<Header.Variant> = None,
       downwardGrowing: boolean = false,
-      state: Option<Header.Scope> = None,
+      scope: Option<Header.Scope> = None,
       explicitHeaders: Array<Element> = [],
       implicitHeaders: Array<Element> = []
     ): Builder {
@@ -191,8 +202,9 @@ export namespace Cell {
         width,
         height,
         element,
+        variant,
         downwardGrowing,
-        state,
+        scope,
         explicitHeaders,
         implicitHeaders
       );
@@ -205,17 +217,15 @@ export namespace Cell {
       width: number,
       height: number,
       element: Element,
+      variant: Option<Header.Variant>,
       downwardGrowing: boolean,
-      state: Option<Header.Scope>,
+      scope: Option<Header.Scope>,
       explicitHeaders: Array<Element>,
       implicitHeaders: Array<Element>
     ) {
-      /**
-       * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
-       */
-      this._cell = Cell.of(kind, x, y, width, height, element, []);
+      this._cell = Cell.of(kind, x, y, width, height, element, variant,[]);
       this._downwardGrowing = downwardGrowing;
-      this._scope = state;
+      this._scope = scope;
       this._explicitHeaders = explicitHeaders;
       this._implicitHeaders = implicitHeaders;
     }
@@ -227,6 +237,7 @@ export namespace Cell {
       width?: number;
       height?: number;
       element?: Element;
+      variant?: Option<Header.Variant>;
       downwardGrowing?: boolean;
       scope?: Option<Header.Scope>;
       explicitHeaders?: Array<Element>;
@@ -239,6 +250,7 @@ export namespace Cell {
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
         update.element !== undefined ? update.element : this.element,
+        update.variant !== undefined ? update.variant : this.variant,
         update.downwardGrowing !== undefined
           ? update.downwardGrowing
           : this._downwardGrowing,
@@ -260,9 +272,10 @@ export namespace Cell {
         this.width,
         this.height,
         this.element,
+        this.variant,
         // the presence of a "headers" attribute is enough to use explicit headers, even if this is an empty list
         // @see Step 3 of https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
-        // some browsers use fallback implicit headers when explicit resolve to nothing. We may want to do some
+        // some browsers use fallback implicit headers when explicit resolve to nothing. We may want to do this
         // and use some browser specific, either here or by exporting both list to the product and selecting later.
         this.element.attribute("headers") === None
           ? this._implicitHeaders
@@ -292,6 +305,10 @@ export namespace Cell {
 
     public get element(): Element {
       return this._cell.element;
+    }
+
+    public get variant(): Option<Header.Variant> {
+      return this._cell.variant
     }
 
     public get downwardGrowing(): boolean {
@@ -358,20 +375,20 @@ export namespace Cell {
     private _scopeToState(
       scope: Header.Scope,
       table: Table.Builder
-    ): Header.State | undefined {
+    ): Header.Variant | undefined {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
         case Header.Scope.ColGroup:
-          return Header.State.ColGroup;
+          return Header.Variant.ColGroup;
         // https://html.spec.whatwg.org/multipage/tables.html#row-group-header
         case Header.Scope.RowGroup:
-          return Header.State.RowGroup;
+          return Header.Variant.RowGroup;
         // https://html.spec.whatwg.org/multipage/tables.html#column-header
         case Header.Scope.Column:
-          return Header.State.Column;
+          return Header.Variant.Column;
         // https://html.spec.whatwg.org/multipage/tables.html#row-header
         case Header.Scope.Row:
-          return Header.State.Row;
+          return Header.Variant.Row;
         // https://html.spec.whatwg.org/multipage/tables.html#column-header
         // https://html.spec.whatwg.org/multipage/tables.html#row-header
         case Header.Scope.Auto:
@@ -402,16 +419,16 @@ export namespace Cell {
               return undefined;
             } else {
               // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
-              return Header.State.Row;
+              return Header.Variant.Row;
             }
           } else {
             // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-            return Header.State.Column;
+            return Header.Variant.Column;
           }
       }
     }
 
-    public headerState(table: Table.Builder): Option<Header.State> {
+    public headerVariant(table: Table.Builder): Option<Header.Variant> {
       return this._scope.flatMap((scope) =>
         Option.from(this._scopeToState(scope, table))
       );
@@ -465,14 +482,14 @@ export namespace Cell {
           // 9.3
           let blocked;
           // 9.4
-          const state = currentCell.headerState(table);
+          const state = currentCell.headerVariant(table);
           if (deltaX === 0) {
             blocked =
               opaqueHeaders.some(
                 (cell) =>
                   cell.anchor.x === currentCell.anchor.x &&
                   cell.width === currentCell.width
-              ) || !state.equals(Some.of(Header.State.Column));
+              ) || !state.equals(Some.of(Header.Variant.Column));
           } else {
             // deltaY === 0
             blocked =
@@ -480,7 +497,7 @@ export namespace Cell {
                 (cell) =>
                   cell.anchor.y === currentCell.anchor.y &&
                   cell.height === currentCell.height
-              ) || !state.equals(Some.of(Header.State.Row));
+              ) || !state.equals(Some.of(Header.Variant.Row));
           }
           // 9.5
           if (!blocked) headersList.push(currentCell);
@@ -556,7 +573,7 @@ export namespace Cell {
         const headers = table.cells
           // get all rowgroup headers
           .filter((cell) =>
-            cell.headerState(table).equals(Some.of(Header.State.RowGroup))
+            cell.headerVariant(table).equals(Some.of(Header.Variant.RowGroup))
           )
           // keep the ones inside the rowgroup of the principal cell
           .filter((rowGroupHeader) =>
@@ -580,7 +597,7 @@ export namespace Cell {
         const headers = table.cells
           // get all colgroup headers
           .filter((cell) =>
-            cell.headerState(table).equals(Some.of(Header.State.ColGroup))
+            cell.headerVariant(table).equals(Some.of(Header.Variant.ColGroup))
           )
           // keep the ones inside the colgroup of the principal cell
           .filter((colGroupHeader) =>
@@ -677,7 +694,7 @@ export namespace Cell {
           ? None
           : parseEnumeratedAttribute("scope", scopeMapping)(cell);
 
-      return Ok.of(Builder.of(kind, x, y, colspan, rowspan, cell, grow, scope));
+      return Ok.of(Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope));
     }
 
     export interface JSON {
@@ -694,6 +711,7 @@ export namespace Cell {
 export namespace Header {
   /**
    * State of the scope attribute
+   * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
    */
   export enum Scope {
     Auto = "auto",
@@ -704,11 +722,11 @@ export namespace Header {
   }
 
   /**
-   * "header state" of the cell. Same as the scope except that "Auto" needs to be resolved.
+   * "header variant" of the cell. Same as the scope except that "Auto" needs to be resolved.
    * @see https://html.spec.whatwg.org/multipage/tables.html#column-header
    * and following defs
    */
-  export enum State {
+  export enum Variant {
     Row = "row",
     Column = "column",
     RowGroup = "row-group",

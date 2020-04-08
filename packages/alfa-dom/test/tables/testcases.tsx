@@ -11,10 +11,12 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   kind: Cell.Kind,
   x: number,
   y: number,
+  // variant: Header.Variant | undefined = undefined,
   headers: Array<string> = [],
   width: number = 1,
   height: number = 1
-): Cell => Cell.of(kind, x, y, width, height, getElt(elt), headers.map(getElt));
+// ): Cell => Cell.of(kind, x, y, width, height, getElt(elt), Option.from(variant), headers.map(getElt));
+): Cell => Cell.of(kind, x, y, width, height, getElt(elt), None, headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
   return Cell.Builder.of(
@@ -513,14 +515,14 @@ export namespace expenses {
   );
 
   export const headerStates = [
-    Header.State.Column,
-    Header.State.Column,
-    Header.State.Column,
-    Header.State.Column, // first row, auto => column
-    Header.State.RowGroup,
-    Header.State.Row,
-    Header.State.RowGroup,
-    Header.State.Row, // explicitly set
+    Header.Variant.Column,
+    Header.Variant.Column,
+    Header.Variant.Column,
+    Header.Variant.Column, // first row, auto => column
+    Header.Variant.RowGroup,
+    Header.Variant.Row,
+    Header.Variant.RowGroup,
+    Header.Variant.Row, // explicitly set
   ];
 }
 
@@ -725,17 +727,17 @@ export namespace headersState {
   );
 
   export const headerStates = [
-    Header.State.Column,
-    Header.State.Row,
+    Header.Variant.Column,
+    Header.Variant.Row,
     undefined,
-    Header.State.Column,
-    Header.State.Column,
-    Header.State.Column,
-    Header.State.Column,
-    Header.State.Column,
-    Header.State.Row,
-    Header.State.Column,
-    Header.State.Column,
+    Header.Variant.Column,
+    Header.Variant.Column,
+    Header.Variant.Column,
+    Header.Variant.Column,
+    Header.Variant.Column,
+    Header.Variant.Row,
+    Header.Variant.Column,
+    Header.Variant.Column,
   ].map(Option.from);
 }
 
