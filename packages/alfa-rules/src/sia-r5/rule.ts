@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Attribute, Element } from "@siteimprove/alfa-dom";
+import { Attribute } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -24,11 +24,8 @@ export default Rule.Atomic.of<Page, Attribute>({
           .children()
           .filter(
             and(
-              Element.isElement,
-              and(
-                isDocumentElement(),
-                hasAttribute("lang", nor(isEmpty, isWhitespace))
-              )
+              isDocumentElement,
+              hasAttribute("lang", nor(isEmpty, isWhitespace))
             )
           )
           .map((element) => element.attribute("lang").get());
