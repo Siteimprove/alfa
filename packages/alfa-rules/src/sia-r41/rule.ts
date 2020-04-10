@@ -33,20 +33,14 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .filter(
             and(
               Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                and(
-                  hasRole(
-                    or(hasName(equals("link")), (role) =>
-                      role.inheritsFrom(hasName(equals("link")))
-                    )
-                  ),
-                  and(
-                    not(isIgnored(device)),
-                    hasAccessibleName(device, not(isEmpty))
-                  )
+              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              hasRole(
+                or(hasName(equals("link")), (role) =>
+                  role.inheritsFrom(hasName(equals("link")))
                 )
-              )
+              ),
+              not(isIgnored(device)),
+              hasAccessibleName(device, not(isEmpty))
             )
           );
 

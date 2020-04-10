@@ -41,13 +41,23 @@ export namespace Predicate {
     };
   }
 
-  export function and<T, U extends T, V extends U>(
+  export function binanyAnd<T, U extends T, V extends U>(
     left: Predicate<T, U>,
     right: Predicate<U, V>
   ): Predicate<T, V> {
     return function and(value) {
       return fold(left, value, right, contradiction);
     };
+  }
+
+  export function and<T, U extends T, V extends U>(
+    left: Predicate<T, U>,
+    ...right: Array<Predicate<U, V>>
+  ): Predicate<T, V> {
+    return right.reduce<Predicate<T, V>>(
+      (acc, cur) => binanyAnd(acc, cur),
+      left
+    );
   }
 
   export function or<T, U extends T, V extends T>(
