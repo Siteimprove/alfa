@@ -1,6 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Document, Element } from "@siteimprove/alfa-dom";
+import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -16,36 +17,32 @@ const { and, fold } = Predicate;
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
   evaluate({ device, document }) {
+    let firstHeading: Element;
+
     return {
       applicability() {
-        return fold(
-          hasChild(and(Element.isElement, isDocumentElement())),
-          document,
-          () => [document],
-          () => []
-        );
+        if (hasChild(and(Element.isElement, isDocumentElement()))(document)) {
+          const myFirstHeading = document
+            .descendants({ flattened: true })
+            .filter(and(Element.isElement, hasRole(hasName(equals("heading")))))
+            .first();
+          if (myFirstHeading.isSome()) {
+            firstHeading = myFirstHeading.get();
+            return [document];
+          }
+        }
+        return [];
       },
 
       expectations(target) {
-        const firstHeading = target
-          .descendants({ flattened: true })
-          .filter(and(Element.isElement, hasRole(hasName(equals("heading")))))
-          .first();
-
         return {
           1: expectation(
-            firstHeading.isNone(),
-            () => Outcomes.HasNoHeadings,
-            () =>
-              expectation(
-                firstHeading
-                  .get()
-                  .attribute("aria-level")
-                  .map((attribute) => attribute.value === "1")
-                  .getOr(false),
-                () => Outcomes.StartWithLevel1Heading,
-                () => Outcomes.StartWithHigherLevelHeading
-              )
+            firstHeading
+              .attribute("aria-level")
+              .map((attribute) => attribute.value === "1")
+              .getOr(false),
+            () => Outcomes.StartWithLevel1Heading,
+            () => Outcomes.StartWithHigherLevelHeading
           ),
         };
       },
@@ -54,8 +51,6 @@ export default Rule.Atomic.of<Page, Document>({
 });
 
 export namespace Outcomes {
-  export const HasNoHeadings = Ok.of("The document has no headings");
-
   export const StartWithLevel1Heading = Ok.of(
     "The document starts with a level 1 heading"
   );
