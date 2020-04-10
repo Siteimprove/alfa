@@ -38,7 +38,7 @@ export default Rule.Atomic.of<Page, Document>({
 
         return {
           1: expectation(
-            accessibleHeading.some((accNode) =>
+            accessibleHeading.every((accNode) =>
               accNode
                 .attribute("aria-level")
                 .map((attribute) => attribute === "1")
