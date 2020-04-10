@@ -1,7 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import * as Accessible from "@siteimprove/alfa-aria";
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -12,7 +11,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import equals = Predicate.equals;
 
-const { and, fold } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
@@ -35,12 +34,16 @@ export default Rule.Atomic.of<Page, Document>({
       },
 
       expectations(target) {
+        const accessibleHeading = Accessible.Node.from(firstHeading, device);
+
         return {
           1: expectation(
-            firstHeading
-              .attribute("aria-level")
-              .map((attribute) => attribute.value === "1")
-              .getOr(false),
+            accessibleHeading.some((accNode) =>
+              accNode
+                .attribute("aria-level")
+                .map((attribute) => attribute === "1")
+                .getOr(false)
+            ),
             () => Outcomes.StartWithLevel1Heading,
             () => Outcomes.StartWithHigherLevelHeading
           ),
