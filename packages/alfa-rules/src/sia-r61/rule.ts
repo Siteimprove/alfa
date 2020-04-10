@@ -34,11 +34,9 @@ export default Rule.Atomic.of<Page, Document>({
       },
 
       expectations(target) {
-        const accessibleHeading = Accessible.Node.from(firstHeading, device);
-
         return {
           1: expectation(
-            accessibleHeading.every((accNode) =>
+            Accessible.Node.from(firstHeading, device).every((accNode) =>
               accNode
                 .attribute("aria-level")
                 .map((attribute) => attribute === "1")

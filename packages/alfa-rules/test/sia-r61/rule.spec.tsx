@@ -11,7 +11,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 
 const device = Device.standard();
 
-test("Passes when document starts with an explicit level 1 heading", async (t) => {
+test("Passes when the document starts with an explicit level 1 heading", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -27,7 +27,7 @@ test("Passes when document starts with an explicit level 1 heading", async (t) =
   ]);
 });
 
-test("Passes when document starts with an implicit level 1 heading", async (t) => {
+test("Passes when the document starts with an implicit level 1 heading", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -39,4 +39,30 @@ test("Passes when document starts with an implicit level 1 heading", async (t) =
   t.deepEqual(await evaluate(R61, { device, document }), [
     passed(R61, document, [["1", Outcomes.StartWithLevel1Heading]]),
   ]);
+});
+
+test("Passes when the document starts with a level 4 heading", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <h4>Semantic HTML is good</h4>
+      </html>
+    ),
+  ]);
+
+  t.deepEqual(await evaluate(R61, { device, document }), [
+    failed(R61, document, [["1", Outcomes.StartWithHigherLevelHeading]]),
+  ]);
+});
+
+test("Is inapplicable when there is no heading", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <p>Hello World!</p>
+      </html>
+    ),
+  ]);
+
+  t.deepEqual(await evaluate(R61, { device, document }), [inapplicable(R61)]);
 });
