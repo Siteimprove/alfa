@@ -1,8 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
-
-import { Document, Element } from "@siteimprove/alfa-dom";
 
 import R61, { Outcomes } from "../../src/sia-r61/rule";
 
