@@ -85,6 +85,7 @@
     "src/sia-r49/rule.ts",
     "src/sia-r5/rule.ts",
     "src/sia-r50/rule.ts",
+    "src/sia-r53/rule.ts",
     "src/sia-r57/rule.ts",
     "src/sia-r59/rule.ts",
     "src/sia-r6/rule.ts",
