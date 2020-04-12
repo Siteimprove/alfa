@@ -13,11 +13,10 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isVisible } from "../common/predicate/is-visible";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { parseAttribute } = Attribute;
-const { and, not, or } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
@@ -39,8 +38,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               const table = cell.ancestors().find(isElementByName("table"));
 
               if (table.isNone()) return result;
-              if (or(not(isVisible(device)), isIgnored(device))(table.get()))
-                return result;
+              if (not(isPerceivable(device))(table.get())) return result;
 
               // if the table is exposed, record the ownership and return the headers attribute
               const headers = cell.attribute("headers").get();

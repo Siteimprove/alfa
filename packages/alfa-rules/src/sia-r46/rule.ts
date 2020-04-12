@@ -1,7 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
 import {
-  Attribute,
   Element,
   hasName,
   isElementByName,
@@ -16,10 +14,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isVisible } from "../common/predicate/is-visible";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 
-const { and, equals, or, not } = Predicate;
+const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r46.html",
@@ -42,7 +39,7 @@ export default Rule.Atomic.of<Page, Element>({
                 isElementByName("th"),
                 hasRole(hasName(equals("rowheader", "columnheader")))
               ),
-              and(isVisible(device), not(isIgnored(device)))
+              isPerceivable(device)
             )
           )
           .map((th) => {
@@ -51,8 +48,7 @@ export default Rule.Atomic.of<Page, Element>({
             const table = th.ancestors().find(isElementByName("table"));
 
             if (table.isNone()) return result;
-            if (or(not(isVisible(device)), isIgnored(device))(table.get()))
-              return result;
+            if (not(isPerceivable(device))(table.get())) return result;
 
             ownership = ownership.set(th, table.get());
             result = Some.of(th);
