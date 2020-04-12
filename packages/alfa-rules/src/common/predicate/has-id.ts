@@ -1,6 +1,7 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+// Also possible here
 export function hasId(
   predicate: Predicate<string> = () => true
 ): Predicate<Element> {
