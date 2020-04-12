@@ -1,10 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
-import * as Accessible from "@siteimprove/alfa-aria";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
+import {getAriaLevel} from "../common/expectation/get-aria-level";
 import { hasChild } from "../common/predicate/has-child";
 import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
@@ -36,12 +36,7 @@ export default Rule.Atomic.of<Page, Document>({
       expectations(target) {
         return {
           1: expectation(
-            Accessible.Node.from(firstHeading, device).every((accNode) =>
-              accNode
-                .attribute("aria-level")
-                .map((attribute) => attribute === "1")
-                .getOr(false)
-            ),
+            getAriaLevel(firstHeading, device).every(level => level === 1),
             () => Outcomes.StartWithLevel1Heading,
             () => Outcomes.StartWithHigherLevelHeading
           ),
