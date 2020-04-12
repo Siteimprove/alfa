@@ -38,11 +38,11 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            thisAriaLevel.every((thisLevel) =>
-              previousAriaLevel.every(
+            thisAriaLevel.flatMap((thisLevel) =>
+              previousAriaLevel.map(
                 (previousLevel) => previousLevel >= thisLevel - 1
               )
-            ),
+            ).every(b => b),
             () => Outcomes.isStructured,
             () => Outcomes.isNotStructured
           ),
