@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
               Element.isElement,
               and(
                 hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                hasRole()
+                hasRole(() => true)
               )
             )
           );
