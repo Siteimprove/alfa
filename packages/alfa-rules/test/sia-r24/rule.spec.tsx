@@ -44,7 +44,7 @@ test("Passes when non-streaming video elements have all audio and visual informa
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
-    passed(R24, video, [["1", Outcomes.HasTranscript]]),
+    passed(R24, video, { 1: Outcomes.HasTranscript }),
   ]);
 });
 
@@ -73,7 +73,7 @@ test("Fails when non-streaming video elements have no audio and visual informati
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
-    failed(R24, video, [["1", Outcomes.HasNoTranscript]]),
+    failed(R24, video, {1: Outcomes.HasNoTranscript}),
   ]);
 });
 

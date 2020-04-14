@@ -43,7 +43,7 @@ test("Passes when some atomic rules are passing", async (t) => {
   });
 
   t.deepEqual(await evaluate(R38, { document }, oracle), [
-    passed(R38, video, [["1", Outcomes.HasAlternative]]),
+    passed(R38, video, { 1: Outcomes.HasAlternative }),
   ]);
 });
 

@@ -12,16 +12,14 @@ import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
 const { isEmpty } = Iterable;
-const { and, nor } = Predicate;
+const { nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r4.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return document
-          .children()
-          .filter(and(Element.isElement, isDocumentElement()));
+        return document.children().filter(isDocumentElement);
       },
 
       expectations(target) {

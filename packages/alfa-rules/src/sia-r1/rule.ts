@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Document>({
     return {
       applicability() {
         return fold(
-          hasChild(and(Element.isElement, isDocumentElement())),
+          hasChild(isDocumentElement),
           document,
           () => [document],
           () => []
