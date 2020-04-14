@@ -35,22 +35,9 @@
     "src/style/rule/style.ts",
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
-    "src/tables/cell.ts",
-    "src/tables/colgroup.ts",
-    "src/tables/row.ts",
-    "src/tables/rowgroup.ts",
-    "src/tables/groups.ts",
-    "src/tables/helpers.ts",
-    "src/tables/table.ts",
-    "test/node/parse-attribute.spec.ts",
-    "test/tables/structure-helpers.spec.tsx",
-    "test/tables/testcases.tsx",
-    "test/tables/structure.spec.tsx"
+    "test/node/parse-attribute.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-comparable"
-    },
     {
       "path": "../alfa-css"
     },
@@ -80,9 +67,6 @@
     },
     {
       "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-set"
     },
     {
       "path": "../alfa-sequence"
