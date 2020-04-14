@@ -8,8 +8,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Role } from "./role";
-import isDocument = Document.isDocument;
 
+const { isDocument } = Document;
 const { and, equals, test } = Predicate;
 
 export class Feature<N extends string = string> {
