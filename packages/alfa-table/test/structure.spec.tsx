@@ -117,12 +117,7 @@ test("Compute simple headers", (t) => {
   );
 
   t.deepEqual(
-    Table.from(
-      duplicateIDExplicitHeaders.table,
-      duplicateIDExplicitHeaders.document
-    )
-      .get()
-      .toJSON(),
+    Table.from(duplicateIDExplicitHeaders.table).get().toJSON(),
     duplicateIDExplicitHeaders.expected.toJSON()
   );
 });

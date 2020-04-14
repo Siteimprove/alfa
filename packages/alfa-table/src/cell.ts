@@ -4,8 +4,6 @@ import {
   hasName,
   isDescendantOf,
   isElementByName,
-  Node,
-  resolveAttributeReferences,
 } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -521,31 +519,26 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    private _assignExplicitHeaders(
-      node: Node,
-      table: Table.Builder
-    ): Cell.Builder {
+    private _assignExplicitHeaders(table: Table.Builder): Cell.Builder {
       // 3 / headers attribute / 1
-      const elements = resolveAttributeReferences(
-        this.element,
-        node,
-        "headers"
-      ).filter(
-        // 3 / headers attribute / 2
-        and(
+      const elements = this.element
+        .resolveAttributeReferences("headers")
+        .filter(
+          // 3 / headers attribute / 2
           and(
-            // only keep cells in the table
-            isElementByName("th", "td"),
-            isDescendantOf(table.element)
-          ),
-          and(
-            // remove principal cell
-            not(equals(this.element)),
-            // Step 4: remove empty cells
-            not(isEmpty)
+            and(
+              // only keep cells in the table
+              isElementByName("th", "td"),
+              isDescendantOf(table.element)
+            ),
+            and(
+              // remove principal cell
+              not(equals(this.element)),
+              // Step 4: remove empty cells
+              not(isEmpty)
+            )
           )
-        )
-      );
+        );
 
       return this._update({ explicitHeaders: elements });
     }
@@ -637,10 +630,8 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    public assignHeaders(node: Node, table: Table.Builder): Cell.Builder {
-      return this._assignExplicitHeaders(node, table)._assignImplicitHeaders(
-        table
-      );
+    public assignHeaders(table: Table.Builder): Cell.Builder {
+      return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
     }
 
     public equals(value: unknown): value is this {

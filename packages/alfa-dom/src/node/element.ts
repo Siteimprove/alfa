@@ -5,6 +5,7 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import {
   EnumeratedValueError,
   parseEnumeratedValue,
+  parseTokensList,
 } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Result } from "@siteimprove/alfa-result";
@@ -251,6 +252,21 @@ export class Element extends Node implements Slot, Slotable {
    */
   public assignedNodes(): Iterable<Slotable> {
     return Slot.findSlotables(this);
+  }
+
+  /**
+   * Return all descendants of this element's root whose id is listed in an IDlist attribute (headers, aria-labelledby, …)
+   */
+  public resolveAttributeReferences(
+    name: string,
+    options: Node.Traversal = {}
+  ): Array<Element> {
+    return this.root(options).resolveReferences(
+      ...this.attribute(name)
+        .map(Attribute.parseAttribute(parseTokensList))
+        .map((r) => r.get())
+        .getOr([])
+    );
   }
 
   public path(): string {
