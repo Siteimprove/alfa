@@ -153,10 +153,12 @@ export namespace Predicate {
 
   export const isPrimitive = or(
     isString,
-    or(
-      isNumber,
-      or(isBigInt, or(isBoolean, or(isNull, or(isUndefined, isSymbol))))
-    )
+    isNumber,
+    isBigInt,
+    isBoolean,
+    isNull,
+    isUndefined,
+    isSymbol
   );
 }
 
