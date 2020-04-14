@@ -27,7 +27,7 @@ function passes<Q>(
   ...ids: Array<string>
 ): Array<Outcome.Passed<Page, Element, Q>> {
   return ids.map((id) =>
-    passed(R53, getById(document, id), [["1", Outcomes.isStructured]])
+    passed(R53, getById(document, id), { 1: Outcomes.isStructured })
   );
 }
 
@@ -71,9 +71,9 @@ test("Fails when the document headings are not properly structured", async (t) =
   ]);
 
   t.deepEqual(await evaluate(R53, { device, document }), [
-    failed(R53, getById(document, "h6"), [["1", Outcomes.isNotStructured]]),
-    passed(R53, getById(document, "h2"), [["1", Outcomes.isStructured]]),
-    failed(R53, getById(document, "h3"), [["1", Outcomes.isNotStructured]]),
+    failed(R53, getById(document, "h6"), { 1: Outcomes.isNotStructured }),
+    passed(R53, getById(document, "h2"), { 1: Outcomes.isStructured }),
+    failed(R53, getById(document, "h3"), { 1: Outcomes.isNotStructured }),
   ]);
 });
 

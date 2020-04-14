@@ -22,7 +22,7 @@ test("Passes when the document starts with an explicit level 1 heading", async (
   ]);
 
   t.deepEqual(await evaluate(R61, { device, document }), [
-    passed(R61, document, [["1", Outcomes.StartWithLevel1Heading]]),
+    passed(R61, document, { 1: Outcomes.StartWithLevel1Heading }),
   ]);
 });
 
@@ -36,7 +36,7 @@ test("Passes when the document starts with an implicit level 1 heading", async (
   ]);
 
   t.deepEqual(await evaluate(R61, { device, document }), [
-    passed(R61, document, [["1", Outcomes.StartWithLevel1Heading]]),
+    passed(R61, document, { 1: Outcomes.StartWithLevel1Heading }),
   ]);
 });
 
@@ -50,7 +50,7 @@ test("Passes when the document starts with a level 4 heading", async (t) => {
   ]);
 
   t.deepEqual(await evaluate(R61, { device, document }), [
-    failed(R61, document, [["1", Outcomes.StartWithHigherLevelHeading]]),
+    failed(R61, document, { 1: Outcomes.StartWithHigherLevelHeading }),
   ]);
 });
 
