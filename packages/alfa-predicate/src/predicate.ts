@@ -41,32 +41,42 @@ export namespace Predicate {
     };
   }
 
-  export function binanyAnd<T, U extends T, V extends U>(
-    left: Predicate<T, U>,
-    right: Predicate<U, V>
-  ): Predicate<T, V> {
-    return function and(value) {
-      return fold(left, value, right, contradiction);
-    };
-  }
-
   export function and<T, U extends T, V extends U>(
     left: Predicate<T, U>,
-    ...right: Array<Predicate<U, V>>
-  ): Predicate<T, V> {
-    return right.reduce<Predicate<T, V>>(
-      (acc, cur) => binanyAnd(acc, cur),
-      left
-    );
+    right: Predicate<U, V>
+  ): Predicate<T, V>;
+
+  export function and<T, U extends T>(
+    left: Predicate<T, U>,
+    right: Predicate<U>,
+    ...rest: Array<Predicate<U>>
+  ): Predicate<T, U>;
+
+  export function and<T>(...predicates: Array<Predicate<T>>): Predicate<T> {
+    return (value) =>
+      predicates.reduce<boolean>(
+        (holds, predicate) => holds && predicate(value),
+        true
+      );
   }
 
   export function or<T, U extends T, V extends T>(
     left: Predicate<T, U>,
     right: Predicate<T, V>
-  ): Predicate<T, U | V> {
-    return function or(value) {
-      return fold(left, value, tautology, right);
-    };
+  ): Predicate<T, U | V>;
+
+  export function or<T>(
+    left: Predicate<T>,
+    right: Predicate<T>,
+    ...rest: Array<Predicate<T>>
+  ): Predicate<T>;
+
+  export function or<T>(...predicates: Array<Predicate<T>>): Predicate<T> {
+    return (value) =>
+      predicates.reduce<boolean>(
+        (holds, predicate) => holds || predicate(value),
+        false
+      );
   }
 
   export function xor<T, U extends T, V extends T>(
