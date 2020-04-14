@@ -2,22 +2,20 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { getAriaLevel } from "../common/expectation/get-aria-level";
+import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
-import equals = Predicate.equals;
 
-const { and } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
   evaluate({ device, document }) {
     // because each heading is compared with the previous one, it is much easier to remember them in reverse order.
-    const allHeadings= document
+    const allHeadings = document
       .descendants({ flattened: true })
       .filter(and(Element.isElement, hasRole(hasName(equals("heading")))))
       .reverse();
@@ -28,19 +26,20 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const thisAriaLevel = getAriaLevel(target, device);
-        const previousAriaLevel = getAriaLevel(
-          allHeadings.skipUntil(equals(target)).rest().first().get(),
-          device
-        );
+        const previousHeading = allHeadings
+          .skipUntil(equals(target))
+          .rest()
+          .first()
+          .get();
 
         return {
           1: expectation(
-            thisAriaLevel.flatMap((thisLevel) =>
-              previousAriaLevel.map(
-                (previousLevel) => previousLevel >= thisLevel - 1
-              )
-            ).every(b => b),
+            hasHeadingLevel(device, (currentLevel) =>
+              hasHeadingLevel(
+                device,
+                (previousLevel) => previousLevel >= currentLevel - 1
+              )(previousHeading)
+            )(target),
             () => Outcomes.isStructured,
             () => Outcomes.isNotStructured
           ),
