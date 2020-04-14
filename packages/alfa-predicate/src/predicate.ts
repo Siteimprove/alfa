@@ -46,11 +46,11 @@ export namespace Predicate {
     right: Predicate<U, V>
   ): Predicate<T, V>;
 
-  export function and<T, U extends T>(
-    left: Predicate<T, U>,
-    right: Predicate<U>,
-    ...rest: Array<Predicate<U>>
-  ): Predicate<T, U>;
+  export function and<T>(
+    left: Predicate<T>,
+    right: Predicate<T>,
+    ...rest: Array<Predicate<T>>
+  ): Predicate<T>;
 
   export function and<T>(...predicates: Array<Predicate<T>>): Predicate<T> {
     return (value) =>
