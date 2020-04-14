@@ -23,8 +23,7 @@ export default Rule.Atomic.of<Page, Document>({
         if (hasChild(and(Element.isElement, isDocumentElement()))(document)) {
           const myFirstHeading = document
             .descendants({ flattened: true })
-            .filter(and(Element.isElement, hasRole(hasName(equals("heading")))))
-            .first();
+            .find(and(Element.isElement, hasRole(hasName(equals("heading")))));
           if (myFirstHeading.isSome()) {
             firstHeading = myFirstHeading.get();
             return [document];
