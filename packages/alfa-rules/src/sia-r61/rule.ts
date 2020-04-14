@@ -16,16 +16,14 @@ const { and, equals } = Predicate;
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
   evaluate({ device, document }) {
-    let firstHeading: Element;
+    const firstHeading = document
+      .descendants({ flattened: true })
+      .find(and(Element.isElement, hasRole(hasName(equals("heading")))));
 
     return {
       applicability() {
         if (hasChild(and(Element.isElement, isDocumentElement()))(document)) {
-          const myFirstHeading = document
-            .descendants({ flattened: true })
-            .find(and(Element.isElement, hasRole(hasName(equals("heading")))));
-          if (myFirstHeading.isSome()) {
-            firstHeading = myFirstHeading.get();
+          if (firstHeading.isSome()) {
             return [document];
           }
         }
@@ -35,7 +33,7 @@ export default Rule.Atomic.of<Page, Document>({
       expectations(target) {
         return {
           1: expectation(
-            getAriaLevel(firstHeading, device).every((level) => level === 1),
+            getAriaLevel(firstHeading.get(), device).every((level) => level === 1),
             () => Outcomes.StartWithLevel1Heading,
             () => Outcomes.StartWithHigherLevelHeading
           ),
