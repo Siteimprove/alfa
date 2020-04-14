@@ -1,4 +1,4 @@
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { hasName } from "./has-name";
