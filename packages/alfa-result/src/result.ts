@@ -21,7 +21,7 @@ export interface Result<T, E>
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
   mapErr<F>(mapper: Mapper<E, F>): Result<T, F>;
-  mapOrElse<U>(mapOk: Mapper<T, U>, mapErr: Mapper<E, U>): U
+  mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   and<U>(result: Result<U, E>): Result<U, E>;
