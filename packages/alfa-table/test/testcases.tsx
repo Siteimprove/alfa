@@ -1,10 +1,20 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
+import {
+  Document,
+  Element,
+  Node,
+  resolveReferences,
+} from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Document, Element, Node, resolveReferences, Table } from "../../src";
-import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
+import { Cell } from "../src/cell";
+import { ColGroup } from "../src/colgroup";
+import { Header } from "../src/header";
+import { Row } from "../src/row";
+import { RowGroup } from "../src/rowgroup";
+import { Table } from "../src";
 
 const { and } = Predicate;
 const { isElement } = Element;
@@ -30,7 +40,6 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
     Option.from(variant),
     headers.map(getElt)
   );
-// ): Cell => Cell.of(kind, x, y, width, height, getElt(elt), None, headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
   return Cell.Builder.of(

@@ -1,4 +1,5 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
+import { Element, isElementByName, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -6,8 +7,10 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element, isElementByName, Node } from "..";
-import { Cell, ColGroup, RowGroup, Row } from "./groups";
+import { Cell } from "./cell";
+import { ColGroup } from "./colgroup";
+import { Row } from "./row";
+import { RowGroup } from "./rowgroup";
 
 const { compare } = Comparable;
 

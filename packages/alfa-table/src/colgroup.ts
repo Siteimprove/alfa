@@ -1,11 +1,11 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
+import { Element, isElementByName } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element, isElementByName } from "..";
 import { parseSpan } from "./helpers";
 
 const { Comparison } = Comparable;

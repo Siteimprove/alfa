@@ -1,4 +1,12 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
+import {
+  Element,
+  hasName,
+  isDescendantOf,
+  isElementByName,
+  Node,
+  resolveAttributeReferences,
+} from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -10,16 +18,9 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import {
-  Element,
-  hasName,
-  isDescendantOf,
-  isElementByName,
-  Node,
-  resolveAttributeReferences,
-  Table,
-} from "..";
+import { Header } from "./header";
 import { isEmpty, parseSpan } from "./helpers";
+import { Table } from "./table";
 
 const { parseEnumeratedAttribute } = Element;
 const { some } = Iterable;
@@ -712,31 +713,5 @@ export namespace Cell {
       explicitHeaders: Element.JSON[];
       implicitHeaders: Element.JSON[];
     }
-  }
-}
-
-export namespace Header {
-  /**
-   * State of the scope attribute
-   * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
-   */
-  export enum Scope {
-    Auto = "auto",
-    Row = "row",
-    Column = "column",
-    RowGroup = "row-group",
-    ColGroup = "col-group",
-  }
-
-  /**
-   * "header variant" of the cell. Same as the scope except that "Auto" needs to be resolved.
-   * @see https://html.spec.whatwg.org/multipage/tables.html#column-header
-   * and following defs
-   */
-  export enum Variant {
-    Row = "row",
-    Column = "column",
-    RowGroup = "row-group",
-    ColGroup = "col-group",
   }
 }

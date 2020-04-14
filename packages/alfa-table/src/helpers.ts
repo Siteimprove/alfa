@@ -1,8 +1,7 @@
+import { Element, Attribute } from "@siteimprove/alfa-dom";
 import { clamp } from "@siteimprove/alfa-math";
 import { parseNonNegativeInteger } from "@siteimprove/alfa-parser";
 import { Ok } from "@siteimprove/alfa-result";
-
-import { Element, Attribute } from "..";
 
 const { parseAttribute } = Attribute;
 

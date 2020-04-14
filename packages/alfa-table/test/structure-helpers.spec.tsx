@@ -1,10 +1,12 @@
+import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 import { None } from "@siteimprove/alfa-option";
 
-import { Attribute, Element } from "../../src";
-import { Cell, ColGroup, RowGroup } from "../../src/tables/groups";
-import { isEmpty, parseSpan } from "../../src/tables/helpers";
+import { Cell } from "../src/cell";
+import { ColGroup } from "../src/colgroup";
+import { RowGroup } from "../src/rowgroup";
+import { isEmpty, parseSpan } from "../src/helpers";
 
 const dummy = Element.of(None, None, "foo");
 

@@ -1,15 +1,14 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Document, Element, Namespace, Table } from "@siteimprove/alfa-dom";
-import {Header} from "@siteimprove/alfa-dom/src/tables/cell";
-import {Iterable} from "@siteimprove/alfa-iterable";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Header, Table } from "@siteimprove/alfa-table";
 
 import { Role } from "./role";
 
-const { isDocument } = Document;
 const { and, equals, test } = Predicate;
 
 export class Feature<N extends string = string> {
@@ -657,7 +656,9 @@ Feature.register(
       // If the <th> is within a <table> with errors, it doesn't really have a role.
       if (tableModel.isErr()) return None;
 
-      const cell = Iterable.find(tableModel.get().cells, cell => cell.element.equals(element));
+      const cell = Iterable.find(tableModel.get().cells, (cell) =>
+        cell.element.equals(element)
+      );
       // If the current element is not a cell in the table, something weird happened and it doesn't have a role.
       if (cell.isNone()) return None;
 
@@ -665,15 +666,16 @@ Feature.register(
       // @see https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
       //     "th (is neither column header nor row header, and ancestor table element has table role)"
       // and "th (is neither column header nor row header, and ancestor table element has grid role)"
-      return  cell.get().variant.map(
-        variant => { switch (variant) {
+      return cell.get().variant.map((variant) => {
+        switch (variant) {
           case Header.Variant.Column:
-          case Header.Variant.ColGroup: return "ColumnHeader";
+          case Header.Variant.ColGroup:
+            return "ColumnHeader";
           case Header.Variant.Row:
-          case Header.Variant.RowGroup: return "RowHeader"
-
-        }}
-      );
+          case Header.Variant.RowGroup:
+            return "RowHeader";
+        }
+      });
     },
 
     (element) => {
