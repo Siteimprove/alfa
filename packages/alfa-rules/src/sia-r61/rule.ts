@@ -5,8 +5,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
-import { getAriaLevel } from "../common/expectation/get-aria-level";
 import { hasChild } from "../common/predicate/has-child";
+import { hasHeadingLevel } from "../common/predicate/has-heading-level";
 import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
@@ -22,18 +22,17 @@ export default Rule.Atomic.of<Page, Document>({
 
     return {
       applicability() {
-        if (hasChild(and(Element.isElement, isDocumentElement()))(document)) {
-          if (firstHeading.isSome()) {
-            return [document];
-          }
-        }
-        return [];
+        return hasChild(and(Element.isElement, isDocumentElement()))(
+          document
+        ) && firstHeading.isSome()
+          ? [document]
+          : [];
       },
 
       expectations(target) {
         return {
           1: expectation(
-            getAriaLevel(firstHeading.get(), device).every((level) => level === 1),
+            hasHeadingLevel(device, equals(1))(firstHeading.get()),
             () => Outcomes.StartWithLevel1Heading,
             () => Outcomes.StartWithHigherLevelHeading
           ),
