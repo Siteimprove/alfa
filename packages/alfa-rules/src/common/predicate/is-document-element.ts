@@ -6,6 +6,7 @@ import { hasNamespace } from "./has-namespace";
 
 const { and, equals } = Predicate;
 
-export function isDocumentElement(): Predicate<Element> {
-  return and(hasName(equals("html")), hasNamespace(equals(Namespace.HTML)));
-}
+export const isDocumentElement = and(
+  Element.isElement,
+  and(hasName(equals("html")), hasNamespace(equals(Namespace.HTML)))
+);
