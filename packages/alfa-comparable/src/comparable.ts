@@ -1,8 +1,3 @@
-export enum Comparison {
-  Less = -1,
-  Equal,
-  More
-}
 
 export interface Comparable<T> {
   /**
@@ -11,12 +6,21 @@ export interface Comparable<T> {
    * potential of over-/underflows when comparisons are implemented naively
    * using subtractions, such `a - b`; this would not be allowed.
    */
-  compare(value: T): Comparison;
+  compare(value: T): Comparable.Comparison;
 }
 
-/**
- * Ready made generic function to use with Array.sort
- */
-export function compare<T extends Comparable<U>, U>(a: T, b: U): Comparison {
-  return a.compare(b);
+export namespace Comparable {
+  export enum Comparison {
+    Less = -1,
+    Equal,
+    More
+  }
+
+  /**
+   * Ready made generic function to use with Array.sort
+   */
+  export function compare<T extends Comparable<U>, U>(a: T, b: U): Comparison {
+    return a.compare(b);
+  }
+
 }

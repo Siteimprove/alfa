@@ -1,4 +1,4 @@
-import { compare } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,6 +8,7 @@ import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
 
 const { and } = Predicate;
 const { isElement } = Element;
+const { compare } = Comparable;
 
 const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   elt: string,
@@ -1426,7 +1427,16 @@ export namespace allWeirdImplicitHeaders {
     7,
     7,
     [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Header.Variant.Column, 2, 2),
+      makeCell(
+        "empty",
+        Cell.Kind.Header,
+        0,
+        0,
+        [],
+        Header.Variant.Column,
+        2,
+        2
+      ),
       makeCell(
         "mars",
         Cell.Kind.Header,

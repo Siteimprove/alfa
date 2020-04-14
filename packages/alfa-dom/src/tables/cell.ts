@@ -1,4 +1,4 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -24,6 +24,7 @@ import { isEmpty, parseSpan } from "./helpers";
 const { parseEnumeratedAttribute } = Element;
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
+const { Comparison } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -115,7 +116,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
    * compare cell according to their anchor
    * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
    */
-  public compare(cell: Cell): Comparison {
+  public compare(cell: Cell): Comparable.Comparison {
     if (this._y < cell._y) return Comparison.Less;
     if (this._y > cell._y) return Comparison.More;
     if (this._x < cell._x) return Comparison.Less;
@@ -329,7 +330,7 @@ export namespace Cell {
       return this._cell.isCovering(x, y);
     }
 
-    public compare(cell: Builder): Comparison {
+    public compare(cell: Builder): Comparable.Comparison {
       return this._cell.compare(cell._cell);
     }
 

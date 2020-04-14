@@ -1,4 +1,4 @@
-import { Comparable, compare, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -7,6 +7,8 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Element, isElementByName } from "..";
 import { Row, Cell } from "./groups";
+
+const { compare, Comparison } = Comparable;
 
 /**
  * @see/ https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
@@ -50,7 +52,7 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
    * compare rowgroups according to their anchor
    * in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
    */
-  public compare(rowgroup: RowGroup): Comparison {
+  public compare(rowgroup: RowGroup): Comparable.Comparison {
     if (this._y < rowgroup._y) return Comparison.Less;
     if (this._y > rowgroup._y) return Comparison.More;
     return Comparison.Equal;

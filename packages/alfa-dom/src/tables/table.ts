@@ -1,4 +1,4 @@
-import { compare } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -8,6 +8,8 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Element, isElementByName, Node } from "..";
 import { Cell, ColGroup, RowGroup, Row } from "./groups";
+
+const { compare } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
@@ -395,8 +397,8 @@ export namespace Table {
       const topNode = node === undefined ? table.element : node;
       // We need to compute all headers variant first and this need to be done separately
       // so that the updated table is used in assignHeaders
-      table = table.update( {
-        cells: table.cells.map((cell) => cell.addHeaderVariant(table))
+      table = table.update({
+        cells: table.cells.map((cell) => cell.addHeaderVariant(table)),
       });
 
       return Ok.of(
