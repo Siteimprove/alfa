@@ -22,9 +22,7 @@ export default Rule.Atomic.of<Page, Document>({
 
     return {
       applicability() {
-        return hasChild(and(Element.isElement, isDocumentElement()))(
-          document
-        ) && firstHeading.isSome()
+        return hasChild(isDocumentElement)(document) && firstHeading.isSome()
           ? [document]
           : [];
       },
