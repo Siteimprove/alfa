@@ -21,12 +21,7 @@ export default Rule.Atomic.of<Page, Document>({
   evaluate({ document }) {
     return {
       applicability() {
-        return test(
-          hasChild(and(Element.isElement, isDocumentElement())),
-          document
-        )
-          ? [document]
-          : [];
+        return test(hasChild(isDocumentElement), document) ? [document] : [];
       },
 
       expectations(target) {
