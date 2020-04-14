@@ -16,16 +16,14 @@ const { and } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r61.html",
   evaluate({ device, document }) {
-    let allHeadings: Sequence<Element>;
+    // because each heading is compared with the previous one, it is much easier to remember them in reverse order.
+    const allHeadings= document
+      .descendants({ flattened: true })
+      .filter(and(Element.isElement, hasRole(hasName(equals("heading")))))
+      .reverse();
 
     return {
       applicability() {
-        // because each heading is compared with the previous one, it is much easier to remember them in reverse order.
-        allHeadings = document
-          .descendants({ flattened: true })
-          .filter(and(Element.isElement, hasRole(hasName(equals("heading")))))
-          .reverse();
-
         return allHeadings.take(allHeadings.size - 1);
       },
 
