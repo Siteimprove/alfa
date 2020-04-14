@@ -6,10 +6,12 @@ const { equals } = Predicate;
 export function hasNamespace(
   predicate: Predicate<Namespace>
 ): Predicate<Element>;
+
 export function hasNamespace(
   namespace: Namespace,
   ...rest: Array<Namespace>
 ): Predicate<Element>;
+
 export function hasNamespace(
   namespaceOrPredicate: Namespace | Predicate<Namespace>,
   ...namespaces: Array<Namespace>
