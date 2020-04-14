@@ -5,7 +5,6 @@
     "src/common/applicability/audio.ts",
     "src/common/applicability/video.ts",
     "src/common/expectation.ts",
-    "src/common/expectation/get-aria-level.ts",
     "src/common/expectation/media-text-alternative.ts",
     "src/common/expectation/outcome-to-trilean.ts",
     "src/common/expectation/video-description-track-accurate.ts",
