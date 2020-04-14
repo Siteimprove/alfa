@@ -18,7 +18,7 @@ const device = Device.standard();
 function getById(document: Document, id: string): Element {
   return document
     .descendants()
-    .find(and(Element.isElement, (element) => element.id.getOr("") === id))
+    .find(and(Element.isElement, (element) => element.id.includes(id)))
     .get();
 }
 
