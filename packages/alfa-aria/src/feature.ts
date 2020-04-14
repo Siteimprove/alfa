@@ -228,32 +228,56 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h1", () => Option.of("heading"))
+  Feature.of(
+    "h1",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "1"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h2", () => Option.of("heading"))
+  Feature.of(
+    "h2",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "2"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h3", () => Option.of("heading"))
+  Feature.of(
+    "h3",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "3"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h4", () => Option.of("heading"))
+  Feature.of(
+    "h4",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "4"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h5", () => Option.of("heading"))
+  Feature.of(
+    "h5",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "5"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h6", () => Option.of("heading"))
+  Feature.of(
+    "h6",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "6"])
+  )
 );
 
 Feature.register(
