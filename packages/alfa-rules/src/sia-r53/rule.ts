@@ -1,12 +1,11 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, hasName } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
-import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 
 const { and, equals } = Predicate;
