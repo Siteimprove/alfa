@@ -5,7 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 export function hasHeadingLevel(
   device: Device,
-  predicate: Predicate<number> = () => true
+  predicate: Predicate<number> = (n) => !isNaN(n)
 ): Predicate<Element> {
   return (element) =>
     Node.from(element, device)
