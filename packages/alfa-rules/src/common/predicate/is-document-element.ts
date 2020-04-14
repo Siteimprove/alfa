@@ -8,5 +8,5 @@ const { and } = Predicate;
 
 export const isDocumentElement = and(
   Element.isElement,
-  hasName("html"), hasNamespace(Namespace.HTML)
+  and(hasName("html"), hasNamespace(Namespace.HTML))
 );
