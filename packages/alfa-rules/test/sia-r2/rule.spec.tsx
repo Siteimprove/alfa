@@ -17,7 +17,7 @@ test("evaluate() passes an image with an accessible name", async (t) => {
   const img = document.children().filter(Element.isElement).first().get();
 
   t.deepEqual(await evaluate(R2, { document }), [
-    passed(R2, img, [["1", Outcomes.HasAccessibleName]]),
+    passed(R2, img, { 1: Outcomes.HasAccessibleName }),
   ]);
 });
 
@@ -29,7 +29,7 @@ test("evaluate() fails an image that has no accessible name", async (t) => {
   const img = document.children().filter(Element.isElement).first().get();
 
   t.deepEqual(await evaluate(R2, { document }), [
-    failed(R2, img, [["1", Outcomes.HasNoAccessibleName]]),
+    failed(R2, img, { 1: Outcomes.HasNoAccessibleName }),
   ]);
 });
 
