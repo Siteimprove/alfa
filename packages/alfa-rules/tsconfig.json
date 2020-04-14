@@ -84,6 +84,7 @@
     "src/sia-r49/rule.ts",
     "src/sia-r5/rule.ts",
     "src/sia-r50/rule.ts",
+    "src/sia-r56/rule.ts",
     "src/sia-r57/rule.ts",
     "src/sia-r59/rule.ts",
     "src/sia-r6/rule.ts",
@@ -101,6 +102,7 @@
     "test/sia-r2/rule.spec.tsx",
     "test/sia-r24/rule.spec.tsx",
     "test/sia-r38/rule.spec.tsx",
+    "test/sia-r56/rule.spec.tsx",
     "test/sia-r57/rule.spec.tsx",
     "test/sia-r64/rule.spec.tsx",
     "test/sia-r68/rule.spec.tsx"
