@@ -28,14 +28,10 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasName(equals("meta")),
-                  and(
-                    hasAttribute("name", equals("viewport")),
-                    hasAttribute("content")
-                  )
-                )
+                hasNamespace(Namespace.HTML),
+                hasName("meta"),
+                hasAttribute("name", equals("viewport")),
+                hasAttribute("content")
               )
             )
           );

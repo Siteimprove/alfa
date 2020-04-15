@@ -23,7 +23,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 import { Question } from "../common/question";
 
 const { map, flatMap, isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
@@ -36,14 +36,10 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             and(
               Element.isElement,
               and(
-                hasName(equals("iframe")),
-                and(
-                  hasNamespace(equals(Namespace.HTML)),
-                  and(
-                    not(isIgnored(device)),
-                    hasAccessibleName(device, not(isEmpty))
-                  )
-                )
+                hasName("iframe"),
+                hasNamespace(Namespace.HTML),
+                not(isIgnored(device)),
+                hasAccessibleName(device, not(isEmpty))
               )
             )
           );

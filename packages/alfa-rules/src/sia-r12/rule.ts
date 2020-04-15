@@ -32,13 +32,9 @@ export default Rule.Atomic.of<Page, Element>({
               Element.isElement,
               and(
                 not(hasInputType(equals("image"))),
-                and(
-                  hasNamespace(equals(Namespace.HTML)),
-                  and(
-                    hasRole(hasName(equals("button"))),
-                    not(isIgnored(device))
-                  )
-                )
+                hasNamespace(Namespace.HTML),
+                hasRole("button"),
+                not(isIgnored(device))
               )
             )
           );

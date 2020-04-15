@@ -18,7 +18,7 @@ import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
 const { filter, first } = Iterable;
-const { and, equals, fold } = Predicate;
+const { and, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r1.html",
@@ -39,10 +39,7 @@ export default Rule.Atomic.of<Page, Document>({
             target.descendants(),
             and(
               Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML)),
-                hasName(equals("title"))
-              )
+              and(hasNamespace(Namespace.HTML), hasName("title"))
             )
           )
         );

@@ -16,7 +16,7 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/expectation";
 
 const { isEmpty } = Iterable;
-const { and, not, equals, property } = Predicate;
+const { and, not, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r19.html",
@@ -26,10 +26,7 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants({ composed: true, nested: true })
           .filter(
-            and(
-              Element.isElement,
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG))
-            )
+            and(Element.isElement, hasNamespace(Namespace.HTML, Namespace.SVG))
           )
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(

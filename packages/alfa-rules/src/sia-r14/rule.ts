@@ -14,6 +14,7 @@ import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasNameFrom } from "../common/predicate/has-name-from";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
@@ -31,25 +32,17 @@ export default Rule.Atomic.of<Page, Element, Question>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                and(
-                  hasRole(
-                    and(
-                      hasCategory(equals(Role.Category.Widget)),
-                      hasNameFrom(equals("content"))
-                    )
-                  ),
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                hasRole(
                   and(
-                    hasDescendant(
-                      and(
-                        Text.isText,
-                        and(isVisible(device), not(isIgnored(device)))
-                      ),
-                      { flattened: true }
-                    ),
-                    hasAccessibleName(device)
+                    hasCategory(equals(Role.Category.Widget)),
+                    hasNameFrom(equals("content"))
                   )
-                )
+                ),
+                hasDescendant(and(Text.isText, isPerceivable(device)), {
+                  flattened: true,
+                }),
+                hasAccessibleName(device)
               )
             )
           );

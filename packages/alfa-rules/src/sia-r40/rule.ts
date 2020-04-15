@@ -12,7 +12,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r40.html",
@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               Element.isElement,
-              and(hasRole(hasName(equals("region"))), not(isIgnored(device)))
+              and(hasRole(hasName("region")), not(isIgnored(device)))
             )
           );
       },
