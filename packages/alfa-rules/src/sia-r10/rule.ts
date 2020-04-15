@@ -13,9 +13,8 @@ import { hasInputType } from "../common/predicate/has-input-type";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isTabbable } from "../common/predicate/is-tabbable";
-import { isVisible } from "../common/predicate/is-visible";
 
 const { and, or, not, equals } = Predicate;
 
@@ -33,7 +32,7 @@ export default Rule.Atomic.of<Page, Attribute>({
                 hasAttribute("autocomplete", hasTokens),
                 hasNamespace(Namespace.HTML),
                 hasName("input", "select", "textarea"),
-                or(isVisible(device), not(isIgnored(device))),
+                isPerceivable(device),
                 not(
                   and(
                     hasName("input"),
