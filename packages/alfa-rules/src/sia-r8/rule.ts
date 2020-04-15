@@ -8,7 +8,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
@@ -29,19 +28,17 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 hasNamespace(Namespace.HTML),
                 hasRole(
-                  hasName(
-                    "checkbox",
-                    "combobox",
-                    "listbox",
-                    "menuitemcheckbox",
-                    "menuitemradio",
-                    "radio",
-                    "searchbox",
-                    "slider",
-                    "spinbutton",
-                    "switch",
-                    "textbox"
-                  )
+                  "checkbox",
+                  "combobox",
+                  "listbox",
+                  "menuitemcheckbox",
+                  "menuitemradio",
+                  "radio",
+                  "searchbox",
+                  "slider",
+                  "spinbutton",
+                  "switch",
+                  "textbox"
                 ),
                 not(isIgnored(device))
               )
