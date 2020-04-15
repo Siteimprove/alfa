@@ -26,13 +26,13 @@ export const isDisabled: Predicate<Element> = (element) => {
       return element
         .parent()
         .flatMap((parent) =>
-          parent.closest(and(Element.isElement, hasName(equals("fieldset"))))
+          parent.closest(and(Element.isElement, hasName("fieldset")))
         )
         .filter(not(isDisabled))
         .flatMap((fieldset) =>
           find(
             fieldset.descendants(),
-            and(Element.isElement, hasName(equals("legend")))
+            and(Element.isElement, hasName("legend"))
           )
         )
         .some((legend) => some(legend.descendants(), equals(element)));
@@ -44,7 +44,7 @@ export const isDisabled: Predicate<Element> = (element) => {
       }
 
       return element
-        .closest(and(Element.isElement, hasName(equals("optgroup"))))
+        .closest(and(Element.isElement, hasName("optgroup")))
         .some(isDisabled);
 
     // https://html.spec.whatwg.org/#attr-optgroup-disabled
