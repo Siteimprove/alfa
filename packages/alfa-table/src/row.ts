@@ -7,7 +7,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import {  isElementByName } from "./helpers";
+import { isElementByName } from "./helpers";
 
 const { compare } = Comparable;
 

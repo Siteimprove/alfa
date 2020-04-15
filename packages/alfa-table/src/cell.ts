@@ -519,17 +519,13 @@ export namespace Cell {
         .filter(
           // 3 / headers attribute / 2
           and(
-            and(
-              // only keep cells in the table
-              isElementByName("th", "td"),
-              (element) => element.ancestors().some(equals(table.element))
-            ),
-            and(
-              // remove principal cell
-              not(equals(this.element)),
-              // Step 4: remove empty cells
-              not(isEmpty)
-            )
+            // only keep cells in the table
+            isElementByName("th", "td"),
+            (element) => element.ancestors().some(equals(table.element)),
+            // remove principal cell
+            not(equals(this.element)),
+            // Step 4: remove empty cells
+            not(isEmpty)
           )
         );
 
