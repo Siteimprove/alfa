@@ -11,7 +11,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, not, equals, property } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r2.html",
@@ -25,10 +25,8 @@ export default Rule.Atomic.of<Page, Element>({
               Element.isElement,
               and(
                 hasNamespace(Namespace.HTML),
-                and(
-                  hasRole(property("name", equals("img"))),
-                  not(isIgnored(device))
-                )
+                hasRole("img"),
+                not(isIgnored(device))
               )
             )
           );

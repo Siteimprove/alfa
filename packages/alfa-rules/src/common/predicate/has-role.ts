@@ -3,8 +3,6 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { hasName } from "./has-name";
 
-const { equals } = Predicate;
-
 export function hasRole(predicate?: Predicate<Role>): Predicate<Element>;
 
 export function hasRole(
