@@ -10,7 +10,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { EnumeratedValueError } from "@siteimprove/alfa-parser";
+import { EnumeratedValueError } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 

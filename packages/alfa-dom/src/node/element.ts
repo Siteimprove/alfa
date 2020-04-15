@@ -2,11 +2,6 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import {
-  EnumeratedValueError,
-  parseEnumeratedValue,
-  parseTokensList,
-} from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -19,6 +14,11 @@ import { Document } from "./document";
 import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
+import {
+  EnumeratedValueError,
+  parseEnumeratedValue,
+  parseTokensList,
+} from "../common/microsyntaxes";
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;

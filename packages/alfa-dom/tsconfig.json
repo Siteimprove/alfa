@@ -7,6 +7,7 @@
     "src/jsx.ts",
     "src/namespace.ts",
     "src/common/index.ts",
+    "src/common/microsyntaxes.ts",
     "src/common/predicate.ts",
     "src/node.ts",
     "src/node/attribute.ts",
@@ -34,6 +35,7 @@
     "src/style/rule/style.ts",
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
+    "test/common/microsyntaxes.spec.ts",
     "test/node/parse-attribute.spec.ts"
   ],
   "references": [

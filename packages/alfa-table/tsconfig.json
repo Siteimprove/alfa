@@ -7,9 +7,11 @@
     "src/header.ts",
     "src/helpers.ts",
     "src/index.ts",
+    "src/microsyntaxes.ts",
     "src/row.ts",
     "src/rowgroup.ts",
     "src/table.ts",
+    "test/microsyntaxes.spec.ts",
     "test/structure-helpers.spec.tsx",
     "test/testcases.tsx",
     "test/structure.spec.tsx"

@@ -1,10 +1,11 @@
 import { Map } from "@siteimprove/alfa-map";
 import { None, Some } from "@siteimprove/alfa-option";
-import { EnumeratedValueError, Parser } from "@siteimprove/alfa-parser";
+import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
 import { Attribute, Element } from "../../src";
+import { EnumeratedValueError } from "../../src/common/microsyntaxes";
 
 const { parseAttribute } = Attribute;
 const { parseEnumeratedAttribute } = Element;
