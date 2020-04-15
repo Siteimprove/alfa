@@ -1,5 +1,5 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
-import { Element, hasName, isDescendantOf } from "@siteimprove/alfa-dom";
+import { Element, hasName } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -522,7 +522,7 @@ export namespace Cell {
             and(
               // only keep cells in the table
               isElementByName("th", "td"),
-              isDescendantOf(table.element)
+              (element) => element.ancestors().some(equals(table.element))
             ),
             and(
               // remove principal cell

@@ -27,9 +27,3 @@ export function hasName<T extends { readonly name: string }>(
   return property("name", predicate);
 }
 
-export function isDescendantOf(
-  node: Node,
-  options?: Node.Traversal
-): Predicate<Node> {
-  return (desc) => node.descendants(options).find(equals(desc)).isSome();
-}
