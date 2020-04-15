@@ -28,18 +28,3 @@ export function parseEnumeratedValue<RESULT>(
 
   return parser;
 }
-
-/**
- * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#space-separated-tokens
- */
-export function parseTokensList(
-  str: string
-): Ok<readonly [string, Array<string>]> {
-  return Ok.of([
-    "",
-    str
-      .trim()
-      .split(/\s+/)
-      .filter((s) => s !== ""),
-  ] as const);
-}

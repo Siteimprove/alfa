@@ -16,8 +16,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 import {
   EnumeratedValueError,
-  parseEnumeratedValue,
-  parseTokensList,
+  parseEnumeratedValue
 } from "../common/microsyntaxes";
 
 const { isEmpty } = Iterable;
@@ -263,8 +262,7 @@ export class Element extends Node implements Slot, Slotable {
   ): Array<Element> {
     return this.root(options).resolveReferences(
       ...this.attribute(name)
-        .map(attribute => attribute.parse(parseTokensList))
-        .map((r) => r.get())
+        .map(attribute => attribute.tokens())
         .getOr([])
     );
   }

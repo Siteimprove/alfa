@@ -52,3 +52,11 @@ test("parse enumerated attribute according to specs", (t) => {
   );
   t.deepEqual(parserWithDefault(noenum), Some.of(0));
 });
+
+test("parse space separated token list", (t) => {
+  t.deepEqual(makeAttribute("foo").tokens(), ["foo"]);
+  t.deepEqual(makeAttribute("foo bar").tokens(), ["foo", "bar"]);
+  t.deepEqual(makeAttribute("").tokens(), []);
+  t.deepEqual(makeAttribute("  \t").tokens(), []);
+  t.deepEqual(makeAttribute("foo  bar\tbaz").tokens(), ["foo", "bar", "baz"]);
+});

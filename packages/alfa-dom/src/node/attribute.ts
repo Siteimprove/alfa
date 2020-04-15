@@ -102,6 +102,16 @@ export class Attribute extends Node {
     return parser(this._value).andThen(([_, value]) => Ok.of(value));
   }
 
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#space-separated-tokens
+   */
+  public tokens(separator: string | RegExp = /\s+/): Array<string> {
+    return this._value
+      .trim()
+      .split(separator)
+      .filter((s) => s !== "");
+  }
+
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
