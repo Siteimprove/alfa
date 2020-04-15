@@ -1,7 +1,5 @@
 import { None, Option } from "@siteimprove/alfa-option";
-import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Result } from "@siteimprove/alfa-result";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
