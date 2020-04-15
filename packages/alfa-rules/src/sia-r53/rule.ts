@@ -6,7 +6,6 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
-import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 
 const { and, equals } = Predicate;
@@ -17,7 +16,7 @@ export default Rule.Atomic.of<Page, Element>({
     // because each heading is compared with the previous one, it is much easier to remember them in reverse order.
     const allHeadings = document
       .descendants({ flattened: true })
-      .filter(and(Element.isElement, hasRole(hasName(equals("heading")))))
+      .filter(and(Element.isElement, hasRole("heading")))
       .reverse();
 
     return {

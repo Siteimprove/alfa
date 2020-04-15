@@ -13,7 +13,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r13.html",
@@ -26,8 +26,9 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(hasName(equals("iframe")), not(isIgnored(device)))
+                hasNamespace(Namespace.HTML),
+                hasName("iframe"),
+                not(isIgnored(device))
               )
             )
           );

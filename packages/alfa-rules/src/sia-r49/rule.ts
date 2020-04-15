@@ -18,7 +18,7 @@ import { isPerceivable } from "../common/predicate/is-perceivable";
 import { Question } from "../common/question";
 
 const { isEmpty } = Iterable;
-const { and, or, nor, not, equals } = Predicate;
+const { and, or, nor, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r49.html",
@@ -31,21 +31,13 @@ export default Rule.Atomic.of<Page, Element, Question>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasName(equals("audio", "video")),
-                  and(
-                    hasAttribute("autoplay"),
-                    and(
-                      nor(hasAttribute("paused"), hasAttribute("muted")),
-                      or(
-                        hasAttribute("src"),
-                        hasChild(
-                          and(Element.isElement, hasName(equals("source")))
-                        )
-                      )
-                    )
-                  )
+                hasNamespace(Namespace.HTML),
+                hasName("audio", "video"),
+                hasAttribute("autoplay"),
+                nor(hasAttribute("paused"), hasAttribute("muted")),
+                or(
+                  hasAttribute("src"),
+                  hasChild(and(Element.isElement, hasName("source")))
                 )
               )
             )

@@ -11,7 +11,7 @@ import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { isDecorative } from "../common/predicate/is-decorative";
 
-const { and, equals } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r67.html",
@@ -23,10 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(hasName(equals("img")), isDecorative)
-              )
+              and(hasNamespace(Namespace.HTML), hasName("img"), isDecorative)
             )
           );
       },

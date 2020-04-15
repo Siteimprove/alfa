@@ -13,7 +13,7 @@ import { hasExplicitRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r21.html",
@@ -26,8 +26,9 @@ export default Rule.Atomic.of<Page, Attribute>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                and(hasAttribute("role", not(isEmpty)), not(isIgnored(device)))
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                hasAttribute("role", not(isEmpty)),
+                not(isIgnored(device))
               )
             )
           )
