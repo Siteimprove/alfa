@@ -6,7 +6,7 @@ import { Ok } from "@siteimprove/alfa-result";
 import { parseNonNegativeInteger } from "./microsyntaxes";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, equals } = Predicate;
+const { and } = Predicate;
 
 /**
  * Parse a "span" (colspan/rowspan) attribute on table cell according to specs.
