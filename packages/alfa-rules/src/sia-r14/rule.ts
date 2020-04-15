@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+                hasNamespace(Namespace.HTML, Namespace.SVG),
                 and(
                   hasRole(
                     and(

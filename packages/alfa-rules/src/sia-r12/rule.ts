@@ -9,7 +9,6 @@ import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasInputType } from "../common/predicate/has-input-type";
-import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
@@ -31,10 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
                 not(hasInputType(equals("image"))),
                 and(
                   hasNamespace(equals(Namespace.HTML)),
-                  and(
-                    hasRole(hasName(equals("button"))),
-                    not(isIgnored(device))
-                  )
+                  and(hasRole("button"), not(isIgnored(device)))
                 )
               )
             )

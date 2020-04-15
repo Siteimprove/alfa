@@ -29,7 +29,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
               and(
                 hasNamespace(equals(Namespace.HTML)),
                 and(
-                  hasName(equals("audio", "video")),
+                  hasName("audio", "video"),
                   and(
                     hasAttribute("autoplay"),
                     and(

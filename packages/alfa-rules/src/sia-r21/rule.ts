@@ -9,7 +9,7 @@ import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { hasRole } from "../common/predicate/has-role";
+import { hasExplicitRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isEmpty } = Iterable;
@@ -39,7 +39,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         return {
           1: expectation(
-            hasRole(() => true, { implicit: false })(owner),
+            hasExplicitRole()(owner),
             () => Outcomes.HasValidRole,
             () => Outcomes.HasNoValidRole
           ),

@@ -8,9 +8,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
-import { hasRole } from "../common/predicate/has-role";
+import { hasExplicitRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isEmpty } = Iterable;
@@ -29,11 +28,10 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 hasNamespace(equals(Namespace.SVG)),
                 and(
-                  hasRole(
-                    hasName(
-                      equals("img", "graphics-document", "graphics-symbol")
-                    ),
-                    { implicit: false }
+                  hasExplicitRole(
+                    "img",
+                    "graphics-document",
+                    "graphics-symbol"
                   ),
                   not(isIgnored(device))
                 )
