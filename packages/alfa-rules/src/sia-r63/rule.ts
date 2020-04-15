@@ -10,7 +10,7 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 
-const { and, equals } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r63.html",
@@ -22,10 +22,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML)),
-                hasName(equals("object"))
-              )
+              and(hasNamespace(Namespace.HTML), hasName("object"))
             )
           );
       },

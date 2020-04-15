@@ -8,13 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasChild } from "../common/predicate/has-child";
-import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
 const { some } = Iterable;
-const { and, equals, test } = Predicate;
+const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r59.html",
@@ -29,10 +28,7 @@ export default Rule.Atomic.of<Page, Document>({
           target.descendants({ flattened: true }),
           and(
             Element.isElement,
-            and(
-              hasNamespace(equals(Namespace.HTML)),
-              hasRole(hasName(equals("heading")))
-            )
+            and(hasNamespace(Namespace.HTML), hasRole("heading"))
           )
         );
 

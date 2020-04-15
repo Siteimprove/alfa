@@ -7,7 +7,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 import { hasChild } from "../common/predicate/has-child";
 import { hasHeadingLevel } from "../common/predicate/has-heading-level";
-import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
@@ -18,7 +17,7 @@ export default Rule.Atomic.of<Page, Document>({
   evaluate({ device, document }) {
     const firstHeading = document
       .descendants({ flattened: true })
-      .find(and(Element.isElement, hasRole(hasName(equals("heading")))));
+      .find(and(Element.isElement, hasRole("heading")));
 
     return {
       applicability() {
