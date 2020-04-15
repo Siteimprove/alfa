@@ -645,7 +645,7 @@ Feature.register(
     "th",
     (element) => {
       const table = element.closest(
-        and(Element.isElement, (element) => element.name === "table")
+        and(Element.isElement, Element.hasName("table"))
       );
       // If the <th> is not in a <table>, it doesn't really have a role…
       if (table.isNone()) return None;

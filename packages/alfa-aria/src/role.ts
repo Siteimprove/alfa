@@ -12,7 +12,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { or } = Predicate;
+const { equals, or } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
@@ -129,8 +129,6 @@ export namespace Role {
   /**
    * @see https://www.w3.org/TR/wai-aria/#roles_categorization
    */
-  import equals = Predicate.equals;
-
   export enum Category {
     /**
      * @see https://www.w3.org/TR/wai-aria/#abstract_roles
@@ -288,7 +286,9 @@ export namespace Role {
     }
   }
 
-  export function hasName<N extends string = string>(predicate: Predicate<string>): Predicate<Role<N>>;
+  export function hasName<N extends string = string>(
+    predicate: Predicate<string>
+  ): Predicate<Role<N>>;
 
   export function hasName<N extends string = string>(
     name: string,

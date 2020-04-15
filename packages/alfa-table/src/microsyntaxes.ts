@@ -3,9 +3,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 /**
  * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
  */
-export function parseInteger(
-  str: string
-): Result<readonly [string, number], string> {
+export function parseInteger(str: string): Result<number, string> {
   // empty/whitespace string are errors for specs, not for Number…
   // \s seems to be close enough to "ASCII whitespace".
   if (str.match(/^\s*$/)) {
@@ -17,17 +15,15 @@ export function parseInteger(
     : raw !== Math.floor(raw)
     ? Outcomes.notInteger
     : // 0 and -0 are different (but equal…) floats. Normalising.
-      Ok.of(["", raw === -0 ? 0 : raw] as const);
+      Ok.of(raw === -0 ? 0 : raw);
 }
 
 /**
  * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
  */
-export function parseNonNegativeInteger(
-  str: string
-): Result<readonly [string, number], string> {
+export function parseNonNegativeInteger(str: string): Result<number, string> {
   const result = parseInteger(str);
-  return result.andThen(([_, value]) =>
+  return parseInteger(str).andThen((value) =>
     value < 0 ? Outcomes.negative : result
   );
 }

@@ -153,7 +153,7 @@ export abstract class Node
   }
 
   /**
-   * finds all descendant element whose id is in the given set
+   * finds all descendant elements whose id is in the given set
    */
   public resolveReferences(...references: Array<string>): Array<Element> {
     const elements: Array<Element> = [];

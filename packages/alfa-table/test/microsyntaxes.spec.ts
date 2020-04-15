@@ -7,7 +7,7 @@ import {
   Outcomes,
 } from "../src/microsyntaxes";
 
-const result = <T>(x: T) => Ok.of(["", x] as const);
+const result = <T>(x: T) => Ok.of(x);
 
 test("parse integers", (t) => {
   t.deepEqual(parseInteger("2"), result(2));

@@ -22,8 +22,9 @@ export function parseSpan(
 ): number {
   return element
     .attribute(name)
-    .map((attribute) => attribute.parse(parseNonNegativeInteger))
-    .map((r) => r.map((x) => clamp(x, min, max)))
+    .map((attribute) =>
+      parseNonNegativeInteger(attribute.value).map((x) => clamp(x, min, max))
+    )
     .getOr(Ok.of(failed))
     .getOr(failed);
 }

@@ -95,12 +95,6 @@ export class Attribute extends Node {
     return path;
   }
 
-  public parse<RESULT, ERROR>(
-    parser: Parser<string, RESULT, ERROR>
-  ): Result<RESULT, ERROR> {
-    return parser(this._value).andThen(([_, value]) => Ok.of(value));
-  }
-
   /**
    * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#space-separated-tokens
    */
