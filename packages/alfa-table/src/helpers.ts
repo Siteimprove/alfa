@@ -1,10 +1,8 @@
-import { Element, Attribute } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { clamp } from "@siteimprove/alfa-math";
 import { Ok } from "@siteimprove/alfa-result";
 
 import { parseNonNegativeInteger } from "./microsyntaxes";
-
-const { parseAttribute } = Attribute;
 
 /**
  * Parse a "span" (colspan/rowspan) attribute on table cell according to specs.
@@ -20,7 +18,7 @@ export function parseSpan(
 ): number {
   return element
     .attribute(name)
-    .map(parseAttribute(parseNonNegativeInteger))
+    .map(attribute => attribute.parse(parseNonNegativeInteger))
     .map((r) => r.map((x) => clamp(x, min, max)))
     .getOr(Ok.of(failed))
     .getOr(failed);

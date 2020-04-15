@@ -263,7 +263,7 @@ export class Element extends Node implements Slot, Slotable {
   ): Array<Element> {
     return this.root(options).resolveReferences(
       ...this.attribute(name)
-        .map(Attribute.parseAttribute(parseTokensList))
+        .map(attribute => attribute.parse(parseTokensList))
         .map((r) => r.get())
         .getOr([])
     );

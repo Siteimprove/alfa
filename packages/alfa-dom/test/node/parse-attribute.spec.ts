@@ -7,7 +7,6 @@ import { test } from "@siteimprove/alfa-test";
 import { Attribute, Element } from "../../src";
 import { EnumeratedValueError } from "../../src/common/microsyntaxes";
 
-const { parseAttribute } = Attribute;
 const { parseEnumeratedAttribute } = Element;
 
 const makeAttribute = (str: string) => Attribute.of(None, None, "dummy", str);
@@ -17,8 +16,8 @@ const parser: Parser<string, number, string> = (str) =>
   str.length < 3 ? tooShort : Ok.of(["", str.length] as const);
 
 test("parse attributes", (t) => {
-  t.deepEqual(parseAttribute(parser)(makeAttribute("12345")), Ok.of(5));
-  t.deepEqual(parseAttribute(parser)(makeAttribute("")), tooShort);
+  t.deepEqual((makeAttribute("12345").parse(parser)), Ok.of(5));
+  t.deepEqual((makeAttribute("").parse(parser)), tooShort);
 });
 
 test("parse enumerated attribute according to specs", (t) => {

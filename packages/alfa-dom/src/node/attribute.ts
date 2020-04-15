@@ -96,6 +96,12 @@ export class Attribute extends Node {
     return path;
   }
 
+  public parse<RESULT, ERROR>(
+    parser: Parser<string, RESULT, ERROR>
+  ): Result<RESULT, ERROR> {
+    return parser(this._value).andThen(([_, value]) => Ok.of(value));
+  }
+
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
@@ -139,13 +145,6 @@ export namespace Attribute {
       attribute.value,
       owner
     );
-  }
-
-  export function parseAttribute<RESULT, ERROR>(
-    parser: Parser<string, RESULT, ERROR>
-  ): Mapper<Attribute, Result<RESULT, ERROR>> {
-    return (attribute) =>
-      parser(attribute.value).andThen(([_, value]) => Ok.of(value));
   }
 }
 
