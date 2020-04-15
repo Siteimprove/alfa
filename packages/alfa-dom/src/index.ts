@@ -13,4 +13,3 @@ export * from "./style/block";
 export * from "./style/declaration";
 export * from "./style/rule";
 export * from "./style/sheet";
-export { EnumeratedValueError } from "./common/microsyntaxes";

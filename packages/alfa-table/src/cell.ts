@@ -10,7 +10,6 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { EnumeratedValueError } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
@@ -20,7 +19,6 @@ import { Header } from "./header";
 import { isEmpty, parseSpan } from "./helpers";
 import { Table } from "./table";
 
-const { parseEnumeratedAttribute } = Element;
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
 const { Comparison } = Comparable;
@@ -683,13 +681,13 @@ export namespace Cell {
         ["col", Header.Scope.Column],
         ["rowgroup", Header.Scope.RowGroup],
         ["colgroup", Header.Scope.ColGroup],
-        [EnumeratedValueError.Missing, Header.Scope.Auto],
-        [EnumeratedValueError.Invalid, Header.Scope.Auto],
+        [Element.EnumeratedAttributeError.Missing, Header.Scope.Auto],
+        [Element.EnumeratedAttributeError.Invalid, Header.Scope.Auto],
       ]);
       const scope =
         kind === Cell.Kind.Data
           ? None
-          : parseEnumeratedAttribute("scope", scopeMapping)(cell);
+          : scopeMapping.get(cell.enumerateAttribute("scope", "col", "colgroup", "row", "rowgroup"));
 
       return Ok.of(
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)

@@ -1,9 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Namespace } from "../namespace";
@@ -14,10 +12,6 @@ import { Document } from "./document";
 import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
-import {
-  EnumeratedValueError,
-  parseEnumeratedValue
-} from "../common/microsyntaxes";
 
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
@@ -253,20 +247,6 @@ export class Element extends Node implements Slot, Slotable {
     return Slot.findSlotables(this);
   }
 
-  /**
-   * Return all descendants of this element's root whose id is listed in an IDlist attribute (headers, aria-labelledby, …)
-   */
-  public resolveAttributeReferences(
-    name: string,
-    options: Node.Traversal = {}
-  ): Array<Element> {
-    return this.root(options).resolveReferences(
-      ...this.attribute(name)
-        .map(attribute => attribute.tokens())
-        .getOr([])
-    );
-  }
-
   public path(): string {
     let path = this._parent.map((parent) => parent.path()).getOr("/");
 
@@ -280,6 +260,39 @@ export class Element extends Node implements Slot, Slotable {
     path += `[${index + 1}]`;
 
     return path;
+  }
+
+  /**
+   * Return all descendants of this element's root whose id is listed in an IDlist attribute (headers, aria-labelledby, …)
+   */
+  public resolveAttributeReferences(
+    name: string,
+    options: Node.Traversal = {}
+  ): Array<Element> {
+    return this.root(options).resolveReferences(
+      ...this.attribute(name)
+        .map((attribute) => attribute.tokens())
+        .getOr([])
+    );
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   */
+  public enumerateAttribute(
+    name: string,
+    ...keywords: Array<string>
+  ): string | Element.EnumeratedAttributeError {
+    const attribute = this.attribute(name);
+
+    if (attribute.isNone() || attribute.get().value === "")
+      return Element.EnumeratedAttributeError.Missing;
+
+    const value = attribute.get().value.toLowerCase();
+
+    return keywords.includes(value)
+      ? value
+      : Element.EnumeratedAttributeError.Invalid;
   }
 
   public toJSON(): Element.JSON {
@@ -368,30 +381,9 @@ export namespace Element {
     );
   }
 
-  /**
-   * Parse an enumerated attribute on an element (if it exists), according to a mapping.
-   * Mapping may includes special keys "missing" and "invalid"
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
-   */
-  export function parseEnumeratedAttribute<RESULT>(
-    name: string,
-    mapping: Map<string, RESULT>
-  ): (element: Element) => Option<RESULT> {
-    function parser(element: Element): Option<RESULT> {
-      return element
-        .attribute(name)
-        .map((attribute) => attribute.value)
-        .map(parseEnumeratedValue(mapping))
-        .getOr<Result<readonly [string, RESULT], EnumeratedValueError>>(
-          Err.of(EnumeratedValueError.Missing)
-        )
-        .mapOrElse(
-          ([_, result]) => Some.of(result),
-          (err) => mapping.get(err)
-        );
-    }
-
-    return parser;
+  export enum EnumeratedAttributeError {
+    Missing = "missing",
+    Invalid = "invalid",
   }
 }
 
