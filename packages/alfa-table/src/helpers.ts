@@ -1,11 +1,11 @@
-import { Element, hasName, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { clamp } from "@siteimprove/alfa-math";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok } from "@siteimprove/alfa-result";
 
 import { parseNonNegativeInteger } from "./microsyntaxes";
 
-const { isElement, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
 
 /**
@@ -40,10 +40,11 @@ export function isEmpty(element: Element): boolean {
 }
 
 export function isHtmlElementWithName(
-  ...names: Array<string>
+  name: string,
+  ...rest: Array<string>
 ): Predicate<Node, Element> {
   return and(
     isElement,
-    and(hasNamespace(Namespace.HTML), hasName(equals(...names)))
+    and(hasNamespace(Namespace.HTML), hasName(name, ...rest))
   );
 }

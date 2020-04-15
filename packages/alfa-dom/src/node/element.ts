@@ -14,7 +14,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { and, equals, not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
@@ -299,6 +299,10 @@ export class Element extends Node implements Slot, Slotable {
     return this._namespace.map(predicate).getOr(false);
   }
 
+  public hasName(predicate: Predicate<string>): boolean {
+    return predicate(this._name);
+  }
+
   public toJSON(): Element.JSON {
     return {
       type: "element",
@@ -412,6 +416,28 @@ export namespace Element {
     }
 
     return (element) => element.hasNamespace(predicate);
+  }
+
+  export function hasName(predicate: Predicate<string>): Predicate<Element>;
+
+  export function hasName(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<Element>;
+
+  export function hasName(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): Predicate<Element> {
+    let predicate: Predicate<string>;
+
+    if (typeof nameOrPredicate === "function") {
+      predicate = nameOrPredicate;
+    } else {
+      predicate = equals(nameOrPredicate, ...names);
+    }
+
+    return (element) => element.hasName(predicate);
   }
 }
 

@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Document, Element, hasName } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";

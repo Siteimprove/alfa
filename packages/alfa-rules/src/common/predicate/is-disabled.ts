@@ -1,7 +1,8 @@
-import { Element, hasName } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+const { hasName } = Element;
 const { some, find } = Iterable;
 const { and, not, equals } = Predicate;
 

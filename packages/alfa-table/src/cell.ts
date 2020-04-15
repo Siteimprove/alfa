@@ -1,5 +1,5 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
-import { Element, hasName } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -660,7 +660,7 @@ export namespace Cell {
       }
 
       // 11
-      const kind = hasName(equals("th"))(cell)
+      const kind = cell.hasName(equals("th"))
         ? Cell.Kind.Header
         : Cell.Kind.Data;
 

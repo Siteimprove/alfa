@@ -1,11 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  hasName,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -15,7 +10,7 @@ import { isVisible } from "../predicate/is-visible";
 import { Question } from "../question";
 import { hasAttribute } from "../predicate/has-attribute";
 
-const { isElement, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, map, some } = Iterable;
 const { and, equals } = Predicate;
 

@@ -1,10 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
-import {
-  Element,
-  hasName,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -21,7 +17,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { isElement, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace } = Element;
 const { map, flatMap, isEmpty } = Iterable;
 const { and, not } = Predicate;
 

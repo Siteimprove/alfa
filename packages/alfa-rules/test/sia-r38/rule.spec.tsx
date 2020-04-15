@@ -3,14 +3,16 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 
-import { Document, Element, hasName } from "@siteimprove/alfa-dom";
-const { and, equals } = Predicate;
+import { Document, Element } from "@siteimprove/alfa-dom";
 
 import { evaluate } from "../common/evaluate";
 import { makeOracle } from "../common/make-oracle";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome";
+import { passed, cantTell } from "../common/outcome";
 
 import R38, { Outcomes } from "../../src/sia-r38/rule";
+
+const { isElement, hasName } = Element;
+const { and } = Predicate;
 
 test("Passes when some atomic rules are passing", async (t) => {
   const document = Document.of((self) => [
@@ -27,7 +29,7 @@ test("Passes when some atomic rules are passing", async (t) => {
 
   const video = document
     .descendants()
-    .filter(and(Element.isElement, hasName("video")))
+    .filter(and(isElement, hasName("video")))
     .first()
     .get();
 
@@ -62,7 +64,7 @@ test("Can't tell when there are not enough answers to expectation", async (t) =>
 
   const video = document
     .descendants()
-    .filter(and(Element.isElement, hasName("video")))
+    .filter(and(isElement, hasName("video")))
     .first()
     .get();
 

@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Document, Element, hasName, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -11,7 +11,7 @@ import { hasChild } from "../common/predicate/has-child";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
-const { isElement, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, first } = Iterable;
 const { and, fold } = Predicate;
 

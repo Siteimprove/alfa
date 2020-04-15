@@ -108,6 +108,10 @@ export class Role<N extends string = string> implements Equatable {
     return some(this.characteristics.name.from, predicate);
   }
 
+  public hasName(predicate: Predicate<N>): boolean {
+    return predicate(this.name);
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Role && value.name === this.name;
   }
@@ -125,6 +129,8 @@ export namespace Role {
   /**
    * @see https://www.w3.org/TR/wai-aria/#roles_categorization
    */
+  import equals = Predicate.equals;
+
   export enum Category {
     /**
      * @see https://www.w3.org/TR/wai-aria/#abstract_roles
@@ -280,6 +286,28 @@ export namespace Role {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
     }
+  }
+
+  export function hasName<N extends string = string>(predicate: Predicate<string>): Predicate<Role<N>>;
+
+  export function hasName<N extends string = string>(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<Role<N>>;
+
+  export function hasName<N extends string = string>(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): Predicate<Role<N>> {
+    let predicate: Predicate<string>;
+
+    if (typeof nameOrPredicate === "function") {
+      predicate = nameOrPredicate;
+    } else {
+      predicate = equals(nameOrPredicate, ...names);
+    }
+
+    return (role) => role.hasName(predicate);
   }
 }
 

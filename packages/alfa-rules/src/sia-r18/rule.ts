@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
-import { Attribute, Element, hasName } from "@siteimprove/alfa-dom";
+import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -40,7 +40,9 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             global.has(target.name) ||
               test(
-                hasRole((role) => role.isAllowed(hasName(target.name))),
+                hasRole((role) =>
+                  role.isAllowed((attribute) => attribute.name === target.name)
+                ),
                 target.owner.get()
               ),
             () => Outcomes.IsAllowed,

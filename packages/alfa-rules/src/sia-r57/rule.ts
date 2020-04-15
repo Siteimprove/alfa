@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { hasName, Text } from "@siteimprove/alfa-dom";
+import { Role } from "@siteimprove/alfa-aria";
+import { Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -13,6 +14,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isEmpty } = Iterable;
 const { and, not, property } = Predicate;
+const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
