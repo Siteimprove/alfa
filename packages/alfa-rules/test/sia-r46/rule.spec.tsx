@@ -22,7 +22,7 @@ test("Passes on explicit header", async (t) => {
       </table>
     ),
   ]);
-  const target = document.resolveReferences("target").shift();
+  const target = document.resolveReferences("target").shift()!;
 
   t.deepEqual(await evaluate(R46, { device, document }), [
     passed(R46, target, { 1: Outcomes.IsAssignedToDataCell }),
@@ -46,8 +46,8 @@ test("Passes on implicit headers", async (t) => {
       </table>
     ),
   ]);
-  const col1 = document.resolveReferences("col1").shift();
-  const col2 = document.resolveReferences("col2").shift();
+  const col1 = document.resolveReferences("col1").shift()!;
+  const col2 = document.resolveReferences("col2").shift()!;
 
   t.deepEqual(await evaluate(R46, { device, document }), [
     passed(R46, col1, { 1: Outcomes.IsAssignedToDataCell }),
@@ -70,8 +70,8 @@ test("Fails on headers with no data cell", async (t) => {
       </table>
     ),
   ]);
-  const col1 = document.resolveReferences("col1").shift();
-  const col2 = document.resolveReferences("col2").shift();
+  const col1 = document.resolveReferences("col1").shift()!;
+  const col2 = document.resolveReferences("col2").shift()!;
 
   t.deepEqual(await evaluate(R46, { device, document }), [
     passed(R46, col1, { 1: Outcomes.IsAssignedToDataCell }),
