@@ -1,4 +1,3 @@
-export * from "./common";
 export * from "./namespace";
 export * from "./node";
 export * from "./node/attribute";
@@ -13,4 +12,3 @@ export * from "./style/block";
 export * from "./style/declaration";
 export * from "./style/rule";
 export * from "./style/sheet";
-export * from "./tables/table";

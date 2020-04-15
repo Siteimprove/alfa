@@ -1,10 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -16,6 +11,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -25,29 +21,27 @@ export default Rule.Atomic.of<Page, Element, Question>({
       applicability() {
         return document.descendants({ flattened: true, nested: true }).filter(
           and(
-            Element.isElement,
+            isElement,
             and(
-              hasNamespace(equals(Namespace.HTML)),
-              and(
-                or(
-                  hasName(equals("img")),
-                  and(hasName(equals("input")), hasInputType(equals("image")))
-                ),
-                and(not(isIgnored(device)), (element) =>
-                  test(
-                    hasAccessibleName(device, (accessibleName) =>
-                      element
-                        .attribute("src")
-                        .map((attr) => getFilename(attr.value))
-                        .some(
-                          (filename) =>
-                            filename === accessibleName.toLowerCase().trim()
-                        )
-                    ),
+              hasNamespace(Namespace.HTML),
+              or(
+                hasName("img"),
+                and(hasName("input"), hasInputType(equals("image")))
+              ),
+              not(isIgnored(device)),
+              (element) =>
+                test(
+                  hasAccessibleName(device, (accessibleName) =>
                     element
-                  )
+                      .attribute("src")
+                      .map((attr) => getFilename(attr.value))
+                      .some(
+                        (filename) =>
+                          filename === accessibleName.toLowerCase().trim()
+                      )
+                  ),
+                  element
                 )
-              )
             )
           )
         );

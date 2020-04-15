@@ -1,11 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
-import {
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Node, Role } from "@siteimprove/alfa-aria";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -23,8 +18,10 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasNamespace } = Element;
 const { map, flatMap, isEmpty } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { and, or, not } = Predicate;
+const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
@@ -35,20 +32,16 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                and(
-                  hasRole(
-                    or(hasName(equals("link")), (role) =>
-                      role.inheritsFrom(hasName(equals("link")))
-                    )
-                  ),
-                  and(
-                    not(isIgnored(device)),
-                    hasAccessibleName(device, not(isEmpty))
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                hasRole(
+                  or(hasName("link"), (role) =>
+                    role.inheritsFrom(hasName("link"))
                   )
-                )
+                ),
+                not(isIgnored(device)),
+                hasAccessibleName(device, not(isEmpty))
               )
             )
           );

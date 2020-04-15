@@ -1,10 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -15,8 +10,9 @@ import { expectation } from "../common/expectation";
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r13.html",
@@ -27,10 +23,11 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(hasName(equals("iframe")), not(isIgnored(device)))
+                hasNamespace(Namespace.HTML),
+                hasName("iframe"),
+                not(isIgnored(device))
               )
             )
           );

@@ -1,12 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Document,
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -16,6 +10,7 @@ import { isVisible } from "../predicate/is-visible";
 import { Question } from "../question";
 import { hasAttribute } from "../predicate/has-attribute";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, map, some } = Iterable;
 const { and, equals } = Predicate;
 
@@ -30,28 +25,24 @@ export function video(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        Element.isElement,
+        isElement,
         and(
-          hasNamespace(equals(Namespace.HTML)),
-          and(
-            hasName(equals("video")),
-            and(
-              isVisible(device),
-              (element) =>
-                track === undefined ||
-                track.has ===
-                  some(
-                    element.children(),
-                    and(
-                      Element.isElement,
-                      and(
-                        hasName(equals("track")),
-                        hasAttribute("kind", equals(track.kind))
-                      )
-                    )
+          hasNamespace(Namespace.HTML),
+          hasName("video"),
+          isVisible(device),
+          (element) =>
+            track === undefined ||
+            track.has ===
+              some(
+                element.children(),
+                and(
+                  Element.isElement,
+                  and(
+                    hasName("track"),
+                    hasAttribute("kind", equals(track.kind))
                   )
-            )
-          )
+                )
+              )
         )
       )
     ),

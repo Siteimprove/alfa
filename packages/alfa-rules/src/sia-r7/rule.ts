@@ -1,11 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Attribute,
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -16,8 +10,9 @@ import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
@@ -27,17 +22,12 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants()
           .filter(
-            and(
-              Element.isElement,
-              and(hasNamespace(equals(Namespace.HTML)), hasName(equals("body")))
-            )
+            and(isElement, and(hasNamespace(Namespace.HTML), hasName("body")))
           )
           .flatMap((body) =>
             body
               .descendants()
-              .filter(
-                and(Element.isElement, hasAttribute("lang", not(isEmpty)))
-              )
+              .filter(and(isElement, hasAttribute("lang", not(isEmpty))))
               .map((element) => element.attribute("lang").get())
           );
       },

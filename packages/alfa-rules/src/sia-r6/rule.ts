@@ -21,13 +21,10 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document.children().filter(
           and(
-            Element.isElement,
+            isDocumentElement,
             and(
-              isDocumentElement(),
-              and(
-                hasAttribute("lang", (value) => Language.parse(value).isSome()),
-                hasAttribute("xml:lang", not(isEmpty))
-              )
+              hasAttribute("lang", (value) => Language.parse(value).isSome()),
+              hasAttribute("xml:lang", not(isEmpty))
             )
           )
         );

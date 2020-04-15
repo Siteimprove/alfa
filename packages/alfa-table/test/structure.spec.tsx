@@ -2,7 +2,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Table } from "../../src";
+import { Table } from "../src";
 import {
   allWeirdImplicitHeaders,
   apple,
@@ -22,7 +22,9 @@ import {
   smithonian,
 } from "./testcases";
 
-import { Row, Cell, RowGroup } from "../../src/tables/groups";
+import { Cell } from "../src/cell";
+import { Row } from "../src/row";
+import { RowGroup } from "../src/rowgroup";
 
 test("Process individual rows", (t) => {
   t.deepEqual(
@@ -115,12 +117,7 @@ test("Compute simple headers", (t) => {
   );
 
   t.deepEqual(
-    Table.from(
-      duplicateIDExplicitHeaders.table,
-      duplicateIDExplicitHeaders.document
-    )
-      .get()
-      .toJSON(),
+    Table.from(duplicateIDExplicitHeaders.table).get().toJSON(),
     duplicateIDExplicitHeaders.expected.toJSON()
   );
 });

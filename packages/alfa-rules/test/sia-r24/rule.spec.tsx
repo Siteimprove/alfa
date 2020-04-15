@@ -1,16 +1,17 @@
-import { Document, Element, hasName } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 import { hasId } from "../../src/common/predicate/has-id";
 
-const { and, equals } = Predicate;
-
 import R24, { Outcomes } from "../../src/sia-r24/rule";
 import { evaluate } from "../common/evaluate";
 import { makeOracle } from "../common/make-oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
+
+const { isElement, hasName } = Element;
+const { and, equals } = Predicate;
 
 test("Passes when non-streaming video elements have all audio and visual information available in a transcript", async (t) => {
   const document = Document.of((self) => [
@@ -28,12 +29,12 @@ test("Passes when non-streaming video elements have all audio and visual informa
 
   const video = document
     .descendants()
-    .filter(and(Element.isElement, hasName(equals("video"))))
+    .filter(and(isElement, hasName("video")))
     .first()
     .get();
   const transcript = document
     .descendants()
-    .filter(and(Element.isElement, hasId(equals("transcript"))))
+    .filter(and(isElement, hasId(equals("transcript"))))
     .first()
     .get();
 
@@ -44,7 +45,7 @@ test("Passes when non-streaming video elements have all audio and visual informa
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
-    passed(R24, video, [["1", Outcomes.HasTranscript]]),
+    passed(R24, video, { 1: Outcomes.HasTranscript }),
   ]);
 });
 
@@ -61,7 +62,7 @@ test("Fails when non-streaming video elements have no audio and visual informati
 
   const video = document
     .descendants()
-    .filter(and(Element.isElement, hasName(equals("video"))))
+    .filter(and(Element.isElement, hasName("video")))
     .first()
     .get();
 
@@ -73,7 +74,7 @@ test("Fails when non-streaming video elements have no audio and visual informati
   });
 
   t.deepEqual(await evaluate(R24, { document }, oracle), [
-    failed(R24, video, [["1", Outcomes.HasNoTranscript]]),
+    failed(R24, video, { 1: Outcomes.HasNoTranscript }),
   ]);
 });
 
@@ -90,7 +91,7 @@ test("Can't tell when some questions are left unanswered", async (t) => {
 
   const video = document
     .descendants()
-    .filter(and(Element.isElement, hasName(equals("video"))))
+    .filter(and(Element.isElement, hasName("video")))
     .first()
     .get();
 
@@ -112,7 +113,7 @@ test("Is inapplicable when element is not a video element", async (t) => {
 
   const img = document
     .descendants()
-    .filter(and(Element.isElement, hasName(equals("img"))))
+    .filter(and(Element.isElement, hasName("img")))
     .first()
     .get();
 

@@ -1,13 +1,18 @@
-import { compare } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import {Document, Element, getDescendantWithId, Node, resolveReferences, Table} from "../../src";
-import { Cell, ColGroup, Row, RowGroup, Header } from "../../src/tables/groups";
+import { Cell } from "../src/cell";
+import { ColGroup } from "../src/colgroup";
+import { Row } from "../src/row";
+import { RowGroup } from "../src/rowgroup";
+import { Header, Table } from "../src";
 
 const { and } = Predicate;
 const { isElement } = Element;
+const { compare } = Comparable;
 
 const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   elt: string,
@@ -29,7 +34,6 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
     Option.from(variant),
     headers.map(getElt)
   );
-// ): Cell => Cell.of(kind, x, y, width, height, getElt(elt), None, headers.map(getElt));
 
 function toBuildingCell(cell: Cell) {
   return Cell.Builder.of(
@@ -44,7 +48,7 @@ function toBuildingCell(cell: Cell) {
 
 const dummy = Element.of(None, None, "dummy");
 const getDescendantById = (node: Node) => (id: string) =>
-  getDescendantWithId(node, id).getOr(dummy);
+  node.resolveReferences(id).shift() || dummy;
 
 // processing simple row
 export namespace simpleRow {
@@ -1426,7 +1430,16 @@ export namespace allWeirdImplicitHeaders {
     7,
     7,
     [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Header.Variant.Column, 2, 2),
+      makeCell(
+        "empty",
+        Cell.Kind.Header,
+        0,
+        0,
+        [],
+        Header.Variant.Column,
+        2,
+        2
+      ),
       makeCell(
         "mars",
         Cell.Kind.Header,

@@ -1,10 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -17,6 +12,7 @@ import { hasInputType } from "../common/predicate/has-input-type";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
@@ -29,16 +25,12 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 not(hasInputType(equals("image"))),
-                and(
-                  hasNamespace(equals(Namespace.HTML)),
-                  and(
-                    hasRole(hasName(equals("button"))),
-                    not(isIgnored(device))
-                  )
-                )
+                hasNamespace(Namespace.HTML),
+                hasRole("button"),
+                not(isIgnored(device))
               )
             )
           );

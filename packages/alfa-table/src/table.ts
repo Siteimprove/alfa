@@ -1,4 +1,5 @@
-import { compare } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -6,8 +7,13 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element, isElementByName, Node } from "..";
-import { Cell, ColGroup, RowGroup, Row } from "./groups";
+import { Cell } from "./cell";
+import { ColGroup } from "./colgroup";
+import { isHtmlElementWithName } from "./helpers";
+import { Row } from "./row";
+import { RowGroup } from "./rowgroup";
+
+const { compare } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
@@ -102,11 +108,8 @@ export class Table implements Equatable, Serializable {
 }
 
 export namespace Table {
-  export function from(
-    element: Element,
-    node: Node | undefined = undefined
-  ): Result<Table, string> {
-    return Builder.from(element, node).map((table) => table.table);
+  export function from(element: Element): Result<Table, string> {
+    return Builder.from(element).map((table) => table.table);
   }
 
   export interface JSON {
@@ -252,10 +255,7 @@ export namespace Table {
       cells: Cell.Builder.JSON[];
     }
 
-    export function from(
-      element: Element,
-      node: Node | undefined = undefined
-    ): Result<Builder, string> {
+    export function from(element: Element): Result<Builder, string> {
       // the document is needed for finding explicit headers. "no document" is allowed for easier unit test.
       if (element.name !== "table")
         return Err.of("This element is not a table");
@@ -267,7 +267,7 @@ export namespace Table {
       // 5 + 8 + 9.3
       let children = element
         .children()
-        .filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
+        .filter(isHtmlElementWithName("colgroup", "thead", "tbody", "tfoot", "tr"));
       // 6
       // skipping caption for now
 
@@ -391,18 +391,16 @@ export namespace Table {
 
       // 21
 
-      // "no document" is allowed for easier unit test (better isolation).
-      const topNode = node === undefined ? table.element : node;
       // We need to compute all headers variant first and this need to be done separately
       // so that the updated table is used in assignHeaders
-      table = table.update( {
-        cells: table.cells.map((cell) => cell.addHeaderVariant(table))
+      table = table.update({
+        cells: table.cells.map((cell) => cell.addHeaderVariant(table)),
       });
 
       return Ok.of(
         table.update({
           cells: table.cells
-            .map((cell) => cell.assignHeaders(topNode, table))
+            .map((cell) => cell.assignHeaders(table))
             .sort(compare),
           colGroups: [...table.colGroups].sort(compare),
           rowGroups: [...table.rowGroups].sort(compare),

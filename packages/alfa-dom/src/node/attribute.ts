@@ -1,8 +1,5 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Result } from "@siteimprove/alfa-result";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -96,6 +93,16 @@ export class Attribute extends Node {
     return path;
   }
 
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#space-separated-tokens
+   */
+  public tokens(separator: string | RegExp = /\s+/): Array<string> {
+    return this._value
+      .trim()
+      .split(separator)
+      .filter((s) => s !== "");
+  }
+
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
@@ -139,13 +146,6 @@ export namespace Attribute {
       attribute.value,
       owner
     );
-  }
-
-  export function parseAttribute<RESULT, ERROR>(
-    parser: Parser<string, RESULT, ERROR>
-  ): Mapper<Attribute, Result<RESULT, ERROR>> {
-    return (attribute) =>
-      parser(attribute.value).andThen(([_, value]) => Ok.of(value));
   }
 }
 

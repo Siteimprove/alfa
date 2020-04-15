@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": [
+    "src/cell.ts",
+    "src/colgroup.ts",
+    "src/header.ts",
+    "src/helpers.ts",
+    "src/index.ts",
+    "src/microsyntaxes.ts",
+    "src/row.ts",
+    "src/rowgroup.ts",
+    "src/table.ts",
+    "test/microsyntaxes.spec.ts",
+    "test/structure-helpers.spec.tsx",
+    "test/testcases.tsx",
+    "test/structure.spec.tsx"
+  ],
+  "references": [
+    {
+      "path": "../alfa-comparable"
+    },
+    {
+      "path": "../alfa-dom"
+    },
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-math"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+  ]
+}

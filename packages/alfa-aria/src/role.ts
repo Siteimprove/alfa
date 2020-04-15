@@ -12,7 +12,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { or } = Predicate;
+const { equals, or } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
@@ -106,6 +106,10 @@ export class Role<N extends string = string> implements Equatable {
 
   public hasNameFrom(predicate: Predicate<"contents" | "author">): boolean {
     return some(this.characteristics.name.from, predicate);
+  }
+
+  public hasName(predicate: Predicate<N>): boolean {
+    return predicate(this.name);
   }
 
   public equals(value: unknown): value is this {
@@ -280,6 +284,30 @@ export namespace Role {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
     }
+  }
+
+  export function hasName<N extends string = string>(
+    predicate: Predicate<string>
+  ): Predicate<Role<N>>;
+
+  export function hasName<N extends string = string>(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<Role<N>>;
+
+  export function hasName<N extends string = string>(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): Predicate<Role<N>> {
+    let predicate: Predicate<string>;
+
+    if (typeof nameOrPredicate === "function") {
+      predicate = nameOrPredicate;
+    } else {
+      predicate = equals(nameOrPredicate, ...names);
+    }
+
+    return (role) => role.hasName(predicate);
   }
 }
 

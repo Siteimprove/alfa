@@ -1,29 +1,22 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { EnumeratedValueError } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import {
-  Element,
-  hasName,
-  isDescendantOf,
-  isElementByName,
-  Node,
-  resolveAttributeReferences,
-  Table,
-} from "..";
-import { isEmpty, parseSpan } from "./helpers";
+import { Header } from "./header";
+import { isHtmlElementWithName, isEmpty, parseSpan } from "./helpers";
+import { Table } from "./table";
 
-const { parseEnumeratedAttribute } = Element;
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
+const { Comparison } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -115,7 +108,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
    * compare cell according to their anchor
    * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
    */
-  public compare(cell: Cell): Comparison {
+  public compare(cell: Cell): Comparable.Comparison {
     if (this._y < cell._y) return Comparison.Less;
     if (this._y > cell._y) return Comparison.More;
     if (this._x < cell._x) return Comparison.Less;
@@ -329,7 +322,7 @@ export namespace Cell {
       return this._cell.isCovering(x, y);
     }
 
-    public compare(cell: Builder): Comparison {
+    public compare(cell: Builder): Comparable.Comparison {
       return this._cell.compare(cell._cell);
     }
 
@@ -519,31 +512,22 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    private _assignExplicitHeaders(
-      node: Node,
-      table: Table.Builder
-    ): Cell.Builder {
+    private _assignExplicitHeaders(table: Table.Builder): Cell.Builder {
       // 3 / headers attribute / 1
-      const elements = resolveAttributeReferences(
-        this.element,
-        node,
-        "headers"
-      ).filter(
-        // 3 / headers attribute / 2
-        and(
+      const elements = this.element
+        .resolveAttributeReferences("headers")
+        .filter(
+          // 3 / headers attribute / 2
           and(
             // only keep cells in the table
-            isElementByName("th", "td"),
-            isDescendantOf(table.element)
-          ),
-          and(
+            isHtmlElementWithName("th", "td"),
+            (element) => element.ancestors().some(equals(table.element)),
             // remove principal cell
             not(equals(this.element)),
             // Step 4: remove empty cells
             not(isEmpty)
           )
-        )
-      );
+        );
 
       return this._update({ explicitHeaders: elements });
     }
@@ -635,10 +619,8 @@ export namespace Cell {
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
-    public assignHeaders(node: Node, table: Table.Builder): Cell.Builder {
-      return this._assignExplicitHeaders(node, table)._assignImplicitHeaders(
-        table
-      );
+    public assignHeaders(table: Table.Builder): Cell.Builder {
+      return this._assignExplicitHeaders(table)._assignImplicitHeaders(table);
     }
 
     public equals(value: unknown): value is this {
@@ -678,7 +660,7 @@ export namespace Cell {
       }
 
       // 11
-      const kind = hasName(equals("th"))(cell)
+      const kind = cell.hasName(equals("th"))
         ? Cell.Kind.Header
         : Cell.Kind.Data;
 
@@ -690,13 +672,21 @@ export namespace Cell {
         ["col", Header.Scope.Column],
         ["rowgroup", Header.Scope.RowGroup],
         ["colgroup", Header.Scope.ColGroup],
-        [EnumeratedValueError.Missing, Header.Scope.Auto],
-        [EnumeratedValueError.Invalid, Header.Scope.Auto],
+        [Element.EnumeratedAttributeError.Missing, Header.Scope.Auto],
+        [Element.EnumeratedAttributeError.Invalid, Header.Scope.Auto],
       ]);
       const scope =
         kind === Cell.Kind.Data
           ? None
-          : parseEnumeratedAttribute("scope", scopeMapping)(cell);
+          : scopeMapping.get(
+              cell.enumerateAttribute(
+                "scope",
+                "col",
+                "colgroup",
+                "row",
+                "rowgroup"
+              )
+            );
 
       return Ok.of(
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)
@@ -711,31 +701,5 @@ export namespace Cell {
       explicitHeaders: Element.JSON[];
       implicitHeaders: Element.JSON[];
     }
-  }
-}
-
-export namespace Header {
-  /**
-   * State of the scope attribute
-   * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
-   */
-  export enum Scope {
-    Auto = "auto",
-    Row = "row",
-    Column = "column",
-    RowGroup = "row-group",
-    ColGroup = "col-group",
-  }
-
-  /**
-   * "header variant" of the cell. Same as the scope except that "Auto" needs to be resolved.
-   * @see https://html.spec.whatwg.org/multipage/tables.html#column-header
-   * and following defs
-   */
-  export enum Variant {
-    Row = "row",
-    Column = "column",
-    RowGroup = "row-group",
-    ColGroup = "col-group",
   }
 }

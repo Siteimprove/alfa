@@ -1,11 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Document,
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -17,8 +11,9 @@ import { hasChild } from "../common/predicate/has-child";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, first } = Iterable;
-const { and, equals, fold } = Predicate;
+const { and, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r1.html",
@@ -26,7 +21,7 @@ export default Rule.Atomic.of<Page, Document>({
     return {
       applicability() {
         return fold(
-          hasChild(and(Element.isElement, isDocumentElement())),
+          hasChild(isDocumentElement),
           document,
           () => [document],
           () => []
@@ -37,13 +32,7 @@ export default Rule.Atomic.of<Page, Document>({
         const title = first(
           filter(
             target.descendants(),
-            and(
-              Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML)),
-                hasName(equals("title"))
-              )
-            )
+            and(isElement, and(hasNamespace(Namespace.HTML), hasName("title")))
           )
         );
 

@@ -23,7 +23,7 @@ test("evaluate() passes a list with two list items", async (t) => {
   const list = document.descendants().filter(Element.isElement).first().get();
 
   t.deepEqual(await evaluate(R68, { document }), [
-    passed(R68, list, [["1", Outcomes.HasCorrectOwnedElements]]),
+    passed(R68, list, { 1: Outcomes.HasCorrectOwnedElements }),
   ]);
 });
 
@@ -44,7 +44,7 @@ test("evaluate() passes a list with a list item and a group of list items", asyn
   const list = document.descendants().filter(Element.isElement).first().get();
 
   t.deepEqual(await evaluate(R68, { document }), [
-    passed(R68, list, [["1", Outcomes.HasCorrectOwnedElements]]),
+    passed(R68, list, { 1: Outcomes.HasCorrectOwnedElements }),
   ]);
 });
 
@@ -61,6 +61,6 @@ test("evaluate() fails a list with a non-list item", async (t) => {
   const list = document.descendants().filter(Element.isElement).first().get();
 
   t.deepEqual(await evaluate(R68, { document }), [
-    failed(R68, list, [["1", Outcomes.HasIncorrectOwnedElements]]),
+    failed(R68, list, { 1: Outcomes.HasIncorrectOwnedElements }),
   ]);
 });

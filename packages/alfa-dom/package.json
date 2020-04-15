@@ -24,7 +24,6 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-comparable": "^0.0.0",
     "@siteimprove/alfa-css": "^0.0.0",
     "@siteimprove/alfa-earl": "^0.0.0",
     "@siteimprove/alfa-equatable": "^0.0.0",

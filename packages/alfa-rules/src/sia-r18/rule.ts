@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
-import { Attribute, Element, hasName } from "@siteimprove/alfa-dom";
+import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -14,7 +14,7 @@ import { expectation } from "../common/expectation";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { and, not, equals, test } = Predicate;
+const { and, not, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r18.html",
@@ -40,7 +40,9 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             global.has(target.name) ||
               test(
-                hasRole((role) => role.isAllowed(hasName(equals(target.name)))),
+                hasRole((role) =>
+                  role.isAllowed((attribute) => attribute.name === target.name)
+                ),
                 target.owner.get()
               ),
             () => Outcomes.IsAllowed,

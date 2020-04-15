@@ -1,10 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Attribute,
-  Element,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -15,8 +10,9 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
+const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not, equals, property } = Predicate;
+const { and, not, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r19.html",
@@ -25,12 +21,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(
-            and(
-              Element.isElement,
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG))
-            )
-          )
+          .filter(and(isElement, hasNamespace(Namespace.HTML, Namespace.SVG)))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
               and(

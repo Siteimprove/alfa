@@ -1,12 +1,15 @@
-import { compare } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element, isElementByName } from "..";
-import { Cell } from "./groups";
+import { Cell } from "./cell";
+import { isHtmlElementWithName } from "./helpers";
+
+const { compare } = Comparable;
 
 /**
  * Build artifact, corresponds to a single <tr> element
@@ -242,7 +245,7 @@ export namespace Row {
       )
         return Err.of("Cells and growing cells must be disjoints");
 
-      let children = tr.children().filter(isElementByName("th", "td"));
+      let children = tr.children().filter(isHtmlElementWithName("th", "td"));
 
       // 1
       // global table height adjusted after building row

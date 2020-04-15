@@ -1,12 +1,14 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Element, isElementByName } from "..";
-import { parseSpan } from "./helpers";
+import { isHtmlElementWithName, parseSpan } from "./helpers";
+
+const { Comparison } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
@@ -49,7 +51,7 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
    * compare colgroups according to their anchor
    * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
    */
-  public compare(colgroup: ColGroup): Comparison {
+  public compare(colgroup: ColGroup): Comparable.Comparison {
     if (this._x < colgroup._x) return Comparison.Less;
     if (this._x > colgroup._x) return Comparison.More;
     return Comparison.Equal;
@@ -140,7 +142,7 @@ export namespace ColGroup {
       if (colgroup.name !== "colgroup")
         return Err.of("This element is not a colgroup");
 
-      let children = colgroup.children().filter(isElementByName("col"));
+      let children = colgroup.children().filter(isHtmlElementWithName("col"));
       let totalSpan = 0;
       if (children.isEmpty()) {
         // second case

@@ -1,13 +1,10 @@
-import {
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-const { and, equals } = Predicate;
+const { isElement, hasName, hasNamespace } = Element;
+const { and } = Predicate;
 
-export function isDocumentElement(): Predicate<Element> {
-  return and(hasName(equals("html")), hasNamespace(equals(Namespace.HTML)));
-}
+export const isDocumentElement = and(
+  isElement,
+  and(hasName("html"), hasNamespace(Namespace.HTML))
+);

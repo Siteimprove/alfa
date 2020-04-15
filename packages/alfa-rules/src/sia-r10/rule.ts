@@ -1,12 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
-import {
-  Attribute,
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -17,10 +11,10 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasCategory } from "../common/predicate/has-category";
 import { hasInputType } from "../common/predicate/has-input-type";
 import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isTabbable } from "../common/predicate/is-tabbable";
-import { isVisible } from "../common/predicate/is-visible";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { and, or, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -32,34 +26,22 @@ export default Rule.Atomic.of<Page, Attribute>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 hasAttribute("autocomplete", hasTokens),
-                and(
-                  hasNamespace(equals(Namespace.HTML)),
+                hasNamespace(Namespace.HTML),
+                hasName("input", "select", "textarea"),
+                isPerceivable(device),
+                not(
                   and(
-                    hasName(equals("input", "select", "textarea")),
-                    and(
-                      or(isVisible(device), not(isIgnored(device))),
-                      and(
-                        not(
-                          and(
-                            hasName(equals("input")),
-                            hasInputType(
-                              equals("hidden", "button", "submit", "reset")
-                            )
-                          )
-                        ),
-                        and(
-                          not(hasAttribute("aria-disabled", equals("true"))),
-                          or(
-                            isTabbable(device),
-                            hasRole(hasCategory(equals(Role.Category.Widget)))
-                          )
-                        )
-                      )
-                    )
+                    hasName("input"),
+                    hasInputType(equals("hidden", "button", "submit", "reset"))
                   )
+                ),
+                not(hasAttribute("aria-disabled", equals("true"))),
+                or(
+                  isTabbable(device),
+                  hasRole(hasCategory(equals(Role.Category.Widget)))
                 )
               )
             )

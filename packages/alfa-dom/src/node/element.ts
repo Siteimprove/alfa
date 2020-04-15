@@ -1,13 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import {
-  EnumeratedValueError,
-  parseEnumeratedValue,
-} from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Namespace } from "../namespace";
@@ -20,7 +14,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { and, equals, not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
@@ -268,6 +262,47 @@ export class Element extends Node implements Slot, Slotable {
     return path;
   }
 
+  /**
+   * Return all descendants of this element's root whose id is listed in an IDlist attribute (headers, aria-labelledby, …)
+   */
+  public resolveAttributeReferences(
+    name: string,
+    options: Node.Traversal = {}
+  ): Array<Element> {
+    return this.root(options).resolveReferences(
+      ...this.attribute(name)
+        .map((attribute) => attribute.tokens())
+        .getOr([])
+    );
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   */
+  public enumerateAttribute(
+    name: string,
+    ...keywords: Array<string>
+  ): string | Element.EnumeratedAttributeError {
+    const attribute = this.attribute(name);
+
+    if (attribute.isNone() || attribute.get().value === "")
+      return Element.EnumeratedAttributeError.Missing;
+
+    const value = attribute.get().value.toLowerCase();
+
+    return keywords.includes(value)
+      ? value
+      : Element.EnumeratedAttributeError.Invalid;
+  }
+
+  public hasNamespace(predicate: Predicate<Namespace>): boolean {
+    return this._namespace.map(predicate).getOr(false);
+  }
+
+  public hasName(predicate: Predicate<string>): boolean {
+    return predicate(this._name);
+  }
+
   public toJSON(): Element.JSON {
     return {
       type: "element",
@@ -354,30 +389,55 @@ export namespace Element {
     );
   }
 
-  /**
-   * Parse an enumerated attribute on an element (if it exists), according to a mapping.
-   * Mapping may includes special keys "missing" and "invalid"
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
-   */
-  export function parseEnumeratedAttribute<RESULT>(
-    name: string,
-    mapping: Map<string, RESULT>
-  ): (element: Element) => Option<RESULT> {
-    function parser(element: Element): Option<RESULT> {
-      return element
-        .attribute(name)
-        .map((attribute) => attribute.value)
-        .map(parseEnumeratedValue(mapping))
-        .getOr<Result<readonly [string, RESULT], EnumeratedValueError>>(
-          Err.of(EnumeratedValueError.Missing)
-        )
-        .mapOrElse(
-          ([_, result]) => Some.of(result),
-          (err) => mapping.get(err)
-        );
+  export enum EnumeratedAttributeError {
+    Missing = "missing",
+    Invalid = "invalid",
+  }
+
+  export function hasNamespace(
+    predicate: Predicate<Namespace>
+  ): Predicate<Element>;
+
+  export function hasNamespace(
+    namespace: Namespace,
+    ...rest: Array<Namespace>
+  ): Predicate<Element>;
+
+  export function hasNamespace(
+    namespaceOrPredicate: Namespace | Predicate<Namespace>,
+    ...namespaces: Array<Namespace>
+  ): Predicate<Element> {
+    let predicate: Predicate<Namespace>;
+
+    if (typeof namespaceOrPredicate === "function") {
+      predicate = namespaceOrPredicate;
+    } else {
+      predicate = Predicate.equals(namespaceOrPredicate, ...namespaces);
     }
 
-    return parser;
+    return (element) => element.hasNamespace(predicate);
+  }
+
+  export function hasName(predicate: Predicate<string>): Predicate<Element>;
+
+  export function hasName(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<Element>;
+
+  export function hasName(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): Predicate<Element> {
+    let predicate: Predicate<string>;
+
+    if (typeof nameOrPredicate === "function") {
+      predicate = nameOrPredicate;
+    } else {
+      predicate = equals(nameOrPredicate, ...names);
+    }
+
+    return (element) => element.hasName(predicate);
   }
 }
 

@@ -1,14 +1,13 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Document, Element, Namespace, Table } from "@siteimprove/alfa-dom";
-import { Header } from "@siteimprove/alfa-dom/src/tables/cell";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Header, Table } from "@siteimprove/alfa-table";
 
 import { Role } from "./role";
-import isDocument = Document.isDocument;
 
 const { and, equals, test } = Predicate;
 
@@ -231,32 +230,56 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h1", () => Option.of("heading"))
+  Feature.of(
+    "h1",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "1"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h2", () => Option.of("heading"))
+  Feature.of(
+    "h2",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "2"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h3", () => Option.of("heading"))
+  Feature.of(
+    "h3",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "3"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h4", () => Option.of("heading"))
+  Feature.of(
+    "h4",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "4"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h5", () => Option.of("heading"))
+  Feature.of(
+    "h5",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "5"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h6", () => Option.of("heading"))
+  Feature.of(
+    "h6",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "6"])
+  )
 );
 
 Feature.register(
@@ -622,14 +645,13 @@ Feature.register(
     "th",
     (element) => {
       const table = element.closest(
-        and(Element.isElement, (element) => element.name === "table")
+        and(Element.isElement, Element.hasName("table"))
       );
       // If the <th> is not in a <table>, it doesn't really have a role…
       if (table.isNone()) return None;
 
-      const node = table.get().root();
       // Is this going to be memoized or re-computed every time?
-      const tableModel = Table.from(table.get(), node);
+      const tableModel = Table.from(table.get());
       // If the <th> is within a <table> with errors, it doesn't really have a role.
       if (tableModel.isErr()) return None;
 
