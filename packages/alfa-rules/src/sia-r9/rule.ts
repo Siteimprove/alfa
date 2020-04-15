@@ -11,7 +11,7 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasName } from "../common/predicate/has-name";
 import { hasNamespace } from "../common/predicate/has-namespace";
 
-const { and, equals } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r9.html",
@@ -24,18 +24,14 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasName(equals("meta")),
-                  and(
-                    hasAttribute(
-                      "http-equiv",
-                      (value) => value.toLowerCase() === "refresh"
-                    ),
-                    hasAttribute("content", (value) =>
-                      getRefreshTime(value).isSome()
-                    )
-                  )
+                hasNamespace(Namespace.HTML),
+                hasName("meta"),
+                hasAttribute(
+                  "http-equiv",
+                  (value) => value.toLowerCase() === "refresh"
+                ),
+                hasAttribute("content", (value) =>
+                  getRefreshTime(value).isSome()
                 )
               )
             )

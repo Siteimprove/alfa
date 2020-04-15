@@ -28,7 +28,7 @@ test("Passes when some atomic rules are passing", async (t) => {
 
   const video = document
     .descendants()
-    .filter(and(Element.isElement, hasName(equals("video"))))
+    .filter(and(Element.isElement, hasName("video")))
     .first()
     .get();
 
@@ -63,7 +63,7 @@ test("Can't tell when there are not enough answers to expectation", async (t) =>
 
   const video = document
     .descendants()
-    .filter(and(Element.isElement, hasName(equals("video"))))
+    .filter(and(Element.isElement, hasName("video")))
     .first()
     .get();
 

@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
+                hasNamespace(Namespace.HTML),
                 and(
                   hasRole(property("name", equals("img"))),
                   not(isIgnored(device))

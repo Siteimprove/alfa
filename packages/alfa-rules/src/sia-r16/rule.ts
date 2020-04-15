@@ -12,7 +12,7 @@ import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 
 const { find, isEmpty } = Iterable;
-const { and, equals, property } = Predicate;
+const { and, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r16.html",
@@ -24,10 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-                hasRole()
-              )
+              and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole())
             )
           );
       },
