@@ -92,7 +92,7 @@ function hasRoleWithOptions(
       predicate = () => true;
       break;
     default:
-      predicate = hasName(equals(nameOrPredicate, ...names));
+      predicate = hasName(nameOrPredicate, ...names);
   }
 
   return (element) =>

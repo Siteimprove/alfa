@@ -28,26 +28,22 @@ export function video(
       and(
         Element.isElement,
         and(
-          hasNamespace(equals(Namespace.HTML)),
-          and(
-            hasName(equals("video")),
-            and(
-              isVisible(device),
-              (element) =>
-                track === undefined ||
-                track.has ===
-                  some(
-                    element.children(),
-                    and(
-                      Element.isElement,
-                      and(
-                        hasName(equals("track")),
-                        hasAttribute("kind", equals(track.kind))
-                      )
-                    )
+          hasNamespace(Namespace.HTML),
+          hasName("video"),
+          isVisible(device),
+          (element) =>
+            track === undefined ||
+            track.has ===
+              some(
+                element.children(),
+                and(
+                  Element.isElement,
+                  and(
+                    hasName("track"),
+                    hasAttribute("kind", equals(track.kind))
                   )
-            )
-          )
+                )
+              )
         )
       )
     ),

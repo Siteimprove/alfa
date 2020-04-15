@@ -13,7 +13,7 @@ import { isPerceivable } from "../predicate/is-perceivable";
 import { Question } from "../question";
 
 const { filter, map } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export function audio(
   document: Document,
@@ -26,8 +26,9 @@ export function audio(
       and(
         Element.isElement,
         and(
-          hasNamespace(equals(Namespace.HTML)),
-          and(hasName(equals("audio")), not(isIgnored(device)))
+          hasNamespace(Namespace.HTML),
+          hasName("audio"),
+          not(isIgnored(device))
         )
       )
     ),
