@@ -25,27 +25,25 @@ export default Rule.Atomic.of<Page, Element, Question>({
           and(
             Element.isElement,
             and(
-              hasNamespace(equals(Namespace.HTML)),
-              and(
-                or(
-                  hasName(equals("img")),
-                  and(hasName(equals("input")), hasInputType(equals("image")))
-                ),
-                and(not(isIgnored(device)), (element) =>
-                  test(
-                    hasAccessibleName(device, (accessibleName) =>
-                      element
-                        .attribute("src")
-                        .map((attr) => getFilename(attr.value))
-                        .some(
-                          (filename) =>
-                            filename === accessibleName.toLowerCase().trim()
-                        )
-                    ),
+              hasNamespace(Namespace.HTML),
+              or(
+                hasName("img"),
+                and(hasName("input"), hasInputType(equals("image")))
+              ),
+              not(isIgnored(device)),
+              (element) =>
+                test(
+                  hasAccessibleName(device, (accessibleName) =>
                     element
-                  )
+                      .attribute("src")
+                      .map((attr) => getFilename(attr.value))
+                      .some(
+                        (filename) =>
+                          filename === accessibleName.toLowerCase().trim()
+                      )
+                  ),
+                  element
                 )
-              )
             )
           )
         );
