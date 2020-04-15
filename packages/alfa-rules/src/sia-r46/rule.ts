@@ -1,21 +1,19 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Element,
-  hasName,
-  isElementByName,
-  Table,
-} from "@siteimprove/alfa-dom";
+import { Role } from "@siteimprove/alfa-aria";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Table } from "@siteimprove/alfa-table";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -34,18 +32,25 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants()
           .filter(
             and(
-              // The table model only works if the element is a th.
+              isElement,
               and(
-                isElementByName("th"),
-                hasRole(hasName(equals("rowheader", "columnheader")))
-              ),
-              isPerceivable(device)
+                hasNamespace(Namespace.HTML),
+                // The table model only works if the element is a th.
+                hasName("th"),
+                hasRole(Role.hasName("rowheader", "columnheader")),
+                isPerceivable(device)
+              )
             )
           )
           .map((th) => {
             let result: Option<Element> = None;
             // get the table containing it: the first <table> ancestor
-            const table = th.ancestors().find(isElementByName("table"));
+            const table = th.closest(
+              and(
+                isElement,
+                and(hasNamespace(Namespace.HTML), hasName("table"))
+              )
+            );
 
             if (table.isNone()) return result;
             if (not(isPerceivable(device))(table.get())) return result;
@@ -59,7 +64,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const tableModel = Table.from(ownership.get(target).get(), document);
+        const tableModel = Table.from(ownership.get(target).get());
         return {
           1: expectation(
             tableModel.isErr(),
@@ -71,9 +76,8 @@ export default Rule.Atomic.of<Page, Element>({
                   tableModel.get().cells,
                   (cell) =>
                     // does there exists a (grid)cell with the target as one of its headers?
-                    hasRole(hasName(equals("cell", "gridcell")))(
-                      cell.element
-                    ) && Iterable.find(cell.headers, equals(target)).isSome()
+                    hasRole(Role.hasName("cell", "gridcell"))(cell.element) &&
+                    Iterable.find(cell.headers, equals(target)).isSome()
                 ),
                 () => Outcomes.IsAssignedToDataCell,
                 () => Outcomes.IsNotAssignedToDataCell

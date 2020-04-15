@@ -1,12 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, getDescendantWithId } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { jsx } from "@siteimprove/alfa-dom/jsx";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
-import { hasId } from "../../src/common/predicate/has-id";
-
-const { and, equals } = Predicate;
-const { isElement } = Element;
 
 import R46, { Outcomes } from "../../src/sia-r46/rule";
 import { evaluate } from "../common/evaluate";
@@ -27,10 +22,10 @@ test("Passes on explicit header", async (t) => {
       </table>
     ),
   ]);
-  const target = getDescendantWithId(document, "target").get();
+  const target = document.resolveReferences("target").shift();
 
   t.deepEqual(await evaluate(R46, { device, document }), [
-    passed(R46, target, [["1", Outcomes.IsAssignedToDataCell]]),
+    passed(R46, target, { 1: Outcomes.IsAssignedToDataCell }),
   ]);
 });
 
@@ -51,12 +46,12 @@ test("Passes on implicit headers", async (t) => {
       </table>
     ),
   ]);
-  const col1 = getDescendantWithId(document, "col1").get();
-  const col2 = getDescendantWithId(document, "col2").get();
+  const col1 = document.resolveReferences("col1").shift();
+  const col2 = document.resolveReferences("col2").shift();
 
   t.deepEqual(await evaluate(R46, { device, document }), [
-    passed(R46, col1, [["1", Outcomes.IsAssignedToDataCell]]),
-    passed(R46, col2, [["1", Outcomes.IsAssignedToDataCell]]),
+    passed(R46, col1, { 1: Outcomes.IsAssignedToDataCell }),
+    passed(R46, col2, { 1: Outcomes.IsAssignedToDataCell }),
   ]);
 });
 
@@ -75,12 +70,12 @@ test("Fails on headers with no data cell", async (t) => {
       </table>
     ),
   ]);
-  const col1 = getDescendantWithId(document, "col1").get();
-  const col2 = getDescendantWithId(document, "col2").get();
+  const col1 = document.resolveReferences("col1").shift();
+  const col2 = document.resolveReferences("col2").shift();
 
   t.deepEqual(await evaluate(R46, { device, document }), [
-    passed(R46, col1, [["1", Outcomes.IsAssignedToDataCell]]),
-    failed(R46, col2, [["1", Outcomes.IsNotAssignedToDataCell]]),
+    passed(R46, col1, { 1: Outcomes.IsAssignedToDataCell }),
+    failed(R46, col2, { 1: Outcomes.IsNotAssignedToDataCell }),
   ]);
 });
 

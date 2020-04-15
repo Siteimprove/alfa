@@ -42,7 +42,7 @@ test("Pass when tokens in headers list refer to cells in the same table", async 
     .get();
 
   t.deepEqual(await evaluate(R45, { device, document }), [
-    passed(R45, target, [["1", Outcomes.HeadersRefersToCellInTable]]),
+    passed(R45, target, { 1: Outcomes.HeadersRefersToCellInTable }),
   ]);
 });
 
@@ -74,7 +74,7 @@ test("Fail when some tokens in headers list do not refer to cells in the same ta
     .get();
 
   t.deepEqual(await evaluate(R45, { device, document }), [
-    failed(R45, target, [["1", Outcomes.HeadersDoesNotReferToCellsInTable]]),
+    failed(R45, target, { 1: Outcomes.HeadersDoesNotReferToCellsInTable }),
   ]);
 });
 

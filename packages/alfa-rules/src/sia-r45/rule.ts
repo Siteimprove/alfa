@@ -1,13 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Attribute,
-  Element,
-  isElementByName,
-  resolveReferences,
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { parseTokensList } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -15,7 +9,7 @@ import { expectation } from "../common/expectation";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
-const { parseAttribute } = Attribute;
+const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -30,12 +24,26 @@ export default Rule.Atomic.of<Page, Attribute>({
           document
             .descendants()
             // get all cells with a headers attribute
-            .filter(and(isElementByName("td", "th"), hasAttribute("headers")))
+            .filter(
+              and(
+                isElement,
+                and(
+                  hasNamespace(Namespace.HTML),
+                  hasName("td", "th"),
+                  hasAttribute("headers")
+                )
+              )
+            )
             // get the attributes themselves
             .map((cell) => {
               let result: Option<Attribute> = None;
               // get the table containing it: the first <table> ancestor
-              const table = cell.ancestors().find(isElementByName("table"));
+              const table = cell.closest(
+                and(
+                  isElement,
+                  and(hasNamespace(Namespace.HTML), hasName("table"))
+                )
+              );
 
               if (table.isNone()) return result;
               if (not(isPerceivable(device))(table.get())) return result;
@@ -53,10 +61,15 @@ export default Rule.Atomic.of<Page, Attribute>({
 
       expectations(target) {
         const table = ownership.get(target).get();
-        const idsList = parseAttribute(parseTokensList)(target).get();
-        const referredCells = resolveReferences(table, ...idsList).filter(
-          isElementByName("td", "th")
-        );
+        const idsList = target.tokens();
+        const referredCells = table
+          .resolveReferences(...idsList)
+          .filter(
+            and(
+              isElement,
+              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
+            )
+          );
 
         return {
           1: expectation(
