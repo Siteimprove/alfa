@@ -36,7 +36,7 @@
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
     "test/common/microsyntaxes.spec.ts",
-    "test/node/parse-attribute.spec.ts"
+    "test/node/attribute.spec.ts"
   ],
   "references": [
     {
