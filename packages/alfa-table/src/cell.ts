@@ -11,7 +11,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Header } from "./header";
-import { isElementByName, isEmpty, parseSpan } from "./helpers";
+import { isHtmlElementWithName, isEmpty, parseSpan } from "./helpers";
 import { Table } from "./table";
 
 const { some } = Iterable;
@@ -520,7 +520,7 @@ export namespace Cell {
           // 3 / headers attribute / 2
           and(
             // only keep cells in the table
-            isElementByName("th", "td"),
+            isHtmlElementWithName("th", "td"),
             (element) => element.ancestors().some(equals(table.element)),
             // remove principal cell
             not(equals(this.element)),

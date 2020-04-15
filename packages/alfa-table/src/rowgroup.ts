@@ -7,7 +7,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import { isElementByName } from "./helpers";
+import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 
 const { compare, Comparison } = Comparable;
@@ -208,7 +208,7 @@ export namespace RowGroup {
       // 1
       // Useless, the height of the group is computed and used instead.
       // 2
-      for (const tr of group.children().filter(isElementByName("tr"))) {
+      for (const tr of group.children().filter(isHtmlElementWithName("tr"))) {
         const row = Row.Builder.from(
           tr,
           rowgroup.cells,

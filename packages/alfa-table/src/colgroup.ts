@@ -6,7 +6,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { isElementByName, parseSpan } from "./helpers";
+import { isHtmlElementWithName, parseSpan } from "./helpers";
 
 const { Comparison } = Comparable;
 
@@ -142,7 +142,7 @@ export namespace ColGroup {
       if (colgroup.name !== "colgroup")
         return Err.of("This element is not a colgroup");
 
-      let children = colgroup.children().filter(isElementByName("col"));
+      let children = colgroup.children().filter(isHtmlElementWithName("col"));
       let totalSpan = 0;
       if (children.isEmpty()) {
         // second case

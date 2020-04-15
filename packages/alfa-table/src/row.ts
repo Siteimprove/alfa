@@ -7,7 +7,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import { isElementByName } from "./helpers";
+import { isHtmlElementWithName } from "./helpers";
 
 const { compare } = Comparable;
 
@@ -245,7 +245,7 @@ export namespace Row {
       )
         return Err.of("Cells and growing cells must be disjoints");
 
-      let children = tr.children().filter(isElementByName("th", "td"));
+      let children = tr.children().filter(isHtmlElementWithName("th", "td"));
 
       // 1
       // global table height adjusted after building row

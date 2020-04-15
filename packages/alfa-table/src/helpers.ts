@@ -39,7 +39,7 @@ export function isEmpty(element: Element): boolean {
   );
 }
 
-export function isElementByName(
+export function isHtmlElementWithName(
   ...names: Array<string>
 ): Predicate<Node, Element> {
   return and(

@@ -9,7 +9,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
 import { ColGroup } from "./colgroup";
-import { isElementByName } from "./helpers";
+import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 import { RowGroup } from "./rowgroup";
 
@@ -267,7 +267,7 @@ export namespace Table {
       // 5 + 8 + 9.3
       let children = element
         .children()
-        .filter(isElementByName("colgroup", "thead", "tbody", "tfoot", "tr"));
+        .filter(isHtmlElementWithName("colgroup", "thead", "tbody", "tfoot", "tr"));
       // 6
       // skipping caption for now
 
