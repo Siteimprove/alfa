@@ -142,6 +142,9 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
 }
 
 export namespace Cell {
+  import isElement = Element.isElement;
+  import hasName = Element.hasName;
+
   export interface JSON {
     [key: string]: json.JSON;
 
@@ -521,7 +524,10 @@ export namespace Cell {
           and(
             // only keep cells in the table
             isHtmlElementWithName("th", "td"),
-            (element) => element.ancestors().some(equals(table.element)),
+            (element) =>
+              element
+                .closest(and(isElement, hasName("table")))
+                .some(equals(table.element)),
             // remove principal cell
             not(equals(this.element)),
             // Step 4: remove empty cells
