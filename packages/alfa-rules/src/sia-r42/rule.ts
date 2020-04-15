@@ -1,7 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, hasNamespace, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -12,6 +12,7 @@ import { expectation } from "../common/expectation";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasNamespace } = Element;
 const { some } = Iterable;
 const { and, not } = Predicate;
 
@@ -24,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
                 not(isIgnored(device)),

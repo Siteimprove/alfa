@@ -4,7 +4,6 @@ import {
   Document,
   Element,
   hasName,
-  hasNamespace,
   Namespace,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -16,6 +15,7 @@ import { isPerceivable } from "../predicate/is-perceivable";
 
 import { Question } from "../question";
 
+const { isElement, hasNamespace } = Element;
 const { filter, map } = Iterable;
 const { and, not } = Predicate;
 
@@ -28,7 +28,7 @@ export function audio(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        Element.isElement,
+        isElement,
         and(
           hasNamespace(Namespace.HTML),
           hasName("audio"),

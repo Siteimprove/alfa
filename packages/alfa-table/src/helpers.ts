@@ -1,8 +1,12 @@
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, hasName, Namespace, Node } from "@siteimprove/alfa-dom";
 import { clamp } from "@siteimprove/alfa-math";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok } from "@siteimprove/alfa-result";
 
 import { parseNonNegativeInteger } from "./microsyntaxes";
+
+const { isElement, hasNamespace } = Element;
+const { and, equals } = Predicate;
 
 /**
  * Parse a "span" (colspan/rowspan) attribute on table cell according to specs.
@@ -18,7 +22,7 @@ export function parseSpan(
 ): number {
   return element
     .attribute(name)
-    .map(attribute => attribute.parse(parseNonNegativeInteger))
+    .map((attribute) => attribute.parse(parseNonNegativeInteger))
     .map((r) => r.map((x) => clamp(x, min, max)))
     .getOr(Ok.of(failed))
     .getOr(failed);
@@ -32,5 +36,14 @@ export function isEmpty(element: Element): boolean {
     element.children().isEmpty() &&
     // \s seems to be close enough to "ASCII whitespace".
     !!element.textContent().match(/^\s*$/)
+  );
+}
+
+export function isElementByName(
+  ...names: Array<string>
+): Predicate<Node, Element> {
+  return and(
+    isElement,
+    and(hasNamespace(Namespace.HTML), hasName(equals(...names)))
   );
 }

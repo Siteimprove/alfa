@@ -1,11 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Attribute,
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, hasName, Namespace } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -16,6 +10,7 @@ import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 
+const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
@@ -27,17 +22,12 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants()
           .filter(
-            and(
-              Element.isElement,
-              and(hasNamespace(Namespace.HTML), hasName("body"))
-            )
+            and(isElement, and(hasNamespace(Namespace.HTML), hasName("body")))
           )
           .flatMap((body) =>
             body
               .descendants()
-              .filter(
-                and(Element.isElement, hasAttribute("lang", not(isEmpty)))
-              )
+              .filter(and(isElement, hasAttribute("lang", not(isEmpty))))
               .map((element) => element.attribute("lang").get())
           );
       },

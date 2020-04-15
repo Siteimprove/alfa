@@ -1,10 +1,5 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
-import {
-  Element,
-  hasName,
-  isDescendantOf,
-  isElementByName,
-} from "@siteimprove/alfa-dom";
+import { Element, hasName, isDescendantOf } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -16,7 +11,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Header } from "./header";
-import { isEmpty, parseSpan } from "./helpers";
+import { isElementByName, isEmpty, parseSpan } from "./helpers";
 import { Table } from "./table";
 
 const { some } = Iterable;
@@ -687,7 +682,15 @@ export namespace Cell {
       const scope =
         kind === Cell.Kind.Data
           ? None
-          : scopeMapping.get(cell.enumerateAttribute("scope", "col", "colgroup", "row", "rowgroup"));
+          : scopeMapping.get(
+              cell.enumerateAttribute(
+                "scope",
+                "col",
+                "colgroup",
+                "row",
+                "rowgroup"
+              )
+            );
 
       return Ok.of(
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)

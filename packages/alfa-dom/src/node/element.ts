@@ -295,6 +295,10 @@ export class Element extends Node implements Slot, Slotable {
       : Element.EnumeratedAttributeError.Invalid;
   }
 
+  public hasNamespace(predicate: Predicate<Namespace>): boolean {
+    return this._namespace.map(predicate).getOr(false);
+  }
+
   public toJSON(): Element.JSON {
     return {
       type: "element",
@@ -384,6 +388,30 @@ export namespace Element {
   export enum EnumeratedAttributeError {
     Missing = "missing",
     Invalid = "invalid",
+  }
+
+  export function hasNamespace(
+    predicate: Predicate<Namespace>
+  ): Predicate<Element>;
+
+  export function hasNamespace(
+    namespace: Namespace,
+    ...rest: Array<Namespace>
+  ): Predicate<Element>;
+
+  export function hasNamespace(
+    namespaceOrPredicate: Namespace | Predicate<Namespace>,
+    ...namespaces: Array<Namespace>
+  ): Predicate<Element> {
+    let predicate: Predicate<Namespace>;
+
+    if (typeof namespaceOrPredicate === "function") {
+      predicate = namespaceOrPredicate;
+    } else {
+      predicate = Predicate.equals(namespaceOrPredicate, ...namespaces);
+    }
+
+    return (element) => element.hasNamespace(predicate);
   }
 }
 

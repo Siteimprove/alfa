@@ -2,7 +2,6 @@ import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
   hasName,
-  hasNamespace,
   Namespace,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -15,6 +14,7 @@ import { expectation } from "../common/expectation";
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 hasNamespace(Namespace.HTML),
                 hasName("iframe"),

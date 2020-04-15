@@ -2,7 +2,6 @@ import { Rule } from "@siteimprove/alfa-act";
 import {
   Element,
   hasName,
-  hasNamespace,
   Namespace,
 } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -14,6 +13,7 @@ import { expectation } from "../common/expectation";
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { isDecorative } from "../common/predicate/is-decorative";
 
+const { isElement, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(hasNamespace(Namespace.HTML), hasName("img"), isDecorative)
             )
           );

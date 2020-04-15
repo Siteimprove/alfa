@@ -4,7 +4,6 @@ import {
   Document,
   Element,
   hasName,
-  hasNamespace,
   Namespace,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -16,6 +15,7 @@ import { isVisible } from "../predicate/is-visible";
 import { Question } from "../question";
 import { hasAttribute } from "../predicate/has-attribute";
 
+const { isElement, hasNamespace } = Element;
 const { filter, map, some } = Iterable;
 const { and, equals } = Predicate;
 
@@ -30,7 +30,7 @@ export function video(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        Element.isElement,
+        isElement,
         and(
           hasNamespace(Namespace.HTML),
           hasName("video"),

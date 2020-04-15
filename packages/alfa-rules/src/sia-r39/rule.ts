@@ -1,10 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import {
-  Element,
-  hasName,
-  hasNamespace,
-  Namespace,
-} from "@siteimprove/alfa-dom";
+import { Element, hasName, Namespace } from "@siteimprove/alfa-dom";
 import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -16,6 +11,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasNamespace } = Element;
 const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -25,7 +21,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
       applicability() {
         return document.descendants({ flattened: true, nested: true }).filter(
           and(
-            Element.isElement,
+            isElement,
             and(
               hasNamespace(Namespace.HTML),
               or(

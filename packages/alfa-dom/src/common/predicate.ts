@@ -1,31 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
-import {Element, Namespace, Node} from "..";
+import { Node } from "..";
 
-const { and, equals, property } = Predicate;
-
-export function hasNamespace(
-  predicate: Predicate<Namespace>
-): Predicate<Element>;
-
-export function hasNamespace(
-  namespace: Namespace,
-  ...rest: Array<Namespace>
-): Predicate<Element>;
-
-export function hasNamespace(
-  namespaceOrPredicate: Namespace | Predicate<Namespace>,
-  ...namespaces: Array<Namespace>
-): Predicate<Element> {
-  let predicate: Predicate<Namespace>;
-
-  if (typeof namespaceOrPredicate === "function") {
-    predicate = namespaceOrPredicate;
-  } else {
-    predicate = equals(namespaceOrPredicate, ...namespaces);
-  }
-
-  return (element) => element.namespace.some(predicate);
-}
+const { equals, property } = Predicate;
 
 export function hasName<T extends { readonly name: string }>(
   predicate: Predicate<string>
@@ -49,14 +25,6 @@ export function hasName<T extends { readonly name: string }>(
   }
 
   return property("name", predicate);
-}
-export function isElementByName(
-  ...names: Array<string>
-): Predicate<Node, Element> {
-  return and(
-    Element.isElement,
-    and(hasNamespace(equals(Namespace.HTML)), hasName(equals(...names)))
-  );
 }
 
 export function isDescendantOf(

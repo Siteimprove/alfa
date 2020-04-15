@@ -4,7 +4,6 @@ import {
   Attribute,
   Element,
   hasName,
-  hasNamespace,
   Namespace,
 } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -20,6 +19,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
+const { isElement, hasNamespace } = Element;
 const { and, or, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 hasAttribute("autocomplete", hasTokens),
                 hasNamespace(Namespace.HTML),
