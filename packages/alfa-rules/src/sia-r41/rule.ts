@@ -34,10 +34,10 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
             and(
               Element.isElement,
               and(
-                hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+                hasNamespace(Namespace.HTML, Namespace.SVG),
                 hasRole(
-                  or(hasName(equals("link")), (role) =>
-                    role.inheritsFrom(hasName(equals("link")))
+                  or(hasName("link"), (role) =>
+                    role.inheritsFrom(hasName("link"))
                   )
                 ),
                 not(isIgnored(device)),
