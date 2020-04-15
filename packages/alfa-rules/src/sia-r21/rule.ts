@@ -13,7 +13,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasRole } from "../common/predicate/has-role";
+import { hasExplicitRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isEmpty } = Iterable;
