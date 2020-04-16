@@ -2,18 +2,10 @@
   "$schema": "http://json.schemastore.org/package",
   "private": true,
   "name": "@siteimprove/alfa-reducer",
-  "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
   "license": "MIT",
   "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
-  "keywords": [
-    "a11y",
-    "accessibility",
-    "aria",
-    "typescript",
-    "wcag"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",
