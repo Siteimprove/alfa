@@ -286,9 +286,7 @@ export namespace Role {
     }
   }
 
-  export function hasName(
-    predicate: Predicate<string>
-  ): Predicate<Role>;
+  export function hasName(predicate: Predicate<string>): Predicate<Role>;
 
   export function hasName(
     name: string,

@@ -1,3 +1,4 @@
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -5,7 +6,8 @@ import { Namespace } from "../namespace";
 import { Node } from "../node";
 import { Element } from "./element";
 
-const { equals } = Predicate;
+const { isEmpty } = Iterable;
+const { equals, not } = Predicate;
 
 export class Attribute extends Node {
   public static of(
@@ -97,10 +99,7 @@ export class Attribute extends Node {
    * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#space-separated-tokens
    */
   public tokens(separator: string | RegExp = /\s+/): Array<string> {
-    return this._value
-      .trim()
-      .split(separator)
-      .filter(not(isEmpty));
+    return this._value.trim().split(separator).filter(not(isEmpty));
   }
 
   public toJSON(): Attribute.JSON {
