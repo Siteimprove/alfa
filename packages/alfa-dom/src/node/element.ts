@@ -277,18 +277,6 @@ export class Element extends Node implements Slot, Slotable {
     );
   }
 
-  /**
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
-   */
-  public enumerateAttribute(
-    name: string,
-    ...keywords: Array<string>
-  ): Result<string, Attribute.EnumeratedAttributeError> {
-    return this.attribute(name)
-      .map(attribute => attribute.enumerate(...keywords))
-      .getOr(Err.of(Attribute.EnumeratedAttributeError.Missing));
-  }
-
   public hasNamespace(predicate: Predicate<Namespace>): boolean {
     return this._namespace.map(predicate).getOr(false);
   }

@@ -32,8 +32,7 @@
     "src/style/rule/style.ts",
     "src/style/rule/supports.ts",
     "src/style/sheet.ts",
-    "test/node/attribute.spec.ts",
-    "test/node/element.spec.ts"
+    "test/node/attribute.spec.ts"
   ],
   "references": [
     {

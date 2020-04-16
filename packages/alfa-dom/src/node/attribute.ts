@@ -1,7 +1,6 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import {Err, Ok, Result} from "@siteimprove/alfa-result";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -108,19 +107,12 @@ export class Attribute extends Node {
    */
   public enumerate(): Option<string>;
 
-  /**
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
-   */
-  public enumerate(valid: string, ...rest: Array<string>): Option<string>;
-  
-  public enumerate(
-    ...valid: Array<string>
-  ): Option<string> {
+  public enumerate<VALID extends string = string>(valid: VALID, ...rest: Array<VALID>): Option<VALID>;
+
+  public enumerate(...valid: Array<string>): Option<string> {
     const value = this._value.toLowerCase();
 
-    return valid.length === 0 || valid.includes(value)
-      ? Some.of(value)
-      : None;
+    return valid.length === 0 || valid.includes(value) ? Some.of(value) : None;
   }
 
   public toJSON(): Attribute.JSON {

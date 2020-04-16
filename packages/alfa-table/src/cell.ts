@@ -683,11 +683,12 @@ export namespace Cell {
         kind === Cell.Kind.Data
           ? None
           : cell
-              .enumerateAttribute("scope", "col", "colgroup", "row", "rowgroup")
-              .mapOrElse(
-                (keyword) => scopeKeywordsMapping.get(keyword),
-                (err) => Some.of(Header.Scope.Auto)
-              );
+              .attribute("scope")
+              .flatMap((attribute) =>
+                attribute.enumerate("col", "colgroup", "row", "rowgroup")
+              )
+              .flatMap((keyword) => scopeKeywordsMapping.get(keyword))
+              .orElse(() => Some.of(Header.Scope.Auto));
       return Ok.of(
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)
       );
