@@ -286,19 +286,19 @@ export namespace Role {
     }
   }
 
-  export function hasName<N extends string = string>(
+  export function hasName(
     predicate: Predicate<string>
-  ): Predicate<Role<N>>;
+  ): Predicate<Role>;
 
-  export function hasName<N extends string = string>(
+  export function hasName(
     name: string,
     ...rest: Array<string>
-  ): Predicate<Role<N>>;
+  ): Predicate<Role>;
 
-  export function hasName<N extends string = string>(
+  export function hasName(
     nameOrPredicate: string | Predicate<string>,
     ...names: Array<string>
-  ): Predicate<Role<N>> {
+  ): Predicate<Role> {
     let predicate: Predicate<string>;
 
     if (typeof nameOrPredicate === "function") {
