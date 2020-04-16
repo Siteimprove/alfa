@@ -13,7 +13,11 @@
     "typescript",
     "wcag"
   ],
-  "repository": "https://github.com/siteimprove/alfa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-cache"
+  },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",

@@ -14,7 +14,10 @@
     "typescript",
     "wcag"
   ],
-  "repository": "https://github.com/siteimprove/alfa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git"
+  },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
     "build": "node scripts/build.js --pretty",
