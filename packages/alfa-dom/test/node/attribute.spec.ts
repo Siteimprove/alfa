@@ -7,7 +7,7 @@ import { Attribute } from "../../src";
 
 const makeAttribute = (str: string) => Attribute.of(None, None, "dummy", str);
 
-test("parse space separated token list", (t) => {
+test("#tokens() parses a space separated token list", (t) => {
   t.deepEqual(makeAttribute("foo").tokens(), ["foo"]);
   t.deepEqual(makeAttribute("foo bar").tokens(), ["foo", "bar"]);
   t.deepEqual(makeAttribute("").tokens(), []);
