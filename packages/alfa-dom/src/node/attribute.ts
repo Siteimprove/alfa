@@ -106,17 +106,21 @@ export class Attribute extends Node {
   /**
    * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
    */
-  public enumerate(
-    ...keywords: Array<string>
-  ): Result<string, Attribute.EnumeratedAttributeError> {
-    if (this._value === "")
-      return Err.of(Attribute.EnumeratedAttributeError.Missing);
+  public enumerate(): Option<string>;
 
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   */
+  public enumerate(valid: string, ...rest: Array<string>): Option<string>;
+  
+  public enumerate(
+    ...valid: Array<string>
+  ): Option<string> {
     const value = this._value.toLowerCase();
 
-    return keywords.length === 0 || keywords.includes(value)
-      ? Ok.of(value)
-      : Err.of(Attribute.EnumeratedAttributeError.Invalid);
+    return valid.length === 0 || valid.includes(value)
+      ? Some.of(value)
+      : None;
   }
 
   public toJSON(): Attribute.JSON {
