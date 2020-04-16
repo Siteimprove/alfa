@@ -5,9 +5,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Cell } from "../src/cell";
-import { ColGroup } from "../src/colgroup";
+import { ColumnGroup } from "../src/column-group";
 import { Row } from "../src/row";
-import { RowGroup } from "../src/rowgroup";
+import { RowGroup } from "../src/row-group";
 import { Header, Table } from "../src";
 
 const { and } = Predicate;
@@ -599,8 +599,8 @@ export namespace expenses {
       RowGroup.of(3, 2, getById("body-2")),
     ].sort(compare),
     [
-      ColGroup.of(0, 1, getById("group-head")),
-      ColGroup.of(1, 3, getById("group-body")),
+      ColumnGroup.of(0, 1, getById("group-head")),
+      ColumnGroup.of(1, 3, getById("group-body")),
     ].sort(compare)
   );
 
@@ -739,8 +739,8 @@ export namespace expensesNum {
       RowGroup.of(3, 2, getById("body-2")),
     ].sort(compare),
     [
-      ColGroup.of(0, 1, getById("group-head")),
-      ColGroup.of(1, 3, getById("group-body")),
+      ColumnGroup.of(0, 1, getById("group-head")),
+      ColumnGroup.of(1, 3, getById("group-body")),
     ].sort(compare)
   );
 }
@@ -1234,7 +1234,7 @@ export namespace colGroupImplicitHeaders {
         1,
         0,
         [],
-        Header.Variant.ColGroup,
+        Header.Variant.ColumnGroup,
         2,
         1
       ),
@@ -1244,7 +1244,7 @@ export namespace colGroupImplicitHeaders {
         3,
         0,
         [],
-        Header.Variant.ColGroup,
+        Header.Variant.ColumnGroup,
         2,
         1
       ),
@@ -1325,9 +1325,9 @@ export namespace colGroupImplicitHeaders {
     ].sort(compare),
     [],
     [
-      ColGroup.of(0, 1, getById("group-empty")),
-      ColGroup.of(1, 2, getById("group-mars")),
-      ColGroup.of(3, 2, getById("group-venus")),
+      ColumnGroup.of(0, 1, getById("group-empty")),
+      ColumnGroup.of(1, 2, getById("group-mars")),
+      ColumnGroup.of(3, 2, getById("group-venus")),
     ].sort(compare)
   );
 }
@@ -1446,7 +1446,7 @@ export namespace allWeirdImplicitHeaders {
         2,
         0,
         [],
-        Header.Variant.ColGroup,
+        Header.Variant.ColumnGroup,
         1,
         2
       ),
@@ -1476,7 +1476,7 @@ export namespace allWeirdImplicitHeaders {
         5,
         0,
         [],
-        Header.Variant.ColGroup,
+        Header.Variant.ColumnGroup,
         2,
         1
       ),
@@ -1696,9 +1696,9 @@ export namespace allWeirdImplicitHeaders {
       RowGroup.of(4, 3, getById("games-rg")),
     ].sort(compare),
     [
-      ColGroup.of(0, 2, getById("group-empty")),
-      ColGroup.of(2, 3, getById("group-mars")),
-      ColGroup.of(5, 2, getById("group-venus")),
+      ColumnGroup.of(0, 2, getById("group-empty")),
+      ColumnGroup.of(2, 3, getById("group-mars")),
+      ColumnGroup.of(5, 2, getById("group-venus")),
     ].sort(compare)
   );
 }

@@ -4,8 +4,8 @@ import { test } from "@siteimprove/alfa-test";
 import { None } from "@siteimprove/alfa-option";
 
 import { Cell } from "../src/cell";
-import { ColGroup } from "../src/colgroup";
-import { RowGroup } from "../src/rowgroup";
+import { ColumnGroup } from "../src/column-group";
+import { RowGroup } from "../src/row-group";
 import { isEmpty, parseSpan } from "../src/helpers";
 
 const dummy = Element.of(None, None, "foo");
@@ -18,8 +18,8 @@ function rowGroup(y: number, h: number): RowGroup {
   return RowGroup.of(y, h, dummy);
 }
 
-function colGroup(x: number, w: number): ColGroup {
-  return ColGroup.of(x, w, dummy);
+function colGroup(x: number, w: number): ColumnGroup {
+  return ColumnGroup.of(x, w, dummy);
 }
 
 test("isCovering ̤correctly computes cell coverage", (t) => {

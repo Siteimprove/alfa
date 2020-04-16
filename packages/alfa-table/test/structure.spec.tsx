@@ -24,7 +24,7 @@ import {
 
 import { Cell } from "../src/cell";
 import { Row } from "../src/row";
-import { RowGroup } from "../src/rowgroup";
+import { RowGroup } from "../src/row-group";
 
 test("Process individual rows", (t) => {
   t.deepEqual(

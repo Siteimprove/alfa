@@ -13,13 +13,13 @@ const { Comparison } = Comparable;
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
  */
-export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
+export class ColumnGroup implements Comparable<ColumnGroup>, Equatable, Serializable {
   private readonly _x: number;
   private readonly _width: number;
   private readonly _element: Element;
 
-  public static of(x: number, width: number, element: Element): ColGroup {
-    return new ColGroup(x, width, element);
+  public static of(x: number, width: number, element: Element): ColumnGroup {
+    return new ColumnGroup(x, width, element);
   }
 
   private constructor(x: number, width: number, element: Element) {
@@ -51,7 +51,7 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
    * compare colgroups according to their anchor
    * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
    */
-  public compare(colgroup: ColGroup): Comparable.Comparison {
+  public compare(colgroup: ColumnGroup): Comparable.Comparison {
     if (this._x < colgroup._x) return Comparison.Less;
     if (this._x > colgroup._x) return Comparison.More;
     return Comparison.Equal;
@@ -59,14 +59,14 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
 
   public equals(value: unknown): value is this {
     return (
-      value instanceof ColGroup &&
+      value instanceof ColumnGroup &&
       this._width === value._width &&
       this._x === value._x &&
       this._element.equals(value._element)
     );
   }
 
-  public toJSON(): ColGroup.JSON {
+  public toJSON(): ColumnGroup.JSON {
     return {
       anchor: this.anchor,
       width: this._width,
@@ -75,9 +75,9 @@ export class ColGroup implements Comparable<ColGroup>, Equatable, Serializable {
   }
 }
 
-export namespace ColGroup {
-  export function from(element: Element): Result<ColGroup, string> {
-    return ColGroup.Builder.from(element).map((colgroup) => colgroup.colgroup);
+export namespace ColumnGroup {
+  export function from(element: Element): Result<ColumnGroup, string> {
+    return ColumnGroup.Builder.from(element).map((colgroup) => colgroup.colgroup);
   }
 
   export interface JSON {
@@ -89,17 +89,17 @@ export namespace ColGroup {
   }
 
   export class Builder implements Equatable, Serializable {
-    private readonly _colgroup: ColGroup;
+    private readonly _colgroup: ColumnGroup;
 
     public static of(x: number, width: number, element: Element) {
       return new Builder(x, width, element);
     }
 
     private constructor(x: number, width: number, element: Element) {
-      this._colgroup = ColGroup.of(x, width, element);
+      this._colgroup = ColumnGroup.of(x, width, element);
     }
 
-    public get colgroup(): ColGroup {
+    public get colgroup(): ColumnGroup {
       return this._colgroup;
     }
 
@@ -168,7 +168,7 @@ export namespace ColGroup {
     export interface JSON {
       [key: string]: json.JSON;
 
-      colgroup: ColGroup.JSON;
+      colgroup: ColumnGroup.JSON;
     }
   }
 }

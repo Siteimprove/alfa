@@ -373,20 +373,20 @@ export namespace Cell {
     private _scopeToState(
       scope: Header.Scope,
       table: Table.Builder
-    ): Header.Variant | undefined {
+    ): Option<Header.Variant> {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
-        case Header.Scope.ColGroup:
-          return Header.Variant.ColGroup;
+        case Header.Scope.ColumnGroup:
+          return Some.of(Header.Variant.ColumnGroup);
         // https://html.spec.whatwg.org/multipage/tables.html#row-group-header
         case Header.Scope.RowGroup:
-          return Header.Variant.RowGroup;
+          return Some.of(Header.Variant.RowGroup);
         // https://html.spec.whatwg.org/multipage/tables.html#column-header
         case Header.Scope.Column:
-          return Header.Variant.Column;
+          return Some.of(Header.Variant.Column);
         // https://html.spec.whatwg.org/multipage/tables.html#row-header
         case Header.Scope.Row:
-          return Header.Variant.Row;
+          return Some.of(Header.Variant.Row);
         // https://html.spec.whatwg.org/multipage/tables.html#column-header
         // https://html.spec.whatwg.org/multipage/tables.html#row-header
         case Header.Scope.Auto:
@@ -414,14 +414,14 @@ export namespace Cell {
               )
             ) {
               // there are *some* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
-              return undefined;
+              return None;
             } else {
               // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
-              return Header.Variant.Row;
+              return Some.of(Header.Variant.Row);
             }
           } else {
             // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-            return Header.Variant.Column;
+            return Some.of(Header.Variant.Column);
           }
       }
     }
@@ -429,7 +429,7 @@ export namespace Cell {
     public addHeaderVariant(table: Table.Builder): Builder {
       return this._update({
         variant: this._scope.flatMap((scope) =>
-          Option.from(this._scopeToState(scope, table))
+          this._scopeToState(scope, table)
         ),
       });
     }
@@ -591,7 +591,7 @@ export namespace Cell {
         const headers = table.cells
           // get all colgroup headers
           .filter((cell) =>
-            cell.variant.equals(Some.of(Header.Variant.ColGroup))
+            cell.variant.equals(Some.of(Header.Variant.ColumnGroup))
           )
           // keep the ones inside the colgroup of the principal cell
           .filter((colGroupHeader) =>
@@ -673,12 +673,6 @@ export namespace Cell {
       /**
        * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
        */
-      const scopeKeywordsMapping = Map.from([
-        ["row", Header.Scope.Row],
-        ["col", Header.Scope.Column],
-        ["rowgroup", Header.Scope.RowGroup],
-        ["colgroup", Header.Scope.ColGroup],
-      ]);
       const scope =
         kind === Cell.Kind.Data
           ? None
@@ -693,6 +687,13 @@ export namespace Cell {
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)
       );
     }
+
+    const scopeKeywordsMapping = Map.from([
+      ["row", Header.Scope.Row],
+      ["col", Header.Scope.Column],
+      ["rowgroup", Header.Scope.RowGroup],
+      ["colgroup", Header.Scope.ColumnGroup],
+    ]);
 
     export interface JSON {
       [key: string]: json.JSON;
