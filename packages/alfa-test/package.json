@@ -22,5 +22,9 @@
     "@siteimprove/alfa-highlight": "^0.0.0",
     "@types/node": "^13.1.6",
     "error-stack-parser": "^2.0.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   }
 }

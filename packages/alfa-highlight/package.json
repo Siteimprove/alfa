@@ -22,5 +22,9 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "emphasize": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   }
 }
