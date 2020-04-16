@@ -673,27 +673,21 @@ export namespace Cell {
       /**
        * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope
        */
-      const scopeMapping = Map.from([
+      const scopeKeywordsMapping = Map.from([
         ["row", Header.Scope.Row],
         ["col", Header.Scope.Column],
         ["rowgroup", Header.Scope.RowGroup],
         ["colgroup", Header.Scope.ColGroup],
-        [Element.EnumeratedAttributeError.Missing, Header.Scope.Auto],
-        [Element.EnumeratedAttributeError.Invalid, Header.Scope.Auto],
       ]);
       const scope =
         kind === Cell.Kind.Data
           ? None
-          : scopeMapping.get(
-              cell.enumerateAttribute(
-                "scope",
-                "col",
-                "colgroup",
-                "row",
-                "rowgroup"
-              )
-            );
-
+          : cell
+              .enumerateAttribute("scope", "col", "colgroup", "row", "rowgroup")
+              .mapOrElse(
+                (keyword) => scopeKeywordsMapping.get(keyword),
+                (err) => Some.of(Header.Scope.Auto)
+              );
       return Ok.of(
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)
       );

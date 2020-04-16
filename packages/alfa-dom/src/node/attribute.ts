@@ -1,6 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import {Err, Ok, Result} from "@siteimprove/alfa-result";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -102,6 +103,22 @@ export class Attribute extends Node {
     return this._value.trim().split(separator).filter(not(isEmpty));
   }
 
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   */
+  public enumerate(
+    ...keywords: Array<string>
+  ): Result<string, Attribute.EnumeratedAttributeError> {
+    if (this._value === "")
+      return Err.of(Attribute.EnumeratedAttributeError.Missing);
+
+    const value = this._value.toLowerCase();
+
+    return keywords.length === 0 || keywords.includes(value)
+      ? Ok.of(value)
+      : Err.of(Attribute.EnumeratedAttributeError.Invalid);
+  }
+
   public toJSON(): Attribute.JSON {
     return {
       type: "attribute",
@@ -145,6 +162,11 @@ export namespace Attribute {
       attribute.value,
       owner
     );
+  }
+
+  export enum EnumeratedAttributeError {
+    Missing = "missing",
+    Invalid = "invalid",
   }
 }
 
