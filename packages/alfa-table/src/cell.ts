@@ -11,7 +11,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Header } from "./header";
-import { isHtmlElementWithName, isEmpty, parseSpan } from "./helpers";
+import { isHtmlElementWithName, parseSpan } from "./helpers";
 import { Table } from "./table";
 
 const { some } = Iterable;
@@ -531,7 +531,7 @@ export namespace Cell {
             // remove principal cell
             not(equals(this.element)),
             // Step 4: remove empty cells
-            not(isEmpty)
+            not(element => element.children().isEmpty())
           )
         );
 
@@ -610,7 +610,7 @@ export namespace Cell {
       headersList = headersList.filter(
         (cell, idx) =>
           // 4 (remove empty cells)
-          !isEmpty(cell.element) &&
+          !cell.element.children().isEmpty() &&
           // 6 remove principal cell
           !cell.equals(this) &&
           // 5 (remove duplicates)

@@ -6,7 +6,7 @@ import { None } from "@siteimprove/alfa-option";
 import { Cell } from "../src/cell";
 import { ColumnGroup } from "../src/column-group";
 import { RowGroup } from "../src/row-group";
-import { isEmpty, parseSpan } from "../src/helpers";
+import { parseSpan } from "../src/helpers";
 
 const dummy = Element.of(None, None, "foo");
 
@@ -79,18 +79,4 @@ test("parse span attribute according to table specs", (t) => {
   t.equal(parseSpan(span("row", "-2"), "rowspan", 0, 65534, 1), 1);
   t.equal(parseSpan(span("row", "abc"), "rowspan", 0, 65534, 1), 1);
   t.equal(parseSpan(nospan, "rowspan", 0, 65534, 1), 1);
-});
-
-test("Detect empty cells (element)", (t) => {
-  t(isEmpty(Element.fromElement(<td />)));
-  t(!isEmpty(Element.fromElement(<td>Foo</td>))); // has text content
-  t(
-    !isEmpty(
-      Element.fromElement(
-        <td>
-          <span />
-        </td>
-      )
-    )
-  ); // has child
 });
