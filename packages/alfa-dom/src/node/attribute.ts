@@ -159,11 +159,6 @@ export namespace Attribute {
       owner
     );
   }
-
-  export enum EnumeratedAttributeError {
-    Missing = "missing",
-    Invalid = "invalid",
-  }
 }
 
 /**
