@@ -107,7 +107,10 @@ export class Attribute extends Node {
    */
   public enumerate(): Option<string>;
 
-  public enumerate<VALID extends string = string>(valid: VALID, ...rest: Array<VALID>): Option<VALID>;
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   */
+  public enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
 
   public enumerate(...valid: Array<string>): Option<string> {
     const value = this._value.toLowerCase();
