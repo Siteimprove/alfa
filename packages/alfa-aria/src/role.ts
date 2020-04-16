@@ -108,7 +108,7 @@ export class Role<N extends string = string> implements Equatable {
     return some(this.characteristics.name.from, predicate);
   }
 
-  public hasName(predicate: Predicate<N>): boolean {
+  public hasName(predicate: Predicate<string>): boolean {
     return predicate(this.name);
   }
 
