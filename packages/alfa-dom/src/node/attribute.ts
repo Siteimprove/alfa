@@ -100,7 +100,7 @@ export class Attribute extends Node {
     return this._value
       .trim()
       .split(separator)
-      .filter((s) => s !== "");
+      .filter(not(isEmpty));
   }
 
   public toJSON(): Attribute.JSON {
