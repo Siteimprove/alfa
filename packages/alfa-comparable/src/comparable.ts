@@ -1,4 +1,3 @@
-
 export interface Comparable<T> {
   /**
    * @remarks
