@@ -1,4 +1,5 @@
 {
+  "$schema": "http://json.schemastore.org/package",
   "private": true,
   "name": "@siteimprove/alfa-cascade",
   "author": "Siteimprove A/S",
