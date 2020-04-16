@@ -36,7 +36,7 @@ export function isEmpty(element: Element): boolean {
   return (
     element.children().isEmpty() &&
     // \s seems to be close enough to "ASCII whitespace".
-    !!element.textContent().match(/^\s*$/)
+    /^\s*$/.test(element.textContent())
   );
 }
 
