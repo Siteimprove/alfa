@@ -10,107 +10,145 @@ export type Predicate<
   | ((value: T, ...args: A) => value is U);
 
 export namespace Predicate {
-  export function test<T, U extends T>(
-    predicate: Predicate<T, U>,
-    value: T
-  ): value is U;
+  export function test<
+    T,
+    U extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(predicate: Predicate<T, U, A>, value: T, ...args: A): value is U;
 
-  export function test<T>(predicate: Predicate<T, T>, value: T): boolean;
-
-  export function test<T, U extends T>(
-    predicate: Predicate<T, U>,
-    value: T
-  ): value is U {
-    return predicate(value);
-  }
-
-  export function fold<T, U extends T, V, W>(
-    predicate: Predicate<T, U>,
+  export function test<T, A extends Array<unknown> = Array<unknown>>(
+    predicate: Predicate<T, T, A>,
     value: T,
+    ...args: A
+  ): boolean;
+
+  export function test<
+    T,
+    U extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(predicate: Predicate<T, U, A>, value: T, ...args: A): value is U {
+    return predicate(value, ...args);
+  }
+
+  export function fold<
+    T,
+    U extends T,
+    A extends Array<unknown> = Array<unknown>,
+    V = U,
+    W = T
+  >(
+    predicate: Predicate<T, U, A>,
     ifTrue: Mapper<U, V>,
-    ifFalse: Mapper<T, W>
+    ifFalse: Mapper<T, W>,
+    value: T,
+    ...args: A
   ): V | W {
-    return predicate(value) ? ifTrue(value) : ifFalse(value);
+    return predicate(value, ...args) ? ifTrue(value) : ifFalse(value);
   }
 
-  export function not<T, U extends T>(
-    predicate: Predicate<T, U>
-  ): Predicate<T> {
-    return function not(value) {
-      return fold(predicate, value, contradiction, tautology);
-    };
+  export function not<
+    T,
+    U extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(predicate: Predicate<T, U, A>): Predicate<T, T, A> {
+    return (value, ...args) => !predicate(value, ...args);
   }
 
-  export function and<T, U extends T, V extends U>(
-    left: Predicate<T, U>,
-    right: Predicate<U, V>
-  ): Predicate<T, V>;
+  export function and<
+    T,
+    U extends T,
+    V extends U,
+    A extends Array<unknown> = Array<unknown>
+  >(left: Predicate<T, U, A>, right: Predicate<U, V, A>): Predicate<T, V, A>;
 
-  export function and<T>(
-    left: Predicate<T>,
-    right: Predicate<T>,
-    ...rest: Array<Predicate<T>>
-  ): Predicate<T>;
+  export function and<
+    T,
+    U extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(
+    left: Predicate<T, U, A>,
+    right: Predicate<T, U, A>,
+    ...rest: Array<Predicate<T, U, A>>
+  ): Predicate<T, U, A>;
 
-  export function and<T>(...predicates: Array<Predicate<T>>): Predicate<T> {
-    return (value) =>
+  export function and<
+    T,
+    U extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(...predicates: Array<Predicate<T, U, A>>): Predicate<T, U, A> {
+    return (value, ...args) =>
       predicates.reduce<boolean>(
-        (holds, predicate) => holds && predicate(value),
+        (holds, predicate) => holds && predicate(value, ...args),
         true
       );
   }
 
-  export function or<T, U extends T, V extends T>(
-    left: Predicate<T, U>,
-    right: Predicate<T, V>
-  ): Predicate<T, U | V>;
+  export function or<
+    T,
+    U extends T,
+    V extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(
+    left: Predicate<T, U, A>,
+    right: Predicate<T, V, A>
+  ): Predicate<T, U | V, A>;
 
-  export function or<T>(
-    left: Predicate<T>,
-    right: Predicate<T>,
-    ...rest: Array<Predicate<T>>
-  ): Predicate<T>;
+  export function or<T, U extends T, A extends Array<unknown> = Array<unknown>>(
+    left: Predicate<T, U, A>,
+    right: Predicate<T, U, A>,
+    ...rest: Array<Predicate<T, U, A>>
+  ): Predicate<T, U, A>;
 
-  export function or<T>(...predicates: Array<Predicate<T>>): Predicate<T> {
-    return (value) =>
+  export function or<T, U extends T, A extends Array<unknown> = Array<unknown>>(
+    ...predicates: Array<Predicate<T, U, A>>
+  ): Predicate<T, U, A> {
+    return (value, ...args) =>
       predicates.reduce<boolean>(
-        (holds, predicate) => holds || predicate(value),
+        (holds, predicate) => holds || predicate(value, ...args),
         false
       );
   }
 
-  export function xor<T, U extends T, V extends T>(
-    left: Predicate<T, U>,
-    right: Predicate<T, V>
-  ): Predicate<T, U | V> {
+  export function xor<
+    T,
+    U extends T,
+    V extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(
+    left: Predicate<T, U, A>,
+    right: Predicate<T, V, A>
+  ): Predicate<T, U | V, A> {
     return and(or(left, right), not(and(left, right)));
   }
 
-  export function nor<T, U extends T, V extends T>(
-    left: Predicate<T, U>,
-    right: Predicate<T, V>
-  ): Predicate<T> {
+  export function nor<
+    T,
+    U extends T,
+    V extends T,
+    A extends Array<unknown> = Array<unknown>
+  >(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A> {
     return not(or(left, right));
   }
 
-  export function nand<T, U extends T, V extends U>(
-    left: Predicate<T, U>,
-    right: Predicate<T, V>
-  ): Predicate<T> {
+  export function nand<
+    T,
+    U extends T,
+    V extends U,
+    A extends Array<unknown> = Array<unknown>
+  >(left: Predicate<T, U, A>, right: Predicate<T, V, A>): Predicate<T, T, A> {
     return not(and(left, right));
   }
 
-  export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
-    return function equals(other) {
-      return values.some((value) => Equatable.equals(other, value));
-    };
+  export function property<
+    T,
+    K extends keyof T,
+    A extends Array<unknown> = Array<unknown>
+  >(property: K, predicate: Predicate<T[K], T[K], A>): Predicate<T, T, A> {
+    return (value, ...args) => predicate(value[property], ...args);
   }
 
-  export function property<T, K extends keyof T>(
-    property: K,
-    predicate: Predicate<T[K]>
-  ): Predicate<T> {
-    return (value) => predicate(value[property]);
+  export function equals<T>(...values: Array<T>): Predicate<unknown, T> {
+    return (other) => values.some((value) => Equatable.equals(other, value));
   }
 
   export function isString(value: unknown): value is string {
@@ -153,19 +191,9 @@ export namespace Predicate {
 
   export const isPrimitive = or(
     isString,
-    isNumber,
-    isBigInt,
-    isBoolean,
-    isNull,
-    isUndefined,
-    isSymbol
+    or(
+      isNumber,
+      or(isBigInt, or(isBoolean, or(isNull, or(isUndefined, isSymbol))))
+    )
   );
-}
-
-function tautology(): true {
-  return true;
-}
-
-function contradiction(): false {
-  return false;
 }
