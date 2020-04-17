@@ -199,8 +199,9 @@ export namespace RowGroup {
         group.name !== "tfoot" &&
         group.name !== "tbody" &&
         group.name !== "thead"
-      )
+      ) {
         return Err.of("This element is not a row group");
+      }
 
       let growingCellsList: Array<Cell.Builder> = [];
       let rowgroup = Builder.of(-1, 0, group);

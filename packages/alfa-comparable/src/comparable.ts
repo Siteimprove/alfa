@@ -1,4 +1,3 @@
-
 export interface Comparable<T> {
   /**
    * @remarks
@@ -22,5 +21,4 @@ export namespace Comparable {
   export function compare<T extends Comparable<U>, U>(a: T, b: U): Comparison {
     return a.compare(b);
   }
-
 }

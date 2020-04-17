@@ -8,7 +8,7 @@ export namespace Header {
     Row = "row",
     Column = "column",
     RowGroup = "row-group",
-    ColGroup = "col-group",
+    ColumnGroup = "column-group",
   }
 
   /**
@@ -20,6 +20,6 @@ export namespace Header {
     Row = "row",
     Column = "column",
     RowGroup = "row-group",
-    ColGroup = "col-group",
+    ColumnGroup = "column-group",
   }
 }

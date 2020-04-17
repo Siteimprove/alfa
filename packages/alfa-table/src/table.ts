@@ -8,10 +8,10 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import { ColGroup } from "./colgroup";
+import { ColumnGroup } from "./column-group";
 import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
-import { RowGroup } from "./rowgroup";
+import { RowGroup } from "./row-group";
 
 const { compare } = Comparable;
 
@@ -24,7 +24,7 @@ export class Table implements Equatable, Serializable {
   private readonly _element: Element;
   private readonly _cells: Array<Cell>;
   private readonly _rowGroups: Array<RowGroup>;
-  private readonly _colGroups: Array<ColGroup>;
+  private readonly _columnGroups: Array<ColumnGroup>;
 
   public static of(
     element: Element,
@@ -32,9 +32,9 @@ export class Table implements Equatable, Serializable {
     height: number = 0,
     cells: Array<Cell> = [],
     rowGroups: Array<RowGroup> = [],
-    colGroups: Array<ColGroup> = []
+    columnGroups: Array<ColumnGroup> = []
   ): Table {
-    return new Table(element, width, height, cells, rowGroups, colGroups);
+    return new Table(element, width, height, cells, rowGroups, columnGroups);
   }
 
   private constructor(
@@ -43,14 +43,14 @@ export class Table implements Equatable, Serializable {
     height: number,
     cells: Array<Cell>,
     rowGroups: Array<RowGroup>,
-    colGroups: Array<ColGroup>
+    columnGroups: Array<ColumnGroup>
   ) {
     this._width = width;
     this._height = height;
     this._element = element;
     this._cells = cells;
     this._rowGroups = rowGroups;
-    this._colGroups = colGroups;
+    this._columnGroups = columnGroups;
   }
 
   public get width(): number {
@@ -69,8 +69,8 @@ export class Table implements Equatable, Serializable {
     return this._cells;
   }
 
-  public get colGroups(): Iterable<ColGroup> {
-    return this._colGroups;
+  public get columnGroups(): Iterable<ColumnGroup> {
+    return this._columnGroups;
   }
 
   public get rowGroups(): Iterable<RowGroup> {
@@ -88,9 +88,9 @@ export class Table implements Equatable, Serializable {
       this._rowGroups.every((rowGroup, idx) =>
         rowGroup.equals(value._rowGroups[idx])
       ) &&
-      this._colGroups.length === value._colGroups.length &&
-      this._colGroups.every((colGroup, idx) =>
-        colGroup.equals(this._colGroups[idx])
+      this._columnGroups.length === value._columnGroups.length &&
+      this._columnGroups.every((colGroup, idx) =>
+        colGroup.equals(this._columnGroups[idx])
       )
     );
   }
@@ -102,7 +102,7 @@ export class Table implements Equatable, Serializable {
       element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.toJSON()),
       rowGroups: this._rowGroups.map((rg) => rg.toJSON()),
-      colGroups: this._colGroups.map((cg) => cg.toJSON()),
+      colGroups: this._columnGroups.map((cg) => cg.toJSON()),
     };
   }
 }
@@ -120,7 +120,7 @@ export namespace Table {
     element: Element.JSON;
     cells: Cell.JSON[];
     rowGroups: RowGroup.JSON[];
-    colGroups: ColGroup.JSON[];
+    colGroups: ColumnGroup.JSON[];
   }
 
   export class Builder implements Equatable, Serializable {
@@ -133,7 +133,7 @@ export namespace Table {
       height: number = 0,
       cells: Array<Cell.Builder> = [],
       rowGroups: Array<RowGroup> = [],
-      colGroups: Array<ColGroup> = []
+      colGroups: Array<ColumnGroup> = []
     ): Builder {
       return new Builder(element, width, height, cells, rowGroups, colGroups);
     }
@@ -144,7 +144,7 @@ export namespace Table {
       height: number,
       cells: Array<Cell.Builder>,
       rowGroups: Array<RowGroup>,
-      colGroups: Array<ColGroup>
+      colGroups: Array<ColumnGroup>
     ) {
       this._table = Table.of(element, width, height, [], rowGroups, colGroups);
       this._cells = cells;
@@ -156,7 +156,7 @@ export namespace Table {
       height?: number;
       cells?: Array<Cell.Builder>;
       rowGroups?: Array<RowGroup>;
-      colGroups?: Array<ColGroup>;
+      colGroups?: Array<ColumnGroup>;
     }): Builder {
       return Builder.of(
         update.element !== undefined ? update.element : this.element,
@@ -184,8 +184,8 @@ export namespace Table {
       return this._table.element;
     }
 
-    public get colGroups(): Iterable<ColGroup> {
-      return this._table.colGroups;
+    public get colGroups(): Iterable<ColumnGroup> {
+      return this._table.columnGroups;
     }
 
     public get rowGroups(): Iterable<RowGroup> {
@@ -284,7 +284,7 @@ export namespace Table {
         if (currentElement.name === "colgroup") {
           // 9.1 (Columns group)
           if (processCG) {
-            const colGroup = ColGroup.Builder.from(currentElement)
+            const colGroup = ColumnGroup.Builder.from(currentElement)
               .get()
               .anchorAt(table.width).colgroup;
             table = table.update({

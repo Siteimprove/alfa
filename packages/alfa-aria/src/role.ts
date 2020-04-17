@@ -108,7 +108,7 @@ export class Role<N extends string = string> implements Equatable {
     return some(this.characteristics.name.from, predicate);
   }
 
-  public hasName(predicate: Predicate<N>): boolean {
+  public hasName(predicate: Predicate<string>): boolean {
     return predicate(this.name);
   }
 
@@ -286,19 +286,17 @@ export namespace Role {
     }
   }
 
-  export function hasName<N extends string = string>(
-    predicate: Predicate<string>
-  ): Predicate<Role<N>>;
+  export function hasName(predicate: Predicate<string>): Predicate<Role>;
 
-  export function hasName<N extends string = string>(
+  export function hasName(
     name: string,
     ...rest: Array<string>
-  ): Predicate<Role<N>>;
+  ): Predicate<Role>;
 
-  export function hasName<N extends string = string>(
+  export function hasName(
     nameOrPredicate: string | Predicate<string>,
     ...names: Array<string>
-  ): Predicate<Role<N>> {
+  ): Predicate<Role> {
     let predicate: Predicate<string>;
 
     if (typeof nameOrPredicate === "function") {

@@ -2,6 +2,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Namespace } from "../namespace";
@@ -276,25 +277,6 @@ export class Element extends Node implements Slot, Slotable {
     );
   }
 
-  /**
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
-   */
-  public enumerateAttribute(
-    name: string,
-    ...keywords: Array<string>
-  ): string | Element.EnumeratedAttributeError {
-    const attribute = this.attribute(name);
-
-    if (attribute.isNone() || attribute.get().value === "")
-      return Element.EnumeratedAttributeError.Missing;
-
-    const value = attribute.get().value.toLowerCase();
-
-    return keywords.includes(value)
-      ? value
-      : Element.EnumeratedAttributeError.Invalid;
-  }
-
   public hasNamespace(predicate: Predicate<Namespace>): boolean {
     return this._namespace.map(predicate).getOr(false);
   }
@@ -387,11 +369,6 @@ export namespace Element {
         Document.fromDocument(content)
       )
     );
-  }
-
-  export enum EnumeratedAttributeError {
-    Missing = "missing",
-    Invalid = "invalid",
   }
 
   export function hasNamespace(

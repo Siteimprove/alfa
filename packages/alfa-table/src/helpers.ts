@@ -29,17 +29,6 @@ export function parseSpan(
     .getOr(failed);
 }
 
-/**
- * @see https://html.spec.whatwg.org/multipage/tables.html#empty-cell
- */
-export function isEmpty(element: Element): boolean {
-  return (
-    element.children().isEmpty() &&
-    // \s seems to be close enough to "ASCII whitespace".
-    !!element.textContent().match(/^\s*$/)
-  );
-}
-
 export function isHtmlElementWithName(
   name: string,
   ...rest: Array<string>

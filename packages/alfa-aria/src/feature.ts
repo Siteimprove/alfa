@@ -668,7 +668,7 @@ Feature.register(
       return cell.get().variant.map((variant) => {
         switch (variant) {
           case Header.Variant.Column:
-          case Header.Variant.ColGroup:
+          case Header.Variant.ColumnGroup:
             return "columnheader";
           case Header.Variant.Row:
           case Header.Variant.RowGroup:
