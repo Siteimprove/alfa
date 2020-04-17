@@ -28,39 +28,44 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return document
-          .descendants()
-          .filter(
-            and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                // The table model only works if the element is a th.
-                hasName("th"),
-                hasRole("rowheader", "columnheader"),
-                isPerceivable(device)
-              )
-            )
-          )
-          .map((th) => {
-            let result: Option<Element> = None;
-            // get the table containing it: the first <table> ancestor
-            const table = th.closest(
+        function* getHeaderCells() {
+          const tables = document
+            .descendants()
+            .filter(
               and(
                 isElement,
-                and(hasNamespace(Namespace.HTML), hasName("table"))
+                and(
+                  hasNamespace(Namespace.HTML),
+                  hasName("table"),
+                  isPerceivable(device)
+                )
               )
             );
 
-            if (table.isNone()) return result;
-            if (not(isPerceivable(device))(table.get())) return result;
+          for (const table of tables) {
+            const headerCells = table
+              .descendants()
+              .filter(
+                and(
+                  isElement,
+                  and(
+                    hasNamespace(Namespace.HTML),
+                    // The table model only works if the element is a th.
+                    hasName("th"),
+                    hasRole("rowheader", "columnheader"),
+                    isPerceivable(device)
+                  )
+                )
+              )
 
-            ownership = ownership.set(th, table.get());
-            result = Some.of(th);
-            return result;
-          })
-          .filter((option) => option.isSome())
-          .map((option) => option.get());
+            for (const cell of headerCells) {
+              ownership = ownership.set(cell, table);
+              yield cell;
+            }
+          }
+        }
+
+        return getHeaderCells();
       },
 
       expectations(target) {
