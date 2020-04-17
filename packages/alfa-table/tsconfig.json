@@ -11,10 +11,14 @@
     "src/row.ts",
     "src/row-group.ts",
     "src/table.ts",
+    "test/cell.spec.ts",
+    "test/column-group.spec.ts",
+    "test/helpers.spec.ts",
     "test/microsyntaxes.spec.ts",
-    "test/structure-helpers.spec.tsx",
+    "test/row.spec.ts",
+    "test/row-group.spec.ts",
     "test/testcases.tsx",
-    "test/structure.spec.tsx"
+    "test/table.spec.ts"
   ],
   "references": [
     {

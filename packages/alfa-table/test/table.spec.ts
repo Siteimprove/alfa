@@ -1,4 +1,3 @@
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { Err } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
@@ -7,50 +6,20 @@ import {
   allWeirdImplicitHeaders,
   apple,
   colGroupImplicitHeaders,
-  complexRow,
-  downwardGrowing,
   duplicateIDExplicitHeaders,
   errors,
   expenses,
   expensesNum,
   explicitHeaders,
   headersVariant,
-  rowGroup,
   rowGroupImplicitHeaders,
   simpleImplicitHeaders,
-  simpleRow,
   smithonian,
 } from "./testcases";
 
 import { Cell } from "../src/cell";
-import { Row } from "../src/row";
-import { RowGroup } from "../src/row-group";
 
-test("Process individual rows", (t) => {
-  t.deepEqual(
-    Row.Builder.from(simpleRow.element).get().toJSON(),
-    simpleRow.expected.toJSON()
-  );
-
-  t.deepEqual(
-    Row.Builder.from(complexRow.element).get().toJSON(),
-    complexRow.expected.toJSON()
-  );
-});
-
-test("Process row groups", (t) => {
-  t.deepEqual(
-    RowGroup.Builder.from(rowGroup.element).get().toJSON(),
-    rowGroup.expected.toJSON()
-  );
-
-  t.deepEqual(
-    RowGroup.Builder.from(downwardGrowing.element).get().toJSON(),
-    downwardGrowing.expected.toJSON()
-  );
-});
-
-test("Header scope and variant", (t) => {
+test("Builder.from() computes correct header variants", (t) => {
   const expensesTable = Table.Builder.from(expenses.element).get();
   t.deepEqual(
     [...expensesTable.cells]
@@ -68,7 +37,7 @@ test("Header scope and variant", (t) => {
   );
 });
 
-test("Process table", (t) => {
+test("from() builds correct table model", (t) => {
   t.deepEqual(
     Table.from(smithonian.element).get().toJSON(),
     smithonian.expected.toJSON()
@@ -90,7 +59,7 @@ test("Process table", (t) => {
   );
 });
 
-test("Table model errors", (t) => {
+test("from() detects table model errors", (t) => {
   t.deepEqual(
     Table.from(errors.emptyCol),
     Err.of("col 1 has no cell anchored in it")
@@ -105,7 +74,7 @@ test("Table model errors", (t) => {
   );
 });
 
-test("Compute simple headers", (t) => {
+test("from() computes header association of simple headers (no groups)", (t) => {
   t.deepEqual(
     Table.from(explicitHeaders.element).get().toJSON(),
     explicitHeaders.expected.toJSON()
@@ -122,7 +91,7 @@ test("Compute simple headers", (t) => {
   );
 });
 
-test("Tables with groups headers", (t) => {
+test("from() computes header association of tables with groups headers", (t) => {
   t.deepEqual(
     Table.from(rowGroupImplicitHeaders.element).get().toJSON(),
     rowGroupImplicitHeaders.expected.toJSON()

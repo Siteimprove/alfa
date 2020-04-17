@@ -119,7 +119,7 @@ export namespace complexRow {
 }
 
 // processing row group
-export namespace rowGroup {
+export namespace simpleRowGroup {
   export const element = Element.fromElement(
     <thead id="thead">
       <tr id="first">

@@ -9,7 +9,7 @@ import {
 
 const result = <T>(x: T) => Ok.of(x);
 
-test("parse integers", (t) => {
+test("parseInteger() parses integers according to specs", (t) => {
   t.deepEqual(parseInteger("2"), result(2));
   t.deepEqual(parseInteger("1234"), result(1234));
   t.deepEqual(parseInteger("-5678"), result(-5678));
@@ -24,7 +24,7 @@ test("parse integers", (t) => {
   t.deepEqual(parseInteger("    "), Outcomes.empty);
 });
 
-test("parse non-negative integers", (t) => {
+test("parseNonNegativeInteger() parses non-negative integers according to specs", (t) => {
   t.deepEqual(parseNonNegativeInteger("42"), result(42));
   t.deepEqual(parseNonNegativeInteger("-0"), result(0));
   t.deepEqual(parseNonNegativeInteger("-42"), Outcomes.negative);
