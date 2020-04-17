@@ -3,7 +3,6 @@ import { Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
-import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Table } from "@siteimprove/alfa-table";
@@ -14,7 +13,7 @@ import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, equals, not } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r46.html",
@@ -27,45 +26,39 @@ export default Rule.Atomic.of<Page, Element>({
     let ownership: Map<Element, Element> = Map.empty();
 
     return {
-      applicability() {
-        function* getHeaderCells() {
-          const tables = document
-            .descendants()
-            .filter(
+      *applicability() {
+        const tables = document
+          .descendants()
+          .filter(
+            and(
+              isElement,
               and(
-                isElement,
-                and(
-                  hasNamespace(Namespace.HTML),
-                  hasName("table"),
-                  isPerceivable(device)
-                )
+                hasNamespace(Namespace.HTML),
+                hasName("table"),
+                isPerceivable(device)
               )
-            );
+            )
+          );
 
-          for (const table of tables) {
-            const headerCells = table
-              .descendants()
-              .filter(
-                and(
-                  isElement,
-                  and(
-                    hasNamespace(Namespace.HTML),
-                    // The table model only works if the element is a th.
-                    hasName("th"),
-                    hasRole("rowheader", "columnheader"),
-                    isPerceivable(device)
-                  )
-                )
+        for (const table of tables) {
+          const headerCells = table.descendants().filter(
+            and(
+              isElement,
+              and(
+                hasNamespace(Namespace.HTML),
+                // The table model only works if the element is a th.
+                hasName("th"),
+                hasRole("rowheader", "columnheader"),
+                isPerceivable(device)
               )
+            )
+          );
 
-            for (const cell of headerCells) {
-              ownership = ownership.set(cell, table);
-              yield cell;
-            }
+          for (const cell of headerCells) {
+            ownership = ownership.set(cell, table);
+            yield cell;
           }
         }
-
-        return getHeaderCells();
       },
 
       expectations(target) {
@@ -81,7 +74,7 @@ export default Rule.Atomic.of<Page, Element>({
                   tableModel.get().cells,
                   (cell) =>
                     // does there exists a (grid)cell with the target as one of its headers?
-                    hasRole(Role.hasName("cell", "gridcell"))(cell.element) &&
+                    hasRole("cell", "gridcell")(cell.element) &&
                     Iterable.find(cell.headers, equals(target)).isSome()
                 ),
                 () => Outcomes.IsAssignedToDataCell,

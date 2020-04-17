@@ -18,46 +18,42 @@ export default Rule.Atomic.of<Page, Attribute>({
     let ownership: Map<Attribute, Element> = Map.empty();
 
     return {
-      applicability() {
-        function* getHeaders() {
-          // get all perceivable tables in the document
-          const tables = document
+      *applicability() {
+        // get all perceivable tables in the document
+        const tables = document
+          .descendants()
+          .filter(
+            and(
+              isElement,
+              and(
+                hasNamespace(Namespace.HTML),
+                hasName("table"),
+                isPerceivable(device)
+              )
+            )
+          );
+
+        for (const table of tables) {
+          // get all cells with a headers attribute
+          const cells = table
             .descendants()
             .filter(
               and(
                 isElement,
                 and(
                   hasNamespace(Namespace.HTML),
-                  hasName("table"),
-                  isPerceivable(device)
+                  hasName("td", "th"),
+                  hasAttribute("headers")
                 )
               )
             );
 
-          for (const table of tables) {
-            // get all cells with a headers attribute
-            const cells = table
-              .descendants()
-              .filter(
-                and(
-                  isElement,
-                  and(
-                    hasNamespace(Namespace.HTML),
-                    hasName("td", "th"),
-                    hasAttribute("headers")
-                  )
-                )
-              );
-
-            for (const cell of cells) {
-              const header = cell.attribute("headers").get();
-              ownership = ownership.set(header, table);
-              yield header;
-            }
+          for (const cell of cells) {
+            const header = cell.attribute("headers").get();
+            ownership = ownership.set(header, table);
+            yield header;
           }
         }
-
-        return getHeaders();
       },
 
       expectations(target) {
