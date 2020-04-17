@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -108,8 +109,12 @@ export class Table implements Equatable, Serializable {
 }
 
 export namespace Table {
+  const cache = Cache.empty<Element, Result<Table, string>>();
+
   export function from(element: Element): Result<Table, string> {
-    return Builder.from(element).map((table) => table.table);
+    return cache.get(element, () =>
+      Builder.from(element).map((table) => table.table)
+    );
   }
 
   export interface JSON {
@@ -267,7 +272,9 @@ export namespace Table {
       // 5 + 8 + 9.3
       let children = element
         .children()
-        .filter(isHtmlElementWithName("colgroup", "thead", "tbody", "tfoot", "tr"));
+        .filter(
+          isHtmlElementWithName("colgroup", "thead", "tbody", "tfoot", "tr")
+        );
       // 6
       // skipping caption for now
 

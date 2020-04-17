@@ -650,7 +650,6 @@ Feature.register(
       // If the <th> is not in a <table>, it doesn't really have a role…
       if (table.isNone()) return None;
 
-      // Is this going to be memoized or re-computed every time?
       const tableModel = Table.from(table.get());
       // If the <th> is within a <table> with errors, it doesn't really have a role.
       if (tableModel.isErr()) return None;

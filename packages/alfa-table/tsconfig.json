@@ -22,6 +22,9 @@
   ],
   "references": [
     {
+      "path": "../alfa-cache"
+    },
+    {
       "path": "../alfa-comparable"
     },
     {
