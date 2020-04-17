@@ -16,7 +16,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
   evaluate({ device, document }) {
     // records in which <table> is located each "headers" attribute
-    let ownership: Map<Attribute, Element> = Map.of();
+    let ownership: Map<Attribute, Element> = Map.empty();
 
     return {
       applicability() {
@@ -73,7 +73,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         return {
           1: expectation(
-            // if each token refers to a cell in the same table then both array have the same length.
+            // each token refers to a cell in the same table iff both array have the same length.
             referredCells.length === idsList.length,
             () => Outcomes.HeadersRefersToCellInTable,
             () => Outcomes.HeadersDoesNotReferToCellsInTable

@@ -37,7 +37,7 @@ export default Rule.Atomic.of<Page, Element>({
                 hasNamespace(Namespace.HTML),
                 // The table model only works if the element is a th.
                 hasName("th"),
-                hasRole(Role.hasName("rowheader", "columnheader")),
+                hasRole("rowheader", "columnheader"),
                 isPerceivable(device)
               )
             )
