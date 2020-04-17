@@ -8,9 +8,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 
+const { isElement, hasNamespace } = Element;
 const { find, isEmpty } = Iterable;
 const { and, property } = Predicate;
 
@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants({ composed: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole())
             )
           );

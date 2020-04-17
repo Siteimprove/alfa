@@ -8,10 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasExplicitRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
+const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
                 hasAttribute("role", not(isEmpty)),

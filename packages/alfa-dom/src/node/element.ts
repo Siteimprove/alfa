@@ -2,6 +2,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Namespace } from "../namespace";
@@ -14,7 +15,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { and, equals, not } = Predicate;
 
 export class Element extends Node implements Slot, Slotable {
   public static of(
@@ -262,6 +263,28 @@ export class Element extends Node implements Slot, Slotable {
     return path;
   }
 
+  /**
+   * Return all descendants of this element's root whose id is listed in an IDlist attribute (headers, aria-labelledby, …)
+   */
+  public resolveAttributeReferences(
+    name: string,
+    options: Node.Traversal = {}
+  ): Array<Element> {
+    return this.root(options).resolveReferences(
+      ...this.attribute(name)
+        .map((attribute) => attribute.tokens())
+        .getOr([])
+    );
+  }
+
+  public hasNamespace(predicate: Predicate<Namespace>): boolean {
+    return this._namespace.map(predicate).getOr(false);
+  }
+
+  public hasName(predicate: Predicate<string>): boolean {
+    return predicate(this._name);
+  }
+
   public toJSON(): Element.JSON {
     return {
       type: "element",
@@ -346,6 +369,52 @@ export namespace Element {
         Document.fromDocument(content)
       )
     );
+  }
+
+  export function hasNamespace(
+    predicate: Predicate<Namespace>
+  ): Predicate<Element>;
+
+  export function hasNamespace(
+    namespace: Namespace,
+    ...rest: Array<Namespace>
+  ): Predicate<Element>;
+
+  export function hasNamespace(
+    namespaceOrPredicate: Namespace | Predicate<Namespace>,
+    ...namespaces: Array<Namespace>
+  ): Predicate<Element> {
+    let predicate: Predicate<Namespace>;
+
+    if (typeof namespaceOrPredicate === "function") {
+      predicate = namespaceOrPredicate;
+    } else {
+      predicate = Predicate.equals(namespaceOrPredicate, ...namespaces);
+    }
+
+    return (element) => element.hasNamespace(predicate);
+  }
+
+  export function hasName(predicate: Predicate<string>): Predicate<Element>;
+
+  export function hasName(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<Element>;
+
+  export function hasName(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): Predicate<Element> {
+    let predicate: Predicate<string>;
+
+    if (typeof nameOrPredicate === "function") {
+      predicate = nameOrPredicate;
+    } else {
+      predicate = equals(nameOrPredicate, ...names);
+    }
+
+    return (element) => element.hasName(predicate);
   }
 }
 

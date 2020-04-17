@@ -13,12 +13,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { map, flatMap, isEmpty } = Iterable;
 const { and, not } = Predicate;
 
@@ -31,7 +30,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 hasName("iframe"),
                 hasNamespace(Namespace.HTML),

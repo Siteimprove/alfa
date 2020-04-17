@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -13,15 +13,15 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasNamespace } = Element;
 const { map, flatMap, isEmpty } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { and, or, not } = Predicate;
+const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
                 hasRole(

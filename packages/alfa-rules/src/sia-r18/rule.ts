@@ -11,7 +11,6 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasName } from "../common/predicate/has-name";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
@@ -41,7 +40,9 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             global.has(target.name) ||
               test(
-                hasRole((role) => role.isAllowed(hasName(target.name))),
+                hasRole((role) =>
+                  role.isAllowed((attribute) => attribute.name === target.name)
+                ),
                 target.owner.get()
               ),
             () => Outcomes.IsAllowed,

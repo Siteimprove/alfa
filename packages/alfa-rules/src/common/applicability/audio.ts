@@ -5,13 +5,12 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasName } from "../predicate/has-name";
-import { hasNamespace } from "../predicate/has-namespace";
 import { isIgnored } from "../predicate/is-ignored";
 import { isPerceivable } from "../predicate/is-perceivable";
 
 import { Question } from "../question";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, map } = Iterable;
 const { and, not } = Predicate;
 
@@ -24,7 +23,7 @@ export function audio(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        Element.isElement,
+        isElement,
         and(
           hasNamespace(Namespace.HTML),
           hasName("audio"),

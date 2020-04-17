@@ -8,10 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasChild } from "../common/predicate/has-child";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
+const { isElement, hasNamespace } = Element;
 const { some } = Iterable;
 const { and, test } = Predicate;
 
@@ -26,10 +26,7 @@ export default Rule.Atomic.of<Page, Document>({
       expectations(target) {
         const hasHeadings = some(
           target.descendants({ flattened: true }),
-          and(
-            Element.isElement,
-            and(hasNamespace(Namespace.HTML), hasRole("heading"))
-          )
+          and(isElement, and(hasNamespace(Namespace.HTML), hasRole("heading")))
         );
 
         return {

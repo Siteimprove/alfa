@@ -1,7 +1,8 @@
 import { Role } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { hasName } from "./has-name";
+
+const { hasName } = Role;
 
 export function hasRole(predicate?: Predicate<Role>): Predicate<Element>;
 

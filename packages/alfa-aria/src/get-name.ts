@@ -11,7 +11,6 @@ import { Role } from "./role";
 
 const { isElement } = Element;
 const { isText } = Text;
-const { isEmpty } = Iterable;
 const { and, or, equals, test } = Predicate;
 
 /**
@@ -153,17 +152,9 @@ function getAriaLabelledbyTextAlternative(
   visited: Set<Element | Text>,
   options: getName.Options
 ): Branched<Option<string>, Browser> {
-  const labelledBy = element
-    .attribute("aria-labelledby")
-    .map((attr) => attr.value);
+  const references = element.resolveAttributeReferences("aria-labelledby");
 
-  if (labelledBy.every(isEmpty) || options.referencing === true) {
-    return Branched.of(None);
-  }
-
-  const references = resolveReferences(element.root(), labelledBy.get());
-
-  if (references.length === 0) {
+  if (references.length === 0 || options.referencing === true) {
     return Branched.of(None);
   }
 
@@ -654,20 +645,4 @@ function isTextLevelElement(element: Element): boolean {
   }
 
   return false;
-}
-
-function resolveReferences(node: Node, references: string): Array<Element> {
-  const elements: Array<Element> = [];
-
-  for (const id of references.trim().split(/\s+/)) {
-    const element = node
-      .descendants()
-      .find(and(isElement, (element) => element.id.includes(id)));
-
-    if (element.isSome()) {
-      elements.push(element.get());
-    }
-  }
-
-  return elements;
 }

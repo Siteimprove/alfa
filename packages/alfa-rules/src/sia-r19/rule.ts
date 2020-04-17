@@ -10,8 +10,7 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
-
+const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, property } = Predicate;
 
@@ -22,9 +21,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return document
           .descendants({ composed: true, nested: true })
-          .filter(
-            and(Element.isElement, hasNamespace(Namespace.HTML, Namespace.SVG))
-          )
+          .filter(and(isElement, hasNamespace(Namespace.HTML, Namespace.SVG)))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
               and(

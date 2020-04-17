@@ -8,7 +8,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-const { equals } = Predicate;
+const { and, equals } = Predicate;
 
 export abstract class Node
   implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
@@ -150,6 +150,25 @@ export abstract class Node
     path += `[${index + 1}]`;
 
     return path;
+  }
+
+  /**
+   * finds all descendant elements whose id is in the given set
+   */
+  public resolveReferences(...references: Array<string>): Array<Element> {
+    const elements: Array<Element> = [];
+
+    for (const id of references) {
+      const element = this.descendants().find(
+        and(Element.isElement, (element) => element.id.includes(id))
+      );
+
+      if (element.isSome()) {
+        elements.push(element.get());
+      }
+    }
+
+    return elements;
   }
 
   public *[Symbol.iterator](): Iterator<Node> {

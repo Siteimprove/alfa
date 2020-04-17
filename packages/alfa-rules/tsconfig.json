@@ -17,8 +17,6 @@
     "src/common/predicate/has-id.ts",
     "src/common/predicate/has-input-type.ts",
     "src/common/predicate/has-name-from.ts",
-    "src/common/predicate/has-name.ts",
-    "src/common/predicate/has-namespace.ts",
     "src/common/predicate/has-nondefault-role.ts",
     "src/common/predicate/has-role.ts",
     "src/common/predicate/has-tab-index.ts",

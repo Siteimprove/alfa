@@ -12,41 +12,38 @@ import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasCategory } from "../common/predicate/has-category";
 import { hasDescendant } from "../common/predicate/has-descendant";
 import { hasNameFrom } from "../common/predicate/has-name-from";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
-import { isIgnored } from "../common/predicate/is-ignored";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 import { isVisible } from "../common/predicate/is-visible";
 
 import { Question } from "../common/question";
 
-const { and, not, equals, test } = Predicate;
+const { isElement, hasNamespace } = Element;
+const { and, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.githu.io/sanshikan/rules/sia-r14.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants({ flattened: true, nested: true })
-          .filter(
+        return document.descendants({ flattened: true, nested: true }).filter(
+          and(
+            isElement,
             and(
-              Element.isElement,
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasRole(
-                  and(
-                    hasCategory(equals(Role.Category.Widget)),
-                    hasNameFrom(equals("content"))
-                  )
-                ),
-                hasDescendant(and(Text.isText, isPerceivable(device)), {
-                  flattened: true,
-                }),
-                hasAccessibleName(device)
-              )
+              hasNamespace(Namespace.HTML, Namespace.SVG),
+              hasRole(
+                and(
+                  hasCategory(equals(Role.Category.Widget)),
+                  hasNameFrom(equals("content"))
+                )
+              ),
+              hasDescendant(and(Text.isText, isPerceivable(device)), {
+                flattened: true,
+              }),
+              hasAccessibleName(device)
             )
-          );
+          )
+        );
       },
 
       expectations(target) {

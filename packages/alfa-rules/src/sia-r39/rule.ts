@@ -1,19 +1,17 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasInputType } from "../common/predicate/has-input-type";
-import { hasName } from "../common/predicate/has-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -23,7 +21,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
       applicability() {
         return document.descendants({ flattened: true, nested: true }).filter(
           and(
-            Element.isElement,
+            isElement,
             and(
               hasNamespace(Namespace.HTML),
               or(

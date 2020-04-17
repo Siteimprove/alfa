@@ -9,10 +9,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
-import { isWhitespace } from "../common/predicate/is-whitespace";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
@@ -24,17 +22,12 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants()
           .filter(
-            and(
-              Element.isElement,
-              and(hasNamespace(Namespace.HTML), hasName("body"))
-            )
+            and(isElement, and(hasNamespace(Namespace.HTML), hasName("body")))
           )
           .flatMap((body) =>
             body
               .descendants()
-              .filter(
-                and(Element.isElement, hasAttribute("lang", not(isEmpty)))
-              )
+              .filter(and(isElement, hasAttribute("lang", not(isEmpty))))
               .map((element) => element.attribute("lang").get())
           );
       },

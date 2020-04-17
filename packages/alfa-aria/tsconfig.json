@@ -148,6 +148,9 @@
       "path": "../alfa-style"
     },
     {
+      "path": "../alfa-table"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
