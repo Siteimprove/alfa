@@ -22,9 +22,9 @@ export default Rule.Atomic.of<Page, Document>({
       applicability() {
         return fold(
           hasChild(isDocumentElement),
-          document,
           () => [document],
-          () => []
+          () => [],
+          document
         );
       },
 

@@ -18,9 +18,9 @@ test("fold() folds over the truth values of a predicate", (t) => {
   const f = (value: unknown) =>
     Predicate.fold(
       isString(),
-      value,
       (x) => `hello ${x}`,
-      () => "goodbye"
+      () => "goodbye",
+      value
     );
 
   t.equal(f("world"), "hello world");
@@ -44,12 +44,31 @@ test("or() combines two predicates to a predicate that is true if either predica
 });
 
 test("test() evaluates a predicate on a value and acts as a type guard", (t) => {
-  const value = "foo";
+  const value: string = "foo";
 
   if (Predicate.test(isFoo(), value)) {
     const foo: "foo" = value;
 
     t.equal(foo, "foo");
+  } else {
+    t.fail();
+  }
+});
+
+test("isPrimitive() tests if a value is a primitive", (t) => {
+  const value: unknown = 123;
+
+  if (Predicate.isPrimitive(value)) {
+    const foo:
+      | string
+      | number
+      | bigint
+      | boolean
+      | null
+      | undefined
+      | symbol = value;
+
+    t.equal(foo, 123);
   } else {
     t.fail();
   }

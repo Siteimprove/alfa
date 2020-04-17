@@ -18,6 +18,7 @@
     { "path": "alfa-cheerio" },
     { "path": "alfa-cli" },
     { "path": "alfa-clone" },
+    { "path": "alfa-collection" },
     { "path": "alfa-comparable" },
     { "path": "alfa-compatibility" },
     { "path": "alfa-continuation" },
