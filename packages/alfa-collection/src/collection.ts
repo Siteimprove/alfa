@@ -45,6 +45,7 @@ export namespace Collection {
 
     get(key: K): Option<V>;
     has(key: K): boolean;
+    set(key: K, value: V): Keyed<K, V>;
     concat(iterable: Iterable<[K, V]>): Keyed<K, V>;
   }
 
@@ -64,6 +65,7 @@ export namespace Collection {
 
     get(value: T): Option<T>;
     has(value: T): boolean;
+    add(value: T): Unkeyed<T>;
     concat(iterable: Iterable<T>): Unkeyed<T>;
   }
 
@@ -83,15 +85,21 @@ export namespace Collection {
 
     get(index: number): Option<T>;
     has(index: number): boolean;
+    set(index: number, value: T): Indexed<T>;
+    insert(index: number, value: T): Indexed<T>;
+    append(value: T): Indexed<T>;
+    prepend(value: T): Indexed<T>;
     concat(iterable: Iterable<T>): Indexed<T>;
     first(): Option<T>;
     last(): Option<T>;
     take(count: number): Indexed<T>;
     takeWhile(predicate: Predicate<T, T, [number]>): Indexed<T>;
     takeUntil(predicate: Predicate<T, T, [number]>): Indexed<T>;
+    takeLast(count: number): Indexed<T>;
     skip(count: number): Indexed<T>;
     skipWhile(predicate: Predicate<T, T, [number]>): Indexed<T>;
     skipUntil(predicate: Predicate<T, T, [number]>): Indexed<T>;
+    skipLast(count: number): Indexed<T>;
     rest(): Indexed<T>;
     slice(start: number, end?: number): Indexed<T>;
     reverse(): Indexed<T>;
