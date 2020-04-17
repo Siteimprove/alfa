@@ -48,8 +48,7 @@ function digitToNumber(digit: asciiDigit): number {
 /**
  * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#signed-integers
  */
-
-export function parseInteger(str: string): Result<number, string> {
+export function parseSignedInteger(str: string): Result<number, string> {
   // 1, 4
   const input = str.trim();
   // 2
@@ -94,8 +93,8 @@ export function parseInteger(str: string): Result<number, string> {
  * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
  */
 export function parseNonNegativeInteger(str: string): Result<number, string> {
-  const result = parseInteger(str);
-  return parseInteger(str).andThen((value) =>
+  const result = parseSignedInteger(str);
+  return parseSignedInteger(str).andThen((value) =>
     value < 0 ? Outcomes.negative : result
   );
 }
