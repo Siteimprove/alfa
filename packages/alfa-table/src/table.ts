@@ -261,7 +261,6 @@ export namespace Table {
     }
 
     export function from(element: Element): Result<Builder, string> {
-      // the document is needed for finding explicit headers. "no document" is allowed for easier unit test.
       if (element.name !== "table")
         return Err.of("This element is not a table");
 
