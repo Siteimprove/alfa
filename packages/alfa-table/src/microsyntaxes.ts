@@ -86,7 +86,7 @@ export function parseSignedInteger(str: string): Result<number, string> {
     }
   }
 
-  return Ok.of(positive ? value : -value);
+  return Ok.of(positive ? value : 0-value);
 }
 
 /**
