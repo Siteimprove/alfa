@@ -70,7 +70,7 @@ export namespace Assert {
               expectation.isNone()
                 ? reasons
                 : expectation.get().isOk()
-                ? reasons.push(expectation.get().get())
+                ? reasons.append(expectation.get().get())
                 : reasons,
             List.empty<string>()
           );

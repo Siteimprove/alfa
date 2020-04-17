@@ -164,7 +164,7 @@ export namespace Branched {
       values,
       (values, value) =>
         mapper(value).flatMap((value) =>
-          values.map((values) => values.push(value))
+          values.map((values) => values.append(value))
         ),
       Branched.of(List.empty())
     );
@@ -216,7 +216,7 @@ function merge<T, B>(
     )
     .getOr(branches);
 
-  return deduplicate(values, value, branches).push(Value.of(value, branches));
+  return deduplicate(values, value, branches).append(Value.of(value, branches));
 }
 
 function deduplicate<T, B>(
@@ -230,7 +230,7 @@ function deduplicate<T, B>(
     }
 
     if (existing.branches.isNone()) {
-      return branches.isNone() ? values : values.push(existing);
+      return branches.isNone() ? values : values.append(existing);
     }
 
     return existing.branches.reduce((values, existingBranches) => {
@@ -243,7 +243,7 @@ function deduplicate<T, B>(
         return values;
       }
 
-      return values.push(Value.of(existing.value, Some.of(deduplicated)));
+      return values.append(Value.of(existing.value, Some.of(deduplicated)));
     }, values);
   }, List.empty());
 }

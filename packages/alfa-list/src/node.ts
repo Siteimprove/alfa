@@ -1,8 +1,6 @@
 import { Bits } from "@siteimprove/alfa-bits";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 const { bit, take, skip } = Bits;
@@ -10,12 +8,11 @@ const { bit, take, skip } = Bits;
 /**
  * @internal
  */
-export interface Node<T> extends Functor<T>, Iterable<T>, Equatable {
+export interface Node<T> extends Iterable<T>, Equatable {
   isEmpty(): this is Empty<T>;
   isLeaf(): this is Leaf<T>;
   get(index: number, shift: number): Option<T>;
   set(index: number, value: T, shift: number): Node<T>;
-  map<U>(mapper: Mapper<T, U>): Node<U>;
 }
 
 /**
@@ -65,10 +62,6 @@ export class Empty<T> implements Node<T> {
 
   public set(): Empty<T> {
     return this;
-  }
-
-  public map<U>(): Empty<U> {
-    return Empty.empty();
   }
 
   public equals(value: unknown): value is this {
@@ -126,10 +119,6 @@ export class Leaf<T> implements Node<T> {
     values[fragment] = value;
 
     return Leaf.of(values);
-  }
-
-  public map<U>(mapper: Mapper<T, U>): Leaf<U> {
-    return Leaf.of(this._values.map(mapper));
   }
 
   public equals(value: unknown): value is this {
@@ -201,14 +190,6 @@ export class Branch<T> implements Node<T> {
     nodes[fragment] = node;
 
     return Branch.of(nodes);
-  }
-
-  public map<U>(mapper: Mapper<T, U>): Branch<U> {
-    return Branch.of(
-      this._nodes.map((node) =>
-        node instanceof Branch ? node.map(mapper) : node.map(mapper)
-      )
-    );
   }
 
   public equals(value: unknown): value is this {

@@ -27,7 +27,7 @@ export class Audit<I, T = unknown, Q = unknown> {
   }
 
   public add(rule: Rule<I, T, Q>): Audit<I, T, Q> {
-    return new Audit(this._input, this._oracle, this._rules.push(rule));
+    return new Audit(this._input, this._oracle, this._rules.append(rule));
   }
 
   public evaluate(): Future<Iterable<Outcome<I, T, Q>>> {
