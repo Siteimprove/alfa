@@ -1,3 +1,4 @@
+import {Cache} from "@siteimprove/alfa-cache";
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -108,8 +109,15 @@ export class Table implements Equatable, Serializable {
 }
 
 export namespace Table {
+  const cache = Cache.empty<Element, Result<Table, string>>();
+
   export function from(element: Element): Result<Table, string> {
-    return Builder.from(element).map((table) => table.table);
+    if (cache.has(element)) {
+      return cache.get(element).get()
+    }
+    const tableModel = Builder.from(element).map((table) => table.table);
+    cache.set(element, tableModel);
+    return tableModel;
   }
 
   export interface JSON {
