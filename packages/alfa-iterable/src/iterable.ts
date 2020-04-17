@@ -184,8 +184,18 @@ export namespace Iterable {
     return Option.from(last);
   }
 
-  export function take<T>(iterable: Iterable<T>, count: number): Iterable<T> {
-    return takeWhile(iterable, () => count-- > 0);
+  export function* take<T>(iterable: Iterable<T>, count: number): Iterable<T> {
+    const iterator = iterable[Symbol.iterator]();
+
+    while (count-- > 0) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
   }
 
   export function* takeWhile<T>(
@@ -210,8 +220,47 @@ export namespace Iterable {
     return takeWhile(iterable, not(predicate));
   }
 
-  export function skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
-    return skipWhile(iterable, () => count-- > 0);
+  export function* takeLast<T>(
+    iterable: Iterable<T>,
+    count: number = 1
+  ): Iterable<T> {
+    if (count <= 0) {
+      return;
+    }
+
+    const last: Array<T> = [];
+
+    for (const value of iterable) {
+      last.push(value);
+
+      if (last.length > count) {
+        last.shift();
+      }
+    }
+
+    yield* last;
+  }
+
+  export function* skip<T>(iterable: Iterable<T>, count: number): Iterable<T> {
+    const iterator = iterable[Symbol.iterator]();
+
+    while (count-- > 0) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+    }
+
+    while (true) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      yield next.value;
+    }
   }
 
   export function* skipWhile<T>(
@@ -236,6 +285,37 @@ export namespace Iterable {
     predicate: Predicate<T, T, [number]>
   ): Iterable<T> {
     return skipWhile(iterable, not(predicate));
+  }
+
+  export function* skipLast<T>(
+    iterable: Iterable<T>,
+    count: number = 1
+  ): Iterable<T> {
+    const iterator = iterable[Symbol.iterator]();
+
+    const first: Array<T> = [];
+
+    while (count-- > 0) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      first.push(next.value);
+    }
+
+    while (true) {
+      const next = iterator.next();
+
+      if (next.done === true) {
+        return;
+      }
+
+      first.push(next.value);
+
+      yield first.shift()!;
+    }
   }
 
   export function rest<T>(iterable: Iterable<T>): Iterable<T> {
