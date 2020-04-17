@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
   // Is it worth it?
   evaluate({ device, document }) {
     // records in which <table> is located each <th>
-    let ownership: Map<Element, Element> = Map.of();
+    let ownership: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
