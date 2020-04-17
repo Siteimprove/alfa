@@ -1,7 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
-import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -10,7 +9,7 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
@@ -20,43 +19,45 @@ export default Rule.Atomic.of<Page, Attribute>({
 
     return {
       applicability() {
-        return (
-          document
+        function* getHeaders() {
+          // get all perceivable tables in the document
+          const tables = document
             .descendants()
-            // get all cells with a headers attribute
             .filter(
               and(
                 isElement,
                 and(
                   hasNamespace(Namespace.HTML),
-                  hasName("td", "th"),
-                  hasAttribute("headers")
+                  hasName("table"),
+                  isPerceivable(device)
                 )
               )
-            )
-            // get the attributes themselves
-            .map((cell) => {
-              let result: Option<Attribute> = None;
-              // get the table containing it: the first <table> ancestor
-              const table = cell.closest(
+            );
+
+          for (const table of tables) {
+            // get all cells with a headers attribute
+            const cells = table
+              .descendants()
+              .filter(
                 and(
                   isElement,
-                  and(hasNamespace(Namespace.HTML), hasName("table"))
+                  and(
+                    hasNamespace(Namespace.HTML),
+                    hasName("td", "th"),
+                    hasAttribute("headers")
+                  )
                 )
               );
 
-              if (table.isNone()) return result;
-              if (not(isPerceivable(device))(table.get())) return result;
+            for (const cell of cells) {
+              const header = cell.attribute("headers").get();
+              ownership = ownership.set(header, table);
+              yield header;
+            }
+          }
+        }
 
-              // if the table is exposed, record the ownership and return the headers attribute
-              const headers = cell.attribute("headers").get();
-              ownership = ownership.set(headers, table.get());
-              result = Some.of(headers);
-              return result;
-            })
-            .filter((option) => option.isSome())
-            .map((option) => option.get())
-        );
+        return getHeaders();
       },
 
       expectations(target) {
