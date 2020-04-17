@@ -83,7 +83,7 @@ export namespace Future {
       values,
       (values, value) =>
         mapper(value).flatMap((value) =>
-          values.map((values) => values.push(value))
+          values.map((values) => values.append(value))
         ),
       now(List.empty())
     );

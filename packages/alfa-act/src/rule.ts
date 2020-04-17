@@ -269,7 +269,7 @@ function resolve<I, T, Q>(
       (expectations, [id, expectation]) =>
         expectations.flatMap((expectations) =>
           expectation.map((expectation) =>
-            expectations.push([
+            expectations.append([
               id,
               expectation.map((value) =>
                 value.map(normalize).mapErr(normalize)

@@ -51,7 +51,7 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
                   groups
                     .get(node.name())
                     .getOrElse(() => List.empty<Element>())
-                    .push(iframe)
+                    .append(iframe)
                 );
               }
 
