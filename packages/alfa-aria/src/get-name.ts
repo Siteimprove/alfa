@@ -245,16 +245,25 @@ function getHtmlTextAlternative(
           .map((type) => type.value.toLowerCase())
           .flatMap((type) => {
             switch (type) {
+              // https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-url-and-textarea-element
+              case "text":
+              case "password":
+              case "search":
+              case "tel":
+              case "email":
+              case "url":
+                return None;
+
               // https://w3c.github.io/html-aam/#input-type-button-input-type-submit-and-input-type-reset
               case "button":
               case "submit":
               case "reset":
                 return element
                   .attribute("value")
-                  .andThen((value) =>
-                    value.value === ""
+                  .andThen((attribute) =>
+                    attribute.value === ""
                       ? None
-                      : Some.of(flatten(value.value, options))
+                      : Some.of(flatten(attribute.value, options))
                   )
                   .orElse(() => {
                     if (type === "submit") {
@@ -270,20 +279,18 @@ function getHtmlTextAlternative(
 
               // https://w3c.github.io/html-aam/#input-type-image
               case "image":
-              default:
                 return element
                   .attribute("alt")
-                  .andThen((alt) =>
-                    alt.value === ""
+                  .orElse(() => element.attribute("title"))
+                  .andThen((attribute) =>
+                    attribute.value === ""
                       ? None
-                      : Some.of(flatten(alt.value, options))
-                  )
-                  .orElse(() =>
-                    element.attribute("value").map((attr) => attr.value)
-                  )
-                  .andThen((value) =>
-                    value === "" ? None : Some.of(flatten(value, options))
+                      : Some.of(flatten(attribute.value, options))
                   );
+
+              // https://w3c.github.io/html-aam/#other-form-elements
+              default:
+                return None;
             }
           })
       );
