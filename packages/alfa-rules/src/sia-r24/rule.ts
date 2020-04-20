@@ -24,8 +24,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             "Where is the transcript of the <video> element?"
-          ).map((transcript) => {
-            return expectation(
+          ).map((transcript) =>
+            expectation(
               transcript.isSome(),
               () => Outcomes.HasTranscript,
               () =>
@@ -41,8 +41,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                     () => Outcomes.HasNoTranscript
                   )
                 )
-            );
-          }),
+            )
+          ),
         };
       },
     };
