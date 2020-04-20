@@ -42,6 +42,8 @@ export { default as R41 } from "./sia-r41/rule";
 export { default as R42 } from "./sia-r42/rule";
 export { default as R43 } from "./sia-r43/rule";
 export { default as R44 } from "./sia-r44/rule";
+export { default as R45 } from "./sia-r45/rule";
+export { default as R46 } from "./sia-r46/rule";
 export { default as R47 } from "./sia-r47/rule";
 export { default as R48 } from "./sia-r48/rule";
 export { default as R49 } from "./sia-r49/rule";
