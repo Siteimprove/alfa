@@ -1,4 +1,4 @@
-import { Comparable } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -10,20 +10,20 @@ import { Cell } from "./cell";
 import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 
-const { compare, Comparison } = Comparable;
+const { compare } = Comparable;
 
 /**
- * @see/ https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
+ * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
  * This is a row group as part of the table. Width and cells list are stored in the table, not here.
  */
 export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
-  protected readonly _y: number;
-  protected readonly _height: number;
-  protected readonly _element: Element;
-
   public static of(y: number, h: number, element: Element): RowGroup {
     return new RowGroup(y, h, element);
   }
+
+  protected readonly _y: number;
+  protected readonly _height: number;
+  protected readonly _element: Element;
 
   protected constructor(y: number, h: number, element: Element) {
     this._y = y;
@@ -54,9 +54,15 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
    * compare rowgroups according to their anchor
    * in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
    */
-  public compare(rowgroup: RowGroup): Comparable.Comparison {
-    if (this._y < rowgroup._y) return Comparison.Less;
-    if (this._y > rowgroup._y) return Comparison.More;
+  public compare(rowgroup: RowGroup): Comparison {
+    if (this._y < rowgroup._y) {
+      return Comparison.Less;
+    }
+
+    if (this._y > rowgroup._y) {
+      return Comparison.Greater;
+    }
+
     return Comparison.Equal;
   }
 
@@ -85,8 +91,9 @@ export namespace RowGroup {
 
   export interface JSON {
     [key: string]: json.JSON;
-
-    anchor: { y: number };
+    anchor: {
+      y: number;
+    };
     height: number;
     element: Element.JSON;
   }

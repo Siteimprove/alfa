@@ -1,4 +1,4 @@
-import { Comparable } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -8,20 +8,18 @@ import * as json from "@siteimprove/alfa-json";
 
 import { isHtmlElementWithName, parseSpan } from "./helpers";
 
-const { Comparison } = Comparable;
-
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
  */
 export class ColumnGroup
   implements Comparable<ColumnGroup>, Equatable, Serializable {
-  private readonly _x: number;
-  private readonly _width: number;
-  private readonly _element: Element;
-
   public static of(x: number, width: number, element: Element): ColumnGroup {
     return new ColumnGroup(x, width, element);
   }
+
+  private readonly _x: number;
+  private readonly _width: number;
+  private readonly _element: Element;
 
   private constructor(x: number, width: number, element: Element) {
     this._x = x;
@@ -52,17 +50,23 @@ export class ColumnGroup
    * compare colgroups according to their anchor
    * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
    */
-  public compare(colgroup: ColumnGroup): Comparable.Comparison {
-    if (this._x < colgroup._x) return Comparison.Less;
-    if (this._x > colgroup._x) return Comparison.More;
+  public compare(colgroup: ColumnGroup): Comparison {
+    if (this._x < colgroup._x) {
+      return Comparison.Less;
+    }
+
+    if (this._x > colgroup._x) {
+      return Comparison.Greater;
+    }
+
     return Comparison.Equal;
   }
 
   public equals(value: unknown): value is this {
     return (
       value instanceof ColumnGroup &&
-      this._width === value._width &&
       this._x === value._x &&
+      this._width === value._width &&
       this._element.equals(value._element)
     );
   }
@@ -77,18 +81,17 @@ export class ColumnGroup
 }
 
 export namespace ColumnGroup {
+  export interface JSON {
+    [key: string]: json.JSON;
+    anchor: { x: number };
+    width: number;
+    element: Element.JSON;
+  }
+
   export function from(element: Element): Result<ColumnGroup, string> {
     return ColumnGroup.Builder.from(element).map(
       (colgroup) => colgroup.colgroup
     );
-  }
-
-  export interface JSON {
-    [key: string]: json.JSON;
-
-    anchor: { x: number };
-    width: number;
-    element: Element.JSON;
   }
 
   export class Builder implements Equatable, Serializable {

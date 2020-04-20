@@ -23,14 +23,6 @@ const { compare } = Comparable;
  */
 export namespace Row {
   export class Builder implements Equatable, Serializable {
-    private readonly _y: number;
-    private readonly _xCurrent: number; // current x position in processing the row
-    private readonly _width: number;
-    private readonly _height: number;
-    private readonly _element: Element;
-    private readonly _cells: Array<Cell.Builder>;
-    private readonly _downwardGrowingCells: Array<Cell.Builder>;
-
     public static of(
       y: number,
       width: number,
@@ -42,6 +34,14 @@ export namespace Row {
     ): Builder {
       return new Builder(y, width, height, element, cells, growing, xCurrent);
     }
+
+    private readonly _y: number;
+    private readonly _xCurrent: number; // current x position in processing the row
+    private readonly _width: number;
+    private readonly _height: number;
+    private readonly _element: Element;
+    private readonly _cells: Array<Cell.Builder>;
+    private readonly _downwardGrowingCells: Array<Cell.Builder>;
 
     private constructor(
       y: number,
@@ -59,28 +59,6 @@ export namespace Row {
       this._element = element;
       this._cells = cells;
       this._downwardGrowingCells = growing;
-    }
-
-    public update(update: {
-      y?: number;
-      xCurrent?: number;
-      width?: number;
-      height?: number;
-      element?: Element;
-      cells?: Array<Cell.Builder>;
-      downwardGrowingCells?: Array<Cell.Builder>;
-    }): Builder {
-      return Builder.of(
-        update.y !== undefined ? update.y : this._y,
-        update.width !== undefined ? update.width : this._width,
-        update.height !== undefined ? update.height : this._height,
-        update.element !== undefined ? update.element : this._element,
-        update.cells !== undefined ? update.cells : this._cells,
-        update.downwardGrowingCells !== undefined
-          ? update.downwardGrowingCells
-          : this._downwardGrowingCells,
-        update.xCurrent !== undefined ? update.xCurrent : this._xCurrent
-      );
     }
 
     public get anchor(): { y: number } {
@@ -105,6 +83,28 @@ export namespace Row {
 
     public get downwardGrowingCells(): Iterable<Cell.Builder> {
       return this._downwardGrowingCells;
+    }
+
+    public update(update: {
+      y?: number;
+      xCurrent?: number;
+      width?: number;
+      height?: number;
+      element?: Element;
+      cells?: Array<Cell.Builder>;
+      downwardGrowingCells?: Array<Cell.Builder>;
+    }): Builder {
+      return Builder.of(
+        update.y !== undefined ? update.y : this._y,
+        update.width !== undefined ? update.width : this._width,
+        update.height !== undefined ? update.height : this._height,
+        update.element !== undefined ? update.element : this._element,
+        update.cells !== undefined ? update.cells : this._cells,
+        update.downwardGrowingCells !== undefined
+          ? update.downwardGrowingCells
+          : this._downwardGrowingCells,
+        update.xCurrent !== undefined ? update.xCurrent : this._xCurrent
+      );
     }
 
     public growCells(y: number): Builder {
@@ -237,15 +237,19 @@ export namespace Row {
       yCurrent: number = 0,
       w: number = 0
     ): Result<Builder, string> {
-      if (tr.name !== "tr") return Err.of("This element is not a table row");
+      if (tr.name !== "tr") {
+        return Err.of("This element is not a table row");
+      }
+
       if (
         cells.some((cell) =>
           growingCells.some((growingCell) => cell.equals(growingCell))
         )
-      )
+      ) {
         return Err.of("Cells and growing cells must be disjoints");
+      }
 
-      let children = tr.children().filter(isHtmlElementWithName("th", "td"));
+      const children = tr.children().filter(isHtmlElementWithName("th", "td"));
 
       // 1
       // global table height adjusted after building row
@@ -277,8 +281,9 @@ export namespace Row {
 
     export interface JSON {
       [key: string]: json.JSON;
-
-      anchor: { y: number };
+      anchor: {
+        y: number;
+      };
       width: number;
       height: number;
       element: Element.JSON;

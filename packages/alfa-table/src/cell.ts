@@ -1,4 +1,4 @@
-import { Comparable } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -11,26 +11,17 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Header } from "./header";
-import { isHtmlElementWithName, parseSpan } from "./helpers";
 import { Table } from "./table";
+import { isHtmlElementWithName, parseSpan } from "./helpers";
 
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
-const { Comparison } = Comparable;
+const { isElement, hasName } = Element;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
  */
 export class Cell implements Comparable<Cell>, Equatable, Serializable {
-  private readonly _kind: Cell.Kind;
-  private readonly _x: number;
-  private readonly _y: number;
-  private readonly _width: number;
-  private readonly _height: number;
-  private readonly _element: Element;
-  private readonly _variant: Option<Header.Variant>;
-  private readonly _headers: Array<Element>;
-
   public static of(
     kind: Cell.Kind,
     x: number,
@@ -43,6 +34,15 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
   ): Cell {
     return new Cell(kind, x, y, width, height, element, variant, headers);
   }
+
+  private readonly _kind: Cell.Kind;
+  private readonly _x: number;
+  private readonly _y: number;
+  private readonly _width: number;
+  private readonly _height: number;
+  private readonly _element: Element;
+  private readonly _variant: Option<Header.Variant>;
+  private readonly _headers: Array<Element>;
 
   private constructor(
     kind: Cell.Kind,
@@ -108,11 +108,23 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
    * compare cell according to their anchor
    * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
    */
-  public compare(cell: Cell): Comparable.Comparison {
-    if (this._y < cell._y) return Comparison.Less;
-    if (this._y > cell._y) return Comparison.More;
-    if (this._x < cell._x) return Comparison.Less;
-    if (this._x > cell._x) return Comparison.More;
+  public compare(cell: Cell): Comparison {
+    if (this._y < cell._y) {
+      return Comparison.Less;
+    }
+
+    if (this._y > cell._y) {
+      return Comparison.Greater;
+    }
+
+    if (this._x < cell._x) {
+      return Comparison.Less;
+    }
+
+    if (this._x > cell._x) {
+      return Comparison.Greater;
+    }
+
     return Comparison.Equal;
   }
 
@@ -120,10 +132,10 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     return (
       value instanceof Cell &&
       this._kind === value._kind &&
-      this._width === value._width &&
-      this._height === value._height &&
       this._x === value._x &&
       this._y === value._y &&
+      this._width === value._width &&
+      this._height === value._height &&
       this._element.equals(value._element)
     );
   }
@@ -142,14 +154,13 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
 }
 
 export namespace Cell {
-  import isElement = Element.isElement;
-  import hasName = Element.hasName;
-
   export interface JSON {
     [key: string]: json.JSON;
-
     kind: Kind;
-    anchor: { x: number; y: number };
+    anchor: {
+      x: number;
+      y: number;
+    };
     width: number;
     height: number;
     element: Element.JSON;
@@ -325,7 +336,7 @@ export namespace Cell {
       return this._cell.isCovering(x, y);
     }
 
-    public compare(cell: Builder): Comparable.Comparison {
+    public compare(cell: Builder): Comparison {
       return this._cell.compare(cell._cell);
     }
 
@@ -355,7 +366,9 @@ export namespace Cell {
     ): boolean {
       for (let col = x; col < x + w; col++) {
         for (let row = y; row < y + h; row++) {
-          if (this.isCovering(col, row)) return true;
+          if (this.isCovering(col, row)) {
+            return true;
+          }
         }
       }
       return false;
@@ -644,6 +657,14 @@ export namespace Cell {
   }
 
   export namespace Builder {
+    export interface JSON {
+      [key: string]: json.JSON;
+      cell: Cell.JSON;
+      state: Option.JSON;
+      explicitHeaders: Element.JSON[];
+      implicitHeaders: Element.JSON[];
+    }
+
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-rows
      */
@@ -652,8 +673,9 @@ export namespace Cell {
       x: number = -1,
       y: number = -1
     ): Result<Builder, string> {
-      if (cell.name !== "th" && cell.name !== "td")
+      if (cell.name !== "th" && cell.name !== "td") {
         return Err.of("This element is not a table cell");
+      }
 
       const colspan = parseSpan(cell, "colspan", 1, 1000, 1);
       // 9
@@ -683,6 +705,7 @@ export namespace Cell {
               )
               .flatMap((keyword) => scopeKeywordsMapping.get(keyword))
               .orElse(() => Some.of(Header.Scope.Auto));
+
       return Ok.of(
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)
       );
@@ -694,14 +717,5 @@ export namespace Cell {
       ["rowgroup", Header.Scope.RowGroup],
       ["colgroup", Header.Scope.ColumnGroup],
     ]);
-
-    export interface JSON {
-      [key: string]: json.JSON;
-
-      cell: Cell.JSON;
-      state: Option.JSON;
-      explicitHeaders: Element.JSON[];
-      implicitHeaders: Element.JSON[];
-    }
   }
 }

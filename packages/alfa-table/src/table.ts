@@ -20,13 +20,6 @@ const { compare } = Comparable;
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model
  */
 export class Table implements Equatable, Serializable {
-  private readonly _width: number;
-  private readonly _height: number;
-  private readonly _element: Element;
-  private readonly _cells: Array<Cell>;
-  private readonly _rowGroups: Array<RowGroup>;
-  private readonly _columnGroups: Array<ColumnGroup>;
-
   public static of(
     element: Element,
     width: number = 0,
@@ -37,6 +30,13 @@ export class Table implements Equatable, Serializable {
   ): Table {
     return new Table(element, width, height, cells, rowGroups, columnGroups);
   }
+
+  private readonly _width: number;
+  private readonly _height: number;
+  private readonly _element: Element;
+  private readonly _cells: Array<Cell>;
+  private readonly _rowGroups: Array<RowGroup>;
+  private readonly _columnGroups: Array<ColumnGroup>;
 
   private constructor(
     element: Element,
@@ -119,7 +119,6 @@ export namespace Table {
 
   export interface JSON {
     [key: string]: json.JSON;
-
     height: number;
     width: number;
     element: Element.JSON;
@@ -129,9 +128,6 @@ export namespace Table {
   }
 
   export class Builder implements Equatable, Serializable {
-    private readonly _table: Table; // will always have empty cells list as its stored here
-    private readonly _cells: Array<Cell.Builder>;
-
     public static of(
       element: Element,
       width: number = 0,
@@ -143,6 +139,9 @@ export namespace Table {
       return new Builder(element, width, height, cells, rowGroups, colGroups);
     }
 
+    private readonly _table: Table; // will always have empty cells list as its stored here
+    private readonly _cells: Array<Cell.Builder>;
+
     private constructor(
       element: Element,
       width: number,
@@ -153,24 +152,6 @@ export namespace Table {
     ) {
       this._table = Table.of(element, width, height, [], rowGroups, colGroups);
       this._cells = cells;
-    }
-
-    public update(update: {
-      element?: Element;
-      width?: number;
-      height?: number;
-      cells?: Array<Cell.Builder>;
-      rowGroups?: Array<RowGroup>;
-      colGroups?: Array<ColumnGroup>;
-    }): Builder {
-      return Builder.of(
-        update.element !== undefined ? update.element : this.element,
-        update.width !== undefined ? update.width : this.width,
-        update.height !== undefined ? update.height : this.height,
-        update.cells !== undefined ? update.cells : this._cells,
-        update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
-        update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
-      );
     }
 
     public get cells(): Array<Cell.Builder> {
@@ -205,6 +186,24 @@ export namespace Table {
         this._cells.map((cell) => cell.cell),
         [...this.rowGroups],
         [...this.colGroups]
+      );
+    }
+
+    public update(update: {
+      element?: Element;
+      width?: number;
+      height?: number;
+      cells?: Array<Cell.Builder>;
+      rowGroups?: Array<RowGroup>;
+      colGroups?: Array<ColumnGroup>;
+    }): Builder {
+      return Builder.of(
+        update.element !== undefined ? update.element : this.element,
+        update.width !== undefined ? update.width : this.width,
+        update.height !== undefined ? update.height : this.height,
+        update.cells !== undefined ? update.cells : this._cells,
+        update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
+        update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
       );
     }
 
@@ -255,7 +254,6 @@ export namespace Table {
   export namespace Builder {
     export interface JSON {
       [key: string]: json.JSON;
-
       table: Table.JSON;
       cells: Cell.Builder.JSON[];
     }
