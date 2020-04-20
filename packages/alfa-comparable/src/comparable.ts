@@ -12,7 +12,7 @@ export namespace Comparable {
   export enum Comparison {
     Less = -1,
     Equal,
-    More
+    More,
   }
 
   /**

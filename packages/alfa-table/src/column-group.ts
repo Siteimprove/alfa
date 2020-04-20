@@ -13,7 +13,8 @@ const { Comparison } = Comparable;
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-column-group
  */
-export class ColumnGroup implements Comparable<ColumnGroup>, Equatable, Serializable {
+export class ColumnGroup
+  implements Comparable<ColumnGroup>, Equatable, Serializable {
   private readonly _x: number;
   private readonly _width: number;
   private readonly _element: Element;
@@ -77,7 +78,9 @@ export class ColumnGroup implements Comparable<ColumnGroup>, Equatable, Serializ
 
 export namespace ColumnGroup {
   export function from(element: Element): Result<ColumnGroup, string> {
-    return ColumnGroup.Builder.from(element).map((colgroup) => colgroup.colgroup);
+    return ColumnGroup.Builder.from(element).map(
+      (colgroup) => colgroup.colgroup
+    );
   }
 
   export interface JSON {

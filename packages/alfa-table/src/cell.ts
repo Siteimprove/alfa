@@ -531,7 +531,7 @@ export namespace Cell {
             // remove principal cell
             not(equals(this.element)),
             // Step 4: remove empty cells
-            not(element => element.children().isEmpty())
+            not((element) => element.children().isEmpty())
           )
         );
 
