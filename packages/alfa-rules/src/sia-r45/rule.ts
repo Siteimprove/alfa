@@ -15,7 +15,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
   evaluate({ device, document }) {
     // records in which <table> is located each "headers" attribute
-    let ownership: Map<Attribute, Element> = Map.empty();
+    let ownership = Map.empty<Attribute, Element>();
 
     return {
       *applicability() {
