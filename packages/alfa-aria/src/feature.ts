@@ -668,10 +668,10 @@ Feature.register(
         switch (variant) {
           case Header.Variant.Column:
           case Header.Variant.ColumnGroup:
-            return "ColumnHeader";
+            return "columnheader";
           case Header.Variant.Row:
           case Header.Variant.RowGroup:
-            return "RowHeader";
+            return "rowheader";
         }
       });
     },
