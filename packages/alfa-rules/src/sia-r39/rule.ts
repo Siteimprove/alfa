@@ -54,9 +54,11 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "boolean",
             target,
             `Does the accessible name of the <${target.name}> element describe its purpose?`
-          )
-            ? Some.of(Outcomes.NameIsDescriptive(target.name))
-            : Some.of(Outcomes.NameIsNotDescriptive(target.name)),
+          ).map((nameDescribesPurpose) =>
+            nameDescribesPurpose
+              ? Some.of(Outcomes.NameIsDescriptive(target.name))
+              : Some.of(Outcomes.NameIsNotDescriptive(target.name))
+          ),
         };
       },
     };
