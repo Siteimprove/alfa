@@ -290,7 +290,7 @@ export namespace Table {
           if (processCG) {
             const colGroup = ColumnGroup.Builder.from(currentElement)
               .get()
-              .anchorAt(table.width).colgroup;
+              .anchorAt(table.width).columnGroup;
             table = table.update({
               // 9.1 (1).4 (cumulative) and (2).2
               width: Math.max(table.width, table.width + colGroup.width),

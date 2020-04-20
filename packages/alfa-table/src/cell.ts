@@ -3,14 +3,13 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Map } from "@siteimprove/alfa-map";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Header } from "./header";
+import { Scope } from "./scope";
 import { Table } from "./table";
 import { isHtmlElementWithName, parseSpan } from "./helpers";
 
@@ -29,10 +28,10 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     width: number,
     height: number,
     element: Element,
-    variant: Option<Header.Variant> = None,
+    scope: Option<Scope.Resolved> = None,
     headers: Array<Element> = []
   ): Cell {
-    return new Cell(kind, x, y, width, height, element, variant, headers);
+    return new Cell(kind, x, y, width, height, element, scope, headers);
   }
 
   private readonly _kind: Cell.Kind;
@@ -41,7 +40,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
-  private readonly _variant: Option<Header.Variant>;
+  private readonly _scope: Option<Scope.Resolved>;
   private readonly _headers: Array<Element>;
 
   private constructor(
@@ -51,7 +50,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     width: number,
     height: number,
     element: Element,
-    variant: Option<Header.Variant>,
+    scope: Option<Scope.Resolved>,
     headers: Array<Element>
   ) {
     this._kind = kind;
@@ -60,8 +59,12 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     this._width = width;
     this._height = height;
     this._element = element;
-    this._variant = variant;
+    this._scope = scope;
     this._headers = headers;
+  }
+
+  public get kind(): Cell.Kind {
+    return this._kind;
   }
 
   public get anchor(): { x: number; y: number } {
@@ -76,52 +79,53 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
     return this._height;
   }
 
-  public get kind(): Cell.Kind {
-    return this._kind;
-  }
-
   public get element(): Element {
     return this._element;
+  }
+
+  public get scope(): Option<Scope.Resolved> {
+    return this._scope;
   }
 
   public get headers(): Iterable<Element> {
     return this._headers;
   }
 
-  public get variant(): Option<Header.Variant> {
-    return this._variant;
-  }
-
   public isCovering(x: number, y: number): boolean {
+    // The cell is *not* covering the slot (x, y) if either:
+    // - the slot is left of the cell; or
+    // - the slot is right of the cell; or
+    // - the slot is above the cell; or
+    // - the slot is below the cell.
     return !(
-      // cell is *not* covering if either
-      (
-        x < this._x || // slot is left of cell
-        this._x + this._width - 1 < x || // slot is right of cell
-        y < this._y || // slot is above cell
-        this._y + this._height - 1 < y
-      ) // slot is below cell
+      x < this._x ||
+      this._x + this._width - 1 < x ||
+      y < this._y ||
+      this._y + this._height - 1 < y
     );
   }
 
   /**
-   * compare cell according to their anchor
-   * in a given group of cells (row, rowgroup, table, …), no two different cells can have the same anchor, so this is good.
+   * Compare this cell to another according to their anchors.
+   *
+   * @remarks
+   * In a given group of cells (rows, row groups, tables, etc.), no two cells
+   * will have the same anchor.
    */
-  public compare(cell: Cell): Comparison {
-    if (this._y < cell._y) {
+  public compare(that: Cell): Comparison {
+    if (this._y < that._y) {
       return Comparison.Less;
     }
 
-    if (this._y > cell._y) {
+    if (this._y > that._y) {
       return Comparison.Greater;
     }
 
-    if (this._x < cell._x) {
+    if (this._x < that._x) {
       return Comparison.Less;
     }
 
-    if (this._x > cell._x) {
+    if (this._x > that._x) {
       return Comparison.Greater;
     }
 
@@ -147,7 +151,7 @@ export class Cell implements Comparable<Cell>, Equatable, Serializable {
       width: this._width,
       height: this._height,
       element: this._element.toJSON(),
-      variant: this._variant.toJSON(),
+      scope: this._scope.getOr(null),
       headers: this._headers.map((header) => header.toJSON()),
     };
   }
@@ -164,7 +168,7 @@ export namespace Cell {
     width: number;
     height: number;
     element: Element.JSON;
-    variant: Option.JSON;
+    scope: Scope.Resolved | null;
     headers: Element.JSON[];
   }
 
@@ -179,7 +183,7 @@ export namespace Cell {
     private readonly _downwardGrowing: boolean;
     // This is the scope attribute, once correctly parsed.
     // The actual variant of the header is stored in the cell and can only be computed once the table is built.
-    private readonly _scope: Option<Header.Scope>;
+    private readonly _scope: Option<Scope>;
     // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
     //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
     //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
@@ -198,9 +202,9 @@ export namespace Cell {
       width: number,
       height: number,
       element: Element,
-      variant: Option<Header.Variant> = None,
+      variant: Option<Scope.Resolved> = None,
       downwardGrowing: boolean = false,
-      scope: Option<Header.Scope> = None,
+      scope: Option<Scope> = None,
       explicitHeaders: Array<Element> = [],
       implicitHeaders: Array<Element> = []
     ): Builder {
@@ -226,9 +230,9 @@ export namespace Cell {
       width: number,
       height: number,
       element: Element,
-      variant: Option<Header.Variant>,
+      variant: Option<Scope.Resolved>,
       downwardGrowing: boolean,
-      scope: Option<Header.Scope>,
+      scope: Option<Scope>,
       explicitHeaders: Array<Element>,
       implicitHeaders: Array<Element>
     ) {
@@ -246,9 +250,9 @@ export namespace Cell {
       width?: number;
       height?: number;
       element?: Element;
-      variant?: Option<Header.Variant>;
+      variant?: Option<Scope.Resolved>;
       downwardGrowing?: boolean;
-      scope?: Option<Header.Scope>;
+      scope?: Option<Scope>;
       explicitHeaders?: Array<Element>;
       implicitHeaders?: Array<Element>;
     }): Builder {
@@ -292,7 +296,7 @@ export namespace Cell {
       );
     }
 
-    public get scope(): Option<Header.Scope> {
+    public get scope(): Option<Scope> {
       return this._scope;
     }
 
@@ -316,8 +320,8 @@ export namespace Cell {
       return this._cell.element;
     }
 
-    public get variant(): Option<Header.Variant> {
-      return this._cell.variant;
+    public get variant(): Option<Scope.Resolved> {
+      return this._cell.scope;
     }
 
     public get downwardGrowing(): boolean {
@@ -384,25 +388,25 @@ export namespace Cell {
     }
 
     private _scopeToState(
-      scope: Header.Scope,
+      scope: Scope,
       table: Table.Builder
-    ): Option<Header.Variant> {
+    ): Option<Scope.Resolved> {
       switch (scope) {
         // https://html.spec.whatwg.org/multipage/tables.html#column-group-header
-        case Header.Scope.ColumnGroup:
-          return Some.of(Header.Variant.ColumnGroup);
+        case Scope.ColumnGroup:
+          return Option.of(Scope.ColumnGroup);
         // https://html.spec.whatwg.org/multipage/tables.html#row-group-header
-        case Header.Scope.RowGroup:
-          return Some.of(Header.Variant.RowGroup);
+        case Scope.RowGroup:
+          return Option.of(Scope.RowGroup);
         // https://html.spec.whatwg.org/multipage/tables.html#column-header
-        case Header.Scope.Column:
-          return Some.of(Header.Variant.Column);
+        case Scope.Column:
+          return Option.of(Scope.Column);
         // https://html.spec.whatwg.org/multipage/tables.html#row-header
-        case Header.Scope.Row:
-          return Some.of(Header.Variant.Row);
+        case Scope.Row:
+          return Option.of(Scope.Row);
         // https://html.spec.whatwg.org/multipage/tables.html#column-header
         // https://html.spec.whatwg.org/multipage/tables.html#row-header
-        case Header.Scope.Auto:
+        case Scope.Auto:
           // Not entirely clear whether "any of the cells covering slots with y-coordinates y .. y+height-1."
           // means "for any x" or just for the x of the cell. Using "for all x"
           if (
@@ -430,11 +434,11 @@ export namespace Cell {
               return None;
             } else {
               // there are *no* data cells in any of the cells covering slots with x-coordinates x .. x+width-1.
-              return Some.of(Header.Variant.Row);
+              return Option.of(Scope.Row);
             }
           } else {
             // there are *no* data cells in any of the cells covering slots with y-coordinates y .. y+height-1.
-            return Some.of(Header.Variant.Column);
+            return Option.of(Scope.Column);
           }
       }
     }
@@ -502,7 +506,7 @@ export namespace Cell {
                 (cell) =>
                   cell.anchor.x === currentCell.anchor.x &&
                   cell.width === currentCell.width
-              ) || !variant.equals(Some.of(Header.Variant.Column));
+              ) || !variant.equals(Some.of(Scope.Column));
           } else {
             // deltaY === 0
             blocked =
@@ -510,7 +514,7 @@ export namespace Cell {
                 (cell) =>
                   cell.anchor.y === currentCell.anchor.y &&
                   cell.height === currentCell.height
-              ) || !variant.equals(Some.of(Header.Variant.Row));
+              ) || !variant.equals(Some.of(Scope.Row));
           }
           // 9.5
           if (!blocked) headersList.push(currentCell);
@@ -579,9 +583,7 @@ export namespace Cell {
         // if the principal cell is in a rowgroup,
         const headers = table.cells
           // get all rowgroup headers
-          .filter((cell) =>
-            cell.variant.equals(Some.of(Header.Variant.RowGroup))
-          )
+          .filter((cell) => cell.variant.equals(Some.of(Scope.RowGroup)))
           // keep the ones inside the rowgroup of the principal cell
           .filter((rowGroupHeader) =>
             principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
@@ -603,9 +605,7 @@ export namespace Cell {
         // if the principal cell is in a colgroup,
         const headers = table.cells
           // get all colgroup headers
-          .filter((cell) =>
-            cell.variant.equals(Some.of(Header.Variant.ColumnGroup))
-          )
+          .filter((cell) => cell.variant.equals(Some.of(Scope.ColumnGroup)))
           // keep the ones inside the colgroup of the principal cell
           .filter((colGroupHeader) =>
             principalColGroup.get().isCovering(colGroupHeader.anchor.x)
@@ -703,19 +703,25 @@ export namespace Cell {
               .flatMap((attribute) =>
                 attribute.enumerate("col", "colgroup", "row", "rowgroup")
               )
-              .flatMap((keyword) => scopeKeywordsMapping.get(keyword))
-              .orElse(() => Some.of(Header.Scope.Auto));
+              .flatMap((keyword) => {
+                switch (keyword) {
+                  case "row":
+                    return Some.of(Scope.Row);
+                  case "col":
+                    return Some.of(Scope.Column);
+                  case "rowgroup":
+                    return Some.of(Scope.RowGroup);
+                  case "colgroup":
+                    return Some.of(Scope.ColumnGroup);
+                  default:
+                    return None;
+                }
+              })
+              .orElse(() => Some.of(Scope.Auto));
 
       return Ok.of(
         Builder.of(kind, x, y, colspan, rowspan, cell, None, grow, scope)
       );
     }
-
-    const scopeKeywordsMapping = Map.from([
-      ["row", Header.Scope.Row],
-      ["col", Header.Scope.Column],
-      ["rowgroup", Header.Scope.RowGroup],
-      ["colgroup", Header.Scope.ColumnGroup],
-    ]);
   }
 }

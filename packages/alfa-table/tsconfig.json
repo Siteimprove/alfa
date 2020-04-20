@@ -4,12 +4,12 @@
   "files": [
     "src/cell.ts",
     "src/column-group.ts",
-    "src/header.ts",
     "src/helpers.ts",
     "src/index.ts",
     "src/microsyntaxes.ts",
     "src/row.ts",
     "src/row-group.ts",
+    "src/scope.ts",
     "src/table.ts",
     "test/cell.spec.ts",
     "test/column-group.spec.ts",

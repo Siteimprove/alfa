@@ -1,6 +1,7 @@
+import { jsx } from "@siteimprove/alfa-dom/jsx";
+
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -8,7 +9,8 @@ import { Cell } from "../src/cell";
 import { ColumnGroup } from "../src/column-group";
 import { Row } from "../src/row";
 import { RowGroup } from "../src/row-group";
-import { Header, Table } from "../src";
+import { Scope } from "../src/scope";
+import { Table } from "../src/table";
 
 const { and } = Predicate;
 const { isElement } = Element;
@@ -20,7 +22,7 @@ const makeCellFromGetter = (getElt: (elt: string) => Element) => (
   x: number,
   y: number,
   headers: Array<string> = [],
-  variant: Header.Variant | undefined = undefined,
+  variant: Scope.Resolved | undefined = undefined,
   width: number = 1,
   height: number = 1
 ): Cell =>
@@ -301,72 +303,13 @@ export namespace smithonian {
     6,
     5,
     [
-      makeCell(
-        "grade",
-        Cell.Kind.Header,
-        0,
-        0,
-        [],
-        Header.Variant.Column,
-        1,
-        2
-      ),
-      makeCell(
-        "yield",
-        Cell.Kind.Header,
-        1,
-        0,
-        [],
-        Header.Variant.Column,
-        1,
-        2
-      ),
-      makeCell(
-        "strength",
-        Cell.Kind.Header,
-        2,
-        0,
-        [],
-        Header.Variant.Column,
-        2,
-        1
-      ),
-      makeCell(
-        "elong",
-        Cell.Kind.Header,
-        4,
-        0,
-        [],
-        Header.Variant.Column,
-        1,
-        2
-      ),
-      makeCell(
-        "reduct",
-        Cell.Kind.Header,
-        5,
-        0,
-        [],
-        Header.Variant.Column,
-        1,
-        2
-      ),
-      makeCell(
-        "kg-mm",
-        Cell.Kind.Header,
-        2,
-        1,
-        ["strength"],
-        Header.Variant.Column
-      ),
-      makeCell(
-        "lb-in",
-        Cell.Kind.Header,
-        3,
-        1,
-        ["strength"],
-        Header.Variant.Column
-      ),
+      makeCell("grade", Cell.Kind.Header, 0, 0, [], Scope.Column, 1, 2),
+      makeCell("yield", Cell.Kind.Header, 1, 0, [], Scope.Column, 1, 2),
+      makeCell("strength", Cell.Kind.Header, 2, 0, [], Scope.Column, 2, 1),
+      makeCell("elong", Cell.Kind.Header, 4, 0, [], Scope.Column, 1, 2),
+      makeCell("reduct", Cell.Kind.Header, 5, 0, [], Scope.Column, 1, 2),
+      makeCell("kg-mm", Cell.Kind.Header, 2, 1, ["strength"], Scope.Column),
+      makeCell("lb-in", Cell.Kind.Header, 3, 1, ["strength"], Scope.Column),
       makeCell("hard", Cell.Kind.Data, 0, 2, ["grade"]),
       makeCell("hard-yield", Cell.Kind.Data, 1, 2, ["yield"]),
       makeCell("hard-kg", Cell.Kind.Data, 2, 2, ["kg-mm", "strength"]),
@@ -445,23 +388,23 @@ export namespace apple {
     4,
     5,
     [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Header.Variant.Column),
-      makeCell("2008", Cell.Kind.Header, 1, 0, [], Header.Variant.Column),
-      makeCell("2007", Cell.Kind.Header, 2, 0, [], Header.Variant.Column),
-      makeCell("2006", Cell.Kind.Header, 3, 0, [], Header.Variant.Column),
-      makeCell("net", Cell.Kind.Header, 0, 1, [], Header.Variant.Row),
+      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+      makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
+      makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
+      makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
+      makeCell("net", Cell.Kind.Header, 0, 1, [], Scope.Row),
       makeCell("net-2008", Cell.Kind.Data, 1, 1, ["net", "2008"]),
       makeCell("net-2007", Cell.Kind.Data, 2, 1, ["net", "2007"]),
       makeCell("net-2006", Cell.Kind.Data, 3, 1, ["net", "2006"]),
-      makeCell("cost", Cell.Kind.Header, 0, 2, [], Header.Variant.Row),
+      makeCell("cost", Cell.Kind.Header, 0, 2, [], Scope.Row),
       makeCell("cost-2008", Cell.Kind.Data, 1, 2, ["cost", "2008"]),
       makeCell("cost-2007", Cell.Kind.Data, 2, 2, ["cost", "2007"]),
       makeCell("cost-2006", Cell.Kind.Data, 3, 2, ["cost", "2006"]),
-      makeCell("margin", Cell.Kind.Header, 0, 3, [], Header.Variant.Row),
+      makeCell("margin", Cell.Kind.Header, 0, 3, [], Scope.Row),
       makeCell("margin-2008", Cell.Kind.Data, 1, 3, ["margin", "2008"]),
       makeCell("margin-2007", Cell.Kind.Data, 2, 3, ["margin", "2007"]),
       makeCell("margin-2006", Cell.Kind.Data, 3, 3, ["margin", "2006"]),
-      makeCell("percent", Cell.Kind.Header, 0, 4, [], Header.Variant.Row),
+      makeCell("percent", Cell.Kind.Header, 0, 4, [], Scope.Row),
       makeCell("percent-2008", Cell.Kind.Data, 1, 4, ["percent", "2008"]),
       makeCell("percent-2007", Cell.Kind.Data, 2, 4, ["percent", "2007"]),
       makeCell("percent-2006", Cell.Kind.Data, 3, 4, ["percent", "2006"]),
@@ -534,22 +477,15 @@ export namespace expenses {
     4,
     5,
     [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Header.Variant.Column),
-      makeCell("2008", Cell.Kind.Header, 1, 0, [], Header.Variant.Column),
-      makeCell("2007", Cell.Kind.Header, 2, 0, [], Header.Variant.Column),
-      makeCell("2006", Cell.Kind.Header, 3, 0, [], Header.Variant.Column),
-      makeCell("rd", Cell.Kind.Header, 0, 1, [], Header.Variant.RowGroup),
+      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+      makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
+      makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
+      makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
+      makeCell("rd", Cell.Kind.Header, 0, 1, [], Scope.RowGroup),
       makeCell("rd-2008", Cell.Kind.Data, 1, 1, ["2008", "rd"]),
       makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
       makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
-      makeCell(
-        "rd-percent",
-        Cell.Kind.Header,
-        0,
-        2,
-        ["rd"],
-        Header.Variant.Row
-      ),
+      makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"], Scope.Row),
       makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
         "rd-percent",
         "2008",
@@ -565,18 +501,11 @@ export namespace expenses {
         "2006",
         "rd",
       ]),
-      makeCell("sales", Cell.Kind.Header, 0, 3, [], Header.Variant.RowGroup),
+      makeCell("sales", Cell.Kind.Header, 0, 3, [], Scope.RowGroup),
       makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
       makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
       makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
-      makeCell(
-        "sales-percent",
-        Cell.Kind.Header,
-        0,
-        4,
-        ["sales"],
-        Header.Variant.Row
-      ),
+      makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"], Scope.Row),
       makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
         "sales-percent",
         "2008",
@@ -605,14 +534,14 @@ export namespace expenses {
   );
 
   export const headerVariants = [
-    Header.Variant.Column,
-    Header.Variant.Column,
-    Header.Variant.Column,
-    Header.Variant.Column, // first row, auto => column
-    Header.Variant.RowGroup,
-    Header.Variant.Row,
-    Header.Variant.RowGroup,
-    Header.Variant.Row, // explicitly set
+    Scope.Column,
+    Scope.Column,
+    Scope.Column,
+    Scope.Column, // first row, auto => column
+    Scope.RowGroup,
+    Scope.Row,
+    Scope.RowGroup,
+    Scope.Row, // explicitly set
   ];
 }
 
@@ -674,22 +603,15 @@ export namespace expensesNum {
     4,
     5,
     [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Header.Variant.Column),
-      makeCell("2008", Cell.Kind.Header, 1, 0, [], Header.Variant.Column),
-      makeCell("2007", Cell.Kind.Header, 2, 0, [], Header.Variant.Column),
-      makeCell("2006", Cell.Kind.Header, 3, 0, [], Header.Variant.Column),
-      makeCell("rd", Cell.Kind.Header, 0, 1, [], Header.Variant.RowGroup),
+      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+      makeCell("2008", Cell.Kind.Header, 1, 0, [], Scope.Column),
+      makeCell("2007", Cell.Kind.Header, 2, 0, [], Scope.Column),
+      makeCell("2006", Cell.Kind.Header, 3, 0, [], Scope.Column),
+      makeCell("rd", Cell.Kind.Header, 0, 1, [], Scope.RowGroup),
       makeCell("rd-2008", Cell.Kind.Data, 1, 1, ["2008", "rd"]),
       makeCell("rd-2007", Cell.Kind.Data, 2, 1, ["2007", "rd"]),
       makeCell("rd-2006", Cell.Kind.Data, 3, 1, ["2006", "rd"]),
-      makeCell(
-        "rd-percent",
-        Cell.Kind.Header,
-        0,
-        2,
-        ["rd"],
-        Header.Variant.Row
-      ),
+      makeCell("rd-percent", Cell.Kind.Header, 0, 2, ["rd"], Scope.Row),
       makeCell("rd-percent-2008", Cell.Kind.Data, 1, 2, [
         "rd-percent",
         "2008",
@@ -705,18 +627,11 @@ export namespace expensesNum {
         "2006",
         "rd",
       ]),
-      makeCell("sales", Cell.Kind.Header, 0, 3, [], Header.Variant.RowGroup),
+      makeCell("sales", Cell.Kind.Header, 0, 3, [], Scope.RowGroup),
       makeCell("sales-2008", Cell.Kind.Data, 1, 3, ["2008", "sales"]),
       makeCell("sales-2007", Cell.Kind.Data, 2, 3, ["2007", "sales"]),
       makeCell("sales-2006", Cell.Kind.Data, 3, 3, ["2006", "sales"]),
-      makeCell(
-        "sales-percent",
-        Cell.Kind.Header,
-        0,
-        4,
-        ["sales"],
-        Header.Variant.Row
-      ),
+      makeCell("sales-percent", Cell.Kind.Header, 0, 4, ["sales"], Scope.Row),
       makeCell("sales-percent-2008", Cell.Kind.Data, 1, 4, [
         "sales-percent",
         "2008",
@@ -831,17 +746,17 @@ export namespace headersVariant {
   );
 
   export const headerVariants = [
-    Header.Variant.Column,
-    Header.Variant.Row,
+    Scope.Column,
+    Scope.Row,
     undefined,
-    Header.Variant.Column,
-    Header.Variant.Column,
-    Header.Variant.Column,
-    Header.Variant.Column,
-    Header.Variant.Column,
-    Header.Variant.Row,
-    Header.Variant.Column,
-    Header.Variant.Column,
+    Scope.Column,
+    Scope.Column,
+    Scope.Column,
+    Scope.Column,
+    Scope.Column,
+    Scope.Row,
+    Scope.Column,
+    Scope.Column,
   ].map(Option.from);
 }
 
@@ -872,8 +787,8 @@ export namespace explicitHeaders {
     2,
     [
       makeCell("text-content", Cell.Kind.Header, 0, 0),
-      makeCell("child", Cell.Kind.Header, 1, 0, [], Header.Variant.Row),
-      makeCell("empty", Cell.Kind.Header, 2, 0, ["child"], Header.Variant.Row),
+      makeCell("child", Cell.Kind.Header, 1, 0, [], Scope.Row),
+      makeCell("empty", Cell.Kind.Header, 2, 0, ["child"], Scope.Row),
       makeCell("data", Cell.Kind.Data, 3, 0, ["child"]),
       makeCell("foo", Cell.Kind.Data, 0, 1, ["text-content", "child", "data"]),
     ].sort(compare)
@@ -924,15 +839,15 @@ export namespace duplicateIDExplicitHeaders {
     3,
     2,
     [
-      makeCell("dup-out", Cell.Kind.Header, 0, 0, [], Header.Variant.Column),
-      makeCell("dup-in", Cell.Kind.Header, 1, 0, [], Header.Variant.Column),
+      makeCell("dup-out", Cell.Kind.Header, 0, 0, [], Scope.Column),
+      makeCell("dup-in", Cell.Kind.Header, 1, 0, [], Scope.Column),
       makeCellFromGetter((_) => lastHeader)(
         "",
         Cell.Kind.Header,
         2,
         0,
         [],
-        Header.Variant.Column
+        Scope.Column
       ),
       makeCell("data-1", Cell.Kind.Data, 0, 1), // no header because first with correct id is out of table
       makeCell("data-2", Cell.Kind.Data, 1, 1, ["dup-in"]),
@@ -970,13 +885,13 @@ export namespace simpleImplicitHeaders {
     3,
     3,
     [
-      makeCell("empty", Cell.Kind.Header, 0, 0, [], Header.Variant.Column),
-      makeCell("col1", Cell.Kind.Header, 1, 0, [], Header.Variant.Column),
-      makeCell("col2", Cell.Kind.Header, 2, 0, [], Header.Variant.Column),
-      makeCell("row1", Cell.Kind.Header, 0, 1, [], Header.Variant.Row),
+      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column),
+      makeCell("col1", Cell.Kind.Header, 1, 0, [], Scope.Column),
+      makeCell("col2", Cell.Kind.Header, 2, 0, [], Scope.Column),
+      makeCell("row1", Cell.Kind.Header, 0, 1, [], Scope.Row),
       makeCell("cell11", Cell.Kind.Data, 1, 1, ["row1", "col1"]),
       makeCell("cell12", Cell.Kind.Data, 2, 1, ["row1", "col2"]),
-      makeCell("row2", Cell.Kind.Header, 0, 2, [], Header.Variant.Row),
+      makeCell("row2", Cell.Kind.Header, 0, 2, [], Scope.Row),
       makeCell("cell21", Cell.Kind.Data, 1, 2, ["row2", "col1"]),
       makeCell("cell22", Cell.Kind.Data, 2, 2, ["row2", "col2"]),
     ].sort(compare)
@@ -1050,26 +965,12 @@ export namespace rowGroupImplicitHeaders {
     4,
     7,
     [
-      makeCell("ID", Cell.Kind.Header, 0, 0, [], Header.Variant.Column),
-      makeCell(
-        "measurement",
-        Cell.Kind.Header,
-        1,
-        0,
-        [],
-        Header.Variant.Column
-      ),
-      makeCell("average", Cell.Kind.Header, 2, 0, [], Header.Variant.Column),
-      makeCell("maximum", Cell.Kind.Header, 3, 0, [], Header.Variant.Column),
+      makeCell("ID", Cell.Kind.Header, 0, 0, [], Scope.Column),
+      makeCell("measurement", Cell.Kind.Header, 1, 0, [], Scope.Column),
+      makeCell("average", Cell.Kind.Header, 2, 0, [], Scope.Column),
+      makeCell("maximum", Cell.Kind.Header, 3, 0, [], Scope.Column),
       makeCell("empty-cat-id", Cell.Kind.Data, 0, 1, ["ID"]),
-      makeCell(
-        "cat",
-        Cell.Kind.Header,
-        1,
-        1,
-        ["measurement"],
-        Header.Variant.RowGroup
-      ),
+      makeCell("cat", Cell.Kind.Header, 1, 1, ["measurement"], Scope.RowGroup),
       makeCell("empty-cat-av", Cell.Kind.Data, 2, 1, ["average", "cat"]),
       makeCell("empty-cat-max", Cell.Kind.Data, 3, 1, ["maximum", "cat"]),
       makeCell("id93", Cell.Kind.Data, 0, 2, ["ID"]),
@@ -1079,7 +980,7 @@ export namespace rowGroupImplicitHeaders {
         1,
         2,
         ["measurement", "cat"],
-        Header.Variant.Row
+        Scope.Row
       ),
       makeCell("cat-legs-av", Cell.Kind.Data, 2, 2, [
         "cat-legs",
@@ -1098,7 +999,7 @@ export namespace rowGroupImplicitHeaders {
         1,
         3,
         ["measurement", "cat"],
-        Header.Variant.Row
+        Scope.Row
       ),
       makeCell("cat-tails-av", Cell.Kind.Data, 2, 3, [
         "cat-tails",
@@ -1111,14 +1012,7 @@ export namespace rowGroupImplicitHeaders {
         "cat",
       ]),
       makeCell("empty-en-id", Cell.Kind.Data, 0, 4, ["ID"]),
-      makeCell(
-        "en",
-        Cell.Kind.Header,
-        1,
-        4,
-        ["measurement"],
-        Header.Variant.RowGroup
-      ),
+      makeCell("en", Cell.Kind.Header, 1, 4, ["measurement"], Scope.RowGroup),
       makeCell("empty-en-av", Cell.Kind.Data, 2, 4, ["average", "en"]),
       makeCell("empty-en-max", Cell.Kind.Data, 3, 4, ["maximum", "en"]),
       makeCell("id32", Cell.Kind.Data, 0, 5, ["ID"]),
@@ -1128,7 +1022,7 @@ export namespace rowGroupImplicitHeaders {
         1,
         5,
         ["measurement", "en"],
-        Header.Variant.Row
+        Scope.Row
       ),
       makeCell("en-legs-av", Cell.Kind.Data, 2, 5, [
         "en-legs",
@@ -1147,7 +1041,7 @@ export namespace rowGroupImplicitHeaders {
         1,
         6,
         ["measurement", "en"],
-        Header.Variant.Row
+        Scope.Row
       ),
       makeCell("en-tails-av", Cell.Kind.Data, 2, 6, [
         "en-tails",
@@ -1228,59 +1122,20 @@ export namespace colGroupImplicitHeaders {
     4,
     [
       makeCell("empty", Cell.Kind.Data, 0, 0, [], undefined, 1, 2),
-      makeCell(
-        "mars",
-        Cell.Kind.Header,
-        1,
-        0,
-        [],
-        Header.Variant.ColumnGroup,
-        2,
-        1
-      ),
-      makeCell(
-        "venus",
-        Cell.Kind.Header,
-        3,
-        0,
-        [],
-        Header.Variant.ColumnGroup,
-        2,
-        1
-      ),
-      makeCell(
-        "mars-produced",
-        Cell.Kind.Header,
-        1,
-        1,
-        ["mars"],
-        Header.Variant.Column
-      ),
-      makeCell(
-        "mars-sold",
-        Cell.Kind.Header,
-        2,
-        1,
-        ["mars"],
-        Header.Variant.Column
-      ),
+      makeCell("mars", Cell.Kind.Header, 1, 0, [], Scope.ColumnGroup, 2, 1),
+      makeCell("venus", Cell.Kind.Header, 3, 0, [], Scope.ColumnGroup, 2, 1),
+      makeCell("mars-produced", Cell.Kind.Header, 1, 1, ["mars"], Scope.Column),
+      makeCell("mars-sold", Cell.Kind.Header, 2, 1, ["mars"], Scope.Column),
       makeCell(
         "venus-produced",
         Cell.Kind.Header,
         3,
         1,
         ["venus"],
-        Header.Variant.Column
+        Scope.Column
       ),
-      makeCell(
-        "venus-sold",
-        Cell.Kind.Header,
-        4,
-        1,
-        ["venus"],
-        Header.Variant.Column
-      ),
-      makeCell("bears", Cell.Kind.Header, 0, 2, [], Header.Variant.Row),
+      makeCell("venus-sold", Cell.Kind.Header, 4, 1, ["venus"], Scope.Column),
+      makeCell("bears", Cell.Kind.Header, 0, 2, [], Scope.Row),
       makeCell("mars-produced-bears", Cell.Kind.Data, 1, 2, [
         "bears",
         "mars-produced",
@@ -1301,7 +1156,7 @@ export namespace colGroupImplicitHeaders {
         "venus-sold",
         "venus",
       ]),
-      makeCell("games", Cell.Kind.Header, 0, 3, [], Header.Variant.Row),
+      makeCell("games", Cell.Kind.Header, 0, 3, [], Scope.Row),
       makeCell("mars-produced-games", Cell.Kind.Data, 1, 3, [
         "games",
         "mars-produced",
@@ -1430,33 +1285,15 @@ export namespace allWeirdImplicitHeaders {
     7,
     7,
     [
-      makeCell(
-        "empty",
-        Cell.Kind.Header,
-        0,
-        0,
-        [],
-        Header.Variant.Column,
-        2,
-        2
-      ),
-      makeCell(
-        "mars",
-        Cell.Kind.Header,
-        2,
-        0,
-        [],
-        Header.Variant.ColumnGroup,
-        1,
-        2
-      ),
+      makeCell("empty", Cell.Kind.Header, 0, 0, [], Scope.Column, 2, 2),
+      makeCell("mars", Cell.Kind.Header, 2, 0, [], Scope.ColumnGroup, 1, 2),
       makeCell(
         "mars-produced",
         Cell.Kind.Header,
         3,
         0,
         ["mars"],
-        Header.Variant.Column,
+        Scope.Column,
         1,
         2
       ),
@@ -1466,54 +1303,22 @@ export namespace allWeirdImplicitHeaders {
         4,
         0,
         ["mars"],
-        Header.Variant.Column,
+        Scope.Column,
         1,
         2
       ),
-      makeCell(
-        "venus",
-        Cell.Kind.Header,
-        5,
-        0,
-        [],
-        Header.Variant.ColumnGroup,
-        2,
-        1
-      ),
+      makeCell("venus", Cell.Kind.Header, 5, 0, [], Scope.ColumnGroup, 2, 1),
       makeCell(
         "venus-produced",
         Cell.Kind.Header,
         5,
         1,
         ["venus"],
-        Header.Variant.Column
+        Scope.Column
       ),
-      makeCell(
-        "venus-sold",
-        Cell.Kind.Header,
-        6,
-        1,
-        ["venus"],
-        Header.Variant.Column
-      ),
-      makeCell(
-        "stuffed",
-        Cell.Kind.Header,
-        0,
-        2,
-        [],
-        Header.Variant.RowGroup,
-        1,
-        2
-      ),
-      makeCell(
-        "bears",
-        Cell.Kind.Header,
-        1,
-        2,
-        ["stuffed"],
-        Header.Variant.Row
-      ),
+      makeCell("venus-sold", Cell.Kind.Header, 6, 1, ["venus"], Scope.Column),
+      makeCell("stuffed", Cell.Kind.Header, 0, 2, [], Scope.RowGroup, 1, 2),
+      makeCell("bears", Cell.Kind.Header, 1, 2, ["stuffed"], Scope.Row),
       makeCell("mars-empty-bears", Cell.Kind.Data, 2, 2, [
         "bears",
         "stuffed",
@@ -1543,14 +1348,7 @@ export namespace allWeirdImplicitHeaders {
         "stuffed",
         "venus",
       ]),
-      makeCell(
-        "bunnies",
-        Cell.Kind.Header,
-        1,
-        3,
-        ["stuffed"],
-        Header.Variant.Row
-      ),
+      makeCell("bunnies", Cell.Kind.Header, 1, 3, ["stuffed"], Scope.Row),
       makeCell("mars-empty-bunnies", Cell.Kind.Data, 2, 3, [
         "bunnies",
         "stuffed",
@@ -1580,16 +1378,7 @@ export namespace allWeirdImplicitHeaders {
         "stuffed",
         "venus",
       ]),
-      makeCell(
-        "games",
-        Cell.Kind.Header,
-        0,
-        4,
-        [],
-        Header.Variant.RowGroup,
-        2,
-        1
-      ),
+      makeCell("games", Cell.Kind.Header, 0, 4, [], Scope.RowGroup, 2, 1),
       makeCell("mars-empty-games", Cell.Kind.Data, 2, 4, ["games", "mars"]),
       makeCell("mars-produced-games", Cell.Kind.Data, 3, 4, [
         "mars-produced",
@@ -1611,16 +1400,7 @@ export namespace allWeirdImplicitHeaders {
         "games",
         "venus",
       ]),
-      makeCell(
-        "board",
-        Cell.Kind.Header,
-        0,
-        5,
-        ["games"],
-        Header.Variant.Row,
-        2,
-        1
-      ),
+      makeCell("board", Cell.Kind.Header, 0, 5, ["games"], Scope.Row, 2, 1),
       makeCell("mars-empty-board", Cell.Kind.Data, 2, 5, [
         "board",
         "games",
@@ -1650,16 +1430,7 @@ export namespace allWeirdImplicitHeaders {
         "games",
         "venus",
       ]),
-      makeCell(
-        "cards",
-        Cell.Kind.Header,
-        0,
-        6,
-        ["games"],
-        Header.Variant.Row,
-        2,
-        1
-      ),
+      makeCell("cards", Cell.Kind.Header, 0, 6, ["games"], Scope.Row, 2, 1),
       makeCell("mars-empty-cards", Cell.Kind.Data, 2, 6, [
         "cards",
         "games",

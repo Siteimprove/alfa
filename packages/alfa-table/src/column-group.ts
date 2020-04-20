@@ -40,22 +40,25 @@ export class ColumnGroup
   }
 
   public isCovering(x: number): boolean {
-    return !(
-      // colgroup is *not* covering if either
-      (x < this._x || this._x + this._width - 1 < x) // slot is left of colgroup or slot is right of colgroup
-    );
+    // The column group is *not* covering the column (x) if either:
+    // - the column is left of the column group; or
+    // - the column is right of the column group.
+    return !(x < this._x || this._x + this._width - 1 < x);
   }
 
   /**
-   * compare colgroups according to their anchor
-   * in a given group of colgroups (table), no two different colgroups can have the same anchor, so this is good.
+   * Compare this column group to another according to their anchors.
+   *
+   * @remarks
+   * In a given group of column groups (tables), no two column groups will have
+   * the same anchor.
    */
-  public compare(colgroup: ColumnGroup): Comparison {
-    if (this._x < colgroup._x) {
+  public compare(that: ColumnGroup): Comparison {
+    if (this._x < that._x) {
       return Comparison.Less;
     }
 
-    if (this._x > colgroup._x) {
+    if (this._x > that._x) {
       return Comparison.Greater;
     }
 
@@ -83,42 +86,44 @@ export class ColumnGroup
 export namespace ColumnGroup {
   export interface JSON {
     [key: string]: json.JSON;
-    anchor: { x: number };
+    anchor: {
+      x: number;
+    };
     width: number;
     element: Element.JSON;
   }
 
   export function from(element: Element): Result<ColumnGroup, string> {
     return ColumnGroup.Builder.from(element).map(
-      (colgroup) => colgroup.colgroup
+      (colgroup) => colgroup.columnGroup
     );
   }
 
   export class Builder implements Equatable, Serializable {
-    private readonly _colgroup: ColumnGroup;
+    private readonly _columnGroup: ColumnGroup;
 
     public static of(x: number, width: number, element: Element) {
       return new Builder(x, width, element);
     }
 
     private constructor(x: number, width: number, element: Element) {
-      this._colgroup = ColumnGroup.of(x, width, element);
+      this._columnGroup = ColumnGroup.of(x, width, element);
     }
 
-    public get colgroup(): ColumnGroup {
-      return this._colgroup;
+    public get columnGroup(): ColumnGroup {
+      return this._columnGroup;
     }
 
     public get anchor(): { x: number } {
-      return this._colgroup.anchor;
+      return this._columnGroup.anchor;
     }
 
     public get width(): number {
-      return this._colgroup.width;
+      return this._columnGroup.width;
     }
 
     public get element(): Element {
-      return this._colgroup.element;
+      return this._columnGroup.element;
     }
 
     public anchorAt(x: number): Builder {
@@ -126,17 +131,24 @@ export namespace ColumnGroup {
     }
 
     public equals(value: unknown): value is this {
-      return value instanceof Builder && this._colgroup.equals(value._colgroup);
+      return (
+        value instanceof Builder && this._columnGroup.equals(value._columnGroup)
+      );
     }
 
     public toJSON(): Builder.JSON {
       return {
-        colgroup: this._colgroup.toJSON(),
+        columnGroup: this._columnGroup.toJSON(),
       };
     }
   }
 
   export namespace Builder {
+    export interface JSON {
+      [key: string]: json.JSON;
+      columnGroup: ColumnGroup.JSON;
+    }
+
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#forming-a-table
      * global step 9.1
@@ -169,12 +181,6 @@ export namespace ColumnGroup {
       // 1.4 and 1.7 done in table builder
       // 2.2 and 2.3 done in table builder
       return Ok.of(Builder.of(x, totalSpan, colgroup));
-    }
-
-    export interface JSON {
-      [key: string]: json.JSON;
-
-      colgroup: ColumnGroup.JSON;
     }
   }
 }

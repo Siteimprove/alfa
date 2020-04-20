@@ -14,7 +14,6 @@ const { compare } = Comparable;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group
- * This is a row group as part of the table. Width and cells list are stored in the table, not here.
  */
 export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
   public static of(y: number, h: number, element: Element): RowGroup {
@@ -44,22 +43,25 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
   }
 
   public isCovering(y: number): boolean {
-    return !(
-      // rowgroup is *not* covering if either
-      (y < this._y || this._y + this._height - 1 < y) // slot is above rowgroup // slot is below rowgroup
-    );
+    // A row group is *not* covering the row (y) if either:
+    // - the row is above the row group; or
+    // - the row is below the row group.
+    return !(y < this._y || this._y + this._height - 1 < y);
   }
 
   /**
-   * compare rowgroups according to their anchor
-   * in a given group of rowgroups (table), no two different rowgroups can have the same anchor, so this is good.
+   * Compare this row group to another according to their anchors.
+   *
+   * @remarks
+   * In a given group of row groups (tables), no two row groups will have the
+   * same anchor.
    */
-  public compare(rowgroup: RowGroup): Comparison {
-    if (this._y < rowgroup._y) {
+  public compare(that: RowGroup): Comparison {
+    if (this._y < that._y) {
       return Comparison.Less;
     }
 
-    if (this._y > rowgroup._y) {
+    if (this._y > that._y) {
       return Comparison.Greater;
     }
 
@@ -69,8 +71,8 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
   public equals(value: unknown): value is this {
     return (
       value instanceof RowGroup &&
-      this._height === value._height &&
       this._y === value._y &&
+      this._height === value._height &&
       this._element.equals(value._element)
     );
   }
@@ -85,10 +87,6 @@ export class RowGroup implements Comparable<RowGroup>, Equatable, Serializable {
 }
 
 export namespace RowGroup {
-  export function from(element: Element): Result<RowGroup, string> {
-    return RowGroup.Builder.from(element).map((rowgroup) => rowgroup.rowgroup);
-  }
-
   export interface JSON {
     [key: string]: json.JSON;
     anchor: {
@@ -98,13 +96,17 @@ export namespace RowGroup {
     element: Element.JSON;
   }
 
+  export function from(element: Element): Result<RowGroup, string> {
+    return RowGroup.Builder.from(element).map((rowgroup) => rowgroup.rowgroup);
+  }
+
   /**
    * The row group builder contains width and cells list that will be merged with parent table once done.
    */
   export class Builder implements Equatable, Serializable {
     private readonly _width: number;
     private readonly _cells: Array<Cell.Builder>;
-    private readonly _rowgroup: RowGroup;
+    private readonly _rowGroup: RowGroup;
 
     public static of(
       y: number,
@@ -123,7 +125,7 @@ export namespace RowGroup {
       width: number,
       cells: Array<Cell.Builder>
     ) {
-      this._rowgroup = RowGroup.of(y, height, element);
+      this._rowGroup = RowGroup.of(y, height, element);
       this._width = width;
       this._cells = cells;
     }
@@ -136,16 +138,16 @@ export namespace RowGroup {
       cells?: Array<Cell.Builder>;
     }): Builder {
       return Builder.of(
-        update.y !== undefined ? update.y : this._rowgroup.anchor.y,
-        update.height !== undefined ? update.height : this._rowgroup.height,
-        update.element !== undefined ? update.element : this._rowgroup.element,
+        update.y !== undefined ? update.y : this._rowGroup.anchor.y,
+        update.height !== undefined ? update.height : this._rowGroup.height,
+        update.element !== undefined ? update.element : this._rowGroup.element,
         update.width !== undefined ? update.width : this._width,
         update.cells !== undefined ? update.cells : this._cells
       );
     }
 
     public get rowgroup(): RowGroup {
-      return this._rowgroup;
+      return this._rowGroup;
     }
 
     public get width(): number {
@@ -157,15 +159,15 @@ export namespace RowGroup {
     }
 
     public get anchor(): { y: number } {
-      return this._rowgroup.anchor;
+      return this._rowGroup.anchor;
     }
 
     public get height(): number {
-      return this._rowgroup.height;
+      return this._rowGroup.height;
     }
 
     public get element(): Element {
-      return this._rowgroup.element;
+      return this._rowGroup.element;
     }
 
     // anchoring a row group needs to move down all cells accordingly
@@ -181,7 +183,7 @@ export namespace RowGroup {
     public equals(value: unknown): value is this {
       if (!(value instanceof Builder)) return false;
       return (
-        this._rowgroup.equals(value._rowgroup) &&
+        this._rowGroup.equals(value._rowGroup) &&
         this._width === value._width &&
         this._cells.length === value._cells.length &&
         this._cells.every((cell, idx) => cell.equals(value._cells[idx]))
@@ -190,7 +192,7 @@ export namespace RowGroup {
 
     public toJSON(): Builder.JSON {
       return {
-        rowgroup: this._rowgroup.toJSON(),
+        rowGroup: this._rowGroup.toJSON(),
         width: this._width,
         cells: this._cells.map((cell) => cell.cell.toJSON()),
       };
@@ -198,6 +200,13 @@ export namespace RowGroup {
   }
 
   export namespace Builder {
+    export interface JSON {
+      [key: string]: json.JSON;
+      rowGroup: RowGroup.JSON;
+      width: number;
+      cells: Cell.JSON[];
+    }
+
     /**
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-processing-row-groups
      */
@@ -246,14 +255,6 @@ export namespace RowGroup {
       // 3, returning the row group for the table to handle
       // we could check here if height>0 and return an option, to be closer to the algorithm but that would be less uniform.
       return Ok.of(rowgroup.update({ cells: rowgroup.cells.sort(compare) }));
-    }
-
-    export interface JSON {
-      [key: string]: json.JSON;
-
-      rowgroup: RowGroup.JSON;
-      width: number;
-      cells: Cell.JSON[];
     }
   }
 }
