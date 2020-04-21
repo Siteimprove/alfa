@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { clamp } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,7 +10,7 @@ import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isHtmlElementWithName } = Element;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -22,10 +22,8 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants()
           .filter(
             and(
-              isElement,
+              isHtmlElementWithName("meta"),
               and(
-                hasNamespace(Namespace.HTML),
-                hasName("meta"),
                 hasAttribute("name", equals("viewport")),
                 hasAttribute("content")
               )

@@ -7,9 +7,9 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import { isHtmlElementWithName } from "./helpers";
 
 const { compare } = Comparable;
+const { isHtmlElementWithName } = Element;
 
 /**
  * Build artifact, corresponds to a single <tr> element

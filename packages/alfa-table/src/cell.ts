@@ -11,11 +11,11 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Scope } from "./scope";
 import { Table } from "./table";
-import { isHtmlElementWithName, parseSpan } from "./helpers";
+import { parseSpan } from "./helpers";
 
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
-const { isElement, hasName } = Element;
+const { isElement, isHtmlElementWithName, hasName } = Element;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -541,14 +541,16 @@ export namespace Cell {
           and(
             // only keep cells in the table
             isHtmlElementWithName("th", "td"),
-            (element) =>
-              element
-                .closest(and(isElement, hasName("table")))
-                .some(equals(table.element)),
-            // remove principal cell
-            not(equals(this.element)),
-            // Step 4: remove empty cells
-            not((element) => element.children().isEmpty())
+            and(
+              (element: Element) =>
+                element
+                  .closest(and(isElement, hasName("table")))
+                  .some(equals(table.element)),
+              // remove principal cell
+              not(equals(this.element)),
+              // Step 4: remove empty cells
+              not((element) => element.children().isEmpty())
+            )
           )
         );
 

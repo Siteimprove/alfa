@@ -1,6 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,7 +11,7 @@ import { expectation } from "../common/expectation";
 import { hasRole } from "../common/predicate/has-role";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isHtmlElementWithName } = Element;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -29,28 +28,14 @@ export default Rule.Atomic.of<Page, Element>({
       *applicability() {
         const tables = document
           .descendants()
-          .filter(
-            and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("table"),
-                isPerceivable(device)
-              )
-            )
-          );
+          .filter(and(isHtmlElementWithName("table"), isPerceivable(device)));
 
         for (const table of tables) {
           const headerCells = table.descendants().filter(
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                // The table model only works if the element is a th.
-                hasName("th"),
-                hasRole("rowheader", "columnheader"),
-                isPerceivable(device)
-              )
+              // The table model only works if the element is a th.
+              isHtmlElementWithName("th"),
+              and(hasRole("rowheader", "columnheader"), isPerceivable(device))
             )
           );
 

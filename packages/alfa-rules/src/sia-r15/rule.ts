@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Node } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -17,7 +17,7 @@ import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isHtmlElementWithName } = Element;
 const { map, flatMap, isEmpty } = Iterable;
 const { and, not } = Predicate;
 
@@ -30,10 +30,8 @@ export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
           .descendants({ flattened: true, nested: true })
           .filter(
             and(
-              isElement,
+              isHtmlElementWithName("iframe"),
               and(
-                hasName("iframe"),
-                hasNamespace(Namespace.HTML),
                 not(isIgnored(device)),
                 hasAccessibleName(device, not(isEmpty))
               )

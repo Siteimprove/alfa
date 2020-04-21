@@ -1,6 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -8,8 +7,7 @@ import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 
-const { isElement, hasName, hasNamespace } = Element;
-const { and } = Predicate;
+const { isHtmlElementWithName } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r63.html",
@@ -18,9 +16,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
           .descendants({ flattened: true, nested: true })
-          .filter(
-            and(isElement, and(hasNamespace(Namespace.HTML), hasName("object")))
-          );
+          .filter(isHtmlElementWithName("object"));
       },
 
       expectations(target) {

@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
@@ -12,7 +12,7 @@ import { hasChild } from "../common/predicate/has-child";
 
 import { Question } from "../common/question";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, isHtmlElementWithName, hasName } = Element;
 const { and, or, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -24,10 +24,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
           .descendants({ composed: true, nested: true })
           .filter(
             and(
-              isElement,
+              isHtmlElementWithName("audio", "video"),
               and(
-                hasNamespace(Namespace.HTML),
-                hasName("audio", "video"),
                 hasAttribute("autoplay"),
                 nor(hasAttribute("paused"), hasAttribute("muted")),
                 or(

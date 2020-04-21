@@ -1,6 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,7 +10,7 @@ import { isPerceivable } from "../predicate/is-perceivable";
 
 import { Question } from "../question";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, isHtmlElementWithName } = Element;
 const { filter, map } = Iterable;
 const { and, not } = Predicate;
 
@@ -22,14 +22,7 @@ export function audio(
   return map(
     filter(
       document.descendants({ flattened: true, nested: true }),
-      and(
-        isElement,
-        and(
-          hasNamespace(Namespace.HTML),
-          hasName("audio"),
-          not(isIgnored(device))
-        )
-      )
+      and(isHtmlElementWithName("audio"), not(isIgnored(device)))
     ),
     (element) =>
       Question.of(
@@ -54,9 +47,7 @@ export function audio(
                     element,
                     "Where is the button that controls playback of the <audio> element?"
                   ).map((playButton) =>
-                    playButton.some(
-                      and(Element.isElement, isPerceivable(device))
-                    )
+                    playButton.some(and(isElement, isPerceivable(device)))
                       ? Option.of(element)
                       : None
                   )

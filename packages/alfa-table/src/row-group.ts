@@ -7,10 +7,10 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
-import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 
 const { compare } = Comparable;
+const { isHtmlElementWithName } = Element;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-row-group

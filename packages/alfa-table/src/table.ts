@@ -10,11 +10,11 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Cell } from "./cell";
 import { ColumnGroup } from "./column-group";
-import { isHtmlElementWithName } from "./helpers";
 import { Row } from "./row";
 import { RowGroup } from "./row-group";
 
 const { compare } = Comparable;
+const { isHtmlElementWithName } = Element;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#table-processing-model

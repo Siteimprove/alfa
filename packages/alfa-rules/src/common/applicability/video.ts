@@ -1,6 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,7 +10,7 @@ import { isVisible } from "../predicate/is-visible";
 import { Question } from "../question";
 import { hasAttribute } from "../predicate/has-attribute";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, isHtmlElementWithName, hasName } = Element;
 const { filter, map, some } = Iterable;
 const { and, equals } = Predicate;
 
@@ -25,10 +25,8 @@ export function video(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        isElement,
+        isHtmlElementWithName("video"),
         and(
-          hasNamespace(Namespace.HTML),
-          hasName("video"),
           isVisible(device),
           (element) =>
             track === undefined ||
@@ -36,7 +34,7 @@ export function video(
               some(
                 element.children(),
                 and(
-                  Element.isElement,
+                  isElement,
                   and(
                     hasName("track"),
                     hasAttribute("kind", equals(track.kind))

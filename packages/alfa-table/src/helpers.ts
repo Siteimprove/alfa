@@ -1,12 +1,8 @@
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { clamp } from "@siteimprove/alfa-math";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok } from "@siteimprove/alfa-result";
 
 import { parseNonNegativeInteger } from "./microsyntaxes";
-
-const { isElement, hasName, hasNamespace } = Element;
-const { and } = Predicate;
 
 /**
  * Parse a "span" (colspan/rowspan) attribute on table cell according to specs.
@@ -29,12 +25,7 @@ export function parseSpan(
     .getOr(failed);
 }
 
-export function isHtmlElementWithName(
-  name: string,
-  ...rest: Array<string>
-): Predicate<Node, Element> {
-  return and(
-    isElement,
-    and(hasNamespace(Namespace.HTML), hasName(name, ...rest))
-  );
+export function isHtmlElementWithName() {
+
+
 }
