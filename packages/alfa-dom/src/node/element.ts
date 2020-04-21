@@ -2,7 +2,6 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Namespace } from "../namespace";
@@ -340,6 +339,16 @@ export namespace Element {
 
   export function isElement(value: unknown): value is Element {
     return value instanceof Element;
+  }
+
+  export function isHtmlElementWithName(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<unknown, Element> {
+    return and(
+      isElement,
+      and(hasNamespace(Namespace.HTML), hasName(name, ...rest))
+    );
   }
 
   export function fromElement(
