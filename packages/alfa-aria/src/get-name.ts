@@ -9,7 +9,7 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { Role } from "./role";
 
-const { isElement } = Element;
+const { hasName, isElement } = Element;
 const { isText } = Text;
 const { and, or, equals, test } = Predicate;
 
@@ -299,7 +299,7 @@ function getHtmlTextAlternative(
     case "fieldset":
       return element
         .children()
-        .find(and(isElement, (element) => element.name === "legend"))
+        .find(and(isElement, hasName("legend")))
         .map((legend) =>
           getName(legend, device, visited, {
             recursing: true,
@@ -312,7 +312,7 @@ function getHtmlTextAlternative(
     case "figure": {
       return element
         .children()
-        .find(and(isElement, (element) => element.name === "figcaption"))
+        .find(and(isElement, hasName("figcaption")))
         .map((caption) =>
           getName(caption, device, visited, {
             recursing: true,
@@ -339,7 +339,7 @@ function getHtmlTextAlternative(
       return Branched.of(
         element
           .children()
-          .find(and(isElement, (element) => element.name === "caption"))
+          .find(and(isElement, hasName("caption")))
           .map((caption) =>
             flatten(caption.textContent({ flattened: true }), options)
           )
@@ -362,9 +362,7 @@ function getSvgTextAlternative(
     return Branched.of(Option.of(flatten(element.textContent(), options)));
   }
 
-  const title = element
-    .children()
-    .find(and(isElement, (child) => child.name === "title"));
+  const title = element.children().find(and(isElement, hasName("title")));
 
   if (title.isSome()) {
     return getName(title.get(), device, visited, {
@@ -539,16 +537,14 @@ function getLabel(element: Element): Option<Element> {
         const root = element.root();
 
         if (root !== element) {
-          const label = root
-            .descendants()
-            .find(
-              and(
-                Element.isElement,
-                (element) =>
-                  element.name === "label" &&
-                  element.attribute("for").some((attr) => attr.value === id)
+          const label = root.descendants().find(
+            and(
+              Element.isElement,
+              and(hasName("label"), (element) =>
+                element.attribute("for").some((attr) => attr.value === id)
               )
-            );
+            )
+          );
 
           return label.filter(() => {
             const target = root
@@ -564,11 +560,7 @@ function getLabel(element: Element): Option<Element> {
 
       return None;
     })
-    .orElse(() =>
-      element.closest(
-        and(Element.isElement, (element) => element.name === "label")
-      )
-    );
+    .orElse(() => element.closest(and(Element.isElement, hasName("label"))));
 }
 
 /**
