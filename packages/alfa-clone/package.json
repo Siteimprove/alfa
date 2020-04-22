@@ -1,6 +1,5 @@
 {
   "$schema": "http://json.schemastore.org/package",
-  "private": true,
   "name": "@siteimprove/alfa-clone",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
