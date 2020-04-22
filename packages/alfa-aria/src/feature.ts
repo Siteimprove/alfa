@@ -9,6 +9,7 @@ import { Scope, Table } from "@siteimprove/alfa-table";
 
 import { Role } from "./role";
 
+const { hasName, isElement } = Element;
 const { and, equals, test } = Predicate;
 
 export class Feature<N extends string = string> {
@@ -210,12 +211,7 @@ Feature.register(
   Feature.of("footer", (element) =>
     element
       .closest(
-        and(Element.isElement, (element) =>
-          test(
-            equals("article", "aside", "main", "nav", "section"),
-            element.name
-          )
-        )
+        and(isElement, hasName("article", "aside", "main", "nav", "section"))
       )
       .isNone()
       ? Option.of("contentinfo")
@@ -287,12 +283,7 @@ Feature.register(
   Feature.of("header", (element) =>
     element
       .closest(
-        and(Element.isElement, (element) =>
-          test(
-            equals("article", "aside", "main", "nav", "section"),
-            element.name
-          )
-        )
+        and(isElement, hasName("article", "aside", "main", "nav", "section"))
       )
       .isNone()
       ? Option.of("banner")
@@ -476,11 +467,7 @@ Feature.register(
     "option",
     (element) =>
       element
-        .closest(
-          and(Element.isElement, (element) =>
-            test(equals("select", "optgroup", "datalist"), element.name)
-          )
-        )
+        .closest(and(isElement, hasName("select", "optgroup", "datalist")))
         .isSome()
         ? Option.of("option")
         : None,
@@ -568,7 +555,7 @@ Feature.register(
     "td",
     (element) =>
       element
-        .closest(and(Element.isElement, (element) => element.name === "table"))
+        .closest(and(Element.isElement, hasName("table")))
         .flatMap((table) => {
           for (const [role] of Role.from(table)) {
             if (role.isSome()) {
@@ -644,9 +631,7 @@ Feature.register(
   Feature.of(
     "th",
     (element) => {
-      const table = element.closest(
-        and(Element.isElement, Element.hasName("table"))
-      );
+      const table = element.closest(and(isElement, hasName("table")));
 
       // If the <th> is not in a <table>, it doesn't really have a role…
       if (table.isNone()) {
