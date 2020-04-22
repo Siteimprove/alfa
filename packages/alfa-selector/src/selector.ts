@@ -24,7 +24,7 @@ const {
   option,
 } = Parser;
 
-const { and, property, equals } = Predicate;
+const { and, property, equals, isString } = Predicate;
 
 /**
  * @see https://drafts.csswg.org/selectors/#selector
@@ -1408,5 +1408,20 @@ export namespace Selector {
         return result;
       })
       .ok();
+  }
+
+  export function matches(
+    selector: string | Selector,
+    scope?: Iterable<Element>
+  ): Predicate<Element> {
+    let parsed: Selector;
+
+    if (isString(selector)) {
+      parsed = parse(selector).getOrElse(() => Not.of(Universal.empty()));
+    } else {
+      parsed = selector;
+    }
+
+    return (element) => parsed.matches(element, scope);
   }
 }
