@@ -14,6 +14,6 @@ jobs:
       - run: yarn install --frozen-lockfile --ignore-platform
       - run: yarn build
       - run: yarn test
-      - run: yarn lerna publish from-package
+      - run: yarn lerna publish --yes from-package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
