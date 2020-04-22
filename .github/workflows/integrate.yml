@@ -18,6 +18,6 @@ jobs:
         with:
           path: .cache/yarn
           key: yarn-${{ hashFiles('yarn.lock') }}
-      - run: yarn install --ignore-platform --cache-folder .cache/yarn
+      - run: yarn install --frozen-lockfile --ignore-platform --cache-folder .cache/yarn
       - run: yarn build
       - run: yarn test

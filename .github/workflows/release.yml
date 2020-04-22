@@ -11,8 +11,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install --ignore-platform
+      - run: yarn install --frozen-lockfile --ignore-platform
       - run: yarn build
+      - run: yarn test
       - run: yarn lerna publish from-package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
