@@ -18,7 +18,7 @@
     "src/**/*.d.ts"
   ],
   "scripts": {
-    "prepare": "node scripts/features.js && node scripts/browsers.js"
+    "generate": "node scripts/features.js && node scripts/browsers.js"
   },
   "dependencies": {
     "@siteimprove/alfa-iterable": "^0.0.0",

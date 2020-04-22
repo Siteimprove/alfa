@@ -18,7 +18,7 @@
     "src/**/*.d.ts"
   ],
   "scripts": {
-    "prepare": "node scripts/subtags.js"
+    "generate": "node scripts/subtags.js"
   },
   "dependencies": {
     "@siteimprove/alfa-equatable": "^0.0.0",
