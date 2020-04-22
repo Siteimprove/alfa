@@ -11,6 +11,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+          registry-url: https://npm.pkg.github.com/
       - run: yarn install --frozen-lockfile --ignore-platform
       - run: yarn build
       - run: yarn test
