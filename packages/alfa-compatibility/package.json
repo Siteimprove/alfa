@@ -4,7 +4,7 @@
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
   "license": "MIT",
-  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
+  "description": "Funtionality for answering user agent compatibility questions based on MDN compatibility data",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",

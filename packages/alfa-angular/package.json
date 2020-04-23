@@ -4,7 +4,7 @@
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
   "license": "MIT",
-  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
+  "description": "Integrations and utilities for the Angular application framework",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",

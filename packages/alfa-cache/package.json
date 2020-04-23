@@ -4,7 +4,7 @@
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
   "license": "MIT",
-  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
+  "description": "A simple in-memory cache that can be used for various purposes, such as function memoization",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",
