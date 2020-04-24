@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               isElement,
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasAttribute("role", not(isEmpty)),
+                hasAttribute("role", value => not(isEmpty)(value.trim())),
                 not(isIgnored(device))
               )
             )
