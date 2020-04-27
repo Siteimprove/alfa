@@ -4,7 +4,7 @@
   "homepage": "https://siteimprove.com",
   "version": "0.0.1",
   "license": "MIT",
-  "description": "Assertion integrations for the Jasime testing framework",
+  "description": "Assertion integrations for the Jasmine testing framework",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",
