@@ -25,7 +25,7 @@ Alfa is an open and standards-based accessibility conformance testing engine use
 
 ## Usage
 
-Alfa is distributed through [GitHub Packages](https://github.com/siteimprove/alfa/packages) as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
+Alfa is distributed through [GitHub Packages](https://github.com/Siteimprove/alfa/packages) as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
 
 ```console
 $ npm install @siteimprove/alfa-<package-name>
@@ -166,4 +166,4 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
-[open an issue]: https://github.com/siteimprove/alfa/issues/new "Open a new issue"
+[open an issue]: https://github.com/Siteimprove/alfa/issues/new "Open a new issue"
