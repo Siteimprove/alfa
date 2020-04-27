@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasExplicitRole } from "../common/predicate/has-role";
+import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 const { isElement, hasNamespace } = Element;
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Attribute>({
               isElement,
               and(
                 hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasAttribute("role", not(isEmpty)),
+                hasAttribute("role", (value) => not(isEmpty)(value.trim())),
                 not(isIgnored(device))
               )
             )
@@ -40,7 +40,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         return {
           1: expectation(
-            hasExplicitRole()(owner),
+            hasRole()(owner),
             () => Outcomes.HasValidRole,
             () => Outcomes.HasNoValidRole
           ),
