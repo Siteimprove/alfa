@@ -4,6 +4,10 @@ All notable changes to Alfa will be documented in this file. The format is based
 
 ## [Unreleased]
 
+### Changed
+
+- `alfa-rules`: SIA-R21 now applies to elements with explicit _and_ implicit semantic roles, but no longer applies to elements with `role` values that consist solely of ASCII whitespace (#218).
+
 ## [0.0.0] - 2020-04-22
 
 [0.0.0]: https://github.com/siteimprove/alfa/releases/tag/v0.0.0
