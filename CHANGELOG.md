@@ -21,13 +21,13 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+## [0.0.1](../../compare/v0.0.0...v0.0.1) - 2020-04-27
+
 ### Changed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R21 now applies to elements with explicit _and_ implicit semantic roles, but no longer applies to elements with `role` values that consist solely of ASCII whitespace ([#218](../../pull/218)).
 
-## [0.0.0] - 2020-04-22
-
-[0.0.0]: ../../releases/tag/v0.0.0
+## [0.0.0](../../releases/tag/v0.0.0) - 2020-04-22
 
 This is the first public of release of Alfa, available for download through [GitHub Packages](../../packages). This release is focused on providing a solid foundation of tools for people and organisations to start testing within their own workflows. Do be aware that as we are still not at a level of API stability where we feel confident in providing compatibility guarantees for future releases, this release, and the ones that follow it throughout this initial version 0, will not be considered stable.
 
