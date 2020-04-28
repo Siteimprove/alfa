@@ -21,6 +21,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ## [Unreleased]
 
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): The `Sheet` class now includes information about media conditions, which can be added to style sheets through `<link rel="stylesheet" media="condition">` ([#220](../../pull/220)).
+
+### Fixed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade): Style sheet media conditions are now considered when computing cascade and disabled style sheets are no longer included ([#220](../../pull/220)).
+
 ## [0.0.1](../../compare/v0.0.0...v0.0.1) - 2020-04-27
 
 ### Changed
