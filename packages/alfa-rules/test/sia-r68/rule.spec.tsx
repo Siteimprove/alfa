@@ -48,6 +48,27 @@ test("evaluate() passes a list with a list item and a group of list items", asyn
   ]);
 });
 
+test("evaluate() ignores non-element children when determining ownership", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <div role="list">
+        <span role="listitem">Item 1</span>{" "}
+        <div role="group">
+          <span role="listitem">Item 2</span>
+          <span role="listitem">Item 3</span>{" "}
+        </div>
+      </div>,
+      Option.of(self)
+    ),
+  ]);
+
+  const list = document.descendants().filter(Element.isElement).first().get();
+
+  t.deepEqual(await evaluate(R68, { document }), [
+    passed(R68, list, { 1: Outcomes.HasCorrectOwnedElements }),
+  ]);
+});
+
 test("evaluate() fails a list with a non-list item", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
