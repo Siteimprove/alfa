@@ -120,6 +120,18 @@ export class SelectorMap {
     };
 
     for (const sheet of sheets) {
+      if (sheet.disabled) {
+        continue;
+      }
+
+      if (sheet.condition.isSome()) {
+        const query = Media.parse(sheet.condition.get());
+
+        if (query.isNone() || !query.get().matches(device)) {
+          continue;
+        }
+      }
+
       for (const rule of sheet.children()) {
         visit(rule);
       }

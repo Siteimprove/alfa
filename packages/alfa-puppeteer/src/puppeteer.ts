@@ -151,6 +151,8 @@ export namespace Puppeteer {
         return {
           rules: [...sheet.cssRules].map(toRule),
           disabled: sheet.disabled,
+          condition:
+            sheet.media.mediaText === "" ? null : sheet.media.mediaText,
         };
       }
 
