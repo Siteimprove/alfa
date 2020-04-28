@@ -100,7 +100,13 @@ function owns(roles: Array<string>): Predicate<Node> {
     const [next, ...remaining] = roles;
 
     if (node.role().some((role) => next === role.name)) {
-      return remaining.length === 0 || node.children().every(owns(remaining));
+      return (
+        remaining.length === 0 ||
+        node
+          .children()
+          .filter((node) => Element.isElement(node.node))
+          .every(owns(remaining))
+      );
     }
 
     return false;
