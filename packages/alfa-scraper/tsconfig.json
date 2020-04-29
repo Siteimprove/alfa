@@ -1,7 +1,15 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/scraper.ts"],
+  "files": [
+    "src/awaiter.ts",
+    "src/credentials.ts",
+    "src/index.ts",
+    "src/scraper.ts",
+    "src/screenshot.ts",
+    "../alfa-time/src/time.ts",
+    "../alfa-time/src/timeout.ts"
+  ],
   "references": [
     {
       "path": "../alfa-device"
@@ -13,13 +21,22 @@
       "path": "../alfa-encoding"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
       "path": "../alfa-http"
+    },
+    {
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-puppeteer"
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-time"
     },
     {
       "path": "../alfa-web"
