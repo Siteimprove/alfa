@@ -14,7 +14,7 @@ import { failed, inapplicable, passed } from "../common/outcome";
 
 const device = Device.standard();
 
-test("Pass when tokens in headers list refer to cells in the same table", async (t) => {
+test("evaluate() passes when tokens in headers list refer to cells in the same table", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <table>
@@ -35,9 +35,8 @@ test("Pass when tokens in headers list refer to cells in the same table", async 
     ),
   ]);
   const target = document
-    .descendants()
-    .find(and(isElement, hasId(equals("target"))))
-    .get()
+    .resolveReferences("target")
+    .shift()!
     .attribute("headers")
     .get();
 
@@ -46,7 +45,7 @@ test("Pass when tokens in headers list refer to cells in the same table", async 
   ]);
 });
 
-test("Fail when some tokens in headers list do not refer to cells in the same table", async (t) => {
+test("evaluate() fails when some tokens in headers list do not refer to cells in the same table", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <table>
@@ -67,9 +66,8 @@ test("Fail when some tokens in headers list do not refer to cells in the same ta
     ),
   ]);
   const target = document
-    .descendants()
-    .find(and(isElement, hasId(equals("target"))))
-    .get()
+    .resolveReferences("target")
+    .shift()!
     .attribute("headers")
     .get();
 
@@ -78,7 +76,38 @@ test("Fail when some tokens in headers list do not refer to cells in the same ta
   ]);
 });
 
-test("Is inapplicable when there is no headers attribute", async (t) => {
+test("evaluate() fails when some token in the headers list refer to the cell itself", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <table>
+        <thead>
+          <tr>
+            <th id="header1">Projects</th>
+            <th>Exams</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="target" colSpan={2} headers="header1 target">
+              15%
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    ),
+  ]);
+  const target = document
+    .resolveReferences("target")
+    .shift()!
+    .attribute("headers")
+    .get();
+
+  t.deepEqual(await evaluate(R45, { device, document }), [
+    failed(R45, target, { 1: Outcomes.HeadersDoesNotReferToCellsInTable }),
+  ]);
+});
+
+test("evaluate() is inapplicable when there is no headers attribute", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <table>
