@@ -15,9 +15,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
   evaluate({ device, document }) {
     // records in which <table> is located each "headers" attribute
-    let tableOwnership = Map.empty<Attribute, Element>();
-    // records in which cell is located each "headers" attribute
-    let cellOwnership = Map.empty<Attribute, Element>();
+    let ownership = Map.empty<Attribute, Element>();
 
     return {
       *applicability() {
@@ -52,27 +50,21 @@ export default Rule.Atomic.of<Page, Attribute>({
 
           for (const cell of cells) {
             const header = cell.attribute("headers").get();
-            tableOwnership = tableOwnership.set(header, table);
-            cellOwnership = cellOwnership.set(header, cell);
+            ownership = ownership.set(header, table);
             yield header;
           }
         }
       },
 
       expectations(target) {
-        const table = tableOwnership.get(target).get();
-        const cell = cellOwnership.get(target).get();
+        const table = ownership.get(target).get();
         const idsList = target.tokens();
         const referredCells = table
           .resolveReferences(...idsList)
           .filter(
             and(
               isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("td", "th"),
-                not(equals(cell))
-              )
+              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
             )
           );
 
@@ -82,6 +74,11 @@ export default Rule.Atomic.of<Page, Attribute>({
             referredCells.length === idsList.length,
             () => Outcomes.HeadersRefersToCellInTable,
             () => Outcomes.HeadersDoesNotReferToCellsInTable
+          ),
+          2: expectation(
+            referredCells.every((cell) => !target.owner.get().equals(cell)),
+            () => Outcomes.HeadersDoesNotRefersToSelf,
+            () => Outcomes.HeadersRefersToSelf
           ),
         };
       },
@@ -96,5 +93,12 @@ export namespace Outcomes {
 
   export const HeadersDoesNotReferToCellsInTable = Err.of(
     "The headers attribute refers to cells not present in the same <table>."
+  );
+
+  export const HeadersDoesNotRefersToSelf = Ok.of(
+    "The headers attribute does not refer to the cell defining it"
+  );
+  export const HeadersRefersToSelf = Err.of(
+    "The headers attribute refers to the cell defining it"
   );
 }
