@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-cache",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "description": "A simple in-memory cache that can be used for various purposes, such as function memoization",
   "repository": {
@@ -18,13 +18,13 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-iterable": "^0.0.0",
-    "@siteimprove/alfa-option": "^0.0.0",
-    "@siteimprove/alfa-predicate": "^0.0.0",
-    "@siteimprove/alfa-thunk": "^0.0.0"
+    "@siteimprove/alfa-iterable": "^0.0.1",
+    "@siteimprove/alfa-option": "^0.0.1",
+    "@siteimprove/alfa-predicate": "^0.0.1",
+    "@siteimprove/alfa-thunk": "^0.0.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0"
+    "@siteimprove/alfa-test": "^0.0.1"
   },
   "publishConfig": {
     "access": "public",
