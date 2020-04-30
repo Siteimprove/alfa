@@ -9,13 +9,15 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 const { isElement, hasName, hasNamespace } = Element;
-const { and } = Predicate;
+const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
   evaluate({ device, document }) {
     // records in which <table> is located each "headers" attribute
-    let ownership = Map.empty<Attribute, Element>();
+    let tableOwnership = Map.empty<Attribute, Element>();
+    // records in which cell is located each "headers" attribute
+    let cellOwnership = Map.empty<Attribute, Element>();
 
     return {
       *applicability() {
@@ -50,27 +52,33 @@ export default Rule.Atomic.of<Page, Attribute>({
 
           for (const cell of cells) {
             const header = cell.attribute("headers").get();
-            ownership = ownership.set(header, table);
+            tableOwnership = tableOwnership.set(header, table);
+            cellOwnership = cellOwnership.set(header, cell);
             yield header;
           }
         }
       },
 
       expectations(target) {
-        const table = ownership.get(target).get();
+        const table = tableOwnership.get(target).get();
+        const cell = cellOwnership.get(target).get();
         const idsList = target.tokens();
         const referredCells = table
           .resolveReferences(...idsList)
           .filter(
             and(
               isElement,
-              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
+              and(
+                hasNamespace(Namespace.HTML),
+                hasName("td", "th"),
+                not(equals(cell))
+              )
             )
           );
 
         return {
           1: expectation(
-            // each token refers to a cell in the same table iff both array have the same length.
+            // each token refers to a different cell in the same table iff both array have the same length.
             referredCells.length === idsList.length,
             () => Outcomes.HeadersRefersToCellInTable,
             () => Outcomes.HeadersDoesNotReferToCellsInTable
