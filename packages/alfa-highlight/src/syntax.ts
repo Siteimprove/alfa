@@ -2,7 +2,7 @@
 
 import * as emphasize from "emphasize";
 
-import { mark } from "./markers";
+import { mark } from "./marker";
 
 const sheet: emphasize.Sheet = {
   comment: mark.gray,
@@ -49,6 +49,6 @@ const sheet: emphasize.Sheet = {
   formula: mark.inverse,
 };
 
-export function highlight(language: string, value: string): string {
+export function syntax(language: string, value: string): string {
   return mark.reset(emphasize.highlight(language, value, sheet).value);
 }
