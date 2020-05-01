@@ -94,7 +94,7 @@ export class Scraper {
 
             // As response handlers are not async, we have to assign the parsed
             // response as a promise and immediately register an error handler
-            // to avoid an uncaugt exception if parsing the response fails.
+            // to avoid an uncaught exception if parsing the response fails.
             response = parseResponse(res).catch((err) => null);
           }
         }
