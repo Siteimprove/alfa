@@ -9,5 +9,5 @@ export function hasTextContent(
   predicate: Predicate<string> = not(isEmpty),
   options: Node.Traversal = {}
 ): Predicate<Node> {
-  return node => predicate(node.textContent(options));
+  return (node) => predicate(node.textContent(options));
 }

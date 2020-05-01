@@ -6,7 +6,10 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+import { Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Set<T>
@@ -21,8 +24,10 @@ export class Set<T>
     return values.reduce((set, value) => set.add(value), Set.empty<T>());
   }
 
+  private static _empty = new Set<never>(Map.empty());
+
   public static empty<T>(): Set<T> {
-    return new Set(Map.empty());
+    return this._empty;
   }
 
   private readonly _values: Map<T, true>;
@@ -73,6 +78,10 @@ export class Set<T>
     );
   }
 
+  public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
+    return Iterable.find(this, predicate);
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Set && value._values.equals(this._values);
   }
@@ -83,18 +92,24 @@ export class Set<T>
     }
   }
 
+  public toArray(): Array<T> {
+    return [...this];
+  }
+
   public toJSON(): Set.JSON {
-    return [...Iterable.map(this._values.keys(), Serializable.toJSON)];
+    return this.toArray().map(Serializable.toJSON);
   }
 
   public toString(): string {
-    const entries = [...this].join(", ");
+    const entries = this.toArray().join(", ");
 
     return `Set {${entries === "" ? "" : ` ${entries} `}}`;
   }
 }
 
 export namespace Set {
+  export interface JSON extends Array<json.JSON> {}
+
   export function isSet<T>(value: unknown): value is Set<T> {
     return value instanceof Set;
   }
@@ -102,6 +117,4 @@ export namespace Set {
   export function from<T>(iterable: Iterable<T>): Set<T> {
     return isSet<T>(iterable) ? iterable : Set.of(...iterable);
   }
-
-  export interface JSON extends Array<json.JSON> {}
 }

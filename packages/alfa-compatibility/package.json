@@ -1,19 +1,15 @@
 {
-  "private": true,
+  "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-compatibility",
-  "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
-  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
-  "keywords": [
-    "a11y",
-    "accessibility",
-    "aria",
-    "typescript",
-    "wcag"
-  ],
-  "repository": "https://github.com/siteimprove/alfa",
+  "description": "Funtionality for answering user agent compatibility questions based on MDN compatibility data",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-compatibility"
+  },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -22,16 +18,20 @@
     "src/**/*.d.ts"
   ],
   "scripts": {
-    "prepare": "node scripts/features.js && node scripts/browsers.js"
+    "generate": "node scripts/features.js && node scripts/browsers.js"
   },
   "dependencies": {
-    "@siteimprove/alfa-iterable": "^0.0.0",
-    "@siteimprove/alfa-json": "^0.0.0",
+    "@siteimprove/alfa-iterable": "^0.0.1",
+    "@siteimprove/alfa-json": "^0.0.1",
     "@types/browserslist": "^4.4.0",
     "browserslist": "^4.4.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0",
+    "@siteimprove/alfa-test": "^0.0.1",
     "mdn-browser-compat-data": "0.0.94"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   }
 }

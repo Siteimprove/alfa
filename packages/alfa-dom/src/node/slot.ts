@@ -1,5 +1,3 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
-
 import { Element } from "./element";
 import { Shadow } from "./shadow";
 import { Slotable } from "./slotable";
@@ -14,6 +12,10 @@ export interface Slot extends Element {
 }
 
 export namespace Slot {
+  export function isSlot(element: Element): boolean;
+
+  export function isSlot(value: unknown): value is Slot;
+
   export function isSlot(value: unknown): value is Slot {
     return Element.isElement(value) && value.name === "slot";
   }
@@ -24,7 +26,7 @@ export namespace Slot {
   export function name(slot: Slot): string {
     return slot
       .attribute("name")
-      .map(name => name.value)
+      .map((name) => name.value)
       .getOr("");
   }
 

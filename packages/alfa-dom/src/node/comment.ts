@@ -14,7 +14,7 @@ export class Comment extends Node {
   private readonly _data: string;
 
   private constructor(data: string, parent: Option<Node>) {
-    super(self => [], parent);
+    super(() => [], parent);
 
     this._data = data;
   }
@@ -24,7 +24,7 @@ export class Comment extends Node {
   }
 
   public path(): string {
-    let path = this._parent.map(parent => parent.path()).getOr("/");
+    let path = this._parent.map((parent) => parent.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "comment()";
@@ -39,7 +39,7 @@ export class Comment extends Node {
   public toJSON(): Comment.JSON {
     return {
       type: "comment",
-      data: this._data
+      data: this._data,
     };
   }
 
@@ -49,13 +49,13 @@ export class Comment extends Node {
 }
 
 export namespace Comment {
-  export function isComment(value: unknown): value is Comment {
-    return value instanceof Comment;
-  }
-
   export interface JSON extends Node.JSON {
     type: "comment";
     data: string;
+  }
+
+  export function isComment(value: unknown): value is Comment {
+    return value instanceof Comment;
   }
 
   export function fromComment(

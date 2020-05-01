@@ -56,16 +56,14 @@ export type Display =
 /**
  * @see https://drafts.csswg.org/css-display/#propdef-display
  */
-const Display: Property<Display> = Property.of(
+export const Display: Property<Display> = Property.of(
   [Keyword.of("inline"), Keyword.of("flow")],
   either(
-    map(Keyword.parse("contents", "none"), box => [box]),
-    map(Keyword.parse("block", "inline", "run-in"), outside => [
+    map(Keyword.parse("contents", "none"), (box) => [box]),
+    map(Keyword.parse("block", "inline", "run-in"), (outside) => [
       outside,
-      Keyword.of("flow")
+      Keyword.of("flow"),
     ])
   ),
-  style => style.specified("display")
+  (style) => style.specified("display")
 );
-
-export default Display;

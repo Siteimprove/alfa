@@ -35,7 +35,7 @@ export class FontFace extends Rule {
   public toJSON(): FontFace.JSON {
     return {
       type: "font-face",
-      style: this._style.toJSON()
+      style: this._style.toJSON(),
     };
   }
 
@@ -63,9 +63,9 @@ export namespace FontFace {
     parent: Option<Rule> = None
   ): FontFace {
     return FontFace.of(
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return json.style.map(declaration =>
+        return json.style.map((declaration) =>
           Declaration.fromDeclaration(declaration, parent)
         );
       },

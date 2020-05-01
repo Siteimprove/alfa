@@ -13,86 +13,81 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { filter, map, flatMap, reduce, groupBy, isEmpty } = Iterable;
-const { and, not, equals } = Predicate;
+const { isElement, hasName, hasNamespace } = Element;
+const { map, flatMap, isEmpty } = Iterable;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r15.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        const iframes = filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        const iframes = document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasName(equals("iframe")),
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  not(isIgnored(device)),
-                  hasAccessibleName(device, not(isEmpty))
-                )
+                hasName("iframe"),
+                hasNamespace(Namespace.HTML),
+                not(isIgnored(device)),
+                hasAccessibleName(device, not(isEmpty))
               )
             )
-          )
-        );
+          );
 
-        const roots = groupBy(iframes, iframe => iframe.root());
+        const roots = iframes.groupBy((iframe) => iframe.root());
 
-        return flatMap(roots, ([root, iframes]) =>
-          reduce(
-            iframes,
-            (groups, iframe) => {
+        return flatMap(roots.values(), (iframes) =>
+          iframes
+            .reduce((groups, iframe) => {
               for (const [node] of Node.from(iframe, device)) {
                 groups = groups.set(
                   node.name(),
                   groups
                     .get(node.name())
                     .getOrElse(() => List.empty<Element>())
-                    .push(iframe)
+                    .append(iframe)
                 );
               }
 
               return groups;
-            },
-            Map.empty<Option<string>, List<Element>>()
-          ).values()
+            }, Map.empty<Option<string>, List<Element>>())
+            .values()
         );
       },
 
       expectations(target) {
         const sources = Set.from(
-          map(target, iframe => iframe.attribute("src"))
+          map(target, (iframe) => iframe.attribute("src"))
         );
 
         return {
           1: expectation(
             sources.size === 1,
-            Outcomes.EmbedSameResources,
-            Question.of(
-              "reference-equivalent-resources",
-              "boolean",
-              target,
-              "Do the <iframe> elements embed equivalent resources?"
-            ).map(embedEquivalentResources =>
-              expectation(
-                embedEquivalentResources,
-                Outcomes.EmbedEquivalentResources,
-                Outcomes.EmbedDifferentResources
+            () => Outcomes.EmbedSameResources,
+            () =>
+              Question.of(
+                "reference-equivalent-resources",
+                "boolean",
+                target,
+                "Do the <iframe> elements embed equivalent resources?"
+              ).map((embedEquivalentResources) =>
+                expectation(
+                  embedEquivalentResources,
+                  () => Outcomes.EmbedEquivalentResources,
+                  () => Outcomes.EmbedDifferentResources
+                )
               )
-            )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

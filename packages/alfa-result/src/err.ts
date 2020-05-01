@@ -35,6 +35,10 @@ export class Err<E> implements Result<never, E> {
     return new Err(mapper(this._error));
   }
 
+  public mapOrElse<T, U>(ok: Mapper<T, U>, err: Mapper<E, U>): U {
+    return err(this._error);
+  }
+
   public flatMap(): this {
     return this;
   }
@@ -91,7 +95,8 @@ export class Err<E> implements Result<never, E> {
 
   public toJSON(): Err.JSON {
     return {
-      error: Serializable.toJSON(this._error)
+      type: "err",
+      error: Serializable.toJSON(this._error),
     };
   }
 
@@ -107,6 +112,7 @@ export namespace Err {
 
   export interface JSON {
     [key: string]: json.JSON;
+    type: "err";
     error: json.JSON;
   }
 }

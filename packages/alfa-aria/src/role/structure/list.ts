@@ -9,7 +9,7 @@ Role.register(
     owns: ["listitem", ["group", "listitem"]],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

@@ -56,7 +56,7 @@ export class Attribute<N extends string = string> implements Equatable {
         return value === "true" || value === "false" || value === "mixed";
 
       case "id-reference":
-	return !/\s+/.test(value);
+        return !/\s+/.test(value);
 
       case "id-reference-list":
         return true;
@@ -71,15 +71,17 @@ export class Attribute<N extends string = string> implements Equatable {
         return true;
 
       case "token":
-	return (
-	  value === "undefined" ||
-	  this.valid.some(valid => some(valid, equals(value)))
-	);
+        return (
+          value === "undefined" ||
+          this.valid.some((valid) => some(valid, equals(value)))
+        );
 
       case "token-list":
         return value
           .split(/\s+/)
-	  .every(token => this.valid.some(valid => some(valid, equals(token))));
+          .every((token) =>
+            this.valid.some((valid) => some(valid, equals(token)))
+          );
 
       case "uri":
         try {
@@ -105,7 +107,7 @@ export namespace Attribute {
     /**
      * @see https://www.w3.org/TR/wai-aria/#dfn-property
      */
-    Property = "property"
+    Property = "property",
   }
 
   export type Value =
@@ -330,7 +332,7 @@ Attribute.register(Property.of("aria-flowto", "id-reference-list"));
  */
 Attribute.register(
   State.of("aria-grabbed", "true-false-undefined", None, None, {
-    deprecated: true
+    deprecated: true,
   })
 );
 

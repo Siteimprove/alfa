@@ -1,4 +1,3 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -6,15 +5,20 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "./token";
 
-const { map } = Iterable;
-const { zeroOrMore, take } = Parser;
-const { and, or, not, equals } = Predicate;
+const { zeroOrMore } = Parser;
+const { and, or, not, equals, test } = Predicate;
 
 export namespace Lexer {
-  export function* lex(input: string): Iterable<Token> {
-    let characters = Slice.of([
-      ...map(input.trim(), char => char.charCodeAt(0))
-    ]);
+  export function lex(input: string): Array<Token> {
+    const points = new Array(input.length);
+
+    for (let i = 0, n = input.length; i < n; i++) {
+      points[i] = input.charCodeAt(i);
+    }
+
+    const tokens: Array<Token> = [];
+
+    let characters = Slice.of(points);
 
     while (true) {
       const result = consumeToken(characters);
@@ -24,20 +28,22 @@ export namespace Lexer {
 
         characters = remainder;
 
-        yield token;
+        tokens.push(token);
       } else {
         break;
       }
     }
+
+    return tokens;
   }
 }
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#digit
  */
-const isDigit: Predicate<number> = code => code >= 0x30 && code <= 0x39;
+const isDigit: Predicate<number> = (code) => code >= 0x30 && code <= 0x39;
 
-const digit: Parser<Slice<number>, number, string> = input => {
+const digit: Parser<Slice<number>, number, string> = (input) => {
   const code = input.get(0).getOr(-1);
 
   return isDigit(code)
@@ -48,12 +54,12 @@ const digit: Parser<Slice<number>, number, string> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#hex-digit
  */
-const isHexDigit: Predicate<number> = code =>
+const isHexDigit: Predicate<number> = (code) =>
   isDigit(code) ||
   (code >= 0x41 && code <= 0x46) ||
   (code >= 0x61 && code <= 0x66);
 
-const hexDigit: Parser<Slice<number>, number, string> = input => {
+const hexDigit: Parser<Slice<number>, number, string> = (input) => {
   const code = input.get(0).getOr(-1);
 
   return isHexDigit(code)
@@ -64,39 +70,39 @@ const hexDigit: Parser<Slice<number>, number, string> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#uppercase-letter
  */
-const isUppercaseLetter: Predicate<number> = code =>
+const isUppercaseLetter: Predicate<number> = (code) =>
   code >= 0x41 && code <= 0x5a;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#lowercase-letter
  */
-const isLowercaseLetter: Predicate<number> = code =>
+const isLowercaseLetter: Predicate<number> = (code) =>
   code >= 0x61 && code <= 0x7a;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#letter
  */
-const isLetter: Predicate<number> = or(isUppercaseLetter, isLowercaseLetter);
+const isLetter = or(isUppercaseLetter, isLowercaseLetter);
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-ascii-code-point
  */
-const isNonAscii: Predicate<number> = code => code >= 0x80;
+const isNonAscii: Predicate<number> = (code) => code >= 0x80;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#newline
  */
-const isNewline: Predicate<number> = equals(0xa);
+const isNewline = equals(0xa);
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#whitespace
  */
-const isWhitespace: Predicate<number> = or(isNewline, equals(0x9, 0x20));
+const isWhitespace = or(isNewline, equals(0x9, 0x20));
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#non-printable-code-point
  */
-const isNonPrintable: Predicate<number> = code =>
+const isNonPrintable: Predicate<number> = (code) =>
   (code >= 0 && code <= 0x8) ||
   code === 0xb ||
   (code >= 0xe && code <= 0x1f) ||
@@ -105,82 +111,74 @@ const isNonPrintable: Predicate<number> = code =>
 /**
  * @see https://drafts.csswg.org/css-syntax/#name-start-code-point
  */
-const isNameStart: Predicate<number> = or(
-  isLetter,
-  or(isNonAscii, equals(0x5f))
-);
+const isNameStart = or(isLetter, or(isNonAscii, equals(0x5f)));
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#name-code-point
  */
-const isName: Predicate<number> = or(isNameStart, or(isDigit, equals(0x2d)));
+const isName = or(isNameStart, or(isDigit, equals(0x2d)));
 
 /**
  * @see https://infra.spec.whatwg.org/#surrogate
  */
-const isSurrogate: Predicate<number> = code => code >= 0xd800 && code <= 0xdfff;
+const isSurrogate: Predicate<number> = (code) =>
+  code >= 0xd800 && code <= 0xdfff;
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#starts-with-a-valid-escape
  */
-const startsValidEscape: Predicate<Slice<number>> = input =>
+const startsValidEscape: Predicate<Slice<number>> = (input) =>
   input
     .get(0)
-    .every(and(equals(0x5c), () => input.get(1).every(not(isNewline))));
+    .some(and(equals(0x5c), () => input.get(1).every(not(isNewline))));
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#starts-with-a-number
  */
-const startsNumber: Predicate<Slice<number>> = input =>
-  input
-    .get(0)
-    .every(
+const startsNumber: Predicate<Slice<number>> = (input) =>
+  input.get(0).some(
+    or(
+      isDigit,
       or(
-        isDigit,
-        or(
-          and(equals(0x2e), () => input.get(1).every(isDigit)),
-          and(equals(0x2b, 0x2d), () =>
-            input
-              .get(1)
-              .every(
-                or(
-                  isDigit,
-                  and(equals(0x2e), () => input.get(2).every(isDigit))
-                )
-              )
+        and(equals(0x2e), () => input.get(1).some(isDigit)),
+        and(equals(0x2b, 0x2d), () =>
+          input.get(1).some(
+            or(
+              isDigit,
+              and(equals(0x2e), () => input.get(2).some(isDigit))
+            )
           )
         )
       )
-    );
+    )
+  );
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#would-start-an-identifier
  */
-const startsIdentifier: Predicate<Slice<number>> = input =>
-  input
-    .get(0)
-    .some(
+const startsIdentifier: Predicate<Slice<number>> = (input) =>
+  input.get(0).some(
+    or(
+      isNameStart,
       or(
-        isNameStart,
-        or(
-          and(equals(0x2d), () =>
-            input
-              .get(1)
-              .every(
-                or(or(isNameStart, equals(0x2d)), () =>
-                  startsValidEscape(input.slice(1))
-                )
+        and(equals(0x2d), () =>
+          input
+            .get(1)
+            .every(
+              or(or(isNameStart, equals(0x2d)), () =>
+                startsValidEscape(input.slice(1))
               )
-          ),
-          and(equals(0x5c), () => startsValidEscape(input))
-        )
+            )
+        ),
+        and(equals(0x5c), () => startsValidEscape(input))
       )
-    );
+    )
+  );
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-name
  */
-const consumeName: Parser<Slice<number>, string> = input => {
+const consumeName: Parser<Slice<number>, string> = (input) => {
   let name: Array<number> = [];
 
   while (input.length > 0) {
@@ -205,19 +203,29 @@ const consumeName: Parser<Slice<number>, string> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-an-escaped-code-point
  */
-const consumeEscapedCodePoint: Parser<Slice<number>, number> = input => {
+const consumeEscapedCodePoint: Parser<Slice<number>, number> = (input) => {
   const byte = input.get(0).getOr(-1);
 
   if (byte === -1) {
     return Ok.of([input, 0xfffd] as const);
   }
 
+  input = input.slice(1);
+
   if (isHexDigit(byte)) {
     const bytes = [byte];
 
-    for (const [remainder, byte] of take(hexDigit, 5)(input.slice(1))) {
+    for (let i = 0; i < 5; i++) {
+      const result = hexDigit(input);
+
+      if (result.isErr()) {
+        break;
+      }
+
+      const [remainder, byte] = result.get();
+
       input = remainder;
-      bytes.push(...byte);
+      bytes.push(byte);
     }
 
     let code = 0;
@@ -247,13 +255,13 @@ const consumeEscapedCodePoint: Parser<Slice<number>, number> = input => {
     return Ok.of([input, code] as const);
   }
 
-  return Ok.of([input.slice(1), byte] as const);
+  return Ok.of([input, byte] as const);
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-number
  */
-const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
+const consumeNumber: Parser<Slice<number>, Token.Number> = (input) => {
   const number: Array<number> = [];
 
   let code = input.get(0);
@@ -292,12 +300,11 @@ const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
 
     if (input.get(1).some(equals(0x2b, 0x2d))) {
       offset = 2;
-      isSigned = true;
     }
 
     if (input.get(offset).some(isDigit)) {
       number.push(...input.slice(0, offset + 1));
-      input = input.slice(offset);
+      input = input.slice(offset + 1);
       code = input.get(0);
       isInteger = false;
 
@@ -311,7 +318,7 @@ const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
 
   return Ok.of([
     input,
-    Token.Number.of(convert(Slice.of(number)), isInteger, isSigned)
+    Token.Number.of(convert(Slice.of(number)), isInteger, isSigned),
   ] as const);
 };
 
@@ -321,7 +328,7 @@ const consumeNumber: Parser<Slice<number>, Token.Number> = input => {
 const consumeNumeric: Parser<
   Slice<number>,
   Token.Number | Token.Dimension | Token.Percentage
-> = input => {
+> = (input) => {
   const [remainder, number] = consumeNumber(input).get();
   input = remainder;
 
@@ -330,14 +337,14 @@ const consumeNumeric: Parser<
 
     return Ok.of([
       remainder,
-      Token.Dimension.of(number.value, name, number.isInteger, number.isSigned)
+      Token.Dimension.of(number.value, name, number.isInteger, number.isSigned),
     ] as const);
   }
 
   if (input.get(0).includes(0x25)) {
     return Ok.of([
       input.slice(1),
-      Token.Percentage.of(number.value / 100, number.isInteger)
+      Token.Percentage.of(number.value / 100, number.isInteger),
     ] as const);
   }
 
@@ -350,14 +357,31 @@ const consumeNumeric: Parser<
 const consumeIdentifierLike: Parser<
   Slice<number>,
   Token.Ident | Token.Function | Token.URL | Token.BadURL
-> = input => {
+> = (input) => {
   const [remainder, string] = consumeName(input).get();
   input = remainder;
 
   const code = input.get(0);
 
   if (string.toLowerCase() === "url" && code.includes(0x28)) {
-    return consumeURL(input.slice(1));
+    input = input.slice(1);
+
+    while (input.get(0).some(isWhitespace) && input.get(1).some(isWhitespace)) {
+      input = input.slice(1);
+    }
+
+    if (
+      input.get(0).some(
+        or(
+          equals(0x22, 0x27),
+          and(isWhitespace, () => input.get(1).some(equals(0x22, 0x27)))
+        )
+      )
+    ) {
+      return Ok.of([input, Token.Function.of(string)] as const);
+    }
+
+    return consumeURL(input);
   }
 
   if (code.includes(0x28)) {
@@ -370,12 +394,12 @@ const consumeIdentifierLike: Parser<
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-string-token
  */
-const consumeString: Parser<Slice<number>, Token.String> = input => {
+const consumeString: Parser<Slice<number>, Token.String> = (input) => {
   const end = input.get(0).get();
 
   input = input.slice(1);
 
-  let string: Array<number> = [];
+  let string = "";
 
   while (true) {
     const code = input.get(0);
@@ -386,19 +410,16 @@ const consumeString: Parser<Slice<number>, Token.String> = input => {
       break;
     }
 
-    string.push(code.get());
+    string += String.fromCharCode(code.get());
   }
 
-  return Ok.of([
-    input,
-    Token.String.of(String.fromCharCode(...string))
-  ] as const);
+  return Ok.of([input, Token.String.of(string)] as const);
 };
 
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-url-token
  */
-const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = input => {
+const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = (input) => {
   while (input.get(0).some(isWhitespace)) {
     input = input.slice(1);
   }
@@ -419,6 +440,7 @@ const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = input => {
       }
 
       if (input.get(0).every(equals(0x29))) {
+        input = input.slice(1);
         break;
       } else {
         return consumeBadURL(input);
@@ -450,7 +472,7 @@ const consumeURL: Parser<Slice<number>, Token.URL | Token.BadURL> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-remnants-of-bad-url
  */
-const consumeBadURL: Parser<Slice<number>, Token.BadURL> = input => {
+const consumeBadURL: Parser<Slice<number>, Token.BadURL> = (input) => {
   while (true) {
     if (startsValidEscape(input)) {
       const [remainder] = consumeEscapedCodePoint(input).get();
@@ -472,7 +494,7 @@ const consumeBadURL: Parser<Slice<number>, Token.BadURL> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-comments
  */
-const consumeComments: Parser<Slice<number>, void> = input => {
+const consumeComments: Parser<Slice<number>, void> = (input) => {
   while (true) {
     if (input.get(0).includes(0x2f) && input.get(1).includes(0x2a)) {
       input = input.slice(2);
@@ -483,9 +505,11 @@ const consumeComments: Parser<Slice<number>, void> = input => {
         }
 
         if (input.get(0).includes(0x2a) && input.get(1).includes(0x2f)) {
-          input = input.slice(1);
+          input = input.slice(2);
           break;
         }
+
+        input = input.slice(1);
       }
     } else {
       break;
@@ -498,14 +522,125 @@ const consumeComments: Parser<Slice<number>, void> = input => {
 /**
  * @see https://drafts.csswg.org/css-syntax/#consume-a-token
  */
-const consumeToken: Parser<Slice<number>, Token, string> = input => {
+const consumeToken: Parser<Slice<number>, Token, string> = (input) => {
   for (const [remainder] of consumeComments(input)) {
     input = remainder;
   }
 
-  const code = input.get(0);
+  if (input.length === 0) {
+    return Err.of("Unexpected end of input");
+  }
 
-  if (code.some(isWhitespace)) {
+  const code = input.get(0).get();
+
+  switch (code) {
+    case 0x22:
+      return consumeString(input);
+
+    case 0x23:
+      input = input.slice(1);
+
+      if (input.get(0).some(isName) || startsValidEscape(input)) {
+        const isIdentifier = startsIdentifier(input);
+
+        const [remainder, name] = consumeName(input).get();
+        input = remainder;
+
+        return Ok.of([input, Token.Hash.of(name, isIdentifier)] as const);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x27:
+      return consumeString(input);
+
+    case 0x28:
+      return Ok.of([input.slice(1), Token.OpenParenthesis.of()] as const);
+
+    case 0x29:
+      return Ok.of([input.slice(1), Token.CloseParenthesis.of()] as const);
+
+    case 0x2b:
+      if (startsNumber(input)) {
+        return consumeNumeric(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x2c:
+      return Ok.of([input.slice(1), Token.Comma.of()] as const);
+
+    case 0x2d:
+      if (startsNumber(input)) {
+        return consumeNumeric(input);
+      }
+
+      if (input.get(1).includes(0x2d) && input.get(2).includes(0x3e)) {
+        return Ok.of([input.slice(3), Token.CloseComment.of()] as const);
+      }
+
+      if (startsIdentifier(input)) {
+        return consumeIdentifierLike(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x2e:
+      if (startsNumber(input)) {
+        return consumeNumeric(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x3a:
+      return Ok.of([input.slice(1), Token.Colon.of()] as const);
+
+    case 0x3b:
+      return Ok.of([input.slice(1), Token.Semicolon.of()] as const);
+
+    case 0x3c:
+      if (
+        input.get(1).includes(0x21) &&
+        input.get(2).includes(0x2d) &&
+        input.get(3).includes(0x2d)
+      ) {
+        return Ok.of([input.slice(4), Token.OpenComment.of()] as const);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x40:
+      input = input.slice(1);
+
+      if (startsIdentifier(input)) {
+        const [remainder, name] = consumeName(input).get();
+
+        return Ok.of([remainder, Token.AtKeyword.of(name)] as const);
+      }
+
+      return Ok.of([input, Token.Delim.of(code)] as const);
+
+    case 0x5b:
+      return Ok.of([input.slice(1), Token.OpenSquareBracket.of()] as const);
+
+    case 0x5c:
+      if (startsValidEscape(input)) {
+        return consumeIdentifierLike(input);
+      }
+
+      return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
+
+    case 0x5d:
+      return Ok.of([input.slice(1), Token.CloseSquareBracket.of()] as const);
+
+    case 0x7b:
+      return Ok.of([input.slice(1), Token.OpenCurlyBracket.of()] as const);
+
+    case 0x7d:
+      return Ok.of([input.slice(1), Token.CloseCurlyBracket.of()] as const);
+  }
+
+  if (test<number>(isWhitespace, code)) {
     input = input.slice(1);
 
     while (input.get(0).some(isWhitespace)) {
@@ -515,140 +650,15 @@ const consumeToken: Parser<Slice<number>, Token, string> = input => {
     return Ok.of([input, Token.Whitespace.of()] as const);
   }
 
-  if (code.includes(0x22)) {
-    return consumeString(input);
-  }
-
-  if (code.includes(0x23)) {
-    input = input.slice(1);
-
-    if (input.get(0).some(isName) || startsValidEscape(input)) {
-      const isIdentifier = startsIdentifier(input);
-
-      const [remainder, name] = consumeName(input).get();
-      input = remainder;
-
-      return Ok.of([input, Token.Hash.of(name, isIdentifier)] as const);
-    }
-  }
-
-  if (code.includes(0x27)) {
-    return consumeString(input);
-  }
-
-  if (code.includes(0x28)) {
-    return Ok.of([input.slice(1), Token.OpenParenthesis.of()] as const);
-  }
-
-  if (code.includes(0x29)) {
-    return Ok.of([input.slice(1), Token.CloseParenthesis.of()] as const);
-  }
-
-  if (code.includes(0x2b)) {
-    if (startsNumber(input)) {
-      return consumeNumeric(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x2c)) {
-    return Ok.of([input.slice(1), Token.Comma.of()] as const);
-  }
-
-  if (code.includes(0x2d)) {
-    if (startsNumber(input)) {
-      return consumeNumeric(input);
-    }
-
-    if (input.get(1).includes(0x2d) && input.get(2).includes(0x3e)) {
-      return Ok.of([input.slice(3), Token.CloseComment.of()] as const);
-    }
-
-    if (startsIdentifier(input)) {
-      return consumeIdentifierLike(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x2e)) {
-    if (startsNumber(input)) {
-      return consumeNumeric(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x3a)) {
-    return Ok.of([input.slice(1), Token.Colon.of()] as const);
-  }
-
-  if (code.includes(0x3b)) {
-    return Ok.of([input.slice(1), Token.Semicolon.of()] as const);
-  }
-
-  if (code.includes(0x3c)) {
-    if (
-      input.get(1).includes(0x21) &&
-      input.get(2).includes(0x2d) &&
-      input.get(3).includes(0x2d)
-    ) {
-      return Ok.of([input.slice(4), Token.OpenComment.of()] as const);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x40)) {
-    input = input.slice(1);
-
-    if (startsIdentifier(input)) {
-      const [remainder, name] = consumeName(input).get();
-
-      return Ok.of([remainder, Token.AtKeyword.of(name)] as const);
-    }
-
-    return Ok.of([input, Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x5b)) {
-    return Ok.of([input.slice(1), Token.OpenSquareBracket.of()] as const);
-  }
-
-  if (code.includes(0x5c)) {
-    if (startsValidEscape(input)) {
-      return consumeIdentifierLike(input);
-    }
-
-    return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
-  }
-
-  if (code.includes(0x5d)) {
-    return Ok.of([input.slice(1), Token.CloseSquareBracket.of()] as const);
-  }
-
-  if (code.includes(0x7b)) {
-    return Ok.of([input.slice(1), Token.OpenCurlyBracket.of()] as const);
-  }
-
-  if (code.includes(0x7d)) {
-    return Ok.of([input.slice(1), Token.CloseCurlyBracket.of()] as const);
-  }
-
-  if (code.some(isDigit)) {
+  if (test<number>(isDigit, code)) {
     return consumeNumeric(input);
   }
 
-  if (code.some(isNameStart)) {
+  if (test<number>(isNameStart, code)) {
     return consumeIdentifierLike(input);
   }
 
-  if (code.isNone()) {
-    return Err.of("Unexpected end of input");
-  }
-
-  return Ok.of([input.slice(1), Token.Delim.of(code.get())] as const);
+  return Ok.of([input.slice(1), Token.Delim.of(code)] as const);
 };
 
 /**
@@ -658,7 +668,7 @@ function convert(input: Slice<number>): number {
   const sign = input
     .get(0)
     .filter(equals(0x2b, 0x2d))
-    .map(sign => (sign === 0x2d ? -1 : 1));
+    .map((sign) => (sign === 0x2d ? -1 : 1));
 
   if (sign.isSome()) {
     input = input.slice(1);
@@ -673,12 +683,9 @@ function convert(input: Slice<number>): number {
     integer.push(...value);
   }
 
-  const i =
-    integer.length === 0
-      ? 0
-      : integer
-          .map(code => code - 0x30)
-          .reduceRight((i, code) => 10 * code + i);
+  const i = integer
+    .map((code) => code - 0x30)
+    .reduce((i, code) => 10 * i + code, 0);
 
   if (input.get(0).includes(0x2e)) {
     input = input.slice(1);
@@ -691,12 +698,9 @@ function convert(input: Slice<number>): number {
     fraction.push(...value);
   }
 
-  const f =
-    fraction.length === 0
-      ? 0
-      : fraction
-          .map(code => code - 0x30)
-          .reduceRight((i, code) => 10 * code + i);
+  const f = fraction
+    .map((code) => code - 0x30)
+    .reduce((i, code) => 10 * i + code, 0);
 
   const d = fraction.length;
 
@@ -707,7 +711,7 @@ function convert(input: Slice<number>): number {
   const exponentSign = input
     .get(0)
     .filter(equals(0x2b, 0x2d))
-    .map(sign => (sign === 0x2d ? -1 : 1));
+    .map((sign) => (sign === 0x2d ? -1 : 1));
 
   if (exponentSign.isSome()) {
     input = input.slice(1);
@@ -722,12 +726,9 @@ function convert(input: Slice<number>): number {
     exponent.push(...value);
   }
 
-  const e =
-    exponent.length === 0
-      ? 0
-      : exponent
-          .map(code => code - 0x30)
-          .reduceRight((i, code) => 10 * code + i);
+  const e = exponent
+    .map((code) => code - 0x30)
+    .reduce((i, code) => 10 * i + code, 0);
 
   // To account for floating point precision errors, we flip the sign of the
   // exponents (`d` and `t`) and divide rather than multiply.

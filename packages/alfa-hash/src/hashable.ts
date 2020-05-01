@@ -18,7 +18,7 @@ export namespace Hashable {
 
   let uid = 1;
 
-  export function hash(value: unknown, hash: Hash): void {
+  export function hash(hash: Hash, value: unknown): void {
     switch (typeof value) {
       case "string":
         Hash.writeString(hash, value);

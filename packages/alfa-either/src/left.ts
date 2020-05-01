@@ -1,7 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Either } from "./either";
 import { Right } from "./right";
@@ -61,8 +64,11 @@ export class Left<L> implements Either<L, never> {
     yield this._value;
   }
 
-  public toJSON() {
-    return { left: this._value };
+  public toJSON(): Left.JSON {
+    return {
+      type: "left",
+      value: Serializable.toJSON(this._value),
+    };
   }
 
   public toString(): string {
@@ -71,6 +77,12 @@ export class Left<L> implements Either<L, never> {
 }
 
 export namespace Left {
+  export interface JSON {
+    [key: string]: json.JSON;
+    type: "left";
+    value: json.JSON;
+  }
+
   export function isLeft<L>(value: unknown): value is Left<L> {
     return value instanceof Left;
   }

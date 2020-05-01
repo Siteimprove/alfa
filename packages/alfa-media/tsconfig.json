@@ -10,7 +10,13 @@
       "path": "../alfa-device"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-option"

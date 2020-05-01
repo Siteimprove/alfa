@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const prettier = require("prettier");
 const axios = require("axios");
 
@@ -14,10 +15,9 @@ const registry = "https://www.iana.org/assignments/language-subtag-registry";
 
 /**
  * @typedef {object} Subtag
- * @property {string} name
  * @property {string} type
- * @property {string | Array<string>} [prefix]
- * @property {string} [scope]
+ * @property {string} name
+ * @property {Array<string>} args
  */
 
 /**
@@ -27,9 +27,9 @@ const registry = "https://www.iana.org/assignments/language-subtag-registry";
 function getType(subtag) {
   switch (subtag.type) {
     case "language":
-      return "PrimaryLanguage";
+      return "Primary";
     case "extlang":
-      return "ExtendedLanguage";
+      return "Extended";
     case "script":
       return "Script";
     case "region":
@@ -39,14 +39,6 @@ function getType(subtag) {
   }
 
   return null;
-}
-
-/**
- * @param {Subtag} subtag
- * @return {string | null}
- */
-function getName(subtag) {
-  return subtag.name.toUpperCase().replace(/^(\d)/, "_$1");
 }
 
 /**
@@ -108,8 +100,8 @@ function expand(query) {
     }
 
     return generate(rest(from), rest(to))
-      .map(result => {
-        return range(from, to).map(c => c + result);
+      .map((result) => {
+        return range(from, to).map((c) => c + result);
       })
       .reduce(concat, []);
   }
@@ -122,15 +114,15 @@ function expand(query) {
  * @return {Array<Record>}
  */
 function parseRecords(input) {
-  return input.split(/\n+%%\n+/).map(record =>
+  return input.split(/\n+%%\n+/).map((record) =>
     record
       .replace(/\n\s+/g, " ")
       .split(/\n+/)
-      .map(field => {
+      .map((field) => {
         const separator = field.indexOf(":");
         return {
           name: field.substring(0, separator).trim(),
-          value: field.substring(separator + 1).trim()
+          value: field.substring(separator + 1).trim(),
         };
       })
   );
@@ -144,35 +136,47 @@ axios.get(registry).then(({ data }) => {
 
   for (const record of records) {
     const tag = record.find(
-      field => field.name === "Tag" || field.name === "Subtag"
+      (field) => field.name === "Tag" || field.name === "Subtag"
     );
 
-    const type = record.find(field => field.name === "Type");
+    const type = record.find((field) => field.name === "Type");
 
     if (tag === undefined || type === undefined) {
       continue;
     }
 
-    const prefix = record.filter(field => field.name === "Prefix");
-    const scope = record.find(field => field.name === "Scope");
+    const prefixes = record.filter((field) => field.name === "Prefix");
+    const scope = record.find((field) => field.name === "Scope");
 
     for (const name of expand(tag.value)) {
+      /** @type {Array<string>} */
+      const args = [`"${name.toLowerCase()}"`];
+
+      switch (type.value) {
+        case "language":
+          if (scope !== undefined) {
+            args.push(`Option.of("${scope.value}")`);
+          }
+          break;
+
+        case "extlang":
+          args.push(`"${prefixes[0].value}"`);
+
+          if (scope !== undefined) {
+            args.push(`Option.of("${scope.value}")`);
+          }
+          break;
+
+        case "variant":
+          args.push(`[${prefixes.map((prefix) => `"${prefix.value}"`)}]`);
+      }
+
       /** @type {Subtag} */
-      const subtag = Object.assign(
-        {
-          type: type.value,
-          name: name.toLowerCase()
-        },
-        prefix.length > 0
-          ? {
-              prefix:
-                prefix.length > 1
-                  ? prefix.map(prefix => prefix.value.toLowerCase())
-                  : prefix[0].value.toLowerCase()
-            }
-          : {},
-        scope !== undefined ? { scope: scope.value } : {}
-      );
+      const subtag = {
+        type: type.value,
+        name: name.toLowerCase(),
+        args,
+      };
 
       if (getType(subtag) !== null) {
         subtags.push(subtag);
@@ -182,7 +186,7 @@ axios.get(registry).then(({ data }) => {
 
   /** @type {Map<string, Array<Subtag>>} */
   const groups = subtags.reduce((groups, subtag) => {
-    const group = `${getType(subtag)}s`;
+    const group = getType(subtag);
 
     let subtags = groups.get(group);
 
@@ -200,41 +204,34 @@ axios.get(registry).then(({ data }) => {
     `
     // This file has been automatically generated based on the IANA Language Subtag
     // Registry. Do therefore not modify it directly! If you wish to make changes,
-    // do so in \`scripts/subtags.js\` and run \`yarn prepare\` to rebuild this file.
+    // do so in \`scripts/subtags.js\` and run \`yarn generate\` to rebuild this file.
 
-    import { ExtendedLanguage, PrimaryLanguage, Region, Script, Variant } from "./types";
-    `
+    import { Map } from "@siteimprove/alfa-map";
+    import { Option } from "@siteimprove/alfa-option";
+
+    import { Language } from "../language";
+    `,
   ];
 
   for (const [group, subtags] of groups) {
     lines.push(`
-      export namespace ${group} {
+      export const ${group} = Map.from([
         ${subtags
-          .map(subtag => {
-            const value = JSON.stringify(subtag, null, 2);
-            return `export const ${getName(subtag)}: ${getType(
-              subtag
-            )} = ${value}`;
+          .map((subtag) => {
+            const type = getType(subtag);
+
+            return `["${subtag.name}", Language.${type}.of(${subtag.args.join(
+              ", "
+            )})]`;
           })
-          .join("\n\n")}
-      }
-    `);
-
-    const index = group.substring(0, group.length - 1);
-
-    lines.push(`
-      export const ${index}Index: Map<string, ${index}> = new Map();
-
-      for (const key of Object.keys(${group})) {
-        const subtag = ${group}[key as keyof typeof ${group}];
-        ${index}Index.set(subtag.name, subtag);
-      }
+          .join("\n,")}
+      ])
     `);
   }
 
   const code = prettier.format(lines.join("\n\n"), {
-    parser: "typescript"
+    parser: "typescript",
   });
 
-  fs.writeFileSync("src/subtags.ts", code);
+  fs.writeFileSync(path.join(__dirname, "../src/language/subtags.ts"), code);
 });

@@ -31,7 +31,8 @@
     "src/style/rule/page.ts",
     "src/style/rule/style.ts",
     "src/style/rule/supports.ts",
-    "src/style/sheet.ts"
+    "src/style/sheet.ts",
+    "test/node/attribute.spec.ts"
   ],
   "references": [
     {
@@ -39,6 +40,9 @@
     },
     {
       "path": "../alfa-earl"
+    },
+    {
+      "path": "../alfa-equatable"
     },
     {
       "path": "../alfa-iterable"
@@ -60,9 +64,6 @@
     },
     {
       "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-test"
     }
   ]
 }

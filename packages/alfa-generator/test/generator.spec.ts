@@ -14,8 +14,8 @@ function* g(n: number) {
   return "g()";
 }
 
-test("map() applies a function to each value yielded by a generator", t => {
-  const iterator = Generator.map(f(), n => n * 2);
+test("map() applies a function to each value yielded by a generator", (t) => {
+  const iterator = Generator.map(f(), (n) => n * 2);
   let next = iterator.next();
 
   t.equal(next.value, 2);
@@ -28,7 +28,7 @@ test("map() applies a function to each value yielded by a generator", t => {
   t.equal(next.value, "f()");
 });
 
-test("flatMap() applies a function to each value yielded by a generator and flattens the result", t => {
+test("flatMap() applies a function to each value yielded by a generator and flattens the result", (t) => {
   const iterator = Generator.flatMap(f(), g);
   let next = iterator.next();
 

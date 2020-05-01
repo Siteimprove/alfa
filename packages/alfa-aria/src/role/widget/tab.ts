@@ -10,8 +10,8 @@ Role.register(
     context: ["tablist"],
     name: {
       from: ["contents", "author"],
-      required: false
+      required: false,
     },
-    implicits: [["aria-selected", "false"]]
+    implicits: [["aria-selected", "false"]],
   })
 );

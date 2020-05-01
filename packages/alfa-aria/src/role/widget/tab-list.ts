@@ -10,8 +10,8 @@ Role.register(
     owns: ["tab"],
     name: {
       from: ["author"],
-      required: false
+      required: false,
     },
-    implicits: [["aria-orientation", "horizontal"]]
+    implicits: [["aria-orientation", "horizontal"]],
   })
 );

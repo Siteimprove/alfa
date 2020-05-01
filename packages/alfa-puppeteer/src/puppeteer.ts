@@ -23,7 +23,7 @@ import {
   SupportsRule,
   Text,
   Type,
-  Shadow
+  Shadow,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Option } from "@siteimprove/alfa-option";
@@ -42,7 +42,7 @@ export namespace Puppeteer {
   }
 
   export async function asPage(value: Type): Promise<Page> {
-    const node = await value.evaluate(node => {
+    const node = await value.evaluate((node) => {
       return toNode(node);
 
       function toNode(node: globalThis.Node): Node.JSON {
@@ -89,7 +89,7 @@ export namespace Puppeteer {
           content:
             "contentDocument" in element && element.contentDocument !== null
               ? toDocument(element.contentDocument)
-              : null
+              : null,
         };
       }
 
@@ -99,21 +99,21 @@ export namespace Puppeteer {
           namespace: attribute.namespaceURI,
           prefix: attribute.prefix,
           name: attribute.localName,
-          value: attribute.value
+          value: attribute.value,
         };
       }
 
       function toText(text: globalThis.Text): Text.JSON {
         return {
           type: "text",
-          data: text.data
+          data: text.data,
         };
       }
 
       function toComment(comment: globalThis.Comment): Comment.JSON {
         return {
           type: "comment",
-          data: comment.data
+          data: comment.data,
         };
       }
 
@@ -121,9 +121,9 @@ export namespace Puppeteer {
         return {
           type: "document",
           children: [...document.childNodes].map(toNode),
-          style: [...document.styleSheets].map(sheet =>
+          style: [...document.styleSheets].map((sheet) =>
             toSheet(sheet as CSSStyleSheet)
-          )
+          ),
         };
       }
 
@@ -132,7 +132,7 @@ export namespace Puppeteer {
           type: "type",
           name: type.name,
           publicId: type.publicId === "" ? null : type.publicId,
-          systemId: type.systemId === "" ? null : type.systemId
+          systemId: type.systemId === "" ? null : type.systemId,
         };
       }
 
@@ -141,16 +141,18 @@ export namespace Puppeteer {
           type: "shadow",
           mode: shadow.mode,
           children: [...shadow.childNodes].map(toNode),
-          style: [...shadow.styleSheets].map(sheet =>
+          style: [...shadow.styleSheets].map((sheet) =>
             toSheet(sheet as CSSStyleSheet)
-          )
+          ),
         };
       }
 
       function toSheet(sheet: globalThis.CSSStyleSheet): Sheet.JSON {
         return {
           rules: [...sheet.cssRules].map(toRule),
-          disabled: sheet.disabled
+          disabled: sheet.disabled,
+          condition:
+            sheet.media.mediaText === "" ? null : sheet.media.mediaText,
         };
       }
 
@@ -191,7 +193,7 @@ export namespace Puppeteer {
         return {
           type: "style",
           selector: styleRule.selectorText,
-          style: toBlock(styleRule.style)
+          style: toBlock(styleRule.style),
         };
       }
 
@@ -200,7 +202,7 @@ export namespace Puppeteer {
           type: "import",
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
           condition: rule.media.mediaText,
-          href: rule.href
+          href: rule.href,
         };
       }
 
@@ -208,7 +210,7 @@ export namespace Puppeteer {
         return {
           type: "media",
           condition: rule.conditionText,
-          rules: [...rule.cssRules].map(toRule)
+          rules: [...rule.cssRules].map(toRule),
         };
       }
 
@@ -217,7 +219,7 @@ export namespace Puppeteer {
       ): FontFaceRule.JSON {
         return {
           type: "font-face",
-          style: toBlock(rule.style)
+          style: toBlock(rule.style),
         };
       }
 
@@ -225,7 +227,7 @@ export namespace Puppeteer {
         return {
           type: "page",
           selector: rule.selectorText,
-          style: toBlock(rule.style)
+          style: toBlock(rule.style),
         };
       }
 
@@ -235,7 +237,7 @@ export namespace Puppeteer {
         return {
           type: "keyframes",
           rules: [...rule.cssRules].map(toRule),
-          name: rule.name
+          name: rule.name,
         };
       }
 
@@ -245,7 +247,7 @@ export namespace Puppeteer {
         return {
           type: "keyframe",
           key: rule.keyText,
-          style: toBlock(rule.style)
+          style: toBlock(rule.style),
         };
       }
 
@@ -255,7 +257,7 @@ export namespace Puppeteer {
         return {
           type: "namespace",
           namespace: rule.namespaceURI,
-          prefix: rule.prefix
+          prefix: rule.prefix,
         };
       }
 
@@ -265,7 +267,7 @@ export namespace Puppeteer {
         return {
           type: "supports",
           condition: rule.conditionText,
-          rules: [...rule.cssRules].map(toRule)
+          rules: [...rule.cssRules].map(toRule),
         };
       }
 
@@ -289,7 +291,7 @@ export namespace Puppeteer {
       Response.empty(),
       node.type === "document"
         ? Document.fromDocument(node as Document.JSON)
-        : Document.of(self => [Node.fromNode(node, Option.of(self))]),
+        : Document.of((self) => [Node.fromNode(node, Option.of(self))]),
       Device.standard()
     );
   }

@@ -8,7 +8,7 @@ Role.register(
     inherits: ["document"],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

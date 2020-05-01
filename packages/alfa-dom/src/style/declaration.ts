@@ -57,7 +57,7 @@ export class Declaration {
     return {
       name: this._name,
       value: this._value,
-      important: this._important
+      important: this._important,
     };
   }
 

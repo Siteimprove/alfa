@@ -4,16 +4,17 @@ const { system } = require("./system");
 
 exports.tester = {
   test(root = "packages") {
-    for (const fileName of system.readDirectory(root, [".spec.js"])) {
+    for (let fileName of system.readDirectory(root, [".spec.ts", ".spec.tsx"])) {
+      fileName = fileName.replace(/\.tsx?$/, ".js");
       execa
         .node(fileName, [], {
           nodeOptions: [
             ...process.execArgv,
             ...["--require", require.resolve("source-map-support/register")]
-          ]
+          ],
+          stdio: "inherit"
         })
         .catch(err => {
-          system.write(err.stderr.trim() + "\n");
           system.exit(1);
         });
     }

@@ -136,8 +136,8 @@ export function sequence<D extends Descriptor>(
   return {
     type: options.required === true ? "+" : "*",
     properties: {
-      descriptor
-    }
+      descriptor,
+    },
   };
 }
 
@@ -150,7 +150,7 @@ export function optional<D extends Descriptor>(
   return {
     type: "?",
     properties: {
-      descriptor
-    }
+      descriptor,
+    },
   };
 }

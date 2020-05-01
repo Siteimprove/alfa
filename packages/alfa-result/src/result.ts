@@ -21,6 +21,7 @@ export interface Result<T, E>
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
   mapErr<F>(mapper: Mapper<E, F>): Result<T, F>;
+  mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   and<U>(result: Result<U, E>): Result<U, E>;
@@ -28,6 +29,7 @@ export interface Result<T, E>
   or<F>(result: Result<T, F>): Result<T, F>;
   orElse<F>(result: Thunk<Result<T, F>>): Result<T, F>;
   get(): T;
+  getErr(): E;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
   ok(): Option<T>;
@@ -59,7 +61,9 @@ export namespace Result {
     }
 
     if (value instanceof Promise) {
-      return value.then(value => Ok.of(value)).catch(error => Err.of(error));
+      return value
+        .then((value) => Ok.of(value))
+        .catch((error) => Err.of(error));
     }
 
     return Ok.of(value);

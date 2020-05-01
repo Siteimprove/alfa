@@ -31,7 +31,7 @@ export default class Subcommand extends Command {
 
     wait: flags.enum({
       options: ["ready", "loaded", "idle"],
-      default: "ready"
+      default: "ready",
     }),
 
     format: flags.string({ char: "f", default: "earl" }),
@@ -40,7 +40,7 @@ export default class Subcommand extends Command {
 
     outcomes: flags.enum({
       options: ["ready", "loaded", "idle"],
-      default: "ready"
+      default: "ready",
     }),
 
     width: flags.integer({ char: "w", default: 800 }),
@@ -48,18 +48,18 @@ export default class Subcommand extends Command {
 
     orientation: flags.enum({
       options: ["landscape", "portrait"],
-      default: "landscape"
+      default: "landscape",
     }),
 
-    resolution: flags.integer({ default: 1 })
+    resolution: flags.integer({ default: 1 }),
   };
 
   static args = [
     {
       name: "url",
       required: true,
-      description: "The URL of the page to audit"
-    }
+      description: "The URL of the page to audit",
+    },
   ];
 
   async run() {
@@ -90,7 +90,7 @@ export default class Subcommand extends Command {
           timeout,
           wait,
           viewport: Viewport.of(width, height, orientation),
-          display: Display.of(resolution)
+          display: Display.of(resolution),
         }
       );
     } catch (err) {
@@ -114,9 +114,9 @@ export default class Subcommand extends Command {
                   .prompt<{ [key: string]: boolean }>({
                     name: question.uri,
                     type: "toggle",
-                    message: question.message
+                    message: question.message,
                   })
-                  .then(answer =>
+                  .then((answer) =>
                     Option.of(question.answer(answer[question.uri]))
                   )
                   .catch(() => None)
@@ -130,7 +130,7 @@ export default class Subcommand extends Command {
                     name: question.uri,
                     type: "input",
                     message: question.message,
-                    validate: expression => {
+                    validate: (expression) => {
                       if (expression === "") {
                         return true;
                       }
@@ -138,8 +138,8 @@ export default class Subcommand extends Command {
                       const nodes = [
                         ...evaluate(page.document, expression, {
                           composed: true,
-                          nested: true
-                        })
+                          nested: true,
+                        }),
                       ];
 
                       if (nodes.length === 1) {
@@ -147,15 +147,15 @@ export default class Subcommand extends Command {
                       }
 
                       return "Invalid XPath expression";
-                    }
+                    },
                   })
-                  .then(answer => {
+                  .then((answer) => {
                     const expression = answer[question.uri];
 
                     const node = first(
                       evaluate(page.document, expression, {
                         composed: true,
-                        nested: true
+                        nested: true,
                       })
                     );
 

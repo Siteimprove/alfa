@@ -8,8 +8,8 @@ Role.register(
     requires: ["aria-level"],
     name: {
       from: ["contents", "author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-level", "2"]]
+    implicits: [["aria-level", "2"]],
   })
 );

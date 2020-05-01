@@ -3,39 +3,35 @@ import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
-
-const { filter, flatMap, isEmpty } = Iterable;
-const { and, not, equals, property } = Predicate;
+const { isElement, hasNamespace } = Element;
+const { isEmpty } = Iterable;
+const { and, not, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r19.html",
   evaluate({ document, device }) {
     return {
       applicability() {
-        return flatMap(
-          filter(
-            document.descendants({ composed: true, nested: true }),
-            and(
-              Element.isElement,
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG))
-            )
-          ),
-          element =>
-            filter(
-              element.attributes,
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(and(isElement, hasNamespace(Namespace.HTML, Namespace.SVG)))
+          .flatMap((element) =>
+            Sequence.from(element.attributes).filter(
               and(
-                property("name", name => aria.Attribute.lookup(name).isSome()),
+                property("name", (name) =>
+                  aria.Attribute.lookup(name).isSome()
+                ),
                 property("value", not(isEmpty))
               )
             )
-        );
+          );
       },
 
       expectations(target) {
@@ -44,13 +40,13 @@ export default Rule.Atomic.of<Page, Attribute>({
         return {
           1: expectation(
             attribute.isValid(target.value),
-            Outcomes.HasValidValue,
-            Outcomes.HasNoValidValue
-          )
+            () => Outcomes.HasValidValue,
+            () => Outcomes.HasNoValidValue
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

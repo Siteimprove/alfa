@@ -9,10 +9,10 @@ import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasInputType } from "../common/predicate/has-input-type";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
+const { isElement, hasNamespace } = Element;
+const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -20,29 +20,31 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML)),
-              and(hasInputType(equals("image")), not(isIgnored(device)))
+              isElement,
+              and(
+                hasNamespace(Namespace.HTML),
+                hasInputType(equals("image")),
+                not(isIgnored(device))
+              )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
         return {
           1: expectation(
             hasAccessibleName(device, not(isEmpty))(target),
-            Outcomes.HasName,
-            Outcomes.HasNoName
-          )
+            () => Outcomes.HasName,
+            () => Outcomes.HasNoName
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

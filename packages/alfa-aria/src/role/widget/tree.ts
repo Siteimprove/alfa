@@ -10,8 +10,8 @@ Role.register(
     supports: ["aria-Multiselectable", "aria-Required"],
     name: {
       from: ["author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-Orientation", "vertical"]]
+    implicits: [["aria-Orientation", "vertical"]],
   })
 );

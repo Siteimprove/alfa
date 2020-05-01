@@ -5,14 +5,26 @@ import {
   Rule,
   StyleRule,
   Sheet,
-  MediaRule
+  MediaRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Selector } from "@siteimprove/alfa-selector";
 
 import { UserAgent } from "./user-agent";
+import { AncestorFilter } from "./ancestor-filter";
+
+const { and, equals, property } = Predicate;
+
+const isDescendantSelector = and(
+  Selector.isComplex,
+  property(
+    "combinator",
+    equals(Selector.Combinator.Descendant, Selector.Combinator.DirectDescendant)
+  )
+);
 
 /**
  * Cascading origins defined in ascending order; origins defined first have
@@ -31,7 +43,7 @@ export enum Origin {
   /**
    * @see https://www.w3.org/TR/css-cascade/#cascade-origin-author
    */
-  Author = 2
+  Author = 2,
 }
 
 /**
@@ -59,12 +71,16 @@ export enum Origin {
  * @internal
  */
 export class SelectorMap {
-  private readonly ids = SelectorMap.Bucket.empty();
-  private readonly classes = SelectorMap.Bucket.empty();
-  private readonly types = SelectorMap.Bucket.empty();
-  private readonly other: Array<SelectorMap.Node> = [];
+  public static of(sheets: Iterable<Sheet>, device: Device): SelectorMap {
+    return new SelectorMap(sheets, device);
+  }
 
-  public constructor(sheets: Iterable<Sheet>, device: Device) {
+  private readonly _ids = Bucket.empty();
+  private readonly _classes = Bucket.empty();
+  private readonly _types = Bucket.empty();
+  private readonly _other: Array<SelectorMap.Node> = [];
+
+  private constructor(sheets: Iterable<Sheet>, device: Device) {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -104,38 +120,63 @@ export class SelectorMap {
     };
 
     for (const sheet of sheets) {
+      if (sheet.disabled) {
+        continue;
+      }
+
+      if (sheet.condition.isSome()) {
+        const query = Media.parse(sheet.condition.get());
+
+        if (query.isNone() || !query.get().matches(device)) {
+          continue;
+        }
+      }
+
       for (const rule of sheet.children()) {
         visit(rule);
       }
     }
   }
 
-  public get(element: Element): Array<SelectorMap.Node> {
+  public get(
+    element: Element,
+    filter?: AncestorFilter
+  ): Array<SelectorMap.Node> {
     const nodes: Array<SelectorMap.Node> = [];
 
-    const id = element.id;
-
-    if (id.isSome()) {
-      collect(this.ids.get(id.get()));
-    }
-
-    collect(this.types.get(element.name));
-
-    for (const className of element.classes) {
-      collect(this.classes.get(className));
-    }
-
-    collect(this.other);
-
-    return nodes;
-
-    function collect(candidates: Array<SelectorMap.Node>) {
+    const collect = (candidates: Iterable<SelectorMap.Node>) => {
       for (const node of candidates) {
+        if (
+          filter !== undefined &&
+          Iterable.every(
+            node.selector,
+            and(isDescendantSelector, (selector) =>
+              canReject(selector.left, filter)
+            )
+          )
+        ) {
+          continue;
+        }
+
         if (node.selector.matches(element)) {
           nodes.push(node);
         }
       }
+    };
+
+    for (const id of element.id) {
+      collect(this._ids.get(id));
     }
+
+    collect(this._types.get(element.name));
+
+    for (const className of element.classes) {
+      collect(this._classes.get(className));
+    }
+
+    collect(this._other);
+
+    return nodes;
   }
 
   private add(
@@ -146,34 +187,32 @@ export class SelectorMap {
     order: number
   ): void {
     const keySelector = getKeySelector(selector);
-    const specificity = getSpecificity(selector);
 
-    const node: SelectorMap.Node = {
+    const node = SelectorMap.Node.of(
       rule,
       selector,
       declarations,
       origin,
-      order,
-      specificity
-    };
+      order
+    );
 
     for (const selector of keySelector) {
       if (selector instanceof Selector.Id) {
-        this.ids.add(selector.name, node);
+        this._ids.add(selector.name, node);
       }
 
       if (selector instanceof Selector.Class) {
-        this.classes.add(selector.name, node);
+        this._classes.add(selector.name, node);
       }
 
       if (selector instanceof Selector.Type) {
-        this.types.add(selector.name, node);
+        this._types.add(selector.name, node);
       }
 
       return;
     }
 
-    this.other.push(node);
+    this._other.push(node);
   }
 }
 
@@ -181,45 +220,94 @@ export class SelectorMap {
  * @internal
  */
 export namespace SelectorMap {
-  export interface Node {
-    readonly rule: Rule;
-    readonly selector: Selector;
-    readonly declarations: Iterable<Declaration>;
-    readonly origin: Origin;
-    readonly order: number;
-    readonly specificity: number;
+  export class Node {
+    public static of(
+      rule: Rule,
+      selector: Selector,
+      declarations: Iterable<Declaration>,
+      origin: Origin,
+      order: number
+    ): Node {
+      return new Node(rule, selector, declarations, origin, order);
+    }
+
+    private readonly _rule: Rule;
+    private readonly _selector: Selector;
+    private readonly _declarations: Iterable<Declaration>;
+    private readonly _origin: Origin;
+    private readonly _order: number;
+    private readonly _specificity: number;
+
+    private constructor(
+      rule: Rule,
+      selector: Selector,
+      declarations: Iterable<Declaration>,
+      origin: Origin,
+      order: number
+    ) {
+      this._rule = rule;
+      this._selector = selector;
+      this._declarations = declarations;
+      this._origin = origin;
+      this._order = order;
+      this._specificity = getSpecificity(selector);
+    }
+
+    public get rule(): Rule {
+      return this._rule;
+    }
+
+    public get selector(): Selector {
+      return this._selector;
+    }
+
+    public get declarations(): Iterable<Declaration> {
+      return this._declarations;
+    }
+
+    public get origin(): Origin {
+      return this._origin;
+    }
+
+    public get order(): number {
+      return this._order;
+    }
+
+    public get specificity(): number {
+      return this._specificity;
+    }
+  }
+}
+
+class Bucket {
+  public static empty(): Bucket {
+    return new Bucket(new Map());
   }
 
-  export class Bucket {
-    public static empty(): Bucket {
-      return new Bucket(new Map());
+  private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
+
+  private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
+    this._nodes = nodes;
+  }
+
+  public add(key: string, node: SelectorMap.Node): void {
+    const nodes = this._nodes.get(key);
+
+    if (nodes === undefined) {
+      this._nodes.set(key, [node]);
+    } else {
+      nodes.push(node);
+    }
+  }
+
+  public get(key: string): Array<SelectorMap.Node> {
+    const nodes = this._nodes.get(key);
+
+    if (nodes === undefined) {
+      return [];
     }
 
-    public readonly nodes: Map<string, Array<Node>>;
-
-    private constructor(nodes: Map<string, Array<Node>>) {
-      this.nodes = nodes;
-    }
-
-    public add(key: string, node: SelectorMap.Node): void {
-      const nodes = this.nodes.get(key);
-
-      if (nodes === undefined) {
-        this.nodes.set(key, [node]);
-      } else {
-        nodes.push(node);
-      }
-    }
-
-    public get(key: string): Array<SelectorMap.Node> {
-      const nodes = this.nodes.get(key);
-
-      if (nodes === undefined) {
-        return [];
-      }
-
-      return nodes;
-    }
+    return nodes;
   }
 }
 
@@ -266,8 +354,6 @@ const componentMax = (1 << componentBits) - 1;
 
 /**
  * @see https://www.w3.org/TR/selectors/#specificity
- *
- * @internal
  */
 function getSpecificity(selector: Selector): Specificity {
   let a = 0;
@@ -312,4 +398,42 @@ function getSpecificity(selector: Selector): Specificity {
     (Math.min(b, componentMax) << (componentBits * 1)) |
     Math.min(c, componentMax)
   );
+}
+
+/**
+ * Check if a selector can be rejected based on an ancestor filter.
+ */
+function canReject(selector: Selector, filter: AncestorFilter): boolean {
+  if (
+    selector instanceof Selector.Id ||
+    selector instanceof Selector.Class ||
+    selector instanceof Selector.Type
+  ) {
+    return !filter.matches(selector);
+  }
+
+  if (selector instanceof Selector.Compound) {
+    // Compound selectors are right-leaning, so recurse to the left first as it
+    // is likely the shortest branch.
+    return (
+      canReject(selector.left, filter) || canReject(selector.right, filter)
+    );
+  }
+
+  if (selector instanceof Selector.Complex) {
+    const { combinator } = selector;
+
+    if (
+      combinator === Selector.Combinator.Descendant ||
+      combinator === Selector.Combinator.DirectDescendant
+    ) {
+      // Complex selectors are left-leaning, so recurse to the right first as it
+      // is likely the shortest branch.
+      return (
+        canReject(selector.right, filter) || canReject(selector.left, filter)
+      );
+    }
+  }
+
+  return false;
 }

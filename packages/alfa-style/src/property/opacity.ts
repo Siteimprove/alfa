@@ -1,29 +1,28 @@
-import { Token } from "@siteimprove/alfa-css";
+import { Number, Percentage } from "@siteimprove/alfa-css";
 import { clamp } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
 
-const { map, either } = Parser;
+const { either } = Parser;
 
-export type Opacity = number;
+export type Opacity = Number | Percentage;
+
+export namespace Opacity {
+  export type Computed = Number;
+}
 
 /**
  * @see https://drafts.csswg.org/css-color/#propdef-opacity
  */
-const Opacity: Property<Opacity> = Property.of(
-  1,
-  map(
-    either(Token.parseNumber(), Token.parsePercentage()),
-    token => token.value
-  ),
-  style =>
+export const Opacity: Property<Opacity> = Property.of(
+  Number.of(1),
+  either(Number.parse, Percentage.parse),
+  (style) =>
     style
       .specified("opacity")
-      .map(opacity => opacity.map(value => clamp(value, 0, 1))),
+      .map((opacity) => Number.of(clamp(opacity.value, 0, 1))),
   {
-    inherits: true
+    inherits: true,
   }
 );
-
-export default Opacity;

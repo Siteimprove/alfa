@@ -1,11 +1,8 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
-
-const { map, join } = Iterable;
 
 export class Document extends Node {
   public static of(
@@ -41,39 +38,38 @@ export class Document extends Node {
   public toJSON(): Document.JSON {
     return {
       type: "document",
-      children: this._children.map(child => child.toJSON()),
-      style: this._style.map(sheet => sheet.toJSON())
+      children: this._children.map((child) => child.toJSON()),
+      style: this._style.map((sheet) => sheet.toJSON()),
     };
   }
 
   public toString(): string {
-    const children = join(
-      map(this._children, child => indent(child.toString())),
-      "\n"
-    );
+    const children = this._children
+      .map((child) => indent(child.toString()))
+      .join("\n");
 
     return `#document${children === "" ? "" : `\n${children}`}`;
   }
 }
 
 export namespace Document {
-  export function isDocument(value: unknown): value is Document {
-    return value instanceof Document;
-  }
-
   export interface JSON extends Node.JSON {
     type: "document";
     children: Array<Node.JSON>;
     style: Array<Sheet.JSON>;
   }
 
+  export function isDocument(value: unknown): value is Document {
+    return value instanceof Document;
+  }
+
   export function fromDocument(document: JSON): Document {
     return Document.of(
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return document.children.map(child => Node.fromNode(child, parent));
+        return document.children.map((child) => Node.fromNode(child, parent));
       },
-      document.style.map(style => Sheet.fromSheet(style))
+      document.style.map((style) => Sheet.fromSheet(style))
     );
   }
 }

@@ -11,7 +11,7 @@ const {
   isString,
   isNumber,
   isBoolean,
-  isNull
+  isNull,
 } = Predicate;
 
 export interface Serializable {

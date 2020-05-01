@@ -10,7 +10,7 @@ Role.register(
     owns: ["radio"],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

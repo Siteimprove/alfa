@@ -8,5 +8,5 @@ export function hasDescendant(
   predicate: Predicate<Node>,
   options: Node.Traversal = {}
 ): Predicate<Node> {
-  return node => some(node.descendants(options), predicate);
+  return (node) => some(node.descendants(options), predicate);
 }

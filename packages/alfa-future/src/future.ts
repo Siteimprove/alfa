@@ -1,6 +1,5 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
-import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -8,20 +7,24 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
+/**
+ * @see http://blog.higher-order.com/assets/trampolines.pdf
+ */
 export abstract class Future<T> implements Monad<T>, Functor<T> {
-  /**
-   * @internal
-   */
-  public abstract step(): Either<Future<T>, Future<T>>;
+  protected abstract step(): Future<T>;
 
   public then(callback: Callback<T>): void {
-    let result = this.step();
+    let step: Future<T> = this;
 
-    while (result.isLeft()) {
-      result = result.get().step();
+    while (true) {
+      const next = step.step();
+
+      if (step !== next) {
+        step = next;
+      } else {
+        return next.then(callback);
+      }
     }
-
-    result.get().then(callback);
   }
 
   public isNow(): boolean {
@@ -37,13 +40,13 @@ export abstract class Future<T> implements Monad<T>, Functor<T> {
   }
 
   public map<U>(mapper: Mapper<T, U>): Future<U> {
-    return this.flatMap(value => Now.of(mapper(value)));
+    return this.flatMap((value) => Now.of(mapper(value)));
   }
 
   public abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
 
   public toPromise(): Promise<T> {
-    return new Promise(resolve => this.then(resolve));
+    return new Promise((resolve) => this.then(resolve));
   }
 }
 
@@ -69,7 +72,7 @@ export namespace Future {
   }
 
   export function from<T>(promise: Promise<T>): Future<T> {
-    return Future.defer(callback => promise.then(callback));
+    return Future.defer((callback) => promise.then(callback));
   }
 
   export function traverse<T, U>(
@@ -79,17 +82,17 @@ export namespace Future {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap(value =>
-          values.map(values => values.push(value))
+        mapper(value).flatMap((value) =>
+          values.map((values) => values.append(value))
         ),
-      Future.now(List.empty())
+      now(List.empty())
     );
   }
 
   export function sequence<T>(
     futures: Iterable<Future<T>>
   ): Future<Iterable<T>> {
-    return traverse(futures, value => value);
+    return traverse(futures, (value) => value);
   }
 }
 
@@ -105,12 +108,16 @@ class Now<T> extends Future<T> {
     this._value = value;
   }
 
-  public step(): Right<Future<T>> {
-    return Right.of(this);
+  protected step(): Future<T> {
+    return this;
   }
 
   public then(callback: Callback<T>): void {
     callback(this._value);
+  }
+
+  public map<U>(mapper: Mapper<T, U>): Future<U> {
+    return new Now(mapper(this._value));
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -130,12 +137,12 @@ class Defer<T> extends Future<T> {
     this._continuation = continuation;
   }
 
-  public step(): Right<Future<T>> {
-    return Right.of(this);
+  protected step(): Future<T> {
+    return this;
   }
 
   public then(callback: Callback<T>): void {
-    this._continuation(callback);
+    this._continuation((value) => defer(() => callback(value)));
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -164,17 +171,19 @@ namespace Defer {
       this._mapper = mapper;
     }
 
-    public step(): Right<Future<T>> {
-      return Right.of(this);
+    protected step(): Future<T> {
+      return this;
     }
 
     public then(callback: Callback<T>): void {
-      this._continuation(value => this._mapper(value).then(callback));
+      this._continuation((value) =>
+        defer(() => this._mapper(value).then(callback))
+      );
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
       return Suspend.of(() =>
-        Bind.of(this._continuation, value =>
+        Bind.of(this._continuation, (value) =>
           this._mapper(value).flatMap(mapper)
         )
       );
@@ -194,8 +203,8 @@ class Suspend<T> extends Future<T> {
     this._thunk = thunk;
   }
 
-  public step(): Left<Future<T>> {
-    return Left.of(this._thunk());
+  protected step(): Future<T> {
+    return this._thunk();
   }
 
   public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
@@ -221,16 +230,18 @@ namespace Suspend {
       this._mapper = mapper;
     }
 
-    public step(): Either<Future<T>, Future<T>> {
-      return this._thunk()
-        .flatMap(this._mapper)
-        .step();
+    protected step(): Future<T> {
+      return this._thunk().flatMap(this._mapper);
     }
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
       return Suspend.of(() =>
-        Bind.of(this._thunk, value => this._mapper(value).flatMap(mapper))
+        Bind.of(this._thunk, (value) => this._mapper(value).flatMap(mapper))
       );
     }
   }
+}
+
+async function defer<T>(thunk: Thunk<T>): Promise<T> {
+  return Promise.resolve().then(thunk);
 }

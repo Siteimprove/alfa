@@ -9,7 +9,7 @@ Role.register(
     owns: ["article"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

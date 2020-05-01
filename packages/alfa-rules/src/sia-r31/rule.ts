@@ -18,7 +18,7 @@ export default Rule.Atomic.of<Page, Element, Question>({
 
       expectations(target) {
         return videoTextAlternative(target, device);
-      }
+      },
     };
-  }
+  },
 });

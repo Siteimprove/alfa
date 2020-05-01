@@ -1,34 +1,58 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Scope, Table } from "@siteimprove/alfa-table";
 
 import { Role } from "./role";
 
+const { hasName, isElement } = Element;
 const { and, equals, test } = Predicate;
 
 export class Feature<N extends string = string> {
   public static of<N extends string>(
     name: N,
     role: Feature.Aspect<Option<string>> = () => None,
+    attributes: Feature.Aspect<Map<string, string>> = () => Map.empty(),
     status: Feature.Status = { obsolete: false }
   ): Feature<N> {
-    return new Feature(name, role, status);
+    return new Feature(name, role, attributes, status);
   }
 
-  public readonly name: N;
-  public readonly role: Feature.Aspect<Option<string>>;
-  public readonly status: Feature.Status;
+  private readonly _name: N;
+  private readonly _role: Feature.Aspect<Option<string>>;
+  private readonly _attributes: Feature.Aspect<Map<string, string>>;
+  private readonly _status: Feature.Status;
 
   private constructor(
     name: N,
     role: Feature.Aspect<Option<string>>,
+    attributes: Feature.Aspect<Map<string, string>>,
     status: Feature.Status
   ) {
-    this.name = name;
-    this.role = role;
-    this.status = status;
+    this._name = name;
+    this._role = role;
+    this._attributes = attributes;
+    this._status = status;
+  }
+
+  public get name(): N {
+    return this._name;
+  }
+
+  public get role(): Feature.Aspect<Option<string>> {
+    return this._role;
+  }
+
+  public get attributes(): Feature.Aspect<Map<string, string>> {
+    return this._attributes;
+  }
+
+  public get status(): Feature.Status {
+    return this._status;
   }
 }
 
@@ -55,20 +79,20 @@ export namespace Feature {
   ): Option<Feature<N>> {
     return features
       .get(namespace)
-      .flatMap(features => features.get(name) as Option<Feature<N>>);
+      .flatMap((features) => features.get(name) as Option<Feature<N>>);
   }
 }
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("a", element =>
+  Feature.of("a", (element) =>
     element.attribute("href").isSome() ? Option.of("link") : None
   )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("area", element =>
+  Feature.of("area", (element) =>
     element.attribute("href").isSome() ? Option.of("link") : None
   )
 );
@@ -85,7 +109,20 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("button", () => Option.of("button"))
+  Feature.of(
+    "button",
+    () => Option.of("button"),
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        attributes = attributes.set("aria-disabled", "true");
+      }
+
+      return attributes;
+    }
+  )
 );
 
 Feature.register(
@@ -105,7 +142,40 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("dialog", () => Option.of("dialog"))
+  Feature.of(
+    "dialog",
+    () => Option.of("dialog"),
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-open-dialog
+      attributes = attributes.set(
+        "aria-expanded",
+        element.attribute("open").isSome() ? "true" : "false"
+      );
+
+      return attributes;
+    }
+  )
+);
+
+Feature.register(
+  Namespace.HTML,
+  Feature.of(
+    "details",
+    () => None,
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-open-details
+      attributes = attributes.set(
+        "aria-expanded",
+        element.attribute("open").isSome() ? "true" : "false"
+      );
+
+      return attributes;
+    }
+  )
 );
 
 Feature.register(
@@ -115,7 +185,20 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("fieldset", () => Option.of("group"))
+  Feature.of(
+    "fieldset",
+    () => Option.of("group"),
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        attributes = attributes.set("aria-disabled", "true");
+      }
+
+      return attributes;
+    }
+  )
 );
 
 Feature.register(
@@ -125,15 +208,10 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("footer", element =>
+  Feature.of("footer", (element) =>
     element
       .closest(
-        and(Element.isElement, element =>
-          test(
-            equals("article", "aside", "main", "nav", "section"),
-            element.name
-          )
-        )
+        and(isElement, hasName("article", "aside", "main", "nav", "section"))
       )
       .isNone()
       ? Option.of("contentinfo")
@@ -148,45 +226,64 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h1", () => Option.of("heading"))
+  Feature.of(
+    "h1",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "1"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h2", () => Option.of("heading"))
+  Feature.of(
+    "h2",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "2"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h3", () => Option.of("heading"))
+  Feature.of(
+    "h3",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "3"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h4", () => Option.of("heading"))
+  Feature.of(
+    "h4",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "4"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h5", () => Option.of("heading"))
+  Feature.of(
+    "h5",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "5"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("h6", () => Option.of("heading"))
+  Feature.of(
+    "h6",
+    () => Option.of("heading"),
+    () => Map.of(["aria-level", "6"])
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("header", element =>
+  Feature.of("header", (element) =>
     element
       .closest(
-        and(Element.isElement, element =>
-          test(
-            equals("article", "aside", "main", "nav", "section"),
-            element.name
-          )
-        )
+        and(isElement, hasName("article", "aside", "main", "nav", "section"))
       )
       .isNone()
       ? Option.of("banner")
@@ -201,9 +298,9 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("img", element =>
+  Feature.of("img", (element) =>
     Option.of(
-      element.attribute("alt").some(alt => alt.value === "")
+      element.attribute("alt").some((alt) => alt.value === "")
         ? "presentation"
         : "img"
     )
@@ -212,55 +309,103 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("input", element =>
-    element
-      .attribute("type")
-      .andThen(type => {
-	switch (type.value.toLowerCase()) {
-	  case "button":
-	  case "image":
-	  case "reset":
-	  case "submit":
-	    return Option.of("button");
+  Feature.of(
+    "input",
+    (element) =>
+      element
+        .attribute("type")
+        .andThen((type) => {
+          switch (type.value.toLowerCase()) {
+            case "button":
+            case "image":
+            case "reset":
+            case "submit":
+              return Option.of("button");
 
-	  case "checkbox":
-	    return Option.of("checkbox");
+            case "checkbox":
+              return Option.of("checkbox");
 
-	  case "number":
-	    return Option.of("spinbutton");
+            case "number":
+              return Option.of("spinbutton");
 
-	  case "radio":
-	    return Option.of("radio");
+            case "radio":
+              return Option.of("radio");
 
-	  case "range":
-	    return Option.of("slider");
+            case "range":
+              return Option.of("slider");
 
-	  case "search":
-	    return Option.of(
-	      element.attribute("list").isSome() ? "combobox" : "searchbox"
-	    );
+            case "search":
+              return Option.of(
+                element.attribute("list").isSome() ? "combobox" : "searchbox"
+              );
 
-	  case "email":
-	  case "tel":
-	  case "text":
-	  case "url":
-	  default:
-	    return Option.of(
-	      element.attribute("list").isSome() ? "combobox" : "textbox"
-	    );
-	}
-      })
-      .orElse(() => Option.of("textbox"))
+            case "email":
+            case "tel":
+            case "text":
+            case "url":
+            default:
+              return Option.of(
+                element.attribute("list").isSome() ? "combobox" : "textbox"
+              );
+          }
+        })
+        .orElse(() => Option.of("textbox")),
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-checked
+      attributes = attributes.set(
+        "aria-checked",
+        element.attribute("checked").isSome() ? "true" : "false"
+      );
+
+      // https://w3c.github.io/html-aam/#att-list
+      for (const { value } of element.attribute("list")) {
+        attributes = attributes.set("aria-controls", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-max-input
+      for (const { value } of element.attribute("max")) {
+        attributes = attributes.set("aria-valuemax", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-min-input
+      for (const { value } of element.attribute("min")) {
+        attributes = attributes.set("aria-valuemin", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-readonly
+      for (const _ of element.attribute("readonly")) {
+        attributes = attributes.set("aria-readonly", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-required
+      for (const _ of element.attribute("required")) {
+        attributes = attributes.set("aria-required", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        attributes = attributes.set("aria-disabled", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-placeholder
+      for (const { value } of element.attribute("placeholder")) {
+        attributes = attributes.set("aria-placeholder", value);
+      }
+
+      return attributes;
+    }
   )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("li", element =>
+  Feature.of("li", (element) =>
     element
       .parent()
       .filter(Element.isElement)
-      .flatMap(parent => {
+      .flatMap((parent) => {
         switch (parent.name) {
           case "ol":
           case "ul":
@@ -300,21 +445,48 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("optgroup", () => Option.of("group"))
+  Feature.of(
+    "optgroup",
+    () => Option.of("group"),
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        attributes = attributes.set("aria-disabled", "true");
+      }
+
+      return attributes;
+    }
+  )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("option", element =>
-    element
-      .closest(
-        and(Element.isElement, element =>
-          test(equals("select", "optgroup", "datalist"), element.name)
-        )
-      )
-      .isSome()
-      ? Option.of("option")
-      : None
+  Feature.of(
+    "option",
+    (element) =>
+      element
+        .closest(and(isElement, hasName("select", "optgroup", "datalist")))
+        .isSome()
+        ? Option.of("option")
+        : None,
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        attributes = attributes.set("aria-disabled", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-selected
+      attributes = attributes.set(
+        "aria-selected",
+        element.attribute("selected").isSome() ? "true" : "false"
+      );
+
+      return attributes;
+    }
   )
 );
 
@@ -335,16 +507,36 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("select", element => {
-    if (
-      element.attribute("multiple").isSome() &&
-      element.attribute("size").some(size => parseInt(size.value) > 1)
-    ) {
-      return Option.of("listbox");
-    }
+  Feature.of(
+    "select",
+    () =>
+      // Despite what the HTML AAM specifies, we always map <select> elements
+      // to a listbox widget as they currently have no way of mapping to a valid
+      // combobo widget. As a combobox requires an owned textarea and a list of
+      // options, we will always end up mapping <select> elements to an invalid
+      // combobox widget.
+      Option.of("listbox"),
+    (element) => {
+      let attributes = Map.empty<string, string>();
 
-    return Option.of("combobox");
-  })
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        attributes = attributes.set("aria-disabled", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-required
+      for (const _ of element.attribute("required")) {
+        attributes = attributes.set("aria-required", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-multiple-select
+      for (const _ of element.attribute("multiple")) {
+        attributes = attributes.set("aria-multiselectable", "true");
+      }
+
+      return attributes;
+    }
+  )
 );
 
 Feature.register(
@@ -359,29 +551,74 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("td", element =>
-    element
-      .closest(and(Element.isElement, element => element.name === "table"))
-      .flatMap(table => {
-        for (const [role] of Role.from(table)) {
-          if (role.isSome()) {
-            switch (role.get().name) {
-              case "table":
-                return Option.of("cell");
-              case "grid":
-                return Option.of("gridcell");
+  Feature.of(
+    "td",
+    (element) =>
+      element
+        .closest(and(Element.isElement, hasName("table")))
+        .flatMap((table) => {
+          for (const [role] of Role.from(table)) {
+            if (role.isSome()) {
+              switch (role.get().name) {
+                case "table":
+                  return Option.of("cell");
+                case "grid":
+                  return Option.of("gridcell");
+              }
             }
           }
-        }
 
-        return None;
-      })
+          return None;
+        }),
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-colspan
+      for (const { value } of element.attribute("colspan")) {
+        attributes = attributes.set("aria-colspan", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-rowspan
+      for (const { value } of element.attribute("rowspan")) {
+        attributes = attributes.set("aria-rowspan", value);
+      }
+
+      return attributes;
+    }
   )
 );
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("textarea", () => Option.of("textbox"))
+  Feature.of(
+    "textarea",
+    () => Option.of("textbox"),
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        attributes = attributes.set("aria-disabled", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-readonly
+      for (const _ of element.attribute("readonly")) {
+        attributes = attributes.set("aria-readonly", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-required
+      for (const _ of element.attribute("required")) {
+        attributes = attributes.set("aria-required", "true");
+      }
+
+      // https://w3c.github.io/html-aam/#att-placeholder
+      for (const { value } of element.attribute("placeholder")) {
+        attributes = attributes.set("aria-placeholder", value);
+      }
+
+      return attributes;
+    }
+  )
 );
 
 Feature.register(
@@ -391,19 +628,63 @@ Feature.register(
 
 Feature.register(
   Namespace.HTML,
-  Feature.of("th", element =>
-    element.attribute("scope").flatMap(scope => {
-      switch (scope.value.toLowerCase()) {
-        case "row":
-        case "rowgroup":
-          return Option.of("RowHeader");
-        case "col":
-        case "colgroup":
-          return Option.of("ColumnHeader");
-        default:
-          return None;
+  Feature.of(
+    "th",
+    (element) => {
+      const table = element.closest(and(isElement, hasName("table")));
+
+      // If the <th> is not in a <table>, it doesn't really have a role…
+      if (table.isNone()) {
+        return None;
       }
-    })
+
+      const tableModel = Table.from(table.get());
+
+      // If the <th> is within a <table> with errors, it doesn't really have a role.
+      if (tableModel.isErr()) {
+        return None;
+      }
+
+      const cell = Iterable.find(tableModel.get().cells, (cell) =>
+        cell.element.equals(element)
+      );
+
+      // If the current element is not a cell in the table, something weird happened and it doesn't have a role.
+      if (cell.isNone()) {
+        return None;
+      }
+
+      // This is not fully correct. If the header has no variant, its role should be computed as a <td>
+      // @see https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
+      //     "th (is neither column header nor row header, and ancestor table element has table role)"
+      // and "th (is neither column header nor row header, and ancestor table element has grid role)"
+      return cell.get().scope.map((scope) => {
+        switch (scope) {
+          case Scope.Column:
+          case Scope.ColumnGroup:
+            return "columnheader";
+          case Scope.Row:
+          case Scope.RowGroup:
+            return "rowheader";
+        }
+      });
+    },
+
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-colspan
+      for (const { value } of element.attribute("colspan")) {
+        attributes = attributes.set("aria-colspan", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-rowspan
+      for (const { value } of element.attribute("rowspan")) {
+        attributes = attributes.set("aria-rowspan", value);
+      }
+
+      return attributes;
+    }
   )
 );
 
@@ -423,8 +704,59 @@ Feature.register(
 );
 
 Feature.register(
+  Namespace.HTML,
+  Feature.of(
+    "meter",
+    () => None,
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-max
+      for (const { value } of element.attribute("max")) {
+        attributes = attributes.set("aria-valuemax", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-min
+      for (const { value } of element.attribute("min")) {
+        attributes = attributes.set("aria-valuemin", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-value-meter
+      for (const { value } of element.attribute("value")) {
+        attributes = attributes.set("aria-valuenow", value);
+      }
+
+      return attributes;
+    }
+  )
+);
+
+Feature.register(
+  Namespace.HTML,
+  Feature.of(
+    "progress",
+    () => None,
+    (element) => {
+      let attributes = Map.empty<string, string>();
+
+      // https://w3c.github.io/html-aam/#att-max
+      for (const { value } of element.attribute("max")) {
+        attributes = attributes.set("aria-valuemax", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-value-meter
+      for (const { value } of element.attribute("value")) {
+        attributes = attributes.set("aria-valuenow", value);
+      }
+
+      return attributes;
+    }
+  )
+);
+
+Feature.register(
   Namespace.SVG,
-  Feature.of("a", element =>
+  Feature.of("a", (element) =>
     Option.of(element.attribute("href").isSome() ? "link" : "group")
   )
 );

@@ -10,6 +10,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Branched<T, B = never>
@@ -83,7 +84,7 @@ export class Branched<T, B = never>
   }
 
   public apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B> {
-    return this.flatMap(value => mapper.map(mapper => mapper(value)));
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public reduce<U>(reducer: Reducer<T, U, [Iterable<B>]>, accumulator: U): U {
@@ -132,10 +133,10 @@ export class Branched<T, B = never>
         ...Iterable.map(this._values, ({ value, branches }) => {
           return {
             value: Serializable.toJSON(value),
-            branches: branches.map(branches => branches.toJSON()).getOr(null)
+            branches: branches.map((branches) => branches.toJSON()).getOr(null),
           };
-        })
-      ]
+        }),
+      ],
     };
   }
 }
@@ -162,8 +163,8 @@ export namespace Branched {
     return Iterable.reduce(
       values,
       (values, value) =>
-        mapper(value).flatMap(value =>
-          values.map(values => values.push(value))
+        mapper(value).flatMap((value) =>
+          values.map((values) => values.append(value))
         ),
       Branched.of(List.empty())
     );
@@ -172,7 +173,7 @@ export namespace Branched {
   export function sequence<T, B>(
     values: Iterable<Branched<T, B>>
   ): Branched<Iterable<T>, B> {
-    return traverse(values, value => value);
+    return traverse(values, (value) => value);
   }
 }
 
@@ -207,15 +208,15 @@ function merge<T, B>(
   branches: Option<List<B>>
 ): List<Value<T, B>> {
   branches = values
-    .find(existing => Equatable.equals(existing.value, value))
-    .map(existing =>
-      existing.branches.flatMap(left =>
-        branches.map(right => left.concat(right))
+    .find((existing) => Equatable.equals(existing.value, value))
+    .map((existing) =>
+      existing.branches.flatMap((left) =>
+        branches.map((right) => left.concat(right))
       )
     )
     .getOr(branches);
 
-  return deduplicate(values, value, branches).push(Value.of(value, branches));
+  return deduplicate(values, value, branches).append(Value.of(value, branches));
 }
 
 function deduplicate<T, B>(
@@ -229,7 +230,7 @@ function deduplicate<T, B>(
     }
 
     if (existing.branches.isNone()) {
-      return branches.isNone() ? values : values.push(existing);
+      return branches.isNone() ? values : values.append(existing);
     }
 
     return existing.branches.reduce((values, existingBranches) => {
@@ -242,7 +243,7 @@ function deduplicate<T, B>(
         return values;
       }
 
-      return values.push(Value.of(existing.value, Some.of(deduplicated)));
+      return values.append(Value.of(existing.value, Some.of(deduplicated)));
     }, values);
   }, List.empty());
 }
@@ -251,7 +252,7 @@ function narrow<T, B>(
   branches: Option<List<B>>,
   scope: Option<List<B>>
 ): Option<List<B>> {
-  return scope.map(scope =>
+  return scope.map((scope) =>
     branches.reduce((scope, branches) => scope.intersect(branches), scope)
   );
 }
@@ -263,8 +264,8 @@ function unused<T, B>(
   return values.reduce(
     (branches, value) =>
       value.branches
-        .flatMap(existing =>
-          branches.map(branches => branches.subtract(existing))
+        .flatMap((existing) =>
+          branches.map((branches) => branches.subtract(existing))
         )
         .or(branches),
     branches

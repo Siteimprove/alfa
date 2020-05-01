@@ -34,5 +34,5 @@ export enum Namespace {
    *
    * @see https://infra.spec.whatwg.org/#xmlns-namespace
    */
-  XMLNS = "http://www.w3.org/2000/xmlns/"
+  XMLNS = "http://www.w3.org/2000/xmlns/",
 }

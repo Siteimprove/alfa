@@ -11,31 +11,28 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
-const { filter, isEmpty } = Iterable;
-const { and, nor } = Predicate;
+const { isEmpty } = Iterable;
+const { nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r4.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return filter(
-          document.children(),
-          and(Element.isElement, isDocumentElement())
-        );
+        return document.children().filter(isDocumentElement);
       },
 
       expectations(target) {
         return {
           1: expectation(
             hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
-            Outcomes.HasLanguage,
-            Outcomes.HasNoLanguage
-          )
+            () => Outcomes.HasLanguage,
+            () => Outcomes.HasNoLanguage
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

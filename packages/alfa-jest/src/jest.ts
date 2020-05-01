@@ -31,10 +31,10 @@ export namespace Jest {
           pass: error.isNone(),
           message: () =>
             this.utils.matcherHint("toBeAccessible", "received", "", {
-              isNot: this.isNot
-            })
+              isNot: this.isNot,
+            }),
         };
-      }
+      },
     });
   }
 }

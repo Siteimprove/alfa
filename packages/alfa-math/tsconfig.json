@@ -3,6 +3,7 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/clamp.ts",
+    "src/equals.ts",
     "src/index.ts",
     "src/matrix.ts",
     "src/mod.ts",

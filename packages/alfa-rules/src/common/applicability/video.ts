@@ -5,13 +5,12 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasName } from "../predicate/has-name";
-import { hasNamespace } from "../predicate/has-namespace";
 import { isVisible } from "../predicate/is-visible";
 
 import { Question } from "../question";
 import { hasAttribute } from "../predicate/has-attribute";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, map, some } = Iterable;
 const { and, equals } = Predicate;
 
@@ -26,38 +25,34 @@ export function video(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        Element.isElement,
+        isElement,
         and(
-          hasNamespace(equals(Namespace.HTML)),
-          and(
-            hasName(equals("video")),
-            and(
-              isVisible(device),
-              element =>
-                track === undefined ||
-                track.has ===
-                  some(
-                    element.children(),
-                    and(
-                      Element.isElement,
-                      and(
-                        hasName(equals("track")),
-                        hasAttribute("kind", equals(track.kind))
-                      )
-                    )
+          hasNamespace(Namespace.HTML),
+          hasName("video"),
+          isVisible(device),
+          (element) =>
+            track === undefined ||
+            track.has ===
+              some(
+                element.children(),
+                and(
+                  Element.isElement,
+                  and(
+                    hasName("track"),
+                    hasAttribute("kind", equals(track.kind))
                   )
-            )
-          )
+                )
+              )
         )
       )
     ),
-    element =>
+    (element) =>
       Question.of(
         "is-video-streaming",
         "boolean",
         element,
         "Is the <video> element streaming?"
-      ).map(isStreaming => {
+      ).map((isStreaming) => {
         if (isStreaming) {
           return None;
         }
@@ -68,7 +63,7 @@ export function video(
             "boolean",
             element,
             "Does the <video> element have audio?"
-          ).map(hasAudio =>
+          ).map((hasAudio) =>
             audio.has === hasAudio ? Option.of(element) : None
           );
         }

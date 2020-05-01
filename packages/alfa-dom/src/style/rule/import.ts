@@ -46,9 +46,9 @@ export class Import extends Condition {
   public toJSON(): Import.JSON {
     return {
       type: "import",
-      rules: [...this._sheet.rules].map(rule => rule.toJSON()),
+      rules: [...this._sheet.rules].map((rule) => rule.toJSON()),
       condition: this._condition,
-      href: this._href
+      href: this._href,
     };
   }
 
@@ -74,8 +74,8 @@ export namespace Import {
   ): Import {
     return Import.of(
       json.href,
-      Sheet.of(owner => {
-        return json.rules.map(rule => Rule.fromRule(rule, owner));
+      Sheet.of((owner) => {
+        return json.rules.map((rule) => Rule.fromRule(rule, owner));
       }),
       Option.of(json.condition),
       owner,

@@ -13,11 +13,10 @@
     "src/common/predicate/has-category.ts",
     "src/common/predicate/has-child.ts",
     "src/common/predicate/has-descendant.ts",
+    "src/common/predicate/has-heading-level.ts",
     "src/common/predicate/has-id.ts",
     "src/common/predicate/has-input-type.ts",
     "src/common/predicate/has-name-from.ts",
-    "src/common/predicate/has-name.ts",
-    "src/common/predicate/has-namespace.ts",
     "src/common/predicate/has-nondefault-role.ts",
     "src/common/predicate/has-role.ts",
     "src/common/predicate/has-tab-index.ts",
@@ -79,14 +78,18 @@
     "src/sia-r42/rule.ts",
     "src/sia-r43/rule.ts",
     "src/sia-r44/rule.ts",
+    "src/sia-r45/rule.ts",
+    "src/sia-r46/rule.ts",
     "src/sia-r47/rule.ts",
     "src/sia-r48/rule.ts",
     "src/sia-r49/rule.ts",
     "src/sia-r5/rule.ts",
     "src/sia-r50/rule.ts",
+    "src/sia-r53/rule.ts",
     "src/sia-r57/rule.ts",
     "src/sia-r59/rule.ts",
     "src/sia-r6/rule.ts",
+    "src/sia-r61/rule.ts",
     "src/sia-r63/rule.ts",
     "src/sia-r64/rule.ts",
     "src/sia-r67/rule.ts",
@@ -99,10 +102,15 @@
     "test/common/outcome.ts",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",
+    "test/sia-r21/rule.spec.tsx",
     "test/sia-r24/rule.spec.tsx",
     "test/sia-r38/rule.spec.tsx",
+    "test/sia-r45/rule.spec.tsx",
+    "test/sia-r46/rule.spec.tsx",
+    "test/sia-r53/rule.spec.tsx",
     "test/sia-r57/rule.spec.tsx",
     "test/sia-r64/rule.spec.tsx",
+    "test/sia-r61/rule.spec.tsx",
     "test/sia-r68/rule.spec.tsx"
   ],
   "references": [
@@ -140,7 +148,7 @@
       "path": "../alfa-iterable"
     },
     {
-      "path": "../alfa-lang"
+      "path": "../alfa-map"
     },
     {
       "path": "../alfa-math"
@@ -162,6 +170,9 @@
     },
     {
       "path": "../alfa-style"
+    },
+    {
+      "path": "../alfa-table"
     },
     {
       "path": "../alfa-test"

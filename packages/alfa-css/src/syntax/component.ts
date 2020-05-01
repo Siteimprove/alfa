@@ -14,10 +14,8 @@ export namespace Component {
   /**
    * @see https://drafts.csswg.org/css-syntax/#consume-a-component-value
    */
-  export const consume: Parser<Slice<Token>, Component> = input => {
+  export const consume: Parser<Slice<Token>, Component> = (input) => {
     const next = input.get(0).get();
-
-    input = input.slice(1);
 
     const component = [next];
 
@@ -30,6 +28,8 @@ export namespace Component {
 
       input = remainder;
       component.push(...block.value);
+    } else {
+      input = input.slice(1);
     }
 
     return Ok.of([input, component] as const);
@@ -38,7 +38,7 @@ export namespace Component {
   /**
    * @see https://drafts.csswg.org/css-syntax/#parse-component-value
    */
-  export const parse: Parser<Slice<Token>, Component, string> = input => {
+  export const parse: Parser<Slice<Token>, Component, string> = (input) => {
     while (input.get(0).some(Token.isWhitespace)) {
       input = input.slice(1);
     }

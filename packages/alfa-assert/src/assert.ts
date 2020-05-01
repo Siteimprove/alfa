@@ -35,7 +35,7 @@ export namespace Assert {
     public toJSON() {
       return {
         target: this.target,
-        reasons: this.reasons.toJSON()
+        reasons: this.reasons.toJSON(),
       };
     }
   }
@@ -50,7 +50,7 @@ export namespace Assert {
 
     export function isAccessible(
       page: web.Page,
-      scope: Iterable<Rule<web.Page, Target>> = Rules.values()
+      scope: Iterable<Rule<web.Page, Target, any>> = Rules.values()
     ): Future<Option<Error<Target>>> {
       const audit = reduce(
         scope,
@@ -58,10 +58,10 @@ export namespace Assert {
         Audit.of(page)
       );
 
-      return audit.evaluate().map(outcomes =>
+      return audit.evaluate().map((outcomes) =>
         find(outcomes, (outcome): outcome is Outcome.Failed<web.Page, Target> =>
           Outcome.isFailed(outcome)
-        ).map(outcome => {
+        ).map((outcome) => {
           const { target, expectations } = outcome;
 
           const reasons = reduce(
@@ -70,7 +70,7 @@ export namespace Assert {
               expectation.isNone()
                 ? reasons
                 : expectation.get().isOk()
-                ? reasons.push(expectation.get().get())
+                ? reasons.append(expectation.get().get())
                 : reasons,
             List.empty<string>()
           );
