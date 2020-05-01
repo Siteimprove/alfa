@@ -9,7 +9,7 @@ import { failed, inapplicable, passed } from "../common/outcome";
 
 const device = Device.standard();
 
-test("Passes on explicit header", async (t) => {
+test("evaluate() passes on explicit header", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <table>
@@ -29,7 +29,7 @@ test("Passes on explicit header", async (t) => {
   ]);
 });
 
-test("Passes on implicit headers", async (t) => {
+test("evaluate() passes on implicit headers", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <table>
@@ -55,7 +55,7 @@ test("Passes on implicit headers", async (t) => {
   ]);
 });
 
-test("Fails on headers with no data cell", async (t) => {
+test("evaluate() fails on headers with no data cell", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <table>
@@ -79,7 +79,7 @@ test("Fails on headers with no data cell", async (t) => {
   ]);
 });
 
-test("Is inapplicable if there is no header cell", async (t) => {
+test("evaluate() is inapplicable if there is no header cell", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <table>

@@ -10,7 +10,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 
 const device = Device.standard();
 
-test("Passes when the document starts with an explicit level 1 heading", async (t) => {
+test("evaluate() passes when the document starts with an explicit level 1 heading", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -26,7 +26,7 @@ test("Passes when the document starts with an explicit level 1 heading", async (
   ]);
 });
 
-test("Passes when the document starts with an implicit level 1 heading", async (t) => {
+test("evaluate() passes when the document starts with an implicit level 1 heading", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -40,7 +40,7 @@ test("Passes when the document starts with an implicit level 1 heading", async (
   ]);
 });
 
-test("Passes when the document starts with a level 4 heading", async (t) => {
+test("evaluate() fails when the document starts with a level 4 heading", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -54,7 +54,7 @@ test("Passes when the document starts with a level 4 heading", async (t) => {
   ]);
 });
 
-test("Is inapplicable when there is no heading", async (t) => {
+test("evaluate() is inapplicable when there is no heading", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
