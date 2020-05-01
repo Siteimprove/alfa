@@ -6,9 +6,7 @@
     "src/credentials.ts",
     "src/index.ts",
     "src/scraper.ts",
-    "src/screenshot.ts",
-    "../alfa-time/src/time.ts",
-    "../alfa-time/src/timeout.ts"
+    "src/screenshot.ts"
   ],
   "references": [
     {
