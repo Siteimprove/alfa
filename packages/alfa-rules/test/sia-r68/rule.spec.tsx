@@ -49,6 +49,8 @@ test("evaluate() passes a list with a list item and a group of list items", asyn
 });
 
 test("evaluate() ignores non-element children when determining ownership", async (t) => {
+  // Don't remove the spaces after some of the elements; they're the non-element
+  // children!
   const document = Document.of((self) => [
     Element.fromElement(
       <div role="list">
