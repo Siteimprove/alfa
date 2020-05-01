@@ -64,7 +64,7 @@ export class Translate<
       type: "translate",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
-      z: this._z.toJSON()
+      z: this._z.toJSON(),
     };
   }
 
@@ -118,7 +118,7 @@ export namespace Translate {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [x, y] = result;
 
       return Translate.of<Length | Percentage, Length | Percentage, Length>(
@@ -143,7 +143,7 @@ export namespace Translate {
         Token.parseCloseParenthesis
       )
     ),
-    x =>
+    (x) =>
       Translate.of<Length | Percentage, Length | Percentage, Length>(
         x,
         Length.of(0, "px"),
@@ -165,7 +165,7 @@ export namespace Translate {
         Token.parseCloseParenthesis
       )
     ),
-    y =>
+    (y) =>
       Translate.of<Length | Percentage, Length | Percentage, Length>(
         Length.of(0, "px"),
         y,
@@ -184,7 +184,7 @@ export namespace Translate {
         Token.parseCloseParenthesis
       )
     ),
-    z =>
+    (z) =>
       Translate.of<Length | Percentage, Length | Percentage, Length>(
         Length.of(0, "px"),
         Length.of(0, "px"),
@@ -218,7 +218,7 @@ export namespace Translate {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [x, [y, z]] = result;
 
       return Translate.of(x, y, z);

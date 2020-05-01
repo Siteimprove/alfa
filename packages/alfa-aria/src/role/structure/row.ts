@@ -11,7 +11,7 @@ Role.register(
     owns: ["cell", "columnheader", "gridcell", "rowheader"],
     name: {
       from: ["contents", "author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

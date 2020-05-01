@@ -49,7 +49,7 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle>
     return {
       type: "skew",
       x: this._x.toJSON(),
-      y: this._y.toJSON()
+      y: this._y.toJSON(),
     };
   }
 
@@ -107,7 +107,7 @@ export namespace Skew {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [x, y] = result;
 
       return Skew.of<Angle, Angle>(
@@ -128,7 +128,7 @@ export namespace Skew {
         Token.parseCloseParenthesis
       )
     ),
-    x => Skew.of<Angle, Angle>(x, Angle.of(0, "deg"))
+    (x) => Skew.of<Angle, Angle>(x, Angle.of(0, "deg"))
   );
 
   /**
@@ -142,7 +142,7 @@ export namespace Skew {
         Token.parseCloseParenthesis
       )
     ),
-    y => Skew.of<Angle, Angle>(Angle.of(0, "deg"), y)
+    (y) => Skew.of<Angle, Angle>(Angle.of(0, "deg"), y)
   );
 
   export const parse = either(parseSkew, either(parseSkewX, parseSkewY));

@@ -46,7 +46,7 @@ export class Scale implements Equatable, Serializable {
     return {
       type: "scale",
       x: this._x.toJSON(),
-      y: this._y.toJSON()
+      y: this._y.toJSON(),
     };
   }
 
@@ -101,7 +101,7 @@ export namespace Scale {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [x, y] = result;
 
       return Scale.of(x, y.getOr(x));
@@ -119,7 +119,7 @@ export namespace Scale {
         Token.parseCloseParenthesis
       )
     ),
-    x => Scale.of(x, Number.of(1))
+    (x) => Scale.of(x, Number.of(1))
   );
 
   /**
@@ -133,7 +133,7 @@ export namespace Scale {
         Token.parseCloseParenthesis
       )
     ),
-    y => Scale.of(Number.of(1), y)
+    (y) => Scale.of(Number.of(1), y)
   );
 
   export const parse = either(parseScale, either(parseScaleX, parseScaleY));

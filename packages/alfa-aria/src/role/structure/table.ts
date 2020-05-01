@@ -10,7 +10,7 @@ Role.register(
     supports: ["aria-colcount", "aria-rowcount"],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

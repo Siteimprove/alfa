@@ -12,9 +12,9 @@ export namespace Parser {
     parser: Parser<I, T, E>,
     mapper: Mapper<T, U>
   ): Parser<I, U, E> {
-    return input =>
-      parser(input).flatMap(([remainder, value]) =>
-        Ok.of([remainder, mapper(value)] as const)
+    return (input) =>
+      parser(input).map(
+        ([remainder, value]) => [remainder, mapper(value)] as const
       );
   }
 
@@ -22,7 +22,7 @@ export namespace Parser {
     parser: Parser<I, T, E>,
     mapper: Mapper<T, Parser<I, U, E>>
   ): Parser<I, U, E> {
-    return input =>
+    return (input) =>
       parser(input).flatMap(([remainder, value]) => mapper(value)(remainder));
   }
 
@@ -31,7 +31,7 @@ export namespace Parser {
     predicate: Predicate<T, U>,
     ifError: Thunk<E>
   ): Parser<I, U, E> {
-    return flatMap(parser, value => input => {
+    return flatMap(parser, (value) => (input) => {
       const result: Result<readonly [I, U], E> = predicate(value)
         ? Ok.of([input, value] as const)
         : Err.of(ifError());
@@ -43,7 +43,7 @@ export namespace Parser {
   export function zeroOrMore<I, T, E>(
     parser: Parser<I, T, E>
   ): Parser<I, Iterable<T>, E> {
-    return input => {
+    return (input) => {
       const values: Array<T> = [];
 
       while (true) {
@@ -66,8 +66,8 @@ export namespace Parser {
   export function oneOrMore<I, T, E>(
     parser: Parser<I, T, E>
   ): Parser<I, Iterable<T>, E> {
-    return flatMap(parser, head =>
-      map(zeroOrMore(parser), tail => [head, ...tail])
+    return flatMap(parser, (head) =>
+      map(zeroOrMore(parser), (tail) => [head, ...tail])
     );
   }
 
@@ -75,7 +75,7 @@ export namespace Parser {
     parser: Parser<I, T, E>,
     n: number
   ): Parser<I, Iterable<T>, E> {
-    return input => {
+    return (input) => {
       const values: Array<T> = [];
 
       for (let i = 0; i < n; i++) {
@@ -96,14 +96,14 @@ export namespace Parser {
   }
 
   export function peek<I, T, E>(parser: Parser<I, T, E>): Parser<I, T, E> {
-    return input => parser(input).map(([, value]) => [input, value]);
+    return (input) => parser(input).map(([, value]) => [input, value]);
   }
 
   export function tee<I, T, E>(
     parser: Parser<I, T, E>,
     callback: Callback<T>
   ): Parser<I, T, E> {
-    return map(parser, value => {
+    return map(parser, (value) => {
       callback(value);
       return value;
     });
@@ -112,8 +112,8 @@ export namespace Parser {
   export function option<I, T, E>(
     parser: Parser<I, T, E>
   ): Parser<I, Option<T>, E> {
-    return input => {
-      const result = map(parser, value => Option.of(value))(input);
+    return (input) => {
+      const result = map(parser, (value) => Option.of(value))(input);
 
       if (result.isOk()) {
         return result;
@@ -127,7 +127,7 @@ export namespace Parser {
     left: Parser<I, T, E>,
     right: Parser<I, U, E>
   ): Parser<I, T | U, E> {
-    return input => {
+    return (input) => {
       const result = left(input);
 
       if (result.isOk()) {
@@ -142,21 +142,21 @@ export namespace Parser {
     left: Parser<I, T, E>,
     right: Parser<I, U, E>
   ): Parser<I, [T, U], E> {
-    return flatMap(left, left => map(right, right => [left, right]));
+    return flatMap(left, (left) => map(right, (right) => [left, right]));
   }
 
   export function left<I, T, U, E>(
     left: Parser<I, T, E>,
     right: Parser<I, U, E>
   ): Parser<I, T, E> {
-    return flatMap(left, left => map(right, () => left));
+    return flatMap(left, (left) => map(right, () => left));
   }
 
   export function right<I, T, U, E>(
     left: Parser<I, T, E>,
     right: Parser<I, U, E>
   ): Parser<I, U, E> {
-    return flatMap(left, () => map(right, right => right));
+    return flatMap(left, () => map(right, (right) => right));
   }
 
   export function delimited<I, T, E>(
@@ -165,7 +165,7 @@ export namespace Parser {
     right: Parser<I, unknown, E> = left
   ): Parser<I, T, E> {
     return flatMap(left, () =>
-      flatMap(separator, separator => map(right, () => separator))
+      flatMap(separator, (separator) => map(right, () => separator))
     );
   }
 
@@ -174,8 +174,8 @@ export namespace Parser {
     separator: Parser<I, unknown, E>,
     right: Parser<I, U, E>
   ): Parser<I, [T, U], E> {
-    return flatMap(left, left =>
-      flatMap(separator, () => map(right, right => [left, right]))
+    return flatMap(left, (left) =>
+      flatMap(separator, () => map(right, (right) => [left, right]))
     );
   }
 

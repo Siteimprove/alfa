@@ -11,64 +11,55 @@ import { expectation } from "../common/expectation";
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { hasChild } from "../common/predicate/has-child";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
 
-const { filter, map, isEmpty } = Iterable;
-const { and, or, nor, not, equals, test } = Predicate;
+const { isElement, hasName, hasNamespace } = Element;
+const { isEmpty } = Iterable;
+const { and, or, nor, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r49.html",
   evaluate({ document, device }) {
     return {
       applicability() {
-        return map(
-          filter(
-            document.descendants({ composed: true, nested: true }),
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasName(equals("audio", "video")),
-                  and(
-                    hasAttribute("autoplay"),
-                    and(
-                      nor(hasAttribute("paused"), hasAttribute("muted")),
-                      or(
-                        hasAttribute("src"),
-                        hasChild(
-                          and(Element.isElement, hasName(equals("source")))
-                        )
-                      )
-                    )
-                  )
+                hasNamespace(Namespace.HTML),
+                hasName("audio", "video"),
+                hasAttribute("autoplay"),
+                nor(hasAttribute("paused"), hasAttribute("muted")),
+                or(
+                  hasAttribute("src"),
+                  hasChild(and(isElement, hasName("source")))
                 )
               )
             )
-          ),
-          element =>
+          )
+          .map((element) =>
             Question.of(
               "has-audio",
               "boolean",
               element,
               `Does the <${element.name}> element contain audio?`
-            ).map(hasAudio =>
+            ).map((hasAudio) =>
               hasAudio
                 ? Question.of(
                     "is-above-duration-threshold",
                     "boolean",
                     element,
                     `Does the <${element.name}> element have a duration of more than 3 seconds?`
-                  ).map(isAboveDurationThreshold =>
+                  ).map((isAboveDurationThreshold) =>
                     isAboveDurationThreshold ? Option.of(element) : None
                   )
                 : None
             )
-        );
+          );
       },
 
       expectations(target) {
@@ -78,27 +69,28 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             `Where is the mechanism that can pause or stop the audio of the <${target.name}> element?`
-          ).map(mechanism =>
+          ).map((mechanism) =>
             expectation(
               mechanism.isSome(),
-              expectation(
-                and(
-                  Element.isElement,
+              () =>
+                expectation(
                   and(
-                    isPerceivable(device),
-                    hasAccessibleName(device, not(isEmpty))
-                  )
-                )(mechanism.get()),
-                Outcomes.HasPerceivablePauseMechanism(target.name),
-                Outcomes.HasNonPerceivablePauseMechanism(target.name)
-              ),
-              Outcomes.HasNoPauseMechanism(target.name)
+                    Element.isElement,
+                    and(
+                      isPerceivable(device),
+                      hasAccessibleName(device, not(isEmpty))
+                    )
+                  )(mechanism.get()),
+                  () => Outcomes.HasPerceivablePauseMechanism(target.name),
+                  () => Outcomes.HasNonPerceivablePauseMechanism(target.name)
+                ),
+              () => Outcomes.HasNoPauseMechanism(target.name)
             )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

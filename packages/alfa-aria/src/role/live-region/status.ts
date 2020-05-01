@@ -8,8 +8,11 @@ Role.register(
     inherits: ["section"],
     name: {
       from: ["author"],
-      required: false
+      required: false,
     },
-    implicits: [["aria-Live", "polite"], ["aria-Atomic", "true"]]
+    implicits: [
+      ["aria-Live", "polite"],
+      ["aria-Atomic", "true"],
+    ],
   })
 );

@@ -87,7 +87,7 @@ export namespace Converter {
         in: inch,
         pc,
         pt,
-        px
+        px,
       };
     })
   );
@@ -99,7 +99,7 @@ export namespace Converter {
     deg: 1,
     grad: 360 / 400,
     rad: 360 / (2 * PI),
-    turn: 360
+    turn: 360,
   });
 
   /**
@@ -107,7 +107,7 @@ export namespace Converter {
    */
   export const time: Converter<Unit.Time> = converter({
     s: 1,
-    ms: 0.001
+    ms: 0.001,
   });
 
   /**
@@ -115,6 +115,6 @@ export namespace Converter {
    */
   export const frequency: Converter<Unit.Frequency> = converter({
     hz: 1,
-    kHz: 1000
+    kHz: 1000,
   });
 }

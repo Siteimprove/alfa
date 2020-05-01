@@ -70,7 +70,7 @@ export class Rotate<A extends Angle = Angle>
       x: this._x.toJSON(),
       y: this._y.toJSON(),
       z: this._z.toJSON(),
-      angle: this._angle.toJSON()
+      angle: this._angle.toJSON(),
     };
   }
 
@@ -120,7 +120,7 @@ export namespace Rotate {
         Token.parseCloseParenthesis
       )
     ),
-    angle => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+    (angle) => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
   );
 
   /**
@@ -134,7 +134,7 @@ export namespace Rotate {
         Token.parseCloseParenthesis
       )
     ),
-    angle => Rotate.of(Number.of(1), Number.of(0), Number.of(0), angle)
+    (angle) => Rotate.of(Number.of(1), Number.of(0), Number.of(0), angle)
   );
 
   /**
@@ -148,7 +148,7 @@ export namespace Rotate {
         Token.parseCloseParenthesis
       )
     ),
-    angle => Rotate.of(Number.of(0), Number.of(1), Number.of(0), angle)
+    (angle) => Rotate.of(Number.of(0), Number.of(1), Number.of(0), angle)
   );
 
   /**
@@ -162,7 +162,7 @@ export namespace Rotate {
         Token.parseCloseParenthesis
       )
     ),
-    angle => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+    (angle) => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
   );
 
   /**
@@ -191,7 +191,7 @@ export namespace Rotate {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [x, [y, [z, angle]]] = result;
 
       return Rotate.of(x, y, z, angle);

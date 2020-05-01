@@ -4,7 +4,8 @@ const { system } = require("./system");
 
 exports.tester = {
   test(root = "packages") {
-    for (const fileName of system.readDirectory(root, [".spec.js"])) {
+    for (let fileName of system.readDirectory(root, [".spec.ts", ".spec.tsx"])) {
+      fileName = fileName.replace(/\.tsx?$/, ".js");
       execa
         .node(fileName, [], {
           nodeOptions: [

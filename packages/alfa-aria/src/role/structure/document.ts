@@ -9,7 +9,7 @@ Role.register(
     supports: ["aria-expanded"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

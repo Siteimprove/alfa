@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Attribute, Element } from "@siteimprove/alfa-dom";
+import { Attribute } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,7 +12,7 @@ import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 import { isWhitespace } from "../common/predicate/is-whitespace";
 
-const { filter, map, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, nor } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
@@ -20,32 +20,28 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ document }) {
     return {
       applicability() {
-        return map(
-          filter(
-            document.children(),
+        return document
+          .children()
+          .filter(
             and(
-              Element.isElement,
-              and(
-                isDocumentElement(),
-                hasAttribute("lang", nor(isEmpty, isWhitespace))
-              )
+              isDocumentElement,
+              hasAttribute("lang", nor(isEmpty, isWhitespace))
             )
-          ),
-          element => element.attribute("lang").get()
-        );
+          )
+          .map((element) => element.attribute("lang").get());
       },
 
       expectations(target) {
         return {
           1: expectation(
-            Language.from(target.value).isSome(),
-            Outcomes.HasValidLanguage,
-            Outcomes.HasNoValidLanguage
-          )
+            Language.parse(target.value).isSome(),
+            () => Outcomes.HasValidLanguage,
+            () => Outcomes.HasNoValidLanguage
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

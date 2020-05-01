@@ -11,7 +11,7 @@ import {
   Element,
   Node,
   Text,
-  Type
+  Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Option } from "@siteimprove/alfa-option";
@@ -32,8 +32,8 @@ export namespace Angular {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of(self => [
-        Element.fromElement(toElement(nativeElement), Option.of(self))
+      Document.of((self) => [
+        Element.fromElement(toElement(nativeElement), Option.of(self)),
       ]),
       Device.standard()
     );
@@ -76,7 +76,7 @@ function toElement(
     style: "style" in element ? toBlock(element.style) : null,
     children: [...element.childNodes].map(toNode),
     shadow: null,
-    content: null
+    content: null,
   };
 }
 
@@ -86,21 +86,21 @@ function toAttribute(attribute: globalThis.Attr): Attribute.JSON {
     namespace: attribute.namespaceURI,
     prefix: attribute.prefix,
     name: attribute.localName,
-    value: attribute.value
+    value: attribute.value,
   };
 }
 
 function toText(text: globalThis.Text): Text.JSON {
   return {
     type: "text",
-    data: text.data
+    data: text.data,
   };
 }
 
 function toComment(comment: globalThis.Comment): Comment.JSON {
   return {
     type: "comment",
-    data: comment.data
+    data: comment.data,
   };
 }
 
@@ -108,7 +108,7 @@ function toDocument(document: globalThis.Document): Document.JSON {
   return {
     type: "document",
     children: [...document.childNodes].map(toNode),
-    style: []
+    style: [],
   };
 }
 
@@ -117,7 +117,7 @@ function toType(type: globalThis.DocumentType): Type.JSON {
     type: "type",
     name: type.name,
     publicId: type.publicId === "" ? null : type.publicId,
-    systemId: type.systemId === "" ? null : type.systemId
+    systemId: type.systemId === "" ? null : type.systemId,
   };
 }
 

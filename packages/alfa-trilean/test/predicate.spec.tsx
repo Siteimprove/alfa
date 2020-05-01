@@ -16,7 +16,7 @@ function isPositiveSecond(arr: Array<number>) {
   return isPositive(arr[1]);
 }
 
-test("fold() folds over the truth values of a predicate", t => {
+test("fold() folds over the truth values of a predicate", (t) => {
   const f = (value: number) =>
     Predicate.fold(
       isPositive,
@@ -31,7 +31,7 @@ test("fold() folds over the truth values of a predicate", t => {
   t.equal(f(0), "who knows?");
 });
 
-test("and() combines two predicates to a predicate that is true if both predicates are definitely true", t => {
+test("and() combines two predicates to a predicate that is true if both predicates are definitely true", (t) => {
   const p = Predicate.and(isPositiveFirst, isPositiveSecond);
 
   t.equal(p([1, 1]), true);
@@ -47,7 +47,7 @@ test("and() combines two predicates to a predicate that is true if both predicat
   t.equal(p([0, -1]), false);
 });
 
-test("or() combines two predicates to a predicate that is true if either predicate is definitely true", t => {
+test("or() combines two predicates to a predicate that is true if either predicate is definitely true", (t) => {
   const p = Predicate.or(isPositiveFirst, isPositiveSecond);
 
   t.equal(p([1, 1]), true);

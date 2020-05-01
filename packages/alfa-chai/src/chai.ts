@@ -23,14 +23,14 @@ export namespace Chai {
     transform: Mapper<T, Future<Page>>
   ): (chai: any, util: any) => void {
     return (chai, util) => {
-      chai.Assertion.addProperty("accessible", function(this: typeof chai) {
+      chai.Assertion.addProperty("accessible", function (this: typeof chai) {
         const value = util.flag(this, "object");
 
         if (identify(value)) {
-          return transform(value).map(page =>
+          return transform(value).map((page) =>
             Assert.Page.isAccessible(page)
-              .map(error =>
-                error.map(error => {
+              .map((error) =>
+                error.map((error) => {
                   const reasons = join(error.reasons, "; ");
 
                   return `, but ${util.inspect(
@@ -38,7 +38,7 @@ export namespace Chai {
                   )} is not: ${reasons}`;
                 })
               )
-              .map(error => {
+              .map((error) => {
                 this.assert(
                   error.isNone(),
                   `expected #{this} to be accessible${error.getOr("")}`,

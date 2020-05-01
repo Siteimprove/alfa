@@ -40,12 +40,12 @@ export class Namespace extends Rule {
     return {
       type: "namespace",
       namespace: this._namespace,
-      prefix: this._prefix.getOr(null)
+      prefix: this._prefix.getOr(null),
     };
   }
 
   public toString(): string {
-    const prefix = this._prefix.map(prefix => ` ${prefix}`).getOr("");
+    const prefix = this._prefix.map((prefix) => ` ${prefix}`).getOr("");
 
     return `@namespace ${prefix}url(${this._namespace})`;
   }

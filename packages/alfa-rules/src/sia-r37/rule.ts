@@ -23,14 +23,13 @@ export default Rule.Composite.of<Page, Element, Question>({
         return {
           1: expectation(
             some(outcomeToTrilean)(outcomes),
-            Outcomes.HasAudioDescription,
-            Outcomes.HasNoAudioDescription,
-            None
-          )
+            () => Outcomes.HasAudioDescription,
+            () => Outcomes.HasNoAudioDescription
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

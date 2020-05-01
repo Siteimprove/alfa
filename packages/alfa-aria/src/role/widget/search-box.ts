@@ -8,7 +8,7 @@ Role.register(
     inherits: ["textbox"],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

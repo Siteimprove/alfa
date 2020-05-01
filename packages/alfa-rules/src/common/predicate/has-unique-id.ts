@@ -10,7 +10,7 @@ const { and } = Predicate;
 const uniques = Cache.empty<Node, Set<string>>();
 
 export function hasUniqueId(): Predicate<Element> {
-  return and(hasId(), element =>
+  return and(hasId(), (element) =>
     uniques
       .get(element.root(), () => {
         const counts = new Map<string, number>();

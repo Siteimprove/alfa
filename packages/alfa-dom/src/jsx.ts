@@ -40,13 +40,13 @@ export function jsx(
     }
 
     json.style = Option.from(
-      json.attributes.find(attribute => attribute.name === "style")
+      json.attributes.find((attribute) => attribute.name === "style")
     )
-      .flatMap(attribute =>
-        css.Declaration.parseList(Slice.of([...css.Lexer.lex(attribute.value)]))
-          .map(result => result[1])
-          .map(declarations =>
-            Iterable.map(declarations, declaration =>
+      .flatMap((attribute) =>
+        css.Declaration.parseList(Slice.of(css.Lexer.lex(attribute.value)))
+          .map((result) => result[1])
+          .map((declarations) =>
+            Iterable.map(declarations, (declaration) =>
               Declaration.of(
                 declaration.name,
                 declaration.value.join(""),
@@ -56,7 +56,7 @@ export function jsx(
           )
           .ok()
       )
-      .map(declarations => Block.of(declarations).toJSON())
+      .map((declarations) => Block.of(declarations).toJSON())
       .getOr(null);
   }
 

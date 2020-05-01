@@ -15,13 +15,13 @@ export default Rule.Atomic.of<Page, Element, Question>({
       applicability() {
         return video(document, device, {
           audio: { has: true },
-          track: { has: true, kind: "descriptions" }
+          track: { has: true, kind: "descriptions" },
         });
       },
 
       expectations(target) {
         return videoDescriptionTrackAccurate(target);
-      }
+      },
     };
-  }
+  },
 });

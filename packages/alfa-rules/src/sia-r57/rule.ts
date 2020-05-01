@@ -1,4 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { Role } from "@siteimprove/alfa-aria";
 import { Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -9,47 +10,46 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/expectation";
 
-import { hasName } from "../common/predicate/has-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
-const { and, not, equals, property } = Predicate;
+const { isEmpty } = Iterable;
+const { and, not, property } = Predicate;
+const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r57.html",
   evaluate({ document, device }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Text.isText,
-            and(property("data", not(isEmpty)), not(isIgnored(device)))
-          )
-        );
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
+            and(
+              Text.isText,
+              and(property("data", not(isEmpty)), not(isIgnored(device)))
+            )
+          );
       },
 
       expectations(target) {
         return {
           1: expectation(
-            aria.Node.from(target, device).every(node =>
+            aria.Node.from(target, device).every((node) =>
               node
                 .ancestors()
-                .some(ancestor =>
+                .some((ancestor) =>
                   ancestor
                     .role()
-                    .some(role =>
-                      role.inheritsFrom(hasName(equals("landmark")))
-                    )
+                    .some((role) => role.inheritsFrom(hasName("landmark")))
                 )
             ),
-            Outcomes.IsIncludedInLandmark,
-            Outcomes.IsNotIncludedInLandmark
-          )
+            () => Outcomes.IsIncludedInLandmark,
+            () => Outcomes.IsNotIncludedInLandmark
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

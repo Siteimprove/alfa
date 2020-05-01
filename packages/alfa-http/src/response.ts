@@ -72,26 +72,26 @@ export class Response implements Body, json.Serializable, earl.Serializable {
       url: this._url,
       status: this._status,
       headers: this._headers.toJSON(),
-      body: Decoder.decode(new Uint8Array(this._body))
+      body: Decoder.decode(new Uint8Array(this._body)),
     };
   }
 
   public toEARL(): Response.EARL {
     return {
       "@context": {
-        http: "http://www.w3.org/2011/http#"
+        http: "http://www.w3.org/2011/http#",
       },
       "@type": ["http:Message", "http:Response"],
       "http:statusCodeValue": this._status,
       "http:headers": this._headers.toEARL(),
       "http:body": {
         "@context": {
-          cnt: "http://www.w3.org/2011/content#"
+          cnt: "http://www.w3.org/2011/content#",
         },
         "@type": ["cnt:Content", "cnt:ContentAsText"],
         "cnt:characterEncoding": "utf-8",
-        "cnt:chars": Decoder.decode(new Uint8Array(this._body))
-      }
+        "cnt:chars": Decoder.decode(new Uint8Array(this._body)),
+      },
     };
   }
 }

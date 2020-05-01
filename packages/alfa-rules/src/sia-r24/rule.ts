@@ -24,28 +24,29 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             "Where is the transcript of the <video> element?"
-          ).map(transcript => {
-            return expectation(
+          ).map((transcript) =>
+            expectation(
               transcript.isSome(),
-              Outcomes.HasTranscript,
-              Question.of(
-                "transcript-link",
-                "node",
-                target,
-                "Where is the link pointing to the transcript of the <video> element?"
-              ).map(transcriptLink =>
-                expectation(
-                  transcriptLink.isSome(),
-                  Outcomes.HasTranscript,
-                  Outcomes.HasNoTranscript
+              () => Outcomes.HasTranscript,
+              () =>
+                Question.of(
+                  "transcript-link",
+                  "node",
+                  target,
+                  "Where is the link pointing to the transcript of the <video> element?"
+                ).map((transcriptLink) =>
+                  expectation(
+                    transcriptLink.isSome(),
+                    () => Outcomes.HasTranscript,
+                    () => Outcomes.HasNoTranscript
+                  )
                 )
-              )
-            );
-          })
+            )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

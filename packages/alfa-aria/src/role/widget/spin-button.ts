@@ -10,12 +10,12 @@ Role.register(
     supports: ["aria-readonly", "aria-required"],
     name: {
       from: ["author"],
-      required: true
+      required: true,
     },
     implicits: [
       ["aria-valuemin", ""],
       ["aria-valuemax", ""],
-      ["aria-valuenow", "0"]
-    ]
+      ["aria-valuenow", "0"],
+    ],
   })
 );

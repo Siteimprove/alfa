@@ -4,8 +4,6 @@
 
 Alfa is an open and standards-based accessibility conformance testing engine used for testing websites built using HTML, CSS, and JavaScript against accessibility standards such as the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG/). It is the result of distilling the best parts of Siteimprove's proprietary accessibility conformance testing engine and implementing them on top of the open [Accessibility Conformance Testing (ACT) Rules Format](https://www.w3.org/TR/act-rules-format/). In comparison to Siteimprove's proprietary engine, Alfa also brings several improvements that make it possible to implement and execute advanced rules without relying on Siteimprove infrastructure.
 
-> :warning: Alfa is still in the early stages of development. Nothing is final, nothing is published, and breaking API changes are swift and unforgiving. You should however not let it deter you from exploring the project and some of the new ideas we're trying to bring to the table.
-
 ## Contents
 
 - [Goals](#goals)
@@ -27,13 +25,13 @@ Alfa is an open and standards-based accessibility conformance testing engine use
 
 ## Usage
 
-Alfa is distributed as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
+Alfa is distributed through [GitHub Packages](../../packages) as a set of separate packages that can be installed via your favourite [npm](https://www.npmjs.com/)-compatible package manager:
 
 ```console
 $ npm install @siteimprove/alfa-<package-name>
 ```
 
-> :warning: As Alfa is still at a pre-alpha level of stability, no packages have been published. The above command will therefore not work _yet_.
+> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com` to your `.npmrc` file.
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
@@ -88,17 +86,17 @@ const scraper = await Scraper.of();
 
 scraper
   .scrape("https://example.com")
-  .then(page => {
+  .then((page) => {
     const audit = Rules.reduce(
       (audit, rule) => audit.add(rule),
       Audit.of(page)
     );
 
-    audit.evaluate().then(outcomes => {
+    audit.evaluate().then((outcomes) => {
       // ...
     });
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
   })
   .finally(() => {
@@ -168,4 +166,4 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
-[open an issue]: https://github.com/siteimprove/alfa/issues/new "Open a new issue"
+[open an issue]: ../../issues/new "Open a new issue"

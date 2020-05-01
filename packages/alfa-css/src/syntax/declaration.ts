@@ -21,11 +21,8 @@ export namespace Declaration {
   /**
    * @see https://drafts.csswg.org/css-syntax/#consume-a-declaration
    */
-  export const consume: Parser<Slice<Token>, Declaration, string> = input => {
-    const name = input
-      .get(0)
-      .get()
-      .toString();
+  export const consume: Parser<Slice<Token>, Declaration, string> = (input) => {
+    const name = input.get(0).get().toString();
 
     input = input.slice(1);
 
@@ -60,7 +57,7 @@ export namespace Declaration {
   /**
    * @see https://drafts.csswg.org/css-syntax/#parse-a-declaration
    */
-  export const parse: Parser<Slice<Token>, Declaration, string> = input => {
+  export const parse: Parser<Slice<Token>, Declaration, string> = (input) => {
     while (input.get(0).some(Token.isWhitespace)) {
       input = input.slice(1);
     }
@@ -81,7 +78,7 @@ export namespace Declaration {
     Slice<Token>,
     Iterable<Declaration>,
     string
-  > = input => {
+  > = (input) => {
     const declarations: Array<Declaration> = [];
 
     while (true) {
@@ -129,5 +126,5 @@ export namespace Declaration {
     Slice<Token>,
     Iterable<Declaration>,
     string
-  > = input => consumeList(input);
+  > = (input) => consumeList(input);
 }

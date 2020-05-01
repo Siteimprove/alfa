@@ -1,12 +1,9 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
-
-const { map, join } = Iterable;
 
 export class Shadow extends Node {
   public static of(
@@ -66,17 +63,16 @@ export class Shadow extends Node {
   public toJSON(): Shadow.JSON {
     return {
       type: "shadow",
-      children: this._children.map(child => child.toJSON()),
+      children: this._children.map((child) => child.toJSON()),
       mode: this._mode,
-      style: this._style.map(sheet => sheet.toJSON())
+      style: this._style.map((sheet) => sheet.toJSON()),
     };
   }
 
   public toString(): string {
-    const children = join(
-      map(this._children, child => indent(child.toString())),
-      "\n"
-    );
+    const children = this._children
+      .map((child) => indent(child.toString()))
+      .join("\n");
 
     return `#shadow-root (${this._mode})${
       children === "" ? "" : `\n${children}`
@@ -87,11 +83,7 @@ export class Shadow extends Node {
 export namespace Shadow {
   export enum Mode {
     Open = "open",
-    Closed = "closed"
-  }
-
-  export function isShadow(value: unknown): value is Shadow {
-    return value instanceof Shadow;
+    Closed = "closed",
   }
 
   export interface JSON extends Node.JSON {
@@ -101,15 +93,19 @@ export namespace Shadow {
     style: Array<Sheet.JSON>;
   }
 
+  export function isShadow(value: unknown): value is Shadow {
+    return value instanceof Shadow;
+  }
+
   export function fromShadow(shadow: JSON, host: Element): Shadow {
     return Shadow.of(
       shadow.mode as Mode,
       host,
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return shadow.children.map(json => Node.fromNode(json, parent));
+        return shadow.children.map((json) => Node.fromNode(json, parent));
       },
-      shadow.style.map(sheet => Sheet.fromSheet(sheet))
+      shadow.style.map((sheet) => Sheet.fromSheet(sheet))
     );
   }
 }

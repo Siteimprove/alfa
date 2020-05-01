@@ -12,7 +12,7 @@ import { Feature } from "./feature";
 import { Attribute } from "./attribute";
 
 const { some } = Iterable;
-const { or } = Predicate;
+const { equals, or } = Predicate;
 
 export class Role<N extends string = string> implements Equatable {
   public static of<N extends string>(
@@ -30,7 +30,7 @@ export class Role<N extends string = string> implements Equatable {
       presentational: false,
       implicits: [],
 
-      ...characteristics
+      ...characteristics,
     });
   }
 
@@ -49,22 +49,22 @@ export class Role<N extends string = string> implements Equatable {
   }
 
   public inheritsFrom(predicate: Predicate<Role>): boolean {
-    return some(this.characteristics.inherits, name =>
+    return some(this.characteristics.inherits, (name) =>
       Role.lookup(name).some(
-        or(predicate, role => role.inheritsFrom(predicate))
+        or(predicate, (role) => role.inheritsFrom(predicate))
       )
     );
   }
 
   public required(): Iterable<Attribute> {
     return Set.from(
-      Iterable.flatMap(this.characteristics.requires, name =>
+      Iterable.flatMap(this.characteristics.requires, (name) =>
         Attribute.lookup(name)
       )
     ).concat(
       Iterable.flatten(
-        Iterable.flatMap(this.characteristics.requires, name =>
-          Role.lookup(name).map(role => role.required())
+        Iterable.flatMap(this.characteristics.requires, (name) =>
+          Role.lookup(name).map((role) => role.required())
         )
       )
     );
@@ -76,13 +76,13 @@ export class Role<N extends string = string> implements Equatable {
 
   public supported(): Iterable<Attribute> {
     return Set.from(
-      Iterable.flatMap(this.characteristics.supports, name =>
+      Iterable.flatMap(this.characteristics.supports, (name) =>
         Attribute.lookup(name)
       )
     ).concat(
       Iterable.flatten(
-        Iterable.flatMap(this.characteristics.inherits, name =>
-          Role.lookup(name).map(role => role.supported())
+        Iterable.flatMap(this.characteristics.inherits, (name) =>
+          Role.lookup(name).map((role) => role.supported())
         )
       )
     );
@@ -98,14 +98,18 @@ export class Role<N extends string = string> implements Equatable {
 
   public hasContext(predicate: Predicate<Role> = () => true): boolean {
     return (
-      some(this.characteristics.context, name =>
+      some(this.characteristics.context, (name) =>
         Role.lookup(name).some(predicate)
-      ) || this.inheritsFrom(role => role.hasContext(predicate))
+      ) || this.inheritsFrom((role) => role.hasContext(predicate))
     );
   }
 
   public hasNameFrom(predicate: Predicate<"contents" | "author">): boolean {
     return some(this.characteristics.name.from, predicate);
+  }
+
+  public hasName(predicate: Predicate<string>): boolean {
+    return predicate(this.name);
   }
 
   public equals(value: unknown): value is this {
@@ -116,7 +120,7 @@ export class Role<N extends string = string> implements Equatable {
     return {
       name: this.name,
       category: this.category,
-      characteristics: this.characteristics
+      characteristics: this.characteristics,
     };
   }
 }
@@ -159,7 +163,7 @@ export namespace Role {
     /**
      * @see https://www.w3.org/TR/graphics-aria/
      */
-    Graphic = "graphic"
+    Graphic = "graphic",
   }
 
   export interface Characteristics {
@@ -227,25 +231,29 @@ export namespace Role {
     element: Element,
     options: from.Options = {}
   ): Branched<Option<Role>, Browser> {
-    const role = element.attribute("role").map(attr => attr.value.trim());
+    const role = element.attribute("role").map((attr) => attr.value.trim());
 
     return (
-      Branched.of<Option<string>, Browser>(role.map(role => role.toLowerCase()))
+      Branched.of<Option<string>, Browser>(
+        role.map((role) => role.toLowerCase())
+      )
 
         // Firefox currently treats the `role` attribute as case-sensitive so it
         // is not lowercased.
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1407167
         .branch(role, ...Browser.query(["firefox"]))
 
-        .map(role =>
+        .map((role) =>
           role
-            .andThen(role => {
+            .andThen((role) => {
               if (options.explicit !== false) {
                 for (const name of role.split(/\s+/)) {
                   const role = Role.lookup(name);
 
                   if (
-                    role.some(role => role.category !== Role.Category.Abstract)
+                    role.some(
+                      (role) => role.category !== Role.Category.Abstract
+                    )
                   ) {
                     return role;
                   }
@@ -256,10 +264,10 @@ export namespace Role {
             })
             .orElse(() => {
               if (options.implicit !== false) {
-                return element.namespace.flatMap(namespace => {
+                return element.namespace.flatMap((namespace) => {
                   const feature = Feature.lookup(namespace, element.name);
 
-                  return feature.flatMap(feature =>
+                  return feature.flatMap((feature) =>
                     feature.role(element).flatMap(Role.lookup)
                   );
                 });
@@ -276,6 +284,28 @@ export namespace Role {
       readonly explicit?: boolean;
       readonly implicit?: boolean;
     }
+  }
+
+  export function hasName(predicate: Predicate<string>): Predicate<Role>;
+
+  export function hasName(
+    name: string,
+    ...rest: Array<string>
+  ): Predicate<Role>;
+
+  export function hasName(
+    nameOrPredicate: string | Predicate<string>,
+    ...names: Array<string>
+  ): Predicate<Role> {
+    let predicate: Predicate<string>;
+
+    if (typeof nameOrPredicate === "function") {
+      predicate = nameOrPredicate;
+    } else {
+      predicate = equals(nameOrPredicate, ...names);
+    }
+
+    return (role) => role.hasName(predicate);
   }
 }
 

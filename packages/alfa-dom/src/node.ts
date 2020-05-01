@@ -1,15 +1,17 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-const { equals } = Predicate;
+const { and, equals } = Predicate;
 
 export abstract class Node
-  implements Iterable<Node>, json.Serializable, earl.Serializable {
+  implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
   protected readonly _children: Array<Node>;
   protected readonly _parent: Option<Node>;
 
@@ -50,7 +52,7 @@ export abstract class Node
    * @see https://dom.spec.whatwg.org/#concept-tree-descendant
    */
   public descendants(options: Node.Traversal = {}): Sequence<Node> {
-    return this.children(options).flatMap(child =>
+    return this.children(options).flatMap((child) =>
       Sequence.of(
         child,
         Lazy.of(() => child.descendants(options))
@@ -63,7 +65,7 @@ export abstract class Node
    */
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
     return this.parent(options)
-      .map(parent =>
+      .map((parent) =>
         Sequence.of(
           parent,
           Lazy.of(() => parent.ancestors(options))
@@ -77,11 +79,8 @@ export abstract class Node
    */
   public preceding(options: Node.Traversal = {}): Sequence<Node> {
     return this.parent(options)
-      .map(parent =>
-        parent
-          .children(options)
-          .takeUntil(equals(this))
-          .reverse()
+      .map((parent) =>
+        parent.children(options).takeUntil(equals(this)).reverse()
       )
       .getOrElse(() => Sequence.empty());
   }
@@ -101,12 +100,7 @@ export abstract class Node
    */
   public following(options: Node.Traversal = {}): Sequence<Node> {
     return this.parent(options)
-      .map(parent =>
-        parent
-          .children(options)
-          .skipUntil(equals(this))
-          .skip(1)
-      )
+      .map((parent) => parent.children(options).skipUntil(equals(this)).skip(1))
       .getOrElse(() => Sequence.empty());
   }
 
@@ -129,7 +123,7 @@ export abstract class Node
   ): Option<T> {
     return predicate(this)
       ? Option.of(this)
-      : this.parent(options).flatMap(parent =>
+      : this.parent(options).flatMap((parent) =>
           parent.closest(predicate, options)
         );
   }
@@ -138,9 +132,7 @@ export abstract class Node
    * @see https://dom.spec.whatwg.org/#concept-descendant-text-content
    */
   public textContent(options: Node.Traversal = {}): string {
-    return this.descendants(options)
-      .filter(Text.isText)
-      .join("");
+    return this.descendants(options).filter(Text.isText).join("");
   }
 
   /**
@@ -148,7 +140,7 @@ export abstract class Node
    * root.
    */
   public path(): string {
-    let path = this._parent.map(parent => parent.path()).getOr("/");
+    let path = this._parent.map((parent) => parent.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += "node()";
@@ -160,8 +152,31 @@ export abstract class Node
     return path;
   }
 
+  /**
+   * finds all descendant elements whose id is in the given set
+   */
+  public resolveReferences(...references: Array<string>): Array<Element> {
+    const elements: Array<Element> = [];
+
+    for (const id of references) {
+      const element = this.descendants().find(
+        and(Element.isElement, (element) => element.id.includes(id))
+      );
+
+      if (element.isSome()) {
+        elements.push(element.get());
+      }
+    }
+
+    return elements;
+  }
+
   public *[Symbol.iterator](): Iterator<Node> {
     yield* this.descendants();
+  }
+
+  public equals(value: unknown): value is this {
+    return value === this;
   }
 
   public abstract toJSON(): Node.JSON;
@@ -169,15 +184,15 @@ export abstract class Node
   public toEARL(): Node.EARL {
     return {
       "@context": {
-        ptr: "http://www.w3.org/2009/pointers#"
+        ptr: "http://www.w3.org/2009/pointers#",
       },
       "@type": [
         "ptr:Pointer",
         "ptr:SinglePointer",
         "ptr:ExpressionPointer",
-        "ptr:XPathPointer"
+        "ptr:XPathPointer",
       ],
-      "ptr:expression": this.path()
+      "ptr:expression": this.path(),
     };
   }
 }

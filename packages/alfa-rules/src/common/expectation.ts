@@ -1,7 +1,8 @@
 import { Interview, Question, Rule } from "@siteimprove/alfa-act";
 import { None, Option, Some } from "@siteimprove/alfa-option";
-import { Trilean } from "@siteimprove/alfa-trilean";
 import { Result } from "@siteimprove/alfa-result";
+import { Thunk } from "@siteimprove/alfa-thunk";
+import { Trilean } from "@siteimprove/alfa-trilean";
 
 type Path<Q, S> = Interview<Q, S, Option.Maybe<Result<string, string>>>;
 
@@ -21,18 +22,18 @@ function toExpectation<Q, S>(
 
 export function expectation<Q, S>(
   test: Trilean,
-  ifTrue: Path<Q, S>,
-  ifFalse: Path<Q, S>,
-  ifUnknown: Path<Q, S> = None
+  ifTrue: Thunk<Path<Q, S>>,
+  ifFalse: Thunk<Path<Q, S>>,
+  ifUnknown: Thunk<Path<Q, S>> = Thunk.of(None)
 ): Interview<Q, S, Rule.Expectation> {
   switch (test) {
     case true:
-      return toExpectation(ifTrue);
+      return toExpectation(ifTrue());
 
     case false:
-      return toExpectation(ifFalse);
+      return toExpectation(ifFalse());
 
     default:
-      return toExpectation(ifUnknown);
+      return toExpectation(ifUnknown());
   }
 }

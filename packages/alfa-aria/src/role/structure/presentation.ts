@@ -8,7 +8,7 @@ Role.register(
     inherits: ["structure"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

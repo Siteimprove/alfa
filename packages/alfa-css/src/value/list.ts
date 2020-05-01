@@ -58,7 +58,7 @@ export class List<T> implements Iterable<T>, Equatable, Hashable, Serializable {
     return {
       type: "list",
       values: this._values.map(Serializable.toJSON),
-      separator: this._separator
+      separator: this._separator,
     };
   }
 

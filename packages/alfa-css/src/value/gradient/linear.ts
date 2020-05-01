@@ -83,8 +83,8 @@ export class Linear<
       type: "gradient",
       kind: "linear",
       direction: this._direction.toJSON(),
-      items: this._items.map(item => item.toJSON()),
-      repeats: this._repeats
+      items: this._items.map((item) => item.toJSON()),
+      repeats: this._repeats,
     };
   }
 
@@ -141,7 +141,7 @@ export namespace Linear {
     public toJSON(): Side.JSON {
       return {
         type: "side",
-        side: this._side
+        side: this._side,
       };
     }
 
@@ -206,7 +206,7 @@ export namespace Linear {
       return {
         type: "corner",
         vertical: this._vertical,
-        horizontal: this._horizontal
+        horizontal: this._horizontal,
       };
     }
 
@@ -235,7 +235,7 @@ export namespace Linear {
         either(Position.parseVertical, Position.parseHorizontal)
       )
     ),
-    side => Side.of(side)
+    (side) => Side.of(side)
   );
 
   /**
@@ -277,7 +277,7 @@ export namespace Linear {
   export const parse = map(
     pair(
       Token.parseFunction(
-        fn =>
+        (fn) =>
           fn.value === "linear-gradient" ||
           fn.value === "repeating-linear-gradient"
       ),
@@ -297,7 +297,7 @@ export namespace Linear {
         Token.parseCloseParenthesis
       )
     ),
-    result => {
+    (result) => {
       const [fn, [direction, items]] = result;
 
       return Linear.of(

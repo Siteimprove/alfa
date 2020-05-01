@@ -26,7 +26,7 @@ export class Type extends Node {
     systemId: Option<string>,
     parent: Option<Node>
   ) {
-    super(self => [], parent);
+    super(() => [], parent);
 
     this._name = name;
     this._publicId = publicId;
@@ -50,7 +50,7 @@ export class Type extends Node {
       type: "type",
       name: this._name,
       publicId: this._publicId.getOr(null),
-      systemId: this._systemId.getOr(null)
+      systemId: this._systemId.getOr(null),
     };
   }
 
@@ -65,6 +65,10 @@ export namespace Type {
     name: string;
     publicId: string | null;
     systemId: string | null;
+  }
+
+  export function isType(value: unknown): value is Type {
+    return value instanceof Type;
   }
 
   export function fromType(type: JSON, parent: Option<Node> = None): Type {

@@ -1,8 +1,5 @@
 import { Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Selector } from "@siteimprove/alfa-selector";
-
-const { isEmpty } = Iterable;
 
 /**
  * The ancestor filter is a data structure used for optimising selector matching
@@ -46,55 +43,54 @@ const { isEmpty } = Iterable;
  * @internal
  */
 export class AncestorFilter {
-  private readonly ids: AncestorBucket = new Map();
-  private readonly classes: AncestorBucket = new Map();
-  private readonly types: AncestorBucket = new Map();
+  public static empty(): AncestorFilter {
+    return new AncestorFilter();
+  }
+
+  private readonly _ids = Bucket.empty();
+  private readonly _classes = Bucket.empty();
+  private readonly _types = Bucket.empty();
+
+  private constructor() {}
 
   public add(element: Element): void {
-    this.process(element, addEntry);
+    for (const id of element.id) {
+      this._ids.add(id);
+    }
+
+    this._types.add(element.name);
+
+    for (const className of element.classes) {
+      this._classes.add(className);
+    }
   }
 
   public remove(element: Element): void {
-    this.process(element, removeEntry);
+    for (const id of element.id) {
+      this._ids.remove(id);
+    }
+
+    this._types.remove(element.name);
+
+    for (const className of element.classes) {
+      this._classes.remove(className);
+    }
   }
 
   public matches(selector: Selector): boolean {
     if (selector instanceof Selector.Id) {
-      return this.ids.has(selector.name);
+      return this._ids.has(selector.name);
     }
 
     if (selector instanceof Selector.Class) {
-      return this.classes.has(selector.name);
+      return this._classes.has(selector.name);
     }
 
     if (selector instanceof Selector.Type) {
-      return this.types.has(selector.name);
+      return this._types.has(selector.name);
     }
 
     return false;
-  }
-
-  private process(
-    element: Element,
-    fn: (bucket: AncestorBucket, entry: string) => void
-  ): void {
-    // Elements with no child nodes are not relevant for ancestor filtering so
-    // we can bail out early.
-    if (isEmpty(element.children())) {
-      return;
-    }
-
-    const id = element.id;
-
-    if (id.isSome()) {
-      fn(this.ids, id.get());
-    }
-
-    fn(this.types, element.name);
-
-    for (const className of element.classes) {
-      fn(this.classes, className);
-    }
   }
 }
 
@@ -110,28 +106,40 @@ export class AncestorFilter {
  * actually much faster than any bloom filter we might be able to cook up in
  * plain JavaScript.
  */
-type AncestorBucket = Map<string, number>;
-
-function addEntry(bucket: AncestorBucket, entry: string): void {
-  const count = bucket.get(entry);
-
-  if (count === undefined) {
-    bucket.set(entry, 1);
-  } else {
-    bucket.set(entry, count + 1);
-  }
-}
-
-function removeEntry(bucket: AncestorBucket, entry: string): void {
-  const count = bucket.get(entry);
-
-  if (count === undefined) {
-    return;
+class Bucket {
+  public static empty(): Bucket {
+    return new Bucket();
   }
 
-  if (count === 1) {
-    bucket.delete(entry);
-  } else {
-    bucket.set(entry, count - 1);
+  private readonly _entries = new Map<string, number>();
+
+  private constructor() {}
+
+  public has(entry: string): boolean {
+    return this._entries.has(entry);
+  }
+
+  public add(entry: string): void {
+    const count = this._entries.get(entry);
+
+    if (count === undefined) {
+      this._entries.set(entry, 1);
+    } else {
+      this._entries.set(entry, count + 1);
+    }
+  }
+
+  public remove(entry: string): void {
+    const count = this._entries.get(entry);
+
+    if (count === undefined) {
+      return;
+    }
+
+    if (count === 1) {
+      this._entries.delete(entry);
+    } else {
+      this._entries.set(entry, count - 1);
+    }
   }
 }

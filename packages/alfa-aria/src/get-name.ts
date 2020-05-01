@@ -9,9 +9,8 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { Role } from "./role";
 
-const { isElement } = Element;
+const { hasName, isElement } = Element;
 const { isText } = Text;
-const { isEmpty } = Iterable;
 const { and, or, equals, test } = Predicate;
 
 /**
@@ -51,15 +50,17 @@ export function getName(
     // https://w3c.github.io/accname/#step2B
     getAriaLabelledbyTextAlternative(node, device, visited, options)
       // https://w3c.github.io/accname/#step2C
-      .map(alt =>
+      .map((alt) =>
         alt.orElse(() => getAriaLabelTextAlternative(node, visited, options))
       )
       // https://w3c.github.io/accname/#step2D
-      .flatMap(alt => {
+      .flatMap((alt) => {
         if (alt.isNone()) {
-          return Role.from(node, { implicit: false }).flatMap(role => {
+          return Role.from(node, { implicit: false }).flatMap((role) => {
             if (
-              role.some(role => test(equals("presentation", "none"), role.name))
+              role.some((role) =>
+                test(equals("presentation", "none"), role.name)
+              )
             ) {
               return Branched.of(None);
             }
@@ -71,7 +72,7 @@ export function getName(
         return Branched.of(alt);
       })
       // https://w3c.github.io/accname/#step2E
-      .flatMap(alt => {
+      .flatMap((alt) => {
         if (alt.isNone()) {
           if (options.labelling !== true && options.referencing !== true) {
             return Branched.of(None);
@@ -89,12 +90,12 @@ export function getName(
       })
       // https://w3c.github.io/accname/#step2F
       // https://w3c.github.io/accname/#step2G
-      .flatMap(alt => {
+      .flatMap((alt) => {
         if (alt.isNone()) {
-          return Role.from(node).flatMap(role => {
+          return Role.from(node).flatMap((role) => {
             if (
               role
-                .filter(role => role.hasNameFrom(equals("contents")))
+                .filter((role) => role.hasNameFrom(equals("contents")))
                 .isSome() ||
               options.referencing === true ||
               options.descending === true ||
@@ -111,7 +112,7 @@ export function getName(
       })
 
       // https://w3c.github.io/accname/#step2I
-      .map(alt =>
+      .map((alt) =>
         alt.orElse(() => getTooltipTextAlternative(node, visited, options))
       )
   );
@@ -151,30 +152,30 @@ function getAriaLabelledbyTextAlternative(
   visited: Set<Element | Text>,
   options: getName.Options
 ): Branched<Option<string>, Browser> {
-  const labelledBy = element
-    .attribute("aria-labelledby")
-    .map(attr => attr.value);
+  const references = element.resolveAttributeReferences("aria-labelledby");
 
-  if (labelledBy.every(isEmpty) || options.referencing === true) {
+  if (references.length === 0 || options.referencing === true) {
     return Branched.of(None);
   }
 
   return Branched.sequence(
-    Iterable.map(resolveReferences(element.root(), labelledBy.get()), element =>
+    Iterable.map(references, (element) =>
       getName(element, device, visited, {
         recursing: true,
-        referencing: true
+        referencing: true,
       })
     )
-  ).map(alts =>
-    Iterable.reduce<Option<string>>(
-      alts,
-      (alt, text) =>
-        alt
-          .map(alt => text.reduce((alt, text) => `${alt} ${text}`, alt))
-          .or(text),
-      None
-    ).map(alt => flatten(alt, options))
+  ).map((alts) =>
+    Option.of(
+      flatten(
+        Iterable.reduce(
+          alts,
+          (alt, text) => text.reduce((alt, text) => `${alt} ${text}`, alt),
+          ""
+        ),
+        options
+      )
+    )
   );
 }
 
@@ -189,9 +190,9 @@ function getAriaLabelTextAlternative(
 ): Option<string> {
   return element
     .attribute("aria-label")
-    .map(attr => attr.value)
-    .filter(label => label.trim() !== "")
-    .map(label => flatten(label, options));
+    .map((attr) => attr.value)
+    .filter((label) => label.trim() !== "")
+    .map((label) => flatten(label, options));
 }
 
 /**
@@ -232,7 +233,7 @@ function getHtmlTextAlternative(
       recursing: true,
       labelling: true,
       // https://github.com/w3c/accname/issues/48
-      referencing: options.referencing
+      referencing: options.referencing,
     });
   }
 
@@ -241,19 +242,28 @@ function getHtmlTextAlternative(
       return Branched.of(
         element
           .attribute("type")
-          .map(type => type.value.toLowerCase())
-          .flatMap(type => {
+          .map((type) => type.value.toLowerCase())
+          .flatMap((type) => {
             switch (type) {
+              // https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-url-and-textarea-element
+              case "text":
+              case "password":
+              case "search":
+              case "tel":
+              case "email":
+              case "url":
+                return None;
+
               // https://w3c.github.io/html-aam/#input-type-button-input-type-submit-and-input-type-reset
               case "button":
               case "submit":
               case "reset":
                 return element
                   .attribute("value")
-                  .andThen(value =>
-                    value.value === ""
+                  .andThen((attribute) =>
+                    attribute.value === ""
                       ? None
-                      : Some.of(flatten(value.value, options))
+                      : Some.of(flatten(attribute.value, options))
                   )
                   .orElse(() => {
                     if (type === "submit") {
@@ -269,20 +279,18 @@ function getHtmlTextAlternative(
 
               // https://w3c.github.io/html-aam/#input-type-image
               case "image":
-              default:
                 return element
                   .attribute("alt")
-                  .andThen(alt =>
-                    alt.value === ""
+                  .orElse(() => element.attribute("title"))
+                  .andThen((attribute) =>
+                    attribute.value === ""
                       ? None
-                      : Some.of(flatten(alt.value, options))
-                  )
-                  .orElse(() =>
-                    element.attribute("value").map(attr => attr.value)
-                  )
-                  .andThen(value =>
-                    value === "" ? None : Some.of(flatten(value, options))
+                      : Some.of(flatten(attribute.value, options))
                   );
+
+              // https://w3c.github.io/html-aam/#other-form-elements
+              default:
+                return None;
             }
           })
       );
@@ -291,11 +299,11 @@ function getHtmlTextAlternative(
     case "fieldset":
       return element
         .children()
-        .find(and(isElement, element => element.name === "legend"))
-        .map(legend =>
+        .find(and(isElement, hasName("legend")))
+        .map((legend) =>
           getName(legend, device, visited, {
             recursing: true,
-            descending: true
+            descending: true,
           })
         )
         .getOrElse(() => Branched.of(None));
@@ -304,11 +312,11 @@ function getHtmlTextAlternative(
     case "figure": {
       return element
         .children()
-        .find(and(isElement, element => element.name === "figcaption"))
-        .map(caption =>
+        .find(and(isElement, hasName("figcaption")))
+        .map((caption) =>
           getName(caption, device, visited, {
             recursing: true,
-            descending: true
+            descending: true,
           })
         )
         .getOrElse(() => Branched.of(None));
@@ -321,7 +329,7 @@ function getHtmlTextAlternative(
       return Branched.of(
         element
           .attribute("alt")
-          .flatMap(alt =>
+          .flatMap((alt) =>
             alt.value === "" ? None : Some.of(flatten(alt.value, options))
           )
       );
@@ -331,8 +339,8 @@ function getHtmlTextAlternative(
       return Branched.of(
         element
           .children()
-          .find(and(isElement, element => element.name === "caption"))
-          .map(caption =>
+          .find(and(isElement, hasName("caption")))
+          .map((caption) =>
             flatten(caption.textContent({ flattened: true }), options)
           )
       );
@@ -354,14 +362,12 @@ function getSvgTextAlternative(
     return Branched.of(Option.of(flatten(element.textContent(), options)));
   }
 
-  const title = element
-    .children()
-    .find(and(isElement, child => child.name === "title"));
+  const title = element.children().find(and(isElement, hasName("title")));
 
   if (title.isSome()) {
     return getName(title.get(), device, visited, {
       recursing: true,
-      descending: true
+      descending: true,
     });
   }
 
@@ -370,9 +376,9 @@ function getSvgTextAlternative(
       return Branched.of(
         element
           .attribute(
-            attr => attr.name === "title" && attr.prefix.includes("xlink")
+            (attr) => attr.name === "title" && attr.prefix.includes("xlink")
           )
-          .flatMap(title =>
+          .flatMap((title) =>
             title.value === "" ? None : Some.of(flatten(title.value, options))
           )
       );
@@ -390,14 +396,14 @@ function getEmbeddedControlTextAlternative(
   visited: Set<Element | Text>,
   options: getName.Options
 ): Branched<Option<string>, Browser> {
-  return Role.from(element).flatMap(role =>
+  return Role.from(element).flatMap((role) =>
     role
-      .map<Branched<Option<string>, Browser>>(role => {
+      .map<Branched<Option<string>, Browser>>((role) => {
         switch (role.name) {
           case "button":
             return getName(element, device, visited, {
               recursing: true,
-              revisiting: true
+              revisiting: true,
             });
 
           case "textbox":
@@ -406,7 +412,7 @@ function getEmbeddedControlTextAlternative(
                 return Branched.of(
                   element
                     .attribute("value")
-                    .flatMap(value =>
+                    .flatMap((value) =>
                       value.value === ""
                         ? None
                         : Some.of(flatten(value.value, options))
@@ -443,7 +449,7 @@ function getSubtreeTextAlternative(
     .filter(or(isElement, isText));
 
   const childTextAlternatives = Branched.sequence(
-    childNodes.map(childNode =>
+    childNodes.map((childNode) =>
       getName(childNode, device, visited, {
         recursing: true,
         descending: true,
@@ -452,16 +458,16 @@ function getSubtreeTextAlternative(
         // Pass down the labelling flag as the current call may have been
         // initiated from a labelling element; the subtree will therefore also
         // have to be considered part of the labelling element.
-        labelling: options.labelling
+        labelling: options.labelling,
       })
     )
   );
 
-  const textAlternative = childTextAlternatives.map(alts =>
+  const textAlternative = childTextAlternatives.map((alts) =>
     Iterable.reduce<Option<string>>(
       alts,
       (alt, text) =>
-        alt.map(alt => text.reduce((alt, text) => alt + text, alt)).or(text),
+        alt.map((alt) => text.reduce((alt, text) => alt + text, alt)).or(text),
       None
     )
   );
@@ -474,8 +480,8 @@ function getSubtreeTextAlternative(
   //   pseudo: "before"
   // });
 
-  return textAlternative.map(textAlternative =>
-    textAlternative.map(textAlternative => flatten(textAlternative, options))
+  return textAlternative.map((textAlternative) =>
+    textAlternative.map((textAlternative) => flatten(textAlternative, options))
   );
 }
 
@@ -490,7 +496,7 @@ function getTooltipTextAlternative(
 ): Option<string> {
   return element
     .attribute("title")
-    .flatMap(title =>
+    .flatMap((title) =>
       title.value === "" ? None : Some.of(flatten(title.value, options))
     );
 }
@@ -511,7 +517,7 @@ function isLabelable(element: Element): boolean {
     case "input":
       return element
         .attribute("type")
-        .every(attr => attr.value.toLowerCase() !== "hidden");
+        .every((attr) => attr.value.toLowerCase() !== "hidden");
   }
 
   return false;
@@ -526,26 +532,26 @@ function getLabel(element: Element): Option<Element> {
   }
 
   return element.id
-    .andThen(id => {
+    .andThen((id) => {
       if (id !== "") {
         const root = element.root();
 
         if (root !== element) {
-          const label = root
-            .descendants()
-            .find(
-              and(
-                Element.isElement,
-                element =>
-                  element.name === "label" &&
-                  element.attribute("for").some(attr => attr.value === id)
+          const label = root.descendants().find(
+            and(
+              Element.isElement,
+              and(hasName("label"), (element) =>
+                element.attribute("for").some((attr) => attr.value === id)
               )
-            );
+            )
+          );
 
           return label.filter(() => {
             const target = root
               .descendants()
-              .find(and(Element.isElement, element => element.id.includes(id)));
+              .find(
+                and(Element.isElement, (element) => element.id.includes(id))
+              );
 
             return target.includes(element);
           });
@@ -554,11 +560,7 @@ function getLabel(element: Element): Option<Element> {
 
       return None;
     })
-    .orElse(() =>
-      element.closest(
-        and(Element.isElement, element => element.name === "label")
-      )
-    );
+    .orElse(() => element.closest(and(Element.isElement, hasName("label"))));
 }
 
 /**
@@ -577,7 +579,7 @@ function isRendered(node: Node, device: Device): boolean {
 
   return node
     .parent({ flattened: true })
-    .every(parent => isRendered(parent, device));
+    .every((parent) => isRendered(parent, device));
 }
 
 /**
@@ -642,20 +644,4 @@ function isTextLevelElement(element: Element): boolean {
   }
 
   return false;
-}
-
-function resolveReferences(node: Node, references: string): Array<Element> {
-  const elements: Array<Element> = [];
-
-  for (const id of references.trim().split(/\s+/)) {
-    const element = node
-      .descendants()
-      .find(and(isElement, element => element.id.includes(id)));
-
-    if (element.isSome()) {
-      elements.push(element.get());
-    }
-  }
-
-  return elements;
 }

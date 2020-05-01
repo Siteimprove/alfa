@@ -9,41 +9,43 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/expectation";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter } = Iterable;
-const { and, not, equals } = Predicate;
+const { isElement, hasNamespace } = Element;
+const { some } = Iterable;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r42.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
-              and(not(isIgnored(device)), hasRole(hasContext()))
+              isElement,
+              and(
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                not(isIgnored(device)),
+                hasRole(hasContext())
+              )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
         return {
           1: expectation(
             hasRequiredContext(device)(target),
-            Outcomes.IsOwnedByContextRole,
-            Outcomes.IsNotOwnedByContextRole
-          )
+            () => Outcomes.IsOwnedByContextRole,
+            () => Outcomes.IsNotOwnedByContextRole
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {
@@ -61,22 +63,26 @@ function hasContext(
 ): Predicate<Role> {
   return function hasContext(role) {
     return (
-      Iterable.some(role.characteristics.context, predicate) ||
+      some(role.characteristics.context, predicate) ||
       role.inheritsFrom(hasContext)
     );
   };
 }
 
 function hasRequiredContext(device: Device): Predicate<Element> {
-  return element =>
-    Node.from(element, device).every(node =>
+  return (element) =>
+    Node.from(element, device).some((node) =>
       node
         .parent()
-        .some(parent =>
+        .some((parent) =>
           parent
             .role()
-            .some(role =>
-              hasContext(context => context === role.name)(node.role().get())
+            .some((parentRole) =>
+              node
+                .role()
+                .some((role) =>
+                  hasContext((context) => context === parentRole.name)(role)
+                )
             )
         )
     );

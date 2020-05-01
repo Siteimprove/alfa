@@ -9,12 +9,11 @@ import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
 import { hasInputType } from "../common/predicate/has-input-type";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
-const { filter, isEmpty } = Iterable;
+const { isElement, hasNamespace } = Element;
+const { isEmpty } = Iterable;
 const { and, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -22,32 +21,32 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              not(hasInputType(equals("image"))),
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(hasRole(hasName(equals("button"))), not(isIgnored(device)))
+                not(hasInputType(equals("image"))),
+                hasNamespace(Namespace.HTML),
+                hasRole("button"),
+                not(isIgnored(device))
               )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
         return {
           1: expectation(
             hasAccessibleName(device, not(isEmpty))(target),
-            Outcomes.HasName,
-            Outcomes.HasNoName
-          )
+            () => Outcomes.HasName,
+            () => Outcomes.HasNoName
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

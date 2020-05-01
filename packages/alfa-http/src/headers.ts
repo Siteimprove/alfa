@@ -58,17 +58,17 @@ export class Headers
   public toEARL(): Headers.EARL {
     return {
       "@context": {
-        http: "http://www.w3.org/2011/http#"
+        http: "http://www.w3.org/2011/http#",
       },
       "@list": [
         ...Iterable.map(this._headers, ([name, value]) => {
           return {
             "@type": "http:MessageHeader" as const,
             "http:fieldName": name,
-            "http:fieldValue": value
+            "http:fieldValue": value,
           };
-        })
-      ]
+        }),
+      ],
     };
   }
 

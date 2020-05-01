@@ -23,7 +23,7 @@ export class Site implements json.Serializable {
 
   public toJSON(): Site.JSON {
     return {
-      resources: this._resources.toJSON()
+      resources: this._resources.toJSON(),
     };
   }
 }

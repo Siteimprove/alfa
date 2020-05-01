@@ -34,7 +34,7 @@ export class Display implements Serializable {
   public toJSON(): Display.JSON {
     return {
       resolution: this._resolution,
-      scan: this._scan
+      scan: this._scan,
     };
   }
 }
@@ -42,7 +42,7 @@ export class Display implements Serializable {
 export namespace Display {
   export enum Scan {
     Interlace = "interlace",
-    Progressive = "progressive"
+    Progressive = "progressive",
   }
 
   export interface JSON {

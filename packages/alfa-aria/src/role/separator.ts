@@ -11,17 +11,17 @@ Role.register(
       "aria-valuemax",
       "aria-valuemin",
       "aria-valuenow",
-      "aria-valuetext"
+      "aria-valuetext",
     ],
     name: {
       from: ["author"],
-      required: false
+      required: false,
     },
     implicits: [
       ["aria-orientation", "horizontal"],
       ["aria-valuemin", "0"],
       ["aria-valuemax", "100"],
-      ["aria-valuenow", "50"]
-    ]
+      ["aria-valuenow", "50"],
+    ],
   })
 );

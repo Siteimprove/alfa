@@ -10,11 +10,11 @@ Role.register(
       "aria-valuemax",
       "aria-valuemin",
       "aria-valuenow",
-      "aria-valuetext"
+      "aria-valuetext",
     ],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

@@ -18,7 +18,7 @@ export namespace Block {
   /**
    * @see https://drafts.csswg.org/css-syntax/#consume-a-simple-block
    */
-  export const consume: Parser<Slice<Token>, Block> = input => {
+  export const consume: Parser<Slice<Token>, Block> = (input) => {
     const token = input.get(0).get();
     const value: Array<Token> = [];
 
@@ -41,7 +41,7 @@ export namespace Block {
     while (true) {
       const next = input.get(0);
 
-      if (next.isNone() || isEndingToken!(next)) {
+      if (next.isNone() || isEndingToken!(next.get())) {
         return Ok.of([input.slice(1), { token, value }] as const);
       }
 

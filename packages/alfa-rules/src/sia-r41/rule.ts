@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -13,93 +13,89 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { filter, map, flatMap, reduce, groupBy, isEmpty } = Iterable;
-const { and, or, not, equals } = Predicate;
+const { isElement, hasNamespace } = Element;
+const { map, flatMap, isEmpty } = Iterable;
+const { and, or, not } = Predicate;
+const { hasName } = Role;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        const elements = filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        const elements = document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              isElement,
               and(
+                hasNamespace(Namespace.HTML, Namespace.SVG),
                 hasRole(
-                  or(hasName(equals("link")), role =>
-                    role.inheritsFrom(hasName(equals("link")))
+                  or(hasName("link"), (role) =>
+                    role.inheritsFrom(hasName("link"))
                   )
                 ),
-                and(
-                  not(isIgnored(device)),
-                  hasAccessibleName(device, not(isEmpty))
-                )
+                not(isIgnored(device)),
+                hasAccessibleName(device, not(isEmpty))
               )
             )
-          )
-        );
+          );
 
-        const roots = groupBy(elements, element => element.root());
+        const roots = elements.groupBy((element) => element.root());
 
-        return flatMap(roots, ([root, elements]) =>
-          reduce(
-            elements,
-            (groups, element) => {
+        return flatMap(roots.values(), (elements) =>
+          elements
+            .reduce((groups, element) => {
               for (const [node] of Node.from(element, device)) {
                 groups = groups.set(
                   node.name(),
                   groups
                     .get(node.name())
                     .getOrElse(() => List.empty<Element>())
-                    .push(element)
+                    .append(element)
                 );
               }
 
               return groups;
-            },
-            Map.empty<Option<string>, List<Element>>()
-          ).values()
+            }, Map.empty<Option<string>, List<Element>>())
+            .values()
         );
       },
 
       expectations(target) {
         const sources = Set.from(
-          map(target, element =>
-            element.attribute("href").map(attr => attr.value)
+          map(target, (element) =>
+            element.attribute("href").map((attr) => attr.value)
           )
         );
 
         return {
           1: expectation(
             sources.size === 1,
-            Outcomes.ResolveSameResource,
-            Question.of(
-              "reference-equivalent-resources",
-              "boolean",
-              target,
-              "Do the links resolve to equivalent resources?"
-            ).map(embedEquivalentResources =>
-              expectation(
-                embedEquivalentResources,
-                Outcomes.ResolveEquivalentResource,
-                Outcomes.ResolveDifferentResource
+            () => Outcomes.ResolveSameResource,
+            () =>
+              Question.of(
+                "reference-equivalent-resources",
+                "boolean",
+                target,
+                "Do the links resolve to equivalent resources?"
+              ).map((embedEquivalentResources) =>
+                expectation(
+                  embedEquivalentResources,
+                  () => Outcomes.ResolveEquivalentResource,
+                  () => Outcomes.ResolveDifferentResource
+                )
               )
-            )
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

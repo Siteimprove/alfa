@@ -68,7 +68,7 @@ export class Named<C extends Named.Color = Named.Color>
     return {
       type: "color",
       format: "named",
-      color: this._color
+      color: this._color,
     };
   }
 
@@ -88,8 +88,8 @@ export namespace Named {
   export type Color = keyof Colors;
 
   export const parse = map(
-    Token.parseIdent(ident => ident.value.toLowerCase() in Colors),
-    ident => Named.of(ident.value.toLowerCase() as Color)
+    Token.parseIdent((ident) => ident.value.toLowerCase() in Colors),
+    (ident) => Named.of(ident.value.toLowerCase() as Color)
   );
 }
 
@@ -250,5 +250,5 @@ const Colors = {
   white: 0xffffff,
   whitesmoke: 0xf5f5f5,
   yellow: 0xffff00,
-  yellowgreen: 0x9acd32
+  yellowgreen: 0x9acd32,
 };

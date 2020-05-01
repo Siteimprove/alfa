@@ -8,5 +8,5 @@ export function hasChild(
   predicate: Predicate<Node>,
   options: Node.Traversal = {}
 ): Predicate<Node> {
-  return node => some(node.children(options), predicate);
+  return (node) => some(node.children(options), predicate);
 }

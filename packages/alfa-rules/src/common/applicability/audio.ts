@@ -5,15 +5,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasName } from "../predicate/has-name";
-import { hasNamespace } from "../predicate/has-namespace";
 import { isIgnored } from "../predicate/is-ignored";
 import { isPerceivable } from "../predicate/is-perceivable";
 
 import { Question } from "../question";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, map } = Iterable;
-const { and, not, equals } = Predicate;
+const { and, not } = Predicate;
 
 export function audio(
   document: Document,
@@ -24,20 +23,21 @@ export function audio(
     filter(
       document.descendants({ flattened: true, nested: true }),
       and(
-        Element.isElement,
+        isElement,
         and(
-          hasNamespace(equals(Namespace.HTML)),
-          and(hasName(equals("audio")), not(isIgnored(device)))
+          hasNamespace(Namespace.HTML),
+          hasName("audio"),
+          not(isIgnored(device))
         )
       )
     ),
-    element =>
+    (element) =>
       Question.of(
         "is-streaming",
         "boolean",
         element,
         "Is the <audio> element streaming?"
-      ).map(isStreaming =>
+      ).map((isStreaming) =>
         isStreaming
           ? None
           : Question.of(
@@ -45,7 +45,7 @@ export function audio(
               "boolean",
               element,
               "Is the <audio> element currently playing?"
-            ).map(isPlaying =>
+            ).map((isPlaying) =>
               isPlaying
                 ? Option.of(element)
                 : Question.of(
@@ -53,7 +53,7 @@ export function audio(
                     "node",
                     element,
                     "Where is the button that controls playback of the <audio> element?"
-                  ).map(playButton =>
+                  ).map((playButton) =>
                     playButton.some(
                       and(Element.isElement, isPerceivable(device))
                     )

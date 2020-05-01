@@ -9,7 +9,7 @@ Role.register(
     context: ["group", "tree"],
     name: {
       from: ["contents", "author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

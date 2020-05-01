@@ -30,14 +30,14 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             "Where is the transcript of the <audio> element?"
-          ).map(transcript => {
+          ).map((transcript) => {
             if (transcript.isNone()) {
               return Question.of(
                 "transcript-link",
                 "node",
                 target,
                 "Where is the link pointing to the transcript of the <audio> element?"
-              ).map(transcriptLink => {
+              ).map((transcriptLink) => {
                 if (transcriptLink.isNone()) {
                   return Some.of(Outcomes.HasNoTranscript);
                 }
@@ -55,28 +55,26 @@ export default Rule.Atomic.of<Page, Element, Question>({
                   "boolean",
                   target,
                   "Is the transcript of the <audio> element perceivable?"
-                ).map(isPerceivable =>
+                ).map((isPerceivable) =>
                   expectation(
                     isPerceivable,
-                    Outcomes.HasPerceivableTranscript,
-                    Outcomes.HasNonPerceivableTranscript
+                    () => Outcomes.HasPerceivableTranscript,
+                    () => Outcomes.HasNonPerceivableTranscript
                   )
                 );
               });
             }
 
             return expectation(
-              transcript
-                .filter(and(Element.isElement, isPerceivable(device)))
-                .isSome(),
-              Outcomes.HasPerceivableTranscript,
-              Outcomes.HasNonPerceivableTranscript
+              transcript.some(and(Element.isElement, isPerceivable(device))),
+              () => Outcomes.HasPerceivableTranscript,
+              () => Outcomes.HasNonPerceivableTranscript
             );
-          })
+          }),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {

@@ -38,6 +38,13 @@ export class Style implements Serializable {
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
 
+  // We cache cascaded and computed properties but not specified properties as
+  // these are inexpensive to resolve from cascaded and computed properties.
+  // Cascaded properties on the other hand require parsing, which is expensive,
+  // and computed properties require absolutization, which is also expensive.
+  private readonly _cascaded = Cache.empty<Name, Option<Value>>();
+  private readonly _computed = Cache.empty<Name, Value>();
+
   private constructor(
     declarations: Iterable<Declaration>,
     device: Device,
@@ -57,7 +64,7 @@ export class Style implements Serializable {
   }
 
   public root(): Style {
-    return this._parent.map(parent => parent.root()).getOr(this);
+    return this._parent.map((parent) => parent.root()).getOr(this);
   }
 
   public initial<N extends Name>(name: N): Style.Initial<N>;
@@ -69,29 +76,31 @@ export class Style implements Serializable {
 
   public cascaded<N extends Name>(name: N): Option<Style.Cascaded<N>>;
   public cascaded<N extends Name>(name: N): Option<Value> {
-    const property: Property = Property.get(name);
+    return this._cascaded.get(name, () => {
+      const property: Property = Property.get(name);
 
-    return find(
-      this._declarations,
-      declaration => declaration.name === name
-    ).flatMap(declaration =>
-      either(
-        Keyword.parse("initial", "inherit"),
-        property.parse
-      )(Slice.of([...Lexer.lex(declaration.value)]))
-        .map(([remainder, value]) =>
-          isEmpty(remainder)
-            ? Option.of(Value.of(value, Option.of(declaration)))
-            : None
-        )
-        .getOr(None)
-    );
+      return find(
+        this._declarations,
+        (declaration) => declaration.name === name
+      ).flatMap((declaration) =>
+        either(
+          Keyword.parse("initial", "inherit"),
+          property.parse
+        )(Slice.of(Lexer.lex(declaration.value)))
+          .map(([remainder, value]) =>
+            isEmpty(remainder)
+              ? Option.of(Value.of(value, Option.of(declaration)))
+              : None
+          )
+          .getOr(None)
+      );
+    });
   }
 
   public specified<N extends Name>(name: N): Style.Specified<N>;
   public specified<N extends Name>(name: N): Value {
     return this.cascaded(name)
-      .map(cascaded => {
+      .map((cascaded) => {
         if (Keyword.isKeyword(cascaded.value)) {
           switch (cascaded.value.value) {
             case "initial":
@@ -112,7 +121,7 @@ export class Style implements Serializable {
         }
 
         return this._parent
-          .map(parent => parent.computed(name))
+          .map((parent) => parent.computed(name))
           .getOrElse(() => this.initial(name));
       });
   }
@@ -123,14 +132,18 @@ export class Style implements Serializable {
       return this.initial(name);
     }
 
-    const property: Property = Property.get(name);
+    return this._computed.get(name, () => {
+      const property: Property = Property.get(name);
 
-    return property.compute(this);
+      return property.compute(this);
+    });
   }
 
   public toJSON(): Style.JSON {
     return {
-      declarations: this._declarations.map(declaration => declaration.toJSON())
+      declarations: this._declarations.map((declaration) =>
+        declaration.toJSON()
+      ),
     };
   }
 }
@@ -170,7 +183,7 @@ export namespace Style {
         element
           .parent({ flattened: true })
           .filter(Element.isElement)
-          .map(parent => from(parent, device))
+          .map((parent) => from(parent, device))
       );
     });
   }

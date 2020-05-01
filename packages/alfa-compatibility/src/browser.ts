@@ -1,5 +1,10 @@
-import { Iterable } from "@siteimprove/alfa-iterable";
 import browserslist = require("browserslist");
+
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
+
+import * as json from "@siteimprove/alfa-json";
+
 import * as data from "./browser/data";
 
 export type Browser<
@@ -12,10 +17,8 @@ export namespace Browser {
 
   export type Version<N extends Name> = Data.Version<N>;
 
-  export class Release<
-    N extends Name = Name,
-    V extends Version<N> = Version<N>
-  > {
+  export class Release<N extends Name = Name, V extends Version<N> = Version<N>>
+    implements Serializable {
     /**
      * @internal
      */
@@ -41,12 +44,23 @@ export namespace Browser {
       this.date = date;
     }
 
-    public toJSON() {
-      return { browser: this.browser, version: this.version };
+    public toJSON(): Release.JSON {
+      return {
+        browser: this.browser,
+        version: this.version,
+      };
     }
 
     public toString(): string {
       return `Release { ${this.browser} ${this.version} }`;
+    }
+  }
+
+  export namespace Release {
+    export interface JSON {
+      [key: string]: json.JSON;
+      browser: string;
+      version: string;
     }
   }
 
@@ -95,11 +109,11 @@ export namespace Browser {
 
             return {
               ...support,
-              [version]: Release.of(browser, version, date)
+              [version]: Release.of(browser, version, date),
             };
           },
           {} as Versions<N>
-        )
+        ),
       };
     },
     {} as Releases
@@ -204,7 +218,7 @@ export namespace Browser {
   }
 
   const defaultScope: Scope = browserslist()
-    .map(entry => {
+    .map((entry) => {
       const [browser, version] = entry.split(/\s+/);
 
       if (!Browser.isBrowser(browser) || !Browser.isVersion(browser, version)) {

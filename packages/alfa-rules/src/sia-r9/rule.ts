@@ -1,6 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -9,41 +8,35 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 
-const { filter, first } = Iterable;
-const { and, equals } = Predicate;
+const { isElement, hasName, hasNamespace } = Element;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r9.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return first(
-          filter(
-            document.descendants(),
+        return document
+          .descendants()
+          .filter(
             and(
-              Element.isElement,
+              isElement,
               and(
-                hasNamespace(equals(Namespace.HTML)),
-                and(
-                  hasName(equals("meta")),
-                  and(
-                    hasAttribute(
-                      "http-equiv",
-                      value => value.toLowerCase() === "refresh"
-                    ),
-                    hasAttribute("content", value =>
-                      getRefreshTime(value).isSome()
-                    )
-                  )
+                hasNamespace(Namespace.HTML),
+                hasName("meta"),
+                hasAttribute(
+                  "http-equiv",
+                  (value) => value.toLowerCase() === "refresh"
+                ),
+                hasAttribute("content", (value) =>
+                  getRefreshTime(value).isSome()
                 )
               )
             )
           )
-        )
-          .map(meta => [meta])
+          .first()
+          .map((meta) => [meta])
           .getOr([]);
       },
 
@@ -55,13 +48,13 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             refreshTime === 0 || refreshTime! > 72000,
-            Outcomes.HasImmediateRefresh,
-            Outcomes.HasDelayedRefresh
-          )
+            () => Outcomes.HasImmediateRefresh,
+            () => Outcomes.HasDelayedRefresh
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 const whitespace = /\s/;

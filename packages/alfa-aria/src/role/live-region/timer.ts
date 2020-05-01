@@ -6,6 +6,6 @@ import { Role } from "../../role";
 Role.register(
   Role.of("timer", Role.Category.LiveRegion, {
     inherits: ["status"],
-    name: { from: ["author"], required: true }
+    name: { from: ["author"], required: true },
   })
 );
