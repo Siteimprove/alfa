@@ -223,7 +223,7 @@ async function takeScreenshot(
       return page.screenshot({
         path: screenshot.path,
         type: "png",
-        omitBackground: screenshot.type.background,
+        omitBackground: !screenshot.type.background,
         fullPage: true,
       });
 
