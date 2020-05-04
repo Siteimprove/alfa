@@ -45,6 +45,14 @@ export class Viewport implements Serializable {
     return this._orientation;
   }
 
+  public isLandscape(): boolean {
+    return this._orientation === Viewport.Orientation.Landscape;
+  }
+
+  public isPortrait(): boolean {
+    return this._orientation === Viewport.Orientation.Portrait;
+  }
+
   public toJSON(): Viewport.JSON {
     return {
       width: this._width,
