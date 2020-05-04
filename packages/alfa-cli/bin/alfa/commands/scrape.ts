@@ -115,7 +115,7 @@ export default class Scrape extends Command {
       default: false,
       allowNo: true,
       description:
-        "Whether or not the screenshot should include a solid, white background",
+        "Whether or not the screenshot should include a default white background. Only applies to PNG screenshots",
     }),
 
     "screenshot-quality": flags.integer({
