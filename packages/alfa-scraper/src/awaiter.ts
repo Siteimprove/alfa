@@ -19,7 +19,7 @@ export namespace Awaiter {
         );
       } catch {
         return Err.of(
-          `Timeout of exceeded while waiting for the document to be ready`
+          `Timeout exceeded while waiting for the document to be ready`
         );
       }
     };
