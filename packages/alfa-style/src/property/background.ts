@@ -2,6 +2,7 @@ import {
   Angle,
   Current,
   Gradient,
+  Image,
   Keyword,
   Length,
   Linear,
@@ -10,7 +11,7 @@ import {
   RGB,
   System,
   Token,
-  URL
+  URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -19,6 +20,7 @@ import * as css from "@siteimprove/alfa-css";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
+import { Style } from "../style";
 
 const { map, either, delimited, option, separatedList } = Parser;
 
@@ -42,8 +44,8 @@ export namespace Background {
       Percentage.of(0)
     ),
     css.Color.parse,
-    style =>
-      style.specified("background-color").map(color => Resolver.color(color))
+    (style) =>
+      style.specified("background-color").map((color) => Resolver.color(color))
   );
 
   export namespace Image {
@@ -71,67 +73,73 @@ export namespace Background {
         either(Keyword.parse("none"), css.Image.parse),
         delimited(option(Token.parseWhitespace), Token.parseComma)
       ),
-      images => List.of(images, ", ")
+      (images) => List.of(images, ", ")
     ),
-    style =>
-      style.specified("background-image").map(images =>
+    (style) =>
+      style.specified("background-image").map((images) =>
         List.of(
-          Iterable.map(images, image => {
+          Iterable.map(images, (image) => {
             switch (image.type) {
               case "keyword":
                 return image;
 
               case "image":
-                switch (image.image.type) {
-                  case "url":
-                    return css.Image.of(image.image);
-
-                  case "gradient":
-                    switch (image.image.kind) {
-                      case "linear": {
-                        const { direction, items, repeats } = image.image;
-
-                        return css.Image.of(
-                          Linear.of(
-                            direction.type === "angle"
-                              ? direction.withUnit("deg")
-                              : direction,
-                            Iterable.map(items, item => {
-                              switch (item.type) {
-                                case "stop": {
-                                  const { color, position } = item;
-
-                                  return Gradient.Stop.of(
-                                    Resolver.color(color),
-                                    position.map(position =>
-                                      position.type === "length"
-                                        ? Resolver.length(position, style)
-                                        : position
-                                    )
-                                  );
-                                }
-
-                                case "hint": {
-                                  const { position } = item;
-
-                                  return Gradient.Hint.of(
-                                    position.type === "length"
-                                      ? Resolver.length(position, style)
-                                      : position
-                                  );
-                                }
-                              }
-                            }),
-                            repeats
-                          )
-                        );
-                      }
-                    }
-                }
+                return resolveImage(image, style);
             }
           }),
           ", "
         )
       )
   );
+}
+
+function resolveImage(image: Image, style: Style) {
+  switch (image.image.type) {
+    case "url":
+      return css.Image.of(image.image);
+
+    case "gradient":
+      return resolveGradient(image.image, style);
+  }
+}
+
+function resolveGradient(gradient: Gradient, style: Style) {
+  switch (gradient.kind) {
+    case "linear": {
+      const { direction, items, repeats } = gradient;
+
+      return css.Image.of(
+        Linear.of(
+          direction.type === "angle" ? direction.withUnit("deg") : direction,
+          Iterable.map(items, (item) => resolveGradientItem(item, style)),
+          repeats
+        )
+      );
+    }
+  }
+}
+
+function resolveGradientItem(item: Gradient.Item, style: Style) {
+  switch (item.type) {
+    case "stop": {
+      const { color, position } = item;
+
+      return Gradient.Stop.of(
+        Resolver.color(color),
+        position.map((position) =>
+          position.type === "length"
+            ? Resolver.length(position, style)
+            : position
+        )
+      );
+    }
+
+    case "hint": {
+      const { position } = item;
+
+      return Gradient.Hint.of(
+        position.type === "length" ? Resolver.length(position, style) : position
+      );
+    }
+  }
 }
