@@ -4,6 +4,8 @@
   "files": [
     "src/index.ts",
     "src/property.ts",
+    "src/property/background.ts",
+    "src/property/color.ts",
     "src/property/display.ts",
     "src/property/font.ts",
     "src/property/opacity.ts",

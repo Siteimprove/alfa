@@ -1,4 +1,11 @@
-import { Converter, Length } from "@siteimprove/alfa-css";
+import {
+  Color,
+  Converter,
+  Length,
+  Percentage,
+  RGB
+} from "@siteimprove/alfa-css";
+import { clamp } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
 
@@ -62,5 +69,38 @@ export namespace Resolver {
     }
 
     return Length.of(Converter.length(value, unit, "px"), "px");
+  }
+
+  /**
+   * @see https://drafts.csswg.org/css-color/#resolving-color-values
+   */
+  export function color(color: Color) {
+    switch (color.type) {
+      case "color": {
+        const [red, green, blue] = [
+          color.red,
+          color.green,
+          color.blue
+        ].map(channel =>
+          Percentage.of(
+            clamp(
+              channel.type === "number" ? channel.value / 0xff : channel.value,
+              0,
+              1
+            )
+          )
+        );
+
+        return RGB.of(
+          red,
+          green,
+          blue,
+          Percentage.of(clamp(color.alpha.value, 0, 1))
+        );
+      }
+
+      case "keyword":
+        return color;
+    }
   }
 }
