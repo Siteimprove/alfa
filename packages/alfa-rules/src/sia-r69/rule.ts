@@ -13,8 +13,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasCategory } from "../common/predicate/has-category";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasRole } from "../common/predicate/has-role";
 import { isDisabled } from "../common/predicate/is-disabled";
 import { isIgnored } from "../common/predicate/is-ignored";
@@ -36,9 +34,12 @@ export default Rule.Atomic.of<Page, Text, Question>({
         function* visit(node: Node): Iterable<Text> {
           if (Element.isElement(node)) {
             if (
-              test(hasNamespace(not(equals(Namespace.HTML))), node) ||
+              test(Element.hasNamespace(not(equals(Namespace.HTML))), node) ||
               test(hasRole(hasCategory(equals(Role.Category.Widget))), node) ||
-              test(and(hasRole(hasName(equals("group"))), isDisabled), node)
+              test(
+                and(hasRole(Role.hasName(equals("group"))), isDisabled),
+                node
+              )
             ) {
               return;
             }
@@ -73,10 +74,10 @@ export default Rule.Atomic.of<Page, Text, Question>({
           "What are the background colors of the text node?"
         );
 
-        const result = foregrounds.map(foregrounds =>
-          backgrounds.map(backgrounds => {
-            const contrasts = flatMap(foregrounds, foreground =>
-              map(backgrounds, background => contrast(foreground, background))
+        const result = foregrounds.map((foregrounds) =>
+          backgrounds.map((backgrounds) => {
+            const contrasts = flatMap(foregrounds, (foreground) =>
+              map(backgrounds, (background) => contrast(foreground, background))
             );
 
             const highest = reduce(
@@ -89,8 +90,8 @@ export default Rule.Atomic.of<Page, Text, Question>({
 
             return expectation(
               highest >= threshold,
-              Outcomes.HasSufficientContrast,
-              Outcomes.HasInsufficientContrast
+              () => Outcomes.HasSufficientContrast,
+              () => Outcomes.HasInsufficientContrast
             );
           })
         );
@@ -99,17 +100,17 @@ export default Rule.Atomic.of<Page, Text, Question>({
 
         return {
           1: getForeground(parent, device)
-            .map(foreground => result.answer(foreground))
-            .flatMap(result =>
-              getBackground(parent, device).map(background =>
+            .map((foreground) => result.answer(foreground))
+            .flatMap((result) =>
+              getBackground(parent, device).map((background) =>
                 result.answer(background)
               )
             )
-            .getOr(result)
+            .getOr(result),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {
@@ -126,7 +127,7 @@ export namespace Outcomes {
  * @see https://w3c.github.io/wcag/guidelines/#dfn-large-scale
  */
 function isLargeText(device: Device): Predicate<Text> {
-  return text => {
+  return (text) => {
     const parent = text.parent({ flattened: true }).filter(Element.isElement);
 
     if (parent.isNone()) {
@@ -166,8 +167,8 @@ function getForeground(
     return Option.of([color.get()]);
   }
 
-  return getBackground(element, device).map(backdrops =>
-    map(backdrops, backdrop => composite(color.get(), backdrop))
+  return getBackground(element, device).map((backdrops) =>
+    map(backdrops, (backdrop) => composite(color.get(), backdrop))
   );
 }
 
@@ -182,12 +183,12 @@ function getBackground(
   element: Element,
   device: Device
 ): Option<Iterable<RGB<Percentage, Percentage>>> {
-  return getLayers(element, device).map(layers => [
+  return getLayers(element, device).map((layers) => [
     ...reduce<Iterable<RGB<Percentage, Percentage>>>(
       layers,
       (backdrops, layer) =>
-        flatMap(layer, color =>
-          map(backdrops, backdrop => composite(color, backdrop))
+        flatMap(layer, (color) =>
+          map(backdrops, (backdrop) => composite(color, backdrop))
         ),
       // We make the initial backdrop solid white as this can be assumed to be
       // the color of the canvas onto which the other backgrounds are rendered.
@@ -197,9 +198,9 @@ function getBackground(
           Percentage.of(1),
           Percentage.of(1),
           Percentage.of(1)
-        )
+        ),
       ]
-    )
+    ),
   ]);
 }
 
@@ -260,10 +261,12 @@ function getLayers(
   // (https://github.com/siteimprove/picasso) for spatially indexing the box
   // tree in which case the background layers sitting behind the current layer
   // can be found by issuing a range query for the box of the current element.
-  if (some(layers, layer => some(layer, color => color.alpha.value !== 1))) {
+  if (
+    some(layers, (layer) => some(layer, (color) => color.alpha.value !== 1))
+  ) {
     const parent = element
       .parent({
-        flattened: true
+        flattened: true,
       })
       .filter(Element.isElement);
 
@@ -271,8 +274,8 @@ function getLayers(
     // isn't, this means we're at the root. In that case, we simply return the
     // layers we've found so far.
     if (parent.isSome()) {
-      return parent.flatMap(parent =>
-        getLayers(parent, device).map(parentLayers =>
+      return parent.flatMap((parent) =>
+        getLayers(parent, device).map((parentLayers) =>
           concat(parentLayers, layers)
         )
       );
@@ -342,9 +345,9 @@ function composite(
   const [red, green, blue] = [
     [foreground.red, background.red],
     [foreground.green, background.green],
-    [foreground.blue, background.blue]
-  ].map(components => {
-    const [a, b] = components.map(c =>
+    [foreground.blue, background.blue],
+  ].map((components) => {
+    const [a, b] = components.map((c) =>
       c.type === "number" ? c.value / 0xff : c.value
     );
 
@@ -363,7 +366,7 @@ function composite(
  * @see https://w3c.github.io/wcag/guidelines/#dfn-relative-luminance
  */
 function luminance(color: RGB): number {
-  const [red, green, blue] = [color.red, color.green, color.blue].map(c => {
+  const [red, green, blue] = [color.red, color.green, color.blue].map((c) => {
     const component = c.type === "number" ? c.value / 0xff : c.value;
 
     return component <= 0.03928

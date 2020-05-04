@@ -18,7 +18,6 @@
     "src/common/predicate/has-input-type.ts",
     "src/common/predicate/has-name-from.ts",
     "src/common/predicate/has-nondefault-role.ts",
-    "src/common/predicate/has-parent.ts",
     "src/common/predicate/has-role.ts",
     "src/common/predicate/has-tab-index.ts",
     "src/common/predicate/has-text-content.ts",
