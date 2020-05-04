@@ -1,2 +1,2 @@
-export * from "./highlight";
-export * from "./markers";
+export * from "./marker";
+export * from "./syntax";

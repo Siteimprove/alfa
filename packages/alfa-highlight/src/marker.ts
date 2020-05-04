@@ -25,7 +25,7 @@ export interface Marker {
   readonly gray: this;
 }
 
-export namespace Markers {
+export namespace Marker {
   // Styles
   export const reset: Marker = chalk.reset;
   export const bold: Marker = chalk.bold;
@@ -48,4 +48,4 @@ export namespace Markers {
   export const gray: Marker = chalk.gray;
 }
 
-export const mark = Markers;
+export const mark = Marker;

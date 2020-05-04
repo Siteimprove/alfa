@@ -31,7 +31,7 @@ function passes<Q>(
   );
 }
 
-test("Passes when the document headings are structured", async (t) => {
+test("evaluate() passes when the document headings are structured", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -58,7 +58,7 @@ test("Passes when the document headings are structured", async (t) => {
   );
 });
 
-test("Fails when the document headings are not properly structured", async (t) => {
+test("evaluate() fails when the document headings are not properly structured", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
@@ -77,7 +77,7 @@ test("Fails when the document headings are not properly structured", async (t) =
   ]);
 });
 
-test("Is inapplicable when the document has only one heading", async (t) => {
+test("evaluate() is inapplicable when the document has only one heading", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <html>
