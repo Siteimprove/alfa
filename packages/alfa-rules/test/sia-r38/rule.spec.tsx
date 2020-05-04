@@ -14,7 +14,7 @@ import R38, { Outcomes } from "../../src/sia-r38/rule";
 const { isElement, hasName } = Element;
 const { and } = Predicate;
 
-test("Passes when some atomic rules are passing", async (t) => {
+test("evaluate() passes when some atomic rules are passing", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <div>
@@ -49,7 +49,7 @@ test("Passes when some atomic rules are passing", async (t) => {
   ]);
 });
 
-test("Can't tell when there are not enough answers to expectation", async (t) => {
+test("evaluate() can't tell when there are not enough answers to expectation", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <div>

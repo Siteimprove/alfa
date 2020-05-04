@@ -13,7 +13,7 @@ import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 const { isElement, hasName } = Element;
 const { and, equals } = Predicate;
 
-test("Passes when non-streaming video elements have all audio and visual information available in a transcript", async (t) => {
+test("evaluate() passes when non-streaming video elements have all audio and visual information available in a transcript", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <div>
@@ -49,7 +49,7 @@ test("Passes when non-streaming video elements have all audio and visual informa
   ]);
 });
 
-test("Fails when non-streaming video elements have no audio and visual information available in a transcript", async (t) => {
+test("evaluate() fails when non-streaming video elements have no audio and visual information available in a transcript", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <video controls>
@@ -78,7 +78,7 @@ test("Fails when non-streaming video elements have no audio and visual informati
   ]);
 });
 
-test("Can't tell when some questions are left unanswered", async (t) => {
+test("evaluate() can't tell when some questions are left unanswered", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <video controls>
@@ -106,7 +106,7 @@ test("Can't tell when some questions are left unanswered", async (t) => {
   ]);
 });
 
-test("Is inapplicable when element is not a video element", async (t) => {
+test("evaluate() is inapplicable when element is not a video element", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(<img src="foo.mp4" />, Option.of(self)),
   ]);
@@ -120,7 +120,7 @@ test("Is inapplicable when element is not a video element", async (t) => {
   t.deepEqual(await evaluate(R24, { document }), [inapplicable(R24)]);
 });
 
-test("Is inapplicable when applicability questions are unanswered", async (t) => {
+test("evaluate() is inapplicable when applicability questions are unanswered", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <video controls>
