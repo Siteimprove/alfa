@@ -10,9 +10,9 @@
     "@siteimprove/alfa-puppeteer": "^0.0.1",
     "@types/chai": "^4.2.3",
     "@types/mocha": "^5.2.7",
-    "@types/puppeteer": "^1.20.1",
+    "@types/puppeteer": "^2.0.1",
     "chai": "^4.2.0",
     "mocha": "^6.2.1",
-    "puppeteer": "^1.20.0"
+    "puppeteer": "^2.1.1"
   }
 }
