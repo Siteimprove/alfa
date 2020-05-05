@@ -33,7 +33,7 @@ export function audio(
     ),
     (element) =>
       Question.of(
-        "is-streaming",
+        "is-audio-streaming",
         "boolean",
         element,
         "Is the <audio> element streaming?"
