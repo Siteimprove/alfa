@@ -24,10 +24,7 @@
   ],
   "oclif": {
     "commands": "./bin/alfa/commands",
-    "bin": "alfa",
-    "plugins": [
-      "@oclif/plugin-help"
-    ]
+    "bin": "alfa"
   },
   "dependencies": {
     "@oclif/command": "^1.5.19",
@@ -38,8 +35,10 @@
     "@siteimprove/alfa-json-ld": "^0.0.1",
     "@siteimprove/alfa-rules": "^0.0.1",
     "@siteimprove/alfa-scraper": "^0.0.1",
+    "@siteimprove/alfa-time": "^0.0.1",
     "@siteimprove/alfa-web": "^0.0.1",
-    "enquirer": "^2.3.0"
+    "enquirer": "^2.3.0",
+    "tempy": "^0.5.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.1"

@@ -86,6 +86,13 @@ const scraper = await Scraper.of();
 
 scraper
   .scrape("https://example.com")
+  .then((result) => {
+    if (result.isErr()) {
+      throw result.getErr();
+    } else {
+      return result.get();
+    }
+  })
   .then((page) => {
     const audit = Rules.reduce(
       (audit, rule) => audit.add(rule),
@@ -95,9 +102,6 @@ scraper
     audit.evaluate().then((outcomes) => {
       // ...
     });
-  })
-  .catch((err) => {
-    console.error(err);
   })
   .finally(() => {
     scraper.close();

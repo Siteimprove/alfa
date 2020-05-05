@@ -21,11 +21,14 @@
     "@siteimprove/alfa-device": "^0.0.1",
     "@siteimprove/alfa-dom": "^0.0.1",
     "@siteimprove/alfa-encoding": "^0.0.1",
+    "@siteimprove/alfa-equatable": "^0.0.1",
     "@siteimprove/alfa-http": "^0.0.1",
+    "@siteimprove/alfa-json": "^0.0.1",
     "@siteimprove/alfa-puppeteer": "^0.0.1",
+    "@siteimprove/alfa-time": "^0.0.1",
     "@siteimprove/alfa-web": "^0.0.1",
-    "@types/puppeteer": "^1.20.1",
-    "puppeteer": "^1.20.0"
+    "@types/puppeteer": "^2.0.1",
+    "puppeteer": "^2.1.1"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.1"
