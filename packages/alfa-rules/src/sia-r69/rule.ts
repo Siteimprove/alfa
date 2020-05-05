@@ -15,13 +15,12 @@ import { expectation } from "../common/expectation";
 import { hasCategory } from "../common/predicate/has-category";
 import { hasRole } from "../common/predicate/has-role";
 import { isDisabled } from "../common/predicate/is-disabled";
-import { isIgnored } from "../common/predicate/is-ignored";
-import { isVisible } from "../common/predicate/is-visible";
+import { isPerceivable } from "../common/predicate/is-perceivable";
 
 import { Question } from "../common/question";
 
 const { reduce, some, flatMap, map, concat } = Iterable;
-const { and, not, equals, test } = Predicate;
+const { and, or, not, equals, test } = Predicate;
 const { min, max } = Math;
 
 export default Rule.Atomic.of<Page, Text, Question>({
@@ -32,23 +31,24 @@ export default Rule.Atomic.of<Page, Text, Question>({
         return visit(document);
 
         function* visit(node: Node): Iterable<Text> {
-          if (Element.isElement(node)) {
-            if (
-              test(Element.hasNamespace(not(equals(Namespace.HTML))), node) ||
-              test(hasRole(hasCategory(equals(Role.Category.Widget))), node) ||
-              test(
-                and(hasRole(Role.hasName(equals("group"))), isDisabled),
-                node
-              )
-            ) {
-              return;
-            }
+          if (
+            test(
+              and(
+                Element.isElement,
+                or(
+                  not(Element.hasNamespace(Namespace.HTML)),
+                  hasRole(hasCategory(equals(Role.Category.Widget))),
+                  and(hasRole("group"), isDisabled)
+                )
+              ),
+              node
+            )
+          ) {
+            return;
           }
 
-          if (Text.isText(node)) {
-            if (test(and(isVisible(device), not(isIgnored(device))), node)) {
-              yield node;
-            }
+          if (test(and(Text.isText, isPerceivable(device)), node)) {
+            yield node;
           }
 
           const children = node.children({ flattened: true, nested: true });
