@@ -39,7 +39,7 @@ test("evaluate() passes when non-streaming video elements have all audio and vis
     .get();
 
   const oracle = makeOracle({
-    "is-streaming": false,
+    "is-video-streaming": false,
     "has-audio": true,
     transcript: Option.of(transcript),
   });
@@ -67,7 +67,7 @@ test("evaluate() fails when non-streaming video elements have no audio and visua
     .get();
 
   const oracle = makeOracle({
-    "is-streaming": false,
+    "is-video-streaming": false,
     "has-audio": true,
     transcript: None,
     "transcript-link": None,
@@ -96,7 +96,7 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
     .get();
 
   const oracle = makeOracle({
-    "is-streaming": false,
+    "is-video-streaming": false,
     "has-audio": true,
     transcript: None,
   });

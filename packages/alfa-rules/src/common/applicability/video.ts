@@ -48,7 +48,7 @@ export function video(
     ),
     (element) =>
       Question.of(
-        "is-streaming",
+        "is-video-streaming",
         "boolean",
         element,
         "Is the <video> element streaming?"

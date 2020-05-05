@@ -34,7 +34,7 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
     .get();
 
   const oracle = makeOracle({
-    "is-streaming": false,
+    "is-video-streaming": false,
     "has-audio": true,
     transcript: None,
     "transcript-link": None,
@@ -68,7 +68,7 @@ test("evaluate() can't tell when there are not enough answers to expectation", a
     .first()
     .get();
 
-  const oracle = makeOracle({ "is-streaming": false, "has-audio": true });
+  const oracle = makeOracle({ "is-video-streaming": false, "has-audio": true });
 
   t.deepEqual(await evaluate(R38, { document }, oracle), [
     cantTell(R38, video),
