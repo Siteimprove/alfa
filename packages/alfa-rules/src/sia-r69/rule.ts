@@ -176,7 +176,7 @@ function getForeground(
  * Determine the approximate background color of an element if possible. It is
  * possible for multiple background colors to be returned, with each color
  * representing a possible background color of the element. Note that it is
- * possible that some of colors will actually never manifest; they're simply a
+ * possible that some of the colors will never manifest; they're simply a
  * worst-case guess at the possible colors that might.
  */
 function getBackground(
@@ -294,7 +294,7 @@ function resolveColor(
   switch (color.type) {
     case "keyword":
       if (color.value === "currentcolor") {
-        const color = style.computed("color").value;
+        color = style.computed("color").value;
 
         if (color.type === "color") {
           return Option.of(
