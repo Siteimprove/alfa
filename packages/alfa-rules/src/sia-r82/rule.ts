@@ -76,7 +76,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                     "error-indicator-identifies-form-field",
                     "boolean",
                     next,
-                    "Does the error indicator identify the form field it relates to?"
+                    `Does the error indicator identify, in text, the form field
+                    it relates to?`
                   ).map((isIdentified) => {
                     if (isIdentified) {
                       return Outcomes.ErrorIndicatorIdentifiesTarget;
@@ -114,7 +115,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                     "error-indicator-describes-resolution",
                     "boolean",
                     indicator,
-                    "Does the error indicator describe the cause of the error or how to resolve it?"
+                    `Does the error indicator describe, in text, the cause of
+                    the error or how to resolve it?`
                   ).map((isDescribed) => {
                     if (isDescribed) {
                       if (test(isPerceivable(device), indicator)) {
