@@ -6,9 +6,9 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 const { not, isObject } = Predicate;
 
-export interface Iterable<T> {
-  [Symbol.iterator](): Iterator<T>;
-}
+// Re-export the global `Iterable` interface to ensure that it merges with the
+// `Iterable` namespace.
+export type Iterable<T> = globalThis.Iterable<T>;
 
 export namespace Iterable {
   export function isIterable<T>(value: unknown): value is Iterable<T> {
