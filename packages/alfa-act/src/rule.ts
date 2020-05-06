@@ -1,3 +1,4 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -17,7 +18,7 @@ import { Outcome } from "./outcome";
 const { flatMap, flatten, reduce } = Iterable;
 
 export abstract class Rule<I, T, Q>
-  implements json.Serializable, earl.Serializable {
+  implements Equatable, json.Serializable, earl.Serializable {
   protected readonly _uri: string;
   protected readonly _evaluate: Rule.Evaluate<I, T, Q>;
 
@@ -36,6 +37,10 @@ export abstract class Rule<I, T, Q>
     outcomes: Cache = Cache.empty()
   ): Future<Iterable<Outcome<I, T, Q>>> {
     return this._evaluate(input, oracle, outcomes);
+  }
+
+  public equals(value: unknown): value is this {
+    return value instanceof Rule && value._uri === this._uri;
   }
 
   public abstract toJSON(): Rule.JSON;
@@ -105,8 +110,8 @@ export namespace Rule {
     }
 
     private constructor(uri: string, evaluate: Atomic.Evaluate<I, T, Q>) {
-      super(uri, (input, oracle, outcomes) => {
-        return outcomes.get(this, () => {
+      super(uri, (input, oracle, outcomes) =>
+        outcomes.get(this, () => {
           const { applicability, expectations } = evaluate(input);
 
           return Future.traverse(applicability(), (interview) =>
@@ -126,8 +131,8 @@ export namespace Rule {
                 resolve(target, Record.of(expectations(target)), this, oracle)
               );
             });
-        });
-      });
+        })
+      );
     }
 
     public toJSON(): Atomic.JSON {
@@ -177,9 +182,9 @@ export namespace Rule {
       composes: Iterable<Rule<I, T, Q>>,
       evaluate: Composite.Evaluate<I, T, Q>
     ) {
-      super(uri, (input, oracle, outcomes) => {
-        return outcomes.get(this, () => {
-          return Future.traverse(composes, (rule) =>
+      super(uri, (input, oracle, outcomes) =>
+        outcomes.get(this, () =>
+          Future.traverse(composes, (rule) =>
             rule.evaluate(input, oracle, outcomes)
           )
             .map((outcomes) =>
@@ -210,9 +215,9 @@ export namespace Rule {
                     oracle
                   )
               );
-            });
-        });
-      });
+            })
+        )
+      );
 
       this._composes = Array.from(composes);
     }
@@ -269,12 +274,7 @@ function resolve<I, T, Q>(
       (expectations, [id, expectation]) =>
         expectations.flatMap((expectations) =>
           expectation.map((expectation) =>
-            expectations.append([
-              id,
-              expectation.map((value) =>
-                value.map(normalize).mapErr(normalize)
-              ),
-            ])
+            expectations.append([id, expectation])
           )
         ),
       Option.of(List.empty<[string, Rule.Expectation]>())
@@ -286,8 +286,4 @@ function resolve<I, T, Q>(
         return Outcome.CantTell.of(rule, target);
       })
   );
-}
-
-function normalize(string: string): string {
-  return string.replace(/\s+/g, " ").trim();
 }
