@@ -13,7 +13,10 @@ export function passed<T, Q>(
     rule,
     target,
     Record.from(
-      Object.entries(expectations).map(([id, exp]) => [id, Some.of(exp)])
+      Object.entries(expectations).map(([id, expectation]) => [
+        id,
+        Some.of(expectation),
+      ])
     )
   );
 }
@@ -27,7 +30,10 @@ export function failed<T, Q>(
     rule,
     target,
     Record.from(
-      Object.entries(expectations).map(([id, exp]) => [id, Some.of(exp)])
+      Object.entries(expectations).map(([id, expectation]) => [
+        id,
+        Some.of(expectation),
+      ])
     )
   );
 }
