@@ -88,6 +88,10 @@ export class Record<T>
     yield* this._values;
   }
 
+  public *entries(): Iterable<Record.Entry<T>> {
+    yield* this;
+  }
+
   public *[Symbol.iterator](): Iterator<Record.Entry<T>> {
     let i = 0;
 
