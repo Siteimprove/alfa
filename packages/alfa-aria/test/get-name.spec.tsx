@@ -334,6 +334,26 @@ test("getName() computes the text alternative of an anchor without an href", (t)
   });
 });
 
+test("getName() computes the text alternative of an anchor with a labelled image", (t) => {
+  const a = Element.fromElement(
+    <a href="http://foo.com">
+      <img alt="Hello world" />
+    </a>
+  );
+
+  t.deepEqual(getName(a, device).toJSON(), {
+    values: [
+      {
+        value: {
+          type: "some",
+          value: "Hello world",
+        },
+        branches: null,
+      },
+    ],
+  });
+});
+
 test("getName() computes the text alternative of a table with a caption", (t) => {
   const table = Element.fromElement(
     <table>
