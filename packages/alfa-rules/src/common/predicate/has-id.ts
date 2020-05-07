@@ -4,5 +4,5 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 export function hasId(
   predicate: Predicate<string> = () => true
 ): Predicate<Element> {
-  return element => element.id.filter(predicate).isSome();
+  return (element) => element.id.filter(predicate).isSome();
 }

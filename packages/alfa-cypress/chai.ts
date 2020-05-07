@@ -14,6 +14,6 @@ declare global {
   }
 }
 
-export default Chai.createPlugin(Cypress.isType, value =>
+export default Chai.createPlugin(Cypress.isType, (value) =>
   Future.now(Cypress.asPage(value))
 );

@@ -1,45 +1,38 @@
 import { Element, Node } from "@siteimprove/alfa-dom";
 
-import { Axis } from "./types";
+import { Expression } from "./expression";
 
 /**
  * @internal
  */
 export function* walk(
   node: Node,
-  axis: Axis,
+  axis: Expression.Axis.Type,
   options: Node.Traversal = {}
 ): Iterable<Node> {
   switch (axis) {
     case "self":
-      yield node;
-      break;
+      return yield node;
 
     case "child":
-      yield* node.children(options);
-      break;
+      return yield* node.children(options);
 
     case "parent":
-      yield* node.parent(options);
-      break;
+      return yield* node.parent(options);
 
     case "descendant":
-      yield* node.descendants(options);
-      break;
+      return yield* node.descendants(options);
 
     case "descendant-or-self":
       yield node;
-      yield* node.descendants(options);
-      break;
+      return yield* node.descendants(options);
 
     case "ancestor":
-      yield* node.ancestors(options);
-      break;
+      return yield* node.ancestors(options);
 
     case "ancestor-or-self":
       yield node;
-      yield* node.ancestors(options);
-      break;
+      return yield* node.ancestors(options);
 
     case "attribute":
       if (Element.isElement(node)) {

@@ -1,18 +1,28 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Record } from "@siteimprove/alfa-record";
+import { Result } from "@siteimprove/alfa-result";
+import { Predicate } from "@siteimprove/alfa-trilean";
+
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
+import * as trilean from "@siteimprove/alfa-trilean";
 
 import { Rule } from "./rule";
 
 export abstract class Outcome<I, T, Q = unknown>
   implements Equatable, json.Serializable, earl.Serializable {
-  public readonly rule: Rule<I, T, Q>;
-  public readonly target?: T;
+  protected readonly _rule: Rule<I, T, Q>;
 
   protected constructor(rule: Rule<I, T, Q>) {
-    this.rule = rule;
+    this._rule = rule;
+  }
+
+  public get rule(): Rule<I, T, Q> {
+    return this._rule;
+  }
+
+  public get target(): T | undefined {
+    return undefined;
   }
 
   public abstract equals(value: unknown): value is this;
@@ -22,12 +32,12 @@ export abstract class Outcome<I, T, Q = unknown>
   public toEARL(): Outcome.EARL {
     return {
       "@context": {
-        earl: "http://www.w3.org/ns/earl#"
+        earl: "http://www.w3.org/ns/earl#",
       },
       "@type": "earl:Assertion",
       "earl:test": {
-        "@id": this.rule.uri
-      }
+        "@id": this._rule.uri,
+      },
     };
   }
 }
@@ -55,8 +65,8 @@ export namespace Outcome {
       return new Passed(rule, target, expectations);
     }
 
-    public readonly target: T;
-    public readonly expectations: Record<{ [key: string]: Rule.Expectation }>;
+    private readonly _target: T;
+    private readonly _expectations: Record<{ [key: string]: Rule.Expectation }>;
 
     private constructor(
       rule: Rule<I, T, Q>,
@@ -65,25 +75,47 @@ export namespace Outcome {
     ) {
       super(rule);
 
-      this.target = target;
-      this.expectations = expectations;
+      this._target = target;
+      this._expectations = Record.from(
+        expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map((result) =>
+              result.map(normalize).mapErr(normalize)
+            ),
+          ])
+      );
+    }
+
+    public get target(): T {
+      return this._target;
+    }
+
+    public get expectations(): Record<{ [key: string]: Rule.Expectation }> {
+      return this._expectations;
     }
 
     public equals(value: unknown): value is this {
       return (
         value instanceof Passed &&
-        Equatable.equals(value.rule, this.rule) &&
-        Equatable.equals(value.target, this.target) &&
-        Equatable.equals(value.expectations, this.expectations)
+        value._rule.equals(this._rule) &&
+        Equatable.equals(value._target, this._target) &&
+        value._expectations.equals(this._expectations)
       );
     }
 
     public toJSON(): Passed.JSON {
       return {
         outcome: "passed",
-        rule: this.rule.toJSON(),
-        target: json.Serializable.toJSON(this.target),
-        expectations: this.expectations.toJSON()
+        rule: this._rule.toJSON(),
+        target: json.Serializable.toJSON(this._target),
+        expectations: this._expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map((expectation) => expectation.toJSON()).getOr(null),
+          ]),
       };
     }
 
@@ -93,12 +125,12 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:passed"
-          }
-        }
+            "@id": "earl:passed",
+          },
+        },
       };
 
-      for (const pointer of earl.Serializable.toEARL(this.target)) {
+      for (const pointer of earl.Serializable.toEARL(this._target)) {
         outcome["earl:result"]["earl:pointer"] = pointer;
       }
 
@@ -111,7 +143,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "passed";
       target: json.JSON;
-      expectations: Record.JSON;
+      expectations: Array<[string, Result.JSON | null]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -134,8 +166,8 @@ export namespace Outcome {
       return new Failed(rule, target, expectations);
     }
 
-    public readonly target: T;
-    public readonly expectations: Record<{ [key: string]: Rule.Expectation }>;
+    private readonly _target: T;
+    private readonly _expectations: Record<{ [key: string]: Rule.Expectation }>;
 
     private constructor(
       rule: Rule<I, T, Q>,
@@ -144,25 +176,47 @@ export namespace Outcome {
     ) {
       super(rule);
 
-      this.target = target;
-      this.expectations = expectations;
+      this._target = target;
+      this._expectations = Record.from(
+        expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map((result) =>
+              result.map(normalize).mapErr(normalize)
+            ),
+          ])
+      );
+    }
+
+    public get target(): T {
+      return this._target;
+    }
+
+    public get expectations(): Record<{ [key: string]: Rule.Expectation }> {
+      return this._expectations;
     }
 
     public equals(value: unknown): value is this {
       return (
         value instanceof Failed &&
-        Equatable.equals(value.rule, this.rule) &&
-        Equatable.equals(value.target, this.target) &&
-        Equatable.equals(value.expectations, this.expectations)
+        value._rule.equals(this._rule) &&
+        Equatable.equals(value._target, this._target) &&
+        value._expectations.equals(this._expectations)
       );
     }
 
     public toJSON(): Failed.JSON {
       return {
         outcome: "failed",
-        rule: this.rule.toJSON(),
-        target: json.Serializable.toJSON(this.target),
-        expectations: this.expectations.toJSON()
+        rule: this._rule.toJSON(),
+        target: json.Serializable.toJSON(this._target),
+        expectations: this._expectations
+          .toArray()
+          .map(([id, expectation]) => [
+            id,
+            expectation.map((expectation) => expectation.toJSON()).getOr(null),
+          ]),
       };
     }
 
@@ -172,12 +226,12 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:failed"
-          }
-        }
+            "@id": "earl:failed",
+          },
+        },
       };
 
-      for (const pointer of earl.Serializable.toEARL(this.target)) {
+      for (const pointer of earl.Serializable.toEARL(this._target)) {
         outcome["earl:result"]["earl:pointer"] = pointer;
       }
 
@@ -190,7 +244,7 @@ export namespace Outcome {
       [key: string]: json.JSON;
       outcome: "failed";
       target: json.JSON;
-      expectations: Record.JSON;
+      expectations: Array<[string, Result.JSON | null]>;
     }
 
     export interface EARL extends Outcome.EARL {
@@ -212,27 +266,31 @@ export namespace Outcome {
       return new CantTell(rule, target);
     }
 
-    public readonly target: T;
+    private readonly _target: T;
 
     private constructor(rule: Rule<I, T, Q>, target: T) {
       super(rule);
 
-      this.target = target;
+      this._target = target;
+    }
+
+    public get target(): T {
+      return this._target;
     }
 
     public equals(value: unknown): value is this {
       return (
         value instanceof CantTell &&
-        Equatable.equals(value.rule, this.rule) &&
-        Equatable.equals(value.target, this.target)
+        value._rule.equals(this._rule) &&
+        Equatable.equals(value._target, this._target)
       );
     }
 
     public toJSON(): CantTell.JSON {
       return {
         outcome: "cantTell",
-        rule: this.rule.toJSON(),
-        target: json.Serializable.toJSON(this.target)
+        rule: this._rule.toJSON(),
+        target: json.Serializable.toJSON(this._target),
       };
     }
 
@@ -242,9 +300,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:cantTell"
-          }
-        }
+            "@id": "earl:cantTell",
+          },
+        },
       };
     }
   }
@@ -281,15 +339,13 @@ export namespace Outcome {
     }
 
     public equals(value: unknown): value is this {
-      return (
-        value instanceof Inapplicable && Equatable.equals(value.rule, this.rule)
-      );
+      return value instanceof Inapplicable && value._rule.equals(this._rule);
     }
 
     public toJSON(): Inapplicable.JSON {
       return {
         outcome: "inapplicable",
-        rule: this.rule.toJSON()
+        rule: this._rule.toJSON(),
       };
     }
 
@@ -299,9 +355,9 @@ export namespace Outcome {
         "earl:result": {
           "@type": "earl:TestResult",
           "earl:outcome": {
-            "@id": "earl:inapplicable"
-          }
-        }
+            "@id": "earl:inapplicable",
+          },
+        },
       };
     }
   }
@@ -327,13 +383,15 @@ export namespace Outcome {
     target: T,
     expectations: Record<{ [key: string]: Rule.Expectation }>
   ): Outcome.Applicable<I, T, Q> {
-    const holds = Iterable.every(expectations, ([id, expectation]) =>
-      expectation.isOk()
+    return Predicate.fold(
+      trilean.every((expectation) =>
+        expectation.isNone() ? undefined : expectation.get().isOk()
+      ),
+      expectations.values(),
+      () => Passed.of(rule, target, expectations),
+      () => Failed.of(rule, target, expectations),
+      () => CantTell.of(rule, target)
     );
-
-    return holds
-      ? Passed.of(rule, target, expectations)
-      : Failed.of(rule, target, expectations);
   }
 
   export function isPassed<I, T, Q>(
@@ -365,4 +423,8 @@ export namespace Outcome {
   ): outcome is Inapplicable<I, T, Q> {
     return outcome instanceof Inapplicable;
   }
+}
+
+function normalize(input: string): string {
+  return input.trim().replace(/\s+/g, " ");
 }

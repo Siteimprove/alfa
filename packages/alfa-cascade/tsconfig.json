@@ -32,6 +32,9 @@
       "path": "../alfa-option"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-selector"
     },
     {

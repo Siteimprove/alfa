@@ -31,7 +31,7 @@ export namespace Unexpected {
           },
           inspect(value, depth, output) {
             output.text(`${value}`);
-          }
+          },
         });
 
         unexpected.addAssertion<T>(
@@ -40,13 +40,13 @@ export namespace Unexpected {
             const page = transform(subject);
 
             return Assert.Page.isAccessible(page)
-              .map(error => {
+              .map((error) => {
                 expect(error.isNone(), "[not] to be", true);
               })
               .toPromise();
           }
         );
-      }
+      },
     };
   }
 }

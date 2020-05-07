@@ -1,19 +1,15 @@
 {
-  "private": true,
+  "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-test",
-  "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
-  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
-  "keywords": [
-    "a11y",
-    "accessibility",
-    "aria",
-    "typescript",
-    "wcag"
-  ],
-  "repository": "https://github.com/siteimprove/alfa",
+  "description": "A simple test library sitting on top of the built-in Node.js assert module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-test"
+  },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -22,8 +18,12 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-highlight": "^0.0.0",
+    "@siteimprove/alfa-highlight": "^0.0.1",
     "@types/node": "^13.1.6",
     "error-stack-parser": "^2.0.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   }
 }

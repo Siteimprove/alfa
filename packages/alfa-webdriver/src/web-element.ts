@@ -22,7 +22,7 @@ import {
   StyleRule,
   SupportsRule,
   Text,
-  Type
+  Type,
 } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Option } from "@siteimprove/alfa-option";
@@ -58,7 +58,7 @@ export namespace WebElement {
     webElement: WebElement,
     browser: Browser
   ): Promise<Page> {
-    const element = await browser.execute(element => {
+    const element = await browser.execute((element) => {
       return toElement(element);
 
       function toNode(node: globalThis.Node): Node.JSON {
@@ -100,7 +100,7 @@ export namespace WebElement {
           style: "style" in element ? toBlock(element.style) : null,
           children: [...element.childNodes].map(toNode),
           shadow: null,
-          content: null
+          content: null,
         };
       }
 
@@ -110,21 +110,21 @@ export namespace WebElement {
           namespace: attribute.namespaceURI,
           prefix: attribute.prefix,
           name: attribute.localName,
-          value: attribute.value
+          value: attribute.value,
         };
       }
 
       function toText(text: globalThis.Text): Text.JSON {
         return {
           type: "text",
-          data: text.data
+          data: text.data,
         };
       }
 
       function toComment(comment: globalThis.Comment): Comment.JSON {
         return {
           type: "comment",
-          data: comment.data
+          data: comment.data,
         };
       }
 
@@ -132,9 +132,9 @@ export namespace WebElement {
         return {
           type: "document",
           children: [...document.childNodes].map(toNode),
-          style: [...document.styleSheets].map(sheet =>
+          style: [...document.styleSheets].map((sheet) =>
             toSheet(sheet as CSSStyleSheet)
-          )
+          ),
         };
       }
 
@@ -143,14 +143,16 @@ export namespace WebElement {
           type: "type",
           name: type.name,
           publicId: type.publicId === "" ? null : type.publicId,
-          systemId: type.systemId === "" ? null : type.systemId
+          systemId: type.systemId === "" ? null : type.systemId,
         };
       }
 
       function toSheet(sheet: globalThis.CSSStyleSheet): Sheet.JSON {
         return {
           rules: [...sheet.cssRules].map(toRule),
-          disabled: sheet.disabled
+          disabled: sheet.disabled,
+          condition:
+            sheet.media.mediaText === "" ? null : sheet.media.mediaText,
         };
       }
 
@@ -191,7 +193,7 @@ export namespace WebElement {
         return {
           type: "style",
           selector: styleRule.selectorText,
-          style: toBlock(styleRule.style)
+          style: toBlock(styleRule.style),
         };
       }
 
@@ -200,7 +202,7 @@ export namespace WebElement {
           type: "import",
           rules: toSheet(rule.styleSheet as globalThis.CSSStyleSheet).rules,
           condition: rule.media.mediaText,
-          href: rule.href
+          href: rule.href,
         };
       }
 
@@ -208,7 +210,7 @@ export namespace WebElement {
         return {
           type: "media",
           condition: rule.conditionText,
-          rules: [...rule.cssRules].map(toRule)
+          rules: [...rule.cssRules].map(toRule),
         };
       }
 
@@ -217,7 +219,7 @@ export namespace WebElement {
       ): FontFaceRule.JSON {
         return {
           type: "font-face",
-          style: toBlock(rule.style)
+          style: toBlock(rule.style),
         };
       }
 
@@ -225,7 +227,7 @@ export namespace WebElement {
         return {
           type: "page",
           selector: rule.selectorText,
-          style: toBlock(rule.style)
+          style: toBlock(rule.style),
         };
       }
 
@@ -235,7 +237,7 @@ export namespace WebElement {
         return {
           type: "keyframes",
           rules: [...rule.cssRules].map(toRule),
-          name: rule.name
+          name: rule.name,
         };
       }
 
@@ -245,7 +247,7 @@ export namespace WebElement {
         return {
           type: "keyframe",
           key: rule.keyText,
-          style: toBlock(rule.style)
+          style: toBlock(rule.style),
         };
       }
 
@@ -255,7 +257,7 @@ export namespace WebElement {
         return {
           type: "namespace",
           namespace: rule.namespaceURI,
-          prefix: rule.prefix
+          prefix: rule.prefix,
         };
       }
 
@@ -265,7 +267,7 @@ export namespace WebElement {
         return {
           type: "supports",
           condition: rule.conditionText,
-          rules: [...rule.cssRules].map(toRule)
+          rules: [...rule.cssRules].map(toRule),
         };
       }
 
@@ -287,7 +289,7 @@ export namespace WebElement {
     return Page.of(
       Request.empty(),
       Response.empty(),
-      Document.of(self => [Element.fromElement(element, Option.of(self))]),
+      Document.of((self) => [Element.fromElement(element, Option.of(self))]),
       Device.standard()
     );
   }

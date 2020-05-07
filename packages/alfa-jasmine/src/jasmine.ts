@@ -26,7 +26,7 @@ export namespace Jasmine {
               if (identify(value)) {
                 const page = transform(value);
 
-                return await Assert.Page.isAccessible(page).map(error => {
+                return await Assert.Page.isAccessible(page).map((error) => {
                   return {
                     pass: error.isNone(),
                     message:
@@ -34,18 +34,18 @@ export namespace Jasmine {
                         "toBeAccessible",
                         error.isNone(),
                         page
-                      ) + (error.isNone() ? "" : ` ${error.toString()}`)
+                      ) + (error.isNone() ? "" : ` ${error.toString()}`),
                   };
                 });
               }
 
               return {
                 pass: true,
-                message: "Expected to not be accessible"
+                message: "Expected to not be accessible",
               };
-            }
+            },
           };
-        }
+        },
       });
     });
   }

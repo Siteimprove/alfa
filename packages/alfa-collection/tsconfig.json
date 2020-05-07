@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": ["src/collection.ts", "src/index.ts"],
+  "references": [
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-foldable"
+    },
+    {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-mapper"
+    },
+    {
+      "path": "../alfa-monad"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-reducer"
+    },
+    {
+      "path": "../alfa-test"
+    }
+  ]
+}

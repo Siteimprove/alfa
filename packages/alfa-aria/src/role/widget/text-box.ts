@@ -12,11 +12,11 @@ Role.register(
       "aria-multiline",
       "aria-placeholder",
       "aria-readonly",
-      "aria-required"
+      "aria-required",
     ],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

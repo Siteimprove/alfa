@@ -24,8 +24,8 @@ import { Selector } from "@siteimprove/alfa-selector";
  *  +-- ".foo"
  *      +-- ".foo[href]"
  *
- * We then associate rule `".foo[href]"` with element A and go ahead and insert
- * the matched rules for element B into the tree:
+ * We then associate rule `".foo[href]"` with element A and insert the matched
+ * rules for element B into the tree:
  *
  *  "div"
  *  +-- ".foo"
@@ -43,23 +43,35 @@ import { Selector } from "@siteimprove/alfa-selector";
  * `body`.
  *
  * @see http://doc.servo.org/style/rule_tree/struct.RuleTree.html
- * @internal
  */
 export class RuleTree {
-  private readonly children: Array<RuleTree.Node> = [];
+  public static empty(): RuleTree {
+    return new RuleTree();
+  }
+
+  private readonly _children: Array<RuleTree.Node> = [];
+
+  private constructor() {}
 
   public add(
-    rules: Iterable<Pick<RuleTree.Node, "rule" | "selector" | "declarations">>
+    rules: Iterable<{
+      rule: Rule;
+      selector: Selector;
+      declarations: Iterable<Declaration>;
+    }>
   ): Option<RuleTree.Node> {
     let parent: Option<RuleTree.Node> = None;
-    let children = this.children;
+    let children = this._children;
 
     for (const { rule, selector, declarations } of rules) {
       // Insert the next rule into the current parent, using the returned rule
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the
       // caller.
-      parent = Option.of(add(rule, selector, declarations, parent, children));
+      parent = Option.of(
+        RuleTree.Node.add(rule, selector, declarations, children, parent)
+      );
+
       children = parent.get().children;
     }
 
@@ -67,9 +79,6 @@ export class RuleTree {
   }
 }
 
-/**
- * @internal
- */
 export namespace RuleTree {
   export class Node {
     public static of(
@@ -82,11 +91,11 @@ export namespace RuleTree {
       return new Node(rule, selector, declarations, children, parent);
     }
 
-    public readonly rule: Rule;
-    public readonly selector: Selector;
-    public readonly declarations: Iterable<Declaration>;
-    public readonly parent: Option<Node>;
-    public readonly children: Array<Node>;
+    private readonly _rule: Rule;
+    private readonly _selector: Selector;
+    private readonly _declarations: Iterable<Declaration>;
+    private readonly _children: Array<Node>;
+    private readonly _parent: Option<Node>;
 
     private constructor(
       rule: Rule,
@@ -95,41 +104,61 @@ export namespace RuleTree {
       children: Array<Node>,
       parent: Option<Node>
     ) {
-      this.rule = rule;
-      this.selector = selector;
-      this.declarations = declarations;
-      this.children = children;
-      this.parent = parent;
+      this._rule = rule;
+      this._selector = selector;
+      this._declarations = declarations;
+      this._children = children;
+      this._parent = parent;
+    }
+
+    public get rule(): Rule {
+      return this._rule;
+    }
+
+    public get selector(): Selector {
+      return this._selector;
+    }
+
+    public get declarations(): Iterable<Declaration> {
+      return this._declarations;
+    }
+
+    public get children(): Array<Node> {
+      return this._children;
+    }
+
+    public get parent(): Option<Node> {
+      return this._parent;
+    }
+
+    public static add(
+      rule: Rule,
+      selector: Selector,
+      declarations: Iterable<Declaration>,
+      children: Array<RuleTree.Node>,
+      parent: Option<Node>
+    ): RuleTree.Node {
+      if (parent.some((parent) => parent._selector.equals(selector))) {
+        return parent.get();
+      }
+
+      for (const child of children) {
+        if (child._selector.equals(selector)) {
+          return this.add(
+            rule,
+            selector,
+            declarations,
+            child._children,
+            Option.of(child)
+          );
+        }
+      }
+
+      const node = Node.of(rule, selector, declarations, [], parent);
+
+      children.push(node);
+
+      return node;
     }
   }
-}
-
-function add(
-  rule: Rule,
-  selector: Selector,
-  declarations: Iterable<Declaration>,
-  parent: Option<RuleTree.Node>,
-  children: Array<RuleTree.Node>
-): RuleTree.Node {
-  if (parent.isSome() && parent.get().selector === selector) {
-    return parent.get();
-  }
-
-  for (const child of children) {
-    if (child.selector.equals(selector)) {
-      return add(
-        rule,
-        selector,
-        declarations,
-        Option.of(child),
-        child.children
-      );
-    }
-  }
-
-  const node = RuleTree.Node.of(rule, selector, declarations, [], parent);
-
-  children.push(node);
-
-  return node;
 }

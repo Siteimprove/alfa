@@ -6,13 +6,24 @@ import { Role } from "../../role";
 Role.register(
   Role.of("combobox", Role.Category.Widget, {
     inherits: ["select"],
-    requires: ["aria-controls", "aria-expanded"],
-    supports: ["aria-autocomplete", "aria-readonly", "aria-required"],
-    owns: ["textbox", "listbox", "tree", "grid", "dialog"],
+    requires: ["aria-expanded"],
+    supports: [
+      "aria-autocomplete",
+      "aria-readonly",
+      "aria-required",
+
+      // This property is only required when the combobox is expanded so we list
+      // it as supported instead.
+      "aria-controls",
+    ],
+    owns: ["textbox"],
     name: {
       from: ["author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-expanded", "false"], ["aria-haspopup", "listbox"]]
+    implicits: [
+      ["aria-expanded", "false"],
+      ["aria-haspopup", "listbox"],
+    ],
   })
 );

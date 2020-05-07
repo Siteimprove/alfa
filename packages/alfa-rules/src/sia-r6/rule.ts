@@ -6,10 +6,12 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
-const { filter, isEmpty } = Iterable;
+const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -17,37 +19,44 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document }) {
     return {
       applicability() {
-        return filter(
-          document.children(),
+        return document.children().filter(
           and(
-            Element.isElement,
+            isDocumentElement,
             and(
-              isDocumentElement(),
-              and(
-                hasAttribute("lang", value => Language.from(value).isSome()),
-                hasAttribute("xml:lang", not(isEmpty))
-              )
+              hasAttribute("lang", (value) => Language.parse(value).isSome()),
+              hasAttribute("xml:lang", not(isEmpty))
             )
           )
         );
       },
 
       expectations(target) {
-        const lang = Language.from(target.attribute("lang").get().value).get();
-        const xmlLang = Language.from(target.attribute("xml:lang").get().value);
+        const lang = Language.parse(target.attribute("lang").get().value).get();
+        const xmlLang = Language.parse(
+          target.attribute("xml:lang").get().value
+        );
 
         return {
-          1:
+          1: expectation(
             xmlLang.isNone() ||
-            xmlLang.filter(xmlLang => xmlLang.primary === lang.primary).isSome()
-              ? Ok.of(
-                  "The lang and xml:lang attributes have matching primary language subtags"
-                )
-              : Err.of(
-                  "The lang and xml:lang attributes do not have matching primary language subtags"
-                )
+              xmlLang
+                .filter((xmlLang) => xmlLang.primary === lang.primary)
+                .isSome(),
+            () => Outcomes.HasMatchingLanguages,
+            () => Outcomes.HasNonMatchingLanguages
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
+
+export namespace Outcomes {
+  export const HasMatchingLanguages = Ok.of(
+    "The lang and xml:lang attributes have matching primary language subtags"
+  );
+
+  export const HasNonMatchingLanguages = Err.of(
+    "The lang and xml:lang attributes do not have matching primary language subtags"
+  );
+}

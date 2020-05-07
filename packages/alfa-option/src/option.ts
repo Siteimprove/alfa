@@ -43,6 +43,8 @@ export interface Option<T>
 }
 
 export namespace Option {
+  export type Maybe<T> = T | Option<T>;
+
   export type JSON = Some.JSON | None.JSON;
 
   export function of<T>(value: T): Option<T> {
@@ -54,7 +56,7 @@ export namespace Option {
   }
 
   export function flatten<T>(value: Option<Option<T>>): Option<T> {
-    return value.flatMap(value => value);
+    return value.flatMap((value) => value);
   }
 
   export function isOption<T>(value: unknown): value is Option<T> {

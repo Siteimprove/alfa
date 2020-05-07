@@ -1,6 +1,6 @@
 // This file has been automatically generated based on the MDN browser
 // compatibility data. Do therefore not modify it directly! If you wish to make
-// changes, do so in `scripts/browsers.js` and run `yarn prepare` to rebuild this
+// changes, do so in `scripts/browsers.js` and run `yarn generate` to rebuild this
 // file.
 
 export type Data = typeof Data;
@@ -83,8 +83,8 @@ export const Data = {
       "73": { date: 1552348800000 },
       "74": { date: 1555977600000 },
       "75": { date: 1559606400000 },
-      "76": { date: 1564444800000 }
-    }
+      "76": { date: 1564444800000 },
+    },
   },
   edge: {
     releases: {
@@ -94,8 +94,8 @@ export const Data = {
       "15": { date: 1491350400000 },
       "16": { date: 1508198400000 },
       "17": { date: 1525046400000 },
-      "18": { date: 1538438400000 }
-    }
+      "18": { date: 1538438400000 },
+    },
   },
   firefox: {
     releases: {
@@ -171,8 +171,8 @@ export const Data = {
       "66": { date: 1552953600000 },
       "67": { date: 1558396800000 },
       "68": { date: 1562630400000 },
-      "69": { date: 1567468800000 }
-    }
+      "69": { date: 1567468800000 },
+    },
   },
   ie: {
     releases: {
@@ -187,8 +187,8 @@ export const Data = {
       "8": { date: 1237420800000 },
       "9": { date: 1300060800000 },
       "10": { date: 1351209600000 },
-      "11": { date: 1381968000000 }
-    }
+      "11": { date: 1381968000000 },
+    },
   },
   opera: {
     releases: {
@@ -267,8 +267,8 @@ export const Data = {
       "58": { date: 1548201600000 },
       "60": { date: 1554768000000 },
       "62": { date: 1561593600000 },
-      "63": { date: 1566259200000 }
-    }
+      "63": { date: 1566259200000 },
+    },
   },
   safari: {
     releases: {
@@ -295,7 +295,7 @@ export const Data = {
       "11": { date: 1505779200000 },
       "11.1": { date: 1523491200000 },
       "12": { date: 1537747200000 },
-      "12.1": { date: 1553472000000 }
-    }
-  }
+      "12.1": { date: 1553472000000 },
+    },
+  },
 };

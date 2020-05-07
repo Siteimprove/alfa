@@ -1,17 +1,24 @@
 name: Integrate
-on: [push]
+on:
+  push:
+    branches:
+      - "*"
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [10, 12]
+    name: Build
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install -g yarn
-    - run: yarn install --ignore-scripts
-    - run: yarn prepare
-    - run: yarn test
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v1
+        with:
+          path: .cache/yarn
+          key: yarn-${{ hashFiles('yarn.lock') }}
+      - run: yarn install --frozen-lockfile --ignore-platform --cache-folder .cache/yarn
+      - run: yarn build
+      - run: yarn test

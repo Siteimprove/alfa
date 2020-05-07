@@ -5,14 +5,15 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import { expectation } from "../common/expectation";
+
 import { hasChild } from "../common/predicate/has-child";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasTextContent } from "../common/predicate/has-text-content";
 import { isDocumentElement } from "../common/predicate/is-document-element";
 
+const { isElement, hasName, hasNamespace } = Element;
 const { filter, first } = Iterable;
-const { and, equals, fold } = Predicate;
+const { and, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r1.html",
@@ -20,10 +21,10 @@ export default Rule.Atomic.of<Page, Document>({
     return {
       applicability() {
         return fold(
-          hasChild(and(Element.isElement, isDocumentElement())),
-          document,
+          hasChild(isDocumentElement),
           () => [document],
-          () => []
+          () => [],
+          document
         );
       },
 
@@ -31,34 +32,26 @@ export default Rule.Atomic.of<Page, Document>({
         const title = first(
           filter(
             target.descendants(),
-            and(
-              Element.isElement,
-              and(
-                hasNamespace(equals(Namespace.HTML)),
-                hasName(equals("title"))
-              )
-            )
+            and(isElement, and(hasNamespace(Namespace.HTML), hasName("title")))
           )
         );
 
         return {
-          1: fold(
-            title => title.isSome(),
-            title,
+          1: expectation(
+            title.isSome(),
             () => Outcomes.HasTitle,
             () => Outcomes.HasNoTitle
           ),
 
-          2: fold(
-            title => title.some(hasTextContent()),
-            title,
+          2: expectation(
+            title.some(hasTextContent()),
             () => Outcomes.HasNonEmptyTitle,
             () => Outcomes.HasEmptyTitle
-          )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 export namespace Outcomes {
@@ -74,7 +67,7 @@ export namespace Outcomes {
     "The first <title> element has text content"
   );
 
-  export const HasEmptyTitle: Rule.Expectation = Err.of(
+  export const HasEmptyTitle = Err.of(
     "The first <title> element has no text content"
   );
 }

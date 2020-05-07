@@ -10,7 +10,7 @@ Role.register(
     context: ["group", "menu", "menubar"],
     name: {
       from: ["contents", "author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

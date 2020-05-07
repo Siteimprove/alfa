@@ -8,7 +8,7 @@ Role.register(
     inherits: ["widget"],
     name: {
       from: ["author"],
-      required: false
-    }
+      required: false,
+    },
   })
 );

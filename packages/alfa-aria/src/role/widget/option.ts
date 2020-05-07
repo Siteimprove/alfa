@@ -11,8 +11,8 @@ Role.register(
     context: ["listbox"],
     name: {
       from: ["contents", "author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-selected", "false"]]
+    implicits: [["aria-selected", "false"]],
   })
 );

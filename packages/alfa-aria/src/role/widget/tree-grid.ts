@@ -9,7 +9,7 @@ Role.register(
     owns: ["row", ["rowgroup", "row"]],
     name: {
       from: ["author"],
-      required: true
-    }
+      required: true,
+    },
   })
 );

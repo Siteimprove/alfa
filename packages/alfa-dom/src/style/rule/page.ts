@@ -43,7 +43,7 @@ export class Page extends Rule {
     return {
       type: "page",
       selector: this._selector,
-      style: this._style.toJSON()
+      style: this._style.toJSON(),
     };
   }
 
@@ -74,9 +74,9 @@ export namespace Page {
   ): Page {
     return Page.of(
       json.selector,
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return json.style.map(declaration =>
+        return json.style.map((declaration) =>
           Declaration.fromDeclaration(declaration, parent)
         );
       },

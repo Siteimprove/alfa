@@ -1,49 +1,58 @@
 import { Rule } from "@siteimprove/alfa-act";
-import * as aria from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
+import * as aria from "@siteimprove/alfa-aria";
 
-const { filter, flatMap, isEmpty } = Iterable;
-const { and, not, equals, property } = Predicate;
+import { expectation } from "../common/expectation";
+
+const { isElement, hasNamespace } = Element;
+const { isEmpty } = Iterable;
+const { and, not, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r19.html",
   evaluate({ document, device }) {
     return {
       applicability() {
-        return flatMap(
-          filter(
-            document.descendants({ composed: true, nested: true }),
-            and(
-              Element.isElement,
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG))
+        return document
+          .descendants({ composed: true, nested: true })
+          .filter(and(isElement, hasNamespace(Namespace.HTML, Namespace.SVG)))
+          .flatMap((element) =>
+            Sequence.from(element.attributes).filter(
+              and(
+                property("name", (name) =>
+                  aria.Attribute.lookup(name).isSome()
+                ),
+                property("value", not(isEmpty))
+              )
             )
-          ),
-          element =>
-	    filter(
-	      element.attributes,
-	      and(
-		property("name", name => aria.Attribute.lookup(name).isSome()),
-		property("value", not(isEmpty))
-	      )
-            )
-        );
+          );
       },
 
       expectations(target) {
         const attribute = aria.Attribute.lookup(target.name).get();
 
         return {
-          1: attribute.isValid(target.value)
-            ? Ok.of("The attribute has a valid value")
-            : Err.of("The attribute does not have a valid value")
+          1: expectation(
+            attribute.isValid(target.value),
+            () => Outcomes.HasValidValue,
+            () => Outcomes.HasNoValidValue
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
+
+export namespace Outcomes {
+  export const HasValidValue = Ok.of("The attribute has a valid value");
+
+  export const HasNoValidValue = Err.of(
+    "The attribute does not have a valid value"
+  );
+}

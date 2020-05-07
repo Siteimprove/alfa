@@ -1,8 +1,13 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
 import { Element } from "./element";
+
+const { isEmpty } = Iterable;
+const { equals, not } = Predicate;
 
 export class Attribute extends Node {
   public static of(
@@ -28,11 +33,11 @@ export class Attribute extends Node {
     value: string,
     owner: Option<Element>
   ) {
-    super(self => [], None);
+    super(() => [], None);
 
     this._namespace = namespace;
     this._prefix = prefix;
-    this._name = name;
+    this._name = foldCase(name, owner);
     this._value = value;
     this._owner = owner;
   }
@@ -57,6 +62,10 @@ export class Attribute extends Node {
     return this._owner;
   }
 
+  public hasName(name: string): boolean {
+    return this._name === foldCase(name, this._owner);
+  }
+
   /**
    * @see https://html.spec.whatwg.org/#boolean-attribute
    */
@@ -78,12 +87,35 @@ export class Attribute extends Node {
   }
 
   public path(): string {
-    let path = this.owner.map(owner => owner.path()).getOr("/");
+    let path = this.owner.map((owner) => owner.path()).getOr("/");
 
     path += path === "/" ? "" : "/";
     path += `@${this._name}`;
 
     return path;
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#space-separated-tokens
+   */
+  public tokens(separator: string | RegExp = /\s+/): Array<string> {
+    return this._value.trim().split(separator).filter(not(isEmpty));
+  }
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   */
+  public enumerate(): Option<string>;
+
+  /**
+   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   */
+  public enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
+
+  public enumerate(...valid: Array<string>): Option<string> {
+    const value = this._value.toLowerCase();
+
+    return valid.length === 0 || valid.includes(value) ? Some.of(value) : None;
   }
 
   public toJSON(): Attribute.JSON {
@@ -92,7 +124,7 @@ export class Attribute extends Node {
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
-      value: this._value
+      value: this._value,
     };
   }
 
@@ -106,16 +138,16 @@ export class Attribute extends Node {
 }
 
 export namespace Attribute {
-  export function isAttribute(value: unknown): value is Attribute {
-    return value instanceof Attribute;
-  }
-
   export interface JSON extends Node.JSON {
     type: "attribute";
     namespace: string | null;
     prefix: string | null;
     name: string;
     value: string;
+  }
+
+  export function isAttribute(value: unknown): value is Attribute {
+    return value instanceof Attribute;
   }
 
   export function fromAttribute(
@@ -130,4 +162,14 @@ export namespace Attribute {
       owner
     );
   }
+}
+
+/**
+ * Conditionally fold the case of an attribute name based on its owner; HTML
+ * attributes are case insensitive while attributes in other namespaces aren't.
+ */
+function foldCase(name: string, owner: Option<Element>): string {
+  return owner.some((owner) => owner.namespace.some(equals(Namespace.HTML)))
+    ? name.toLowerCase()
+    : name;
 }

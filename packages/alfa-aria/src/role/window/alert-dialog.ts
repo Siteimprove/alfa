@@ -6,6 +6,6 @@ import { Role } from "../../role";
 Role.register(
   Role.of("alertdialog", Role.Category.Window, {
     inherits: ["alert", "dialog"],
-    name: { from: ["author"], required: true }
+    name: { from: ["author"], required: true },
   })
 );

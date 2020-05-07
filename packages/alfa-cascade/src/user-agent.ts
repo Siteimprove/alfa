@@ -3,7 +3,7 @@ import {
   Namespace,
   NamespaceRule,
   Sheet,
-  StyleRule
+  StyleRule,
 } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 
@@ -11,7 +11,7 @@ import { None, Option } from "@siteimprove/alfa-option";
  * @see https://html.spec.whatwg.org/#rendering
  * @internal
  */
-export const UserAgent = Sheet.of(owner => {
+export const UserAgent = Sheet.of((owner) => {
   return [
     NamespaceRule.of(Namespace.HTML, None, owner),
 
@@ -21,7 +21,7 @@ export const UserAgent = Sheet.of(owner => {
 
     StyleRule.of(
       "[hidden], base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
-      self => [Declaration.of("display", "none", false, Option.of(self))],
+      (self) => [Declaration.of("display", "none", false, Option.of(self))],
       owner
     ),
 
@@ -41,9 +41,9 @@ export const UserAgent = Sheet.of(owner => {
 
     StyleRule.of(
       "input[type=hidden i]",
-      self => [Declaration.of("display", "none", true, Option.of(self))],
+      (self) => [Declaration.of("display", "none", true, Option.of(self))],
       owner
-    )
+    ),
 
     // /**
     //  * @see https://html.spec.whatwg.org/#the-page

@@ -43,7 +43,7 @@ export class Keyframe extends Rule {
     return {
       type: "keyframe",
       key: this._key,
-      style: this._style.toJSON()
+      style: this._style.toJSON(),
     };
   }
 
@@ -74,9 +74,9 @@ export namespace Keyframe {
   ): Keyframe {
     return Keyframe.of(
       json.key,
-      self => {
+      (self) => {
         const parent = Option.of(self);
-        return json.style.map(declaration =>
+        return json.style.map((declaration) =>
           Declaration.fromDeclaration(declaration, parent)
         );
       },

@@ -45,11 +45,19 @@ export class Viewport implements Serializable {
     return this._orientation;
   }
 
+  public isLandscape(): boolean {
+    return this._orientation === Viewport.Orientation.Landscape;
+  }
+
+  public isPortrait(): boolean {
+    return this._orientation === Viewport.Orientation.Portrait;
+  }
+
   public toJSON(): Viewport.JSON {
     return {
       width: this._width,
       height: this._height,
-      orientation: this._orientation
+      orientation: this._orientation,
     };
   }
 }
@@ -57,7 +65,7 @@ export class Viewport implements Serializable {
 export namespace Viewport {
   export enum Orientation {
     Portrait = "portrait",
-    Landscape = "landscape"
+    Landscape = "landscape",
   }
 
   export interface JSON {

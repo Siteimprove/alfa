@@ -6,6 +6,6 @@ import { Role } from "../../role";
 Role.register(
   Role.of("window", Role.Category.Abstract, {
     inherits: ["roletype"],
-    supports: ["aria-expanded", "aria-modal"]
+    supports: ["aria-expanded", "aria-modal"],
   })
 );

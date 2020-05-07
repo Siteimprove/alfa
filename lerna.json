@@ -1,7 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/lerna",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "packages": ["packages/*"]
+  "packages": [
+    "packages/*"
+  ],
+  "command": {
+    "publish": {
+      "registry": "https://npm.pkg.github.com"
+    }
+  }
 }

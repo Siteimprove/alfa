@@ -53,6 +53,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-trilean"
     }
   ]
 }

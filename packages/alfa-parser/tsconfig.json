@@ -4,16 +4,25 @@
   "files": ["src/index.ts", "src/parser.ts"],
   "references": [
     {
+      "path": "../alfa-callback"
+    },
+    {
       "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-option"
     },
     {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-result"
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-thunk"
     }
   ]
 }

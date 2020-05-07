@@ -84,7 +84,9 @@ export const None: None = new (class None {
   public *[Symbol.iterator](): Iterator<never> {}
 
   public toJSON(): None.JSON {
-    return {};
+    return {
+      type: "none",
+    };
   }
 
   public toString(): string {
@@ -95,5 +97,6 @@ export const None: None = new (class None {
 export namespace None {
   export interface JSON {
     [key: string]: json.JSON;
+    type: "none";
   }
 }

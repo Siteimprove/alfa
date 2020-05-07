@@ -10,10 +10,10 @@
       "path": "../alfa-continuation"
     },
     {
-      "path": "../alfa-either"
+      "path": "../alfa-functor"
     },
     {
-      "path": "../alfa-functor"
+      "path": "../alfa-iterable"
     },
     {
       "path": "../alfa-list"

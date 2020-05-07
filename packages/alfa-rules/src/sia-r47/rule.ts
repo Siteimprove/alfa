@@ -1,17 +1,16 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { clamp } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
+import { expectation } from "../common/expectation";
 
-const { filter } = Iterable;
+import { hasAttribute } from "../common/predicate/has-attribute";
+
+const { isElement, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -19,22 +18,19 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants(),
-          and(
-            Element.isElement,
+        return document
+          .descendants()
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML)),
+              isElement,
               and(
-                hasName(equals("meta")),
-                and(
-                  hasAttribute("name", equals("viewport")),
-                  hasAttribute("content")
-                )
+                hasNamespace(Namespace.HTML),
+                hasName("meta"),
+                hasAttribute("name", equals("viewport")),
+                hasAttribute("content")
               )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
@@ -52,17 +48,16 @@ export default Rule.Atomic.of<Page, Element>({
         const scalable = parseUserScalable(properties.get("user-scalable"));
 
         return {
-          1:
-            scale.every(scale => scale >= 2) &&
-            scalable.every(scalable => scalable !== "fixed")
-              ? Ok.of(
-                  "The <meta> element does not restrict the ability to zoom"
-                )
-              : Err.of("The <meta> element restricts the ability to zoom")
+          1: expectation(
+            scale.every((scale) => scale >= 2) &&
+              scalable.every((scalable) => scalable !== "fixed"),
+            () => Outcomes.MetaDoesNotPreventZoom,
+            () => Outcomes.MedatDoesPreventZoom
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 /*
@@ -180,4 +175,14 @@ export function parseUserScalable(
         scalableValue <= -1 || scalableValue >= 1 ? "zoom" : "fixed"
       );
   }
+}
+
+export namespace Outcomes {
+  export const MetaDoesNotPreventZoom = Ok.of(
+    "The <meta> element does not restrict the ability to zoom"
+  );
+
+  export const MedatDoesPreventZoom = Err.of(
+    "The <meta> element restricts the ability to zoom"
+  );
 }

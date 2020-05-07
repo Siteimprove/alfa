@@ -1,68 +1,89 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { hasNamespace } from "../common/predicate/has-namespace";
-import { hasNondefaultRole } from "../common/predicate/has-nondefault-role";
+import { expectation } from "../common/expectation";
+
 import { hasRole } from "../common/predicate/has-role";
 import { isIgnored } from "../common/predicate/is-ignored";
-import { Ok, Err } from "@siteimprove/alfa-result";
 
-const { filter } = Iterable;
-const { and, not, equals, test } = Predicate;
+const { isElement, hasNamespace } = Element;
+const { some } = Iterable;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r42.html",
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
-          and(
-            Element.isElement,
+        return document
+          .descendants({ flattened: true, nested: true })
+          .filter(
             and(
-              hasNamespace(equals(Namespace.HTML, Namespace.SVG)),
+              isElement,
               and(
+                hasNamespace(Namespace.HTML, Namespace.SVG),
                 not(isIgnored(device)),
-                and(
-                  hasNondefaultRole,
-                  hasRole(role => role.hasContext())
-                )
+                hasRole(hasContext())
               )
             )
-          )
-        );
+          );
       },
 
       expectations(target) {
         return {
-          1: test(hasRequiredContext(device), target)
-            ? Ok.of(
-                "The element is owned by an element of its required context role"
-              )
-            : Err.of(
-                "The element is not owned by an element of its required context role"
-              )
+          1: expectation(
+            hasRequiredContext(device)(target),
+            () => Outcomes.IsOwnedByContextRole,
+            () => Outcomes.IsNotOwnedByContextRole
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
+export namespace Outcomes {
+  export const IsOwnedByContextRole = Ok.of(
+    "The element is owned by an element of its required context role"
+  );
+
+  export const IsNotOwnedByContextRole = Err.of(
+    "The element is not owned by an element of its required context role"
+  );
+}
+
+function hasContext(
+  predicate: Predicate<string> = () => true
+): Predicate<Role> {
+  return function hasContext(role) {
+    return (
+      some(role.characteristics.context, predicate) ||
+      role.inheritsFrom(hasContext)
+    );
+  };
+}
+
 function hasRequiredContext(device: Device): Predicate<Element> {
-  return element =>
-    Node.from(element, device).every(node =>
-      node.parent().some(parent =>
-        parent.role().some(role =>
-          node
+  return (element) =>
+    Node.from(element, device).some((node) =>
+      node
+        .parent()
+        .some((parent) =>
+          parent
             .role()
-            .get()
-            .hasContext(context => context.name === role.name)
+            .some((parentRole) =>
+              node
+                .role()
+                .some((role) =>
+                  hasContext((context) => context === parentRole.name)(role)
+                )
+            )
         )
-      )
     );
 }

@@ -1,19 +1,15 @@
 {
-  "private": true,
+  "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-rules",
-  "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
-  "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
-  "keywords": [
-    "a11y",
-    "accessibility",
-    "aria",
-    "typescript",
-    "wcag"
-  ],
-  "repository": "https://github.com/siteimprove/alfa",
+  "description": "Implementations of ACT rules from the Sanshikan repository",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-rules"
+  },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -22,28 +18,34 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-act": "^0.0.0",
-    "@siteimprove/alfa-affine": "^0.0.0",
-    "@siteimprove/alfa-aria": "^0.0.0",
-    "@siteimprove/alfa-branched": "^0.0.0",
-    "@siteimprove/alfa-compatibility": "^0.0.0",
-    "@siteimprove/alfa-css": "^0.0.0",
-    "@siteimprove/alfa-device": "^0.0.0",
-    "@siteimprove/alfa-dom": "^0.0.0",
-    "@siteimprove/alfa-future": "^0.0.0",
-    "@siteimprove/alfa-iana": "^0.0.0",
-    "@siteimprove/alfa-iterable": "^0.0.0",
-    "@siteimprove/alfa-lang": "^0.0.0",
-    "@siteimprove/alfa-math": "^0.0.0",
-    "@siteimprove/alfa-media": "^0.0.0",
-    "@siteimprove/alfa-option": "^0.0.0",
-    "@siteimprove/alfa-predicate": "^0.0.0",
-    "@siteimprove/alfa-record": "^0.0.0",
-    "@siteimprove/alfa-result": "^0.0.0",
-    "@siteimprove/alfa-style": "^0.0.0",
-    "@siteimprove/alfa-web": "^0.0.0"
+    "@siteimprove/alfa-act": "^0.0.1",
+    "@siteimprove/alfa-affine": "^0.0.1",
+    "@siteimprove/alfa-aria": "^0.0.1",
+    "@siteimprove/alfa-branched": "^0.0.1",
+    "@siteimprove/alfa-compatibility": "^0.0.1",
+    "@siteimprove/alfa-css": "^0.0.1",
+    "@siteimprove/alfa-device": "^0.0.1",
+    "@siteimprove/alfa-dom": "^0.0.1",
+    "@siteimprove/alfa-future": "^0.0.1",
+    "@siteimprove/alfa-iana": "^0.0.1",
+    "@siteimprove/alfa-iterable": "^0.0.1",
+    "@siteimprove/alfa-map": "^0.0.1",
+    "@siteimprove/alfa-math": "^0.0.1",
+    "@siteimprove/alfa-media": "^0.0.1",
+    "@siteimprove/alfa-option": "^0.0.1",
+    "@siteimprove/alfa-predicate": "^0.0.1",
+    "@siteimprove/alfa-record": "^0.0.1",
+    "@siteimprove/alfa-result": "^0.0.1",
+    "@siteimprove/alfa-style": "^0.0.1",
+    "@siteimprove/alfa-table": "^0.0.1",
+    "@siteimprove/alfa-trilean": "^0.0.1",
+    "@siteimprove/alfa-web": "^0.0.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "^0.0.0"
+    "@siteimprove/alfa-test": "^0.0.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   }
 }

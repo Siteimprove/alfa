@@ -18,11 +18,21 @@ export namespace Transformation {
   }
 
   export function translate(tx: number, ty = 0, tz = 0): Transformation {
-    return [[1, 0, 0, tx], [0, 1, 0, ty], [0, 0, 1, tz], [0, 0, 0, 1]];
+    return [
+      [1, 0, 0, tx],
+      [0, 1, 0, ty],
+      [0, 0, 1, tz],
+      [0, 0, 0, 1],
+    ];
   }
 
   export function scale(sx: number, sy: number, sz = 1): Transformation {
-    return [[sx, 0, 0, 0], [0, sy, 0, 0], [0, 0, sz, 0], [0, 0, 0, 1]];
+    return [
+      [sx, 0, 0, 0],
+      [0, sy, 0, 0],
+      [0, 0, sz, 0],
+      [0, 0, 0, 1],
+    ];
   }
 
   export function rotate(a: number, u: Vector<3> = [0, 0, 1]): Transformation {
@@ -33,30 +43,40 @@ export namespace Transformation {
         cos(a) + x ** 2 * (1 - cos(a)),
         x * y * (1 - cos(a)) - z * sin(a),
         x * z * (1 - cos(a)) + y * sin(a),
-        0
+        0,
       ],
       [
         y * x * (1 - cos(a)) + z * sin(a),
         cos(a) + y ** 2 * (1 - cos(a)),
         y * z * (1 - cos(a)) - x * sin(a),
-        0
+        0,
       ],
       [
         z * x * (1 - cos(a)) - y * sin(a),
         z * y * (1 - cos(a)) + x * sin(a),
         cos(a) + z ** 2 * (1 - cos(a)),
-        0
+        0,
       ],
-      [0, 0, 0, 1]
+      [0, 0, 0, 1],
     ];
   }
 
   export function skew(a: number, b: number): Transformation {
-    return [[1, tan(a), 0, 0], [tan(b), 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+    return [
+      [1, tan(a), 0, 0],
+      [tan(b), 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+    ];
   }
 
   export function project(d: number): Transformation {
-    return [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, -1 / d, 1]];
+    return [
+      [1, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, -1 / d, 1],
+    ];
   }
 
   export interface Decomposed {
@@ -130,7 +150,7 @@ export namespace Transformation {
     const u: Matrix<3, 3> = [
       [t[0][0], t[0][1], t[0][2]],
       [t[1][0], t[1][1], t[1][2]],
-      [t[2][0], t[2][1], t[2][2]]
+      [t[2][0], t[2][1], t[2][2]],
     ];
 
     const scale: Vector<3> = [Vector.norm(u[0]), 0, 0];
@@ -168,7 +188,7 @@ export namespace Transformation {
       0.5 * sqrt(max(1 + u[0][0] - u[1][1] - u[2][2], 0)),
       0.5 * sqrt(max(1 - u[0][0] + u[1][1] - u[2][2], 0)),
       0.5 * sqrt(max(1 - u[0][0] - u[1][1] + u[2][2], 0)),
-      0.5 * sqrt(max(1 + u[0][0] + u[1][1] + u[2][2], 0))
+      0.5 * sqrt(max(1 + u[0][0] + u[1][1] + u[2][2], 0)),
     ];
 
     if (u[2][1] > u[1][2]) {
@@ -195,7 +215,7 @@ export namespace Transformation {
     return [
       ascl * a[0] + bscl * b[0],
       ascl * a[1] + bscl * b[1],
-      ascl * a[2] + bscl * b[2]
+      ascl * a[2] + bscl * b[2],
     ];
   }
 }

@@ -1,7 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Slice } from "@siteimprove/alfa-slice";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
 
@@ -11,37 +14,63 @@ const { equals } = Predicate;
 /**
  * @see https://drafts.csswg.org/css-values/#keywords
  */
-export class Keyword<T extends string = string> implements Equatable {
+export class Keyword<T extends string = string>
+  implements Equatable, Hashable, Serializable {
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }
 
-  public readonly value: T;
+  private readonly _value: T;
 
   private constructor(value: T) {
-    this.value = value;
+    this._value = value;
+  }
+
+  public get type(): "keyword" {
+    return "keyword";
+  }
+
+  public get value(): T {
+    return this._value;
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof Keyword && value.value === this.value;
+    return value instanceof Keyword && value._value === this._value;
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeString(hash, this._value);
+  }
+
+  public toJSON(): Keyword.JSON {
+    return {
+      type: "keyword",
+      value: this._value,
+    };
   }
 
   public toString(): string {
-    return this.value;
+    return this._value;
   }
 }
 
 export namespace Keyword {
+  export interface JSON {
+    [key: string]: json.JSON;
+    type: "keyword";
+    value: string;
+  }
+
   export function isKeyword(value: unknown): value is Keyword {
     return value instanceof Keyword;
   }
 
-  export function parse<T extends string>(
-    ...keywords: Array<T>
-  ): Parser<Slice<Token>, Keyword<T>, string> {
+  export function parse<T extends string>(...keywords: Array<T>) {
     return map(
-      Token.parseIdent(ident => keywords.some(equals(ident.value))),
-      ident => Keyword.of(ident.value as T)
+      Token.parseIdent((ident) =>
+        keywords.some(equals(ident.value.toLowerCase()))
+      ),
+      (ident) => Keyword.of(ident.value.toLowerCase() as T)
     );
   }
 }

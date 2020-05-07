@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/graph.ts", "src/index.ts"],
+  "files": ["src/graph.ts", "src/index.ts", "test/graph.spec.ts"],
   "references": [
     {
       "path": "../alfa-equatable"

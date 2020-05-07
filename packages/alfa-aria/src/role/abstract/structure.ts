@@ -5,6 +5,6 @@ import { Role } from "../../role";
  */
 Role.register(
   Role.of("structure", Role.Category.Abstract, {
-    inherits: ["roletype"]
+    inherits: ["roletype"],
   })
 );

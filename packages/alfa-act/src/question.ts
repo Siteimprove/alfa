@@ -2,6 +2,7 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Question<Q, A, S, T = A>
@@ -12,7 +13,7 @@ export class Question<Q, A, S, T = A>
     subject: S,
     message: string
   ): Question<Q, A, S> {
-    return new Question(uri, type, subject, message, answer => answer);
+    return new Question(uri, type, subject, message, (answer) => answer);
   }
 
   private readonly _uri: string;
@@ -57,7 +58,7 @@ export class Question<Q, A, S, T = A>
       this._type,
       this._subject,
       this._message,
-      answer => mapper(this._quester(answer))
+      (answer) => mapper(this._quester(answer))
     );
   }
 
@@ -69,7 +70,7 @@ export class Question<Q, A, S, T = A>
       this._type,
       this._subject,
       this._message,
-      answer => mapper(this._quester(answer))._quester(answer)
+      (answer) => mapper(this._quester(answer))._quester(answer)
     );
   }
 
@@ -82,7 +83,7 @@ export class Question<Q, A, S, T = A>
       uri: this._uri,
       type: Serializable.toJSON(this._type),
       subject: Serializable.toJSON(this._subject),
-      message: this._message
+      message: this._message,
     };
   }
 }
@@ -94,6 +95,12 @@ export namespace Question {
     type: json.JSON;
     subject: json.JSON;
     message: string;
+  }
+
+  export function isQuestion<Q, A, S, T = A>(
+    value: unknown
+  ): value is Question<Q, A, S, T> {
+    return value instanceof Question;
   }
 }
 

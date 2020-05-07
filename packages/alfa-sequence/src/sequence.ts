@@ -1,7 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { JSON, Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
@@ -46,6 +45,7 @@ export interface Sequence<T>
   reverse(): Sequence<T>;
   groupBy<K>(grouper: Mapper<T, K>): Map<K, Sequence<T>>;
   join(separator: string): string;
+  toArray(): Array<T>;
   toJSON(): Array<JSON>;
 }
 
@@ -67,8 +67,18 @@ export namespace Sequence {
       return iterable;
     }
 
-    const iterator = iterable[Symbol.iterator]();
+    if (Array.isArray(iterable)) {
+      return fromArray(iterable);
+    }
 
+    return fromIterable(iterable);
+  }
+
+  export function fromIterable<T>(iterable: Iterable<T>): Sequence<T> {
+    return fromIterator(iterable[Symbol.iterator]());
+  }
+
+  export function fromIterator<T>(iterator: Iterator<T>): Sequence<T> {
     const tail = (): Sequence<T> => {
       const head = iterator.next();
 
@@ -77,6 +87,20 @@ export namespace Sequence {
       }
 
       return of(head.value, Lazy.of(tail));
+    };
+
+    return tail();
+  }
+
+  export function fromArray<T>(array: Array<T>): Sequence<T> {
+    let i = 0;
+
+    const tail = (): Sequence<T> => {
+      if (i >= array.length) {
+        return empty();
+      }
+
+      return of(array[i++], Lazy.of(tail));
     };
 
     return tail();

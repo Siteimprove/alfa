@@ -1,19 +1,17 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { hasAccessibleName } from "../common/predicate/has-accessible-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
 import { hasInputType } from "../common/predicate/has-input-type";
-import { hasName } from "../common/predicate/has-name";
 import { isIgnored } from "../common/predicate/is-ignored";
 
 import { Question } from "../common/question";
 
-const { filter } = Iterable;
+const { isElement, hasName, hasNamespace } = Element;
 const { and, or, not, equals, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -21,32 +19,29 @@ export default Rule.Atomic.of<Page, Element, Question>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return filter(
-          document.descendants({ flattened: true, nested: true }),
+        return document.descendants({ flattened: true, nested: true }).filter(
           and(
-            Element.isElement,
+            isElement,
             and(
-              hasNamespace(equals(Namespace.HTML)),
-              and(
-                or(
-                  hasName(equals("img")),
-                  and(hasName(equals("input")), hasInputType(equals("image")))
-                ),
-                and(not(isIgnored(device)), element =>
-                  test(
-                    hasAccessibleName(device, accessibleName =>
-                      element
-                        .attribute("src")
-                        .map(attr => getFilename(attr.value))
-                        .some(
-                          filename =>
-                            filename === accessibleName.toLowerCase().trim()
-                        )
-                    ),
+              hasNamespace(Namespace.HTML),
+              or(
+                hasName("img"),
+                and(hasName("input"), hasInputType(equals("image")))
+              ),
+              not(isIgnored(device)),
+              (element) =>
+                test(
+                  hasAccessibleName(device, (accessibleName) =>
                     element
-                  )
+                      .attribute("src")
+                      .map((attr) => getFilename(attr.value))
+                      .some(
+                        (filename) =>
+                          filename === accessibleName.toLowerCase().trim()
+                      )
+                  ),
+                  element
                 )
-              )
             )
           )
         );
@@ -59,17 +54,15 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "boolean",
             target,
             `Does the accessible name of the <${target.name}> element describe its purpose?`
-          )
-            ? Ok.of(
-                `The accessible name of the <${target.name}> element describes its purpose`
-              )
-            : Err.of(
-                `The accessible name of the <${target.name}> element does not describe its purpose`
-              )
+          ).map((nameDescribesPurpose) =>
+            nameDescribesPurpose
+              ? Some.of(Outcomes.NameIsDescriptive(target.name))
+              : Some.of(Outcomes.NameIsNotDescriptive(target.name))
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
 
 function getFilename(path: string): string {
@@ -81,4 +74,14 @@ function getFilename(path: string): string {
   }
 
   return base.trim();
+}
+
+export namespace Outcomes {
+  export const NameIsDescriptive = (name: string): Result<string, string> =>
+    Ok.of(`The accessible name of the <${name}> element describes its purpose`);
+
+  export const NameIsNotDescriptive = (name: string): Result<string, string> =>
+    Err.of(
+      `The accessible name of the <${name}> element does not describe its purpose`
+    );
 }

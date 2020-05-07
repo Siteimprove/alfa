@@ -9,8 +9,8 @@ Role.register(
     requires: ["aria-checked"],
     name: {
       from: ["contents", "author"],
-      required: true
+      required: true,
     },
-    implicits: [["aria-checked", "false"]]
+    implicits: [["aria-checked", "false"]],
   })
 );

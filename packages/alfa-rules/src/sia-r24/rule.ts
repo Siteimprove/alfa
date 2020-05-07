@@ -5,6 +5,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
 
+import { expectation } from "../common/expectation";
+
 import { Question } from "../common/question";
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -22,22 +24,35 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "node",
             target,
             "Where is the transcript of the <video> element?"
-          ).map(transcript => {
-            return transcript.isSome()
-              ? Ok.of("The <video> element has a transcript")
-              : Question.of(
+          ).map((transcript) =>
+            expectation(
+              transcript.isSome(),
+              () => Outcomes.HasTranscript,
+              () =>
+                Question.of(
                   "transcript-link",
                   "node",
                   target,
                   "Where is the link pointing to the transcript of the <video> element?"
-                ).map(transcriptLink =>
-                  transcriptLink.isSome()
-                    ? Ok.of("The <video> element has a transcript")
-                    : Err.of("The <video> element does not have a transcript")
-                );
-          })
+                ).map((transcriptLink) =>
+                  expectation(
+                    transcriptLink.isSome(),
+                    () => Outcomes.HasTranscript,
+                    () => Outcomes.HasNoTranscript
+                  )
+                )
+            )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
+
+export namespace Outcomes {
+  export const HasTranscript = Ok.of("The <video> element has a transcript");
+
+  export const HasNoTranscript = Err.of(
+    "The <video> element does not have a transcript"
+  );
+}

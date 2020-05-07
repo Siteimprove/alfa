@@ -7,10 +7,12 @@
   "files": [
     "bin/alfa.ts",
     "bin/alfa/commands/audit.ts",
+    "bin/alfa/commands/scrape.ts",
     "src/formatter.ts",
     "src/formatter/earl.ts",
     "src/formatter/json.ts",
-    "src/index.ts"
+    "src/index.ts",
+    "src/oracle.ts"
   ],
   "references": [
     {
@@ -30,6 +32,9 @@
     },
     {
       "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-time"
     },
     {
       "path": "../alfa-web"

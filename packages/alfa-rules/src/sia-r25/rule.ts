@@ -5,6 +5,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video";
 
+import { expectation } from "../common/expectation";
+
 import { Question } from "../common/question";
 
 export default Rule.Atomic.of<Page, Element, Question>({
@@ -22,17 +24,25 @@ export default Rule.Atomic.of<Page, Element, Question>({
             "boolean",
             target,
             "Is the visual information of the <video> available through its audio or a separate audio description track?"
-          ).map(hasAudio =>
-            hasAudio
-              ? Ok.of(
-                  "The visual information of the <video> element is available through audio"
-                )
-              : Err.of(
-                  "The visual information of the <video> element is not available through audio"
-                )
-          )
+          ).map((hasAudio) =>
+            expectation(
+              hasAudio,
+              () => Outcomes.HasInformativeAudio,
+              () => Outcomes.HasNoInformativeAudio
+            )
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
+
+export namespace Outcomes {
+  export const HasInformativeAudio = Ok.of(
+    "The visual information of the <video> element is available through audio"
+  );
+
+  export const HasNoInformativeAudio = Err.of(
+    "The visual information of the <video> element is not available through audio"
+  );
+}

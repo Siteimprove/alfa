@@ -8,8 +8,6 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Rule } from "./rule";
 
-const { flatten } = Iterable;
-
 export class Audit<I, T = unknown, Q = unknown> {
   public static of<I, T = unknown, Q = unknown>(
     input: I,
@@ -29,14 +27,14 @@ export class Audit<I, T = unknown, Q = unknown> {
   }
 
   public add(rule: Rule<I, T, Q>): Audit<I, T, Q> {
-    return new Audit(this._input, this._oracle, this._rules.push(rule));
+    return new Audit(this._input, this._oracle, this._rules.append(rule));
   }
 
   public evaluate(): Future<Iterable<Outcome<I, T, Q>>> {
     const outcomes = Cache.empty();
 
-    return Future.traverse(this._rules, rule =>
+    return Future.traverse(this._rules, (rule) =>
       rule.evaluate(this._input, this._oracle, outcomes)
-    ).map(flatten);
+    ).map(Iterable.flatten);
   }
 }

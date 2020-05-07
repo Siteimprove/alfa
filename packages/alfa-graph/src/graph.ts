@@ -4,12 +4,19 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
+
 import * as json from "@siteimprove/alfa-json";
 
 export class Graph<T>
   implements Iterable<[T, Iterable<T>]>, Equatable, Serializable {
+  public static of<T>(nodes: Map<T, Set<T>>): Graph<T> {
+    return new Graph(nodes);
+  }
+
+  private static _empty = new Graph<never>(Map.empty());
+
   public static empty<T>(): Graph<T> {
-    return new Graph(Map.empty());
+    return this._empty;
   }
 
   private readonly _nodes: Map<T, Set<T>>;
@@ -35,7 +42,7 @@ export class Graph<T>
   }
 
   public add(node: T): Graph<T> {
-    const { _nodes: nodes } = this;
+    const nodes = this._nodes;
 
     if (nodes.has(node)) {
       return this;
@@ -45,27 +52,19 @@ export class Graph<T>
   }
 
   public delete(node: T): Graph<T> {
-    let { _nodes: nodes } = this;
+    let nodes = this._nodes;
 
     if (!nodes.has(node)) {
       return this;
     }
 
-    for (const to of nodes.get(node).get()) {
-      nodes = nodes.set(
-        to,
-        nodes
-          .get(to)
-          .map(to => to.delete(node))
-          .get()
-      );
-    }
-
-    return new Graph(nodes.delete(node));
+    return new Graph(
+      nodes.delete(node).map((neighbors) => neighbors.delete(node))
+    );
   }
 
   public connect(from: T, to: T): Graph<T> {
-    let { _nodes: nodes } = this;
+    let nodes = this._nodes;
 
     if (!nodes.has(from)) {
       nodes = nodes.set(from, Set.empty());
@@ -80,14 +79,14 @@ export class Graph<T>
         from,
         nodes
           .get(from)
-          .map(from => from.add(to))
+          .map((from) => from.add(to))
           .get()
       )
     );
   }
 
   public disconnect(from: T, to: T): Graph<T> {
-    const { _nodes: nodes } = this;
+    const nodes = this._nodes;
 
     if (!nodes.has(from) || !nodes.has(to)) {
       return this;
@@ -98,7 +97,7 @@ export class Graph<T>
         from,
         nodes
           .get(from)
-          .map(from => from.delete(to))
+          .map((from) => from.delete(to))
           .get()
       )
     );
@@ -112,18 +111,16 @@ export class Graph<T>
     yield* this._nodes;
   }
 
+  public toArray(): Array<[T, Array<T>]> {
+    return [...this].map(([node, neighbors]) => [node, [...neighbors]]);
+  }
+
   public toJSON(): Graph.JSON {
     return {
-      nodes: [
-        ...Iterable.map(
-          this._nodes,
-          ([node, neighbors]) =>
-            [
-              Serializable.toJSON(node),
-              [...Iterable.map(neighbors, Serializable.toJSON)]
-            ] as [json.JSON, Array<json.JSON>]
-        )
-      ]
+      nodes: this.toArray().map(([node, neighbors]) => [
+        Serializable.toJSON(node),
+        neighbors.map(Serializable.toJSON),
+      ]),
     };
   }
 
@@ -144,5 +141,24 @@ export namespace Graph {
   export interface JSON {
     [key: string]: json.JSON;
     nodes: Array<[json.JSON, Array<json.JSON>]>;
+  }
+
+  export function isGraph<T>(value: unknown): value is Graph<T> {
+    return value instanceof Graph;
+  }
+
+  export function from<T>(iterable: Iterable<[T, Iterable<T>]>): Graph<T> {
+    if (isGraph<T>(iterable)) {
+      return iterable;
+    }
+
+    return Graph.of(
+      Map.from(
+        Iterable.map(iterable, ([node, neighbours]) => [
+          node,
+          Set.from(neighbours),
+        ])
+      )
+    );
   }
 }

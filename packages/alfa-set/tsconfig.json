@@ -28,6 +28,12 @@
       "path": "../alfa-monad"
     },
     {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
       "path": "../alfa-reducer"
     },
     {

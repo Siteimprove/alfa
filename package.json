@@ -2,19 +2,14 @@
   "$schema": "http://json.schemastore.org/package",
   "private": true,
   "name": "@siteimprove/alfa",
-  "author": "Siteimprove A/S",
   "homepage": "https://siteimprove.com",
   "version": "0.0.0",
   "license": "MIT",
   "description": "Suite of open and standards-based tools for performing reliable accessibility conformance testing at scale",
-  "keywords": [
-    "a11y",
-    "accessibility",
-    "aria",
-    "typescript",
-    "wcag"
-  ],
-  "repository": "https://github.com/siteimprove/alfa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git"
+  },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
     "build": "node scripts/build.js --pretty",
@@ -36,7 +31,7 @@
     "execa": "^4.0.0",
     "lerna": "^3.19.0",
     "minimist": "^1.2.0",
-    "prettier": "1.19.1",
+    "prettier": "2.0.1",
     "source-map-support": "^0.5.16",
     "typescript": "^3.7.4"
   }

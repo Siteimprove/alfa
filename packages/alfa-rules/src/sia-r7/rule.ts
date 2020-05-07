@@ -6,52 +6,51 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { hasAttribute } from "../common/predicate/has-attribute";
-import { hasName } from "../common/predicate/has-name";
-import { hasNamespace } from "../common/predicate/has-namespace";
-import { isWhitespace } from "../common/predicate/is-whitespace";
+import { expectation } from "../common/expectation";
 
-const { filter, first, map, isEmpty } = Iterable;
-const { and, nor, equals } = Predicate;
+import { hasAttribute } from "../common/predicate/has-attribute";
+
+const { isElement, hasName, hasNamespace } = Element;
+const { isEmpty } = Iterable;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r7.html",
   evaluate({ document }) {
     return {
       applicability() {
-        return first(
-          filter(
-            document.descendants(),
-            and(
-              Element.isElement,
-              and(hasNamespace(equals(Namespace.HTML)), hasName(equals("body")))
-            )
+        return document
+          .descendants()
+          .filter(
+            and(isElement, and(hasNamespace(Namespace.HTML), hasName("body")))
           )
-        )
-          .map(body =>
-            map(
-              filter(
-                body.descendants(),
-                and(
-                  Element.isElement,
-                  hasAttribute("lang", nor(isEmpty, isWhitespace))
-                )
-              ),
-              element => element.attribute("lang").get()
-            )
-          )
-          .getOr([]);
+          .flatMap((body) =>
+            body
+              .descendants()
+              .filter(and(isElement, hasAttribute("lang", not(isEmpty))))
+              .map((element) => element.attribute("lang").get())
+          );
       },
 
       expectations(target) {
         return {
-          1: Language.from(target.value).isSome()
-            ? Ok.of("The lang attribute has a valid primary language subtag")
-            : Err.of(
-                "The lang attribute does not have a valid primary language subtag"
-              )
+          1: expectation(
+            Language.parse(target.value).isSome(),
+            () => Outcomes.HasValidLanguage,
+            () => Outcomes.HasNoValidLanguage
+          ),
         };
-      }
+      },
     };
-  }
+  },
 });
+
+export namespace Outcomes {
+  export const HasValidLanguage = Ok.of(
+    "The lang attribute has a valid primary language subtag"
+  );
+
+  export const HasNoValidLanguage = Err.of(
+    "The lang attribute does not have a valid primary language subtag"
+  );
+}

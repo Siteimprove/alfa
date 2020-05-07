@@ -7,6 +7,10 @@
     "src/get-name.ts",
     "src/index.ts",
     "src/node.ts",
+    "src/node/container.ts",
+    "src/node/element.ts",
+    "src/node/inert.ts",
+    "src/node/text.ts",
     "src/role.ts",
     "src/role/abstract/command.ts",
     "src/role/abstract/composite.ts",
@@ -111,7 +115,13 @@
       "path": "../alfa-dom"
     },
     {
+      "path": "../alfa-equatable"
+    },
+    {
       "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
     },
     {
       "path": "../alfa-lazy"
@@ -132,7 +142,13 @@
       "path": "../alfa-sequence"
     },
     {
+      "path": "../alfa-set"
+    },
+    {
       "path": "../alfa-style"
+    },
+    {
+      "path": "../alfa-table"
     },
     {
       "path": "../alfa-test"

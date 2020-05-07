@@ -15,7 +15,7 @@ export class Record<T>
     Serializable {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
-    const values = List.from(keys.map(key => properties[key]));
+    const values = List.from(keys.map((key) => properties[key]));
 
     return new Record(Indices.from(keys), keys, values);
   }
@@ -88,12 +88,20 @@ export class Record<T>
     yield* this._values;
   }
 
+  public *entries(): Iterable<Record.Entry<T>> {
+    yield* this;
+  }
+
   public *[Symbol.iterator](): Iterator<Record.Entry<T>> {
     let i = 0;
 
     for (const value of this._values) {
       yield [this._keys[i++], value];
     }
+  }
+
+  public toArray(): Array<Record.Entry<T>> {
+    return [...this];
   }
 
   public toJSON(): Record.JSON {
@@ -104,6 +112,14 @@ export class Record<T>
     }
 
     return json;
+  }
+
+  public toString(): string {
+    const entries = this.toArray()
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+
+    return `Record {${entries === "" ? "" : ` ${entries} `}}`;
   }
 }
 
