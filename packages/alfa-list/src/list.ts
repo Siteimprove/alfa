@@ -1,4 +1,5 @@
 import { Collection } from "@siteimprove/alfa-collection";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
@@ -15,7 +16,7 @@ const { not } = Predicate;
 
 export class List<T> implements Collection.Indexed<T> {
   public static of<T>(...values: Array<T>): List<T> {
-    return values.reduce((list, value) => list.push(value), List.empty<T>());
+    return values.reduce((list, value) => list._push(value), List.empty<T>());
   }
 
   private static _empty = new List<never>(Empty.empty(), Empty.empty(), 0, 0);
@@ -51,7 +52,7 @@ export class List<T> implements Collection.Indexed<T> {
 
   public map<U>(mapper: Mapper<T, U, [number]>): List<U> {
     return this.reduce(
-      (list, value, index) => list.push(mapper(value, index)),
+      (list, value, index) => list._push(mapper(value, index)),
       List.empty<U>()
     );
   }
@@ -163,7 +164,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public append(value: T): List<T> {
-    return this.push(value);
+    return this._push(value);
   }
 
   public prepend(value: T): List<T> {
@@ -173,7 +174,7 @@ export class List<T> implements Collection.Indexed<T> {
   public concat(iterable: Iterable<T>): List<T> {
     return Iterable.reduce<T, List<T>>(
       iterable,
-      (list, value) => list.push(value),
+      (list, value) => list._push(value),
       this
     );
   }
@@ -218,7 +219,7 @@ export class List<T> implements Collection.Indexed<T> {
     let list: List<T> = this;
 
     while (count-- > 0) {
-      list = list.pop();
+      list = list._pop();
     }
 
     return list;
@@ -249,7 +250,7 @@ export class List<T> implements Collection.Indexed<T> {
         groups
           .get(group)
           .getOrElse(() => List.empty<T>())
-          .push(value)
+          ._push(value)
       );
     }, Map.empty<K, List<T>>());
   }
@@ -271,6 +272,14 @@ export class List<T> implements Collection.Indexed<T> {
     );
   }
 
+  public hash(hash: Hash): void {
+    for (const value of this) {
+      Hashable.hash(hash, value);
+    }
+
+    Hash.writeUint32(hash, this._size);
+  }
+
   public *[Symbol.iterator](): Iterator<T> {
     yield* this._head;
     yield* this._tail;
@@ -290,7 +299,7 @@ export class List<T> implements Collection.Indexed<T> {
     return `List [${values === "" ? "" : ` ${values} `}]`;
   }
 
-  private push(value: T): List<T> {
+  private _push(value: T): List<T> {
     // If no tail exists yet, this means that the list is empty. We therefore
     // create a new tail with the pushed value. As the current list is empty,
     // it won't have a head. As such, there's no need to pass the head along.
@@ -382,7 +391,7 @@ export class List<T> implements Collection.Indexed<T> {
     return new List(head, Leaf.of([value]), shift, this._size + 1);
   }
 
-  private pop(): List<T> {
+  private _pop(): List<T> {
     // If the list has no tail then it is empty. We therefore return the list
     // itself as the pop has no effect.
     if (this._tail.isEmpty()) {

@@ -1,6 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -14,7 +15,8 @@ export interface Collection<T>
     Monad<T>,
     Foldable<T>,
     Equatable,
-    Serializable {
+    Serializable,
+    Hashable {
   readonly size: number;
   isEmpty(): this is Collection<never>;
   map<U>(mapper: Mapper<T, U>): Collection<U>;

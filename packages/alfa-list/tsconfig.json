@@ -13,6 +13,9 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {
