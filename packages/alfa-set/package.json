@@ -18,14 +18,12 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "^0.0.1",
-    "@siteimprove/alfa-foldable": "^0.0.1",
-    "@siteimprove/alfa-functor": "^0.0.1",
+    "@siteimprove/alfa-collection": "^0.0.1",
+    "@siteimprove/alfa-hash": "^0.0.1",
     "@siteimprove/alfa-iterable": "^0.0.1",
     "@siteimprove/alfa-json": "^0.0.1",
     "@siteimprove/alfa-map": "^0.0.1",
     "@siteimprove/alfa-mapper": "^0.0.1",
-    "@siteimprove/alfa-monad": "^0.0.1",
     "@siteimprove/alfa-option": "^0.0.1",
     "@siteimprove/alfa-predicate": "^0.0.1",
     "@siteimprove/alfa-reducer": "^0.0.1"
