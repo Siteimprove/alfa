@@ -57,7 +57,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       expectations(target) {
         const table = headers.get(target).get();
 
-        const ids = [...target.tokens()];
+        const ids = target.tokens();
 
         const cells = table
           .descendants()
@@ -76,7 +76,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             // Each token refers to a different cell in the same table if the
             // number of identified cells is equal to the number of IDs.
-            cells.size === ids.length,
+            cells.size === ids.size,
             () => Outcomes.HeadersRefersToCellInTable,
             () => Outcomes.HeadersDoesNotReferToCellsInTable
           ),

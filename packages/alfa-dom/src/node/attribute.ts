@@ -1,6 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -98,8 +99,10 @@ export class Attribute extends Node {
   /**
    * @see https://html.spec.whatwg.org/#space-separated-tokens
    */
-  public tokens(separator: string | RegExp = /\s+/): Iterable<string> {
-    return this._value.trim().split(separator).filter(not(isEmpty));
+  public tokens(separator: string | RegExp = /\s+/): Sequence<string> {
+    return Sequence.from(
+      this._value.trim().split(separator).filter(not(isEmpty))
+    );
   }
 
   /**
