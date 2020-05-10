@@ -46,6 +46,7 @@ export namespace Collection {
     get(key: K): Option<V>;
     has(key: K): boolean;
     set(key: K, value: V): Keyed<K, V>;
+    delete(key: K, value: V): Keyed<K, V>;
     concat(iterable: Iterable<[K, V]>): Keyed<K, V>;
   }
 
@@ -66,6 +67,7 @@ export namespace Collection {
     get(value: T): Option<T>;
     has(value: T): boolean;
     add(value: T): Unkeyed<T>;
+    delete(value: T): Unkeyed<T>;
     concat(iterable: Iterable<T>): Unkeyed<T>;
   }
 
