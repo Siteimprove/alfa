@@ -9,7 +9,7 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { Role } from "./role";
 
-const { hasName, isElement } = Element;
+const { hasName, hasId, isElement } = Element;
 const { isText } = Text;
 const { and, or, equals, test } = Predicate;
 
@@ -152,9 +152,18 @@ function getAriaLabelledbyTextAlternative(
   visited: Set<Element | Text>,
   options: getName.Options
 ): Branched<Option<string>, Browser> {
-  const references = element.resolveAttributeReferences("aria-labelledby");
+  const labelledby = element.attribute("aria-labelledby");
 
-  if (references.length === 0 || options.referencing === true) {
+  if (labelledby.isNone()) {
+    return Branched.of(None);
+  }
+
+  const references = element
+    .root()
+    .descendants()
+    .filter(and(isElement, hasId(equals(...labelledby.get().tokens()))));
+
+  if (references.isEmpty() || options.referencing === true) {
     return Branched.of(None);
   }
 

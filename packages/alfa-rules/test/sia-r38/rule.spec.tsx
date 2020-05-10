@@ -1,10 +1,9 @@
 import { jsx } from "@siteimprove/alfa-dom/jsx";
 import { test } from "@siteimprove/alfa-test";
 
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-
-import { Document, Element } from "@siteimprove/alfa-dom";
 
 import R38, { Outcomes } from "../../src/sia-r38/rule";
 
@@ -48,7 +47,11 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
         "track-describes-video": true,
       })
     ),
-    [passed(R38, video, { 1: Outcomes.HasAlternative })]
+    [
+      passed(R38, video, {
+        1: Outcomes.HasAlternative,
+      }),
+    ]
   );
 });
 
@@ -74,7 +77,10 @@ test("evaluate() can't tell when there are not enough answers to expectation", a
     await evaluate(
       R38,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
+      oracle({
+        "is-video-streaming": false,
+        "has-audio": true,
+      })
     ),
     [cantTell(R38, video)]
   );

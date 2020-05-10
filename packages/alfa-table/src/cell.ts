@@ -11,11 +11,11 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Scope } from "./scope";
 import { Table } from "./table";
-import { isHtmlElementWithName, parseSpan } from "./helpers";
+import { parseSpan } from "./helpers";
 
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
-const { isElement, hasName } = Element;
+const { isElement, hasName, hasId } = Element;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -533,26 +533,37 @@ export namespace Cell {
      * @see https://html.spec.whatwg.org/multipage/tables.html#algorithm-for-assigning-header-cells
      */
     private _assignExplicitHeaders(table: Table.Builder): Cell.Builder {
+      const headers = this.element.attribute("headers");
+
+      if (headers.isNone()) {
+        return this;
+      }
+
       // 3 / headers attribute / 1
       const elements = this.element
-        .resolveAttributeReferences("headers")
+        .root()
+        .descendants()
         .filter(
-          // 3 / headers attribute / 2
           and(
-            // only keep cells in the table
-            isHtmlElementWithName("th", "td"),
-            (element) =>
-              element
-                .closest(and(isElement, hasName("table")))
-                .some(equals(table.element)),
-            // remove principal cell
-            not(equals(this.element)),
-            // Step 4: remove empty cells
-            not((element) => element.children().isEmpty())
+            isElement,
+            and(
+              hasId(equals(...headers.get().tokens())),
+              // 3 / headers attribute / 2
+              // only keep cells in the table
+              hasName("th", "td"),
+              (element) =>
+                element
+                  .closest(and(isElement, hasName("table")))
+                  .some(equals(table.element)),
+              // remove principal cell
+              not(equals(this.element)),
+              // Step 4: remove empty cells
+              not((element) => element.children().isEmpty())
+            )
           )
         );
 
-      return this._update({ explicitHeaders: elements });
+      return this._update({ explicitHeaders: elements.toArray() });
     }
 
     /**
@@ -688,9 +699,7 @@ export namespace Cell {
       }
 
       // 11
-      const kind = cell.hasName(equals("th"))
-        ? Cell.Kind.Header
-        : Cell.Kind.Data;
+      const kind = cell.name === "th" ? Cell.Kind.Header : Cell.Kind.Data;
 
       /**
        * @see https://html.spec.whatwg.org/multipage/tables.html#attr-th-scope

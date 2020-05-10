@@ -96,19 +96,19 @@ export class Attribute extends Node {
   }
 
   /**
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#space-separated-tokens
+   * @see https://html.spec.whatwg.org/#space-separated-tokens
    */
-  public tokens(separator: string | RegExp = /\s+/): Array<string> {
+  public tokens(separator: string | RegExp = /\s+/): Iterable<string> {
     return this._value.trim().split(separator).filter(not(isEmpty));
   }
 
   /**
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   * @see https://html.spec.whatwg.org/#enumerated-attribute
    */
   public enumerate(): Option<string>;
 
   /**
-   * @see https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#enumerated-attribute
+   * @see https://html.spec.whatwg.org/#enumerated-attribute
    */
   public enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
 
