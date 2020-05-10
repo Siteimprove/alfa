@@ -26,14 +26,11 @@ test("evaluate() passes when the document headings are structured", async (t) =>
     ),
   ]);
 
-  const [h1, h2, h3] = document
+  const [, h2, h3] = document
     .descendants()
     .filter(and(isElement, hasName("h1", "h2", "h3")));
 
   t.deepEqual(await evaluate(R53, { document }), [
-    passed(R53, h1, {
-      1: Outcomes.IsStructured,
-    }),
     passed(R53, h2, {
       1: Outcomes.IsStructured,
     }),
