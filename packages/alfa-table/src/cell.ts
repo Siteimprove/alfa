@@ -1,11 +1,12 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -15,7 +16,7 @@ import { parseSpan } from "./helpers";
 
 const { some } = Iterable;
 const { and, equals, not } = Predicate;
-const { isElement, hasName, hasId } = Element;
+const { isElement, hasName, hasNamespace, hasId } = Element;
 
 /**
  * @see https://html.spec.whatwg.org/multipage/tables.html#concept-cell
@@ -540,24 +541,32 @@ export namespace Cell {
       }
 
       // 3 / headers attribute / 1
-      const elements = this.element
-        .root()
-        .descendants()
+      const elements = headers
+        .get()
+        .tokens()
+        .flatMap((id) =>
+          Sequence.from(
+            this.element
+              .root()
+              .descendants()
+              .find(and(isElement, hasId(id)))
+          )
+        )
         .filter(
           and(
             isElement,
             and(
-              hasId(equals(...headers.get().tokens())),
               // 3 / headers attribute / 2
-              // only keep cells in the table
               hasName("th", "td"),
+              hasNamespace(Namespace.HTML),
+              // Only keep cells in the table
               (element) =>
                 element
                   .closest(and(isElement, hasName("table")))
                   .some(equals(table.element)),
-              // remove principal cell
+              // Remove principal cell
               not(equals(this.element)),
-              // Step 4: remove empty cells
+              // Remove empty cells
               not((element) => element.children().isEmpty())
             )
           )
