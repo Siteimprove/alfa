@@ -1,5 +1,4 @@
 import { Collection } from "@siteimprove/alfa-collection";
-import { JSON } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -16,6 +15,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   map<U>(mapper: Mapper<T, U, [number]>): Sequence<U>;
   flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
   reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
+  apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
   filter<U extends T>(predicate: Predicate<T, U, [number]>): Sequence<U>;
   find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U>;
   includes(value: T): boolean;
@@ -45,10 +45,12 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   join(separator: string): string;
   groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
-  toJSON(): Array<JSON>;
+  toJSON(): Sequence.JSON;
 }
 
 export namespace Sequence {
+  export type JSON = Cons.JSON | Nil.JSON;
+
   export function isSequence<T>(value: unknown): value is Sequence<T> {
     return Cons.isCons(value) || value === Nil;
   }
@@ -59,6 +61,10 @@ export namespace Sequence {
 
   export function empty<T>(): Sequence<T> {
     return Nil;
+  }
+
+  export function flatten<T>(sequence: Sequence<Sequence<T>>): Sequence<T> {
+    return sequence.flatMap((sequence) => sequence);
   }
 
   export function from<T>(iterable: Iterable<T>): Sequence<T> {

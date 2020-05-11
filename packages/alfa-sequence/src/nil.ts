@@ -27,6 +27,10 @@ export const Nil: Nil = new (class Nil {
     return accumulator;
   }
 
+  public apply(): Nil {
+    return this;
+  }
+
   public filter(): Nil {
     return this;
   }
@@ -159,7 +163,7 @@ export const Nil: Nil = new (class Nil {
     return [];
   }
 
-  public toJSON(): Array<never> {
+  public toJSON(): Nil.JSON {
     return [];
   }
 
@@ -167,3 +171,7 @@ export const Nil: Nil = new (class Nil {
     return "Sequence []";
   }
 })();
+
+export namespace Nil {
+  export type JSON = Array<never>;
+}

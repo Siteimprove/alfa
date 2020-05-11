@@ -68,6 +68,10 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.reduce(this, reducer, accumulator);
   }
 
+  public apply<U>(mapper: List<Mapper<T, U>>): List<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
+
   public filter<U extends T>(predicate: Predicate<T, U, [number]>): List<U> {
     return List.from(Iterable.filter(this, predicate));
   }

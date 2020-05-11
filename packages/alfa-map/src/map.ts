@@ -61,6 +61,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
+  public apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
+
   public filter<U extends V>(predicate: Predicate<V, U, [K]>): Map<K, U> {
     return this.reduce(
       (map, value, key) => (predicate(value, key) ? map.set(key, value) : map),

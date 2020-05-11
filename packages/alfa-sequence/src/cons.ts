@@ -1,12 +1,14 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { JSON, Serializable } from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Nil } from "./nil";
 import { Sequence } from "./sequence";
@@ -42,7 +44,7 @@ export class Cons<T> implements Sequence<T> {
     return false;
   }
 
-  public map<U>(mapper: Mapper<T, U, [number]>, index = 0): Sequence<U> {
+  public map<U>(mapper: Mapper<T, U, [number]>, index = 0): Cons<U> {
     return new Cons(
       mapper(this._head, index),
       this._tail.map((tail) =>
@@ -101,6 +103,10 @@ export class Cons<T> implements Sequence<T> {
         return accumulator;
       }
     }
+  }
+
+  public apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public filter<U extends T>(predicate: Predicate<T, U>): Sequence<U> {
@@ -456,8 +462,8 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON(): Array<JSON> {
-    const json: Array<JSON> = [];
+  public toJSON(): Cons.JSON {
+    const json: Cons.JSON = [];
 
     let next: Cons<T> = this;
 
@@ -479,10 +485,9 @@ export class Cons<T> implements Sequence<T> {
   }
 }
 
-/**
- * @internal
- */
 export namespace Cons {
+  export type JSON = Array<json.JSON>;
+
   export function isCons<T>(value: unknown): value is Cons<T> {
     return value instanceof Cons;
   }
