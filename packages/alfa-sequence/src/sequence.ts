@@ -1,11 +1,8 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
-import { JSON, Serializable } from "@siteimprove/alfa-json";
+import { Collection } from "@siteimprove/alfa-collection";
+import { JSON } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
@@ -13,38 +10,40 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Cons } from "./cons";
 import { Nil } from "./nil";
 
-export interface Sequence<T>
-  extends Monad<T>,
-    Functor<T>,
-    Foldable<T>,
-    Iterable<T>,
-    Equatable,
-    Serializable {
+export interface Sequence<T> extends Collection.Indexed<T> {
   readonly size: number;
-  isEmpty(): boolean;
-  map<U>(mapper: Mapper<T, U>): Sequence<U>;
-  flatMap<U>(mapper: Mapper<T, Sequence<U>>): Sequence<U>;
-  reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
-  some(predicate: Predicate<T>): boolean;
-  every(predicate: Predicate<T>): boolean;
-  concat(iterable: Iterable<T>): Sequence<T>;
-  filter<U extends T>(predicate: Predicate<T, U>): Sequence<U>;
-  find<U extends T>(predicate: Predicate<T, U>): Option<U>;
-  count(predicate: Predicate<T>): number;
+  isEmpty(): this is Sequence<never>;
+  map<U>(mapper: Mapper<T, U, [number]>): Sequence<U>;
+  flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
+  reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
+  filter<U extends T>(predicate: Predicate<T, U, [number]>): Sequence<U>;
+  find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U>;
+  includes(value: T): boolean;
+  some(predicate: Predicate<T, T, [number]>): boolean;
+  every(predicate: Predicate<T, T, [number]>): boolean;
+  count(predicate: Predicate<T, T, [number]>): number;
   get(index: number): Option<T>;
+  has(index: number): boolean;
+  set(index: number, value: T): Sequence<T>;
+  insert(index: number, value: T): Sequence<T>;
+  append(value: T): Sequence<T>;
+  prepend(value: T): Sequence<T>;
+  concat(iterable: Iterable<T>): Sequence<T>;
   first(): Option<T>;
   last(): Option<T>;
   take(count: number): Sequence<T>;
-  takeWhile(predicate: Predicate<T>): Sequence<T>;
-  takeUntil(predicate: Predicate<T>): Sequence<T>;
+  takeWhile(predicate: Predicate<T, T, [number]>): Sequence<T>;
+  takeUntil(predicate: Predicate<T, T, [number]>): Sequence<T>;
+  takeLast(count: number): Sequence<T>;
   skip(count: number): Sequence<T>;
-  skipWhile(predicate: Predicate<T>): Sequence<T>;
-  skipUntil(predicate: Predicate<T>): Sequence<T>;
+  skipWhile(predicate: Predicate<T, T, [number]>): Sequence<T>;
+  skipUntil(predicate: Predicate<T, T, [number]>): Sequence<T>;
+  skipLast(count: number): Sequence<T>;
   rest(): Sequence<T>;
   slice(start: number, end?: number): Sequence<T>;
   reverse(): Sequence<T>;
-  groupBy<K>(grouper: Mapper<T, K>): Map<K, Sequence<T>>;
   join(separator: string): string;
+  groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
   toJSON(): Array<JSON>;
 }
