@@ -26,7 +26,7 @@ const { map, flatMap, isEmpty } = Iterable;
 const { and, or, not, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Iterable<Element>, Question>({
-  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r41.html",
+  uri: "https://siteimprove.github.io/sanshikan/rules/sia-r81.html",
   evaluate({ device, document }) {
     return {
       applicability() {
