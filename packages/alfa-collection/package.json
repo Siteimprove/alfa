@@ -18,6 +18,7 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-applicative": "^0.0.1",
     "@siteimprove/alfa-equatable": "^0.0.1",
     "@siteimprove/alfa-foldable": "^0.0.1",
     "@siteimprove/alfa-functor": "^0.0.1",

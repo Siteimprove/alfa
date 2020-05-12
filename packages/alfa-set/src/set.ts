@@ -53,6 +53,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return Iterable.reduce(this, reducer, accumulator);
   }
 
+  public apply<U>(mapper: Set<Mapper<T, U>>): Set<U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
+  }
+
   public filter<U extends T>(predicate: Predicate<T, U>): Set<U> {
     return this.reduce(
       (set, value) => (predicate(value) ? set.add(value) : set),
@@ -157,6 +161,12 @@ export namespace Set {
   }
 
   export function from<T>(iterable: Iterable<T>): Set<T> {
-    return isSet<T>(iterable) ? iterable : Set.of(...iterable);
+    return isSet<T>(iterable)
+      ? iterable
+      : Iterable.reduce(
+          iterable,
+          (set, value) => set.add(value),
+          Set.empty<T>()
+        );
   }
 }

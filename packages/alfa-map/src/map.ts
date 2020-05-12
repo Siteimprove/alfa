@@ -20,7 +20,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
-  private static _empty = new Map<never, never>(Empty.empty(), 0);
+  private static _empty = new Map<never, never>(Empty, 0);
 
   public static empty<K = never, V = never>(): Map<K, V> {
     return this._empty;
@@ -59,6 +59,10 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
       (accumulator, [key, value]) => reducer(accumulator, value, key),
       accumulator
     );
+  }
+
+  public apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U> {
+    return this.flatMap((value) => mapper.map((mapper) => mapper(value)));
   }
 
   public filter<U extends V>(predicate: Predicate<V, U, [K]>): Map<K, U> {
@@ -196,6 +200,12 @@ export namespace Map {
   }
 
   export function from<K, V>(iterable: Iterable<[K, V]>): Map<K, V> {
-    return isMap<K, V>(iterable) ? iterable : Map.of(...iterable);
+    return isMap<K, V>(iterable)
+      ? iterable
+      : Iterable.reduce(
+          iterable,
+          (map, [key, value]) => map.set(key, value),
+          Map.empty<K, V>()
+        );
   }
 }
