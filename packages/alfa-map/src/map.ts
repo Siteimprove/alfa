@@ -20,7 +20,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
-  private static _empty = new Map<never, never>(Empty.empty(), 0);
+  private static _empty = new Map<never, never>(Empty, 0);
 
   public static empty<K = never, V = never>(): Map<K, V> {
     return this._empty;
@@ -200,6 +200,12 @@ export namespace Map {
   }
 
   export function from<K, V>(iterable: Iterable<[K, V]>): Map<K, V> {
-    return isMap<K, V>(iterable) ? iterable : Map.of(...iterable);
+    return isMap<K, V>(iterable)
+      ? iterable
+      : Iterable.reduce(
+          iterable,
+          (map, [key, value]) => map.set(key, value),
+          Map.empty<K, V>()
+        );
   }
 }

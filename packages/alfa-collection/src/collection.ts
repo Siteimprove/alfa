@@ -35,6 +35,8 @@ export interface Collection<T>
 
 export namespace Collection {
   export interface Keyed<K, V> extends Collection<V>, Iterable<[K, V]> {
+    // Collection<T> methods
+
     isEmpty(): this is Keyed<K, never>;
     map<U>(mapper: Mapper<V, U, [K]>): Keyed<K, U>;
     flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [K]>): Keyed<K, U>;
@@ -47,7 +49,7 @@ export namespace Collection {
     every(predicate: Predicate<V, V, [K]>): boolean;
     count(predicate: Predicate<V, V, [K]>): number;
 
-    // Keyed<K, V> specific methods
+    // Keyed<K, V> methods
 
     get(key: K): Option<V>;
     has(key: K): boolean;
@@ -57,6 +59,8 @@ export namespace Collection {
   }
 
   export interface Unkeyed<T> extends Collection<T>, Iterable<T> {
+    // Collection<T> methods
+
     isEmpty(): this is Unkeyed<never>;
     map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
     flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
@@ -69,7 +73,7 @@ export namespace Collection {
     every(predicate: Predicate<T>): boolean;
     count(predicate: Predicate<T>): number;
 
-    // Unkeyed<T> specific methods
+    // Unkeyed<T> methods
 
     get(value: T): Option<T>;
     has(value: T): boolean;
@@ -79,6 +83,8 @@ export namespace Collection {
   }
 
   export interface Indexed<T> extends Collection<T>, Iterable<T> {
+    // Collection<T> methods
+
     isEmpty(): this is Indexed<never>;
     map<U>(mapper: Mapper<T, U, [number]>): Indexed<U>;
     flatMap<U>(mapper: Mapper<T, Indexed<U>, [number]>): Indexed<U>;
@@ -91,7 +97,7 @@ export namespace Collection {
     every(predicate: Predicate<T, T, [number]>): boolean;
     count(predicate: Predicate<T, T, [number]>): number;
 
-    // Indexed<T> specific methods
+    // Indexed<T> methods
 
     get(index: number): Option<T>;
     has(index: number): boolean;

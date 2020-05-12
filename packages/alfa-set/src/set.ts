@@ -161,6 +161,12 @@ export namespace Set {
   }
 
   export function from<T>(iterable: Iterable<T>): Set<T> {
-    return isSet<T>(iterable) ? iterable : Set.of(...iterable);
+    return isSet<T>(iterable)
+      ? iterable
+      : Iterable.reduce(
+          iterable,
+          (set, value) => set.add(value),
+          Set.empty<T>()
+        );
   }
 }

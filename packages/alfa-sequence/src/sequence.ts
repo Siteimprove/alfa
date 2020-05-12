@@ -10,7 +10,8 @@ import { Cons } from "./cons";
 import { Nil } from "./nil";
 
 export interface Sequence<T> extends Collection.Indexed<T> {
-  readonly size: number;
+  // Collection<T> methods
+
   isEmpty(): this is Sequence<never>;
   map<U>(mapper: Mapper<T, U, [number]>): Sequence<U>;
   flatMap<U>(mapper: Mapper<T, Sequence<U>, [number]>): Sequence<U>;
@@ -22,6 +23,9 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   some(predicate: Predicate<T, T, [number]>): boolean;
   every(predicate: Predicate<T, T, [number]>): boolean;
   count(predicate: Predicate<T, T, [number]>): number;
+
+  // Indexed<T> methods
+
   get(index: number): Option<T>;
   has(index: number): boolean;
   set(index: number, value: T): Sequence<T>;
@@ -43,8 +47,14 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   slice(start: number, end?: number): Sequence<T>;
   reverse(): Sequence<T>;
   join(separator: string): string;
+
+  // Sequence<T> methods
+
   groupBy<K>(grouper: Mapper<T, K, [number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
+
+  // Serializable methods
+
   toJSON(): Sequence.JSON;
 }
 

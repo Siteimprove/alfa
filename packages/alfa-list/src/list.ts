@@ -19,20 +19,20 @@ export class List<T> implements Collection.Indexed<T> {
     return values.reduce((list, value) => list._push(value), List.empty<T>());
   }
 
-  private static _empty = new List<never>(Empty.empty(), Empty.empty(), 0, 0);
+  private static _empty = new List<never>(Empty, Empty, 0, 0);
 
   public static empty<T = never>(): List<T> {
     return this._empty;
   }
 
-  private readonly _head: Empty<T> | Leaf<T> | Branch<T>;
-  private readonly _tail: Empty<T> | Leaf<T>;
+  private readonly _head: Empty | Leaf<T> | Branch<T>;
+  private readonly _tail: Empty | Leaf<T>;
   private readonly _shift: number;
   private readonly _size: number;
 
   private constructor(
-    head: Empty<T> | Leaf<T> | Branch<T>,
-    tail: Empty<T> | Leaf<T>,
+    head: Empty | Leaf<T> | Branch<T>,
+    tail: Empty | Leaf<T>,
     shift: number,
     size: number
   ) {
@@ -51,9 +51,17 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public map<U>(mapper: Mapper<T, U, [number]>): List<U> {
-    return this.reduce(
-      (list, value, index) => list._push(mapper(value, index)),
-      List.empty<U>()
+    let index = 0;
+
+    const tail = (this._tail as Node<T>).map((value) => mapper(value, index++));
+
+    const head = (this._head as Node<T>).map((value) => mapper(value, index++));
+
+    return new List(
+      head as Empty | Leaf<U> | Branch<U>,
+      tail as Empty | Leaf<U>,
+      this._shift,
+      this._size
     );
   }
 
@@ -129,6 +137,10 @@ export class List<T> implements Collection.Indexed<T> {
     let tail = this._tail;
 
     if (index < offset) {
+      if (head.isEmpty()) {
+        return this;
+      }
+
       head = head.set(index, value, this._shift);
 
       if (head === this._head) {
@@ -312,7 +324,7 @@ export class List<T> implements Collection.Indexed<T> {
     // Out: List { head: Empty, tail: Leaf(value) }
     //
     if (this._tail.isEmpty()) {
-      return new List(Empty.empty(), Leaf.of([value]), 0, 1);
+      return new List(Empty, Leaf.of([value]), 0, 1);
     }
 
     // If the tail has capacity for another value, we concatenate the pushed
@@ -430,7 +442,7 @@ export class List<T> implements Collection.Indexed<T> {
 
     if (this._head.isLeaf() || this._head.isEmpty()) {
       return new List(
-        Empty.empty(),
+        Empty,
         this._head,
         this._shift - Node.Bits,
         this._size - 1
@@ -493,6 +505,12 @@ export namespace List {
   }
 
   export function from<T>(iterable: Iterable<T>): List<T> {
-    return isList<T>(iterable) ? iterable : List.of(...iterable);
+    return isList<T>(iterable)
+      ? iterable
+      : Iterable.reduce(
+          iterable,
+          (list, value) => list.append(value),
+          List.empty<T>()
+        );
   }
 }

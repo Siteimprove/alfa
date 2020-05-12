@@ -1,6 +1,8 @@
 import { Bits } from "@siteimprove/alfa-bits";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 const { bit, take, skip } = Bits;
@@ -8,11 +10,12 @@ const { bit, take, skip } = Bits;
 /**
  * @internal
  */
-export interface Node<T> extends Iterable<T>, Equatable {
-  isEmpty(): this is Empty<T>;
+export interface Node<T> extends Functor<T>, Iterable<T>, Equatable {
+  isEmpty(): this is Empty;
   isLeaf(): this is Leaf<T>;
   get(index: number, shift: number): Option<T>;
   set(index: number, value: T, shift: number): Node<T>;
+  map<U>(mapper: Mapper<T, U>): Node<U>;
 }
 
 /**
@@ -39,20 +42,17 @@ export namespace Node {
 /**
  * @internal
  */
-export class Empty<T> implements Node<T> {
-  private static _empty = new Empty<never>();
+export interface Empty extends Node<never> {}
 
-  public static empty<T>(): Empty<T> {
-    return this._empty;
-  }
-
-  private constructor() {}
-
-  public isEmpty(): this is Empty<T> {
+/**
+ * @internal
+ */
+export const Empty: Empty = new (class Empty {
+  public isEmpty(): this is Empty {
     return true;
   }
 
-  public isLeaf(): this is Leaf<T> {
+  public isLeaf(): this is Leaf<never> {
     return false;
   }
 
@@ -60,7 +60,11 @@ export class Empty<T> implements Node<T> {
     return None;
   }
 
-  public set(): Empty<T> {
+  public set(): Empty {
+    return this;
+  }
+
+  public map(): Empty {
     return this;
   }
 
@@ -69,7 +73,7 @@ export class Empty<T> implements Node<T> {
   }
 
   public *[Symbol.iterator](): Iterator<never> {}
-}
+})();
 
 /**
  * @internal
@@ -89,7 +93,7 @@ export class Leaf<T> implements Node<T> {
     return this._values;
   }
 
-  public isEmpty(): this is Empty<T> {
+  public isEmpty(): this is Empty {
     return false;
   }
 
@@ -119,6 +123,10 @@ export class Leaf<T> implements Node<T> {
     values[fragment] = value;
 
     return Leaf.of(values);
+  }
+
+  public map<U>(mapper: Mapper<T, U>): Leaf<U> {
+    return Leaf.of(this._values.map(mapper));
   }
 
   public equals(value: unknown): value is this {
@@ -158,7 +166,7 @@ export class Branch<T> implements Node<T> {
     return this._nodes;
   }
 
-  public isEmpty(): this is Empty<T> {
+  public isEmpty(): this is Empty {
     return false;
   }
 
@@ -190,6 +198,14 @@ export class Branch<T> implements Node<T> {
     nodes[fragment] = node;
 
     return Branch.of(nodes);
+  }
+
+  public map<U>(mapper: Mapper<T, U>): Branch<U> {
+    return Branch.of(
+      this._nodes.map(
+        (node) => (node as Node<T>).map(mapper) as Branch<U> | Leaf<U>
+      )
+    );
   }
 
   public equals(value: unknown): value is this {
