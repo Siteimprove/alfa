@@ -4,6 +4,9 @@
   "files": ["src/collection.ts", "src/index.ts"],
   "references": [
     {
+      "path": "../alfa-applicative"
+    },
+    {
       "path": "../alfa-equatable"
     },
     {
@@ -11,6 +14,9 @@
     },
     {
       "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-hash"
     },
     {
       "path": "../alfa-iterable"

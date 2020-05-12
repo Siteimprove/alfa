@@ -152,25 +152,6 @@ export abstract class Node
     return path;
   }
 
-  /**
-   * finds all descendant elements whose id is in the given set
-   */
-  public resolveReferences(...references: Array<string>): Array<Element> {
-    const elements: Array<Element> = [];
-
-    for (const id of references) {
-      const element = this.descendants().find(
-        and(Element.isElement, (element) => element.id.includes(id))
-      );
-
-      if (element.isSome()) {
-        elements.push(element.get());
-      }
-    }
-
-    return elements;
-  }
-
   public *[Symbol.iterator](): Iterator<Node> {
     yield* this.descendants();
   }

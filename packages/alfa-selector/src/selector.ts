@@ -1374,7 +1374,6 @@ export namespace Selector {
 
   /**
    * @see https://drafts.csswg.org/selectors/#typedef-selector-list
-   * @internal
    */
   const parseList = map(
     pair(

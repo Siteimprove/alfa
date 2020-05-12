@@ -9,6 +9,15 @@
   ],
   "references": [
     {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-hash"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
       "path": "../alfa-test"
     }
   ]

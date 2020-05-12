@@ -23,12 +23,16 @@ export const None: None = new (class None {
     return this;
   }
 
+  public reduce<U>(reducer: unknown, accumulator: U): U {
+    return accumulator;
+  }
+
   public apply(): None {
     return this;
   }
 
-  public reduce<U>(reducer: unknown, accumulator: U): U {
-    return accumulator;
+  public filter(): None {
+    return this;
   }
 
   public includes(): boolean {
@@ -41,10 +45,6 @@ export const None: None = new (class None {
 
   public every(): boolean {
     return true;
-  }
-
-  public filter(): None {
-    return this;
   }
 
   public and(): None {
@@ -82,6 +82,10 @@ export const None: None = new (class None {
   public hash(): void {}
 
   public *[Symbol.iterator](): Iterator<never> {}
+
+  public toArray(): Array<never> {
+    return [];
+  }
 
   public toJSON(): None.JSON {
     return {

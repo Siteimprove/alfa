@@ -4,79 +4,84 @@ import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
+
 import { expectation } from "../common/expectation";
+
 import { hasAttribute } from "../common/predicate/has-attribute";
 import { isPerceivable } from "../common/predicate/is-perceivable";
 
-const { isElement, hasName, hasNamespace } = Element;
-const { and, equals, not } = Predicate;
+const { isElement, hasId, hasName, hasNamespace } = Element;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://siteimprove.github.io/sanshikan/rules/sia-r45.html",
   evaluate({ device, document }) {
-    // records in which <table> is located each "headers" attribute
-    let ownership = Map.empty<Attribute, Element>();
-
-    return {
-      *applicability() {
-        // get all perceivable tables in the document
-        const tables = document
+    const headers = document
+      .descendants()
+      .filter(
+        and(
+          isElement,
+          and(
+            hasNamespace(Namespace.HTML),
+            hasName("table"),
+            isPerceivable(device)
+          )
+        )
+      )
+      .reduce((headers, table) => {
+        const cells = table
           .descendants()
           .filter(
             and(
               isElement,
               and(
                 hasNamespace(Namespace.HTML),
-                hasName("table"),
-                isPerceivable(device)
+                hasName("td", "th"),
+                hasAttribute("headers")
               )
             )
           );
 
-        for (const table of tables) {
-          // get all cells with a headers attribute
-          const cells = table
-            .descendants()
-            .filter(
-              and(
-                isElement,
-                and(
-                  hasNamespace(Namespace.HTML),
-                  hasName("td", "th"),
-                  hasAttribute("headers")
-                )
-              )
-            );
-
-          for (const cell of cells) {
-            const header = cell.attribute("headers").get();
-            ownership = ownership.set(header, table);
-            yield header;
-          }
+        for (const cell of cells) {
+          headers = headers.set(cell.attribute("headers").get(), table);
         }
+
+        return headers;
+      }, Map.empty<Attribute, Element>());
+
+    return {
+      applicability() {
+        return headers.keys();
       },
 
       expectations(target) {
-        const table = ownership.get(target).get();
-        const idsList = target.tokens();
-        const referredCells = table
-          .resolveReferences(...idsList)
+        const table = headers.get(target).get();
+
+        const ids = target.tokens();
+
+        const cells = table
+          .descendants()
           .filter(
             and(
               isElement,
-              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
+              and(
+                hasNamespace(Namespace.HTML),
+                hasName("td", "th"),
+                hasId(equals(...ids))
+              )
             )
           );
 
         return {
           1: expectation(
-            // each token refers to a different cell in the same table iff both array have the same length.
-            referredCells.length === idsList.length,
+            // Each token refers to a different cell in the same table if the
+            // number of identified cells is equal to the number of IDs.
+            cells.size === ids.size,
             () => Outcomes.HeadersRefersToCellInTable,
             () => Outcomes.HeadersDoesNotReferToCellsInTable
           ),
           2: expectation(
-            referredCells.every((cell) => !target.owner.get().equals(cell)),
+            cells.every((cell) => !target.owner.some(equals(cell))),
             () => Outcomes.HeadersDoesNotRefersToSelf,
             () => Outcomes.HeadersRefersToSelf
           ),

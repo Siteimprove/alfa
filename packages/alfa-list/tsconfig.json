@@ -13,6 +13,12 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-functor"
+    },
+    {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {

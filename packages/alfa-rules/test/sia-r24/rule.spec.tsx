@@ -11,12 +11,13 @@ import { hasId } from "../../src/common/predicate/has-id";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome";
 
 const { isElement, hasName } = Element;
 const { and, equals } = Predicate;
 
-test("evaluate() passes when non-streaming video elements have all audio and visual information available in a transcript", async (t) => {
+test(`evaluate() passes when non-streaming video elements have all audio and
+      visual information available in a transcript`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <div>
@@ -50,11 +51,16 @@ test("evaluate() passes when non-streaming video elements have all audio and vis
         transcript: Option.of(transcript),
       })
     ),
-    [passed(R24, video, { 1: Outcomes.HasTranscript })]
+    [
+      passed(R24, video, {
+        1: Outcomes.HasTranscript,
+      }),
+    ]
   );
 });
 
-test("evaluate() fails when non-streaming video elements have no audio and visual information available in a transcript", async (t) => {
+test(`evaluate() fails when non-streaming video elements have no audio and
+      visual information available in a transcript`, async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
       <video controls>
@@ -81,7 +87,11 @@ test("evaluate() fails when non-streaming video elements have no audio and visua
         "transcript-link": None,
       })
     ),
-    [failed(R24, video, { 1: Outcomes.HasNoTranscript })]
+    [
+      failed(R24, video, {
+        1: Outcomes.HasNoTranscript,
+      }),
+    ]
   );
 });
 

@@ -1,7 +1,10 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+
 import * as json from "@siteimprove/alfa-json";
 
-export class Display implements Serializable {
+export class Display implements Equatable, Hashable, Serializable {
   public static of(
     resolution: number,
     scan: Display.Scan = Display.Scan.Progressive
@@ -29,6 +32,26 @@ export class Display implements Serializable {
    */
   public get scan(): Display.Scan {
     return this._scan;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Display &&
+      value._resolution === this._resolution &&
+      value._scan === this._scan
+    );
+  }
+
+  public hash(hash: Hash): void {
+    Hash.writeUint8(hash, this._resolution);
+
+    switch (this._scan) {
+      case Display.Scan.Interlace:
+        Hash.writeUint8(hash, 1);
+        break;
+      case Display.Scan.Progressive:
+        Hash.writeUint8(hash, 2);
+    }
   }
 
   public toJSON(): Display.JSON {

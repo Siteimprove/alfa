@@ -2,7 +2,7 @@ import { jsx } from "@siteimprove/alfa-dom/jsx";
 
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Cell } from "../src/cell";
@@ -13,7 +13,7 @@ import { Scope } from "../src/scope";
 import { Table } from "../src/table";
 
 const { and } = Predicate;
-const { isElement } = Element;
+const { isElement, hasId } = Element;
 const { compare } = Comparable;
 
 const makeCellFromGetter = (getElt: (elt: string) => Element) => (
@@ -48,9 +48,11 @@ function toBuildingCell(cell: Cell) {
   );
 }
 
-const dummy = Element.of(None, None, "dummy");
 const getDescendantById = (node: Node) => (id: string) =>
-  node.resolveReferences(id).shift() || dummy;
+  node
+    .descendants()
+    .find(and(isElement, hasId(id)))
+    .get();
 
 // processing simple row
 export namespace simpleRow {

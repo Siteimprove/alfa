@@ -17,6 +17,11 @@
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
+  "dependencies": {
+    "@siteimprove/alfa-equatable": "^0.0.1",
+    "@siteimprove/alfa-hash": "^0.0.1",
+    "@siteimprove/alfa-json": "^0.0.1"
+  },
   "devDependencies": {
     "@siteimprove/alfa-test": "^0.0.1"
   },

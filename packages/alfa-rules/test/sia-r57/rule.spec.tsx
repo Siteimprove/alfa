@@ -9,6 +9,8 @@ import R57, { Outcomes } from "../../src/sia-r57/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
+const { isText } = Text;
+
 test("evaluate() passes a text node that is included in a landmark", async (t) => {
   const document = Document.of((self) => [
     Element.fromElement(
@@ -17,10 +19,12 @@ test("evaluate() passes a text node that is included in a landmark", async (t) =
     ),
   ]);
 
-  const text = document.descendants().filter(Text.isText).first().get();
+  const text = document.descendants().find(isText).get();
 
   t.deepEqual(await evaluate(R57, { document }), [
-    passed(R57, text, { 1: Outcomes.IsIncludedInLandmark }),
+    passed(R57, text, {
+      1: Outcomes.IsIncludedInLandmark,
+    }),
   ]);
 });
 
@@ -32,10 +36,12 @@ test("evaluate() fails a text node that is not included in a landmark", async (t
     ),
   ]);
 
-  const text = document.descendants().filter(Text.isText).first().get();
+  const text = document.descendants().find(isText).get();
 
   t.deepEqual(await evaluate(R57, { document }), [
-    failed(R57, text, { 1: Outcomes.IsNotIncludedInLandmark }),
+    failed(R57, text, {
+      1: Outcomes.IsNotIncludedInLandmark,
+    }),
   ]);
 });
 

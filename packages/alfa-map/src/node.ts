@@ -13,7 +13,7 @@ const { bit, take, skip, test, set, clear, popCount } = Bits;
  * @internal
  */
 export interface Node<K, V> extends Functor<V>, Iterable<[K, V]>, Equatable {
-  isEmpty(): this is Empty<K, V>;
+  isEmpty(): this is Empty;
   isLeaf(): this is Leaf<K, V>;
   get(key: K, hash: number, shift: number): Option<V>;
   set(key: K, value: V, hash: number, shift: number): Status<Node<K, V>>;
@@ -39,20 +39,17 @@ export namespace Node {
 /**
  * @internal
  */
-export class Empty<K, V> implements Node<K, V> {
-  private static _empty = new Empty<never, never>();
+export interface Empty extends Node<never, never> {}
 
-  public static empty<K, V>(): Empty<K, V> {
-    return this._empty;
-  }
-
-  private constructor() {}
-
-  public isEmpty(): this is Empty<K, V> {
+/**
+ * @internal
+ */
+export const Empty: Empty = new (class Empty {
+  public isEmpty(): this is Empty {
     return true;
   }
 
-  public isLeaf(): this is Leaf<K, V> {
+  public isLeaf(): this is Leaf<never, never> {
     return false;
   }
 
@@ -60,16 +57,16 @@ export class Empty<K, V> implements Node<K, V> {
     return None;
   }
 
-  public set(key: K, value: V, hash: number): Status<Node<K, V>> {
+  public set<K, V>(key: K, value: V, hash: number): Status<Node<K, V>> {
     return Status.created(Leaf.of(hash, key, value));
   }
 
-  public delete(): Status<Node<K, V>> {
+  public delete<K, V>(): Status<Node<K, V>> {
     return Status.unchanged(this);
   }
 
-  public map<U>(): Empty<K, U> {
-    return Empty.empty();
+  public map(): Empty {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -77,7 +74,7 @@ export class Empty<K, V> implements Node<K, V> {
   }
 
   public *[Symbol.iterator](): Iterator<never> {}
-}
+})();
 
 /**
  * @internal
@@ -105,7 +102,7 @@ export class Leaf<K, V> implements Node<K, V> {
     return this._value;
   }
 
-  public isEmpty(): this is Empty<K, V> {
+  public isEmpty(): this is Empty {
     return false;
   }
 
@@ -146,7 +143,7 @@ export class Leaf<K, V> implements Node<K, V> {
 
   public delete(key: K, hash: number): Status<Node<K, V>> {
     return hash === this._hash && Equatable.equals(key, this._key)
-      ? Status.deleted(Empty.empty())
+      ? Status.deleted(Empty)
       : Status.unchanged(this);
   }
 
@@ -187,7 +184,7 @@ export class Collision<K, V> implements Node<K, V> {
     this._nodes = nodes;
   }
 
-  public isEmpty(): this is Empty<K, V> {
+  public isEmpty(): this is Empty {
     return false;
   }
 
@@ -302,7 +299,7 @@ export class Sparse<K, V> implements Node<K, V> {
     this._nodes = nodes;
   }
 
-  public isEmpty(): this is Empty<K, V> {
+  public isEmpty(): this is Empty {
     return false;
   }
 

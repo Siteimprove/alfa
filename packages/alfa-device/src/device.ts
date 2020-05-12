@@ -1,10 +1,13 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Display } from "./display";
 import { Viewport } from "./viewport";
 
-export class Device implements Serializable {
+export class Device implements Equatable, Hashable, Serializable {
   public static of(
     type: Device.Type,
     viewport: Viewport,
@@ -33,6 +36,31 @@ export class Device implements Serializable {
 
   public get display(): Display {
     return this._display;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Device &&
+      value._type === this._type &&
+      value._viewport.equals(this._viewport) &&
+      value._display.equals(this._display)
+    );
+  }
+
+  public hash(hash: Hash): void {
+    switch (this._type) {
+      case Device.Type.Print:
+        Hash.writeUint8(hash, 1);
+        break;
+      case Device.Type.Screen:
+        Hash.writeUint8(hash, 2);
+        break;
+      case Device.Type.Screen:
+        Hash.writeUint8(hash, 3);
+    }
+
+    this._viewport.hash(hash);
+    this._display.hash(hash);
   }
 
   public toJSON(): Device.JSON {
