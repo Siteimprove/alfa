@@ -60,34 +60,43 @@ export default Rule.Atomic.of<Page, Element, Question>({
               () => Outcomes.HasNoErrorIndicator,
               () => {
                 function identifiesTarget(
-                  indicators: Array<Node>
+                  indicators: Array<Node>,
+                  error: Err<string>
                 ): Interview<
                   Question,
                   Node,
                   Option.Maybe<Result<string, string>>
                 > {
-                  const next = indicators[0];
+                  const indicator = indicators[0];
 
-                  if (next === undefined) {
-                    return Outcomes.NoErrorIndicatorIdentifiesTarget;
+                  if (indicator === undefined) {
+                    return error;
                   }
 
                   return Question.of(
                     "error-indicator-identifies-form-field",
                     "boolean",
-                    next,
+                    indicator,
                     `Does the error indicator identify, in text, the form field
                     it relates to?`
                   ).map((isIdentified) => {
                     if (isIdentified) {
-                      return Outcomes.ErrorIndicatorIdentifiesTarget;
+                      if (test(isPerceivable(device), indicator)) {
+                        return Outcomes.ErrorIndicatorIdentifiesTarget;
+                      } else {
+                        error =
+                          Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable;
+                      }
                     }
 
-                    return identifiesTarget(indicators.slice(1));
+                    return identifiesTarget(indicators.slice(1), error);
                   });
                 }
 
-                return identifiesTarget(indicators);
+                return identifiesTarget(
+                  indicators,
+                  Outcomes.NoErrorIndicatorIdentifiesTarget
+                );
               }
             )
           ),
@@ -122,7 +131,8 @@ export default Rule.Atomic.of<Page, Element, Question>({
                       if (test(isPerceivable(device), indicator)) {
                         return Outcomes.ErrorIndicatorDescribesResolution;
                       } else {
-                        error = Outcomes.ErrorIndicatorIsNotPerceivable;
+                        error =
+                          Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable;
                       }
                     }
 
@@ -149,7 +159,12 @@ export namespace Outcomes {
   );
 
   export const ErrorIndicatorIdentifiesTarget = Ok.of(
-    "At least one error indicator identifies the form field"
+    "At least one error indicator that is perceivable identifies the form field"
+  );
+
+  export const ErrorIndicatorIdentifiesTargetButIsNotPerceivable = Err.of(
+    `At least one error indicator identifies the form field, but the error
+    indicator is not perceivable`
   );
 
   export const NoErrorIndicatorIdentifiesTarget = Err.of(
@@ -161,7 +176,7 @@ export namespace Outcomes {
     error or how to resolve it`
   );
 
-  export const ErrorIndicatorIsNotPerceivable = Err.of(
+  export const ErrorIndicatorDescribesResolutionButIsNotPerceivable = Err.of(
     `At least one error indicator describes the cause of the error or how to
     resolve it, but the error indicator is not perceivable`
   );

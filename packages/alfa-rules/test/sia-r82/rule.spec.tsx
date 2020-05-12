@@ -117,7 +117,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
     [
       failed(R82, input, {
         1: Outcomes.ErrorIndicatorIdentifiesTarget,
-        2: Outcomes.ErrorIndicatorIsNotPerceivable,
+        2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
       }),
     ]
   );
@@ -139,7 +139,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
     [
       failed(R82, input, {
         1: Outcomes.ErrorIndicatorIdentifiesTarget,
-        2: Outcomes.ErrorIndicatorIsNotPerceivable,
+        2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
       }),
     ]
   );
