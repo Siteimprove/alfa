@@ -35,9 +35,11 @@ const input = document
   .find(and(isElement, hasName("input")))
   .get();
 
-const [error, invisibleError, ignoredError] = document
-  .descendants()
-  .filter(and(isElement, hasName("span")));
+const [
+  perceivableError,
+  invisibleError,
+  ignoredError,
+] = document.descendants().filter(and(isElement, hasName("span")));
 
 test("evaluate() passes when a form field has no error indicator", async (t) => {
   t.deepEqual(
@@ -65,7 +67,7 @@ test(`evaluate() passes when a form field has an error indicator that identifies
       R82,
       { document },
       oracle({
-        "error-indicators": [error],
+        "error-indicators": [perceivableError],
         "error-indicator-identifies-form-field": true,
         "error-indicator-describes-resolution": true,
       })
@@ -87,7 +89,7 @@ test(`evaluate() fails when a form field has an error indicator that does not
       R82,
       { document },
       oracle({
-        "error-indicators": [error],
+        "error-indicators": [perceivableError],
         "error-indicator-identifies-form-field": false,
         "error-indicator-describes-resolution": false,
       })

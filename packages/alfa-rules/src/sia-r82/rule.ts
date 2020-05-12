@@ -1,4 +1,5 @@
 import { Rule, Interview } from "@siteimprove/alfa-act";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option } from "@siteimprove/alfa-option";
@@ -58,46 +59,12 @@ export default Rule.Atomic.of<Page, Element, Question>({
             expectation(
               indicators.length === 0,
               () => Outcomes.HasNoErrorIndicator,
-              () => {
-                function identifiesTarget(
-                  indicators: Array<Node>,
-                  error: Err<string>
-                ): Interview<
-                  Question,
-                  Node,
-                  Option.Maybe<Result<string, string>>
-                > {
-                  const indicator = indicators[0];
-
-                  if (indicator === undefined) {
-                    return error;
-                  }
-
-                  return Question.of(
-                    "error-indicator-identifies-form-field",
-                    "boolean",
-                    indicator,
-                    `Does the error indicator identify, in text, the form field
-                    it relates to?`
-                  ).map((isIdentified) => {
-                    if (isIdentified) {
-                      if (test(isPerceivable(device), indicator)) {
-                        return Outcomes.ErrorIndicatorIdentifiesTarget;
-                      } else {
-                        error =
-                          Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable;
-                      }
-                    }
-
-                    return identifiesTarget(indicators.slice(1), error);
-                  });
-                }
-
-                return identifiesTarget(
+              () =>
+                identifiesTarget(
                   indicators,
-                  Outcomes.NoErrorIndicatorIdentifiesTarget
-                );
-              }
+                  Outcomes.NoErrorIndicatorIdentifiesTarget,
+                  device
+                )
             )
           ),
 
@@ -105,46 +72,12 @@ export default Rule.Atomic.of<Page, Element, Question>({
             expectation(
               indicators.length === 0,
               () => Outcomes.HasNoErrorIndicator,
-              () => {
-                function describesResolution(
-                  indicators: Array<Node>,
-                  error: Err<string>
-                ): Interview<
-                  Question,
-                  Node,
-                  Option.Maybe<Result<string, string>>
-                > {
-                  const indicator = indicators[0];
-
-                  if (indicator === undefined) {
-                    return error;
-                  }
-
-                  return Question.of(
-                    "error-indicator-describes-resolution",
-                    "boolean",
-                    indicator,
-                    `Does the error indicator describe, in text, the cause of
-                    the error or how to resolve it?`
-                  ).map((isDescribed) => {
-                    if (isDescribed) {
-                      if (test(isPerceivable(device), indicator)) {
-                        return Outcomes.ErrorIndicatorDescribesResolution;
-                      } else {
-                        error =
-                          Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable;
-                      }
-                    }
-
-                    return describesResolution(indicators.slice(1), error);
-                  });
-                }
-
-                return describesResolution(
+              () =>
+                describesResolution(
                   indicators,
-                  Outcomes.NoErrorIndicatorDescribesResolution
-                );
-              }
+                  Outcomes.NoErrorIndicatorDescribesResolution,
+                  device
+                )
             )
           ),
         };
@@ -185,4 +118,63 @@ export namespace Outcomes {
     `None of the error indicators describe the cause of the error or how to
     resolve it`
   );
+}
+
+function identifiesTarget(
+  indicators: Array<Node>,
+  error: Err<string>,
+  device: Device
+): Interview<Question, Node, Option.Maybe<Result<string, string>>> {
+  const indicator = indicators[0];
+
+  if (indicator === undefined) {
+    return error;
+  }
+
+  return Question.of(
+    "error-indicator-identifies-form-field",
+    "boolean",
+    indicator,
+    "Does the error indicator identify, in text, the form field it relates to?"
+  ).map((isIdentified) => {
+    if (isIdentified) {
+      if (test(isPerceivable(device), indicator)) {
+        return Outcomes.ErrorIndicatorIdentifiesTarget;
+      } else {
+        error = Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable;
+      }
+    }
+
+    return identifiesTarget(indicators.slice(1), error, device);
+  });
+}
+
+function describesResolution(
+  indicators: Array<Node>,
+  error: Err<string>,
+  device: Device
+): Interview<Question, Node, Option.Maybe<Result<string, string>>> {
+  const indicator = indicators[0];
+
+  if (indicator === undefined) {
+    return error;
+  }
+
+  return Question.of(
+    "error-indicator-describes-resolution",
+    "boolean",
+    indicator,
+    `Does the error indicator describe, in text, the cause of the error or how
+    to resolve it?`
+  ).map((isDescribed) => {
+    if (isDescribed) {
+      if (test(isPerceivable(device), indicator)) {
+        return Outcomes.ErrorIndicatorDescribesResolution;
+      } else {
+        error = Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable;
+      }
+    }
+
+    return describesResolution(indicators.slice(1), error, device);
+  });
 }
