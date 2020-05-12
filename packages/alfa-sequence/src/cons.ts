@@ -385,7 +385,7 @@ export class Cons<T> implements Sequence<T> {
           Lazy.force(groups.get(group).getOrElse(() => Sequence.empty<T>()))
         )
       );
-    }, Map.empty<K, Sequence<T>>());
+    }, Map.empty<K, Sequence<T>>()).map((group) => group.reverse());
   }
 
   public equals(value: unknown): value is this {
