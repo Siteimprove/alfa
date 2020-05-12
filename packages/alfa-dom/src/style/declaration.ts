@@ -1,9 +1,12 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { Rule } from "./rule";
 
-export class Declaration {
+export class Declaration implements Equatable, Serializable {
   public static of(
     name: string,
     value: string,
@@ -51,6 +54,15 @@ export class Declaration {
       yield parent;
       yield* parent.ancestors();
     }
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Declaration &&
+      value._name === this._name &&
+      value._value === this._value &&
+      value._important === this._important
+    );
   }
 
   public toJSON(): Declaration.JSON {
