@@ -1,7 +1,11 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component";
 import { Token } from "./token";
@@ -11,13 +15,70 @@ const { or, not } = Predicate;
 /**
  * @see https://drafts.csswg.org/css-syntax/#declaration
  */
-export interface Declaration {
-  name: string;
-  value: Array<Token>;
-  important: boolean;
+export class Declaration implements Equatable, Serializable {
+  public static of(
+    name: string,
+    value: Array<Token>,
+    important = false
+  ): Declaration {
+    return new Declaration(name, value, important);
+  }
+
+  private readonly _name: string;
+  private readonly _value: Array<Token>;
+  private readonly _important: boolean;
+
+  private constructor(name: string, value: Array<Token>, important: boolean) {
+    this._name = name;
+    this._value = value;
+    this._important = important;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public get value(): Array<Token> {
+    return this._value;
+  }
+
+  public get important(): boolean {
+    return this._important;
+  }
+
+  public equals(value: unknown): value is this {
+    return (
+      value instanceof Declaration &&
+      value._name === this._name &&
+      value._important === this._important &&
+      value._value.length === this._value.length &&
+      value._value.every((token, i) => token.equals(this._value[i]))
+    );
+  }
+
+  public toJSON(): Declaration.JSON {
+    return {
+      name: this._name,
+      value: this._value.map((token) => token.toJSON()),
+      important: this._important,
+    };
+  }
+
+  public toString(): string {
+    return `${this._name}: ${this._value}${
+      this._important ? " !important" : ""
+    }`;
+  }
 }
 
 export namespace Declaration {
+  export interface JSON {
+    [key: string]: json.JSON;
+    name: string;
+    value: Array<Token.JSON>;
+    important: boolean;
+  }
+
   /**
    * @see https://drafts.csswg.org/css-syntax/#consume-a-declaration
    */
@@ -49,9 +110,9 @@ export namespace Declaration {
       value.push(...component);
     }
 
-    const declaration: Declaration = { name, value, important: false };
+    let important = false;
 
-    return Ok.of([input, declaration] as const);
+    return Ok.of([input, Declaration.of(name, value, important)] as const);
   };
 
   /**
