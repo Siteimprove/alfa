@@ -96,7 +96,13 @@
     "src/sia-r68/rule.ts",
     "src/sia-r69/rule.ts",
     "src/sia-r7/rule.ts",
+    "src/sia-r71/rule.ts",
+    "src/sia-r72/rule.ts",
+    "src/sia-r73/rule.ts",
+    "src/sia-r74/rule.ts",
+    "src/sia-r75/rule.ts",
     "src/sia-r8/rule.ts",
+    "src/sia-r80/rule.ts",
     "src/sia-r9/rule.ts",
     "test/common/evaluate.ts",
     "test/common/oracle.ts",
@@ -113,7 +119,13 @@
     "test/sia-r64/rule.spec.tsx",
     "test/sia-r61/rule.spec.tsx",
     "test/sia-r68/rule.spec.tsx",
-    "test/sia-r69/rule.spec.tsx"
+    "test/sia-r69/rule.spec.tsx",
+    "test/sia-r71/rule.spec.tsx",
+    "test/sia-r72/rule.spec.tsx",
+    "test/sia-r73/rule.spec.tsx",
+    "test/sia-r74/rule.spec.tsx",
+    "test/sia-r75/rule.spec.tsx",
+    "test/sia-r80/rule.spec.tsx"
   ],
   "references": [
     {

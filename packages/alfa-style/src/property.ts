@@ -82,7 +82,9 @@ import { Background } from "./property/background";
 import { Color } from "./property/color";
 import { Display } from "./property/display";
 import { Font } from "./property/font";
+import { Line } from "./property/line";
 import { Opacity } from "./property/opacity";
+import { Text } from "./property/text";
 import { Transform } from "./property/transform";
 import { Visibility } from "./property/visibility";
 
@@ -98,7 +100,10 @@ export namespace Property {
     "font-family": Font.Family,
     "font-size": Font.Size,
     "font-weight": Font.Weight,
+    "line-height": Line.Height,
     opacity: Opacity,
+    "text-align": Text.Align,
+    "text-transform": Text.Transform,
     transform: Transform,
     visibility: Visibility,
   };
