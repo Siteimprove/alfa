@@ -34,3 +34,115 @@ test("evaluate() passes a paragraph whose line height is at least 1.5", async (t
     }),
   ]);
 });
+
+test(`evaluate() passes a paragraph whose line height is at least 1.5 times the
+      font size`, async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <p style="font-size: 16px; line-height: 24px">Hello world</p>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  const target = document
+    .descendants()
+    .find(and(isElement, hasName("p")))
+    .get();
+
+  t.deepEqual(await evaluate(R73, { document }), [
+    passed(R73, target, {
+      1: Outcomes.IsSufficient,
+    }),
+  ]);
+});
+
+test("evaluate() fails a paragraph whose line height is less than 1.5", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <p style="line-height: 1.2">Hello world</p>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  const target = document
+    .descendants()
+    .find(and(isElement, hasName("p")))
+    .get();
+
+  t.deepEqual(await evaluate(R73, { document }), [
+    failed(R73, target, {
+      1: Outcomes.IsInsufficient,
+    }),
+  ]);
+});
+
+test(`evaluate() fails a paragraph whose line height is less than 1.5 times the
+      font size`, async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <p style="font-size: 16px; line-height: 22px">Hello world</p>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  const target = document
+    .descendants()
+    .find(and(isElement, hasName("p")))
+    .get();
+
+  t.deepEqual(await evaluate(R73, { document }), [
+    failed(R73, target, {
+      1: Outcomes.IsInsufficient,
+    }),
+  ]);
+});
+
+test(`evaluate() fails a paragraph whose line height is "normal"`, async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <p style="line-height: normal">Hello world</p>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  const target = document
+    .descendants()
+    .find(and(isElement, hasName("p")))
+    .get();
+
+  t.deepEqual(await evaluate(R73, { document }), [
+    failed(R73, target, {
+      1: Outcomes.IsNormal,
+    }),
+  ]);
+});
+
+test("evaluate() fails a paragraph that relies on the default line height", async (t) => {
+  const document = Document.of((self) => [
+    Element.fromElement(
+      <html>
+        <p>Hello world</p>
+      </html>,
+      Option.of(self)
+    ),
+  ]);
+
+  const target = document
+    .descendants()
+    .find(and(isElement, hasName("p")))
+    .get();
+
+  t.deepEqual(await evaluate(R73, { document }), [
+    failed(R73, target, {
+      1: Outcomes.IsNormal,
+    }),
+  ]);
+});
