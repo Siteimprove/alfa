@@ -112,6 +112,29 @@ export namespace Declaration {
 
     let important = false;
 
+    if (value.length >= 2) {
+      const fst = value[value.length - 2];
+      const snd = value[value.length - 1];
+
+      if (
+        fst.type === "delim" &&
+        fst.value === 0x21 &&
+        snd.type === "ident" &&
+        snd.value.toLowerCase() === "important"
+      ) {
+        value.splice(value.length - 2, 2);
+        important = true;
+      }
+    }
+
+    if (value.length >= 1) {
+      const lst = value[value.length - 1];
+
+      if (lst.type === "whitespace") {
+        value.pop();
+      }
+    }
+
     return Ok.of([input, Declaration.of(name, value, important)] as const);
   };
 
