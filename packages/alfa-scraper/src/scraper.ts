@@ -46,6 +46,7 @@ export class Scraper {
       device = Device.standard(),
       credentials = null,
       screenshot = null,
+      javascript = true,
     } = options;
 
     let page: puppeteer.Page | undefined;
@@ -64,6 +65,8 @@ export class Scraper {
       });
 
       await page.authenticate(credentials);
+
+      await page.setJavaScriptEnabled(javascript);
 
       let request: Request | null = null;
       let response: Response | null | Promise<Response | null> = null;
@@ -173,6 +176,7 @@ export namespace Scraper {
       readonly device?: Device;
       readonly credentials?: Credentials;
       readonly screenshot?: Screenshot;
+      readonly javascript?: boolean;
     }
   }
 }
