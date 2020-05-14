@@ -78,16 +78,3 @@ test("evaluate() fails a paragraph whose text is uppercased by inheritance", asy
     }),
   ]);
 });
-
-test("evaluate() is inapplicable to a paragraph with just a single whitespace", async (t) => {
-  const document = Document.of((self) => [
-    Element.fromElement(
-      <html>
-        <p> </p>
-      </html>,
-      Option.of(self)
-    ),
-  ]);
-
-  t.deepEqual(await evaluate(R72, { document }), [inapplicable(R72)]);
-});
