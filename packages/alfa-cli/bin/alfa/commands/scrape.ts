@@ -60,6 +60,12 @@ export default class Scrape extends Command {
       description: "The pixel density of the browser",
     }),
 
+    javascript: flags.boolean({
+      default: true,
+      allowNo: true,
+      description: "Whether or not JavaScript is enabled",
+    }),
+
     username: flags.string({
       char: "u",
       dependsOn: ["password"],
@@ -210,6 +216,7 @@ export default class Scrape extends Command {
         device,
         credentials,
         screenshot,
+        javascript: flags.javascript,
       }
     );
 
