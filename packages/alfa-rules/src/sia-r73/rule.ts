@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-result";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
