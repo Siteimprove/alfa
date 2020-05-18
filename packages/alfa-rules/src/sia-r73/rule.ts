@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -34,26 +35,29 @@ export default Rule.Atomic.of<Page, Element>({
         const style = Style.from(target, device);
 
         const { value: lineHeight } = style.computed("line-height");
-        const { value: fontSize } = style.computed("font-size");
+
+        let outcome: Ok<string> | Err<string> = Outcomes.IsNormal;
+
+        switch (lineHeight.type) {
+          case "number":
+            outcome =
+              lineHeight.value >= 1.5
+                ? Outcomes.IsSufficient
+                : Outcomes.IsInsufficient;
+            break;
+
+          case "length": {
+            const { value: fontSize } = style.computed("font-size");
+
+            outcome =
+              lineHeight.value / fontSize.value >= 1.5
+                ? Outcomes.IsSufficient
+                : Outcomes.IsInsufficient;
+          }
+        }
 
         return {
-          1: expectation(
-            lineHeight.type === "number" && lineHeight.value >= 1.5,
-            () => Outcomes.IsSufficient,
-            () =>
-              expectation(
-                lineHeight.type === "length" &&
-                  lineHeight.value / fontSize.value >= 1.5,
-                () => Outcomes.IsSufficient,
-                () =>
-                  expectation(
-                    lineHeight.type === "keyword" &&
-                      lineHeight.value === "normal",
-                    () => Outcomes.IsNormal,
-                    () => Outcomes.IsInsufficient
-                  )
-              )
-          ),
+          1: Option.of(outcome),
         };
       },
     };
