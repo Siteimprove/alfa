@@ -179,12 +179,16 @@ export namespace Cell {
   }
 
   export class Builder implements Comparable<Builder>, Equatable, Serializable {
+    // Builder elements are referenced by Table Builder slot.
+    // Therefore, we must keep the same element and update it to avoid breaking reference.
+    // Any update to a Cell.Builder thus has to go through side effects :-(
+
     // The product always has empty headers while building. Correct headers are filled in by the final export.
-    private readonly _cell: Cell;
-    private readonly _downwardGrowing: boolean;
+    private _cell: Cell;
+    private _downwardGrowing: boolean;
     // This is the scope attribute, once correctly parsed.
     // The actual variant of the header is stored in the cell and can only be computed once the table is built.
-    private readonly _scope: Option<Scope>;
+    private _scope: Option<Scope>;
     // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
     //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
     //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
@@ -193,8 +197,8 @@ export namespace Cell {
     //         Currently not exposing both to final cell, but easy to do if needed.
     // Note 3: Headers are empty when building the cell, they are filled in once the table is built because we need
     //         to know the full table in order to find both explicit and implicit headers.
-    private readonly _explicitHeaders: Array<Element>;
-    private readonly _implicitHeaders: Array<Element>;
+    private _explicitHeaders: Array<Element>;
+    private _implicitHeaders: Array<Element>;
 
     public static of(
       kind: Cell.Kind,
@@ -257,25 +261,32 @@ export namespace Cell {
       explicitHeaders?: Array<Element>;
       implicitHeaders?: Array<Element>;
     }): Builder {
-      return Builder.of(
+      const cell = Cell.of(
         update.kind !== undefined ? update.kind : this.kind,
         update.x !== undefined ? update.x : this.anchor.x,
         update.y !== undefined ? update.y : this.anchor.y,
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
         update.element !== undefined ? update.element : this.element,
-        update.variant !== undefined ? update.variant : this.variant,
+        update.variant !== undefined ? update.variant : this.variant
+      );
+
+      this._cell = cell;
+      this._downwardGrowing =
         update.downwardGrowing !== undefined
           ? update.downwardGrowing
-          : this._downwardGrowing,
-        update.scope !== undefined ? update.scope : this.scope,
+          : this._downwardGrowing;
+      this._scope = update.scope !== undefined ? update.scope : this.scope;
+      this._explicitHeaders =
         update.explicitHeaders !== undefined
           ? update.explicitHeaders
-          : this._explicitHeaders,
+          : this._explicitHeaders;
+      this._implicitHeaders =
         update.implicitHeaders !== undefined
           ? update.implicitHeaders
-          : this._implicitHeaders
-      );
+          : this._implicitHeaders;
+
+      return this; // for chaining
     }
 
     public get cell(): Cell {
