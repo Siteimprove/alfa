@@ -4,7 +4,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -231,11 +231,14 @@ export namespace Table {
       );
     }
 
+    /**
+     * Update a table builder
+     * Cells can't be updated as they must be kept in sync with slots. Use #addCells or side effect on the cell itself.
+     */
     public update(update: {
       element?: Element;
       width?: number;
       height?: number;
-      cells?: Array<Cell.Builder>;
       rowGroups?: Array<RowGroup>;
       colGroups?: Array<ColumnGroup>;
     }): Builder {
@@ -243,7 +246,7 @@ export namespace Table {
         update.element !== undefined ? update.element : this.element,
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
-        update.cells !== undefined ? update.cells : this._cells,
+        this._cells,
         this._slots,
         update.rowGroups !== undefined ? update.rowGroups : this.rowGroups,
         update.colGroups !== undefined ? update.colGroups : this.colGroups
@@ -251,7 +254,15 @@ export namespace Table {
     }
 
     public addCells(cells: Iterable<Cell.Builder>): Builder {
-      return this.update({ cells: this._cells.concat(...cells) });
+      return Builder.of(
+        this.element,
+        this.width,
+        this.height,
+        this._cells.concat(...cells),
+        this._slots,
+        this.rowGroups,
+        this.colGroups
+      );
     }
 
     public addRowGroupFromElement(
@@ -266,11 +277,11 @@ export namespace Table {
               // adjust table height and width
               height: Math.max(this.height, this.height + rowGroup.height),
               width: Math.max(this.width, rowGroup.width),
-              // merge in new cells
-              cells: this._cells.concat(...rowGroup.cells),
               // add new group
               rowGroups: this.rowGroups.concat(rowGroup.rowgroup),
-            });
+            })
+              // merge in new cells
+              .addCells(rowGroup.cells);
           } else {
             return this;
           }
@@ -359,10 +370,10 @@ export namespace Table {
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
           table = table.update({
-            cells: table.cells.concat(...row.cells),
             height: Math.max(table.height, yCurrent + 1),
             width: Math.max(table.width, row.width),
-          });
+          })
+            .addCells(row.cells);
           // row processing steps 4/16
           yCurrent++;
 
@@ -440,22 +451,29 @@ export namespace Table {
 
       // The slots array might be sparse (or at least have holes) if some slots are not covered.
       // We first turn it into a dense array to allow array-operation optimisations.
-      
+      // const slots: Array<Array<Option<Cell.Builder>>> = new Array(table.width);
+      // for (let i=0; i<slots.length; i++) {
+      //   slots[i] = new Array(table.height)
+      // }
+      //
 
-      // We need to compute all headers variant first and this need to be done separately
+      // Next, we need to compute all headers variant first and this need to be done separately
       // so that the updated table is used in assignHeaders
-      table = table.update({
-        cells: table.cells.map((cell) => cell.addHeaderVariant(table)),
-      });
+      table.cells.forEach((cell) => cell.addHeaderVariant(table));
+      // Next, we assign headers to cells
+      table.cells.forEach((cell) => cell.assignHeaders(table));
 
+      // Finally, we sort lists and export the result.
       return Ok.of(
-        table.update({
-          cells: table.cells
-            .map((cell) => cell.assignHeaders(table))
-            .sort(compare),
-          colGroups: table.colGroups.sort(compare),
-          rowGroups: table.rowGroups.sort(compare),
-        })
+        Builder.of(
+          table.element,
+          table.width,
+          table.height,
+          table.cells.sort(compare),
+          table.slots,
+          table.rowGroups.sort(compare),
+          table.colGroups.sort(compare)
+        )
       );
     }
   }
