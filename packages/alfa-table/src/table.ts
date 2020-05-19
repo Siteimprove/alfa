@@ -70,11 +70,11 @@ export class Table implements Equatable, Serializable {
     return this._cells;
   }
 
-  public get columnGroups(): Iterable<ColumnGroup> {
+  public get columnGroups(): Array<ColumnGroup> {
     return this._columnGroups;
   }
 
-  public get rowGroups(): Iterable<RowGroup> {
+  public get rowGroups(): Array<RowGroup> {
     return this._rowGroups;
   }
 
@@ -170,11 +170,11 @@ export namespace Table {
       return this._table.element;
     }
 
-    public get colGroups(): Iterable<ColumnGroup> {
+    public get colGroups(): Array<ColumnGroup> {
       return this._table.columnGroups;
     }
 
-    public get rowGroups(): Iterable<RowGroup> {
+    public get rowGroups(): Array<RowGroup> {
       return this._table.rowGroups;
     }
 
@@ -184,8 +184,8 @@ export namespace Table {
         this.width,
         this.height,
         this._cells.map((cell) => cell.cell),
-        [...this.rowGroups],
-        [...this.colGroups]
+        this.rowGroups,
+        this.colGroups
       );
     }
 
@@ -202,8 +202,8 @@ export namespace Table {
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
         update.cells !== undefined ? update.cells : this._cells,
-        update.rowGroups !== undefined ? update.rowGroups : [...this.rowGroups],
-        update.colGroups !== undefined ? update.colGroups : [...this.colGroups]
+        update.rowGroups !== undefined ? update.rowGroups : this.rowGroups,
+        update.colGroups !== undefined ? update.colGroups : this.colGroups
       );
     }
 
@@ -226,7 +226,7 @@ export namespace Table {
               // merge in new cells
               cells: this._cells.concat(...rowGroup.cells),
               // add new group
-              rowGroups: [...this.rowGroups].concat(rowGroup.rowgroup),
+              rowGroups: this.rowGroups.concat(rowGroup.rowgroup),
             });
           } else {
             return this;
@@ -295,7 +295,7 @@ export namespace Table {
               // 9.1 (1).4 (cumulative) and (2).2
               width: Math.max(table.width, table.width + colGroup.width),
               // 9.1 (1).7 and (2).3
-              colGroups: [...table.colGroups].concat(colGroup),
+              colGroups: table.colGroups.concat(colGroup),
             });
           }
           continue;
@@ -406,8 +406,8 @@ export namespace Table {
           cells: table.cells
             .map((cell) => cell.assignHeaders(table))
             .sort(compare),
-          colGroups: [...table.colGroups].sort(compare),
-          rowGroups: [...table.rowGroups].sort(compare),
+          colGroups: table.colGroups.sort(compare),
+          rowGroups: table.rowGroups.sort(compare),
         })
       );
     }

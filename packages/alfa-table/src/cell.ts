@@ -190,8 +190,8 @@ export namespace Cell {
     // The actual variant of the header is stored in the cell and can only be computed once the table is built.
     private _scope: Option<Scope>;
     // Note 1: The HTML spec makes no real difference between Cell and the element in it and seems to use the word "cell"
-    //         all over the place. Storing here elements instead of Cell is easier because Elements don't change during
-    //         the computation, so there is no need to either update all usages or have side effects for updating Cell.
+    //         all over the place. Storing here elements instead of Cell is easier to avoid potential infinite loop when
+    //         converting Cell.Builder to Cell.
     // Note 2: Explicit and Implicit headings are normally mutually exclusive. However, it seems that some browsers
     //         fallback to implicit headers if explicit ones refer to inexistant elements. So keeping both is safer.
     //         Currently not exposing both to final cell, but easy to do if needed.
@@ -607,17 +607,17 @@ export namespace Cell {
         );
       }
       // 3.5: find row group headers for the rowgroup of the principal cell
-      const principalRowGroup = Iterable.find(table.rowGroups, (rg) =>
+      const principalRowGroup = table.rowGroups.find( (rg) =>
         rg.isCovering(this.anchor.y)
       );
-      if (principalRowGroup.isSome()) {
+      if (principalRowGroup !== undefined) {
         // if the principal cell is in a rowgroup,
         const headers = table.cells
           // get all rowgroup headers
           .filter((cell) => cell.variant.equals(Some.of(Scope.RowGroup)))
           // keep the ones inside the rowgroup of the principal cell
           .filter((rowGroupHeader) =>
-            principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
+            principalRowGroup.isCovering(rowGroupHeader.anchor.y)
           )
           // keep the ones that are top and left of the principal cell
           .filter(
@@ -629,17 +629,17 @@ export namespace Cell {
         headersList.push(...headers);
       }
       // 3.6: find column group headers for the colgroup of the principal cell
-      const principalColGroup = Iterable.find(table.colGroups, (cg) =>
+      const principalColGroup = table.colGroups.find( (cg) =>
         cg.isCovering(this.anchor.x)
       );
-      if (principalColGroup.isSome()) {
+      if (principalColGroup !== undefined) {
         // if the principal cell is in a colgroup,
         const headers = table.cells
           // get all colgroup headers
           .filter((cell) => cell.variant.equals(Some.of(Scope.ColumnGroup)))
           // keep the ones inside the colgroup of the principal cell
           .filter((colGroupHeader) =>
-            principalColGroup.get().isCovering(colGroupHeader.anchor.x)
+            principalColGroup.isCovering(colGroupHeader.anchor.x)
           )
           // keep the ones that are top and left of the principal cell
           .filter(
