@@ -98,6 +98,9 @@ export class Table implements Equatable, Serializable {
       this._height === value._height &&
       this._cells.length === value._cells.length &&
       this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
+      this._slots.every((array, x) =>
+        array.every((option, y) => option.equals(value._slots[x][y]))
+      ) &&
       this._rowGroups.length === value._rowGroups.length &&
       this._rowGroups.every((rowGroup, idx) =>
         rowGroup.equals(value._rowGroups[idx])
@@ -115,6 +118,7 @@ export class Table implements Equatable, Serializable {
       width: this._width,
       element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.toJSON()),
+      slots: this._slots.map((array) => array.map((option) => option.toJSON())),
       rowGroups: this._rowGroups.map((rg) => rg.toJSON()),
       colGroups: this._columnGroups.map((cg) => cg.toJSON()),
     };
@@ -136,6 +140,7 @@ export namespace Table {
     width: number;
     element: Element.JSON;
     cells: Cell.JSON[];
+    slots: Option.JSON[][];
     rowGroups: RowGroup.JSON[];
     colGroups: ColumnGroup.JSON[];
   }
@@ -239,6 +244,7 @@ export namespace Table {
       element?: Element;
       width?: number;
       height?: number;
+      slots?: Array<Array<Option<Cell.Builder>>>;
       rowGroups?: Array<RowGroup>;
       colGroups?: Array<ColumnGroup>;
     }): Builder {
@@ -247,7 +253,7 @@ export namespace Table {
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
         this._cells,
-        this._slots,
+        update.slots !== undefined ? update.slots : this._slots,
         update.rowGroups !== undefined ? update.rowGroups : this.rowGroups,
         update.colGroups !== undefined ? update.colGroups : this.colGroups
       );
@@ -273,15 +279,17 @@ export namespace Table {
         .map((rowGroup) => rowGroup.anchorAt(yCurrent))
         .map((rowGroup) => {
           if (rowGroup.height > 0) {
-            return this.update({
-              // adjust table height and width
-              height: Math.max(this.height, this.height + rowGroup.height),
-              width: Math.max(this.width, rowGroup.width),
-              // add new group
-              rowGroups: this.rowGroups.concat(rowGroup.rowgroup),
-            })
-              // merge in new cells
-              .addCells(rowGroup.cells);
+            return (
+              this.update({
+                // adjust table height and width
+                height: Math.max(this.height, this.height + rowGroup.height),
+                width: Math.max(this.width, rowGroup.width),
+                // add new group
+                rowGroups: this.rowGroups.concat(rowGroup.rowgroup),
+              })
+                // merge in new cells
+                .addCells(rowGroup.cells)
+            );
           } else {
             return this;
           }
@@ -293,6 +301,9 @@ export namespace Table {
       return (
         this._cells.length === value._cells.length &&
         this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
+        this._slots.every((array, x) =>
+          array.every((option, y) => option.equals(value._slots[x][y]))
+        ) &&
         this._table.equals(value._table)
       );
     }
@@ -369,10 +380,11 @@ export namespace Table {
             table.width
           ).get();
           growingCellsList = [...row.downwardGrowingCells];
-          table = table.update({
-            height: Math.max(table.height, yCurrent + 1),
-            width: Math.max(table.width, row.width),
-          })
+          table = table
+            .update({
+              height: Math.max(table.height, yCurrent + 1),
+              width: Math.max(table.width, row.width),
+            })
             .addCells(row.cells);
           // row processing steps 4/16
           yCurrent++;
@@ -451,11 +463,18 @@ export namespace Table {
 
       // The slots array might be sparse (or at least have holes) if some slots are not covered.
       // We first turn it into a dense array to allow array-operation optimisations.
-      // const slots: Array<Array<Option<Cell.Builder>>> = new Array(table.width);
-      // for (let i=0; i<slots.length; i++) {
-      //   slots[i] = new Array(table.height)
-      // }
-      //
+      const slots: Array<Array<Option<Cell.Builder>>> = new Array(table.width);
+      for (let x = 0; x < table.width; x++) {
+        slots[x] = new Array(table.height);
+        for (let y = 0; y < table.height; y++) {
+          slots[x][y] =
+            // line shouldn't be empty or it would have 0 cell anchored to it…
+            table.slots[x] !== undefined && table.slots[x][y] !== undefined
+              ? table.slots[x][y]
+              : None;
+        }
+      }
+      table = table.update({ slots });
 
       // Next, we need to compute all headers variant first and this need to be done separately
       // so that the updated table is used in assignHeaders
