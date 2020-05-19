@@ -331,6 +331,7 @@ export namespace smithonian {
       makeCell("soft-elong", Cell.Kind.Data, 4, 4, ["elong"]),
       makeCell("soft-reduct", Cell.Kind.Data, 5, 4, ["reduct"]),
     ].sort(compare),
+    [[]],
     [
       RowGroup.of(0, 2, getById("thead")),
       RowGroup.of(2, 3, getById("tbody")),
@@ -411,6 +412,7 @@ export namespace apple {
       makeCell("percent-2007", Cell.Kind.Data, 2, 4, ["percent", "2007"]),
       makeCell("percent-2006", Cell.Kind.Data, 3, 4, ["percent", "2006"]),
     ].sort(compare),
+    [[]],
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -524,6 +526,7 @@ export namespace expenses {
         "sales",
       ]),
     ].sort(compare),
+    [[]],
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -650,6 +653,7 @@ export namespace expensesNum {
         "sales",
       ]),
     ].sort(compare),
+    [[]],
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -1056,6 +1060,7 @@ export namespace rowGroupImplicitHeaders {
         "en",
       ]),
     ].sort(compare),
+    [[]],
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 3, getById("tbody-1")),
@@ -1180,6 +1185,7 @@ export namespace colGroupImplicitHeaders {
         "venus",
       ]),
     ].sort(compare),
+    [[]],
     [],
     [
       ColumnGroup.of(0, 1, getById("group-empty")),
@@ -1463,6 +1469,7 @@ export namespace allWeirdImplicitHeaders {
         "venus",
       ]),
     ].sort(compare),
+    [[]],
     [
       RowGroup.of(0, 2, getById("thead")),
       RowGroup.of(2, 2, getById("stuffed-animals")),

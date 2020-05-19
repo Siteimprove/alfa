@@ -25,16 +25,18 @@ export class Table implements Equatable, Serializable {
     width: number = 0,
     height: number = 0,
     cells: Array<Cell> = [],
+    slots: Array<Array<Cell>> = [[]],
     rowGroups: Array<RowGroup> = [],
     columnGroups: Array<ColumnGroup> = []
   ): Table {
-    return new Table(element, width, height, cells, rowGroups, columnGroups);
+    return new Table(element, width, height, cells, slots, rowGroups, columnGroups);
   }
 
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
   private readonly _cells: Array<Cell>;
+  private readonly _slots: Array<Array<Cell>>;
   private readonly _rowGroups: Array<RowGroup>;
   private readonly _columnGroups: Array<ColumnGroup>;
 
@@ -43,6 +45,7 @@ export class Table implements Equatable, Serializable {
     width: number,
     height: number,
     cells: Array<Cell>,
+    slots: Array<Array<Cell>>,
     rowGroups: Array<RowGroup>,
     columnGroups: Array<ColumnGroup>
   ) {
@@ -50,6 +53,7 @@ export class Table implements Equatable, Serializable {
     this._height = height;
     this._element = element;
     this._cells = cells;
+    this._slots = slots;
     this._rowGroups = rowGroups;
     this._columnGroups = columnGroups;
   }
@@ -133,29 +137,39 @@ export namespace Table {
       width: number = 0,
       height: number = 0,
       cells: Array<Cell.Builder> = [],
+      slots: Array<Array<Cell.Builder>> = [[]],
       rowGroups: Array<RowGroup> = [],
       colGroups: Array<ColumnGroup> = []
     ): Builder {
-      return new Builder(element, width, height, cells, rowGroups, colGroups);
+      return new Builder(element, width, height, cells, slots, rowGroups, colGroups);
     }
 
-    private readonly _table: Table; // will always have empty cells list as its stored here
+    // The product will always have empty cells list as it's stored here
+    // The product will always have empty slots array as it's stored here
+    private readonly _table: Table;
     private readonly _cells: Array<Cell.Builder>;
+    private readonly _slots: Array<Array<Cell.Builder>>;
 
     private constructor(
       element: Element,
       width: number,
       height: number,
       cells: Array<Cell.Builder>,
+      slots: Array<Array<Cell.Builder>>,
       rowGroups: Array<RowGroup>,
       colGroups: Array<ColumnGroup>
     ) {
-      this._table = Table.of(element, width, height, [], rowGroups, colGroups);
+      this._table = Table.of(element, width, height, [], [[]], rowGroups, colGroups);
       this._cells = cells;
+      this._slots = slots;
     }
 
     public get cells(): Array<Cell.Builder> {
       return this._cells;
+    }
+
+    public get slots(): Array<Array<Cell.Builder>> {
+      return this._slots;
     }
 
     public get width(): number {
@@ -184,6 +198,7 @@ export namespace Table {
         this.width,
         this.height,
         this._cells.map((cell) => cell.cell),
+        this._slots.map(array => array.map((cell) => cell.cell)),
         this.rowGroups,
         this.colGroups
       );
@@ -202,6 +217,7 @@ export namespace Table {
         update.width !== undefined ? update.width : this.width,
         update.height !== undefined ? update.height : this.height,
         update.cells !== undefined ? update.cells : this._cells,
+        this._slots,
         update.rowGroups !== undefined ? update.rowGroups : this.rowGroups,
         update.colGroups !== undefined ? update.colGroups : this.colGroups
       );
