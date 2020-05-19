@@ -4,6 +4,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Option } from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -25,18 +26,26 @@ export class Table implements Equatable, Serializable {
     width: number = 0,
     height: number = 0,
     cells: Array<Cell> = [],
-    slots: Array<Array<Cell>> = [[]],
+    slots: Array<Array<Option<Cell>>> = [[]],
     rowGroups: Array<RowGroup> = [],
     columnGroups: Array<ColumnGroup> = []
   ): Table {
-    return new Table(element, width, height, cells, slots, rowGroups, columnGroups);
+    return new Table(
+      element,
+      width,
+      height,
+      cells,
+      slots,
+      rowGroups,
+      columnGroups
+    );
   }
 
   private readonly _width: number;
   private readonly _height: number;
   private readonly _element: Element;
   private readonly _cells: Array<Cell>;
-  private readonly _slots: Array<Array<Cell>>;
+  private readonly _slots: Array<Array<Option<Cell>>>;
   private readonly _rowGroups: Array<RowGroup>;
   private readonly _columnGroups: Array<ColumnGroup>;
 
@@ -45,7 +54,7 @@ export class Table implements Equatable, Serializable {
     width: number,
     height: number,
     cells: Array<Cell>,
-    slots: Array<Array<Cell>>,
+    slots: Array<Array<Option<Cell>>>,
     rowGroups: Array<RowGroup>,
     columnGroups: Array<ColumnGroup>
   ) {
@@ -137,29 +146,45 @@ export namespace Table {
       width: number = 0,
       height: number = 0,
       cells: Array<Cell.Builder> = [],
-      slots: Array<Array<Cell.Builder>> = [[]],
+      slots: Array<Array<Option<Cell.Builder>>> = [[]],
       rowGroups: Array<RowGroup> = [],
       colGroups: Array<ColumnGroup> = []
     ): Builder {
-      return new Builder(element, width, height, cells, slots, rowGroups, colGroups);
+      return new Builder(
+        element,
+        width,
+        height,
+        cells,
+        slots,
+        rowGroups,
+        colGroups
+      );
     }
 
     // The product will always have empty cells list as it's stored here
     // The product will always have empty slots array as it's stored here
     private readonly _table: Table;
     private readonly _cells: Array<Cell.Builder>;
-    private readonly _slots: Array<Array<Cell.Builder>>;
+    private readonly _slots: Array<Array<Option<Cell.Builder>>>;
 
     private constructor(
       element: Element,
       width: number,
       height: number,
       cells: Array<Cell.Builder>,
-      slots: Array<Array<Cell.Builder>>,
+      slots: Array<Array<Option<Cell.Builder>>>,
       rowGroups: Array<RowGroup>,
       colGroups: Array<ColumnGroup>
     ) {
-      this._table = Table.of(element, width, height, [], [[]], rowGroups, colGroups);
+      this._table = Table.of(
+        element,
+        width,
+        height,
+        [],
+        [[]],
+        rowGroups,
+        colGroups
+      );
       this._cells = cells;
       this._slots = slots;
     }
@@ -168,7 +193,7 @@ export namespace Table {
       return this._cells;
     }
 
-    public get slots(): Array<Array<Cell.Builder>> {
+    public get slots(): Array<Array<Option<Cell.Builder>>> {
       return this._slots;
     }
 
@@ -198,7 +223,9 @@ export namespace Table {
         this.width,
         this.height,
         this._cells.map((cell) => cell.cell),
-        this._slots.map(array => array.map((cell) => cell.cell)),
+        this._slots.map((array) =>
+          array.map((option) => option.map((cell) => cell.cell))
+        ),
         this.rowGroups,
         this.colGroups
       );
@@ -410,6 +437,10 @@ export namespace Table {
       }
 
       // 21
+
+      // The slots array might be sparse (or at least have holes) if some slots are not covered.
+      // We first turn it into a dense array to allow array-operation optimisations.
+      
 
       // We need to compute all headers variant first and this need to be done separately
       // so that the updated table is used in assignHeaders
