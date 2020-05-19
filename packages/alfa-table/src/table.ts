@@ -4,7 +4,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import {None, Option, Some} from "@siteimprove/alfa-option";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
@@ -260,12 +260,29 @@ export namespace Table {
     }
 
     public addCells(cells: Iterable<Cell.Builder>): Builder {
+      const slots = this._slots;
+      for (const cell of cells) {
+        for (let x=cell.anchor.x; x < cell.anchor.x + cell.width; x++) {
+          if (slots[x] === undefined) {
+            slots[x] = [];
+          }
+          for (let y=cell.anchor.y; y < cell.anchor.y + cell.height; y++) {
+            if (slots[x][y] === undefined || slots[x][y].isNone()) {
+              slots[x][y] = Some.of(cell);
+            } else {
+              // the slot is covered twice
+              // ignoring for now…
+            }
+          }
+        }
+      }
+
       return Builder.of(
         this.element,
         this.width,
         this.height,
         this._cells.concat(...cells),
-        this._slots,
+        slots,
         this.rowGroups,
         this.colGroups
       );

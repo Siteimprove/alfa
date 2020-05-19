@@ -64,7 +64,7 @@ function makeSlotArray(
   for (let x = 0; x < width; x++) {
     slots[x] = new Array(height);
     for (let y = 0; y < height; y++) {
-      slots[x][y] = None; // Option.from(cells.find((cell) => cell.isCovering(x, y)));
+      slots[x][y] = Option.from(cells.find((cell) => cell.isCovering(x, y)));
     }
   }
 
