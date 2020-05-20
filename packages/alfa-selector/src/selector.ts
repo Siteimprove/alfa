@@ -765,6 +765,10 @@ export namespace Selector {
             return Active.of();
           case "focus":
             return Focus.of();
+          case "link":
+            return Link.of();
+          case "visited":
+            return Visited.of();
           case "root":
             return Root.of();
         }
@@ -995,6 +999,32 @@ export namespace Selector {
 
     private constructor() {
       super("focus");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#link-pseudo
+   */
+  export class Link extends Pseudo.Class {
+    public static of(): Link {
+      return new Link();
+    }
+
+    private constructor() {
+      super("link");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#visited-pseudo
+   */
+  export class Visited extends Pseudo.Class {
+    public static of(): Visited {
+      return new Visited();
+    }
+
+    private constructor() {
+      super("visited");
     }
   }
 
