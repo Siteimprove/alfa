@@ -349,7 +349,6 @@ export namespace smithonian {
     6,
     5,
     cells,
-    makeSlotArray(6, 5, cells),
     [
       RowGroup.of(0, 2, getById("thead")),
       RowGroup.of(2, 3, getById("tbody")),
@@ -431,7 +430,6 @@ export namespace apple {
     4,
     5,
     cells,
-    makeSlotArray(4, 5, cells),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -546,7 +544,6 @@ export namespace expenses {
     4,
     5,
     cells,
-    makeSlotArray(4, 5, cells),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -674,7 +671,6 @@ export namespace expensesNum {
     4,
     5,
     cells,
-    makeSlotArray(4, 5, cells),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 2, getById("body-1")),
@@ -819,8 +815,7 @@ export namespace explicitHeaders {
     element,
     4,
     2,
-    cells,
-    makeSlotArray(4, 2, cells)
+    cells
   );
 }
 
@@ -881,8 +876,7 @@ export namespace duplicateIDExplicitHeaders {
     table,
     3,
     2,
-    cells,
-    makeSlotArray(3, 2, cells)
+    cells
   );
 }
 
@@ -924,8 +918,7 @@ export namespace simpleImplicitHeaders {
     element,
     3,
     3,
-    cells,
-    makeSlotArray(3, 3, cells)
+    cells
   );
 }
 
@@ -1086,7 +1079,6 @@ export namespace rowGroupImplicitHeaders {
     4,
     7,
     cells,
-    makeSlotArray(4, 7, cells),
     [
       RowGroup.of(0, 1, getById("thead")),
       RowGroup.of(1, 3, getById("tbody-1")),
@@ -1212,7 +1204,6 @@ export namespace colGroupImplicitHeaders {
     5,
     4,
     cells,
-    makeSlotArray(5, 4, cells),
     [],
     [
       ColumnGroup.of(0, 1, getById("group-empty")),
@@ -1497,7 +1488,6 @@ export namespace allWeirdImplicitHeaders {
     7,
     7,
     cells,
-    makeSlotArray(7, 7, cells),
     [
       RowGroup.of(0, 2, getById("thead")),
       RowGroup.of(2, 2, getById("stuffed-animals")),

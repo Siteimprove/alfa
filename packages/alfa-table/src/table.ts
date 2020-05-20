@@ -26,7 +26,6 @@ export class Table implements Equatable, Serializable {
     width: number = 0,
     height: number = 0,
     cells: Array<Cell> = [],
-    slots: Array<Array<Option<Cell>>> = [[]],
     rowGroups: Array<RowGroup> = [],
     columnGroups: Array<ColumnGroup> = []
   ): Table {
@@ -35,7 +34,6 @@ export class Table implements Equatable, Serializable {
       width,
       height,
       cells,
-      slots,
       rowGroups,
       columnGroups
     );
@@ -45,7 +43,6 @@ export class Table implements Equatable, Serializable {
   private readonly _height: number;
   private readonly _element: Element;
   private readonly _cells: Array<Cell>;
-  private readonly _slots: Array<Array<Option<Cell>>>;
   private readonly _rowGroups: Array<RowGroup>;
   private readonly _columnGroups: Array<ColumnGroup>;
 
@@ -54,7 +51,6 @@ export class Table implements Equatable, Serializable {
     width: number,
     height: number,
     cells: Array<Cell>,
-    slots: Array<Array<Option<Cell>>>,
     rowGroups: Array<RowGroup>,
     columnGroups: Array<ColumnGroup>
   ) {
@@ -62,7 +58,6 @@ export class Table implements Equatable, Serializable {
     this._height = height;
     this._element = element;
     this._cells = cells;
-    this._slots = slots;
     this._rowGroups = rowGroups;
     this._columnGroups = columnGroups;
   }
@@ -98,9 +93,6 @@ export class Table implements Equatable, Serializable {
       this._height === value._height &&
       this._cells.length === value._cells.length &&
       this._cells.every((cell, idx) => cell.equals(value._cells[idx])) &&
-      this._slots.every((array, x) =>
-        array.every((option, y) => option.equals(value._slots[x][y]))
-      ) &&
       this._rowGroups.length === value._rowGroups.length &&
       this._rowGroups.every((rowGroup, idx) =>
         rowGroup.equals(value._rowGroups[idx])
@@ -118,7 +110,6 @@ export class Table implements Equatable, Serializable {
       width: this._width,
       element: this._element.toJSON(),
       cells: this._cells.map((cell) => cell.toJSON()),
-      slots: this._slots.map((array) => array.map((option) => option.toJSON())),
       rowGroups: this._rowGroups.map((rg) => rg.toJSON()),
       colGroups: this._columnGroups.map((cg) => cg.toJSON()),
     };
@@ -140,7 +131,6 @@ export namespace Table {
     width: number;
     element: Element.JSON;
     cells: Cell.JSON[];
-    slots: Option.JSON[][];
     rowGroups: RowGroup.JSON[];
     colGroups: ColumnGroup.JSON[];
   }
@@ -167,7 +157,6 @@ export namespace Table {
     }
 
     // The product will always have empty cells list as it's stored here
-    // The product will always have empty slots array as it's stored here
     private readonly _table: Table;
     private readonly _cells: Array<Cell.Builder>;
     private readonly _slots: Array<Array<Option<Cell.Builder>>>;
@@ -186,7 +175,6 @@ export namespace Table {
         width,
         height,
         [],
-        [[]],
         rowGroups,
         colGroups
       );
@@ -228,9 +216,6 @@ export namespace Table {
         this.width,
         this.height,
         this._cells.map((cell) => cell.cell),
-        this._slots.map((array) =>
-          array.map((option) => option.map((cell) => cell.cell))
-        ),
         this.rowGroups,
         this.colGroups
       );
