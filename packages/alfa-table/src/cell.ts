@@ -494,14 +494,14 @@ export namespace Cell {
         x += deltaX, y += deltaY
       ) {
         // 7
-        const covering = table.cells.filter((cell) => cell.isCovering(x, y));
-        if (covering.length !== 1) {
+        const covering = table.slots[x][y];
+        if (covering.isNone()) {
           // More than one cell covering a slot is a table model error. Not sure why the test is in the algorithm…
           // (0 cell is possible, more than one is not)
           continue;
         }
         // 8
-        const currentCell = covering[0];
+        const currentCell = covering.get();
         // 9
         if (currentCell.kind === Cell.Kind.Header) {
           // 9.1
