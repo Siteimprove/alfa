@@ -1,5 +1,5 @@
 import { Lexer, Token } from "@siteimprove/alfa-css";
-import { Element } from "@siteimprove/alfa-dom";
+import { Document, Fragment, Shadow, Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -20,11 +20,13 @@ const {
   left,
   right,
   pair,
+  take,
+  filter,
   delimited,
   option,
 } = Parser;
 
-const { and, property, equals, isString } = Predicate;
+const { and, or, property, equals, isString } = Predicate;
 
 /**
  * @see https://drafts.csswg.org/selectors/#selector
@@ -752,6 +754,44 @@ export namespace Selector {
 
   export type Pseudo = Pseudo.Class | Pseudo.Element;
 
+  const parsePseudoClass = right(
+    Token.parseColon,
+    filter(
+      map(Token.parseIdent(), (ident) => {
+        switch (ident.value) {
+          case "hover":
+            return Hover.of();
+          case "active":
+            return Active.of();
+          case "focus":
+            return Focus.of();
+          case "root":
+            return Root.of();
+        }
+      }),
+      (pseudo): pseudo is Pseudo.Class => pseudo !== undefined,
+      () => "Invalid pseudo class"
+    )
+  );
+
+  const parsePseudoElement = right(
+    take(Token.parseColon, 2),
+    filter(
+      map(Token.parseIdent(), (ident) => {
+        switch (ident.value) {
+          case "before":
+            return Before.of();
+          case "after":
+            return After.of();
+        }
+      }),
+      (pseudo): pseudo is Pseudo.Element => pseudo !== undefined,
+      () => "Invalid pseudo element"
+    )
+  );
+
+  const parsePseudo = either(parsePseudoClass, parsePseudoElement);
+
   /**
    * @see https://drafts.csswg.org/selectors/#matches-pseudo
    */
@@ -920,9 +960,71 @@ export namespace Selector {
   }
 
   /**
+   * @see https://drafts.csswg.org/selectors/#hover-pseudo
+   */
+  export class Hover extends Pseudo.Class {
+    public static of(): Hover {
+      return new Hover();
+    }
+
+    private constructor() {
+      super("hover");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#active-pseudo
+   */
+  export class Active extends Pseudo.Class {
+    public static of(): Active {
+      return new Active();
+    }
+
+    private constructor() {
+      super("active");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#focus-pseudo
+   */
+  export class Focus extends Pseudo.Class {
+    public static of(): Focus {
+      return new Focus();
+    }
+
+    private constructor() {
+      super("focus");
+    }
+  }
+
+  /**
+   * @see https://drafts.csswg.org/selectors/#root-pseudo
+   */
+  export class Root extends Pseudo.Class {
+    public static of(): Root {
+      return new Root();
+    }
+
+    private constructor() {
+      super("root");
+    }
+
+    public matches(element: Element): boolean {
+      return element
+        .parent()
+        .every(or(Document.isDocument, Fragment.isFragment, Shadow.isShadow));
+    }
+  }
+
+  /**
    * @see https://drafts.csswg.org/css-pseudo/#selectordef-before
    */
   export class Before extends Pseudo.Element {
+    public static of(): Before {
+      return new Before();
+    }
+
     private constructor() {
       super("before");
     }
@@ -932,6 +1034,10 @@ export namespace Selector {
    * @see https://drafts.csswg.org/css-pseudo/#selectordef-after
    */
   export class After extends Pseudo.Element {
+    public static of(): After {
+      return new After();
+    }
+
     private constructor() {
       super("after");
     }
@@ -957,7 +1063,13 @@ export namespace Selector {
    */
   const parseSimple = either(
     parseClass,
-    either(parseType, either(parseAttribute, either(parseId, parseUniversal)))
+    either(
+      parseType,
+      either(
+        parseAttribute,
+        either(parseId, either(parseUniversal, parsePseudo))
+      )
+    )
   );
 
   /**
