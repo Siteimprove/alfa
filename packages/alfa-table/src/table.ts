@@ -479,7 +479,8 @@ export namespace Table {
       // 21
 
       // The slots array might be sparse (or at least have holes) if some slots are not covered.
-      // We first turn it into a dense array to allow array-operation optimisations.
+      // We first turn it into a dense array to allow array-operation optimisations
+      // and make access easier to handle (slots[x][y] is never undefined after this).
       const slots: Array<Array<Option<Cell.Builder>>> = new Array(table.width);
       for (let x = 0; x < table.width; x++) {
         slots[x] = new Array(table.height);
@@ -493,8 +494,8 @@ export namespace Table {
       }
       table = table.update({ slots });
 
-      // Next, we need to compute all headers variant first and this need to be done separately
-      // so that the updated table is used in assignHeaders
+      // Next, we need to compute all headers variant.
+      // This need to be done separately so that the updated table is used in assignHeaders.
       table.cells.forEach((cell) => cell.addHeaderVariant(table));
       // Next, we assign headers to cells
       table.cells.forEach((cell) => cell.assignHeaders(table));
