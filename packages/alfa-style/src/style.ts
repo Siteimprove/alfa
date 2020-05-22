@@ -1,6 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Lexer, Keyword } from "@siteimprove/alfa-css";
+import { Lexer, Keyword, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -41,8 +41,8 @@ export class Style implements Serializable {
   // these are inexpensive to resolve from cascaded and computed properties.
   // Cascaded properties on the other hand require parsing, which is expensive,
   // and computed properties require absolutization, which is also expensive.
-  private readonly _cascaded = new Map<string, Value>();
-  private readonly _computed = new Map<string, Value>();
+  private readonly _cascaded = new Map<Name, Value>();
+  private readonly _computed = new Map<Name, Value>();
 
   private constructor(
     declarations: Array<Declaration>,
@@ -211,39 +211,41 @@ export namespace Style {
 function parse<N extends Property.Name>(
   property: Property.WithName<N>,
   value: string
-): Option<unknown> {
-  const result = left(
-    either(Keyword.parse("initial", "inherit"), property.parse as any),
+) {
+  return left(
+    either(
+      Keyword.parse("initial", "inherit"),
+      property.parse as Parser<Slice<Token>, Property.Value.Parsed<N>, string>
+    ),
     eof(() => "Expected end of input")
-  )(Slice.of(Lexer.lex(value))).map(([, value]) => value);
-
-  if (result.isErr()) {
-    return None;
-  }
-
-  return Option.of(result.get());
+  )(Slice.of(Lexer.lex(value)))
+    .map(([, value]) => value)
+    .ok();
 }
 
 function parseShorthand<N extends Property.Shorthand.Name>(
   shorthand: Property.Shorthand.WithName<N>,
   value: string
-): Option<Record<{ [property: string]: unknown }>> {
-  const result = left(
-    either(Keyword.parse("initial", "inherit"), shorthand.parse),
+) {
+  return left(
+    either(
+      Keyword.parse("initial", "inherit"),
+      shorthand.parse as Parser<
+        Slice<Token>,
+        Record<{ [N in Property.Name]?: Property.Value.Parsed<N> }>,
+        string
+      >
+    ),
     eof(() => "Expected end of input")
-  )(Slice.of(Lexer.lex(value))).map(([, value]) => {
-    if (Keyword.isKeyword(value)) {
-      return Record.from(
-        Iterable.map(shorthand.properties, (property) => [property, value])
-      );
-    }
+  )(Slice.of(Lexer.lex(value)))
+    .map(([, value]) => {
+      if (Keyword.isKeyword(value)) {
+        return Record.from(
+          Iterable.map(shorthand.properties, (property) => [property, value])
+        );
+      }
 
-    return value;
-  });
-
-  if (result.isErr()) {
-    return None;
-  }
-
-  return Option.of(result.get());
+      return value;
+    })
+    .ok();
 }
