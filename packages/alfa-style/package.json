@@ -32,6 +32,7 @@
     "@siteimprove/alfa-monad": "^0.0.1",
     "@siteimprove/alfa-option": "^0.0.1",
     "@siteimprove/alfa-parser": "^0.0.1",
+    "@siteimprove/alfa-record": "^0.0.1",
     "@siteimprove/alfa-slice": "^0.0.1"
   },
   "devDependencies": {
