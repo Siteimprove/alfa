@@ -188,4 +188,16 @@ export namespace Parser {
       ([first, rest]) => [first, ...rest]
     );
   }
+
+  export function eof<I extends Iterable<unknown>, E>(
+    ifError: Thunk<E>
+  ): Parser<I, void, E> {
+    return (input) => {
+      for (const _ of input) {
+        return Err.of(ifError());
+      }
+
+      return Ok.of([input, undefined] as const);
+    };
+  }
 }
