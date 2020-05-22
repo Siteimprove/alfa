@@ -9,6 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/expectation";
 
 import { hasDescendant } from "../common/predicate/has-descendant";
+import { isVisible } from "../common/predicate/is-visible";
 import { isTabbable } from "../common/predicate/is-tabbable";
 
 const { isElement, hasNamespace } = Element;
@@ -24,7 +25,11 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               isElement,
-              and(hasNamespace(Namespace.HTML), isPossiblyScrollable(device))
+              and(
+                hasNamespace(Namespace.HTML),
+                isVisible(device),
+                isPossiblyScrollable(device)
+              )
             )
           );
       },
