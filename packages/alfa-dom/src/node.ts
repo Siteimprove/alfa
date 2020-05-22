@@ -8,7 +8,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
-const { and, equals } = Predicate;
+const { equals } = Predicate;
 
 export abstract class Node
   implements Iterable<Node>, Equatable, json.Serializable, earl.Serializable {
@@ -64,25 +64,25 @@ export abstract class Node
    * @see https://dom.spec.whatwg.org/#concept-tree-ancestor
    */
   public ancestors(options: Node.Traversal = {}): Sequence<Node> {
-    return this.parent(options)
-      .map((parent) =>
-        Sequence.of(
-          parent,
-          Lazy.of(() => parent.ancestors(options))
-        )
-      )
-      .getOrElse(() => Sequence.empty());
+    for (const parent of this.parent(options)) {
+      return Sequence.of(
+        parent,
+        Lazy.of(() => parent.ancestors(options))
+      );
+    }
+
+    return Sequence.empty();
   }
 
   /**
    * @see https://dom.spec.whatwg.org/#concept-tree-preceding
    */
   public preceding(options: Node.Traversal = {}): Sequence<Node> {
-    return this.parent(options)
-      .map((parent) =>
-        parent.children(options).takeUntil(equals(this)).reverse()
-      )
-      .getOrElse(() => Sequence.empty());
+    for (const parent of this.parent(options)) {
+      return parent.children(options).takeUntil(equals(this)).reverse();
+    }
+
+    return Sequence.empty();
   }
 
   /**
@@ -99,9 +99,11 @@ export abstract class Node
    * @see https://dom.spec.whatwg.org/#concept-tree-following
    */
   public following(options: Node.Traversal = {}): Sequence<Node> {
-    return this.parent(options)
-      .map((parent) => parent.children(options).skipUntil(equals(this)).skip(1))
-      .getOrElse(() => Sequence.empty());
+    for (const parent of this.parent(options)) {
+      return parent.children(options).skipUntil(equals(this)).skip(1);
+    }
+
+    return Sequence.empty();
   }
 
   /**
@@ -121,11 +123,13 @@ export abstract class Node
     predicate: Predicate<Node, T>,
     options: Node.Traversal = {}
   ): Option<T> {
-    return predicate(this)
-      ? Option.of(this)
-      : this.parent(options).flatMap((parent) =>
-          parent.closest(predicate, options)
-        );
+    if (predicate(this)) {
+      return Option.of(this);
+    }
+
+    return this.parent(options).flatMap((parent) =>
+      parent.closest(predicate, options)
+    );
   }
 
   /**

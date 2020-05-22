@@ -57,14 +57,14 @@ export class Page extends Rule {
 }
 
 export namespace Page {
-  export function isPage(value: unknown): value is Page {
-    return value instanceof Page;
-  }
-
   export interface JSON extends Rule.JSON {
     type: "page";
     selector: string;
     style: Block.JSON;
+  }
+
+  export function isPage(value: unknown): value is Page {
+    return value instanceof Page;
   }
 
   export function fromPage(

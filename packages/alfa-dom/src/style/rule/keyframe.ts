@@ -57,14 +57,14 @@ export class Keyframe extends Rule {
 }
 
 export namespace Keyframe {
-  export function isKeyframe(value: unknown): value is Keyframe {
-    return value instanceof Keyframe;
-  }
-
   export interface JSON extends Rule.JSON {
     type: "keyframe";
     key: string;
     style: Block.JSON;
+  }
+
+  export function isKeyframe(value: unknown): value is Keyframe {
+    return value instanceof Keyframe;
   }
 
   export function fromKeyframe(
