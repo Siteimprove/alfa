@@ -52,9 +52,7 @@ export class Style implements Serializable {
     this._device = device;
     this._parent = parent;
 
-    for (let i = declarations.length - 1; i >= 0; i--) {
-      const declaration = declarations[i];
-
+    for (const declaration of declarations) {
       const { name, value } = declaration;
 
       if (Property.isName(name)) {
