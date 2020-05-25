@@ -26,6 +26,7 @@ export interface Collection<T>
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
   apply<U>(mapper: Collection<Mapper<T, U>>): Collection<U>;
   filter<U extends T>(predicate: Predicate<T, U>): Collection<U>;
+  reject(predicate: Predicate<T>): Collection<T>;
   find<U extends T>(predicate: Predicate<T, U>): Option<U>;
   includes(value: T): boolean;
   some(predicate: Predicate<T>): boolean;
@@ -43,6 +44,7 @@ export namespace Collection {
     reduce<U>(reducer: Reducer<V, U, [K]>, accumulator: U): U;
     apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
     filter<U extends V>(predicate: Predicate<V, U, [K]>): Keyed<K, U>;
+    reject(predicate: Predicate<V, V, [K]>): Keyed<K, V>;
     find<U extends V>(predicate: Predicate<V, U, [K]>): Option<U>;
     includes(value: V): boolean;
     some(predicate: Predicate<V, V, [K]>): boolean;
@@ -67,6 +69,7 @@ export namespace Collection {
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     apply<U>(mapper: Unkeyed<Mapper<T, U>>): Unkeyed<U>;
     filter<U extends T>(predicate: Predicate<T, U>): Unkeyed<U>;
+    reject(predicate: Predicate<T>): Unkeyed<T>;
     find<U extends T>(predicate: Predicate<T, U>): Option<U>;
     includes(value: T): boolean;
     some(predicate: Predicate<T>): boolean;
@@ -91,6 +94,7 @@ export namespace Collection {
     reduce<U>(reducer: Reducer<T, U, [number]>, accumulator: U): U;
     apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
     filter<U extends T>(predicate: Predicate<T, U, [number]>): Indexed<U>;
+    reject(predicate: Predicate<T, T, [number]>): Indexed<T>;
     find<U extends T>(predicate: Predicate<T, U, [number]>): Option<U>;
     includes(value: T): boolean;
     some(predicate: Predicate<T, T, [number]>): boolean;

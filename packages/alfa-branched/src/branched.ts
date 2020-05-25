@@ -11,6 +11,8 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 import * as json from "@siteimprove/alfa-json";
 
+const { not } = Predicate;
+
 export class Branched<T, B = never>
   implements Collection<T>, Iterable<[T, Iterable<B>]> {
   public static of<T, B = never>(
@@ -105,6 +107,10 @@ export class Branched<T, B = never>
         )
       )
     );
+  }
+
+  public reject(predicate: Predicate<T, T, [Iterable<B>]>): Branched<T, B> {
+    return this.filter(not(predicate));
   }
 
   public find<U extends T>(

@@ -10,6 +10,8 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 import * as json from "@siteimprove/alfa-json";
 
+const { not } = Predicate;
+
 export class Set<T> implements Collection.Unkeyed<T> {
   public static of<T>(...values: Array<T>): Set<T> {
     return values.reduce((set, value) => set.add(value), Set.empty<T>());
@@ -62,6 +64,10 @@ export class Set<T> implements Collection.Unkeyed<T> {
       (set, value) => (predicate(value) ? set.add(value) : set),
       Set.empty<U>()
     );
+  }
+
+  public reject(predicate: Predicate<T>): Set<T> {
+    return this.filter(not(predicate));
   }
 
   public find<U extends T>(predicate: Predicate<T, U>): Option<U> {
