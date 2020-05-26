@@ -622,7 +622,7 @@ export namespace Cell {
           .filter((rowGroupHeader) =>
             principalRowGroup.get().isCovering(rowGroupHeader.anchor.y)
           )
-          // keep the ones that are top and left of the principal cell
+          // keep the ones that are above and left of the principal cell
           .filter(
             (cell) =>
               cell.anchor.x < this.anchor.x + this.width &&
@@ -644,7 +644,7 @@ export namespace Cell {
           .filter((colGroupHeader) =>
             principalColGroup.get().isCovering(colGroupHeader.anchor.x)
           )
-          // keep the ones that are top and left of the principal cell
+          // keep the ones that are above and left of the principal cell
           .filter(
             (cell) =>
               cell.anchor.x < this.anchor.x + this.width &&
